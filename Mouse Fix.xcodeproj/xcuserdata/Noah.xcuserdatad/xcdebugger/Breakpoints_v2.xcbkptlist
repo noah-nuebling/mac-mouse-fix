@@ -528,50 +528,22 @@
             endingLineNumber = "451"
             landmarkName = "+load"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "152AA766-9403-4596-920D-21296FE3D3F8 - 858a0b8659fe4e7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__27+[TestOuter(loaddddd) load]_block_invoke"
-                  moduleName = "Mac Mouse Fix.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Utility/MFCoding/MFCoding.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "451"
-                  endingLineNumber = "451">
-               </Location>
-               <Location
-                  uuid = "152AA766-9403-4596-920D-21296FE3D3F8 - 858a0b8659fe4e7"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__27+[TestOuter(loaddddd) load]_block_invoke"
-                  moduleName = "Mac Mouse Fix.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Utility/MFCoding/MFCoding.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "451"
-                  endingLineNumber = "451">
-               </Location>
-               <Location
-                  uuid = "152AA766-9403-4596-920D-21296FE3D3F8 - 858a0b8659fe49a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__27+[TestOuter(loaddddd) load]_block_invoke"
-                  moduleName = "Mac Mouse Fix.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/Noah/Desktop/mmf-stuff/mac-mouse-fix/Shared/Utility/MFCoding/MFCoding.m"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "454"
-                  endingLineNumber = "454">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CAC33278-6A75-4B88-8218-86B94DC2AEA4"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Utility/SharedUtilitySwift.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "dumpSwiftIvars(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

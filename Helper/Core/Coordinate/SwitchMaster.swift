@@ -116,6 +116,23 @@ import ReactiveSwift
     private var buttonKillSwitch = false
     private var scrollKillSwitch = false
     
+    //
+    // MARK: Debug
+    //
+    
+    @inline(__always) private func logWithState(_ message: @autoclosure () -> String) {
+        
+        /// Note: [Mar 2025] This only has to be so complicated because our threading architecture is really bad. Once we move all input and SwitchMaster to GlobalEventTapThread.m, this won't be necessary.
+        if (runningPreRelease()) {
+            let invocationId = Int.random(in: 0...99999);
+            DDLogDebug("[\(invocationId)] SwitchMaster: \(message())")
+            ModifiedDrag.activationState { modifiedDragActivation in /// Note: [Mar 2025] This won't be necessary once we use GlobalEventTapThread.m
+                DDLogDebug("[\(invocationId)] SwitchMaster: EventTap state - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isReceiving() ? 1 : 0), pointing: \(modifiedDragActivation.rawValue)")
+                DDLogDebug("[\(invocationId)] SwitchMaster: MenuItem state - buttonMenu: \(MenuBarItem.buttonsItemIsEnabled() ? 1 : 0), scrollMenu: \(MenuBarItem.scrollItemIsEnabled() ? 1 : 0)")
+                DDLogDebug("[\(invocationId)] SwitchMaster: Internal state -\n\(SharedUtilitySwift.dumpSwiftIvars(self))");
+            }
+        }
+    }
     
     //
     // MARK: Init
@@ -132,6 +149,9 @@ import ReactiveSwift
         latestRemaps = Remap.remaps
         latestScrollConfig = ScrollConfig.shared
         latestModifiers = Modifiers.modifiers(with: nil)
+        
+        /// Debug
+        logWithState("Initialized.")
     }
     
     //
@@ -156,8 +176,7 @@ import ReactiveSwift
         toggleKillSwitchMenuItems()
         
         /// Debug
-        DDLogDebug("SwitchMaster toggling due to lockdown")
-        logState()
+        logWithState("Toggled due to lockdown.")
     }
     
     //
@@ -184,8 +203,10 @@ import ReactiveSwift
             togglePointingTap(modifications: nil)
             
             /// Debug
-            DDLogDebug("SwitchMaster toggling due to helperState change")
-            logState()
+            logWithState("""
+                Toggled due to helperState change.
+                New value - userIsActive: \(userIsActiveNew)
+                """)
         }
     }
     
@@ -221,8 +242,10 @@ import ReactiveSwift
             togglePointingTap(modifications: nil)
             
             /// Debug
-            DDLogDebug("SwitchMaster toggling due to killSwitch change")
-            logState()
+            logWithState("""
+                Toggled due to killSwitch change.
+                New values - btn: \(btn), scrl: \(scrl)
+                """)
         }
     }
     
@@ -256,8 +279,10 @@ import ReactiveSwift
         toggleKillSwitchMenuItems()
         
         /// Debug
-        DDLogDebug("SwitchMaster toggling due to attachedDevices change")
-        logState()
+        logWithState("""
+            Toggled due to attachedDevices change.
+            New devices: \(devices)
+            """)
         
     }
     
@@ -299,8 +324,10 @@ import ReactiveSwift
         self.togglePointingTap(modifications: nil /*self.latestModifications*/)
         
         /// Debug
-        DDLogDebug("SwitchMaster toggling due to remaps change")
-        logState()
+        logWithState("""
+            Toggled due to remaps change.
+            New remaps: \(remaps)
+            """)
     }
     
     private var latestScrollConfig = ScrollConfig.shared /// Not sure if this is a good initialization value
@@ -327,8 +354,10 @@ import ReactiveSwift
         toggleKillSwitchMenuItems()
         
         /// Debug
-        DDLogDebug("SwitchMaster toggling due to scroll config change")
-        logState()
+        logWithState("""
+            Toggled due to scrollConfig change.
+            New scrollConfig: \(scrollConfig)
+            """)
     }
     
     private var latestModifiers = NSDictionary()
@@ -348,8 +377,10 @@ import ReactiveSwift
         self.togglePointingTap(modifications: self.latestModifications)
         
         /// Debug
-        DDLogDebug("SwitchMaster toggling due to modifier change")
-        logState()
+        logWithState("""
+            Toggled due to modifier change.
+            New modifiers: \(modifiers)
+            """)
     }
     
     //
@@ -396,18 +427,6 @@ import ReactiveSwift
             self.currentModificationModifiesButtonOnSomeDevice = false
         }
 
-    }
-    
-    //
-    // MARK: Debug
-    //
-    
-    private func logState() {
-        if runningPreRelease() {
-            ModifiedDrag.activationState { modifiedDragActivation in
-                DDLogDebug("SwitchMaster switched to - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isReceiving() ? 1 : 0), pointing: \(modifiedDragActivation.rawValue), buttonMenu: \(MenuBarItem.buttonsItemIsEnabled() ? 1 : 0), scrollMenu: \(MenuBarItem.scrollItemIsEnabled() ? 1 : 0)")
-            }
-        }
     }
     
     //

@@ -58,6 +58,56 @@ import CocoaLumberjackSwift
         return NSRect(x: x, y: y, width: width, height: height)
     }
     
+    static func stringByAddingIndent(_ str: String, _ padding: String) -> String {
+        /// Note: [Mar 2025] We have multiple implementations of an 'addIndent' function. We should probably merge them so we have one for objc and maybe another native Swift one for speed.
+        let result = str.replacingOccurrences(
+            of: "(\n|^)(.)",
+            with: "$1" + padding + "$2",
+            options: [.regularExpression],
+            range: nil
+        )
+        return result;
+    }
+    
+    static func dumpSwiftIvars(_ instance: Any) -> String {
+        
+        /// [Mar 2025] Creates a string describing all the 'children' of the instance using the Swift Mirror API.
+        ///     I think this covers all the internal state held in native Swift properties.
+        ///     Not sure it covers internal state held in objc ivars or associated objects.
+        ///         (Send an `fp_ivarDescription` message to get objc ivar description.)
+        ///
+        ///     Mirror performance:
+        ///         I think I heard multiple times that Mirror() is super slow and shouldn't be used. But I haven't tested that. Hopefully it's fast for debug logging.
+        ///         Alternative: For Codable object's we could encode the to JSON to get a string-representation, but not sure that'd be faster.
+    
+        var result = ""
+        
+        result += "{\n"
+        
+        let padding = "    "
+        
+        for (i, (label, value)) in Mirror(reflecting: instance).children.enumerated() {
+            if (i != 0) { result += "\n" }
+            result += padding;
+            result += label ?? "<nil>";
+            let valueDesc: String
+            if let value = value as? NSObject {
+                valueDesc = value.debugDescription; /// Send `-[debugDescription]` message on objects since String(describing:) escapes newlines inside NSArray description (Observed in [Mar 2025])
+            } else {
+                valueDesc = String(describing: value);
+            }
+            if (!valueDesc.contains("\n")) {
+                result += " = " + valueDesc;
+            } else {
+                result += " =\n" + stringByAddingIndent(valueDesc, padding);
+            }
+        }
+        
+        result += "\n}";
+        
+        return result;
+    }
+    
     static func insecureDeepCopy<T: NSCoding>(of original: T) throws -> T {
     
         /// Approach 4
