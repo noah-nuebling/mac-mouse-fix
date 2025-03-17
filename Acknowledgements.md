@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **March 2025**
 
+- 🇲🇾&nbsp;Abi&nbsp;Fathullah - "One app to resolve all mouse issues on Mac."
 - 🇦🇺&nbsp;Devan&nbsp;Sabaratnam
 - 🇺🇸&nbsp;Hank&nbsp;Hampton
 - 🇬🇧&nbsp;Mark&nbsp;Riddell
