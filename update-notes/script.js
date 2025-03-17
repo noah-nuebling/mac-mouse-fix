@@ -1,5 +1,3 @@
-<script>
-
 document.addEventListener("DOMContentLoaded", function() {
   
   // Implement special blockquote styles from GitHub Markdown. See https://github.com/orgs/community/discussions/16925
@@ -61,5 +59,3 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   };
 });
-
-</script>
