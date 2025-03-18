@@ -50,7 +50,7 @@ import CoreGraphics
     private func userIsActive_Manual() -> Bool {
         /// For debugging and stuff
         guard let d = CGSessionCopyCurrentDictionary() as NSDictionary? else { return false }
-        guard let result = d.value(forKey: kCGSessionOnConsoleKey) as? Bool else { return false }
+        guard let result = d.value(forKey: kCGSessionOnConsoleKey) as? Bool else { return false } /// [Mar 2025] why 'kCGSessionOnConsoleKey'? – that's weird... Here's an SO post that also mentions this: https://stackoverflow.com/a/8790102/10601702
         return result
     }
     
