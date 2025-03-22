@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/style.css"/>
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/script.js"></script>            
+</head>
+<body>
+<p>Mac Mouse Fix <strong>3.0.4 Beta 1</strong> gizlilik, verimlilik ve
+güvenilirliği artırıyor.<br />
+Yeni bir çevrimdışı lisanslama sistemi sunuyor ve önemli hataları
+düzeltiyor.</p>
+<h3 id="geliştirilmiş-gizlilik-ve-verimlilik">Geliştirilmiş Gizlilik ve
+Verimlilik</h3>
+<ul>
+<li>İnternet bağlantılarını en aza indiren yeni bir çevrimdışı lisans
+doğrulama sistemi sunuyor.</li>
+<li>Uygulama artık sadece kesinlikle gerekli olduğunda internete
+bağlanıyor, gizliliğinizi koruyor ve kaynak kullanımını azaltıyor.</li>
+<li>Lisanslı olduğunda uygulama normal kullanımda tamamen çevrimdışı
+çalışıyor.</li>
+</ul>
+<details>
+<summary>
+<b>Detaylı Gizlilik Bilgisi</b>
+</summary>
+<p>Önceki sürümler her başlatıldığında lisansları çevrimiçi doğruluyordu
+ve bu da üçüncü taraf sunucularının (GitHub ve Gumroad) bağlantı
+kayıtlarını tutmasına olanak tanıyordu. Yeni sistem gereksiz
+bağlantıları ortadan kaldırıyor – ilk lisans aktivasyonundan sonra,
+sadece yerel lisans verileri bozulduğunda internete bağlanıyor. <br><br>
+Ben şahsen hiçbir kullanıcı davranışını kaydetmemiş olsam da, önceki
+sistem teorik olarak üçüncü taraf sunucularının IP adreslerini ve
+bağlantı zamanlarını kaydetmesine izin veriyordu. Gumroad ayrıca lisans
+anahtarınızı kaydedebilir ve potansiyel olarak Mac Mouse Fix’i satın
+aldığınızda kaydettiği kişisel bilgilerle ilişkilendirebilirdi. <br><br>
+Orijinal lisanslama sistemini oluştururken bu ince gizlilik sorunlarını
+düşünmemiştim, ama artık Mac Mouse Fix mümkün olduğunca gizli ve
+internet bağlantısız! <br><br> Ayrıca
+<a href=https://gumroad.com/privacy>Gumroad’un gizlilik politikasına</a>
+ve benim bu
+<a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>GitHub
+yorumuma</a> bakabilirsiniz.</p>
+</details>
+<h3 id="hata-düzeltmeleri">Hata Düzeltmeleri</h3>
+<ul>
+<li>‘Spaces &amp; Mission Control’ için ‘Tıkla ve Sürükle’ kullanırken
+macOS’un bazen takıldığı bir hata düzeltildi.</li>
+<li>Mac Mouse Fix’te tanımlanan ‘Mission Control’ gibi bir ‘Tıklama’
+eylemi kullanırken Sistem Ayarları’ndaki klavye kısayollarının bazen
+silindiği bir hata düzeltildi.</li>
+<li>Uygulamayı zaten satın almış kullanıcılara ‘Ücretsiz günler bitti’
+bildirimi göstererek uygulamanın bazen çalışmayı durdurduğu <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aopen%20label%3A%22%27Free%20days%20are%20over%27%20bug%22">bir
+hata</a> düzeltildi.
+<ul>
+<li>Bu hatayı yaşadıysanız, verdiğim rahatsızlık için içtenlikle özür
+dilerim. <a
+href="https://redirect.macmousefix.com/?message=&amp;target=mmf-apply-for-refund">Buradan
+geri ödeme</a> için başvurabilirsiniz.</li>
+</ul></li>
+</ul>
+<h3 id="teknik-iyileştirmeler">Teknik İyileştirmeler</h3>
+<ul>
+<li>Daha temiz veri modellemesi ve insan tarafından okunabilir
+yapılandırma dosyaları sağlayan yeni bir ‘MFDataClass’ sistemi
+uygulandı.</li>
+<li>Gumroad dışındaki ödeme platformlarının eklenmesi için destek
+oluşturuldu. Yani gelecekte yerelleştirilmiş ödemeler olabilir ve
+uygulama farklı ülkelerde satılabilir!</li>
+</ul>
+<h3
+id="macos-10.14-mojave-için-resmi-olmayan-desteğin-kaldırılması">macOS
+10.14 Mojave için (Resmi Olmayan) Desteğin Kaldırılması</h3>
+<p>Mac Mouse Fix 3 resmi olarak macOS 11 Big Sur ve sonrasını
+destekliyor. Ancak, bazı hataları ve grafik sorunlarını kabul etmeye
+istekli kullanıcılar için Mac Mouse Fix 3.0.3 ve önceki sürümler hala
+macOS 10.14.4 Mojave’de kullanılabiliyordu.</p>
+<p>Mac Mouse Fix 3.0.4 bu desteği kaldırıyor ve <strong>artık macOS
+10.15 Catalina gerektiriyor</strong>.<br />
+Bu durumun yarattığı herhangi bir rahatsızlık için özür dilerim. Bu
+değişiklik, gelişmiş lisanslama sistemini modern Swift özellikleriyle
+uygulamama olanak sağladı. Mojave kullanıcıları Mac Mouse Fix <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3">3.0.3</a>
+veya <a href="https://redirect.macmousefix.com/?target=mmf2-latest">Mac
+Mouse Fix 2’nin en son sürümünü</a> kullanmaya devam edebilirler. Umarım
+bu herkes için iyi bir çözümdür.</p>
+<p><em>Claude’un mükemmel yardımıyla düzenlendi.</em></p>
+<hr />
+<p>Ayrıca önceki sürüm <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3"><strong>3.0.3</strong></a>’e
+göz atın.</p>
+</body>
+</html>

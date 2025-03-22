@@ -18,6 +18,92 @@ from pprint import pprint
 
 import subprocess
 
+import re
+
+import anthropic
+
+import argparse
+
+
+# TODO: [Mar 2025]
+#   - [ ] Integrate this with our scripts repo
+#       - [ ] Use it to validate the locales
+#           - We can enforce that this repo should be in a folder like mac-mouse-fix-update-feed. The mac-mouse-fix repo, on the master branch, should be a in a sibling folder – Then we can read the locales from the xcode project.
+#       - [ ] Replace subprocess and os.system calls with our 'safe' (non-shell) custom implementation. (Now that we're passing LLM output, shell=True isn't safe anymore I think.)
+#   - [ ] For each locale, create folder of localized 'releases' md docs which mirror the GitHub releases page (including asset-download-links)
+#   - [ ] Rename from generate_appcasts to something that reflects that it also creates 'release' documents now.
+#   - Anthropic API: 
+#       - Look into Batch Processing:   https://docs.anthropic.com/en/docs/build-with-claude/batch-processing
+#       - Look into Prompt Caching:     https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
+#       - Optimize Prompt / do 'prompt engineerig' (?)
+#       - Optimize Model choice (?)
+#       - Optimize Cost (?)
+#           - I'll only run this once in a while, so it probably doesn't matter.
+#       - See if there are other API params to optimize (?)
+#       - Optimize latency (?)
+#           - Not that important but current latency of like 30 s per request is annoying to work with. [Mar 2025]
+
+"""
+Protocol:  
+  - [Mar 2025] 
+        I machine translated 3.0.3 update notes using the following parameters:
+            model:          claude-3-5-sonnet-20241022
+            temperature:    0
+            system: 
+                You are an accurate, elegant translator. Requests that you handle follow the pattern:
+                `language_code: <some ISO language code>\\nenglish_text: <some english text>`
+                You will reply with the translation of the english text into the language specified by the language code. You do not reply with any other information. Only the translation.
+                Context: The text you translate is written by the developer of an indie app. The text is intended to be read by users of said indie app. To be appropriate for this context, the text should not be overly formal. For example, when translating to German, use informal 'du' instead of formal 'Sie'.
+            input: 
+                f"language_code: {lcode}\nenglish_text: {release_notes_cleaned}"
+                On {lcode}:
+                    - I fed it 29 language_code's, extracted from the 'knownRegions' in the MMF Xcode project. (from the feature-strings-catalog branch)
+                On {release_notes_cleaned}:
+                    - Release notes were downloaded straight from the GitHub releases API, I then also stripped out HTML comments since those don't need to be translated.
+
+        I then asked Claude 3.7 (with extended thinking) to thoroughly review the translations.
+            - It said they were of excellent quality.
+            - It noted that Korean, Japanese, and French use polite forms, which German uses informal 'du'. 
+                - I asked it whether that makes sense and it explained that this culturally appropriate and matches trends seen in tech documentation and communication by tech companies.
+
+        I also personally reviewed the German versions:
+            - The translations sound very good and natural. Some stuff sounds weird, but I think that's mostly cause my original English texts aren't super well written. (I felt it was very apologetic and verbose in some places. I just felt like who caressss when reading it. But that's not the LLM-translator's fault.)
+
+        -> It seems like this setup produces very good translations.
+            (We haven't iterated on the prompt or other parameters, but I think we don't have to since this is good enough.)
+
+        Caveats: 
+            - When we use very specific terms mirroring UI elements in the app, that is unlikely to get accurately translated.
+            - Solution ideas:
+                1. Manual glossary: 
+                    Have human translators of the main app create a glossary somehow
+                2. Disclaimer: 
+                    Mark the update notes as 'machine translated' and 'possibly containing some inaccuracies'
+                    -> I think people generally appreciate knowing whether the content they look at is AI generated.
+                3. Flood LLM context: 
+                    Feed all the (human generated) translations from the app and the website into the LLM's context window
+                    - Problems: 
+                        - Bigger load on the API (Should probably use 'prompt caching'.)
+                        - Might degrade the quality if we clutter up the context window
+                        - Not sure how handle older UI elements get removed? Then we can't easily update older notes anymore I think. I guess we could feed it different versions of the human generated translations but then we won't be able to employ prompt caching I think and it would complicated everything.
+                        - For a lot of the strings in the main MMF app, the primary context for the translators stems from the autogenerated screenshots with markers for where the specific string appears in the screenshot - Might not be feasible to feed this context to the LLM.
+                        -> Even with these problems, feeding the human translations as context might still bring worth-it quality improvements.
+                4. 'Dynamic glossary':
+                    - In this script we'd maintain a 'glossary_keys' list and then we'd extract the English original + translations for those keys from the .xcstrings files 
+                      in the 'mac-mouse-fix' repo and paste them into the LLM's context. 
+                    -> This should be easy to maintain and make translations quality really good.
+                    - Problems:
+                        - When older strings referenced by the glossary_keys get removed, we might need special handling -> Could probably just hardcode the latest commit where a specific string is available.
+
+                -> Conclusion: Start with 2. (Disclaimer) and perhaps add 4. (Dynamic glossary) later to improve quality.
+"""
+
+# Parse args
+argparser = argparse.ArgumentParser("")
+argparser.add_argument('--test-mode', action=argparse._StoreTrueAction)
+argparser.add_argument('--anthropic-api-key', default=os.environ.get("ANTHROPIC_API_KEY"))
+args = argparser.parse_args()
+
 # Test mode
 TEST_MODE = False
 if len(sys.argv) >= 2 and sys.argv[1] == '--test-mode':
@@ -46,9 +132,10 @@ appcast_pre_file_name           = "appcast-pre.xml"                         # Pa
 appcast_url                     = f"{base_url}/{appcast_file_name}"         # This gets included as a link in appcast.xml. Not sure what it does.
 appcast_pre_url                 = f"{base_url}/{appcast_pre_file_name}"
 
-update_notes_folder            = "update-notes/html"                        # This is where the html update notes go. They are generated from the .md update notes downloaded off GitHub. appcast.xml will reference these html update notes via <sparkle:releaseNotesLink>
-css_file_path                  = "update-notes/style.css"                   # The css file referenced by the html update notes.
-js_file_path                   = "update-notes/script.js"
+update_notes_folder_markdown    = "update-notes/md"                          # This is where the md update notes go. The English versions are extracted from GitHub releases, and the translations are automatically generated by this script.
+update_notes_folder_html        = "update-notes/html"                        # This is where the html update notes go. They are generated from the .md update notes downloaded off GitHub. appcast.xml will reference these html update notes via <sparkle:releaseNotesLink>
+css_file_path                   = "update-notes/style.css"                   # The css file referenced by the html update notes.
+js_file_path                    = "update-notes/script.js"
 
 # Implementation detail paths/folders
 
@@ -59,11 +146,51 @@ html_header_includes_tmp_file   = f"{download_folder}/html_header_includes.html"
 
 info_plist_app_subpath          = "Contents/Info.plist"         # Where to look fo the Info.plist file within the unzipped app bundle
 
-prefpane_bundle_name = "Mouse Fix.prefpane"                     # App has been renamed, this is the old name
+prefpane_bundle_name            = "Mouse Fix.prefpane"                     # App has been renamed, this is the old name
 
 # Dynamic paths/folders
 current_directory = os.getcwd()
 download_folder_absolute = os.path.join(current_directory, download_folder)
+
+# Language codes
+#   ISO codes for the languages to translate the update notes into. 
+#   Keep in-sync with 'knownRegions' in project.pbxproject of mac-mouse-fix and mac-mouse-fix-website repos:
+#       https://github.com/noah-nuebling/mac-mouse-fix/blob/b3c2cb85f81e8637d51b533a43bbc99084e85e89/Mouse%20Fix.xcodeproj/project.pbxproj#L7954
+#   (TODO: Perhaps automatically sync the languages with the mac-mouse-fix-website repo – we can expect to find that as a sibling folder to the one where this script runs.)
+
+source_language_code = 'en'
+
+language_codes = [
+    'en',
+    'de',
+    "zh-Hant",
+    "zh-HK",
+    "zh-Hans",
+    'ko',
+    'vi',
+    'ar',
+    'ca',
+    'cs',
+    'nl',
+    'fr',
+    'el',
+    'he',
+    'hu',
+    'it',
+    'ja',
+    'pl',
+    "pt-BR",
+    "pt-PT",
+    'ro',
+    'ru',
+    'es',
+    'sv',
+    'tr',
+    'uk',
+    'th',
+    'id',
+    'hi',
+]
 
 # Stuff for reading directly from the project source files. 
 #   We went over to downloading and unzipping all old bundles instead.
@@ -152,28 +279,160 @@ def generate():
 
             # Get release notes
             release_notes = r['body'] # This is markdown
+            
+            # Get path to cached English release notes
+            md_path_src = os.path.join(update_notes_folder_markdown, source_language_code, tag_name + ".md")
 
-            # Write release notes to file. 
+            # Compare to cached release notes
+            cached_release_notes_differ = True
+            try:
+                old_release_notes = Path(md_path_src).read_text()
+                cached_release_notes_differ = old_release_notes == release_notes
+            except Exception as e:
+                print(f"Comparing to cached release notes failed with error: {e}")
+            
+            # Write md release notes to cache
             #   Note: As a plain string I had trouble passing it to pandoc, because I couldn't escape it properly
-            with open(f"{download_folder}/release_notes.md", "w") as f:
+            os.makedirs(os.path.dirname(md_path_src), exist_ok=True)
+            with open(md_path_src, "w") as f:
                 f.write(release_notes)
             
-            # Convert release notes to HTML 
-            release_notes = subprocess.check_output(f"cat {download_folder}/release_notes.md | "
-                                                    "pandoc "
-                                                    "--from markdown --to html "
-                                                    "--standalone "                 # Not sure what this does / if it's necessary
-                                                    f"--include-in-header ./{html_header_includes_tmp_file} "
-                                                    "--metadata title='' "
-                                                    "--metadata document-css=false" # Stops pandoc from adding some of its default inline css, but can't manage to turn that off entirely.
-                                                    ,
-                                                    shell=True).decode('utf-8')
+            # Translate release notes
+            def do_translation():               # Wrapping this in a function because python doesn't have goto
+                user_allowed_all = False
+                for lcode in language_codes:
+                    
+                    # Skip English
+                    if lcode == source_language_code: continue
 
-            # Write release notes
-            release_notes_path = f"{update_notes_folder}/en/{tag_name}.html"
-            os.makedirs(f"{update_notes_folder}/en/", exist_ok=True)
-            with open(release_notes_path, 'w') as f:
-                f.write(release_notes)
+                    # Get path for translated md file
+                    translation_path = os.path.join(update_notes_folder_markdown, lcode, tag_name + ".md")
+
+                    # Skip translation if it's still up-to-date
+                    if not cached_release_notes_differ and os.path.exists(translation_path):
+                        print(f"Skipping translation to {lcode} since cache at '{md_path_src}' is still up-to-date, and a translation already exists at '{translation_path}'.")
+                        continue
+
+                    # Confirm translation with user
+                    do_translate = None
+                    if user_allowed_all:
+                        do_translate = True
+                    else:
+                        while True:
+                            user_input = input(f"Translate release notes for version {tag_name} to language {lcode}? (Might incur API costs) [y/n/a - a to translate to all remaining languages without asking again.]")
+                            if   user_input == 'y': do_translate = True
+                            elif user_input == 'n': do_translate = False
+                            elif user_input == 'a': do_translate = True; user_allowed_all = True
+                            else:                   print(f'Error: Input {user_input} unrecognised.'); continue
+                            break
+                    assert do_translate is not None, "Code is buggy"
+
+                    if do_translate:
+                        
+                        # Log
+                        print(f"Translating to {lcode}")
+
+                        # Lazily create anthropic client (Store it on the function object)
+                        if not hasattr(do_translation, "anthropic_client"):
+                            api_key = args.anthropic_api_key
+                            assert api_key is not None, "Error: No anthropic API key found (Provide it via arg or environment var)."
+                            do_translation.anthropic_client = anthropic.Anthropic(api_key=api_key)
+                            assert do_translation.anthropic_client is not None, f"Error: No anthropic API client couldn't be created. api_key: {api_key}"
+                        anthropic_client = do_translation.anthropic_client
+
+                        # Remove HTML comments, since those don't have to be translated
+                        release_notes_cleaned =  re.sub(r"<!--.*?-->", "", release_notes, count=0, flags=re.DOTALL)
+
+                        # Constant: Max output tokens
+                        #   Discussion: [Mar 2025]
+                        #   - The `3.0.1 Beta 1` notes have a bit over 1000 tokens.
+                        #   - 8192 is currently the max. That seems sorta low? But should be enough for our usecase. 
+                        #   - If we reach the limit, the stop_reason is set to 'max_tokens'
+                        max_output_tokens = 8192
+                        
+                        # Create request for anthropic API
+                        anthropic_args = {
+                            'model':        "claude-3-5-sonnet-20241022",
+                            'system':       textwrap.dedent(
+                                """\
+                                You are an accurate, elegant translator. Requests that you handle follow the pattern: \
+                                `language_code: <some ISO language code>\\nenglish_text: <some english text>`
+                                You will reply with the translation of the english text into the language specified by the language code. You do not reply with any other information. Only the translation.
+                                Context: The text you translate is written by the developer of an indie app. The text is intended to be read by users of said indie app. To be appropriate for this context, the text should not be overly formal. For example, when translating to German, use informal 'du' instead of formal 'Sie'.\
+                                """
+                            ),
+                            'messages': [{
+                                "role": "user",
+                                "content": [
+                                    {
+                                        "type": "text",
+                                        "text": f"language_code: {lcode}\nenglish_text: {release_notes_cleaned}"
+                                    }
+                                ]
+                            }]
+                        }
+
+                        # Get input token count
+                        input_token_count_response = anthropic_client.messages.count_tokens(**anthropic_args)
+                        input_token_count = input_token_count_response.input_tokens
+                        
+                        # Log
+                        print(f"Sending request to anthropic with {input_token_count} input tokens...")
+
+                        # Ping Anthropic
+                        anthropic_args = { 
+                            **anthropic_args, 
+                            'max_tokens':   max_output_tokens,
+                            'temperature':  0,
+                        }
+                        response = anthropic_client.messages.create(**anthropic_args)
+                        
+                        # Validate response
+                        assert response.stop_reason == 'end_turn', f"Anthropic model stopped with unexpected reason '{response.stop_reason}'"
+                        
+                        # Extract translation text
+                        translation = response.content[0].text
+                        
+                        # Log
+                        print(f"Writing translation to {translation_path}...")
+
+                        # Write translation to file
+                        p = Path(translation_path)
+                        p.parent.mkdir(parents=True, exist_ok=True)
+                        p.write_text(translation)
+
+            do_translation()
+
+            # Iterate through all translated md files
+            for lcode in language_codes:
+                
+                # Log
+                print()
+
+                # Convert release notes to HTML 
+                md_path: Path = Path() / update_notes_folder_markdown / lcode / (tag_name + '.md')
+                release_notes_html = subprocess.check_output(
+                    f"cat {str(md_path)} | "
+                    "pandoc "
+                    "--from markdown --to html "
+                    "--standalone "                 # Not sure what this does / if it's necessary
+                    f"--include-in-header ./{html_header_includes_tmp_file} "
+                    "--metadata title='' "
+                    "--metadata document-css=false" # Stops pandoc from adding some of its default inline css, but can't manage to turn that off entirely.
+                    ,
+                    shell=True).decode('utf-8')
+
+                # Get path
+                html_path: Path = Path() / update_notes_folder_html / lcode / (tag_name + '.html')
+                
+                # Compare
+                if html_path.read_text() == release_notes_html:
+                    print(f"HTML release notes at '{html_path}' were already up-to-date")
+                else:
+                    print(f"Updating HTML release notes at '{html_path}'")
+                    html_path.parent.mkdir(parents=True, exist_ok=True)
+                    html_path.write_text(release_notes_html)
+
 
             # Get title
             title = f"{short_version} available!"
@@ -301,7 +560,7 @@ def generate():
                 # Approach 1: <sparkle:releaseNotesLink>
                 #   (Requires githack to fix mime type)
                 release_notes_str = "<sparkle:releaseNotesLink>{release_notes_link_slot}</sparkle:releaseNotesLink>".format(
-                    release_notes_link_slot = apply_githack(f"{base_url}/{release_notes_path}")
+                    release_notes_link_slot = apply_githack(f"{base_url}/{html_path}")
                 )
             else:
                 # Approach 2: <description>
@@ -310,7 +569,7 @@ def generate():
                 <description>
                 {release_notes_slot}
                 </description>\
-                """).format(release_notes_slot = release_notes)
+                """).format(release_notes_slot = release_notes_html)
 
             item_string = textwrap.dedent("""\
             <item>

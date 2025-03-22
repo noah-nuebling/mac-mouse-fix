@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/style.css"/>
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/script.js"></script>            
+</head>
+<body>
+<p>Mac Mouse Fix <strong>3.0.4 Beta 1</strong> ปรับปรุงความเป็นส่วนตัว
+ประสิทธิภาพ และความน่าเชื่อถือ<br />
+มีการนำระบบใบอนุญาตแบบออฟไลน์ใหม่มาใช้ และแก้ไขข้อบกพร่องที่สำคัญหลายประการ</p>
+<h3 id="ความเปนสวนตวและประสทธภาพทดขน">ความเป็นส่วนตัวและประสิทธิภาพที่ดีขึ้น</h3>
+<ul>
+<li>แนะนำระบบตรวจสอบใบอนุญาตแบบออฟไลน์ใหม่ที่ลดการเชื่อมต่ออินเทอร์เน็ตให้น้อยที่สุด</li>
+<li>แอพจะเชื่อมต่ออินเทอร์เน็ตเฉพาะเมื่อจำเป็นเท่านั้น
+เพื่อปกป้องความเป็นส่วนตัวและลดการใช้ทรัพยากร</li>
+<li>แอพทำงานแบบออฟไลน์ทั้งหมดระหว่างการใช้งานปกติเมื่อมีใบอนุญาต</li>
+</ul>
+<details>
+<summary>
+<b>ข้อมูลความเป็นส่วนตัวโดยละเอียด</b>
+</summary>
+<p>เวอร์ชันก่อนหน้านี้ตรวจสอบใบอนุญาตออนไลน์ทุกครั้งที่เปิดใช้งาน
+ซึ่งอาจทำให้บันทึกการเชื่อมต่อถูกเก็บไว้โดยเซิร์ฟเวอร์ของบุคคลที่สาม (GitHub และ Gumroad)
+ระบบใหม่กำจัดการเชื่อมต่อที่ไม่จำเป็น – หลังจากเปิดใช้งานใบอนุญาตครั้งแรก
+จะเชื่อมต่ออินเทอร์เน็ตเฉพาะเมื่อข้อมูลใบอนุญาตในเครื่องเสียหายเท่านั้น <br><br>
+แม้ว่าผมจะไม่เคยบันทึกพฤติกรรมของผู้ใช้เอง
+แต่ระบบเดิมอาจทำให้เซิร์ฟเวอร์ของบุคคลที่สามบันทึกที่อยู่ IP และเวลาที่เชื่อมต่อได้ Gumroad
+ยังสามารถบันทึกรหัสใบอนุญาตของคุณและอาจเชื่อมโยงกับข้อมูลส่วนตัวใดๆ
+ที่พวกเขาบันทึกเกี่ยวกับคุณเมื่อคุณซื้อ Mac Mouse Fix <br><br>
+ผมไม่ได้พิจารณาปัญหาความเป็นส่วนตัวเหล่านี้เมื่อสร้างระบบใบอนุญาตเดิม แต่ตอนนี้ Mac Mouse
+Fix มีความเป็นส่วนตัวและปลอดการใช้อินเทอร์เน็ตมากที่สุดเท่าที่จะเป็นไปได้! <br><br>
+ดูเพิ่มเติมที่ <a href=https://gumroad.com/privacy>นโยบายความเป็นส่วนตัวของ
+Gumroad</a> และ
+<a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>ความคิดเห็นบน
+GitHub</a> ของผม</p>
+</details>
+<h3 id="การแกไขขอบกพรอง">การแก้ไขข้อบกพร่อง</h3>
+<ul>
+<li>แก้ไขข้อบกพร่องที่ macOS บางครั้งค้างเมื่อใช้ ‘คลิกและลาก’ สำหรับ ‘Spaces &amp;
+Mission Control’</li>
+<li>แก้ไขข้อบกพร่องที่ทางลัดแป้นพิมพ์ในการตั้งค่าระบบบางครั้งถูกลบเมื่อใช้การกระทำ ‘คลิก’
+ที่กำหนดไว้ใน Mac Mouse Fix เช่น ‘Mission Control’</li>
+<li>แก้ไข<a
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aopen%20label%3A%22%27Free%20days%20are%20over%27%20bug%22">ข้อบกพร่อง</a>ที่แอพบางครั้งหยุดทำงานและแสดงการแจ้งเตือนว่า
+‘วันทดลองใช้หมดแล้ว’ สำหรับผู้ใช้ที่ซื้อแอพแล้ว
+<ul>
+<li>หากคุณประสบปัญหานี้ ผมขออภัยอย่างจริงใจสำหรับความไม่สะดวก คุณสามารถขอ<a
+href="https://redirect.macmousefix.com/?message=&amp;target=mmf-apply-for-refund">คืนเงินได้ที่นี่</a></li>
+</ul></li>
+</ul>
+<h3 id="การปรบปรงทางเทคนค">การปรับปรุงทางเทคนิค</h3>
+<ul>
+<li>นำระบบ ‘MFDataClass’
+ใหม่มาใช้เพื่อให้การจัดการข้อมูลสะอาดขึ้นและไฟล์การกำหนดค่าอ่านง่ายขึ้น</li>
+<li>สร้างการรองรับสำหรับการเพิ่มแพลตฟอร์มการชำระเงินอื่นนอกเหนือจาก Gumroad
+ดังนั้นในอนาคต อาจมีการชำระเงินแบบท้องถิ่น และแอพอาจขายไปยังประเทศต่างๆ!</li>
+</ul>
+<h3
+id="ยกเลกการรองรบ-อยางไมเปนทางการ-สำหรบ-macos-10.14-mojave">ยกเลิกการรองรับ
+(อย่างไม่เป็นทางการ) สำหรับ macOS 10.14 Mojave</h3>
+<p>Mac Mouse Fix 3 รองรับ macOS 11 Big Sur และรุ่นใหม่กว่าอย่างเป็นทางการ
+อย่างไรก็ตาม สำหรับผู้ใช้ที่ยอมรับข้อบกพร่องและปัญหาด้านกราฟิกบางอย่างได้ Mac Mouse Fix
+3.0.3 และรุ่นก่อนหน้ายังสามารถใช้งานบน macOS 10.14.4 Mojave ได้</p>
+<p>Mac Mouse Fix 3.0.4 ยกเลิกการรองรับนั้นและ<strong>ต้องการ macOS 10.15
+Catalina</strong><br />
+ผมขออภัยสำหรับความไม่สะดวกที่เกิดขึ้น
+การเปลี่ยนแปลงนี้ทำให้ผมสามารถนำระบบใบอนุญาตที่ปรับปรุงใหม่มาใช้โดยใช้คุณสมบัติ Swift
+ที่ทันสมัย ผู้ใช้ Mojave สามารถใช้ Mac Mouse Fix <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3">3.0.3</a>
+หรือ <a
+href="https://redirect.macmousefix.com/?target=mmf2-latest">เวอร์ชันล่าสุดของ
+Mac Mouse Fix 2</a> ต่อไปได้ ผมหวังว่านี่จะเป็นทางออกที่ดีสำหรับทุกคน</p>
+<p><em>แก้ไขด้วยความช่วยเหลือที่ยอดเยี่ยมจาก Claude</em></p>
+<hr />
+<p>ดูการอัปเดตก่อนหน้า <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3"><strong>3.0.3</strong></a>
+ด้วย</p>
+</body>
+</html>

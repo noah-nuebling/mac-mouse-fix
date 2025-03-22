@@ -7,16 +7,16 @@
         {
             "name": "Python: Current file with args",
             "args": [
-                "plot", " 2.1.0", "./stats_internal.py", "plot", "2.1.0"
+                "--anthropic-api-key", "<Don't commit this>"
             ],
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
-            "program": "python3",
+            "program": "${file}",
             "console": "integratedTerminal"
         },
         {
             "name": "Python: Current File",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal"

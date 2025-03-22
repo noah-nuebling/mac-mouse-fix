@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>-</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/style.css"/>
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/script.js"></script>            
+</head>
+<body>
+<p>Mac Mouse Fix <strong>3.0.4 Beta 1</strong> cải thiện quyền riêng tư,
+hiệu quả và độ tin cậy.<br />
+Phiên bản này giới thiệu hệ thống cấp phép ngoại tuyến mới và sửa nhiều
+lỗi quan trọng.</p>
+<h3 id="nâng-cao-quyền-riêng-tư-hiệu-quả">Nâng cao Quyền riêng tư &amp;
+Hiệu quả</h3>
+<ul>
+<li>Giới thiệu hệ thống xác thực giấy phép ngoại tuyến mới giảm thiểu
+kết nối internet.</li>
+<li>Ứng dụng giờ chỉ kết nối internet khi thực sự cần thiết, bảo vệ
+quyền riêng tư và giảm sử dụng tài nguyên.</li>
+<li>Ứng dụng hoạt động hoàn toàn ngoại tuyến trong quá trình sử dụng
+bình thường khi đã được cấp phép.</li>
+</ul>
+<details>
+<summary>
+<b>Thông tin Chi tiết về Quyền riêng tư</b>
+</summary>
+<p>Các phiên bản trước xác thực giấy phép trực tuyến mỗi lần khởi động,
+có thể cho phép nhật ký kết nối được lưu trữ bởi máy chủ bên thứ ba
+(GitHub và Gumroad). Hệ thống mới loại bỏ các kết nối không cần thiết –
+sau khi kích hoạt giấy phép ban đầu, nó chỉ kết nối internet nếu dữ liệu
+giấy phép cục bộ bị hỏng. <br><br> Mặc dù tôi chưa bao giờ ghi lại hành
+vi người dùng, nhưng hệ thống trước đây về mặt lý thuyết cho phép máy
+chủ bên thứ ba ghi lại địa chỉ IP và thời gian kết nối. Gumroad cũng có
+thể ghi lại mã giấy phép của bạn và có thể liên kết nó với bất kỳ thông
+tin cá nhân nào họ ghi lại về bạn khi bạn mua Mac Mouse Fix. <br><br>
+Tôi đã không xem xét những vấn đề quyền riêng tư tinh tế này khi xây
+dựng hệ thống cấp phép ban đầu, nhưng giờ đây, Mac Mouse Fix đã riêng tư
+và không cần internet nhất có thể! <br><br> Xem thêm
+<a href=https://gumroad.com/privacy>chính sách quyền riêng tư của
+Gumroad</a> và
+<a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>bình
+luận trên GitHub</a> của tôi.</p>
+</details>
+<h3 id="sửa-lỗi">Sửa lỗi</h3>
+<ul>
+<li>Đã sửa lỗi đôi khi macOS bị treo khi sử dụng ‘Click and Drag’ cho
+‘Spaces &amp; Mission Control’.</li>
+<li>Đã sửa lỗi đôi khi phím tắt trong System Settings bị xóa khi sử dụng
+thao tác ‘Click’ được định nghĩa trong Mac Mouse Fix như ‘Mission
+Control’.</li>
+<li>Đã sửa <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aopen%20label%3A%22%27Free%20days%20are%20over%27%20bug%22">lỗi</a>
+khiến ứng dụng đôi khi ngừng hoạt động và hiển thị thông báo ‘Free days
+are over’ cho người dùng đã mua ứng dụng.
+<ul>
+<li>Nếu bạn gặp lỗi này, tôi chân thành xin lỗi vì sự bất tiện. Bạn có
+thể yêu cầu <a
+href="https://redirect.macmousefix.com/?message=&amp;target=mmf-apply-for-refund">hoàn
+tiền tại đây</a>.</li>
+</ul></li>
+</ul>
+<h3 id="cải-tiến-kỹ-thuật">Cải tiến Kỹ thuật</h3>
+<ul>
+<li>Triển khai hệ thống ‘MFDataClass’ mới cho phép mô hình hóa dữ liệu
+rõ ràng hơn và tệp cấu hình dễ đọc.</li>
+<li>Xây dựng hỗ trợ thêm nền tảng thanh toán khác ngoài Gumroad. Vì vậy
+trong tương lai, có thể có thanh toán bản địa hóa và ứng dụng có thể
+được bán cho các quốc gia khác nhau!</li>
+</ul>
+<h3 id="ngừng-hỗ-trợ-không-chính-thức-cho-macos-10.14-mojave">Ngừng Hỗ
+trợ (Không chính thức) cho macOS 10.14 Mojave</h3>
+<p>Mac Mouse Fix 3 chính thức hỗ trợ macOS 11 Big Sur trở lên. Tuy
+nhiên, đối với người dùng chấp nhận một số lỗi và vấn đề đồ họa, Mac
+Mouse Fix 3.0.3 và các phiên bản trước vẫn có thể được sử dụng trên
+macOS 10.14.4 Mojave.</p>
+<p>Mac Mouse Fix 3.0.4 ngừng hỗ trợ đó và <strong>giờ yêu cầu macOS
+10.15 Catalina</strong>.<br />
+Tôi xin lỗi vì bất kỳ sự bất tiện nào do điều này gây ra. Thay đổi này
+cho phép tôi triển khai hệ thống cấp phép cải tiến bằng các tính năng
+Swift hiện đại. Người dùng Mojave có thể tiếp tục sử dụng Mac Mouse Fix
+<a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3">3.0.3</a>
+hoặc <a
+href="https://redirect.macmousefix.com/?target=mmf2-latest">phiên bản
+mới nhất của Mac Mouse Fix 2</a>. Tôi hy vọng đó là giải pháp tốt cho
+tất cả mọi người.</p>
+<p><em>Chỉnh sửa với sự hỗ trợ tuyệt vời từ Claude.</em></p>
+<hr />
+<p>Xem thêm phiên bản trước đó <a
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3"><strong>3.0.3</strong></a>.</p>
+</body>
+</html>
