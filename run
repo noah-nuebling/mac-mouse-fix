@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# [Mar 2025] Copied from feature-strings-catalog branch to update-feed branch
+
+# Dispatch to python, passing along all arguments
+python3 mac-mouse-fix-scripts/run.py "$@";

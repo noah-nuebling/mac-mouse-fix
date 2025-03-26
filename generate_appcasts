@@ -10,42 +10,58 @@ import urllib.request
 import urllib.parse
 
 from pathlib import Path
-
 import json
-
 import textwrap
 from pprint import pprint
-
 import subprocess
-
 import re
-
 import anthropic
-
 import argparse
+import hashlib
+from typing import Callable
+import tempfile
+from mfutils import deptracked
+from mfutils import mfdedent
+from mfutils import HumanBytes
+from dataclasses import dataclass
 
-
-# TODO: [Mar 2025]
-#   - [ ] Integrate this with our scripts repo
-#       - [ ] Use it to validate the locales
-#           - We can enforce that this repo should be in a folder like mac-mouse-fix-update-feed. The mac-mouse-fix repo, on the master branch, should be a in a sibling folder – Then we can read the locales from the xcode project.
-#       - [ ] Replace subprocess and os.system calls with our 'safe' (non-shell) custom implementation. (Now that we're passing LLM output, shell=True isn't safe anymore I think.)
-#   - [ ] For each locale, create folder of localized 'releases' md docs which mirror the GitHub releases page (including asset-download-links)
-#   - [ ] Rename from generate_appcasts to something that reflects that it also creates 'release' documents now.
-#   - Anthropic API: 
-#       - Look into Batch Processing:   https://docs.anthropic.com/en/docs/build-with-claude/batch-processing
-#       - Look into Prompt Caching:     https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
-#       - Optimize Prompt / do 'prompt engineerig' (?)
-#       - Optimize Model choice (?)
-#       - Optimize Cost (?)
-#           - I'll only run this once in a while, so it probably doesn't matter.
-#       - See if there are other API params to optimize (?)
-#       - Optimize latency (?)
-#           - Not that important but current latency of like 30 s per request is annoying to work with. [Mar 2025]
+from babel import dates as bdates
+import datetime
 
 """
+
+TODO: [Mar 2025]
+    - [x] Integrate this with our scripts repo
+        - [ ] Use it to validate the locales
+            - We can enforce that this repo should be in a folder like mac-mouse-fix-update-feed. The mac-mouse-fix repo, on the master branch, should be a in a sibling folder – Then we can read the locales from the xcode project.
+        - [ ] Replace subprocess and os.system calls with our 'safe' (non-shell) custom implementation. (Now that we're passing LLM output, shell=True isn't safe anymore I think.)
+    - [x] For each locale, create folder of localized 'releases' md docs which mirror the GitHub releases page (including asset-download-links)
+    - [ ] Rename from generate_appcasts to something that reflects that it also creates 'release' documents now.
+    - Anthropic API: 
+        - Look into Batch Processing:   https://docs.anthropic.com/en/docs/build-with-claude/batch-processing
+        - Look into Prompt Caching:     https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
+        - Optimize Prompt / do 'prompt engineerig' (?)
+        - Optimize Model choice (?)
+        - Optimize Cost (?)
+            - I'll only run this once in a while, so it probably doesn't matter.
+        - See if there are other API params to optimize (?)
+        - Optimize latency (?)
+            - Not that important but current latency of like 30 s per request is annoying to work with. [Mar 2025]
+    
+    Update: (late [Mar 2025])
+        - [ ] Actually create the appcasts.xml file in such a way that it references all the new translated update-notes html files.
+        - [ ] Add locale picker at top of release documents – reuse code for for creating locale picker when compiling human-translated markdown documents
+        - [ ] Cleanup file/folder structure for all the new files we're creating now.
+        - [x] Cleanup comments and stuff maybe
+        - [ ] Implement system to link between release-note documents while preserverving language choice.
+        - [ ] Perhaps implement 'dynamic glossary' idea which we described in a comment somewhere inside generate_appcasts.
+        - [ ] Document/think about problem I just noticed: The refund-email-link we included in several recent release notes is not translatable
+            with the systems we've planned.
+            I think it's the only user-facing string currently hosted in the redirection service.
+            ... Thought: I think like 1 person ever sent us a refund request via that link (?) Perhaps shouldn't spend too much energy on this.
+
 Protocol:  
-  - [Mar 2025] 
+  - (early) [Mar 2025]
         I machine translated 3.0.3 update notes using the following parameters:
             model:          claude-3-5-sonnet-20241022
             temperature:    0
@@ -72,14 +88,14 @@ Protocol:
         -> It seems like this setup produces very good translations.
             (We haven't iterated on the prompt or other parameters, but I think we don't have to since this is good enough.)
 
-        Caveats: 
-            - When we use very specific terms mirroring UI elements in the app, that is unlikely to get accurately translated.
+        Problems: 
+        1. When we use very specific terms mirroring UI elements in the app, that is unlikely to get accurately translated.
             - Solution ideas:
                 1. Manual glossary: 
                     Have human translators of the main app create a glossary somehow
                 2. Disclaimer: 
                     Mark the update notes as 'machine translated' and 'possibly containing some inaccuracies'
-                    -> I think people generally appreciate knowing whether the content they look at is AI generated.
+                    -> Other reason to do this: I think people generally appreciate knowing whether the content they look at is AI generated.
                 3. Flood LLM context: 
                     Feed all the (human generated) translations from the app and the website into the LLM's context window
                     - Problems: 
@@ -96,13 +112,42 @@ Protocol:
                         - When older strings referenced by the glossary_keys get removed, we might need special handling -> Could probably just hardcode the latest commit where a specific string is available.
 
                 -> Conclusion: Start with 2. (Disclaimer) and perhaps add 4. (Dynamic glossary) later to improve quality.
+
+    - (late) [Mar 2025]: 
+            Updated the prompt with a localizer_hint, plus XML markup:
+                System Prompt: 
+                    You are an accurate, elegant translator. Requests that you handle follow the pattern:
+                    `<language_code>[some ISO language code]</language_code><localizer_hint>[some hint for you]</localizer_hint><english_text>[some english text]</english_text>`
+                    You will reply with the translation of the english text into the language specified by the language code. You do not reply with any other information. Only the translation.
+                    The localizer hint will either provide additional context to help you with your translation, or it will be '<None>', in which case you can ignore it.
+                    Please note: The text you translate is written by the developer of an indie app. The text is intended to be read by users of said indie app. To be appropriate for this context, the text should not be overly formal. For example, when translating to German, use informal 'du' instead of formal 'Sie'.
+                    rf"<language_code>{language_code}</language_code><localizer_hint>{localizer_hint}</localizer_hint><english_text>{english_text}</english_text>"
+                User Prompt:
+                    rf"<language_code>{language_code}</language_code><localizer_hint>{localizer_hint}</localizer_hint><english_text>{english_text}</english_text>"
+            
+            Reasoning behind these changes:
+                - The localizer_hint is necessary to accurately translate very short custom strings like 'Assets'
+                - The XML makes things unambiguous if the localizer hint contains `\n` (which was the separator before)
+            
+            Other stuff I did:
+                - I tried twiddling with the prompt a bit but didn't make it better
+                - I used the Anthropic console 'improve prompt' feature. I told it to make the translations more natural. It wrote a very long prompt. But I think the results were less natural if anything.
+                -> I think our prompt already produces close-to-optimal results
+                    
+
+    
 """
+
+# Validate location
+assert os.path.basename(os.getcwd()) == 'mac-mouse-fix-update-feed', f"Running from unexpected folder {os.getcwd()}. Explanation: [Mar 2025] This script currently lives in the update-feed branch of the main mac-mouse-fix repo, but the script should be run from a separate folder next to the main repo folder, so it can access the Mac Mouse Fix source code."
 
 # Parse args
 argparser = argparse.ArgumentParser("")
 argparser.add_argument('--test-mode', action=argparse._StoreTrueAction)
 argparser.add_argument('--anthropic-api-key', default=os.environ.get("ANTHROPIC_API_KEY"))
-args = argparser.parse_args()
+args, unrecognized_args = argparser.parse_known_args()
+if unrecognized_args:
+    print(f"Ignoring unrecognized args: {unrecognized_args}")
 
 # Test mode
 TEST_MODE = False
@@ -123,7 +168,7 @@ else:
 
 if False:
     proxy_url               = "https://noah-nuebling.github.io/mmf-update-notes-proxy/?url="
-    raw_github_url      = "https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/master"
+    raw_github_url          = "https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/master"
 
 # Output paths/folders
 appcast_file_name               = "appcast.xml"                             # Path to the appcast for stable releases
@@ -132,31 +177,41 @@ appcast_pre_file_name           = "appcast-pre.xml"                         # Pa
 appcast_url                     = f"{base_url}/{appcast_file_name}"         # This gets included as a link in appcast.xml. Not sure what it does.
 appcast_pre_url                 = f"{base_url}/{appcast_pre_file_name}"
 
-update_notes_folder_markdown    = "update-notes/md"                          # This is where the md update notes go. The English versions are extracted from GitHub releases, and the translations are automatically generated by this script.
-update_notes_folder_html        = "update-notes/html"                        # This is where the html update notes go. They are generated from the .md update notes downloaded off GitHub. appcast.xml will reference these html update notes via <sparkle:releaseNotesLink>
+update_notes_folder_html        = "update-notes/html"                        # This is where the html update notes go. They are generated from the .md update notes downloaded off GitHub. [Mar 2025] appcast.xml will reference these html update notes via <sparkle:releaseNotesLink>, so these are displayed directly to the user in the Sparkle update window.
 css_file_path                   = "update-notes/style.css"                   # The css file referenced by the html update notes.
-js_file_path                    = "update-notes/script.js"
+js_file_path                    = "update-notes/script.js"                  
 
 # Implementation detail paths/folders
-
+update_notes_folder_markdown    = "update-notes/md"                                 # This is where the raw md update notes go. The English versions are extracted straight from GitHub releases, and the translations are automatically generated by this script. [Mar 2025] These serve as a cache so we can avoid (slowly) re-translating unless necessary.
+deptracker_path                 = "dependency_tracker.json"
 sparkle_project_path            = "Frameworks/Sparkle-1.27.3"                       # Need this to use Sparkles code-signing tool # This is dangerously hardcoded # Might be smart to keep this in sync with the Sparkle version in the app.
-download_folder                 = "generate_appcasts_downloads"                     # This is were we download old app versions to, and then unzip them. We want to delete this on exit.
+download_folder                 = "generate_appcasts_downloads"                     # This is were we download old app versions to, and then unzip them. We want to delete this on exit. (Update: [Mar 2025] also using this to store other temporary data now)
 app_bundle_name                 = "Mac Mouse Fix.app"                               # This is the name of the app bundle after unzipping it
 html_header_includes_tmp_file   = f"{download_folder}/html_header_includes.html"    # Temp file for storing html headers for update notes. I guess we're using downloads_folder as a general 'tmp' folder here.
 
-info_plist_app_subpath          = "Contents/Info.plist"         # Where to look fo the Info.plist file within the unzipped app bundle
+info_plist_app_subpath          = "Contents/Info.plist"                     # Where to look fo the Info.plist file within the unzipped app bundle
 
-prefpane_bundle_name            = "Mouse Fix.prefpane"                     # App has been renamed, this is the old name
+prefpane_bundle_name            = "Mouse Fix.prefpane"                       # App has been renamed, this is the old name
 
 # Dynamic paths/folders
 current_directory = os.getcwd()
 download_folder_absolute = os.path.join(current_directory, download_folder)
 
+# GitHub date parsing
+def ui_string_from_gh_date(locale: str, gh_date: str) -> str:
+    # Doesn't output hour, minute, second. Only year, month, day
+    #   Not moving this into mfutils, since I think it's pretty specific for what we're doing here.
+    gh_api_time_format = "%Y-%m-%dT%H:%M:%SZ"
+    dt = datetime.datetime.strptime(gh_date, gh_api_time_format)
+    dt = dt.replace(tzinfo=datetime.timezone.utc)                   # Set the timezone to +0 (Implied by the 'Z' in the original ISO string from the gh API.)
+    result = bdates.format_date(dt, locale=locale)
+    return result
+
 # Language codes
 #   ISO codes for the languages to translate the update notes into. 
 #   Keep in-sync with 'knownRegions' in project.pbxproject of mac-mouse-fix and mac-mouse-fix-website repos:
 #       https://github.com/noah-nuebling/mac-mouse-fix/blob/b3c2cb85f81e8637d51b533a43bbc99084e85e89/Mouse%20Fix.xcodeproj/project.pbxproj#L7954
-#   (TODO: Perhaps automatically sync the languages with the mac-mouse-fix-website repo – we can expect to find that as a sibling folder to the one where this script runs.)
+#   (TODO: Perhaps automatically sync the languages with the mac-mouse-fix-website repo – I think it's ok to expect to find that as a sibling folder to the one where this script runs, just like we do for the strings-upload script [Mar 2025])
 
 source_language_code = 'en'
 
@@ -205,7 +260,12 @@ if False:
     base_xcconfig_path = "xcconfig/Base.xcconfig"
     files_to_checkout = [info_plist_path, base_xcconfig_path]
 
+#
+# Main function
+#
+
 def generate():
+
     try:
 
         # Check if there are uncommited changes
@@ -240,22 +300,22 @@ def generate():
             #       Contra: This might **slow down** loading of update notes because we need to download 3 different files through githack. 
             #           But based on [Feb 2025] testing, the slow down is not noticable. Specifically, I saw that: 1. BetterDisplay, another Sparkle app also take a bit to load the notes 2. When you load a note in the browser, it's instant, despite css and js being served through githack. -> So I don't feel like githack makes a difference.
             
-            html_header_includes = textwrap.dedent("""\
-            <link rel="stylesheet" href="{css_slot}"/>
-            <script src="{js_slot}"></script>\
+            html_header_includes = mfdedent("""
+                <link rel="stylesheet" href="{css_slot}"/>
+                <script src="{js_slot}"></script>
             """).format(
                 css_slot = apply_githack(f'{base_url}/{css_file_path}'),
                 js_slot = apply_githack(f'{base_url}/{js_file_path}')
             )
         else: 
             # Approach 2: include the css/js files directly
-            html_header_includes = textwrap.dedent("""\
-            <style> 
-            {css_slot} 
-            </style>
-            <script> 
-            {js_slot} 
-            </script>\
+            html_header_includes = mfdedent("""
+                <style> 
+                {css_slot} 
+                </style>
+                <script> 
+                {js_slot} 
+                </script>
             """).format(css_slot = textwrap.indent(Path(css_file_path).read_text(), 4 * ' '), 
                         js_slot = textwrap.indent(Path(js_file_path).read_text(), 4 * ' '))
         
@@ -276,178 +336,196 @@ def generate():
 
             # Get tag name
             tag_name = r['tag_name']
+            
+            # Get link to main GitHub releases page
+            html_url = r['html_url']
 
             # Get release notes
             release_notes = r['body'] # This is markdown
             
-            # Get path to cached English release notes
-            md_path_src = os.path.join(update_notes_folder_markdown, source_language_code, tag_name + ".md")
-
-            # Compare to cached release notes
-            cached_release_notes_differ = True
-            try:
-                old_release_notes = Path(md_path_src).read_text()
-                cached_release_notes_differ = old_release_notes == release_notes
-            except Exception as e:
-                print(f"Comparing to cached release notes failed with error: {e}")
-            
-            # Write md release notes to cache
-            #   Note: As a plain string I had trouble passing it to pandoc, because I couldn't escape it properly
-            os.makedirs(os.path.dirname(md_path_src), exist_ok=True)
-            with open(md_path_src, "w") as f:
-                f.write(release_notes)
-            
-            # Translate release notes
-            def do_translation():               # Wrapping this in a function because python doesn't have goto
-                user_allowed_all = False
-                for lcode in language_codes:
-                    
-                    # Skip English
-                    if lcode == source_language_code: continue
-
-                    # Get path for translated md file
-                    translation_path = os.path.join(update_notes_folder_markdown, lcode, tag_name + ".md")
-
-                    # Skip translation if it's still up-to-date
-                    if not cached_release_notes_differ and os.path.exists(translation_path):
-                        print(f"Skipping translation to {lcode} since cache at '{md_path_src}' is still up-to-date, and a translation already exists at '{translation_path}'.")
-                        continue
-
-                    # Confirm translation with user
-                    do_translate = None
-                    if user_allowed_all:
-                        do_translate = True
-                    else:
-                        while True:
-                            user_input = input(f"Translate release notes for version {tag_name} to language {lcode}? (Might incur API costs) [y/n/a - a to translate to all remaining languages without asking again.]")
-                            if   user_input == 'y': do_translate = True
-                            elif user_input == 'n': do_translate = False
-                            elif user_input == 'a': do_translate = True; user_allowed_all = True
-                            else:                   print(f'Error: Input {user_input} unrecognised.'); continue
-                            break
-                    assert do_translate is not None, "Code is buggy"
-
-                    if do_translate:
-                        
-                        # Log
-                        print(f"Translating to {lcode}")
-
-                        # Lazily create anthropic client (Store it on the function object)
-                        if not hasattr(do_translation, "anthropic_client"):
-                            api_key = args.anthropic_api_key
-                            assert api_key is not None, "Error: No anthropic API key found (Provide it via arg or environment var)."
-                            do_translation.anthropic_client = anthropic.Anthropic(api_key=api_key)
-                            assert do_translation.anthropic_client is not None, f"Error: No anthropic API client couldn't be created. api_key: {api_key}"
-                        anthropic_client = do_translation.anthropic_client
-
-                        # Remove HTML comments, since those don't have to be translated
-                        release_notes_cleaned =  re.sub(r"<!--.*?-->", "", release_notes, count=0, flags=re.DOTALL)
-
-                        # Constant: Max output tokens
-                        #   Discussion: [Mar 2025]
-                        #   - The `3.0.1 Beta 1` notes have a bit over 1000 tokens.
-                        #   - 8192 is currently the max. That seems sorta low? But should be enough for our usecase. 
-                        #   - If we reach the limit, the stop_reason is set to 'max_tokens'
-                        max_output_tokens = 8192
-                        
-                        # Create request for anthropic API
-                        anthropic_args = {
-                            'model':        "claude-3-5-sonnet-20241022",
-                            'system':       textwrap.dedent(
-                                """\
-                                You are an accurate, elegant translator. Requests that you handle follow the pattern: \
-                                `language_code: <some ISO language code>\\nenglish_text: <some english text>`
-                                You will reply with the translation of the english text into the language specified by the language code. You do not reply with any other information. Only the translation.
-                                Context: The text you translate is written by the developer of an indie app. The text is intended to be read by users of said indie app. To be appropriate for this context, the text should not be overly formal. For example, when translating to German, use informal 'du' instead of formal 'Sie'.\
-                                """
-                            ),
-                            'messages': [{
-                                "role": "user",
-                                "content": [
-                                    {
-                                        "type": "text",
-                                        "text": f"language_code: {lcode}\nenglish_text: {release_notes_cleaned}"
-                                    }
-                                ]
-                            }]
-                        }
-
-                        # Get input token count
-                        input_token_count_response = anthropic_client.messages.count_tokens(**anthropic_args)
-                        input_token_count = input_token_count_response.input_tokens
-                        
-                        # Log
-                        print(f"Sending request to anthropic with {input_token_count} input tokens...")
-
-                        # Ping Anthropic
-                        anthropic_args = { 
-                            **anthropic_args, 
-                            'max_tokens':   max_output_tokens,
-                            'temperature':  0,
-                        }
-                        response = anthropic_client.messages.create(**anthropic_args)
-                        
-                        # Validate response
-                        assert response.stop_reason == 'end_turn', f"Anthropic model stopped with unexpected reason '{response.stop_reason}'"
-                        
-                        # Extract translation text
-                        translation = response.content[0].text
-                        
-                        # Log
-                        print(f"Writing translation to {translation_path}...")
-
-                        # Write translation to file
-                        p = Path(translation_path)
-                        p.parent.mkdir(parents=True, exist_ok=True)
-                        p.write_text(translation)
-
-            do_translation()
-
-            # Iterate through all translated md files
-            for lcode in language_codes:
-                
-                # Log
-                print()
-
-                # Convert release notes to HTML 
-                md_path: Path = Path() / update_notes_folder_markdown / lcode / (tag_name + '.md')
-                release_notes_html = subprocess.check_output(
-                    f"cat {str(md_path)} | "
-                    "pandoc "
-                    "--from markdown --to html "
-                    "--standalone "                 # Not sure what this does / if it's necessary
-                    f"--include-in-header ./{html_header_includes_tmp_file} "
-                    "--metadata title='' "
-                    "--metadata document-css=false" # Stops pandoc from adding some of its default inline css, but can't manage to turn that off entirely.
-                    ,
-                    shell=True).decode('utf-8')
-
-                # Get path
-                html_path: Path = Path() / update_notes_folder_html / lcode / (tag_name + '.html')
-                
-                # Compare
-                if html_path.read_text() == release_notes_html:
-                    print(f"HTML release notes at '{html_path}' were already up-to-date")
-                else:
-                    print(f"Updating HTML release notes at '{html_path}'")
-                    html_path.parent.mkdir(parents=True, exist_ok=True)
-                    html_path.write_text(release_notes_html)
-
-
-            # Get title
-            title = f"{short_version} available!"
-
             # Get publishing date
-            publishing_date = r['published_at'];
+            publishing_date = r['published_at']
 
             # Get isPrerelease
             is_prerelease = r['prerelease']
 
+            # Get path to cached English release notes
+            md_path_src = os.path.join(update_notes_folder_markdown, source_language_code, tag_name + ".md")
+
+            # Remove HTML comments from release notes
+            #   Since those don't have to be translated (And would cost a bunch of extra Claude tokens)
+            release_notes = re.sub(r"<!--.*?-->", "", release_notes, count=0, flags=re.DOTALL)
+            
+            # Write the fresh source-language release notes to file
+            p = Path(md_path_src)
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text(release_notes)
+
+            # Update translations for release notes
+            for lcode in language_codes:
+                translation_path = os.path.join(update_notes_folder_markdown, lcode, tag_name + ".md")
+                _ = upget_translation(release_notes, lcode, md_path_src, translation_path)
+
+            # Update HTML release notes
+            for lcode in language_codes:
+                
+                # Get dependency paths
+                md_path: str            = os.path.join(update_notes_folder_markdown, lcode, tag_name + '.md')
+                disclaimer_path: str    = get_custom_string_path(lcode, 'release-notes.disclaimer')
+
+                # Get target path
+                html_path: str          = os.path.join(update_notes_folder_html, lcode, tag_name + '.html')
+
+                # Combine dependency paths
+                source_paths = None
+                if lcode != source_language_code:   source_paths = [disclaimer_path, md_path]
+                else:                               source_paths = [md_path]
+                
+                # Update dependencies (only disclaimer as of [Mar 2025])
+                #   Notes: 
+                #   - [Mar 2025] This will update the file at disclaimer_path, so gotta call it before the @deptracked updater below
+                #   - [Mar 2025] If you change the html_url, the dependency-tracker won't understand that. Delete html docs to force recompute.
+                disclaimer = upget_custom_string(lcode, 'release-notes.disclaimer').format(gh_releases_url=html_url) 
+
+                # Convert to HTML
+                #   Note: [Mar 2025] Combining stuff into the HTML update-notes should be pretty fast - do we even need to use @deptracker? (We built deptracker to avoid pinging the slow LLM API repeatedly, which we don't gotta do here.)
+                @deptracked(deptracker_path, source_paths, html_path)
+                def upget():
+                    
+                    # Combine dependencies
+                    combined_md = Path(md_path).read_text()
+                    if lcode != source_language_code:
+                        combined_md = disclaimer + '\n\n---\n\n' + combined_md
+
+                    # Write combined md to temp file
+                    #   Notes: 
+                    #       - [Mar 2025] Gotta write to file, otherwise we couldn't escape it properly for pandoc IIRC.
+                    #       - [Mar 2025] Not sure we should use tempfile or our download_folder for this temp file
+                    md_path_temp = tempfile.NamedTemporaryFile().name
+                    Path(md_path_temp).write_text(combined_md)
+                    print(f"Wrote combined markdown to '{md_path_temp}'")
+
+                    # Convert combined md release notes to HTML 
+                    release_notes_html = subprocess.check_output(
+                        f"cat {md_path_temp} | "
+                        "pandoc "
+                        "--from markdown --to html "
+                        "--standalone "                 # Not sure what this does / if it's necessary
+                        f"--include-in-header ./{html_header_includes_tmp_file} "
+                        "--metadata title='' "
+                        "--metadata document-css=false" # Stops pandoc from adding some of its default inline css, but can't manage to turn that off entirely.
+                        ,
+                        shell=True
+                    ).decode('utf-8')
+
+                    # Return
+                    return release_notes_html
+                _ = upget()
+
+            # Update Release documents
+            #   (Create md docs mirroring GitHub releases pages (but localized)
+            for lcode in language_codes:
+                
+                # Skip English
+                #   (The English 'release document' is just the actual GitHub Release page)
+                if lcode == source_language_code:
+                    continue
+
+                # Get dependency paths
+                md_path = os.path.join(update_notes_folder_markdown, lcode, tag_name + ".md")
+                kdisclaimer = 'release.disclaimer'
+                kmetadata   = 'release.metadata'
+                kassets     = 'release.assets'
+                source_paths = [
+                    md_path,
+                    get_custom_string_path(lcode, kdisclaimer),
+                    get_custom_string_path(lcode, kmetadata),
+                    get_custom_string_path(lcode, kassets),
+                ]
+
+                # Skip if source file doesn't exist
+                if not os.path.exists(md_path):
+                    print(f"Not creating release document for release notes at '{md_path}' because the file doesn't exist.") # This is to let us skip certain translations during development. Shouldn't happen in production.
+                    continue
+
+                # Get target path
+                release_doc_path = os.path.join("./release-docs", lcode, tag_name + '.md')
+
+                # Update dependencies
+                disclaimer      = upget_custom_string(lcode, kdisclaimer)
+                metadata        = upget_custom_string(lcode, kmetadata)
+                assets_title    = upget_custom_string(lcode, kassets)
+
+                # Apply formatting
+                disclaimer = disclaimer.format(gh_releases_url=html_url)
+                metadata = metadata.format(date=ui_string_from_gh_date(lcode, publishing_date))
+
+                # Combine dependencies into target
+                @deptracked(deptracker_path, source_paths, release_doc_path)
+                def upget() -> str:
+
+                    # Build prefix
+                    prefix = mfdedent(r"""
+                        {language_picker}
+                        <table align=><td>
+                        {disclaimer}
+                        </td></table>
+
+                        <table></table>
+
+                        # {version_name}
+                        *{metadata}*
+
+                        <br>
+                        """).format(language_picker="[langpick go here]", disclaimer=disclaimer, version_name=short_version, metadata=metadata)
+                    
+                    # Get strings describing each asset
+                    #   [Mar 2025] This is not localized, so we could cache it for each lang.
+                    assets_content = ""
+                    for i, asset in enumerate(r['assets']):
+
+                        url  = asset['browser_download_url']
+                        name = asset['name']
+                        size = HumanBytes.format(int(asset['size']), metric=True, precision=1) # This is in metric (1000 B/KB), while on official GH release page it seems to be in binary (1024 B/KB) – but I don't think it'll matter to anyone.
+
+                        if i != 0: 
+                            assets_content += '\n'
+                        assets_content += mfdedent(r"""
+                            <tr>
+                                <td><a href="{download_url}">{asset_name}</a></td>
+                                <td>{asset_size}</td>
+                            </tr>
+                            """).format(download_url=url, asset_name=name, asset_size=size)
+
+                    # Build suffix
+                    suffix = mfdedent(r"""      
+                        ---
+                                      
+                        <table align="start">
+                        <tr>
+                            <td colspan=2>
+                                <b>{assets_title}</b>
+                            </td>
+                        </tr>
+                        {assets_content}
+                        </table>
+                        """).format(assets_title=assets_title, assets_content=assets_content)
+                    
+                    # Get release notes
+                    release_notes = Path(md_path).read_text()
+
+                    # Combine
+                    result = prefix + '\n\n' + release_notes + '\n\n' + suffix
+
+                    # Return
+                    return result
+                upget()
+            
+            # Get title
+            title = f"{short_version} available!"
+
             # Get type
             type = "application/octet-stream" # Not sure what this is or if this is right
-
-            # Get localized release notes ?
-            #   ...
 
             if False:
 
@@ -565,26 +643,26 @@ def generate():
             else:
                 # Approach 2: <description>
                 #   (This bloats the appcast file quite a lot)
-                release_notes_str = textwrap.dedent("""\
-                <description>
-                {release_notes_slot}
-                </description>\
+                release_notes_str = mfdedent("""
+                    <description>
+                    {release_notes_slot}
+                    </description>
                 """).format(release_notes_slot = release_notes_html)
 
-            item_string = textwrap.dedent("""\
-            <item>
-                <title>{title_slot}</title>
-                <pubDate>{publishing_date_slot}</pubDate>
-                <sparkle:minimumSystemVersion>{minimum_macos_version_slot}</sparkle:minimumSystemVersion>
-                {release_notes_str_slot}
-                <enclosure
-                    url=\"{download_link_slot}\"
-                    sparkle:version=\"{bundle_version_slot}\"
-                    sparkle:shortVersionString=\"{short_version_slot}\"
-                    {signature_and_length_slot}
-                    type=\"{type_slot}\"
-                />
-            </item>\
+            item_string = mfdedent("""
+                <item>
+                    <title>{title_slot}</title>
+                    <pubDate>{publishing_date_slot}</pubDate>
+                    <sparkle:minimumSystemVersion>{minimum_macos_version_slot}</sparkle:minimumSystemVersion>
+                    {release_notes_str_slot}
+                    <enclosure
+                        url=\"{download_link_slot}\"
+                        sparkle:version=\"{bundle_version_slot}\"
+                        sparkle:shortVersionString=\"{short_version_slot}\"
+                        {signature_and_length_slot}
+                        type=\"{type_slot}\"
+                    />
+                </item>
             """).format(
                 title_slot                  = title,
                 publishing_date_slot        = publishing_date,
@@ -604,30 +682,30 @@ def generate():
             appcast_pre_items.append(item_string)
 
         # Assemble item strings into final appcast strings
-        appcast_content_string = textwrap.dedent('''\
-        <?xml version="1.0" encoding="utf-8"?>
-        <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
-        <channel>
-            <title>Mac Mouse Fix Update Feed</title>
-            <link>{}</link>
-            <description>Stable releases of Mac Mouse Fix</description>
-            <language>en</language>
-            {}
-        </channel>
-        </rss>\
+        appcast_content_string = mfdedent('''
+            <?xml version="1.0" encoding="utf-8"?>
+            <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+            <channel>
+                <title>Mac Mouse Fix Update Feed</title>
+                <link>{}</link>
+                <description>Stable releases of Mac Mouse Fix</description>
+                <language>en</language>
+                {}
+            </channel>
+            </rss>
         ''').format(appcast_url, '\n'.join(appcast_items))
 
-        appcast_pre_content_string = textwrap.dedent('''\
-        <?xml version="1.0" encoding="utf-8"?>
-        <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
-          <channel>
-            <title>Mac Mouse Fix Update Feed for Prereleases</title>
-            <link>{}</link>
-            <description>Prereleases of Mac Mouse Fix</description>
-            <language>en</language>
-            {}
-          </channel>
-        </rss>\
+        appcast_pre_content_string = mfdedent('''
+            <?xml version="1.0" encoding="utf-8"?>
+            <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+            <channel>
+                <title>Mac Mouse Fix Update Feed for Prereleases</title>
+                <link>{}</link>
+                <description>Prereleases of Mac Mouse Fix</description>
+                <language>en</language>
+                {}
+            </channel>
+            </rss>
         ''').format(appcast_pre_url, '\n'.join(appcast_pre_items))
 
         # Write to file
@@ -644,6 +722,10 @@ def generate():
         print(e)
         clean_up(download_folder)
         exit(1)
+
+#
+# Other helpers
+#
 
 def clean_up(download_folder):
     ret = os.system(f'rm -R {download_folder}')
@@ -673,5 +755,230 @@ def os_system_exc(s):
     ret = os.system(s)
     if ret != 0:
         raise Exception(f"os.system failed with error code {ret}")
+
+# Custom strings
+# Explanation:
+#   [Mar 2025] The main localizable strings this script deals with are the release notes obtained from the GitHub releases API, 
+#   but we need some additional localizable strings - those are defined here.
+# Notes: 
+#   - [Mar 2025] Leading and trailling whitespace seems to be lost after translation with Claude, so we shouldn't include them here.
+#   - [Mar 2025] Use upget_custom_string() to access (translated versions) of these. 
+#   - On 'release-notes.disclaimer' string:
+#       - [Mar 2025] 'not completely accurate' is translated to German as 'nicht vollständig präzise' which is pretty awkward. 'not completely accurate' is translated as 'nicht vollständig korrekt' which is better.
+#           -> Perhaps we should tune the LLM params to sound more natural, or alternatively hardcode some strings?
+
+@dataclass
+class LocalizableString:
+    string: str
+    hint: str|None = None
+
+custom_strings_in_src_language: dict[str, LocalizableString] = {
+    'release-notes.disclaimer': LocalizableString(mfdedent(r""" 
+        **ℹ️ Translated by AI**
+
+        This release note has been translated by the Claude AI. It may not be entirely accurate.\
+        For the original English version, [click here]({gh_releases_url}).
+        """)),
+    'release.disclaimer': LocalizableString(mfdedent(r"""
+        <b>Translated by AI</b><br>
+        This is a translation of a <b><em>GitHub Release</em></b>.<br>
+        The translation was made by the Claude AI and may not be entirely correct.<br>
+        For the original GitHub Release (in English), click re</a>.<a href="{gh_releases_url}">he
+        """)),
+    'release.metadata': LocalizableString(
+        r"**Release Date:** {date}",   
+        hint="Metadata displayed right below the header of a release document for the Mac Mouse Fix app."),
+    'release.assets': LocalizableString(
+        r"Assets",                     
+        hint="This is a heading for a table showing downloadable files/resources for a release of the Mac Mouse Fix app."),
+
+    # Handwritten German versions (unused, just for reference, as of [Mar 2025])
+        '__de.release.disclaimer': LocalizableString(mfdedent(r"""
+            <b>Von KI übersetzt</b><br>
+            Dies ist eine Übersetzung von einem <b><em>GitHub Release</em></b>.<br>
+            Die Übersetzung wurde von der Claude KI erstellt und ist möglicherweise nicht ganz korrekt.<br>
+            Das ursprüngliche GitHub Release (auf englisch) findest du <a href="{gh_releases_url}">hier</a>.
+            """)),
+        '__de.release.metadata': LocalizableString(
+            "**Veröffentlichungsdatum:** {date}"),
+        '__de.release.assets': LocalizableString(
+            "Assets"),
+}
+
+def get_custom_string_path(lcode: str, strkey: str) -> str: 
+    _custom_strings_folder = "./custom-strings/"
+    return os.path.join(_custom_strings_folder, lcode, strkey + '.txt')
+
+def upget_custom_string(lcode: str, strkey: str) -> str:
+
+    # Validate args
+    assert lcode in language_codes,                     f"Unknown language code {lcode}"
+    assert strkey in custom_strings_in_src_language,    f"Unknown string key {strkey}"
+
+    # Derive stuff
+    src_path:           str                 = get_custom_string_path(source_language_code, strkey)
+    translation_path:   str                 = get_custom_string_path(lcode, strkey)
+    fresh_src:          LocalizableString   = custom_strings_in_src_language[strkey]
+
+    # Write the fresh source-language-string to file
+    #   Note: [Mar 2025] Is it inefficient to do this every time here? Maybe we could restrict this to only happen once per strkey, per program-run
+    p = Path(src_path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(fresh_src.string)
+
+    # Do translation
+    #   Note: [Mar 2025] We have one file per strkey – is that inefficient or something?
+    result = upget_translation(fresh_src, lcode, src_path, translation_path)
+
+    # Return
+    return result
+
+#
+# Translation helpers
+#
+
+def _let_claude_translate(language_code: str, english_textttt: str|LocalizableString) -> str:
+
+    # [Mar 2025] Helper for upget_translation()
+
+    # Preprocess args
+    english_text: str = None
+    localizer_hint: str = None
+    if isinstance(english_textttt, LocalizableString):
+        english_text = english_textttt.string
+        localizer_hint = english_textttt.hint
+    else:
+        english_text = english_textttt
+        localizer_hint = None
+    localizer_hint = localizer_hint or '<None>'
+
+    # Validate
+    assert english_text     != '' and english_text is not None, f"English input is empty"
+    assert localizer_hint   != '',                              f"Localizer hint is empty but not None"
+
+    # Lazily create anthropic client (Store it on the function object)
+    if not hasattr(_let_claude_translate, "anthropic_client"):
+        api_key = args.anthropic_api_key
+        assert api_key is not None, "Error: No anthropic API key found (Provide it via arg or environment var)."
+        _let_claude_translate.anthropic_client = anthropic.Anthropic(api_key=api_key)
+        assert _let_claude_translate.anthropic_client is not None, f"Error: No anthropic API client couldn't be created. api_key: {api_key}"
+    anthropic_client = _let_claude_translate.anthropic_client
+
+    # Constant: Max output tokens
+    #   Discussion: [Mar 2025]
+    #   - The `3.0.1 Beta 1` notes have a bit over 1000 tokens.
+    #   - 8192 is currently the max. That seems sorta low? But should be enough for our usecase. 
+    #   - If we reach the limit, the stop_reason is set to 'max_tokens'
+    max_output_tokens = 8192
+    
+    # Create request for anthropic API
+    anthropic_args = {
+        'model': "claude-3-5-sonnet-20241022",
+        'system': mfdedent(r"""
+            You are an accurate, elegant translator. Requests that you handle follow the pattern:
+            `<language_code>[some ISO language code]</language_code><localizer_hint>[some hint for you]</localizer_hint><english_text>[some english text]</english_text>`
+            You will reply with the translation of the english text into the language specified by the language code. You do not reply with any other information. Only the translation.
+            The localizer hint will either provide additional context to help you with your translation, or it will be '<None>', in which case you can ignore it.
+            Please note: The text you translate is written by the developer of an indie app. The text is intended to be read by users of said indie app. To be appropriate for this context, the text should not be overly formal. For example, when translating to German, use informal 'du' instead of formal 'Sie'.
+            """),
+        'messages': [{
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": rf"<language_code>{language_code}</language_code><localizer_hint>{localizer_hint}</localizer_hint><english_text>{english_text}</english_text>"
+                }
+            ]
+        }]
+    }
+
+    # Get input token count
+    input_token_count_response = anthropic_client.messages.count_tokens(**anthropic_args)
+    input_token_count = input_token_count_response.input_tokens
+    
+    # Log
+    print(f"Sending request to anthropic with {input_token_count} input tokens...")
+
+    # Ping Anthropic
+    anthropic_args = { 
+        **anthropic_args, 
+        'max_tokens':   max_output_tokens,
+        'temperature':  0,
+    }
+    response = anthropic_client.messages.create(**anthropic_args)
+    
+    # Validate response
+    assert response.stop_reason == 'end_turn', f"Anthropic model stopped with unexpected reason '{response.stop_reason}'"
+    
+    # Extract translation text
+    translation = response.content[0].text
+
+    # Return
+    return translation
+
+def upget_translation(
+    fresh_src: str|LocalizableString, 
+    translation_language_code: str,
+    src_path: str,
+    translation_path: str,
+) -> str:
+    
+    # Caution:
+    #   [Mar 2025] src_path must be updated to contain fresh_src before this is called, otherwise the dependency tracker will incorrectly reference the outdated content of the source file, while the translation is actually derived from the newer fresh_src.
+    #       -> Perhaps we could make this less error-prone (but also less efficient) by not passing in fresh_src, or by writing fresh_src to src_path inside this function. 
+    #       Related: Explanation or 'upget' function-prefix explained in the deptracked() implementation
+
+    # Skip source language (English)
+    if translation_language_code == source_language_code: 
+        return fresh_src.string if isinstance(fresh_src, LocalizableString) else fresh_src
+
+    # Get translation
+    @deptracked(deptracker_path, [src_path], translation_path)
+    def upget():
+        
+        # Constants
+        user_allowed_translate_all_key = f'user_allowed_translate_all - {src_path}'
+
+        # Check if user allows this translation
+        #   (User might wanna avoid expensive/slow API calls.)
+        user_allowed_translate = None
+        if hasattr(upget_translation, user_allowed_translate_all_key):
+            user_allowed_translate = getattr(upget_translation, user_allowed_translate_all_key)
+        else:
+            while True:
+                user_input = input(f"Translate '{src_path}' to language '{translation_language_code}'? (Might incur API costs) [y/n/ya/na - ya/na to apply choice to all remaining languages without asking again.]")
+                if   user_input == 'y':     user_allowed_translate = True
+                elif user_input == 'n':     user_allowed_translate = False
+                elif user_input == 'ya':    user_allowed_translate = True;                          setattr(upget_translation, user_allowed_translate_all_key, True)
+                elif user_input == 'na':    user_allowed_translate = False;                         setattr(upget_translation, user_allowed_translate_all_key, False)
+                else:                       print(f'Error: Input {user_input} unrecognised.');      continue
+                break
+        assert user_allowed_translate is not None, "Code is buggy"
+        
+        if not user_allowed_translate:
+            return None # Signal to deptracker decorator that we didn't derive the string (by returning None)
+        
+        # Log
+        print(f"Translating to '{translation_language_code}'")
+
+        # Ask LLM to translate
+        translation = _let_claude_translate(translation_language_code, fresh_src)
+
+        # Validate
+        assert translation is not None, f"Translation for '{translation_path}' from LLM is unexpectedly None"
+
+        # Return
+        return translation
+    translation = upget()
+
+    # Fall back to placeholder
+    if translation is None: translation = "<No translation>"
+
+    # Return
+    return translation
+
+#
+# Run
+#
 
 generate()

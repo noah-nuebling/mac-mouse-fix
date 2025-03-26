@@ -7,7 +7,7 @@
         {
             "name": "Python: Current file with args",
             "args": [
-                "--anthropic-api-key", "<Don't commit this>"
+                "--anthropic-api-keyyyy", "<Don't commit this>"
             ],
             "type": "debugpy",
             "request": "launch",
