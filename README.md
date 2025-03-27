@@ -2,14 +2,14 @@ This repo makes it easier to publish updates to Mac Mouse Fix. I documented it h
 
 # Overview
 
-This repo contains the script `generate_appcasts` which can automatically create appcast.xml files to be read by the Sparkle updater framework based on GitHub releases.
+This repo contains the script `generate_releases` which can automatically create appcast.xml files to be read by the Sparkle updater framework based on GitHub releases.
 That way you can have your in-app updates hosted through GitHub releases. 
 This is super handy, because that way you can have all your downloads and update notes in one, easy to maintain place, making it very easy to publish a new update.
 
 Another benefit of using GitHub releases for everything, is that you'll get download counters for free without resorting to Google Analytics or another tracker.\
 This repo contains the script `stats` to easily display and record download counts for your GitHub releases.
 
-`generate_appcasts` creates 2 appcast files. `appcast.xml` which contains only stable releases and `appcast-pre.xml` which contains prereleases as well. This allows you to let users opt-in to beta testing your app.
+`generate_releases` creates 2 appcast files. `appcast.xml` which contains only stable releases and `appcast-pre.xml` which contains prereleases as well. This allows you to let users opt-in to beta testing your app.
 
 It also creates update notes under `update-notes/html/` – these are included int the appcast files by reference.
 
@@ -36,11 +36,11 @@ You can use this repo with the following terminal commands:
 
 - `./update` \
   To
-  - run `./generate_appcasts`
+  - run `./generate_releases`
   - run `./stats record`
   - Commit and push everything
 
-- `./generate_appcasts` \
+- `./generate_releases` \
   to generate the `appcast.xml` and `appcast-pre.xml` files \
     (`appcast.xml` will only contain stable releases, while `appcast-pre.xml` will also contain prereleases)
 
@@ -55,7 +55,7 @@ The workflow for publishing a new update is:
 Simply run the command at the top of test.md
 
 ### To test `appcast.xml` [Feb 2025]
-- Run `./generate_appcasts --test-mode` which will set the 'base_url' to `http://127.0.0.1:8000` and then generate new appcast files.
+- Run `./generate_releases --test-mode` which will set the 'base_url' to `http://127.0.0.1:8000` and then generate new appcast files.
 - Host the folder containing this repo on a local server at `http://127.0.0.1:8000` by running `python3 -m http.server 8000`
 - Inside the MMF source code, set `kMFUpdateFeedRepoAddressRaw` to `http://127.0.0.1:8000`, also update the `SUFeedURL` value in Info.plist accordingly.
 - If necessary, lower the version string and build number of MMF such that it will display some older release as an update.
@@ -66,7 +66,7 @@ Background: `file://` and `localhost:` URLs are forbidden by Sparkle so we need 
 # Other
 
 Optimization:
-  Every time you run `generate_appcasts`, it will generate the appcasts from scratch. For that it needs to download *all* GitHub releases which can be very slow. It needs to download the releases primarily to sign them for Sparkle. It will also unzip the downloaded releases and then access their Info.plist files to read the bundle version and the minimum compatible macOS version.\
+  Every time you run `generate_releases`, it will generate the appcasts from scratch. For that it needs to download *all* GitHub releases which can be very slow. It needs to download the releases primarily to sign them for Sparkle. It will also unzip the downloaded releases and then access their Info.plist files to read the bundle version and the minimum compatible macOS version.\
   All of this is very inefficient, but it's fast enough for Mac Mouse Fix for now. In the future I might add a mode where only the latest release is processed to speed things up.
 
 Download link for latest release:
@@ -89,7 +89,7 @@ The generated appcast files are queried by Mac Mouse Fix to find new upates.
 (I don't think anybody actually wants to do this, it's just some sloppy python scripts.)
 
 To adopt this stuff for your own app you'll want to do the following things: (Untested)
-- Adjust `generate_appcasts`, by 
+- Adjust `generate_releases`, by 
   - Replacing the paths and URLs at the top, to reflect your repo URL, app bundle name, ...
   - Adjust the code further to fit your needs. 
     - The script is written for a simple app bundle that's shipped in a zip file, if you ship in a dmg or something you'll have to adjust it

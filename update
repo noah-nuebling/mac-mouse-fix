@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Check if there are uncommited changes
-# generate_appcasts uses git stash several times, so they'd be lost
+# generate_releases uses git stash several times, so they'd be lost
 uncommitted_changes=$(git diff-index HEAD --);
 if [ -n "$uncommitted_changes" ] # If uncommited_changes is not empty
 then
@@ -15,9 +15,9 @@ git pull;
 
 # Update appcast files
 echo 'Generating appcasts...'
-python3 ./generate_appcasts;
+python3 ./generate_releases;
 if [ $? -ne 0 ]; then
-    echo "generate_appcasts Python script failed. Exiting."
+    echo "generate_releases Python script failed. Exiting."
     exit 1
 fi
 echo 'Pushing new appcasts...'

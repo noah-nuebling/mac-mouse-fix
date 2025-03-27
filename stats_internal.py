@@ -399,7 +399,7 @@ def make_format(current, other, periodt):
     return format_coord
 
 def get_app_assets(r):
-    # NOTE: This has a copy in generate_appcasts. Keep them in sync.
+    # NOTE: This has a copy in generate_releases. Keep them in sync.
     
     app_assets = [asset for asset in r['assets'] if asset['name'] == 'MacMouseFixApp.zip' or asset['name'] == 'MacMouseFix.zip']
     assert len(app_assets) <= 1, f"Found {len(app_assets)} app assets. Here are the asset names: { list(map(lambda a: a['name'], r['assets'])) }"

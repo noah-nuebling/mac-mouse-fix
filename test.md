@@ -7,7 +7,7 @@ rm test.html; cat test.md | pandoc --from markdown --to html --standalone --outp
 On the YAML at the start:
 
   - Included css and js
-  - Keep in sync with generate_appcasts script. 
+  - Keep in sync with generate_releases script. 
   - More on pandoc YAML: https://pandoc.org/MANUAL.html#extension-yaml_metadata_block
 -->
 
