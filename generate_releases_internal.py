@@ -1069,16 +1069,21 @@ def upget_translation(
 
         # Validate
         assert translation is not None, f"Translation for '{translation_path}' from LLM is unexpectedly None"
-        
-        if do_localize_urls:
-            # Log
-            print(f"Localizing URLs inside LLM's translation...")
-            # Localize URLs
-            translation = mflocales.localize_urls(source_locale, translation_locale, translation) # If url localization logic changes, the dependency tracker won't know -> Delete result files to force recomputation
 
         # Return
         return translation
     translation = upget()
+
+    # Localize urls
+    #   Notes: 
+    #       - [Mar 2025] doing this outside the deptracker, otherwise, we'd have to retranslate everything with the LLM, when we change the url-localization-logic
+    #       - [Mar 2025] After changing url-localization-logic changes, we still might have to delete some target files to force re-generation of some files (not sure) (I think it's the HTML files since those are also deptracked atm)
+    #   
+    if translation is not None and do_localize_urls:
+        # Log
+        print(f"Localizing URLs inside LLM's translation...")
+        # Localize URLs
+        translation = mflocales.localize_urls(source_locale, translation_locale, translation)
 
     # Fall back to placeholder
     if translation is None: translation = "<No translation>"
