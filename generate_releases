@@ -13,16 +13,14 @@ from pathlib import Path
 import json
 import textwrap
 from pprint import pprint
-import subprocess
 import re
 import anthropic
 import argparse
 import hashlib
 from typing import Callable
 import tempfile
-from mfutils import deptracked
-from mfutils import mfdedent
-from mfutils import HumanBytes
+import mfutils
+from mfutils import deptracked, mfdedent, HumanBytes
 import mflocales
 from dataclasses import dataclass
 
@@ -38,9 +36,9 @@ import datetime
 
 TODO: [Mar 2025]
     - [x] Integrate this with our scripts repo
-        - [ ] Use it to validate the locales
+        - [x] Use it to validate the locales
             - We can enforce that this repo should be in a folder like mac-mouse-fix-update-feed. The mac-mouse-fix repo, on the master branch, should be a in a sibling folder – Then we can read the locales from the xcode project.
-        - [ ] Replace subprocess and os.system calls with our 'safe' (non-shell) custom implementation. (Now that we're passing LLM output, shell=True isn't safe anymore I think.)
+        - [x] Replace subprocess and os.system calls with our 'safe' (non-shell) custom implementation. (Now that we're passing LLM output, shell=True isn't safe anymore I think.)
     - [x] For each locale, create folder of localized 'releases' md docs which mirror the GitHub releases page (including asset-download-links)
     - [x] Rename from generate_appcasts to something that reflects that it also creates 'release' documents now.
     - Anthropic API: 
@@ -55,11 +53,11 @@ TODO: [Mar 2025]
             - Not that important but current latency of like 30 s per request is annoying to work with. [Mar 2025]
     
     Update: (late [Mar 2025])
-        - [ ] Actually create the appcasts.xml file in such a way that it references all the new translated update-notes html files.
-        - [ ] Add locale picker at top of release documents – reuse code for for creating locale picker when compiling human-translated markdown documents
+        - [x] Add locale picker at top of release documents – reuse code for for creating locale picker when compiling human-translated markdown documents
         - [x] Cleanup file/folder structure for all the new files we're creating now.
         - [x] Cleanup comments and stuff maybe
-        - [ ] Implement system to link between release-note documents while preserverving language choice.
+        - [x] Implement system to link between release-note documents while preserverving language choice.
+        - [ ] Actually create the appcasts.xml file in such a way that it references all the new translated update-notes html files.
         - [ ] Perhaps implement 'dynamic glossary' idea which we described in a comment somewhere inside generate_releases.
         - [ ] Document/think about problem I just noticed: The refund-email-link we included in several recent release notes is not translatable
             with the systems we've planned.
@@ -257,6 +255,23 @@ language_codes = [
     'hi',
 ]
 
+# Validate language codes
+#   Discussion: [Mar 2025] 
+#       The MMF project currently has 3 repos with localizable strings: mac-mouse-fix, mac-mouse-fix-website, and mac-mouse-fix/update-feed (Which lives inside a branch of mac-mouse-fix but I think of as 'functionally its own repo')
+#       For things to work smoothly, all these 3 should have the same locales. We have some asserts to help us keep them in-sync:
+#           - For mac-mouse-fix and mac-mouse-fix-website (Which are human-translated), we check that their locales are synced in the script that exports and uploads the strings for human translators.
+#           - For mac-mouse-fix/update-feed (Which is AI-translated), we check that the locales match the main mac-mouse-fix repo  – right here.
+#       Meta: 
+#           [Mar 2025] Maybe this explanation should be moved to some central place since it concerns all the localizable repos in the MMF project
+print(f"Validating locales against main repo...")
+def _validate_language_codes():
+    p = os.path.join('../mac-mouse-fix', mflocales.path_to_xcodeproj['mac-mouse-fix'])
+    assert os.path.exists(p), f"Wanted to validate locales, but main repo Xcode project not found at expected location: {p}"
+    loc_dev, loc_trans = mflocales.find_xcode_project_locales(p)
+    assert loc_dev == source_language_code,         f"Source language code doesn't match main repo: '{loc_dev}' vs '{source_language_code}'"
+    assert set(loc_trans) == set(language_codes)-{source_language_code},   f"Translation language codes don't match main repo. Symmetric difference: {set(loc_trans).symmetric_difference(set(language_codes))}"
+_validate_language_codes()
+
 # Stuff for reading directly from the project source files. 
 #   We went over to downloading and unzipping all old bundles instead.
 #   Note: 
@@ -283,7 +298,7 @@ def generate():
         if TEST_MODE or True:
             pass
         else: 
-            uncommitted_changes = subprocess.check_output('git diff-index HEAD --', shell=True).decode('utf-8')
+            uncommitted_changes = mfutils.runclt('git diff-index HEAD --')
             if (len(uncommitted_changes) != 0):
                 raise Exception('There are uncommited changes. Please commit or stash them before running this script.')
 
@@ -374,7 +389,7 @@ def generate():
             # Update translations for release notes
             for lcode in language_codes:
                 translation_path = os.path.join(update_notes_folder_markdown, lcode, tag_name + ".md")
-                _ = upget_translation(release_notes, lcode, md_path_src, translation_path)
+                _ = upget_translation(release_notes, lcode, md_path_src, translation_path, do_localize_urls=True)
 
             # Update HTML release notes
             for lcode in language_codes:
@@ -402,8 +417,11 @@ def generate():
                 @deptracked(deptracker_path, source_paths, html_path)
                 def upget():
                     
+                    # Load translated release notes
+                    release_notes = Path(md_path).read_text()
+
                     # Combine dependencies
-                    combined_md = Path(md_path).read_text()
+                    combined_md = release_notes
                     if lcode != source_language_code:
                         combined_md = disclaimer + '\n\n---\n\n' + combined_md
 
@@ -416,7 +434,7 @@ def generate():
                     print(f"Wrote combined markdown to '{md_path_temp}'")
 
                     # Convert combined md release notes to HTML 
-                    release_notes_html = subprocess.check_output(
+                    release_notes_html = mfutils.runclt(
                         f"cat {md_path_temp} | "
                         "pandoc "
                         "--from markdown --to html "
@@ -424,9 +442,7 @@ def generate():
                         f"--include-in-header ./{html_header_includes_tmp_file} "
                         "--metadata title='' "
                         "--metadata document-css=false" # Stops pandoc from adding some of its default inline css, but can't manage to turn that off entirely.
-                        ,
-                        shell=True
-                    ).decode('utf-8')
+                    )
 
                     # Return
                     return release_notes_html
@@ -475,30 +491,49 @@ def generate():
                 def upget() -> str:
                     
                     # Build language picker
-                    #   Note: [Mar 2025]
-                    #       buildmd.py creates same-looking langauge picker. 
-                    #           (buildmd.py builds human-translated md files instead of AI-translated ones) 
-                    #       We could reuse the code, but it feels simple enough that it's not worth it
+                    #   Notes: 
+                    #       - [Mar 2025] buildmd.py creates same-looking langauge picker. 
+                    #           (buildmd.py builds human-translated md files, while this builds AI-translated ones)
+                    #           We could reuse the code, but it feels simple enough, and would require enough refactoring, that it's not worth it
+                    #
+                    #       - [Mar 2025] On "Help translate Mac Mouse Fix to different languages!" link
+                    #           - This is hardcoded to English here, but translated in the buildmd.py script
+                    #               - The main purpose of the link inside buildmd is to inform humans how to contribute translations. For this purpose, they should speak English.
+                    #               - We also planned to keep the localization guide (which it links to) in English
+                    #                   (Update: Although we do have a redirection-service link for it which we should probably use, and which would add flexibility around the locale)
+                    #               -> So not sure it makes sense to translate this -> Leaving it hardcoded to English for now.
+                    #           - For these AI-translated documents, such a link might not be necessary at all, the only purpose of the link I could think of would be:
+                    #               1. Report quality issues with translations
+                    #               2. (?) Link to a central place where you can learn more about Translations of MMF
+                    #               3. (?) Keep consistency with language picker in human-translated md documents.
+                    #               -> Perhaps for the purpose of gathering 'quality-issue-reports' from non-English-speakers, it would make sense to translate the link, and its destination?
 
-                    lang_picker_content = ""
+                    locale_picker_content = ""
                     for i, lcode2 in enumerate(language_codes):
-                        if i != 0: 
-                            lang_picker_content += '\n'
-                        langname = mflocales.locale_to_language_name(lcode2, lcode, include_flag=True)
-                        if lcode == lcode2:
-                            lang_picker_content += f"**{langname}**"
-                        else:
-                            lang_picker_content += f"[{langname}](https://google.com/)"
-                        lang_picker_content += '\\'
+                        
+                        is_last = i == len(language_codes)-1
+                        langname = mflocales.locale_to_language_name(lcode2, lcode2, include_flag=True)
+                        
+                        link = None
+                        if lcode2 == source_language_code:      
+                                                                link = html_url             # English links to the actual GitHub Releases page
+                                                                langname += " (GitHub)";    # [Mar 2025] Don't think we have to translate this. Especially since all language names in the picker are in that language, and this is next to the English one.
+                        else:                                   link = mflocales.mmf_release_url(lcode2, tag_name)
 
-                    lang_picker = mfdedent("""
+                        if lcode == lcode2:     locale_picker_content += f"**{langname}**"
+                        else:                   locale_picker_content += f"[{langname}]({link})"
+                        if not is_last:         locale_picker_content += '\\\n'
+
+                    locale_picker = mfdedent(r"""
                         <details>
                         <summary>{current_locale_name}</summary>
-                        {content}
+
+                        {content}\
+                        [Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
                         </details>
                         """).format(
                             current_locale_name=mflocales.locale_to_language_name(lcode, lcode, include_flag=True),
-                            content=lang_picker_content
+                            content=locale_picker_content,
                         )
 
                     # Build prefix
@@ -514,7 +549,7 @@ def generate():
                         *{metadata}*
 
                         <br>
-                        """).format(language_picker=lang_picker, disclaimer=disclaimer, version_name=short_version, metadata=metadata)
+                        """).format(language_picker=locale_picker, disclaimer=disclaimer, version_name=short_version, metadata=metadata)
                     
                     # Get strings describing each asset
                     #   [Mar 2025] This is not localized, so we could cache it for each lang.
@@ -562,8 +597,7 @@ def generate():
             title = f"{short_version} available!"
 
             # Get type
-            type = "application/octet-stream" # Not sure what this is or if this is right
-
+            type = "application/octet-stream" # Not sure what this is or if this is right)
             if False:
 
                 # Tried to checkout each commit and then read bundle version and minimum compatible macOS version from the local Xcode source files. 
@@ -571,7 +605,7 @@ def generate():
 
                 # Get commit number
                 # commit = os_system_exc(f"git rev-list -n 1 {tag_name}") # Can't capture the output of this for some reason
-                commit_number = subprocess.check_output(f"git rev-list -n 1 {tag_name}", shell=True).decode('utf-8')
+                commit_number = mfutils.runclt(f"git rev-list -n 1 {tag_name}")
                 commit_number = commit_number[0:-1] # There's a linebreak at the end
 
                 # Check out commit
@@ -580,14 +614,14 @@ def generate():
                 files_string = ' '.join(files_to_checkout)
                 bash_string = f"git checkout {commit_number} {files_string}"
                 try:
-                    subprocess.check_output(bash_string)
+                    mfutils.runclt(bash_string)
                 except Exception as e:
                     print(f"Exception while checking out commit {commit_number} ({short_version}): {e}. Skipping this release.")
                     continue
 
                 # Get version
                 #   Get from Info.plist file
-                bundle_version = subprocess.check_output(f"/usr/libexec/PlistBuddy {info_plist_path} -c 'Print CFBundleVersion'", shell=True).decode('utf-8')
+                bundle_version = mfutils.runclt(f"/usr/libexec/PlistBuddy {info_plist_path} -c 'Print CFBundleVersion'")
 
                 # Get minimum macOS version
                 #   The environment variable buried deep within project.pbxproj. No practical way to get at this
@@ -595,7 +629,7 @@ def generate():
                 #   See how alt-tab-macos did it here: https://github.com/lwouis/alt-tab-macos/blob/master/config/base.xcconfig
                 minimum_macos_version = ""
                 try:
-                    minimum_macos_version = subprocess.check_output(f"awk -F ' = ' '/MACOSX_DEPLOYMENT_TARGET/ {{ print $2; }}' < {base_xcconfig_path}", shell=True).decode('utf-8')
+                    minimum_macos_version = mfutils.runclt(f"awk -F ' = ' '/MACOSX_DEPLOYMENT_TARGET/ {{ print $2; }}' < {base_xcconfig_path}")
                     minimum_macos_version = minimum_macos_version[0:-1] # Remove trailing \n character
                 except:
                     minimum_macos_version = 10.11
@@ -617,11 +651,11 @@ def generate():
             urllib.request.urlretrieve(download_link, download_zip_path)
 
             # Get edSignature
-            signature_and_length = subprocess.check_output(f"./{sparkle_project_path}/bin/sign_update {download_zip_path}", shell=True).decode('utf-8')
+            signature_and_length = mfutils.runclt(f"./{sparkle_project_path}/bin/sign_update {download_zip_path}")
             signature_and_length = signature_and_length[0:-1]
 
             # Unzip update
-            os_system_exc(f'ditto -x -k --sequesterRsrc --rsrc "{download_zip_path}" "{download_folder}"') # This works, while subprocess.check_output() doesn't for some reason
+            os_system_exc(f'ditto -x -k --sequesterRsrc --rsrc "{download_zip_path}" "{download_folder}"') # This works, while subprocess.check_output() doesn't for some reason || Update: [Mar 2025] Using runclt() now, instead of subprocess.check_output(). Haven't tested that here. 
 
             # Find app bundle
             #   Maybe we could just name the unzipped folder instead of guessing here
@@ -642,8 +676,8 @@ def generate():
             info_plist_path = f'{app_path}/{info_plist_app_subpath}'
 
             # Read stuff from Info.plist
-            bundle_version = subprocess.check_output(f"/usr/libexec/PlistBuddy '{info_plist_path}' -c 'Print CFBundleVersion'", shell=True).decode('utf-8')
-            minimum_macos_version = subprocess.check_output(f"/usr/libexec/PlistBuddy '{info_plist_path}' -c 'Print LSMinimumSystemVersion'", shell=True).decode('utf-8')
+            bundle_version = mfutils.runclt(f"/usr/libexec/PlistBuddy '{info_plist_path}' -c 'Print CFBundleVersion'")
+            minimum_macos_version = mfutils.runclt(f"/usr/libexec/PlistBuddy '{info_plist_path}' -c 'Print LSMinimumSystemVersion'")
             bundle_version = bundle_version[0:-1]
             minimum_macos_version = minimum_macos_version[0:-1]
 
@@ -864,13 +898,13 @@ def upget_custom_string(lcode: str, strkey: str) -> str:
 
     # Do translation
     #   Note: [Mar 2025] We have one file per strkey – is that inefficient or something?
-    result = upget_translation(fresh_src, lcode, src_path, translation_path)
+    result = upget_translation(fresh_src, lcode, src_path, translation_path, do_localize_urls=False)
 
     # Return
     return result
 
 #
-# Translation helpers
+# AI Translation
 #
 
 def _let_claude_translate(language_code: str, english_textttt: str|LocalizableString) -> str:
@@ -957,6 +991,7 @@ def upget_translation(
     translation_language_code: str,
     src_path: str,
     translation_path: str,
+    do_localize_urls: bool
 ) -> str:
     
     # Caution:
@@ -995,13 +1030,19 @@ def upget_translation(
             return None # Signal to deptracker decorator that we didn't derive the string (by returning None)
         
         # Log
-        print(f"Translating to '{translation_language_code}'")
+        print(f"Translating to '{translation_language_code}'...")
 
         # Ask LLM to translate
         translation = _let_claude_translate(translation_language_code, fresh_src)
 
         # Validate
         assert translation is not None, f"Translation for '{translation_path}' from LLM is unexpectedly None"
+        
+        if do_localize_urls:
+            # Log
+            print(f"Localizing URLs inside LLM's translation...")
+            # Localize URLs
+            translation = mflocales.localize_urls(source_language_code, translation_language_code, translation) # If url localization logic changes, the dependency tracker won't know -> Delete result files to force recomputation
 
         # Return
         return translation
