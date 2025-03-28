@@ -15,7 +15,7 @@ git pull;
 
 # Update release files
 echo 'Generating release files...'
-python3 ./generate_releases;
+./generate_releases;
 if [ $? -ne 0 ]; then
     echo "generate_releases Python script failed. Exiting."
     exit 1
