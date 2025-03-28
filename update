@@ -13,16 +13,16 @@ fi
 echo 'Pulling...'
 git pull;
 
-# Update appcast files
-echo 'Generating appcasts...'
+# Update release files
+echo 'Generating release files...'
 python3 ./generate_releases;
 if [ $? -ne 0 ]; then
     echo "generate_releases Python script failed. Exiting."
     exit 1
 fi
-echo 'Pushing new appcasts...'
+echo 'Pushing new release files...'
 git add .;
-git commit -m "Update script: Updated appcasts";
+git commit -m "Update script: Updated release files";
 git push;
 
 # Record stats
