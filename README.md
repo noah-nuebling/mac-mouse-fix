@@ -58,6 +58,7 @@ Simply run the command at the top of test.md
 - Run `./generate_releases --test-mode` which will set the 'base_url' to `http://127.0.0.1:8000` and then generate new appcast files.
 - Host the folder containing this repo on a local server at `http://127.0.0.1:8000` by running `python3 -m http.server 8000`
 - Inside the MMF source code, set `kMFUpdateFeedRepoAddressRaw` to `http://127.0.0.1:8000`, also update the `SUFeedURL` value in Info.plist accordingly.
+- Turn off security by going to mainApp's Info.plist and setting NSAppTransportSecurity.NSAllowsArbitraryLoads = YES
 - If necessary, lower the version string and build number of MMF such that it will display some older release as an update.
 - Build and run the app. It should now retrieve and display updates straight from the local appcast files.
     

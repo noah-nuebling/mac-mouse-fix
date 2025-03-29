@@ -200,7 +200,7 @@ folder_github_releases          = f"{folder_docs}/github-releases"          # Th
 folder_update_notes_html        = f"{folder_docs}/update-notes-html"        # This is where the html update notes go. They are generated from the .md update notes downloaded off GitHub. [Mar 2025] appcast.xml will reference these html update notes via <sparkle:releaseNotesLink>, so these are displayed directly to the user in the Sparkle update window.
 
 # Assets
-folder_html_assets              = "html_assets"
+folder_html_assets              = "html-assets"
 path_css_file                   = f"{folder_html_assets}/style.css"         # The css file referenced by the html update notes.
 path_js_file                    = f"{folder_html_assets}/script.js"                  
 
@@ -454,13 +454,14 @@ def generate():
                         "pandoc"
                        f" {md_path_temp}"
                         " --from markdown --to html"
-                        " --standalone"                 # Not sure what this does / if it's necessary
+                        " --standalone"                     # Not sure what this does / if it's necessary
                        f" --include-in-header ./{path_tmp_file_html_header_includes}"
+                       f" --variable lang={locale}"         # Sets the `lang` and `xml:lang` attributes on the outermost <html> element || I observed [Mar 2025] that this fixes comma (，) and period (。) alignment when Safari/Sparkle renders the Chinese docs
                         " --metadata title=''"
-                        " --metadata document-css=false" # Stops pandoc from adding some of its default inline css, but can't manage to turn that off entirely.
+                        " --metadata document-css=false"    # Stops pandoc from adding some of its default inline css, but can't manage to turn that off entirely.
                         ,
                         fail_on_stderr=False
-                    ) 
+                    )
 
                     # Write result to file
                     p = Path(html_path)
@@ -771,6 +772,7 @@ def generate():
                     #       Sparkle docs say `xml:lang` expects 2-letter *country code* (Src: https://sparkle-project.org/documentation/publishing/). 
                     #       But we're supplying locale codes from Xcode, which consist of a *language code* plus optional *region* or *script* code (E.g. zh-Hans, zh-HK) (Src: https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html)
                     #       Not sure how Sparkle will handle this, I think they'll handle it fine and just wrote their docs incorrectly (Nobody gets the terminology around these codes right - Not even me in this script.)
+                    #           Update: [Mar 29 2025] Tested – Works perfect in Sparkle.
                     appcast_release_notes_element = mfdedent("""
                         <sparkle:releaseNotesLink xml:lang=\"{lang_slot}\">
                         {release_notes_link_slot}
