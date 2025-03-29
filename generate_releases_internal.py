@@ -25,8 +25,6 @@ from dataclasses import dataclass
 from babel import dates as bdates
 import datetime
 
-
-
 """
 [Mar 2025] Downloads MMF Releases from GitHub, and based on those:
     1. Generates 2 appcast rss feed files for Sparkle
