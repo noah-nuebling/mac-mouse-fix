@@ -123,7 +123,6 @@ Protocol:
                     You will reply with the translation of the english text into the language specified by the language code. You do not reply with any other information. Only the translation.
                     The localizer hint will either provide additional context to help you with your translation, or it will be '<None>', in which case you can ignore it.
                     Please note: The text you translate is written by the developer of an indie app. The text is intended to be read by users of said indie app. To be appropriate for this context, the text should not be overly formal. For example, when translating to German, use informal 'du' instead of formal 'Sie'.
-                    rf"<language_code>{language_code}</language_code><localizer_hint>{localizer_hint}</localizer_hint><english_text>{english_text}</english_text>"
                 User Prompt:
                     rf"<language_code>{language_code}</language_code><localizer_hint>{localizer_hint}</localizer_hint><english_text>{english_text}</english_text>"
             
@@ -138,6 +137,23 @@ Protocol:
             
             Note:
                 - Explicitly telling the LLM that the localizer_hint may be '<None>' seemed to improve results (but I don't remember how) (Explanation idea: If the input already contains mistakes the output is more likely to, as well.)
+    - (even later) [Mar 2025]
+        Updated system prompt with a hint to preserve markup:
+            You are an accurate, elegant translator. Requests that you handle follow the pattern:
+            `<language_code>[some ISO language code]</language_code><localizer_hint>[some hint for you]</localizer_hint><english_text>[some english text]</english_text>`
+            You will reply with the translation of the english text into the language specified by the language code. You do not reply with any other information. Only the translation.
+            The localizer hint will either provide additional context to help you with your translation, or it will be '<None>', in which case you can ignore it.
+
+            Please note:
+            - The text you translate is written by the developer of an indie app. The text is intended to be read by users of said indie app. To be appropriate for this context, the text should not be overly formal. For example, when translating to German, use informal 'du' instead of formal 'Sie'.
+            - Your output will be rendered as Markdown or HTML. Please maintain all relevant formatting characters as they appear in the source text, including backslashes at the end of a line (\), asterisks (*), and any other special characters that serve as markup to determine the text formatting.
+            - Maintain all placeholders exactly as they appear in the source text (like {variable_name}, %s, etc.)
+            - Remember to not reply with any other information except for your translation.
+
+        Reasoning behind these changes:
+            - I noticed that, for some languages like Catalan (ca), the model consistently forgot the backslash at the end of the line in the `release-notes.disclaimer` string. The explicit hint seems to fix this.
+            - Added another hint to prevent similar mistakes around placeholders (format specifiers). (Not sure this improves things)
+            - I also added a final 'only reply with translation' hint at the end just to make sure it doesn't forget among all the other info (Not sure this improves things)
 """
 
 # Validate location
@@ -666,14 +682,15 @@ def generate():
             #           (Tests performed inside https://github.com/noah-nuebling/gh-release-asset-id-test-mar-2025/releases/tag/test)
             #       
             #       -> Conclusion: Based on these tests, I think the 'id' field can be safely used as the 'source hash'. To be more strict, we might combine it with the 'updated_at' field. To be more human-readable, we could use the 'url' instead of the 'id'
-            # 
+            # Note [Mar 2025]:
+            #   - If we rename an asset, it would get 'orphaned' by the dependency tracker and not cleaned up automatically. To fix this we could make the download_zip_path independent of the download_name. But I don't think this will ever happen, and if it happens it's easy to deal with.
             
             download_name = download_link.rsplit('/', 1)[-1]
-            download_zip_path = os.path.join(folder_ghasset_cache, tag_name, download_name)
+            download_zip_path = getpath_ghasset_cache(tag_name, download_name)
             Path(download_zip_path).parent.mkdir(parents=True, exist_ok=True)
             deptracker_source_hashes = [
-                f'ghasset_url:{app_assets[0]['url']}', 
-                f'ghasset_updatedat:{app_assets[0]['updated_at']}'
+                f'ghasset-url:{app_assets[0]['url']}', 
+                f'ghasset-updated-at:{app_assets[0]['updated_at']}'
             ]
             did_download = False
             @deptracked(path_deptracker_ghasset, deptracker_source_hashes, download_zip_path, sources_are_files=False)
@@ -868,10 +885,11 @@ def ui_string_from_gh_date(locale: str, gh_date: str) -> str:
     result = bdates.format_date(dt, locale=locale)
     return result
 
-def getpath_custom_string     (locale: str, strkey: str)   -> str: return os.path.join(folder_custom_strings         , strkey , locale    + '.txt')
-def getpath_github_release    (locale: str, tag_name: str) -> str: return os.path.join(folder_github_releases        , locale  , tag_name + '.md')
-def getpath_release_notes_md  (locale: str, tag_name: str) -> str: return os.path.join(folder_update_notes_markdown  , locale  , tag_name + '.md')
-def getpath_release_notes_html(locale: str, tag_name: str) -> str: return os.path.join(folder_update_notes_html      , locale  , tag_name + '.html')
+def getpath_ghasset_cache     (tag_name: str, download_name: str) -> str:   return os.path.join(folder_ghasset_cache, tag_name, download_name)
+def getpath_custom_string     (locale: str, strkey: str)          -> str:   return os.path.join(folder_custom_strings         , strkey , locale    + '.txt')
+def getpath_github_release    (locale: str, tag_name: str)        -> str:   return os.path.join(folder_github_releases        , locale  , tag_name + '.md')
+def getpath_release_notes_md  (locale: str, tag_name: str)        -> str:   return os.path.join(folder_update_notes_markdown  , locale  , tag_name + '.md')
+def getpath_release_notes_html(locale: str, tag_name: str)        -> str:   return os.path.join(folder_update_notes_html      , locale  , tag_name + '.html')
 
 def clean_up(download_folder):
     ret = os.system(f'rm -R {download_folder}')
@@ -1024,7 +1042,11 @@ def _let_claude_translate(locale: str, english_textttt: str|LocalizableString) -
             `<language_code>[some ISO language code]</language_code><localizer_hint>[some hint for you]</localizer_hint><english_text>[some english text]</english_text>`
             You will reply with the translation of the english text into the language specified by the language code. You do not reply with any other information. Only the translation.
             The localizer hint will either provide additional context to help you with your translation, or it will be '<None>', in which case you can ignore it.
-            Please note: The text you translate is written by the developer of an indie app. The text is intended to be read by users of said indie app. To be appropriate for this context, the text should not be overly formal. For example, when translating to German, use informal 'du' instead of formal 'Sie'.
+
+            Please note:
+            - The text you translate is written by the developer of an indie app. The text is intended to be read by users of said indie app. To be appropriate for this context, the text should not be overly formal. For example, when translating to German, use informal 'du' instead of formal 'Sie'.
+            - Your output will be rendered as Markdown or HTML. Please maintain all relevant formatting characters as they appear in the source text, including backslashes at the end of a line (\), asterisks (*), and any other special characters that serve as markup to determine the text formatting.
+            - Remember to not reply with any other information except for your translation.
             """),
         'messages': [{
             "role": "user",
