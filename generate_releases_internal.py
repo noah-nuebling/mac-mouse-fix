@@ -203,16 +203,6 @@ prefpane_bundle_name            = "Mouse Fix.prefpane"                       # A
 current_directory = os.getcwd()
 download_folder_absolute = os.path.join(current_directory, download_folder)
 
-# GitHub date parsing
-def ui_string_from_gh_date(locale: str, gh_date: str) -> str:
-    # Doesn't output hour, minute, second. Only year, month, day
-    #   Not moving this into mfutils, since I think it's pretty specific for what we're doing here.
-    gh_api_time_format = "%Y-%m-%dT%H:%M:%SZ"
-    dt = datetime.datetime.strptime(gh_date, gh_api_time_format)
-    dt = dt.replace(tzinfo=datetime.timezone.utc)                   # Set the timezone to +0 (Implied by the 'Z' in the original ISO string from the gh API.)
-    result = bdates.format_date(dt, locale=locale)
-    return result
-
 # Locale IDs
 #   Codes for the languages to translate the update notes into. 
 #   Keep in-sync with 'knownRegions' in project.pbxproject of mac-mouse-fix and mac-mouse-fix-website repos:
@@ -612,7 +602,6 @@ def generate():
                 # Get commit number
                 # commit = os_system_exc(f"git rev-list -n 1 {tag_name}") # Can't capture the output of this for some reason
                 commit_number = mfutils.runclt(f"git rev-list -n 1 {tag_name}")
-                commit_number = commit_number[0:-1] # There's a linebreak at the end
 
                 # Check out commit
                 # This would probably be a lot faster if we only checked out the files we need
@@ -636,7 +625,6 @@ def generate():
                 minimum_macos_version = ""
                 try:
                     minimum_macos_version = mfutils.runclt(f"awk -F ' = ' '/MACOSX_DEPLOYMENT_TARGET/ {{ print $2; }}' < {base_xcconfig_path}")
-                    minimum_macos_version = minimum_macos_version[0:-1] # Remove trailing \n character
                 except:
                     minimum_macos_version = 10.11
 
@@ -651,14 +639,19 @@ def generate():
             # Get download link
             download_link = app_assets[0]['browser_download_url']
 
+            # Log
+            print(f"Downloading MMF asset at '{download_link}'...")
+
             # Download MMF version
             download_name = download_link.rsplit('/', 1)[-1]
             download_zip_path = f'{download_folder}/{download_name}'
             urllib.request.urlretrieve(download_link, download_zip_path)
+            
+            # Log
+            print(f"Process MMF asset downloaded from '{download_link}'...")
 
             # Get edSignature
             signature_and_length = mfutils.runclt(f"./{sparkle_project_path}/bin/sign_update {download_zip_path}")
-            signature_and_length = signature_and_length[0:-1]
 
             # Unzip MMF version
             os_system_exc(f'ditto -x -k --sequesterRsrc --rsrc "{download_zip_path}" "{download_folder}"') # This works, while subprocess.check_output() doesn't for some reason || Update: [Mar 2025] Using runclt() now, instead of subprocess.check_output(). Haven't tested that here. 
@@ -684,8 +677,6 @@ def generate():
             # Read stuff from Info.plist
             bundle_version = mfutils.runclt(f"/usr/libexec/PlistBuddy '{info_plist_path}' -c 'Print CFBundleVersion'")
             minimum_macos_version = mfutils.runclt(f"/usr/libexec/PlistBuddy '{info_plist_path}' -c 'Print LSMinimumSystemVersion'")
-            bundle_version = bundle_version[0:-1]
-            minimum_macos_version = minimum_macos_version[0:-1]
 
             # Delete bundle we just processed so that we won't accidentally process it again next round (that happens if the next bundle has prefpane_bundle_name instead of app_bundle_name)
             shutil.rmtree(app_path)
@@ -710,7 +701,7 @@ def generate():
             #           - Contained in main Sparkle repo, uses <sparkle:releaseNotesLink>
             #       - SampleAppcast.xml 2 (https://sparkle-project.org/files/sparkletestcast.xml)
             #           - Linked from Sparkle docs, uses <description>
-
+            appcast_release_note_elements = []
             for locale in locales:
                 
                 html_path = getpath_release_notes_html(locale, tag_name)
@@ -727,57 +718,61 @@ def generate():
                     #       Sparkle docs say `xml:lang` expects 2-letter *country code* (Src: https://sparkle-project.org/documentation/publishing/). 
                     #       But we're supplying locale codes from Xcode, which consist of a *language code* plus optional *region* or *script* code (E.g. zh-Hans, zh-HK) (Src: https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPInternational/LanguageandLocaleIDs/LanguageandLocaleIDs.html)
                     #       Not sure how Sparkle will handle this, I think they'll handle it fine and just wrote their docs incorrectly (Nobody gets the terminology around these codes right - Not even me in this script.)
-                    release_notes_str = mfdedent("""
+                    appcast_release_notes_element = mfdedent("""
                         <sparkle:releaseNotesLink xml:lang=\"{lang_slot}\">
                         {release_notes_link_slot}
                         </sparkle:releaseNotesLink>
                     """).format(
                         lang_slot=locale,
-                        release_notes_link_slot=apply_githack(f"{base_url}/{html_path}"),
+                        release_notes_link_slot=(4*' ' + apply_githack(f"{base_url}/{html_path}")),
                     )
                 else:
                     # Approach 2: <description>
                     #   (This bloats the appcast file quite a lot)
-                    release_notes_str = mfdedent("""
+                    appcast_release_notes_element = mfdedent("""
                         <description xml:lang=\"{lang_slot}\">
                         {release_notes_slot}
                         </description>
                     """).format(
                         lang_slot=locale,
-                        release_notes_slot=release_notes_html
+                        release_notes_slot=(4*' ' + release_notes_html)
                     )
+                
+                appcast_release_note_elements.append(appcast_release_notes_element)
+            
+            release_notes_str = '\n'.join(appcast_release_note_elements)
 
-                item_string = mfdedent("""
-                    <item>
-                        <title>{title_slot}</title>
-                        <pubDate>{publishing_date_slot}</pubDate>
-                        <sparkle:minimumSystemVersion>{minimum_macos_version_slot}</sparkle:minimumSystemVersion>
-                    {release_notes_str_slot}
-                        <enclosure
-                            url=\"{download_link_slot}\"
-                            sparkle:version=\"{bundle_version_slot}\"
-                            sparkle:shortVersionString=\"{short_version_slot}\"
-                            {signature_and_length_slot}
-                            type=\"{type_slot}\"
-                        />
-                    </item>
-                """).format(
-                    title_slot                  = f"{short_version} available!", # Note: [Mar 2025] Not sure if this needs to be translated. Is it even shown to the user?
-                    publishing_date_slot        = publishing_date,
-                    minimum_macos_version_slot  = minimum_macos_version,
-                    release_notes_str_slot      = textwrap.indent(release_notes_str, 4*' '),
-                    download_link_slot          = download_link,
-                    bundle_version_slot         = bundle_version,
-                    short_version_slot          = short_version,
-                    signature_and_length_slot   = signature_and_length,
-                    type_slot                   = "application/octet-stream", # Not sure what this is or if this is right
-                )
+            item_string = mfdedent("""
+                <item>
+                    <title>{title_slot}</title>
+                    <pubDate>{publishing_date_slot}</pubDate>
+                    <sparkle:minimumSystemVersion>{minimum_macos_version_slot}</sparkle:minimumSystemVersion>
+                {release_notes_str_slot}
+                    <enclosure
+                        url=\"{download_link_slot}\"
+                        sparkle:version=\"{bundle_version_slot}\"
+                        sparkle:shortVersionString=\"{short_version_slot}\"
+                        {signature_and_length_slot}
+                        type=\"{type_slot}\"
+                    />
+                </item>
+            """).format(
+                title_slot                  = f"{short_version} available!", # Note: [Mar 2025] Not sure if this needs to be translated. Is it even shown to the user?
+                publishing_date_slot        = publishing_date,
+                minimum_macos_version_slot  = minimum_macos_version,
+                release_notes_str_slot      = textwrap.indent(release_notes_str, 4*' '),
+                download_link_slot          = download_link,
+                bundle_version_slot         = bundle_version,
+                short_version_slot          = short_version,
+                signature_and_length_slot   = signature_and_length,
+                type_slot                   = "application/octet-stream", # Not sure what this is or if this is right
+            )
 
-                # Append item_string to arrays
-                if not is_prerelease:
-                    appcast_items.append(item_string)
+            # Append item_string to arrays
+            if not is_prerelease:
+                appcast_items.append(item_string)
 
-                appcast_pre_items.append(item_string)
+            appcast_pre_items.append(item_string)
 
         # Assemble item strings into final appcast strings
         #   Note: [Mar 2025] Not sure we need to translate any of the text here. I don't think it's shown to the user.
@@ -825,6 +820,17 @@ def generate():
 #
 # Other helpers
 #
+
+def ui_string_from_gh_date(locale: str, gh_date: str) -> str:
+    # GitHub date parsing
+    #   Doesn't output hour, minute, second. Only year, month, day
+    #     Not moving this into mfutils, since I think it's pretty specific for what we're doing here.
+    gh_api_time_format = "%Y-%m-%dT%H:%M:%SZ"
+    dt = datetime.datetime.strptime(gh_date, gh_api_time_format)
+    dt = dt.replace(tzinfo=datetime.timezone.utc)                   # Set the timezone to +0 (Implied by the 'Z' in the original ISO string from the gh API.)
+    locale = locale.replace('-', '_')
+    result = bdates.format_date(dt, locale=locale)
+    return result
 
 def getpath_custom_string     (locale: str, strkey: str)   -> str: return os.path.join(folder_custom_strings         , strkey , locale    + '.txt')
 def getpath_github_release    (locale: str, tag_name: str) -> str: return os.path.join(folder_github_releases        , locale  , tag_name + '.md')
@@ -1040,20 +1046,25 @@ def upget_translation(
     def upget():
         
         # Constants
-        user_allowed_translate_all_key = f'user_allowed_translate_all - {src_path}'
+        user_allowed_translate_all_locales_key  = f'user_allowed_translate_all - {src_path}'
+        user_allowed_translate_ALL_key          = f'user_allowed_translate_ALL'
 
         # Check if user allows this translation
         #   (User might wanna avoid expensive/slow API calls.)
         user_allowed_translate = None
-        if hasattr(upget_translation, user_allowed_translate_all_key):
-            user_allowed_translate = getattr(upget_translation, user_allowed_translate_all_key)
+        if hasattr(upget_translation, user_allowed_translate_ALL_key):
+            user_allowed_translate = getattr(upget_translation, user_allowed_translate_ALL_key)
+        elif hasattr(upget_translation, user_allowed_translate_all_locales_key):
+            user_allowed_translate = getattr(upget_translation, user_allowed_translate_all_locales_key)
         else:
             while True:
-                user_input = input(f"Translate '{src_path}' to language '{translation_locale}'? (Might incur API costs) [y/n/ya/na - ya/na to apply choice to all remaining languages without asking again.]")
+                user_input = input(f"❓🤖❓ Translate '{src_path}' to language '{translation_locale}'? (Might incur API costs) [y/n/ya/na/yaa/naa - ya/na to apply choice to all remaining languages. yaa/naa to apply choice to all.]")
                 if   user_input == 'y':     user_allowed_translate = True
                 elif user_input == 'n':     user_allowed_translate = False
-                elif user_input == 'ya':    user_allowed_translate = True;                          setattr(upget_translation, user_allowed_translate_all_key, True)
-                elif user_input == 'na':    user_allowed_translate = False;                         setattr(upget_translation, user_allowed_translate_all_key, False)
+                elif user_input == 'ya':    user_allowed_translate = True;                          setattr(upget_translation, user_allowed_translate_all_locales_key, True)
+                elif user_input == 'na':    user_allowed_translate = False;                         setattr(upget_translation, user_allowed_translate_all_locales_key, False)
+                elif user_input == 'yaa':   user_allowed_translate = True;                          setattr(upget_translation, user_allowed_translate_ALL_key, True)
+                elif user_input == 'naa':   user_allowed_translate = False;                         setattr(upget_translation, user_allowed_translate_ALL_key, False)
                 else:                       print(f'Error: Input {user_input} unrecognised.');      continue
                 break
         assert user_allowed_translate is not None, "Code is buggy"
@@ -1077,8 +1088,7 @@ def upget_translation(
     # Localize urls
     #   Notes: 
     #       - [Mar 2025] doing this outside the deptracker, otherwise, we'd have to retranslate everything with the LLM, when we change the url-localization-logic
-    #       - [Mar 2025] After changing url-localization-logic changes, we still might have to delete some target files to force re-generation of some files (not sure) (I think it's the HTML files since those are also deptracked atm)
-    #   
+    #       - [Mar 2025] After changing url-localization-logic, we still might have to delete some target files to force re-generation of some files (not sure) (I think it's the HTML files since those are also deptracked atm, which maybe they shouldn't be.)
     if translation is not None and do_localize_urls:
         # Log
         print(f"Localizing URLs inside LLM's translation...")
