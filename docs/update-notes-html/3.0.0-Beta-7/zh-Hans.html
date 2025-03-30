@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-Hans" xml:lang="zh-Hans">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp0sxsyg5c</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI 翻译</strong></p>
+
+<p>此发行说明由 Claude AI 翻译。可能存在不够准确的地方。<br />
+
+查看英文原版，请<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-7">点击这里</a>。</p>
+
+<hr />
+
+<p>另外也请查看 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-6">3.0.0
+
+Beta 6</a> 中引入的<strong>出色改进</strong>！</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 7</strong> 带来了一些小改进和错误修复。</p>
+
+<p>以下是所有新内容：</p>
+
+<p><strong>改进</strong></p>
+
+<ul>
+
+<li>添加了<strong>韩语翻译</strong>。非常感谢 <span class="citation"
+
+data-cites="jeongtae">@jeongtae</span>！（在 <a
+
+href="https://github.com/jeongtae">GitHub</a> 上找到他）</li>
+
+<li>使用”平滑度：高”选项时的<strong>滚动</strong>变得<strong>更加流畅</strong>，通过逐渐改变速度而不是在移动滚轮时突然改变滚动速度来实现。这应该使滚动感觉更加流畅，更容易用眼睛跟随，同时不会降低响应性。使用”平滑度：高”选项的滚动现在会多使用约
+
+30% 的 CPU，在我的电脑上，持续滚动时的 CPU 使用率从 1.2% 上升到了
+
+1.6%。所以滚动仍然非常高效，我希望这不会对任何人造成影响。非常感谢 <a
+
+href="https://mos.caldis.me/">MOS</a>，它启发了这个功能，我使用了它的”滚动监视器”来帮助实现这个功能。</li>
+
+<li>Mac Mouse Fix 现在<strong>处理所有来源的按钮输入</strong>。之前，Mac
+
+Mouse Fix
+
+只处理它识别的鼠标的输入。我认为这可能会帮助某些边缘情况下的鼠标兼容性，比如使用黑苹果时，但它也会导致
+
+Mac Mouse Fix
+
+接收其他应用程序人为生成的按钮输入，这可能会在其他边缘情况下导致问题。如果这给你带来任何问题，请告诉我，我会在未来的更新中解决。</li>
+
+<li>改进了”桌面和启动台”的”点击并滚动”以及”点击并滚动”以”在空间之间移动”手势的感觉和polish。</li>
+
+<li>现在在计算<strong>通知显示时间</strong>时会考虑语言的信息密度。在此之前，对于像中文或韩文这样信息密度高的语言，通知的可见时间会非常短。</li>
+
+<li>启用了<strong>不同手势</strong>来在<strong>空间</strong>之间移动、打开<strong>调度中心</strong>或打开<strong>应用程序
+
+Exposé</strong>。在 Beta 6 中，我将这些操作仅限于”点击并拖动”手势 -
+
+这是一个实验，看看有多少人真正关心能够以其他方式访问这些操作。看来确实有人关心，所以现在我再次使其可以通过简单的按钮”点击”或”点击并滚动”来访问这些操作。</li>
+
+<li>使得可以通过<strong>点击并滚动</strong>手势进行<strong>旋转</strong>。</li>
+
+<li>在某些场景下<strong>改进</strong>了<strong>触控板模拟</strong>选项的工作方式。例如，在邮件中水平滚动删除消息时，消息移动的方向现在是相反的，我希望这对大多数人来说感觉更自然和一致。</li>
+
+<li>添加了<strong>重新映射</strong>到<strong>主要点击</strong>或<strong>次要点击</strong>的功能。我实现这个是因为我最喜欢的鼠标的右键坏了。这些选项默认是隐藏的。你可以在选择操作时按住
+
+Option 键来查看它们。
+
+<ul>
+
+<li>这目前缺少中文和韩文的翻译，如果你愿意为这些功能提供翻译，将不胜感激！</li>
+
+</ul></li>
+
+</ul>
+
+<p><strong>错误修复</strong></p>
+
+<ul>
+
+<li>修复了一个错误，对于从未在系统设置中切换过”自然滚动”选项的用户来说，“调度中心和空间”的<strong>点击并拖动</strong>方向是<strong>相反的</strong>。现在，Mac
+
+Mouse Fix 中的”点击并拖动”手势方向应该始终与触控板或 Magic Mouse
+
+上的手势方向匹配。如果你想要一个单独的选项来反转”点击并拖动”方向，而不是跟随系统设置，请告诉我。</li>
+
+<li>修复了一个错误，某些用户的<strong>免费天数</strong>会<strong>增长过快</strong>。如果你受到这个问题的影响，请告诉我，我会看看能做些什么。</li>
+
+<li>修复了在 macOS Sonoma 下标签栏显示不正确的问题。</li>
+
+<li>修复了使用”macOS”滚动速度时，通过”点击并滚动”打开启动台时的卡顿。</li>
+
+<li>修复了”Mac Mouse Fix Helper”应用程序（当 Mac Mouse Fix
+
+启用时在后台运行）在录制键盘快捷键时有时会崩溃的问题。</li>
+
+<li>修复了 Mac Mouse Fix 在尝试接收 <a
+
+href="https://github.com/artginzburg/MiddleClick-Sonoma">MiddleClick-Sonoma</a>
+
+生成的人工事件时崩溃的错误。</li>
+
+<li>修复了在”恢复默认值…“对话框中显示的某些鼠标名称包含两次制造商的问题。</li>
+
+<li>降低了当电脑运行缓慢时”调度中心和空间”的”点击并拖动”卡住的可能性。</li>
+
+<li>纠正了 UI 字符串中应该是”Force click”而不是”Force
+
+Touch”的用法。</li>
+
+<li>修复了某些配置下，如果在过渡动画仍在进行时释放按钮，通过”点击并滚动”打开启动台或显示桌面将不起作用的错误。</li>
+
+</ul>
+
+<p><strong>更多</strong></p>
+
+<ul>
+
+<li>多项底层改进、稳定性改进、底层清理等。</li>
+
+</ul>
+
+<h2 id="如何帮助">如何帮助</h2>
+
+<p>你可以通过分享你的<strong>想法</strong>、<strong>问题</strong>和<strong>反馈</strong>来帮助！</p>
+
+<p>分享<strong>想法</strong>和<strong>问题</strong>的最佳地点是 <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">反馈助手</a>。
+
+提供<strong>快速</strong>非结构化反馈的最佳地点是 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">反馈讨论</a>。</p>
+
+<p>你也可以在应用程序的”<strong>ⓘ 关于</strong>”标签中访问这些地方。</p>
+
+<p><strong>感谢</strong>你帮助改进 Mac Mouse Fix！😎:)</p>
+
+</body>
+
+</html>

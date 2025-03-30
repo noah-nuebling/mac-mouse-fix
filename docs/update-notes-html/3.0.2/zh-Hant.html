@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-Hant" xml:lang="zh-Hant">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmplakizx4w</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ 由 AI 翻譯</strong></p>
+
+<p>此發行說明由 Claude AI 翻譯。內容可能不完全準確。<br />
+
+查看英文原文請<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.2">點擊此處</a>。</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.2</strong>
+
+帶來多項改進，包括<strong>更流暢的滾動</strong>、改進的翻譯等等！</p>
+
+<h3 id="滾動">滾動</h3>
+
+<ul>
+
+<li><p>現在您可以透過向相反方向滾動一步來停止滾動動畫。這讓您在使用「流暢度：高」時可以像觸控板一樣<strong>「拋出」</strong>和<strong>「接住」頁面</strong>。</p></li>
+
+<li><p>Mac Mouse Fix
+
+現在在顯示刷新週期的較早階段發送滾動事件，讓應用程式有更多時間處理滾動事件並流暢顯示。這<strong>改善了幀率</strong>，特別是在
+
+YouTube.com 等複雜網站上。</p></li>
+
+<li><p>改進了「流暢度：高」設定的回應性，使滾動更容易控制。</p></li>
+
+<li><p>改進了 3.0.1
+
+中引入的機制，在使用「流暢度：一般」時，滾輪移動越快，動畫速度就越快。在
+
+3.0.2
+
+中，動畫加速應該更加一致和可預測，讓視覺體驗更舒適的同時提供出色的控制。</p></li>
+
+<li><p>修復了滾動速度過慢的問題，特別是在使用「精確」選項時。這個問題是在
+
+3.0.1 中引入的。感謝 <span class="citation"
+
+data-cites="V-Coba">@V-Coba</span> 在 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/795">795</a>
+
+中提出這個問題。</p></li>
+
+<li><p>改進了在使用「點擊並滾動」進行「放大或縮小」時在 Arc
+
+瀏覽器中的表現。</p></li>
+
+</ul>
+
+<h3 id="本地化">本地化</h3>
+
+<ul>
+
+<li>更新了 🇻🇳 越南語翻譯。感謝 <span class="citation"
+
+data-cites="nghlt">@nghlt</span>！</li>
+
+<li>改進了一些 🇩🇪 德語翻譯。</li>
+
+<li>Mac Mouse Fix
+
+中沒有當前語言翻譯的文本現在會顯示佔位符值，而不是空白。這應該能讓在缺少翻譯時瀏覽應用程式變得不那麼困惑。</li>
+
+</ul>
+
+<h3 id="其他">其他</h3>
+
+<ul>
+
+<li>Mac Mouse Fix 現在會向可能遇到 macOS 13 Ventura 及更新版本中阻止 Mac
+
+Mouse Fix 啟用的錯誤的用戶顯示通知，並提供<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/861">此指南</a>的連結。</li>
+
+<li>更改了三鍵滑鼠的預設設定。預設設定不再為滾輪按鈕提供「點擊並滾動」動作，因為這個操作相當困難。相反，預設設定現在提供「按住」和「雙擊」動作。</li>
+
+<li>在「關於」標籤頁中為 Mac Mouse Fix
+
+圖示添加了工具提示。它告訴您如何在 Finder 中顯示 Mac Mouse Fix
+
+的配置文件。</li>
+
+<li>大量底層清理和改進。</li>
+
+</ul>
+
+<hr />
+
+<p>另外查看先前的版本 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.1"><strong>3.0.1</strong></a>。</p>
+
+</body>
+
+</html>

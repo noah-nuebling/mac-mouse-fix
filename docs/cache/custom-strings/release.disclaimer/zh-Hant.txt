@@ -1,0 +1,4 @@
+<b>由 AI 翻譯</b><br>
+這是一個<b><em>GitHub 發布版本</em></b>的翻譯。<br>
+此翻譯由 Claude AI 完成，可能不完全準確。<br>
+要查看原始的 GitHub 發布版本（英文），請<a href="{gh_releases_url}">點擊這裡</a>。

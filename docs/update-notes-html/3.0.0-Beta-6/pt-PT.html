@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-PT" xml:lang="pt-PT">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpy1chjbn6</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Traduzido por IA</strong></p>
+
+<p>Esta nota de lançamento foi traduzida pela IA Claude. Pode não estar
+
+totalmente precisa.<br />
+
+Para a versão original em inglês, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-6">clique
+
+aqui</a>.</p>
+
+<hr />
+
+<p>Confere também as <strong>alterações interessantes</strong>
+
+introduzidas no <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-5">3.0.0
+
+Beta 5</a>!</p>
+
+<hr />
+
+<p>O <strong>3.0.0 Beta 6</strong> traz otimizações profundas e
+
+aperfeiçoamentos, uma reformulação das configurações de scroll,
+
+traduções para chinês e mais!</p>
+
+<p>Aqui está tudo o que há de novo:</p>
+
+<h2 id="otimizações-profundas">1. Otimizações Profundas</h2>
+
+<p>Para este Beta, dediquei muito trabalho para extrair o máximo de
+
+desempenho do Mac Mouse Fix. E agora tenho o prazer de anunciar que,
+
+quando clicas num botão do rato no Beta 6, é <strong>2x</strong> mais
+
+rápido em comparação com o beta anterior! E o scroll é ainda
+
+<strong>4x</strong> mais rápido!</p>
+
+<p>Com o Beta 6, o MMF também desligará inteligentemente partes de si
+
+mesmo para poupar o máximo possível de CPU e bateria.</p>
+
+<p>Por exemplo, quando estás a usar um rato com 3 botões mas só tens
+
+ações configuradas para botões que não existem no teu rato, como os
+
+botões 4 e 5, o Mac Mouse Fix deixará completamente de monitorizar os
+
+cliques do teu rato. Significa 0% de uso de CPU quando clicas num botão
+
+do teu rato! Ou quando as configurações de scroll no MMF correspondem às
+
+do sistema, o Mac Mouse Fix deixará de monitorizar completamente o input
+
+da roda de scroll. Significa 0% de uso de CPU quando fazes scroll! Mas
+
+se configurares a funcionalidade Command (⌘)-Scroll para Zoom, o Mac
+
+Mouse Fix começará a monitorizar o input da roda de scroll - mas apenas
+
+enquanto mantiveres pressionada a tecla Command (⌘). E assim por diante.
+
+Portanto, é realmente inteligente e só usará CPU quando for
+
+necessário!</p>
+
+<p>Isto significa que o MMF não é apenas o controlador de rato mais
+
+poderoso, fácil de usar e aperfeiçoado para Mac, é também um dos, se não
+
+o, mais otimizado e eficiente!</p>
+
+<h2 id="tamanho-da-app-reduzido">2. Tamanho da App Reduzido</h2>
+
+<p>Com 16 MB, o Beta 6 é cerca de 2x menor que o Beta 5!</p>
+
+<p>Isto é um efeito secundário do fim do suporte para versões mais
+
+antigas do macOS.</p>
+
+<h2 id="fim-do-suporte-para-versões-antigas-do-macos">3. Fim do Suporte
+
+para Versões Antigas do macOS</h2>
+
+<p>Tentei arduamente fazer o MMF 3 funcionar adequadamente em versões do
+
+macOS anteriores ao macOS 11 Big Sur. Mas a quantidade de trabalho para
+
+o tornar polido revelou-se avassaladora, então tive de desistir.</p>
+
+<p>Daqui para a frente, a versão mais antiga oficialmente suportada será
+
+o macOS 11 Big Sur.</p>
+
+<p>A app ainda abrirá em versões mais antigas, mas haverá problemas
+
+visuais e possivelmente outros. A app não abrirá mais em versões do
+
+macOS anteriores à 10.14.4. Isto é o que nos permite reduzir o tamanho
+
+da app em 2x, já que a 10.14.4 é a versão mais antiga do macOS que
+
+inclui bibliotecas Swift modernas (Ver “Swift ABI Stability”), o que
+
+significa que essas bibliotecas Swift já não precisam de estar contidas
+
+na app.</p>
+
+<h2 id="melhorias-no-scroll">4. Melhorias no Scroll</h2>
+
+<p>O Beta 6 apresenta muitas melhorias na configuração e na interface
+
+dos novos sistemas de scroll introduzidos no MMF 3.</p>
+
+<h3 id="interface">Interface</h3>
+
+<ul>
+
+<li>Simplificou e encurtou bastante o texto da interface no separador
+
+Scroll. A maioria das menções à palavra “Scroll” foram removidas já que
+
+está implícito pelo contexto.</li>
+
+<li>Reformulou as configurações de suavidade do scroll para serem muito
+
+mais claras e permitirem algumas opções adicionais. Agora podes escolher
+
+entre uma “Suavidade” “Desligada”, “Regular” ou “Alta”, substituindo o
+
+antigo interruptor “com Inércia”. Penso que isto é muito mais claro e
+
+criou espaço na interface para a nova opção “Simulação de
+
+Trackpad”.</li>
+
+<li>Desligar a nova opção “Simulação de Trackpad” desativa o efeito
+
+elástico durante o scroll, também impede o scroll entre páginas no
+
+Safari e outras apps, e mais. Muitas pessoas ficavam incomodadas com
+
+isto, especialmente aquelas com rodas de scroll de rotação livre como as
+
+encontradas em alguns ratos Logitech como o MX Master, mas outras
+
+gostam, então decidi torná-lo uma opção. Espero que a apresentação da
+
+funcionalidade esteja clara. Se tiveres alguma sugestão, avisa-me.</li>
+
+<li>Alterou a opção “Direção Natural do Scroll” para “Inverter Direção
+
+do Scroll”. Isto significa que a configuração agora inverte a direção do
+
+scroll do sistema e já não é independente da direção do scroll do
+
+sistema. Embora isto seja possivelmente uma experiência de utilizador
+
+ligeiramente pior, esta nova forma de fazer as coisas permite-nos
+
+implementar algumas otimizações e torna mais transparente para o
+
+utilizador como desligar completamente o Mac Mouse Fix para o
+
+scroll.</li>
+
+<li>Melhorou a forma como as configurações de scroll interagem com o
+
+scroll modificado em muitos casos extremos. Por exemplo, a opção
+
+“Precisão” já não se aplicará ao “Clicar e Scroll” para a ação “Ambiente
+
+de Trabalho e Launchpad” já que é um obstáculo aqui em vez de ser
+
+útil.</li>
+
+<li>Melhorou a velocidade do scroll ao usar “Clicar e Scroll” para
+
+“Ambiente de Trabalho e Launchpad” ou “Aumentar ou Diminuir Zoom” e
+
+outras funcionalidades.</li>
+
+<li>Removeu o link não funcional para as configurações de velocidade do
+
+scroll do sistema no separador scroll que estava presente em versões do
+
+macOS anteriores ao macOS 13.0 Ventura. Não consegui encontrar uma forma
+
+de fazer o link funcionar e não é extremamente importante.</li>
+
+</ul>
+
+<h3 id="sensação-do-scroll">Sensação do Scroll</h3>
+
+<ul>
+
+<li>Melhorou a curva de animação para “Suavidade Regular” (anteriormente
+
+acessível desligando “com Inércia”). Isto torna as coisas mais suaves e
+
+responsivas.</li>
+
+<li>Melhorou a sensação de todas as configurações de velocidade do
+
+scroll. As velocidades “Média” e “Rápida” estão mais rápidas. Há mais
+
+separação entre as velocidades “Baixa”, “Média” e “Alta”. A aceleração à
+
+medida que moves a roda do scroll mais rapidamente sente-se mais natural
+
+e confortável quando usas a opção “Precisão”.</li>
+
+<li>A forma como a velocidade do scroll aumenta à medida que continuas a
+
+fazer scroll numa direção sentir-se-á mais natural e gradual. Estou a
+
+usar novas curvas matemáticas para modelar a aceleração. O aumento de
+
+velocidade também será mais difícil de ativar acidentalmente.</li>
+
+<li>Já não aumenta a velocidade do scroll quando continuas a fazer
+
+scroll numa direção enquanto usas a velocidade de scroll “macOS”.</li>
+
+<li>Restringiu o tempo de animação do scroll a um máximo. Se a animação
+
+do scroll naturalmente demorasse mais tempo, será acelerada para ficar
+
+abaixo do tempo máximo. Desta forma, fazer scroll até à extremidade da
+
+página com uma roda de rotação livre não fará o conteúdo da página
+
+mover-se para fora do ecrã durante tanto tempo. Isto não deve afetar o
+
+scroll normal com uma roda sem rotação livre.</li>
+
+<li>Melhorou algumas interações em torno do efeito elástico ao fazer
+
+scroll até à extremidade de uma página no Safari e outras apps.</li>
+
+<li>Corrigiu um problema onde “Clicar e Scroll” e outras funcionalidades
+
+relacionadas com scroll não funcionavam corretamente após atualizar de
+
+uma versão muito antiga do painel de preferências do Mac Mouse Fix.</li>
+
+<li>Corrigiu um problema onde scrolls de um pixel eram enviados com
+
+atraso ao usar a velocidade de scroll “macOS” junto com o scroll
+
+suave.</li>
+
+<li>Corrigiu um bug onde o scroll ainda estava muito rápido após
+
+libertar o modificador de Scroll Rápido. Outras melhorias em torno de
+
+como a velocidade do scroll é transportada de deslizes de scroll
+
+anteriores.</li>
+
+<li>Melhorou a forma como a velocidade do scroll aumenta com tamanhos de
+
+ecrã maiores.</li>
+
+</ul>
+
+<h2 id="notarização">5. Notarização</h2>
+
+<p>A partir do 3.0.0 Beta 6, o Mac Mouse Fix será “Notarizado”. Isso
+
+significa que não haverá mais mensagens sobre o Mac Mouse Fix ser
+
+potencialmente “Software Malicioso” ao abrir a app pela primeira
+
+vez.</p>
+
+<p>Notarizar a tua app custa $100 por ano. Sempre fui contra isto, já
+
+que parecia hostil para software gratuito e de código aberto como o Mac
+
+Mouse Fix, e também parecia um passo perigoso em direção à Apple
+
+controlar e bloquear o Mac como fazem com o iOS. Mas a falta de
+
+Notarização levou a problemas bastante graves, incluindo <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/114">várias
+
+situações</a> onde ninguém podia usar a app até eu lançar uma nova
+
+versão. Como o Mac Mouse Fix será monetizado agora, pensei que
+
+finalmente era apropriado Notarizar a app para uma experiência de
+
+utilizador mais fácil e estável.</p>
+
+<h2 id="traduções-para-chinês">6. Traduções para Chinês</h2>
+
+<p>O Mac Mouse Fix está agora disponível em Chinês! Mais
+
+especificamente, está disponível em:</p>
+
+<ul>
+
+<li>Chinês Tradicional</li>
+
+<li>Chinês Simplificado</li>
+
+<li>Chinês (Hong Kong)</li>
+
+</ul>
+
+<p>Um enorme obrigado ao <span class="citation"
+
+data-cites="groverlynn">@groverlynn</span> por fornecer todas estas
+
+traduções, bem como por atualizá-las durante os betas e comunicar
+
+comigo. Vê o seu pull request aqui:
+
+https://github.com/noah-nuebling/mac-mouse-fix/pull/395.</p>
+
+<h2 id="todo-o-resto">7. Todo o Resto</h2>
+
+<p>Além das alterações listadas acima, o Beta 6 também apresenta muitas
+
+melhorias menores.</p>
+
+<ul>
+
+<li>Removeu várias opções das Ações “Clicar”, “Clicar e Manter” e
+
+“Clicar e Scroll” porque achei que eram redundantes já que a mesma
+
+funcionalidade pode ser alcançada de outras formas e isto limpa muito os
+
+menus. Trarei essas opções de volta se as pessoas reclamarem. Então se
+
+sentires falta dessas opções - por favor reclama.</li>
+
+<li>A direção de Clicar e Arrastar agora corresponderá à direção do
+
+deslize do trackpad mesmo quando “Scroll Natural” estiver desligado nas
+
+Definições do Sistema &gt; Trackpad. Antes, Clicar e Arrastar sempre se
+
+comportava como deslizar no trackpad com “Scroll Natural”
+
+<em>ligado</em>.</li>
+
+<li>Corrigiu um problema onde os cursores desapareciam e depois
+
+reapareciam noutro lugar ao usar uma Ação “Clicar e Arrastar” durante
+
+uma gravação de ecrã ou ao usar o software DisplayLink.</li>
+
+<li>Corrigiu o centramento do “+” no Campo “+” no separador Botões</li>
+
+<li>Várias melhorias visuais no separador botões. A paleta de cores do
+
+Campo “+” e da Tabela de Ações foi reformulada para parecer correta ao
+
+usar a opção “Permitir coloração do papel de parede nas janelas” do
+
+macOS. As bordas da Tabela de Ações agora têm uma cor transparente que
+
+parece mais dinâmica e ajusta-se ao seu ambiente.</li>
+
+<li>Fez com que quando adicionas muitas ações à tabela de ações e a
+
+janela do Mac Mouse Fix cresce, ela crescerá exatamente do tamanho do
+
+ecrã (ou do ecrã menos a dock se não tiveres o ocultamento da dock
+
+ativado) e depois para. Quando adicionares ainda mais ações, a tabela de
+
+ações começará a fazer scroll.</li>
+
+<li>Este Beta agora suporta um novo checkout onde podes comprar uma
+
+licença em dólares americanos como anunciado. Antes só podias comprar
+
+uma licença em Euros. As antigas licenças em Euros continuarão a ser
+
+suportadas, claro.</li>
+
+<li>Corrigiu um problema onde o scroll com momentum às vezes não era
+
+iniciado ao usar a funcionalidade “Scroll e Navegar”.</li>
+
+<li>Quando a janela do Mac Mouse Fix se redimensiona durante uma mudança
+
+de separador, agora reposicionar-se-á para não se sobrepor à Dock</li>
+
+<li>Corrigiu a cintilação em alguns elementos da interface ao mudar do
+
+separador Botões para outro separador</li>
+
+<li>Melhorou a aparência da animação que o Campo “+” reproduz após
+
+gravar um input. Especialmente em versões do macOS anteriores ao
+
+Ventura, onde a sombra do Campo “+” apareceria com falhas durante a
+
+animação.</li>
+
+<li>Desativou notificações listando vários botões que foram
+
+capturados/já não são capturados pelo Mac Mouse Fix que apareceriam ao
+
+iniciar a app pela primeira vez ou ao carregar uma predefinição. Achei
+
+que estas mensagens eram distrativas e ligeiramente avassaladoras e não
+
+muito úteis nesses contextos.</li>
+
+<li>Reformulou o Ecrã de Concessão de Acessibilidade. Agora mostrará
+
+informações sobre por que o Mac Mouse Fix precisa de Acesso à
+
+Acessibilidade diretamente em vez de ligar ao website e está um pouco
+
+mais claro e tem um layout visualmente mais agradável.</li>
+
+<li>Atualizou o link de Agradecimentos no separador Sobre.</li>
+
+<li>Melhorou as mensagens de erro quando o Mac Mouse Fix não pode ser
+
+ativado porque há outra versão presente no sistema. A mensagem agora
+
+será exibida numa janela de alerta flutuante que sempre permanece no
+
+topo de outras janelas até ser descartada em vez de uma Notificação
+
+Toast que desaparece ao clicar em qualquer lugar. Isto deve tornar mais
+
+fácil seguir os passos de solução sugeridos.</li>
+
+<li>Corrigiu alguns problemas com a renderização de markdown em versões
+
+do macOS anteriores ao Ventura. O MMF agora usará uma solução de
+
+renderização de markdown personalizada para todas as versões do macOS,
+
+incluindo Ventura. Antes estávamos a usar uma API do sistema introduzida
+
+no Ventura mas isso levava a inconsistências. Markdown é usado para
+
+adicionar links e ênfase ao texto em toda a interface.</li>
+
+<li>Aperfeiçoou as interações em torno da ativação do acesso à
+
+acessibilidade.</li>
+
+<li>Corrigiu um problema onde a janela da app às vezes abria sem mostrar
+
+nenhum conteúdo até mudares para um dos separadores.</li>
+
+<li>Corrigiu um problema com o Campo “+” onde às vezes não podias
+
+adicionar uma nova ação mesmo que mostrasse um efeito de hover indicando
+
+que podes inserir uma ação.</li>
+
+<li>Corrigiu um deadlock e vários outros pequenos problemas que às vezes
+
+aconteciam ao mover o ponteiro do rato dentro do Campo “+”</li>
+
+<li>Corrigiu um problema onde um popover que aparece no separador Botões
+
+quando o teu rato não parece corresponder às configurações atuais de
+
+botões às vezes teria todo o texto em negrito.</li>
+
+<li>Atualizou todas as menções da antiga licença MIT para a nova licença
+
+MMF. Novos ficheiros criados para o projeto agora conterão um cabeçalho
+
+gerado automaticamente mencionando a licença MMF.</li>
+
+<li>Fez com que mudar para o separador Botões ative o MMF para Scroll.
+
+Caso contrário, não poderias gravar gestos de Clicar e Scroll.</li>
+
+<li>Corrigiu alguns problemas onde nomes de botões não estavam a ser
+
+exibidos corretamente na Tabela de Ações em algumas situações.</li>
+
+<li>Corrigiu um bug onde a seção de teste no ecrã Sobre ficaria com
+
+falhas ao abrir a app e depois mudar para o separador de teste após o
+
+teste expirar.</li>
+
+<li>Corrigiu um bug onde o link Ativar Licença na seção de teste do
+
+Separador Sobre às vezes não reagia a cliques.</li>
+
+<li>Corrigiu uma fuga de memória ao usar a funcionalidade “Clicar e
+
+Arrastar” para “Spaces e Mission Control”.</li>
+
+<li>Ativou runtime endurecido na app principal do Mac Mouse Fix,
+
+melhorando a segurança</li>
+
+<li>Muita limpeza de código, reestruturação do projeto</li>
+
+<li>Vários outros crashes corrigidos</li>
+
+<li>Várias fugas de memória corrigidas</li>
+
+<li>Vários pequenos ajustes nas strings da interface</li>
+
+<li>Reformulações de vários sistemas internos também melhoraram a
+
+robustez e o comportamento em casos extremos</li>
+
+</ul>
+
+<h2 id="como-podes-ajudar">8. Como Podes Ajudar</h2>
+
+<p>Podes ajudar partilhando as tuas <strong>ideias</strong>,
+
+<strong>problemas</strong> e <strong>feedback</strong>!</p>
+
+<p>O melhor lugar para partilhar as tuas <strong>ideias</strong> e
+
+<strong>problemas</strong> é o <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Assistente
+
+de Feedback</a>. O melhor lugar para dar feedback
+
+<strong>rápido</strong> não estruturado é a <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Discussão
+
+de Feedback</a>.</p>
+
+<p>Também podes aceder a estes lugares dentro da app no separador
+
+“<strong>ⓘ Sobre</strong>”.</p>
+
+<p><strong>Obrigado</strong> por ajudares a tornar o Mac Mouse Fix o
+
+melhor possível! 🙌:)</p>
+
+</body>
+
+</html>

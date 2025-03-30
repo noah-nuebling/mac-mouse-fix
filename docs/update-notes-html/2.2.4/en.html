@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp_8218l74</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p>Mac Mouse Fix <strong>2.2.4</strong> is now notarized! It also
+
+includes some small bug fixes and other improvements.</p>
+
+<h3 id="notarization"><strong>Notarization</strong></h3>
+
+<p>Mac Mouse Fix 2.2.4 is now ‘notarized’ by Apple. That means no more
+
+messages about Mac Mouse Fix being potentially ‘Malicious Software’ when
+
+opening the app for the first time.</p>
+
+<h4 id="background">Background</h4>
+
+<p>Notarizing your app costs $100 per year. I was always against this,
+
+since it felt hostile towards free and open source software like Mac
+
+Mouse Fix, and it also felt like a dangerous step towards Apple
+
+controlling and locking down the Mac like they do iPhones or iPads. But
+
+lack of notarization led to different problems, including <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/114">difficulties
+
+opening the app</a> and even <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/95">several
+
+situations</a> where nobody could use the app anymore until I released a
+
+new version.</p>
+
+<p>For Mac Mouse Fix 3, I thought it was finally appropriate to pay the
+
+$100 per year to notarize the app, since Mac Mouse Fix 3 is monetized.
+
+(<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0">Learn
+
+More</a>)<br />
+
+Now, Mac Mouse Fix 2 gets notarization as well, which should lead to an
+
+easier and more stable user experience.</p>
+
+<h3 id="bug-fixes"><strong>Bug fixes</strong></h3>
+
+<ul>
+
+<li>Fixed an issue where the cursor would disappear and then reappear in
+
+a different location when using a ‘Click and Drag’ Action during a
+
+screen recording or while using the <a
+
+href="https://www.synaptics.com/products/displaylink-graphics">DisplayLink</a>
+
+software.<br />
+
+</li>
+
+<li>Fixed an issue with enabling Mac Mouse Fix under macOS 10.14 Mojave
+
+and possibly older macOS versions, too.<br />
+
+</li>
+
+<li>Improved memory management, potentially fixing a crash of the ‘Mac
+
+Mouse Fix Helper’ app, that would occur when detaching a mouse from your
+
+computer. See Discussion <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/771">#771</a>.</li>
+
+</ul>
+
+<h3 id="other-improvements"><strong>Other Improvements</strong></h3>
+
+<ul>
+
+<li>The window that the app displays to inform you that a new version of
+
+Mac Mouse Fix is available now supports JavaScript. This allows for the
+
+update notes to be prettier and easier to read. For example, the update
+
+notes can now display <a
+
+href="https://github.com/orgs/community/discussions/16925">Markdown
+
+Alerts</a> and more.</li>
+
+<li>Removed a link to the https://macmousefix.com/about/ page from the
+
+“Grant Accessibility Access to Mac Mouse Fix Helper” screen. That’s
+
+because the About page no longer exists and has been replaced by the <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix">GitHub Readme</a>
+
+for now.</li>
+
+<li>This release now includes dSYM files which can be used by anyone to
+
+decode crash reports of Mac Mouse Fix 2.2.4.</li>
+
+<li>Some under-the-hood cleanup and improvements.</li>
+
+</ul>
+
+<hr />
+
+<p>Also check out the previous release <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.3"><strong>2.2.3</strong></a>.</p>
+
+</body>
+
+</html>

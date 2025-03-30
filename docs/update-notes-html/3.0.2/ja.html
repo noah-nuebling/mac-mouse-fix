@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp_36jnm6j</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AIによる翻訳</strong></p>
+
+<p>このリリースノートはClaude
+
+AIによって翻訳されています。完全に正確ではない可能性があります。<br />
+
+英語の原文は<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.2">こちら</a>をクリックしてください。</p>
+
+<hr />
+
+<p>Mac Mouse Fix
+
+<strong>3.0.2</strong>では、<strong>よりスムーズなスクロール</strong>、翻訳の改善など、多くの改良が加えられました！</p>
+
+<h3 id="スクロール">スクロール</h3>
+
+<ul>
+
+<li>反対方向に1ステップスクロールすることで、スクロールアニメーションを停止できるようになりました。これにより、トラックパッドのように’Smoothness:
+
+High’使用時にページを<strong>「投げる」</strong>と<strong>「キャッチする」</strong>ことができます。</li>
+
+<li>Mac Mouse
+
+Fixは、ディスプレイのリフレッシュサイクルの早い段階でスクロールイベントを送信するようになり、アプリがスクロールイベントを処理して滑らかに表示する時間的余裕が増えました。これにより、特にYouTube.comのような複雑なウェブサイトで<strong>フレームレートが改善</strong>されます。</li>
+
+<li>’Smoothness:
+
+High’設定の応答性が向上し、スクロールの制御が容易になりました。</li>
+
+<li>’Smoothness:
+
+Regular’使用時にスクロールホイールを速く動かすとアニメーション速度が速くなる3.0.1で導入されたメカニズムを改善しました。3.0.2では、アニメーションの加速がより一貫性があり予測可能になり、優れた制御性を保ちながら目への負担が軽減されます。</li>
+
+<li>’Precision’オプション使用時に特にスクロール速度が遅すぎる問題を修正しました。この問題は3.0.1で発生していました。<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/795">795</a>で指摘してくれた@V-Cobaに感謝します。</li>
+
+<li>’Click and Scroll’で’Zoom In or
+
+Out’を使用する際のArcブラウザ内での動作を改善しました。</li>
+
+</ul>
+
+<h3 id="ローカライゼーション">ローカライゼーション</h3>
+
+<ul>
+
+<li>🇻🇳 ベトナム語の翻訳を更新。<span class="citation"
+
+data-cites="nghltに感謝">@nghltに感謝</span>！</li>
+
+<li>🇩🇪 ドイツ語の翻訳を一部改善。</li>
+
+<li>現在の言語に翻訳がないMac Mouse
+
+Fix内のテキストが、空白ではなくプレースホルダー値を表示するようになりました。これにより、翻訳が欠けている場合でもアプリの操作がわかりやすくなります。</li>
+
+</ul>
+
+<h3 id="その他">その他</h3>
+
+<ul>
+
+<li>macOS 13 Venturaおよびそれ以降で、Mac Mouse
+
+Fixが有効にならない可能性があるバグを経験するユーザーに対して、<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/861">このガイド</a>へのリンクを含む通知を表示するようになりました。</li>
+
+<li>3ボタンマウスのデフォルト設定を変更しました。実行が難しいスクロールホイールボタンの’Click
+
+and Scroll’アクションをデフォルト設定から除外し、代わりに’Hold’と’Double
+
+Click’アクションを追加しました。</li>
+
+<li>Aboutタブ上のMac Mouse
+
+Fixアイコンにツールチップを追加しました。FinderでMac Mouse
+
+Fixの設定ファイルを表示する方法を説明します。</li>
+
+<li>多くの内部的なクリーンアップと改善を実施。</li>
+
+</ul>
+
+<hr />
+
+<p>前回のリリース<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.1"><strong>3.0.1</strong></a>もご確認ください。</p>
+
+</body>
+
+</html>

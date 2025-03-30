@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp72fb5tbw</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Von KI übersetzt</strong></p>
+
+<p>Diese Versionshinweise wurden von der Claude KI übersetzt. Sie sind
+
+möglicherweise nicht vollständig präzise.<br />
+
+Die englische Originalversion findest du <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.2">hier</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.2</strong> bringt mehrere Verbesserungen,
+
+darunter <strong>geschmeidigeres Scrollen</strong>, verbesserte
+
+Übersetzungen und mehr!</p>
+
+<h3 id="scrollen">Scrollen</h3>
+
+<ul>
+
+<li>Du kannst Scroll-Animationen jetzt stoppen, indem du einen Schritt
+
+in die entgegengesetzte Richtung scrollst. Dies ermöglicht es dir, die
+
+Seite bei Verwendung von ‘Geschmeidigkeit: Hoch’ ähnlich wie bei einem
+
+Trackpad zu <strong>‘werfen’</strong> und zu
+
+<strong>‘fangen’</strong>.</li>
+
+<li>Mac Mouse Fix sendet Scroll-Events nun früher im
+
+Bildschirm-Aktualisierungszyklus, wodurch Apps mehr Zeit haben, die
+
+Scroll-Events zu verarbeiten und das Scrollen flüssig darzustellen. Dies
+
+<strong>verbessert die Bildrate</strong>, besonders auf komplexen
+
+Websites wie YouTube.com.</li>
+
+<li>Verbesserte Reaktionsfähigkeit der ‘Geschmeidigkeit: Hoch’
+
+Einstellung, wodurch das Scrollen leichter zu kontrollieren ist.</li>
+
+<li>Verbesserung eines in 3.0.1 eingeführten Mechanismus, bei dem die
+
+Animationsgeschwindigkeit bei ‘Geschmeidigkeit: Normal’ schneller wird,
+
+je schneller du das Scrollrad bewegst. In 3.0.2 erscheint die
+
+Beschleunigung der Animation konsistenter und vorhersehbarer, was sie
+
+angenehmer für die Augen macht und gleichzeitig eine gute Kontrolle
+
+ermöglicht.</li>
+
+<li>Ein Problem wurde behoben, bei dem die Scrollgeschwindigkeit zu
+
+langsam war, besonders bei Verwendung der ‘Präzision’ Option. Dieses
+
+Problem wurde in 3.0.1 eingeführt. Danke an <span class="citation"
+
+data-cites="V-Coba">@V-Coba</span>, der in <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/795">795</a>
+
+darauf aufmerksam gemacht hat.</li>
+
+<li>Verbessertes Verhalten im Arc Browser bei Verwendung von ‘Klicken
+
+und Scrollen’ zum ‘Rein- oder Rauszoomen’.</li>
+
+</ul>
+
+<h3 id="lokalisierung">Lokalisierung</h3>
+
+<ul>
+
+<li>Aktualisierte 🇻🇳 Vietnamesische Übersetzungen. Dank an <span
+
+class="citation" data-cites="nghlt">@nghlt</span>!</li>
+
+<li>Verbesserte einige 🇩🇪 Deutsche Übersetzungen.</li>
+
+<li>Text in Mac Mouse Fix, der keine Übersetzung für die aktuelle
+
+Sprache hat, zeigt jetzt einen Platzhalter an, anstatt einfach leer zu
+
+bleiben. Dies sollte die Navigation in der App bei fehlenden
+
+Übersetzungen weniger verwirrend machen.</li>
+
+</ul>
+
+<h3 id="sonstiges">Sonstiges</h3>
+
+<ul>
+
+<li>Mac Mouse Fix zeigt jetzt eine Benachrichtigung mit einem Link zu <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/861">diesem
+
+Leitfaden</a> für Benutzer, die möglicherweise von einem Bug in macOS 13
+
+Ventura und höher betroffen sind, der verhindern kann, dass Mac Mouse
+
+Fix aktiviert wird.</li>
+
+<li>Geänderte Standardeinstellungen für Mäuse mit 3 Tasten. Die
+
+Standardeinstellungen beinhalten nicht mehr eine ‘Klicken und Scrollen’
+
+Aktion für die Scrollrad-Taste, da diese ziemlich schwer auszuführen
+
+ist. Stattdessen gibt es nun eine ‘Halten’ und eine ‘Doppelklick’
+
+Aktion.</li>
+
+<li>Dem Mac Mouse Fix Symbol im Über-Tab wurde ein Tooltip hinzugefügt.
+
+Er erklärt dir, wie du Mac Mouse Fix’s Konfigurationsdatei im Finder
+
+anzeigen kannst.</li>
+
+<li>Viele Verbesserungen und Aufräumarbeiten unter der Haube.</li>
+
+</ul>
+
+<hr />
+
+<p>Sieh dir auch das vorherige Release <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.1"><strong>3.0.1</strong></a>
+
+an.</p>
+
+</body>
+
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpzio7zhlj</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AIによる翻訳</strong></p>
+
+<p>このリリースノートはClaude
+
+AIによって翻訳されています。完全に正確ではない可能性があります。<br />
+
+英語の原文は<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-5">こちら</a>をクリックしてください。</p>
+
+<hr />
+
+<p><a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-4">3.0.0
+
+Beta
+
+4</a>で導入された<strong>素晴らしい変更点</strong>もご確認ください！</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 5</strong>では、macOS 13
+
+Venturaで一部の<strong>マウス</strong>との<strong>互換性</strong>を復元し、多くのアプリでの<strong>スクロール</strong>の問題を修正しました。
+
+その他、小さな修正や使い勝手の改善も含まれています。</p>
+
+<p><strong>新機能の全容</strong>はこちら：</p>
+
+<h3 id="マウス">マウス</h3>
+
+<ul>
+
+<li>ターミナルやその他のアプリでのスクロールを修正しました！GitHub Issue
+
+<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/413">#413</a>をご覧ください。</li>
+
+<li>信頼性の低いApple
+
+APIの使用を避け、低レベルのハックを採用することで、macOS 13
+
+Venturaでの一部のマウスとの互換性の問題を修正しました。新たな問題が発生しないことを願っています
+
+-
+
+問題が発生した場合はお知らせください！この問題の解決に協力してくれたMariaとGitHubユーザーの<a
+
+href="https://github.com/samiulhsnt">samiulhsnt</a>に特別な感謝を！詳細はGitHub
+
+Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/424">#424</a>をご覧ください。</li>
+
+<li>マウスボタン1または2のクリック時にCPUを使用しなくなりました。その他のボタンのクリック時のCPU使用率も若干低下しました。
+
+<ul>
+
+<li>これは「デバッグビルド」のため、このベータ版でのボタンクリック時のCPU使用率は、正式リリース版の約10倍になる可能性があります</li>
+
+</ul></li>
+
+<li>Mac Mouse
+
+Fixの「スムーズスクロール」と「スクロール＆ナビゲート」機能で使用されるトラックパッドスクロールのシミュレーションがさらに正確になりました。これにより、特定の状況での動作が改善される可能性があります。</li>
+
+</ul>
+
+<h3 id="ui">UI</h3>
+
+<ul>
+
+<li>古いバージョンのMac Mouse
+
+Fixからアップデートした後のアクセシビリティアクセス許可の問題を自動的に修正するようになりました。<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.2">2.2.2リリースノート</a>で説明された変更を採用しています。</li>
+
+<li>「アクセシビリティアクセスを許可」画面に「キャンセル」ボタンを追加</li>
+
+<li>Mac Mouse
+
+Fixの新バージョンをインストールした後、古いバージョンの「Mac Mouse Fix
+
+Helper」に接続してしまい、設定が正しく機能しない問題を修正しました。今後は古い「Mac
+
+Mouse Fix Helper」には接続せず、必要に応じて自動的に無効化します。</li>
+
+<li>macOS Venturaで、システム上に別バージョンのMac Mouse
+
+Fixが存在するためにMac Mouse
+
+Fixを正しく有効化できない問題の解決手順をユーザーに提供するようになりました。</li>
+
+<li>「アクセシビリティアクセスを許可」画面の動作とアニメーションを改善</li>
+
+<li>Mac Mouse
+
+Fixが有効化された時に最前面に表示されるようになりました。これにより、システム設定＞一般＞ログインアイテムで無効化された後にMac
+
+Mouse Fixを有効化するなどの状況でのUI操作が改善されます。</li>
+
+<li>「アクセシビリティアクセスを許可」画面のUI文字列を改善</li>
+
+<li>システム設定で無効化されている状態でMac Mouse
+
+Fixを有効化しようとした時に表示されるUI文字列を改善</li>
+
+<li>ドイツ語のUI文字列の修正</li>
+
+</ul>
+
+<h3 id="内部的な変更">内部的な変更</h3>
+
+<ul>
+
+<li>「Mac Mouse Fix」と組み込まれている「Mac Mouse Fix
+
+Helper」のビルド番号を同期するようになりました。これにより、「Mac Mouse
+
+Fix」が誤って古いバージョンの「Mac Mouse Fix
+
+Helper」に接続することを防ぎます。</li>
+
+<li>初回起動時のキャッシュデータを削除することで、ライセンスと試用期間に関するデータが正しく表示されない問題を修正</li>
+
+<li>プロジェクト構造とソースコードの大幅なクリーンアップ</li>
+
+<li>デバッグメッセージの改善</li>
+
+</ul>
+
+<hr />
+
+<h3 id="ご協力いただける方法">ご協力いただける方法</h3>
+
+<p><strong>アイデア</strong>、<strong>問題点</strong>、<strong>フィードバック</strong>をお寄せください！</p>
+
+<p><strong>アイデア</strong>や<strong>問題点</strong>を共有するのに最適な場所は<a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">フィードバックアシスタント</a>です。
+
+<strong>簡単な</strong>非構造化フィードバックを提供するのに最適な場所は<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">フィードバックディスカッション</a>です。</p>
+
+<p>これらの場所には、アプリ内の「<strong>ⓘ
+
+About</strong>」タブからもアクセスできます。</p>
+
+<p>Mac Mouse
+
+Fixの改善にご協力いただき、<strong>ありがとうございます</strong>！💙💛❤️</p>
+
+</body>
+
+</html>

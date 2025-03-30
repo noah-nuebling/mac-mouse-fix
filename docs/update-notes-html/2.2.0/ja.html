@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmphille4qt</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AIによる翻訳</strong></p>
+
+<p>このリリースノートはClaude
+
+AIによって翻訳されています。完全に正確ではない可能性があります。<br />
+
+英語の原文は<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0">こちら</a>をクリックしてください。</p>
+
+<hr />
+
+<p>Mac Mouse Fix 2で導入された<strong>クールな機能</strong>も<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.0.0">こちら</a>でチェックしてください！</p>
+
+<hr />
+
+<p>Mac Mouse Fix
+
+<strong>2.2.0</strong>では、使いやすさの向上とバグ修正が行われました！</p>
+
+<h3
+
+id="appleキーボード専用のファンクションキーへのリマップが改善">Appleキーボード専用のファンクションキーへのリマップが改善</h3>
+
+<p>前回のアップデート2.1.0では、マウスボタンをキーボードの任意のキー（Appleキーボード専用のファンクションキーを含む）にリマップできる新機能が導入されました。2.2.0ではこの機能がさらに改善・洗練されました：</p>
+
+<ul>
+
+<li>Appleキーボードを持っていなくても、Option
+
+(⌥)キーを押すことでAppleキーボード専用のキーにリマップできるようになりました。</li>
+
+<li>ファンクションキーのシンボルの外観が改善され、他のテキストとより調和するようになりました。</li>
+
+<li>Caps
+
+Lockへのリマップ機能は無効化されました。期待通りに動作しなかったためです。</li>
+
+</ul>
+
+<h3
+
+id="アクションの追加削除がより簡単に">アクションの追加/削除がより簡単に</h3>
+
+<p>アクションテーブルでアクションを追加・削除できることが分かりにくいというユーザーの声がありました。2.2.0では理解しやすくするため、以下の変更と新機能が追加されました：</p>
+
+<ul>
+
+<li>アクションを右クリックで削除できるようになりました。
+
+<ul>
+
+<li>これによりアクション削除のオプションが見つけやすくなります。</li>
+
+<li>右クリックメニューには’-‘ボタンのシンボルが表示され、’-’_ボタン_に注目が集まり、さらに’+’ボタンにも注目が集まるようになります。これによりアクションを<strong>追加</strong>するオプションもより見つけやすくなるはずです。</li>
+
+</ul></li>
+
+<li>空の行を右クリックしてアクションテーブルにアクションを追加できるようになりました。</li>
+
+<li>‘-’ボタンはアクションが選択されている時のみ有効になります。これにより’-’ボタンが選択されたアクションを削除することがより明確になります。</li>
+
+<li>デフォルトのウィンドウの高さが増加し、右クリックでアクションを追加できる空の行が表示されるようになりました。</li>
+
+<li>‘+’と’-’ボタンにツールチップが追加されました。</li>
+
+</ul>
+
+<h3 id="クリックドラッグの改善">クリック＆ドラッグの改善</h3>
+
+<p>クリック＆ドラッグを有効にする閾値が5ピクセルから7ピクセルに増加しました。これにより、誤ってクリック＆ドラッグが作動することを防ぎながら、小さな快適な動きでSpaceの切り替えなどができます。</p>
+
+<h3 id="その他のui変更">その他のUI変更</h3>
+
+<ul>
+
+<li>アクションテーブルの外観が改善されました。</li>
+
+<li>その他様々なUI改善が行われました。</li>
+
+</ul>
+
+<h3 id="バグ修正">バグ修正</h3>
+
+<ul>
+
+<li>MMFが無効化された状態で起動した際にUIがグレーアウトされない問題を修正しました。</li>
+
+<li>隠れていた「ボタン3クリック＆ドラッグ」オプションを削除しました。
+
+<ul>
+
+<li>選択するとアプリがクラッシュしていました。このオプションはBlenderとの互換性を向上させるために作られましたが、キーボードモディファイアと組み合わせられないため、現状ではBlenderユーザーにとってあまり有用ではありません。将来のリリースでBlenderとの互換性を改善する予定です。</li>
+
+</ul></li>
+
+</ul>
+
+</body>
+
+</html>

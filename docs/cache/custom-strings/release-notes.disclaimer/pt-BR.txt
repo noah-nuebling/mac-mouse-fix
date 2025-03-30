@@ -1,0 +1,4 @@
+**ℹ️ Traduzido por IA**
+
+Esta nota de versão foi traduzida pela IA Claude. Pode não estar totalmente precisa.\
+Para a versão original em inglês, [clique aqui]({gh_releases_url}).

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp22nxwkok</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AIによる翻訳</strong></p>
+
+<p>このリリースノートはClaude
+
+AIによって翻訳されています。完全に正確ではない可能性があります。<br />
+
+英語の原文は<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.1">こちら</a>をクリックしてください。</p>
+
+<hr />
+
+<p>Mac Mouse Fix
+
+<strong>3.0.1</strong>では、複数のバグ修正と改善に加えて、<strong>新しい言語</strong>が追加されました！</p>
+
+<h3 id="ベトナム語が追加されました">ベトナム語が追加されました！</h3>
+
+<p>Mac Mouse
+
+Fixが🇻🇳ベトナム語に対応しました。GitHubの@nghltさんに大感謝です！</p>
+
+<h3 id="バグ修正">バグ修正</h3>
+
+<ul>
+
+<li><strong>ファストユーザスイッチング</strong>で正常に動作するようになりました！
+
+<ul>
+
+<li>ファストユーザスイッチングとは、最初のアカウントからログアウトせずに2つ目のmacOSアカウントにログインすることです。</li>
+
+<li>このアップデート以前は、ファストユーザスイッチ後にスクロールが機能しなくなっていましたが、現在は正常に動作します。</li>
+
+</ul></li>
+
+<li>Mac Mouse
+
+Fixを初めて起動した際に、ボタンタブのレイアウトが広すぎる小さなバグを修正しました。</li>
+
+<li>複数のアクションを素早く追加する際の’+’フィールドの動作を改善しました。</li>
+
+<li>Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/735">735</a>で@V-Cobaさんが報告した特殊なクラッシュを修正しました。</li>
+
+</ul>
+
+<h3 id="その他の改善点">その他の改善点</h3>
+
+<ul>
+
+<li>’スムーズさ：通常’設定使用時の<strong>スクロールの反応性が向上</strong>しました。
+
+<ul>
+
+<li>スクロールホイールを速く動かすほどアニメーション速度が速くなります。これにより、ゆっくりスクロールした時の滑らかさを保ちながら、速いスクロールでより反応性が良くなりました。</li>
+
+</ul></li>
+
+<li><strong>スクロール速度の加速</strong>をより安定的で予測可能にしました。</li>
+
+<li>新しいMac Mouse
+
+Fixバージョンにアップデートする際に<strong>設定を保持する</strong>メカニズムを実装しました。
+
+<ul>
+
+<li>以前は、設定の構造が変更された場合、新バージョンへのアップデート後に全ての設定がリセットされていました。現在は、設定の構造をアップグレードして設定を保持するようになりました。</li>
+
+<li>これは現在、3.0.0から3.0.1へのアップデート時のみ機能します。3.0.0より古いバージョンからアップデートする場合や、3.0.1から以前のバージョンに_ダウングレード_する場合は、設定は引き続きリセットされます。</li>
+
+</ul></li>
+
+<li>ボタンタブのレイアウトが異なる言語により適切に対応するようになりました。</li>
+
+<li><a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix#background">GitHubのReadme</a>やその他のドキュメントを改善しました。</li>
+
+<li>ローカライゼーションシステムを改善しました。翻訳ファイルが自動的にクリーンアップされ、潜在的な問題が分析されるようになりました。Mac
+
+Mouse
+
+Fixの翻訳を手伝いたい人向けに、自動検出された問題や他の有用な情報、手順を含む新しい<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/731">ローカライゼーションガイド</a>が追加されました。以前この機能の一部を提供していた<a
+
+href="https://github.com/FlineDev/BartyCrouch">BartyCrouch</a>ツールへの依存を削除しました。</li>
+
+<li>英語とドイツ語のUIテキストを改善しました。</li>
+
+<li>多くの内部的なクリーンアップと改善を行いました。</li>
+
+</ul>
+
+<hr />
+
+<p>Mac Mouse Fixの最大のアップデートとなった<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0"><strong>3.0.0</strong></a>のリリースノートもご確認ください！</p>
+
+</body>
+
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ca" xml:lang="ca">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp969_7jpn</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Traduït per IA</strong></p>
+
+<p>Aquesta nota de llançament ha estat traduïda per la IA Claude. Pot no
+
+ser completament precisa.<br />
+
+Per veure la versió original en anglès, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-7">feu
+
+clic aquí</a>.</p>
+
+<hr />
+
+<p>També doneu un cop d’ull a les <strong>millores interessants</strong>
+
+introduïdes a <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-6">3.0.0
+
+Beta 6</a>!</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 7</strong> porta diverses petites millores i
+
+correccions d’errors.</p>
+
+<p>Aquí teniu tot el que és nou:</p>
+
+<p><strong>Millores</strong></p>
+
+<ul>
+
+<li>S’han afegit <strong>traduccions al coreà</strong>. Moltes gràcies a
+
+<span class="citation" data-cites="jeongtae">@jeongtae</span>! (El
+
+trobareu a <a href="https://github.com/jeongtae">GitHub</a>)</li>
+
+<li>S’ha fet el <strong>desplaçament</strong> amb l’opció ‘Suavitat:
+
+Alta’ <strong>encara més suau</strong>, canviant només la velocitat
+
+gradualment, en lloc de tenir salts sobtats en la velocitat de
+
+desplaçament mentre mous la roda. Això hauria de fer que el desplaçament
+
+se senti una mica més suau i més fàcil de seguir amb els ulls sense fer
+
+les coses menys responsives. El desplaçament amb ‘Suavitat: Alta’ ara
+
+utilitza un 30% més de CPU, al meu ordinador va passar d’un 1,2% d’ús de
+
+CPU en desplaçament continu a un 1,6%. Així que el desplaçament segueix
+
+sent molt eficient i espero que això no suposi una diferència per a
+
+ningú. Moltes gràcies a <a href="https://mos.caldis.me/">MOS</a>, que va
+
+inspirar aquesta funció i el seu ‘Monitor de Desplaçament’ que vaig
+
+utilitzar per implementar la funció.</li>
+
+<li>Mac Mouse Fix ara <strong>gestiona entrades de botons de totes les
+
+fonts</strong>. Abans, Mac Mouse Fix només gestionava entrades de
+
+ratolins que reconeixia. Crec que això podria ajudar amb la
+
+compatibilitat amb certs ratolins en casos extrems, com quan s’utilitza
+
+un Hackintosh, però també farà que Mac Mouse Fix capturi entrades de
+
+botons generades artificialment per altres aplicacions, cosa que podria
+
+provocar problemes en altres casos extrems. Feu-me saber si això us
+
+causa algun problema, i ho abordaré en futures actualitzacions.</li>
+
+<li>S’ha refinat la sensació i el poliment dels gestos ‘Clic i
+
+Desplaçament’ per a ‘Escriptori i Launchpad’ i ‘Clic i Desplaçament’ per
+
+‘Moure’s entre Espais’.</li>
+
+<li>Ara es té en compte la densitat d’informació d’un idioma quan es
+
+calcula el <strong>temps que es mostren les notificacions</strong>.
+
+Abans d’això, les notificacions només romanien visibles durant un temps
+
+molt curt en idiomes amb alta densitat d’informació com el xinès o el
+
+coreà.</li>
+
+<li>S’han habilitat <strong>diferents gestos</strong> per moure’s entre
+
+<strong>Espais</strong>, obrir el <strong>Control de Missió</strong>, o
+
+obrir l’<strong>Exposé d’Aplicacions</strong>. A la Beta 6, vaig fer que
+
+aquestes accions només estiguessin disponibles a través del gest ‘Clic i
+
+Arrossegar’ - com a experiment per veure quanta gent realment es
+
+preocupava de poder accedir a aquestes accions d’altres maneres. Sembla
+
+que alguns sí que ho fan, així que ara ho he fet possible de nou accedir
+
+a aquestes accions mitjançant un simple ‘Clic’ d’un botó o mitjançant
+
+‘Clic i Desplaçament’.</li>
+
+<li>S’ha fet possible <strong>Rotar</strong> mitjançant un gest de
+
+<strong>Clic i Desplaçament</strong>.</li>
+
+<li>S’ha <strong>millorat</strong> la manera com funciona l’opció de
+
+<strong>Simulació del Trackpad</strong> en alguns escenaris. Per
+
+exemple, quan es desplaça horitzontalment per eliminar un missatge al
+
+Mail, la direcció en què es mou el missatge ara està invertida, cosa que
+
+espero que se senti una mica més natural i consistent per a la majoria
+
+de la gent.</li>
+
+<li>S’ha afegit una funció per <strong>reassignar</strong> al
+
+<strong>Clic Primari</strong> o <strong>Clic Secundari</strong>. Ho he
+
+implementat perquè el botó dret del meu ratolí favorit es va trencar.
+
+Aquestes opcions estan ocultes per defecte. Pots veure-les mantenint
+
+premuda la tecla Opció mentre selecciones una acció.
+
+<ul>
+
+<li>Actualment falten traduccions per al xinès i el coreà, així que si
+
+voleu contribuir amb traduccions per a aquestes funcions, seria molt
+
+apreciat!</li>
+
+</ul></li>
+
+</ul>
+
+<p><strong>Correccions d’Errors</strong></p>
+
+<ul>
+
+<li>S’ha corregit un error on la <strong>direcció de ‘Clic i
+
+Arrossegar’</strong> per a ‘Control de Missió i Espais’ estava
+
+<strong>invertida</strong> per a les persones que mai han canviat
+
+l’opció ‘Desplaçament natural’ a la Configuració del Sistema. Ara, la
+
+direcció dels gestos ‘Clic i Arrossegar’ a Mac Mouse Fix hauria de
+
+coincidir sempre amb la direcció dels gestos al teu Trackpad o Magic
+
+Mouse. Si vols una opció separada per invertir la direcció de ‘Clic i
+
+Arrossegar’, en lloc de seguir la Configuració del Sistema, fes-m’ho
+
+saber.</li>
+
+<li>S’ha corregit un error on els <strong>dies gratuïts</strong>
+
+<strong>augmentaven massa ràpidament</strong> per a alguns usuaris. Si
+
+t’ha afectat això, fes-m’ho saber i veuré què puc fer.</li>
+
+<li>S’ha corregit un problema a macOS Sonoma on la barra de pestanyes no
+
+es mostrava correctament.</li>
+
+<li>S’ha corregit la inestabilitat quan s’utilitza la velocitat de
+
+desplaçament ‘macOS’ mentre s’utilitza ‘Clic i Desplaçament’ per obrir
+
+el Launchpad.</li>
+
+<li>S’ha corregit un error on l’aplicació ‘Mac Mouse Fix Helper’ (que
+
+s’executa en segon pla quan Mac Mouse Fix està activat) es bloquejava de
+
+vegades en gravar una drecera de teclat.</li>
+
+<li>S’ha corregit un error on Mac Mouse Fix es bloquejava en intentar
+
+capturar esdeveniments artificials generats per <a
+
+href="https://github.com/artginzburg/MiddleClick-Sonoma">MiddleClick-Sonoma</a></li>
+
+<li>S’ha corregit un problema on el nom d’alguns ratolins mostrat al
+
+diàleg ‘Restaurar valors per defecte…’ contenia el fabricant dues
+
+vegades.</li>
+
+<li>S’ha fet menys probable que ‘Clic i Arrossegar’ per a ‘Control de
+
+Missió i Espais’ es quedi encallat quan l’ordinador va lent.</li>
+
+<li>S’ha corregit l’ús de ‘Force Touch’ en les cadenes de la interfície
+
+on hauria de ser ‘Force click’.</li>
+
+<li>S’ha corregit un error que ocorria en certes configuracions, on
+
+obrir el Launchpad o mostrar l’Escriptori mitjançant ‘Clic i
+
+Desplaçament’ no funcionava si deixaves anar el botó mentre l’animació
+
+de transició encara estava en curs.</li>
+
+</ul>
+
+<p><strong>Més</strong></p>
+
+<ul>
+
+<li>Diverses millores internes, millores d’estabilitat, neteja interna i
+
+més.</li>
+
+</ul>
+
+<h2 id="com-pots-ajudar">Com Pots Ajudar</h2>
+
+<p>Pots ajudar compartint les teves <strong>idees</strong>,
+
+<strong>problemes</strong> i <strong>comentaris</strong>!</p>
+
+<p>El millor lloc per compartir les teves <strong>idees</strong> i
+
+<strong>problemes</strong> és l’<a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Assistent
+
+de Comentaris</a>. El millor lloc per donar <strong>comentaris</strong>
+
+ràpids no estructurats és la <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Discussió
+
+de Comentaris</a>.</p>
+
+<p>També pots accedir a aquests llocs des de dins de l’aplicació a la
+
+pestanya ‘<strong>ⓘ Sobre</strong>’.</p>
+
+<p><strong>Gràcies</strong> per ajudar a fer Mac Mouse Fix millor!
+
+😎:)</p>
+
+</body>
+
+</html>

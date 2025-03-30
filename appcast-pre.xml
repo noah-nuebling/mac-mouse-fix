@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
-  <channel>
+<channel>
     <title>Mac Mouse Fix Update Feed for Prereleases</title>
     <link>https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed/appcast-pre.xml</link>
     <description>Prereleases of Mac Mouse Fix</description>
@@ -9,7 +9,33 @@
     <title>3.0.4 Beta 1 available!</title>
     <pubDate>2025-02-18T23:34:44Z</pubDate>
     <sparkle:minimumSystemVersion>10.15.0</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.4-Beta-1.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.4-Beta-1/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.4-Beta-1/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.4-Beta-1/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.4-Beta-1/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.4-Beta-1/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.4-Beta-1/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.4-Beta-1/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.4-Beta-1/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.4-Beta-1/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.4-Beta-1/MacMouseFixApp.zip"
         sparkle:version="23655"
@@ -17,12 +43,38 @@
         sparkle:edSignature="fCnC40JPT92pDXe8tgNKYNgU1GIMoeOdkKCRebZIIMq0v+gymbi5kyvi6lgACgjrw1p1GeXEKhpgtQMChQ+3Cg==" length="7444644"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>3.0.3 available!</title>
     <pubDate>2024-09-19T08:44:29Z</pubDate>
     <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.3.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.3/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.3/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.3/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.3/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.3/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.3/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.3/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.3/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.3/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.3/MacMouseFixApp.zip"
         sparkle:version="22854"
@@ -30,12 +82,38 @@
         sparkle:edSignature="x0zHVTgpqijq7RkqlCibpiMQi5Ykb7Ikk8gEux/2dGfUY81Gz7ZEBknwDDIMYKkxuOsgjPVsZPuHEh56Pn8KBg==" length="7224915"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.2.5 available!</title>
     <pubDate>2024-09-18T14:52:35Z</pubDate>
     <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.5.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.5/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.5/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.5/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.5/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.5/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.5/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.5/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.5/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.5/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.5/MacMouseFixApp.zip"
         sparkle:version="7631"
@@ -43,12 +121,38 @@
         sparkle:edSignature="G6csTrCTYt69rexM9bZydS8wwWR2nU+8r3agBJhIXdlyKzorPddPiTlmLsNnUx4iLzNNZFRT1ZWr+hVqUoITBA==" length="2489731"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.2.4 available!</title>
     <pubDate>2024-05-19T13:56:53Z</pubDate>
     <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.4.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.4/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.4/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.4/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.4/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.4/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.4/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.4/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.4/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.4/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.4/MacMouseFixApp.zip"
         sparkle:version="7614"
@@ -56,12 +160,38 @@
         sparkle:edSignature="0s69FxFjccIVE7JQxRYcd58CXi+QnZmr/voeKKCczNRL+WlI+wF9vzBWhfIBojSaR7P8HMYBttPfaIWAbNKSDw==" length="2440385"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>3.0.2 available!</title>
     <pubDate>2024-03-05T19:07:03Z</pubDate>
     <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.2.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.2/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.2/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.2/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.2/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.2/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.2/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.2/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.2/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.2/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.2/MacMouseFixApp.zip"
         sparkle:version="22635"
@@ -69,12 +199,38 @@
         sparkle:edSignature="TRXTAtBjFwxAQnH3PXPbz6ogGCc7BrTwBWulTj5j+b76tsv+jevoOVZNp0BvWwpKGHtz3p+m9HzDG0yLdpVBCA==" length="6340306"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>3.0.1 available!</title>
     <pubDate>2024-01-15T06:30:28Z</pubDate>
     <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.1.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.1/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.1/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.1/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.1/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.1/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.1/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.1/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.1/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.1/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.1/MacMouseFixApp.zip"
         sparkle:version="22148"
@@ -82,12 +238,38 @@
         sparkle:edSignature="6YYVBj1zzOoOyTXC7bWnEh8ZZd80V3AhTKLdRzoPUePZOMs07ROU3zCdqJvLhysPo1hmUqcs9oHkSFcQLzn2CQ==" length="6313884"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>3.0.0 available!</title>
     <pubDate>2023-12-23T11:28:16Z</pubDate>
     <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.0.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.0/MacMouseFixApp.zip"
         sparkle:version="22033"
@@ -95,12 +277,38 @@
         sparkle:edSignature="sMVWqVyYmjO/6V1ftErBnPVN8EpIew/6RL3AMGDgqQu+7n8rrVxBgHrjxgIx4GPoxGuw2XAMZ34+yGmnFco0AA==" length="6271342"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>3.0.0 Beta 7 available!</title>
     <pubDate>2023-12-15T18:04:22Z</pubDate>
     <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.0-Beta-7.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-7/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-7/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-7/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-7/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-7/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-7/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-7/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-7/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-7/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.0-Beta-7/MacMouseFixApp.zip"
         sparkle:version="21988"
@@ -108,12 +316,38 @@
         sparkle:edSignature="nu9IDGXqGAKAFYn/KUGGaBzBT0okLjl4rZuct0RgvXNY+EgOI7AIJPREY5fcRXBPlRAOVQ1E5KPr81QqjCC5Dw==" length="6265497"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>3.0.0 Beta 6 available!</title>
     <pubDate>2022-12-16T12:10:04Z</pubDate>
     <sparkle:minimumSystemVersion>10.14.4</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.0-Beta-6.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-6/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-6/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-6/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-6/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-6/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-6/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-6/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-6/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-6/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.0-Beta-6/MacMouseFixApp.zip"
         sparkle:version="21668"
@@ -121,12 +355,38 @@
         sparkle:edSignature="iOV3gnmFwbLek+1GGtqNDUPGBdsNDIHs9bhrodb96XTeUCXsEDNuqp3KYOvn/cZdiR/HSkTAJvwRllops/keBw==" length="6264166"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>3.0.0 Beta 5 available!</title>
     <pubDate>2022-11-03T14:21:23Z</pubDate>
     <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.0-Beta-5.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-5/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-5/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-5/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-5/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-5/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-5/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-5/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-5/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-5/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.0-Beta-5/MacMouseFixApp.zip"
         sparkle:version="19739"
@@ -134,12 +394,38 @@
         sparkle:edSignature="WGKIpoCG7c2RJFgF2LwiAXNKiXZ+6MVEnky85oVqfgmAnboyUPg71weEDRalnhTiiIjE5/FMNQIm3E2SHw4dBA==" length="19083739"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.2.3 available!</title>
     <pubDate>2022-10-30T16:41:07Z</pubDate>
     <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.3.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.3/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.3/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.3/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.3/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.3/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.3/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.3/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.3/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.3/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.3/MacMouseFixApp.zip"
         sparkle:version="7603"
@@ -147,12 +433,38 @@
         sparkle:edSignature="qMi5X0XgNWMWkDar3JdySr1B5fLnqE9AQot+qNkZlIEn/ASmT5ABMUhaDK3ndgnzh32IN7eGhsNImhCBICeAAA==" length="2442063"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.2.2 available!</title>
     <pubDate>2022-10-23T16:16:38Z</pubDate>
     <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.2.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.2/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.2/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.2/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.2/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.2/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.2/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.2/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.2/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.2/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.2/MacMouseFixApp.zip"
         sparkle:version="7391"
@@ -160,12 +472,38 @@
         sparkle:edSignature="J6J9+AA4ZKvXarD9o7hhf4mKFWBdCRwDU2TqbIuh7OIepCq7f618AkgbY/3Ng1rXpNIPlZZdxaxMFCJ5u6hTCg==" length="3145946"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.2.1 available!</title>
     <pubDate>2022-10-20T23:15:00Z</pubDate>
     <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.1.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.1/MacMouseFixApp.zip"
         sparkle:version="7310"
@@ -173,12 +511,38 @@
         sparkle:edSignature="s2V1WqgbfgDC26WfPBDt+ExMLe2UqyY/mjlTm4sSdGtRdvpBSSzke+1xwheZehzMsg8YTTqeh+/AKIlsFkc7Bg==" length="3139125"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>3.0.0 Beta 4 available!</title>
     <pubDate>2022-10-19T17:02:38Z</pubDate>
     <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.0-Beta-4.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-4/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-4/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-4/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-4/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-4/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-4/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-4/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-4/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-4/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.0-Beta-4/MacMouseFixApp.zip"
         sparkle:version="19384"
@@ -186,12 +550,38 @@
         sparkle:edSignature="KsO7xI6ksh9AXh/JbLbYmXwMZU+/qpR8JW8XsxpkGDFFrUdvGGlNv8oGclbiRJUBI030sCOMG9YyCAN+3xi6AQ==" length="19076034"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>3.0.0 Beta 3 available!</title>
     <pubDate>2022-09-15T07:47:42Z</pubDate>
     <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.0-Beta-3.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-3/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-3/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-3/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-3/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-3/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-3/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-3/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-3/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-3/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.0-Beta-3/MacMouseFixApp.zip"
         sparkle:version="18468"
@@ -199,12 +589,38 @@
         sparkle:edSignature="53VNYgW3WNMzgQyCzp3TpZF03pw7TvMUGW4yEdGP5TH03e6D2gc6rtTSs7WEefLMHKt9S+L4PDFTudYZT/SRDQ==" length="14358771"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>3.0.0 Beta 2 available!</title>
     <pubDate>2022-09-14T12:19:48Z</pubDate>
     <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.0-Beta-2.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-2/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-2/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-2/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-2/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-2/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-2/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-2/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-2/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-2/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.0-Beta-2/MacMouseFixApp.zip"
         sparkle:version="18409"
@@ -212,12 +628,38 @@
         sparkle:edSignature="6tFDOMU6Vl7Mu7QtCXvWP3hL4m/p8dWYOIqEuJ4H8n3p3se6FcNDLpKzhld4X/3DjrS5XbpMmHtKlBfEH6RHDg==" length="14354123"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>3.0.0 Beta 1 available!</title>
     <pubDate>2022-09-12T00:26:44Z</pubDate>
     <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/3.0.0-Beta-1.1.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-1.1/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-1.1/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-1.1/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-1.1/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-1.1/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-1.1/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-1.1/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-1.1/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.0-Beta-1.1/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.0-Beta-1.1/MacMouseFixApp.zip"
         sparkle:version="18394"
@@ -225,12 +667,38 @@
         sparkle:edSignature="Fqot2nJuO45fCULU9lH1DKQe+o6M45Y6y4s0HLwUTx7sZw86NQp31UwfY2g9NwIZ9dYCsdsx5K/h3qAZC0tJAg==" length="16796085"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.2.1 Beta 3 available!</title>
     <pubDate>2022-09-06T13:53:14Z</pubDate>
     <sparkle:minimumSystemVersion>10.13</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.1-Beta-3.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-3/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-3/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-3/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-3/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-3/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-3/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-3/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-3/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-3/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.1-Beta-3/MacMouseFixApp.zip"
         sparkle:version="7302"
@@ -238,12 +706,38 @@
         sparkle:edSignature="DjyHMQ/Tj6SVOjUnh34f58haaYD/B23SpZZNfgqih1VjsTjXglK7tBWVgAecY3AOleJ9QgxhYmWn2yHg2iZ2DQ==" length="3222672"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.2.1 Beta 2 available!</title>
     <pubDate>2022-08-07T17:04:24Z</pubDate>
     <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.1-Beta-2.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-2/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-2/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-2/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-2/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-2/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-2/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-2/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-2/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-2/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.1-Beta-2/MacMouseFixApp.zip"
         sparkle:version="7258"
@@ -251,12 +745,38 @@
         sparkle:edSignature="luLhTQ2rKxa4dLTm/Nf+StENPLzDlTKuMoqSlbhuslgwFovVhyWJg8pvvJR4yFnHaC0BX723dynoeQpGaRg5DQ==" length="5094571"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.2.1 Beta 1 available!</title>
     <pubDate>2022-08-05T20:17:15Z</pubDate>
     <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.1-Beta-1.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-1/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-1/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-1/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-1/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-1/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-1/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-1/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-1/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.1-Beta-1/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.1-Beta-1/MacMouseFixApp.zip"
         sparkle:version="7054"
@@ -264,12 +784,38 @@
         sparkle:edSignature="n/pJ7YUwRZzTtMjX4U8d9ICdg8ZMShJpP0YzUeEPAkBRyTMXzSzwMgjwMuRkJh3AqjaY9FDGbryEp08S8NmFBQ==" length="5090587"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.2.0 available!</title>
     <pubDate>2022-01-15T23:08:48Z</pubDate>
     <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.2.0.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.0/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.0/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.0/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.0/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.0/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.0/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.0/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.0/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.2.0/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.2.0/MacMouseFixApp.zip"
         sparkle:version="6943"
@@ -277,12 +823,38 @@
         sparkle:edSignature="dQYe43HyzVixCKZB23ALGQKe+IpT5QtQmn8O/7RwT6yFbMPTmmQU1zGkeOlvGFmzPYtwiosnCMfvBDVeTzH3AA==" length="3727162"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.1.0 available!</title>
     <pubDate>2022-01-09T02:07:06Z</pubDate>
     <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.1.0.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.1.0/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.1.0/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.1.0/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.1.0/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.1.0/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.1.0/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.1.0/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.1.0/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.1.0/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.1.0/MacMouseFixApp.zip"
         sparkle:version="6525"
@@ -290,12 +862,38 @@
         sparkle:edSignature="8d3wjlVwVmGjcnh3qXWf0xh0utL+e3hFqLmpWdCi5fi8fGzF4Xo0s6Xj2ugkqpb77M7VxLacFA3fXKsBtLrOCw==" length="3648590"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.0.0 available!</title>
     <pubDate>2022-01-05T06:42:08Z</pubDate>
     <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.0.0.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.0.0/MacMouseFixApp.zip"
         sparkle:version="6294"
@@ -303,12 +901,38 @@
         sparkle:edSignature="jpj6WXB1glH6XIEbv5FOcUGLPgpgY8fSpH4k9+sjGolTAlR/vDEGQErgpaG3L4c9TnD72a9ZcKh39ZQ4LbcvBA==" length="3083800"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.0.0 Beta 13 available!</title>
     <pubDate>2022-01-04T07:38:31Z</pubDate>
     <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.0.0-Beta-13.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-13/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-13/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-13/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-13/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-13/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-13/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-13/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-13/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-13/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.0.0-Beta-13/MacMouseFixApp.zip"
         sparkle:version="6282"
@@ -316,12 +940,38 @@
         sparkle:edSignature="afSMw+ngMyZOk6o3bSNceYPwuLFMs8DBN35Bh8ZwHyvQuiDxMp0UBXtYIY58isKzfGiEc1VJkfKjdJcoCwUaBw==" length="3083499"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.0.0 Beta 12 available!</title>
     <pubDate>2021-07-14T22:19:01Z</pubDate>
     <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.0.0-Beta-12.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-12/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-12/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-12/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-12/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-12/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-12/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-12/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-12/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-12/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.0.0-Beta-12/MacMouseFixApp.zip"
         sparkle:version="6195"
@@ -329,12 +979,38 @@
         sparkle:edSignature="r2JxQGMuhys97fofNnJw0IDOfi9QFvNztB4IUlugunTYEoyAXU2rPrplbeRbehP/1yUtOSOGWwC6B+LScOLtDw==" length="3151278"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.0.0 Beta 11 available!</title>
     <pubDate>2021-06-12T13:29:08Z</pubDate>
     <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.0.0-Beta-11.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-11/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-11/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-11/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-11/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-11/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-11/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-11/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-11/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-11/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.0.0-Beta-11/MacMouseFixApp.zip"
         sparkle:version="6185"
@@ -342,12 +1018,38 @@
         sparkle:edSignature="OfSkmHtgGmy94hjs0C0kcfryGFjKf5jfejM/y7ZD842v8JHt7qq7zxDP18Jk3ftyAn/dR0+jVC9pCayK0KAmDQ==" length="3144687"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.0.0 Beta 10 available!</title>
     <pubDate>2021-05-29T08:34:41Z</pubDate>
     <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.0.0-Beta-10.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-10/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-10/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-10/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-10/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-10/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-10/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-10/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-10/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-10/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.0.0-Beta-10/MacMouseFixApp.zip"
         sparkle:version="6165"
@@ -355,12 +1057,38 @@
         sparkle:edSignature="cbGIUzb5Lw9HNAPijrqTNhYzPbaervIeQmVy2jrSyMuYH90LgG2jCLseHrn72IVuKKFU0rQ78a/Q1+4QUZ+KDg==" length="3141632"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.0.0 Beta 9 available!</title>
     <pubDate>2021-05-06T23:45:14Z</pubDate>
     <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.0.0-Beta-9.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-9/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-9/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-9/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-9/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-9/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-9/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-9/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-9/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-9/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.0.0-Beta-9/MacMouseFixApp.zip"
         sparkle:version="6028"
@@ -368,12 +1096,38 @@
         sparkle:edSignature="WG904N1BM+krYMqul2hoa3/kDpkRlPE7j+JCZG1YaDCb+6Bdt/5SvVXEocf2S9DFWKtWR9kG6NNpESKk0IthAQ==" length="3121561"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.0.0 Beta 8 available!</title>
     <pubDate>2021-05-05T23:09:25Z</pubDate>
     <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.0.0-Beta-8.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-8/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-8/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-8/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-8/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-8/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-8/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-8/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-8/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-8/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.0.0-Beta-8/MacMouseFixApp.zip"
         sparkle:version="6024"
@@ -381,12 +1135,38 @@
         sparkle:edSignature="+tmWM8sEiEktwq6/OqVkHBXg4qYw2MkKzJtZHR03WXnmN0nM2XtUXu0w3qo0EdD/2eGqHQ6mIjfW49pa4ZgoBA==" length="3121577"
         type="application/octet-stream"
     />
-</item>            
+</item>
 <item>
     <title>2.0.0 Beta 7 available!</title>
     <pubDate>2021-05-05T16:12:23Z</pubDate>
     <sparkle:minimumSystemVersion>10.11</sparkle:minimumSystemVersion>
-    <sparkle:releaseNotesLink>https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/update-notes/html/en/2.0.0-Beta-7.html</sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-7/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ca">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-7/ca.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-7/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-BR">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-7/pt-BR.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="pt-PT">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-7/pt-PT.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-7/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-7/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-7/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ja">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/2.0.0-Beta-7/ja.html
+    </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/2.0.0-Beta-7/MacMouseFixApp.zip"
         sparkle:version="6023"
@@ -394,6 +1174,6 @@
         sparkle:edSignature="KqublpOfW+CvyiGIRM9O3fPFUiXm8CFQb9SQdFHFGR/XdaNZsEwjvZ9Oxzb2N/b7FmcdaX/5TwnDwXk//y2UBg==" length="3121632"
         type="application/octet-stream"
     />
-</item>            
-  </channel>
-</rss>        
+</item>
+</channel>
+</rss>

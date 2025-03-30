@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpdhqgt8nb</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AIによる翻訳</strong></p>
+
+<p>このリリースノートはClaude
+
+AIによって翻訳されています。完全に正確ではない可能性があります。<br />
+
+英語の原文は<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.4">こちら</a>をクリックしてください。</p>
+
+<hr />
+
+<p>Mac Mouse Fix
+
+<strong>2.2.4</strong>がAppleの公証を取得しました！また、いくつかの小さなバグ修正やその他の改善も含まれています。</p>
+
+<h3 id="公証について"><strong>公証について</strong></h3>
+
+<p>Mac Mouse Fix
+
+2.2.4がAppleによって「公証」されました。これにより、初めてアプリを開く際に表示される「悪意のあるソフトウェア」である可能性についての警告メッセージが表示されなくなります。</p>
+
+<h4 id="背景">背景</h4>
+
+<p>アプリの公証には年間100ドルの費用がかかります。Mac Mouse
+
+Fixのような無料でオープンソースのソフトウェアに対して敵対的に感じられ、またAppleがiPhoneやiPadのようにMacを管理・制限する危険な一歩だと感じていたため、これまで反対していました。しかし、公証がないことで<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/114">アプリを開くのが困難</a>になったり、<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/95">新バージョンをリリースするまで誰もアプリを使用できない状況</a>が発生するなど、様々な問題が生じていました。</p>
+
+<p>Mac Mouse Fix
+
+3は収益化されているため、年間100ドルを支払って公証を取得することが適切だと考えました。(<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0">詳細</a>)<br />
+
+今回、Mac Mouse Fix
+
+2も公証を取得し、より簡単で安定したユーザー体験を提供できるようになりました。</p>
+
+<h3 id="バグ修正"><strong>バグ修正</strong></h3>
+
+<ul>
+
+<li>画面録画中や<a
+
+href="https://www.synaptics.com/products/displaylink-graphics">DisplayLink</a>ソフトウェアの使用中に「クリック＆ドラッグ」アクションを使用した際、カーソルが消えて別の場所に再表示される問題を修正しました。</li>
+
+<li>macOS 10.14 Mojaveおよびそれより古いmacOSバージョンでMac Mouse
+
+Fixを有効化する際の問題を修正しました。</li>
+
+<li>メモリ管理を改善し、マウスをコンピュータから取り外した際に発生する可能性のある「Mac
+
+Mouse Fix Helper」アプリのクラッシュを修正しました。ディスカッション<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/771">#771</a>を参照してください。</li>
+
+</ul>
+
+<h3 id="その他の改善点"><strong>その他の改善点</strong></h3>
+
+<ul>
+
+<li>Mac Mouse
+
+Fixの新バージョンが利用可能であることを通知するウィンドウがJavaScriptをサポートするようになりました。これにより、アップデート情報がより見やすく読みやすくなりました。例えば、<a
+
+href="https://github.com/orgs/community/discussions/16925">Markdownアラート</a>などが表示できるようになりました。</li>
+
+<li>「Mac Mouse Fix
+
+Helperにアクセシビリティアクセスを許可する」画面からhttps://macmousefix.com/about/へのリンクを削除しました。これは、Aboutページが存在しなくなり、現在は<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix">GitHubのReadme</a>に置き換えられているためです。</li>
+
+<li>このリリースにはdSYMファイルが含まれており、Mac Mouse Fix
+
+2.2.4のクラッシュレポートを誰でもデコードできるようになりました。</li>
+
+<li>その他、内部的なクリーンアップと改善を行いました。</li>
+
+</ul>
+
+<hr />
+
+<p>前回のリリース<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.3"><strong>2.2.3</strong></a>もご確認ください。</p>
+
+</body>
+
+</html>

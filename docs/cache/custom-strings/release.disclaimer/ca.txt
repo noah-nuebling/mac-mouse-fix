@@ -1,0 +1,4 @@
+<b>Traduït per IA</b><br>
+Això és una traducció d'un <b><em>GitHub Release</em></b>.<br>
+La traducció ha estat feta per la IA Claude i pot no ser completament correcta.<br>
+Per veure el GitHub Release original (en anglès), <a href="{gh_releases_url}">feu clic aquí</a>.

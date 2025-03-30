@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-PT" xml:lang="pt-PT">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpep352bsh</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Traduzido por IA</strong></p>
+
+<p>Esta nota de lançamento foi traduzida pela IA Claude. Pode não estar
+
+totalmente precisa.<br />
+
+Para a versão original em inglês, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-7">clique
+
+aqui</a>.</p>
+
+<hr />
+
+<p>Confira também as <strong>melhorias interessantes</strong>
+
+introduzidas no <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-6">3.0.0
+
+Beta 6</a>!</p>
+
+<hr />
+
+<p>O <strong>3.0.0 Beta 7</strong> traz várias pequenas melhorias e
+
+correções de bugs.</p>
+
+<p>Aqui está tudo de novo:</p>
+
+<p><strong>Melhorias</strong></p>
+
+<ul>
+
+<li>Adicionadas <strong>traduções para coreano</strong>. Muito obrigado
+
+ao <span class="citation" data-cites="jeongtae">@jeongtae</span>!
+
+(Encontre-o no <a href="https://github.com/jeongtae">GitHub</a>)</li>
+
+<li>Tornou a <strong>rolagem</strong> com a opção ‘Suavidade: Alta’
+
+<strong>ainda mais suave</strong>, mudando a velocidade apenas
+
+gradualmente, em vez de ter saltos repentinos na velocidade de rolagem
+
+ao mover a roda do scroll. Isto deve fazer a rolagem parecer um pouco
+
+mais suave e mais fácil de seguir com os olhos sem tornar as coisas
+
+menos responsivas. A rolagem com ‘Suavidade: Alta’ usa cerca de 30% mais
+
+CPU agora, no meu computador passou de 1.2% de uso de CPU durante
+
+rolagem contínua para 1.6%. Então a rolagem ainda é altamente eficiente
+
+e espero que isso não faça diferença para ninguém. Muito obrigado ao <a
+
+href="https://mos.caldis.me/">MOS</a>, que inspirou este recurso e cujo
+
+‘Scroll Monitor’ eu usei para ajudar a implementar o recurso.</li>
+
+<li>O Mac Mouse Fix agora está <strong>processando entradas de botões de
+
+todas as fontes</strong>. Antes, o Mac Mouse Fix só processava entradas
+
+de ratos que reconhecia. Acho que isso pode ajudar na compatibilidade
+
+com certos ratos em casos específicos, como quando se usa um Hackintosh,
+
+mas também fará com que o Mac Mouse Fix capte entradas de botões geradas
+
+artificialmente por outros apps, o que pode levar a problemas em outros
+
+casos específicos. Avise-me se isso causar algum problema para você, e
+
+eu resolverei isso em atualizações futuras.</li>
+
+<li>Refinado o toque e o polimento dos gestos ‘Clicar e Rolar’ para
+
+‘Desktop e Launchpad’ e ‘Clicar e Rolar’ para ‘Mover Entre Spaces’.</li>
+
+<li>Agora considerando a densidade de informação de um idioma ao
+
+calcular o <strong>tempo que as notificações são mostradas</strong>.
+
+Antes disso, as notificações permaneciam visíveis por um tempo muito
+
+curto em idiomas com alta densidade de informação como chinês ou
+
+coreano.</li>
+
+<li>Habilitados <strong>diferentes gestos</strong> para mover entre
+
+<strong>Spaces</strong>, abrir o <strong>Mission Control</strong> ou
+
+abrir o <strong>App Exposé</strong>. No Beta 6, fiz com que essas ações
+
+estivessem disponíveis apenas através do gesto ‘Clicar e Arrastar’ -
+
+como uma experiência para ver quantas pessoas realmente se importavam em
+
+poder acessar essas ações de outras maneiras. Parece que algumas se
+
+importam, então agora tornei possível novamente acessar essas ações
+
+através de um simples ‘Clique’ de um botão ou através de ‘Clicar e
+
+Rolar’.</li>
+
+<li>Tornou possível <strong>Rodar</strong> através de um gesto de
+
+<strong>Clicar e Rolar</strong>.</li>
+
+<li><strong>Melhorada</strong> a forma como a opção de <strong>Simulação
+
+do Trackpad</strong> funciona em alguns cenários. Por exemplo, ao rolar
+
+horizontalmente para apagar uma mensagem no Mail, a direção em que a
+
+mensagem se move agora está invertida, o que espero que pareça um pouco
+
+mais natural e consistente para a maioria das pessoas.</li>
+
+<li>Adicionado um recurso para <strong>remapear</strong> para
+
+<strong>Clique Primário</strong> ou <strong>Clique Secundário</strong>.
+
+Implementei isso porque o botão direito do meu rato favorito quebrou.
+
+Estas opções estão ocultas por padrão. Você pode vê-las mantendo
+
+pressionada a tecla Option ao selecionar uma ação.
+
+<ul>
+
+<li>Atualmente faltam traduções para chinês e coreano, então se você
+
+quiser contribuir com traduções para estes recursos, seria muito
+
+apreciado!</li>
+
+</ul></li>
+
+</ul>
+
+<p><strong>Correções de Bugs</strong></p>
+
+<ul>
+
+<li>Corrigido um bug onde a <strong>direção do ‘Clicar e
+
+Arrastar’</strong> para ‘Mission Control e Spaces’ estava
+
+<strong>invertida</strong> para pessoas que nunca alternaram a opção
+
+‘Rolagem natural’ nas Configurações do Sistema. Agora, a direção dos
+
+gestos ‘Clicar e Arrastar’ no Mac Mouse Fix deve sempre corresponder à
+
+direção dos gestos no seu Trackpad ou Magic Mouse. Se você quiser uma
+
+opção separada para inverter a direção do ‘Clicar e Arrastar’, em vez de
+
+seguir as Configurações do Sistema, avise-me.</li>
+
+<li>Corrigido um bug onde os <strong>dias gratuitos</strong>
+
+<strong>contavam muito rapidamente</strong> para alguns usuários. Se
+
+você foi afetado por isso, avise-me e verei o que posso fazer.</li>
+
+<li>Corrigido um problema no macOS Sonoma onde a barra de abas não era
+
+exibida corretamente.</li>
+
+<li>Corrigida instabilidade ao usar velocidade de rolagem ‘macOS’
+
+enquanto usa ‘Clicar e Rolar’ para abrir o Launchpad.</li>
+
+<li>Corrigido crash onde o app ‘Mac Mouse Fix Helper’ (que roda em
+
+segundo plano quando o Mac Mouse Fix está ativado) crashava às vezes ao
+
+gravar um atalho de teclado.</li>
+
+<li>Corrigido um bug onde o Mac Mouse Fix crashava ao tentar captar
+
+eventos artificiais gerados pelo <a
+
+href="https://github.com/artginzburg/MiddleClick-Sonoma">MiddleClick-Sonoma</a></li>
+
+<li>Corrigido um problema onde o nome de alguns ratos exibidos no
+
+diálogo ‘Restaurar Padrões…’ continha o fabricante duas vezes.</li>
+
+<li>Tornado menos provável que ‘Clicar e Arrastar’ para ‘Mission Control
+
+e Spaces’ fique travado quando o computador está lento.</li>
+
+<li>Corrigido o uso de ‘Force Touch’ nas strings da UI onde deveria ser
+
+‘Force click’.</li>
+
+<li>Corrigido um bug que ocorria em certas configurações, onde abrir o
+
+Launchpad ou mostrar o Desktop através de ‘Clicar e Rolar’ não
+
+funcionava se você soltasse o botão enquanto a animação de transição
+
+ainda estava em andamento.</li>
+
+</ul>
+
+<p><strong>Mais</strong></p>
+
+<ul>
+
+<li>Várias melhorias internas, melhorias de estabilidade, limpeza
+
+interna e mais.</li>
+
+</ul>
+
+<h2 id="como-você-pode-ajudar">Como Você Pode Ajudar</h2>
+
+<p>Você pode ajudar compartilhando suas <strong>ideias</strong>,
+
+<strong>problemas</strong> e <strong>feedback</strong>!</p>
+
+<p>O melhor lugar para compartilhar suas <strong>ideias</strong> e
+
+<strong>problemas</strong> é o <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Assistente
+
+de Feedback</a>. O melhor lugar para dar feedback
+
+<strong>rápido</strong> não estruturado é a <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Discussão
+
+de Feedback</a>.</p>
+
+<p>Você também pode acessar estes lugares de dentro do app na aba
+
+‘<strong>ⓘ Sobre</strong>’.</p>
+
+<p><strong>Obrigado</strong> por ajudar a tornar o Mac Mouse Fix melhor!
+
+😎:)</p>
+
+</body>
+
+</html>

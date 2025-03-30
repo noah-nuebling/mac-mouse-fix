@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpb2nysuxo</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p>Mac Mouse Fix <strong>3.0.4 Beta 1</strong> improves privacy,
+
+efficiency, and reliability.<br />
+
+It introduces a new offline licensing system, and fixes several
+
+important bugs.</p>
+
+<h3 id="enhanced-privacy-efficiency">Enhanced Privacy &amp;
+
+Efficiency</h3>
+
+<ul>
+
+<li>Introduces a new offline license validation system that minimizes
+
+internet connections.</li>
+
+<li>The app now connects to the internet only when absolutely necessary,
+
+protecting your privacy and reducing resource usage.</li>
+
+<li>The app operates completely offline during normal use when
+
+licensed.</li>
+
+</ul>
+
+<details>
+
+<summary>
+
+<b>Detailed Privacy Information</b>
+
+</summary>
+
+<p>Previous versions validated licenses online at every launch,
+
+potentially allowing connection logs to be stored by third-party servers
+
+(GitHub and Gumroad). The new system eliminates unnecessary connections
+
+– after the initial license activation, it only connects to the internet
+
+if local license data is corrupted. <br><br> While no user behavior was
+
+ever recorded by me personally, the previous system theoretically
+
+allowed third-party servers to log IP addresses and connection times.
+
+Gumroad could also log your license key and potentially correlate it to
+
+any personal info they recorded about you when you bought Mac Mouse Fix.
+
+<br><br> I didn’t consider these subtle privacy issues when I built the
+
+original licensing system, but now, Mac Mouse Fix is as private and
+
+internet-free as possible! <br><br> Also see
+
+<a href=https://gumroad.com/privacy>Gumroad’s privacy policy</a> and
+
+this
+
+<a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>GitHub
+
+comment</a> of mine.</p>
+
+</details>
+
+<h3 id="bug-fixes">Bug Fixes</h3>
+
+<ul>
+
+<li>Fixed a bug where macOS would sometimes get stuck when using ‘Click
+
+and Drag’ for ‘Spaces &amp; Mission Control’.</li>
+
+<li>Fixed a bug where keyboard shortcuts in System Settings would
+
+sometimes get deleted when using a ‘Click’ action defined in Mac Mouse
+
+Fix such as ‘Mission Control’.</li>
+
+<li>Fixed <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aopen%20label%3A%22%27Free%20days%20are%20over%27%20bug%22">a
+
+bug</a> where the app would sometimes stop working and show a
+
+notification that the ‘Free days are over’ to users who had already
+
+bought the app.
+
+<ul>
+
+<li>If you experienced this bug, I sincerely apologize for the
+
+inconvenience. You can apply for a <a
+
+href="https://redirect.macmousefix.com/?message=&amp;target=mmf-apply-for-refund">refund
+
+here</a>.</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="technical-improvements">Technical Improvements</h3>
+
+<ul>
+
+<li>Implemented a new ‘MFDataClass’ system allowing for cleaner data
+
+modeling and human-readable configuration files.</li>
+
+<li>Built support for adding payment platforms other than Gumroad. So in
+
+the future, there might be localized checkouts, and the app might be
+
+sold to different countries!</li>
+
+</ul>
+
+<h3 id="dropped-unofficial-support-for-macos-10.14-mojave">Dropped
+
+(Unofficial) Support for macOS 10.14 Mojave</h3>
+
+<p>Mac Mouse Fix 3 officially supports macOS 11 Big Sur and later.
+
+However, for users willing to accept some glitches and graphical issues,
+
+Mac Mouse Fix 3.0.3 and earlier could still be used on macOS 10.14.4
+
+Mojave.</p>
+
+<p>Mac Mouse Fix 3.0.4 drops that support and <strong>now requires macOS
+
+10.15 Catalina</strong>.<br />
+
+I apologize for any inconvenience caused by this. This change allowed me
+
+to implement the improved licensing system using modern Swift features.
+
+Mojave users can continue using Mac Mouse Fix <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3">3.0.3</a>
+
+or the <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest">latest
+
+version of Mac Mouse Fix 2</a>. I hope that’s a good solution for
+
+everyone.</p>
+
+<p><em>Edited with excellent assistance from Claude.</em></p>
+
+<hr />
+
+<p>Also check out the previous release <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3"><strong>3.0.3</strong></a>.</p>
+
+</body>
+
+</html>

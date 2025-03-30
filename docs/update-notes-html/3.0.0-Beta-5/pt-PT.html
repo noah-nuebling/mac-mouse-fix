@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-PT" xml:lang="pt-PT">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmphe1ajwb0</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Traduzido por IA</strong></p>
+
+<p>Esta nota de lançamento foi traduzida pela IA Claude. Pode não estar
+
+totalmente precisa.<br />
+
+Para a versão original em inglês, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-5">clique
+
+aqui</a>.</p>
+
+<hr />
+
+<p>Confere também as <strong>alterações interessantes</strong>
+
+introduzidas no <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-4">3.0.0
+
+Beta 4</a>!</p>
+
+<hr />
+
+<p>O <strong>3.0.0 Beta 5</strong> restaura a
+
+<strong>compatibilidade</strong> com alguns <strong>ratos</strong> no
+
+macOS 13 Ventura e <strong>corrige a rolagem</strong> em várias
+
+aplicações. Também inclui várias outras pequenas correções e melhorias
+
+na qualidade de vida.</p>
+
+<p>Aqui está <strong>tudo o que há de novo</strong>:</p>
+
+<h3 id="rato">Rato</h3>
+
+<ul>
+
+<li>Corrigida a rolagem no Terminal e outras aplicações! Vê o Issue no
+
+GitHub <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/413">#413</a>.</li>
+
+<li>Corrigida a incompatibilidade com alguns ratos no macOS 13 Ventura,
+
+abandonando o uso de APIs Apple não confiáveis em favor de hacks de
+
+baixo nível. Espero que isto não introduza novos problemas - avisa-me se
+
+acontecer! Agradecimentos especiais à Maria e ao utilizador do GitHub <a
+
+href="https://github.com/samiulhsnt">samiulhsnt</a> por ajudarem a
+
+descobrir isto! Vê o Issue no GitHub <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/424">#424</a>
+
+para mais informações.</li>
+
+<li>Não usará CPU ao clicar nos Botões 1 ou 2 do rato. Uso de CPU
+
+ligeiramente reduzido ao clicar noutros botões.
+
+<ul>
+
+<li>Esta é uma “Debug Build”, por isso o uso de CPU pode ser cerca de 10
+
+vezes maior ao clicar nos botões nesta beta vs a versão final</li>
+
+</ul></li>
+
+<li>A simulação de rolagem do trackpad usada para as funcionalidades
+
+“Rolagem Suave” e “Rolar &amp; Navegar” do Mac Mouse Fix está agora
+
+ainda mais precisa. Isto pode levar a um melhor comportamento em algumas
+
+situações.</li>
+
+</ul>
+
+<h3 id="interface">Interface</h3>
+
+<ul>
+
+<li>Correção automática de problemas com a concessão de Acesso à
+
+Acessibilidade após atualizar de uma versão mais antiga do Mac Mouse
+
+Fix. Adota as alterações descritas nas <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.2">Notas
+
+de Lançamento 2.2.2</a>.</li>
+
+<li>Adicionado um botão “Cancelar” no ecrã “Conceder Acesso à
+
+Acessibilidade”</li>
+
+<li>Corrigido um problema onde a configuração do Mac Mouse Fix não
+
+funcionava corretamente após instalar uma nova versão, porque a nova
+
+versão se conectava à versão antiga do “Mac Mouse Fix Helper”. Agora, o
+
+Mac Mouse Fix não se conectará mais à versão antiga do “Mac Mouse Fix
+
+Helper” e desativará a versão antiga automaticamente quando
+
+apropriado.</li>
+
+<li>Fornecendo instruções ao utilizador sobre como corrigir um problema
+
+onde o Mac Mouse Fix não pode ser ativado corretamente devido a outra
+
+versão do Mac Mouse Fix estar presente no sistema. Este problema ocorre
+
+apenas no macOS Ventura.</li>
+
+<li>Comportamento e animações aprimorados no ecrã “Conceder Acesso à
+
+Acessibilidade”</li>
+
+<li>O Mac Mouse Fix será trazido para o primeiro plano quando for
+
+ativado. Isto melhora as interações da interface em algumas situações,
+
+como quando ativas o Mac Mouse Fix depois de ter sido desativado em
+
+Definições do Sistema &gt; Geral &gt; Itens de Login.</li>
+
+<li>Textos da interface melhorados no ecrã “Conceder Acesso à
+
+Acessibilidade”</li>
+
+<li>Textos da interface melhorados que aparecem ao tentar ativar o Mac
+
+Mouse Fix enquanto está desativado nas Definições do Sistema</li>
+
+<li>Corrigido um texto em alemão na interface</li>
+
+</ul>
+
+<h3 id="bastidores">Bastidores</h3>
+
+<ul>
+
+<li>O número de compilação do “Mac Mouse Fix” e do “Mac Mouse Fix
+
+Helper” incorporado estão agora sincronizados. Isto é usado para evitar
+
+que o “Mac Mouse Fix” se conecte acidentalmente a versões antigas do
+
+“Mac Mouse Fix Helper”.</li>
+
+<li>Corrigido problema onde alguns dados sobre a tua licença e período
+
+de teste às vezes eram exibidos incorretamente ao iniciar a aplicação
+
+pela primeira vez, removendo dados em cache da configuração inicial</li>
+
+<li>Muita limpeza na estrutura do projeto e código-fonte</li>
+
+<li>Mensagens de depuração melhoradas</li>
+
+</ul>
+
+<hr />
+
+<h3 id="como-podes-ajudar">Como Podes Ajudar</h3>
+
+<p>Podes ajudar partilhando as tuas <strong>ideias</strong>,
+
+<strong>problemas</strong> e <strong>feedback</strong>!</p>
+
+<p>O melhor lugar para partilhar as tuas <strong>ideias</strong> e
+
+<strong>problemas</strong> é o <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Assistente
+
+de Feedback</a>. O melhor lugar para dar feedback
+
+<strong>rápido</strong> e não estruturado é a <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Discussão
+
+de Feedback</a>.</p>
+
+<p>Também podes aceder a estes lugares dentro da aplicação no separador
+
+“<strong>ⓘ Sobre</strong>”.</p>
+
+<p><strong>Obrigado</strong> por ajudares a tornar o Mac Mouse Fix
+
+melhor! 💙💛❤️</p>
+
+</body>
+
+</html>
