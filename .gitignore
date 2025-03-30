@@ -20,3 +20,9 @@ gumroad_sales_cache.json
 
 # Password file
 sudopass.sh
+
+# Downloads/temp folder     (Note: [Mar 2025] Used by generate_releases.py)
+generate_releases_downloads
+
+# App bundle cache          (Note: [Mar 2025] The files are large and fast to download – no need to clutter up the git history)
+app-bundle-cache
