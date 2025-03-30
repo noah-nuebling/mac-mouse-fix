@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **March 2025**
 
+- 🇬🇧&nbsp;Sean&nbsp;Cozens - "Exellent app for mouse users. Thank you."
 - 🇺🇦&nbsp;Gudzelyak92
 - 🇺🇸&nbsp;Ben&nbsp;Traverse - "acab"
 - 🇺🇸&nbsp;Joseph&nbsp;H
