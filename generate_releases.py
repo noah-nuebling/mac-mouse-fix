@@ -1112,25 +1112,34 @@ def upget_translation(
     def update_translation_file():
         
         # Constants
-        user_allowed_translate_all_locales_key  = f'user_allowed_translate_all - {src_path}'
-        user_allowed_translate_ALL_key          = f'user_allowed_translate_ALL'
+        key_userchoice_alltranslations_doc       = f'user_allowed_translate_all - {src_path}'
+        key_userchoice_alltranslations_locale    = f'user_allowed_translate_all - {translation_locale}'
+        key_userchoice_alltranslations           = f'user_allowed_translate_ALL'
 
         # Check if user allows this translation
         #   (User might wanna avoid expensive/slow API calls.)
         user_allowed_translate = None
-        if hasattr(upget_translation, user_allowed_translate_ALL_key):
-            user_allowed_translate = getattr(upget_translation, user_allowed_translate_ALL_key)
-        elif hasattr(upget_translation, user_allowed_translate_all_locales_key):
-            user_allowed_translate = getattr(upget_translation, user_allowed_translate_all_locales_key)
+        if 0: pass
+        elif hasattr(upget_translation, key_userchoice_alltranslations_doc):    user_allowed_translate = getattr(upget_translation, key_userchoice_alltranslations_doc)
+        elif hasattr(upget_translation, key_userchoice_alltranslations_locale): user_allowed_translate = getattr(upget_translation, key_userchoice_alltranslations_locale)
+        elif hasattr(upget_translation, key_userchoice_alltranslations):        user_allowed_translate = getattr(upget_translation, key_userchoice_alltranslations)
         else:
             while True:
-                user_input = input(f"❓🤖❓ Translate '{src_path}' to language '{translation_locale}'? (Might incur API costs) [y/n/ya/na/yaa/naa - ya/na to apply choice to all remaining languages. yaa/naa to apply choice to all.]")
+                user_input = input(mfdedent("""
+                    ❓🤖❓ Translate '{src_path}' to language '{translation_locale}'? (Might incur API costs)
+                        [y/n/yd/nd/yl/nl/yaa/naa
+                        - yd/nd     to apply choice to all remaining translations of this document
+                        - yl/nl     to apply choice to all remaining translations into this language
+                        - yaa/naa   to apply choice to all remaining translations]
+                    """).format(src_path=src_path, translation_locale=translation_locale))
                 if   user_input == 'y':     user_allowed_translate = True
                 elif user_input == 'n':     user_allowed_translate = False
-                elif user_input == 'ya':    user_allowed_translate = True;                          setattr(upget_translation, user_allowed_translate_all_locales_key, True)
-                elif user_input == 'na':    user_allowed_translate = False;                         setattr(upget_translation, user_allowed_translate_all_locales_key, False)
-                elif user_input == 'yaa':   user_allowed_translate = True;                          setattr(upget_translation, user_allowed_translate_ALL_key, True)
-                elif user_input == 'naa':   user_allowed_translate = False;                         setattr(upget_translation, user_allowed_translate_ALL_key, False)
+                elif user_input == 'yd':    user_allowed_translate = True;                          setattr(upget_translation, key_userchoice_alltranslations_doc,      True)
+                elif user_input == 'nd':    user_allowed_translate = False;                         setattr(upget_translation, key_userchoice_alltranslations_doc,      False)
+                elif user_input == 'yl':    user_allowed_translate = True;                          setattr(upget_translation, key_userchoice_alltranslations_locale,   True)
+                elif user_input == 'nl':    user_allowed_translate = False;                         setattr(upget_translation, key_userchoice_alltranslations_locale,   False)
+                elif user_input == 'yaa':   user_allowed_translate = True;                          setattr(upget_translation, key_userchoice_alltranslations,          True)
+                elif user_input == 'naa':   user_allowed_translate = False;                         setattr(upget_translation, key_userchoice_alltranslations,          False)
                 else:                       print(f'Error: Input {user_input} unrecognised.');      continue
                 break
         assert user_allowed_translate is not None, "Code is buggy"
