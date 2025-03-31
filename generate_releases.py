@@ -62,6 +62,7 @@ TODO: [Mar 2025]
 
 Protocol:  
   - (early) [Mar 2025]
+        I found an old system/user prompt for translation from a few months back in the Anthropic console. I used it verbatim IIRC, as it already produced good results.
         I machine translated 3.0.3 update notes using the following parameters:
             model:          claude-3-5-sonnet-20241022
             temperature:    0
@@ -110,6 +111,8 @@ Protocol:
                     -> This should be easy to maintain and make translations quality really good.
                     - Problems:
                         - When older strings referenced by the glossary_keys get removed, we might need special handling -> Could probably just hardcode the latest commit where a specific string is available.
+                    - Update: Idea:
+                        - To build the dynamic glossary: Tell the LLM: Output sequence <!-- MISSING LOCALIZATION CONTEXT --> if you find that you are missing context information to create a precise and clear translation. (Such as the precise terms displayed in the app's UI)
 
                 -> Conclusion: Start with 2. (Disclaimer) and perhaps add 4. (Dynamic glossary) later to improve quality.
 
@@ -948,35 +951,50 @@ class LocalizableString:
     hint: str|None = None
 
 custom_strings_in_src_language: dict[str, LocalizableString] = {
-    'release-notes.disclaimer': LocalizableString(mfdedent(r""" 
-        **ℹ️ Translated by AI**
+    'release-notes.disclaimer': LocalizableString(
+        mfdedent(r""" 
+            **ℹ️ Translated by AI**
 
-        This release note has been translated by the Claude AI. It may contain errors.\
-        For the original English version, [click here]({gh_releases_url}).
-        """)),
-    'release.disclaimer': LocalizableString(mfdedent(r"""
-        <b>ℹ️ Translated by AI</b><br>
-        This GitHub Release has been translated by the Claude AI. It may contain errors.<br>
-        For the original English version, <a href="{gh_releases_url}">click here</a>.
-        """)),
+            This release note has been translated by the Claude AI. It may contain errors.\
+            For the original English version, [click here]({gh_releases_url}).
+        """)
+    ),
+    'release.disclaimer': LocalizableString(
+        mfdedent(r"""
+            <b>ℹ️ Translated by AI</b><br>
+            This GitHub Release has been translated by the Claude AI. It may contain errors.<br>
+            For the original English version, <a href="{gh_releases_url}">click here</a>.
+        """),
+        hint=mfdedent(r"""
+            This will be displayed at the top of a localization of a https://github.com/<owner>/<repo>/releases/tag/<tag> page.
+            Please keep the term 'GitHub Release' in English as if it were an official feature name.
+            (It's actually not, but the terms 'GitHub' and 'Release' do appear on the (English only) page, and so I think this will help users understand what we're referring to.)
+        """)
+    ),
     'release.metadata': LocalizableString(
         r"**Release Date:** {date}",   
-        hint="Metadata displayed right below the header of a release document for the Mac Mouse Fix app."),
+        hint="Metadata displayed right below the header of a release document for the Mac Mouse Fix app."
+    ),
     'release.assets': LocalizableString(
         r"Assets",                     
-        hint="This is a heading for a table showing downloadable files/resources for a release of the Mac Mouse Fix app."),
+        hint="This is a heading for a table showing downloadable files/resources for a release of the Mac Mouse Fix app."
+    ),
 
     # Handwritten German versions (unused, just for reference, as of [Mar 2025])
-        '__de.release.disclaimer': LocalizableString(mfdedent(r"""
-            <b>Von KI übersetzt</b><br>
-            Dies ist eine Übersetzung von einem <b><em>GitHub Release</em></b>.<br>
-            Die Übersetzung wurde von der Claude KI erstellt und ist möglicherweise nicht ganz korrekt.<br>
-            Das ursprüngliche GitHub Release (auf englisch) findest du <a href="{gh_releases_url}">hier</a>.
-            """)),
+        '__de.release.disclaimer': LocalizableString(
+            mfdedent(r"""
+                <b>Von KI übersetzt</b><br>
+                Dies ist eine Übersetzung von einem <b><em>GitHub Release</em></b>.<br>
+                Die Übersetzung wurde von der Claude KI erstellt und ist möglicherweise nicht ganz korrekt.<br>
+                Das ursprüngliche GitHub Release (auf englisch) findest du <a href="{gh_releases_url}">hier</a>.
+            """)
+        ),
         '__de.release.metadata': LocalizableString(
-            "**Veröffentlichungsdatum:** {date}"),
+            "**Veröffentlichungsdatum:** {date}"
+        ),
         '__de.release.assets': LocalizableString(
-            "Assets"),
+            "Assets"
+        ),
 }
 
 def upget_custom_string(locale: str, strkey: str) -> str|None:
