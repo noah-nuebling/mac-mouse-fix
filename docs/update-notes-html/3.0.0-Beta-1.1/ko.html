@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmporu4mpmg</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI가 번역함</strong></p>
+
+<p>이 릴리스 노트는 Claude AI가 번역했습니다. 오류가 있을 수
+
+있습니다.<br />
+
+영어 원문을 보시려면 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-1.1">여기를
+
+클릭하세요</a>.</p>
+
+<hr />
+
+<p><strong>3.0.0</strong>은 지금까지 Mac Mouse Fix의 <strong>가장 큰
+
+업데이트</strong>가 될 것입니다!</p>
+
+<p>오랫동안 작업해온 많은 기능들을 한데 모아 마침내 이 멋진 <strong>가치
+
+제안</strong>을 전달합니다:</p>
+
+<p><strong>$10짜리 마우스를 Apple 트랙패드보다 더 좋게
+
+만들어보세요!</strong></p>
+
+<p>지금 바로 <strong>테스트</strong>해보실 수 있습니다! 여러분의
+
+피드백이 정말 기대됩니다!</p>
+
+<p>다음은 <strong>새로운 기능들</strong>입니다:</p>
+
+<h2 id="클릭하고-드래그하여-스크롤">1. 클릭하고 드래그하여 스크롤</h2>
+
+<p>이제 어느 방향으로든 자유롭게 <strong>클릭하고 드래그하여
+
+스크롤</strong>할 수 있습니다!</p>
+
+<p><strong>Safari</strong>에서 뒤로가기와 앞으로가기,
+
+<strong>Mail</strong>에서 메시지를 읽음 표시하기, 그리고 <strong>Apple
+
+트랙패드</strong>에서 <strong>두 손가락 스와이프</strong>로 할 수 있는
+
+<strong>모든 것</strong>을 할 수 있습니다!</p>
+
+<p>이 수준의 품질로 기능을 구현하기 위해 열심히 노력했습니다.
+
+결과적으로, 사용해보시면 정말 “<strong>그냥 작동한다</strong>”는 것을
+
+느끼실 수 있을 것입니다!</p>
+
+<h2 id="스크롤-제스처">2. 스크롤 제스처</h2>
+
+<p>이제 Mac Mouse Fix는 <strong>스크롤 제스처</strong>를 지원합니다!
+
+마우스 버튼을 누른 채로 <strong>스크롤</strong>하여 <strong>동작을
+
+실행</strong>할 수 있다는 의미입니다!</p>
+
+<p>스크롤 제스처를 통해 매우 <strong>직관적인</strong> 방식으로 하나의
+
+마우스 버튼에서 <strong>더 많은 기능</strong>을 사용할 수 있습니다.</p>
+
+<p>이 베타 버전에는 <strong>다음과 같은</strong> 스크롤 제스처가
+
+있습니다:</p>
+
+<ul>
+
+<li><strong>데스크톱 &amp; Launchpad</strong>는 위나 아래로 스크롤하여
+
+데스크톱을 보여주거나 Launchpad를 열 수 있게 해줍니다. Apple
+
+트랙패드에서 4손가락으로 핀치하는 동작을 시뮬레이션하기 때문에 매우
+
+자연스럽고 직관적입니다.</li>
+
+<li><strong>Spaces 간 이동</strong>은 위아래로 스크롤하여 Spaces 간
+
+전환할 수 있게 해줍니다. Apple 트랙패드에서 3손가락으로 스와이프하는
+
+동작을 시뮬레이션하기 때문에 매우 자연스럽습니다. 하지만 이미 클릭하고
+
+드래그로 Spaces 간 이동이 가능하기 때문에 중복될 수 있다고 생각합니다.
+
+여러분의 의견을 들려주세요!</li>
+
+<li><strong>확대/축소</strong>를 통해 웹이나 다른 곳에서 자세히 볼 수
+
+있습니다. Mac Mouse Fix 2에서는 Command (⌘) 키를 누른 채 스크롤하여
+
+사용할 수 있었지만, 이제는 한 손으로 더 쉽게 할 수 있습니다!</li>
+
+<li><strong>가로 스크롤</strong>로 좌우로 스크롤할 수 있습니다. Apple
+
+트랙패드에서 2손가락 스와이프를 시뮬레이션하기 때문에 Safari와 다른
+
+앱에서 페이지 간 이동에도 사용할 수 있습니다.</li>
+
+<li><strong>빠른 스크롤</strong>로 최소한의 노력으로 긴 거리를 스크롤할
+
+수 있습니다.</li>
+
+<li><strong>정밀 스크롤</strong>로 짧은 거리를 스크롤하고 볼륨
+
+슬라이더와 같은 민감한 UI 요소를 정밀하게 사용할 수 있습니다.</li>
+
+<li><strong>앱 전환기</strong>로 키보드에서 Command-Tab (⌘ + ↹)을 누르는
+
+것처럼 최근 앱 간 전환할 수 있습니다. 이 기능에는 몇 가지 버그가 있고
+
+이미 키보드로 쉽게 탭 전환기에 접근할 수 있기 때문에 유용하지 않을 수
+
+있어서 나중에 제거할 것 같습니다. 하지만 여러분의 의견을
+
+들려주세요.</li>
+
+</ul>
+
+<h2 id="관성-스크롤">3. 관성 스크롤</h2>
+
+<p><strong>관성 스크롤</strong>은 마우스의 스크롤을 Apple 트랙패드만큼
+
+<strong>빠르고</strong> <strong>부드럽게</strong> 만들어줍니다.</p>
+
+<p>관성 스크롤은 <strong>길고</strong> 매우 <strong>부드러운
+
+애니메이션</strong>을 만듭니다. 스크롤 휠에서 긴 애니메이션은 일반적으로
+
+제어력이 떨어지는 단점이 있습니다.</p>
+
+<p>하지만 Mac Mouse Fix 3는 <strong>스마트한 알고리즘</strong>을
+
+구현하여 <strong>훌륭한 관성 느낌</strong>을 주면서도 많은
+
+<strong>제어력</strong>을 제공합니다.</p>
+
+<p>참고로, 이 베타를 다운로드하시면 (Magic Mouse 외에) 마우스에서
+
+<strong>스크롤 바운싱</strong>을 사용하는 <strong>최초의</strong> 사람들
+
+중 한 명이 될 것입니다! 꽤 멋지지 않나요?</p>
+
+<h2 id="기타-스크롤-개선사항">4. 기타 스크롤 개선사항</h2>
+
+<p>MMF 3를 위해 대부분의 스크롤 코드를 <strong>다시
+
+작성</strong>했습니다. 이를 통해 많은 <strong>작은 기능들</strong>과
+
+개선사항을 구현할 수 있었습니다:</p>
+
+<ol type="1">
+
+<li>이제 <strong>2개의 추가 키보드 수정자</strong>가 있어서 Command
+
+(⌘)로 <strong>확대/축소</strong>, Shift (⇧)로 <strong>가로
+
+스크롤</strong>뿐만 아니라 Control (^)로 <strong>빠른 스크롤</strong>,
+
+Option (⌥)으로 <strong>정밀 스크롤</strong>도 할 수 있습니다.</li>
+
+<li>아름답고 직관적인 새로운 UI를 통해 <strong>모든 4개의 키보드
+
+수정자</strong>를 보고 <strong>커스터마이즈</strong>할 수 있습니다.</li>
+
+<li><strong>항상 켜진 정밀 스크롤</strong>을 통해 수정자 키를 누르지
+
+않고도 스크롤 휠을 천천히 움직여 정밀하게 스크롤할 수 있습니다.</li>
+
+<li>마우스의 <strong>가로 스크롤 입력</strong>이 더 이상 무시되지 않고
+
+일반 세로 스크롤 입력처럼 부드럽게 처리되고 반전됩니다. <strong>틸트
+
+휠</strong>이나 <strong>가로 스크롤 휠</strong>이 있는 마우스는 이제
+
+훨씬 더 좋은 느낌을 줄 것입니다.</li>
+
+<li><strong>스크롤 방향 반전 설정</strong>이 이제 시스템 설정과
+
+독립적이어서 UI가 덜 복잡해졌습니다.</li>
+
+<li>이제 <strong>스크롤 설정</strong>을 더 자유롭게
+
+<strong>조합</strong>할 수 있습니다. 예를 들어, 부드러운 스크롤이
+
+<strong>비활성화</strong>되어 있을 때도 <strong>Mac Mouse Fix</strong>의
+
+스크롤 속도를 사용할 수 있습니다. 또는 부드러운 스크롤이
+
+<strong>활성화</strong>되어 있을 때 <strong>macOS</strong>의 스크롤
+
+속도를 사용할 수 있습니다. (참고: 개인적으로 macOS의 스크롤 속도를 전혀
+
+좋아하지 않고 누군가가 선호할 이유를 생각할 수 없습니다. 만약
+
+선호하신다면 여러분의 경험에 대해 더 자세히 알고 싶습니다! “<strong>ⓘ
+
+About</strong>” 탭을 통해 연락해주세요.)</li>
+
+</ol>
+
+<h2 id="메뉴-바-아이템">5. 메뉴 바 아이템</h2>
+
+<p>이제 Mac Mouse Fix에 <strong>메뉴 바 아이템</strong>이 있어서
+
+활성화되어 있을 때 항상 확인할 수 있습니다!</p>
+
+<p>메뉴 바 아이템에는 <strong>아름다운 아이콘</strong>이 있고, Mac Mouse
+
+Fix가 방해되지 않도록 게임을 하거나 앱을 사용할 때 특정 기능을
+
+<strong>빠르게 비활성화</strong>할 수 있습니다.</p>
+
+<p>물론 깔끔한 메뉴 바를 위해 <strong>비활성화</strong>할 수도
+
+있습니다.</p>
+
+<h2 id="앱별-설정이-제거되었습니다">6. 앱별 설정이 제거되었습니다</h2>
+
+<p><strong>앱별 설정</strong>은 현재 제거되었습니다. 하지만 앞으로 더
+
+강력하고 안정적인 형태로 <strong>다시 가져올</strong> 계획입니다.</p>
+
+<p>현재로서는 <strong>메뉴 바</strong> 아이템의 빠른 설정이 덜
+
+편리하지만 <strong>더 나은</strong> 해결책이라고 생각합니다.</p>
+
+<p>이는 이전 앱별 설정의 <strong>가장 중요한 문제들</strong>을
+
+<strong>해결</strong>합니다:</p>
+
+<ul>
+
+<li>앱별 설정은 <strong>명령줄 실행 파일</strong>과 같은 일부
+
+프로그램에서 작동하지 않았습니다. 여기에는 <strong>Minecraft</strong>와
+
+같은 인기 앱이 포함되었습니다.</li>
+
+<li>앱별 설정에는 많은 제한이 있었습니다. 예를 들어 버튼을 완전히
+
+<strong>끌 수 없었</strong>는데, 이는 많은 게이머들에게 문제가
+
+되었습니다.</li>
+
+</ul>
+
+<p>또한 이전 앱별 설정은 원래 이전 스크롤 시스템과 호환되지 않는 일부
+
+앱을 위한 <strong>임시 해결책</strong>으로 설계되었다는 점을 고려해야
+
+합니다. 하지만 이제 새로운 스크롤 시스템이 Apple 트랙패드의 터치
+
+스크롤을 정확하게 에뮬레이트하므로 이러한 호환성 문제의 대부분이
+
+<strong>해결되었습니다</strong>! 따라서 이전 앱별 설정이 가장 잘했던
+
+것에 대한 필요성이 줄어들었습니다.</p>
+
+<p>모두가 이해해주시길 바랍니다! 여러분의 <strong>생각</strong>을
+
+들려주세요!</p>
+
+<h2 id="ui-전면-개편">7. UI 전면 개편</h2>
+
+<p><strong>단순함</strong>과 <strong>사용 편의성</strong>을 유지하면서도
+
+더 <strong>아름답고</strong> <strong>강력</strong>하도록 UI를 완전히
+
+<strong>다시 작성</strong>했습니다.</p>
+
+<p>다음은 새로운 기능들입니다:</p>
+
+<ul>
+
+<li>UI가 이제 여러 <strong>탭</strong>으로 나뉘어졌습니다. 이를 통해
+
+정리가 깔끔해지고 UI가 너무 복잡하거나 부담스럽지 않으면서도 Mac Mouse
+
+Fix가 중요한 추가 설정을 제공할 수 있게 되었습니다. 이는 앞으로 Mac
+
+Mouse Fix를 새로운 기능으로 확장할 수 있게 해줄 것입니다.</li>
+
+<li>새로운 UI 전체에 미묘하고 즐거운 작은 <strong>애니메이션</strong>을
+
+추가하여 탐색이 더 쉬워지고 세련된 느낌을 줍니다.</li>
+
+<li>다른 옵션에 종속된 옵션들은 <strong>숨겨지고</strong> 레이아웃이
+
+아름다운 미묘한 애니메이션과 함께 조정됩니다. 이를 통해 가능한 한
+
+단순하고 간소화된 상태를 유지합니다. 따라서 생각할 필요가 없는 옵션들을
+
+보느라 시간과 두뇌 자원을 낭비하지 않아도 됩니다.</li>
+
+<li>새로운 UI는 혼란스러울 수 있는 옵션들에 대한 작은
+
+<strong>힌트</strong>를 제공합니다.</li>
+
+<li><strong>새로운 액션 테이블 디자인</strong>은 많은 사람들이
+
+혼란스러워했던 액션 추가와 제거 방법을 더 명확하게 만들었습니다. 또한
+
+액션 수에 맞춰 크기가 조절되므로 수동으로 크기를 조절할 필요가
+
+없습니다.</li>
+
+<li>새로운 <strong>About 탭</strong>은 아름다운 레이아웃을 특징으로
+
+하며, 지원, 피드백 등을 위한 추가 옵션을 손쉽게 사용할 수 있게
+
+합니다.</li>
+
+<li>일부 <strong>기존 UI 문구</strong>가 개선되었습니다.</li>
+
+<li>이제 클릭하고 드래그 제스처 중에 마우스 포인터를 고정하는
+
+<strong>새로운 옵션</strong>이 있습니다. 테스트할 수 있는 것은 없지만,
+
+트랙볼 마우스에 매우 좋을 것 같습니다!</li>
+
+</ul>
+
+<h2 id="수익화">8. 수익화</h2>
+
+<p>Mac Mouse Fix 3는 <strong>30일 동안 무료</strong>로 사용할 수 있으며,
+
+그 후에는 <strong>$1.99</strong>에 구매할 수 있습니다.</p>
+
+<p>무료였던 것에 대해 지불해야 하는 것이 좋은 느낌은 아니지만, 이것이
+
+프로젝트에 정말 <strong>좋은 일</strong>이라는 것을 이해해주시길
+
+바랍니다!</p>
+
+<p>Mac Mouse Fix의 다른 모든 측면과 마찬가지로, <strong>사용자
+
+경험</strong>을 가능한 한 <strong>단순</strong>하고
+
+<strong>즐겁게</strong> 만드는 데 많은 주의를 기울였습니다:</p>
+
+<ol type="1">
+
+<li><strong>30일 무료</strong> 기간이 스마트하게 구현되었습니다. Mac
+
+Mouse Fix는 <strong>실제로 사용한 날</strong>만
+
+<strong>카운트</strong>합니다. 따라서 시간이 다 되기 전에 앱을 사용해야
+
+한다는 <strong>압박감</strong>이 없고, 스트레스 없이 앱을 구매할지 말지
+
+정보에 입각한 결정을 내릴 수 있습니다.</li>
+
+<li>30일 무료 기간이 끝난 후, 앱 <strong>구매</strong>는 매우
+
+<strong>단순</strong>하고 <strong>빠릅</strong>니다. <strong>Apple
+
+Pay</strong>와 <strong>PayPal</strong>과 같이 좋아하는 모든 결제 수단을
+
+사용할 수 있으며, Apple Pay를 통해 앱 내에서 <strong>2번의
+
+클릭</strong>으로 결제할 수 있습니다!</li>
+
+<li>$1.99에 앱을 구매한 후, <strong>라이선스 활성화</strong>도 매우
+
+<strong>단순</strong>합니다. 웹 브라우저의 <strong>결제 화면</strong>에
+
+<strong>링크</strong>를 넣어서 앱으로 <strong>직접</strong> 이동하고
+
+<strong>라이선스 입력 화면</strong>을 열어줍니다!</li>
+
+<li><strong>라이선스를 활성화</strong>하면 about 탭에 귀여운 랜덤
+
+<strong>감사 메시지</strong>가 나타납니다. (매우 희귀한 비밀 메시지도
+
+있다고 합니다…)</li>
+
+<li>라이선스는 <strong>iCloud를 통해 동기화</strong>되어 모든 컴퓨터에서
+
+자동으로 사용할 수 있습니다!</li>
+
+</ol>
+
+<p>Mac Mouse Fix를 재정적으로 도와주시면 제가 더 많은 시간을 투자하여
+
+<strong>최고의 마우스 드라이버</strong>를 만들 수 있습니다. 저도 Mac
+
+Mouse Fix 작업을 <em>정말</em> 좋아하기 때문에 <strong>행복</strong>할
+
+것입니다 :)</p>
+
+<p><strong>Mac Mouse Fix는 여전히 오픈 소스인가요?</strong></p>
+
+<p>네. Mac Mouse Fix는 여전히 오픈 소스이며, 앞으로도 그럴
+
+계획입니다.</p>
+
+<p>이는 소스에서 빌드하고 라이선스 확인을 비활성화하여 Mac Mouse Fix를
+
+무료로 사용할 <em>수</em> 있다는 것을 의미합니다. 그래도 괜찮습니다.
+
+다만 이러한 크랙 버전을 온라인에 공유하는 것은 권장하지 않습니다. 물론
+
+다음 업데이트에서는 크랙되지 않은 버전을 받게 되므로 매 업데이트마다 이
+
+작업을 다시 해야 합니다. (아니면 그냥 $1.99를 내고 최고의 마우스
+
+드라이버를 구매하세요! :)</p>
+
+<p>누구나 자신만의 기여를 추가하지 않고 Mac Mouse Fix의 복사본을
+
+판매하지 않는 한 무료 및 상업용 제품에서 Mac Mouse Fix의 소스 코드를
+
+계속 사용할 수 있습니다.</p>
+
+<p>MMF 3가 적용될 새로운 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/blob/version-3/LICENSE">MMF
+
+라이선스</a>에서 자세한 내용을 확인하세요.</p>
+
+<p><strong>Mac Mouse Fix 3 베타를 사용하려면 돈을 내야
+
+하나요?</strong></p>
+
+<p>아니요. 30일 무료 기간을 사용하시면 됩니다. 무료 일수 카운터는 Mac
+
+Mouse Fix 3의 안정 버전이 출시될 때 초기화되지 않을 것 같습니다. 이는
+
+추가로 설계하고 구현해야 할 것이 있고 많은 사람들이 크게 신경 쓰지 않을
+
+것 같기 때문입니다. (신경 쓰신다면 알려주세요). 하지만 베타가 30일 이상
+
+지속되면 무료 일수를 연장할 것입니다.</p>
+
+<p><strong>이미 기부했다면 Mac Mouse Fix를 무료로 받을 수
+
+있나요?</strong></p>
+
+<p>네! 2022년 9월 10일 이전에 밀크쉐이크를 사주셨다면
+
+noah.n.public@gmail.com으로 제목에 “Milkshake Karma”를 넣고 증거
+
+스크린샷과 함께 이메일을 보내주시면 100% 할인 코드나 비슷한 것을
+
+보내드리겠습니다!</p>
+
+<h2 id="국제화">9. 국제화</h2>
+
+<p>UI 재작성으로 이제 Mac Mouse Fix를 다른 언어로
+
+<strong>번역</strong>할 수 있게 되었습니다!</p>
+
+<p>이미 제 모국어인 <strong>독일어</strong>로 번역했고, 여러분도
+
+<strong>자신의 언어</strong>로 번역할 수 있습니다!</p>
+
+<p>앞으로 더 <strong>자세한 가이드</strong>를 작성할 계획이지만,
+
+시도해보고 싶으시다면 다음은 <strong>단계</strong>에 대한 간단한
+
+개요입니다:</p>
+
+<ul>
+
+<li>소스 코드 &amp; Xcode <strong>다운로드</strong></li>
+
+<li>프로젝트에 <strong><a
+
+href="https://developer.apple.com/documentation/xcode/adding-support-for-languages-and-regions">언어
+
+추가</a></strong></li>
+
+<li>프로젝트 전체의 <strong><code>.strings</code></strong> 및
+
+<strong><code>.stringsdict</code></strong> 파일에 번역 입력</li>
+
+<li>변경사항 <strong>커밋</strong>하고 <strong>풀 리퀘스트</strong>
+
+생성</li>
+
+</ul>
+
+<p>번역이 프로젝트에 추가되면 <strong>MMF 복사본 10개를 무료</strong>로
+
+받을 수 있고, 물론 <strong>기여자로 크레딧</strong>도 받습니다. About
+
+탭의 (비밀 희귀 감사 메시지)를 변경하여 <strong>개인 메시지</strong>도
+
+남길 수 있다고 합니다.</p>
+
+<p>앞으로 <strong>더 많은 혜택</strong>을 추가할 수도 있습니다. 이에
+
+대한 <strong>아이디어</strong>가 있다면 알려주세요!</p>
+
+<h2 id="도움을-주실-수-있는-방법">10. 도움을 주실 수 있는 방법</h2>
+
+<p><strong>아이디어</strong>, <strong>이슈</strong>,
+
+<strong>피드백</strong>을 공유해주세요!</p>
+
+<p><strong>아이디어</strong>와 <strong>이슈</strong>를 공유하기 가장
+
+좋은 곳은 <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">피드백
+
+어시스턴트</a>입니다. <strong>빠른</strong> 비정형 피드백을 주시기 가장
+
+좋은 곳은 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">피드백
+
+토론</a>입니다.</p>
+
+<p>앱 내의 “<strong>ⓘ About</strong>” 탭에서도 이 두 곳에 접근하실 수
+
+있습니다.</p>
+
+<p>Mac Mouse Fix를 더 좋게 만드는 데 도움을 주셔서
+
+<strong>감사합니다</strong>! 🚀</p>
+
+</body>
+
+</html>

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="tr" xml:lang="tr">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpmgvy3ict</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI tarafından çevrildi</strong></p>
+
+<p>Bu sürüm notu Claude AI tarafından çevrilmiştir. Hatalar
+
+içerebilir.<br />
+
+İngilizce orijinal versiyonu için <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-6">buraya
+
+tıklayın</a>.</p>
+
+<hr />
+
+<p>Ayrıca <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-5&amp;locale=tr">3.0.0
+
+Beta 5</a>’te tanıtılan <strong>harika değişikliklere</strong> de göz
+
+atın!</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 6</strong> derin optimizasyonlar ve
+
+iyileştirmeler, kaydırma ayarlarının yeniden düzenlenmesi, Çince
+
+çeviriler ve daha fazlasını getiriyor!</p>
+
+<p>İşte tüm yenilikler:</p>
+
+<h2 id="derin-optimizasyonlar">1. Derin Optimizasyonlar</h2>
+
+<p>Bu Beta için, Mac Mouse Fix’ten son performans parçasını çıkarmak
+
+için çok çalıştım. Ve şimdi mutlulukla duyuruyorum ki, Beta 6’da bir
+
+fare düğmesine tıkladığınızda, önceki betaya göre <strong>2 kat</strong>
+
+daha hızlı! Ve kaydırma işlemi ise <strong>4 kat</strong> daha
+
+hızlı!</p>
+
+<p>Beta 6 ile MMF, CPU’nuzu ve pilinizi mümkün olduğunca korumak için
+
+kendisinin bazı parçalarını akıllıca kapatacak.</p>
+
+<p>Örneğin, şu anda 3 düğmeli bir fare kullanıyorsanız ve sadece
+
+farenizde bulunmayan 4. ve 5. düğmeler gibi düğmeler için eylemler
+
+ayarladıysanız, Mac Mouse Fix farenizden gelen düğme girişini tamamen
+
+dinlemeyi durduracak. Yani farenizde bir düğmeye tıkladığınızda %0 CPU
+
+kullanımı! Veya MMF’deki kaydırma ayarları sistemle eşleştiğinde, Mac
+
+Mouse Fix kaydırma tekerleğinden gelen girişi tamamen dinlemeyi
+
+durduracak. Yani kaydırma yaparken %0 CPU kullanımı! Ancak Komut
+
+(⌘)-Kaydırma ile Yakınlaştırma özelliğini ayarlarsanız, Mac Mouse Fix
+
+kaydırma tekerleği girişinizi dinlemeye başlayacak - ama sadece Komut
+
+(⌘) tuşunu basılı tutarken. Ve benzeri. Yani gerçekten akıllı ve sadece
+
+gerektiğinde CPU kullanacak!</p>
+
+<p>Bu, MMF’nin artık sadece en güçlü, kullanımı kolay ve cilalı fare
+
+sürücüsü değil, aynı zamanda en optimize ve verimli sürücülerden biri,
+
+belki de en iyisi olduğu anlamına geliyor!</p>
+
+<h2 id="azaltılmış-uygulama-boyutu">2. Azaltılmış Uygulama Boyutu</h2>
+
+<p>16 MB ile Beta 6, Beta 5’e göre yaklaşık 2 kat daha küçük!</p>
+
+<p>Bu, eski macOS sürümlerine desteğin kaldırılmasının bir yan
+
+etkisi.</p>
+
+<h2 id="eski-macos-sürümlerine-desteğin-kaldırılması">3. Eski macOS
+
+Sürümlerine Desteğin Kaldırılması</h2>
+
+<p>MMF 3’ü macOS 11 Big Sur öncesi macOS sürümlerinde düzgün çalıştırmak
+
+için çok uğraştım. Ancak cilalı bir his vermesi için gereken iş miktarı
+
+çok fazlaydı, bu yüzden bundan vazgeçmek zorunda kaldım.</p>
+
+<p>Bundan sonra, resmi olarak desteklenen en eski sürüm macOS 11 Big Sur
+
+olacak.</p>
+
+<p>Uygulama eski sürümlerde hala açılacak ancak görsel ve belki başka
+
+sorunlar olacak. Uygulama artık macOS 10.14.4’ten önceki sürümlerde
+
+açılmayacak. Bu, modern Swift kütüphanelerini (“Swift ABI Stability”
+
+bakınız) içeren en eski macOS sürümü 10.14.4 olduğu için, bu Swift
+
+kütüphanelerinin artık uygulamada bulunması gerekmediğinden uygulama
+
+boyutunu 2 kat küçültmemizi sağlıyor.</p>
+
+<h2 id="kaydırma-iyileştirmeleri">4. Kaydırma İyileştirmeleri</h2>
+
+<p>Beta 6, MMF 3’te tanıtılan yeni kaydırma sistemlerinin
+
+yapılandırmasında ve kullanıcı arayüzünde birçok iyileştirme
+
+içeriyor.</p>
+
+<h3 id="kullanıcı-arayüzü">Kullanıcı Arayüzü</h3>
+
+<ul>
+
+<li>Kaydırma sekmesindeki kullanıcı arayüzü metni büyük ölçüde
+
+basitleştirildi ve kısaltıldı. “Kaydırma” kelimesinin çoğu kullanımı,
+
+bağlamdan anlaşıldığı için kaldırıldı.</li>
+
+<li>Kaydırma yumuşaklığı ayarları çok daha net olacak şekilde yeniden
+
+düzenlendi ve bazı ek seçeneklere izin verildi. Artık eski “Eylemsizlik
+
+ile” düğmesinin yerini alan “Kapalı”, “Normal” veya “Yüksek”
+
+“Yumuşaklık” seçenekleri arasında seçim yapabilirsiniz. Bunun çok daha
+
+net olduğunu düşünüyorum ve kullanıcı arayüzünde yeni “Trackpad
+
+Simülasyonu” seçeneği için yer açtı.</li>
+
+<li>Yeni “Trackpad Simülasyonu” seçeneğinin kapatılması, kaydırma
+
+sırasında lastik bant efektini devre dışı bırakır, ayrıca Safari ve
+
+diğer uygulamalarda sayfalar arasında kaydırmayı ve daha fazlasını
+
+engeller. Özellikle Logitech MX Master gibi bazı Logitech Farelerde
+
+bulunan serbest dönen kaydırma tekerleğine sahip olanlar olmak üzere
+
+birçok kişi bundan rahatsız oldu, ancak bazıları bundan hoşlanıyor, bu
+
+yüzden bunu bir seçenek haline getirmeye karar verdim. Umarım özelliğin
+
+sunumu nettir. Bu konuda önerileriniz varsa, bana bildirin.</li>
+
+<li>“Doğal Kaydırma Yönü” seçeneği “Kaydırma Yönünü Tersine Çevir”
+
+olarak değiştirildi. Bu, ayarın artık sistem kaydırma yönünü tersine
+
+çevirdiği ve artık sistem kaydırma yönünden bağımsız olmadığı anlamına
+
+geliyor. Bu yeni yöntem, tartışmasız biraz daha kötü bir kullanıcı
+
+deneyimi sunsa da, bazı optimizasyonları uygulamamıza olanak tanıyor ve
+
+kullanıcıya kaydırma için Mac Mouse Fix’i tamamen nasıl kapatacağını
+
+daha şeffaf bir şekilde gösteriyor.</li>
+
+<li>Kaydırma ayarlarının birçok farklı uç durumda değiştirilmiş kaydırma
+
+ile etkileşiminin iyileştirilmesi. Örneğin, “Hassasiyet” seçeneği artık
+
+“Masaüstü ve Launchpad” için “Tıkla ve Kaydır” eyleminde uygulanmayacak
+
+çünkü burada yardımcı olmak yerine engel oluşturuyor.</li>
+
+<li>“Masaüstü ve Launchpad” veya “Yakınlaştır veya Uzaklaştır” ve diğer
+
+özellikler için “Tıkla ve Kaydır” kullanırken kaydırma hızı
+
+iyileştirildi.</li>
+
+<li>macOS 13.0 Ventura öncesi macOS sürümlerinde kaydırma sekmesinde
+
+bulunan çalışmayan sistem kaydırma hızı ayarlarına bağlantı kaldırıldı.
+
+Bağlantıyı çalışır hale getirmenin bir yolunu bulamadım ve çok önemli
+
+değil.</li>
+
+</ul>
+
+<h3 id="kaydırma-hissi">Kaydırma Hissi</h3>
+
+<ul>
+
+<li>“Normal Yumuşaklık” için animasyon eğrisi iyileştirildi (önceden
+
+“Eylemsizlik ile” kapalıyken erişilebiliyordu). Bu, işlemlerin daha
+
+yumuşak ve duyarlı hissedilmesini sağlıyor.</li>
+
+<li>Tüm kaydırma hızı ayarlarının hissi iyileştirildi. “Orta” hız ve
+
+“Hızlı” hız daha hızlı. “Düşük”, “Orta” ve “Yüksek” hızlar arasında daha
+
+fazla ayrım var. “Hassasiyet” seçeneğini kullanırken kaydırma
+
+tekerleğini daha hızlı hareket ettirdikçe hızlanma daha doğal ve rahat
+
+hissediliyor.</li>
+
+<li>Bir yönde kaydırmaya devam ederken kaydırma hızının artış şekli daha
+
+doğal ve kademeli hissedilecek. Hızlanmayı modellemek için yeni
+
+matematiksel eğriler kullanıyorum. Hız artışını kazara tetiklemek de
+
+daha zor olacak.</li>
+
+<li>“macOS” kaydırma hızını kullanırken bir yönde kaydırmaya devam
+
+ederken artık kaydırma hızı artmıyor.</li>
+
+<li>Kaydırma animasyon süresi maksimum bir süreyle sınırlandırıldı.
+
+Kaydırma animasyonu doğal olarak daha uzun sürecekse, maksimum sürenin
+
+altında kalmak için hızlandırılacak. Bu şekilde, serbest dönen bir
+
+tekerlek ile sayfa kenarına kaydırma yaparken sayfa içeriği ekrandan bu
+
+kadar uzun süre uzaklaşmayacak. Bu, serbest dönmeyen normal bir tekerlek
+
+ile normal kaydırmayı etkilememeli.</li>
+
+<li>Safari ve diğer uygulamalarda sayfa kenarına kaydırma yaparken
+
+lastik bant efekti etrafındaki bazı etkileşimler iyileştirildi.</li>
+
+<li>Mac Mouse Fix’in çok eski tercih paneli sürümünden yükseltme
+
+yapıldıktan sonra “Tıkla ve Kaydır” ve diğer kaydırmayla ilgili
+
+özelliklerin düzgün çalışmadığı bir sorun düzeltildi.</li>
+
+<li>“macOS” kaydırma hızını yumuşak kaydırma ile birlikte kullanırken
+
+tek piksellik kaydırmaların gecikmeli gönderildiği bir sorun
+
+düzeltildi.</li>
+
+<li>Hızlı Kaydırma değiştiricisini bıraktıktan sonra kaydırmanın hala
+
+çok hızlı olduğu bir hata düzeltildi. Önceki kaydırma hareketlerinden
+
+kaydırma hızının nasıl devralındığı konusunda diğer iyileştirmeler.</li>
+
+<li>Kaydırma hızının daha büyük ekran boyutlarıyla artış şekli
+
+iyileştirildi.</li>
+
+</ul>
+
+<h2 id="onaylama">5. Onaylama</h2>
+
+<p>3.0.0 Beta 6’dan itibaren Mac Mouse Fix “Onaylanmış” olacak. Bu,
+
+uygulamayı ilk kez açarken Mac Mouse Fix’in potansiyel olarak “Kötü
+
+Amaçlı Yazılım” olduğuna dair mesajların artık görünmeyeceği anlamına
+
+geliyor.</p>
+
+<p>Uygulamanızı onaylatmak yılda 100$ maliyete sahip. Mac Mouse Fix gibi
+
+ücretsiz ve açık kaynaklı yazılımlara karşı düşmanca göründüğü ve ayrıca
+
+Apple’ın iOS’ta yaptığı gibi Mac’i kontrol etmesi ve kilitlemesi yönünde
+
+tehlikeli bir adım gibi göründüğü için buna her zaman karşıydım. Ancak
+
+Onaylama eksikliği, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/114">birkaç
+
+durumda</a> yeni bir sürüm yayınlayana kadar kimsenin uygulamayı
+
+kullanamaması da dahil olmak üzere oldukça ciddi sorunlara yol açtı. Mac
+
+Mouse Fix artık ücretli olacağı için, daha kolay ve daha istikrarlı bir
+
+kullanıcı deneyimi için uygulamayı Onaylatmanın sonunda uygun olduğunu
+
+düşündüm.</p>
+
+<h2 id="çince-çeviriler">6. Çince Çeviriler</h2>
+
+<p>Mac Mouse Fix artık Çince’de mevcut! Daha spesifik olarak, şu
+
+dillerde kullanılabilir:</p>
+
+<ul>
+
+<li>Geleneksel Çince</li>
+
+<li>Basitleştirilmiş Çince</li>
+
+<li>Çince (Hong Kong)</li>
+
+</ul>
+
+<p>Tüm bu çevirileri sağladığı, betalar boyunca güncellemeleri ve
+
+benimle iletişimi için <span class="citation"
+
+data-cites="groverlynn">@groverlynn</span>’e çok teşekkürler. Pull
+
+request’ini buradan görebilirsiniz:
+
+https://github.com/noah-nuebling/mac-mouse-fix/pull/395.</p>
+
+<h2 id="diğer-her-şey">7. Diğer Her Şey</h2>
+
+<p>Yukarıda listelenen değişikliklerin yanı sıra Beta 6 ayrıca birçok
+
+küçük iyileştirme içeriyor.</p>
+
+<ul>
+
+<li>“Tıklama”, “Tıkla ve Tut” ve “Tıkla ve Kaydır” Eylemlerinden birkaç
+
+seçenek kaldırıldı çünkü aynı işlevselliğe başka şekillerde
+
+ulaşılabileceği ve menüleri çok temizlediği için gereksiz olduklarını
+
+düşündüm. İnsanlar şikayet ederse bu seçenekleri geri getireceğim. Yani
+
+bu seçenekleri özlüyorsanız - lütfen şikayet edin.</li>
+
+<li>Tıkla ve Sürükle yönü artık Sistem Ayarları &gt; Trackpad altında
+
+“Doğal kaydırma” kapalı olduğunda bile trackpad kaydırma yönüyle
+
+eşleşecek. Daha önce, Tıkla ve Sürükle her zaman trackpad’de “Doğal
+
+kaydırma” <em>açık</em> durumdayken kaydırma gibi davranıyordu.</li>
+
+<li>Ekran kaydı sırasında veya DisplayLink yazılımını kullanırken “Tıkla
+
+ve Sürükle” Eylemini kullanırken imlecin kaybolup başka bir yerde
+
+yeniden belirdiği bir sorun düzeltildi.</li>
+
+<li>Düğmeler sekmesindeki “+”-Alanında “+” işaretinin ortalanması
+
+düzeltildi.</li>
+
+<li>Düğmeler sekmesinde birkaç görsel İyileştirme. “+”-Alanı ve Eylem
+
+Tablosunun renk paleti, macOS’un “Pencerelerde duvar kağıdı
+
+renklendirmesine izin ver” seçeneğini kullanırken doğru görünecek
+
+şekilde yeniden düzenlendi. Eylem Tablosunun kenarlıkları artık
+
+çevresine uyum sağlayan ve daha dinamik görünen şeffaf bir renge
+
+sahip.</li>
+
+<li>Eylem tablosuna çok sayıda eylem eklediğinizde ve Mac Mouse Fix
+
+penceresi büyüdüğünde, tam olarak ekran kadar büyüyecek (veya dock
+
+gizleme etkin değilse ekran eksi dock kadar) ve sonra duracak şekilde
+
+ayarlandı. Daha fazla eylem eklediğinizde, eylem tablosu kaydırmaya
+
+başlayacak.</li>
+
+<li>Bu Beta artık reklamı yapıldığı gibi ABD doları cinsinden lisans
+
+satın alabileceğiniz yeni bir ödeme sistemini destekliyor. Daha önce
+
+sadece Euro cinsinden lisans satın alabiliyordunuz. Eski Euro lisansları
+
+tabii ki desteklenmeye devam edecek.</li>
+
+<li>“Kaydır ve Gezin” özelliğini kullanırken momentum kaydırmanın bazen
+
+başlatılmadığı bir sorun düzeltildi.</li>
+
+<li>Mac Mouse Fix penceresi bir sekme değişikliği sırasında kendini
+
+yeniden boyutlandırdığında artık Dock ile çakışmayacak şekilde kendini
+
+yeniden konumlandıracak.</li>
+
+<li>Düğmeler sekmesinden başka bir sekmeye geçerken bazı kullanıcı
+
+arayüzü öğelerindeki titreme düzeltildi.</li>
+
+<li>Bir girişi kaydettikten sonra “+”-Alanının oynadığı animasyonun
+
+görünümü iyileştirildi. Özellikle Ventura öncesi macOS sürümlerinde,
+
+“+”-Alanının gölgesinin animasyon sırasında bozuk görüneceği
+
+durumlarda.</li>
+
+<li>Uygulamayı ilk kez başlatırken veya bir ön ayar yüklerken görünen,
+
+Mac Mouse Fix tarafından yakalanan/artık yakalanmayan birkaç düğmeyi
+
+listeleyen bildirimler devre dışı bırakıldı. Bu mesajların bu
+
+bağlamlarda dikkat dağıtıcı, biraz bunaltıcı ve pek yardımcı olmadığını
+
+düşündüm.</li>
+
+<li>Erişilebilirlik Erişimi Verme Ekranı yeniden düzenlendi. Artık Mac
+
+Mouse Fix’in neden Erişilebilirlik Erişimine ihtiyaç duyduğu hakkındaki
+
+bilgileri web sitesine bağlantı vermek yerine doğrudan gösterecek ve
+
+biraz daha net ve görsel olarak daha hoş bir düzene sahip.</li>
+
+<li>Hakkında sekmesindeki Teşekkürler bağlantısı güncellendi.</li>
+
+<li>Sistemde başka bir sürüm bulunduğu için Mac Mouse Fix’in
+
+etkinleştirilemediği durumlarda hata mesajları iyileştirildi. Mesaj
+
+artık herhangi bir yere tıklandığında kaybolan bir Toast Bildirimi
+
+yerine, kapatılana kadar diğer pencerelerin üzerinde kalan yüzen bir
+
+uyarı penceresinde gösterilecek. Bu, önerilen çözüm adımlarını takip
+
+etmeyi kolaylaştırmalı.</li>
+
+<li>Ventura öncesi macOS sürümlerinde markdown işleme ile ilgili bazı
+
+sorunlar düzeltildi. MMF artık Ventura dahil tüm macOS Sürümleri için
+
+özel bir markdown işleme çözümü kullanacak. Daha önce Ventura’da
+
+tanıtılan bir sistem API’sini kullanıyorduk ancak bu tutarsızlıklara yol
+
+açıyordu. Markdown, kullanıcı arayüzü genelinde bağlantılar ve vurgu
+
+eklemek için kullanılıyor.</li>
+
+<li>Erişilebilirlik erişimini etkinleştirme etkileşimleri
+
+cilalandı.</li>
+
+<li>Uygulama penceresinin bazen sekmelerden birine geçene kadar herhangi
+
+bir içerik göstermeden açıldığı bir sorun düzeltildi.</li>
+
+<li>“+”-Alanında, bir eylem girebileceğinizi gösteren bir hover efekti
+
+göstermesine rağmen bazen yeni bir eylem ekleyemediğiniz bir sorun
+
+düzeltildi.</li>
+
+<li>“+”-Alanı içinde fare işaretçisini hareket ettirirken bazen oluşan
+
+bir kilitlenme ve diğer küçük sorunlar düzeltildi.</li>
+
+<li>Farenizin mevcut düğme ayarlarına uymadığı görüldüğünde Düğmeler
+
+sekmesinde görünen bir açılır pencerenin bazen tüm metninin kalın olduğu
+
+bir sorun düzeltildi.</li>
+
+<li>Eski MIT lisansına yapılan tüm atıflar yeni MMF lisansına
+
+güncellendi. Proje için oluşturulan yeni dosyalar artık MMF lisansından
+
+bahseden otomatik oluşturulmuş bir başlık içerecek.</li>
+
+<li>Düğmeler sekmesine geçiş, MMF’yi Kaydırma için etkinleştirecek
+
+şekilde ayarlandı. Aksi takdirde, Tıkla ve Kaydır hareketlerini
+
+kaydedemezdiniz.</li>
+
+<li>Bazı durumlarda düğme adlarının Eylem Tablosunda doğru
+
+görüntülenmediği bazı sorunlar düzeltildi.</li>
+
+<li>Deneme süresi sona erdikten sonra uygulamayı açıp Hakkında
+
+sekmesindeki deneme bölümüne geçtiğinizde hatalı görüneceği bir hata
+
+düzeltildi.</li>
+
+<li>Hakkında Sekmesinin deneme bölümündeki Lisans Etkinleştir
+
+bağlantısının bazen tıklamalara tepki vermediği bir hata
+
+düzeltildi.</li>
+
+<li>“Tıkla ve Sürükle” için “Spaces ve Mission Control” özelliğini
+
+kullanırken oluşan bir bellek sızıntısı düzeltildi.</li>
+
+<li>Ana Mac Mouse Fix uygulamasında Sertleştirilmiş çalışma zamanı
+
+etkinleştirildi, güvenlik artırıldı.</li>
+
+<li>Çok sayıda kod temizliği, proje yeniden yapılandırması</li>
+
+<li>Birkaç çökme düzeltildi</li>
+
+<li>Birkaç bellek sızıntısı düzeltildi</li>
+
+<li>Çeşitli küçük kullanıcı arayüzü metin düzeltmeleri</li>
+
+<li>Birkaç dahili sistemin yeniden düzenlenmesi ayrıca sağlamlığı ve uç
+
+durumlardaki davranışı iyileştirdi</li>
+
+</ul>
+
+<h2 id="nasıl-yardımcı-olabilirsiniz">8. Nasıl Yardımcı
+
+Olabilirsiniz</h2>
+
+<p><strong>Fikirlerinizi</strong>, <strong>sorunlarınızı</strong> ve
+
+<strong>geri bildirimlerinizi</strong> paylaşarak yardımcı
+
+olabilirsiniz!</p>
+
+<p><strong>Fikirlerinizi</strong> ve <strong>sorunlarınızı</strong>
+
+paylaşmak için en iyi yer <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Geri
+
+Bildirim Asistanı</a>. <strong>Hızlı</strong> yapılandırılmamış geri
+
+bildirim vermek için en iyi yer <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Geri
+
+Bildirim Tartışması</a>.</p>
+
+<p>Bu yerlere uygulama içinden “<strong>ⓘ Hakkında</strong>” sekmesinden
+
+de erişebilirsiniz.</p>
+
+<p>Mac Mouse Fix’i en iyi hale getirmemize yardımcı olduğunuz için
+
+<strong>teşekkürler</strong>! 🙌:)</p>
+
+</body>
+
+</html>

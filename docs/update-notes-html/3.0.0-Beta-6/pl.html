@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpqzts7deg</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Przetłumaczone przez AI</strong></p>
+
+<p>Ta informacja o wydaniu została przetłumaczona przez Claude AI. Może
+
+zawierać błędy.<br />
+
+Aby zobaczyć oryginalną wersję po angielsku, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-6">kliknij
+
+tutaj</a>.</p>
+
+<hr />
+
+<p>Sprawdź też <strong>świetne zmiany</strong> wprowadzone w <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-5&amp;locale=pl">3.0.0
+
+Beta 5</a>!</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 6</strong> wprowadza głębokie optymalizacje i
+
+ulepszenia, przebudowę ustawień przewijania, tłumaczenia na język
+
+chiński i więcej!</p>
+
+<p>Oto wszystkie nowości:</p>
+
+<h2 id="głębokie-optymalizacje">1. Głębokie Optymalizacje</h2>
+
+<p>W tej wersji Beta włożyłem dużo pracy w wydobycie maksymalnej
+
+wydajności z Mac Mouse Fix. Teraz z dumą mogę ogłosić, że kliknięcie
+
+przycisku myszy w Beta 6 jest <strong>2x</strong> szybsze w porównaniu
+
+do poprzedniej bety! A przewijanie jest nawet <strong>4x</strong>
+
+szybsze!</p>
+
+<p>W Beta 6, MMF będzie też inteligentnie wyłączać niektóre swoje
+
+części, aby maksymalnie oszczędzać procesor i baterię.</p>
+
+<p>Na przykład, gdy używasz myszy z 3 przyciskami, ale masz
+
+skonfigurowane akcje tylko dla przycisków, których nie ma w twojej myszy
+
+(jak przyciski 4 i 5), Mac Mouse Fix całkowicie przestanie nasłuchiwać
+
+sygnałów z przycisków myszy. Oznacza to 0% użycia procesora podczas
+
+klikania! Albo gdy ustawienia przewijania w MMF są zgodne z systemowymi,
+
+Mac Mouse Fix przestanie całkowicie nasłuchiwać sygnałów z kółka myszy.
+
+Oznacza to 0% użycia procesora podczas przewijania! Ale jeśli ustawisz
+
+funkcję Command (⌘)-Scroll do przybliżania, Mac Mouse Fix zacznie
+
+nasłuchiwać sygnałów z kółka myszy - ale tylko gdy trzymasz klawisz
+
+Command (⌘). I tak dalej. Jest więc naprawdę inteligentny i będzie
+
+używać procesora tylko wtedy, gdy musi!</p>
+
+<p>Oznacza to, że MMF jest teraz nie tylko najpotężniejszym,
+
+najprostszym w użyciu i najbardziej dopracowanym sterownikiem myszy dla
+
+Maca, ale także jednym z najbardziej, jeśli nie najbardziej,
+
+zoptymalizowanym i wydajnym!</p>
+
+<h2 id="zmniejszony-rozmiar-aplikacji">2. Zmniejszony Rozmiar
+
+Aplikacji</h2>
+
+<p>Przy 16 MB, Beta 6 jest około 2x mniejsza niż Beta 5!</p>
+
+<p>Jest to efekt uboczny porzucenia wsparcia dla starszych wersji
+
+macOS.</p>
+
+<h2 id="porzucenie-wsparcia-dla-starszych-wersji-macos">3. Porzucenie
+
+Wsparcia dla Starszych Wersji macOS</h2>
+
+<p>Starałem się, aby MMF 3 działał poprawnie na wersjach macOS przed
+
+macOS 11 Big Sur. Ale ilość pracy potrzebnej do osiągnięcia
+
+dopracowanego efektu okazała się przytłaczająca, więc musiałem z tego
+
+zrezygnować.</p>
+
+<p>Od teraz, najwcześniejszą oficjalnie wspieraną wersją będzie macOS 11
+
+Big Sur.</p>
+
+<p>Aplikacja nadal będzie się otwierać na starszych wersjach, ale będą
+
+występować problemy wizualne i być może inne. Aplikacja nie będzie się
+
+już uruchamiać na wersjach macOS przed 10.14.4. To właśnie pozwala nam
+
+zmniejszyć rozmiar aplikacji 2-krotnie, ponieważ 10.14.4 jest
+
+najwcześniejszą wersją macOS zawierającą nowoczesne biblioteki Swift
+
+(Zobacz “Swift ABI Stability”), co oznacza, że te biblioteki Swift nie
+
+muszą już być zawarte w aplikacji.</p>
+
+<h2 id="ulepszenia-przewijania">4. Ulepszenia Przewijania</h2>
+
+<p>Beta 6 zawiera wiele ulepszeń w konfiguracji i interfejsie
+
+użytkownika nowych systemów przewijania wprowadzonych w MMF 3.</p>
+
+<h3 id="interfejs-użytkownika">Interfejs Użytkownika</h3>
+
+<ul>
+
+<li>Znacznie uproszczono i skrócono tekst interfejsu w zakładce
+
+Przewijanie. Większość wzmianek o słowie “Przewijanie” została usunięta,
+
+ponieważ wynika to z kontekstu.</li>
+
+<li>Przebudowano ustawienia płynności przewijania, aby były jaśniejsze i
+
+umożliwiały dodatkowe opcje. Teraz możesz wybrać między “Płynnością”
+
+“Wyłączoną”, “Regularną” lub “Wysoką”, zastępując stary przełącznik “z
+
+Inercją”. Myślę, że jest to znacznie jaśniejsze i zrobiło miejsce w
+
+interfejsie na nową opcję “Symulacja Trackpada”.</li>
+
+<li>Wyłączenie nowej opcji “Symulacja Trackpada” wyłącza efekt gumowej
+
+taśmy podczas przewijania, zapobiega też przewijaniu między stronami w
+
+Safari i innych aplikacjach, i więcej. Wiele osób było tym zirytowanych,
+
+szczególnie ci z kółkami przewijania bez blokady, jak w niektórych
+
+myszkach Logitech, np. MX Master, ale inni to lubią, więc zdecydowałem
+
+się zrobić z tego opcję. Mam nadzieję, że prezentacja tej funkcji jest
+
+jasna. Jeśli masz jakieś sugestie, daj mi znać.</li>
+
+<li>Zmieniono opcję “Naturalny Kierunek Przewijania” na “Odwróć Kierunek
+
+Przewijania”. Oznacza to, że ustawienie teraz odwraca systemowy kierunek
+
+przewijania i nie jest już niezależne od systemowego kierunku
+
+przewijania. Chociaż jest to prawdopodobnie nieco gorsze doświadczenie
+
+użytkownika, ten nowy sposób działania pozwala nam zaimplementować pewne
+
+optymalizacje i sprawia, że jest bardziej przejrzyste dla użytkownika,
+
+jak całkowicie wyłączyć Mac Mouse Fix dla przewijania.</li>
+
+<li>Ulepszono sposób, w jaki ustawienia przewijania współdziałają z
+
+modyfikowanym przewijaniem w wielu różnych przypadkach brzegowych. Np.
+
+opcja “Precyzja” nie będzie już stosowana do akcji “Kliknij i Przewiń”
+
+dla “Pulpit i Launchpad”, ponieważ jest tu przeszkodą zamiast
+
+pomocą.</li>
+
+<li>Poprawiono prędkość przewijania przy używaniu “Kliknij i Przewiń”
+
+dla “Pulpit i Launchpad” lub “Przybliż lub Oddal” i innych funkcji.</li>
+
+<li>Usunięto niedziałający link do systemowych ustawień prędkości
+
+przewijania w zakładce przewijania, który był obecny w wersjach macOS
+
+przed macOS 13.0 Ventura. Nie mogłem znaleźć sposobu na sprawienie, by
+
+link działał, a nie jest to szczególnie ważne.</li>
+
+</ul>
+
+<h3 id="odczucie-przewijania">Odczucie Przewijania</h3>
+
+<ul>
+
+<li>Poprawiono krzywą animacji dla “Regularnej Płynności” (wcześniej
+
+dostępnej przez wyłączenie “z Inercją”). To sprawia, że wszystko jest
+
+bardziej płynne i responsywne.</li>
+
+<li>Poprawiono odczucie wszystkich ustawień prędkości przewijania.
+
+Prędkości “Średnia” i “Szybka” są szybsze. Jest większa różnica między
+
+prędkościami “Niska”, “Średnia” i “Wysoka”. Przyspieszenie podczas
+
+szybszego poruszania kółkiem myszy wydaje się bardziej naturalne i
+
+wygodne przy używaniu opcji “Precyzja”.</li>
+
+<li>Sposób, w jaki prędkość przewijania wzrasta podczas ciągłego
+
+przewijania w jednym kierunku, będzie bardziej naturalny i stopniowy.
+
+Używam nowych krzywych matematycznych do modelowania przyspieszenia.
+
+Przyspieszenie będzie też trudniejsze do przypadkowego
+
+uruchomienia.</li>
+
+<li>Brak przyspieszania prędkości przewijania podczas ciągłego
+
+przewijania w jednym kierunku przy używaniu prędkości przewijania
+
+“macOS”.</li>
+
+<li>Ograniczono maksymalny czas animacji przewijania. Jeśli animacja
+
+przewijania naturalnie trwałaby dłużej, zostanie przyspieszona, aby
+
+pozostać poniżej maksymalnego czasu. Dzięki temu przewijanie do krawędzi
+
+strony kółkiem bez blokady nie spowoduje tak długiego przesunięcia
+
+zawartości strony poza ekran. Nie powinno to wpływać na normalne
+
+przewijanie kółkiem z blokadą.</li>
+
+<li>Poprawiono niektóre interakcje związane z efektem gumowej taśmy
+
+podczas przewijania do krawędzi strony w Safari i innych
+
+aplikacjach.</li>
+
+<li>Naprawiono problem, gdzie “Kliknij i Przewiń” i inne funkcje
+
+związane z przewijaniem nie działały poprawnie po aktualizacji z bardzo
+
+starej wersji panelu preferencji Mac Mouse Fix.</li>
+
+<li>Naprawiono problem, gdzie pojedyncze piksele przewijania były
+
+wysyłane z opóźnieniem przy używaniu prędkości przewijania “macOS” razem
+
+z płynnym przewijaniem.</li>
+
+<li>Naprawiono błąd, gdzie przewijanie nadal było bardzo szybkie po
+
+zwolnieniu modyfikatora Szybkiego Przewijania. Inne ulepszenia dotyczące
+
+tego, jak prędkość przewijania jest przenoszona z poprzednich
+
+przesunięć.</li>
+
+<li>Poprawiono sposób, w jaki prędkość przewijania zwiększa się przy
+
+większych rozmiarach wyświetlacza.</li>
+
+</ul>
+
+<h2 id="notaryzacja">5. Notaryzacja</h2>
+
+<p>Począwszy od 3.0.0 Beta 6, Mac Mouse Fix będzie “Notaryzowany”.
+
+Oznacza to brak więcej komunikatów o tym, że Mac Mouse Fix jest
+
+potencjalnie “Złośliwym Oprogramowaniem” przy pierwszym otwarciu
+
+aplikacji.</p>
+
+<p>Notaryzacja aplikacji kosztuje 100$ rocznie. Zawsze byłem temu
+
+przeciwny, ponieważ wydawało się to wrogie wobec darmowego i otwartego
+
+oprogramowania jak Mac Mouse Fix, a także wydawało się niebezpiecznym
+
+krokiem w kierunku kontrolowania i zamykania Maca przez Apple, jak robią
+
+to z iOS. Ale brak Notaryzacji prowadził do dość poważnych problemów, w
+
+tym <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/114">kilku
+
+sytuacji</a>, gdzie nikt nie mógł używać aplikacji, dopóki nie wydałem
+
+nowej wersji. Ponieważ Mac Mouse Fix będzie teraz monetyzowany, uznałem,
+
+że w końcu właściwe jest Notaryzowanie aplikacji dla łatwiejszego i
+
+stabilniejszego doświadczenia użytkownika.</p>
+
+<h2 id="tłumaczenia-na-chiński">6. Tłumaczenia na Chiński</h2>
+
+<p>Mac Mouse Fix jest teraz dostępny po chińsku! Dokładniej, jest
+
+dostępny w:</p>
+
+<ul>
+
+<li>Chiński, Tradycyjny</li>
+
+<li>Chiński, Uproszczony</li>
+
+<li>Chiński (Hong Kong)</li>
+
+</ul>
+
+<p>Ogromne podziękowania dla <span class="citation"
+
+data-cites="groverlynn">@groverlynn</span> za dostarczenie wszystkich
+
+tych tłumaczeń, a także za ich aktualizowanie podczas bet i komunikację
+
+ze mną. Zobacz jego pull request tutaj:
+
+https://github.com/noah-nuebling/mac-mouse-fix/pull/395.</p>
+
+<h2 id="wszystko-inne">7. Wszystko Inne</h2>
+
+<p>Oprócz zmian wymienionych powyżej, Beta 6 zawiera również wiele
+
+mniejszych ulepszeń.</p>
+
+<ul>
+
+<li>Usunięto kilka opcji z Akcji “Kliknij”, “Kliknij i Przytrzymaj” oraz
+
+“Kliknij i Przewiń”, ponieważ uznałem je za redundantne, gdyż tę samą
+
+funkcjonalność można osiągnąć inaczej, a to upraszcza menu. Przywrócę te
+
+opcje, jeśli ludzie będą narzekać. Więc jeśli brakuje ci tych opcji -
+
+proszę narzekaj.</li>
+
+<li>Kierunek Kliknij i Przeciągnij będzie teraz odpowiadał kierunkowi
+
+przeciągania trackpadem nawet gdy “Naturalne przewijanie” jest wyłączone
+
+w Ustawieniach Systemowych &gt; Trackpad. Wcześniej Kliknij i
+
+Przeciągnij zawsze zachowywał się jak przeciąganie na trackpadzie z
+
+włączonym “Naturalnym przewijaniem”.</li>
+
+<li>Naprawiono problem, gdzie kursory znikały i pojawiały się gdzie
+
+indziej podczas używania Akcji “Kliknij i Przeciągnij” podczas
+
+nagrywania ekranu lub przy używaniu oprogramowania DisplayLink.</li>
+
+<li>Naprawiono wycentrowanie “+” w Polu “+” w zakładce Przyciski</li>
+
+<li>Kilka wizualnych ulepszeń w zakładce Przyciski. Paleta kolorów Pola
+
+“+” i Tabeli Akcji została przepracowana, aby wyglądała poprawnie przy
+
+używaniu opcji macOS “Zezwalaj na zabarwianie okien tapetą”. Obramowania
+
+Tabeli Akcji mają teraz przezroczysty kolor, który wygląda bardziej
+
+dynamicznie i dostosowuje się do otoczenia.</li>
+
+<li>Sprawiono, że gdy dodajesz dużo akcji do tabeli akcji i okno Mac
+
+Mouse Fix się powiększa, urośnie dokładnie do rozmiaru ekranu (lub do
+
+rozmiaru ekranu minus dok, jeśli nie masz włączonego ukrywania doku) i
+
+zatrzyma się. Gdy dodasz jeszcze więcej akcji, tabela akcji zacznie się
+
+przewijać.</li>
+
+<li>Ta Beta wspiera teraz nową opcję płatności, gdzie możesz kupić
+
+licencję w dolarach amerykańskich, jak reklamowano. Wcześniej można było
+
+kupić licencję tylko w euro. Stare licencje w euro będą oczywiście nadal
+
+wspierane.</li>
+
+<li>Naprawiono problem, gdzie przewijanie z rozpędem czasami nie było
+
+uruchamiane przy używaniu funkcji “Przewiń i Nawiguj”.</li>
+
+<li>Gdy okno Mac Mouse Fix zmienia rozmiar podczas przełączania
+
+zakładek, teraz zmieni swoją pozycję tak, aby nie nakładało się na
+
+Dok</li>
+
+<li>Naprawiono migotanie niektórych elementów interfejsu przy
+
+przełączaniu z zakładki Przyciski na inną zakładkę</li>
+
+<li>Poprawiono wygląd animacji, którą Pole “+” odtwarza po nagraniu
+
+sygnału wejściowego. Szczególnie na wersjach macOS przed Ventura, gdzie
+
+cień Pola “+” wyglądał błędnie podczas animacji.</li>
+
+<li>Wyłączono powiadomienia wymieniające kilka przycisków, które zostały
+
+przechwycone/nie są już przechwytywane przez Mac Mouse Fix, które
+
+pojawiały się przy pierwszym uruchomieniu aplikacji lub przy ładowaniu
+
+presetu. Uznałem, że te komunikaty były rozpraszające i nieco
+
+przytłaczające oraz niezbyt pomocne w tych kontekstach.</li>
+
+<li>Przebudowano Ekran Przyznawania Dostępu do Ułatwień Dostępu. Teraz
+
+będzie pokazywać informacje o tym, dlaczego Mac Mouse Fix potrzebuje
+
+Dostępu do Ułatwień Dostępu bezpośrednio zamiast linkować do strony
+
+internetowej i jest nieco jaśniejszy oraz ma bardziej przyjemny
+
+wizualnie układ.</li>
+
+<li>Zaktualizowano link do Podziękowań w zakładce O programie.</li>
+
+<li>Poprawiono komunikaty o błędach, gdy Mac Mouse Fix nie może być
+
+włączony, ponieważ inna wersja jest obecna w systemie. Komunikat będzie
+
+teraz wyświetlany w pływającym oknie alertu, które zawsze pozostaje na
+
+wierzchu innych okien do momentu zamknięcia, zamiast Powiadomienia
+
+Toast, które znika po kliknięciu gdziekolwiek. Powinno to ułatwić
+
+podążanie za sugerowanymi krokami rozwiązania.</li>
+
+<li>Naprawiono niektóre problemy z renderowaniem markdown na wersjach
+
+macOS przed Ventura. MMF będzie teraz używać własnego rozwiązania do
+
+renderowania markdown dla wszystkich wersji macOS, włącznie z Ventura.
+
+Wcześniej używaliśmy API systemowego wprowadzonego w Ventura, ale to
+
+prowadziło do niespójności. Markdown jest używany do dodawania linków i
+
+wyróżnień w tekście w całym interfejsie.</li>
+
+<li>Dopracowano interakcje związane z włączaniem dostępu do ułatwień
+
+dostępu.</li>
+
+<li>Naprawiono problem, gdzie okno aplikacji czasami otwierało się bez
+
+pokazywania zawartości, dopóki nie przełączyło się na jedną z
+
+zakładek.</li>
+
+<li>Naprawiono problem z Polem “+”, gdzie czasami nie można było dodać
+
+nowej akcji, mimo że pokazywał się efekt najechania wskazujący, że można
+
+wprowadzić akcję.</li>
+
+<li>Naprawiono zakleszczenie i kilka innych małych problemów, które
+
+czasami występowały przy poruszaniu wskaźnikiem myszy wewnątrz Pola
+
+“+”.</li>
+
+<li>Naprawiono problem, gdzie wyskakujące okienko pojawiające się w
+
+zakładce Przyciski, gdy twoja mysz wydaje się nie pasować do obecnych
+
+ustawień przycisków, czasami miało cały tekst pogrubiony.</li>
+
+<li>Zaktualizowano wszystkie wzmianki o starej licencji MIT na nową
+
+licencję MMF. Nowe pliki utworzone dla projektu będą teraz zawierać
+
+automatycznie generowany nagłówek wspominający licencję MMF.</li>
+
+<li>Sprawiono, że przełączanie na zakładkę Przyciski włącza MMF dla
+
+Przewijania. W przeciwnym razie nie można było nagrywać gestów Kliknij i
+
+Przewiń.</li>
+
+<li>Naprawiono niektóre problemy, gdzie nazwy przycisków nie wyświetlały
+
+się poprawnie w Tabeli Akcji w niektórych sytuacjach.</li>
+
+<li>Naprawiono błąd, gdzie sekcja próbna na ekranie O programie
+
+wyglądała błędnie przy otwieraniu aplikacji, a następnie przełączaniu na
+
+zakładkę próbną po wygaśnięciu okresu próbnego.</li>
+
+<li>Naprawiono błąd, gdzie link Aktywuj Licencję w sekcji próbnej
+
+zakładki O programie czasami nie reagował na kliknięcia.</li>
+
+<li>Naprawiono wyciek pamięci przy używaniu funkcji “Kliknij i
+
+Przeciągnij” dla “Spaces i Mission Control”.</li>
+
+<li>Włączono Hardened runtime w głównej aplikacji Mac Mouse Fix,
+
+poprawiając bezpieczeństwo</li>
+
+<li>Dużo porządków w kodzie, restrukturyzacja projektu</li>
+
+<li>Naprawiono kilka innych awarii</li>
+
+<li>Naprawiono kilka wycieków pamięci</li>
+
+<li>Różne małe poprawki tekstu interfejsu</li>
+
+<li>Przebudowy kilku wewnętrznych systemów również poprawiły odporność i
+
+zachowanie w przypadkach brzegowych</li>
+
+</ul>
+
+<h2 id="jak-możesz-pomóc">8. Jak Możesz Pomóc</h2>
+
+<p>Możesz pomóc dzieląc się swoimi <strong>pomysłami</strong>,
+
+<strong>problemami</strong> i <strong>opiniami</strong>!</p>
+
+<p>Najlepszym miejscem do dzielenia się <strong>pomysłami</strong> i
+
+<strong>problemami</strong> jest <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Asystent
+
+Opinii</a>. Najlepszym miejscem do dawania <strong>szybkich</strong>
+
+nieustrukturyzowanych opinii jest <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Dyskusja
+
+Opinii</a>.</p>
+
+<p>Możesz też dostać się do tych miejsc z poziomu aplikacji w zakładce
+
+“<strong>ⓘ O programie</strong>”.</p>
+
+<p><strong>Dziękuję</strong> za pomoc w uczynieniu Mac Mouse Fix
+
+najlepszym, jakim może być! 🙌:)</p>
+
+</body>
+
+</html>

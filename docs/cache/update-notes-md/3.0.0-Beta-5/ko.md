@@ -1,0 +1,48 @@
+[3.0.0 Beta 4](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-4)에서 도입된 **멋진 변경사항**도 확인해보세요!
+
+---
+
+**3.0.0 Beta 5**는 macOS 13 Ventura에서 일부 **마우스**와의 **호환성**을 복원하고 많은 앱에서 **스크롤**을 수정했습니다.
+또한 여러 가지 작은 수정사항과 사용성 개선이 포함되어 있습니다.
+
+다음은 **새로운 기능** 목록입니다:
+
+### 마우스
+
+- 터미널과 다른 앱에서 스크롤 문제가 해결되었습니다! GitHub 이슈 [#413](https://github.com/noah-nuebling/mac-mouse-fix/issues/413)을 참조하세요.
+- 신뢰할 수 없는 Apple API 대신 저수준 해킹을 사용하여 macOS 13 Ventura에서 일부 마우스와의 호환성 문제를 해결했습니다. 새로운 문제가 발생하지 않기를 바랍니다 - 문제가 있다면 알려주세요! 이 문제를 해결하는데 도움을 준 Maria와 GitHub 사용자 [samiulhsnt](https://github.com/samiulhsnt)에게 특별한 감사를 드립니다! 자세한 내용은 GitHub 이슈 [#424](https://github.com/noah-nuebling/mac-mouse-fix/issues/424)를 참조하세요.
+- 마우스 버튼 1 또는 2를 클릭할 때 CPU를 사용하지 않습니다. 다른 버튼을 클릭할 때 CPU 사용량이 약간 감소했습니다.
+    - 이것은 "디버그 빌드"이므로 이 베타에서 버튼을 클릭할 때 CPU 사용량이 최종 릴리스보다 약 10배 높을 수 있습니다
+- Mac Mouse Fix의 "부드러운 스크롤"과 "스크롤 및 탐색" 기능에 사용되는 트랙패드 스크롤 시뮬레이션이 더욱 정확해졌습니다. 이로 인해 일부 상황에서 더 나은 동작을 보일 수 있습니다.
+
+### UI
+
+- Mac Mouse Fix의 이전 버전에서 업데이트한 후 접근성 접근 권한 부여 문제를 자동으로 해결합니다. [2.2.2 릴리스 노트](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.2)에 설명된 변경사항을 적용했습니다.
+- "접근성 접근 권한 부여" 화면에 "취소" 버튼 추가
+- Mac Mouse Fix의 새 버전을 설치한 후 이전 버전의 "Mac Mouse Fix Helper"에 연결되어 설정이 제대로 작동하지 않는 문제를 해결했습니다. 이제 Mac Mouse Fix는 이전 "Mac Mouse Fix Helper"에 연결되지 않으며 필요한 경우 이전 버전을 자동으로 비활성화합니다.
+- macOS Ventura에서만 발생하는 시스템에 다른 버전의 Mac Mouse Fix가 있어 제대로 활성화할 수 없는 문제를 해결하는 방법에 대한 사용자 안내를 제공합니다.
+- "접근성 접근 권한 부여" 화면의 동작과 애니메이션 개선
+- Mac Mouse Fix가 활성화될 때 앱이 전면으로 나타납니다. 시스템 설정 > 일반 > 로그인 항목에서 비활성화된 후 Mac Mouse Fix를 활성화할 때와 같은 상황에서 UI 상호작용이 개선됩니다.
+- "접근성 접근 권한 부여" 화면의 UI 문구 개선
+- 시스템 설정에서 비활성화된 상태에서 Mac Mouse Fix를 활성화하려고 할 때 표시되는 UI 문구 개선
+- 독일어 UI 문구 수정
+
+### 내부 개선
+
+- "Mac Mouse Fix"와 내장된 "Mac Mouse Fix Helper"의 빌드 번호가 이제 동기화됩니다. 이는 "Mac Mouse Fix"가 실수로 이전 버전의 "Mac Mouse Fix Helper"에 연결되는 것을 방지하는 데 사용됩니다.
+- 초기 구성에서 캐시 데이터를 제거하여 앱을 처음 시작할 때 라이선스와 평가판 기간에 관한 일부 데이터가 잘못 표시되는 문제를 해결했습니다
+- 프로젝트 구조와 소스 코드의 대대적인 정리
+- 디버그 메시지 개선
+
+---
+
+### 도움을 주실 수 있는 방법
+
+여러분의 **아이디어**, **문제점** 그리고 **피드백**을 공유해주세요!
+
+**아이디어**와 **문제점**을 공유하기 가장 좋은 곳은 [피드백 도우미](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)입니다.
+**빠른** 비정형 피드백을 제공하기 가장 좋은 곳은 [피드백 토론](https://github.com/noah-nuebling/mac-mouse-fix/discussions/366)입니다.
+
+앱 내의 "**ⓘ 정보**" 탭에서도 이러한 곳들에 접근할 수 있습니다.
+
+Mac Mouse Fix를 더 좋게 만드는데 도움을 주셔서 **감사합니다**! 💙💛❤️

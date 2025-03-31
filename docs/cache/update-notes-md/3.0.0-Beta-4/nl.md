@@ -1,0 +1,104 @@
+Bekijk ook **wat er nieuw was** in [3.0.0 Beta 3](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-3)!
+
+---
+
+**3.0.0 Beta 4** brengt een nieuwe **"Standaardinstellingen herstellen..." optie** evenals veel **gebruiksgemak** verbeteringen en **bugfixes**!
+
+Hier is **alles** wat **nieuw** is:
+
+## 1. "Standaardinstellingen herstellen..." optie
+
+Er is nu een "**Standaardinstellingen herstellen...**" knop op het tabblad "Knoppen". 
+Hierdoor kun je je nog **comfortabeler** voelen tijdens het **experimenteren** met instellingen.
+
+Er zijn **2 standaardinstellingen** beschikbaar:
+
+1. De "Standaardinstelling voor muizen met **5+ knoppen**" is super krachtig en comfortabel. Het stelt je in staat om **alles** te doen wat je op een **trackpad** doet. Allemaal met de 2 **zijknoppen** die precies daar zitten waar je **duim** rust! Maar het is natuurlijk alleen beschikbaar op muizen met 5 of meer knoppen.
+2. De "Standaardinstelling voor muizen met **3 knoppen**" laat je nog steeds de **belangrijkste** dingen doen die je op een trackpad doet - zelfs op een muis met maar 3 knoppen.
+
+Ik heb mijn best gedaan om deze functie **slim** te maken:
+
+- Wanneer je MMF voor het eerst start, wordt automatisch de preset **geselecteerd** die het **beste bij je muis past**.
+- Wanneer je de standaardinstellingen wilt herstellen, zal Mac Mouse Fix je **laten zien** welk **muismodel** je gebruikt en het **aantal knoppen**, zodat je gemakkelijk kunt kiezen welke van de twee presets je wilt gebruiken. Het zal ook de preset **voorselecteren** die het **beste bij je muis past**.
+- Wanneer je overschakelt naar een **nieuwe muis** die niet past bij je huidige instellingen, zal een popup op het tabblad Knoppen je **herinneren** hoe je de **aanbevolen** instellingen voor je muis kunt **laden**!
+- Alle **UI** hieromheen is zeer **eenvoudig**, **mooi** en **animeert** soepel.
+
+Ik hoop dat je deze functie **nuttig** en **eenvoudig in gebruik** vindt! Maar laat het me weten als je problemen hebt.
+Is er iets **vreemds** of **niet-intuïtiefs**? Verschijnen de **popups** **te vaak** of op **ongepaste momenten**? **Laat me weten** wat je ervan vindt!
+
+## 2. Mac Mouse Fix tijdelijk gratis in sommige landen
+
+Er zijn enkele **landen** waar de **betalingsprovider** Gumroad van Mac Mouse Fix momenteel **niet werkt**.
+Mac Mouse Fix is nu **gratis** in **die landen** totdat ik een alternatieve betaalmethode kan aanbieden!
+
+Als je in een van de gratis landen bent, wordt informatie hierover **weergegeven** op het **Over-tabblad** en bij het **invoeren van een licentiesleutel**
+
+Als het **onmogelijk is** om Mac Mouse Fix in jouw land te **kopen**, maar het is ook nog **niet gratis** in jouw land - laat het me dan weten en ik zal Mac Mouse Fix ook gratis maken in jouw land!
+
+## 3. Een goed moment om te beginnen met vertalen!
+
+Met Beta 4 heb ik **alle UI-wijzigingen** geïmplementeerd die ik gepland had voor Mac Mouse Fix 3. Ik verwacht dus geen grote wijzigingen meer in de UI tot Mac Mouse Fix 3 uitkomt.
+
+Als je hebt gewacht omdat je verwachtte dat de UI nog zou veranderen, dan is **dit een goed moment** om te beginnen met het **vertalen** van de app naar jouw taal!
+
+Voor **meer informatie** over het vertalen van de app, zie **[3.0.0 Beta 1 Release Notes](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-1.1) > 9. Internationalization**
+
+## 4. Al het andere
+
+Naast de bovengenoemde wijzigingen bevat Beta 4 nog veel meer kleine **bugfixes**, **aanpassingen** en **gebruiksgemak** verbeteringen:
+
+### UI
+
+#### Bugfixes
+
+- Probleem opgelost waarbij links van het Over-tabblad steeds opnieuw werden geopend bij het klikken in het venster. Credits aan GitHub-gebruiker [DingoBits](https://github.com/DingoBits) die dit heeft opgelost!
+- Probleem opgelost waarbij sommige in-app symbolen niet correct werden weergegeven op oudere macOS-versies
+- Scrollbalken verborgen in Actietabel. Dank aan GitHub-gebruiker [marianmelinte93](https://github.com/marianmelinte93) die me hierop attent maakte in [deze reactie](https://github.com/noah-nuebling/mac-mouse-fix/discussions/366#discussioncomment-3728994)!
+- Probleem opgelost waarbij feedback over functies die automatisch opnieuw worden ingeschakeld wanneer je het betreffende tabblad opent in de UI (nadat je die functie hebt uitgeschakeld via de menubalk) niet werd weergegeven op macOS Monterey en lager. Opnieuw dank aan [marianmelinte93](https://github.com/marianmelinte93) voor het melden van dit probleem.
+- Ontbrekende lokaliseerbaarheid en Duitse vertalingen toegevoegd voor de optie "Klik om te scrollen om tussen ruimtes te bewegen"
+- Meer kleine lokaliseerbaarheidsproblemen opgelost
+- Meer ontbrekende Duitse vertalingen toegevoegd
+- Meldingen die worden weergegeven wanneer een knop is vastgelegd / niet meer is vastgelegd werken nu correct wanneer sommige knoppen zijn vastgelegd en andere zijn vrijgegeven op hetzelfde moment.
+
+#### Verbeteringen
+
+- "Klik en scroll voor App Switcher" optie verwijderd. Het was een beetje buggy en ik denk niet dat het erg nuttig was.
+- "Klik en scroll om te draaien" optie toegevoegd.
+- Layout van het "Mac Mouse Fix" menu in de menubalk aangepast.
+- "Koop Mac Mouse Fix" knop toegevoegd aan het "Mac Mouse Fix" menu in de menubalk.
+- Een hinttekst toegevoegd onder de "Toon in menubalk" optie. Het doel is om beter zichtbaar te maken dat het menubalk-item kan worden gebruikt om functies snel aan of uit te zetten
+- De "Bedankt voor het kopen van Mac Mouse Fix" berichten op het over-scherm kunnen nu volledig worden aangepast door vertalers.
+- Verbeterde hints voor vertalers
+- Verbeterde UI-teksten rond het verlopen van de proefperiode
+- Verbeterde UI-teksten op het Over-tabblad
+- Vette markeringen toegevoegd aan sommige UI-teksten om de leesbaarheid te verbeteren
+- Waarschuwing toegevoegd bij het klikken op de "Stuur me een e-mail" link op het Over-tabblad.
+- Sorteervolgorde van Actietabel gewijzigd. Klik- en scroll-acties worden nu voor klik- en sleep-acties weergegeven. Dit voelt natuurlijker voor mij omdat de rijen van de tabel nu gesorteerd zijn op hoe krachtig hun triggers zijn (Klik < Scroll < Sleep).
+- De app zal nu het actief gebruikte apparaat bijwerken bij interactie met de UI. Dit is handig omdat sommige UI-elementen nu gebaseerd zijn op het apparaat dat je gebruikt. (Zie de nieuwe "Standaardinstellingen herstellen..." functie).
+- Een melding die aangeeft welke knoppen zijn vastgelegd / niet meer zijn vastgelegd wordt nu weergegeven wanneer je de app voor het eerst start.
+- Meer verbeteringen aan meldingen die worden weergegeven wanneer een knop is vastgelegd / niet meer is vastgelegd
+- Onmogelijk gemaakt om per ongeluk extra witruimte in te voeren bij het activeren van een licentiesleutel
+
+### Muis
+
+#### Bugfixes
+
+- Scrollsimulatie verbeterd om correct "fixed point deltas" te verzenden. Dit lost een probleem op waarbij de scrollsnelheid te langzaam was in sommige apps zoals Safari met uitgeschakeld vloeiend scrollen.
+- Probleem opgelost waarbij de "Klik en sleep voor Mission Control & Spaces" functie soms bleef hangen wanneer de computer traag was
+- Probleem opgelost waarbij de CPU altijd werd gebruikt door Mac Mouse Fix bij het bewegen van de muis na gebruik van de "Klik en sleep om te scrollen & navigeren" functie
+
+#### Verbeteringen
+
+- Sterk verbeterde scroll-naar-zoom responsiviteit in Chromium-gebaseerde browsers zoals Chrome, Brave of Edge
+
+### Onder de motorkap
+
+#### Bugfixes
+
+- Probleem opgelost waarbij Mac Mouse Fix niet correct werkte na verplaatsing naar een andere map terwijl het was ingeschakeld
+- Enkele problemen opgelost met het inschakelen van Mac Mouse Fix terwijl een andere instantie van Mac Mouse Fix nog was ingeschakeld. (Dit komt omdat Apple me toestond de bundle ID te wijzigen van "com.nuebling.mac-mouse-fixxx" dat werd gebruikt in Beta 3 terug naar het originele "com.nuebling.mac-mouse-fix". Weet niet waarom.)
+
+#### Verbeteringen
+
+- Deze en toekomstige bèta's zullen meer gedetailleerde debug-informatie weergeven
+- Opruiming en verbeteringen onder de motorkap. Oude pre-10.13 code verwijderd. Frameworks en afhankelijkheden opgeschoond. De broncode is nu makkelijker te gebruiken en meer toekomstbestendig.

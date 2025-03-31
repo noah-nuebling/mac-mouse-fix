@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="el" xml:lang="el">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp6v68u52e</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Μετάφραση από AI</strong></p>
+
+<p>Αυτές οι σημειώσεις έκδοσης έχουν μεταφραστεί από το Claude AI.
+
+Ενδέχεται να περιέχουν λάθη.<br />
+
+Για την πρωτότυπη αγγλική έκδοση, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-5">πατήστε
+
+εδώ</a>.</p>
+
+<hr />
+
+<p>Δείτε επίσης τις <strong>ωραίες αλλαγές</strong> που εισήχθησαν στην
+
+<a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-4&amp;locale=el">3.0.0
+
+Beta 4</a>!</p>
+
+<hr />
+
+<p>Η <strong>3.0.0 Beta 5</strong> αποκαθιστά τη
+
+<strong>συμβατότητα</strong> με κάποια <strong>ποντίκια</strong> στο
+
+macOS 13 Ventura και <strong>διορθώνει την κύλιση</strong> σε πολλές
+
+εφαρμογές. Περιλαμβάνει επίσης διάφορες άλλες μικρές διορθώσεις και
+
+βελτιώσεις στην ποιότητα χρήσης.</p>
+
+<p>Εδώ είναι <strong>όλα τα νέα</strong>:</p>
+
+<h3 id="ποντίκι">Ποντίκι</h3>
+
+<ul>
+
+<li>Διορθώθηκε η κύλιση στο Terminal και άλλες εφαρμογές! Δείτε το
+
+GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/413">#413</a>.</li>
+
+<li>Διορθώθηκε η ασυμβατότητα με κάποια ποντίκια στο macOS 13 Ventura
+
+αντικαθιστώντας τη χρήση αναξιόπιστων Apple APIs με χαμηλού επιπέδου
+
+τεχνικές. Ελπίζω να μην προκαλέσει νέα προβλήματα - ενημερώστε με αν
+
+συμβεί! Ιδιαίτερες ευχαριστίες στη Maria και στον χρήστη του GitHub <a
+
+href="https://github.com/samiulhsnt">samiulhsnt</a> για τη βοήθεια στην
+
+επίλυση! Δείτε το GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/424">#424</a>
+
+για περισσότερες πληροφορίες.</li>
+
+<li>Δεν θα χρησιμοποιεί πλέον CPU κατά το κλικ στα κουμπιά 1 ή 2 του
+
+ποντικιού. Ελαφρώς μειωμένη χρήση CPU κατά το κλικ άλλων κουμπιών.
+
+<ul>
+
+<li>Αυτή είναι μια “Debug Build” οπότε η χρήση CPU μπορεί να είναι
+
+περίπου 10 φορές υψηλότερη κατά το κλικ κουμπιών σε αυτή τη beta σε
+
+σύγκριση με την τελική έκδοση</li>
+
+</ul></li>
+
+<li>Η προσομοίωση κύλισης trackpad που χρησιμοποιείται για τις
+
+λειτουργίες “Ομαλή Κύλιση” και “Κύλιση &amp; Πλοήγηση” του Mac Mouse Fix
+
+είναι τώρα ακόμα πιο ακριβής. Αυτό μπορεί να οδηγήσει σε καλύτερη
+
+συμπεριφορά σε κάποιες περιπτώσεις.</li>
+
+</ul>
+
+<h3 id="διεπαφή-χρήστη">Διεπαφή Χρήστη</h3>
+
+<ul>
+
+<li>Αυτόματη διόρθωση προβλημάτων με την παραχώρηση Πρόσβασης
+
+Προσβασιμότητας μετά από ενημέρωση από παλαιότερη έκδοση του Mac Mouse
+
+Fix. Υιοθετεί τις αλλαγές που περιγράφονται στις <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.2&amp;locale=el">Σημειώσεις
+
+Έκδοσης 2.2.2</a>.</li>
+
+<li>Προστέθηκε κουμπί “Ακύρωση” στην οθόνη “Παραχώρηση Πρόσβασης
+
+Προσβασιμότητας”</li>
+
+<li>Διορθώθηκε ένα πρόβλημα όπου η διαμόρφωση του Mac Mouse Fix δεν
+
+λειτουργούσε σωστά μετά την εγκατάσταση νέας έκδοσης, επειδή η νέα
+
+έκδοση συνδεόταν στην παλιά έκδοση του “Mac Mouse Fix Helper”. Τώρα, το
+
+Mac Mouse Fix δεν θα συνδέεται πλέον στον παλιό “Mac Mouse Fix Helper”
+
+και θα απενεργοποιεί την παλιά έκδοση αυτόματα όταν χρειάζεται.</li>
+
+<li>Παροχή οδηγιών στον χρήστη για την επίλυση προβλήματος όπου το Mac
+
+Mouse Fix δεν μπορεί να ενεργοποιηθεί σωστά λόγω παρουσίας άλλης έκδοσης
+
+στο σύστημα. Αυτό το πρόβλημα εμφανίζεται μόνο στο macOS Ventura.</li>
+
+<li>Βελτιωμένη συμπεριφορά και κινήσεις στην οθόνη “Παραχώρηση Πρόσβασης
+
+Προσβασιμότητας”</li>
+
+<li>Το Mac Mouse Fix θα έρχεται στο προσκήνιο όταν ενεργοποιείται. Αυτό
+
+βελτιώνει τις αλληλεπιδράσεις διεπαφής σε καταστάσεις όπως όταν
+
+ενεργοποιείτε το Mac Mouse Fix αφού έχει απενεργοποιηθεί στις Ρυθμίσεις
+
+Συστήματος &gt; Γενικά &gt; Στοιχεία Εκκίνησης.</li>
+
+<li>Βελτιωμένα κείμενα διεπαφής στην οθόνη “Παραχώρηση Πρόσβασης
+
+Προσβασιμότητας”</li>
+
+<li>Βελτιωμένα κείμενα διεπαφής που εμφανίζονται όταν προσπαθείτε να
+
+ενεργοποιήσετε το Mac Mouse Fix ενώ είναι απενεργοποιημένο στις
+
+Ρυθμίσεις Συστήματος</li>
+
+<li>Διορθώθηκε ένα γερμανικό κείμενο διεπαφής</li>
+
+</ul>
+
+<h3 id="εσωτερικές-αλλαγές">Εσωτερικές Αλλαγές</h3>
+
+<ul>
+
+<li>Ο αριθμός έκδοσης του “Mac Mouse Fix” και του ενσωματωμένου “Mac
+
+Mouse Fix Helper” είναι πλέον συγχρονισμένοι. Αυτό χρησιμοποιείται για
+
+να αποτρέψει το “Mac Mouse Fix” από το να συνδεθεί κατά λάθος σε παλιές
+
+εκδόσεις του “Mac Mouse Fix Helper”.</li>
+
+<li>Διορθώθηκε πρόβλημα όπου κάποια δεδομένα σχετικά με την άδεια και
+
+την περίοδο δοκιμής εμφανίζονταν μερικές φορές λανθασμένα κατά την πρώτη
+
+εκκίνηση της εφαρμογής, αφαιρώντας δεδομένα cache από την αρχική
+
+διαμόρφωση</li>
+
+<li>Πολλές βελτιώσεις στη δομή του project και τον πηγαίο κώδικα</li>
+
+<li>Βελτιωμένα μηνύματα αποσφαλμάτωσης</li>
+
+</ul>
+
+<hr />
+
+<h3 id="πώς-μπορείτε-να-βοηθήσετε">Πώς Μπορείτε να Βοηθήσετε</h3>
+
+<p>Μπορείτε να βοηθήσετε μοιράζοντας τις <strong>ιδέες</strong>, τα
+
+<strong>προβλήματα</strong> και τα <strong>σχόλιά</strong> σας!</p>
+
+<p>Το καλύτερο μέρος για να μοιραστείτε τις <strong>ιδέες</strong> και
+
+τα <strong>προβλήματά</strong> σας είναι ο <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Βοηθός
+
+Ανατροφοδότησης</a>. Το καλύτερο μέρος για να δώσετε
+
+<strong>γρήγορη</strong> μη δομημένη ανατροφοδότηση είναι η <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Συζήτηση
+
+Ανατροφοδότησης</a>.</p>
+
+<p>Μπορείτε επίσης να αποκτήσετε πρόσβαση σε αυτά τα μέρη μέσα από την
+
+εφαρμογή στην καρτέλα “<strong>ⓘ Σχετικά</strong>”.</p>
+
+<p><strong>Ευχαριστώ</strong> που βοηθάτε να γίνει το Mac Mouse Fix
+
+καλύτερο! 💙💛❤️</p>
+
+</body>
+
+</html>

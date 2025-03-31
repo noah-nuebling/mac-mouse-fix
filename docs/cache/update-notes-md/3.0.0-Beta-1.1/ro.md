@@ -1,0 +1,157 @@
+**3.0.0** va fi **cea mai mare actualizare** a Mac Mouse Fix de până acum!
+
+Reunește multe funcții la care am lucrat mult timp pentru a oferi în sfârșit această **propunere de valoare** extraordinară:
+
+**Fă-ți mouse-ul de $10 mai bun decât un Apple Trackpad!**
+
+Și poți să o **testezi acum**! Sunt foarte nerăbdător să aud părerea voastră!
+
+Iată **tot ce este nou**:
+
+## 1. Click și Drag pentru Derulare
+
+Acum poți să folosești **Click și Drag pentru a Derula** liber în orice direcție!
+
+De asemenea, îți permite să mergi înapoi și înainte în **Safari**, să marchezi mesajele ca citite în **Mail** și să **faci orice altceva** poți face cu o **glisare cu două degete** pe un **Apple Trackpad**!
+
+Am muncit din greu pentru a implementa această funcție la acest standard de calitate. Dar ca rezultat, pe măsură ce te joci cu ea, cred că vei descoperi că **pur și simplu funcționează**!
+
+## 2. Gesturi de Derulare
+
+Mac Mouse Fix acum suportă **Gesturi de Derulare**!
+Asta înseamnă că poți **declanșa acțiuni** prin **derulare** în timp ce ții apăsat un buton al mouse-ului!
+
+Gesturile de Derulare îți permit să obții și mai **multă funcționalitate** dintr-un singur buton de mouse într-un mod super **intuitiv**.
+
+În această versiune beta, există următoarele Gesturi de Derulare:
+
+  - **Desktop & Launchpad** îți permite să afișezi Desktop-ul sau să deschizi Launchpad derulând în sus sau în jos. Este super fluid și intuitiv deoarece simulează ciupirea cu 4 degete pe un Apple Trackpad.
+  - **Mișcare între Spații** îți permite să comuți între Spații derulând în sus sau în jos. Este la fel de fluid deoarece simulează glisarea cu 3 degete pe un Apple Trackpad. Totuși, nu sunt sigur dacă este redundant având în vedere că poți deja să folosești Click și Drag pentru a te mișca între Spații. Spune-mi ce părere ai!
+  - **Mărire sau micșorare** îți permite să privești mai îndeaproape pe web sau în alte locuri. Această funcție era deja disponibilă în Mac Mouse Fix 2 ținând apăsată tasta Command (⌘) în timp ce derulezi, dar acum o poți face mai ușor folosind doar o mână!
+  - **Derulare Orizontală** îți permite să derulezi stânga și dreapta. O poți folosi și pentru a naviga între pagini în Safari și alte aplicații deoarece simulează glisarea cu 2 degete pe un Apple Trackpad.
+  - **Derulare Rapidă** îți permite să derulezi distanțe mari cu efort minim.
+  - **Derulare Precisă** îți permite să derulezi distanțe mici și să folosești Elemente UI sensibile precum cursoarele de volum cu precizie.
+  - **Comutator de Aplicații** îți permite să comuți între aplicațiile recente, la fel ca atunci când apeși Command-Tab (⌘ + ↹) pe tastatură. Această funcție are câteva bug-uri și nu sunt sigur că este foarte utilă, având în vedere că poți accesa deja ușor Comutatorul Tab de la tastatură, așa că probabil o voi elimina mai târziu. Totuși, spune-mi ce părere ai.
+
+## 3. Derulare Inerțială
+
+**Derularea Inerțială** face ca derularea cu mouse-ul să fie la fel de **rapidă** și **fluidă** ca pe un Apple Trackpad.
+
+Derularea Inerțială creează animații **lungi** și foarte **line**. Pe o rotiță de derulare, animațiile lungi vin în general cu dezavantajul unui control mai redus.
+
+Dar Mac Mouse Fix 3 implementează **algoritmi inteligenți** pentru a-ți oferi o **senzație inerțială grozavă** în timp ce îți oferă în continuare mult **control**.
+
+Apropo, dacă descarci această versiune Beta, cred că vei fi **unul dintre primii** oameni care folosesc **derularea cu efect de salt** de la un mouse! (în afară de Magic Mouse) Cred că e destul de tare.
+
+## 4. Alte Îmbunătățiri ale Derulării
+
+Am **rescris** majoritatea codului de derulare pentru MMF 3. Acest lucru mi-a permis să implementez multe **alte funcții** și îmbunătățiri mici:
+
+1. Acum există **2 modificatori suplimentari de tastatură** astfel încât poți nu doar să **Mărești sau să micșorezi** cu Command (⌘) și să **Derulezi Orizontal** cu Shift (⇧), dar și să **Derulezi Rapid** cu Control (^) și să **Derulezi Precis** cu Option (⌥).
+2. Acum poți vedea și **personaliza toți cei 4 modificatori de tastatură** folosind o interfață nouă, frumoasă și intuitivă.
+3. **Derularea Precisă Permanentă** îți permite să derulezi precis chiar și fără să ții apăsată o tastă modificatoare mișcând rotița de derulare încet.
+4. **Intrarea de Derulare Orizontală** de la mouse nu mai este ignorată, ci este netezită și inversată la fel ca intrarea normală de derulare verticală. Dacă mouse-ul tău are o **rotiță înclinabilă** sau o **rotiță de derulare orizontală**, ar trebui să se simtă mult mai plăcut acum.
+5. **Setările de Inversare a Direcției de Derulare** sunt acum independente de Setările de Sistem, permițând o interfață mai puțin complicată.
+6. **Setările de derulare** pot fi acum **combinate** mai liber. De exemplu, poți folosi Viteza de Derulare a **Mac Mouse Fix** chiar și când Derularea Lină este **dezactivată**. Sau poți folosi Viteza de Derulare a **macOS** când Derularea Lină este **activată**. (Notă: Personal nu-mi place deloc Viteza de Derulare a macOS și nu-mi pot imagina motive pentru care cineva ar prefera-o. Așa că dacă o preferi, aș fi foarte interesat să aflu mai multe despre experiența ta! Poți să mă contactezi prin fila "**ⓘ Despre**".)
+
+## 5. Element în Bara de Meniu
+
+Mac Mouse Fix are acum un **Element în Bara de Meniu** astfel încât poți vedea întotdeauna când este activat!
+
+Elementul din Bara de Meniu are o **pictogramă frumoasă** și îți permite să **dezactivezi rapid** anumite funcții ale Mac Mouse Fix astfel încât să poți juca un joc sau să folosești o aplicație fără ca Mac Mouse Fix să interfereze.
+
+Bineînțeles, poți în continuare să îl **dezactivezi** pentru o Bară de Meniu mai curată.
+
+## 6. Setările Specifice Aplicațiilor au fost Eliminate
+
+**Setările Specifice Aplicațiilor** au dispărut deocamdată. Totuși, plănuiesc să le **aduc înapoi** într-o formă mult mai robustă și puternică în viitor.
+
+Deocamdată, cred că setările rapide din **Bara de Meniu** sunt o soluție **mai bună**, deși mai puțin convenabilă.
+
+Acestea **rezolvă** cele **mai importante probleme** ale vechilor Setări Specifice Aplicațiilor:
+
+- Setările Specifice Aplicațiilor nu funcționau cu unele programe precum **executabilele din linia de comandă**. Acestea includeau aplicații populare precum **Minecraft**.
+- Setările Specifice Aplicațiilor aveau multe limitări, cum ar fi că nu îți permiteau să **dezactivezi complet butoanele**, ceea ce era o problemă pentru mulți gameri.
+
+Un alt aspect de luat în considerare este că vechile Setări Specifice Aplicațiilor au fost inițial **concepute ca o soluție temporară** pentru unele aplicații care erau incompatibile cu vechiul sistem de derulare. Dar acum, cu noul sistem de derulare care emulează precis Gesturile Touch de pe un Apple Trackpad, majoritatea acestor incompatibilități ar trebui să fie **rezolvate oricum**! Așa că ar trebui să fie mai puțină nevoie de ceea ce vechile Setări Specifice Aplicațiilor făceau cel mai bine.
+
+Sper că toată lumea este de acord cu asta! Spune-mi **părerea** ta!
+
+## 7. Revizuirea Interfeței
+
+Am **rescris complet interfața** pentru a fi mai **frumoasă** și mai **puternică** păstrând în același timp **simplitatea** și **ușurința în utilizare** pe care oamenii o iubesc la Mac Mouse Fix.
+
+Iată ce este nou:
+
+- Interfața este acum împărțită în diferite **file**. Acest lucru curăță lucrurile și permite Mac Mouse Fix să ofere setări suplimentare care sunt importante pentru oameni fără ca interfața să devină prea complicată sau copleșitoare. Acest lucru îmi va permite și să extind Mac Mouse Fix cu funcții noi în viitor.
+- Am adăugat **animații** subtile și încântătoare în toată noua interfață care o fac mai ușor de navigat și adaugă un sentiment de rafinament.
+- Opțiunile care depind de alte opțiuni vor fi **ascunse** și aspectul se va ajusta cu animații subtile frumoase. Acest lucru păstrează lucrurile cât mai simple și optimizate posibil. Astfel nu trebuie să pierzi timp și energie mentală uitându-te la opțiuni la care nu trebuie să te gândești.
+- Noua interfață include **indicii** mici pentru opțiunile care pot fi altfel confuze.
+- **Noul design al Tabelului de Acțiuni** face mult mai clar cum să adaugi și să elimini Acțiuni, lucru care îi confuza pe mulți oameni. De asemenea, se micșorează și crește pentru a se potrivi numărului de Acțiuni astfel încât nu trebuie să îl redimensionezi manual.
+- Noua **Filă Despre** are un aspect frumos și pune la îndemână opțiuni suplimentare pentru suport, feedback și altele.
+- Unele **texte existente din interfață** au fost îmbunătățite.
+- Există acum o **nouă opțiune** pentru a Bloca Cursorul Mouse-ului în timpul Gesturilor Click și Drag. Nu am unul pentru a testa, dar ar trebui să fie foarte util pentru Mouse-urile cu Trackball!
+
+## 8. Monetizare
+
+Mac Mouse Fix 3 va fi **gratuit timp de 30 de zile** și apoi va costa **$1.99** pentru a-l deține.
+
+Știu că a plăti pentru ceva ce obișnuia să fie gratuit nu este cel mai bun sentiment, dar sper că te pot convinge că este un lucru **foarte bun pentru proiect**!
+
+Ca pentru orice alt aspect al Mac Mouse Fix, am acordat mare atenție pentru a face **experiența utilizatorului** cât mai **simplă** și **plăcută** posibil:
+
+1. Cele **30 de zile gratuite** sunt implementate inteligent. Mac Mouse Fix **numără doar zilele** în care **chiar îl folosești**. Astfel nu există **presiune** să folosești aplicația înainte ca timpul să expire și poți lua o decizie informată dacă vrei să cumperi aplicația sau nu fără stres.
+2. După ce cele 30 de zile gratuite se termină, **plata** pentru aplicație este extrem de **simplă** și **rapidă**. Poți folosi toate metodele de plată pe care le iubești precum **Apple Pay** și **PayPal**, și durează doar **2 click-uri** pentru a plăti din interiorul aplicației prin Apple Pay!
+3. După ce ai cumpărat aplicația pentru $1.99, **activarea licenței** tale este de asemenea extrem de **simplă**. Am pus chiar un **link** pe **ecranul de checkout** în browser-ul web care te duce **direct** în aplicație și deschide **ecranul pentru introducerea licenței** pentru tine!
+4. După ce îți **activezi licența**, există un mesaj de **mulțumire** drăguț aleatoriu în fila despre. (Am auzit că există chiar și unele super secrete rare...)
+5. Licența ta este **sincronizată prin iCloud** astfel încât va fi disponibilă automat pe toate computerele tale!
+
+Ajutând Mac Mouse Fix financiar, mă poți ajuta să **petrec mult mai mult timp** cu el și să îl fac cel **mai bun driver de mouse VREODATĂ**.
+De asemenea, _iubesc_ să petrec timp cu Mac Mouse Fix, așa că asta m-ar face și pe mine **fericit** :)
+
+**Va rămâne Mac Mouse Fix Open Source?**
+
+Da. Mac Mouse Fix va rămâne open source și nu plănuiesc să schimb asta în niciun moment.
+
+Asta înseamnă că *poți* folosi Mac Mouse Fix gratuit compilându-l din sursă și dezactivând verificările de licență. Este perfect în regulă, doar descurajez împărtășirea acestor versiuni crăcuite online.
+Și bineînțeles, la următoarea actualizare, vei primi o versiune necrăcuită ceea ce înseamnă că va trebui să faci asta din nou pentru fiecare actualizare. (Sau pur și simplu plătești $1.99 pentru cel mai bun driver de mouse vreodată! :)
+
+Oricine va putea în continuare să folosească codul sursă din Mac Mouse Fix în produsele lor gratuite și comerciale atâta timp cât nu vând doar o copie a Mac Mouse Fix fără să își aducă propria contribuție.
+
+Află despre detalii în noua [Licență MMF](https://github.com/noah-nuebling/mac-mouse-fix/blob/version-3/LICENSE) sub care va fi licențiat MMF 3.
+
+**Va trebui să plătesc pentru a folosi versiunea Beta a Mac Mouse Fix 3?**
+
+Nu. Poți folosi pur și simplu cele 30 de zile gratuite. Contorul zilelor gratuite probabil nu se va reseta când versiunea stabilă a Mac Mouse Fix 3 va fi lansată, deoarece ar fi lucruri în plus de proiectat și implementat și nu cred că pe cineva îl va interesa prea mult. (Spune-mi dacă te interesează). Dar voi extinde numărul de zile gratuite dacă beta continuă mai mult de 30 de zile.
+
+**Pot obține Mac Mouse Fix gratuit dacă am donat deja?**
+
+Da! Dacă mi-ai cumpărat un milkshake înainte de 10 septembrie 2022, poți scrie un email la noah.n.public@gmail.com cu "Milkshake Karma" în subiect și o captură de ecran ca dovadă și apoi îți voi trimite un cod de reducere de 100% sau ceva de genul!
+
+## 9. Internaționalizare
+
+Cu rescrierea interfeței, acum este posibil să **traduci** Mac Mouse Fix în diferite limbi!
+
+L-am tradus deja în **Germană**, limba mea nativă, și poți să îl traduci și tu în **limba ta**!
+
+Plănuiesc să scriu un **ghid mai detaliat** despre asta în viitor, dar dacă vrei să încerci, iată o mică prezentare generală a **pașilor**:
+
+- **Descarcă** codul sursă & Xcode
+- **[Adaugă limba ta](https://developer.apple.com/documentation/xcode/adding-support-for-languages-and-regions)** în proiect
+- Pune traducerile tale în fișierele **`.strings`** și **`.stringsdict`** din proiect
+- **Commit** la modificările tale și creează un **pull request**
+
+Dacă traducerea ta este adăugată în proiect vei primi **10 copii MMF gratuite** și, bineînțeles, vei fi **creditat ca contributor**. Am auzit că poți lăsa și **mesajul tău personal** schimbând unele dintre (mesajele secrete rare de mulțumire) din fila Despre.
+
+Poate voi adăuga **mai multe beneficii** în viitor. Spune-mi dacă ai **idei** pentru asta!
+
+## 10. Cum Poți Ajuta
+
+Poți ajuta împărtășind **ideile**, **problemele** și **feedback-ul** tău!
+
+Cel mai bun loc pentru a împărtăși **ideile** și **problemele** tale este [Asistentul de Feedback](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report).
+Cel mai bun loc pentru a oferi feedback **rapid** nestructurat este [Discuția de Feedback](https://github.com/noah-nuebling/mac-mouse-fix/discussions/366).
+
+Poți accesa ambele aceste locuri din aplicație în fila "**ⓘ Despre**".
+
+**Mulțumesc** că ajuți la îmbunătățirea Mac Mouse Fix! 🚀

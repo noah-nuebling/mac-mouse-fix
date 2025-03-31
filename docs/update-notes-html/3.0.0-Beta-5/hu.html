@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hu" xml:lang="hu">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpqanmwwqz</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI által fordítva</strong></p>
+
+<p>Ezt a kiadási megjegyzést a Claude AI fordította. Tartalmazhat
+
+hibákat.<br />
+
+Az eredeti angol verzióért <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-5">kattints
+
+ide</a>.</p>
+
+<hr />
+
+<p>Nézd meg a <strong>remek változtatásokat</strong> is a <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-4&amp;locale=hu">3.0.0
+
+Beta 4</a> verzióban!</p>
+
+<hr />
+
+<p>A <strong>3.0.0 Beta 5</strong> visszaállítja a
+
+<strong>kompatibilitást</strong> néhány <strong>egérrel</strong> macOS
+
+13 Ventura alatt, és <strong>javítja a görgetést</strong> számos
+
+alkalmazásban. Emellett több kisebb javítást és életminőség-javító
+
+fejlesztést is tartalmaz.</p>
+
+<p>Itt van <strong>minden újdonság</strong>:</p>
+
+<h3 id="egér">Egér</h3>
+
+<ul>
+
+<li>Javítva a görgetés a Terminalban és más alkalmazásokban! Lásd a
+
+GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/413">#413</a>-at.</li>
+
+<li>Javítva a kompatibilitási probléma néhány egérrel macOS 13 Ventura
+
+alatt azáltal, hogy a megbízhatatlan Apple API-k helyett alacsony szintű
+
+megoldásokat használunk. Reméljük, ez nem okoz új problémákat - jelezd,
+
+ha mégis! Külön köszönet Mariának és <a
+
+href="https://github.com/samiulhsnt">samiulhsnt</a> GitHub
+
+felhasználónak a segítségért! További információkért lásd a GitHub Issue
+
+<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/424">#424</a>-et.</li>
+
+<li>Már nem használ CPU-t az 1-es vagy 2-es egérgomb kattintásakor.
+
+Enyhén csökkentett CPU-használat más gombok kattintásakor.
+
+<ul>
+
+<li>Ez egy “Debug Build”, így a CPU-használat körülbelül 10-szer
+
+magasabb lehet a gombok kattintásakor ebben a bétában a végleges
+
+kiadáshoz képest</li>
+
+</ul></li>
+
+<li>A trackpad görgetés szimuláció, amit a Mac Mouse Fix “Smooth
+
+Scrolling” és “Scroll &amp; Navigate” funkcióihoz használunk, most még
+
+pontosabb. Ez néhány helyzetben jobb működést eredményezhet.</li>
+
+</ul>
+
+<h3 id="felhasználói-felület">Felhasználói felület</h3>
+
+<ul>
+
+<li>Automatikusan javítja az Accessibility hozzáférés engedélyezésével
+
+kapcsolatos problémákat a Mac Mouse Fix régebbi verziójáról történő
+
+frissítés után. Átveszi a <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.2&amp;locale=hu">2.2.2
+
+kiadási jegyzetekben</a> leírt változtatásokat.</li>
+
+<li>“Mégse” gomb hozzáadva az “Accessibility hozzáférés engedélyezése”
+
+képernyőhöz</li>
+
+<li>Javítva egy probléma, ahol a Mac Mouse Fix konfigurálása nem
+
+működött megfelelően új verzió telepítése után, mert az új verzió a “Mac
+
+Mouse Fix Helper” régi verziójához csatlakozott. Most a Mac Mouse Fix
+
+már nem csatlakozik a régi “Mac Mouse Fix Helper”-hez, és szükség esetén
+
+automatikusan letiltja a régi verziót.</li>
+
+<li>Útmutatást ad a felhasználónak olyan probléma megoldásához, amikor a
+
+Mac Mouse Fix nem engedélyezhető megfelelően egy másik Mac Mouse Fix
+
+verzió jelenléte miatt a rendszeren. Ez a probléma csak macOS Ventura
+
+alatt fordul elő.</li>
+
+<li>Finomított viselkedés és animációk az “Accessibility hozzáférés
+
+engedélyezése” képernyőn</li>
+
+<li>A Mac Mouse Fix előtérbe kerül, amikor engedélyezve van. Ez javítja
+
+a felhasználói felület interakcióit bizonyos helyzetekben, például
+
+amikor a Mac Mouse Fix-et a Rendszerbeállítások &gt; Általános &gt;
+
+Bejelentkezési elemek alatt történt letiltás után engedélyezed.</li>
+
+<li>Javított UI szövegek az “Accessibility hozzáférés engedélyezése”
+
+képernyőn</li>
+
+<li>Javított UI szövegek, amelyek akkor jelennek meg, amikor a Mac Mouse
+
+Fix-et próbálod engedélyezni, miközben le van tiltva a
+
+Rendszerbeállításokban</li>
+
+<li>Javított német UI szöveg</li>
+
+</ul>
+
+<h3 id="háttérben">Háttérben</h3>
+
+<ul>
+
+<li>A “Mac Mouse Fix” és a beágyazott “Mac Mouse Fix Helper” build száma
+
+most szinkronizálva van. Ez megakadályozza, hogy a “Mac Mouse Fix”
+
+véletlenül a “Mac Mouse Fix Helper” régi verzióihoz csatlakozzon.</li>
+
+<li>Javítva egy probléma, ahol a licenccel és próbaidőszakkal
+
+kapcsolatos adatok néha helytelenül jelentek meg az alkalmazás első
+
+indításakor, a kezdeti konfigurációból származó gyorsítótár-adatok
+
+eltávolításával</li>
+
+<li>Sok tisztogatás a projekt szerkezetében és forráskódjában</li>
+
+<li>Javított hibakeresési üzenetek</li>
+
+</ul>
+
+<hr />
+
+<h3 id="hogyan-segíthetsz">Hogyan segíthetsz</h3>
+
+<p>Segíthetsz az <strong>ötletek</strong>, <strong>problémák</strong> és
+
+<strong>visszajelzések</strong> megosztásával!</p>
+
+<p>Az <strong>ötletek</strong> és <strong>problémák</strong>
+
+megosztásának legjobb helye a <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Feedback
+
+Assistant</a>. A <strong>gyors</strong>, strukturálatlan visszajelzések
+
+legjobb helye a <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Feedback
+
+Discussion</a>.</p>
+
+<p>Ezeket a helyeket az alkalmazáson belül is elérheted az “<strong>ⓘ
+
+Névjegy</strong>” fülön.</p>
+
+<p><strong>Köszönjük</strong>, hogy segítesz jobbá tenni a Mac Mouse
+
+Fix-et! 💙💛❤️</p>
+
+</body>
+
+</html>

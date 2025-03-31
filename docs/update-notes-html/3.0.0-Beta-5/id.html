@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="id" xml:lang="id">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmprvaegn0p</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Diterjemahkan oleh AI</strong></p>
+
+<p>Catatan rilis ini telah diterjemahkan oleh AI Claude. Mungkin
+
+terdapat kesalahan.<br />
+
+Untuk versi asli dalam bahasa Inggris, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-5">klik
+
+di sini</a>.</p>
+
+<hr />
+
+<p>Lihat juga <strong>perubahan keren</strong> yang diperkenalkan di <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-4&amp;locale=id">3.0.0
+
+Beta 4</a>!</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 5</strong> mengembalikan
+
+<strong>kompatibilitas</strong> dengan beberapa <strong>mouse</strong>
+
+di macOS 13 Ventura dan <strong>memperbaiki scrolling</strong> di banyak
+
+aplikasi. Juga mencakup beberapa perbaikan kecil dan peningkatan
+
+kualitas lainnya.</p>
+
+<p>Berikut <strong>semua yang baru</strong>:</p>
+
+<h3 id="mouse">Mouse</h3>
+
+<ul>
+
+<li>Memperbaiki scrolling di Terminal dan aplikasi lainnya! Lihat GitHub
+
+Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/413">#413</a>.</li>
+
+<li>Memperbaiki ketidakcocokan dengan beberapa mouse di macOS 13 Ventura
+
+dengan beralih dari penggunaan Apple API yang tidak dapat diandalkan ke
+
+hack tingkat rendah. Semoga ini tidak menimbulkan masalah baru - beri
+
+tahu saya jika terjadi! Terima kasih khusus kepada Maria dan pengguna
+
+GitHub <a href="https://github.com/samiulhsnt">samiulhsnt</a> yang
+
+membantu memecahkan masalah ini! Lihat GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/424">#424</a>
+
+untuk informasi lebih lanjut.</li>
+
+<li>Tidak akan menggunakan CPU saat mengklik Tombol Mouse 1 atau 2 lagi.
+
+Sedikit menurunkan penggunaan CPU saat mengklik tombol lainnya.
+
+<ul>
+
+<li>Ini adalah “Debug Build” sehingga penggunaan CPU bisa sekitar 10
+
+kali lebih tinggi saat mengklik tombol di beta ini dibandingkan dengan
+
+rilis final</li>
+
+</ul></li>
+
+<li>Simulasi scrolling trackpad yang digunakan untuk fitur “Smooth
+
+Scrolling” dan “Scroll &amp; Navigate” Mac Mouse Fix sekarang lebih
+
+akurat. Ini mungkin menghasilkan perilaku yang lebih baik dalam beberapa
+
+situasi.</li>
+
+</ul>
+
+<h3 id="ui">UI</h3>
+
+<ul>
+
+<li>Secara otomatis memperbaiki masalah pemberian Akses Aksesibilitas
+
+setelah memperbarui dari versi Mac Mouse Fix yang lebih lama. Mengadopsi
+
+perubahan yang dijelaskan dalam <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.2&amp;locale=id">Catatan
+
+Rilis 2.2.2</a>.</li>
+
+<li>Menambahkan tombol “Batal” ke layar “Berikan Akses
+
+Aksesibilitas”</li>
+
+<li>Memperbaiki masalah di mana konfigurasi Mac Mouse Fix tidak
+
+berfungsi dengan baik setelah menginstal versi baru Mac Mouse Fix,
+
+karena versi baru akan terhubung ke versi lama “Mac Mouse Fix Helper”.
+
+Sekarang, Mac Mouse Fix tidak akan terhubung ke “Mac Mouse Fix Helper”
+
+lama lagi dan menonaktifkan versi lama secara otomatis bila
+
+diperlukan.</li>
+
+<li>Memberikan instruksi kepada pengguna tentang cara memperbaiki
+
+masalah di mana Mac Mouse Fix tidak dapat diaktifkan dengan benar karena
+
+versi Mac Mouse Fix lain ada di sistem. Masalah ini hanya terjadi di
+
+macOS Ventura.</li>
+
+<li>Memperhalus perilaku dan animasi di layar “Berikan Akses
+
+Aksesibilitas”</li>
+
+<li>Mac Mouse Fix akan dibawa ke latar depan saat diaktifkan. Ini
+
+meningkatkan interaksi UI dalam beberapa situasi seperti ketika Anda
+
+mengaktifkan Mac Mouse Fix setelah dinonaktifkan di Pengaturan Sistem
+
+&gt; Umum &gt; Item Login.</li>
+
+<li>Meningkatkan string UI di layar “Berikan Akses Aksesibilitas”</li>
+
+<li>Meningkatkan string UI yang muncul saat mencoba mengaktifkan Mac
+
+Mouse Fix sementara dinonaktifkan di Pengaturan Sistem</li>
+
+<li>Memperbaiki string UI bahasa Jerman</li>
+
+</ul>
+
+<h3 id="di-balik-layar">Di Balik Layar</h3>
+
+<ul>
+
+<li>Nomor build “Mac Mouse Fix” dan “Mac Mouse Fix Helper” yang tertanam
+
+sekarang disinkronkan. Ini digunakan untuk mencegah “Mac Mouse Fix”
+
+tidak sengaja terhubung ke versi lama “Mac Mouse Fix Helper”.</li>
+
+<li>Memperbaiki masalah di mana beberapa data seputar lisensi dan
+
+periode uji coba terkadang ditampilkan secara tidak benar saat memulai
+
+aplikasi untuk pertama kali dengan menghapus data cache dari konfigurasi
+
+awal</li>
+
+<li>Banyak pembersihan struktur proyek dan kode sumber</li>
+
+<li>Meningkatkan pesan debug</li>
+
+</ul>
+
+<hr />
+
+<h3 id="bagaimana-anda-dapat-membantu">Bagaimana Anda Dapat
+
+Membantu</h3>
+
+<p>Anda dapat membantu dengan berbagi <strong>ide</strong>,
+
+<strong>masalah</strong> dan <strong>umpan balik</strong> Anda!</p>
+
+<p>Tempat terbaik untuk berbagi <strong>ide</strong> dan
+
+<strong>masalah</strong> Anda adalah <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Asisten
+
+Umpan Balik</a>. Tempat terbaik untuk memberikan umpan balik
+
+<strong>cepat</strong> yang tidak terstruktur adalah <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Diskusi
+
+Umpan Balik</a>.</p>
+
+<p>Anda juga dapat mengakses tempat-tempat ini dari dalam aplikasi di
+
+tab “<strong>ⓘ Tentang</strong>”.</p>
+
+<p><strong>Terima kasih</strong> telah membantu membuat Mac Mouse Fix
+
+lebih baik! 💙💛❤️</p>
+
+</body>
+
+</html>

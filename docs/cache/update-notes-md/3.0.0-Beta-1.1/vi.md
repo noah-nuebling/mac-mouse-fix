@@ -1,0 +1,157 @@
+**3.0.0** sẽ là **bản cập nhật lớn nhất** của Mac Mouse Fix từ trước đến nay!
+
+Tổng hợp nhiều tính năng mà tôi đã làm việc trong thời gian dài để cuối cùng mang đến **đề xuất giá trị** tuyệt vời này:
+
+**Biến chuột $10 của bạn thành thiết bị tốt hơn cả Apple Trackpad!**
+
+Và bạn có thể **thử ngay bây giờ**! Tôi rất háo hức được nghe phản hồi từ các bạn!
+
+Đây là **tất cả những điều mới**:
+
+## 1. Nhấp và Kéo để Cuộn
+
+Giờ đây bạn có thể **Nhấp và Kéo để Cuộn** tự do theo mọi hướng!
+
+Nó cũng cho phép bạn quay lại và tiến tới trong **Safari**, đánh dấu tin nhắn đã đọc trong **Mail**, và **làm bất cứ điều gì** bạn có thể làm với **vuốt hai ngón tay** trên **Apple Trackpad**!
+
+Tôi đã làm việc chăm chỉ để triển khai tính năng đạt tiêu chuẩn chất lượng này. Kết quả là, khi bạn thử nghiệm, tôi nghĩ bạn sẽ thấy nó thực sự "**hoạt động tốt**"!
+
+## 2. Cử Chỉ Cuộn
+
+Mac Mouse Fix giờ đây hỗ trợ **Cử Chỉ Cuộn**!
+Điều đó có nghĩa là bạn có thể **kích hoạt các hành động** bằng cách **cuộn** trong khi giữ nút chuột!
+
+Cử Chỉ Cuộn cho phép bạn có được **nhiều chức năng hơn** từ một nút chuột theo cách **trực quan**.
+
+Trong bản beta này, có **những** Cử Chỉ Cuộn sau:
+
+  - **Desktop & Launchpad** cho phép bạn hiện Desktop hoặc mở Launchpad bằng cách cuộn lên hoặc xuống. Điều này cảm giác rất mượt mà và trực quan vì nó mô phỏng thao tác chụm 4 ngón tay trên Apple Trackpad.
+  - **Di chuyển giữa các Spaces** cho phép bạn chuyển đổi giữa các Spaces bằng cách cuộn lên hoặc xuống. Điều này cũng cảm giác rất mượt mà vì nó mô phỏng thao tác vuốt 3 ngón tay trên Apple Trackpad. Tuy nhiên, tôi không chắc liệu điều này có thừa không vì bạn đã có thể Nhấp và Kéo để di chuyển giữa các Spaces. Hãy cho tôi biết bạn nghĩ gì!
+  - **Phóng to hoặc thu nhỏ** cho phép bạn nhìn kỹ hơn trên web hoặc nơi khác. Tính năng này đã có sẵn trong Mac Mouse Fix 2 bằng cách giữ phím Command (⌘) trong khi cuộn, nhưng giờ đây bạn có thể làm điều đó dễ dàng hơn chỉ bằng một tay!
+  - **Cuộn Ngang** cho phép bạn cuộn sang trái và phải. Bạn cũng có thể sử dụng nó để điều hướng giữa các trang trong Safari và các ứng dụng khác vì nó mô phỏng thao tác vuốt 2 ngón tay trên Apple Trackpad.
+  - **Cuộn Nhanh** cho phép bạn cuộn quãng đường dài với ít nỗ lực.
+  - **Cuộn Chính Xác** cho phép bạn cuộn quãng đường ngắn và sử dụng các Phần tử UI nhạy cảm như thanh trượt âm lượng một cách chính xác.
+  - **Chuyển đổi Ứng dụng** cho phép bạn chuyển đổi giữa các ứng dụng gần đây, giống như nhấn Command-Tab (⌘ + ↹) trên bàn phím. Tính năng này có một số lỗi và tôi không chắc nó có hữu ích không, vì bạn đã có thể dễ dàng truy cập Tab Switcher từ bàn phím, vì vậy tôi có thể sẽ xóa nó sau. Tuy nhiên, hãy cho tôi biết bạn nghĩ gì.
+
+## 3. Cuộn Quán tính
+
+**Cuộn Quán tính** làm cho việc cuộn trên chuột của bạn cảm giác **nhanh** và **mượt mà** như Apple Trackpad.
+
+Cuộn Quán tính tạo ra các **hoạt ảnh dài** và rất **mượt mà**. Trên con lăn chuột, hoạt ảnh dài thường đi kèm với sự đánh đổi về kiểm soát.
+
+Nhưng Mac Mouse Fix 3 triển khai một số **thuật toán thông minh** để mang lại **cảm giác quán tính tuyệt vời** trong khi vẫn cung cấp nhiều **kiểm soát**.
+
+Nhân tiện, nếu bạn tải xuống Beta này, tôi nghĩ bạn sẽ là **một trong những** người đầu tiên sử dụng **hiệu ứng nảy khi cuộn** từ chuột! (ngoài Magic Mouse) Tôi nghĩ điều đó khá thú vị.
+
+## 4. Các Cải tiến Cuộn Khác
+
+Tôi đã **viết lại** hầu hết mã cuộn cho MMF 3. Điều này cho phép tôi triển khai nhiều **tính năng và cải tiến nhỏ** khác:
+
+1. Giờ đây có **2 phím bổ trợ bàn phím bổ sung** để bạn không chỉ có thể **Phóng to hoặc thu nhỏ** với Command (⌘), và **Cuộn Ngang** với Shift (⇧), mà còn **Cuộn Nhanh** với Control (^) và **Cuộn Chính xác** với Option (⌥).
+2. Giờ đây bạn có thể xem và **tùy chỉnh tất cả 4 phím bổ trợ** bằng giao diện người dùng mới đẹp mắt và trực quan.
+3. **Cuộn Chính xác Luôn bật** cho phép bạn cuộn chính xác ngay cả khi không giữ phím bổ trợ bằng cách di chuyển con lăn chuột chậm.
+4. **Đầu vào Cuộn Ngang** từ chuột của bạn không còn bị bỏ qua nữa, mà thay vào đó được làm mượt và đảo ngược giống như đầu vào cuộn dọc thông thường. Nếu chuột của bạn có **con lăn nghiêng** hoặc **con lăn ngang** thì giờ đây nó sẽ cảm giác tốt hơn nhiều.
+5. **Cài đặt Đảo chiều Cuộn** giờ đây độc lập với Cài đặt Hệ thống cho phép giao diện người dùng đơn giản hơn.
+6. **Cài đặt cuộn** giờ đây có thể được **kết hợp** tự do hơn. Ví dụ, bạn có thể sử dụng Tốc độ Cuộn của **Mac Mouse Fix** ngay cả khi Cuộn Mượt bị **tắt**. Hoặc bạn có thể sử dụng Tốc độ Cuộn của **macOS** khi Cuộn Mượt được **bật**. (Lưu ý: Cá nhân tôi không thích Tốc độ Cuộn của macOS chút nào và tôi không thể nghĩ ra lý do tại sao ai đó lại thích nó hơn. Vì vậy, nếu bạn thích nó hơn, tôi rất muốn tìm hiểu thêm về trải nghiệm của bạn! Bạn có thể liên hệ thông qua tab "**ⓘ Giới thiệu**".)
+
+## 5. Mục Menu Bar
+
+Mac Mouse Fix giờ đây có **Mục Menu Bar** để bạn luôn có thể thấy khi nào nó được bật!
+
+Mục Menu Bar có **biểu tượng đẹp mắt**, và nó cũng cho phép bạn **nhanh chóng tắt** một số tính năng của Mac Mouse Fix để bạn có thể chơi game hoặc sử dụng ứng dụng mà không bị Mac Mouse Fix can thiệp.
+
+Tất nhiên, bạn vẫn có thể **tắt** nó để có Menu Bar gọn gàng hơn.
+
+## 6. Cài đặt Theo Ứng dụng Đã Bị Xóa
+
+**Cài đặt Theo Ứng dụng** tạm thời bị xóa. Tuy nhiên, tôi có kế hoạch **mang chúng trở lại** với hình thức mạnh mẽ và ổn định hơn trong tương lai.
+
+Hiện tại, tôi nghĩ các cài đặt nhanh trong **Menu Bar** là giải pháp **tốt hơn**, dù kém thuận tiện hơn.
+
+Chúng **giải quyết** những **vấn đề quan trọng nhất** của Cài đặt Theo Ứng dụng cũ:
+
+- Cài đặt Theo Ứng dụng không hoạt động với một số chương trình như **tệp thực thi dòng lệnh**. Điều này bao gồm các ứng dụng phổ biến như **Minecraft**.
+- Cài đặt Theo Ứng dụng có nhiều hạn chế như không cho phép bạn **tắt hoàn toàn các nút**, điều này là vấn đề với nhiều game thủ.
+
+Một điều khác cần xem xét là Cài đặt Theo Ứng dụng cũ ban đầu được **thiết kế như một giải pháp tạm thời** cho một số ứng dụng không tương thích với hệ thống cuộn cũ. Nhưng giờ đây, với hệ thống cuộn mới mô phỏng chính xác Cuộn Cảm ứng từ Apple Trackpad, hầu hết các vấn đề không tương thích này sẽ được **khắc phục**! Vì vậy, sẽ ít cần đến những gì mà Cài đặt Theo Ứng dụng cũ làm tốt nhất.
+
+Tôi hy vọng mọi người đều ổn với điều đó! Hãy cho tôi biết **suy nghĩ** của bạn!
+
+## 7. Cải tiến Giao diện Người dùng
+
+Tôi đã hoàn toàn **viết lại giao diện người dùng** để **đẹp hơn** và **mạnh mẽ hơn** trong khi vẫn giữ được **sự đơn giản** và **dễ sử dụng** mà mọi người yêu thích ở Mac Mouse Fix.
+
+Đây là những điều mới:
+
+- Giao diện người dùng giờ được chia thành các **tab** khác nhau. Điều này làm gọn gàng mọi thứ và cho phép Mac Mouse Fix cung cấp các cài đặt bổ sung quan trọng mà không làm cho giao diện người dùng trở nên quá phức tạp hoặc khó hiểu. Điều này cũng sẽ cho phép tôi mở rộng Mac Mouse Fix với các tính năng mới trong tương lai.
+- Tôi đã thêm những **hoạt ảnh** nhỏ tinh tế và thú vị khắp giao diện người dùng mới giúp việc điều hướng dễ dàng hơn và tạo cảm giác hoàn thiện.
+- Các tùy chọn phụ thuộc vào các tùy chọn khác sẽ được **ẩn** và bố cục sẽ điều chỉnh với các hoạt ảnh tinh tế đẹp mắt. Điều này giữ cho mọi thứ đơn giản và hợp lý nhất có thể. Vì vậy, bạn không phải lãng phí thời gian và sức lực để xem xét các tùy chọn mà bạn không cần phải nghĩ đến.
+- Giao diện người dùng mới có các **gợi ý** nhỏ cho các tùy chọn có thể gây nhầm lẫn.
+- **Thiết kế Bảng Hành động mới** làm cho việc thêm và xóa Hành động trở nên rõ ràng hơn, điều mà nhiều người đã bị nhầm lẫn. Nó cũng co giãn để phù hợp với số lượng Hành động nên bạn không phải điều chỉnh kích thước thủ công.
+- **Tab Giới thiệu** mới có bố cục đẹp mắt, và đặt các tùy chọn bổ sung cho hỗ trợ, phản hồi, và nhiều thứ khác trong tầm tay bạn.
+- Một số **chuỗi giao diện người dùng hiện có** đã được cải thiện.
+- Giờ đây có **tùy chọn mới** để Khóa Con trỏ Chuột trong khi thực hiện Cử chỉ Nhấp và Kéo. Tôi không có cái nào để thử nghiệm, nhưng điều này nên rất tốt cho Chuột Trackball!
+
+## 8. Kiếm tiền
+
+Mac Mouse Fix 3 sẽ **miễn phí trong 30 ngày** và sau đó có giá **$1.99** để sở hữu.
+
+Tôi biết rằng việc phải trả tiền cho thứ từng miễn phí không phải là cảm giác tốt nhất, nhưng tôi hy vọng có thể thuyết phục bạn rằng đó là một điều **tốt cho dự án**!
+
+Giống như mọi khía cạnh khác của Mac Mouse Fix, tôi đã chú ý rất nhiều đến việc làm cho **trải nghiệm người dùng** trở nên **đơn giản** và **dễ chịu** nhất có thể:
+
+1. **30 ngày miễn phí** được triển khai thông minh. Mac Mouse Fix **chỉ đếm những ngày** mà bạn **thực sự sử dụng nó**. Vì vậy, không có **áp lực** phải sử dụng ứng dụng trước khi hết thời gian, và bạn có thể đưa ra quyết định có hiểu biết về việc có muốn mua ứng dụng hay không mà không bị căng thẳng.
+2. Sau 30 ngày miễn phí, việc **thanh toán** cho ứng dụng cực kỳ **đơn giản** và **nhanh chóng**. Bạn có thể sử dụng tất cả các phương thức thanh toán bạn yêu thích như **Apple Pay** và **PayPal**, và chỉ cần **2 cú nhấp** để thanh toán từ trong ứng dụng qua Apple Pay!
+3. Sau khi bạn mua ứng dụng với giá $1.99, việc **kích hoạt giấy phép** của bạn cũng cực kỳ **đơn giản**. Tôi thực sự đã đặt một **liên kết** trên **màn hình thanh toán** trong trình duyệt web đưa bạn **trực tiếp** vào ứng dụng và mở **màn hình nhập giấy phép** cho bạn!
+4. Sau khi **kích hoạt giấy phép**, có một thông điệp **cảm ơn** ngẫu nhiên dễ thương trên tab giới thiệu. (Tôi nghe nói thậm chí còn có một số thông điệp bí mật cực kỳ hiếm...)
+5. Giấy phép của bạn được **đồng bộ qua iCloud** nên nó sẽ tự động có sẵn trên tất cả máy tính của bạn!
+
+Bằng cách hỗ trợ Mac Mouse Fix về mặt tài chính, bạn cũng có thể giúp tôi **dành nhiều thời gian hơn** cho nó và biến nó thành **trình điều khiển chuột TỐT NHẤT**. 
+Tôi cũng _rất thích_ dành thời gian cho Mac Mouse Fix, vì vậy điều đó cũng sẽ làm tôi **vui** :)
+
+**Mac Mouse Fix có còn là Mã nguồn Mở không?**
+
+Có. Mac Mouse Fix vẫn sẽ là mã nguồn mở, và tôi không có kế hoạch thay đổi điều đó tại bất kỳ thời điểm nào.
+
+Điều này cũng có nghĩa là bạn *có thể* sử dụng Mac Mouse Fix miễn phí bằng cách biên dịch từ mã nguồn và tắt kiểm tra giấy phép. Điều đó hoàn toàn ổn, tôi chỉ không khuyến khích chia sẻ các phiên bản crack này trực tuyến.
+Và tất nhiên, trong lần cập nhật tiếp theo, bạn sẽ nhận được phiên bản không crack nghĩa là bạn sẽ phải làm điều này lại cho mỗi lần cập nhật. (Hoặc chỉ cần trả $1.99 cho trình điều khiển chuột tuyệt vời nhất! :)
+
+Bất kỳ ai cũng vẫn có thể sử dụng mã nguồn từ Mac Mouse Fix trong các sản phẩm miễn phí và thương mại của họ miễn là họ không chỉ bán một bản sao của Mac Mouse Fix mà không thêm đóng góp của riêng họ.
+
+Tìm hiểu chi tiết trong [Giấy phép MMF](https://github.com/noah-nuebling/mac-mouse-fix/blob/version-3/LICENSE) mới mà MMF 3 sẽ được cấp phép theo.
+
+**Tôi có phải trả tiền để sử dụng Mac Mouse Fix 3 Beta không?**
+
+Không. Bạn có thể chỉ cần sử dụng 30 ngày miễn phí của mình. Bộ đếm ngày miễn phí có thể sẽ không đặt lại khi phiên bản ổn định của Mac Mouse Fix 3 phát hành, vì điều đó sẽ là thêm thứ để thiết kế và triển khai và tôi không nghĩ ai sẽ quan tâm quá nhiều. (Hãy cho tôi biết nếu bạn quan tâm). Nhưng tôi sẽ mở rộng số ngày miễn phí nếu bản beta kéo dài hơn 30 ngày.
+
+**Tôi có thể nhận Mac Mouse Fix miễn phí nếu tôi đã quyên góp trước đây không?**
+
+Có! Nếu bạn đã mua cho tôi một ly sữa lắc trước ngày 10 tháng 9 năm 2022, bạn có thể viết email đến noah.n.public@gmail.com với "Milkshake Karma" trong tiêu đề và một ảnh chụp màn hình làm bằng chứng và sau đó tôi sẽ gửi cho bạn mã giảm giá 100% hoặc gì đó tương tự!
+
+## 9. Quốc tế hóa
+
+Với việc viết lại giao diện người dùng, giờ đây có thể **dịch** Mac Mouse Fix sang các ngôn ngữ khác nhau!
+
+Tôi đã dịch nó sang **tiếng Đức**, ngôn ngữ mẹ đẻ của tôi, và bạn cũng có thể dịch nó sang **ngôn ngữ của bạn**!
+
+Tôi dự định viết một **hướng dẫn chi tiết** hơn về điều này trong tương lai, nhưng nếu bạn muốn thử, đây là tổng quan nhỏ về các **bước**:
+
+- **Tải xuống** mã nguồn & Xcode
+- **[Thêm ngôn ngữ của bạn](https://developer.apple.com/documentation/xcode/adding-support-for-languages-and-regions)** vào dự án
+- Đặt bản dịch của bạn vào các tệp **`.strings`** và **`.stringsdict`** trong toàn bộ dự án
+- **Commit** các thay đổi của bạn và tạo một **pull request**
+
+Nếu bản dịch của bạn được thêm vào dự án, bạn sẽ nhận được **10 bản sao MMF miễn phí**, và tất nhiên, bạn sẽ được **ghi công là người đóng góp**. Tôi nghe nói bạn cũng có thể để lại **thông điệp cá nhân** của mình bằng cách thay đổi một số (thông điệp cảm ơn hiếm bí mật) trên tab Giới thiệu.
+
+Có thể tôi sẽ thêm **nhiều đặc quyền hơn** trong tương lai. Hãy cho tôi biết nếu bạn có bất kỳ **ý tưởng** nào cho điều đó!
+
+## 10. Cách Bạn Có Thể Giúp đỡ
+
+Bạn có thể giúp đỡ bằng cách chia sẻ **ý tưởng**, **vấn đề** và **phản hồi** của bạn!
+
+Nơi tốt nhất để chia sẻ **ý tưởng** và **vấn đề** của bạn là [Trợ lý Phản hồi](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report).
+Nơi tốt nhất để đưa ra phản hồi **nhanh** không có cấu trúc là [Thảo luận Phản hồi](https://github.com/noah-nuebling/mac-mouse-fix/discussions/366).
+
+Bạn cũng có thể truy cập cả hai nơi này từ trong ứng dụng trên tab "**ⓘ Giới thiệu**".
+
+**Cảm ơn** vì đã giúp làm cho Mac Mouse Fix tốt hơn! 🚀

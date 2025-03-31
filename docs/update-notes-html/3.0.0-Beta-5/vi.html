@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="vi" xml:lang="vi">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmphdyyinp5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Được dịch bởi AI</strong></p>
+
+<p>Ghi chú phát hành này được dịch bởi Claude AI. Có thể có một số
+
+lỗi.<br />
+
+Để xem phiên bản tiếng Anh gốc, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-5">nhấn
+
+vào đây</a>.</p>
+
+<hr />
+
+<p>Đồng thời hãy xem qua những <strong>thay đổi tuyệt vời</strong> được
+
+giới thiệu trong <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-4&amp;locale=vi">3.0.0
+
+Beta 4</a>!</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 5</strong> khôi phục <strong>khả năng tương
+
+thích</strong> với một số <strong>chuột</strong> trên macOS 13 Ventura
+
+và <strong>sửa chức năng cuộn</strong> trong nhiều ứng dụng. Nó cũng bao
+
+gồm một số sửa lỗi nhỏ và cải tiến chất lượng khác.</p>
+
+<p>Đây là <strong>tất cả những điều mới</strong>:</p>
+
+<h3 id="chuột">Chuột</h3>
+
+<ul>
+
+<li>Đã sửa chức năng cuộn trong Terminal và các ứng dụng khác! Xem
+
+GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/413">#413</a>.</li>
+
+<li>Đã sửa vấn đề không tương thích với một số chuột trên macOS 13
+
+Ventura bằng cách chuyển từ việc sử dụng API Apple không đáng tin cậy
+
+sang các hack cấp thấp. Hy vọng điều này không gây ra vấn đề mới - hãy
+
+cho tôi biết nếu có! Cảm ơn đặc biệt đến Maria và người dùng GitHub <a
+
+href="https://github.com/samiulhsnt">samiulhsnt</a> đã giúp tìm ra giải
+
+pháp! Xem GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/424">#424</a>
+
+để biết thêm thông tin.</li>
+
+<li>Sẽ không sử dụng CPU khi nhấp Nút Chuột 1 hoặc 2 nữa. Giảm nhẹ mức
+
+sử dụng CPU khi nhấp các nút khác.
+
+<ul>
+
+<li>Đây là “Bản Dựng Gỡ Lỗi” nên mức sử dụng CPU có thể cao hơn khoảng
+
+10 lần khi nhấp nút trong bản beta này so với bản phát hành chính
+
+thức</li>
+
+</ul></li>
+
+<li>Mô phỏng cuộn trackpad được sử dụng cho tính năng “Cuộn Mượt” và
+
+“Cuộn &amp; Điều Hướng” của Mac Mouse Fix giờ đây còn chính xác hơn.
+
+Điều này có thể dẫn đến hoạt động tốt hơn trong một số tình huống.</li>
+
+</ul>
+
+<h3 id="giao-diện-người-dùng">Giao diện người dùng</h3>
+
+<ul>
+
+<li>Tự động sửa các vấn đề với việc cấp Quyền truy cập Accessibility sau
+
+khi cập nhật từ phiên bản cũ của Mac Mouse Fix. Áp dụng các thay đổi
+
+được mô tả trong <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.2&amp;locale=vi">Ghi
+
+chú Phát hành 2.2.2</a>.</li>
+
+<li>Thêm nút “Hủy” vào màn hình “Cấp Quyền truy cập Accessibility”</li>
+
+<li>Đã sửa lỗi cấu hình Mac Mouse Fix không hoạt động đúng sau khi cài
+
+đặt phiên bản mới của Mac Mouse Fix, vì phiên bản mới sẽ kết nối với
+
+phiên bản cũ của “Mac Mouse Fix Helper”. Giờ đây, Mac Mouse Fix sẽ không
+
+kết nối với “Mac Mouse Fix Helper” cũ nữa và tự động vô hiệu hóa phiên
+
+bản cũ khi cần thiết.</li>
+
+<li>Cung cấp hướng dẫn cho người dùng cách khắc phục vấn đề khi Mac
+
+Mouse Fix không thể được kích hoạt đúng cách do có phiên bản Mac Mouse
+
+Fix khác trong hệ thống. Vấn đề này chỉ xảy ra trên macOS Ventura.</li>
+
+<li>Cải thiện hành vi và hiệu ứng trên màn hình “Cấp Quyền truy cập
+
+Accessibility”</li>
+
+<li>Mac Mouse Fix sẽ được đưa lên nền trước khi được kích hoạt. Điều này
+
+cải thiện tương tác giao diện người dùng trong một số tình huống như khi
+
+bạn kích hoạt Mac Mouse Fix sau khi nó bị vô hiệu hóa trong System
+
+Settings &gt; General &gt; Login Items.</li>
+
+<li>Cải thiện chuỗi giao diện người dùng trên màn hình “Cấp Quyền truy
+
+cập Accessibility”</li>
+
+<li>Cải thiện chuỗi giao diện người dùng hiển thị khi cố gắng kích hoạt
+
+Mac Mouse Fix trong khi nó bị vô hiệu hóa trong System Settings</li>
+
+<li>Đã sửa một chuỗi giao diện người dùng tiếng Đức</li>
+
+</ul>
+
+<h3 id="bên-dưới-nắp-capo">Bên dưới nắp capo</h3>
+
+<ul>
+
+<li>Số phiên bản của “Mac Mouse Fix” và “Mac Mouse Fix Helper” nhúng giờ
+
+đã được đồng bộ hóa. Điều này được sử dụng để ngăn “Mac Mouse Fix” vô
+
+tình kết nối với các phiên bản cũ của “Mac Mouse Fix Helper”.</li>
+
+<li>Đã sửa lỗi một số dữ liệu về giấy phép và thời gian dùng thử đôi khi
+
+hiển thị không chính xác khi khởi động ứng dụng lần đầu tiên bằng cách
+
+xóa dữ liệu cache khỏi cấu hình ban đầu</li>
+
+<li>Dọn dẹp nhiều trong cấu trúc dự án và mã nguồn</li>
+
+<li>Cải thiện thông báo gỡ lỗi</li>
+
+</ul>
+
+<hr />
+
+<h3 id="cách-bạn-có-thể-giúp-đỡ">Cách Bạn Có Thể Giúp đỡ</h3>
+
+<p>Bạn có thể giúp đỡ bằng cách chia sẻ <strong>ý tưởng</strong>,
+
+<strong>vấn đề</strong> và <strong>phản hồi</strong> của bạn!</p>
+
+<p>Nơi tốt nhất để chia sẻ <strong>ý tưởng</strong> và <strong>vấn
+
+đề</strong> là <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Trợ
+
+lý Phản hồi</a>. Nơi tốt nhất để đưa ra phản hồi <strong>nhanh</strong>
+
+không có cấu trúc là <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Thảo
+
+luận Phản hồi</a>.</p>
+
+<p>Bạn cũng có thể truy cập những nơi này từ trong ứng dụng trên tab
+
+“<strong>ⓘ Giới thiệu</strong>”.</p>
+
+<p><strong>Cảm ơn</strong> vì đã giúp Mac Mouse Fix trở nên tốt hơn!
+
+💙💛❤️</p>
+
+</body>
+
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ro" xml:lang="ro">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpb7uutnct</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Tradus de AI</strong></p>
+
+<p>Această notă de lansare a fost tradusă de AI-ul Claude. Poate conține
+
+erori.<br />
+
+Pentru versiunea originală în engleză, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-5">click
+
+aici</a>.</p>
+
+<hr />
+
+<p>Verifică și <strong>modificările interesante</strong> introduse în <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-4&amp;locale=ro">3.0.0
+
+Beta 4</a>!</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 5</strong> restabilește
+
+<strong>compatibilitatea</strong> cu unele <strong>mouse-uri</strong> în
+
+macOS 13 Ventura și <strong>repară derularea</strong> în multe
+
+aplicații. De asemenea, include mai multe remedieri minore și
+
+îmbunătățiri ale calității vieții.</p>
+
+<p>Iată <strong>toate noutățile</strong>:</p>
+
+<h3 id="mouse">Mouse</h3>
+
+<ul>
+
+<li>Am reparat derularea în Terminal și alte aplicații! Vezi problema
+
+GitHub <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/413">#413</a>.</li>
+
+<li>Am rezolvat incompatibilitatea cu unele mouse-uri în macOS 13
+
+Ventura renunțând la utilizarea API-urilor Apple nesigure în favoarea
+
+unor hack-uri de nivel inferior. Sper că acest lucru nu va introduce
+
+probleme noi - anunță-mă dacă se întâmplă! Mulțumiri speciale Mariei și
+
+utilizatorului GitHub <a
+
+href="https://github.com/samiulhsnt">samiulhsnt</a> pentru ajutorul în
+
+rezolvarea acestei probleme! Vezi problema GitHub <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/424">#424</a>
+
+pentru mai multe informații.</li>
+
+<li>Nu va mai folosi CPU când se face click pe Butonul 1 sau 2 al
+
+mouse-ului. Am redus ușor utilizarea CPU-ului la click-urile pe alte
+
+butoane.
+
+<ul>
+
+<li>Aceasta este o “Versiune de Debug” așa că utilizarea CPU-ului poate
+
+fi de aproximativ 10 ori mai mare la click-urile pe butoane în această
+
+versiune beta față de versiunea finală</li>
+
+</ul></li>
+
+<li>Simularea derulării trackpad-ului folosită pentru funcțiile
+
+“Derulare Lină” și “Derulare &amp; Navigare” ale Mac Mouse Fix este acum
+
+și mai precisă. Acest lucru ar putea duce la un comportament mai bun în
+
+anumite situații.</li>
+
+</ul>
+
+<h3 id="interfață">Interfață</h3>
+
+<ul>
+
+<li>Repararea automată a problemelor cu acordarea Accesului de
+
+Accesibilitate după actualizarea de la o versiune mai veche de Mac Mouse
+
+Fix. Adoptă modificările descrise în <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.2&amp;locale=ro">Notele
+
+de lansare 2.2.2</a>.</li>
+
+<li>Am adăugat un buton “Anulare” în ecranul “Acordă Acces de
+
+Accesibilitate”</li>
+
+<li>Am reparat o problemă unde configurarea Mac Mouse Fix nu funcționa
+
+corect după instalarea unei noi versiuni de Mac Mouse Fix, deoarece noua
+
+versiune se conecta la versiunea veche de “Mac Mouse Fix Helper”. Acum,
+
+Mac Mouse Fix nu se va mai conecta la vechiul “Mac Mouse Fix Helper” și
+
+va dezactiva automat versiunea veche când este necesar.</li>
+
+<li>Oferirea instrucțiunilor utilizatorului despre cum să repare o
+
+problemă unde Mac Mouse Fix nu poate fi activat corect din cauza
+
+prezenței unei alte versiuni de Mac Mouse Fix în sistem. Această
+
+problemă apare doar în macOS Ventura.</li>
+
+<li>Am îmbunătățit comportamentul și animațiile în ecranul “Acordă Acces
+
+de Accesibilitate”</li>
+
+<li>Mac Mouse Fix va fi adus în prim-plan când este activat. Acest lucru
+
+îmbunătățește interacțiunile cu interfața în anumite situații, cum ar fi
+
+când activezi Mac Mouse Fix după ce a fost dezactivat în Setări Sistem
+
+&gt; General &gt; Elemente de Login.</li>
+
+<li>Am îmbunătățit textele din interfață în ecranul “Acordă Acces de
+
+Accesibilitate”</li>
+
+<li>Am îmbunătățit textele din interfață care apar când încerci să
+
+activezi Mac Mouse Fix în timp ce este dezactivat în Setări Sistem</li>
+
+<li>Am reparat un text în limba germană din interfață</li>
+
+</ul>
+
+<h3 id="sub-capotă">Sub capotă</h3>
+
+<ul>
+
+<li>Numărul de build al “Mac Mouse Fix” și al “Mac Mouse Fix Helper”
+
+încorporat sunt acum sincronizate. Acest lucru este folosit pentru a
+
+preveni conectarea accidentală a “Mac Mouse Fix” la versiuni vechi ale
+
+“Mac Mouse Fix Helper”.</li>
+
+<li>Am reparat problema unde unele date despre licență și perioada de
+
+probă erau uneori afișate incorect la prima pornire a aplicației prin
+
+eliminarea datelor cache din configurația inițială</li>
+
+<li>Multe curățări ale structurii proiectului și codului sursă</li>
+
+<li>Am îmbunătățit mesajele de debug</li>
+
+</ul>
+
+<hr />
+
+<h3 id="cum-poți-ajuta">Cum poți ajuta</h3>
+
+<p>Poți ajuta împărtășind <strong>ideile</strong>,
+
+<strong>problemele</strong> și <strong>feedback-ul</strong> tău!</p>
+
+<p>Cel mai bun loc pentru a împărtăși <strong>ideile</strong> și
+
+<strong>problemele</strong> tale este <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Asistentul
+
+de Feedback</a>. Cel mai bun loc pentru a oferi feedback
+
+<strong>rapid</strong> nestructurat este <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Discuția
+
+de Feedback</a>.</p>
+
+<p>Poți accesa aceste locuri și din aplicație în fila “<strong>ⓘ
+
+Despre</strong>”.</p>
+
+<p><strong>Mulțumesc</strong> că ajuți la îmbunătățirea Mac Mouse Fix!
+
+💙💛❤️</p>
+
+</body>
+
+</html>

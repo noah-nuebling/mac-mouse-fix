@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpaql6cqlt</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI가 번역함</strong></p>
+
+<p>이 릴리스 노트는 Claude AI가 번역했습니다. 오류가 있을 수
+
+있습니다.<br />
+
+영어 원문을 보시려면 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-4">여기를
+
+클릭하세요</a>.</p>
+
+<hr />
+
+<p><a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-3&amp;locale=ko">3.0.0
+
+Beta 3</a>의 <strong>새로운 기능</strong>도 확인해보세요!</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 4</strong>는 새로운 <strong>“기본값 복원…”
+
+옵션</strong>과 함께 많은 <strong>사용성 개선</strong>과 <strong>버그
+
+수정</strong>을 가져왔습니다!</p>
+
+<p>다음은 <strong>모든 새로운</strong> 기능입니다:</p>
+
+<h2 id="기본값-복원-옵션">1. “기본값 복원…” 옵션</h2>
+
+<p>이제 “버튼” 탭에 “<strong>기본값 복원…</strong>” 버튼이 있습니다.
+
+이를 통해 설정을 <strong>실험</strong>하면서도 더욱
+
+<strong>편안하게</strong> 느낄 수 있습니다.</p>
+
+<p><strong>2가지 기본값</strong>이 제공됩니다:</p>
+
+<ol type="1">
+
+<li>“<strong>5개 이상의 버튼</strong>이 있는 마우스를 위한 기본 설정”은
+
+매우 강력하고 편리합니다. 실제로 <strong>트랙패드</strong>에서 할 수
+
+있는 <strong>모든 것</strong>을 할 수 있습니다. <strong>엄지</strong>가
+
+놓이는 위치에 있는 2개의 <strong>측면 버튼</strong>만으로도 가능합니다!
+
+물론 5개 이상의 버튼이 있는 마우스에서만 사용할 수 있습니다.</li>
+
+<li>“<strong>3개의 버튼</strong>이 있는 마우스를 위한 기본 설정”은 3개의
+
+버튼만 있는 마우스에서도 트랙패드에서 할 수 있는 <strong>가장
+
+중요한</strong> 기능들을 사용할 수 있게 해줍니다.</li>
+
+</ol>
+
+<p>이 기능을 <strong>스마트</strong>하게 만들기 위해 노력했습니다:</p>
+
+<ul>
+
+<li>MMF를 처음 시작할 때 <strong>마우스에 가장 적합한</strong> 프리셋을
+
+<strong>자동으로 선택</strong>합니다.</li>
+
+<li>기본값을 복원할 때, Mac Mouse Fix는 사용 중인 <strong>마우스
+
+모델</strong>과 <strong>버튼 수</strong>를 <strong>보여주어</strong> 두
+
+프리셋 중 어떤 것을 사용할지 쉽게 선택할 수 있게 합니다. 또한
+
+<strong>마우스에 가장 적합한</strong> 프리셋을 <strong>미리
+
+선택</strong>합니다.</li>
+
+<li>현재 설정에 맞지 않는 <strong>새로운 마우스</strong>로 전환할 때,
+
+버튼 탭에 팝업이 표시되어 마우스에 권장되는 설정을
+
+<strong>불러오는</strong> 방법을 <strong>알려줍니다</strong>!</li>
+
+<li>이와 관련된 모든 <strong>UI</strong>는 매우
+
+<strong>단순</strong>하고, <strong>아름답</strong>며,
+
+<strong>애니메이션</strong>이 부드럽게 작동합니다.</li>
+
+</ul>
+
+<p>이 기능이 <strong>유용</strong>하고 <strong>사용하기 쉽기</strong>를
+
+바랍니다! 문제가 있다면 알려주세요. 뭔가 <strong>이상</strong>하거나
+
+<strong>직관적이지 않은</strong> 부분이 있나요? <strong>팝업</strong>이
+
+<strong>너무 자주</strong> 또는 <strong>부적절한 상황</strong>에서
+
+나타나나요? 여러분의 경험을 <strong>알려주세요</strong>!</p>
+
+<h2 id="일부-국가에서-mac-mouse-fix-일시적-무료-제공">2. 일부 국가에서
+
+Mac Mouse Fix 일시적 무료 제공</h2>
+
+<p>현재 Mac Mouse Fix의 <strong>결제 제공업체</strong>인 Gumroad가
+
+<strong>작동하지 않는</strong> <strong>국가</strong>들이 있습니다. 대체
+
+결제 방법을 제공할 때까지 <strong>해당 국가</strong>에서는 Mac Mouse
+
+Fix를 <strong>무료</strong>로 제공합니다!</p>
+
+<p>무료 제공 국가에 있다면, 이에 대한 정보가 <strong>정보 탭</strong>과
+
+<strong>라이선스 키 입력</strong> 시 <strong>표시</strong>됩니다.</p>
+
+<p>만약 귀하의 국가에서 Mac Mouse Fix <strong>구매가
+
+불가능</strong>하지만 아직 <strong>무료</strong>로도 제공되지 않는다면,
+
+알려주시면 해당 국가에서도 Mac Mouse Fix를 무료로 제공하도록
+
+하겠습니다!</p>
+
+<h2 id="번역을-시작하기-좋은-시기입니다">3. 번역을 시작하기 좋은
+
+시기입니다!</h2>
+
+<p>Beta 4에서는 Mac Mouse Fix 3을 위해 계획했던 <strong>모든 UI
+
+변경사항</strong>을 구현했습니다. 따라서 Mac Mouse Fix 3가 출시될 때까지
+
+UI에 큰 변경사항은 없을 것으로 예상됩니다.</p>
+
+<p>UI가 더 변경될 것으로 예상하여 기다리고 계셨다면, 지금이 앱을
+
+여러분의 언어로 <strong>번역</strong>을 시작하기에 <strong>좋은
+
+시기</strong>입니다!</p>
+
+<p>앱 번역에 대한 <strong>자세한 정보</strong>는 <strong><a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-1.1&amp;locale=ko">3.0.0
+
+Beta 1 릴리스 노트</a> &gt; 9. 국제화</strong>를 참조하세요.</p>
+
+<h2 id="기타-변경사항">4. 기타 변경사항</h2>
+
+<p>위에 나열된 변경사항 외에도 Beta 4에는 많은 소소한 <strong>버그
+
+수정</strong>, <strong>개선사항</strong>, 그리고 <strong>사용성
+
+개선</strong>이 포함되어 있습니다:</p>
+
+<h3 id="ui">UI</h3>
+
+<h4 id="버그-수정">버그 수정</h4>
+
+<ul>
+
+<li>정보 탭의 링크를 클릭할 때 창의 아무 곳을 클릭해도 계속해서 열리는
+
+버그를 수정했습니다. GitHub 사용자 <a
+
+href="https://github.com/DingoBits">DingoBits</a>가 이를
+
+수정했습니다!</li>
+
+<li>이전 macOS 버전에서 일부 인앱 심볼이 올바르게 표시되지 않는 문제를
+
+수정했습니다</li>
+
+<li>액션 테이블의 스크롤바를 숨겼습니다. GitHub 사용자 <a
+
+href="https://github.com/marianmelinte93">marianmelinte93</a>가 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366#discussioncomment-3728994">이
+
+댓글</a>에서 이 문제를 알려주어 감사합니다!</li>
+
+<li>macOS Monterey 이하 버전에서 메뉴 바에서 특정 기능을 비활성화한 후
+
+해당 기능의 탭을 열면 자동으로 재활성화되는 것에 대한 피드백이 표시되지
+
+않는 문제를 수정했습니다. 다시 한 번 <a
+
+href="https://github.com/marianmelinte93">marianmelinte93</a>에게 이
+
+문제를 알려준 것에 감사드립니다.</li>
+
+<li>“스페이스 간 이동을 위한 클릭하여 스크롤” 옵션에 대한 누락된 현지화
+
+및 독일어 번역을 추가했습니다</li>
+
+<li>더 많은 소소한 현지화 문제를 수정했습니다</li>
+
+<li>누락된 독일어 번역을 추가했습니다</li>
+
+<li>일부 버튼이 캡처되고 다른 버튼이 동시에 캡처 해제될 때 버튼이
+
+캡처되었거나 더 이상 캡처되지 않음을 표시하는 알림이 이제 제대로
+
+작동합니다.</li>
+
+</ul>
+
+<h4 id="개선사항">개선사항</h4>
+
+<ul>
+
+<li>“앱 전환기를 위한 클릭 및 스크롤” 옵션을 제거했습니다. 약간 버그가
+
+있었고 그다지 유용하지 않다고 생각했습니다.</li>
+
+<li>“회전을 위한 클릭 및 스크롤” 옵션을 추가했습니다.</li>
+
+<li>메뉴 바의 “Mac Mouse Fix” 메뉴 레이아웃을 조정했습니다.</li>
+
+<li>메뉴 바의 “Mac Mouse Fix” 메뉴에 “Mac Mouse Fix 구매” 버튼을
+
+추가했습니다.</li>
+
+<li>“메뉴 바에 표시” 옵션 아래에 힌트 텍스트를 추가했습니다. 메뉴 바
+
+항목을 사용하여 기능을 빠르게 켜거나 끌 수 있다는 것을 더 쉽게 발견할 수
+
+있도록 하는 것이 목적입니다</li>
+
+<li>정보 화면의 “Mac Mouse Fix 구매해 주셔서 감사합니다” 메시지를 이제
+
+현지화 담당자가 완전히 사용자 정의할 수 있습니다.</li>
+
+<li>현지화 담당자를 위한 힌트를 개선했습니다</li>
+
+<li>평가판 만료에 관한 UI 문구를 개선했습니다</li>
+
+<li>정보 탭의 UI 문구를 개선했습니다</li>
+
+<li>가독성을 높이기 위해 일부 UI 문구에 굵은 강조를 추가했습니다</li>
+
+<li>정보 탭의 “이메일 보내기” 링크를 클릭할 때 알림을 추가했습니다.</li>
+
+<li>액션 테이블의 정렬 순서를 변경했습니다. 이제 클릭 및 스크롤 액션이
+
+클릭 및 드래그 액션 전에 표시됩니다. 테이블의 행이 이제 트리거의 강도에
+
+따라 정렬되어(클릭 &lt; 스크롤 &lt; 드래그) 더 자연스럽게
+
+느껴집니다.</li>
+
+<li>이제 UI와 상호작용할 때 활성 사용 중인 장치를 업데이트합니다. 이는
+
+일부 UI가 현재 사용 중인 장치를 기반으로 하기 때문에 유용합니다. (새로운
+
+“기본값 복원…” 기능 참조)</li>
+
+<li>앱을 처음 시작할 때 어떤 버튼이 캡처되었는지/더 이상 캡처되지 않는지
+
+표시하는 알림이 이제 표시됩니다.</li>
+
+<li>버튼이 캡처되었거나 더 이상 캡처되지 않을 때 표시되는 알림을 더욱
+
+개선했습니다</li>
+
+<li>라이선스 키를 활성화할 때 실수로 불필요한 공백이 입력되는 것을
+
+불가능하게 만들었습니다</li>
+
+</ul>
+
+<h3 id="마우스">마우스</h3>
+
+<h4 id="버그-수정-1">버그 수정</h4>
+
+<ul>
+
+<li>“고정 포인트 델타”를 제대로 전송하도록 스크롤 시뮬레이션을
+
+개선했습니다. 이는 부드러운 스크롤이 꺼진 Safari와 같은 일부 앱에서
+
+스크롤 속도가 너무 느린 문제를 해결합니다.</li>
+
+<li>컴퓨터가 느릴 때 “Mission Control 및 스페이스를 위한 클릭 및 드래그”
+
+기능이 가끔 멈추는 문제를 수정했습니다</li>
+
+<li>“스크롤 및 탐색을 위한 클릭 및 드래그” 기능을 사용한 후 마우스를
+
+움직일 때 Mac Mouse Fix가 항상 CPU를 사용하는 문제를 수정했습니다</li>
+
+</ul>
+
+<h4 id="개선사항-1">개선사항</h4>
+
+<ul>
+
+<li>Chrome, Brave, Edge와 같은 Chromium 기반 브라우저에서 스크롤하여
+
+확대/축소하는 반응성을 크게 개선했습니다</li>
+
+</ul>
+
+<h3 id="내부-구조">내부 구조</h3>
+
+<h4 id="버그-수정-2">버그 수정</h4>
+
+<ul>
+
+<li>Mac Mouse Fix가 활성화된 상태에서 다른 폴더로 이동할 때 제대로
+
+작동하지 않는 문제를 수정했습니다</li>
+
+<li>다른 Mac Mouse Fix 인스턴스가 여전히 활성화된 상태에서 Mac Mouse
+
+Fix를 활성화할 때 발생하는 일부 문제를 수정했습니다. (이는 Apple이 Beta
+
+3에서 사용된 “com.nuebling.mac-mouse-fixxx”에서 원래의
+
+“com.nuebling.mac-mouse-fix”로 번들 ID를 변경하도록 허용했기 때문입니다.
+
+이유는 확실하지 않습니다.)</li>
+
+</ul>
+
+<h4 id="개선사항-2">개선사항</h4>
+
+<ul>
+
+<li>이 베타와 향후 베타는 더 자세한 디버깅 정보를 출력할 것입니다</li>
+
+<li>내부 구조 정리 및 개선. 이전 10.13 이전 코드를 제거했습니다.
+
+프레임워크와 종속성을 정리했습니다. 이제 소스 코드가 더 쉽게 작업할 수
+
+있고 미래 지향적입니다.</li>
+
+</ul>
+
+</body>
+
+</html>

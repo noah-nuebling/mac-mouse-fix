@@ -1,0 +1,157 @@
+**3.0.0** bude **největší aktualizací** Mac Mouse Fix dosud!
+
+Spojuje mnoho funkcí, na kterých jsem dlouho pracoval, aby konečně přinesl tento skvělý **hodnotový návrh**:
+
+**Udělejte ze své myši za $10 lepší zařízení než Apple Trackpad!**
+
+A můžete to **vyzkoušet hned teď**! Jsem opravdu nadšený, že uslyším vaši zpětnou vazbu!
+
+Zde je **vše nové**:
+
+## 1. Kliknutí a tažení pro posouvání
+
+Nyní můžete **kliknout a táhnout pro volné posouvání** v libovolném směru!
+
+Také vám to umožní přecházet zpět a vpřed v **Safari**, označovat zprávy jako přečtené v **Mailu** a **dělat cokoli jiného**, co můžete udělat **dvouprstým přejetím** na **Apple Trackpadu**!
+
+Tvrdě jsem pracoval na implementaci této funkce v této kvalitě. Ale výsledkem je, že když si s tím pohrajete, zjistíte, že to opravdu "**prostě funguje**"!
+
+## 2. Gesta posouvání
+
+Mac Mouse Fix nyní podporuje **gesta posouvání**!
+To znamená, že můžete **spouštět akce** **posouváním** při držení tlačítka myši!
+
+Gesta posouvání vám umožní získat ještě **více funkcí** z jediného tlačítka myši velmi **intuitivním** způsobem.
+
+V této betě jsou k dispozici **následující** gesta posouvání:
+
+  - **Plocha a Launchpad** vám umožní zobrazit plochu nebo otevřít Launchpad posouváním nahoru nebo dolů. Je to super plynulé a intuitivní, protože to simuluje štípnutí čtyřmi prsty na Apple Trackpadu.
+  - **Pohyb mezi plochami** vám umožní přepínat mezi plochami posouváním nahoru nebo dolů. Je to také super plynulé, protože to simuluje přejetí třemi prsty na Apple Trackpadu. Nejsem si ale jistý, jestli to není nadbytečné, když už můžete kliknout a táhnout pro přesun mezi plochami. Dejte mi vědět, co si myslíte!
+  - **Přiblížení nebo oddálení** vám umožní podívat se blíže na web nebo kdekoli jinde. Toto bylo již dostupné v Mac Mouse Fix 2 držením klávesy Command (⌘) při posouvání, ale nyní to můžete dělat snadněji pomocí jedné ruky!
+  - **Horizontální posouvání** vám umožní posouvat se doleva a doprava. Můžete ho také použít k navigaci mezi stránkami v Safari a dalších aplikacích, protože simuluje přejetí dvěma prsty na Apple Trackpadu.
+  - **Rychlé posouvání** vám umožní posouvat se na velké vzdálenosti s minimálním úsilím.
+  - **Přesné posouvání** vám umožní posouvat se na malé vzdálenosti a používat citlivé prvky UI jako posuvníky hlasitosti s přesností.
+  - **Přepínač aplikací** vám umožní přepínat mezi nedávnými aplikacemi, stejně jako stisknutí Command-Tab (⌘ + ↹) na klávesnici. Tato funkce má nějaké chyby a nejsem si jistý, jestli je velmi užitečná, protože už můžete snadno přistupovat k přepínači karet z klávesnice, takže ji pravděpodobně později odstraním. Dejte mi ale vědět, co si myslíte.
+
+## 3. Inerciální posouvání
+
+**Inerciální posouvání** dělá posouvání na vaší myši stejně **rychlé** a **plynulé** jako na Apple Trackpadu.
+
+Inerciální posouvání vytváří **dlouhé** a velmi **plynulé animace**. Na kolečku myši dlouhé animace obecně přinášejí kompromis v podobě menší kontroly.
+
+Ale Mac Mouse Fix 3 implementuje některé **chytré algoritmy**, aby vám poskytl **skvělý inerciální pocit** při zachování vysoké míry **kontroly**.
+
+Mimochodem, pokud si stáhnete tuto betu, myslím, že budete **jedni z prvních** lidí, kteří použijí **odraz při posouvání** z myši! (kromě Magic Mouse) Myslím, že je to docela cool.
+
+## 4. Další vylepšení posouvání
+
+**Přepsal** jsem většinu kódu pro posouvání pro MMF 3. To mi umožnilo implementovat mnoho **dalších malých funkcí** a vylepšení:
+
+1. Nyní jsou k dispozici **2 další klávesové modifikátory**, takže můžete nejen **přibližovat a oddalovat** pomocí Command (⌘) a **posouvat horizontálně** pomocí Shift (⇧), ale také **posouvat rychle** pomocí Control (^) a **posouvat přesně** pomocí Option (⌥).
+2. Nyní můžete vidět a **přizpůsobit všechny 4 klávesové modifikátory** pomocí krásného a intuitivního nového UI.
+3. **Trvale zapnuté přesné posouvání** vám umožní posouvat se přesně i bez držení modifikační klávesy pomalým pohybem kolečka myši.
+4. **Horizontální vstup posouvání** z vaší myši již není ignorován, ale místo toho je vyhlazován a invertován stejně jako normální vertikální vstup posouvání. Pokud má vaše myš **naklápěcí kolečko** nebo **horizontální kolečko**, mělo by se nyní cítit mnohem příjemněji.
+5. **Nastavení směru posouvání** jsou nyní nezávislá na systémových nastaveních, což umožňuje méně komplikované UI.
+6. **Nastavení posouvání** lze nyní **kombinovat** volněji. Například můžete použít **rychlost posouvání Mac Mouse Fix** i když je plynulé posouvání **vypnuto**. Nebo můžete použít **rychlost posouvání macOS**, když je plynulé posouvání **zapnuto**. (Poznámka: Osobně se mi rychlost posouvání macOS vůbec nelíbí a nedokážu si představit důvody, proč by ji někdo preferoval. Takže pokud ji preferujete, velmi rád bych se dozvěděl více o vašich zkušenostech! Můžete mě kontaktovat přes záložku "**ⓘ O aplikaci**".)
+
+## 5. Položka v menu liště
+
+Mac Mouse Fix má nyní **položku v menu liště**, takže vždy vidíte, kdy je zapnutý!
+
+Položka v menu liště má **krásnou ikonu** a také vám umožňuje **rychle vypnout** určité funkce Mac Mouse Fix, abyste mohli hrát hru nebo používat aplikaci bez toho, aby Mac Mouse Fix zasahoval.
+
+Samozřejmě ji můžete také **vypnout** pro čistší menu lištu.
+
+## 6. Nastavení pro konkrétní aplikace byla odstraněna
+
+**Nastavení pro konkrétní aplikace** jsou prozatím pryč. Plánuji je však **vrátit** v mnohem robustnější a výkonnější podobě v budoucnu.
+
+Prozatím si myslím, že rychlá nastavení v **menu liště** jsou **lepším**, i když méně pohodlným řešením.
+
+**Řeší** **nejdůležitější problémy** starých nastavení pro konkrétní aplikace:
+
+- Nastavení pro konkrétní aplikace nefungovala s některými programy jako **příkazy příkazového řádku**. To zahrnovalo populární aplikace jako **Minecraft**.
+- Nastavení pro konkrétní aplikace měla mnoho omezení, například neumožňovala **úplně vypnout tlačítka**, což byl problém pro mnoho hráčů.
+
+Další věc k zvážení je, že stará nastavení pro konkrétní aplikace byla původně **navržena jako náplast** pro některé aplikace, které byly nekompatibilní se starým systémem posouvání. Ale nyní, s novým systémem posouvání přesně emulujícím dotykové posouvání z Apple Trackpadu, by většina těchto nekompatibilit měla být **vyřešena**! Takže by měla být menší potřeba toho, v čem byla stará nastavení pro konkrétní aplikace nejlepší.
+
+Doufám, že s tím všichni souhlasí! Dejte mi vědět vaše **názory**!
+
+## 7. Přepracování UI
+
+Kompletně jsem **přepsal UI**, aby bylo **krásnější** a **výkonnější**, ale zároveň si zachovalo **jednoduchost** a **snadnost použití**, kterou lidé na Mac Mouse Fix milují.
+
+Zde je, co je nového:
+
+- UI je nyní rozděleno do různých **záložek**. To věci zpřehledňuje a umožňuje Mac Mouse Fix poskytovat další nastavení, která jsou pro lidi důležitá, aniž by se UI stalo příliš komplikovaným nebo přehlcujícím. To mi také umožní v budoucnu rozšířit Mac Mouse Fix o nové funkce.
+- Přidal jsem jemné a příjemné malé **animace** po celém novém UI, které usnadňují navigaci a přidávají pocit vybroušenosti.
+- Možnosti, které závisí na jiných možnostech, budou **skryty** a rozložení se přizpůsobí s krásnými jemnými animacemi. To udržuje věci co nejjednodušší a nejpřehlednější. Takže nemusíte plýtvat časem a mentální energií na prohlížení možností, o kterých nepotřebujete přemýšlet.
+- Nové UI obsahuje malé **nápovědy** pro možnosti, které by jinak mohly být matoucí.
+- **Nový design tabulky akcí** činí mnohem jasnějším, jak přidávat a odebírat akce, což bylo pro mnoho lidí matoucí. Také se zmenšuje a zvětšuje podle počtu akcí, takže ji nemusíte ručně měnit.
+- Nová **záložka O aplikaci** má krásné rozložení a poskytuje snadný přístup k dalším možnostem pro podporu, zpětnou vazbu a další.
+- Některé **existující texty UI** byly vylepšeny.
+- Nyní je k dispozici **nová možnost** uzamknout ukazatel myši během gest kliknutí a tažení. Nemám možnost to otestovat, ale mělo by to být velmi příjemné pro trackballové myši!
+
+## 8. Monetizace
+
+Mac Mouse Fix 3 bude **zdarma po dobu 30 dnů** a poté bude stát **$1.99**.
+
+Vím, že platit za něco, co bývalo zdarma, není nejlepší pocit, ale doufám, že vás přesvědčím, že je to pro projekt opravdu **dobrá věc**!
+
+Stejně jako u každého jiného aspektu Mac Mouse Fix jsem věnoval velkou pozornost tomu, aby **uživatelský zážitek** byl co **nejjednodušší** a **nejpříjemnější**:
+
+1. **30 dní zdarma** je chytře implementováno. Mac Mouse Fix **počítá pouze dny**, ve kterých ho **skutečně používáte**. Takže není **žádný tlak** na používání aplikace před vypršením času a můžete se bez stresu informovaně rozhodnout, zda chcete aplikaci koupit nebo ne.
+2. Po uplynutí 30 dní zdarma je **placení** za aplikaci extrémně **jednoduché** a **rychlé**. Můžete použít všechny platební metody, které máte rádi, jako **Apple Pay** a **PayPal**, a stačí pouze **2 kliknutí** pro zaplacení přímo v aplikaci přes Apple Pay!
+3. Po zakoupení aplikace za $1.99 je **aktivace licence** také extrémně **jednoduchá**. Dokonce jsem umístil **odkaz** na **obrazovku s potvrzením** v webovém prohlížeči, který vás zavede **přímo** do aplikace a otevře **obrazovku pro zadání licence**!
+4. Po **aktivaci licence** je na záložce O aplikaci roztomilá náhodná **děkovná zpráva**. (Slyšel jsem, že existují dokonce nějaké super tajné vzácné...)
+5. Vaše licence je **synchronizována přes iCloud**, takže bude automaticky dostupná na všech vašich počítačích!
+
+Tím, že Mac Mouse Fix finančně podpoříte, mi také pomůžete **věnovat mu mnohem více času** a udělat z něj **nejlepší ovladač myši VŠECH DOB**.
+Také _miluji_ trávit čas na Mac Mouse Fix, takže by mě to také udělalo **šťastným** :)
+
+**Bude Mac Mouse Fix stále open source?**
+
+Ano. Mac Mouse Fix zůstane open source a neplánuji to v žádném bodě měnit.
+
+To také znamená, že Mac Mouse Fix *můžete* používat zdarma tím, že si ho zkompilujete ze zdrojového kódu a vypnete kontroly licencí. To je naprosto v pořádku, jen odrazuji od sdílení těchto cracknutých verzí online.
+A samozřejmě při příští aktualizaci dostanete necracknutou verzi, což znamená, že to budete muset dělat znovu při každé aktualizaci. (Nebo prostě zaplatit $1.99 za nejlepší ovladač myši všech dob! :)
+
+Kdokoli bude také moci nadále používat zdrojový kód z Mac Mouse Fix ve svých bezplatných a komerčních produktech, pokud nebudou prodávat kopii Mac Mouse Fix bez přidání vlastního přínosu.
+
+Podrobnosti se dozvíte v nové [MMF licenci](https://github.com/noah-nuebling/mac-mouse-fix/blob/version-3/LICENSE), pod kterou bude MMF 3 licencován.
+
+**Budu muset platit za používání Mac Mouse Fix 3 Beta?**
+
+Ne. Můžete prostě využít svých 30 dní zdarma. Počítadlo volných dní se pravděpodobně při vydání stabilní verze Mac Mouse Fix 3 neresetuje, protože by to znamenalo další věci k navržení a implementaci a nemyslím si, že by to někomu příliš vadilo. (Dejte mi vědět, pokud ano). Ale prodloužím počet volných dní, pokud beta potrvá déle než 30 dní.
+
+**Mohu získat Mac Mouse Fix zdarma, pokud jsem již daroval?**
+
+Ano! Pokud jste mi koupili milkshake před 10. zářím 2022, můžete napsat email na noah.n.public@gmail.com s předmětem "Milkshake Karma" a screenshotem jako důkazem a pak vám pošlu slevový kód na 100 % nebo něco podobného!
+
+## 9. Internacionalizace
+
+S přepsáním UI je nyní možné **přeložit** Mac Mouse Fix do různých jazyků!
+
+Už jsem ho přeložil do **němčiny**, mého rodného jazyka, a vy ho můžete přeložit do **vašeho jazyka** také!
+
+Plánuji v budoucnu napsat **podrobnější průvodce**, ale pokud to chcete zkusit, zde je stručný přehled **kroků**:
+
+- **Stáhněte** si zdrojový kód a Xcode
+- **[Přidejte váš jazyk](https://developer.apple.com/documentation/xcode/adding-support-for-languages-and-regions)** do projektu
+- Vložte své překlady do souborů **`.strings`** a **`.stringsdict`** v celém projektu
+- **Commitněte** své změny a vytvořte **pull request**
+
+Pokud bude váš překlad přidán do projektu, dostanete **10 kopií MMF zdarma** a samozřejmě budete **uvedeni jako přispěvatel**. Slyšel jsem, že můžete také zanechat svou **osobní zprávu** změnou některých (tajných vzácných děkovných zpráv) na záložce O aplikaci.
+
+Možná v budoucnu přidám **další výhody**. Dejte mi vědět, pokud máte nějaké **nápady**!
+
+## 10. Jak můžete pomoci
+
+Můžete pomoci sdílením vašich **nápadů**, **problémů** a **zpětné vazby**!
+
+Nejlepší místo pro sdílení vašich **nápadů** a **problémů** je [Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report).
+Nejlepší místo pro poskytnutí **rychlé** nestrukturované zpětné vazby je [Feedback Discussion](https://github.com/noah-nuebling/mac-mouse-fix/discussions/366).
+
+K oběma těmto místům můžete přistupovat také z aplikace na záložce "**ⓘ O aplikaci**".
+
+**Děkuji** za pomoc s vylepšováním Mac Mouse Fix! 🚀

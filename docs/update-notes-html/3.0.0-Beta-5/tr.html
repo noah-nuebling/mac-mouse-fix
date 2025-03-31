@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="tr" xml:lang="tr">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpszha9iuc</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI tarafından çevrildi</strong></p>
+
+<p>Bu sürüm notu Claude AI tarafından çevrilmiştir. Hatalar
+
+içerebilir.<br />
+
+İngilizce orijinal versiyonu için <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-5">buraya
+
+tıklayın</a>.</p>
+
+<hr />
+
+<p>Ayrıca <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-4&amp;locale=tr">3.0.0
+
+Beta 4</a>’te tanıtılan <strong>güzel değişikliklere</strong> de göz
+
+atın!</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 5</strong>, macOS 13 Ventura’da bazı
+
+<strong>fareler</strong> ile <strong>uyumluluğu</strong> geri getiriyor
+
+ve birçok uygulamada <strong>kaydırmayı düzeltiyor</strong>. Ayrıca
+
+çeşitli küçük düzeltmeler ve kullanım kolaylığı iyileştirmeleri
+
+içeriyor.</p>
+
+<p>İşte <strong>tüm yenilikler</strong>:</p>
+
+<h3 id="fare">Fare</h3>
+
+<ul>
+
+<li>Terminal ve diğer uygulamalarda kaydırma düzeltildi! GitHub Sorunu
+
+<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/413">#413</a>’e
+
+bakın.</li>
+
+<li>Güvenilmez Apple API’leri yerine düşük seviyeli çözümler kullanarak
+
+macOS 13 Ventura’da bazı farelerle olan uyumsuzluk sorunu giderildi.
+
+Umarım bu yeni sorunlara yol açmaz - eğer açarsa bana bildirin! Maria ve
+
+GitHub kullanıcısı <a
+
+href="https://github.com/samiulhsnt">samiulhsnt</a>’ye bunu çözmemize
+
+yardımcı oldukları için özel teşekkürler! Daha fazla bilgi için GitHub
+
+Sorunu <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/424">#424</a>’e
+
+bakın.</li>
+
+<li>Fare Düğmesi 1 veya 2’ye tıklarken artık CPU kullanılmayacak. Diğer
+
+düğmelere tıklarken CPU kullanımı biraz azaltıldı.
+
+<ul>
+
+<li>Bu bir “Hata Ayıklama Sürümü” olduğundan, bu betada düğmelere
+
+tıklarken CPU kullanımı final sürüme göre yaklaşık 10 kat daha yüksek
+
+olabilir</li>
+
+</ul></li>
+
+<li>Mac Mouse Fix’in “Pürüzsüz Kaydırma” ve “Kaydır &amp; Gezin”
+
+özellikleri için kullanılan trackpad kaydırma simülasyonu artık daha da
+
+hassas. Bu bazı durumlarda daha iyi davranışlara yol açabilir.</li>
+
+</ul>
+
+<h3 id="arayüz">Arayüz</h3>
+
+<ul>
+
+<li>Mac Mouse Fix’in eski bir sürümünden güncelleme sonrası
+
+Erişilebilirlik Erişimi verme sorunları otomatik olarak düzeltiliyor. <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.2&amp;locale=tr">2.2.2
+
+Sürüm Notları</a>’nda açıklanan değişiklikleri benimsiyor.</li>
+
+<li>“Erişilebilirlik Erişimi Ver” ekranına “İptal” düğmesi eklendi</li>
+
+<li>Mac Mouse Fix’in yeni bir sürümünü yükledikten sonra, yeni sürümün
+
+eski “Mac Mouse Fix Helper” sürümüne bağlanması nedeniyle
+
+yapılandırmanın düzgün çalışmadığı bir sorun düzeltildi. Artık Mac Mouse
+
+Fix eski “Mac Mouse Fix Helper”a bağlanmayacak ve gerektiğinde eski
+
+sürümü otomatik olarak devre dışı bırakacak.</li>
+
+<li>Sistemde başka bir Mac Mouse Fix sürümünün bulunması nedeniyle Mac
+
+Mouse Fix’in düzgün şekilde etkinleştirilememesi durumunda kullanıcıya
+
+sorunu nasıl düzelteceğine dair talimatlar veriliyor. Bu sorun yalnızca
+
+macOS Ventura’da ortaya çıkıyor.</li>
+
+<li>“Erişilebilirlik Erişimi Ver” ekranındaki davranış ve animasyonlar
+
+iyileştirildi</li>
+
+<li>Mac Mouse Fix etkinleştirildiğinde ön plana getirilecek. Bu, Mac
+
+Mouse Fix’i Sistem Ayarları &gt; Genel &gt; Oturum Açma Öğeleri altında
+
+devre dışı bırakıldıktan sonra etkinleştirdiğinizde olduğu gibi bazı
+
+durumlarda arayüz etkileşimlerini iyileştirir.</li>
+
+<li>“Erişilebilirlik Erişimi Ver” ekranındaki arayüz metinleri
+
+iyileştirildi</li>
+
+<li>Mac Mouse Fix Sistem Ayarları’nda devre dışıyken etkinleştirmeye
+
+çalışırken görünen arayüz metinleri iyileştirildi</li>
+
+<li>Almanca bir arayüz metni düzeltildi</li>
+
+</ul>
+
+<h3 id="altyapı">Altyapı</h3>
+
+<ul>
+
+<li>“Mac Mouse Fix” ve gömülü “Mac Mouse Fix Helper”ın derleme
+
+numaraları artık senkronize edildi. Bu, “Mac Mouse Fix”in yanlışlıkla
+
+eski “Mac Mouse Fix Helper” sürümlerine bağlanmasını önlemek için
+
+kullanılıyor.</li>
+
+<li>Uygulamayı ilk kez başlatırken lisansınız ve deneme sürenizle ilgili
+
+bazı verilerin bazen yanlış görüntülenmesi sorunu, başlangıç
+
+yapılandırmasından önbellek verilerini kaldırarak düzeltildi</li>
+
+<li>Proje yapısı ve kaynak kodunda çok sayıda temizlik yapıldı</li>
+
+<li>Hata ayıklama mesajları iyileştirildi</li>
+
+</ul>
+
+<hr />
+
+<h3 id="nasıl-yardımcı-olabilirsiniz">Nasıl Yardımcı Olabilirsiniz</h3>
+
+<p><strong>Fikirlerinizi</strong>, <strong>sorunlarınızı</strong> ve
+
+<strong>geri bildirimlerinizi</strong> paylaşarak yardımcı
+
+olabilirsiniz!</p>
+
+<p><strong>Fikirlerinizi</strong> ve <strong>sorunlarınızı</strong>
+
+paylaşmak için en iyi yer <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Geri
+
+Bildirim Asistanı</a>’dır. <strong>Hızlı</strong>, yapılandırılmamış
+
+geri bildirim vermek için en iyi yer <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Geri
+
+Bildirim Tartışması</a>’dır.</p>
+
+<p>Bu yerlere uygulama içinden “<strong>ⓘ Hakkında</strong>” sekmesinden
+
+de erişebilirsiniz.</p>
+
+<p>Mac Mouse Fix’i daha iyi hale getirmeye yardımcı olduğunuz için
+
+<strong>teşekkürler</strong>! 💙💛❤️</p>
+
+</body>
+
+</html>

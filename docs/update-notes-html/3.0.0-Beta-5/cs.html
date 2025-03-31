@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cs" xml:lang="cs">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpingwt0ey</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Přeloženo umělou inteligencí</strong></p>
+
+<p>Tato poznámka k vydání byla přeložena umělou inteligencí Claude. Může
+
+obsahovat chyby.<br />
+
+Pro původní anglickou verzi <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-5">klikněte
+
+zde</a>.</p>
+
+<hr />
+
+<p>Podívejte se také na <strong>skvělé změny</strong> představené v <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-4&amp;locale=cs">3.0.0
+
+Beta 4</a>!</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 5</strong> obnovuje <strong>kompatibilitu</strong>
+
+s některými <strong>myšmi</strong> v macOS 13 Ventura a <strong>opravuje
+
+scrollování</strong> v mnoha aplikacích. Obsahuje také několik dalších
+
+drobných oprav a vylepšení kvality života.</p>
+
+<p>Zde je <strong>vše nové</strong>:</p>
+
+<h3 id="myš">Myš</h3>
+
+<ul>
+
+<li>Opraveno scrollování v Terminálu a dalších aplikacích! Viz GitHub
+
+problém <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/413">#413</a>.</li>
+
+<li>Opravena nekompatibilita s některými myšmi v macOS 13 Ventura
+
+přechodem od nespolehlivých Apple API k nízkoúrovňovým hackům. Doufám,
+
+že to nepřinese nové problémy - dejte mi vědět, pokud ano! Speciální
+
+poděkování Marii a GitHub uživateli <a
+
+href="https://github.com/samiulhsnt">samiulhsnt</a> za pomoc při řešení
+
+tohoto problému! Více informací najdete v GitHub problému <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/424">#424</a>.</li>
+
+<li>Nebude již využívat CPU při klikání na tlačítka myši 1 nebo 2. Mírně
+
+sníženo využití CPU při klikání na ostatní tlačítka.
+
+<ul>
+
+<li>Toto je “Debug Build”, takže využití CPU může být při klikání na
+
+tlačítka v této betě až 10krát vyšší než ve finální verzi</li>
+
+</ul></li>
+
+<li>Simulace scrollování trackpadu, která se používá pro funkce “Plynulé
+
+scrollování” a “Scrollování &amp; Navigace” v Mac Mouse Fix, je nyní
+
+ještě přesnější. To může v některých situacích vést k lepšímu
+
+chování.</li>
+
+</ul>
+
+<h3 id="ui">UI</h3>
+
+<ul>
+
+<li>Automatické opravování problémů s udělením přístupu k Accessibility
+
+po aktualizaci ze starší verze Mac Mouse Fix. Přejímá změny popsané v <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.2&amp;locale=cs">poznámkách
+
+k vydání 2.2.2</a>.</li>
+
+<li>Přidáno tlačítko “Zrušit” na obrazovce “Udělit přístup k
+
+Accessibility”</li>
+
+<li>Opraven problém, kdy konfigurace Mac Mouse Fix nefungovala správně
+
+po instalaci nové verze Mac Mouse Fix, protože se nová verze připojovala
+
+ke staré verzi “Mac Mouse Fix Helper”. Nyní se Mac Mouse Fix již nebude
+
+připojovat ke starému “Mac Mouse Fix Helper” a v případě potřeby starou
+
+verzi automaticky deaktivuje.</li>
+
+<li>Poskytnutí instrukcí uživateli, jak opravit problém, kdy Mac Mouse
+
+Fix nelze správně povolit kvůli přítomnosti jiné verze Mac Mouse Fix v
+
+systému. Tento problém se vyskytuje pouze v macOS Ventura.</li>
+
+<li>Vylepšeno chování a animace na obrazovce “Udělit přístup k
+
+Accessibility”</li>
+
+<li>Mac Mouse Fix bude přesunut do popředí, když je povolen. To zlepšuje
+
+interakce s UI v některých situacích, například když povolíte Mac Mouse
+
+Fix poté, co byl zakázán v Systémových nastaveních &gt; Obecné &gt;
+
+Přihlašovací položky.</li>
+
+<li>Vylepšeny texty UI na obrazovce “Udělit přístup k
+
+Accessibility”</li>
+
+<li>Vylepšeny texty UI, které se zobrazují při pokusu o povolení Mac
+
+Mouse Fix, když je zakázán v Systémových nastaveních</li>
+
+<li>Opraven německý text v UI</li>
+
+</ul>
+
+<h3 id="pod-kapotou">Pod kapotou</h3>
+
+<ul>
+
+<li>Číslo sestavení “Mac Mouse Fix” a vloženého “Mac Mouse Fix Helper”
+
+jsou nyní synchronizovány. To se používá k zabránění “Mac Mouse Fix” v
+
+náhodném připojení ke starým verzím “Mac Mouse Fix Helper”.</li>
+
+<li>Opraven problém, kdy se některá data o vaší licenci a zkušební době
+
+někdy zobrazovala nesprávně při prvním spuštění aplikace odstraněním dat
+
+mezipaměti z počáteční konfigurace</li>
+
+<li>Spousta úklidu ve struktuře projektu a zdrojovém kódu</li>
+
+<li>Vylepšeny ladící zprávy</li>
+
+</ul>
+
+<hr />
+
+<h3 id="jak-můžete-pomoci">Jak můžete pomoci</h3>
+
+<p>Můžete pomoci sdílením vašich <strong>nápadů</strong>,
+
+<strong>problémů</strong> a <strong>zpětné vazby</strong>!</p>
+
+<p>Nejlepším místem pro sdílení vašich <strong>nápadů</strong> a
+
+<strong>problémů</strong> je <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Feedback
+
+Assistant</a>. Nejlepším místem pro poskytnutí <strong>rychlé</strong>
+
+nestrukturované zpětné vazby je <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Feedback
+
+Discussion</a>.</p>
+
+<p>K těmto místům se můžete dostat také přímo z aplikace na záložce
+
+“<strong>ⓘ O aplikaci</strong>”.</p>
+
+<p><strong>Děkuji</strong> za pomoc při vylepšování Mac Mouse Fix!
+
+💙💛❤️</p>
+
+</body>
+
+</html>
