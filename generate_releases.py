@@ -511,11 +511,11 @@ def generate():
                         "pandoc"
                        f" {md_path_temp}"
                         " --from markdown --to html"
-                        " --standalone"                     # Not sure what this does / if it's necessary
+                        " --standalone"                             # Not sure what this does / if it's necessary
                        f" --include-in-header ./{path_tmp_file_html_header_includes}"
-                       f" --variable lang={locale}"         # Sets the `lang` and `xml:lang` attributes on the outermost <html> element || I observed [Mar 2025] that this fixes comma (，) and period (。) alignment when Safari/Sparkle renders the Chinese docs
-                        " --metadata title=''"
-                        " --metadata document-css=false"    # Stops pandoc from adding some of its default inline css, but can't manage to turn that off entirely.
+                       f" --variable lang={locale}"                 # Sets the `lang` and `xml:lang` attributes on the outermost <html> element || I observed [Mar 2025] that this fixes comma (，) and period (。) alignment when Safari/Sparkle renders the Chinese docs
+                       f" --variable pagetitle='{short_version}'"   # [Mar 2025] Source: https://stackoverflow.com/questions/20059445/prevent-pandoc-from-adding-a-title-when-adding-css-to-html-using-h-option || Man pandoc is a pain. || History: We used to set `--metadata title=''` but that sorta broke after passing the input file as an arg instead of cat-piping its contents into pandoc, because pandoc then just used the input-file's name as the title.
+                        " --metadata document-css=false"            # Stops pandoc from adding some of its default inline css, but can't manage to turn that off entirely.
                         ,
                         fail_on_stderr=False
                     )
