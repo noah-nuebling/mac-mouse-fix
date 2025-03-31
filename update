@@ -15,7 +15,7 @@ git pull;
 
 # Update release files
 echo 'Generating release files...'
-./run generate_releases.py;
+./run generate_releases;
 if [ $? -ne 0 ]; then
     echo "generate_releases Python script failed. Exiting."
     exit 1
@@ -27,7 +27,7 @@ git push;
 
 # Record stats
 echo 'Recording stats...'
-./run stats.py record;
+./run stats record;
 if [ $? -ne 0 ]; then
     echo "stats bash script failed. Exiting."
     exit 1

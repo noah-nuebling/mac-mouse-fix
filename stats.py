@@ -63,7 +63,7 @@ def main():
             Provide a list of version names you want to compare.
             The version names are the titles of the corresponding GitHub releases. (Would probably be better to use the git tag instead)
             Example of usage:
-                `./stats plot "2.0.0" "2.0.0 Beta 13"`
+                `./run stats plot "2.0.0" "2.0.0 Beta 13"`
         `all`
             Separate graph for each release.
         `all-stable`
@@ -76,8 +76,8 @@ def main():
             - 'week[*x]'
             Where `x` can be any number.
             Examples:
-                `./stats plot 3.0.2 --period 'week'`
-                `./stats plot --period 'day*365'`
+                `./run stats plot 3.0.2 --period 'week'`
+                `./run stats plot --period 'day*365'`
                 """)    
             exit()
         elif command_line_argument == 'record':
@@ -104,7 +104,7 @@ def main():
                 # log[short_version][current_time]['download_count'] = downloads
 
             # Print
-            print(f'New datapoints recorded for utc time: {current_time}. View them with `./stats print` or `./stats plot`')
+            print(f'New datapoints recorded for utc time: {current_time}. View them with `./run stats print` or `./run stats plot`')
 
             # Write log to file
             with open(history_file_path, 'w') as outfile:

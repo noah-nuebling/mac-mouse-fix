@@ -28,29 +28,29 @@ I wrote this Readme when the scripts here were quite simple, since I thought oth
 
 You can use this repo with the following terminal commands:
 
-- `./run stats.py` \
+- `./run stats` \
   to see how many times your releases have been downloaded at this point according to the GitHub API.
 
-- `./run stats.py record` \
+- `./run stats record` \
   to record the current download counts from the GitHub API to `stats_history.json`
 
-- `./run stats.py print` \
+- `./run stats print` \
   to display the recorded download counts from `stats_history.json`
 
-- `./run stats.py plot` \
+- `./run stats plot` \
   to visualize the recorded stats
 
-- `./run stats.py plot <versions to plot>` \
+- `./run stats plot <versions to plot>` \
   to visualize the recorded stats for specific app versions.
 
-- `./run generate_releases.py` \
+- `./run generate_releases` \
   to generate the `appcast.xml` and `appcast-pre.xml` files \
     (`appcast.xml` will only contain stable releases, while `appcast-pre.xml` will also contain prereleases)
 
 - `./update` \
   To
-  - run `./run generate_releases.py`
-  - run `./run stats.py record`
+  - run `./run generate_releases`
+  - run `./run stats record`
   - Commit and push everything
 
 The workflow for publishing a new update is:
