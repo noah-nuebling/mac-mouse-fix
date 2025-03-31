@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **März 2025**
 
+- 🇨🇱&nbsp;Tokosan - "Makes my Logitech G502 really useful, even more than how it is on Windows. Really great app. Thanks for developing it!"
 - 🇬🇧&nbsp;Sean&nbsp;Cozens - "Exellent app for mouse users. Thank you."
 - 🇺🇦&nbsp;Gudzelyak92
 - 🇺🇸&nbsp;Ben&nbsp;Traverse - "acab"
