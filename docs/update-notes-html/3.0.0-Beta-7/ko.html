@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpnugrgzb7</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI가 번역함</strong></p>
+
+<p>이 릴리스 노트는 Claude AI가 번역했습니다. 오류가 있을 수
+
+있습니다.<br />
+
+영어 원문을 보시려면 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-7">여기를
+
+클릭하세요</a>.</p>
+
+<hr />
+
+<p><a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-6&amp;locale=ko">3.0.0
+
+Beta 6</a>에서 도입된 <strong>멋진 개선사항</strong>들도
+
+확인해보세요!</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 7</strong>은 여러 가지 작은 개선사항과 버그 수정을
+
+포함합니다.</p>
+
+<p>새로운 내용은 다음과 같습니다:</p>
+
+<p><strong>개선사항</strong></p>
+
+<ul>
+
+<li><strong>한국어 번역</strong>이 추가되었습니다. <span
+
+class="citation" data-cites="jeongtae님께">@jeongtae님께</span> 큰
+
+감사를 드립니다! (<a href="https://github.com/jeongtae">GitHub</a>에서
+
+찾아보실 수 있습니다)</li>
+
+<li>‘부드러움: 높음’ 옵션으로 <strong>스크롤</strong>할 때 스크롤 속도가
+
+갑자기 변하는 대신 점진적으로 변하도록 하여 <strong>더욱
+
+부드럽게</strong> 만들었습니다. 이로 인해 반응성을 떨어뜨리지 않으면서도
+
+스크롤이 더 부드럽고 눈으로 따라가기 쉬워졌습니다. ‘부드러움: 높음’
+
+옵션으로 스크롤할 때 CPU 사용량이 약 30% 증가했는데, 제 컴퓨터에서는
+
+연속 스크롤 시 CPU 사용량이 1.2%에서 1.6%로 증가했습니다. 여전히 매우
+
+효율적이므로 큰 영향은 없을 것으로 기대합니다. 이 기능에 영감을 주고
+
+구현을 도운 ‘Scroll Monitor’ 기능의 <a
+
+href="https://mos.caldis.me/">MOS</a>에 큰 감사를 드립니다.</li>
+
+<li>이제 Mac Mouse Fix가 <strong>모든 소스의 버튼 입력을
+
+처리</strong>합니다. 이전에는 인식된 마우스의 입력만 처리했습니다.
+
+해킨토시 사용 시와 같은 일부 상황에서 특정 마우스와의 호환성이 개선될 수
+
+있지만, 다른 앱에서 인위적으로 생성된 버튼 입력도 감지하게 되어 일부
+
+상황에서 문제가 발생할 수 있습니다. 문제가 발생하면 알려주시면 향후
+
+업데이트에서 해결하도록 하겠습니다.</li>
+
+<li>‘데스크톱 및 런치패드’용 ’클릭 앤 스크롤’과 ’스페이스 간 이동’용
+
+’클릭 앤 스크롤’ 제스처의 느낌과 완성도를 개선했습니다.</li>
+
+<li>이제 언어의 정보 밀도를 고려하여 <strong>알림이 표시되는
+
+시간</strong>을 계산합니다. 이전에는 중국어나 한국어와 같이 정보 밀도가
+
+높은 언어에서 알림이 매우 짧은 시간 동안만 표시되었습니다.</li>
+
+<li><strong>스페이스</strong> 간 이동, <strong>미션 컨트롤</strong>
+
+열기, <strong>앱 익스포제</strong> 열기를 위한 <strong>다양한
+
+제스처</strong>를 활성화했습니다. Beta 6에서는 이러한 동작들을 ‘클릭 앤
+
+드래그’ 제스처로만 사용할 수 있도록 했는데, 이는 다른 방식으로 이러한
+
+동작에 접근하는 것이 얼마나 중요한지 실험해보기 위해서였습니다. 일부
+
+사용자들에게 중요한 것으로 보여 이제 단순 ’클릭’이나 ’클릭 앤 스크롤’을
+
+통해서도 이러한 동작에 접근할 수 있도록 했습니다.</li>
+
+<li>‘클릭 앤 스크롤’ 제스처로 <strong>회전</strong>할 수 있게
+
+되었습니다.</li>
+
+<li>일부 시나리오에서 <strong>트랙패드 시뮬레이션</strong> 옵션의 작동
+
+방식을 <strong>개선</strong>했습니다. 예를 들어 메일에서 메시지를
+
+삭제하기 위해 가로로 스크롤할 때, 메시지가 이동하는 방향이 이제 반전되어
+
+대부분의 사용자에게 더 자연스럽고 일관된 느낌을 줄 것으로
+
+기대합니다.</li>
+
+<li><strong>기본 클릭</strong> 또는 <strong>보조 클릭</strong>으로
+
+<strong>리매핑</strong>하는 기능을 추가했습니다. 제가 가장 좋아하는
+
+마우스의 오른쪽 버튼이 고장나서 이 기능을 구현했습니다. 이 옵션들은
+
+기본적으로 숨겨져 있습니다. 동작을 선택할 때 Option 키를 누르고 있으면
+
+볼 수 있습니다.
+
+<ul>
+
+<li>현재 중국어와 한국어 번역이 없으므로, 이 기능들의 번역에
+
+기여해주시면 감사하겠습니다!</li>
+
+</ul></li>
+
+</ul>
+
+<p><strong>버그 수정</strong></p>
+
+<ul>
+
+<li>시스템 설정에서 ‘자연스러운 스크롤’ 옵션을 한 번도 토글하지 않은
+
+사용자들의 경우 ‘미션 컨트롤 및 스페이스’용 <strong>’클릭 앤 드래그’의
+
+방향이 반전</strong>되는 버그를 수정했습니다. 이제 Mac Mouse Fix의 ’클릭
+
+앤 드래그’ 제스처 방향이 항상 트랙패드나 매직 마우스의 제스처 방향과
+
+일치해야 합니다. 시스템 설정을 따르는 대신 ‘클릭 앤 드래그’ 방향을
+
+반전시키는 별도의 옵션이 필요하다면 알려주세요.</li>
+
+<li>일부 사용자에게 <strong>무료 사용 기간</strong>이 <strong>너무 빨리
+
+증가</strong>하는 버그를 수정했습니다. 이 문제의 영향을 받았다면
+
+알려주시면 해결 방법을 찾아보겠습니다.</li>
+
+<li>macOS Sonoma에서 탭 바가 제대로 표시되지 않는 문제를
+
+수정했습니다.</li>
+
+<li>‘클릭 앤 스크롤’로 런치패드를 열 때 ’macOS’ 스크롤 속도를 사용하면서
+
+발생하는 끊김 현상을 수정했습니다.</li>
+
+<li>키보드 단축키를 기록할 때 ‘Mac Mouse Fix Helper’ 앱(Mac Mouse Fix가
+
+활성화되어 있을 때 백그라운드에서 실행되는 앱)이 가끔 충돌하는 문제를
+
+수정했습니다.</li>
+
+<li><a
+
+href="https://github.com/artginzburg/MiddleClick-Sonoma">MiddleClick-Sonoma</a>에서
+
+생성된 인공적인 이벤트를 감지하려 할 때 Mac Mouse Fix가 충돌하는 버그를
+
+수정했습니다.</li>
+
+<li>‘기본값 복원…’ 대화상자에 표시되는 일부 마우스의 이름에 제조사가 두
+
+번 포함되는 문제를 수정했습니다.</li>
+
+<li>컴퓨터가 느릴 때 ’미션 컨트롤 및 스페이스’용 ’클릭 앤 드래그’가
+
+멈추는 현상이 발생할 가능성을 줄였습니다.</li>
+
+<li>UI 문자열에서 ’Force Touch’를 ’Force click’으로 올바르게
+
+수정했습니다.</li>
+
+<li>특정 설정에서 ’클릭 앤 스크롤’로 런치패드를 열거나 데스크톱을 표시할
+
+때, 전환 애니메이션이 진행 중일 때 버튼을 놓으면 작동하지 않는 버그를
+
+수정했습니다.</li>
+
+</ul>
+
+<p><strong>기타</strong></p>
+
+<ul>
+
+<li>여러 가지 내부 개선사항, 안정성 개선, 내부 정리 등이
+
+이루어졌습니다.</li>
+
+</ul>
+
+<h2 id="도움을-주실-수-있는-방법">도움을 주실 수 있는 방법</h2>
+
+<p>여러분의 <strong>아이디어</strong>, <strong>문제점</strong> 그리고
+
+<strong>피드백</strong>을 공유해주세요!</p>
+
+<p><strong>아이디어</strong>와 <strong>문제점</strong>을 공유하기 가장
+
+좋은 곳은 <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">피드백
+
+도우미</a>입니다. <strong>간단한</strong> 비정형 피드백을 남기기 가장
+
+좋은 곳은 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">피드백
+
+토론</a>입니다.</p>
+
+<p>앱 내의 ‘<strong>ⓘ 정보</strong>’ 탭에서도 이러한 곳들에 접근할 수
+
+있습니다.</p>
+
+<p>Mac Mouse Fix를 더 좋게 만드는 데 도움을 주셔서
+
+<strong>감사합니다</strong>! 😎:)</p>
+
+</body>
+
+</html>

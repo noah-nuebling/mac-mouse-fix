@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cs" xml:lang="cs">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpeuexx5im</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Přeloženo umělou inteligencí</strong></p>
+
+<p>Tato poznámka k vydání byla přeložena umělou inteligencí Claude. Může
+
+obsahovat chyby.<br />
+
+Pro původní anglickou verzi <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.4">klikněte
+
+zde</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>2.2.4</strong> je nyní notarizován! Obsahuje
+
+také několik drobných oprav chyb a dalších vylepšení.</p>
+
+<h3 id="notarizace"><strong>Notarizace</strong></h3>
+
+<p>Mac Mouse Fix 2.2.4 je nyní ‘notarizován’ společností Apple. To
+
+znamená, že se při prvním otevření aplikace již neobjeví zprávy o tom,
+
+že Mac Mouse Fix je potenciálně ‘Škodlivý software’.</p>
+
+<h4 id="pozadí">Pozadí</h4>
+
+<p>Notarizace aplikace stojí 100 $ ročně. Vždy jsem byl proti tomu,
+
+protože to působilo nepřátelsky vůči svobodnému a open source softwaru
+
+jako je Mac Mouse Fix, a také to vypadalo jako nebezpečný krok směrem k
+
+tomu, aby Apple kontroloval a uzamykal Mac stejně jako iPhony nebo
+
+iPady. Ale absence notarizace vedla k různým problémům, včetně <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/114">potíží
+
+s otevřením aplikace</a> a dokonce <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/95">několika
+
+situací</a>, kdy nikdo nemohl aplikaci používat, dokud jsem nevydal
+
+novou verzi.</p>
+
+<p>Pro Mac Mouse Fix 3 jsem usoudil, že je konečně vhodné zaplatit 100 $
+
+ročně za notarizaci aplikace, protože Mac Mouse Fix 3 je monetizován.
+
+(<a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0&amp;locale=cs">Více
+
+informací</a>)<br />
+
+Nyní získává notarizaci i Mac Mouse Fix 2, což by mělo vést k jednodušší
+
+a stabilnější uživatelské zkušenosti.</p>
+
+<h3 id="opravy-chyb"><strong>Opravy chyb</strong></h3>
+
+<ul>
+
+<li>Opravena chyba, kdy kurzor zmizel a pak se znovu objevil na jiném
+
+místě při použití akce ‘Kliknutí a přetažení’ během nahrávání obrazovky
+
+nebo při používání softwaru <a
+
+href="https://www.synaptics.com/products/displaylink-graphics">DisplayLink</a>.</li>
+
+<li>Opravena chyba s povolením Mac Mouse Fix pod macOS 10.14 Mojave a
+
+možná i staršími verzemi macOS.</li>
+
+<li>Vylepšena správa paměti, potenciálně opravující pád aplikace ‘Mac
+
+Mouse Fix Helper’, ke kterému docházelo při odpojení myši od počítače.
+
+Viz Diskuze <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/771">#771</a>.</li>
+
+</ul>
+
+<h3 id="další-vylepšení"><strong>Další vylepšení</strong></h3>
+
+<ul>
+
+<li>Okno, které aplikace zobrazuje pro informování o dostupnosti nové
+
+verze Mac Mouse Fix, nyní podporuje JavaScript. To umožňuje, aby
+
+poznámky k aktualizaci byly hezčí a lépe čitelné. Například poznámky k
+
+aktualizaci nyní mohou zobrazovat <a
+
+href="https://github.com/orgs/community/discussions/16925">Markdown
+
+Alerts</a> a další.</li>
+
+<li>Odstraněn odkaz na stránku https://macmousefix.com/about/ z
+
+obrazovky “Udělit přístup k Accessibility pro Mac Mouse Fix Helper”. Je
+
+to proto, že stránka About již neexistuje a byla prozatím nahrazena <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix">GitHub
+
+Readme</a>.</li>
+
+<li>Toto vydání nyní obsahuje soubory dSYM, které může kdokoli použít k
+
+dekódování hlášení o pádech Mac Mouse Fix 2.2.4.</li>
+
+<li>Několik interních vylepšení a úprav.</li>
+
+</ul>
+
+<hr />
+
+<p>Podívejte se také na předchozí vydání <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.3&amp;locale=cs"><strong>2.2.3</strong></a>.</p>
+
+</body>
+
+</html>

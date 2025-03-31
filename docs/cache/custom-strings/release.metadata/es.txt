@@ -1,0 +1,1 @@
+**Fecha de lanzamiento:** {date}

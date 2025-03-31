@@ -1,0 +1,4 @@
+**ℹ️ Tradotto dall'IA**
+
+Questa nota di rilascio è stata tradotta dall'IA Claude. Potrebbe contenere errori.\
+Per la versione originale in inglese, [clicca qui]({gh_releases_url}).

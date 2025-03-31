@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ro" xml:lang="ro">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpuknrynar</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Tradus de AI</strong></p>
+
+<p>Această notă de lansare a fost tradusă de AI-ul Claude. Poate conține
+
+erori.<br />
+
+Pentru versiunea originală în engleză, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-7">click
+
+aici</a>.</p>
+
+<hr />
+
+<p>De asemenea, verifică <strong>îmbunătățirile interesante</strong>
+
+introduse în <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-6&amp;locale=ro">3.0.0
+
+Beta 6</a>!</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 7</strong> aduce câteva îmbunătățiri minore și
+
+remedieri de erori.</p>
+
+<p>Iată toate noutățile:</p>
+
+<p><strong>Îmbunătățiri</strong></p>
+
+<ul>
+
+<li>Au fost adăugate <strong>traduceri în coreeană</strong>. Mulțumiri
+
+mari lui <span class="citation" data-cites="jeongtae">@jeongtae</span>!
+
+(Îl poți găsi pe <a href="https://github.com/jeongtae">GitHub</a>)</li>
+
+<li>Am făcut <strong>derularea</strong> cu opțiunea ‘Fluiditate:
+
+Ridicată’ <strong>și mai fluidă</strong>, schimbând viteza doar treptat,
+
+în loc să existe salturi bruște în viteza de derulare când miști rotița.
+
+Acest lucru ar trebui să facă derularea puțin mai fluidă și mai ușor de
+
+urmărit cu ochii fără a face lucrurile mai puțin responsive. Derularea
+
+cu ‘Fluiditate: Ridicată’ folosește acum cu aproximativ 30% mai mult
+
+CPU, pe computerul meu a crescut de la 1.2% utilizare CPU la derulare
+
+continuă la 1.6%. Deci derularea rămâne foarte eficientă și sper că
+
+această diferență nu va afecta pe nimeni. Mulțumiri mari <a
+
+href="https://mos.caldis.me/">MOS</a>, care a inspirat această funcție
+
+și al cărui ‘Scroll Monitor’ l-am folosit pentru implementare.</li>
+
+<li>Mac Mouse Fix acum <strong>gestionează comenzile de la toate
+
+sursele</strong>. Înainte, Mac Mouse Fix gestiona doar comenzile de la
+
+mouse-urile pe care le recunoștea. Cred că acest lucru ar putea ajuta
+
+compatibilitatea cu anumite mouse-uri în cazuri particulare, cum ar fi
+
+când folosești un Hackintosh, dar va face și ca Mac Mouse Fix să preia
+
+comenzi generate artificial de alte aplicații, ceea ce ar putea duce la
+
+probleme în alte cazuri particulare. Anunță-mă dacă acest lucru îți
+
+creează probleme și le voi rezolva în actualizări viitoare.</li>
+
+<li>Am rafinat senzația și finisajul gesturilor ‘Click și Derulare’
+
+pentru ‘Desktop &amp; Launchpad’ și ‘Click și Derulare’ pentru
+
+‘Deplasare între Spații’.</li>
+
+<li>Acum luăm în considerare densitatea informațională a unei limbi când
+
+calculăm <strong>timpul de afișare al notificărilor</strong>. Înainte,
+
+notificările rămâneau vizibile pentru o perioadă foarte scurtă în
+
+limbile cu densitate informațională ridicată precum chineza sau
+
+coreeana.</li>
+
+<li>Am activat <strong>gesturi diferite</strong> pentru deplasarea între
+
+<strong>Spații</strong>, deschiderea <strong>Mission Control</strong>
+
+sau deschiderea <strong>App Exposé</strong>. În Beta 6, am făcut ca
+
+aceste acțiuni să fie disponibile doar prin gestul ‘Click și Tragere’ -
+
+ca un experiment pentru a vedea câți oameni chiar țin să poată accesa
+
+aceste acțiuni în alte moduri. Se pare că unii țin, așa că acum am făcut
+
+din nou posibil să accesezi aceste acțiuni printr-un simplu ‘Click’ al
+
+unui buton sau prin ‘Click și Derulare’.</li>
+
+<li>Am făcut posibilă <strong>Rotirea</strong> printr-un gest de
+
+<strong>Click și Derulare</strong>.</li>
+
+<li>Am <strong>îmbunătățit</strong> modul în care funcționează opțiunea
+
+de <strong>Simulare Trackpad</strong> în anumite scenarii. De exemplu,
+
+când derulezi orizontal pentru a șterge un mesaj în Mail, direcția în
+
+care se mișcă mesajul este acum inversată, ceea ce sper că se simte mai
+
+natural și consistent pentru majoritatea oamenilor.</li>
+
+<li>Am adăugat o funcție pentru <strong>remapare</strong> la
+
+<strong>Click Primar</strong> sau <strong>Click Secundar</strong>. Am
+
+implementat acest lucru pentru că butonul drept al mouse-ului meu
+
+preferat s-a stricat. Aceste opțiuni sunt ascunse implicit. Le poți
+
+vedea ținând apăsată tasta Option în timp ce selectezi o acțiune.
+
+<ul>
+
+<li>Momentan lipsesc traducerile pentru chineză și coreeană, așa că dacă
+
+dorești să contribui cu traduceri pentru aceste funcții, ar fi foarte
+
+apreciat!</li>
+
+</ul></li>
+
+</ul>
+
+<p><strong>Remedieri de Erori</strong></p>
+
+<ul>
+
+<li>Am remediat o eroare unde <strong>direcția ‘Click și
+
+Tragere’</strong> pentru ‘Mission Control &amp; Spații’ era
+
+<strong>inversată</strong> pentru persoanele care nu au schimbat
+
+niciodată opțiunea ‘Derulare naturală’ în Setări Sistem. Acum, direcția
+
+gesturilor ‘Click și Tragere’ în Mac Mouse Fix ar trebui să se
+
+potrivească întotdeauna cu direcția gesturilor de pe Trackpad sau Magic
+
+Mouse. Dacă dorești o opțiune separată pentru inversarea direcției
+
+‘Click și Tragere’, în loc să urmeze Setările Sistem, anunță-mă.</li>
+
+<li>Am remediat o eroare unde <strong>zilele gratuite</strong> se
+
+<strong>numărau prea repede</strong> pentru unii utilizatori. Dacă ai
+
+fost afectat de acest lucru, anunță-mă și voi vedea ce pot face.</li>
+
+<li>Am remediat o problemă în macOS Sonoma unde bara de file nu se afișa
+
+corect.</li>
+
+<li>Am remediat sacadarea când folosești viteza de derulare ‘macOS’ în
+
+timp ce folosești ‘Click și Derulare’ pentru a deschide Launchpad.</li>
+
+<li>Am remediat o eroare unde aplicația ‘Mac Mouse Fix Helper’ (care
+
+rulează în fundal când Mac Mouse Fix este activat) se bloca uneori la
+
+înregistrarea unei comenzi rapide de la tastatură.</li>
+
+<li>Am remediat o eroare unde Mac Mouse Fix se bloca când încerca să
+
+preia evenimente artificiale generate de <a
+
+href="https://github.com/artginzburg/MiddleClick-Sonoma">MiddleClick-Sonoma</a></li>
+
+<li>Am remediat o problemă unde numele unor mouse-uri afișate în
+
+dialogul ‘Restaurare Valori Implicite…’ conținea producătorul de două
+
+ori.</li>
+
+<li>Am făcut mai puțin probabil ca ‘Click și Tragere’ pentru ‘Mission
+
+Control &amp; Spații’ să se blocheze când computerul este lent.</li>
+
+<li>Am corectat utilizarea ‘Force Touch’ în textele interfeței unde ar
+
+fi trebuit să fie ‘Force click’.</li>
+
+<li>Am remediat o eroare care apărea pentru anumite configurații, unde
+
+deschiderea Launchpad sau afișarea Desktop-ului prin ‘Click și Derulare’
+
+nu funcționa dacă eliberai butonul în timp ce animația de tranziție era
+
+încă în desfășurare.</li>
+
+</ul>
+
+<p><strong>Mai Multe</strong></p>
+
+<ul>
+
+<li>Mai multe îmbunătățiri sub capotă, îmbunătățiri de stabilitate,
+
+curățare sub capotă și altele.</li>
+
+</ul>
+
+<h2 id="cum-poți-ajuta">Cum Poți Ajuta</h2>
+
+<p>Poți ajuta împărtășind <strong>ideile</strong>,
+
+<strong>problemele</strong> și <strong>feedback-ul</strong> tău!</p>
+
+<p>Cel mai bun loc pentru a împărtăși <strong>ideile</strong> și
+
+<strong>problemele</strong> tale este <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Asistentul
+
+de Feedback</a>. Cel mai bun loc pentru a oferi feedback
+
+<strong>rapid</strong> nestructurat este <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Discuția
+
+de Feedback</a>.</p>
+
+<p>Poți accesa aceste locuri și din aplicație în fila ‘<strong>ⓘ
+
+Despre</strong>’.</p>
+
+<p><strong>Mulțumesc</strong> că ajuți la îmbunătățirea Mac Mouse Fix!
+
+😎:)</p>
+
+</body>
+
+</html>

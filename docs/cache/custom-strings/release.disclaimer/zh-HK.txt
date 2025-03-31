@@ -1,4 +1,3 @@
-<b>由人工智能翻譯</b><br>
-這是一個<b><em>GitHub 發布版本</em></b>的翻譯。<br>
-此翻譯由 Claude 人工智能完成，可能不完全準確。<br>
-如要查看原始的 GitHub 發布版本（英文），請<a href="{gh_releases_url}">點擊這裡</a>。
+<b>ℹ️ AI 翻譯</b><br>
+此 GitHub 版本由 Claude AI 翻譯。可能包含錯誤。<br>
+查看英文原文，請<a href="{gh_releases_url}">點擊此處</a>。

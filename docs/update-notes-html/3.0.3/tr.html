@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="tr" xml:lang="tr">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp0wltmokv</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI tarafından çevrildi</strong></p>
+
+<p>Bu sürüm notu Claude AI tarafından çevrilmiştir. Hatalar
+
+içerebilir.<br />
+
+İngilizce orijinal versiyonu için <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3">buraya
+
+tıklayın</a>.</p>
+
+<hr />
+
+<p><strong>ℹ️ Mac Mouse Fix 2 Kullanıcılarına Not</strong></p>
+
+<p>Mac Mouse Fix 3’ün tanıtımıyla birlikte uygulamanın fiyatlandırma
+
+modeli değişti:</p>
+
+<ul>
+
+<li><strong>Mac Mouse Fix 2</strong><br />
+
+%100 ücretsiz kalıyor ve desteklemeye devam edeceğim.<br />
+
+Mac Mouse Fix 2’yi kullanmaya devam etmek için <strong>bu güncellemeyi
+
+atla</strong>. Mac Mouse Fix 2’nin en son sürümünü <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=tr">buradan</a>
+
+indirebilirsin.</li>
+
+<li><strong>Mac Mouse Fix 3</strong><br />
+
+30 gün ücretsiz, sahip olmak için birkaç dolar ödemen gerekiyor.<br />
+
+Mac Mouse Fix 3’ü edinmek için <strong>şimdi güncelle</strong>!</li>
+
+</ul>
+
+<p>Mac Mouse Fix 3’ün fiyatlandırması ve özellikleri hakkında daha fazla
+
+bilgiyi <a href="https://macmousefix.com/">yeni web sitesinde</a>
+
+bulabilirsin.</p>
+
+<p>Mac Mouse Fix’i kullandığın için teşekkürler! :)</p>
+
+<hr />
+
+<p><strong>ℹ️ Mac Mouse Fix 3 Alıcılarına Not</strong></p>
+
+<p>Eğer yanlışlıkla artık ücretsiz olmadığını bilmeden Mac Mouse Fix 3’e
+
+güncellediysen, sana <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=tr">para
+
+iadesi</a> teklif etmek isterim.</p>
+
+<p>Mac Mouse Fix 2’nin son sürümü <strong>tamamen ücretsiz</strong>
+
+kalıyor ve <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=tr">buradan</a>
+
+indirebilirsin.</p>
+
+<p>Rahatsızlık için özür dilerim ve umarım bu çözüm herkes için
+
+uygundur!</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.3</strong> macOS 15 Sequoia için hazır.
+
+Ayrıca bazı kararlılık sorunlarını düzeltiyor ve çeşitli küçük
+
+iyileştirmeler sunuyor.</p>
+
+<h3 id="macos-15-sequoia-desteği">macOS 15 Sequoia desteği</h3>
+
+<p>Uygulama artık macOS 15 Sequoia’da düzgün çalışıyor!</p>
+
+<ul>
+
+<li>macOS 15 Sequoia’da çoğu UI animasyonu bozuktu. Artık her şey tekrar
+
+düzgün çalışıyor!</li>
+
+<li>Kaynak kodu artık macOS 15 Sequoia’da derlenebiliyor. Önceden, Swift
+
+derleyicisiyle ilgili sorunlar uygulamanın derlenmesini
+
+engelliyordu.</li>
+
+</ul>
+
+<h3 id="kaydırma-çökmelerinin-ele-alınması">Kaydırma çökmelerinin ele
+
+alınması</h3>
+
+<p>Mac Mouse Fix 3.0.2’den bu yana, kaydırma sırasında Mac Mouse Fix’in
+
+periyodik olarak kendini devre dışı bırakıp yeniden etkinleştirdiğine
+
+dair <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">birden
+
+fazla rapor</a> geldi. Bu, ‘Mac Mouse Fix Helper’ arka plan
+
+uygulamasının çökmesinden kaynaklanıyordu. Bu güncelleme, aşağıdaki
+
+değişikliklerle bu çökmeleri düzeltmeye çalışıyor:</p>
+
+<ul>
+
+<li><p>Kaydırma mekanizması, bu çökmelere neden olduğu düşünülen uç
+
+durumla karşılaştığında çökmek yerine kurtulmaya ve çalışmaya devam
+
+etmeye çalışacak.</p></li>
+
+<li><p>Uygulamada beklenmeyen durumların ele alınış şeklini daha genel
+
+olarak değiştirdim: Artık hemen çökmek yerine, uygulama birçok durumda
+
+beklenmeyen durumlardan kurtulmaya çalışacak.</p>
+
+<ul>
+
+<li>Bu değişiklik, yukarıda açıklanan kaydırma çökmelerinin
+
+düzeltilmesine katkıda bulunuyor. Ayrıca diğer çökmeleri de
+
+önleyebilir.</li>
+
+</ul></li>
+
+</ul>
+
+<p>Not: Bu çökmeleri kendi makinemde hiç tekrarlayamadım ve hala neyin
+
+sebep olduğundan emin değilim, ancak aldığım raporlara dayanarak bu
+
+güncelleme herhangi bir çökmeyi önleyecektir. Eğer hala kaydırma
+
+sırasında çökmeler yaşıyorsanız veya 3.0.2 sürümünde çökmeler
+
+yaşadıysanız, deneyiminizi ve tanılama verilerinizi GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">#988</a>’de
+
+paylaşmanız değerli olacaktır. Bu, sorunu anlamama ve Mac Mouse Fix’i
+
+geliştirmeme yardımcı olacaktır. Teşekkürler!</p>
+
+<h3 id="kaydırma-takılmalarının-ele-alınması">Kaydırma takılmalarının
+
+ele alınması</h3>
+
+<p>3.0.2’de, Apple’ın VSync API’lerinden kaynaklanan kaydırma
+
+takılmalarını azaltmak amacıyla Mac Mouse Fix’in sisteme kaydırma
+
+olaylarını gönderme şeklinde değişiklikler yaptım.</p>
+
+<p>Ancak, daha kapsamlı testler ve geri bildirimler sonrasında,
+
+3.0.2’deki yeni mekanizmanın bazı senaryolarda kaydırmayı daha pürüzsüz
+
+hale getirirken diğerlerinde daha takılmalı hale getirdiği görüldü.
+
+Özellikle Firefox’ta belirgin şekilde daha kötü olduğu görüldü.<br />
+
+Genel olarak, yeni mekanizmanın kaydırma takılmalarını gerçekten
+
+iyileştirdiği net değildi. Ayrıca, yukarıda açıklanan kaydırma
+
+çökmelerine katkıda bulunmuş olabilir.</p>
+
+<p>Bu nedenle yeni mekanizmayı devre dışı bıraktım ve kaydırma olayları
+
+için VSync mekanizmasını Mac Mouse Fix 3.0.0 ve 3.0.1’deki haline geri
+
+döndürdüm.</p>
+
+<p>Daha fazla bilgi için GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/875">#875</a>’e
+
+bakın.</p>
+
+<h3 id="para-iadesi">Para İadesi</h3>
+
+<p>3.0.1 ve 3.0.2’deki kaydırma değişiklikleriyle ilgili sorunlar için
+
+özür dilerim. Bunlarla ilgili ortaya çıkacak sorunları büyük ölçüde
+
+hafife aldım ve bu sorunları ele almakta yavaş kaldım. Bu deneyimden
+
+ders çıkarmaya ve gelecekte bu tür değişikliklerde daha dikkatli olmaya
+
+çalışacağım. Ayrıca etkilenen herkese para iadesi teklif etmek
+
+istiyorum. İlgileniyorsanız <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=tr">buraya</a>
+
+tıklamanız yeterli.</p>
+
+<h3 id="daha-akıllı-güncelleme-mekanizması">Daha akıllı güncelleme
+
+mekanizması</h3>
+
+<p>Bu değişiklikler Mac Mouse Fix <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.4&amp;locale=tr">2.2.4</a>
+
+ve <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.5&amp;locale=tr">2.2.5</a>’ten
+
+aktarıldı. Detaylar için onların sürüm notlarına göz atın. İşte bir
+
+özet:</p>
+
+<ul>
+
+<li>Kullanıcıya hangi güncellemeyi göstereceğine karar veren yeni, daha
+
+akıllı bir mekanizma var.</li>
+
+<li>Sparkle 1.26.0 güncelleme çerçevesinden en son Sparkle <a
+
+href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>’e
+
+geçiş yapıldı.</li>
+
+<li>Uygulamanın Mac Mouse Fix’in yeni bir sürümünün mevcut olduğunu
+
+bildirmek için gösterdiği pencere artık JavaScript’i destekliyor, bu da
+
+güncelleme notlarının daha güzel formatlanmasına olanak tanıyor.</li>
+
+</ul>
+
+<h3 id="diğer-iyileştirmeler-ve-hata-düzeltmeleri">Diğer İyileştirmeler
+
+ve Hata Düzeltmeleri</h3>
+
+<ul>
+
+<li>Bazı durumlarda ‘Hakkında’ sekmesinde uygulama fiyatı ve ilgili
+
+bilgilerin yanlış görüntülenmesi sorunu düzeltildi.</li>
+
+<li>Birden fazla ekran kullanırken pürüzsüz kaydırmanın ekran yenileme
+
+hızıyla senkronize edilme mekanizmasının düzgün çalışmaması sorunu
+
+düzeltildi.</li>
+
+<li>Birçok küçük altyapı temizliği ve iyileştirmesi yapıldı.</li>
+
+</ul>
+
+<hr />
+
+<p>Ayrıca önceki sürüm <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.2&amp;locale=tr"><strong>3.0.2</strong></a>’ye
+
+de göz atın.</p>
+
+</body>
+
+</html>

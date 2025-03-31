@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="uk" xml:lang="uk">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpey135j8b</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Перекладено ШІ</strong></p>
+
+<p>Цей опис оновлення було перекладено ШІ Claude. Він може містити
+
+помилки.<br />
+
+Щоб переглянути оригінальну англійську версію, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.5">натисніть
+
+тут</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>2.2.5</strong> містить покращення механізму
+
+оновлення та готовий до роботи з macOS 15 Sequoia!</p>
+
+<h3 id="нова-система-оновлень-sparkle">Нова система оновлень
+
+Sparkle</h3>
+
+<p>Mac Mouse Fix використовує систему оновлень <a
+
+href="https://sparkle-project.org/">Sparkle</a> для забезпечення
+
+якісного досвіду оновлення.</p>
+
+<p>У версії 2.2.5 Mac Mouse Fix переходить з Sparkle 1.26.0 на найновішу
+
+версію Sparkle <a
+
+href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>,
+
+що містить виправлення безпеки, покращення локалізації та інше.</p>
+
+<h3 id="розумніший-механізм-оновлення">Розумніший механізм
+
+оновлення</h3>
+
+<p>З’явився новий механізм, який визначає, яке оновлення показувати
+
+користувачу. Поведінка змінилася таким чином:</p>
+
+<ol type="1">
+
+<li>Після пропуску <strong>мажорного</strong> оновлення (наприклад,
+
+2.2.5 -&gt; 3.0.0), ви все одно отримуватимете сповіщення про нові
+
+<strong>мінорні</strong> оновлення (наприклад, 2.2.5 -&gt; 2.2.6).
+
+<ul>
+
+<li>Це дозволяє вам легко залишатися на Mac Mouse Fix 2, продовжуючи
+
+отримувати оновлення, як обговорювалося в GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/962">#962</a>.</li>
+
+</ul></li>
+
+<li>Замість показу оновлення до найновішої версії, Mac Mouse Fix тепер
+
+показуватиме оновлення до першої версії останньої мажорної версії.
+
+<ul>
+
+<li>Приклад: Якщо ви використовуєте MMF 2.2.5, і MMF 3.4.5 є найновішою
+
+версією, додаток тепер показуватиме першу версію MMF 3 (3.0.0), замість
+
+найновішої версії (3.4.5). Таким чином, усі користувачі MMF 2.2.5
+
+побачать список змін MMF 3.0.0 перед переходом на MMF 3.</li>
+
+<li>Обговорення:
+
+<ul>
+
+<li>Головна причина цього в тому, що на початку цього року багато
+
+користувачів MMF 2 оновилися безпосередньо з MMF 2 до MMF 3.0.1 або
+
+3.0.2. Оскільки вони ніколи не бачили список змін 3.0.0, вони пропустили
+
+інформацію про зміни в ціноутворенні між MMF 2 та MMF 3 (MMF 3 більше не
+
+є повністю безкоштовним). Тому коли MMF 3 раптом повідомив, що потрібно
+
+заплатити для продовження використання додатку, деякі користувачі були -
+
+цілком зрозуміло - трохи спантеличені та засмучені.</li>
+
+<li>Недолік: Якщо ви просто хочете оновитися до найновішої версії, тепер
+
+вам доведеться в деяких випадках оновлюватися двічі. Це трохи
+
+неефективно, але все одно має зайняти лише кілька секунд. І оскільки це
+
+робить зміни між мажорними версіями набагато прозорішими, я вважаю це
+
+розумним компромісом.</li>
+
+</ul></li>
+
+</ul></li>
+
+</ol>
+
+<h3 id="підтримка-macos-15-sequoia">Підтримка macOS 15 Sequoia</h3>
+
+<p>Mac Mouse Fix 2.2.5 чудово працюватиме на новій macOS 15 Sequoia -
+
+так само, як і 2.2.4.</p>
+
+<hr />
+
+<p>Також перегляньте попередній реліз <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.4&amp;locale=uk"><strong>2.2.4</strong></a>.</p>
+
+<p><em>Якщо у вас виникли проблеми з увімкненням Mac Mouse Fix після
+
+оновлення, будь ласка, перегляньте <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/861">‘Посібник
+
+з увімкнення Mac Mouse Fix’</a>.</em></p>
+
+</body>
+
+</html>

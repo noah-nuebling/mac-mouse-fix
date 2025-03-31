@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ar" xml:lang="ar">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpwpcpfo4a</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ تمت الترجمة بواسطة الذكاء الاصطناعي</strong></p>
+
+<p>تمت ترجمة ملاحظة الإصدار هذه بواسطة كلود للذكاء الاصطناعي. قد تحتوي
+
+على أخطاء.<br />
+
+للنسخة الإنجليزية الأصلية، <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.5">انقر
+
+هنا</a>.</p>
+
+<hr />
+
+<p>يتميز Mac Mouse Fix <strong>2.2.5</strong> بتحسينات في آلية التحديث،
+
+وهو جاهز لنظام macOS 15 Sequoia!</p>
+
+<h3 id="إطار-عمل-sparkle-الجديد-للتحديث">إطار عمل Sparkle الجديد
+
+للتحديث</h3>
+
+<p>يستخدم Mac Mouse Fix إطار عمل <a
+
+href="https://sparkle-project.org/">Sparkle</a> للتحديث للمساعدة في
+
+توفير تجربة تحديث رائعة.</p>
+
+<p>مع الإصدار 2.2.5، ينتقل Mac Mouse Fix من استخدام Sparkle 1.26.0 إلى
+
+أحدث إصدار Sparkle <a
+
+href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>،
+
+الذي يحتوي على إصلاحات أمنية وتحسينات في الترجمة والمزيد.</p>
+
+<h3 id="آلية-تحديث-أكثر-ذكاء">آلية تحديث أكثر ذكاءً</h3>
+
+<p>هناك آلية جديدة تقرر أي تحديث يتم عرضه للمستخدم. تغير السلوك بالطرق
+
+التالية:</p>
+
+<ol type="1">
+
+<li>بعد تخطي تحديث <strong>رئيسي</strong> (مثل 2.2.5 -&gt; 3.0.0)، ستظل
+
+تتلقى إشعارات بالتحديثات <strong>الثانوية</strong> الجديدة (مثل 2.2.5
+
+-&gt; 2.2.6).
+
+<ul>
+
+<li>هذا يتيح لك البقاء بسهولة على Mac Mouse Fix 2 مع الاستمرار في تلقي
+
+التحديثات، كما تمت مناقشته في مشكلة GitHub <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/962">#962</a>.</li>
+
+</ul></li>
+
+<li>بدلاً من عرض التحديث إلى أحدث إصدار، سيعرض Mac Mouse Fix الآن التحديث
+
+إلى الإصدار الأول من أحدث نسخة رئيسية.
+
+<ul>
+
+<li>مثال: إذا كنت تستخدم MMF 2.2.5، وكان MMF 3.4.5 هو أحدث إصدار، فسيعرض
+
+التطبيق الآن الإصدار الأول من MMF 3 (3.0.0)، بدلاً من أحدث إصدار (3.4.5).
+
+بهذه الطريقة، يرى جميع مستخدمي MMF 2.2.5 سجل تغييرات MMF 3.0.0 قبل
+
+الانتقال إلى MMF 3.</li>
+
+<li>مناقشة:
+
+<ul>
+
+<li>الدافع الرئيسي وراء هذا هو أنه في وقت سابق من هذا العام، قام العديد
+
+من مستخدمي MMF 2 بالتحديث مباشرة من MMF 2 إلى MMF 3.0.1 أو 3.0.2. نظراً
+
+لأنهم لم يروا سجل تغييرات 3.0.0 أبداً، فاتتهم أي معلومات حول تغييرات
+
+التسعير بين MMF 2 و MMF 3 (MMF 3 لم يعد مجانياً 100%). لذلك عندما طلب MMF
+
+3 فجأة الدفع لمواصلة استخدام التطبيق، شعر البعض - بشكل مفهوم - بالارتباك
+
+والاستياء.</li>
+
+<li>العيب: إذا كنت تريد فقط التحديث إلى أحدث إصدار، فستحتاج الآن إلى
+
+التحديث مرتين في بعض الحالات. هذا غير فعال قليلاً، لكنه لا يزال يستغرق
+
+بضع ثوانٍ فقط. وبما أن هذا يجعل التغييرات بين الإصدارات الرئيسية أكثر
+
+شفافية، أعتقد أنها مقايضة منطقية.</li>
+
+</ul></li>
+
+</ul></li>
+
+</ol>
+
+<h3 id="دعم-macos-15-sequoia">دعم macOS 15 Sequoia</h3>
+
+<p>سيعمل Mac Mouse Fix 2.2.5 بشكل رائع على نظام macOS 15 Sequoia الجديد
+
+- تماماً مثل 2.2.4.</p>
+
+<hr />
+
+<p>تحقق أيضاً من الإصدار السابق <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.4&amp;locale=ar"><strong>2.2.4</strong></a>.</p>
+
+<p><em>إذا واجهت مشكلة في تمكين Mac Mouse Fix بعد التحديث، يرجى الاطلاع
+
+على <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/861">دليل
+
+‘تمكين Mac Mouse Fix’</a>.</em></p>
+
+</body>
+
+</html>

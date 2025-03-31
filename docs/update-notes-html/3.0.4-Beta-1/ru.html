@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp9obosgdb</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Переведено ИИ</strong></p>
+
+<p>Это примечание к выпуску было переведено ИИ Claude. Оно может
+
+содержать ошибки.<br />
+
+Оригинальную английскую версию можно найти <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.4-Beta-1">здесь</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.4 Beta 1</strong> улучшает
+
+конфиденциальность, эффективность и надежность.<br />
+
+Вводит новую систему офлайн-лицензирования и исправляет несколько важных
+
+ошибок.</p>
+
+<h3 id="улучшенная-конфиденциальность-и-эффективность">Улучшенная
+
+конфиденциальность и эффективность</h3>
+
+<ul>
+
+<li>Представляет новую систему офлайн-проверки лицензий, минимизирующую
+
+подключения к интернету.</li>
+
+<li>Приложение теперь подключается к интернету только когда это
+
+действительно необходимо, защищая вашу конфиденциальность и снижая
+
+использование ресурсов.</li>
+
+<li>При наличии лицензии приложение работает полностью в
+
+офлайн-режиме.</li>
+
+</ul>
+
+<details>
+
+<summary>
+
+<b>Подробная информация о конфиденциальности</b>
+
+</summary>
+
+<p>Предыдущие версии проверяли лицензии онлайн при каждом запуске, что
+
+потенциально позволяло сторонним серверам (GitHub и Gumroad) сохранять
+
+логи подключений. Новая система устраняет ненужные подключения – после
+
+первоначальной активации лицензии она подключается к интернету только
+
+если локальные данные лицензии повреждены. <br><br> Хотя я лично никогда
+
+не записывал действия пользователей, предыдущая система теоретически
+
+позволяла сторонним серверам логировать IP-адреса и время подключений.
+
+Gumroad также мог логировать ваш лицензионный ключ и потенциально
+
+связывать его с любой личной информацией, которую они записали о вас при
+
+покупке Mac Mouse Fix. <br><br> Я не учел эти тонкие вопросы
+
+конфиденциальности при создании оригинальной системы лицензирования, но
+
+теперь Mac Mouse Fix максимально конфиденциален и независим от
+
+интернета! <br><br> Также смотрите
+
+<a href=https://gumroad.com/privacy>политику конфиденциальности
+
+Gumroad</a> и мой
+
+<a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>комментарий
+
+на GitHub</a>.</p>
+
+</details>
+
+<h3 id="исправления-ошибок">Исправления ошибок</h3>
+
+<ul>
+
+<li>Исправлена ошибка, из-за которой macOS иногда зависала при
+
+использовании ‘Click and Drag’ для ‘Spaces &amp; Mission Control’.</li>
+
+<li>Исправлена ошибка, из-за которой сочетания клавиш в Системных
+
+настройках иногда удалялись при использовании действия ‘Click’,
+
+определенного в Mac Mouse Fix, например ‘Mission Control’.</li>
+
+<li>Исправлена <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aopen%20label%3A%22%27Free%20days%20are%20over%27%20bug%22">ошибка</a>,
+
+из-за которой приложение иногда переставало работать и показывало
+
+уведомление о том, что ‘Бесплатные дни закончились’ пользователям,
+
+которые уже купили приложение.
+
+<ul>
+
+<li>Если вы столкнулись с этой ошибкой, я искренне извиняюсь за
+
+неудобства. Вы можете подать заявку на <a
+
+href="https://redirect.macmousefix.com/?message=&amp;target=mmf-apply-for-refund&amp;locale=ru">возврат
+
+средств здесь</a>.</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="технические-улучшения">Технические улучшения</h3>
+
+<ul>
+
+<li>Реализована новая система ‘MFDataClass’, обеспечивающая более чистое
+
+моделирование данных и читаемые конфигурационные файлы.</li>
+
+<li>Добавлена поддержка платежных платформ помимо Gumroad. Так что в
+
+будущем могут появиться локализованные платежи, и приложение может
+
+продаваться в разных странах!</li>
+
+</ul>
+
+<h3
+
+id="прекращена-неофициальная-поддержка-macos-10.14-mojave">Прекращена
+
+(неофициальная) поддержка macOS 10.14 Mojave</h3>
+
+<p>Mac Mouse Fix 3 официально поддерживает macOS 11 Big Sur и более
+
+поздние версии. Однако для пользователей, готовых смириться с некоторыми
+
+сбоями и графическими проблемами, Mac Mouse Fix 3.0.3 и более ранние
+
+версии все еще могли использоваться на macOS 10.14.4 Mojave.</p>
+
+<p>Mac Mouse Fix 3.0.4 прекращает эту поддержку и <strong>теперь требует
+
+macOS 10.15 Catalina</strong>.<br />
+
+Приношу извинения за любые неудобства, вызванные этим. Это изменение
+
+позволило мне реализовать улучшенную систему лицензирования с
+
+использованием современных функций Swift. Пользователи Mojave могут
+
+продолжать использовать Mac Mouse Fix <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.3&amp;locale=ru">3.0.3</a>
+
+или <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=ru">последнюю
+
+версию Mac Mouse Fix 2</a>. Надеюсь, это хорошее решение для всех.</p>
+
+<p><em>Отредактировано с отличной помощью Claude.</em></p>
+
+<hr />
+
+<p>Также ознакомьтесь с предыдущим релизом <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.3&amp;locale=ru"><strong>3.0.3</strong></a>.</p>
+
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+Mac Mouse Fix **3.0.4 Beta 1** meningkatkan privasi, efisiensi, dan keandalan.\
+Versi ini memperkenalkan sistem lisensi offline baru, dan memperbaiki beberapa bug penting.
+
+### Peningkatan Privasi & Efisiensi
+
+- Memperkenalkan sistem validasi lisensi offline baru yang meminimalkan koneksi internet.
+- Aplikasi sekarang hanya terhubung ke internet saat benar-benar diperlukan, melindungi privasi Anda dan mengurangi penggunaan sumber daya.
+- Aplikasi beroperasi sepenuhnya secara offline selama penggunaan normal ketika berlisensi.
+
+<details>
+<summary><b>Informasi Privasi Terperinci</b></summary>
+Versi sebelumnya memvalidasi lisensi secara online setiap kali diluncurkan, yang berpotensi memungkinkan log koneksi disimpan oleh server pihak ketiga (GitHub dan Gumroad). Sistem baru menghilangkan koneksi yang tidak perlu – setelah aktivasi lisensi awal, aplikasi hanya terhubung ke internet jika data lisensi lokal rusak.
+<br><br>
+Meskipun perilaku pengguna tidak pernah direkam oleh saya secara pribadi, sistem sebelumnya secara teoritis memungkinkan server pihak ketiga untuk mencatat alamat IP dan waktu koneksi. Gumroad juga bisa mencatat kunci lisensi Anda dan berpotensi menghubungkannya dengan informasi pribadi apa pun yang mereka catat tentang Anda saat Anda membeli Mac Mouse Fix.
+<br><br>
+Saya tidak mempertimbangkan masalah privasi yang halus ini ketika membangun sistem lisensi asli, tapi sekarang, Mac Mouse Fix seprivat dan sebebas internet mungkin!
+<br><br>
+Lihat juga <a href=https://gumroad.com/privacy>kebijakan privasi Gumroad</a> dan <a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>komentar GitHub</a> saya.
+
+</details>
+
+### Perbaikan Bug
+
+- Memperbaiki bug di mana macOS terkadang macet saat menggunakan 'Click and Drag' untuk 'Spaces & Mission Control'.
+- Memperbaiki bug di mana pintasan keyboard di System Settings terkadang terhapus saat menggunakan aksi 'Click' yang didefinisikan di Mac Mouse Fix seperti 'Mission Control'.
+- Memperbaiki [bug](https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aopen%20label%3A%22%27Free%20days%20are%20over%27%20bug%22) di mana aplikasi terkadang berhenti bekerja dan menampilkan notifikasi bahwa 'Free days are over' kepada pengguna yang sudah membeli aplikasi.
+    - Jika Anda mengalami bug ini, saya mohon maaf atas ketidaknyamanannya. Anda dapat mengajukan [pengembalian dana di sini](https://redirect.macmousefix.com/?message=&target=mmf-apply-for-refund).
+
+### Peningkatan Teknis
+
+- Mengimplementasikan sistem 'MFDataClass' baru yang memungkinkan pemodelan data yang lebih bersih dan file konfigurasi yang dapat dibaca manusia.
+- Membangun dukungan untuk menambahkan platform pembayaran selain Gumroad. Jadi di masa depan, mungkin ada checkout yang terlokalisasi, dan aplikasi mungkin dijual ke berbagai negara!
+
+### Menghentikan Dukungan (Tidak Resmi) untuk macOS 10.14 Mojave
+
+Mac Mouse Fix 3 secara resmi mendukung macOS 11 Big Sur dan versi yang lebih baru. Namun, bagi pengguna yang bersedia menerima beberapa glitch dan masalah grafis, Mac Mouse Fix 3.0.3 dan versi sebelumnya masih bisa digunakan pada macOS 10.14.4 Mojave.
+
+Mac Mouse Fix 3.0.4 menghentikan dukungan tersebut dan **sekarang membutuhkan macOS 10.15 Catalina**.\
+Saya mohon maaf atas ketidaknyamanan yang disebabkan oleh hal ini. Perubahan ini memungkinkan saya mengimplementasikan sistem lisensi yang ditingkatkan menggunakan fitur Swift modern. Pengguna Mojave dapat terus menggunakan Mac Mouse Fix [3.0.3](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3) atau [versi terbaru Mac Mouse Fix 2](https://redirect.macmousefix.com/?target=mmf2-latest). Saya harap ini menjadi solusi yang baik untuk semua orang.
+
+*Diedit dengan bantuan luar biasa dari Claude.*
+
+---
+
+Lihat juga rilis sebelumnya [**3.0.3**](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3).

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="sv" xml:lang="sv">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpblp63vni</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Översatt av AI</strong></p>
+
+<p>Detta releasemeddelande har översatts av Claude AI. Det kan innehålla
+
+fel.<br />
+
+För den engelska originalversionen, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3">klicka
+
+här</a>.</p>
+
+<hr />
+
+<p><strong>ℹ️ Meddelande till Mac Mouse Fix 2-användare</strong></p>
+
+<p>Med lanseringen av Mac Mouse Fix 3 har appens prismodell ändrats:</p>
+
+<ul>
+
+<li><strong>Mac Mouse Fix 2</strong><br />
+
+Förblir 100% gratis, och jag planerar att fortsätta stödja den.<br />
+
+<strong>Hoppa över denna uppdatering</strong> för att fortsätta använda
+
+Mac Mouse Fix 2. Ladda ner den senaste versionen av Mac Mouse Fix 2 <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=sv">här</a>.</li>
+
+<li><strong>Mac Mouse Fix 3</strong><br />
+
+Gratis i 30 dagar, kostar några dollar att äga.<br />
+
+<strong>Uppdatera nu</strong> för att få Mac Mouse Fix 3!</li>
+
+</ul>
+
+<p>Du kan läsa mer om priser och funktioner i Mac Mouse Fix 3 på den <a
+
+href="https://macmousefix.com/">nya webbplatsen</a>.</p>
+
+<p>Tack för att du använder Mac Mouse Fix! :)</p>
+
+<hr />
+
+<p><strong>ℹ️ Meddelande till Mac Mouse Fix 3-köpare</strong></p>
+
+<p>Om du av misstag uppdaterade till Mac Mouse Fix 3 utan att veta att
+
+den inte längre är gratis, vill jag erbjuda dig en <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=sv">återbetalning</a>.</p>
+
+<p>Den senaste versionen av Mac Mouse Fix 2 förblir <strong>helt
+
+gratis</strong>, och du kan ladda ner den <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=sv">här</a>.</p>
+
+<p>Jag ber om ursäkt för besväret och hoppas att alla är okej med denna
+
+lösning!</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.3</strong> är redo för macOS 15 Sequoia.
+
+Den åtgärdar även vissa stabilitetsproblem och innehåller flera små
+
+förbättringar.</p>
+
+<h3 id="stöd-för-macos-15-sequoia">Stöd för macOS 15 Sequoia</h3>
+
+<p>Appen fungerar nu korrekt under macOS 15 Sequoia!</p>
+
+<ul>
+
+<li>De flesta UI-animationer var trasiga under macOS 15 Sequoia. Nu
+
+fungerar allt som det ska igen!</li>
+
+<li>Källkoden kan nu byggas under macOS 15 Sequoia. Tidigare fanns det
+
+problem med Swift-kompilatorn som hindrade appen från att byggas.</li>
+
+</ul>
+
+<h3 id="åtgärdar-scroll-krascher">Åtgärdar scroll-krascher</h3>
+
+<p>Sedan Mac Mouse Fix 3.0.2 har det kommit <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">flera
+
+rapporter</a> om att Mac Mouse Fix periodvis inaktiverar och
+
+återaktiverar sig själv under scrollning. Detta orsakades av krascher i
+
+bakgrundsappen ‘Mac Mouse Fix Helper’. Denna uppdatering försöker
+
+åtgärda dessa krascher med följande ändringar:</p>
+
+<ul>
+
+<li><p>Scrollningsmekanismen kommer att försöka återhämta sig och
+
+fortsätta köra istället för att krascha när den stöter på det
+
+specialfall som verkar ha lett till dessa krascher.</p></li>
+
+<li><p>Jag har ändrat hur oväntade tillstånd hanteras i appen mer
+
+generellt: Istället för att alltid krascha omedelbart kommer appen nu
+
+att försöka återhämta sig från oväntade tillstånd i många fall.</p>
+
+<ul>
+
+<li>Denna ändring bidrar till fixarna för scroll-krascherna som beskrivs
+
+ovan. Den kan också förhindra andra krascher.</li>
+
+</ul></li>
+
+</ul>
+
+<p>Sidokommentar: Jag kunde aldrig reproducera dessa krascher på min
+
+maskin, och jag är fortfarande inte säker på vad som orsakade dem, men
+
+baserat på rapporterna jag fått borde denna uppdatering förhindra alla
+
+krascher. Om du fortfarande upplever krascher under scrollning eller om
+
+du <em>upplevde</em> krascher under 3.0.2, skulle det vara värdefullt om
+
+du delade din erfarenhet och diagnostikdata i GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">#988</a>.
+
+Detta skulle hjälpa mig att förstå problemet och förbättra Mac Mouse
+
+Fix. Tack!</p>
+
+<h3 id="åtgärdar-scroll-hackningar">Åtgärdar scroll-hackningar</h3>
+
+<p>I 3.0.2 gjorde jag ändringar i hur Mac Mouse Fix skickar
+
+scroll-händelser till systemet i ett försök att minska scroll-hackningar
+
+som troligen orsakades av problem med Apples VSync-API:er.</p>
+
+<p>Efter mer omfattande tester och feedback verkar det dock som att den
+
+nya mekanismen i 3.0.2 gör scrollningen jämnare i vissa scenarier men
+
+hackigare i andra. Särskilt i Firefox verkade det vara märkbart
+
+sämre.<br />
+
+Sammantaget var det inte tydligt att den nya mekanismen faktiskt
+
+förbättrade scroll-hackningar över lag. Den kan också ha bidragit till
+
+scroll-krascherna som beskrivs ovan.</p>
+
+<p>Därför har jag inaktiverat den nya mekanismen och återställt
+
+VSync-mekanismen för scroll-händelser till hur den var i Mac Mouse Fix
+
+3.0.0 och 3.0.1.</p>
+
+<p>Se GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/875">#875</a>
+
+för mer information.</p>
+
+<h3 id="återbetalning">Återbetalning</h3>
+
+<p>Jag ber om ursäkt för problemen relaterade till
+
+scrollningsändringarna i 3.0.1 och 3.0.2. Jag underskattade kraftigt
+
+problemen som skulle komma med det, och jag var långsam med att åtgärda
+
+dessa problem. Jag ska göra mitt bästa för att lära mig av denna
+
+erfarenhet och vara mer försiktig med sådana ändringar i framtiden. Jag
+
+vill också erbjuda alla drabbade en återbetalning. Klicka bara <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=sv">här</a>
+
+om du är intresserad.</p>
+
+<h3 id="smartare-uppdateringsmekanism">Smartare
+
+uppdateringsmekanism</h3>
+
+<p>Dessa ändringar har överförts från Mac Mouse Fix <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.4&amp;locale=sv">2.2.4</a>
+
+och <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.5&amp;locale=sv">2.2.5</a>.
+
+Kolla in deras releasenoter för att lära dig mer om detaljerna. Här är
+
+en sammanfattning:</p>
+
+<ul>
+
+<li>Det finns en ny, smartare mekanism som bestämmer vilken uppdatering
+
+som ska visas för användaren.</li>
+
+<li>Bytt från att använda Sparkle 1.26.0 uppdateringsramverk till
+
+senaste Sparkle <a
+
+href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>.</li>
+
+<li>Fönstret som appen visar för att informera dig om att en ny version
+
+av Mac Mouse Fix finns tillgänglig stöder nu JavaScript, vilket
+
+möjliggör snyggare formatering av uppdateringsnotiserna.</li>
+
+</ul>
+
+<h3 id="andra-förbättringar-buggfixar">Andra förbättringar &amp;
+
+buggfixar</h3>
+
+<ul>
+
+<li>Åtgärdade ett problem där apppriset och relaterad information
+
+visades felaktigt på ‘Om’-fliken i vissa fall.</li>
+
+<li>Åtgärdade ett problem där mekanismen för att synkronisera mjuk
+
+scrollning med skärmuppdateringsfrekvensen inte fungerade korrekt vid
+
+användning av flera skärmar.</li>
+
+<li>Massor av mindre under-huven-städning och förbättringar.</li>
+
+</ul>
+
+<hr />
+
+<p>Kolla även in den tidigare versionen <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.2&amp;locale=sv"><strong>3.0.2</strong></a>.</p>
+
+</body>
+
+</html>

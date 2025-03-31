@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ro" xml:lang="ro">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpj5_v5_ie</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Tradus de AI</strong></p>
+
+<p>Această notă de lansare a fost tradusă de AI-ul Claude. Poate conține
+
+erori.<br />
+
+Pentru versiunea originală în engleză, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.2">click
+
+aici</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.2</strong> aduce mai multe îmbunătățiri,
+
+inclusiv <strong>derulare mai fluidă</strong>, traduceri îmbunătățite și
+
+multe altele!</p>
+
+<h3 id="derulare">Derulare</h3>
+
+<ul>
+
+<li>Acum poți opri animațiile de derulare prin derularea unui pas în
+
+direcția opusă. Acest lucru îți permite să <strong>“arunci”</strong> și
+
+să <strong>“prinzi pagina”</strong> când folosești ‘Fluiditate:
+
+Ridicată’, similar cu un Trackpad.</li>
+
+<li>Mac Mouse Fix trimite acum evenimente de derulare mai devreme în
+
+ciclul de reîmprospătare a afișajului, oferind aplicațiilor mai mult
+
+timp pentru a procesa evenimentele de derulare și a afișa derularea
+
+fluid. Acest lucru <strong>îmbunătățește rata cadrelor</strong>, în
+
+special pe site-uri complexe precum YouTube.com.</li>
+
+<li>Am îmbunătățit reactivitatea setării ‘Fluiditate: Ridicată’, făcând
+
+derularea mai ușor de controlat.</li>
+
+<li>Am îmbunătățit un mecanism introdus în 3.0.1 unde viteza animației
+
+devine mai rapidă pe măsură ce rotești rotița mai repede când folosești
+
+‘Fluiditate: Normală’. În 3.0.2, accelerarea animației ar trebui să
+
+apară mai consistentă și previzibilă, făcând-o mai plăcută pentru ochi
+
+în timp ce oferă un control excelent.</li>
+
+<li>Am rezolvat o problemă unde viteza de derulare era prea lentă, în
+
+special când se folosea opțiunea ‘Precizie’. Această problemă a fost
+
+introdusă în 3.0.1. Mulțumim lui <span class="citation"
+
+data-cites="V-Coba">@V-Coba</span> pentru că a atras atenția asupra
+
+acesteia în <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/795">795</a>.</li>
+
+<li>Am îmbunătățit comportamentul în browserul Arc când se folosește
+
+‘Click și Derulare’ pentru ‘Mărire sau Micșorare’.</li>
+
+</ul>
+
+<h3 id="localizare">Localizare</h3>
+
+<ul>
+
+<li>Am actualizat traducerile în 🇻🇳 Vietnameză. Mulțumiri lui <span
+
+class="citation" data-cites="nghlt">@nghlt</span>!</li>
+
+<li>Am îmbunătățit unele traduceri în 🇩🇪 Germană.</li>
+
+<li>Textul din Mac Mouse Fix care nu are o traducere pentru limba
+
+curentă va afișa acum o valoare temporară în loc să rămână gol. Acest
+
+lucru ar trebui să facă navigarea în aplicație mai puțin confuză când
+
+lipsesc traduceri.</li>
+
+</ul>
+
+<h3 id="altele">Altele</h3>
+
+<ul>
+
+<li>Mac Mouse Fix va afișa acum o notificare cu un link către <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/861">acest
+
+ghid</a> utilizatorilor care ar putea întâmpina un bug în macOS 13
+
+Ventura și versiunile ulterioare care poate împiedica activarea Mac
+
+Mouse Fix.</li>
+
+<li>Am modificat setările implicite pentru mouse-urile cu 3 butoane.
+
+Setările implicite nu mai includ o acțiune ‘Click și Derulare’ pentru
+
+Butonul Rotiță, deoarece este destul de greu de executat. În schimb,
+
+setările implicite includ acum o acțiune ‘Menținere’ și ‘Dublu
+
+Click’.</li>
+
+<li>Am adăugat un tooltip la iconița Mac Mouse Fix din tab-ul Despre.
+
+Acesta îți spune cum să găsești fișierul de configurare Mac Mouse Fix în
+
+Finder.</li>
+
+<li>Multe îmbunătățiri și curățări la nivel intern.</li>
+
+</ul>
+
+<hr />
+
+<p>De asemenea, verifică versiunea anterioară <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.1&amp;locale=ro"><strong>3.0.1</strong></a>.</p>
+
+</body>
+
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmph7b5edv_</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Przetłumaczone przez AI</strong></p>
+
+<p>Ta informacja o wydaniu została przetłumaczona przez Claude AI. Może
+
+zawierać błędy.<br />
+
+Aby zobaczyć oryginalną wersję po angielsku, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3">kliknij
+
+tutaj</a>.</p>
+
+<hr />
+
+<p><strong>ℹ️ Informacja dla użytkowników Mac Mouse Fix 2</strong></p>
+
+<p>Wraz z wprowadzeniem Mac Mouse Fix 3, model cenowy aplikacji uległ
+
+zmianie:</p>
+
+<ul>
+
+<li><strong>Mac Mouse Fix 2</strong><br />
+
+Pozostaje w 100% darmowy i planuję dalej go wspierać.<br />
+
+<strong>Pomiń tę aktualizację</strong>, aby nadal korzystać z Mac Mouse
+
+Fix 2. Pobierz najnowszą wersję Mac Mouse Fix 2 <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=pl">tutaj</a>.</li>
+
+<li><strong>Mac Mouse Fix 3</strong><br />
+
+Darmowy przez 30 dni, kosztuje kilka dolarów, aby posiadać.<br />
+
+<strong>Zaktualizuj teraz</strong>, aby otrzymać Mac Mouse Fix 3!</li>
+
+</ul>
+
+<p>Więcej informacji o cenach i funkcjach Mac Mouse Fix 3 znajdziesz na
+
+<a href="https://macmousefix.com/">nowej stronie</a>.</p>
+
+<p>Dziękuję za korzystanie z Mac Mouse Fix! :)</p>
+
+<hr />
+
+<p><strong>ℹ️ Informacja dla nabywców Mac Mouse Fix 3</strong></p>
+
+<p>Jeśli przypadkowo zaktualizowałeś do Mac Mouse Fix 3 nie wiedząc, że
+
+nie jest już darmowy, chciałbym zaoferować Ci <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=pl">zwrot
+
+pieniędzy</a>.</p>
+
+<p>Najnowsza wersja Mac Mouse Fix 2 pozostaje <strong>całkowicie
+
+darmowa</strong> i możesz ją pobrać <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=pl">tutaj</a>.</p>
+
+<p>Przepraszam za kłopot i mam nadzieję, że to rozwiązanie jest dla
+
+wszystkich odpowiednie!</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.3</strong> jest gotowy na macOS 15 Sequoia.
+
+Naprawia również problemy ze stabilnością i wprowadza kilka drobnych
+
+ulepszeń.</p>
+
+<h3 id="wsparcie-dla-macos-15-sequoia">Wsparcie dla macOS 15
+
+Sequoia</h3>
+
+<p>Aplikacja działa teraz poprawnie pod macOS 15 Sequoia!</p>
+
+<ul>
+
+<li>Większość animacji UI była uszkodzona w macOS 15 Sequoia. Teraz
+
+wszystko działa znowu prawidłowo!</li>
+
+<li>Kod źródłowy można teraz skompilować pod macOS 15 Sequoia. Wcześniej
+
+występowały problemy z kompilatorem Swift uniemożliwiające kompilację
+
+aplikacji.</li>
+
+</ul>
+
+<h3 id="rozwiązanie-problemów-z-przewijaniem">Rozwiązanie problemów z
+
+przewijaniem</h3>
+
+<p>Od wersji Mac Mouse Fix 3.0.2 pojawiło się <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">wiele
+
+zgłoszeń</a> o tym, że Mac Mouse Fix okresowo wyłącza się i włącza
+
+podczas przewijania. Było to spowodowane awariami aplikacji ‘Mac Mouse
+
+Fix Helper’ działającej w tle. Ta aktualizacja próbuje naprawić te
+
+awarie poprzez następujące zmiany:</p>
+
+<ul>
+
+<li><p>Mechanizm przewijania będzie próbował się odzyskać i kontynuować
+
+działanie zamiast się zawieszać, gdy napotka przypadek brzegowy, który
+
+prawdopodobnie prowadził do tych awarii.</p></li>
+
+<li><p>Zmieniłem sposób obsługi nieoczekiwanych stanów w aplikacji:
+
+Zamiast zawsze natychmiast się zawieszać, aplikacja będzie teraz w wielu
+
+przypadkach próbować odzyskać się z nieoczekiwanych stanów.</p>
+
+<ul>
+
+<li>Ta zmiana przyczynia się do naprawy awarii przewijania opisanych
+
+powyżej. Może również zapobiec innym awariom.</li>
+
+</ul></li>
+
+</ul>
+
+<p>Uwaga: Nigdy nie udało mi się odtworzyć tych awarii na moim
+
+komputerze i nadal nie jestem pewien, co je powodowało, ale na podstawie
+
+otrzymanych zgłoszeń ta aktualizacja powinna zapobiec wszelkim awariom.
+
+Jeśli nadal doświadczasz awarii podczas przewijania lub doświadczyłeś
+
+awarii w wersji 3.0.2, byłoby cenne, gdybyś podzielił się swoim
+
+doświadczeniem i danymi diagnostycznymi w GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">#988</a>.
+
+Pomoże mi to zrozumieć problem i ulepszyć Mac Mouse Fix. Dziękuję!</p>
+
+<h3 id="rozwiązanie-problemów-z-zacinaniem-się-przewijania">Rozwiązanie
+
+problemów z zacinaniem się przewijania</h3>
+
+<p>W wersji 3.0.2 wprowadziłem zmiany w sposobie wysyłania zdarzeń
+
+przewijania do systemu, próbując zmniejszyć zacinanie się przewijania
+
+prawdopodobnie spowodowane problemami z API VSync Apple.</p>
+
+<p>Jednak po bardziej szczegółowych testach i otrzymaniu opinii okazało
+
+się, że nowy mechanizm w 3.0.2 sprawia, że przewijanie jest płynniejsze
+
+w niektórych scenariuszach, ale bardziej się zacina w innych.
+
+Szczególnie w Firefox wydawało się zauważalnie gorsze.<br />
+
+Ogólnie nie było jasne, czy nowy mechanizm faktycznie poprawił płynność
+
+przewijania. Mógł również przyczynić się do awarii przewijania opisanych
+
+powyżej.</p>
+
+<p>Dlatego wyłączyłem nowy mechanizm i przywróciłem mechanizm VSync dla
+
+zdarzeń przewijania do stanu z Mac Mouse Fix 3.0.0 i 3.0.1.</p>
+
+<p>Zobacz GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/875">#875</a>
+
+aby uzyskać więcej informacji.</p>
+
+<h3 id="zwrot-pieniędzy">Zwrot pieniędzy</h3>
+
+<p>Przepraszam za problemy związane ze zmianami w przewijaniu w wersjach
+
+3.0.1 i 3.0.2. Znacznie nie doceniłem problemów, które się z tym
+
+wiązały, i zbyt wolno reagowałem na te problemy. Postaram się wyciągnąć
+
+wnioski z tego doświadczenia i być bardziej ostrożnym przy takich
+
+zmianach w przyszłości. Chciałbym również zaoferować zwrot pieniędzy
+
+wszystkim poszkodowanym. Wystarczy kliknąć <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=pl">tutaj</a>
+
+jeśli jesteś zainteresowany.</p>
+
+<h3 id="inteligentniejszy-mechanizm-aktualizacji">Inteligentniejszy
+
+mechanizm aktualizacji</h3>
+
+<p>Te zmiany zostały przeniesione z Mac Mouse Fix <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.4&amp;locale=pl">2.2.4</a>
+
+i <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.5&amp;locale=pl">2.2.5</a>.
+
+Sprawdź ich informacje o wydaniu, aby dowiedzieć się więcej o
+
+szczegółach. Oto podsumowanie:</p>
+
+<ul>
+
+<li>Istnieje nowy, inteligentniejszy mechanizm decydujący o tym, którą
+
+aktualizację pokazać użytkownikowi.</li>
+
+<li>Przełączono się z używania frameworka aktualizacji Sparkle 1.26.0 na
+
+najnowszy Sparkle <a
+
+href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>.</li>
+
+<li>Okno, które aplikacja wyświetla, aby poinformować o dostępności
+
+nowej wersji Mac Mouse Fix, teraz obsługuje JavaScript, co pozwala na
+
+ładniejsze formatowanie notatek o aktualizacji.</li>
+
+</ul>
+
+<h3 id="inne-ulepszenia-i-poprawki-błędów">Inne ulepszenia i poprawki
+
+błędów</h3>
+
+<ul>
+
+<li>Naprawiono problem, gdzie cena aplikacji i powiązane informacje były
+
+nieprawidłowo wyświetlane w zakładce ‘O programie’ w niektórych
+
+przypadkach.</li>
+
+<li>Naprawiono problem, gdzie mechanizm synchronizacji płynnego
+
+przewijania z częstotliwością odświeżania ekranu nie działał prawidłowo
+
+podczas korzystania z wielu wyświetlaczy.</li>
+
+<li>Wiele drobnych porządków i ulepszeń pod maską.</li>
+
+</ul>
+
+<hr />
+
+<p>Sprawdź również poprzednie wydanie <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.2&amp;locale=pl"><strong>3.0.2</strong></a>.</p>
+
+</body>
+
+</html>

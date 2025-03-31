@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hu" xml:lang="hu">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp7rm_21ch</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI által fordítva</strong></p>
+
+<p>Ezt a kiadási megjegyzést a Claude AI fordította. Tartalmazhat
+
+hibákat.<br />
+
+Az eredeti angol verzióért <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-7">kattints
+
+ide</a>.</p>
+
+<hr />
+
+<p>Nézd meg a <strong>remek fejlesztéseket</strong> is, amiket a <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-6&amp;locale=hu">3.0.0
+
+Beta 6</a> hozott!</p>
+
+<hr />
+
+<p>A <strong>3.0.0 Beta 7</strong> számos kisebb fejlesztést és
+
+hibajavítást tartalmaz.</p>
+
+<p>Íme az összes újdonság:</p>
+
+<p><strong>Fejlesztések</strong></p>
+
+<ul>
+
+<li>Hozzáadtuk a <strong>koreai fordításokat</strong>. Nagy köszönet
+
+<span class="citation" data-cites="jeongtae-nek">@jeongtae-nek</span>!
+
+(Megtalálod a <a href="https://github.com/jeongtae">GitHubon</a>)</li>
+
+<li>A ‘Simaság: Magas’ opcióval a <strong>görgetés</strong> <strong>még
+
+simább</strong> lett azáltal, hogy a sebesség csak fokozatosan változik,
+
+nem pedig hirtelen ugrásokkal, ahogy mozgatod a görgőt. Ez simábbá és
+
+szemmel könnyebben követhetővé teszi a görgetést anélkül, hogy
+
+csökkentené a reakcióképességet. A ‘Simaság: Magas’ opcióval történő
+
+görgetés körülbelül 30%-kal több CPU-t használ, az én gépemen 1.2%-ról
+
+1.6%-ra nőtt a folyamatos görgetés során. Így a görgetés továbbra is
+
+nagyon hatékony, és remélem, ez senkinek nem okoz majd problémát. Nagy
+
+köszönet a <a href="https://mos.caldis.me/">MOS</a>-nak, amely
+
+inspirálta ezt a funkciót, és amelynek ‘Scroll Monitor’-ját használtam a
+
+funkció megvalósításához.</li>
+
+<li>A Mac Mouse Fix most már <strong>minden forrásból kezeli a
+
+gombbemeneteket</strong>. Korábban a Mac Mouse Fix csak az általa
+
+felismert egerek bemeneteit kezelte. Azt gondolom, ez segíthet bizonyos
+
+egerek kompatibilitásán szélsőséges esetekben, például Hackintosh
+
+használatakor, de ez azt is jelenti, hogy a Mac Mouse Fix más
+
+alkalmazások által mesterségesen generált gombbemeneteket is észlel, ami
+
+más szélsőséges esetekben problémákhoz vezethet. Jelezd, ha ez bármilyen
+
+problémát okoz számodra, és a jövőbeli frissítésekben foglalkozni fogok
+
+vele.</li>
+
+<li>Finomítottuk az ‘Asztalt és Launchpadet’ megjelenítő ‘Kattintás és
+
+görgetés’, valamint a ‘Terek közötti mozgáshoz’ használt ‘Kattintás és
+
+görgetés’ gesztusok érzetét és kidolgozottságát.</li>
+
+<li>Most már figyelembe vesszük a nyelv információsűrűségét az
+
+<strong>értesítések megjelenítési idejének</strong> kiszámításakor.
+
+Korábban az értesítések csak nagyon rövid ideig maradtak láthatóak a
+
+magas információsűrűségű nyelveken, mint a kínai vagy a koreai.</li>
+
+<li>Engedélyeztük a <strong>különböző gesztusokat</strong> a
+
+<strong>Terek</strong> közötti mozgáshoz, a <strong>Mission
+
+Control</strong> megnyitásához vagy az <strong>App Exposé</strong>
+
+megnyitásához. A Beta 6-ban kísérletképpen csak a ‘Kattintás és húzás’
+
+gesztuson keresztül tettem elérhetővé ezeket a műveleteket, hogy lássam,
+
+hány embert érdekel valójában, hogy más módon is hozzáférhessen ezekhez
+
+a műveletekhez. Úgy tűnik, hogy néhányan igen, így most újra lehetővé
+
+tettem, hogy ezeket a műveleteket egy egyszerű ‘Kattintással’ vagy
+
+‘Kattintás és görgetéssel’ is el lehessen érni.</li>
+
+<li>Lehetővé tettük a <strong>Forgatást</strong> a <strong>Kattintás és
+
+görgetés</strong> gesztussal.</li>
+
+<li><strong>Fejlesztettük</strong> a <strong>Trackpad
+
+Szimuláció</strong> opció működését bizonyos helyzetekben. Például
+
+amikor vízszintesen görgetsz egy üzenet törléséhez a Mailben, az üzenet
+
+mozgásának iránya most meg van fordítva, ami remélem, természetesebbnek
+
+és következetesebbnek érződik a legtöbb ember számára.</li>
+
+<li>Hozzáadtunk egy funkciót a <strong>Elsődleges kattintás</strong>
+
+vagy <strong>Másodlagos kattintás</strong>
+
+<strong>újratérképezéséhez</strong>. Ezt azért valósítottam meg, mert a
+
+kedvenc egeremen eltört a jobb gomb. Ezek az opciók alapértelmezetten
+
+rejtettek. Az Option billentyű lenyomva tartásával láthatod őket egy
+
+művelet kiválasztásakor.
+
+<ul>
+
+<li>Ehhez jelenleg hiányoznak a kínai és koreai fordítások, így ha
+
+szeretnél hozzájárulni ezeknek a funkcióknak a fordításához, azt nagyra
+
+értékelnénk!</li>
+
+</ul></li>
+
+</ul>
+
+<p><strong>Hibajavítások</strong></p>
+
+<ul>
+
+<li>Javítottuk azt a hibát, ahol a ‘Mission Control és Terek’
+
+<strong>‘Kattintás és húzás’</strong> <strong>iránya fordított</strong>
+
+volt azoknál a felhasználóknál, akik soha nem kapcsolták át a
+
+‘Természetes görgetés’ opciót a Rendszerbeállításokban. Most a Mac Mouse
+
+Fix ‘Kattintás és húzás’ gesztusainak iránya mindig meg kell, hogy
+
+egyezzen a Trackpaden vagy Magic Mouse-on használt gesztusok irányával.
+
+Ha szeretnél egy külön opciót a ‘Kattintás és húzás’ irányának
+
+megfordítására ahelyett, hogy az a Rendszerbeállításokat követné,
+
+jelezd.</li>
+
+<li>Javítottuk azt a hibát, ahol a <strong>próbaidő napjai túl
+
+gyorsan</strong> számolódtak fel egyes felhasználóknál. Ha érintett
+
+voltál ebben, jelezd, és megnézem, mit tehetek.</li>
+
+<li>Javítottuk azt a problémát macOS Sonoma alatt, ahol a fülsáv nem
+
+jelent meg megfelelően.</li>
+
+<li>Javítottuk a döcögést a ‘macOS’ görgetési sebesség használatakor,
+
+amikor ‘Kattintás és görgetéssel’ nyitod meg a Launchpadet.</li>
+
+<li>Javítottuk azt a hibát, ahol a ‘Mac Mouse Fix Helper’ alkalmazás
+
+(amely a háttérben fut, amikor a Mac Mouse Fix engedélyezve van) néha
+
+összeomlott billentyűparancs rögzítésekor.</li>
+
+<li>Javítottuk azt a hibát, ahol a Mac Mouse Fix összeomlott, amikor
+
+megpróbálta felvenni a <a
+
+href="https://github.com/artginzburg/MiddleClick-Sonoma">MiddleClick-Sonoma</a>
+
+által generált mesterséges eseményeket.</li>
+
+<li>Javítottuk azt a problémát, ahol egyes egerek neve kétszer
+
+tartalmazta a gyártót az ‘Alapértelmezések visszaállítása…’
+
+párbeszédablakban.</li>
+
+<li>Csökkentettük annak esélyét, hogy a ‘Mission Control és Terek’
+
+‘Kattintás és húzás’ funkció beragadjon, amikor a számítógép lassú.</li>
+
+<li>Javítottuk a ‘Force Touch’ használatát a felhasználói felület
+
+szövegeiben, ahol ‘Force click’-nek kellene lennie.</li>
+
+<li>Javítottuk azt a hibát, amely bizonyos konfigurációknál fordult elő,
+
+ahol a Launchpad megnyitása vagy az Asztal megjelenítése ‘Kattintás és
+
+görgetéssel’ nem működött, ha felengedted a gombot, miközben az átmeneti
+
+animáció még tartott.</li>
+
+</ul>
+
+<p><strong>Egyéb</strong></p>
+
+<ul>
+
+<li>Számos háttérbeli fejlesztés, stabilitási javítás, háttérkód
+
+tisztítás és egyéb.</li>
+
+</ul>
+
+<h2 id="hogyan-segíthetsz">Hogyan segíthetsz</h2>
+
+<p>Segíthetsz az <strong>ötleteid</strong>, <strong>problémáid</strong>
+
+és <strong>visszajelzéseid</strong> megosztásával!</p>
+
+<p>Az <strong>ötletek</strong> és <strong>problémák</strong>
+
+megosztásának legjobb helye a <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Visszajelzési
+
+Asszisztens</a>. A <strong>gyors</strong>, strukturálatlan
+
+visszajelzések legjobb helye a <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Visszajelzési
+
+Beszélgetés</a>.</p>
+
+<p>Ezeket a helyeket az alkalmazáson belül is elérheted a ‘<strong>ⓘ
+
+Névjegy</strong>’ fülön.</p>
+
+<p><strong>Köszönjük</strong>, hogy segítesz jobbá tenni a Mac Mouse
+
+Fix-et! 😎:)</p>
+
+</body>
+
+</html>

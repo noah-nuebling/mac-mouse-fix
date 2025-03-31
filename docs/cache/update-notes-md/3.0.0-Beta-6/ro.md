@@ -1,0 +1,126 @@
+Verifică și **modificările interesante** introduse în [3.0.0 Beta 5](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-5)!
+
+
+---
+
+**3.0.0 Beta 6** aduce optimizări profunde și rafinament, o restructurare a setărilor de derulare, traduceri în chineză și multe altele!
+
+Iată tot ce este nou:
+
+## 1. Optimizări Profunde
+
+Pentru această versiune Beta, am depus mult efort pentru a obține maximum de performanță din Mac Mouse Fix. Și acum sunt bucuros să anunț că, atunci când faci click pe un buton al mouse-ului în Beta 6, este de **2x** mai rapid comparativ cu beta-ul anterior! Iar derularea este chiar de **4x** mai rapidă!
+
+Cu Beta 6, MMF va dezactiva în mod inteligent anumite părți pentru a economisi cât mai mult CPU și baterie.
+
+De exemplu, când folosești un mouse cu 3 butoane dar ai setat acțiuni doar pentru butoane care nu se găsesc pe mouse-ul tău, precum butoanele 4 și 5, Mac Mouse Fix va înceta complet să asculte input-ul de la butoanele mouse-ului tău. Asta înseamnă 0% utilizare CPU când faci click pe un buton al mouse-ului! Sau când setările de derulare din MMF se potrivesc cu cele ale sistemului, Mac Mouse Fix va înceta complet să asculte input-ul de la rotița de derulare. Asta înseamnă 0% utilizare CPU când derulezi! Dar dacă setezi funcția Command (⌘)-Scroll pentru Zoom, Mac Mouse Fix va începe să asculte input-ul rotiței de derulare - dar doar în timp ce ții apăsată tasta Command (⌘). Și așa mai departe.
+Deci este foarte inteligent și va folosi CPU doar când este necesar!
+
+Asta înseamnă că MMF nu este doar cel mai puternic, ușor de folosit și rafinat driver pentru mouse pe Mac, ci este și unul dintre cele mai optimizate și eficiente, dacă nu chiar cel mai optimizat și eficient!
+
+## 2. Dimensiune Redusă a Aplicației
+
+La 16 MB, Beta 6 este aproximativ de 2x mai mic decât Beta 5!
+
+Aceasta este o consecință a renunțării la suportul pentru versiunile mai vechi de macOS.
+
+## 3. Renunțarea la Suportul pentru Versiuni Mai Vechi de macOS
+
+Am încercat din greu să fac MMF 3 să ruleze corespunzător pe versiuni de macOS anterioare macOS 11 Big Sur. Dar cantitatea de muncă necesară pentru a-l face să se simtă rafinat s-a dovedit a fi copleșitoare, așa că a trebuit să renunț la asta.
+
+În continuare, cea mai veche versiune suportată oficial va fi macOS 11 Big Sur.
+
+Aplicația se va deschide în continuare pe versiuni mai vechi, dar vor exista probleme vizuale și poate alte probleme. Aplicația nu se va mai deschide pe versiuni de macOS anterioare 10.14.4. Acest lucru ne permite să reducem dimensiunea aplicației de 2x deoarece 10.14.4 este cea mai veche versiune de macOS care include bibliotecile Swift moderne (Vezi "Swift ABI Stability"), ceea ce înseamnă că aceste biblioteci Swift nu mai trebuie incluse în aplicație.
+
+## 4. Îmbunătățiri la Derulare
+
+Beta 6 include multe îmbunătățiri la configurarea și interfața noilor sisteme de derulare introduse în MMF 3.
+
+### Interfață
+
+- Am simplificat și scurtat foarte mult textul din interfața filei Scroll. Majoritatea mențiunilor cuvântului "Scroll" au fost eliminate deoarece sunt subînțelese din context.
+- Am restructurat setările de fluiditate a derulării pentru a fi mult mai clare și pentru a permite opțiuni suplimentare. Acum poți alege între o "Fluiditate" de "Oprită", "Normală" sau "Ridicată", înlocuind vechiul comutator "cu Inerție". Cred că acest lucru este mult mai clar și a făcut loc în interfață pentru noua opțiune "Simulare Trackpad".
+- Dezactivarea noii opțiuni "Simulare Trackpad" dezactivează efectul de bandă elastică în timpul derulării, previne și derularea între pagini în Safari și alte aplicații, și multe altele. Mulți oameni au fost deranjați de acest lucru, în special cei cu rotițe de derulare cu rotire liberă cum se găsesc pe unele mouse-uri Logitech precum MX Master, dar alții se bucură de el, așa că am decis să-l fac opțional. Sper că prezentarea funcției este clară. Dacă ai sugestii în această privință, anunță-mă.
+- Am schimbat opțiunea "Direcție Naturală de Derulare" în "Inversează Direcția de Derulare". Asta înseamnă că setarea acum inversează direcția de derulare a sistemului și nu mai este independentă de direcția de derulare a sistemului. Deși aceasta este argumentabil o experiență de utilizare ușor mai slabă, acest nou mod de a face lucrurile ne permite să implementăm unele optimizări și face mai transparent pentru utilizator cum să dezactiveze complet Mac Mouse Fix pentru derulare.
+- Am îmbunătățit modul în care setările de derulare interacționează cu derularea modificată în multe cazuri de margine diferite. De exemplu, opțiunea "Precizie" nu se va mai aplica la acțiunea "Click și Derulare" pentru "Desktop & Launchpad" deoarece aici este un impediment în loc să fie utilă.
+- Am îmbunătățit viteza de derulare când se folosește "Click și Derulare" pentru "Desktop & Launchpad" sau "Mărește sau Micșorează" și alte funcții.
+- Am eliminat link-ul nefuncțional către setările de viteză de derulare ale sistemului de pe fila de derulare care era prezent pe versiuni de macOS anterioare macOS 13.0 Ventura. Nu am putut găsi o modalitate de a face link-ul să funcționeze și nu este teribil de important.
+
+### Senzația la Derulare
+
+- Am îmbunătățit curba de animație pentru "Fluiditate Normală" (anterior accesibilă prin dezactivarea "cu Inerție"). Acest lucru face lucrurile să se simtă mai fluide și responsive.
+- Am îmbunătățit senzația tuturor setărilor de viteză de derulare. Vitezele "Medie" și "Rapidă" sunt mai rapide. Există mai multă separare între vitezele "Mică" "Medie" și "Mare". Accelerarea pe măsură ce miști rotița mai repede se simte mai naturală și confortabilă când folosești opțiunea "Precizie".
+- Modul în care viteza de derulare crește pe măsură ce continui să derulezi într-o direcție se va simți mai natural și gradual. Folosesc noi curbe matematice pentru a modela accelerarea. Accelerarea vitezei va fi și mai greu de declanșat accidental.
+- Nu mai accelerez viteza de derulare când continui să derulezi într-o direcție în timp ce folosești viteza de derulare "macOS".
+- Am restricționat timpul de animație la derulare la un maxim. Dacă animația de derulare ar dura în mod natural mai mult timp, va fi accelerată pentru a rămâne sub timpul maxim. Astfel, derularea până la marginea paginii cu o rotiță cu rotire liberă nu va face conținutul paginii să se deplaseze în afara ecranului pentru atât de mult timp. Acest lucru nu ar trebui să afecteze derularea normală cu o rotiță fără rotire liberă.
+- Am îmbunătățit unele interacțiuni în jurul efectului de bandă elastică când derulezi până la marginea paginii în Safari și alte aplicații.
+- Am rezolvat o problemă unde "Click și Derulare" și alte funcții legate de derulare nu funcționau corect după actualizarea de la o versiune foarte veche a panoului de preferințe Mac Mouse Fix.
+- Am rezolvat o problemă unde derulările de un singur pixel erau trimise cu întârziere când se folosea viteza de derulare "macOS" împreună cu derularea fluidă.
+- Am rezolvat un bug unde derularea era încă foarte rapidă după eliberarea modificatorului Swift Scroll. Alte îmbunătățiri în jurul modului în care viteza de derulare este transferată de la derulările anterioare.
+- Am îmbunătățit modul în care viteza de derulare crește cu dimensiuni mai mari ale ecranului
+
+## 5. Notarizare
+
+Începând cu 3.0.0 Beta 6, Mac Mouse Fix va fi "Notarizat". Asta înseamnă că nu vor mai fi mesaje despre Mac Mouse Fix fiind potențial "Software Malițios" când deschizi aplicația pentru prima dată.
+
+Notarizarea aplicației costă $100 pe an. Am fost întotdeauna împotriva acestui lucru, deoarece părea ostil față de software-ul gratuit și open source precum Mac Mouse Fix, și părea și un pas periculos spre controlul și blocarea Mac-ului de către Apple așa cum fac cu iOS. Dar lipsa Notarizării a dus la probleme destul de severe, inclusiv [mai multe situații](https://github.com/noah-nuebling/mac-mouse-fix/discussions/114) unde nimeni nu putea folosi aplicația până când nu lansam o nouă versiune. Deoarece Mac Mouse Fix va fi monetizat acum, m-am gândit că era în sfârșit potrivit să Notarizez aplicația pentru o experiență de utilizare mai ușoară și mai stabilă.
+
+## 6. Traduceri în Chineză
+
+Mac Mouse Fix este acum disponibil în Chineză!
+Mai specific, este disponibil în:
+
+- Chineză, Tradițională
+- Chineză, Simplificată
+- Chineză (Hong Kong)
+
+Mulțumiri imense lui @groverlynn pentru furnizarea tuturor acestor traduceri precum și pentru actualizarea lor pe parcursul versiunilor beta și pentru comunicarea cu mine. Vezi pull request-ul său aici: https://github.com/noah-nuebling/mac-mouse-fix/pull/395.
+
+## 7. Toate Celelalte
+
+Pe lângă modificările enumerate mai sus, Beta 6 include și multe îmbunătățiri mai mici.
+
+- Am eliminat mai multe opțiuni din Acțiunile "Click", "Click și Ține" și "Click și Derulare" deoarece am considerat că erau redundante întrucât aceeași funcționalitate poate fi obținută altfel și deoarece acest lucru curăță mult meniurile. Voi readuce acele opțiuni dacă oamenii se plâng. Deci dacă îți lipsesc acele opțiuni - te rog să te plângi.
+- Direcția Click și Trage va corespunde acum cu direcția de glisare a trackpad-ului chiar și când "Derulare naturală" este dezactivată în Setări Sistem > Trackpad. Înainte, Click și Trage se comporta întotdeauna ca glisarea pe trackpad cu "Derulare naturală" *activată*.
+- Am rezolvat o problemă unde cursoarele dispăreau și apoi reapăreau în altă parte când se folosea o Acțiune "Click și Trage" în timpul unei înregistrări de ecran sau când se folosea software-ul DisplayLink.
+- Am corectat centrarea "+" în câmpul "+" de pe fila Butoane
+- Mai multe îmbunătățiri vizuale la fila butoane. Paleta de culori a câmpului "+" și a Tabelului de Acțiuni a fost restructurată pentru a arăta corect când se folosește opțiunea macOS "Permite nuanțarea fundalului în ferestre". Marginile Tabelului de Acțiuni au acum o culoare transparentă care arată mai dinamică și se adaptează la mediul înconjurător.
+- Am făcut astfel încât atunci când adaugi multe acțiuni în tabelul de acțiuni și fereastra Mac Mouse Fix crește, va crește exact cât ecranul (sau cât ecranul minus dock-ul dacă nu ai activată ascunderea dock-ului) și apoi se va opri. Când adaugi și mai multe acțiuni, tabelul de acțiuni va începe să deruleze.
+- Această versiune Beta suportă acum un nou checkout unde poți cumpăra o licență în dolari americani așa cum este anunțat. Înainte puteai cumpăra o licență doar în Euro. Vechile licențe în Euro vor fi în continuare suportate bineînțeles.
+- Am rezolvat o problemă unde derularea cu inerție uneori nu era pornită când se folosea funcția "Derulare & Navigare".
+- Când fereastra Mac Mouse Fix își redimensionează în timpul unei schimbări de filă, acum se va repoziționa astfel încât să nu se suprapună cu Dock-ul
+- Am rezolvat pâlpâirea pe unele elemente UI când se schimbă de la fila Butoane la altă filă
+- Am îmbunătățit aspectul animației pe care câmpul "+" o redă după înregistrarea unui input. În special pe versiuni de macOS anterioare Ventura, unde umbra câmpului "+" ar apărea defectă în timpul animației.
+- Am dezactivat notificările care listau mai multe butoane care au fost capturate/nu mai sunt capturate de Mac Mouse Fix care ar apărea când pornești aplicația pentru prima dată sau când încarci un preset. M-am gândit că aceste mesaje erau distractive și ușor copleșitoare și nu foarte utile în acele contexte.
+- Am restructurat Ecranul de Acordare a Accesibilității. Acum va arăta informații despre de ce Mac Mouse Fix are nevoie de Acces la Accesibilitate inline în loc să trimită la website și este puțin mai clar și are un aspect mai plăcut vizual.
+- Am actualizat link-ul de Mulțumiri de pe fila Despre.
+- Am îmbunătățit mesajele de eroare când Mac Mouse Fix nu poate fi activat deoarece există o altă versiune prezentă în sistem. Mesajul va fi acum afișat într-o fereastră de alertă plutitoare care rămâne întotdeauna deasupra altor ferestre până când este închisă în loc de o Notificare Toast care dispare când faci click oriunde. Acest lucru ar trebui să facă mai ușor de urmat pașii de soluționare sugerați.
+- Am rezolvat unele probleme cu randarea markdown pe versiuni de macOS anterioare Ventura. MMF va folosi acum o soluție personalizată de randare markdown pentru toate versiunile de macOS, inclusiv Ventura. Înainte foloseam un API de sistem introdus în Ventura dar asta ducea la inconsistențe. Markdown este folosit pentru a adăuga link-uri și evidențiere textului în toată interfața.
+- Am rafinat interacțiunile în jurul activării accesului la accesibilitate.
+- Am rezolvat o problemă unde fereastra aplicației se deschidea uneori fără să arate niciun conținut până când treceai la una dintre file.
+- Am rezolvat o problemă cu câmpul "+" unde uneori nu puteai adăuga o nouă acțiune chiar dacă arăta un efect de hover indicând că poți introduce o acțiune.
+- Am rezolvat un deadlock și mai multe alte probleme mici care apăreau uneori când mutai cursorul mouse-ului în interiorul câmpului "+".
+- Am rezolvat o problemă unde un popover care apare pe fila Butoane când mouse-ul tău nu pare să se potrivească cu setările curente ale butoanelor ar avea uneori tot textul îngroșat.
+- Am actualizat toate mențiunile vechii licențe MIT la noua licență MMF. Noile fișiere create pentru proiect vor conține acum un antet autogenerat care menționează licența MMF.
+- Am făcut ca trecerea la fila Butoane să activeze MMF pentru Derulare. Altfel, nu puteai înregistra gesturi Click și Derulare.
+- Am rezolvat unele probleme unde numele butoanelor nu se afișau corect în Tabelul de Acțiuni în unele situații.
+- Am rezolvat un bug unde secțiunea de trial de pe ecranul Despre ar arăta defect când deschizi aplicația și apoi treci la fila trial după ce trial-ul a expirat.
+- Am rezolvat un bug unde link-ul Activare Licență din secțiunea de trial a filei Despre uneori nu reacționa la click-uri.
+- Am rezolvat o scurgere de memorie când se folosește funcția "Click și Trage" pentru "Spaces & Mission Control".
+- Am activat runtime întărit pe aplicația principală Mac Mouse Fix, îmbunătățind securitatea
+- Multă curățare de cod, restructurare de proiect
+- Mai multe crash-uri rezolvate
+- Mai multe scurgeri de memorie rezolvate
+- Diverse mici ajustări ale textelor din interfață
+- Restructurări ale mai multor sisteme interne au îmbunătățit și robustețea și comportamentul în cazuri de margine
+
+## 8. Cum Poți Ajuta
+
+Poți ajuta împărtășind **ideile**, **problemele** și **feedback-ul** tău!
+
+Cel mai bun loc pentru a împărtăși **ideile** și **problemele** tale este [Asistentul de Feedback](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report).
+Cel mai bun loc pentru a oferi feedback **rapid** nestructurat este [Discuția de Feedback](https://github.com/noah-nuebling/mac-mouse-fix/discussions/366).
+
+Poți accesa aceste locuri și din aplicație pe fila "**ⓘ Despre**".
+
+**Mulțumesc** că ajuți la a face Mac Mouse Fix cel mai bun posibil! 🙌:)

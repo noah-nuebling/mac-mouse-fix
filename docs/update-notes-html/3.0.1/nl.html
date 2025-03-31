@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nl" xml:lang="nl">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp4a4dj8it</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Vertaald door AI</strong></p>
+
+<p>Deze release note is vertaald door de Claude AI. Het kan fouten
+
+bevatten.<br />
+
+Voor de originele Engelse versie, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.1">klik
+
+hier</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.1</strong> brengt verschillende bugfixes en
+
+verbeteringen, samen met een <strong>nieuwe taal</strong>!</p>
+
+<h3 id="vietnamese-is-toegevoegd">Vietnamese is toegevoegd!</h3>
+
+<p>Mac Mouse Fix is nu beschikbaar in 🇻🇳 Vietnamees. Grote dank aan
+
+<span class="citation" data-cites="nghlt">@nghlt</span> <a
+
+href="https://GitHub.com/nghlt">op GitHub</a>!</p>
+
+<h3 id="bugfixes">Bugfixes</h3>
+
+<ul>
+
+<li>Mac Mouse Fix werkt nu correct met <strong>Snel gebruiker
+
+wisselen</strong>!
+
+<ul>
+
+<li>Snel gebruiker wisselen is wanneer je inlogt op een tweede
+
+macOS-account zonder uit te loggen bij het eerste account.</li>
+
+<li>Voor deze update stopte het scrollen met werken na een snelle
+
+gebruikerswissel. Nu zou alles correct moeten werken.</li>
+
+</ul></li>
+
+<li>Een kleine bug opgelost waarbij de layout van het tabblad Knoppen te
+
+breed was na het eerste gebruik van Mac Mouse Fix.</li>
+
+<li>Het ‘+’ veld werkt nu betrouwbaarder bij het snel achter elkaar
+
+toevoegen van meerdere Acties.</li>
+
+<li>Een obscure crash opgelost die werd gemeld door <span
+
+class="citation" data-cites="V-Coba">@V-Coba</span> in Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/735">735</a>.</li>
+
+</ul>
+
+<h3 id="andere-verbeteringen">Andere verbeteringen</h3>
+
+<ul>
+
+<li><strong>Scrollen voelt responsiever</strong> bij gebruik van de
+
+‘Vloeiendheid: Normaal’ instelling.
+
+<ul>
+
+<li>De animatiesnelheid wordt nu sneller naarmate je het scrollwiel
+
+sneller beweegt. Hierdoor voelt het responsiever aan wanneer je snel
+
+scrolt, terwijl het net zo vloeiend blijft wanneer je langzaam
+
+scrolt.</li>
+
+</ul></li>
+
+<li>De <strong>scroll-snelheidsversnelling</strong> is stabieler en
+
+voorspelbaarder gemaakt.</li>
+
+<li>Een mechanisme geïmplementeerd om je <strong>instellingen te
+
+behouden</strong> wanneer je update naar een nieuwe Mac Mouse Fix
+
+versie.
+
+<ul>
+
+<li>Voorheen werden alle instellingen gereset na een update naar een
+
+nieuwe versie als de structuur van de instellingen was veranderd. Nu zal
+
+Mac Mouse Fix proberen de structuur van je instellingen te upgraden en
+
+je voorkeuren te behouden.</li>
+
+<li>Dit werkt momenteel alleen bij updates van 3.0.0 naar 3.0.1. Als je
+
+update vanaf een oudere versie dan 3.0.0, of als je <em>downgradet</em>
+
+van 3.0.1 <em>naar</em> een eerdere versie, worden je instellingen nog
+
+steeds gereset.</li>
+
+</ul></li>
+
+<li>De layout van het tabblad Knoppen past zich nu beter aan aan
+
+verschillende talen.</li>
+
+<li>Verbeteringen aan de <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix#background">GitHub
+
+Readme</a> en andere documenten.</li>
+
+<li>Verbeterde lokalisatiesystemen. De vertaalbestanden worden nu
+
+automatisch opgeschoond en geanalyseerd op mogelijke problemen. Er is
+
+een nieuwe <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/731">Localization
+
+Guide</a> die automatisch gedetecteerde problemen toont samen met andere
+
+nuttige informatie en instructies voor mensen die willen helpen met het
+
+vertalen van Mac Mouse Fix. Afhankelijkheid van de <a
+
+href="https://github.com/FlineDev/BartyCrouch">BartyCrouch</a> tool
+
+verwijderd die eerder werd gebruikt voor een deel van deze
+
+functionaliteit.</li>
+
+<li>Verschillende UI-teksten in het Engels en Duits verbeterd.</li>
+
+<li>Veel opschoning en verbeteringen onder de motorkap.</li>
+
+</ul>
+
+<hr />
+
+<p>Bekijk ook de release notes van <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0&amp;locale=nl"><strong>3.0.0</strong></a>
+
+- de grootste update voor Mac Mouse Fix tot nu toe!</p>
+
+</body>
+
+</html>

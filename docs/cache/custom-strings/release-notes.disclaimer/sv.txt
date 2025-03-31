@@ -1,0 +1,4 @@
+**ℹ️ Översatt av AI**
+
+Detta releasemeddelande har översatts av Claude AI. Det kan innehålla fel.\
+För den engelska originalversionen, [klicka här]({gh_releases_url}).

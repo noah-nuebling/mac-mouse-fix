@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpk39szpur</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Traducido por IA</strong></p>
+
+<p>Esta nota de la versión ha sido traducida por la IA Claude. Puede
+
+contener errores.<br />
+
+Para ver la versión original en inglés, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3">haz
+
+clic aquí</a>.</p>
+
+<hr />
+
+<p><strong>ℹ️ Nota para usuarios de Mac Mouse Fix 2</strong></p>
+
+<p>Con la introducción de Mac Mouse Fix 3, el modelo de precios de la
+
+aplicación ha cambiado:</p>
+
+<ul>
+
+<li><strong>Mac Mouse Fix 2</strong><br />
+
+Permanece 100% gratuito, y planeo seguir dando soporte.<br />
+
+<strong>Omite esta actualización</strong> para seguir usando Mac Mouse
+
+Fix 2. Descarga la última versión de Mac Mouse Fix 2 <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=es">aquí</a>.</li>
+
+<li><strong>Mac Mouse Fix 3</strong><br />
+
+Gratis durante 30 días, cuesta unos pocos dólares para tenerlo en
+
+propiedad.<br />
+
+<strong>¡Actualiza ahora</strong> para obtener Mac Mouse Fix 3!</li>
+
+</ul>
+
+<p>Puedes aprender más sobre los precios y características de Mac Mouse
+
+Fix 3 en el <a href="https://macmousefix.com/">nuevo sitio web</a>.</p>
+
+<p>¡Gracias por usar Mac Mouse Fix! :)</p>
+
+<hr />
+
+<p><strong>ℹ️ Nota para compradores de Mac Mouse Fix 3</strong></p>
+
+<p>Si actualizaste accidentalmente a Mac Mouse Fix 3 sin saber que ya no
+
+es gratuito, me gustaría ofrecerte un <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=es">reembolso</a>.</p>
+
+<p>La última versión de Mac Mouse Fix 2 sigue siendo
+
+<strong>completamente gratuita</strong>, y puedes descargarla <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=es">aquí</a>.</p>
+
+<p>¡Lamento las molestias y espero que todos estén de acuerdo con esta
+
+solución!</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.3</strong> está listo para macOS 15
+
+Sequoia. También corrige algunos problemas de estabilidad y proporciona
+
+varias pequeñas mejoras.</p>
+
+<h3 id="soporte-para-macos-15-sequoia">Soporte para macOS 15
+
+Sequoia</h3>
+
+<p>¡La aplicación ahora funciona correctamente en macOS 15 Sequoia!</p>
+
+<ul>
+
+<li>La mayoría de las animaciones de la interfaz estaban rotas en macOS
+
+15 Sequoia. ¡Ahora todo funciona correctamente de nuevo!</li>
+
+<li>El código fuente ahora se puede compilar en macOS 15 Sequoia. Antes,
+
+había problemas con el compilador Swift que impedían la compilación de
+
+la aplicación.</li>
+
+</ul>
+
+<h3 id="solución-a-los-bloqueos-durante-el-desplazamiento">Solución a
+
+los bloqueos durante el desplazamiento</h3>
+
+<p>Desde Mac Mouse Fix 3.0.2 hubo <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">múltiples
+
+reportes</a> de Mac Mouse Fix desactivándose y reactivándose
+
+periódicamente durante el desplazamiento. Esto fue causado por bloqueos
+
+de la aplicación de fondo ‘Mac Mouse Fix Helper’. Esta actualización
+
+intenta corregir estos bloqueos con los siguientes cambios:</p>
+
+<ul>
+
+<li><p>El mecanismo de desplazamiento intentará recuperarse y seguir
+
+funcionando en lugar de bloquearse cuando encuentre el caso extremo que
+
+parece haber provocado estos bloqueos.</p></li>
+
+<li><p>He cambiado la forma en que se manejan los estados inesperados en
+
+la aplicación en general: En lugar de bloquearse inmediatamente, la
+
+aplicación ahora intentará recuperarse de estados inesperados en muchos
+
+casos.</p>
+
+<ul>
+
+<li>Este cambio contribuye a las correcciones de los bloqueos de
+
+desplazamiento descritos anteriormente. También podría prevenir otros
+
+bloqueos.</li>
+
+</ul></li>
+
+</ul>
+
+<p>Nota al margen: Nunca pude reproducir estos bloqueos en mi máquina y
+
+todavía no estoy seguro de qué los causó, pero según los informes que
+
+recibí, esta actualización debería prevenir cualquier bloqueo. Si aún
+
+experimentas bloqueos durante el desplazamiento o si experimentaste
+
+bloqueos en la versión 3.0.2, sería valioso que compartieras tu
+
+experiencia y datos de diagnóstico en el Issue de GitHub <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">#988</a>.
+
+Esto me ayudaría a entender el problema y mejorar Mac Mouse Fix.
+
+¡Gracias!</p>
+
+<h3 id="solución-a-los-tartamudeos-durante-el-desplazamiento">Solución a
+
+los tartamudeos durante el desplazamiento</h3>
+
+<p>En la versión 3.0.2 hice cambios en la forma en que Mac Mouse Fix
+
+envía eventos de desplazamiento al sistema en un intento de reducir los
+
+tartamudeos probablemente causados por problemas con las APIs de VSync
+
+de Apple.</p>
+
+<p>Sin embargo, después de pruebas más extensas y retroalimentación,
+
+parece que el nuevo mecanismo en 3.0.2 hace que el desplazamiento sea
+
+más suave en algunos escenarios pero más entrecortado en otros.
+
+Especialmente en Firefox parecía ser notablemente peor.<br />
+
+En general, no estaba claro que el nuevo mecanismo realmente mejorara
+
+los tartamudeos en todos los casos. Además, podría haber contribuido a
+
+los bloqueos de desplazamiento descritos anteriormente.</p>
+
+<p>Por eso he desactivado el nuevo mecanismo y he revertido el mecanismo
+
+de VSync para eventos de desplazamiento a como estaba en Mac Mouse Fix
+
+3.0.0 y 3.0.1.</p>
+
+<p>Consulta el Issue de GitHub <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/875">#875</a>
+
+para más información.</p>
+
+<h3 id="reembolso">Reembolso</h3>
+
+<p>Lamento los problemas relacionados con los cambios en el
+
+desplazamiento en las versiones 3.0.1 y 3.0.2. Subestimé enormemente los
+
+problemas que surgirían con eso, y fui lento en abordar estos problemas.
+
+Haré todo lo posible por aprender de esta experiencia y ser más
+
+cuidadoso con tales cambios en el futuro. También me gustaría ofrecer un
+
+reembolso a cualquier persona afectada. Solo haz clic <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=es">aquí</a>
+
+si estás interesado.</p>
+
+<h3 id="mecanismo-de-actualización-más-inteligente">Mecanismo de
+
+actualización más inteligente</h3>
+
+<p>Estos cambios se trajeron de Mac Mouse Fix <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.4&amp;locale=es">2.2.4</a>
+
+y <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.5&amp;locale=es">2.2.5</a>.
+
+Consulta sus notas de lanzamiento para conocer más detalles. Aquí hay un
+
+resumen:</p>
+
+<ul>
+
+<li>Hay un nuevo mecanismo más inteligente que decide qué actualización
+
+mostrar al usuario.</li>
+
+<li>Se cambió del marco de actualización Sparkle 1.26.0 al último
+
+Sparkle <a
+
+href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>.</li>
+
+<li>La ventana que muestra la aplicación para informarte que hay una
+
+nueva versión de Mac Mouse Fix disponible ahora admite JavaScript, lo
+
+que permite un mejor formato de las notas de actualización.</li>
+
+</ul>
+
+<h3 id="otras-mejoras-y-correcciones-de-errores">Otras mejoras y
+
+correcciones de errores</h3>
+
+<ul>
+
+<li>Se corrigió un problema donde el precio de la aplicación y la
+
+información relacionada se mostraban incorrectamente en la pestaña
+
+‘Acerca de’ en algunos casos.</li>
+
+<li>Se corrigió un problema donde el mecanismo para sincronizar el
+
+desplazamiento suave con la tasa de refresco de la pantalla no
+
+funcionaba correctamente al usar múltiples pantallas.</li>
+
+<li>Muchas mejoras y limpiezas menores bajo el capó.</li>
+
+</ul>
+
+<hr />
+
+<p>También consulta el lanzamiento anterior <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.2&amp;locale=es"><strong>3.0.2</strong></a>.</p>
+
+</body>
+
+</html>

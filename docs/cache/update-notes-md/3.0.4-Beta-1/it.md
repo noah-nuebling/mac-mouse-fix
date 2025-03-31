@@ -1,0 +1,45 @@
+Mac Mouse Fix **3.0.4 Beta 1** migliora privacy, efficienza e affidabilità.\
+Introduce un nuovo sistema di licenza offline e risolve diversi bug importanti.
+
+### Privacy ed Efficienza Migliorate
+
+- Introduce un nuovo sistema di validazione delle licenze offline che riduce al minimo le connessioni internet.
+- L'app ora si connette a internet solo quando assolutamente necessario, proteggendo la tua privacy e riducendo l'utilizzo delle risorse.
+- L'app funziona completamente offline durante l'uso normale quando è attivata la licenza.
+
+<details>
+<summary><b>Informazioni Dettagliate sulla Privacy</b></summary>
+Le versioni precedenti convalidavano le licenze online ad ogni avvio, potenzialmente permettendo la memorizzazione dei log di connessione da parte di server di terze parti (GitHub e Gumroad). Il nuovo sistema elimina le connessioni non necessarie – dopo l'attivazione iniziale della licenza, si connette a internet solo se i dati della licenza locale sono corrotti.
+<br><br>
+Anche se non ho mai registrato personalmente alcun comportamento degli utenti, il sistema precedente teoricamente permetteva ai server di terze parti di registrare indirizzi IP e tempi di connessione. Gumroad poteva anche registrare la tua chiave di licenza e potenzialmente correlarla a qualsiasi informazione personale registrata su di te al momento dell'acquisto di Mac Mouse Fix.
+<br><br>
+Non avevo considerato questi sottili problemi di privacy quando ho costruito il sistema di licenze originale, ma ora Mac Mouse Fix è il più privato e libero da internet possibile!
+<br><br>
+Vedi anche <a href=https://gumroad.com/privacy>l'informativa sulla privacy di Gumroad</a> e questo mio <a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>commento su GitHub</a>.
+
+</details>
+
+### Correzioni di Bug
+
+- Risolto un bug dove macOS a volte si bloccava quando si usava 'Click and Drag' per 'Spaces & Mission Control'.
+- Risolto un bug dove le scorciatoie da tastiera nelle Impostazioni di Sistema venivano talvolta eliminate quando si usava un'azione 'Click' definita in Mac Mouse Fix come 'Mission Control'.
+- Risolto [un bug](https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aopen%20label%3A%22%27Free%20days%20are%20over%27%20bug%22) dove l'app a volte smetteva di funzionare e mostrava una notifica che i 'Giorni gratuiti sono terminati' agli utenti che avevano già acquistato l'app.
+    - Se hai riscontrato questo bug, mi scuso sinceramente per l'inconveniente. Puoi richiedere un [rimborso qui](https://redirect.macmousefix.com/?message=&target=mmf-apply-for-refund).
+
+### Miglioramenti Tecnici
+
+- Implementato un nuovo sistema 'MFDataClass' che permette una modellazione dei dati più pulita e file di configurazione leggibili dall'uomo.
+- Costruito il supporto per aggiungere piattaforme di pagamento oltre a Gumroad. Quindi in futuro, potrebbero esserci checkout localizzati, e l'app potrebbe essere venduta in diversi paesi!
+
+### Supporto (Non Ufficiale) Rimosso per macOS 10.14 Mojave
+
+Mac Mouse Fix 3 supporta ufficialmente macOS 11 Big Sur e versioni successive. Tuttavia, per gli utenti disposti ad accettare alcuni glitch e problemi grafici, Mac Mouse Fix 3.0.3 e versioni precedenti potevano ancora essere utilizzate su macOS 10.14.4 Mojave.
+
+Mac Mouse Fix 3.0.4 rimuove questo supporto e **ora richiede macOS 10.15 Catalina**.\
+Mi scuso per qualsiasi inconveniente causato da questo cambiamento. Questa modifica mi ha permesso di implementare il sistema di licenze migliorato utilizzando funzionalità Swift moderne. Gli utenti Mojave possono continuare a utilizzare Mac Mouse Fix [3.0.3](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3) o l'[ultima versione di Mac Mouse Fix 2](https://redirect.macmousefix.com/?target=mmf2-latest). Spero che questa sia una buona soluzione per tutti.
+
+*Modificato con l'eccellente assistenza di Claude.*
+
+---
+
+Dai anche un'occhiata alla versione precedente [**3.0.3**](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3).

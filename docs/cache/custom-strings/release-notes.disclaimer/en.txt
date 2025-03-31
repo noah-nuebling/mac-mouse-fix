@@ -1,4 +1,4 @@
 **ℹ️ Translated by AI**
 
-This release note has been translated by the Claude AI. It may not be entirely accurate.\
+This release note has been translated by the Claude AI. It may contain errors.\
 For the original English version, [click here]({gh_releases_url}).

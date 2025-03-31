@@ -1,0 +1,4 @@
+**ℹ️ Tradus de AI**
+
+Această notă de lansare a fost tradusă de AI-ul Claude. Poate conține erori.\
+Pentru versiunea originală în engleză, [click aici]({gh_releases_url}).

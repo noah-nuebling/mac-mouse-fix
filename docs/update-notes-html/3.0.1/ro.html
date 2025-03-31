@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ro" xml:lang="ro">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpwzhenyik</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Tradus de AI</strong></p>
+
+<p>Această notă de lansare a fost tradusă de AI-ul Claude. Poate conține
+
+erori.<br />
+
+Pentru versiunea originală în engleză, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.1">click
+
+aici</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.1</strong> aduce mai multe remedieri de
+
+erori și îmbunătățiri, împreună cu o <strong>nouă limbă</strong>!</p>
+
+<h3 id="s-a-adăugat-limba-vietnameză">S-a adăugat limba vietnameză!</h3>
+
+<p>Mac Mouse Fix este acum disponibil în 🇻🇳 vietnameză. Mulțumiri
+
+speciale lui <span class="citation" data-cites="nghlt">@nghlt</span> <a
+
+href="https://GitHub.com/nghlt">de pe GitHub</a>!</p>
+
+<h3 id="remedieri-de-erori">Remedieri de erori</h3>
+
+<ul>
+
+<li>Mac Mouse Fix funcționează acum corect cu <strong>Comutarea Rapidă
+
+între Utilizatori</strong>!
+
+<ul>
+
+<li>Comutarea Rapidă între Utilizatori este când te conectezi la un al
+
+doilea cont macOS fără a te deconecta din primul cont.</li>
+
+<li>Înainte de această actualizare, derularea nu mai funcționa după o
+
+comutare rapidă între utilizatori. Acum totul ar trebui să funcționeze
+
+corect.</li>
+
+</ul></li>
+
+<li>S-a remediat un mic bug unde aspectul filei Butoane era prea lat
+
+după prima pornire a Mac Mouse Fix.</li>
+
+<li>Câmpul ‘+’ funcționează acum mai fiabil când adaugi mai multe
+
+Acțiuni în succesiune rapidă.</li>
+
+<li>S-a remediat o eroare obscură raportată de <span class="citation"
+
+data-cites="V-Coba">@V-Coba</span> în Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/735">735</a>.</li>
+
+</ul>
+
+<h3 id="alte-îmbunătățiri">Alte îmbunătățiri</h3>
+
+<ul>
+
+<li><strong>Derularea se simte mai receptivă</strong> când folosești
+
+setarea ‘Fluiditate: Normală’.
+
+<ul>
+
+<li>Viteza animației devine acum mai rapidă pe măsură ce miști rotița
+
+mai repede. Astfel, se simte mai receptiv când derulezi rapid în timp ce
+
+rămâne la fel de fluid când derulezi încet.</li>
+
+</ul></li>
+
+<li><strong>Accelerarea vitezei de derulare</strong> este acum mai
+
+stabilă și previzibilă.</li>
+
+<li>S-a implementat un mecanism pentru a <strong>păstra
+
+setările</strong> când actualizezi la o nouă versiune Mac Mouse Fix.
+
+<ul>
+
+<li>Înainte, Mac Mouse Fix reseta toate setările după actualizarea la o
+
+nouă versiune, dacă structura setărilor se schimba. Acum, Mac Mouse Fix
+
+va încerca să actualizeze structura setărilor tale și să-ți păstreze
+
+preferințele.</li>
+
+<li>Deocamdată, acest lucru funcționează doar la actualizarea de la
+
+3.0.0 la 3.0.1. Dacă actualizezi de la o versiune mai veche decât 3.0.0,
+
+sau dacă <em>retrogradezi</em> de la 3.0.1 <em>la</em> o versiune
+
+anterioară, setările tale vor fi în continuare resetate.</li>
+
+</ul></li>
+
+<li>Aspectul filei Butoane se adaptează acum mai bine în lățime pentru
+
+diferite limbi.</li>
+
+<li>Îmbunătățiri aduse <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix#background">GitHub
+
+Readme</a> și altor documente.</li>
+
+<li>Sisteme de localizare îmbunătățite. Fișierele de traducere sunt acum
+
+curățate și analizate automat pentru potențiale probleme. Există un nou
+
+<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/731">Ghid
+
+de Localizare</a> care prezintă orice probleme detectate automat
+
+împreună cu alte informații utile și instrucțiuni pentru persoanele care
+
+vor să ajute la traducerea Mac Mouse Fix. S-a eliminat dependența de
+
+instrumentul <a
+
+href="https://github.com/FlineDev/BartyCrouch">BartyCrouch</a> care era
+
+folosit anterior pentru a obține o parte din această
+
+funcționalitate.</li>
+
+<li>S-au îmbunătățit mai multe texte din interfață în engleză și
+
+germană.</li>
+
+<li>Multe îmbunătățiri și curățări în cod.</li>
+
+</ul>
+
+<hr />
+
+<p>Vezi și notele de lansare pentru <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0&amp;locale=ro"><strong>3.0.0</strong></a>
+
+- cea mai mare actualizare a Mac Mouse Fix de până acum!</p>
+
+</body>
+
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cs" xml:lang="cs">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpwwpvm5jv</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Přeloženo umělou inteligencí</strong></p>
+
+<p>Tato poznámka k vydání byla přeložena umělou inteligencí Claude. Může
+
+obsahovat chyby.<br />
+
+Pro původní anglickou verzi <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.4-Beta-1">klikněte
+
+zde</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.4 Beta 1</strong> vylepšuje soukromí,
+
+efektivitu a spolehlivost.<br />
+
+Zavádí nový offline licenční systém a opravuje několik důležitých
+
+chyb.</p>
+
+<h3 id="vylepšené-soukromí-a-efektivita">Vylepšené soukromí a
+
+efektivita</h3>
+
+<ul>
+
+<li>Zavádí nový offline systém ověřování licencí, který minimalizuje
+
+připojení k internetu.</li>
+
+<li>Aplikace se nyní připojuje k internetu pouze v případě absolutní
+
+nutnosti, chrání vaše soukromí a snižuje využití zdrojů.</li>
+
+<li>Při běžném používání funguje aplikace s licencí zcela offline.</li>
+
+</ul>
+
+<details>
+
+<summary>
+
+<b>Podrobné informace o ochraně soukromí</b>
+
+</summary>
+
+<p>Předchozí verze ověřovaly licence online při každém spuštění, což
+
+potenciálně umožňovalo ukládání protokolů připojení na serverech třetích
+
+stran (GitHub a Gumroad). Nový systém eliminuje zbytečná připojení – po
+
+počáteční aktivaci licence se připojuje k internetu pouze v případě, že
+
+jsou místní licenční data poškozena. <br><br> I když jsem osobně nikdy
+
+nezaznamenával chování uživatelů, předchozí systém teoreticky umožňoval
+
+serverům třetích stran zaznamenávat IP adresy a časy připojení. Gumroad
+
+mohl také zaznamenávat váš licenční klíč a potenciálně jej propojit s
+
+osobními údaji, které o vás zaznamenal při nákupu Mac Mouse Fix.
+
+<br><br> Při vytváření původního licenčního systému jsem tyto jemné
+
+problémy se soukromím nebral v úvahu, ale nyní je Mac Mouse Fix
+
+maximálně soukromý a nezávislý na internetu! <br><br> Podívejte se také
+
+na <a href=https://gumroad.com/privacy>zásady ochrany soukromí
+
+Gumroad</a> a můj
+
+<a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>komentář
+
+na GitHubu</a>.</p>
+
+</details>
+
+<h3 id="opravy-chyb">Opravy chyb</h3>
+
+<ul>
+
+<li>Opravena chyba, kdy macOS někdy zamrzl při používání funkce
+
+‘Kliknutí a přetažení’ pro ‘Spaces &amp; Mission Control’.</li>
+
+<li>Opravena chyba, kdy se klávesové zkratky v Systémových nastaveních
+
+někdy smazaly při použití akce ‘Kliknutí’ definované v Mac Mouse Fix,
+
+jako například ‘Mission Control’.</li>
+
+<li>Opravena <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aopen%20label%3A%22%27Free%20days%20are%20over%27%20bug%22">chyba</a>,
+
+kdy aplikace někdy přestala fungovat a zobrazovala oznámení, že
+
+‘Zkušební dny vypršely’ uživatelům, kteří si aplikaci již zakoupili.
+
+<ul>
+
+<li>Pokud jste se s touto chybou setkali, upřímně se omlouvám za
+
+nepříjemnosti. Můžete požádat o <a
+
+href="https://redirect.macmousefix.com/?message=&amp;target=mmf-apply-for-refund&amp;locale=cs">vrácení
+
+peněz zde</a>.</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="technická-vylepšení">Technická vylepšení</h3>
+
+<ul>
+
+<li>Implementován nový systém ‘MFDataClass’ umožňující čistější
+
+modelování dat a konfiguračních souborů čitelných pro člověka.</li>
+
+<li>Vybudována podpora pro přidání dalších platebních platforem kromě
+
+Gumroad. Takže v budoucnu by mohly být k dispozici lokalizované platby a
+
+aplikace by se mohla prodávat do různých zemí!</li>
+
+</ul>
+
+<h3 id="ukončena-neoficiální-podpora-pro-macos-10.14-mojave">Ukončena
+
+(neoficiální) podpora pro macOS 10.14 Mojave</h3>
+
+<p>Mac Mouse Fix 3 oficiálně podporuje macOS 11 Big Sur a novější.
+
+Nicméně pro uživatele, kteří byli ochotni přijmout některé chyby a
+
+grafické problémy, bylo možné Mac Mouse Fix 3.0.3 a starší verze stále
+
+používat na macOS 10.14.4 Mojave.</p>
+
+<p>Mac Mouse Fix 3.0.4 tuto podporu ukončuje a <strong>nyní vyžaduje
+
+macOS 10.15 Catalina</strong>.<br />
+
+Omlouvám se za případné nepříjemnosti způsobené touto změnou. Tato změna
+
+mi umožnila implementovat vylepšený licenční systém pomocí moderních
+
+funkcí Swift. Uživatelé Mojave mohou nadále používat Mac Mouse Fix <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.3&amp;locale=cs">3.0.3</a>
+
+nebo <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=cs">nejnovější
+
+verzi Mac Mouse Fix 2</a>. Doufám, že je to pro všechny dobré
+
+řešení.</p>
+
+<p><em>Upraveno s vynikající pomocí Claude.</em></p>
+
+<hr />
+
+<p>Podívejte se také na předchozí verzi <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.3&amp;locale=cs"><strong>3.0.3</strong></a>.</p>
+
+</body>
+
+</html>

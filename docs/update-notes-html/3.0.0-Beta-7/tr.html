@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="tr" xml:lang="tr">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpz3u_x25m</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI tarafından çevrildi</strong></p>
+
+<p>Bu sürüm notu Claude AI tarafından çevrilmiştir. Hatalar
+
+içerebilir.<br />
+
+İngilizce orijinal versiyonu için <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-7">buraya
+
+tıklayın</a>.</p>
+
+<hr />
+
+<p>Ayrıca <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-6&amp;locale=tr">3.0.0
+
+Beta 6</a>’da tanıtılan <strong>harika geliştirmelere</strong> de göz
+
+atın!</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 7</strong> birkaç küçük iyileştirme ve hata
+
+düzeltmesi getiriyor.</p>
+
+<p>İşte tüm yenilikler:</p>
+
+<p><strong>İyileştirmeler</strong></p>
+
+<ul>
+
+<li><strong>Korece çeviriler</strong> eklendi. <span class="citation"
+
+data-cites="jeongtae">@jeongtae</span>’ye çok teşekkürler! (Kendisini <a
+
+href="https://github.com/jeongtae">GitHub</a>’da bulabilirsiniz)</li>
+
+<li>‘Yumuşaklık: Yüksek’ seçeneğiyle <strong>kaydırma</strong> işlemini,
+
+kaydırma tekerleğini hareket ettirirken ani hız değişimleri yerine hızı
+
+kademeli olarak değiştirerek <strong>daha da pürüzsüz</strong> hale
+
+getirdik. Bu, kaydırmayı gözlerinizle takip etmeyi biraz daha kolay ve
+
+pürüzsüz hale getirirken tepkisellikten ödün vermeyecek. ‘Yumuşaklık:
+
+Yüksek’ ile kaydırma artık yaklaşık %30 daha fazla CPU kullanıyor, benim
+
+bilgisayarımda sürekli kaydırma sırasında CPU kullanımı %1.2’den %1.6’ya
+
+çıktı. Yani kaydırma hala oldukça verimli ve umarım bu kimse için fark
+
+yaratmaz. Bu özelliğe ilham veren ve özelliği uygulamama yardımcı olan
+
+’Scroll Monitor’ü için <a href="https://mos.caldis.me/">MOS</a>’a çok
+
+teşekkürler.</li>
+
+<li>Mac Mouse Fix artık <strong>tüm kaynaklardan gelen düğme girişlerini
+
+işliyor</strong>. Daha önce, Mac Mouse Fix yalnızca tanıdığı farelerden
+
+gelen girişleri işliyordu. Bunun Hackintosh kullanırken olduğu gibi bazı
+
+uç durumlarda belirli farelerle uyumluluğa yardımcı olabileceğini
+
+düşünüyorum, ancak aynı zamanda Mac Mouse Fix’in diğer uygulamalardan
+
+yapay olarak üretilen düğme girişlerini algılamasına neden olacak ve bu
+
+da başka uç durumlarda sorunlara yol açabilir. Bu sizin için herhangi
+
+bir soruna yol açarsa bana bildirin, gelecek güncellemelerde bu konuyu
+
+ele alacağım.</li>
+
+<li>‘Masaüstü ve Launchpad’ için ‘Tıkla ve Kaydır’ ve ‘Masaüstü Alanları
+
+Arasında Hareket’ için ‘Tıkla ve Kaydır’ hareketlerinin hissiyatı ve
+
+inceliği geliştirildi.</li>
+
+<li>Artık <strong>bildirimlerin gösterilme süresini</strong> hesaplarken
+
+bir dilin bilgi yoğunluğu dikkate alınıyor. Daha önce, Çince veya Korece
+
+gibi yüksek bilgi yoğunluğuna sahip dillerde bildirimler çok kısa süre
+
+görünür kalıyordu.</li>
+
+<li><strong>Masaüstü Alanları</strong> arasında hareket etmek,
+
+<strong>Mission Control</strong>’ü açmak veya <strong>Uygulama
+
+Exposé</strong>’sini açmak için <strong>farklı hareketler</strong>
+
+etkinleştirildi. Beta 6’da, bu eylemlere sadece ‘Tıkla ve Sürükle’
+
+hareketiyle erişilebilmesini sağlamıştım - insanların bu eylemlere başka
+
+yollarla erişebilmeyi gerçekten önemseyip önemsemediklerini görmek için
+
+bir deney olarak. Bazılarının önemsediği anlaşılıyor, bu yüzden şimdi bu
+
+eylemlere basit bir düğme ‘Tıklaması’ veya ‘Tıkla ve Kaydır’ ile erişmek
+
+tekrar mümkün.</li>
+
+<li>‘Tıkla ve Kaydır’ hareketiyle <strong>Döndürme</strong> yapılması
+
+mümkün hale getirildi.</li>
+
+<li><strong>Trackpad Simülasyonu</strong> seçeneğinin bazı senaryolarda
+
+çalışma şekli <strong>iyileştirildi</strong>. Örneğin Mail’de bir mesajı
+
+silmek için yatay kaydırma yaparken, mesajın hareket ettiği yön artık
+
+tersine çevrildi, bu da umarım çoğu kişi için daha doğal ve tutarlı
+
+hissedilir.</li>
+
+<li><strong>Birincil Tıklama</strong> veya <strong>İkincil
+
+Tıklama</strong> olarak <strong>yeniden eşleme</strong> özelliği
+
+eklendi. Bunu en sevdiğim farenin sağ tuşu bozulduğu için ekledim. Bu
+
+seçenekler varsayılan olarak gizlidir. Bir eylem seçerken Option tuşunu
+
+basılı tutarak bunları görebilirsiniz.
+
+<ul>
+
+<li>Şu anda Çince ve Korece çevirileri eksik, bu özellikler için çeviri
+
+katkısında bulunmak isterseniz çok memnun oluruz!</li>
+
+</ul></li>
+
+</ul>
+
+<p><strong>Hata Düzeltmeleri</strong></p>
+
+<ul>
+
+<li>‘Mission Control ve Masaüstü Alanları’ için <strong>‘Tıkla ve
+
+Sürükle’ yönünün</strong> Sistem Ayarları’nda ‘Doğal kaydırma’
+
+seçeneğini hiç değiştirmemiş kişiler için <strong>ters</strong> olduğu
+
+bir hata düzeltildi. Artık Mac Mouse Fix’teki ‘Tıkla ve Sürükle’
+
+hareketlerinin yönü her zaman Trackpad veya Magic Mouse’unuzdaki
+
+hareketlerin yönüyle eşleşmeli. ‘Tıkla ve Sürükle’ yönünü Sistem
+
+Ayarları’nı takip etmek yerine ayrı bir seçenekle tersine çevirmek
+
+istiyorsanız bana bildirin.</li>
+
+<li>Bazı kullanıcılar için <strong>ücretsiz günlerin</strong> çok hızlı
+
+<strong>sayıldığı</strong> bir hata düzeltildi. Bu durumdan
+
+etkilendiyseniz bana bildirin, ne yapabileceğime bakacağım.</li>
+
+<li>macOS Sonoma’da sekme çubuğunun düzgün görüntülenmemesi sorunu
+
+düzeltildi.</li>
+
+<li>Launchpad’i açmak için ‘Tıkla ve Kaydır’ kullanırken ‘macOS’
+
+kaydırma hızını kullanmanın neden olduğu takılmalar düzeltildi.</li>
+
+<li>‘Mac Mouse Fix Helper’ uygulamasının (Mac Mouse Fix etkinken arka
+
+planda çalışan) bir klavye kısayolunu kaydederken bazen çökmesi sorunu
+
+düzeltildi.</li>
+
+<li>Mac Mouse Fix’in <a
+
+href="https://github.com/artginzburg/MiddleClick-Sonoma">MiddleClick-Sonoma</a>
+
+tarafından üretilen yapay olayları algılamaya çalışırken çökmesine neden
+
+olan bir hata düzeltildi.</li>
+
+<li>‘Varsayılanlara Geri Dön…’ iletişim kutusunda bazı farelerin adının
+
+üreticiyi iki kez içerdiği bir sorun düzeltildi.</li>
+
+<li>Bilgisayar yavaşken ‘Mission Control ve Masaüstü Alanları’ için
+
+’Tıkla ve Sürükle’nin takılı kalma olasılığı azaltıldı.</li>
+
+<li>Arayüz metinlerinde ‘Force Touch’ yerine ‘Force click’ kullanımı
+
+düzeltildi.</li>
+
+<li>Belirli yapılandırmalarda, ‘Tıkla ve Kaydır’ ile Launchpad’i açma
+
+veya Masaüstünü gösterme işleminde, geçiş animasyonu devam ederken
+
+düğmeyi bırakırsanız çalışmama sorunu düzeltildi.</li>
+
+</ul>
+
+<p><strong>Diğer</strong></p>
+
+<ul>
+
+<li>Çeşitli arka plan iyileştirmeleri, kararlılık iyileştirmeleri, arka
+
+plan temizliği ve daha fazlası.</li>
+
+</ul>
+
+<h2 id="nasıl-yardımcı-olabilirsiniz">Nasıl Yardımcı Olabilirsiniz</h2>
+
+<p><strong>Fikirlerinizi</strong>, <strong>sorunlarınızı</strong> ve
+
+<strong>geri bildirimlerinizi</strong> paylaşarak yardımcı
+
+olabilirsiniz!</p>
+
+<p><strong>Fikirlerinizi</strong> ve <strong>sorunlarınızı</strong>
+
+paylaşmak için en iyi yer <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Geri
+
+Bildirim Asistanı</a>. <strong>Hızlı</strong> yapılandırılmamış geri
+
+bildirim vermek için en iyi yer <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Geri
+
+Bildirim Tartışması</a>.</p>
+
+<p>Bu yerlere uygulamanın içinden ‘<strong>ⓘ Hakkında</strong>’
+
+sekmesinden de erişebilirsiniz.</p>
+
+<p>Mac Mouse Fix’i daha iyi hale getirmeye yardımcı olduğunuz için
+
+<strong>teşekkürler</strong>! 😎:)</p>
+
+</body>
+
+</html>

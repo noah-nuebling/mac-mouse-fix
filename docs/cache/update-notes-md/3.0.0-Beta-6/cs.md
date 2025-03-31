@@ -1,0 +1,126 @@
+Podívejte se také na **skvělé změny** představené v [3.0.0 Beta 5](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-5)!
+
+
+---
+
+**3.0.0 Beta 6** přináší hluboké optimalizace a vylepšení, přepracování nastavení scrollování, čínské překlady a další!
+
+Zde jsou všechny novinky:
+
+## 1. Hluboké Optimalizace
+
+Pro tuto Betu jsem věnoval hodně práce získání maximálního výkonu z Mac Mouse Fix. A nyní s radostí oznamuji, že když v Betě 6 kliknete tlačítkem myši, je to **2x** rychlejší oproti předchozí betě! A scrollování je dokonce **4x** rychlejší!
+
+S Betou 6 bude MMF také chytře vypínat své části, aby co nejvíce šetřil CPU a baterii.
+
+Například když právě používáte myš se 3 tlačítky, ale máte nastavené akce pouze pro tlačítka, která na vaší myši nejsou, jako tlačítka 4 a 5, Mac Mouse Fix úplně přestane naslouchat vstupům z tlačítek vaší myši. To znamená 0% využití CPU při klikání tlačítkem myši! Nebo když nastavení scrollování v MMF odpovídá systému, Mac Mouse Fix úplně přestane naslouchat vstupům z kolečka myši. To znamená 0% využití CPU při scrollování! Ale pokud si nastavíte funkci Command (⌘)-Scroll pro přiblížení, Mac Mouse Fix začne naslouchat vstupům z kolečka myši - ale pouze když držíte klávesu Command (⌘). A tak dále.
+Je to tedy opravdu chytré a využívá CPU pouze když musí!
+
+To znamená, že MMF je nyní nejen nejvýkonnější, nejsnáze použitelný a nejlépe vyladěný ovladač myši pro Mac, ale také jeden z nejoptimalizovanějších a nejefektivnějších, ne-li ten nejlepší!
+
+## 2. Zmenšená Velikost Aplikace
+
+S 16 MB je Beta 6 přibližně 2x menší než Beta 5!
+
+Je to vedlejší efekt ukončení podpory pro starší verze macOS.
+
+## 3. Ukončení Podpory pro Starší Verze macOS
+
+Snažil jsem se, aby MMF 3 fungovalo správně na verzích macOS před macOS 11 Big Sur. Ale množství práce potřebné k dosažení vyladěného dojmu se ukázalo jako ohromující, takže jsem se musel vzdát.
+
+Do budoucna bude oficiálně podporovanou nejstarší verzí macOS 11 Big Sur.
+
+Aplikace se stále otevře na starších verzích, ale budou tam vizuální a možná i jiné problémy. Aplikace se již neotevře na verzích macOS před 10.14.4. To nám umožňuje zmenšit velikost aplikace 2x, protože 10.14.4 je nejstarší verze macOS dodávaná s moderními knihovnami Swift (viz "Swift ABI Stability"), což znamená, že tyto knihovny Swift už nemusí být obsaženy v aplikaci.
+
+## 4. Vylepšení Scrollování
+
+Beta 6 přináší mnoho vylepšení konfigurace a UI nových systémů scrollování představených v MMF 3.
+
+### UI
+
+- Výrazně zjednodušené a zkrácené texty UI na záložce Scroll. Většina zmínek slova "Scroll" byla odstraněna, protože vyplývá z kontextu.
+- Přepracované nastavení plynulosti scrollování pro větší přehlednost a umožnění dalších možností. Nyní můžete vybrat mezi "Plynulostí" "Vypnuto", "Běžná" nebo "Vysoká", nahrazující starý přepínač "s Setrvačností". Myslím, že je to mnohem jasnější a udělalo to v UI místo pro novou možnost "Simulace Trackpadu".
+- Vypnutí nové možnosti "Simulace Trackpadu" zakáže gumový efekt při scrollování, také zabrání scrollování mezi stránkami v Safari a dalších aplikacích a více. Mnoho lidí to obtěžovalo, zejména ty s volně se točícími kolečky myši, jako mají některé myši Logitech jako MX Master, ale jiným se to líbí, tak jsem se rozhodl udělat z toho volitelnou možnost. Doufám, že prezentace funkce je jasná. Pokud máte nějaké návrhy, dejte mi vědět.
+- Změněna možnost "Přirozený Směr Scrollování" na "Obrátit Směr Scrollování". To znamená, že nastavení nyní obrací systémový směr scrollování a není již nezávislé na systémovém směru scrollování. I když je to pravděpodobně mírně horší uživatelská zkušenost, tento nový způsob nám umožňuje implementovat některé optimalizace a dělá pro uživatele transparentnější, jak úplně vypnout Mac Mouse Fix pro scrollování.
+- Vylepšený způsob, jakým nastavení scrollování interagují s modifikovaným scrollováním v mnoha různých hraničních případech. Např. možnost "Přesnost" se již nebude aplikovat na "Kliknutí a Scrollování" pro akci "Plocha & Launchpad", protože je zde spíše překážkou než pomocí.
+- Vylepšená rychlost scrollování při používání "Kliknutí a Scrollování" pro "Plocha & Launchpad" nebo "Přiblížit nebo Oddálit" a další funkce.
+- Odstraněn nefunkční odkaz na systémová nastavení rychlosti scrollování na záložce scroll, který byl přítomen na verzích macOS před macOS 13.0 Ventura. Nemohl jsem najít způsob, jak odkaz zprovoznit a není to příliš důležité.
+
+### Pocit při Scrollování
+
+- Vylepšená animační křivka pro "Běžnou Plynulost" (dříve dostupná vypnutím "s Setrvačností"). To dělá věci plynulejší a responzivnější.
+- Vylepšený pocit ze všech nastavení rychlosti scrollování. "Střední" rychlost a "Rychlá" rychlost jsou rychlejší. Je větší rozdíl mezi "Nízkou", "Střední" a "Vysokou" rychlostí. Zrychlení při rychlejším pohybu kolečkem myši se cítí přirozenější a pohodlnější při použití možnosti "Přesnost".
+- Způsob, jakým se rychlost scrollování zvyšuje při pokračování scrollování v jednom směru, se bude cítit přirozenější a postupnější. Používám nové matematické křivky pro modelování zrychlení. Nárůst rychlosti bude také těžší náhodně spustit.
+- Již nezvyšuji rychlost scrollování při pokračování scrollování v jednom směru při používání "macOS" rychlosti scrollování.
+- Omezena maximální doba animace scrollování. Pokud by animace scrollování přirozeně trvala déle, bude zrychlena, aby zůstala pod maximální dobou. Díky tomu se při scrollování do okraje stránky s volně se točícím kolečkem obsah stránky neposune mimo obrazovku na tak dlouho. Toto by nemělo ovlivnit normální scrollování s běžným kolečkem.
+- Vylepšené některé interakce kolem gumového efektu při scrollování do okraje stránky v Safari a dalších aplikacích.
+- Opraven problém, kde "Kliknutí a Scrollování" a další funkce související se scrollováním nefungovaly správně po upgradu z velmi staré verze preference pane Mac Mouse Fix.
+- Opraven problém, kde jednopixelové scrolly byly posílány se zpožděním při používání "macOS" rychlosti scrollování společně s plynulým scrollováním.
+- Opraven bug, kde scrollování bylo stále velmi rychlé po uvolnění modifikátoru Rychlého Scrollování. Další vylepšení kolem toho, jak je rychlost scrollování přenášena z předchozích tahů scrollování.
+- Vylepšen způsob, jakým se rychlost scrollování zvyšuje s většími velikostmi displeje.
+
+## 5. Notarizace
+
+Od verze 3.0.0 Beta 6 bude Mac Mouse Fix "Notarizován". To znamená žádné další zprávy o tom, že Mac Mouse Fix je potenciálně "Škodlivý Software" při prvním otevření aplikace.
+
+Notarizace vaší aplikace stojí $100 ročně. Vždy jsem byl proti tomu, protože to působilo nepřátelsky vůči svobodnému a open source softwaru jako Mac Mouse Fix, a také to působilo jako nebezpečný krok směrem k tomu, aby Apple kontroloval a uzamykal Mac jako to dělají s iOS. Ale nedostatek Notarizace vedl k docela vážným problémům, včetně [několika situací](https://github.com/noah-nuebling/mac-mouse-fix/discussions/114), kdy nikdo nemohl aplikaci používat, dokud jsem nevydal novou verzi. Vzhledem k tomu, že Mac Mouse Fix bude nyní zpoplatněn, myslel jsem, že je konečně vhodné aplikaci Notarizovat pro snazší a stabilnější uživatelskou zkušenost.
+
+## 6. Čínské Překlady
+
+Mac Mouse Fix je nyní dostupný v čínštině!
+Konkrétně je dostupný v:
+
+- Čínština, Tradiční
+- Čínština, Zjednodušená
+- Čínština (Hong Kong)
+
+Obrovské díky @groverlynn za poskytnutí všech těchto překladů a také za jejich aktualizaci během bet a komunikaci se mnou. Podívejte se na jeho pull request zde: https://github.com/noah-nuebling/mac-mouse-fix/pull/395.
+
+## 7. Vše Ostatní
+
+Kromě výše uvedených změn Beta 6 také obsahuje mnoho menších vylepšení.
+
+- Odstraněno několik možností z Akcí "Kliknutí", "Kliknutí a Podržení" a "Kliknutí a Scrollování", protože jsem si myslel, že jsou redundantní, protože stejné funkcionality lze dosáhnout jinak a protože to zjednodušuje menu. Tyto možnosti vrátím, pokud si lidé budou stěžovat. Takže pokud vám tyto možnosti chybí - prosím stěžujte si.
+- Směr Kliknutí a Tažení bude nyní odpovídat směru gesta trackpadu i když je "Přirozené scrollování" vypnuto v Systémových nastaveních > Trackpad. Dříve se Kliknutí a Tažení vždy chovalo jako gesto na trackpadu s *zapnutým* "Přirozeným scrollováním".
+- Opraven problém, kde kurzory zmizely a pak se objevily někde jinde při používání Akce "Kliknutí a Tažení" během nahrávání obrazovky nebo při používání softwaru DisplayLink.
+- Opraveno centrování "+" v "+"-Poli na záložce Tlačítka
+- Několik vizuálních vylepšení záložky tlačítka. Barevná paleta "+"-Pole a Tabulky Akcí byla přepracována, aby vypadala správně při používání macOS možnosti "Povolit tónování tapety v oknech". Okraje Tabulky Akcí mají nyní průhlednou barvu, která vypadá dynamičtěji a přizpůsobuje se svému okolí.
+- Upraveno tak, že když přidáte hodně akcí do tabulky akcí a okno Mac Mouse Fix roste, vyroste přesně tak velké jako obrazovka (nebo jako obrazovka minus dock, pokud nemáte povolené skrývání docku) a pak se zastaví. Když přidáte ještě více akcí, tabulka akcí začne scrollovat.
+- Tato Beta nyní podporuje nový checkout, kde můžete koupit licenci v amerických dolarech, jak je inzerováno. Dříve jste mohli koupit licenci pouze v eurech. Staré euro licence budou samozřejmě stále podporovány.
+- Opraven problém, kde setrvačné scrollování někdy nebylo spuštěno při používání funkce "Scrollování & Navigace".
+- Když se okno Mac Mouse Fix samo změní velikost během přepínání záložek, nyní se přemístí tak, aby se nepřekrývalo s Dockem
+- Opraven záblesk na některých prvcích UI při přepínání ze záložky Tlačítka na jinou záložku
+- Vylepšen vzhled animace, kterou "+"-Pole přehrává po zaznamenání vstupu. Zejména na verzích macOS před Venturou, kde by stín "+"-Pole vypadal během animace chybně.
+- Zakázány notifikace vypisující několik tlačítek, která byla zachycena/již nejsou zachycena Mac Mouse Fix, které by se objevily při prvním spuštění aplikace nebo při načítání předvolby. Myslel jsem, že tyto zprávy byly rušivé a mírně přehlcující a v těchto kontextech ne příliš užitečné.
+- Přepracována obrazovka Udělení přístupu k Přístupnosti. Nyní bude zobrazovat informace o tom, proč Mac Mouse Fix potřebuje Přístup k Přístupnosti přímo namísto odkazování na web a je o něco jasnější a má vizuálně příjemnější rozložení.
+- Aktualizován odkaz na Poděkování na záložce O aplikaci.
+- Vylepšeny chybové zprávy, když Mac Mouse Fix nemůže být povolen, protože je v systému přítomna jiná verze. Zpráva se nyní zobrazí v plovoucím okně upozornění, které vždy zůstává nad ostatními okny, dokud není zavřeno, namísto Toast Notifikace, která zmizí při kliknutí kamkoli. To by mělo usnadnit sledování navrhovaných kroků řešení.
+- Opraveny některé problémy s vykreslováním markdownu na verzích macOS před Venturou. MMF nyní používá vlastní řešení pro vykreslování markdownu pro všechny verze macOS, včetně Ventury. Dříve jsme používali systémové API představené ve Ventuře, ale to vedlo k nekonzistencím. Markdown se používá pro přidání odkazů a zvýraznění textu napříč UI.
+- Vyladěny interakce kolem povolení přístupu k přístupnosti.
+- Opraven problém, kde se okno aplikace někdy otevřelo bez zobrazení obsahu, dokud jste nepřepnuli na jednu ze záložek.
+- Opraven problém s "+"-Polem, kde jste někdy nemohli přidat novou akci, i když ukazovalo efekt při najetí myší indikující, že můžete zadat akci.
+- Opraven deadlock a několik dalších malých problémů, které se někdy staly při pohybu ukazatele myši uvnitř "+"-Pole
+- Opraven problém, kde popover, který se objeví na záložce Tlačítka, když se zdá, že vaše myš neodpovídá aktuálnímu nastavení tlačítek, by někdy měl všechen text tučný.
+- Aktualizovány všechny zmínky staré MIT licence na novou MMF licenci. Nové soubory vytvořené pro projekt budou nyní obsahovat automaticky generovanou hlavičku zmiňující MMF licenci.
+- Přepnutí na záložku Tlačítka nyní povolí MMF pro Scrollování. Jinak byste nemohli zaznamenávat gesta Kliknutí a Scrollování.
+- Opraveny některé problémy, kde se názvy tlačítek nezobrazovaly správně v Tabulce Akcí v některých situacích.
+- Opraven bug, kde sekce o zkušební verzi na obrazovce O aplikaci vypadala chybně při otevření aplikace a pak přepnutí na záložku zkušební verze po vypršení zkušební doby.
+- Opraven bug, kde odkaz Aktivovat Licenci v sekci o zkušební verzi na záložce O aplikaci někdy nereagoval na kliknutí.
+- Opraven únik paměti při používání funkce "Kliknutí a Tažení" pro "Spaces & Mission Control".
+- Povolen Hardened runtime na hlavní aplikaci Mac Mouse Fix, zlepšující bezpečnost
+- Hodně úklidu kódu, restrukturalizace projektu
+- Několik dalších opravených pádů
+- Několik opravených úniků paměti
+- Různé malé úpravy textů UI
+- Přepracování několika interních systémů také zlepšilo robustnost a chování v hraničních případech
+
+## 8. Jak Můžete Pomoci
+
+Můžete pomoci sdílením vašich **nápadů**, **problémů** a **zpětné vazby**!
+
+Nejlepší místo pro sdílení vašich **nápadů** a **problémů** je [Asistent zpětné vazby](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report).
+Nejlepší místo pro poskytnutí **rychlé** nestrukturované zpětné vazby je [Diskuze o zpětné vazbě](https://github.com/noah-nuebling/mac-mouse-fix/discussions/366).
+
+K těmto místům můžete také přistupovat přímo z aplikace na záložce "**ⓘ O aplikaci**".
+
+**Děkuji** za pomoc udělat Mac Mouse Fix nejlepším, jakým může být! 🙌:)

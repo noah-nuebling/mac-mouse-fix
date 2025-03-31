@@ -1,0 +1,3 @@
+<b>ℹ️ Traducido por IA</b><br>
+Esta versión de GitHub ha sido traducida por la IA Claude. Puede contener errores.<br>
+Para ver la versión original en inglés, <a href="{gh_releases_url}">haz clic aquí</a>.

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="id" xml:lang="id">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmprappw_j3</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Diterjemahkan oleh AI</strong></p>
+
+<p>Catatan rilis ini telah diterjemahkan oleh AI Claude. Mungkin
+
+terdapat kesalahan.<br />
+
+Untuk versi asli dalam bahasa Inggris, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.2">klik
+
+di sini</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.2</strong> membawa beberapa peningkatan,
+
+termasuk <strong>pengguliran yang lebih halus</strong>, terjemahan yang
+
+lebih baik, dan banyak lagi!</p>
+
+<h3 id="pengguliran">Pengguliran</h3>
+
+<ul>
+
+<li>Sekarang Anda dapat menghentikan animasi gulir dengan menggulir satu
+
+langkah ke arah berlawanan. Ini memungkinkan Anda untuk
+
+<strong>‘melempar’</strong> dan <strong>‘menangkap halaman’</strong>
+
+saat menggunakan ‘Kehalusan: Tinggi’, mirip dengan Trackpad.</li>
+
+<li>Mac Mouse Fix sekarang mengirim event gulir lebih awal dalam siklus
+
+penyegaran tampilan, memberi aplikasi lebih banyak waktu untuk memproses
+
+event gulir dan menampilkan pengguliran dengan halus. Ini
+
+<strong>meningkatkan framerate</strong>, terutama pada situs web
+
+kompleks seperti YouTube.com.</li>
+
+<li>Meningkatkan responsivitas pengaturan ‘Kehalusan: Tinggi’, membuat
+
+pengguliran lebih mudah dikontrol.</li>
+
+<li>Menyempurnakan mekanisme yang diperkenalkan di 3.0.1 di mana
+
+kecepatan animasi menjadi lebih cepat saat Anda menggerakkan roda gulir
+
+lebih cepat ketika menggunakan ‘Kehalusan: Regular’. Di 3.0.2 percepatan
+
+animasi akan terlihat lebih konsisten dan dapat diprediksi, membuatnya
+
+lebih nyaman di mata sambil memberikan kontrol yang baik.</li>
+
+<li>Memperbaiki masalah di mana kecepatan pengguliran terlalu lambat,
+
+terutama saat menggunakan opsi ‘Presisi’. Masalah ini diperkenalkan di
+
+3.0.1. Terima kasih kepada <span class="citation"
+
+data-cites="V-Coba">@V-Coba</span> yang telah menarik perhatian pada
+
+masalah ini di <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/795">795</a>.</li>
+
+<li>Meningkatkan perilaku di dalam browser Arc saat menggunakan ‘Klik
+
+dan Gulir’ untuk ‘Perbesar atau Perkecil’.</li>
+
+</ul>
+
+<h3 id="lokalisasi">Lokalisasi</h3>
+
+<ul>
+
+<li>Memperbarui terjemahan 🇻🇳 Vietnam. Kredit untuk <span
+
+class="citation" data-cites="nghlt">@nghlt</span>!</li>
+
+<li>Meningkatkan beberapa terjemahan 🇩🇪 Jerman.</li>
+
+<li>Teks di dalam Mac Mouse Fix yang tidak memiliki terjemahan untuk
+
+bahasa saat ini sekarang akan menampilkan nilai placeholder alih-alih
+
+kosong. Ini akan membuat navigasi aplikasi lebih mudah dipahami ketika
+
+ada terjemahan yang hilang.</li>
+
+</ul>
+
+<h3 id="lainnya">Lainnya</h3>
+
+<ul>
+
+<li>Mac Mouse Fix sekarang akan menampilkan notifikasi dengan tautan ke
+
+<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/861">panduan
+
+ini</a> kepada pengguna yang mungkin mengalami bug di macOS 13 Ventura
+
+dan versi selanjutnya yang dapat mencegah Mac Mouse Fix diaktifkan.</li>
+
+<li>Mengubah pengaturan default untuk mouse dengan 3 tombol. Pengaturan
+
+default tidak lagi menampilkan aksi ‘Klik dan Gulir’ untuk Tombol Roda
+
+Gulir, karena itu cukup sulit dilakukan. Sebagai gantinya, pengaturan
+
+default sekarang menampilkan aksi ‘Tahan’ dan ‘Klik Ganda’.</li>
+
+<li>Menambahkan tooltip ke ikon Mac Mouse Fix di tab Tentang. Ini
+
+memberi tahu Anda cara menampilkan file konfigurasi Mac Mouse Fix di
+
+Finder.</li>
+
+<li>Banyak perbaikan dan peningkatan di balik layar.</li>
+
+</ul>
+
+<hr />
+
+<p>Lihat juga rilis sebelumnya <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.1&amp;locale=id"><strong>3.0.1</strong></a>.</p>
+
+</body>
+
+</html>

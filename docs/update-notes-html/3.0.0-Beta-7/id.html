@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="id" xml:lang="id">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp4tktpft8</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Diterjemahkan oleh AI</strong></p>
+
+<p>Catatan rilis ini telah diterjemahkan oleh AI Claude. Mungkin
+
+terdapat kesalahan.<br />
+
+Untuk versi asli dalam bahasa Inggris, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-7">klik
+
+di sini</a>.</p>
+
+<hr />
+
+<p>Lihat juga <strong>peningkatan keren</strong> yang diperkenalkan di
+
+<a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-6&amp;locale=id">3.0.0
+
+Beta 6</a>!</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 7</strong> membawa beberapa peningkatan kecil dan
+
+perbaikan bug.</p>
+
+<p>Berikut semua yang baru:</p>
+
+<p><strong>Peningkatan</strong></p>
+
+<ul>
+
+<li>Menambahkan <strong>terjemahan Korea</strong>. Terima kasih banyak
+
+kepada <span class="citation" data-cites="jeongtae">@jeongtae</span>!
+
+(Temukan dia di <a href="https://github.com/jeongtae">GitHub</a>)</li>
+
+<li>Membuat <strong>pengguliran</strong> dengan opsi ‘Kelancaran:
+
+Tinggi’ <strong>lebih halus lagi</strong>, dengan hanya mengubah
+
+kecepatan secara bertahap, alih-alih memiliki lompatan mendadak dalam
+
+kecepatan pengguliran saat Anda menggerakkan roda gulir. Ini seharusnya
+
+membuat pengguliran terasa sedikit lebih halus dan lebih mudah diikuti
+
+dengan mata tanpa membuat hal-hal kurang responsif. Pengguliran dengan
+
+‘Kelancaran: Tinggi’ sekarang menggunakan sekitar 30% lebih banyak CPU,
+
+di komputer saya meningkat dari 1.2% penggunaan CPU saat terus menggulir
+
+menjadi 1.6%. Jadi pengguliran masih sangat efisien dan saya harap ini
+
+tidak akan membuat perbedaan bagi siapa pun. Terima kasih banyak kepada
+
+<a href="https://mos.caldis.me/">MOS</a>, yang menginspirasi fitur ini
+
+dan yang ‘Scroll Monitor’-nya saya gunakan untuk membantu
+
+mengimplementasikan fitur tersebut.</li>
+
+<li>Mac Mouse Fix sekarang <strong>menangani input tombol dari semua
+
+sumber</strong>. Sebelumnya, Mac Mouse Fix hanya menangani input dari
+
+mouse yang dikenalinya. Saya pikir ini mungkin membantu kompatibilitas
+
+dengan mouse tertentu dalam kasus tertentu, seperti saat menggunakan
+
+Hackintosh, tetapi ini juga akan membuat Mac Mouse Fix menangkap input
+
+tombol buatan dari aplikasi lain, yang mungkin menyebabkan masalah dalam
+
+kasus tertentu lainnya. Beri tahu saya jika ini menyebabkan masalah bagi
+
+Anda, dan saya akan menanganinya dalam pembaruan mendatang.</li>
+
+<li>Menyempurnakan nuansa dan kehalusan gerakan ‘Klik dan Gulir’ untuk
+
+‘Desktop &amp; Launchpad’ dan ‘Klik dan Gulir’ untuk ‘Berpindah Antar
+
+Spaces’.</li>
+
+<li>Sekarang memperhitungkan kepadatan informasi suatu bahasa saat
+
+menghitung <strong>waktu notifikasi ditampilkan</strong>. Sebelumnya,
+
+notifikasi hanya akan tetap terlihat dalam waktu sangat singkat dalam
+
+bahasa dengan kepadatan informasi tinggi seperti Mandarin atau
+
+Korea.</li>
+
+<li>Mengaktifkan <strong>gerakan berbeda</strong> untuk berpindah antara
+
+<strong>Spaces</strong>, membuka <strong>Mission Control</strong>, atau
+
+membuka <strong>App Exposé</strong>. Di Beta 6, saya membuat agar
+
+aksi-aksi ini hanya tersedia melalui gerakan ‘Klik dan Seret’ - sebagai
+
+eksperimen untuk melihat berapa banyak orang yang benar-benar peduli
+
+tentang kemampuan mengakses aksi-aksi tersebut dengan cara lain.
+
+Sepertinya beberapa orang memang peduli, jadi sekarang saya memungkinkan
+
+kembali untuk mengakses aksi-aksi ini melalui ‘Klik’ sederhana pada
+
+tombol atau melalui ‘Klik dan Gulir’.</li>
+
+<li>Memungkinkan untuk <strong>Memutar</strong> melalui gerakan
+
+<strong>Klik dan Gulir</strong>.</li>
+
+<li><strong>Meningkatkan</strong> cara kerja opsi <strong>Simulasi
+
+Trackpad</strong> dalam beberapa skenario. Misalnya saat menggulir
+
+horizontal untuk menghapus pesan di Mail, arah pergerakan pesan sekarang
+
+dibalik, yang saya harap terasa lebih alami dan konsisten bagi
+
+kebanyakan orang.</li>
+
+<li>Menambahkan fitur untuk <strong>memetakan ulang</strong> ke
+
+<strong>Klik Utama</strong> atau <strong>Klik Sekunder</strong>. Saya
+
+mengimplementasikan ini karena tombol kanan mouse favorit saya rusak.
+
+Opsi-opsi ini disembunyikan secara default. Anda dapat melihatnya dengan
+
+menahan tombol Option saat memilih sebuah aksi.
+
+<ul>
+
+<li>Saat ini masih kurang terjemahan untuk bahasa Mandarin dan Korea,
+
+jadi jika Anda ingin berkontribusi terjemahan untuk fitur-fitur ini, itu
+
+akan sangat dihargai!</li>
+
+</ul></li>
+
+</ul>
+
+<p><strong>Perbaikan Bug</strong></p>
+
+<ul>
+
+<li>Memperbaiki bug di mana <strong>arah ‘Klik dan Seret’</strong> untuk
+
+‘Mission Control &amp; Spaces’ <strong>terbalik</strong> untuk
+
+orang-orang yang tidak pernah mengubah opsi ‘Pengguliran natural’ di
+
+Pengaturan Sistem. Sekarang, arah gerakan ‘Klik dan Seret’ di Mac Mouse
+
+Fix seharusnya selalu sesuai dengan arah gerakan di Trackpad atau Magic
+
+Mouse Anda. Jika Anda menginginkan opsi terpisah untuk membalik arah
+
+‘Klik dan Seret’, alih-alih mengikuti Pengaturan Sistem, beri tahu
+
+saya.</li>
+
+<li>Memperbaiki bug di mana <strong>hari gratis</strong> akan
+
+<strong>bertambah terlalu cepat</strong> untuk beberapa pengguna. Jika
+
+Anda terkena dampak ini, beri tahu saya dan saya akan melihat apa yang
+
+bisa saya lakukan.</li>
+
+<li>Memperbaiki masalah di macOS Sonoma di mana bar tab tidak
+
+ditampilkan dengan benar.</li>
+
+<li>Memperbaiki ketidaklancaran saat menggunakan kecepatan pengguliran
+
+‘macOS’ sambil menggunakan ‘Klik dan Gulir’ untuk membuka
+
+Launchpad.</li>
+
+<li>Memperbaiki crash di mana aplikasi ‘Mac Mouse Fix Helper’ (yang
+
+berjalan di latar belakang ketika Mac Mouse Fix diaktifkan)
+
+kadang-kadang crash saat merekam pintasan keyboard.</li>
+
+<li>Memperbaiki bug di mana Mac Mouse Fix akan crash saat mencoba
+
+menangkap event buatan yang dihasilkan oleh <a
+
+href="https://github.com/artginzburg/MiddleClick-Sonoma">MiddleClick-Sonoma</a></li>
+
+<li>Memperbaiki masalah di mana nama untuk beberapa mouse yang
+
+ditampilkan di dialog ‘Kembalikan Default…’ akan memuat nama produsen
+
+dua kali.</li>
+
+<li>Membuat ‘Klik dan Seret’ untuk ‘Mission Control &amp; Spaces’ lebih
+
+kecil kemungkinannya untuk macet ketika komputer lambat.</li>
+
+<li>Memperbaiki penggunaan ‘Force Touch’ dalam string UI di mana
+
+seharusnya ‘Force click’.</li>
+
+<li>Memperbaiki bug yang terjadi untuk konfigurasi tertentu, di mana
+
+membuka Launchpad atau menampilkan Desktop melalui ‘Klik dan Gulir’
+
+tidak akan berfungsi jika Anda melepaskan tombol saat animasi transisi
+
+masih berlangsung.</li>
+
+</ul>
+
+<p><strong>Lainnya</strong></p>
+
+<ul>
+
+<li>Beberapa peningkatan di balik layar, peningkatan stabilitas,
+
+pembersihan di balik layar, dan lainnya.</li>
+
+</ul>
+
+<h2 id="bagaimana-anda-dapat-membantu">Bagaimana Anda Dapat
+
+Membantu</h2>
+
+<p>Anda dapat membantu dengan membagikan <strong>ide</strong>,
+
+<strong>masalah</strong> dan <strong>umpan balik</strong> Anda!</p>
+
+<p>Tempat terbaik untuk membagikan <strong>ide</strong> dan
+
+<strong>masalah</strong> Anda adalah <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Asisten
+
+Umpan Balik</a>. Tempat terbaik untuk memberikan umpan balik
+
+<strong>cepat</strong> tidak terstruktur adalah <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Diskusi
+
+Umpan Balik</a>.</p>
+
+<p>Anda juga dapat mengakses tempat-tempat ini dari dalam aplikasi di
+
+tab ‘<strong>ⓘ Tentang</strong>’.</p>
+
+<p><strong>Terima kasih</strong> telah membantu membuat Mac Mouse Fix
+
+lebih baik! 😎:)</p>
+
+</body>
+
+</html>

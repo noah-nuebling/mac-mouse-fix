@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cs" xml:lang="cs">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpyxdrqpld</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Přeloženo umělou inteligencí</strong></p>
+
+<p>Tato poznámka k vydání byla přeložena umělou inteligencí Claude. Může
+
+obsahovat chyby.<br />
+
+Pro původní anglickou verzi <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-7">klikněte
+
+zde</a>.</p>
+
+<hr />
+
+<p>Podívejte se také na <strong>skvělá vylepšení</strong> představená v
+
+<a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-6&amp;locale=cs">3.0.0
+
+Beta 6</a>!</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 7</strong> přináší několik drobných vylepšení a
+
+oprav chyb.</p>
+
+<p>Zde jsou všechny novinky:</p>
+
+<p><strong>Vylepšení</strong></p>
+
+<ul>
+
+<li>Přidány <strong>korejské překlady</strong>. Velké díky <span
+
+class="citation" data-cites="jeongtae">@jeongtae</span>! (Najdete ho na
+
+<a href="https://github.com/jeongtae">GitHubu</a>)</li>
+
+<li><strong>Scrollování</strong> s možností ‘Plynulost: Vysoká’ je nyní
+
+<strong>ještě plynulejší</strong>, díky postupné změně rychlosti namísto
+
+náhlých skoků při pohybu kolečkem myši. Scrollování by mělo být o něco
+
+plynulejší a snazší pro sledování očima, aniž by se snížila odezva.
+
+Scrollování s ‘Plynulost: Vysoká’ nyní využívá asi o 30 % více CPU, na
+
+mém počítači se zvýšilo z 1,2 % na 1,6 % při nepřetržitém scrollování.
+
+Scrollování je tedy stále vysoce efektivní a doufám, že to nebude pro
+
+nikoho problém. Velké díky <a href="https://mos.caldis.me/">MOS</a>,
+
+který inspiroval tuto funkci a jehož ‘Scroll Monitor’ pomohl při
+
+implementaci.</li>
+
+<li>Mac Mouse Fix nyní <strong>zpracovává vstupy tlačítek ze všech
+
+zdrojů</strong>. Dříve Mac Mouse Fix zpracovával pouze vstupy z myší,
+
+které rozpoznal. Myslím, že to může pomoci s kompatibilitou některých
+
+myší v krajních případech, například při používání Hackintoshe, ale také
+
+to způsobí, že Mac Mouse Fix zachytí uměle generované vstupy tlačítek z
+
+jiných aplikací, což může v některých případech vést k problémům. Dejte
+
+mi vědět, pokud to způsobí nějaké problémy, a v budoucích aktualizacích
+
+to vyřeším.</li>
+
+<li>Vylepšený pocit a vyladění gest ‘Kliknutí a scrollování’ pro ‘Plochu
+
+a Launchpad’ a ‘Kliknutí a scrollování’ pro ‘Přesun mezi Spaces’.</li>
+
+<li>Nyní se bere v úvahu informační hustota jazyka při výpočtu
+
+<strong>doby zobrazení oznámení</strong>. Dříve byla oznámení viditelná
+
+jen velmi krátkou dobu v jazycích s vysokou informační hustotou, jako je
+
+čínština nebo korejština.</li>
+
+<li>Povolena <strong>různá gesta</strong> pro přesun mezi
+
+<strong>Spaces</strong>, otevření <strong>Mission Control</strong> nebo
+
+otevření <strong>App Exposé</strong>. V Beta 6 jsem tyto akce
+
+zpřístupnil pouze přes gesto ‘Kliknutí a tažení’ - jako experiment,
+
+abych zjistil, kolik lidí skutečně stojí o možnost přístupu k těmto
+
+akcím jinými způsoby. Zdá se, že někteří ano, takže jsem znovu umožnil
+
+přístup k těmto akcím přes jednoduché ‘Kliknutí’ tlačítka nebo přes
+
+‘Kliknutí a scrollování’.</li>
+
+<li>Umožněno <strong>Otáčení</strong> pomocí gesta <strong>Kliknutí a
+
+scrollování</strong>.</li>
+
+<li><strong>Vylepšen</strong> způsob, jakým funguje možnost
+
+<strong>Simulace trackpadu</strong> v některých scénářích. Například při
+
+horizontálním scrollování pro smazání zprávy v Mailu je nyní směr pohybu
+
+zprávy obrácený, což by mělo většině lidí připadat přirozenější a
+
+konzistentnější.</li>
+
+<li>Přidána funkce pro <strong>přemapování</strong> na <strong>Primární
+
+kliknutí</strong> nebo <strong>Sekundární kliknutí</strong>.
+
+Implementoval jsem to, protože se mi rozbilo pravé tlačítko na mé
+
+oblíbené myši. Tyto možnosti jsou ve výchozím nastavení skryté. Můžete
+
+je zobrazit podržením klávesy Option při výběru akce.
+
+<ul>
+
+<li>Momentálně chybí překlady pro čínštinu a korejštinu, takže pokud
+
+byste chtěli přispět překlady pro tyto funkce, budeme velmi vděční!</li>
+
+</ul></li>
+
+</ul>
+
+<p><strong>Opravy chyb</strong></p>
+
+<ul>
+
+<li>Opravena chyba, kde byl <strong>směr ‘Kliknutí a tažení’</strong>
+
+pro ‘Mission Control &amp; Spaces’ <strong>obrácený</strong> pro
+
+uživatele, kteří nikdy nepřepnuli možnost ‘Přirozené scrollování’ v
+
+Systémových nastaveních. Nyní by směr gest ‘Kliknutí a tažení’ v Mac
+
+Mouse Fix měl vždy odpovídat směru gest na vašem Trackpadu nebo Magic
+
+Mouse. Pokud chcete samostatnou možnost pro obrácení směru ‘Kliknutí a
+
+tažení’ místo následování Systémových nastavení, dejte mi vědět.</li>
+
+<li>Opravena chyba, kde <strong>volné dny</strong> <strong>narůstaly
+
+příliš rychle</strong> pro některé uživatele. Pokud jste byli touto
+
+chybou postiženi, dejte mi vědět a uvidím, co s tím mohu udělat.</li>
+
+<li>Opraven problém v macOS Sonoma, kde se lišta karet nezobrazovala
+
+správně.</li>
+
+<li>Opraveno trhání při používání rychlosti scrollování ‘macOS’ při
+
+používání ‘Kliknutí a scrollování’ pro otevření Launchpadu.</li>
+
+<li>Opravena chyba, kde aplikace ‘Mac Mouse Fix Helper’ (která běží na
+
+pozadí, když je Mac Mouse Fix povolen) někdy padala při nahrávání
+
+klávesové zkratky.</li>
+
+<li>Opravena chyba, kde Mac Mouse Fix padal při pokusu o zachycení
+
+umělých událostí generovaných <a
+
+href="https://github.com/artginzburg/MiddleClick-Sonoma">MiddleClick-Sonoma</a></li>
+
+<li>Opraven problém, kde název některých myší zobrazený v dialogu
+
+‘Obnovit výchozí…’ obsahoval výrobce dvakrát.</li>
+
+<li>Snížena pravděpodobnost, že ‘Kliknutí a tažení’ pro ‘Mission Control
+
+&amp; Spaces’ uvízne, když je počítač pomalý.</li>
+
+<li>Opraveno použití ‘Force Touch’ v textech UI, kde mělo být ‘Force
+
+click’.</li>
+
+<li>Opravena chyba, která se vyskytovala u určitých konfigurací, kde
+
+otevření Launchpadu nebo zobrazení Plochy pomocí ‘Kliknutí a
+
+scrollování’ nefungovalo, pokud jste uvolnili tlačítko během probíhající
+
+přechodové animace.</li>
+
+</ul>
+
+<p><strong>Další</strong></p>
+
+<ul>
+
+<li>Několik vylepšení pod kapotou, zlepšení stability, úklid kódu a
+
+další.</li>
+
+</ul>
+
+<h2 id="jak-můžete-pomoci">Jak můžete pomoci</h2>
+
+<p>Můžete pomoci sdílením vašich <strong>nápadů</strong>,
+
+<strong>problémů</strong> a <strong>zpětné vazby</strong>!</p>
+
+<p>Nejlepší místo pro sdílení vašich <strong>nápadů</strong> a
+
+<strong>problémů</strong> je <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Feedback
+
+Assistant</a>. Nejlepší místo pro poskytnutí <strong>rychlé</strong>
+
+nestrukturované zpětné vazby je <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Feedback
+
+Discussion</a>.</p>
+
+<p>K těmto místům se můžete dostat také přímo z aplikace na kartě
+
+‘<strong>ⓘ O aplikaci</strong>’.</p>
+
+<p><strong>Díky</strong> za pomoc s vylepšováním Mac Mouse Fix! 😎:)</p>
+
+</body>
+
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cs" xml:lang="cs">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmptaq79c97</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Přeloženo umělou inteligencí</strong></p>
+
+<p>Tato poznámka k vydání byla přeložena umělou inteligencí Claude. Může
+
+obsahovat chyby.<br />
+
+Pro původní anglickou verzi <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3">klikněte
+
+zde</a>.</p>
+
+<hr />
+
+<p><strong>ℹ️ Poznámka pro uživatele Mac Mouse Fix 2</strong></p>
+
+<p>S uvedením Mac Mouse Fix 3 se změnil cenový model aplikace:</p>
+
+<ul>
+
+<li><strong>Mac Mouse Fix 2</strong><br />
+
+Zůstává 100% zdarma a plánuji jej nadále podporovat.<br />
+
+<strong>Přeskočte tuto aktualizaci</strong>, pokud chcete nadále
+
+používat Mac Mouse Fix 2. Stáhněte si nejnovější verzi Mac Mouse Fix 2
+
+<a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=cs">zde</a>.</li>
+
+<li><strong>Mac Mouse Fix 3</strong><br />
+
+Zdarma na 30 dní, poté stojí pár dolarů.<br />
+
+<strong>Aktualizujte nyní</strong> a získejte Mac Mouse Fix 3!</li>
+
+</ul>
+
+<p>Více informací o cenách a funkcích Mac Mouse Fix 3 najdete na <a
+
+href="https://macmousefix.com/">nových webových stránkách</a>.</p>
+
+<p>Děkuji, že používáte Mac Mouse Fix! :)</p>
+
+<hr />
+
+<p><strong>ℹ️ Poznámka pro kupující Mac Mouse Fix 3</strong></p>
+
+<p>Pokud jste omylem aktualizovali na Mac Mouse Fix 3, aniž byste
+
+věděli, že už není zdarma, rád vám nabídnu <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=cs">vrácení
+
+peněz</a>.</p>
+
+<p>Nejnovější verze Mac Mouse Fix 2 zůstává <strong>zcela
+
+zdarma</strong> a můžete si ji stáhnout <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=cs">zde</a>.</p>
+
+<p>Omlouvám se za nepříjemnosti a doufám, že toto řešení všem
+
+vyhovuje!</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.3</strong> je připraven pro macOS 15
+
+Sequoia. Opravuje také některé problémy se stabilitou a přináší několik
+
+drobných vylepšení.</p>
+
+<h3 id="podpora-macos-15-sequoia">Podpora macOS 15 Sequoia</h3>
+
+<p>Aplikace nyní správně funguje pod macOS 15 Sequoia!</p>
+
+<ul>
+
+<li>Většina UI animací byla pod macOS 15 Sequoia nefunkční. Nyní vše
+
+funguje správně!</li>
+
+<li>Zdrojový kód je nyní možné sestavit pod macOS 15 Sequoia. Dříve
+
+existovaly problémy s kompilátorem Swift, které bránily sestavení
+
+aplikace.</li>
+
+</ul>
+
+<h3 id="řešení-pádů-při-scrollování">Řešení pádů při scrollování</h3>
+
+<p>Od Mac Mouse Fix 3.0.2 bylo <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">více
+
+hlášení</a> o tom, že se Mac Mouse Fix během scrollování periodicky
+
+vypíná a zapíná. To bylo způsobeno pády aplikace ‘Mac Mouse Fix Helper’
+
+běžící na pozadí. Tato aktualizace se snaží tyto pády opravit
+
+následujícími změnami:</p>
+
+<ul>
+
+<li><p>Mechanismus scrollování se pokusí obnovit a pokračovat v běhu
+
+místo pádu, když narazí na hraniční případ, který pravděpodobně vedl k
+
+těmto pádům.</p></li>
+
+<li><p>Změnil jsem způsob, jakým jsou v aplikaci obecně řešeny
+
+neočekávané stavy: Místo okamžitého pádu se nyní aplikace v mnoha
+
+případech pokusí z neočekávaných stavů zotavit.</p>
+
+<ul>
+
+<li>Tato změna přispívá k opravám pádů při scrollování popsaných výše.
+
+Může také zabránit dalším pádům.</li>
+
+</ul></li>
+
+</ul>
+
+<p>Poznámka: Tyto pády jsem nikdy nemohl reprodukovat na svém počítači a
+
+stále si nejsem jistý, co je způsobilo, ale na základě obdržených
+
+hlášení by tato aktualizace měla zabránit jakýmkoli pádům. Pokud stále
+
+zažíváte pády při scrollování nebo jste je zažívali pod verzí 3.0.2,
+
+bylo by cenné, kdybyste sdíleli své zkušenosti a diagnostická data v
+
+GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">#988</a>.
+
+Pomohlo by mi to lépe porozumět problému a vylepšit Mac Mouse Fix.
+
+Děkuji!</p>
+
+<h3 id="řešení-zasekávání-při-scrollování">Řešení zasekávání při
+
+scrollování</h3>
+
+<p>Ve verzi 3.0.2 jsem změnil způsob, jakým Mac Mouse Fix posílá
+
+události scrollování do systému, ve snaze omezit zasekávání
+
+pravděpodobně způsobené problémy s Apple VSync API.</p>
+
+<p>Po důkladnějším testování a zpětné vazbě se však ukázalo, že nový
+
+mechanismus v 3.0.2 dělá scrollování plynulejší v některých scénářích,
+
+ale trhavější v jiných. Zejména ve Firefoxu bylo znatelně horší.<br />
+
+Celkově nebylo jasné, zda nový mechanismus skutečně zlepšil plynulost
+
+scrollování napříč systémem. Také mohl přispět k pádům při scrollování
+
+popsaným výše.</p>
+
+<p>Proto jsem nový mechanismus deaktivoval a vrátil VSync mechanismus
+
+pro události scrollování zpět do stavu, v jakém byl v Mac Mouse Fix
+
+3.0.0 a 3.0.1.</p>
+
+<p>Více informací najdete v GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/875">#875</a>.</p>
+
+<h3 id="vrácení-peněz">Vrácení peněz</h3>
+
+<p>Omlouvám se za potíže související se změnami scrollování ve verzích
+
+3.0.1 a 3.0.2. Značně jsem podcenil problémy, které by s tím mohly
+
+nastat, a byl jsem pomalý v řešení těchto problémů. Udělám vše pro to,
+
+abych se z této zkušenosti poučil a byl v budoucnu s takovými změnami
+
+opatrnější. Rád bych také nabídl vrácení peněz všem, kterých se to týká.
+
+Stačí kliknout <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=cs">zde</a>,
+
+pokud máte zájem.</p>
+
+<h3 id="chytřejší-mechanismus-aktualizací">Chytřejší mechanismus
+
+aktualizací</h3>
+
+<p>Tyto změny byly převzaty z Mac Mouse Fix <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.4&amp;locale=cs">2.2.4</a>
+
+a <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.5&amp;locale=cs">2.2.5</a>.
+
+Podrobnosti najdete v jejich poznámkách k vydání. Zde je shrnutí:</p>
+
+<ul>
+
+<li>Existuje nový, chytřejší mechanismus, který rozhoduje, kterou
+
+aktualizaci uživateli zobrazit.</li>
+
+<li>Přechod z frameworku Sparkle 1.26.0 na nejnovější Sparkle <a
+
+href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>.</li>
+
+<li>Okno, které aplikace zobrazuje pro informování o nové verzi Mac
+
+Mouse Fix, nyní podporuje JavaScript, což umožňuje hezčí formátování
+
+poznámek k aktualizaci.</li>
+
+</ul>
+
+<h3 id="další-vylepšení-a-opravy-chyb">Další vylepšení a opravy
+
+chyb</h3>
+
+<ul>
+
+<li>Opravena chyba, kdy se cena aplikace a související informace v
+
+některých případech zobrazovaly nesprávně na kartě ‘O aplikaci’.</li>
+
+<li>Opravena chyba, kdy mechanismus pro synchronizaci plynulého
+
+scrollování s obnovovací frekvencí displeje nefungoval správně při
+
+používání více displejů.</li>
+
+<li>Mnoho drobných vylepšení a úprav pod kapotou.</li>
+
+</ul>
+
+<hr />
+
+<p>Podívejte se také na předchozí vydání <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.2&amp;locale=cs"><strong>3.0.2</strong></a>.</p>
+
+</body>
+
+</html>

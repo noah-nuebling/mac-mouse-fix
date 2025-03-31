@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cs" xml:lang="cs">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpl7a9wcd7</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Přeloženo umělou inteligencí</strong></p>
+
+<p>Tato poznámka k vydání byla přeložena umělou inteligencí Claude. Může
+
+obsahovat chyby.<br />
+
+Pro původní anglickou verzi <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.1">klikněte
+
+zde</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.1</strong> přináší několik oprav chyb a
+
+vylepšení, spolu s <strong>novým jazykem</strong>!</p>
+
+<h3 id="byla-přidána-vietnamština">Byla přidána vietnamština!</h3>
+
+<p>Mac Mouse Fix je nyní dostupný ve 🇻🇳 vietnamštině. Velké díky
+
+uživateli <span class="citation" data-cites="nghlt">@nghlt</span> <a
+
+href="https://GitHub.com/nghlt">na GitHubu</a>!</p>
+
+<h3 id="opravy-chyb">Opravy chyb</h3>
+
+<ul>
+
+<li>Mac Mouse Fix nyní správně funguje s <strong>Rychlým přepínáním
+
+uživatelů</strong>!
+
+<ul>
+
+<li>Rychlé přepínání uživatelů je, když se přihlásíte do druhého účtu
+
+macOS bez odhlášení z prvního účtu.</li>
+
+<li>Před touto aktualizací přestalo po rychlém přepnutí uživatele
+
+fungovat scrollování. Nyní by mělo vše fungovat správně.</li>
+
+</ul></li>
+
+<li>Opravena drobná chyba, kdy bylo rozložení karty Tlačítka příliš
+
+široké po prvním spuštění Mac Mouse Fix.</li>
+
+<li>Vylepšena spolehlivost pole ‘+’ při rychlém přidávání několika Akcí
+
+za sebou.</li>
+
+<li>Opravena nejasná chyba nahlášená uživatelem <span class="citation"
+
+data-cites="V-Coba">@V-Coba</span> v Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/735">735</a>.</li>
+
+</ul>
+
+<h3 id="další-vylepšení">Další vylepšení</h3>
+
+<ul>
+
+<li><strong>Scrollování je více responzivní</strong> při použití
+
+nastavení ‘Plynulost: Běžná’.
+
+<ul>
+
+<li>Rychlost animace se nyní zvyšuje s rychlejším otáčením kolečka myši.
+
+Díky tomu je scrollování při rychlém pohybu responzivnější, zatímco při
+
+pomalém scrollování zůstává stejně plynulé.</li>
+
+</ul></li>
+
+<li><strong>Zrychlení scrollování</strong> je nyní stabilnější a
+
+předvídatelnější.</li>
+
+<li>Implementován mechanismus pro <strong>zachování vašich
+
+nastavení</strong> při aktualizaci na novou verzi Mac Mouse Fix.
+
+<ul>
+
+<li>Dříve Mac Mouse Fix resetoval všechna vaše nastavení po aktualizaci
+
+na novou verzi, pokud se změnila struktura nastavení. Nyní se Mac Mouse
+
+Fix pokusí aktualizovat strukturu vašich nastavení a zachovat vaše
+
+preference.</li>
+
+<li>Zatím to funguje pouze při aktualizaci z verze 3.0.0 na 3.0.1. Pokud
+
+aktualizujete ze starší verze než 3.0.0, nebo pokud provádíte
+
+<em>downgrade</em> z 3.0.1 <em>na</em> předchozí verzi, vaše nastavení
+
+budou stále resetována.</li>
+
+</ul></li>
+
+<li>Rozložení karty Tlačítka se nyní lépe přizpůsobuje šířce různých
+
+jazyků.</li>
+
+<li>Vylepšení <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix#background">GitHub
+
+Readme</a> a dalších dokumentů.</li>
+
+<li>Vylepšené lokalizační systémy. Překladové soubory jsou nyní
+
+automaticky čištěny a analyzovány na potenciální problémy. K dispozici
+
+je nový <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/731">Průvodce
+
+lokalizací</a>, který obsahuje automaticky zjištěné problémy spolu s
+
+dalšími užitečnými informacemi a pokyny pro lidi, kteří chtějí pomoci s
+
+překladem Mac Mouse Fix. Odstraněna závislost na nástroji <a
+
+href="https://github.com/FlineDev/BartyCrouch">BartyCrouch</a>, který
+
+byl dříve používán pro získání některých těchto funkcí.</li>
+
+<li>Vylepšeno několik UI textů v angličtině a němčině.</li>
+
+<li>Spousta vylepšení a úprav pod kapotou.</li>
+
+</ul>
+
+<hr />
+
+<p>Podívejte se také na poznámky k vydání <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0&amp;locale=cs"><strong>3.0.0</strong></a>
+
+- dosud největší aktualizace Mac Mouse Fix!</p>
+
+</body>
+
+</html>

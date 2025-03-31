@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="id" xml:lang="id">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp9npbz6xf</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Diterjemahkan oleh AI</strong></p>
+
+<p>Catatan rilis ini telah diterjemahkan oleh AI Claude. Mungkin
+
+terdapat kesalahan.<br />
+
+Untuk versi asli dalam bahasa Inggris, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.5">klik
+
+di sini</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>2.2.5</strong> memiliki peningkatan pada
+
+mekanisme pembaruan, dan siap untuk macOS 15 Sequoia!</p>
+
+<h3 id="kerangka-pembaruan-sparkle-baru">Kerangka pembaruan Sparkle
+
+baru</h3>
+
+<p>Mac Mouse Fix menggunakan kerangka pembaruan <a
+
+href="https://sparkle-project.org/">Sparkle</a> untuk membantu
+
+memberikan pengalaman pembaruan yang hebat.</p>
+
+<p>Dengan 2.2.5, Mac Mouse Fix beralih dari menggunakan Sparkle 1.26.0
+
+ke Sparkle versi terbaru <a
+
+href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>,
+
+yang memuat perbaikan keamanan, peningkatan lokalisasi, dan lainnya.</p>
+
+<h3 id="mekanisme-pembaruan-yang-lebih-cerdas">Mekanisme pembaruan yang
+
+lebih cerdas</h3>
+
+<p>Ada mekanisme baru yang menentukan pembaruan mana yang akan
+
+ditampilkan kepada pengguna. Perilakunya berubah dalam cara berikut:</p>
+
+<ol type="1">
+
+<li>Setelah kamu melewati pembaruan <strong>major</strong> (seperti
+
+2.2.5 -&gt; 3.0.0), kamu tetap akan diberi tahu tentang pembaruan
+
+<strong>minor</strong> baru (seperti 2.2.5 -&gt; 2.2.6).
+
+<ul>
+
+<li>Ini memungkinkan kamu untuk tetap menggunakan Mac Mouse Fix 2 sambil
+
+tetap menerima pembaruan, seperti yang dibahas di GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/962">#962</a>.</li>
+
+</ul></li>
+
+<li>Alih-alih menampilkan pembaruan ke versi terbaru, Mac Mouse Fix
+
+sekarang akan menampilkan pembaruan ke versi pertama dari versi major
+
+terbaru.
+
+<ul>
+
+<li>Contoh: Jika kamu menggunakan MMF 2.2.5, dan MMF 3.4.5 adalah versi
+
+terbaru, aplikasi sekarang akan menampilkan versi pertama dari MMF 3
+
+(3.0.0), bukan versi terbaru (3.4.5). Dengan cara ini, semua pengguna
+
+MMF 2.2.5 akan melihat changelog MMF 3.0.0 sebelum beralih ke MMF
+
+3.</li>
+
+<li>Diskusi:
+
+<ul>
+
+<li>Motivasi utama di balik ini adalah, awal tahun ini, banyak pengguna
+
+MMF 2 memperbarui langsung dari MMF 2 ke MMF 3.0.1, atau 3.0.2. Karena
+
+mereka tidak pernah melihat changelog 3.0.0, mereka melewatkan informasi
+
+tentang perubahan harga antara MMF 2 dan MMF 3 (MMF 3 tidak lagi 100%
+
+gratis). Jadi ketika MMF 3 tiba-tiba mengatakan mereka perlu membayar
+
+untuk terus menggunakan aplikasi, beberapa - yang bisa dimengerti -
+
+sedikit bingung dan kecewa.</li>
+
+<li>Kerugian: Jika kamu hanya ingin memperbarui ke versi terbaru,
+
+sekarang kamu harus memperbarui dua kali dalam beberapa kasus. Ini
+
+sedikit tidak efisien, tapi seharusnya tetap hanya membutuhkan beberapa
+
+detik. Dan karena ini membuat perubahan antara versi major jauh lebih
+
+transparan, saya pikir ini adalah pertukaran yang masuk akal.</li>
+
+</ul></li>
+
+</ul></li>
+
+</ol>
+
+<h3 id="dukungan-macos-15-sequoia">Dukungan macOS 15 Sequoia</h3>
+
+<p>Mac Mouse Fix 2.2.5 akan bekerja dengan baik di macOS 15 Sequoia yang
+
+baru - sama seperti 2.2.4.</p>
+
+<hr />
+
+<p>Lihat juga rilis sebelumnya <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.4&amp;locale=id"><strong>2.2.4</strong></a>.</p>
+
+<p><em>Jika kamu mengalami masalah mengaktifkan Mac Mouse Fix setelah
+
+memperbarui, silakan periksa <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/861">‘Panduan
+
+Mengaktifkan Mac Mouse Fix’</a>.</em></p>
+
+</body>
+
+</html>

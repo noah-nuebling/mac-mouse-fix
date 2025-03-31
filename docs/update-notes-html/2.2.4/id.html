@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="id" xml:lang="id">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp1i3e449f</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Diterjemahkan oleh AI</strong></p>
+
+<p>Catatan rilis ini telah diterjemahkan oleh AI Claude. Mungkin
+
+terdapat kesalahan.<br />
+
+Untuk versi asli dalam bahasa Inggris, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.4">klik
+
+di sini</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>2.2.4</strong> sekarang telah dinotarisasi!
+
+Versi ini juga mencakup beberapa perbaikan bug dan peningkatan
+
+lainnya.</p>
+
+<h3 id="notarisasi"><strong>Notarisasi</strong></h3>
+
+<p>Mac Mouse Fix 2.2.4 kini telah ‘dinotarisasi’ oleh Apple. Artinya
+
+tidak akan ada lagi pesan tentang Mac Mouse Fix yang berpotensi sebagai
+
+‘Perangkat Lunak Berbahaya’ saat membuka aplikasi untuk pertama
+
+kali.</p>
+
+<h4 id="latar-belakang">Latar Belakang</h4>
+
+<p>Notarisasi aplikasi membutuhkan biaya $100 per tahun. Saya selalu
+
+menentang hal ini, karena terasa tidak ramah terhadap perangkat lunak
+
+gratis dan open source seperti Mac Mouse Fix, dan juga terasa seperti
+
+langkah berbahaya menuju Apple yang mengontrol dan mengunci Mac seperti
+
+yang mereka lakukan pada iPhone atau iPad. Namun ketiadaan notarisasi
+
+menyebabkan berbagai masalah, termasuk <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/114">kesulitan
+
+membuka aplikasi</a> dan bahkan <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/95">beberapa
+
+situasi</a> di mana tidak ada yang bisa menggunakan aplikasi sampai saya
+
+merilis versi baru.</p>
+
+<p>Untuk Mac Mouse Fix 3, saya akhirnya merasa tepat untuk membayar $100
+
+per tahun untuk notarisasi aplikasi, karena Mac Mouse Fix 3 sudah
+
+dimonetisasi. (<a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0&amp;locale=id">Pelajari
+
+Lebih Lanjut</a>)<br />
+
+Sekarang, Mac Mouse Fix 2 juga mendapatkan notarisasi, yang seharusnya
+
+menghasilkan pengalaman pengguna yang lebih mudah dan stabil.</p>
+
+<h3 id="perbaikan-bug"><strong>Perbaikan Bug</strong></h3>
+
+<ul>
+
+<li>Memperbaiki masalah di mana kursor akan menghilang dan kemudian
+
+muncul kembali di lokasi berbeda saat menggunakan Aksi ‘Klik dan Seret’
+
+selama perekaman layar atau saat menggunakan perangkat lunak <a
+
+href="https://www.synaptics.com/products/displaylink-graphics">DisplayLink</a>.</li>
+
+<li>Memperbaiki masalah dengan mengaktifkan Mac Mouse Fix di macOS 10.14
+
+Mojave dan kemungkinan versi macOS yang lebih lama juga.</li>
+
+<li>Meningkatkan manajemen memori, berpotensi memperbaiki crash pada
+
+aplikasi ‘Mac Mouse Fix Helper’, yang terjadi saat melepaskan mouse dari
+
+komputer Anda. Lihat Diskusi <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/771">#771</a>.</li>
+
+</ul>
+
+<h3 id="peningkatan-lainnya"><strong>Peningkatan Lainnya</strong></h3>
+
+<ul>
+
+<li>Jendela yang ditampilkan aplikasi untuk memberi tahu Anda bahwa
+
+versi baru Mac Mouse Fix tersedia sekarang mendukung JavaScript. Ini
+
+memungkinkan catatan pembaruan menjadi lebih cantik dan lebih mudah
+
+dibaca. Misalnya, catatan pembaruan sekarang dapat menampilkan <a
+
+href="https://github.com/orgs/community/discussions/16925">Markdown
+
+Alerts</a> dan lainnya.</li>
+
+<li>Menghapus tautan ke halaman https://macmousefix.com/about/ dari
+
+layar “Berikan Akses Aksesibilitas ke Mac Mouse Fix Helper”. Ini karena
+
+halaman About tidak lagi ada dan untuk sementara digantikan oleh <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix">GitHub
+
+Readme</a>.</li>
+
+<li>Rilis ini sekarang menyertakan file dSYM yang dapat digunakan oleh
+
+siapa saja untuk mendekode laporan crash Mac Mouse Fix 2.2.4.</li>
+
+<li>Beberapa pembersihan dan peningkatan di balik layar.</li>
+
+</ul>
+
+<hr />
+
+<p>Lihat juga rilis sebelumnya <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.3&amp;locale=id"><strong>2.2.3</strong></a>.</p>
+
+</body>
+
+</html>

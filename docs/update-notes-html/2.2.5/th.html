@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="th" xml:lang="th">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpyhc5y6xl</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ แปลโดย AI</strong></p>
+
+<p>บันทึกการเปิดตัวนี้ได้รับการแปลโดย Claude AI อาจมีข้อผิดพลาดบางประการ<br />
+
+สำหรับเวอร์ชันภาษาอังกฤษต้นฉบับ <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.5">คลิกที่นี่</a></p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>2.2.5</strong> มาพร้อมการปรับปรุงกลไกการอัปเดต
+
+และพร้อมใช้งานกับ macOS 15 Sequoia!</p>
+
+<h3 id="เฟรมเวรกการอปเดต-sparkle-ใหม">เฟรมเวิร์กการอัปเดต Sparkle ใหม่</h3>
+
+<p>Mac Mouse Fix ใช้เฟรมเวิร์กการอัปเดต <a
+
+href="https://sparkle-project.org/">Sparkle</a>
+
+เพื่อช่วยมอบประสบการณ์การอัปเดตที่ยอดเยี่ยม</p>
+
+<p>ใน 2.2.5 Mac Mouse Fix เปลี่ยนจากการใช้ Sparkle 1.26.0 เป็นเวอร์ชันล่าสุด <a
+
+href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>
+
+ซึ่งมีการแก้ไขด้านความปลอดภัย การปรับปรุงการแปลภาษา และอื่นๆ</p>
+
+<h3 id="กลไกการอปเดตทฉลาดขน">กลไกการอัปเดตที่ฉลาดขึ้น</h3>
+
+<p>มีกลไกใหม่ที่ตัดสินใจว่าจะแสดงการอัปเดตใดให้ผู้ใช้ พฤติกรรมเปลี่ยนแปลงดังนี้:</p>
+
+<ol type="1">
+
+<li>หลังจากที่คุณข้ามการอัปเดต <strong>หลัก</strong> (เช่น 2.2.5 -&gt; 3.0.0)
+
+คุณจะยังได้รับการแจ้งเตือนเกี่ยวกับการอัปเดต <strong>ย่อย</strong> (เช่น 2.2.5 -&gt;
+
+2.2.6)
+
+<ul>
+
+<li>สิ่งนี้ช่วยให้คุณยังคงใช้ Mac Mouse Fix 2 พร้อมรับการอัปเดตได้อย่างง่ายดาย
+
+ตามที่อภิปรายใน GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/962">#962</a></li>
+
+</ul></li>
+
+<li>แทนที่จะแสดงการอัปเดตเป็นเวอร์ชันล่าสุด Mac Mouse Fix
+
+จะแสดงการอัปเดตเป็นรุ่นแรกของเวอร์ชันหลักล่าสุด
+
+<ul>
+
+<li>ตัวอย่าง: ถ้าคุณใช้ MMF 2.2.5 และ MMF 3.4.5 เป็นเวอร์ชันล่าสุด
+
+แอปจะแสดงเวอร์ชันแรกของ MMF 3 (3.0.0) แทนเวอร์ชันล่าสุด (3.4.5) วิธีนี้ผู้ใช้ MMF
+
+2.2.5 ทุกคนจะได้เห็นบันทึกการเปลี่ยนแปลงของ MMF 3.0.0 ก่อนเปลี่ยนไปใช้ MMF 3</li>
+
+<li>การอภิปราย:
+
+<ul>
+
+<li>เหตุผลหลักคือ เมื่อต้นปีนี้ ผู้ใช้ MMF 2 หลายคนอัปเดตจาก MMF 2 ไปเป็น MMF 3.0.1
+
+หรือ 3.0.2 โดยตรง เนื่องจากพวกเขาไม่เคยเห็นบันทึกการเปลี่ยนแปลงของ 3.0.0
+
+จึงพลาดข้อมูลเกี่ยวกับการเปลี่ยนแปลงราคาระหว่าง MMF 2 และ MMF 3 (MMF 3 ไม่ได้ฟรี
+
+100% อีกต่อไป) ดังนั้นเมื่อ MMF 3 บอกว่าต้องจ่ายเงินเพื่อใช้งานแอปต่อ
+
+บางคนจึงสับสนและไม่พอใจ ซึ่งเข้าใจได้</li>
+
+<li>ข้อเสีย: หากคุณต้องการอัปเดตเป็นเวอร์ชันล่าสุด ตอนนี้คุณอาจต้องอัปเดตสองครั้งในบางกรณี
+
+แม้จะไม่มีประสิทธิภาพเท่าที่ควร แต่ก็ควรใช้เวลาเพียงไม่กี่วินาที
+
+และเนื่องจากทำให้การเปลี่ยนแปลงระหว่างเวอร์ชันหลักโปร่งใสมากขึ้น
+
+ผมคิดว่าเป็นการแลกเปลี่ยนที่สมเหตุสมผล</li>
+
+</ul></li>
+
+</ul></li>
+
+</ol>
+
+<h3 id="รองรบ-macos-15-sequoia">รองรับ macOS 15 Sequoia</h3>
+
+<p>Mac Mouse Fix 2.2.5 จะทำงานได้ดีบน macOS 15 Sequoia ใหม่ - เช่นเดียวกับ
+
+2.2.4</p>
+
+<hr />
+
+<p>ดูการเปิดตัวก่อนหน้า <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.4&amp;locale=th"><strong>2.2.4</strong></a>
+
+ได้เช่นกัน</p>
+
+<p><em>หากคุณมีปัญหาในการเปิดใช้งาน Mac Mouse Fix หลังการอัปเดต โปรดดูที่<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/861">คู่มือ
+
+‘การเปิดใช้งาน Mac Mouse Fix’</a></em></p>
+
+</body>
+
+</html>

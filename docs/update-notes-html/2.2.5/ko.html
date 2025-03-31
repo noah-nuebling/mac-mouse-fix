@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpl7oxl48j</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI가 번역함</strong></p>
+
+<p>이 릴리스 노트는 Claude AI가 번역했습니다. 오류가 있을 수
+
+있습니다.<br />
+
+영어 원문을 보시려면 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.5">여기를
+
+클릭하세요</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>2.2.5</strong>는 업데이트 메커니즘이
+
+개선되었으며, macOS 15 Sequoia를 지원합니다!</p>
+
+<h3 id="새로운-sparkle-업데이트-프레임워크">새로운 Sparkle 업데이트
+
+프레임워크</h3>
+
+<p>Mac Mouse Fix는 더 나은 업데이트 경험을 제공하기 위해 <a
+
+href="https://sparkle-project.org/">Sparkle</a> 업데이트 프레임워크를
+
+사용합니다.</p>
+
+<p>2.2.5 버전에서는 Sparkle 1.26.0에서 최신 버전인 <a
+
+href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>으로
+
+전환되어 보안 수정, 현지화 개선 등이 포함되었습니다.</p>
+
+<h3 id="더-스마트해진-업데이트-메커니즘">더 스마트해진 업데이트
+
+메커니즘</h3>
+
+<p>사용자에게 표시할 업데이트를 결정하는 새로운 메커니즘이
+
+도입되었습니다. 다음과 같이 동작이 변경되었습니다:</p>
+
+<ol type="1">
+
+<li><strong>메이저</strong> 업데이트(예: 2.2.5 -&gt; 3.0.0)를 건너뛴
+
+후에도 <strong>마이너</strong> 업데이트(예: 2.2.5 -&gt; 2.2.6) 알림을
+
+계속 받을 수 있습니다.
+
+<ul>
+
+<li>GitHub 이슈 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/962">#962</a>에서
+
+논의된 대로, Mac Mouse Fix 2를 계속 사용하면서도 업데이트를 받을 수
+
+있습니다.</li>
+
+</ul></li>
+
+<li>최신 릴리스로 업데이트하는 대신, Mac Mouse Fix는 이제 최신 메이저
+
+버전의 첫 번째 릴리스로 업데이트를 표시합니다.
+
+<ul>
+
+<li>예시: MMF 2.2.5를 사용 중이고 MMF 3.4.5가 최신 버전인 경우, 앱은
+
+이제 최신 버전(3.4.5) 대신 MMF 3의 첫 번째 버전(3.0.0)을 표시합니다.
+
+이렇게 하면 모든 MMF 2.2.5 사용자가 MMF 3으로 전환하기 전에 MMF 3.0.0
+
+변경 로그를 볼 수 있습니다.</li>
+
+<li>설명:
+
+<ul>
+
+<li>이는 올해 초 많은 MMF 2 사용자들이 MMF 2에서 MMF 3.0.1이나 3.0.2로
+
+직접 업데이트했기 때문입니다. 3.0.0 변경 로그를 보지 못해 MMF 2와 MMF 3
+
+사이의 가격 정책 변경(MMF 3는 더 이상 100% 무료가 아님)에 대한 정보를
+
+놓쳤습니다. 그래서 MMF 3에서 갑자기 앱 사용을 위해 결제가 필요하다고
+
+했을 때, 일부 사용자들이 당연히 혼란스러워하고 불편해했습니다.</li>
+
+<li>단점: 최신 버전으로 업데이트하려면 이제 경우에 따라 두 번
+
+업데이트해야 합니다. 약간 비효율적이지만 여전히 몇 초밖에 걸리지
+
+않습니다. 그리고 이는 메이저 버전 간의 변경사항을 더 투명하게 만들기
+
+때문에, 합리적인 절충안이라고 생각합니다.</li>
+
+</ul></li>
+
+</ul></li>
+
+</ol>
+
+<h3 id="macos-15-sequoia-지원">macOS 15 Sequoia 지원</h3>
+
+<p>Mac Mouse Fix 2.2.5는 2.2.4와 마찬가지로 새로운 macOS 15
+
+Sequoia에서도 잘 작동합니다.</p>
+
+<hr />
+
+<p>이전 릴리스 <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.4&amp;locale=ko"><strong>2.2.4</strong></a>도
+
+확인해보세요.</p>
+
+<p><em>업데이트 후 Mac Mouse Fix를 활성화하는 데 문제가 있다면, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/861">‘Mac
+
+Mouse Fix 활성화’ 가이드</a>를 확인해주세요.</em></p>
+
+</body>
+
+</html>

@@ -1076,19 +1076,62 @@ def _let_claude_translate(locale: str, english_textttt: str|LocalizableString) -
     # Log
     print(f"Sending request to anthropic with {input_token_count} input tokens...")
 
-    # Ping Anthropic
+    # Add args
     anthropic_args = { 
         **anthropic_args, 
         'max_tokens':   max_output_tokens,
         'temperature':  0,
     }
-    response = anthropic_client.messages.create(**anthropic_args)
-    
-    # Validate response
-    assert response.stop_reason == 'end_turn', f"Anthropic model stopped with unexpected reason '{response.stop_reason}'"
-    
-    # Extract translation text
-    translation = response.content[0].text
+
+    # Declare result
+    translation = ''
+
+    while 1:
+        # Ping Anthropic API
+        #   (And print progress while streaming response)
+        nchars_streamed = 0
+        nchars_english = len(english_text)
+        with anthropic_client.messages.stream(**anthropic_args) as stream:
+            for new_text in stream.text_stream:
+                nchars_streamed += len(new_text)
+                print(f"Number of received characters: {nchars_streamed} (original has {nchars_english} characters)", end="\r")
+            print(end='\n')
+        
+        # Analyze stream result
+        msg = stream.get_final_message()
+        assert len(msg.content) == 1, f"Response unexpectedly contains more than one element: {msg.content}"
+        stream_result_text = ''.join([x.text for x in msg.content])
+        translation += stream_result_text
+
+        # Re-prompt if we hit token-limit
+        if 0: pass
+        elif msg.stop_reason == 'max_tokens':
+
+            print(f"Interrupted due to token limit. Re-prompting the AI... (Last characters: ...{stream_result_text[-30:].replace('\n', r'\n')})")
+
+            anthropic_args['messages'] += [
+                {   "role": "assistant", # Note: [Mar 2025] We could simply pass the stream's 'final_message' here - this is basically a reconstruction of it.
+                    "content": [{
+                        "type": "text",
+                        "text": stream_result_text,
+                }]},
+                {   "role": "user",
+                    "content": [{
+                        "type": "text",
+                        "text": "You've been interrupted due to the Anthropic API's output token limit. Please continue exactly from where you left off. Your messages will be stitched together into one document.",
+                }]}
+            ]
+            continue
+
+        # Validate stop_reason
+        elif msg.stop_reason != 'end_turn':
+            assert False, f"Unexpected stop reason: {msg.stop_reason}"
+        
+        # Success
+        break
+
+    # Validate
+    assert len(translation) > 0, f"Translation is unexpectedly empty"
 
     # Return
     return translation

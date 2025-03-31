@@ -1,0 +1,4 @@
+**ℹ️ AI tarafından çevrildi**
+
+Bu sürüm notu Claude AI tarafından çevrilmiştir. Hatalar içerebilir.\
+İngilizce orijinal versiyonu için [buraya tıklayın]({gh_releases_url}).

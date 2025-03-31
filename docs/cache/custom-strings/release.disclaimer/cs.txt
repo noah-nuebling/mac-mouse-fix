@@ -1,0 +1,3 @@
+<b>ℹ️ Přeloženo umělou inteligencí</b><br>
+Tento GitHub Release byl přeložen umělou inteligencí Claude. Může obsahovat chyby.<br>
+Pro původní anglickou verzi <a href="{gh_releases_url}">klikněte zde</a>.

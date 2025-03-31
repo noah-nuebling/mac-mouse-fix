@@ -1,0 +1,4 @@
+**ℹ️ Được dịch bởi AI**
+
+Ghi chú phát hành này được dịch bởi Claude AI. Có thể có một số lỗi.\
+Để xem phiên bản tiếng Anh gốc, [nhấn vào đây]({gh_releases_url}).

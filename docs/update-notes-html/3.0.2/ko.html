@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp_2916hf1</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI가 번역함</strong></p>
+
+<p>이 릴리스 노트는 Claude AI가 번역했습니다. 오류가 있을 수
+
+있습니다.<br />
+
+영어 원문을 보시려면 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.2">여기를
+
+클릭하세요</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.2</strong>가 <strong>더 부드러운
+
+스크롤링</strong>, 향상된 번역 등 여러 개선 사항을 가져왔습니다!</p>
+
+<h3 id="스크롤링">스크롤링</h3>
+
+<ul>
+
+<li>이제 반대 방향으로 한 단계 스크롤하여 스크롤 애니메이션을 멈출 수
+
+있습니다. 이를 통해 트랙패드처럼 ‘Smoothness: High’ 사용 시 페이지를
+
+<strong>‘던지고’</strong> <strong>‘잡을’</strong> 수 있습니다.</li>
+
+<li>Mac Mouse Fix가 이제 디스플레이 리프레시 주기의 더 이른 시점에
+
+스크롤 이벤트를 전송하여, 앱이 스크롤 이벤트를 처리하고 부드럽게 표시할
+
+시간을 더 확보할 수 있게 되었습니다. 이는 YouTube.com과 같은 복잡한
+
+웹사이트에서 특히 <strong>프레임률을 개선</strong>합니다.</li>
+
+<li>‘Smoothness: High’ 설정의 반응성을 개선하여 스크롤을 더 쉽게 제어할
+
+수 있습니다.</li>
+
+<li>‘Smoothness: Regular’ 사용 시 스크롤 휠을 더 빠르게 움직이면
+
+애니메이션 속도가 빨라지는 3.0.1에서 도입된 메커니즘을 개선했습니다.
+
+3.0.2에서는 애니메이션 가속이 더 일관되고 예측 가능하게 나타나, 뛰어난
+
+제어성을 제공하면서도 눈의 피로를 덜어줍니다.</li>
+
+<li>‘Precision’ 옵션 사용 시 특히 스크롤 속도가 너무 느렸던 문제를
+
+수정했습니다. 이 문제는 3.0.1에서 발생했습니다. <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/795">795</a>에서
+
+이 문제를 지적해 주신 <span class="citation"
+
+data-cites="V-Coba에게">@V-Coba에게</span> 감사드립니다.</li>
+
+<li>’Click and Scroll’을 사용하여 ’확대/축소’할 때 Arc 브라우저 내에서의
+
+동작이 개선되었습니다.</li>
+
+</ul>
+
+<h3 id="현지화">현지화</h3>
+
+<ul>
+
+<li>🇻🇳 베트남어 번역이 업데이트되었습니다. <span class="citation"
+
+data-cites="nghlt님께">@nghlt님께</span> 감사드립니다!</li>
+
+<li>일부 🇩🇪 독일어 번역이 개선되었습니다.</li>
+
+<li>현재 언어에 대한 번역이 없는 Mac Mouse Fix 내의 텍스트가 이제
+
+비어있는 대신 플레이스홀더 값을 표시합니다. 이를 통해 번역이 누락된
+
+경우에도 앱을 더 쉽게 탐색할 수 있습니다.</li>
+
+</ul>
+
+<h3 id="기타">기타</h3>
+
+<ul>
+
+<li>Mac Mouse Fix가 이제 macOS 13 Ventura 이상에서 Mac Mouse Fix를
+
+활성화하지 못하게 할 수 있는 버그를 경험할 수 있는 사용자들에게 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/861">이
+
+가이드</a>로 연결되는 알림을 표시합니다.</li>
+
+<li>3개 버튼이 있는 마우스의 기본 설정이 변경되었습니다. 수행하기 어려운
+
+스크롤휠 버튼의 ‘Click and Scroll’ 동작이 더 이상 기본 설정에 포함되지
+
+않습니다. 대신 기본 설정에 ‘Hold’와 ’Double Click’ 동작이
+
+포함됩니다.</li>
+
+<li>About 탭의 Mac Mouse Fix 아이콘에 툴팁이 추가되었습니다. Finder에서
+
+Mac Mouse Fix의 설정 파일을 표시하는 방법을 알려줍니다.</li>
+
+<li>많은 내부 정리 및 개선이 이루어졌습니다.</li>
+
+</ul>
+
+<hr />
+
+<p>이전 릴리스 <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.1&amp;locale=ko"><strong>3.0.1</strong></a>도
+
+확인해보세요.</p>
+
+</body>
+
+</html>

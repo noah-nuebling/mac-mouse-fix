@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="vi" xml:lang="vi">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp23b98mb5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Được dịch bởi AI</strong></p>
+
+<p>Ghi chú phát hành này được dịch bởi Claude AI. Có thể có một số
+
+lỗi.<br />
+
+Để xem phiên bản tiếng Anh gốc, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3">nhấn
+
+vào đây</a>.</p>
+
+<hr />
+
+<p><strong>ℹ️ Lưu ý cho người dùng Mac Mouse Fix 2</strong></p>
+
+<p>Với sự ra mắt của Mac Mouse Fix 3, mô hình giá của ứng dụng đã thay
+
+đổi:</p>
+
+<ul>
+
+<li><strong>Mac Mouse Fix 2</strong><br />
+
+Vẫn hoàn toàn miễn phí, và tôi dự định sẽ tiếp tục hỗ trợ nó.<br />
+
+<strong>Bỏ qua bản cập nhật này</strong> để tiếp tục sử dụng Mac Mouse
+
+Fix 2. Tải về phiên bản mới nhất của Mac Mouse Fix 2 <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=vi">tại
+
+đây</a>.</li>
+
+<li><strong>Mac Mouse Fix 3</strong><br />
+
+Miễn phí trong 30 ngày, sau đó tốn vài đô để sở hữu.<br />
+
+<strong>Cập nhật ngay</strong> để có Mac Mouse Fix 3!</li>
+
+</ul>
+
+<p>Bạn có thể tìm hiểu thêm về giá cả và tính năng của Mac Mouse Fix 3
+
+trên <a href="https://macmousefix.com/">trang web mới</a>.</p>
+
+<p>Cảm ơn bạn đã sử dụng Mac Mouse Fix! :)</p>
+
+<hr />
+
+<p><strong>ℹ️ Lưu ý cho người mua Mac Mouse Fix 3</strong></p>
+
+<p>Nếu bạn vô tình cập nhật lên Mac Mouse Fix 3 mà không biết rằng nó
+
+không còn miễn phí nữa, tôi muốn đề nghị <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=vi">hoàn
+
+tiền</a> cho bạn.</p>
+
+<p>Phiên bản mới nhất của Mac Mouse Fix 2 vẫn <strong>hoàn toàn miễn
+
+phí</strong>, và bạn có thể tải về <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=vi">tại
+
+đây</a>.</p>
+
+<p>Tôi xin lỗi vì sự bất tiện này và hy vọng mọi người đều đồng ý với
+
+giải pháp này!</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.3</strong> đã sẵn sàng cho macOS 15
+
+Sequoia. Nó cũng sửa một số vấn đề về tính ổn định và cung cấp nhiều cải
+
+tiến nhỏ.</p>
+
+<h3 id="hỗ-trợ-macos-15-sequoia">Hỗ trợ macOS 15 Sequoia</h3>
+
+<p>Ứng dụng giờ đây hoạt động tốt trên macOS 15 Sequoia!</p>
+
+<ul>
+
+<li>Hầu hết các hiệu ứng UI bị hỏng trên macOS 15 Sequoia. Giờ đây mọi
+
+thứ đã hoạt động bình thường trở lại!</li>
+
+<li>Mã nguồn giờ đây có thể được biên dịch trên macOS 15 Sequoia. Trước
+
+đây, có các vấn đề với trình biên dịch Swift khiến ứng dụng không thể
+
+biên dịch được.</li>
+
+</ul>
+
+<h3 id="giải-quyết-các-sự-cố-crash-khi-cuộn">Giải quyết các sự cố crash
+
+khi cuộn</h3>
+
+<p>Kể từ Mac Mouse Fix 3.0.2, đã có <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">nhiều
+
+báo cáo</a> về việc Mac Mouse Fix định kỳ tự tắt và bật lại trong khi
+
+cuộn. Điều này do các sự cố crash của ứng dụng nền ‘Mac Mouse Fix
+
+Helper’. Bản cập nhật này cố gắng sửa các sự cố crash này với những thay
+
+đổi sau:</p>
+
+<ul>
+
+<li><p>Cơ chế cuộn sẽ cố gắng phục hồi và tiếp tục chạy thay vì crash
+
+khi gặp trường hợp đặc biệt dường như đã dẫn đến những sự cố crash
+
+này.</p></li>
+
+<li><p>Tôi đã thay đổi cách xử lý các trạng thái không mong đợi trong
+
+ứng dụng một cách tổng quát hơn: Thay vì luôn crash ngay lập tức, ứng
+
+dụng giờ đây sẽ cố gắng phục hồi từ các trạng thái không mong đợi trong
+
+nhiều trường hợp.</p>
+
+<ul>
+
+<li>Thay đổi này góp phần vào việc sửa các sự cố crash khi cuộn được mô
+
+tả ở trên. Nó cũng có thể ngăn chặn các sự cố crash khác.</li>
+
+</ul></li>
+
+</ul>
+
+<p>Lưu ý: Tôi không thể tái tạo được các sự cố crash này trên máy của
+
+mình, và tôi vẫn chưa chắc chắn nguyên nhân là gì, nhưng dựa trên các
+
+báo cáo tôi nhận được, bản cập nhật này sẽ ngăn chặn mọi sự cố crash.
+
+Nếu bạn vẫn gặp sự cố crash khi cuộn hoặc bạn <em>đã</em> gặp sự cố
+
+crash trong phiên bản 3.0.2, sẽ rất có giá trị nếu bạn chia sẻ trải
+
+nghiệm và dữ liệu chẩn đoán của mình trong GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">#988</a>.
+
+Điều này sẽ giúp tôi hiểu vấn đề và cải thiện Mac Mouse Fix. Cảm ơn
+
+bạn!</p>
+
+<h3 id="giải-quyết-vấn-đề-giật-khi-cuộn">Giải quyết vấn đề giật khi
+
+cuộn</h3>
+
+<p>Trong phiên bản 3.0.2, tôi đã thay đổi cách Mac Mouse Fix gửi các sự
+
+kiện cuộn đến hệ thống nhằm giảm hiện tượng giật có thể do vấn đề với
+
+các API VSync của Apple.</p>
+
+<p>Tuy nhiên, sau khi thử nghiệm kỹ lưỡng hơn và nhận phản hồi, có vẻ
+
+như cơ chế mới trong 3.0.2 làm cho việc cuộn mượt mà hơn trong một số
+
+tình huống nhưng lại giật hơn trong các tình huống khác. Đặc biệt là
+
+trên Firefox, nó dường như tệ hơn đáng kể.<br />
+
+Nhìn chung, không rõ ràng là cơ chế mới thực sự cải thiện tình trạng
+
+giật khi cuộn trên toàn bộ hệ thống. Ngoài ra, nó có thể đã góp phần vào
+
+các sự cố crash khi cuộn được mô tả ở trên.</p>
+
+<p>Đó là lý do tại sao tôi đã vô hiệu hóa cơ chế mới và khôi phục lại cơ
+
+chế VSync cho các sự kiện cuộn về như trong Mac Mouse Fix 3.0.0 và
+
+3.0.1.</p>
+
+<p>Xem GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/875">#875</a>
+
+để biết thêm thông tin.</p>
+
+<h3 id="hoàn-tiền">Hoàn tiền</h3>
+
+<p>Tôi xin lỗi vì những rắc rối liên quan đến các thay đổi về cuộn trong
+
+phiên bản 3.0.1 và 3.0.2. Tôi đã đánh giá thấp các vấn đề sẽ phát sinh
+
+từ điều đó, và tôi đã chậm trong việc giải quyết những vấn đề này. Tôi
+
+sẽ cố gắng hết sức để học hỏi từ trải nghiệm này và cẩn thận hơn với
+
+những thay đổi như vậy trong tương lai. Tôi cũng muốn đề nghị hoàn tiền
+
+cho bất kỳ ai bị ảnh hưởng. Chỉ cần nhấp <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=vi">vào
+
+đây</a> nếu bạn quan tâm.</p>
+
+<h3 id="cơ-chế-cập-nhật-thông-minh-hơn">Cơ chế cập nhật thông minh
+
+hơn</h3>
+
+<p>Những thay đổi này được chuyển từ Mac Mouse Fix <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.4&amp;locale=vi">2.2.4</a>
+
+và <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.5&amp;locale=vi">2.2.5</a>.
+
+Xem ghi chú phát hành của chúng để tìm hiểu thêm về chi tiết. Dưới đây
+
+là tóm tắt:</p>
+
+<ul>
+
+<li>Có một cơ chế mới, thông minh hơn để quyết định hiển thị bản cập
+
+nhật nào cho người dùng.</li>
+
+<li>Chuyển từ sử dụng framework cập nhật Sparkle 1.26.0 sang Sparkle <a
+
+href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>
+
+mới nhất.</li>
+
+<li>Cửa sổ mà ứng dụng hiển thị để thông báo cho bạn về phiên bản mới
+
+của Mac Mouse Fix giờ đây hỗ trợ JavaScript, cho phép định dạng ghi chú
+
+cập nhật đẹp hơn.</li>
+
+</ul>
+
+<h3 id="các-cải-tiến-sửa-lỗi-khác">Các cải tiến &amp; sửa lỗi khác</h3>
+
+<ul>
+
+<li>Đã sửa lỗi khiến giá ứng dụng và thông tin liên quan hiển thị không
+
+chính xác trên tab ‘About’ trong một số trường hợp.</li>
+
+<li>Đã sửa lỗi khiến cơ chế đồng bộ hóa cuộn mượt với tốc độ làm mới màn
+
+hình không hoạt động đúng khi sử dụng nhiều màn hình.</li>
+
+<li>Nhiều cải tiến và dọn dẹp nhỏ dưới nền.</li>
+
+</ul>
+
+<hr />
+
+<p>Đồng thời hãy xem qua phiên bản trước đó <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.2&amp;locale=vi"><strong>3.0.2</strong></a>.</p>
+
+</body>
+
+</html>

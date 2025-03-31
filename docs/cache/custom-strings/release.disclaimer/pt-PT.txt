@@ -1,4 +1,3 @@
-<b>Traduzido por IA</b><br>
-Esta é uma tradução de uma <b><em>GitHub Release</em></b>.<br>
-A tradução foi feita pela IA Claude e pode não estar totalmente correta.<br>
-Para a GitHub Release original (em inglês), <a href="{gh_releases_url}">clique aqui</a>.
+<b>ℹ️ Traduzido por IA</b><br>
+Esta Release do GitHub foi traduzida pela IA Claude. Pode conter erros.<br>
+Para a versão original em inglês, <a href="{gh_releases_url}">clique aqui</a>.

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp5euqoctr</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI가 번역함</strong></p>
+
+<p>이 릴리스 노트는 Claude AI가 번역했습니다. 오류가 있을 수
+
+있습니다.<br />
+
+영어 원문을 보시려면 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.4">여기를
+
+클릭하세요</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>2.2.4</strong>가 이제 공증되었습니다! 또한 작은
+
+버그 수정과 기타 개선 사항이 포함되어 있습니다.</p>
+
+<h3 id="공증"><strong>공증</strong></h3>
+
+<p>Mac Mouse Fix 2.2.4가 이제 Apple의 ’공증’을 받았습니다. 이는 앱을
+
+처음 실행할 때 Mac Mouse Fix가 잠재적으로 ’악성 소프트웨어’라는 메시지가
+
+더 이상 표시되지 않는다는 것을 의미합니다.</p>
+
+<h4 id="배경">배경</h4>
+
+<p>앱 공증에는 연간 100달러의 비용이 듭니다. Mac Mouse Fix와 같은 무료
+
+오픈소스 소프트웨어에 적대적이고, Apple이 iPhone이나 iPad처럼 Mac을
+
+통제하고 제한하는 위험한 단계라고 느껴져서 항상 반대했습니다. 하지만
+
+공증이 없어서 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/114">앱
+
+실행의 어려움</a>과 심지어 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/95">새
+
+버전을 출시할 때까지 아무도 앱을 사용할 수 없는 상황</a>과 같은 다른
+
+문제들이 발생했습니다.</p>
+
+<p>Mac Mouse Fix 3는 수익화되었기 때문에, 앱 공증을 위해 연간 100달러를
+
+지불하는 것이 마침내 적절하다고 생각했습니다. (<a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0&amp;locale=ko">자세히
+
+알아보기</a>)<br />
+
+이제 Mac Mouse Fix 2도 공증을 받게 되어, 더 쉽고 안정적인 사용자 경험을
+
+제공할 수 있게 되었습니다.</p>
+
+<h3 id="버그-수정"><strong>버그 수정</strong></h3>
+
+<ul>
+
+<li>화면 녹화 중이나 <a
+
+href="https://www.synaptics.com/products/displaylink-graphics">DisplayLink</a>
+
+소프트웨어 사용 중에 ‘클릭 앤 드래그’ 동작을 사용할 때 커서가 사라졌다가
+
+다른 위치에 나타나는 문제를 수정했습니다.</li>
+
+<li>macOS 10.14 Mojave 및 이전 macOS 버전에서 Mac Mouse Fix를 활성화하는
+
+문제를 수정했습니다.</li>
+
+<li>메모리 관리를 개선하여, 컴퓨터에서 마우스를 분리할 때 발생하는 ‘Mac
+
+Mouse Fix Helper’ 앱의 충돌 문제를 잠재적으로 해결했습니다. 토론 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/771">#771</a>을
+
+참조하세요.</li>
+
+</ul>
+
+<h3 id="기타-개선-사항"><strong>기타 개선 사항</strong></h3>
+
+<ul>
+
+<li>Mac Mouse Fix의 새 버전이 있음을 알리는 창이 이제 JavaScript를
+
+지원합니다. 이를 통해 업데이트 노트가 더 보기 좋고 읽기 쉬워졌습니다.
+
+예를 들어, 업데이트 노트에서 이제 <a
+
+href="https://github.com/orgs/community/discussions/16925">Markdown
+
+알림</a> 등을 표시할 수 있습니다.</li>
+
+<li>“Mac Mouse Fix Helper에 접근성 접근 권한 부여” 화면에서
+
+https://macmousefix.com/about/ 페이지로의 링크를 제거했습니다. About
+
+페이지가 더 이상 존재하지 않고 현재는 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix">GitHub
+
+Readme</a>로 대체되었기 때문입니다.</li>
+
+<li>이 릴리스에는 이제 Mac Mouse Fix 2.2.4의 충돌 보고서를 디코딩하는 데
+
+사용할 수 있는 dSYM 파일이 포함되어 있습니다.</li>
+
+<li>일부 내부 정리 및 개선이 이루어졌습니다.</li>
+
+</ul>
+
+<hr />
+
+<p>이전 릴리스 <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.3&amp;locale=ko"><strong>2.2.3</strong></a>도
+
+확인해보세요.</p>
+
+</body>
+
+</html>

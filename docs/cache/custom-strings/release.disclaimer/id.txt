@@ -1,0 +1,3 @@
+<b>ℹ️ Diterjemahkan oleh AI</b><br>
+GitHub Release ini telah diterjemahkan oleh AI Claude. Mungkin terdapat kesalahan.<br>
+Untuk versi asli dalam bahasa Inggris, <a href="{gh_releases_url}">klik di sini</a>.

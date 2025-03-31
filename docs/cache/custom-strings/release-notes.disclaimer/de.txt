@@ -1,4 +1,4 @@
 **ℹ️ Von KI übersetzt**
 
-Diese Versionshinweise wurden von der Claude KI übersetzt. Sie sind möglicherweise nicht vollständig präzise.\
+Diese Versionshinweise wurden von der Claude KI übersetzt. Sie können Fehler enthalten.\
 Die englische Originalversion findest du [hier]({gh_releases_url}).

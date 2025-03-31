@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpjkqp6b7o</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Traducido por IA</strong></p>
+
+<p>Esta nota de la versión ha sido traducida por la IA Claude. Puede
+
+contener errores.<br />
+
+Para ver la versión original en inglés, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.1">haz
+
+clic aquí</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.1</strong> trae varias correcciones de
+
+errores y mejoras, ¡junto con un <strong>nuevo idioma</strong>!</p>
+
+<h3 id="se-agregó-el-vietnamita">¡Se agregó el vietnamita!</h3>
+
+<p>Mac Mouse Fix ahora está disponible en 🇻🇳 vietnamita. ¡Muchas gracias
+
+a <span class="citation" data-cites="nghlt">@nghlt</span> <a
+
+href="https://GitHub.com/nghlt">en GitHub</a>!</p>
+
+<h3 id="correcciones-de-errores">Correcciones de errores</h3>
+
+<ul>
+
+<li>¡Mac Mouse Fix ahora funciona correctamente con el <strong>Cambio
+
+Rápido de Usuario</strong>!
+
+<ul>
+
+<li>El Cambio Rápido de Usuario es cuando inicias sesión en una segunda
+
+cuenta de macOS sin cerrar la sesión de la primera cuenta.</li>
+
+<li>Antes de esta actualización, el desplazamiento dejaba de funcionar
+
+después de un cambio rápido de usuario. Ahora todo debería funcionar
+
+correctamente.</li>
+
+</ul></li>
+
+<li>Se corrigió un pequeño error donde el diseño de la pestaña Botones
+
+era demasiado ancho después de iniciar Mac Mouse Fix por primera
+
+vez.</li>
+
+<li>Se mejoró la fiabilidad del campo ‘+’ al agregar varias Acciones en
+
+sucesión rápida.</li>
+
+<li>Se corrigió un error poco común reportado por <span class="citation"
+
+data-cites="V-Coba">@V-Coba</span> en el Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/735">735</a>.</li>
+
+</ul>
+
+<h3 id="otras-mejoras">Otras mejoras</h3>
+
+<ul>
+
+<li><strong>El desplazamiento se siente más receptivo</strong> cuando se
+
+usa la configuración ‘Suavidad: Regular’.
+
+<ul>
+
+<li>La velocidad de la animación ahora se vuelve más rápida a medida que
+
+mueves la rueda de desplazamiento más rápido. De esta manera, se siente
+
+más receptivo cuando te desplazas rápido mientras se mantiene igual de
+
+suave cuando te desplazas lentamente.</li>
+
+</ul></li>
+
+<li>Se hizo la <strong>aceleración de la velocidad de
+
+desplazamiento</strong> más estable y predecible.</li>
+
+<li>Se implementó un mecanismo para <strong>mantener tu
+
+configuración</strong> cuando actualizas a una nueva versión de Mac
+
+Mouse Fix.
+
+<ul>
+
+<li>Antes, Mac Mouse Fix restablecía toda tu configuración después de
+
+actualizar a una nueva versión si la estructura de la configuración
+
+cambiaba. Ahora, Mac Mouse Fix intentará actualizar la estructura de tu
+
+configuración y mantener tus preferencias.</li>
+
+<li>Por ahora, esto solo funciona al actualizar de 3.0.0 a 3.0.1. Si
+
+estás actualizando desde una versión anterior a 3.0.0, o si
+
+<em>degradas</em> de 3.0.1 <em>a</em> una versión anterior, tu
+
+configuración se seguirá restableciendo.</li>
+
+</ul></li>
+
+<li>El diseño de la pestaña Botones ahora adapta mejor su ancho a
+
+diferentes idiomas.</li>
+
+<li>Mejoras en el <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix#background">GitHub
+
+Readme</a> y otros documentos.</li>
+
+<li>Mejoras en los sistemas de localización. Los archivos de traducción
+
+ahora se limpian y analizan automáticamente en busca de posibles
+
+problemas. Hay una nueva <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/731">Guía
+
+de Localización</a> que presenta cualquier problema detectado
+
+automáticamente junto con otra información útil e instrucciones para
+
+personas que quieren ayudar a traducir Mac Mouse Fix. Se eliminó la
+
+dependencia de la herramienta <a
+
+href="https://github.com/FlineDev/BartyCrouch">BartyCrouch</a> que se
+
+usaba anteriormente para obtener parte de esta funcionalidad.</li>
+
+<li>Se mejoraron varios textos de la interfaz en inglés y alemán.</li>
+
+<li>Muchas mejoras y limpieza bajo el capó.</li>
+
+</ul>
+
+<hr />
+
+<p>¡También consulta las notas de la versión <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0&amp;locale=es"><strong>3.0.0</strong></a>
+
+- la actualización más grande de Mac Mouse Fix hasta ahora!</p>
+
+</body>
+
+</html>

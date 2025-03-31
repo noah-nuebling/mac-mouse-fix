@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmppg22y_us</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Traduit par l’IA</strong></p>
+
+<p>Cette note de version a été traduite par l’IA Claude. Elle peut
+
+contenir des erreurs.<br />
+
+Pour la version originale en anglais, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-7">cliquez
+
+ici</a>.</p>
+
+<hr />
+
+<p>Découvrez aussi les <strong>belles améliorations</strong> introduites
+
+dans <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-6&amp;locale=fr">3.0.0
+
+Beta 6</a> !</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 7</strong> apporte plusieurs petites améliorations
+
+et corrections de bugs.</p>
+
+<p>Voici toutes les nouveautés :</p>
+
+<p><strong>Améliorations</strong></p>
+
+<ul>
+
+<li>Ajout des <strong>traductions en coréen</strong>. Un grand merci à
+
+<span class="citation" data-cites="jeongtae">@jeongtae</span> !
+
+(Retrouvez-le sur <a href="https://github.com/jeongtae">GitHub</a>)</li>
+
+<li>Le <strong>défilement</strong> avec l’option ‘Fluidité : Élevée’ est
+
+<strong>encore plus fluide</strong>, en ne modifiant la vitesse que
+
+progressivement, au lieu d’avoir des sauts brusques dans la vitesse de
+
+défilement lorsque vous déplacez la molette. Cela devrait rendre le
+
+défilement un peu plus fluide et plus facile à suivre des yeux sans
+
+réduire la réactivité. Le défilement avec ‘Fluidité : Élevée’ utilise
+
+environ 30% de CPU en plus, sur mon ordinateur il est passé de 1,2%
+
+d’utilisation CPU en défilement continu à 1,6%. Le défilement reste donc
+
+très efficace et j’espère que cela ne fera pas de différence pour
+
+quiconque. Un grand merci à <a href="https://mos.caldis.me/">MOS</a>,
+
+qui a inspiré cette fonctionnalité et dont j’ai utilisé le ‘Scroll
+
+Monitor’ pour aider à l’implémenter.</li>
+
+<li>Mac Mouse Fix <strong>gère maintenant les entrées de boutons de
+
+toutes sources</strong>. Auparavant, Mac Mouse Fix ne gérait que les
+
+entrées des souris qu’il reconnaissait. Je pense que cela pourrait
+
+améliorer la compatibilité avec certaines souris dans des cas
+
+particuliers, comme lors de l’utilisation d’un Hackintosh, mais cela
+
+conduira aussi Mac Mouse Fix à détecter les entrées de boutons générées
+
+artificiellement par d’autres applications, ce qui pourrait poser des
+
+problèmes dans d’autres cas particuliers. Faites-moi savoir si cela vous
+
+pose des problèmes, et je les traiterai dans les futures mises à
+
+jour.</li>
+
+<li>Affinement de la sensation et du raffinement des gestes ‘Cliquer et
+
+faire défiler’ pour ‘Bureau et Launchpad’ et ‘Cliquer et faire défiler’
+
+pour ‘Se déplacer entre les Spaces’.</li>
+
+<li>Prise en compte de la densité d’information d’une langue lors du
+
+calcul du <strong>temps d’affichage des notifications</strong>.
+
+Auparavant, les notifications ne restaient visibles que très peu de
+
+temps dans les langues à haute densité d’information comme le chinois ou
+
+le coréen.</li>
+
+<li>Activation de <strong>différents gestes</strong> pour se déplacer
+
+entre les <strong>Spaces</strong>, ouvrir <strong>Mission
+
+Control</strong>, ou ouvrir <strong>App Exposé</strong>. Dans la Beta 6,
+
+j’avais fait en sorte que ces actions ne soient disponibles que via le
+
+geste ‘Cliquer et faire glisser’ - comme une expérience pour voir
+
+combien de personnes tenaient vraiment à pouvoir accéder à ces actions
+
+d’autres manières. Il semble que certains y tiennent, donc j’ai rendu à
+
+nouveau possible l’accès à ces actions via un simple ‘Clic’ d’un bouton
+
+ou via ‘Cliquer et faire défiler’.</li>
+
+<li>Ajout de la possibilité de <strong>Pivoter</strong> via un geste
+
+<strong>Cliquer et faire défiler</strong>.</li>
+
+<li><strong>Amélioration</strong> du fonctionnement de l’option
+
+<strong>Simulation du trackpad</strong> dans certains scénarios. Par
+
+exemple, lors du défilement horizontal pour supprimer un message dans
+
+Mail, la direction du déplacement du message est maintenant inversée, ce
+
+qui devrait sembler un peu plus naturel et cohérent pour la plupart des
+
+utilisateurs.</li>
+
+<li>Ajout d’une fonction pour <strong>remapper</strong> vers le
+
+<strong>Clic principal</strong> ou le <strong>Clic secondaire</strong>.
+
+J’ai implémenté cela car le bouton droit de ma souris préférée s’est
+
+cassé. Ces options sont masquées par défaut. Vous pouvez les voir en
+
+maintenant la touche Option enfoncée lors de la sélection d’une action.
+
+<ul>
+
+<li>Il manque actuellement les traductions en chinois et en coréen pour
+
+ces fonctionnalités, donc si vous souhaitez contribuer aux traductions,
+
+ce serait grandement apprécié !</li>
+
+</ul></li>
+
+</ul>
+
+<p><strong>Corrections de bugs</strong></p>
+
+<ul>
+
+<li>Correction d’un bug où la <strong>direction du ‘Cliquer et faire
+
+glisser’</strong> pour ‘Mission Control &amp; Spaces’ était
+
+<strong>inversée</strong> pour les personnes qui n’ont jamais basculé
+
+l’option ‘Défilement naturel’ dans les Réglages Système. Maintenant, la
+
+direction des gestes ‘Cliquer et faire glisser’ dans Mac Mouse Fix
+
+devrait toujours correspondre à la direction des gestes sur votre
+
+Trackpad ou Magic Mouse. Si vous souhaitez une option séparée pour
+
+inverser la direction ‘Cliquer et faire glisser’, au lieu de suivre les
+
+Réglages Système, faites-le moi savoir.</li>
+
+<li>Correction d’un bug où les <strong>jours gratuits</strong>
+
+<strong>s’incrémentaient trop rapidement</strong> pour certains
+
+utilisateurs. Si vous avez été affecté par ce problème, faites-le moi
+
+savoir et je verrai ce que je peux faire.</li>
+
+<li>Correction d’un problème sous macOS Sonoma où la barre d’onglets ne
+
+s’affichait pas correctement.</li>
+
+<li>Correction des saccades lors de l’utilisation de la vitesse de
+
+défilement ‘macOS’ avec ‘Cliquer et faire défiler’ pour ouvrir
+
+Launchpad.</li>
+
+<li>Correction d’un crash où l’application ‘Mac Mouse Fix Helper’ (qui
+
+s’exécute en arrière-plan lorsque Mac Mouse Fix est activé) plantait
+
+parfois lors de l’enregistrement d’un raccourci clavier.</li>
+
+<li>Correction d’un bug où Mac Mouse Fix plantait en essayant de
+
+détecter les événements artificiels générés par <a
+
+href="https://github.com/artginzburg/MiddleClick-Sonoma">MiddleClick-Sonoma</a></li>
+
+<li>Correction d’un problème où le nom de certaines souris affiché dans
+
+la boîte de dialogue ‘Restaurer les valeurs par défaut…’ contenait deux
+
+fois le fabricant.</li>
+
+<li>Réduction de la probabilité que ‘Cliquer et faire glisser’ pour
+
+‘Mission Control &amp; Spaces’ se bloque lorsque l’ordinateur est
+
+lent.</li>
+
+<li>Correction de l’utilisation de ‘Force Touch’ dans les chaînes de
+
+l’interface utilisateur où il devrait être ‘Force click’.</li>
+
+<li>Correction d’un bug qui se produisait pour certaines configurations,
+
+où l’ouverture de Launchpad ou l’affichage du Bureau via ‘Cliquer et
+
+faire défiler’ ne fonctionnait pas si vous relâchiez le bouton pendant
+
+que l’animation de transition était encore en cours.</li>
+
+</ul>
+
+<p><strong>Plus</strong></p>
+
+<ul>
+
+<li>Plusieurs améliorations sous le capot, améliorations de la
+
+stabilité, nettoyage sous le capot, et plus encore.</li>
+
+</ul>
+
+<h2 id="comment-vous-pouvez-aider">Comment vous pouvez aider</h2>
+
+<p>Vous pouvez aider en partageant vos <strong>idées</strong>,
+
+<strong>problèmes</strong> et <strong>retours</strong> !</p>
+
+<p>Le meilleur endroit pour partager vos <strong>idées</strong> et
+
+<strong>problèmes</strong> est l’<a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Assistant
+
+de feedback</a>. Le meilleur endroit pour donner des retours
+
+<strong>rapides</strong> non structurés est la <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Discussion
+
+de feedback</a>.</p>
+
+<p>Vous pouvez également accéder à ces endroits depuis l’application
+
+dans l’onglet ‘<strong>ⓘ À propos</strong>’.</p>
+
+<p><strong>Merci</strong> d’aider à améliorer Mac Mouse Fix ! 😎:)</p>
+
+</body>
+
+</html>

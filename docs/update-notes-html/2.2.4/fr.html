@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmp71ksb6k3</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Traduit par l’IA</strong></p>
+
+<p>Cette note de version a été traduite par l’IA Claude. Elle peut
+
+contenir des erreurs.<br />
+
+Pour la version originale en anglais, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.4">cliquez
+
+ici</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>2.2.4</strong> est maintenant notarisé ! Cette
+
+version inclut également quelques corrections de bugs et d’autres
+
+améliorations.</p>
+
+<h3 id="notarisation"><strong>Notarisation</strong></h3>
+
+<p>Mac Mouse Fix 2.2.4 est maintenant ‘notarisé’ par Apple. Cela
+
+signifie qu’il n’y aura plus de messages indiquant que Mac Mouse Fix est
+
+potentiellement un ‘Logiciel malveillant’ lors de la première ouverture
+
+de l’application.</p>
+
+<h4 id="contexte">Contexte</h4>
+
+<p>La notarisation d’une application coûte 100 $ par an. J’y étais
+
+toujours opposé, car cela semblait hostile envers les logiciels gratuits
+
+et open source comme Mac Mouse Fix, et cela semblait également être un
+
+pas dangereux vers un contrôle et un verrouillage du Mac par Apple,
+
+comme ils le font avec les iPhone ou les iPad. Mais l’absence de
+
+notarisation a entraîné différents problèmes, notamment des <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/114">difficultés
+
+à ouvrir l’application</a> et même <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/95">plusieurs
+
+situations</a> où personne ne pouvait plus utiliser l’application
+
+jusqu’à ce que je publie une nouvelle version.</p>
+
+<p>Pour Mac Mouse Fix 3, j’ai pensé qu’il était enfin approprié de payer
+
+les 100 $ par an pour notariser l’application, puisque Mac Mouse Fix 3
+
+est monétisé. (<a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0&amp;locale=fr">En
+
+savoir plus</a>)<br />
+
+Maintenant, Mac Mouse Fix 2 bénéficie également de la notarisation, ce
+
+qui devrait conduire à une expérience utilisateur plus facile et plus
+
+stable.</p>
+
+<h3 id="corrections-de-bugs"><strong>Corrections de bugs</strong></h3>
+
+<ul>
+
+<li>Correction d’un problème où le curseur disparaissait puis
+
+réapparaissait à un endroit différent lors de l’utilisation d’une action
+
+‘Cliquer-glisser’ pendant un enregistrement d’écran ou lors de
+
+l’utilisation du logiciel <a
+
+href="https://www.synaptics.com/products/displaylink-graphics">DisplayLink</a>.</li>
+
+<li>Correction d’un problème d’activation de Mac Mouse Fix sous macOS
+
+10.14 Mojave et possiblement aussi sous des versions plus anciennes de
+
+macOS.</li>
+
+<li>Amélioration de la gestion de la mémoire, corrigeant potentiellement
+
+un plantage de l’application ‘Mac Mouse Fix Helper’ qui survenait lors
+
+du détachement d’une souris de votre ordinateur. Voir la Discussion <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/771">#771</a>.</li>
+
+</ul>
+
+<h3 id="autres-améliorations"><strong>Autres améliorations</strong></h3>
+
+<ul>
+
+<li>La fenêtre que l’application affiche pour vous informer qu’une
+
+nouvelle version de Mac Mouse Fix est disponible prend maintenant en
+
+charge JavaScript. Cela permet aux notes de mise à jour d’être plus
+
+jolies et plus faciles à lire. Par exemple, les notes de mise à jour
+
+peuvent maintenant afficher les <a
+
+href="https://github.com/orgs/community/discussions/16925">Alertes
+
+Markdown</a> et plus encore.</li>
+
+<li>Suppression d’un lien vers la page https://macmousefix.com/about/ de
+
+l’écran “Accorder l’accès d’accessibilité à Mac Mouse Fix Helper”. C’est
+
+parce que la page À propos n’existe plus et a été remplacée pour
+
+l’instant par le <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix">README
+
+GitHub</a>.</li>
+
+<li>Cette version inclut maintenant des fichiers dSYM qui peuvent être
+
+utilisés par n’importe qui pour décoder les rapports de plantage de Mac
+
+Mouse Fix 2.2.4.</li>
+
+<li>Quelques nettoyages et améliorations sous le capot.</li>
+
+</ul>
+
+<hr />
+
+<p>Consultez également la version précédente <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.3&amp;locale=fr"><strong>2.2.3</strong></a>.</p>
+
+</body>
+
+</html>

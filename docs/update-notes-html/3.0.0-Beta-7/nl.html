@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nl" xml:lang="nl">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpy17c_qqm</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Vertaald door AI</strong></p>
+
+<p>Deze release note is vertaald door de Claude AI. Het kan fouten
+
+bevatten.<br />
+
+Voor de originele Engelse versie, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-7">klik
+
+hier</a>.</p>
+
+<hr />
+
+<p>Bekijk ook de <strong>handige verbeteringen</strong> die zijn
+
+geïntroduceerd in <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-6&amp;locale=nl">3.0.0
+
+Beta 6</a>!</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 7</strong> brengt verschillende kleine
+
+verbeteringen en bugfixes.</p>
+
+<p>Hier is alles wat nieuw is:</p>
+
+<p><strong>Verbeteringen</strong></p>
+
+<ul>
+
+<li><strong>Koreaanse vertalingen</strong> toegevoegd. Grote dank aan
+
+<span class="citation" data-cites="jeongtae">@jeongtae</span>! (Vind hem
+
+op <a href="https://github.com/jeongtae">GitHub</a>)</li>
+
+<li><strong>Scrollen</strong> met de ‘Vloeiendheid: Hoog’ optie
+
+<strong>nog vloeiender</strong> gemaakt door de snelheid alleen
+
+geleidelijk te veranderen, in plaats van plotselinge sprongen in de
+
+scrollsnelheid tijdens het bewegen van het scrollwiel. Dit zou het
+
+scrollen wat vloeiender en makkelijker te volgen moeten maken met je
+
+ogen zonder dat het minder responsief wordt. Scrollen met ‘Vloeiendheid:
+
+Hoog’ gebruikt nu ongeveer 30% meer CPU, op mijn computer ging het van
+
+1.2% CPU-gebruik bij continu scrollen naar 1.6%. Scrollen blijft dus
+
+zeer efficiënt en ik hoop dat dit voor niemand een verschil zal maken.
+
+Grote dank aan <a href="https://mos.caldis.me/">MOS</a>, dat de
+
+inspiratie was voor deze functie en waarvan ik de ‘Scroll Monitor’ heb
+
+gebruikt om de functie te implementeren.</li>
+
+<li>Mac Mouse Fix <strong>verwerkt nu knopinvoer van alle
+
+bronnen</strong>. Voorheen verwerkte Mac Mouse Fix alleen invoer van
+
+muizen die het herkende. Ik denk dat dit de compatibiliteit met bepaalde
+
+muizen in randgevallen kan verbeteren, bijvoorbeeld bij gebruik van een
+
+Hackintosh, maar het zorgt er ook voor dat Mac Mouse Fix kunstmatig
+
+gegenereerde knopinvoer van andere apps oppikt, wat in andere
+
+randgevallen tot problemen kan leiden. Laat het me weten als dit
+
+problemen voor je veroorzaakt, dan zal ik dat in toekomstige updates
+
+aanpakken.</li>
+
+<li>Het gevoel en de afwerking verfijnd van de ‘Klik en Scroll’ voor
+
+‘Bureaublad &amp; Launchpad’ en ‘Klik en Scroll’ voor ‘Tussen Spaces
+
+bewegen’ gebaren.</li>
+
+<li>Er wordt nu rekening gehouden met de informatiedichtheid van een
+
+taal bij het berekenen van de <strong>tijd dat meldingen worden
+
+getoond</strong>. Voorheen bleven meldingen maar heel kort zichtbaar in
+
+talen met hoge informatiedichtheid zoals Chinees of Koreaans.</li>
+
+<li><strong>Verschillende gebaren</strong> mogelijk gemaakt om tussen
+
+<strong>Spaces</strong> te bewegen, <strong>Mission Control</strong> te
+
+openen, of <strong>App Exposé</strong> te openen. In Beta 6 had ik deze
+
+acties alleen beschikbaar gemaakt via het ‘Klik en Sleep’ gebaar - als
+
+experiment om te zien hoeveel mensen het echt belangrijk vonden om deze
+
+acties op andere manieren te kunnen gebruiken. Het lijkt erop dat
+
+sommigen dat wel willen, dus nu is het weer mogelijk om deze acties te
+
+gebruiken via een simpele ‘Klik’ van een knop of via ‘Klik en
+
+Scroll’.</li>
+
+<li>Mogelijk gemaakt om te <strong>Roteren</strong> via een <strong>Klik
+
+en Scroll</strong> gebaar.</li>
+
+<li>De werking van de <strong>Trackpad Simulatie</strong> optie
+
+<strong>verbeterd</strong> in sommige scenario’s. Bijvoorbeeld bij
+
+horizontaal scrollen om een bericht in Mail te verwijderen, is de
+
+richting waarin het bericht beweegt nu omgekeerd, wat hopelijk voor de
+
+meeste mensen natuurlijker en consistenter aanvoelt.</li>
+
+<li>Een functie toegevoegd om te <strong>herkoppelen</strong> naar
+
+<strong>Primaire Klik</strong> of <strong>Secundaire Klik</strong>. Ik
+
+heb dit geïmplementeerd omdat de rechtermuisknop op mijn favoriete muis
+
+kapot ging. Deze opties zijn standaard verborgen. Je kunt ze zien door
+
+de Option-toets ingedrukt te houden tijdens het selecteren van een
+
+actie.
+
+<ul>
+
+<li>Dit mist momenteel vertalingen voor Chinees en Koreaans, dus als je
+
+vertalingen voor deze functies wilt bijdragen zou dat zeer gewaardeerd
+
+worden!</li>
+
+</ul></li>
+
+</ul>
+
+<p><strong>Bugfixes</strong></p>
+
+<ul>
+
+<li>Een bug opgelost waarbij de <strong>richting van ‘Klik en
+
+Sleep’</strong> voor ‘Mission Control &amp; Spaces’
+
+<strong>omgekeerd</strong> was voor mensen die nooit de ‘Natuurlijk
+
+scrollen’ optie in Systeeminstellingen hebben omgeschakeld. Nu zou de
+
+richting van ‘Klik en Sleep’ gebaren in Mac Mouse Fix altijd moeten
+
+overeenkomen met de richting van gebaren op je Trackpad of Magic Mouse.
+
+Als je een aparte optie wilt voor het omkeren van de ‘Klik en Sleep’
+
+richting, in plaats van dat het de Systeeminstellingen volgt, laat het
+
+me weten.</li>
+
+<li>Een bug opgelost waarbij de <strong>gratis dagen</strong> voor
+
+sommige gebruikers <strong>te snel optelden</strong>. Als je hier last
+
+van had, laat het me weten en ik zal kijken wat ik kan doen.</li>
+
+<li>Een probleem opgelost onder macOS Sonoma waarbij de tabbalk niet
+
+correct werd weergegeven.</li>
+
+<li>Schokkerigheid opgelost bij gebruik van ‘macOS’ scrollsnelheid
+
+tijdens ‘Klik en Scroll’ om Launchpad te openen.</li>
+
+<li>Crash opgelost waarbij de ‘Mac Mouse Fix Helper’ app (die op de
+
+achtergrond draait wanneer Mac Mouse Fix is ingeschakeld) soms zou
+
+crashen bij het opnemen van een sneltoets.</li>
+
+<li>Een bug opgelost waarbij Mac Mouse Fix zou crashen bij het oppikken
+
+van kunstmatige events gegenereerd door <a
+
+href="https://github.com/artginzburg/MiddleClick-Sonoma">MiddleClick-Sonoma</a></li>
+
+<li>Een probleem opgelost waarbij de naam voor sommige muizen in de
+
+‘Standaardinstellingen herstellen…’ dialoog de fabrikant twee keer
+
+bevatte.</li>
+
+<li>De kans verkleind dat ‘Klik en Sleep’ voor ‘Mission Control &amp;
+
+Spaces’ vastloopt wanneer de computer traag is.</li>
+
+<li>Gebruik van ‘Force Touch’ in UI-teksten gecorrigeerd waar het ‘Force
+
+click’ moet zijn.</li>
+
+<li>Een bug opgelost die zou optreden bij bepaalde configuraties,
+
+waarbij het openen van Launchpad of het tonen van het Bureaublad via
+
+‘Klik en Scroll’ niet zou werken als je de knop losliet terwijl de
+
+overgangsanimatie nog bezig was.</li>
+
+</ul>
+
+<p><strong>Meer</strong></p>
+
+<ul>
+
+<li>Verschillende verbeteringen onder de motorkap,
+
+stabiliteitsverbeteringen, opschoning onder de motorkap, en meer.</li>
+
+</ul>
+
+<h2 id="hoe-je-kunt-helpen">Hoe Je Kunt Helpen</h2>
+
+<p>Je kunt helpen door je <strong>ideeën</strong>,
+
+<strong>problemen</strong> en <strong>feedback</strong> te delen!</p>
+
+<p>De beste plek om je <strong>ideeën</strong> en
+
+<strong>problemen</strong> te delen is de <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Feedback
+
+Assistant</a>. De beste plek om <strong>snelle</strong>
+
+ongestructureerde feedback te geven is de <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Feedback
+
+Discussie</a>.</p>
+
+<p>Je kunt deze plekken ook bereiken vanuit de app op het ‘<strong>ⓘ
+
+Over</strong>’ tabblad.</p>
+
+<p><strong>Bedankt</strong> voor je hulp om Mac Mouse Fix beter te
+
+maken! 😎:)</p>
+
+</body>
+
+</html>

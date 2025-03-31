@@ -1,0 +1,49 @@
+Hãy xem qua những **cải tiến tuyệt vời** được giới thiệu trong [3.0.0 Beta 6](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-6)!
+
+
+---
+
+**3.0.0 Beta 7** mang đến một số cải tiến và sửa lỗi nhỏ.
+
+Dưới đây là tất cả những điểm mới:
+
+**Cải tiến**
+
+- Thêm **bản dịch tiếng Hàn**. Cảm ơn @jeongtae rất nhiều! (Tìm anh ấy trên [GitHub](https://github.com/jeongtae))
+- Làm cho **cuộn** với tùy chọn 'Độ mượt: Cao' **còn mượt hơn nữa**, bằng cách chỉ thay đổi tốc độ từ từ, thay vì có những thay đổi đột ngột về tốc độ cuộn khi bạn di chuyển con lăn. Điều này giúp việc cuộn cảm giác mượt mà hơn và dễ theo dõi hơn bằng mắt mà không làm giảm độ phản hồi. Cuộn với 'Độ mượt: Cao' sử dụng nhiều CPU hơn khoảng 30%, trên máy tính của tôi tăng từ 1.2% lên 1.6% khi cuộn liên tục. Vì vậy việc cuộn vẫn rất hiệu quả và tôi hy vọng điều này sẽ không ảnh hưởng đến ai. Cảm ơn [MOS](https://mos.caldis.me/) rất nhiều, đã truyền cảm hứng cho tính năng này và tôi đã sử dụng 'Scroll Monitor' của họ để giúp triển khai tính năng.
+- Mac Mouse Fix giờ đây **xử lý đầu vào nút từ mọi nguồn**. Trước đây, Mac Mouse Fix chỉ xử lý đầu vào từ chuột mà nó nhận diện được. Tôi nghĩ điều này có thể giúp tương thích với một số chuột trong các trường hợp đặc biệt, như khi sử dụng Hackintosh, nhưng nó cũng sẽ khiến Mac Mouse Fix nhận các đầu vào nút được tạo nhân tạo từ các ứng dụng khác, điều này có thể dẫn đến vấn đề trong một số trường hợp đặc biệt khác. Hãy cho tôi biết nếu điều này gây ra bất kỳ vấn đề nào cho bạn, và tôi sẽ giải quyết trong các bản cập nhật tương lai.
+- Tinh chỉnh cảm giác và độ hoàn thiện của cử chỉ 'Nhấp và Cuộn' cho 'Desktop & Launchpad' và 'Nhấp và Cuộn' để 'Di chuyển giữa các Spaces'.
+- Giờ đây tính đến mật độ thông tin của ngôn ngữ khi tính toán **thời gian hiển thị thông báo**. Trước đây, thông báo chỉ hiển thị trong thời gian rất ngắn đối với các ngôn ngữ có mật độ thông tin cao như tiếng Trung hoặc tiếng Hàn.
+- Cho phép **các cử chỉ khác nhau** để di chuyển giữa **Spaces**, mở **Mission Control**, hoặc mở **App Exposé**. Trong Beta 6, tôi đã làm cho những hành động này chỉ có thể thực hiện thông qua cử chỉ 'Nhấp và Kéo' - như một thử nghiệm để xem có bao nhiêu người thực sự quan tâm đến việc có thể truy cập những hành động đó bằng các cách khác. Có vẻ như một số người quan tâm, nên giờ đây tôi đã làm cho có thể truy cập các hành động này thông qua 'Nhấp' đơn giản hoặc 'Nhấp và Cuộn'.
+- Cho phép **Xoay** thông qua cử chỉ **Nhấp và Cuộn**.
+- **Cải thiện** cách hoạt động của tùy chọn **Mô phỏng Trackpad** trong một số tình huống. Ví dụ, khi cuộn ngang để xóa tin nhắn trong Mail, hướng di chuyển của tin nhắn giờ đây được đảo ngược, điều này tôi hy vọng sẽ cảm thấy tự nhiên và nhất quán hơn với hầu hết mọi người.
+- Thêm tính năng để **ánh xạ lại** thành **Nhấp Chính** hoặc **Nhấp Phụ**. Tôi đã triển khai điều này vì nút chuột phải trên chuột yêu thích của tôi bị hỏng. Các tùy chọn này được ẩn theo mặc định. Bạn có thể thấy chúng bằng cách giữ phím Option khi chọn một hành động.
+  - Hiện tại tính năng này chưa có bản dịch tiếng Trung và tiếng Hàn, vì vậy nếu bạn muốn đóng góp bản dịch cho các tính năng này thì rất được hoan nghênh!
+
+**Sửa lỗi**
+
+- Sửa lỗi khi **hướng của 'Nhấp và Kéo'** cho 'Mission Control & Spaces' bị **đảo ngược** đối với những người chưa bao giờ chuyển đổi tùy chọn 'Cuộn tự nhiên' trong Cài đặt Hệ thống. Giờ đây, hướng của cử chỉ 'Nhấp và Kéo' trong Mac Mouse Fix sẽ luôn khớp với hướng của cử chỉ trên Trackpad hoặc Magic Mouse của bạn. Nếu bạn muốn một tùy chọn riêng để đảo ngược hướng 'Nhấp và Kéo', thay vì theo Cài đặt Hệ thống, hãy cho tôi biết.
+- Sửa lỗi khi **số ngày dùng thử** **tăng quá nhanh** đối với một số người dùng. Nếu bạn bị ảnh hưởng bởi điều này, hãy cho tôi biết và tôi sẽ xem có thể làm gì.
+- Sửa lỗi trên macOS Sonoma khi thanh tab không hiển thị đúng cách.
+- Sửa lỗi giật khi sử dụng tốc độ cuộn 'macOS' trong khi sử dụng 'Nhấp và Cuộn' để mở Launchpad.
+- Sửa lỗi crash khi ứng dụng 'Mac Mouse Fix Helper' (chạy trong nền khi Mac Mouse Fix được bật) đôi khi bị crash khi ghi lại phím tắt.
+- Sửa lỗi khi Mac Mouse Fix bị crash khi cố gắng nhận các sự kiện nhân tạo được tạo bởi [MiddleClick-Sonoma](https://github.com/artginzburg/MiddleClick-Sonoma)
+- Sửa lỗi khi tên của một số chuột hiển thị trong hộp thoại 'Khôi phục Mặc định...' chứa nhà sản xuất hai lần.
+- Giảm khả năng 'Nhấp và Kéo' cho 'Mission Control & Spaces' bị kẹt khi máy tính chậm.
+- Sửa việc sử dụng 'Force Touch' trong chuỗi UI thành 'Force click'.
+- Sửa lỗi xảy ra với một số cấu hình nhất định, khi mở Launchpad hoặc hiển thị Desktop thông qua 'Nhấp và Cuộn' không hoạt động nếu bạn thả nút trong khi hiệu ứng chuyển tiếp vẫn đang diễn ra.
+
+**Thêm nữa**
+
+- Nhiều cải tiến bên trong, cải thiện độ ổn định, dọn dẹp bên trong, và nhiều hơn nữa.
+
+## Bạn có thể giúp như thế nào
+
+Bạn có thể giúp bằng cách chia sẻ **ý tưởng**, **vấn đề** và **phản hồi** của mình!
+
+Nơi tốt nhất để chia sẻ **ý tưởng** và **vấn đề** là [Trợ lý Phản hồi](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report).
+Nơi tốt nhất để đưa ra phản hồi **nhanh** không cấu trúc là [Thảo luận Phản hồi](https://github.com/noah-nuebling/mac-mouse-fix/discussions/366).
+
+Bạn cũng có thể truy cập những nơi này từ trong ứng dụng trên tab '**ⓘ Giới thiệu**'.
+
+**Cảm ơn** vì đã giúp Mac Mouse Fix trở nên tốt hơn! 😎:)

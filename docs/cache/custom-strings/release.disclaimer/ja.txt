@@ -1,4 +1,3 @@
-<b>AIによる翻訳</b><br>
-これは<b><em>GitHubリリース</em></b>の翻訳です。<br>
-この翻訳はClaude AIによって行われており、完全に正確ではない可能性があります。<br>
-オリジナルのGitHubリリース（英語）は<a href="{gh_releases_url}">こちらをクリック</a>してください。
+<b>ℹ️ AIによる翻訳</b><br>
+このGitHubリリースはClaude AIによって翻訳されています。誤訳がある可能性があります。<br>
+英語の原文は<a href="{gh_releases_url}">こちら</a>をクリックしてください。

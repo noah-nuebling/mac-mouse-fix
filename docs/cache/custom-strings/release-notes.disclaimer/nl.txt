@@ -1,0 +1,4 @@
+**ℹ️ Vertaald door AI**
+
+Deze release note is vertaald door de Claude AI. Het kan fouten bevatten.\
+Voor de originele Engelse versie, [klik hier]({gh_releases_url}).

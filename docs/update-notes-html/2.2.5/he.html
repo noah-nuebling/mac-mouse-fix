@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="he" xml:lang="he">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>tmpo85fe11j</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ תורגם על ידי בינה מלאכותית</strong></p>
+
+<p>הערת שחרור זו תורגמה על ידי הבינה המלאכותית Claude. היא עשויה להכיל
+
+שגיאות.<br />
+
+לגרסה המקורית באנגלית, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.5">לחץ
+
+כאן</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>2.2.5</strong> כולל שיפורים במנגנון העדכון,
+
+והוא מוכן למערכת ההפעלה macOS 15 Sequoia!</p>
+
+<h3 id="מסגרת-עדכון-sparkle-חדשה">מסגרת עדכון Sparkle חדשה</h3>
+
+<p>Mac Mouse Fix משתמש במסגרת העדכון <a
+
+href="https://sparkle-project.org/">Sparkle</a> כדי לספק חוויית עדכון
+
+מעולה.</p>
+
+<p>בגרסה 2.2.5, Mac Mouse Fix עובר משימוש ב-Sparkle 1.26.0 לגרסה העדכנית
+
+ביותר <a
+
+href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>,
+
+הכוללת תיקוני אבטחה, שיפורי תרגום ועוד.</p>
+
+<h3 id="מנגנון-עדכון-חכם-יותר">מנגנון עדכון חכם יותר</h3>
+
+<p>קיים מנגנון חדש שמחליט איזה עדכון להציג למשתמש. ההתנהגות השתנתה
+
+באופנים הבאים:</p>
+
+<ol type="1">
+
+<li>לאחר שתדלג על עדכון <strong>גרסה ראשית</strong> (כמו 2.2.5 -&gt;
+
+3.0.0), עדיין תקבל התראות על עדכוני <strong>גרסאות משניות</strong> (כמו
+
+2.2.5 -&gt; 2.2.6).
+
+<ul>
+
+<li>זה מאפשר לך להישאר בקלות על Mac Mouse Fix 2 תוך קבלת עדכונים, כפי
+
+שנדון בגיטהאב Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/962">#962</a>.</li>
+
+</ul></li>
+
+<li>במקום להציג את העדכון לגרסה האחרונה, Mac Mouse Fix יציג כעת את
+
+העדכון לגרסה הראשונה של הגרסה הראשית האחרונה.
+
+<ul>
+
+<li>דוגמה: אם אתה משתמש ב-MMF 2.2.5, ו-MMF 3.4.5 היא הגרסה האחרונה,
+
+האפליקציה תציג כעת את הגרסה הראשונה של MMF 3 (3.0.0), במקום את הגרסה
+
+האחרונה (3.4.5). כך, כל משתמשי MMF 2.2.5 יראו את רשימת השינויים של MMF
+
+3.0.0 לפני המעבר ל-MMF 3.</li>
+
+<li>דיון:
+
+<ul>
+
+<li>המוטיבציה העיקרית מאחורי זה היא שמוקדם יותר השנה, משתמשים רבים של
+
+MMF 2 עדכנו ישירות מ-MMF 2 ל-MMF 3.0.1 או 3.0.2. מכיוון שהם מעולם לא ראו
+
+את רשימת השינויים של 3.0.0, הם פספסו מידע על שינויי המחירים בין MMF 2
+
+ל-MMF 3 (MMF 3 כבר לא 100% חינמי). אז כשפתאום MMF 3 אמר שהם צריכים לשלם
+
+כדי להמשיך להשתמש באפליקציה, חלקם היו - באופן מובן - קצת מבולבלים
+
+ומתוסכלים.</li>
+
+<li>חיסרון: אם אתה רק רוצה לעדכן לגרסה האחרונה, כעת תצטרך לעדכן פעמיים
+
+במקרים מסוימים. זה קצת לא יעיל, אבל זה עדיין אמור לקחת רק כמה שניות.
+
+ומכיוון שזה הופך את השינויים בין גרסאות ראשיות לשקופים הרבה יותר, אני
+
+חושב שזו פשרה הגיונית.</li>
+
+</ul></li>
+
+</ul></li>
+
+</ol>
+
+<h3 id="תמיכה-ב-macos-15-sequoia">תמיכה ב-macOS 15 Sequoia</h3>
+
+<p>Mac Mouse Fix 2.2.5 יעבוד מצוין על macOS 15 Sequoia החדשה - בדיוק כמו
+
+2.2.4.</p>
+
+<hr />
+
+<p>בדוק גם את הגרסה הקודמת <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.4&amp;locale=he"><strong>2.2.4</strong></a>.</p>
+
+<p><em>אם יש לך בעיות בהפעלת Mac Mouse Fix לאחר העדכון, אנא בדוק את <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/861">המדריך
+
+‘הפעלת Mac Mouse Fix’</a>.</em></p>
+
+</body>
+
+</html>
