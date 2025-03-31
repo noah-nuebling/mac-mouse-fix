@@ -598,8 +598,8 @@ def generate():
                         
                         link = None
                         if locale2 == source_locale:      
-                                                                link = html_url             # English links to the actual GitHub Releases page
-                                                                langname += " (GitHub)";    # [Mar 2025] Don't think we have to translate this. Especially since all language names in the picker are in that language, and this is next to the English one.
+                                                                link = html_url                     # English links to the actual GitHub Releases page
+                                                                langname += " (GitHub Release)";    # [Mar 2025] Don't think we have to translate this. Especially since all language names in the picker are in that language, and this is next to the English one. || [Mar 2025] This is displayed close to the release.disclaimer string – perhaps 'keep in sync' in some way?
                         else:                                   link = mflocales.mmf_release_url(locale2, tag_name)
 
                         if locale == locale2:     locale_picker_content += f"**{langname}**"
