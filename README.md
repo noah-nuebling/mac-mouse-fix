@@ -2,52 +2,63 @@ This repo makes it easier to publish updates to Mac Mouse Fix. I documented it h
 
 # Overview
 
-This repo contains the script `generate_releases` which can automatically create appcast.xml files to be read by the Sparkle updater framework based on GitHub releases.
-That way you can have your in-app updates hosted through GitHub releases. 
-This is super handy, because that way you can have all your downloads and update notes in one, easy to maintain place, making it very easy to publish a new update.
+Last updated [Mar 2025]
+This repo contains the `generate_releases.py` script which;
+- Downloads releases from GitHub
+- Translates them
+- Creates a translated mirror of the GitHub Release pages under docs/github-releases
+- Creates ./appcast.xml and ./appcast-pre.xml rss feeds (containing translated release notes) - which can be displayed as app updates through the Sparkle framework.
+
+This makes it easy to publish a new update. You simply create a new GitHub Release, and then run a script, and done!
 
 Another benefit of using GitHub releases for everything, is that you'll get download counters for free without resorting to Google Analytics or another tracker.\
-This repo contains the script `stats` to easily display and record download counts for your GitHub releases.
+This repo contains the script `stats.py` to easily display and record download counts for your GitHub releases.
 
-`generate_releases` creates 2 appcast files. `appcast.xml` which contains only stable releases and `appcast-pre.xml` which contains prereleases as well. This allows you to let users opt-in to beta testing your app.
+`generate_releases.py` creates 2 appcast files. `appcast.xml` which contains only stable releases and `appcast-pre.xml` which contains prereleases as well. This allows you to let users opt-in to beta testing your app.
 
-It also creates update notes under `update-notes/html/` – these are included int the appcast files by reference.
+Update notes will be automatically generated based on the GitHub Releases' body texts. The styling is neutral, supports dark mode, and is easy to adjust in `html-assets/style.html`
 
-Update notes will be automatically generated based on the GitHub Releases' body texts. The styling is neutral, supports dark mode, and is easy to adjust in `update-notes/style.html`
+---
 
-# Usage
+**Update [Mar 2025]:**
+
+I wrote this Readme when the scripts here were quite simple, since I thought other devs might wanna use this as a template, but we've now added relatively complex features like AI Translation, visualization of the download numbers and reliance on our mac-mouse-fix-scripts repo as a submodule - so I probably wouldn't recommend using this as a template anymore, as it's relatively specific and complicated.
+
+# General Usage
 
 You can use this repo with the following terminal commands:
 
-- `./stats` \
+- `./run stats.py` \
   to see how many times your releases have been downloaded at this point according to the GitHub API.
 
-- `./stats record` \
+- `./run stats.py record` \
   to record the current download counts from the GitHub API to `stats_history.json`
 
-- `./stats print` \
+- `./run stats.py print` \
   to display the recorded download counts from `stats_history.json`
 
-- `./stats plot` \
+- `./run stats.py plot` \
   to visualize the recorded stats
 
-- `./stats plot <versions to plot>` \
+- `./run stats.py plot <versions to plot>` \
   to visualize the recorded stats for specific app versions.
+
+- `./run generate_releases.py` \
+  to generate the `appcast.xml` and `appcast-pre.xml` files \
+    (`appcast.xml` will only contain stable releases, while `appcast-pre.xml` will also contain prereleases)
 
 - `./update` \
   To
-  - run `./generate_releases`
-  - run `./stats record`
+  - run `./run generate_releases.py`
+  - run `./run stats.py record`
   - Commit and push everything
-
-- `./generate_releases` \
-  to generate the `appcast.xml` and `appcast-pre.xml` files \
-    (`appcast.xml` will only contain stable releases, while `appcast-pre.xml` will also contain prereleases)
 
 The workflow for publishing a new update is:
 - Create a GitHub release for the new update
 - Checkout this repo / branch and run `./update`.
-- If everything went well, the new update will now show up in your app!
+- Result:
+  - Localized GitHub Releases will appear at https://github.com/noah-nuebling/mac-mouse-fix/tree/update-feed/docs/github-releases
+  - The update will now show up in the app (with localized release notes)
 
 # Testing
 
@@ -66,10 +77,6 @@ Background: `file://` and `localhost:` URLs are forbidden by Sparkle so we need 
 
 # Other
 
-Optimization:
-  Every time you run `generate_releases`, it will generate the appcasts from scratch. For that it needs to download *all* GitHub releases which can be very slow. It needs to download the releases primarily to sign them for Sparkle. It will also unzip the downloaded releases and then access their Info.plist files to read the bundle version and the minimum compatible macOS version.\
-  All of this is very inefficient, but it's fast enough for Mac Mouse Fix for now. In the future I might add a mode where only the latest release is processed to speed things up.
-
 Download link for latest release:
   Use a URL like `https://github.com/[owner]/[repo]/releases/latest/download/[AssetName].zip` to link to your latest release download from an external website. Downloads from that external website will also count towards your GitHub Releases' download counts.
 
@@ -81,23 +88,6 @@ On timestamps:
 
 The generated appcast files are queried by Mac Mouse Fix to find new upates.
   
-  In MMF we're using these URLs:
-    - https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed/appcast.xml
-    - https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed/appcast-pre.xml
-
-# For others who want to adopt this
-
-(I don't think anybody actually wants to do this, it's just some sloppy python scripts.)
-
-To adopt this stuff for your own app you'll want to do the following things: (Untested)
-- Adjust `generate_releases`, by 
-  - Replacing the paths and URLs at the top, to reflect your repo URL, app bundle name, ...
-  - Adjust the code further to fit your needs. 
-    - The script is written for a simple app bundle that's shipped in a zip file, if you ship in a dmg or something you'll have to adjust it
-    - The code involving `prefpane_bundle_name` is only there because my app moved from being a prefpane to being a normal app bundle in the past. You'll probably want to remove it.
-    - My app isn't signed through the Apple Developer Program nor Notarized. If yours is, then you might need to adjust other things about the script.
-      - Update [Feb 2025] Not true anymore. MMF is notarized.
-    - There are probably other things I can't think of right now.
-- Adjust `update-notes/style.css` and `update-notes/script.js` to your liking.
-- Replace the repo URL at the top of the `stats` script if you want to use it.
-- Possibly install some command line tools this depends on. I recommend you use [Homebrew](https://brew.sh/) for that. (Update [Feb 2025]: Everybody knows this what is this ahahdhfasf)
+  MMF is hardcoded to use these URLs:
+  - https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed/appcast.xml
+  - https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed/appcast-pre.xml
