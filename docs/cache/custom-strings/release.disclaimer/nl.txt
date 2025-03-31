@@ -1,3 +1,3 @@
 <b>ℹ️ Vertaald door AI</b><br>
-Deze GitHub Release is vertaald door de Claude AI. Het kan fouten bevatten.<br>
+Deze GitHub Release is vertaald door de Claude AI. Er kunnen fouten in voorkomen.<br>
 Voor de originele Engelse versie, <a href="{gh_releases_url}">klik hier</a>.

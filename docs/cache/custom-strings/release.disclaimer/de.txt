@@ -1,3 +1,3 @@
 <b>ℹ️ Von KI übersetzt</b><br>
-Diese GitHub-Version wurde von der Claude KI übersetzt. Sie könnte Fehler enthalten.<br>
+Dieser GitHub Release wurde von der Claude KI übersetzt. Es können Fehler enthalten sein.<br>
 Für die englische Originalversion <a href="{gh_releases_url}">klicke hier</a>.

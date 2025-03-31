@@ -1,3 +1,3 @@
-<b>ℹ️ Yapay Zeka tarafından çevrildi</b><br>
-Bu GitHub Sürümü Claude yapay zekası tarafından çevrilmiştir. Hatalar içerebilir.<br>
+<b>ℹ️ AI tarafından çevrildi</b><br>
+Bu GitHub Release, Claude AI tarafından çevrildi. Hatalar içerebilir.<br>
 Orijinal İngilizce versiyon için <a href="{gh_releases_url}">buraya tıklayın</a>.

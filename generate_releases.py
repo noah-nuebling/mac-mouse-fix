@@ -39,7 +39,9 @@ TODO: [Mar 2025]
     - [x] Rename from generate_appcasts to something that reflects that it also creates 'release' documents now.
     - Anthropic API: 
         - Look into Batch Processing:   https://docs.anthropic.com/en/docs/build-with-claude/batch-processing
+            - Update: [Mar 2025] This does allow for concurrent requests which might speed up things a lot, but the async Messages API might be a better solution for that (See "About optimizing iteration speed:" below.)
         - Look into Prompt Caching:     https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching
+            - Update: [Mar 2025] Our time-to-first-token is very fast, just the output generation taks a while. Based on that, I don't think prompt caching would help. (It's very easy to implement though, so perhaps we should try anyways)
         - Optimize Prompt / do 'prompt engineerig' (?)
         - Optimize Model choice (?)
         - Optimize Cost (?)
@@ -60,7 +62,40 @@ TODO: [Mar 2025]
             I think it's the only user-facing string currently hosted in the redirection service.
             ... Thought: I think like 1 person ever sent us a refund request via that link (?) Perhaps shouldn't spend too much energy on this.
 
-Protocol:  
+About optimizing iteration speed: [Mar 2025]
+    Currently, if we ever need to change the system prompt, we have to re-generate ALL the files, which could take hours.
+    Solution brainstorm:
+        - Simple solution: Just never change the system prompt. -> Then we won't run into this problem.
+        - Simple solution: Just skip translating certain release notes (Most of them are relevant to almost no one I think – especially the translations.)
+        - Sophisticated solution: Parallelize translation requests
+            - If we simply get translations into all our languages in parallel that's a massive speedup (30x for ~30 languages)
+            - Options: 
+                - Anthropic async Messages API
+                - Anthropic Batch API
+            - Problem: Rate-limits
+                - Rate limits for Messages API are pretty low (especially since I'm 'Tier 1') so not sure parallelization would actually bring speedup.
+                - I don't understand what rate limits are for Batch API. It looks like they might be higher, but not sure. Docs are unclear.
+            - Problem: Unclear output token limits for batch processing?
+                - Currently, using Messages API, we're handling 8192 output token limit by streaming and re-prompting.
+                - For Batch API, I couldn't find any information on:
+                    - Whether the 8192 token limit applies at all
+                    - Whether you can do anything when you hit it.
+                        - Docs say that Batch API doesn't support streaming, and streaming is required to handle the token limits with the Messages API. That might mean there's no way to handle limits via Batch API, but not sure
+            - Consideration: Slower responses for Batch API?
+                - Batch processing is advertised as 'for non-time-sensitive tasks' but also it says that batch requests are worked on ASAP... This might mean slower turnaround compared to async Messages API. But not sure.
+            - Problem: Missing documentation:
+                - I looked everywhere but couldn't find an answer about output token limits, reached out via their support bot, perhaps they'll reply in an email.
+                - -> We could just test it out in a little test.py script. Probably wouldn't take too long.
+            - Conclusion:
+                - Messages API 
+                    Pro: Bit easier to implement (only slight modification from current impl)
+                    Contra: Might have low rate limits
+                - Batch API 
+                    Contra: perhaps slower turnaround, perhaps no way to handle output-token limits.
+                    Pro: perhaps higher rate-limits, lower costs
+                Conclusionnnn: Look into this when it's actually a problem and then do some testing. Don't waste time now.
+
+LLM Prompting Protocol:  
   - (early) [Mar 2025]
         I found an old system/user prompt for translation from a few months back in the Anthropic console. I used it verbatim IIRC, as it already produced good results.
         I machine translated 3.0.3 update notes using the following parameters:
@@ -945,6 +980,7 @@ def os_system_exc(s):
 # Notes: 
 #   - [Mar 2025] Leading and trailling whitespace seems to be lost after translation with Claude, so we shouldn't include them here.
 #   - [Mar 2025] Use upget_custom_string() to access (translated versions) of these. 
+#   - [Mar 2025] IMPORTANT: When you change the hint the deptracker won't notice. Delete all the translations to force regenerate.
 @dataclass
 class LocalizableString:
     string: str

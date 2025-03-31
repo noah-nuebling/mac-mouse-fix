@@ -1,3 +1,3 @@
 <b>ℹ️ Przetłumaczone przez AI</b><br>
-To wydanie GitHub zostało przetłumaczone przez Claude AI. Może zawierać błędy.<br>
+Ten GitHub Release został przetłumaczony przez Claude AI. Może zawierać błędy.<br>
 Aby zobaczyć oryginalną wersję po angielsku, <a href="{gh_releases_url}">kliknij tutaj</a>.

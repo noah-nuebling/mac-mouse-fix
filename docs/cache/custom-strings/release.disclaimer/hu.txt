@@ -1,3 +1,3 @@
 <b>ℹ️ AI által fordítva</b><br>
-Ezt a GitHub kiadást a Claude AI fordította. Tartalmazhat hibákat.<br>
+Ezt a GitHub Release-t a Claude AI fordította. Tartalmazhat hibákat.<br>
 Az eredeti angol verzióért <a href="{gh_releases_url}">kattints ide</a>.

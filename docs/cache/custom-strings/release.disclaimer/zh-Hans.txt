@@ -1,3 +1,3 @@
 <b>ℹ️ AI 翻译</b><br>
-此 GitHub 发布说明由 Claude AI 翻译。可能包含错误。<br>
+此 GitHub Release 由 Claude AI 翻译。可能包含错误。<br>
 查看英文原文请<a href="{gh_releases_url}">点击这里</a>。
