@@ -460,6 +460,20 @@ Meta todo:
   2. Review all the links, the names of options in MMF and macOS, the grammar and phrasing, etc.
 ```
 
+- **Why does Scrolling and Buttons automatically re-enable after I turn them off from the Menu Bar
+    
+  <!-- Sloppily wrote this draft on [Apr 2025]. Did zero editing. -->
+    
+  The Menu Bar buttons are meant to quickly, and temporarily turn off certain features while you're working with specific apps.
+  To edit the settings in a permanent way, you can edit the settings in 'Buttons' and 'Scrolling' Tab. 
+  
+  To completely turn off all effects of Mac Mouse Fix on your buttons, delete all the actions on the 'Buttons' tab. 
+  To completely turn off all effects of Mac Mouse Fix on your scroll wheel, configure the 'Scrolling' tab like this:
+  <Insert screenshot>
+  
+  I know the current solution isn't amazing. But it allowed me to ship MMF 3.
+  I plan to eventually replace the buttons in the Menu Bar with powerful App-Specific Settings. 
+
 - **How many devices can I use my Mac Mouse Fix license on?** 
   
   Your license is meant to 'just work' on all your devices. If you log in with the same Apple ID, your license will even sync automatically!
