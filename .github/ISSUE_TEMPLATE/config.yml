@@ -10,9 +10,7 @@ contact_links:
   - name: Enhancement request
     url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=feature-request
     about: Suggest a new feature, UI changes, or other improvements
-  - name: Free form feedback
-    url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=other
-    about: Write free form feedback
-  - name: Blank issue
-    url: https://github.com/noah-nuebling/mac-mouse-fix/issues/new
-    about: Write free form feedback
+  # [Mar 2025] vvv Disabling since we're forced to set `blank_issues_enabled: true`
+  # - name: Free form feedback
+  #  url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=other
+  #  about: Write free form feedback
