@@ -40,6 +40,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!
 
+**April 2025**
+
+- 🇹🇭&nbsp;Rindhewat
+
 **March 2025**
 
 - 🇨🇱&nbsp;Tokosan - "Makes my Logitech G502 really useful, even more than how it is on Windows. Really great app. Thanks for developing it!"
