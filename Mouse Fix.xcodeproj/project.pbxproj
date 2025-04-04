@@ -320,7 +320,6 @@
 		4FF6669125F2C93A00689B77 /* ScrollUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662F25F2C93A00689B77 /* ScrollUtility.m */; };
 		4FF6669225F2C93A00689B77 /* RoughScroll_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6663025F2C93A00689B77 /* RoughScroll_old_.m */; };
 		4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6663325F2C93A00689B77 /* TouchSimulator.m */; };
-		4FF6669425F2C93A00689B77 /* GestureScrollSimulator_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6663425F2C93A00689B77 /* GestureScrollSimulator_old_.m */; };
 		4FF6669525F2C93A00689B77 /* ModifiedDrag.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6663825F2C93A00689B77 /* ModifiedDrag.m */; };
 		4FF6669625F2C93A00689B77 /* Actions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6663B25F2C93A00689B77 /* Actions.m */; };
 		4FF6669725F2C93A00689B77 /* Remap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6663D25F2C93A00689B77 /* Remap.m */; };
@@ -8298,7 +8297,6 @@
 				4F12952128D2D738009A49AB /* NSTextField+Extentions.swift in Sources */,
 				4FDECCDF28A3E93100DDEE91 /* IsObjC.m in Sources */,
 				4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */,
-				4FF6669425F2C93A00689B77 /* GestureScrollSimulator_old_.m in Sources */,
 				4F8A8DBD287F203D00786BCC /* IOHIDAccelerationTable.cpp in Sources */,
 				4F5F3EF32756F1DB00C350C0 /* ScrollModifiers.swift in Sources */,
 			);
