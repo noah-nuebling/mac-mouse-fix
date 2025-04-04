@@ -22,9 +22,9 @@ import CocoaLumberjackSwift
         ///
         
 #if DEBUG
-        dynamicLogLevel = .all
+        dynamicLogLevel = .debug
 #else
-        dynamicLogLevel = .all
+        dynamicLogLevel = .info
 //        dynamicLogLevel = .off /// Override for testing
 #endif
         
