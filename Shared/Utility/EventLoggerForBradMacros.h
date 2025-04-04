@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
+#import "SharedUtility.h"
+
 /// This file contains macros from EventLoggerForBrad that we copy pasted over, before properly merging the EventLoggerForBrad code into MMF.
 ///     TODO: Merge these when copying over EventLoggerForBrad macros
 
