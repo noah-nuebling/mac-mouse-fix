@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>23715</string>
+	<string>23716</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSBackgroundOnly</key>
@@ -34,5 +34,33 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>OSLogPreferences</key>
+	<dict>
+		<key>com.nuebling.mac-mouse-fix</key>
+		<dict>
+			<key>DEFAULT-OPTIONS</key>
+			<dict>
+				<key>Enable-Oversize-Messages</key>
+				<true/>
+				<key>Enable-Private-Data</key>
+				<false/>
+				<key>Level</key>
+				<dict>
+					<key>Enable</key>
+					<string>Debug</string>
+					<key>Persist</key>
+					<string>Debug</string>
+				</dict>
+				<key>Signpost-Backtraces-Enabled</key>
+				<false/>
+				<key>Signpost-Enabled</key>
+				<false/>
+				<key>Signpost-Persisted</key>
+				<false/>
+				<key>Signpost-Scope</key>
+				<string>Process</string>
+			</dict>
+		</dict>
+	</dict>
 </dict>
 </plist>

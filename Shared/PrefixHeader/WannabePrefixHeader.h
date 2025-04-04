@@ -38,9 +38,9 @@
 
 
 #if DEBUG
-static DDLogLevel ddLogLevel = DDLogLevelDebug; /// These definitions might make more sense in Constants.h
+static DDLogLevel ddLogLevel = DDLogLevelAll; /// These definitions might make more sense in Constants.h
 #else
-static DDLogLevel ddLogLevel = DDLogLevelInfo;
+static DDLogLevel ddLogLevel = DDLogLevelAll;
 //static DDLogLevel ddLogLevel = DDLogLevelOff; /// Override log level for testing
 #endif
 
