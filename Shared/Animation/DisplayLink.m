@@ -99,18 +99,20 @@ typedef enum {
 
 - (void)setUpNewDisplayLinkWithActiveDisplays {
     
+    /// Discussion [Apr 2025] Should be called `setupNew*CV*DisplayLink...`
+    
     CVReturn ret;
     
     if (_displayLink != nil) {
-        CVReturn ret = CVDisplayLinkStop(_displayLink);
+        CVReturn ret = CVDisplayLinkStop(_displayLink); /// [Apr 2025] Expected to be -6672 (DisplayLinkNotRunning)
         CVDisplayLinkRelease(_displayLink);
-        DDLogDebug(@"DisplayLink.m: Deleted existing CVDisplayLink. Code: %d", ret);
+        DDLogDebug(@"DisplayLink.m: (%@) Deleted existing CVDisplayLink for displayLink. Code: %d", [self identifier], ret);
     }
     
     ret             = CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
     CVReturn ret2   = CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, (__bridge void *_Nullable)(self));
     
-    DDLogDebug(@"DisplayLink.m: Created new CVDisplayLink. Codes: (%d, %d)", ret, ret2);
+    DDLogDebug(@"DisplayLink.m: (%@) Created new CVDisplayLink. Codes: (%d, %d)", [self identifier], ret, ret2);
     assert(ret == kCVReturnSuccess && ret2 == kCVReturnSuccess);
 }
 
@@ -140,7 +142,7 @@ typedef enum {
 
     
     /// Debug
-    DDLogDebug(@"DisplayLink.m: Starting link %@", self.identifier);
+    DDLogDebug(@"DisplayLink.m: (%@) starting", [self identifier]);
     
     /// Store callback
     
@@ -166,7 +168,7 @@ typedef enum {
             
             failedAttempts += 1;
             if (failedAttempts >= maxAttempts) {
-                DDLogInfo(@"DisplayLink.m: Failed to start CVDisplayLink after %lld tries. Last error code: %d", failedAttempts, rt);
+                DDLogInfo(@"DisplayLink.m: (%@) Failed to start CVDisplayLink after %lld tries. Last error code: %d", [self identifier], failedAttempts, rt);
                 break;
             }
         }
@@ -208,7 +210,7 @@ typedef enum {
 
 - (void)stop_Unsafe {
     /// Debug
-    DDLogDebug(@"DisplayLink.m: Stopping link %@", self.identifier);
+    DDLogDebug(@"DisplayLink.m: (%@) stopping", [self identifier]);
     
     if ([self isRunning_Unsafe]) {
         
@@ -303,7 +305,7 @@ typedef enum {
     Boolean result = CVDisplayLinkIsRunning(self->_displayLink);
     
     /// Debug
-    DDLogDebug(@"DisplayLink.m: link %@ isRunning: %d", self.identifier, result);
+    DDLogDebug(@"DisplayLink.m %@ isRunning: %d", [self identifier], result);
     
     /// Return
     return result;
@@ -319,7 +321,7 @@ typedef enum {
     int64_t pointerNumber = (int64_t)(void *)dl;
     return [NSString stringWithFormat:@"%lld", pointerNumber];
 }
-- (NSString *)identifier {
+- (NSString *)identifier { /// [Apr 2025] for debugging it would be handy to give the displayLink a 'name' based on where it's used
     return [DisplayLink identifierForDisplayLink:_displayLink];
 }
 
@@ -428,7 +430,7 @@ typedef enum {
 //            returnCode = [self setDisplay:dsp];
 //        }
 //    } else if (matchingDisplayCount == 0) {
-//        DDLogWarn(@"DisplayLink.m: There are 0 diplays under the mouse pointer");
+//        DDLogWarn(@"DisplayLink.m: (%@) There are 0 diplays under the mouse pointer", [self identifier]);
 //        returnCode = kCVReturnError;
 //    }
 //    
@@ -455,7 +457,7 @@ typedef enum {
     CGError cgErr = CVDisplayLinkSetCurrentCGDisplay(_displayLink, displayID);
     
     /// Log
-    DDLogDebug(@"DisplayLink.m: Set link to display %d. Error: %d", displayID, cgErr);
+    DDLogDebug(@"DisplayLink.m: (%@) set to display %d. Error: %d", [self identifier], displayID, cgErr);
     
     if (cgErr) {
         assert(false);
@@ -498,27 +500,29 @@ void displayReconfigurationCallback(CGDirectDisplayID display, CGDisplayChangeSu
     ///     That way, the displayLink won't be recreated when the user isn't even using Mac Mouse Fix.
     /// Update: [Mar 2025]
     ///     - TODO: Test this! This is way to complicated and important to just not test and optimize it.
-    ///     - CGDisplayReconfigurationCallBack docs say this is called twice, once before, once after display reconfiguration, but it says in the 'before' callbacks, the flags are always set to `kCGDisplayBeginConfigurationFlag`, so we should be ignoring that here.
+    ///     - CGDisplayReconfigurationCallBack docs say this is called twice, once before, once after display reconfiguration, but it says in the 'before' callbacks, the flags are always set only to `kCGDisplayBeginConfigurationFlag` – so we're ignoring that here.
     ///     - Threading:
     ///         Comments above CGDisplayChangeSummaryFlags definition say that callbacks might be called from different threads.
     ///         As I understand it would always be called from the 'event-processing thread' (which is what we call the 'displayLink thread' I think) in our case since our code doesn't manually change the display configuration (Not sure about this).
     ///         Either way, the code that uses the mutable state we manipulate here `_displayLinkIsOutdated` runs on the `_displayLinkQueue`, so there's potential for a race-condition here.
     ///             (After thinking about it, only race condition I can see is when there's a *double* display configuration change and, the second change is swallowed, and doesn't cause a -[setUpNewDisplayLinkWithActiveDisplays] call)
     ///             TODO: Probably dispatch this workload to the `_displayLinkQueue` to be very safe against race conditions.
+    ///     - Optimization/Architecture:
+    ///         - We do this for each DisplayLink instance separately. Would it make sense to only do it once for all DisplayLink instances? ... Probably wouldn't bring practical benefit though, and might make code more error-prone.
     
     /// Get self
     DisplayLink *self = (__bridge DisplayLink *)userInfo;
     
     if ((flags & kCGDisplayAddFlag)     || /// Using enabledFlag and disabledFlag here is untested. I'm not sure when they are true.
-        (flags & kCGDisplayRemoveFlag)  ||
+        (flags & kCGDisplayRemoveFlag)  || /// Update: [Apr 2025] I don't see a reason to recreate the displayLink when displays are *removed*.
         (flags & kCGDisplayEnabledFlag) ||
         (flags & kCGDisplayDisabledFlag))
     {
-        DDLogInfo(@"DisplayLink.m: added / removed. Flagging the displayLink as outdated. flags: %@", MFCGDisplayChangeSummaryFlags_ToString(flags));
+        DDLogInfo(@"DisplayLink.m: (%@) added / removed. Flagging the displayLink as outdated. display: %d, flags: %@", [self identifier], display, MFCGDisplayChangeSummaryFlags_ToString(flags));
         self->_displayLinkIsOutdated = YES;
     }
     else {
-        DDLogDebug(@"DisplayLink.m: Ignored display reconfiguration. flags: %@", MFCGDisplayChangeSummaryFlags_ToString(flags));
+        DDLogDebug(@"DisplayLink.m: (%@) Ignored display reconfiguration. display: %d, flags: %@", [self identifier], display, MFCGDisplayChangeSummaryFlags_ToString(flags));
     }
     
 }
@@ -534,14 +538,14 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     DisplayLinkCallbackTimeInfo timeInfo = parseTimeStamps(inNow, inOutputTime);
     
     /// Debug
-    DDLogDebug(@"DisplayLink.m: Callback %@", [DisplayLink identifierForDisplayLink:displayLink]);
+    DDLogDebug(@"DisplayLink.m: (%@) Callback", [self identifier]);
     
     /// Define workload
     __auto_type workload = ^void (DisplayLinkCallbackTimeInfo timeInfo) {
         
         /// Check requestedState
         if (self->_requestedState == kMFDisplayLinkRequestedStateStopped) {
-            DDLogDebug(@"DisplayLink.m: callback called after requested stop. Returning");
+            DDLogDebug(@"DisplayLink.m: (%@) callback called after requested stop. Returning", [self identifier]);
             return;
         }
         
@@ -629,7 +633,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
             workload = ^(DisplayLinkCallbackTimeInfo timeInfo){
                 
                 /// Debug
-                DDLogDebug(@"DisplayLink.m: Callback workload %@", [DisplayLink identifierForDisplayLink:displayLink]);
+                DDLogDebug(@"DisplayLink.m: (%@) Callback workload", [self identifier]);
                 startTsSync = CACurrentMediaTime();
                 
                 /// Do work
@@ -655,7 +659,8 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
                 }
                 
                 /// Print
-                DDLogDebug(@"DisplayLink.m: callback workload times - last %f, now %f, now2 %f, next %f, send %f\n|| overallProcessing %f, workProcessing %f, workPeriod %f, nextFrameToWorkCompletion %f\n||vblTime: %f, vblDelta: %f, vblCount: %llu",
+                DDLogDebug(@"DisplayLink.m: (%@) callback workload times - last %f, now %f, now2 %f, next %f, send %f\n|| overallProcessing %f, workProcessing %f, workPeriod %f, nextFrameToWorkCompletion %f\n||vblTime: %f, vblDelta: %f, vblCount: %llu",
+                           [self identifier],
                            (timeInfo.lastFrame - rts) * 1000,
                            (timeInfo.cvCallbackTime - rts) * 1000,
                            (startTs - rts) * 1000,
@@ -764,7 +769,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
                 workload(timeInfo);
             });
         } else {
-            DDLogError(@"DisplayLink.m: Don't use special scheduling without extensive testing. This caused regressions in scrolling stutteriness in some scenarios and even crashes I think (See 3.0.2-vcoba stuff: https://github.com/noah-nuebling/mac-mouse-fix/issues/875, and 3.0.2 crashes: https://github.com/noah-nuebling/mac-mouse-fix/issues/988)");
+            DDLogError(@"DisplayLink.m: (%@) Don't use special scheduling without extensive testing. This caused regressions in scrolling stutteriness in some scenarios and even crashes I think (See 3.0.2-vcoba stuff: https://github.com/noah-nuebling/mac-mouse-fix/issues/875, and 3.0.2 crashes: https://github.com/noah-nuebling/mac-mouse-fix/issues/988)", [self identifier]);
             assert(false);
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC*workDelay), self->_displayLinkQueue, ^{ /// Schedule the workload to run after `workDelay`
                 workload(timeInfo);
