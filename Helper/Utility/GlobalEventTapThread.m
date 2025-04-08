@@ -12,8 +12,14 @@
 ///     Specifically I'm trying to get the CPU usage for twoFingerModifiedDrag lower
 ///     Edit: This does decrease CPU use! But only slightly.
 ///
-///     Edit2: (Dec 2024) I think since the `twoFingerModifiedDrag` draws a fake mouse pointer (necessarily, on the mainthread), with relatively high CPU usag,  it's probably good to put inputProcessing on a separate thread to ensure responsiveness.
-///             Also, all processing of input events should be on the same thread (so on this thread, not the mainthread or some dispatchqueue) to prevent race conditions and problems where events are processed in the wrong order. (I think see order-of-events problems during click-and-drag sometimes under MMF 3.0.3. – seems like clicks and drags are processed on different threads. (?) Also, doubleclicks are – stupidly – processed on the mainthread iirc, (Mightt be wrong, don't remember how this stuff works anymore – but the threading architecture is terrible and overcomplicated.))
+///     Edit2: [Dec 2024] I think since the `twoFingerModifiedDrag` draws a fake mouse pointer (necessarily, on the mainthread), with relatively high CPU usag,  it's probably good to put inputProcessing on a separate thread to ensure responsiveness.
+///         Also, all processing of input events should be on the same thread (so on this thread, not the mainthread or some dispatchqueue) to prevent race conditions and problems where events are processed in the wrong order. (I think see order-of-events problems during click-and-drag sometimes under MMF 3.0.3. – seems like clicks and drags are processed on different threads. (?) Also, doubleclicks are – stupidly – processed on the mainthread iirc, (Mightt be wrong, don't remember how this stuff works anymore – but the threading architecture is terrible and overcomplicated.))
+///         Update [Apr 2025] another practical reason to change this is the crazy crashes that happened after we tried to change scroll-event scheduling in 3.0.2. IIRC it took us months to get the multithreading bugs under control when building MMF 3, and it seems that changing the timings can make the whole house-of-cards fall apart. We don't want that! Coordinating everything on 1 thread, should allow for more 'fearless refactors'.
+///     Edit3: [Apr 2025] If we put everything on IOThread (that's what we've been calling GlobalEventTapThread lately), this should greatly reduce potential for raceconditions and deadlocks and could simply some existing code a lot, since we won't need as much locking and dispatching to dispatchqueues and stuff, I think.
+///         However, they are still going to be *interaction-points between the IOThread and mainThread* which have high potential for race-conditions.
+///         Thread-interaction points:
+///             - Remaps loading
+///             - <TODO: Think about other interaction points>
 
 #import "GlobalEventTapThread.h"
 

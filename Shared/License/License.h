@@ -66,7 +66,8 @@ MFDataClassInterface0(MFDataClassBase, MFLicenseTypeInfo)                       
     MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoGumroadV1)                /// Standard USD-based Gumroad licenses that were sold on Gumroad after MMF 3 Beta 6 (IIRC).
     
     #if 0
-        MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoPaddleV1)                 /// Standard MMF 3 licenses that we plan to sell on Paddle, verified through our AWS API. (This is the plan as of Oct 2024)
+        MFDataClassInterface0(MFLicenseTypeInfo, MFLicenseTypeInfoPaddleV1)                 /// Standard MMF 3 licenses that we plan to sell on Paddle, verified through our AWS API. (This is the plan as of [Oct 2024])
+                                                                                            ///     Update: [Apr 2025] We plan to sell through Stripe directly now. It has much nicer UX for purchasers. More polished. Not using a merchant of record is not as much of a problem as I thought according to some internet article I read (Because Freibeträge are so high that I'd be very rich before any country would go after me for sales taxes, at which point I could afford a tax department, lol) Mr. Kuschling agreed. I also saw some other indie app using Stripe directly (I forgot which one.)
     #endif
     
     /// Special licenses

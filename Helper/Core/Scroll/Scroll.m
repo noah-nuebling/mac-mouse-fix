@@ -33,6 +33,11 @@
 #import "MFHIDEventImports.h"
 #import "IOUtility.h"
 
+///
+/// There are issues where scrolling stops working intermittently or after a restart [Apr 8 2025]
+///     See this note on the issue: https://github.com/noah-nuebling/notes-public/blob/23361f16a315f48f1f6278161b8cefab50fc3665/mmf/bug-investigation/scrolling-stops-intermittently_apr-2025.md
+///
+
 @implementation Scroll
 
 #pragma mark - Variables - static

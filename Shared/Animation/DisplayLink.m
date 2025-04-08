@@ -11,6 +11,14 @@
 /// Also see:
 /// - CoreVideo programming concepts:  https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreVideo/CVProg_Concepts/CVProg_Concepts.html
 /// - litherium post on understanding CVDisplayLink: http://litherum.blogspot.com/2021/05/understanding-cvdisplaylink.html
+///
+/// Higher-level-plan [Apr 2025]:
+///     We plan to move to putting everything on an IOThread (aka GlobalEventTapThread), including callbacks and interaction with the DisplayLink.
+///     This should be easy with the newer CADisplayLink, since you can tell it to deliver on a specific runLoop.
+///         But since CADisplayLink is only supported on very new macOS versions, we'll have to keep using CVDisplayLink.
+///     For CVDisplayLink we'd have to create a wrapper that 'contains' all its multithreading complexity and makes it deliver on a runLoop. This might cause worse CPU usage or event-timings, but I assume that won't matter too much.
+///         On newer macOS versions we could implement CADisplayLink which should have optimal performance.
+///     See more at GlobalEventTapThread.m
 
 #import "DisplayLink.h"
 #import <Cocoa/Cocoa.h>
