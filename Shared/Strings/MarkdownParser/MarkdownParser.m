@@ -60,14 +60,14 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
     NSMutableArray<NSDictionary *> *stack = [NSMutableArray array];
     
     /// Create/init search range for src string
-    __block NSRange src_search_range = NSMakeRange(0, src.length);
+    NSRange src_search_range = NSMakeRange(0, src.length);
     
     /// Create counter for md lists
-    __block int md_list_index = -1;
+    int md_list_index = -1;
     
     /// Declare result
     ///     Note: We're modifying this as we walk the markdown tree so should be mutable but all our custom`NSAttributedString` apis don't work on mutable strings, so we're making it immutable and copying it on every modification.
-    __block NSAttributedString *dst = [[NSMutableAttributedString alloc] init];
+    NSAttributedString *dst = [[NSMutableAttributedString alloc] init];
     
     /// Walk the md tree
     while (true) {
@@ -157,7 +157,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
         
         /// Use stack to track node enter and exit
         
-        __block NSRange rangeOfExitedNodeInDst = NSMakeRange(NSNotFound, 0);
+        NSRange rangeOfExitedNodeInDst = NSMakeRange(NSNotFound, 0);
         
         if (!is_leaf && did_enter) {
             /// Stack push
@@ -195,28 +195,39 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
             } \
         }
         
+        /// Define bcase macros
+        ///     TODO: [Apr 2025] replace these with proper bcase implementation from EventLoggerForBrad
+        #define bcase(x)   break; case x
+        #define bdefault() break; default
+        
         /// Handle all types of nodes
         ///     Notes:
         ///     - Nodes with a leaf-node-type are marked with 🍁. They only have enter events, no exit events.
         ///     - The `command_map` dict is just a long switch / if-else statement, but the dict makes it more readable
-        NSDictionary *command_map = @{
-            
-            @(CMARK_NODE_NONE): ^{
+        ///     - Performance testing: [Apr 2025]
+        ///         Switch vs NSDictionary:
+        ///             Instead of a C-switch, we used to use an NSDictionary containing objc-blocks. That seems slow, but from my benchmarking, the difference to the C-switch looks much smaller than the random fluctuations from run to run.
+        ///             But we still stuck to switch since the code is a bit cleaner (at least with our bcase macros)
+        ///         All the invocations of MarkdownParser take 10ths or 100ths of a millisecond, (and it's only called once per UI string, when the app first loads – I think)
+        ///             -> Therefore, there is absolutely *zero* reason to try to optimize this any further.
+        
+        switch (node_type) {
+            bcase(CMARK_NODE_NONE): {
                 
                 assert(false); /// Something went wrong
                 
-            },
-            @(CMARK_NODE_DOCUMENT): ^{          /// == `CMARK_NODE_FIRST_BLOCK`
+            }
+            bcase(CMARK_NODE_DOCUMENT): {          /// == `CMARK_NODE_FIRST_BLOCK`
                 
                 /// Root node
                 
-            },
-            @(CMARK_NODE_BLOCK_QUOTE): ^{
+            }
+            bcase(CMARK_NODE_BLOCK_QUOTE): {
                 
                 assert(false); /// Don't know how to handle
                 
-            },
-            @(CMARK_NODE_LIST): ^{
+            }
+            bcase(CMARK_NODE_LIST): {
                 
                 addDoubleLinebreaksForBlockElementToDst();
                 
@@ -226,8 +237,8 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
                     md_list_index = cmark_node_get_list_start(node);
                 }
                 
-            },
-            @(CMARK_NODE_ITEM): ^{
+            }
+            bcase(CMARK_NODE_ITEM): {
                 
                 /// Note: Even though list items are blockElements, they don't have double linebreaks between them, so we don't use addDoubleLinebreaksForBlockElementToDst()
                                 
@@ -296,14 +307,14 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
                     md_list_index += 1;
                 }
                 
-            },
-            @(CMARK_NODE_CODE_BLOCK): ^{        /// 🍁
+            }
+            bcase(CMARK_NODE_CODE_BLOCK): {        /// 🍁
                 
                 assert(did_enter); /// Leaf node
                 assert(false); /// Don't know how to handle
                 
-            },
-            @(CMARK_NODE_HTML_BLOCK): ^{        /// 🍁
+            }
+            bcase(CMARK_NODE_HTML_BLOCK): {        /// 🍁
                 
                 assert(did_enter); /// Leaf node
                 /// Explanation:
@@ -311,31 +322,31 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
                 ///     We attach these to dst to give users at least some context in case these placeholders make it through to the UI.
                 ///
                 dst = [dst attributedStringByAppending:@(cmark_node_get_literal(node)).attributed];
-            },
-            @(CMARK_NODE_CUSTOM_BLOCK): ^{
+            }
+            bcase(CMARK_NODE_CUSTOM_BLOCK): {
                 
                 assert(false); /// Don't know how to handle
                 
-            },
-            @(CMARK_NODE_PARAGRAPH): ^{
+            }
+            bcase(CMARK_NODE_PARAGRAPH): {
                 
                 addDoubleLinebreaksForBlockElementToDst();
                 
                 /// Note: Why the isTopLevel restriction?
                 ///     Update: every list item seems to contain its own paragraph, they are all last paragraphs through, so the `is_top_level` check doesn't seem necessary.
-            },
-            @(CMARK_NODE_HEADING): ^{
+            }
+            bcase(CMARK_NODE_HEADING): {
                 
                 assert(false); /// Don't know how to handle
                 
-            },
-            @(CMARK_NODE_THEMATIC_BREAK): ^{    /// == `CMARK_NODE_LAST_BLOCK` || 🍁 || "thematic break" is the horizontal line aka hrule
+            }
+            bcase(CMARK_NODE_THEMATIC_BREAK): {    /// == `CMARK_NODE_LAST_BLOCK` || 🍁 || "thematic break" is the horizontal line aka hrule
                 
                 assert(did_enter); /// Leaf node
                 assert(false); /// Don't know how to handle
                 
-            },
-            @(CMARK_NODE_TEXT): ^{              /// == `CMARK_NODE_FIRST_INLINE` || 🍁
+            }
+            bcase(CMARK_NODE_TEXT): {              /// == `CMARK_NODE_FIRST_INLINE` || 🍁
                 
                 NSString *node_text = @(cmark_node_get_literal(node));
                 assert(did_enter); /// Leaf node
@@ -349,6 +360,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
                     ///
                     ///     Note: To find the correct substring it might be more efficient faster to use the private NSBigMutableString which seemingly uses unicode characters along with
                     ///     `cmark_node_get_[...]_column()` and `cmark_node_get_[...]_line()` APIs which also uses unicode characters afaik.
+                    ///                 Update: [Apr 2025] IIRC, there's also a way to index normal NSString by unicode characters.
                     
                     NSRange src_range = [src.string rangeOfString:node_text options:0 range:src_search_range];
                     NSAttributedString *src_substr = [src attributedSubstringFromRange:src_range];
@@ -359,14 +371,14 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
                     src_search_range = NSMakeRange(new_search_range_start, src.length - new_search_range_start);
                 }
                 
-            },
-            @(CMARK_NODE_SOFTBREAK): ^{         /// 🍁
+            }
+            bcase(CMARK_NODE_SOFTBREAK): {         /// 🍁
                 
                 assert(did_enter); /// Leaf node
                 dst = [dst attributedStringByAppending:@"\n".attributed];
                 
-            },
-            @(CMARK_NODE_LINEBREAK): ^{         /// 🍁
+            }
+            bcase(CMARK_NODE_LINEBREAK): {         /// 🍁
                 
                 /// Notes:
                 /// - I've never seen this be called. `\n\n` will start a new paragraph, not insert a 'linebreak'.
@@ -376,14 +388,14 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
                 assert(did_enter); /// Leaf node
                 dst = [dst attributedStringByAppending:@"\n".attributed];
                 
-            },
-            @(CMARK_NODE_CODE): ^{              /// 🍁
+            }
+            bcase(CMARK_NODE_CODE): {              /// 🍁
                 
                 assert(did_enter); /// Leaf node
                 assert(false); /// Don't know how to handle
                 
-            },
-            @(CMARK_NODE_HTML_INLINE): ^{       /// 🍁
+            }
+            bcase(CMARK_NODE_HTML_INLINE): {       /// 🍁
                 
                 assert(did_enter); /// Leaf node
                 
@@ -394,47 +406,42 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
                     dst = [dst attributedStringByAppending:literal.attributed];
                 }
                 
-            },
-            @(CMARK_NODE_CUSTOM_INLINE): ^{
+            }
+            bcase(CMARK_NODE_CUSTOM_INLINE): {
                 
                 assert(false); /// Don't know how to handle
                 
-            },
-            @(CMARK_NODE_EMPH): ^{
+            }
+            bcase(CMARK_NODE_EMPH): {
                 /// Notes:
                 /// - We're misusing emphasis (which is usually italic) as a semibold. We're using the semibold, because for the small hint texts in the UI, bold looks way to strong. This is a very unsemantic and hacky solution. It works for now, but just keep this in mind.
                 /// - I tried using Italics in different places in the UI, and it always looked really bad. Also Chinese, Korean, and Japanese don't have italics. Edit: Actually on GitHub they do seem to have italics: https://github.com/dokuwiki/dokuwiki/issues/4080
                 if (did_exit) {
                     dst = [dst attributedStringByAddingWeight:NSFontWeightSemibold forRange:&rangeOfExitedNodeInDst];
                 }
-            },
-            @(CMARK_NODE_STRONG): ^{
+            }
+            bcase(CMARK_NODE_STRONG): {
                 if (did_exit) {
                     dst = [dst attributedStringByAddingWeight:NSFontWeightBold forRange:&rangeOfExitedNodeInDst];
                 }
-            },
-            @(CMARK_NODE_LINK): ^{
+            }
+            bcase(CMARK_NODE_LINK): {
                 if (did_exit) {
                     NSString *urlStr = @(cmark_node_get_url(node));
                     if (urlStr != nil && urlStr.length > 0) {
                         dst = [dst attributedStringByAddingHyperlink:[NSURL URLWithString:urlStr] forRange:&rangeOfExitedNodeInDst];
                     }
                 }
-            },
-            @(CMARK_NODE_IMAGE): ^{             /// == `CMARK_NODE_LAST_INLINE`
+            }
+            bcase(CMARK_NODE_IMAGE): {             /// == `CMARK_NODE_LAST_INLINE`
                 assert(false); /// Don't know how to handle
                 
             }
+            bdefault: {
+                NSLog(@"Error: Unknown node_type: %s", node_type_name); /// [Apr 2025] Why are we using NSLog?
+                assert(false);
+            }
         };
-        
-        /// Execute command from map for this node
-        void (^command)(void) = command_map[@(node_type)];
-        if (command != nil) {
-            command();
-        } else {
-            NSLog(@"Error: Unknown node_type: %s", node_type_name);
-            assert(false);
-        }
         
     } /// End iterating nodes
     
