@@ -15,7 +15,18 @@ import Cocoa
     /// You can request the config once, then store it.
     /// You'll receive an independent instance that you can override with custom values. This should be useful for implementing Modifications in Scroll.m
     ///     Everything in ScrollConfigResult is lazy so that you only pay for what you actually use
-    ///  Edit: Since we're always copying the scrollConfig before returning to apply some overrides, all this lazyness is sort of useless I think. Because during copy, all the lazy computed properties will be calculated from what I've seen. But this will only happen during the first copy, so it's whatever.
+    /// Edit: Since we're always copying the scrollConfig before returning to apply some overrides, all this lazyness is sort of useless I think. Because during copy, all the lazy computed properties will be calculated from what I've seen. But this will only happen during the first copy, so it's whatever.
+    ///
+    /// Ideas for improving Smoothness: Regular [Apr 2025]
+    ///         (Not sure this belongs here – do we have notes on this somewhere else?)
+    ///     - Ease-out too slow on Smoothness: Regular?
+    ///         I tested MMF 2 and after going back to MMF 3 the regular scrolling felt a bittt too slow. [Apr 2025]
+    ///             One day I was kinda stressed out n angry and wanted to scan pages for something I was looking for. So you make lots of quick, large scrolls, followed by pauses to scan the page visually. The ease-out animation after the quick large scrolls felt a bit too long.
+    ///             ... But now that I've used MMF 3 for a while and have calmed down, I don't feel that way anymore. It feels quite nice.
+    ///     - Allow Increasing 'speed' for Smoothness: Regular by dynamically increasing animation duration?
+    ///         IIRC, the 'speed' (sensitivity/acceleration) gets lower as you lower the smoothness. IIRC, this is because shortAnimations + high 'speed' means content moves so fast that it becomes jarring/disorientating for the eyes.
+    ///         However, the lower 'speed' makes scrolling take more physical effort on lower smoothness settings, which I don't like.
+    ///         Idea: Dynamically increase animation duration on large 'swipes' such that content doesn't move so fast as to be jarring. Then you could perhaps turn up the 'speed' for 'Smoothness: Regular'.
     
     // MARK: Convenience functions
     ///     For accessing top level dict and different sub-dicts

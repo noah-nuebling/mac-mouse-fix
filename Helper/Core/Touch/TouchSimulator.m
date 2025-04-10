@@ -161,7 +161,7 @@ static NSMutableDictionary *_swipeInfo;
     }
     
     /// Override end phase with canceled phase
-    
+    ///     Note: Would it make more sense for this to happen in the 'driver' of the event simulation? (As of [Feb 2025] the 'drivers' are Scroll.m and ModifiedDragOutputThreeFingerSwipe.m)
     if (phase == kIOHIDEventPhaseEnded) {
         if ([SharedUtility signOf:_dockSwipeLastDelta] == [SharedUtility signOf:_dockSwipeOriginOffset]) {
             phase = kIOHIDEventPhaseEnded;
@@ -258,9 +258,10 @@ static NSMutableDictionary *_swipeInfo;
             
             /// Invalidate scheduled double-send
             /// Notes:
-            ///     - We invalidate the double/triple send timers here, since otherwise, the double/triple sent end events can cancel the new gesture.
+            ///     - We invalidate the double/triple send timers here, since otherwise, the double/triple-sent end events can cancel the new gesture.
             ///     - Docs say timers must be scheduled and invalidated from the same thread. That's why we dispatch to the main thread.
-            ///     - Threading is a bit messy. We should have a unified output-event thread, where we do all this.
+            ///     - Threading is a bit messy. We should probably have a unified output-event thread, where we do all this.
+            ///     - Race condition? – Since we dispatch_async() right above, in edge-cases, the gesture might still be canceled right after the kIOHIDEventPhaseBegan events are sent. A unified output-event thread should allow us to fix this.
             
             if (_doubleSendTimer != nil) [_doubleSendTimer invalidate];
             if (_tripleSendTimer != nil) [_tripleSendTimer invalidate];
@@ -273,10 +274,11 @@ static NSMutableDictionary *_swipeInfo;
         /// Double-send end-events
         /// Notes:
         ///     - The inital dockSwipe event we post will be ignored by the system when it is under load (I called this the "stuck bug" in other places). Sending the event again with a delay of 200ms (0.2s) gets it unstuck almost always. Sending the event twice gives us the best of both responsiveness and reliability.
-        ///     - In Scroll.m, even with sending the event again after 0.2 seconds, the stuck bug still happens a bunch for some reason. Even though this almost completely eliminates the bug in ModifiedDrag. Sending it again after 0.5 seconds works better but still sometimes happens. Edit: Doesn't happen anymore on M1.
+        ///     - In Scroll.m, even with sending the event again after 0.2 seconds, the stuck bug still happens a bunch for some reason. Even though this almost completely eliminates the bug in ModifiedDrag.m . Sending it again after 0.5 seconds works better but still sometimes happens.
+        ///         Edit: Doesn't happen anymore on M1. Edit 2: [Feb 2025] The double-sending code used to be broken for a while (fixed in e8f90d2f32829e3e5f1621fa8e4b58634c9ea07b) . Maybe that's why we observed the stuck-bug for Scroll.m here?
 
         /// Put the events into a dict
-        ///     Note: The `events` dict retains the events, and the timers retain the `events` dict -> Once the timers are invalidated, the events are automatically released.
+        ///     Note: The `events` dict retains the events, and the timers retain the events dict -> Once the timers are invalidated, the events are automatically released.
         ///     Edit: We didn't release the events in MMF 3.0.0 Beta 6. I wonder why I didn't notice this? (Should leak a little bit of memory.) We then moved to using `__bridge_transfer`
         ///                 On 28.08.2024 we moved to using `__bridge` and simply calling `CFRelease()` afterwards. (That's the same as using `__bridge_transfer`, which I find confusing.)
 
@@ -284,8 +286,9 @@ static NSMutableDictionary *_swipeInfo;
         
         /// Dispatch to main queue
         /// Notes:
-        ///     - 27.08.2024 (macOS Sequoia Beta) - The double/triple send didn't work. I fixed it by adding  `dispatch_async(dispatch_get_main_queue()`. Not sure how long this had been broken.
-        ///     - Not sure it's ideal for responsivity to do this on the main thread. I feel like we should simplify the threading so there are 4 threads: input events, output events, ui (main thread) and background (stuff like checking for updates)
+        ///     - 27.08.2024 (macOS Sequoia Beta) - The double/triple send didn't work. I fixed it by adding  `dispatch_async(dispatch_get_main_queue()`. Not sure how long this had been broken. (Fixed in e8f90d2f32829e3e5f1621fa8e4b58634c9ea07b)
+        ///     - Might worsen responsivity to do this on the main thread? I feel like we should simplify the threading of the entire app so there are 4 threads: input events, output events, ui (main thread) and background (stuff like checking for updates)
+        ///         - Update: [ Apr 2025] We plan to simplify threading now. grep for IOThread
         
         dispatch_async(dispatch_get_main_queue(), ^{
             

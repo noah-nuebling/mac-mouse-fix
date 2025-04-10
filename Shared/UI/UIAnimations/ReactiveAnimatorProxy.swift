@@ -90,7 +90,7 @@ extension NSAnimatablePropertyContainer where Self: NSObject {
             
             /// Make copy so we don't change the animation outside this scope
             var animation = animation1!.copy() as! CABasicAnimation
-
+            
             /// Make animations round to integer to avoid jitter. This is useful for resize animations. But this breaks opacity animations.
             var doRoundToInt = false
             if (newValue as? NSRect) != nil { doRoundToInt = true }

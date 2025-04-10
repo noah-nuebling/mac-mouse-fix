@@ -82,32 +82,32 @@ import ReactiveSwift
     
     /// Derived from: Attached Devices
     
-    var someDeviceHasScroll = false
-    var someDeviceHasPointing = false
-    var someDeviceHasUsableButtons = false
-    var maxButtonNumberAmongDevices: Int32 = 0
+    var someDeviceHasScroll                 = false
+    var someDeviceHasPointing               = false
+    var someDeviceHasUsableButtons          = false
+    var maxButtonNumberAmongDevices: Int32  = 0
     
     /// Derived from: Various
     
-    var defaultModifiesScroll = false /// Derives from: Scroll Config
-    let defaultModifiesPointing = false /// Always false
-    var defaultModifiesButtonOnSomeDevice = false /// Derives from: Remaps & Attached Devices
+    var defaultModifiesScroll               = false /// Derives from: Scroll Config
+    let defaultModifiesPointing             = false /// Always false
+    var defaultModifiesButtonOnSomeDevice   = false /// Derives from: Remaps & Attached Devices
     
     /// Derived from: Remaps
     
-    var somekbModModifiesScroll = false
-    var somekbModModifiesPointing = false
+    var somekbModModifiesScroll             = false
+    var somekbModModifiesPointing           = false
     var somekbModModifiesButtonOnSomeDevice = false /// & derives from: Attached Devices
     
-    var someButtonModifiesScroll = false
-    var someButtonModifiesPointing = false
-    var someButtonModifiesButtonOnSomeDevice = false /// & derives from: Attached Devices
+    var someButtonModifiesScroll                = false
+    var someButtonModifiesPointing              = false
+    var someButtonModifiesButtonOnSomeDevice    = false /// & derives from: Attached Devices
     
     /// Derived from: Modifiers & Remaps
     
-    var currentModificationModifiesScroll = false
-    var currentModificationModifiesPointing = false
-    var currentModificationModifiesButtonOnSomeDevice = false /// & derives from: Attached Devices
+    var currentModificationModifiesScroll               = false
+    var currentModificationModifiesPointing             = false
+    var currentModificationModifiesButtonOnSomeDevice   = false /// & derives from: Attached Devices
     
     /// Derived from: Lockdown
     var isLockedDown = false
@@ -119,6 +119,23 @@ import ReactiveSwift
     private var buttonKillSwitch = false
     private var scrollKillSwitch = false
     
+    //
+    // MARK: Debug
+    //
+    
+    @inline(__always) private func logWithState(_ message: @autoclosure () -> String) {
+        
+        /// Note: [Mar 2025] This only has to be so complicated because our threading architecture is really bad. Once we move all input and SwitchMaster to GlobalEventTapThread.m, this won't be necessary.
+        if (runningPreRelease()) {
+            let invocationId = Int.random(in: 0...99999);
+            DDLogDebug("[\(invocationId)] SwitchMaster: \(message())")
+            ModifiedDrag.activationState { modifiedDragActivation in /// Note: [Mar 2025] This won't be necessary once we use GlobalEventTapThread.m
+                DDLogDebug("[\(invocationId)] SwitchMaster: EventTap state - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isReceiving() ? 1 : 0), pointing: \(modifiedDragActivation.rawValue)")
+                DDLogDebug("[\(invocationId)] SwitchMaster: MenuItem state - buttonMenu: \(MenuBarItem.buttonsItemIsEnabled() ? 1 : 0), scrollMenu: \(MenuBarItem.scrollItemIsEnabled() ? 1 : 0)")
+                DDLogDebug("[\(invocationId)] SwitchMaster: Internal state -\n\(SharedUtilitySwift.dumpSwiftIvars(self))");
+            }
+        }
+    }
     
     //
     // MARK: Init
@@ -126,15 +143,26 @@ import ReactiveSwift
     
     @objc func load_Manual() {
         
+        /// Notes:
+        /// - [Mar 2025] During app startup SwitchMaster seems to called a bazillion times before being initialized. That's inefficent (and might even lead to corrupted state?)
+        ///     - Solution idea 1: Make `.shared` optional and create the singleton instance inside `load_Manual`
+        ///         ... However that might cause SwitchMaster to miss important state-updates during startup. We'd have to manually fill in all the initial state inside `load_Manual`. A proper reactive system would be able to do this automatically, but with our system it'd be difficult to maintain. (Sidenote: IIRC, we initially implemented this in ReactiveSwift but moved to manual function calls because it was too slow.)
+        ///     - Solution idea 2: Alternatively we could simply remove `load_Manual` and have the place that previously called it init HelperState instead.
+        ///         -> This should ensure correct behavior more easily than if we only start recording any state after `load_Manual`. While SwitchMaster might be called a few times during startup before it starts turning on any taps, it's pretty optimized and made to be called all the time, so actually shouldn't be a problem.
+        
         /// Force HelperState to init so that it updates `userIsActive`
         ///     Might be better to just directly assign `userIsActive` here instead of this indirect stuff.
         _ = HelperState.shared
         
         /// Not sure this is necessary or useful
+        ///     Update [Mar 2025] Still not totally sure. But I don't think it's necessary. The managers of all the state we're setting here should give SwitchMaster a callback when the state is initialized or when it changes. If the managers do that, then this shouldn't be necessary.
         latestDevices = DeviceManager.attachedDevices
         latestRemaps = Remap.remaps
         latestScrollConfig = ScrollConfig.shared
         latestModifiers = Modifiers.modifiers(with: nil)
+        
+        /// Debug
+        logWithState("Initialized.")
     }
     
     //
@@ -153,14 +181,16 @@ import ReactiveSwift
         /// - Not sure if we need to call `togglePointingTap(modifications:)`
         
         toggleKbModTap()
+        if false { toggleBtnModProcessing() } /// [Mar 2025] Why aren't we calling this?
+        
         toggleScrollTap()
         toggleButtonTap()
         togglePointingTap(modifications: nil)
+        
         toggleKillSwitchMenuItems()
         
         /// Debug
-        DDLogDebug("SwitchMaster toggling due to lockdown")
-        logState()
+        logWithState("Toggled due to lockdown.")
     }
     
     //
@@ -181,14 +211,24 @@ import ReactiveSwift
             userIsActive = userIsActiveNew
             
             /// Call togglers
+            
             toggleKbModTap()
+            if false { toggleBtnModProcessing() }
+            /// ^ [Mar 2025] Why aren't we calling this?
+            /// Note: [Mar 2025] After adding a `if isLockedDown || !userIsActive` guard inside toggleBtnModProcessing(), Click and Drag doesn't work right after enabling MMF.
+            ///     This can be fixed by calling toggleBtnModProcessing() here.
+            ///     This strongly vindicates the idea that toggleBtnModProcessing() is correct to call here, and that it's only working now due to luck.
+            ///     TODO: call toggleBtnModProcessing() here and in all the other places where we're missing it.
+            
             toggleScrollTap()
             toggleButtonTap()
             togglePointingTap(modifications: nil)
             
             /// Debug
-            DDLogDebug("SwitchMaster toggling due to helperState change")
-            logState()
+            logWithState("""
+                Toggled due to helperState change.
+                New state - userIsActive: \(userIsActiveNew)
+                """)
         }
     }
     
@@ -202,7 +242,7 @@ import ReactiveSwift
         let btn = generalConfig.object(forKey: "buttonKillSwitch") as! Bool
         let scrl = generalConfig.object(forKey: "scrollKillSwitch") as! Bool
         
-        /// Store & record change
+        /// Update state & set didChange
         
         var didChange = false
         
@@ -218,14 +258,19 @@ import ReactiveSwift
         if didChange {
             
             /// Call togglers
+            
             toggleKbModTap()
+            if false { toggleBtnModProcessing() } /// [Mar 2025] Why aren't we calling this?
+            
             toggleScrollTap()
             toggleButtonTap()
             togglePointingTap(modifications: nil)
             
             /// Debug
-            DDLogDebug("SwitchMaster toggling due to killSwitch change")
-            logState()
+            logWithState("""
+                Toggled due to killSwitch change.
+                New state - btn: \(btn), scrl: \(scrl)
+                """)
         }
     }
     
@@ -246,21 +291,25 @@ import ReactiveSwift
         remapsOrAttachedDevicesChanged(remaps: latestRemaps, devices: devices)
         remapsOrModifiersOrAttachedDevicesChanged(remaps: latestRemaps, modifiers: latestModifiers, attachedDevices: devices)
         
-        /// Store
+        /// Store latest
         latestDevices = devices
         
         /// Call togglers
+        
         self.toggleKbModTap()
         self.toggleBtnModProcessing()
         
         self.toggleScrollTap()
         self.toggleButtonTap()
         self.togglePointingTap(modifications: nil)
+        
         toggleKillSwitchMenuItems()
         
         /// Debug
-        DDLogDebug("SwitchMaster toggling due to attachedDevices change")
-        logState()
+        logWithState("""
+            Toggled due to attachedDevices change.
+            New devices: \(devices)
+            """)
         
     }
     
@@ -279,31 +328,35 @@ import ReactiveSwift
         remapsOrModifiersChanged(remaps: remaps, modifiers: latestModifiers)
         remapsOrModifiersOrAttachedDevicesChanged(remaps: remaps, modifiers: latestModifiers, attachedDevices: latestDevices)
         
-        /// Store
+        /// Store latest
         latestRemaps = remaps
         
         /// Call togglers
+        /// Notes:
+        /// - On not calling togglePointingTap():
+        ///     - Would be a hack
+        ///     - We want to do this because it prevents an issue where after recording a click and drag in the addField it immediately activates.
+        ///     - I'm not totally sure this won't lead to other issues in edge cases though, so we'll find another solution:
+        ///         - sol1: Only conclude addMode drag when the user lets go of the button - Works but makes things less responsive
+        ///         - sol2:Make modifiedDrag ignore reinitialization while addModeDrag is active
+        ///     - Update: [2025] IIRC we fixed this problem another way. Should update these comments.
+        /// - On passing in self.latestModifications into togglePointingTap():
+        ///     -  I'm not 100% sure self.latestModifications is always up-to-date here (what if the new remaps should enable modifier tracking but those modifiers aren't in self.latestModifications, yet?). Since this is not performance-critical it's better to just pass in nil, so that `togglePointingTap()` gets the values fresh.
+        
         self.toggleKbModTap()
         self.toggleBtnModProcessing()
         
         self.toggleScrollTap()
         self.toggleButtonTap()
+        self.togglePointingTap(modifications: nil /*self.latestModifications*/)
         
         toggleKillSwitchMenuItems()
         
-        /// On not toggling pointing tap
-        /// - Would be a hack
-        /// - We want to do this because it prevents an issue where after recording a click and drag in the addField it immediately activates.
-        /// - I'm not totally sure this won't lead to other issues in edge cases though, so we'll find another solution:
-        ///     - sol1: Only conclude addMode drag when the user lets go of the button - Works but makes things less responsive
-        ///     - sol2:Make modifiedDrag ignore reinitialization while addModeDrag is active
-        /// - On passing in self.latestModifications:
-        ///  -  I'm not 100% sure self.latestModifications is always up-to-date here (what if the new remaps should enable modifier tracking but those modifiers aren't in self.latestModifications, yet?). Since this is not performance-critical it's better to just pass in nil, so that `togglePointingTap()` gets the values fresh.
-        self.togglePointingTap(modifications: nil /*self.latestModifications*/)
-        
         /// Debug
-        DDLogDebug("SwitchMaster toggling due to remaps change")
-        logState()
+        logWithState("""
+            Toggled due to remaps change.
+            New remaps: \(remaps)
+            """)
     }
     
     private var latestScrollConfig = ScrollConfig.shared /// Not sure if this is a good initialization value
@@ -315,13 +368,16 @@ import ReactiveSwift
             self.defaultModifiesScroll = false
         } else {
             self.defaultModifiesScroll = /*!scrollKillSwitch && */
-            (scrollConfig.smoothEnabled || scrollConfig.u_speed != kMFScrollSpeedSystem || scrollConfig.u_invertDirection == kMFScrollInversionInverted)
+                (scrollConfig.smoothEnabled || scrollConfig.u_speed != kMFScrollSpeedSystem || scrollConfig.u_invertDirection == kMFScrollInversionInverted)
         }
         
-        /// Store
+        /// Store latest
         latestScrollConfig = scrollConfig
         
         /// Call togglers
+        ///     Note: [Mar 2025] Problem(?): Shouldn't we call toggleButtonTap() here, since we call toggleBtnModProcessing()
+        ///         TODO: Call toggleButtonTap() here and in all other places we call toggleBtnModProcessing()
+        
         self.toggleKbModTap()
         self.toggleBtnModProcessing()
         
@@ -330,8 +386,10 @@ import ReactiveSwift
         toggleKillSwitchMenuItems()
         
         /// Debug
-        DDLogDebug("SwitchMaster toggling due to scroll config change")
-        logState()
+        logWithState("""
+            Toggled due to scrollConfig change.
+            New scrollConfig: \(scrollConfig)
+            """)
     }
     
     private var latestModifiers = NSDictionary()
@@ -341,26 +399,31 @@ import ReactiveSwift
         remapsOrModifiersChanged(remaps: latestRemaps, modifiers: modifiers)
         remapsOrModifiersOrAttachedDevicesChanged(remaps: latestRemaps, modifiers: modifiers, attachedDevices: latestDevices)
         
-        /// Store
+        /// Store latest
         latestModifiers = modifiers
         
         /// Call togglers
+        ///     Note: [Mar 2025] Why we aren't toggling btn/kbd mods here? -> I think because if we listened to mods conditionally based on presence of other mods, then only a specific order of activating the mods would work.
         
         self.toggleScrollTap()
         self.toggleButtonTap()
         self.togglePointingTap(modifications: self.latestModifications)
         
         /// Debug
-        DDLogDebug("SwitchMaster toggling due to modifier change")
-        logState()
+        logWithState("""
+            Toggled due to modifier change.
+            New modifiers: \(modifiers)
+            """)
     }
     
     //
-    // MARK: Combined callbacks
+    // MARK: Combined state updaters
     //
     
     private func remapsOrAttachedDevicesChanged(remaps: NSDictionary, devices: NSArray) {
         
+        /// Note: [Mar 2025] Why not use `self.maxButtonNumberAmongDevices` here instead of calling `DeviceManager.maxButtonNumberAmongDevices()`? Pretty sure that's would be correct.
+        ///     TODO: use self.maxButtonNumberAmongDevices here and in all other places where `DeviceManager.maxButtonNumberAmongDevices()` is used (Maybe think it through again before.)
         let maxButton = DeviceManager.maxButtonNumberAmongDevices()
         let result = self.modifierUsage_Buttons(remaps, maxButton: maxButton)
         self.somekbModModifiesButtonOnSomeDevice = result.somekbModModifiesButtonOnSomeDevice
@@ -384,13 +447,14 @@ import ReactiveSwift
             self.currentModificationModifiesPointing = false
         }
         
-        /// Store
+        /// Store latest
         latestModifications = modifications
     }
     
     private func remapsOrModifiersOrAttachedDevicesChanged(remaps: NSDictionary, modifiers: NSDictionary, attachedDevices: NSArray) {
         
         /// NOTE: Not totally sure using `latestModifications` always works here. Make sure you call `remapsOrModifiersChanged` before this so `latestModifications` is updated first
+        ///     Update: [Mar 2025] Current understanding: When attached devices change, this is called without first calling remapsOrModifiersChanged() (and therefore, without updating latestModifications). But I think that's ok since attached devices really don't affect latestModifications. (This would no longer be true if we introduce device-specific settings.)
         
         /// Update state
         if let m = latestModifications {
@@ -399,18 +463,6 @@ import ReactiveSwift
             self.currentModificationModifiesButtonOnSomeDevice = false
         }
 
-    }
-    
-    //
-    // MARK: Debug
-    //
-    
-    private func logState() {
-        if runningPreRelease() {
-            ModifiedDrag.activationState { modifiedDragActivation in
-                DDLogDebug("SwitchMaster switched to - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isReceiving() ? 1 : 0), pointing: \(modifiedDragActivation.rawValue), buttonMenu: \(MenuBarItem.buttonsItemIsEnabled() ? 1 : 0), scrollMenu: \(MenuBarItem.scrollItemIsEnabled() ? 1 : 0)")
-            }
-        }
     }
     
     //
@@ -426,21 +478,17 @@ import ReactiveSwift
         
         var priority = kMFModifierPriorityUnused
         
-        let kbModsAreUsed =
-        (someDeviceHasScroll && somekbModModifiesScroll && !scrollKillSwitch)
-        || (someDeviceHasPointing && somekbModModifiesPointing)
-        || (someDeviceHasUsableButtons && somekbModModifiesButtonOnSomeDevice && !buttonKillSwitch)
+        let someKbModReallyModifiesScroll   = somekbModModifiesScroll             && someDeviceHasScroll          && !scrollKillSwitch
+        let someKbModReallyModifiesPointing = somekbModModifiesPointing           && someDeviceHasPointing        && true
+        let someKbModReallyModifiesButtons  = somekbModModifiesButtonOnSomeDevice && someDeviceHasUsableButtons   && !buttonKillSwitch
         
-        if kbModsAreUsed {
+        if someKbModReallyModifiesScroll || someKbModReallyModifiesPointing || someKbModReallyModifiesButtons {
             
-            let someKbModsToggleScroll = !defaultModifiesScroll && somekbModModifiesScroll && !scrollKillSwitch
-            let someKbModsTogglePointing = !defaultModifiesPointing && somekbModModifiesPointing
-            let someKbModsToggleButtons = !defaultModifiesButtonOnSomeDevice && somekbModModifiesButtonOnSomeDevice && !buttonKillSwitch
+            let someKbModsToggleScroll      = someKbModReallyModifiesScroll     && !defaultModifiesScroll               ;
+            let someKbModsTogglePointing    = someKbModReallyModifiesPointing   && !defaultModifiesPointing             ;
+            let someKbModsToggleButtons     = someKbModReallyModifiesButtons    && !defaultModifiesButtonOnSomeDevice   ;
             
-            if  (someDeviceHasScroll && someKbModsToggleScroll)
-                    || (someDeviceHasPointing && someKbModsTogglePointing)
-                    || (someDeviceHasUsableButtons && someKbModsToggleButtons) {
-                
+            if someKbModsToggleScroll || someKbModsTogglePointing || someKbModsToggleButtons {
                 priority = kMFModifierPriorityActiveListen
             } else {
                 priority = kMFModifierPriorityPassiveUse
@@ -452,25 +500,22 @@ import ReactiveSwift
     
     private func toggleBtnModProcessing() {
         
+        /// TODO [Mar 2025]:
+        ///     Add a `if isLockedDown || !userIsActive` guard here like for all the other togglers
+        
         var priority = kMFModifierPriorityUnused
         
-        let buttonsAreUsedAsModifiers =
-        (someDeviceHasScroll && someButtonModifiesScroll && !scrollKillSwitch)
-        || (someDeviceHasPointing && someButtonModifiesPointing)
-        || (someDeviceHasUsableButtons && someButtonModifiesButtonOnSomeDevice && !buttonKillSwitch) /// `!buttonKillSwitch` is redundant here, but makes it more readable?
+        let someBtnReallyModifiesScroll      = someButtonModifiesScroll             && someDeviceHasScroll        && !scrollKillSwitch      ;
+        let someBtnReallyModifiesPointing    = someButtonModifiesPointing           && someDeviceHasPointing      && true                   ;
+        let someBtnReallyModifiesButtons     = someButtonModifiesButtonOnSomeDevice && someDeviceHasUsableButtons && !buttonKillSwitch      ; /// `!buttonKillSwitch` is redundant here ([Mar 2025]: Why?), but makes it more readable? || [Mar 2025]: someDeviceHasUsableButtons might also be redundant, because someButtonModifiesButtonOnSomeDevice might already capture that.
         
-        if  buttonsAreUsedAsModifiers {
+        if someBtnReallyModifiesScroll || someBtnReallyModifiesPointing || someBtnReallyModifiesButtons {
             
-            let someBtnModsToggleScroll = !defaultModifiesScroll && someButtonModifiesScroll && !scrollKillSwitch
-            let someBtnModsTogglePointing = !defaultModifiesPointing && someButtonModifiesPointing
-            let someBtnModsToggleButtons = !defaultModifiesButtonOnSomeDevice && someButtonModifiesButtonOnSomeDevice && !buttonKillSwitch
+            let someBtnModsToggleScroll     = someBtnReallyModifiesScroll   && !defaultModifiesScroll            ;
+            let someBtnModsTogglePointing   = someBtnReallyModifiesPointing && !defaultModifiesPointing          ;
+            let someBtnModsToggleButtons    = someBtnReallyModifiesButtons  && !defaultModifiesButtonOnSomeDevice;
             
-            let buttonModifiersToggleTaps =
-            (someDeviceHasScroll && someBtnModsToggleScroll)
-            || (someDeviceHasPointing && someBtnModsTogglePointing)
-            || (someDeviceHasUsableButtons && someBtnModsToggleButtons)
-            
-            if buttonModifiersToggleTaps {
+            if someBtnModsToggleScroll || someBtnModsTogglePointing || someBtnModsToggleButtons {
                 priority = kMFModifierPriorityActiveListen
             } else {
                 priority = kMFModifierPriorityPassiveUse
@@ -501,10 +546,14 @@ import ReactiveSwift
             return
         }
         
+        /// Notes:
+        ///     - [Mar 2025] We should perhaps reuse the 'areButtonsModifiers?' logic from toggleBtnModProcessing(), instead of this duplicate (and outdated - we're missing `!scrollKillSwitch`) logic.
+        ///         -> TODO: Reuse updated logic from toggleBtnModProcessing()
+        ///     - [Mar 2025] We should probably always call toggleButtonTap() after toggleBtnModProcessing() - so the tap is actually toggled in case this switches buttonModProcessing to/away from kMFModifierPriorityActiveListen
         let buttonsAreUsedAsModifiers =
-        (someDeviceHasScroll && someButtonModifiesScroll)
-        || (someDeviceHasPointing && someButtonModifiesPointing)
-        || (someDeviceHasUsableButtons && someButtonModifiesButtonOnSomeDevice)
+            (someDeviceHasScroll        && someButtonModifiesScroll)                ||
+            (someDeviceHasPointing      && someButtonModifiesPointing)              ||
+            (someDeviceHasUsableButtons && someButtonModifiesButtonOnSomeDevice)
         
         if someDeviceHasUsableButtons && (currentModificationModifiesButtonOnSomeDevice || buttonsAreUsedAsModifiers) {
             
@@ -528,6 +577,7 @@ import ReactiveSwift
             
             /// Get modifications
             /// - Maybe we should store the "latestModifications" as an instance var for optimzation && to keep things clean? Aside from this we're only using instance vars in the tapTogglers, I feel like maybe there's is some architectural idea for why we only need to use instance vars.
+            /// - Update: [Mar 2025] We do store the 'latestModifications' as an instance var now. Should we use it here? 
             let modifications: NSDictionary?
             
             if modificationsArg != nil {
@@ -550,12 +600,15 @@ import ReactiveSwift
     
     private func toggleKillSwitchMenuItems() {
         
+        /// Disabling this, because I think it's not really clear to users what graying out the items means or when it happens.
+        
+        /// Note: [Mar 2025] We're never disabling the items (I think) – so why enable them here instead of just returning?
+        /// Note: [Mar 2025] If we ever enable this code again, we should perhaps add a `if isLockedDown || !userIsActive` guard here like for all the other togglers.
+        
         MenuBarItem.enableScrollItem(true)
         MenuBarItem.enableButtonsItem(true)
         
         if ((false)) {
-            
-            /// Disabling this, because I think it's not really clear to users what graying out the items means or when it happens.
             
             let scrollCanBeToggled =
             !isLockedDown && someDeviceHasScroll &&

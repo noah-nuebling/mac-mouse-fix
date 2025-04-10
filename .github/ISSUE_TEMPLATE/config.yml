@@ -1,4 +1,4 @@
-blank_issues_enabled: false
+blank_issues_enabled: true # [Mar 2025] had to set this to true to not break MMF Feedback Assistant. See https://github.com/orgs/community/discussions/14287#discussioncomment-12691930
 
 contact_links:
   - name: Need help?
@@ -10,6 +10,7 @@ contact_links:
   - name: Enhancement request
     url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=feature-request
     about: Suggest a new feature, UI changes, or other improvements
-  - name: Free form feedback
-    url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=other
-    about: Write free form feedback
+  # [Mar 2025] vvv Disabling since we're forced to set `blank_issues_enabled: true`
+  # - name: Free form feedback
+  #  url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=other
+  #  about: Write free form feedback

@@ -7,6 +7,12 @@
 // --------------------------------------------------------------------------
 //
 
+///
+/// I observed a bug [Mar 2025]
+/// When app is not licensed, but the system region is set to a free country, then you start the app, and then hover over the trial section (which will show the 'activate license' text) *before* the free country message can load in –
+///     then the UI will get stuck and the free country message never loads in. I've also seen the 'activate license' button itself get stuck in some weird, broken state, but not every time.
+///
+
 import Foundation
 
 class TrialSectionManager {
@@ -34,7 +40,7 @@ class TrialSectionManager {
     
     /// Start and stop
     
-    func startManaging(licenseConfig: LicenseConfig, license: MFLicenseAndTrialState) {
+    func startManaging(licenseConfig: MFLicenseConfig, trialState: MFTrialState) {
         
         /// Make initialSection current
         showInitial(animate: false)
@@ -42,8 +48,7 @@ class TrialSectionManager {
         /// Style intialSection
         
         /// Setup image
-
-        let imageName = license.trialIsActive.boolValue ? "calendar" : "calendar"/*"hourglass.tophalf.filled"*/
+        let imageName = trialState.trialIsActive ? "calendar" : "calendar" /*"hourglass.tophalf.filled"*/
         
         if #available(macOS 11.0, *) {
             currentSection.imageView!.symbolConfiguration = .init(pointSize: 13, weight: .regular, scale: .large)
@@ -51,7 +56,7 @@ class TrialSectionManager {
         currentSection.imageView!.image = SFSymbolStrings.image(withSymbolName: imageName)
         
         /// Set string
-        currentSection.textField!.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, license: license)
+        currentSection.textField!.attributedStringValue = LicenseUtility.trialCounterString(licenseConfig: licenseConfig, trialState: trialState)
         
         /// Set height
         ///     This wasn't necessary under Ventura but under Monterey the textField is too high otherwise
@@ -155,6 +160,7 @@ class TrialSectionManager {
                 newSection.imageView?.image = image
                 
                 /// Setup hyperlink
+                ///     I've heard of the activate link not working for some people. I think I even experienced it, once. Perhaps, the app's ability to handle `macmousefix:` links breaks sometimes. Feels like it might be a bug/security feature in macOS?
                 
                 let linkTitle = NSLocalizedString("trial-notif.activate-license-button", comment: "")
                 let link = Hyperlink(title: linkTitle, linkID: kMFLinkIDMMFLActivate, alwaysTracking: true, leftPadding: 30)

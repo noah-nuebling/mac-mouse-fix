@@ -78,7 +78,7 @@ import Foundation
     
     // MARK: SwitchMaster interface
     
-    static func enableButtonsItem(_ enable: Bool) {
+    static func enableButtonsItem(_ enable: Bool) { /// Note: [Mar 2025] 'enabled' doesn't mean the item is checked. It means that it's clickable and not grayed-out.
         instance?.buttonsEnabledItem.isEnabled = enable
         
     }

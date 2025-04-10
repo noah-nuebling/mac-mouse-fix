@@ -200,10 +200,14 @@ static BOOL _mouseDidMove = NO;
     return _mouseDidMove;
 }
 static CGPoint _previousMouseLocation;
-/// Checks if cursor did move since the last time this function was called. Writes result into `_mouseDidMove`.
-///     Storing result in _mouseDidMove instead of returning so that different parts of the program can reuse this info
-/// Passing in event for optimization. Not sure if significatnt.
 + (void)updateMouseDidMoveWithEvent:(CGEventRef)event {
+    
+    /// Checks if cursor moved since the last time this function was called. Writes result into `_mouseDidMove`.
+    ///     Storing result in `_mouseDidMove` instead of returning it, so that different parts of the program can reuse this info
+    /// Passing in event for optimization. Not sure if significant.
+    ///     Update: (Sep 2024) `_mouseDidMove` is only used inside Scroll.m. Not returning is weird and unnecessary, and caused us to write a bug inside Scroll.m I believe.
+    ///                     We did begin implementing a much better replacement for this system in the branch `app-specific`
+    
     CGPoint mouseLocation = CGEventGetLocation(event);
     _mouseDidMove = ![ScrollUtility point:mouseLocation
                           isAboutTheSameAs:_previousMouseLocation
@@ -216,8 +220,10 @@ static BOOL _frontMostAppDidChange;
     return _frontMostAppDidChange;
 }
 static NSRunningApplication *_previousFrontMostApp;
-/// Checks if frontmost application changed since the last time this function was called. Writes result into `_frontMostAppDidChange`.
 + (void)updateFrontMostAppDidChange {
+    
+    /// Checks if frontmost application changed since the last time this function was called. Writes result into `_frontMostAppDidChange`.
+    
     NSRunningApplication *frontMostApp = NSWorkspace.sharedWorkspace.frontmostApplication;
     _frontMostAppDidChange = ![frontMostApp isEqual:_previousFrontMostApp];
     _previousFrontMostApp = frontMostApp;

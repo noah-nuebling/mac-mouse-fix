@@ -27,14 +27,14 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 ///     We saw that he function returns an NSObject of type 'HIDEvent'. Then we used VSCode to search Apples open source projects IOHIDFamily-1633.100.36, IOKitUser-1845.100.19, and xnu-7195.101.1 for the headers declaring 'HIDEvent' and their dependencies and added the to the project until everything compiled.
 ///
-///     We then tried to find _SLEventSetIOHIDEvent, but we couldn't manage to. However, we could build our own equivalent function based on reversing the process seen in the assembly of CGEventCopyIOHIDEvent and shifting around pointers between memory addresses.
+///     We then tried to find `_SLEventSetIOHIDEvent`, but we couldn't manage to. However, we could build our own equivalent function based on reversing the process seen in the assembly of CGEventCopyIOHIDEvent and shifting around pointers between memory addresses.
 ///
 /// Old Notes from TouchSimulator.m: (These observations led us to this)
 ///     I just saw in Instruments that when CFRelease is called on the scrollEvents we capture in Scroll.m, then the following function are called:
 ///         `CGSEventReclaimObjects()`, which then calls `[HIDEvent dealloc]`
 ///         This Suggests that CGEvent is an interface / wrapper / different name for for CGSEvent, and CGSEvent is an interface / wrapper for HIDEvent. Kernel drivers send IOHIDEvent IIRC, so possible HIDEvent is an interface / wrapper for IOHIDEvent.
 ///
-///     In the private Skylight framework there are the functions: _SLEventSetIOHIDEvent and _SLEventCopyIOHIDEvent.
+///     In the private Skylight framework there are the functions: `_SLEventSetIOHIDEvent` and `_SLEventCopyIOHIDEvent`.
 ///         SLEvent is a differnent name for CGSEvent as far as I understand.
 ///         Maybe we can use these functions to create CGEvents from IOHIDEvents.
 ///         This would be great because IOHIDEvents are not opaque. All their fields are documented.
@@ -52,7 +52,7 @@ void CGEventSetHIDEvent(CGEventRef _Nonnull, HIDEvent * _Nonnull);
 /// MARK: v Attempts to find a HIDEvent -> CGEvent function
 
 /// Unsuccessful, we ended up writing our own function.
-/// Actually in `SkyLight.tbd` there is `_SLEventSetIOHIDEvent`, but I can't find a definition that works
+/// Actually in `SkyLight.tbd` there is `_SLEventSetIOHIDEvent`, but I can't find a definition that we can link against.
 
 /// Trying to find a function that converts HIDEvent -> CGEvent
 ///     (__bridge doesn't work)

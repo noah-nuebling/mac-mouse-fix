@@ -59,7 +59,7 @@
 
 /// Animation prototype stuff
 /// Explanation:
-///     Under macOS 15.0 Beta, collapsable-stackView- and fade-animations broke.
+///     Under macOS 15.0 Sequoia Beta, collapsable-stackView- and fade-animations broke.
 ///     To fix it we had to call `animation = [animation animationForObject:key:targetValue:]`
 ///     before passing an animation to the animationManager inside ReactiveAnimatorProxy.swift.
 /// Notes:
@@ -74,7 +74,9 @@
 ///         From my current understanding, the reason we introduced the ReactiveAnimatorProxy.swift in the first place was so that:
 ///             1. So that we can assign values using ReactiveSwift and have those value assignments be animated (we do this by making our animatorProxy a ReactiveSwift BindingTargetProvider)
 ///             2. So we can use custom CAAnimations with an animator proxy, which we couldn't figure out a way to do otherwise
-///                 (NSAnimationContext only lets you specify one of 4 or 5 `timingFunctions` iirc, CALayer has methods for animating with a specific animation, but that is very cumbersome and might not apply in all places where we use animator proxies. E.g. when animating a layoutConstraint, then no CALayers are directly involved afaiu. NSAnimatablePropertyContainer lets you specify an animation by replacing the `animations` dict, this could actually be a viable solution, but not sure.)
+///                 (NSAnimationContext only lets you specify one of 4 or 5 `timingFunctions` iirc, CALayer has methods for animating with a specific animation, but that is very cumbersome and might not apply in all places where we use animator proxies.
+///                 E.g. when animating a layoutConstraint, then no CALayers are directly involved afaiu.
+///                 NSAnimatablePropertyContainer lets you specify an animation by replacing the `animations` dict, this could actually be a viable solution, but not sure.)
 ///
 ///     Possible improvement to the current system:
 ///         We should be able to add the reactive stuff in an `_NSObjectAnimator` extension, (or we can just do without reactive stuff or see if Apples Combine has more native integration).

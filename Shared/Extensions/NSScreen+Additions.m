@@ -18,6 +18,8 @@
 
 + (NSScreen * _Nullable)screenUnderMousePointerWithEvent:(CGEventRef _Nullable)event {
     
+    /// TODO: Simplify / optimize this: Use [NSScreen +_screenAtPoint:]
+    
 #if IS_HELPER
     
     CGDirectDisplayID displayID;
@@ -32,6 +34,8 @@
 }
 
 + (NSScreen * _Nullable)screenWithDisplayID:(CGDirectDisplayID)displayID {
+
+    /// TODO: Simplify/optimize this: Use [NSScreen +_screenForScreenNumber:]
     
     for (NSScreen *screen in NSScreen.screens) {
         if (screen.displayID == displayID)
@@ -43,7 +47,7 @@
 
 /// Src: https://stackoverflow.com/questions/1236498/how-to-get-the-display-name-with-the-display-id-in-mac-os-x
 - (CGDirectDisplayID)displayID {
-    return [[[self deviceDescription] valueForKey:@"NSScreenNumber"] unsignedIntValue];
+    return [[[self deviceDescription] valueForKey:@"NSScreenNumber"] unsignedIntValue]; /// TODO: Simplify/optimize this. In lldb we can just do `self->_displayID`
 }
 
 @end

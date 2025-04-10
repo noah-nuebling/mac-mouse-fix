@@ -15,7 +15,10 @@
 #import "NSAttributedString+Additions.h"
 #import "SFSymbolStrings.h"
 #import "Mac_Mouse_Fix-Swift.h"
+/*
 #import "CoolSFSymbolsFont.h"
+#import "SymbolicHotKeys.h"
+*/
 
 @implementation UIStrings
 
@@ -30,26 +33,51 @@
 
 + (NSString * _Nullable)flagEmoji:(NSString *)countryCode {
     
-    /// Src: https://stackoverflow.com/a/34995291
+    /// Based on: https://stackoverflow.com/a/34995291
     
-    int base = 127462 - 65;
+    /// Check null and validate length
+    if (!countryCode || countryCode.length != 2) {
+        assert(false && "Expecting two-letter ISO country code");
+        return nil;
+    }
     
-    wchar_t bytes[2] = {
-        base + [countryCode characterAtIndex:0],
-        base + [countryCode characterAtIndex:1]
+    /// Extract chars
+    char16_t chars[2];
+    [countryCode getCharacters:chars range:NSMakeRange(0, 2)];
+    
+    /// Guard: Chars are all uppercase letters
+    #define isUpperCaseLetter(char) ('A' <= (char) && (char) <= 'Z')
+    if (!isUpperCaseLetter(chars[0]) || !isUpperCaseLetter(chars[1])) {
+        assert(false && "Expecting two-letter ISO country code");
+        return nil;
+    }
+    #undef isUpperCaseLetter
+    
+    /// Transform to pair of regional indicator chars
+    char32_t bytes[2] = {
+        U'🇦' + (chars[0] - 'A'),
+        U'🇦' + (chars[1] - 'A')
     };
     
-    return [[NSString alloc] initWithBytes:bytes
-                                    length:countryCode.length * sizeof(wchar_t)
-                                  encoding:NSUTF32LittleEndianStringEncoding];
+    /// Get string encoding
+    ///     Notes:
+    ///     - NSUTF32StringEncoding doesn't work here because it expects a byte-order mark (BOM) at the start, such as 0xFFFE0000
+    ///     - All ARM and Intel Apple machines except the old PPC ones are LittleEndian, so we could just hardcode to NSUTF32LittleEndianStringEncoding.
+    NSStringEncoding encoding = (CFByteOrderGetCurrent() == CFByteOrderLittleEndian) ? NSUTF32LittleEndianStringEncoding : NSUTF32BigEndianStringEncoding;
+    
+    /// Make string
+    NSString *result = [[NSString alloc] initWithBytes:bytes
+                                                length:sizeof(bytes)
+                                              encoding:encoding];
+    
+    /// Return
+    return result;
 }
-
 
 /// Other code for obtaining UI strings found in RemapTableController
 /// Function for getting extended button string for tooltips found in RemapTableController
 
 + (NSString *)systemSettingsName {
-    
     if (@available(macOS 13.0, *)) {
         return NSLocalizedString(@"system-settings-name", @"Note: The name of the system settings app in macOS 13 Ventura and later.");
     } else {
@@ -150,10 +178,12 @@
     NSString *kb = @"";
     CGEventFlags f = flags;
     kb = [NSString stringWithFormat:@"%@%@%@%@",
-          (f & kCGEventFlagMaskControl ?    @"^" : @""),
-          (f & kCGEventFlagMaskAlternate ?  @"⌥" : @""),
-          (f & kCGEventFlagMaskShift ?      @"⇧" : @""),
-          (f & kCGEventFlagMaskCommand ?    @"⌘" : @"")];
+          (f & kCGEventFlagMaskControl      ? @"^" : @"")   ,
+          (f & kCGEventFlagMaskAlternate    ? @"⌥" : @"")   ,
+          (f & kCGEventFlagMaskShift        ? @"⇧" : @"")   ,
+          (f & kCGEventFlagMaskCommand      ? @"⌘" : @"")   ]
+//          (f & kCGEventFlagMaskSecondaryFn  ? @"🌎": @"")   ] /// Caution: Due to eternalmods, the fn flag doesn't always indicate that the fn/globe key is held. – See EventLoggerForBrad.
+    ;
     
     return kb;
 }
@@ -323,6 +353,8 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
             CGSSymbolicHotKey shk = _highestSymbolicHotKeyInCache;
             while (shk < 512) { /// 512 is arbitrary
                 
+                /// TODO: Define/Set `shk < 512` to a well-considered constant based on our experiments inside EventLoggerForBrad
+                
                 /// Get info about the SHK
                 unichar keyEquivalent;
                 CGKeyCode virtualKeyCode;
@@ -336,6 +368,7 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
                 _hotKeyCache[@[@(virtualKeyCode), @(modifiers)]] = @(shk);
                 
                 /// Check if shk is what we're looking for.
+                ///     TODO: Check if this shk's `modifiers` actually fit the `flags` arg (?)
                 if (((CGKeyCode)virtualKeyCode) == keyCode) {
                     symbolicHotkey = @(shk);
                     break;

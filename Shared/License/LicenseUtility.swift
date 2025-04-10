@@ -9,10 +9,53 @@
 
 import Cocoa
 
-@objc class LicenseUtility: NSObject {
-
+func MFCatch<R, E>(_ workload: () throws(E) -> R) -> (R?, E?) {
     
-    @objc static func buyMMF(licenseConfig: LicenseConfig, locale: Locale, useQuickLink: Bool) {
+    /// (Sync version)
+    
+    /// Explanation:
+    ///     Takes a throwing closure `workload` as its argument.
+    ///     Runs `workload` and catches any errors it might throw.
+    ///     Returns a tuple of the result and the thrown error. Exactly one of the two will be nil.
+    ///         (Update: Are we sure? What happens exactly, if the `workload` succeeds but returns nil?)
+    ///
+    ///     This is very similar to Swift's native `Result` type, but it's simpler, and easier to integrate into our existing completion-handler-based asynchronous code for handling licensing stuff.
+    ///         Update: I did have a bit of trouble keeping in mind that exactly one out of `error` and `result` is nil. Maybe using Swift's native `Result` would actually be easier for me... But I don't like the weird switch-case-pattern-matching you have to do there, and it doesn't work with throwing async functions....
+    
+    var result: R? = nil
+    var error: E? = nil
+    
+    do {
+        result = try workload()
+    } catch let e {
+        error = e
+    }
+    
+    return (result, error)
+}
+
+func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
+    
+    /// (Async version)
+    ///
+    /// Explanation:
+    ///     This is like the regular MFCatch function, but it works in an async context
+    
+    var result: R? = nil
+    var error: E? = nil
+    
+    do {
+        result = try await workload()
+    } catch let e {
+        error = e
+    }
+    
+    return (result, error)
+}
+
+@objc class LicenseUtility: NSObject {
+    
+    @objc static func buyMMF(licenseConfig: MFLicenseConfig, locale: Locale, useQuickLink: Bool) {
         
         /// Originally implemented this in ObjC but lead to weird linker errors
         
@@ -53,29 +96,29 @@ import Cocoa
         }
     }
     
-    @objc static func trialCounterString(licenseConfig: LicenseConfig, license: MFLicenseAndTrialState) -> NSAttributedString {
+    @objc static func trialCounterString(licenseConfig: MFLicenseConfig, trialState: MFTrialState) -> NSAttributedString {
         
         /// Guard unlicensed
-        assert(!license.isLicensed.boolValue)
+        ///     Note: Perhaps we should return an error UI string here, so it is more obvious to the user that sth went wrong and they can file a bug report?
+//        assert(!licenseState.isLicensed, "Error: The app is licensed, yet we're trying to display the trialCounterString")
+        
         
         /// Get trial state
-        ///     We can also get `trialDays` from MFLicenseAndTrialState, which is sort of redundant`
+        ///     Note: We can also get `trialDays` from `trialState` instead of `licenseConfig`, which is sort of redundant
         let trialDays = Int(licenseConfig.trialDays)
-        let daysOfUse = Int(license.daysOfUseUI)
+        let daysOfUseUI = trialState.daysOfUseUI
         
         /// Build base string
-        
         let base: String
-        if !license.trialIsActive.boolValue {
+        if !trialState.trialIsActive {
             /// Trial expired
             
             base = NSLocalizedString("trial-counter.expired", comment: "")
             
         } else {
             /// Trial still active
-                
             let b = NSLocalizedString("trial-counter.active", comment: "Note: If you think \"x/y\" looks unnatural in your language you could also use something like \"x of y\"")
-            base = String(format: b, daysOfUse, trialDays)
+            base = String(format: b, daysOfUseUI, trialDays)
         }
         
         /// Apply markdown

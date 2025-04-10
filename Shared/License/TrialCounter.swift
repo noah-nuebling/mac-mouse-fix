@@ -41,6 +41,7 @@ import Cocoa
     
     @objc static func load_Manual() {
         /// Need to use loadManual() because the initialization does network calls and is async. So we need initialization to be done way before handleUse() is called for the first time, because otherwise the trialIsActive and hasBeenUsedToday flags will be wrong.
+        ///     -> Don't think this is a watertight protection against this race-condition. TODO: Think about: 1. How to prevent the race cond. 2. Whether the race cond is acceptable.
         let _ = TrialCounter.shared
     }
     @objc override init() {
@@ -60,62 +61,69 @@ import Cocoa
         if !runningHelper() { return }
         
         /// Real init
-        
-        /// Get licenseConfig
-        ///     Note: Getting the licenseConfig is unnecessary if the app is licenseed. That's because all that the licenseState() func needs the licenseConfig for is to check the number of trialDays. And if the app is licensed, we don't need to check for the trialDays.
-        
-        LicenseConfig.get { licenseConfig in
             
+        /// Start an async-context
+        ///     Notes:
+        ///     - We're using .detached because .init schedules on the current Actor according to the docs. We're not trying to use any Actors.
+        ///     - Using priority .background because it makes sense?
+        ///     - @MainActor so all Licensing code runs on the main-thread
+        Task.detached(priority: .background, operation: { @MainActor in
+        
             /// Check licensing state
-            License.checkLicenseAndTrial(licenseConfig: licenseConfig) { license, error in
+            let licenseState = await GetLicenseState.get()
+            
+            if licenseState.isLicensed {
                 
-                if license.isLicensed.boolValue {
-                    
-                    /// Do nothing if licensed
-                    
-                } else if !license.trialIsActive.boolValue {
-                    
-                    /// Not licensed and trial expired -> do nothing
-                    ///     In this case AccessibilityCheck.m will perform the lockDown, by calling `License.runCheckAndReact()`
-                    
-                } else {
-                    
-                    /// Trial period is active!
-                    
-                    /// Set trialActive flag
-                    self.trialIsActive = true
-                    
-                    /// Init hasBeeUsedToday
+                /// Do nothing if licensed
+                
+            } else {
+        
+            let licenseConfig = await GetLicenseConfig.get()
+            let trialState = GetTrialState.get(licenseConfig)
+        
+            if !trialState.trialIsActive {
+                
+                /// Not licensed and trial expired -> do nothing
+                ///     In this case AccessibilityCheck.m will perform the lockDown, by calling `License.runCheckAndReact()`
+                
+            } else {
+                
+                /// Trial period is active!
+                
+                /// Set trialActive flag
+                self.trialIsActive = true
+                
+                /// Init hasBeenUsedToday
+                self.hasBeenUsedToday = false
+                if let lastUseDate = TrialCounter.lastUseDate as? NSDate {
+                    let now = Date.init(timeIntervalSinceNow: 0)
+                    let a = Calendar.current.dateComponents([.day, .month, .year], from: lastUseDate as Date)
+                    let b = Calendar.current.dateComponents([.day, .month, .year], from: now)
+                    let isSameDay = a.day == b.day && a.month == b.month && a.year == b.year
+                    if isSameDay {
+                        self.hasBeenUsedToday = true
+                    }
+                }
+                
+                /// Init daily timer
+                ///     Notes:
+                ///     - Is fired at 00:00 on the next day, and in 24 hour periods after that. We could also just do 24 hour periods without making sure it's always fired at 00:00. But I think it's a little nicer and more consistent from a user experience standpoint to have it reset at 00:00.
+                ///     - When the computer sleeps the timer is not fired. But it's fired after it wakes up. This shouldn't cause any problems.
+                ///
+                let secondsPerDay = 24*60*60
+                let nextDay = Date(timeIntervalSinceNow: TimeInterval(secondsPerDay))
+                let nextDayBreak = Calendar.current.startOfDay(for: nextDay)
+                self.daily = Timer(fire: nextDayBreak, interval: TimeInterval(secondsPerDay), repeats: true) { timer in
+                    DDLogInfo("Daily trial timer fired")
                     self.hasBeenUsedToday = false
-                    if let lastUseDate = TrialCounter.lastUseDate as? NSDate {
-                        let now = Date.init(timeIntervalSinceNow: 0)
-                        let a = Calendar.current.dateComponents([.day, .month, .year], from: lastUseDate as Date)
-                        let b = Calendar.current.dateComponents([.day, .month, .year], from: now)
-                        let isSameDay = a.day == b.day && a.month == b.month && a.year == b.year
-                        if isSameDay {
-                            self.hasBeenUsedToday = true
-                        }
-                    }
-                    
-                    /// Init daily timer
-                    ///     Notes:
-                    ///     - Is fired at 00:00 on the next day, and in 24 hour periods after that. We could also just do 24 hour periods without making sure it's always fired at 00:00. But I think it's a little nicer and more consistent from a user experience standpoint to have it reset at 00:00.
-                    ///     - When the computer sleeps the timer is not fired. But it's fired after it wakes up. This shouldn't cause any problems.
-                    ///
-                    let secondsPerDay = 24*60*60
-                    let nextDay = Date(timeIntervalSinceNow: TimeInterval(secondsPerDay))
-                    let nextDayBreak = Calendar.current.startOfDay(for: nextDay)
-                    self.daily = Timer(fire: nextDayBreak, interval: TimeInterval(secondsPerDay), repeats: true) { timer in
-                        DDLogInfo("Daily trial timer fired")
-                        self.hasBeenUsedToday = false
-                    }
-                    
-                    /// Schedule daily timer
-                    ///     Not sure if .default or .common is better here. Default might be a little more efficicent but maybe it doesn't work in some cases?
-                    RunLoop.main.add(self.daily, forMode: .common)
+                }
+                
+                /// Schedule daily timer
+                ///     Not sure if .default or .common is better here. Default might be a little more efficicent but maybe it doesn't work in some cases?
+                RunLoop.main.add(self.daily, forMode: .common)
                 }
             }
-        }
+        })
     }
     
     /// Vars
@@ -148,7 +156,7 @@ import Cocoa
     @objc func handleUse() {
         
         /// Debug
-        DDLogDebug("handling use in trial")
+        DDLogDebug("TrialCounter.handleUse() called. trialIsActive: \(trialIsActive) | hasBeenUsedToday: \(hasBeenUsedToday) | lastUseDate: \(TrialCounter.lastUseDate ?? "<nil>") | daysOfUse: \(TrialCounter.daysOfUse)")
         
         /// Guard not running helper
         assert(runningHelper())
@@ -159,22 +167,25 @@ import Cocoa
         /// Only react to use once a day
         if hasBeenUsedToday { return }
         
-        DispatchQueue.global(qos: .background).async {
-            
-            /// Dispatching to another queue here because there was an obscure concurrency crash when trying to debug something. This is not necessary for normal operation but it shouldn't hurt.
+        /// Start an async context
+        /// Notes:
+        /// - Old note: Dispatching to another queue here because there was an obscure concurrency crash when trying to debug something. This is not necessary for normal operation but it shouldn't hurt.
+        ///     Update: (Oct 2024) now using `Task` instead of dispatch queue so we can use async/await
+        /// - Update: Now using @MainActor so all licensing code runs on the mainthread. (Hope that won't bring back the 'obscure concurrency crash'?)
+        
+        Task.detached(priority: .background, operation: { @MainActor in
             
             /// Update state
-            ///     Should we check whether the date has actually changed?
+            ///     Notes:
+            ///     - Should we validate that the date has actually changed?
+            ///     - (Oct 2024) This is shared mutable state. Can there be race conditions? How bad would their effect be? I saw we are already wrapping  self.hasBeenUsedToday with @Atomic, so we seem to have given this some thought, but it's not documented.
             self.hasBeenUsedToday = true
             TrialCounter.lastUseDate = Date(timeIntervalSinceNow: 0.0)
             TrialCounter.daysOfUse += 1
-            
-            /// Get updated licenseConfig
-            LicenseConfig.get { licenseConfig in
                 
-                /// Display UI & lock down helper if necessary
-                License.checkAndReact(licenseConfig: licenseConfig, triggeredByUser: false)
-            }
-        }
+            /// Display UI & lock down helper if necessary
+            ///     Note: In this code branch, we already know that the app is not licensed, that the trial is active, and that, therefore, we'll need to load the licenseConfig to obtain the trialDuration -> Perhaps we should pass this information into the called function? As it is, the called function has to re-gather this info independently.
+            License.checkAndReact(triggeredByUser: false)
+        })
     }
 }
