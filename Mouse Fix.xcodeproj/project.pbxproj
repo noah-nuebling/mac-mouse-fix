@@ -85,6 +85,10 @@
 		4F4C73D82C4FB3FA001D97C3 /* LocalizedStringAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73D62C4FB3FA001D97C3 /* LocalizedStringAnnotation.m */; };
 		4F4C73FE2C4FB5D2001D97C3 /* AnnotationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */; };
 		4F4C73FF2C4FB5D2001D97C3 /* AnnotationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */; };
+		4F5170152CBFD75C0018D388 /* MFDataClassImpls.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */; };
+		4F5170162CBFD75C0018D388 /* MFDataClassImpls.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */; };
+		4F5170182CBFD7660018D388 /* MFDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170172CBFD7660018D388 /* MFDataClass.m */; };
+		4F5170192CBFD7660018D388 /* MFDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170172CBFD7660018D388 /* MFDataClass.m */; };
 		4F58FE002C56DE9B00926A00 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FDFF2C56DE9B00926A00 /* Logging.swift */; };
 		4F58FE022C56DE9B00926A00 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FDFF2C56DE9B00926A00 /* Logging.swift */; };
 		4F58FE032C56E65900926A00 /* AnnotationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */; };
@@ -92,10 +96,6 @@
 		4F58FE122C571DE200926A00 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4F58FE112C571DE200926A00 /* CocoaLumberjackSwift */; };
 		4F58FE132C57297400926A00 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FDFF2C56DE9B00926A00 /* Logging.swift */; };
 		4F58FE142C57BAFA00926A00 /* NSTextField+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */; };
-		4F5170152CBFD75C0018D388 /* MFDataClassImpls.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */; };
-		4F5170162CBFD75C0018D388 /* MFDataClassImpls.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */; };
-		4F5170182CBFD7660018D388 /* MFDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170172CBFD7660018D388 /* MFDataClass.m */; };
-		4F5170192CBFD7660018D388 /* MFDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170172CBFD7660018D388 /* MFDataClass.m */; };
 		4F5971E52901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5971E62901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5C2F802885C5D0001B9B8A /* HelperState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */; };
@@ -2099,14 +2099,14 @@
 		4F4C73FB2C4FB570001D97C3 /* Queue.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
 		4F4C73FC2C4FB5D2001D97C3 /* AnnotationUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AnnotationUtility.h; sourceTree = "<group>"; };
 		4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnnotationUtility.m; sourceTree = "<group>"; };
+		4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClassImpls.m; sourceTree = "<group>"; };
+		4F5170172CBFD7660018D388 /* MFDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClass.m; sourceTree = "<group>"; };
+		4F51701A2CBFD7730018D388 /* MFDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFDataClass.h; sourceTree = "<group>"; };
 		4F52FAA42C775A57003C2821 /* Last State of Localization.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Last State of Localization.md"; sourceTree = "<group>"; };
 		4F58FDFF2C56DE9B00926A00 /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		4F58FE042C56EA1300926A00 /* TestLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestLogging.h; sourceTree = "<group>"; };
 		4F58FE052C56EA1300926A00 /* TestLogging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestLogging.m; sourceTree = "<group>"; };
 		4F58FE092C56EA2F00926A00 /* TestLogging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLogging.swift; sourceTree = "<group>"; };
-		4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClassImpls.m; sourceTree = "<group>"; };
-		4F5170172CBFD7660018D388 /* MFDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClass.m; sourceTree = "<group>"; };
-		4F51701A2CBFD7730018D388 /* MFDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFDataClass.h; sourceTree = "<group>"; };
 		4F5971E42901763D00A32656 /* MathObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MathObjc.m; sourceTree = "<group>"; };
 		4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperState.swift; sourceTree = "<group>"; };
 		4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapsOverrider_old_.swift; sourceTree = "<group>"; };
@@ -2305,7 +2305,6 @@
 		4FCECD8021092354001F1078 /* Mac Mouse Fix Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mac Mouse Fix Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashablePair.swift; sourceTree = "<group>"; };
 		4FCEDC91292D765600E7DA2A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		4FCEDC94292EB41700E7DA2A /* DeviceManagerSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManagerSwift.swift; sourceTree = "<group>"; };
 		4FD031572D5927DE000EA331 /* MFDeepCopyCoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFDeepCopyCoder.h; sourceTree = "<group>"; };
 		4FD031582D5927DE000EA331 /* MFDeepCopyCoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDeepCopyCoder.m; sourceTree = "<group>"; };
 		4FD0A71027B295F600FFCD12 /* GeneralConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralConfig.swift; sourceTree = "<group>"; };
@@ -2362,7 +2361,7 @@
 		4FE78C422C502A5F00C54103 /* NSString+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Additions.h"; sourceTree = "<group>"; };
 		4FE78C432C502A5F00C54103 /* NSString+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
 		4FE7A0DE28677AD600C33B37 /* Gain Curve Math.tex */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Gain Curve Math.tex"; sourceTree = "<group>"; };
-		4FE8FC792929D8AC0002583B /* On Bundle Size.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "On Bundle Size.md"; sourceTree = "<group>"; };
+		4FE8FC792929D8AC0002583B /* On Bundle Size & Deployment Target.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "On Bundle Size & Deployment Target.md"; sourceTree = "<group>"; };
 		4FEA2E4A2C5458CA00C86D67 /* buildmd.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = buildmd.py; sourceTree = "<group>"; };
 		4FEA2E4B2C5458CA00C86D67 /* python_requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = python_requirements.txt; sourceTree = "<group>"; };
 		4FEA2E4D2C5458CA00C86D67 /* buildstrings.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = buildstrings.py; sourceTree = "<group>"; };
@@ -2387,7 +2386,6 @@
 		4FEA2E692C5458CA00C86D67 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4FEA2E6A2C5458CA00C86D67 /* run.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = run.py; sourceTree = "<group>"; };
 		4FEA2E6B2C5458CA00C86D67 /* StringsImport.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = StringsImport.md; sourceTree = "<group>"; };
-		4FE8FC792929D8AC0002583B /* On Bundle Size & Deployment Target.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "On Bundle Size & Deployment Target.md"; sourceTree = "<group>"; };
 		4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+Additions.m"; sourceTree = "<group>"; };
 		4FEA63CE2921510E00E464D6 /* NSImage+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+Additions.h"; sourceTree = "<group>"; };
 		4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "SymbolicHotKeys Reference.txt"; sourceTree = "<group>"; };
@@ -7398,7 +7396,6 @@
 			children = (
 				4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */,
 				4FEB6618279376C200E6A111 /* notes.md */,
-				4FE8FC792929D8AC0002583B /* On Bundle Size.md */,
 				4FC778302D66693E00488468 /* Localization Notes.md */,
 				4FE8FC792929D8AC0002583B /* On Bundle Size & Deployment Target.md */,
 				4F1B41A72D4C06AC00026C94 /* CodeStyle.md */,
@@ -7497,15 +7494,11 @@
 				4FF6653B25F2C7B000689B77 /* SharedUtility.m */,
 				4FF797382C8245D700C18001 /* Links.h */,
 				4FF797392C8245D700C18001 /* Links.m */,
-				4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */,
 				4F0CFFE62C51878500C5D843 /* MFDataClass.h */,
 				4F0CFFE72C51878500C5D843 /* MFDataClass.m */,
 				4F0CFFEC2C518CF600C5D843 /* MFDataClassImplementations.m */,
 				4F0C00402C53273200C5D843 /* BidirectionalMap.h */,
 				4F0C00412C53273200C5D843 /* BidirectionalMap.m */,
-				4F8A8DC0287F885D00786BCC /* Shorthands.h */,
-				4FA06818291B2C4C00949B5F /* Shorthands.m */,
-				4FF27DD62B95B108004744E1 /* Shorthands.swift */,
 				4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */,
 				4F5FC0612D6206E3009DCF10 /* SimpleUnboxing.h */,
 				4F51701A2CBFD7730018D388 /* MFDataClass.h */,
@@ -7764,7 +7757,6 @@
 				4FF6663B25F2C93A00689B77 /* Actions.m */,
 				4FA5F08C2CE4CEF800ED2354 /* SymbolicHotKeys.h */,
 				4FA5F08D2CE4CEF800ED2354 /* SymbolicHotKeys.m */,
-				4FCEDC80292CDC8300E7DA2A /* Actions.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -8328,7 +8320,6 @@
 				4F909D2228A0C3D2009349A2 /* ScrollTabController.swift in Sources */,
 				4F6F67A028A8141800C6C40F /* ButtonTabController.swift in Sources */,
 				4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */,
-				4F8FC13F275DC81900887A0C /* PrefixSwift.swift in Sources */,
 				4F428CE72CD3D608006322AB /* MacAddress.m in Sources */,
 				4F8CE7012617738A00D70A76 /* AppTranslocationManager.m in Sources */,
 				4F4C73D72C4FB3FA001D97C3 /* LocalizedStringAnnotation.m in Sources */,
@@ -8354,7 +8345,6 @@
 				4FB8B2A32CCEBC4900A5A580 /* APIRequests.swift in Sources */,
 				4FDE75A428B25E1A00662314 /* String+Extensions.swift in Sources */,
 				4FB8B29E2CCEBB1700A5A580 /* GetTrialState.swift in Sources */,
-				4FF6654C25F2C7B000689B77 /* Queue.m in Sources */,
 				4FF8C89E28955DC4007EC31F /* CoolTimer.swift in Sources */,
 				4FDB5F4A2D4F85A900164F97 /* NSCharacterSet+Additions.m in Sources */,
 				4F909D3428A0C3D2009349A2 /* Replace.swift in Sources */,
@@ -8417,9 +8407,7 @@
 				4FA40CF928A0CCCA00499E53 /* Bezier.swift in Sources */,
 				4F12952028D2D5E1009A49AB /* NSTextField+Extentions.swift in Sources */,
 				4FB8B2992CCEBADA00A5A580 /* GetLicenseState.swift in Sources */,
-				4FC8A7D728ACEB7B007DB982 /* NSString+Extensions.swift in Sources */,
 				4F5170162CBFD75C0018D388 /* MFDataClassImpls.m in Sources */,
-				4FC8A7CD28AAF1BC007DB982 /* MarkdownParser.swift in Sources */,
 				4F09284528B8E82B00BDC2FF /* LicenseSheetController.swift in Sources */,
 				4F909D3E28A0C3D2009349A2 /* SensitivityDisplay.swift in Sources */,
 				4F8A44522925311B00361EFF /* SFSymbolStrings.m in Sources */,
@@ -8486,7 +8474,6 @@
 				4FA9733B293F7643002B5C24 /* ScrollSpeedupCurve.swift in Sources */,
 				4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */,
 				4F58FE022C56DE9B00926A00 /* Logging.swift in Sources */,
-				4FCEDC96292EB41700E7DA2A /* DeviceManagerSwift.swift in Sources */,
 				4F428CE62CD3D608006322AB /* MacAddress.m in Sources */,
 				4F44FF042606D73D00926A5E /* MFMessagePort.m in Sources */,
 				4F0CFFED2C518CF600C5D843 /* MFDataClassImplementations.m in Sources */,
@@ -8559,8 +8546,6 @@
 				4FF6668525F2C93A00689B77 /* Modifiers.m in Sources */,
 				4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */,
 				4FE1A1B92C56A50100CE3347 /* Logging.m in Sources */,
-				4FC4F093292B1DB10046F61C /* RemapsAnalyzer.swift in Sources */,
-				4F8FC140275DC81900887A0C /* PrefixSwift.swift in Sources */,
 				4FDB5F4B2D4F85A900164F97 /* NSCharacterSet+Additions.m in Sources */,
 				4FFA4E4828B7D2E40062A1FE /* NSShadow+Extensions.swift in Sources */,
 				4F2CC58727B8D2300084AACE /* HybridCurves.swift in Sources */,
@@ -8570,7 +8555,6 @@
 				4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */,
 				4FDE75AA28B269AE00662314 /* Randomizer.swift in Sources */,
 				4F5170152CBFD75C0018D388 /* MFDataClassImpls.m in Sources */,
-				4F8A44532925311B00361EFF /* Symbols.m in Sources */,
 				4F626E99292A842D00E6FFD5 /* KeyCaptureMode.m in Sources */,
 				4F12525C2CAA88A400A079BD /* UNIXSignals.m in Sources */,
 				4FFA4E3B28B79D980062A1FE /* String+Extensions.swift in Sources */,
@@ -8625,7 +8609,6 @@
 				4FFA4E3828B79D410062A1FE /* NSAttributedString+Additions.m in Sources */,
 				4FFA4E4228B7D2890062A1FE /* FadeAnimations.swift in Sources */,
 				4FAA5602293A41AF00BA782C /* BezierCappedAccelerationCurve.swift in Sources */,
-				4FF6654B25F2C7B000689B77 /* Queue.m in Sources */,
 				4F1B41A62D4BACBA00026C94 /* NSData+Additions.m in Sources */,
 				4F9C9B6B268A2D6F0083DED0 /* CircularBuffer.m in Sources */,
 				4FF8C8A32895AACB007EC31F /* Buttons.swift in Sources */,
@@ -8636,7 +8619,6 @@
 				4FDECCDF28A3E93100DDEE91 /* IsObjC.m in Sources */,
 				4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */,
 				4FE78C3B2C50177800C54103 /* DisableSwiftBridging.swift in Sources */,
-				4FF6669425F2C93A00689B77 /* GestureScrollSimulator_old_.m in Sources */,
 				4F8A8DBD287F203D00786BCC /* IOHIDAccelerationTable.cpp in Sources */,
 				4F5F3EF32756F1DB00C350C0 /* ScrollModifiers.swift in Sources */,
 			);
@@ -8802,7 +8784,7 @@
 ",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -8835,7 +8817,7 @@
 					"$(inherited)",
 				);
 				GENERATE_INFOPLIST_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.noah-nuebling.localization-screenshot-taker";
@@ -8920,7 +8902,6 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15.0;
 				MARKETING_VERSION = "3.1.0 Beta 1";
-
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -8931,103 +8912,6 @@
 					"$(inherited)",
 					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
 				);
-			};
-			name = Release;
-		};
-		4F94F61625E5EC2800D9F24A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = LM5Z78756B;
-				INFOPLIST_FILE = "Mac Mouse FixTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.Mac-Mouse-FixTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mac Mouse Fix.app/Contents/MacOS/Mac Mouse Fix";
-			};
-			name = Debug;
-		};
-		4F94F61725E5EC2800D9F24A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = LM5Z78756B;
-				INFOPLIST_FILE = "Mac Mouse FixTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15.0;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.Mac-Mouse-FixTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mac Mouse Fix.app/Contents/MacOS/Mac Mouse Fix";
-			};
-			name = Release;
-		};
-		4F94F61925E5EC2800D9F24A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = LM5Z78756B;
-				INFOPLIST_FILE = "Mac Mouse FixUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.Mac-Mouse-FixUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = "Mac Mouse Fix";
-			};
-			name = Debug;
-		};
-		4F94F61A25E5EC2800D9F24A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = "$(inherited)";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = LM5Z78756B;
-				INFOPLIST_FILE = "Mac Mouse FixUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15.0;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.Mac-Mouse-FixUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = "Mac Mouse Fix";
 			};
 			name = Release;
 		};
@@ -9096,7 +8980,7 @@
 				INFOPLIST_FILE_MAINAPP = App/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
+				MACOSX_DEPLOYMENT_TARGET = 10.15.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -9172,7 +9056,7 @@
 				INFOPLIST_FILE_MAINAPP = App/SupportFiles/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
+				MACOSX_DEPLOYMENT_TARGET = 10.15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
