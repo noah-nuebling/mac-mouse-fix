@@ -11,8 +11,6 @@
 /// Meta: [Apr 9 2025] While resolving conflict from merging master into feature-strings-catalog branch, it looks like at some point this file was renamed from `Shared/License/LicenseConfig.swift` to `Shared/License/Retrieve/GetLicenseConfig.swift` but git doesn't understand it's the same file.
 ///
 
-import CocoaLumberjackSwift
-
 @objc class GetLicenseConfig : NSObject {
     
     /// -> This class retrieves instances of the `MFLicenseConfig` dataclass

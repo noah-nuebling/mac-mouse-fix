@@ -22,7 +22,6 @@
 ///         There is a currentLicenseState var held by License.swift. It's a reactive signal provider, (That's ReactiveSwift lib lingo, we could also use KVO or Combine) and all the UI that depends on it simply subscribes to it. We init the currentLicenseState to the cache. We update it on app start and when we know it changed due the trial expiring or the user activating their license or something. This should more efficient and much cleaner and should behave better in edge cases. But right now it's not worth implementing because it won't make much of a practical difference to the user.
 
 import Cocoa
-import CocoaLumberjackSwift
 
 // MARK: - Main class
 

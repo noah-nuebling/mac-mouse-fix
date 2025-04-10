@@ -10,7 +10,7 @@
 /// How to use:
 ///     Swift:
 ///       Import `Logging.h` in your target's Swift bridging header
-///       Add Logging.swift as a member of your target target. (It will import CocoaLumberjackSwift everywhere)
+///       Add Logging.swift as a member of your target. (It will import CocoaLumberjackSwift everywhere)
 ///     objc:
 ///       Import `Logging.h` at the top of your files
 ///     Swift & objc:
@@ -45,7 +45,8 @@
 
 ///
 /// History:
-///     We initially tried to setup CocoaLumberjack using a prefix header (PrefixHeader.pch) but we couldn't get it to work properly, so we moved to using Logging.h
+///     We initially tried to setup CocoaLumberjack using a prefix header (PrefixHeader.pch) but we couldn't get it to work properly, so we moved to 'WannabePrefixHeader.h' as a stopgap. Finally we moved from that to Logging.h.
+///             Update: [Apr 2025] IIRC we deleted WannabePrefixHeader.h after creating Logging.h, since that was all it did.
 ///
 ///     Old notes from WannabePrefixHeader.h:
 ///         General note on my use of CocoaLumberjack:
@@ -69,7 +70,7 @@
 ///         For some reason there was a cryptic error saying "Could not build module 'CocoaLumberjack'" along with over 30 of other errors like "Unknown type name 'NSString' - NSObjcRuntime.h" as soon as I   imported <CocoaLumberjack/CocoaLumberjack.h> here. I could not Google these errors at all
 ///          So instead I moved the CocoaLumberjack setup to WannabePrefixHeader.h, until I can get this to work
 ///
-///         The rest of CocoaLumberjack setup is done in `setupBasicCocoaLumberjackLogging`
+///         The rest of CocoaLumberjack setup is done in `+[Logging setUpDDLog]`
 
 #if !REPLACE_COCOALUMBERJACK
 

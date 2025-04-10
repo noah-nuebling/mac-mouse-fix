@@ -210,6 +210,7 @@ NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria
     /// - Benchmark: Finding a subclass defined in the current executable took 1.2ms (Summer 2024, macOS Sequoia Beta)
     ///     -> I wrote this for hacking, but I think it should be ok to use in our production code.
     /// - The `@"framework"` search criterion can be a name of a system framework such as "AppKit" or an absolute path to an image such as the `executablePath` of the current process, which will only search classes that were declared in the current executable. If The `@"framework"` is empty, all framworks in the runtime will be searched which can be slow but useful for hacking and exploring and stuff. The underlying `objc_enumerateClasses` searches the caller's image when passing in NULL but this class can only search the callers image by passing the callers executablePath to `objc_enumerateClasses`. Not sure if that's bad for performance. Now that we use this in production code, it would probably be better to define a special constant like `__mfall__` that searches all frameworks and have the null-case be to only search the callers image, just like `objc_enumerateClasses`. But honestly the performance impact is probably negligible.
+    /// - Update: [Apr 2025] When you know the class name, it''s probably better to use `NSClassFromString()`
     
     /// Validate
     assert([criteria isKindOfClass:[NSDictionary class]]);

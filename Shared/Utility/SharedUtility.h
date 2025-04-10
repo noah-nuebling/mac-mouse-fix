@@ -19,9 +19,6 @@
 #import <CoreVideo/CoreVideo.h>
 #import "objc/runtime.h"
 
-/// Import WannabePrefixHeader.h here so we don't have to manually include it in as many places (not sure if bad practise)
-#import "WannabePrefixHeader.h"
-
 /// Import other stuff so we don't have to import it in so many places
 #import "MFDefer.h"
 
@@ -407,7 +404,6 @@ int8_t sign(double x);
 + (void)printInvocationCountWithId:(NSString *)strId;
 + (BOOL)button:(NSNumber * _Nonnull)button isPartOfModificationPrecondition:(NSDictionary *)modificationPrecondition;
 + (NSString *)binaryRepresentation:(unsigned int)value;
-+ (void)setupBasicCocoaLumberjackLogging;
 + (void)resetDispatchGroupCount:(dispatch_group_t)group;
 
 NS_ASSUME_NONNULL_END

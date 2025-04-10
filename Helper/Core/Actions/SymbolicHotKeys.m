@@ -76,7 +76,7 @@
 
 */
 
-#import "WannaBePrefixHeader.h"
+#import "Logging.h"
 #import "SymbolicHotKeys.h"
 #import "HelperUtility.h"
 #import <Carbon/Carbon.h>

@@ -23,7 +23,7 @@
 
 #import "MacAddress.h"
 #import <IOKit/network/IONetworkLib.h>
-#import "WannabePrefixHeader.h" /// To import CocoaLumberJack
+#import "Logging.h"
 #import "SharedUtility.h"
 
 @interface MacAddress : NSObject @end

@@ -548,7 +548,7 @@ import simd /// Vector stuff
         
         /// Failure
         
-        print("Bisection failed, too. Failed to solve for x = \(x). Resulting t = \(t)")  // TODO: Can't import CocoaLumberjack right now. Use that instead when possible
+        print("Bisection failed, too. Failed to solve for x = \(x). Resulting t = \(t)")  // TODO: Can't import CocoaLumberjack right now. Use that instead when possible || Update: [Apr 2025] Logging.swift should now make logging functions available everywhere (no need for import CocoaLumberjack)
         
         return t
         
