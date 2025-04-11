@@ -71,10 +71,10 @@ import Foundation
                         
                         /// Sidenote:
                         ///     We added this localizedStringKey on the master branch inside .strings files, while we already replaced all the .strings files with .xcstrings files on the feature-strings-catalog branch. -- Don't forget to port this string over, when you merge the master changes into feature-strings-catalog! (Last updated: Oct 2024)
-                        /// - [ ] MERGE TODO: [Apr 2025] Remove `First draft:` comment. Use `Links.link(kMFLinkIDMailToNoah)` instead of hardcoding mail in string.
-                        /// - [ ] MERGE TODO: [Apr 2025] Mock this case to make sure it works/doesn't crash after. (Probably also test all the other codepaths? But if they're not rare we'll test them automatically.)
-                        let messageFormat = NSLocalizedString("license-toast.server-response-invalid", comment: "First draft: **There was an issue with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, please reach out to me [here](mailto:noah.n.public@gmail.com).")
-                        message = String(messageFormat)
+                        /// - [x] MERGE TODO: [Apr 2025] Remove `First draft:` comment. Use `Links.link(kMFLinkIDMailToNoah)` instead of hardcoding mail in string.
+                        /// - [x] MERGE TODO: [Apr 2025] Mock this case to make sure it works/doesn't crash after.
+                        let messageFormat = NSLocalizedString("license-toast.server-response-invalid", comment: "")
+                        message = String(format: messageFormat, Links.link(kMFLinkIDMailToNoah) ?? "")
                         
                         do {
                             /// Log extended debug info to the console.
@@ -101,7 +101,7 @@ import Foundation
                                 /// Discussion:
                                 ///     The `license-toast.unknown-key` error message used to just say `**'%@'** is not a known license key\n\nPlease try a different key` which felt a little rude or unhelpful for people who misspelled the key, or accidentally pasted/entered a newline (which I sometimes received support requests about)
                                 ///     So we added the tip to remove whitespace in the error message. But then, we also made it impossible to enter any whitespace into the licenseKey textfield to begin with, so giving the tip to remove whitespace is a little unnecessary now. But I already wrote this and it sounds friendlier than just saying 'check if you misspelled' - I think? Might change this later.
-                                ///     - [ ] MERGE TODO: [Apr 2025] Check if this still works post-merge (Also the impossible-to-enter-whitespace stuff.)
+                                ///     - [x] MERGE TODO: [Apr 2025] Check if this still works post-merge (Also the impossible-to-enter-whitespace stuff.)
                                 ///     Architecture: [Apr 2025] It feels a little bad that this interacts directly with the exact json response format of the Gumroad server. Maybe we should create an MFDataClass for the response. But oh well, this works.
                             case "That license does not exist for the provided product.":
                                 let messageFormat = NSLocalizedString("license-toast.unknown-key", comment: "")

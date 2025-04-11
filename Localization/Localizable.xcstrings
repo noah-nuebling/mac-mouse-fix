@@ -7120,7 +7120,15 @@
       }
     },
     "license-toast.server-response-invalid" : {
-      "comment" : "First draft: **There was an issue with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, please reach out to me [here](mailto:noah.n.public@gmail.com)."
+      "comment" : "First draft: **There was an issue with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, please reach out to me [here](mailto:noah.n.public@gmail.com).",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**There was an issue with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, please reach out to me [here](%@)."
+          }
+        }
+      }
     },
     "license-toast.unknown-error" : {
       "comment" : "",

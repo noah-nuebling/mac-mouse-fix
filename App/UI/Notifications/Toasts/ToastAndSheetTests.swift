@@ -45,11 +45,19 @@ import Foundation
             
         ],
         "licensesheet": Toasts.simpleToastMap_LicenseSheet.values + [
-            
+            /// Deactivation
             { LicenseToasts.showDeactivationToast() },
-            /*{ LicenseToasts.showErrorToast(<#T##error: NSError?##NSError?#>, <#T##licenseTypeInfoOverride: MFLicenseTypeInfo?##MFLicenseTypeInfo?#>, <#T##licenseKey: String##String#>) (Not sure how to create a mock error) },*/
+            /// Success
             { LicenseToasts.showSuccessToast(true) },
-            { LicenseToasts.showSuccessToast(false) }
+            { LicenseToasts.showSuccessToast(false) },
+            /// Errors
+            ///     Last updated [Apr 11 2025]
+            { LicenseToasts.showErrorToast(NSError()                                                                                                                                                                     , MFLicenseTypeInfoFreeCountry(regionCode: "de"),  "<NOT-A-REAL-LICENSE-KEY>") },
+            { LicenseToasts.showErrorToast(NSError(domain: NSURLErrorDomain,     code: -1,                                              userInfo: nil                                                                   ), nil,                                             "<NOT-A-REAL-LICENSE-KEY>") }, /// [Apr 2025] We just treat any NSURLErrorDomain error as 'no internet', so code and userInfo don't matter
+            { LicenseToasts.showErrorToast(NSError(domain: MFLicenseErrorDomain, code: kMFLicenseErrorCodeInvalidNumberOfActivations,   userInfo: ["nOfActivations": 101, "maxActivations": 99]                         ), nil,                                             "<NOT-A-REAL-LICENSE-KEY>") },
+            { LicenseToasts.showErrorToast(NSError(domain: MFLicenseErrorDomain, code: kMFLicenseErrorCodeServerResponseInvalid,        userInfo: nil                                                                   ), nil,                                             "<NOT-A-REAL-LICENSE-KEY>") },
+            { LicenseToasts.showErrorToast(NSError(domain: MFLicenseErrorDomain, code: kMFLicenseErrorCodeGumroadServerResponseError,   userInfo: ["message": "That license does not exist for the provided product."]  ), nil,                                             "<NOT-A-REAL-LICENSE-KEY>") },
+            { LicenseToasts.showErrorToast(NSError(domain: MFLicenseErrorDomain, code: kMFLicenseErrorCodeGumroadServerResponseError,   userInfo: ["message": "Some stuff went wrong, yo – So says Mr. Gumroad"]        ), nil,                                             "<NOT-A-REAL-LICENSE-KEY>") },
         ],
     ]
     

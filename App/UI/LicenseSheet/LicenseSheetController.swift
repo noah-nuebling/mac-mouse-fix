@@ -158,10 +158,10 @@ import Cocoa
         /// - [x] MERGE TODO: [Apr 9 2025]  Backport feature-strings-catalog changes from LicenseToasts.swift showSuccessToast() and showErrorToast() into this func (displayUserFeedback()). Delete LicenseToasts.swift implementations.
         /// - [x] MERGE TODO: Refactor displayUserFeedback() and extract functionality into LicenseToasts.swift (So that ToastAndSheetTests works.)
         ///
-        /// MERGE TODO: We kinda blindly deleted all the 'First draft:' comments from the master branch. Except for:
+        /// - We kinda blindly deleted all the 'First draft:' comments from the master branch. Except for:
         ///     - license-toast.activation-overload – because that string only existed on the master
         ///     -> Meaning, if we changed any strings after they master and feature-strings-catalog diverted, those changes would be lost
-        ///         -> MERGE TODO: Check if any strings changed on master except for license-toast.activation-overload (Not sure how.)
+        ///         -> [ ] MERGE TODO: Check if any strings changed on master except for license-toast.activation-overload (Not sure how.)
         ///
         /// Also address all the other 'MERGE TODO:'s. 
 
