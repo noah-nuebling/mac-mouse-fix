@@ -195,11 +195,6 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
             } \
         }
         
-        /// Define bcase macros
-        ///     TODO: [Apr 2025] replace these with proper bcase implementation from EventLoggerForBrad
-        #define bcase(x)   break; case x
-        #define bdefault() break; default
-        
         /// Handle all types of nodes
         ///     Notes:
         ///     - Nodes with a leaf-node-type are marked with 🍁. They only have enter events, no exit events.
@@ -437,7 +432,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
                 assert(false); /// Don't know how to handle
                 
             }
-            bdefault: {
+            bcase(): {
                 NSLog(@"Error: Unknown node_type: %s", node_type_name); /// [Apr 2025] Why are we using NSLog?
                 assert(false);
             }
