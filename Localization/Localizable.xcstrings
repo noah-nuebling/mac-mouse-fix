@@ -7120,8 +7120,13 @@
       }
     },
     "license-toast.server-response-invalid" : {
-      "comment" : "First draft: **There was an issue with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, please reach out to me [here](mailto:noah.n.public@gmail.com).",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Es gab ein Problem beim Lizenzserver**\n\nBitte versuche es später noch einmal.\n\nWenn das Problem weiterhin besteht, kontaktiere mich bitte [hier](%@)."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
