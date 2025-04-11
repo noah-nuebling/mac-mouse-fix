@@ -16,6 +16,8 @@
 
 
 + (NSString *_Nullable)link:(MFLinkID)linkID {
+
+    /// Note: [Apr 2025] Why is the result optional? I feel like we should just assert(false) and return "<Invalid MFLinkID>" or something
     
     NSString *currentLocale = NSBundle.mainBundle.preferredLocalizations.firstObject ?: @"";
     
@@ -133,14 +135,14 @@ static NSString *redirectionServiceLink(NSString *_Nonnull target, NSString *_Nu
         assert(false);
         return nil;
     }
-    BOOL targetContainsInvalidCharacters = [target rangeOfCharacterFromSet:NSCharacterSet.URLQueryAllowedCharacterSet.invertedSet].location != NSNotFound;
+    BOOL targetContainsInvalidCharacters = [target rangeOfCharacterFromSet: NSCharacterSet.URLQueryAllowedCharacterSet.invertedSet].location != NSNotFound;
     if (targetContainsInvalidCharacters) {
         assert(false);
         return nil;
     }
     
     /// Define helper function
-    NSString *(^percentEscaped)(NSString *) = ^(NSString *str){
+    __auto_type percentEscaped = ^NSString *(NSString *str){
         return [str stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]]; /// We use a percent escape specifically for url-queries (Everything after `/?`)
     };
     

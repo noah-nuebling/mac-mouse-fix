@@ -13,9 +13,7 @@
 #import "SharedUtility.h"
 @import AppKit.NSScreen;
 #import <objc/runtime.h>
-/*
 #import "Logging.h"
-*/
 #import "MFSemaphore.h"
 
 @implementation SharedUtility
@@ -491,6 +489,31 @@ inline bool runningHelper(void) {
 }
 
 #pragma mark - Debug
+
+/*
++ (NSString *)binaryRepresentation:(int64_t)value {
+        
+    /// Note: [Apr 2025]: (While cleaning up merge of branch master into feature-strings-catalog)
+    /// Moved this from HelperUtility.m to SharedUtility.m. Other parts of the program need this in SharedUtility to compile. Not sure what happened here. I guess the merge got messed up. The arg type changed from `unsigned int` to `int64_t` I think.
+    ///     Update: Oh but all usages of this are commented out.
+    ///         Also, I think we had a macro for this that was more powerful in EventLoggerForBrad or somewhere. So we're commenting this out. Use the macro instead probably.
+        
+    uint64_t one = 1; /// A literal 1 is apparently 32 bits, so we need to declare it here to make it 64 bits. Declaring as unsigned only to silence an error when shiftting this left by 63 places.
+    
+    int64_t nibbleCount = sizeof(value) * 2;
+    NSMutableString *bitString = [NSMutableString stringWithCapacity:nibbleCount * 5];
+    
+    for (int64_t index = 4 * nibbleCount - 1; index >= 0; index--)
+    {
+        [bitString appendFormat:@"%i", value & (one << index) ? 1 : 0];
+        if (index % 4 == 0)
+        {
+            [bitString appendString:@" "];
+        }
+    }
+    return bitString;
+}
+*/
 
 + (NSString *)callerInfo {
     return [NSString stringWithFormat:@" - %@", [[NSThread callStackSymbols] objectAtIndex:2]];

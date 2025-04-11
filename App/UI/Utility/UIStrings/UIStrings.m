@@ -15,8 +15,8 @@
 #import "NSAttributedString+Additions.h"
 #import "SFSymbolStrings.h"
 #import "Mac_Mouse_Fix-Swift.h"
-/*
 #import "CoolSFSymbolsFont.h"
+/*
 #import "SymbolicHotKeys.h"
 */
 

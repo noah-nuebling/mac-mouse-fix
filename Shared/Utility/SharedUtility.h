@@ -403,7 +403,6 @@ int8_t sign(double x);
 + (NSString *)currentDispatchQueueDescription;
 + (void)printInvocationCountWithId:(NSString *)strId;
 + (BOOL)button:(NSNumber * _Nonnull)button isPartOfModificationPrecondition:(NSDictionary *)modificationPrecondition;
-+ (NSString *)binaryRepresentation:(unsigned int)value;
 + (void)resetDispatchGroupCount:(dispatch_group_t)group;
 
 NS_ASSUME_NONNULL_END

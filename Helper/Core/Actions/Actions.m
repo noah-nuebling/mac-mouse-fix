@@ -16,12 +16,12 @@
 #import "Remap.h"
 #import "Constants.h"
 
-/*
 #import "Logging.h"
+/*
 @import Carbon;
 #import "CGSHotKeys.h"
-#import "SymbolicHotKeys.h"
 */
+#import "SymbolicHotKeys.h"
 
 @implementation Actions
 

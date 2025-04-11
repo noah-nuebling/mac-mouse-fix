@@ -47,9 +47,9 @@ import Foundation
         "licensesheet": Toasts.simpleToastMap_LicenseSheet.values + [
             
             { LicenseToasts.showDeactivationToast() },
-            /*{  LicenseToasts.showErrorToast(<#T##NSError?#>, <#T##String#>) Not sure how to create a mock error   }, */
-            { LicenseToasts.showSuccessToast(kMFLicenseReasonValidLicense, true) },
-            { LicenseToasts.showSuccessToast(kMFLicenseReasonValidLicense, false) }
+            /*{ LicenseToasts.showErrorToast(<#T##error: NSError?##NSError?#>, <#T##licenseTypeInfoOverride: MFLicenseTypeInfo?##MFLicenseTypeInfo?#>, <#T##licenseKey: String##String#>) (Not sure how to create a mock error) },*/
+            { LicenseToasts.showSuccessToast(true) },
+            { LicenseToasts.showSuccessToast(false) }
         ],
     ]
     

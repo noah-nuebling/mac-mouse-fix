@@ -7119,6 +7119,9 @@
         }
       }
     },
+    "license-toast.server-response-invalid" : {
+      "comment" : "First draft: **There was an issue with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, please reach out to me [here](mailto:noah.n.public@gmail.com)."
+    },
     "license-toast.unknown-error" : {
       "comment" : "",
       "localizations" : {

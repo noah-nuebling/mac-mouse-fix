@@ -12,6 +12,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MFPlistEncoder.h"
+#import "Logging.h"
 
 #import "License.h"
 

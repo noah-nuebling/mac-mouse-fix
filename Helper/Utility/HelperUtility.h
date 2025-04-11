@@ -28,7 +28,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// Display data
 //+ (CGEventRef)createEventWithValuesFromEvent:(CGEventRef)event;
 + (void)printEventFieldDifferencesBetween:(CGEventRef)event1 and:(CGEventRef)event2;
-+ (NSString *)binaryRepresentation:(int64_t)value;
 
 /// Get current modifier flags
 CGEventFlags getModifierFlags(void);
