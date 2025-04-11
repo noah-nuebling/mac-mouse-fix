@@ -154,17 +154,6 @@ import Cocoa
     /// Helper for activateLicense
     
     fileprivate func displayUserFeedback(isValidLicense: Bool, licenseTypeInfo: MFLicenseTypeInfo?, licenseTypeInfoOverride: MFLicenseTypeInfo?, error: NSError?, key: String, isActivation: Bool) {
-        
-        /// - [x] MERGE TODO: [Apr 9 2025]  Backport feature-strings-catalog changes from LicenseToasts.swift showSuccessToast() and showErrorToast() into this func (displayUserFeedback()). Delete LicenseToasts.swift implementations.
-        /// - [x] MERGE TODO: Refactor displayUserFeedback() and extract functionality into LicenseToasts.swift (So that ToastAndSheetTests works.)
-        ///
-        /// - We kinda blindly deleted all the 'First draft:' comments from the master branch. Except for:
-        ///     - `license-toast.activation-overload` – because that string only existed on the master
-        ///     -> Meaning, if we changed any strings after they master and `feature-strings-catalog` diverted, those changes would be lost
-        ///         -> [x] MERGE TODO: Check if any strings changed on master except for `license-toast.activation-overload` (Not sure how.)
-        ///                 -> Update: `license-toast.server-response-invalid` also changed, and we added a German translationf for it.
-        ///                     Actually, I'm pretty sure we meant `license-toast.server-response-invalid` above. That's the string that was added on master, and for which we added a German translation there. I'm kinda tired and confused.
-        ///                  -> Done: Found some git commands see `Merge master into feature-strings-catalog [Apr 2025].md` note for details.
 
         /// Validate
         if (isValidLicense) {
