@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2025**
 
+- 🇩🇪&nbsp;Ilia&nbsp;Sarantsev - "Fantastic example of good old indie software!"
 - 🇮🇹&nbsp;Mauro&nbsp;Madrigali
 - 🇦🇱&nbsp;Bkt
 - 🇨🇭&nbsp;Adrian
