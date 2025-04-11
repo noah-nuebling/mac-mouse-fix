@@ -71,6 +71,7 @@ import Foundation
                         
                         /// Sidenote:
                         ///     We added this localizedStringKey on the master branch inside .strings files, while we already replaced all the .strings files with .xcstrings files on the feature-strings-catalog branch. -- Don't forget to port this string over, when you merge the master changes into feature-strings-catalog! (Last updated: Oct 2024)
+                        ///         Update: [Apr 2025] Just merged master into feature-strings-catalog and ported this string over.
                         let messageFormat = NSLocalizedString("license-toast.server-response-invalid", comment: "")
                         message = String(format: messageFormat, Links.link(kMFLinkIDMailToNoah) ?? "")
                         

@@ -10,19 +10,15 @@
 #import <Foundation/Foundation.h>
 #import "DisableSwiftBridging.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface NSString (Additions)
 
-- (MF_SWIFT_UNBRIDGED(NSString *))substringWithRegex:(MF_SWIFT_UNBRIDGED(NSString *))regex NS_REFINED_FOR_SWIFT;
-- (MF_SWIFT_UNBRIDGED(NSAttributedString *))attributed NS_REFINED_FOR_SWIFT;
-- (MF_SWIFT_UNBRIDGED(NSString *))firstCapitalized NS_REFINED_FOR_SWIFT;
-- (MF_SWIFT_UNBRIDGED(NSString *))stringByRemovingAllWhiteSpace NS_REFINED_FOR_SWIFT;
-- (MF_SWIFT_UNBRIDGED(NSString *))stringByTrimmingWhiteSpace NS_REFINED_FOR_SWIFT;
-- (MF_SWIFT_UNBRIDGED(NSString *))stringByAddingIndent:(NSInteger)indent NS_REFINED_FOR_SWIFT;
-- (MF_SWIFT_UNBRIDGED(NSString *))stringByAddingIndent:(NSInteger)indent withCharacter:(MF_SWIFT_UNBRIDGED(NSString *))indentCharacter NS_REFINED_FOR_SWIFT;
-- (MF_SWIFT_UNBRIDGED(NSString *))stringByPrependingCharacter:(MF_SWIFT_UNBRIDGED(NSString *))prependedCharacter count:(NSInteger)count NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSString              *_Nullable)) substringWithRegex: (MF_SWIFT_UNBRIDGED(NSString *_Nonnull))regex                                                                                                      NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSAttributedString    *_Nonnull))  attributed                                                                                                                                                             NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSString              *_Nonnull))  firstCapitalized                                                                                                                                                       NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSString              *_Nonnull))  stringByRemovingAllWhiteSpace                                                                                                                                          NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSString              *_Nonnull))  stringByTrimmingWhiteSpace                                                                                                                                             NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSString              *_Nonnull))  stringByAddingIndent: (NSInteger)indent                                                                                                                                NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSString              *_Nonnull))  stringByAddingIndent: (NSInteger)indent                                                    withCharacter: (MF_SWIFT_UNBRIDGED(NSString *_Nonnull))indentCharacter      NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSString              *_Nonnull))  stringByPrependingCharacter: (MF_SWIFT_UNBRIDGED(NSString *_Nonnull))prependedCharacter    count: (NSInteger)count                                                     NS_REFINED_FOR_SWIFT;
 
 @end
-
-NS_ASSUME_NONNULL_END

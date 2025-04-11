@@ -92,7 +92,7 @@ static CFMachPortRef _kbModEventTap;
 
 + (void)setKeyboardModifierPriority:(MFModifierPriority)priority {
     
-    /// Sep 2024 - I just saw a crash report in console on CGEventTapEnable(). Here's the interesting part of the stack trace:
+    /// [Sep 2024] - I just saw a crash report in console on CGEventTapEnable(). Here's the interesting part of the stack trace:
     ///     ```
     ///     Exception Type:        EXC_BAD_ACCESS (SIGSEGV)
     ///     Exception Codes:       KERN_INVALID_ADDRESS at 0x0000000000000008

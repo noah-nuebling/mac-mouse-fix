@@ -197,8 +197,6 @@
 		4FA2F1262C29A125000C5535 /* NotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* NotificationLabel.m */; };
 		4FA2F13D2C2B0932000C5535 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */; };
 		4FA2F13E2C2B0932000C5535 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */; };
-		4FA398FD2D56409A003A4BEE /* TreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA398FC2D56409A003A4BEE /* TreeNode.m */; };
-		4FA398FE2D56409A003A4BEE /* TreeNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA398FC2D56409A003A4BEE /* TreeNode.m */; };
 		4FA40CEF28A0CA0A00499E53 /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CEE28A0CA0A00499E53 /* ReactiveSwift */; };
 		4FA40CF228A0CA3900499E53 /* ReactiveCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CF128A0CA3900499E53 /* ReactiveCocoa */; };
 		4FA40CF628A0CCC600499E53 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD50266AC10C003935EA /* Math.swift */; };
@@ -2248,8 +2246,6 @@
 		4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		4FA2F13F2C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/ButtonOptionsViewController.xcstrings; sourceTree = "<group>"; };
 		4FA2F1402C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/AuthorizeAccessibilityView.xcstrings; sourceTree = "<group>"; };
-		4FA398FB2D564094003A4BEE /* TreeNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TreeNode.h; sourceTree = "<group>"; };
-		4FA398FC2D56409A003A4BEE /* TreeNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TreeNode.m; sourceTree = "<group>"; };
 		4FA40CF528A0CBA600499E53 /* Mac Mouse Fix-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FA5F08C2CE4CEF800ED2354 /* SymbolicHotKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SymbolicHotKeys.h; sourceTree = "<group>"; };
 		4FA5F08D2CE4CEF800ED2354 /* SymbolicHotKeys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SymbolicHotKeys.m; sourceTree = "<group>"; };
@@ -7505,8 +7501,6 @@
 				4F5170172CBFD7660018D388 /* MFDataClass.m */,
 				4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */,
 				4FD031CB2D5EAAA7000EA331 /* MFCoding */,
-				4FA398FB2D564094003A4BEE /* TreeNode.h */,
-				4FA398FC2D56409A003A4BEE /* TreeNode.m */,
 				4F8A8DC0287F885D00786BCC /* Shorthands.h */,
 				4FA06818291B2C4C00949B5F /* Shorthands.m */,
 				4FF27DD62B95B108004744E1 /* Shorthands.swift */,
@@ -8365,7 +8359,6 @@
 				4F7D97A628AEB2EE00C11E79 /* AboutTabController.swift in Sources */,
 				4F79A81C2604317200076A7E /* ToastController.m in Sources */,
 				4F909D2E28A0C3D2009349A2 /* NSControl+Extensions.swift in Sources */,
-				4FA398FE2D56409A003A4BEE /* TreeNode.m in Sources */,
 				4F5170192CBFD7660018D388 /* MFDataClass.m in Sources */,
 				4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */,
 				4FA40D0028A0CCCB00499E53 /* CombinedLinearCurve.swift in Sources */,
@@ -8574,7 +8567,6 @@
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,
 				4FF1DC7A2CC1130700A839AB /* License.m in Sources */,
 				4FFA4E4728B7D2980062A1FE /* Animate.swift in Sources */,
-				4FA398FD2D56409A003A4BEE /* TreeNode.m in Sources */,
 				4FDE75A228B2397600662314 /* PayButton.swift in Sources */,
 				4F09284228B8C71C00BDC2FF /* Hyperlink.m in Sources */,
 				4F9E78D02685E30C002C2309 /* GestureScrollSimulator.m in Sources */,

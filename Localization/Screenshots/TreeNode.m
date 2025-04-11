@@ -52,7 +52,7 @@
     
     /// Create node
     TreeNode<NSObject *> *node = [[TreeNode alloc] initWithRepresentedObject:kvcObject];
-    [node.mutableChildNodes setArray:childNodes];
+    [node.mutableChildNodes setArray: childNodes];
     
     /// Return
     return node;
@@ -88,14 +88,17 @@
     NSInteger indentDepth = 2;
     NSString *indentChar = self.indexPath.length >= 2 ? @"· " : @"  "; /// Indenting with 'interpunct' character on deeper nodes to make child-depth more apparent
     
+    if (self.representedObject == nil) return @"<nil>";
+    
     NSString *result = [self.representedObject description];
+    assert(result != nil);
     
     NSMutableArray *childStringArray = [NSMutableArray array];
     
     for (TreeNode *child in self.childNodes) {
         NSString *childDescription = [child description];
         childDescription = [childDescription stringByAddingIndent:indentDepth withCharacter:indentChar];
-        childDescription = [[@"- " stringByAppendingString:[childDescription substringFromIndex:indentDepth]] stringByPrependingCharacter:indentChar count:indentDepth-2]; /// Add a bullet at the start of each child.
+        childDescription = [[@"- " stringByAppendingString: [childDescription substringFromIndex: indentDepth]] stringByPrependingCharacter: indentChar count: indentDepth-2]; /// Add a bullet at the start of each child.
         [childStringArray addObject:childDescription];
     }
     NSString *childString = [childStringArray componentsJoinedByString:@"\n"];
@@ -201,6 +204,7 @@
 - (void)goToNextObjectDepthFirst {
     
     /// I kinda forgot what depth first traversal is, but I think this implements what can be seen as DFS in this article: https://builtin.com/software-engineering-perspectives/tree-traversal
+    ///     Update [Feb 2025] I think this is postorder traversal
     
     /// Find first unvisited child
     NSInteger indexOfFirstUnvisitedChild = _lastVisitedChildIndex + 1;

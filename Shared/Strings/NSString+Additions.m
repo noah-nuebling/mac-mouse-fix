@@ -12,7 +12,7 @@
 
 @implementation NSString (Additions)
 
-- (NSString *)substringWithRegex:(NSString *)regex {
+- (NSString *_Nullable)substringWithRegex:(NSString *_Nonnull)regex {
     
     NSRange range = [self rangeOfString:regex options:NSRegularExpressionSearch];
     
@@ -26,28 +26,33 @@
     return result;
 }
 
-- (NSAttributedString *)attributed {
+- (NSAttributedString *_Nonnull)attributed {
     return [[NSAttributedString alloc] initWithString:self];
 }
 
-- (NSString *)firstCapitalized {
+- (NSString *_Nonnull)firstCapitalized {
     NSString *firstChar = [self substringToIndex:1];
     NSString *rest = [self substringFromIndex:1];
     
     return [[[firstChar capitalizedString] stringByAppendingString:rest] copy]; /// Why copy?
 }
-- (NSString *)stringByRemovingAllWhiteSpace {
+- (NSString *_Nonnull)stringByRemovingAllWhiteSpace {
     return [self.attributed attributedStringByRemovingAllWhitespace].string;
 }
-- (NSString *)stringByTrimmingWhiteSpace {
+- (NSString *_Nonnull)stringByTrimmingWhiteSpace {
     return [[[self attributed] attributedStringByTrimmingWhitespace] string];
 }
 
-- (NSString *)stringByAddingIndent:(NSInteger)indent {
+- (NSString *_Nonnull)stringByAddingIndent:(NSInteger)indent {
     return [self stringByAddingIndent:indent withCharacter:@" "];
 }
 
-- (NSString *)stringByAddingIndent:(NSInteger)indent withCharacter:(NSString *)indentCharacter {
+- (NSString *_Nonnull)stringByAddingIndent:(NSInteger)indent withCharacter:(NSString *_Nonnull)ch {
+    
+    /// Note: [Apr 2025]
+    ///     Could also implement this with regex find-and-replace.
+    ///     We have multiple implementations of 'addIndent' functions. Search for `)(.)` to find the ones using regex find-and-replace
+    ///     At some point we should probably consolidate the implementations
     
     /// Split self
     NSArray *lines = [self componentsSeparatedByString:@"\n"];
@@ -55,7 +60,7 @@
     /// Build padded lines
     NSMutableArray *paddedLines = [NSMutableArray arrayWithCapacity:[lines count]];
     for (NSString *line in lines) {
-        NSString *paddedLine = [line stringByPrependingCharacter:indentCharacter count:indent];
+        NSString *paddedLine = [line stringByPrependingCharacter:ch count:indent];
         [paddedLines addObject:paddedLine];
     }
     /// Join result
@@ -65,10 +70,11 @@
     return result;
 }
 
-- (NSString *)stringByPrependingCharacter:(NSString *)prependedCharacter count:(NSInteger)count {
-    /// Create padding string
-    NSString *padding = [@"" stringByPaddingToLength:count withString:prependedCharacter startingAtIndex:0];
-    NSString *result = [padding stringByAppendingString:self];
+- (NSString *_Nonnull)stringByPrependingCharacter:(NSString *_Nonnull)ch count:(NSInteger)count {
+    
+    NSString *result = [self stringByPaddingToLength: (self.length + ch.length*count)
+                                          withString: ch
+                                     startingAtIndex: 0];
     return result;
 }
 

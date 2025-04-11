@@ -9,7 +9,7 @@
 
 import Foundation
 
-/// On Swift Autobriding
+/// On Swift Autobridging
 /// Swift automatically bridges Foundation-type args (like NSDictionary) to native Swift types which is super slow. At least for Dictionaries. We've found a way to prevent this:
 ///
 /// 1. In your objc header file, wrap all autobridging argument/return types with the `(MF_SWIFT_UNBRIDGED(<the type>))` macro. The macro will replace the type with `id` when swift is looking at it - which disables the autobridiging.
@@ -25,8 +25,8 @@ extension NSString {
     
     /// NSString+Additions.h
     
-    func substring(withRegex regex: NSString) -> NSString {
-        return __substring(withRegex: regex) as! NSString
+    func substring(withRegex regex: NSString) -> NSString? {
+        return __substring(withRegex: regex) as! NSString?
     }
     func attributed() -> NSAttributedString {
         return __attributed() as! NSAttributedString
