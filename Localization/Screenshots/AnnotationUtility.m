@@ -671,6 +671,8 @@ NSString *_listMethods(id obj, NSMutableArray<Class> *subclassPath) {
     /// This method prints a list of all methods defined on a class
     ///     with decoded return types and argument types!
     ///     This is really handy for creating categories, swizzles, or inspecting private classes.
+    ///
+    ///     Update: [Apr 2025] Can also use `[NSObject fp_methodDescription]`, `[NSObject fp_shortMethodDescription]` and `[NSObject fp_ivarDescription]` instead (Defined in `FileProvider.framework` – therefore 'fp'.)
     
     /// Get class
     Class cls = getClass(obj);

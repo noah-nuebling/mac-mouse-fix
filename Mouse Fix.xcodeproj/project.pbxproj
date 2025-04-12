@@ -484,7 +484,7 @@
 		4F1667EA2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XCStringsDummyApp-Info.plist"; sourceTree = "<group>"; };
 		4F1667EE2C6A6EA0009E4924 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		4F17D2E0292A635200EB07CA /* SwitchMaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchMaster.swift; sourceTree = "<group>"; };
-		4F18466A2C53AD6D00D5E835 /* XCLoc Screenshot Structure.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "XCLoc Screenshot Structure.md"; sourceTree = "<group>"; };
+		4F18466A2C53AD6D00D5E835 /* Automatic Localization Screenshots.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Automatic Localization Screenshots.md"; sourceTree = "<group>"; };
 		4F18A85727BF6E0200A5703B /* IOHIDEvent-Reconstructed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOHIDEvent-Reconstructed.h"; sourceTree = "<group>"; };
 		4F19F65E2906BB98007DE4CD /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4F1AFE962670EBA900ECA424 /* DragCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragCurve.swift; sourceTree = "<group>"; };
@@ -2080,8 +2080,6 @@
 		4F4C737B2C4FB06E001D97C3 /* NSString+Steganography.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Steganography.h"; sourceTree = "<group>"; };
 		4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Steganography.m"; sourceTree = "<group>"; };
 		4F4C73A92C4FB28C001D97C3 /* .gitmodules */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitmodules; sourceTree = "<group>"; };
-		4F4C73AA2C4FB299001D97C3 /* crowdin.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = crowdin.yml; sourceTree = "<group>"; };
-		4F4C73D22C4FB2F7001D97C3 /* launch.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = launch.json; sourceTree = "<group>"; };
 		4F4C73D52C4FB3FA001D97C3 /* LocalizedStringAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalizedStringAnnotation.h; sourceTree = "<group>"; };
 		4F4C73D62C4FB3FA001D97C3 /* LocalizedStringAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalizedStringAnnotation.m; sourceTree = "<group>"; };
 		4F4C73F22C4FB4C2001D97C3 /* KVPair.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KVPair.h; sourceTree = "<group>"; };
@@ -2682,7 +2680,7 @@
 				4F909D1928A0C3D2009349A2 /* Localization Readme.md */,
 				4F52FAA42C775A57003C2821 /* Last State of Localization.md */,
 				4F0BED622C77B69F00979816 /* Choice of Languages.md */,
-				4F18466A2C53AD6D00D5E835 /* XCLoc Screenshot Structure.md */,
+				4F18466A2C53AD6D00D5E835 /* Automatic Localization Screenshots.md */,
 				4F0C003C2C525F8500C5D843 /* Misappropriating XCStrings.md */,
 			);
 			path = "Localization Notes";
@@ -6526,7 +6524,6 @@
 				4F42304628CE6C1C003A41D3 /* License */,
 				4F0BDC722B446A3C00AE65C1 /* Markdown */,
 				4F39BC88263B68F400FDF692 /* xcconfig */,
-				4F4C73AA2C4FB299001D97C3 /* crowdin.yml */,
 				4FEA2E6C2C5458CA00C86D67 /* mac-mouse-fix-scripts */,
 				4F0C00162C525AC000C5D843 /* .env */,
 				4F0C003A2C525AC000C5D843 /* run */,
@@ -6535,7 +6532,6 @@
 				4F2153222B2E145500DD3957 /* .github */,
 				4F4C73A92C4FB28C001D97C3 /* .gitmodules */,
 				4F214C212B2E140A00DD3957 /* .gitignore */,
-				4F4C73D32C4FB2F7001D97C3 /* .vscode */,
 				4F0C003B2C525F6C00C5D843 /* Localization Notes */,
 				4FEB6616279376C200E6A111 /* Various Notes */,
 			);
@@ -6562,14 +6558,6 @@
 				4F4C73D42C4FB3C7001D97C3 /* Screenshots */,
 			);
 			path = Localization;
-			sourceTree = "<group>";
-		};
-		4F4C73D32C4FB2F7001D97C3 /* .vscode */ = {
-			isa = PBXGroup;
-			children = (
-				4F4C73D22C4FB2F7001D97C3 /* launch.json */,
-			);
-			path = .vscode;
 			sourceTree = "<group>";
 		};
 		4F4C73D42C4FB3C7001D97C3 /* Screenshots */ = {
@@ -7480,6 +7468,7 @@
 		4FF6653625F2C7B000689B77 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				4F2E8FAC2D4FBD8200689058 /* EventLoggerForBradMacros.h */,
 				4FF6653E25F2C7B000689B77 /* SharedUtility.h */,
 				4FF6653B25F2C7B000689B77 /* SharedUtility.m */,
 				4FF797382C8245D700C18001 /* Links.h */,
@@ -7497,7 +7486,6 @@
 				4F8A8DC0287F885D00786BCC /* Shorthands.h */,
 				4FA06818291B2C4C00949B5F /* Shorthands.m */,
 				4FF27DD62B95B108004744E1 /* Shorthands.swift */,
-				4F2E8FAC2D4FBD8200689058 /* EventLoggerForBradMacros.h */,
 				4F2E8FE12D53EB8D00689058 /* MFOnceMacro.h */,
 				4F2E8FE22D53EB8D00689058 /* MFOnceMacro.m */,
 				4F1B418D2D49960E00026C94 /* MFSemaphore.h */,
