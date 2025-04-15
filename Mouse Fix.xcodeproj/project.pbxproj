@@ -244,6 +244,18 @@
 		4FB8B29F2CCEBB1700A5A580 /* GetTrialState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B29D2CCEBB1000A5A580 /* GetTrialState.swift */; };
 		4FB8B2A22CCEBC4900A5A580 /* APIRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B2A12CCEBC4900A5A580 /* APIRequests.swift */; };
 		4FB8B2A32CCEBC4900A5A580 /* APIRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B2A12CCEBC4900A5A580 /* APIRequests.swift */; };
+		4FBC82952DAE93AD00354981 /* DeallocTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC828C2DAE93AD00354981 /* DeallocTracker.m */; };
+		4FBC82962DAE93AD00354981 /* MFObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82872DAE93AD00354981 /* MFObserver.m */; };
+		4FBC82972DAE93AD00354981 /* MFObserverTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC828F2DAE93AD00354981 /* MFObserverTests.m */; };
+		4FBC82982DAE93AD00354981 /* ObservationBenchmarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82912DAE93AD00354981 /* ObservationBenchmarks.m */; };
+		4FBC82992DAE93AD00354981 /* KVOMutationSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82892DAE93AD00354981 /* KVOMutationSupport.m */; };
+		4FBC829A2DAE93AD00354981 /* ObservationBenchmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82922DAE93AD00354981 /* ObservationBenchmarks.swift */; };
+		4FBC829B2DAE93AD00354981 /* DeallocTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC828C2DAE93AD00354981 /* DeallocTracker.m */; };
+		4FBC829C2DAE93AD00354981 /* MFObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82872DAE93AD00354981 /* MFObserver.m */; };
+		4FBC829D2DAE93AD00354981 /* MFObserverTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC828F2DAE93AD00354981 /* MFObserverTests.m */; };
+		4FBC829E2DAE93AD00354981 /* ObservationBenchmarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82912DAE93AD00354981 /* ObservationBenchmarks.m */; };
+		4FBC829F2DAE93AD00354981 /* KVOMutationSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82892DAE93AD00354981 /* KVOMutationSupport.m */; };
+		4FBC82A02DAE93AD00354981 /* ObservationBenchmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82922DAE93AD00354981 /* ObservationBenchmarks.swift */; };
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
 		4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */; };
 		4FC55B982915652C00663B24 /* Alerts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55B972915652C00663B24 /* Alerts.m */; };
@@ -2267,6 +2279,19 @@
 		4FB8B29A2CCEBAE100A5A580 /* GetLicenseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLicenseConfig.swift; sourceTree = "<group>"; };
 		4FB8B29D2CCEBB1000A5A580 /* GetTrialState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTrialState.swift; sourceTree = "<group>"; };
 		4FB8B2A12CCEBC4900A5A580 /* APIRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequests.swift; sourceTree = "<group>"; };
+		4FBC827A2DAE8EF800354981 /* Side-Repos 2024.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Side-Repos 2024.md"; sourceTree = "<group>"; };
+		4FBC82862DAE93AD00354981 /* MFObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFObserver.h; sourceTree = "<group>"; };
+		4FBC82872DAE93AD00354981 /* MFObserver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFObserver.m; sourceTree = "<group>"; };
+		4FBC82882DAE93AD00354981 /* KVOMutationSupport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KVOMutationSupport.h; sourceTree = "<group>"; };
+		4FBC82892DAE93AD00354981 /* KVOMutationSupport.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KVOMutationSupport.m; sourceTree = "<group>"; };
+		4FBC828B2DAE93AD00354981 /* DeallocTracker.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DeallocTracker.h; sourceTree = "<group>"; };
+		4FBC828C2DAE93AD00354981 /* DeallocTracker.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeallocTracker.m; sourceTree = "<group>"; };
+		4FBC828E2DAE93AD00354981 /* MFObserverTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFObserverTests.h; sourceTree = "<group>"; };
+		4FBC828F2DAE93AD00354981 /* MFObserverTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFObserverTests.m; sourceTree = "<group>"; };
+		4FBC82902DAE93AD00354981 /* ObservationBenchmarks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObservationBenchmarks.h; sourceTree = "<group>"; };
+		4FBC82912DAE93AD00354981 /* ObservationBenchmarks.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObservationBenchmarks.m; sourceTree = "<group>"; };
+		4FBC82922DAE93AD00354981 /* ObservationBenchmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationBenchmarks.swift; sourceTree = "<group>"; };
+		4FBC82A12DAE93BD00354981 /* Xcode Nullability Settings.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Xcode Nullability Settings.md"; sourceTree = "<group>"; };
 		4FBC9434260F8AA60062F186 /* MASShortcut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASShortcut.m; sourceTree = "<group>"; };
 		4FBC9436260F8AA60062F186 /* MASShortcut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASShortcut.h; sourceTree = "<group>"; };
 		4FBC9437260F8AA60062F186 /* MASKeyMasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASKeyMasks.h; sourceTree = "<group>"; };
@@ -7020,6 +7045,48 @@
 			path = Retrieve;
 			sourceTree = "<group>";
 		};
+		4FBC828A2DAE93AD00354981 /* Untested */ = {
+			isa = PBXGroup;
+			children = (
+				4FBC82882DAE93AD00354981 /* KVOMutationSupport.h */,
+				4FBC82892DAE93AD00354981 /* KVOMutationSupport.m */,
+			);
+			path = Untested;
+			sourceTree = "<group>";
+		};
+		4FBC828D2DAE93AD00354981 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				4FBC828B2DAE93AD00354981 /* DeallocTracker.h */,
+				4FBC828C2DAE93AD00354981 /* DeallocTracker.m */,
+			);
+			path = Old;
+			sourceTree = "<group>";
+		};
+		4FBC82932DAE93AD00354981 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				4FBC828E2DAE93AD00354981 /* MFObserverTests.h */,
+				4FBC828F2DAE93AD00354981 /* MFObserverTests.m */,
+				4FBC82902DAE93AD00354981 /* ObservationBenchmarks.h */,
+				4FBC82912DAE93AD00354981 /* ObservationBenchmarks.m */,
+				4FBC82922DAE93AD00354981 /* ObservationBenchmarks.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		4FBC82942DAE93AD00354981 /* MFObserver */ = {
+			isa = PBXGroup;
+			children = (
+				4FBC82862DAE93AD00354981 /* MFObserver.h */,
+				4FBC82872DAE93AD00354981 /* MFObserver.m */,
+				4FBC828A2DAE93AD00354981 /* Untested */,
+				4FBC828D2DAE93AD00354981 /* Old */,
+				4FBC82932DAE93AD00354981 /* Tests */,
+			);
+			path = MFObserver;
+			sourceTree = "<group>";
+		};
 		4FBC9433260F8AA60062F186 /* MAS */ = {
 			isa = PBXGroup;
 			children = (
@@ -7372,6 +7439,8 @@
 		4FEB6616279376C200E6A111 /* Various Notes */ = {
 			isa = PBXGroup;
 			children = (
+				4FBC827A2DAE8EF800354981 /* Side-Repos 2024.md */,
+				4FBC82A12DAE93BD00354981 /* Xcode Nullability Settings.md */,
 				4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */,
 				4FEB6618279376C200E6A111 /* notes.md */,
 				4FC778302D66693E00488468 /* Localization Notes.md */,
@@ -7436,6 +7505,7 @@
 				4FF9305C28805FC40007CCA7 /* Math */,
 				4F09284128B8C71000BDC2FF /* UI */,
 				4F9C14B527BAF202008A1479 /* IOKit */,
+				4FBC82942DAE93AD00354981 /* MFObserver */,
 				4FA40D1128A0D9FB00499E53 /* External */,
 				4FFA4E3928B79D8D0062A1FE /* Strings */,
 				4F909D4228A0C4C2009349A2 /* Extensions */,
@@ -8316,6 +8386,12 @@
 				4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */,
 				4FF1DC7B2CC1130700A839AB /* License.m in Sources */,
 				4FA40CF628A0CCC600499E53 /* Math.swift in Sources */,
+				4FBC82952DAE93AD00354981 /* DeallocTracker.m in Sources */,
+				4FBC82962DAE93AD00354981 /* MFObserver.m in Sources */,
+				4FBC82972DAE93AD00354981 /* MFObserverTests.m in Sources */,
+				4FBC82982DAE93AD00354981 /* ObservationBenchmarks.m in Sources */,
+				4FBC82992DAE93AD00354981 /* KVOMutationSupport.m in Sources */,
+				4FBC829A2DAE93AD00354981 /* ObservationBenchmarks.swift in Sources */,
 				4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */,
 				4F909D2428A0C3D2009349A2 /* TabItemControllerProtocol.swift in Sources */,
 				4FB8B2A32CCEBC4900A5A580 /* APIRequests.swift in Sources */,
@@ -8482,6 +8558,12 @@
 				4FA13FC428B3A2E0005C68FC /* TrialNotificationController.swift in Sources */,
 				4F262CF22C64B6E000773789 /* MarkdownParser.m in Sources */,
 				4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */,
+				4FBC829B2DAE93AD00354981 /* DeallocTracker.m in Sources */,
+				4FBC829C2DAE93AD00354981 /* MFObserver.m in Sources */,
+				4FBC829D2DAE93AD00354981 /* MFObserverTests.m in Sources */,
+				4FBC829E2DAE93AD00354981 /* ObservationBenchmarks.m in Sources */,
+				4FBC829F2DAE93AD00354981 /* KVOMutationSupport.m in Sources */,
+				4FBC82A02DAE93AD00354981 /* ObservationBenchmarks.swift in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
 				4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */,
 				4F3A40B1266BBC5000436821 /* Curve.swift in Sources */,
