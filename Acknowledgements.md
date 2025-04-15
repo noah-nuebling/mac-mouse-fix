@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **April 2025**
 
+- 🇺🇸&nbsp;Kck
 - 🇭🇰&nbsp;Tian
 - 🇻🇳&nbsp;Thucth&nbsp;Qt
 - 🇩🇪&nbsp;Ilia&nbsp;Sarantsev - "Fantastic example of good old indie software!"
