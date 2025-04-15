@@ -40,7 +40,7 @@
 
 - (Device *)init { /// This is just so that StrangeDevice works.
     self->_nOfButtons = 0;
-    self->_iohidDevice = nil;
+    self->_iohidDevice = NULL;
     return [super init];
 }
 + (Device *)strangeDevice {

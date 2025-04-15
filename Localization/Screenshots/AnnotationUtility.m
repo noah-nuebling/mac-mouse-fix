@@ -140,17 +140,17 @@ void swizzleMethodOnClassAndSubclasses(Class baseClass, NSDictionary<MFClassSear
 
 #pragma mark - Runtime
 
-NSString *getExecutablePath(void) {
+NSString *_Nullable getExecutablePath(void) {
     
     /// Get the path of the current executable.
     
     static uint32_t pathBufferSize = MAXPATHLEN; /// Make this static to store between invocations. For optimization, so we don't hit the fallback case over and over. Not sure if relevant.
-    char *pathBuffer = malloc(pathBufferSize); if (pathBuffer == NULL) return NULL; /// ChatGPT and SO tells me to NULL-check my malloc, and that not doing it is "unsafe" and "bad programming". I'm annoyed because that seems extremely unnecessary, but ok.
+    char *pathBuffer = malloc(pathBufferSize); if (pathBuffer == NULL) return nil; /// ChatGPT and SO tells me to NULL-check my malloc, and that not doing it is "unsafe" and "bad programming". I'm annoyed because that seems extremely unnecessary, but ok.
     int ret = _NSGetExecutablePath(pathBuffer, &pathBufferSize);
     
     if (ret == -1) { /// Fallback case: If the buffer size is not large enough, the buffer size is set to the right value and the function returns -1
         free(pathBuffer);
-        pathBuffer = malloc(pathBufferSize); if (pathBuffer == NULL) return NULL;
+        pathBuffer = malloc(pathBufferSize); if (pathBuffer == NULL) return nil;
         ret = _NSGetExecutablePath(pathBuffer, &pathBufferSize);
         if (ret == -1) {
             assert(false);

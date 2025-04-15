@@ -27,6 +27,16 @@
 #define UNPACK(args...) args /// This allows us to include `,` inside an argument to a macro (but the argument then needs to be wrapped inside `()` by the caller of the macro )
 #define APPEND_ARGS(args...) , ## args /// This is like UNPACK but it also automatically inserts a comma before the args. The ## deletes the comma, if `args` is empty. I have no idea why. But this lets us nicely append args to an existing list of arguments in a function call or function header.
 
+/// `_O_` and `_I_` macros:
+///     Shorthand for `_Nullable` and `_Nonnull`.
+///     Mnemonics:
+///         o -> nothing (`_Nullable`)
+///         i -> something (`_Nonnull`)
+///     Surrounding underscores make the identifiers unique and easily greppable
+///     [Apr 2025] Wrote these because we managed to enable compiler warnings for nullability (See `Xcode Nullability Settings.md`) but cluttering up business logic with `_Nullable` and `_Nonnull` is annoying.
+#define _O_ _Nullable
+#define _I_ _Nonnull
+
 /// `nowarn_begin()` and `nowarn_end()` macros:
 ///     Temporarily disable all clang warnings (-Weverything).
 ///     Example usage:
@@ -385,14 +395,14 @@ bool runningHelper(void);
 + (NSString *)launchCLT:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError ** _Nullable)error;
 + (void)launchCLT:(NSURL *)commandLineTool withArgs:(NSArray <NSString *> *)arguments;
 + (FSEventStreamRef)scheduleFSEventStreamOnPaths:(NSArray<NSString *> *)urls withCallback:(FSEventStreamCallback)callback;
-+ (void)destroyFSEventStream:(FSEventStreamRef)stream;
++ (void)destroyFSEventStream:(FSEventStreamRef _Nullable)stream;
 + (NSPoint)quartzToCocoaScreenSpace_Point:(CGPoint)quartzPoint;
 + (CGPoint)cocoaToQuartzScreenSpace_Point:(NSPoint)cocoaPoint;
 + (NSRect)quartzToCocoaScreenSpace:(CGRect)quartzFrame;
 + (CGRect)cocoaToQuartzScreenSpace:(NSRect)cocoaFrame;
 + (id)deepMutableCopyOf:(id)object;
-+ (id)deepCopyOf:(id)object;
-+ (id<NSCoding>)deepCopyOf:(id<NSCoding>)original error:(NSError *_Nullable *_Nullable)error;
++ (id _O_)deepCopyOf:(id _O_)object;
++ (id<NSCoding> _O_)deepCopyOf:(id<NSCoding> _I_)original error:(NSError *_O_ *_O_)error;
 + (NSString *)callerInfo;
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
 + (CGEventType)CGEventTypeForButtonNumber:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown;

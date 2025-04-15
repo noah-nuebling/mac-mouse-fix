@@ -162,7 +162,7 @@ NSException * _Nullable tryCatch(void (^tryBlock)(void)) {
     
     iterateIvarsOn(obj, ^(Ivar ivar, BOOL *stop) {
         
-        NSString *ivarName = @(ivar_getName(ivar));
+        NSString *ivarName = @(ivar_getName(ivar) ?: "");
         
         if ([name isEqual:ivarName]) {
             
@@ -204,22 +204,22 @@ NSException * _Nullable tryCatch(void (^tryBlock)(void)) {
     
     iterateIvarsOn(obj, ^(Ivar ivar, BOOL *stop) {
         
-        NSString *name = [@(ivar_getName(ivar)) copy];
+        NSString *name = [@(ivar_getName(ivar) ?: "") copy];
         [ivars addObject:name];
     });
 
     /// Methods
     NSMutableArray *methods = [NSMutableArray array];
-    iterateMethodsOn(obj, ^(Method method, struct objc_method_description *description, BOOL *stop) {
+    iterateMethodsOn(obj, ^(Method _Nonnull method, struct objc_method_description *_Nonnull description, BOOL *stop) {
         
-        [methods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name)), @(description->types)]];
+        [methods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name ?: NSSelectorFromString(@""))), @(description->types ?: "")]];
     });
 
     /// Class Methods
     NSMutableArray *classMethods = [NSMutableArray array];
     iterateMethodsOn([obj class], ^(Method method, struct objc_method_description *description, BOOL *stop) {
         
-        [classMethods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name)), @(description->types)]];
+        [classMethods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name ?: NSSelectorFromString(@""))), @(description->types ?: "")]];
     });
     
 
@@ -265,19 +265,19 @@ static void iterateIvarsOn(id obj, void(^callback)(Ivar ivar, BOOL *stop)) {
 //    });
 //}
 
-static void iterateMethodsOn(id obj, void(^callback)(Method method, struct objc_method_description *description, BOOL *stop)) {
+static void iterateMethodsOn(id _O_ obj, void(^_I_ callback)(Method _I_ method, struct objc_method_description *_I_ description, BOOL *_I_ stop)) {
     
     /// To iterate class methods, pass in [obj class]
     
-    Class class = [obj class];
+    Class _O_ class = [obj class];
     
     unsigned int nMethods;
-    Method *methodList = class_copyMethodList(class, &nMethods);
+    Method _Nonnull *_O_ methodList = class_copyMethodList(class, &nMethods);
     
     for (int i = 0; i < nMethods; i++) {
         
-        Method m = methodList[i];
-        struct objc_method_description *d = method_getDescription(m);
+        Method _I_ m = methodList[i];
+        struct objc_method_description *_I_ d = method_getDescription(m);
         
         BOOL shouldStop = NO;
         callback(m, d, &shouldStop);
@@ -287,20 +287,20 @@ static void iterateMethodsOn(id obj, void(^callback)(Method method, struct objc_
     free(methodList);
 }
 
-static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property, NSString *name, NSString *attributes, BOOL *stop)) {
+static void iteratePropertiesOn(id _O_ obj, void(^_I_ callback)(objc_property_t _I_ property, NSString *_O_ name, NSString *_O_ attributes, BOOL *_I_ stop)) {
     
-    Class class = [obj class];
+    Class _O_ class = [obj class];
     
     /// Properties
     unsigned int nProperties;
-    objc_property_t *propertyList = class_copyPropertyList(class, &nProperties);
+    objc_property_t _I_ *_O_ propertyList = class_copyPropertyList(class, &nProperties);
     
     for (int i = 0; i < nProperties; i++) {
-        objc_property_t m = propertyList[i];
-        const char *name = property_getName(m);
-        const char *attrs = property_getAttributes(m);
+        objc_property_t _I_ m = propertyList[i];
+        const char *_I_ name = property_getName(m);
+        const char *_O_ attrs = property_getAttributes(m);
         BOOL shouldStop = NO;
-        callback(m, @(name), @(attrs), &shouldStop);
+        callback(m, @(name), @(attrs ?: ""), &shouldStop);
         if (shouldStop) break;
     }
     
@@ -399,7 +399,7 @@ inline bool runningHelper(void) {
     /// Declare error if none is passed in
     ///     So we can still retrieve errors for internal logic and debug messages. Not sure about the __autoreleasing stuff.
     NSError *__autoreleasing localError;
-    if (errorPtr == nil) {
+    if (errorPtr == NULL) {
         errorPtr = &localError;
     }
     
@@ -453,7 +453,7 @@ inline bool runningHelper(void) {
     /// Debug
     if (runningPreRelease()) {
         NSString *errorDesc = @"";
-        if (errorPtr != nil && *errorPtr != nil) {
+        if (errorPtr != NULL && *errorPtr != nil) {
             errorDesc = (*errorPtr).debugDescription;
         }
         DDLogDebug(@"Called command line tool at %@ with args: %@ - result: %@, error: %@", executableURL, arguments, result, errorDesc);
@@ -470,7 +470,7 @@ inline bool runningHelper(void) {
     
     DDLogDebug(@"Calling command line tool at %@ with args: %@ using async API", commandLineTool, args);
     
-    [NSTask launchedTaskWithExecutableURL:commandLineTool arguments:args error:nil terminationHandler:nil];
+    [NSTask launchedTaskWithExecutableURL:commandLineTool arguments:args error:NULL terminationHandler:nil];
 }
 
 #pragma mark - Monitor file system
@@ -481,10 +481,10 @@ inline bool runningHelper(void) {
     FSEventStreamStart(stream);
     return stream;
 }
-+ (void)destroyFSEventStream:(FSEventStreamRef)stream {
++ (void)destroyFSEventStream:(FSEventStreamRef _Nullable)stream {
     if (stream != NULL) {
-        FSEventStreamInvalidate(stream);
-        FSEventStreamRelease(stream);
+        FSEventStreamInvalidate((void *_I_)stream);
+        FSEventStreamRelease((void *_I_)stream);
     }
 }
 
@@ -691,7 +691,7 @@ inline bool runningHelper(void) {
     }
 }
 
-+ (id)deepCopyOf:(id)object {
++ (id _O_)deepCopyOf:(id _O_)object {
 
     /// TODO: Replace this with the error-returning implementation (below)
     
@@ -705,7 +705,7 @@ inline bool runningHelper(void) {
     return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:object]];
 }
 
-+ (id<NSCoding>)deepCopyOf:(id<NSCoding>)original error:(NSError *_Nullable *_Nullable)error {
++ (id<NSCoding>_O_)deepCopyOf:(id<NSCoding> _I_)original error:(NSError *_O_ *_O_)error {
     
     /// Copied this from the Swift implementation in SharedUtilitySwift, since the Swift implementation wasn't compatible with ObjC. We still like to keep both around since the Swift version is nicer with it's generic types. Maybe generics are also possible in this form in ObjC but I don't know how.
     /// The simpler default methods only work with `NSSecureCoding` objects. This implementation also works with `NSCoding` objects.
@@ -715,7 +715,7 @@ inline bool runningHelper(void) {
     ///     Edit: [Feb 2025] Also, is manual recursion (Which we use in `deepMutableCopyOf:`) perhaps faster than an archiver? MFDeepCopyCoder was doing recursion like that afaik, so maybe not.
     /// TODO: Use MFEncode() and MFDecode() instead of this.
     
-    assert(original != nil);
+    assert((id)original != nil);
     
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:original requiringSecureCoding:false error:error];
     if (data == nil) {

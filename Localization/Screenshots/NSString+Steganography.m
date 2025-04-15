@@ -106,7 +106,7 @@ static NSRegularExpression *secretMessageRegex(void) {
     
     /// Create regex
     NSRegularExpressionOptions expressionOptions = 0;
-    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern options:expressionOptions error:nil];
+    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern options:expressionOptions error:NULL];
     
     /// Return
     return expression;
@@ -323,7 +323,7 @@ static NSRegularExpression *secretMessageRegex(void) {
     /// Get UTF32Char  array
     UTF32Char buffer[self.length + 1]; /// Not sure why `+ 1` Probably null terminator?
     NSStringEncodingConversionOptions conversionOptions = 0;
-    [self getBytes:buffer maxLength:sizeof(UTF32Char) * self.length usedLength:nil encoding:NSUTF32LittleEndianStringEncoding options:conversionOptions range:NSMakeRange(0, self.length) remainingRange:nil];
+    [self getBytes:buffer maxLength:sizeof(UTF32Char) * self.length usedLength:NULL encoding:NSUTF32LittleEndianStringEncoding options:conversionOptions range:NSMakeRange(0, self.length) remainingRange:NULL];
     
     /// Convert to NSArray
     NSMutableArray *result = [NSMutableArray array];
@@ -395,7 +395,7 @@ static NSRegularExpression *secretMessageRegex(void) {
     /// Finds secret messages in the string.
     NSString *pattern = @"(?:\u200b[\u200c\u200d]{8})*\u200b"; /// Matches packets of 8 200c or 200d chars surrounded by 200b chars.
     NSRegularExpressionOptions expressionOptions = 0;
-    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern options:expressionOptions error:nil];
+    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern options:expressionOptions error:NULL];
     NSMatchingOptions matchingOptions = 0;
     NSArray<NSTextCheckingResult *> *matches = [expression matchesInString:self options:matchingOptions range:NSMakeRange(0, self.length)];
     

@@ -74,12 +74,12 @@ static CFTimeInterval _lastScrollAnalysisResultTimeStamp;
     /// Create AXUIElement for getting app under mouse pointer
     _systemWideAXUIElement = AXUIElementCreateSystemWide();
     /// Create Event source
-    if (_eventSource == nil) {
+    if (_eventSource == NULL) {
         _eventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
     }
     
     /// Create/enable scrollwheel input callback
-    if (_eventTap == nil) {
+    if (_eventTap == NULL) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
         _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
         DDLogDebug(@"Scroll.m: _eventTap: %@", _eventTap);
@@ -248,7 +248,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         heavyProcessing(eventCopy, scrollDeltaAxis1, scrollDeltaAxis2, tickTime);
     });
     
-    return nil;
+    return NULL;
 }
 
 #pragma mark - Main event processing

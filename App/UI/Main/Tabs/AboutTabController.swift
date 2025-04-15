@@ -47,8 +47,8 @@ class AboutTabController: NSViewController {
 //        alert.showsSuppressionButton = true
         let sendButton = alert.addButton(withTitle: NSLocalizedString("mail-alert.send", comment: ""))
         let backButton = alert.addButton(withTitle: NSLocalizedString("mail-alert.back", comment: ""))
-        sendButton.keyEquivalent = IBUtility.keyChar(forLiteral: "return")
-        backButton.keyEquivalent = IBUtility.keyChar(forLiteral: "escape")
+        sendButton.keyEquivalent = IBUtility.keyChar(forLiteral: "return")!
+        backButton.keyEquivalent = IBUtility.keyChar(forLiteral: "escape")!
         
         /// Set mail icon
         

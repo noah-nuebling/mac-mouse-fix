@@ -244,18 +244,8 @@
 		4FB8B29F2CCEBB1700A5A580 /* GetTrialState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B29D2CCEBB1000A5A580 /* GetTrialState.swift */; };
 		4FB8B2A22CCEBC4900A5A580 /* APIRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B2A12CCEBC4900A5A580 /* APIRequests.swift */; };
 		4FB8B2A32CCEBC4900A5A580 /* APIRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B2A12CCEBC4900A5A580 /* APIRequests.swift */; };
-		4FBC82952DAE93AD00354981 /* DeallocTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC828C2DAE93AD00354981 /* DeallocTracker.m */; };
 		4FBC82962DAE93AD00354981 /* MFObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82872DAE93AD00354981 /* MFObserver.m */; };
-		4FBC82972DAE93AD00354981 /* MFObserverTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC828F2DAE93AD00354981 /* MFObserverTests.m */; };
-		4FBC82982DAE93AD00354981 /* ObservationBenchmarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82912DAE93AD00354981 /* ObservationBenchmarks.m */; };
-		4FBC82992DAE93AD00354981 /* KVOMutationSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82892DAE93AD00354981 /* KVOMutationSupport.m */; };
-		4FBC829A2DAE93AD00354981 /* ObservationBenchmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82922DAE93AD00354981 /* ObservationBenchmarks.swift */; };
-		4FBC829B2DAE93AD00354981 /* DeallocTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC828C2DAE93AD00354981 /* DeallocTracker.m */; };
 		4FBC829C2DAE93AD00354981 /* MFObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82872DAE93AD00354981 /* MFObserver.m */; };
-		4FBC829D2DAE93AD00354981 /* MFObserverTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC828F2DAE93AD00354981 /* MFObserverTests.m */; };
-		4FBC829E2DAE93AD00354981 /* ObservationBenchmarks.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82912DAE93AD00354981 /* ObservationBenchmarks.m */; };
-		4FBC829F2DAE93AD00354981 /* KVOMutationSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82892DAE93AD00354981 /* KVOMutationSupport.m */; };
-		4FBC82A02DAE93AD00354981 /* ObservationBenchmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82922DAE93AD00354981 /* ObservationBenchmarks.swift */; };
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
 		4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */; };
 		4FC55B982915652C00663B24 /* Alerts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55B972915652C00663B24 /* Alerts.m */; };
@@ -8386,12 +8376,7 @@
 				4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */,
 				4FF1DC7B2CC1130700A839AB /* License.m in Sources */,
 				4FA40CF628A0CCC600499E53 /* Math.swift in Sources */,
-				4FBC82952DAE93AD00354981 /* DeallocTracker.m in Sources */,
 				4FBC82962DAE93AD00354981 /* MFObserver.m in Sources */,
-				4FBC82972DAE93AD00354981 /* MFObserverTests.m in Sources */,
-				4FBC82982DAE93AD00354981 /* ObservationBenchmarks.m in Sources */,
-				4FBC82992DAE93AD00354981 /* KVOMutationSupport.m in Sources */,
-				4FBC829A2DAE93AD00354981 /* ObservationBenchmarks.swift in Sources */,
 				4FF6660025F2C92700689B77 /* Hyperlink.m in Sources */,
 				4F909D2428A0C3D2009349A2 /* TabItemControllerProtocol.swift in Sources */,
 				4FB8B2A32CCEBC4900A5A580 /* APIRequests.swift in Sources */,
@@ -8558,12 +8543,7 @@
 				4FA13FC428B3A2E0005C68FC /* TrialNotificationController.swift in Sources */,
 				4F262CF22C64B6E000773789 /* MarkdownParser.m in Sources */,
 				4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */,
-				4FBC829B2DAE93AD00354981 /* DeallocTracker.m in Sources */,
 				4FBC829C2DAE93AD00354981 /* MFObserver.m in Sources */,
-				4FBC829D2DAE93AD00354981 /* MFObserverTests.m in Sources */,
-				4FBC829E2DAE93AD00354981 /* ObservationBenchmarks.m in Sources */,
-				4FBC829F2DAE93AD00354981 /* KVOMutationSupport.m in Sources */,
-				4FBC82A02DAE93AD00354981 /* ObservationBenchmarks.swift in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
 				4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */,
 				4F3A40B1266BBC5000436821 /* Curve.swift in Sources */,
@@ -8982,6 +8962,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -8996,6 +8977,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
@@ -9037,6 +9019,10 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"\"-Dnil=((id\\ _Nullable)__DARWIN_NULL)\"",
+					"\"-DNULL=((void *\\ _Nullable)0)\"",
+				);
 				SDKROOT = macosx;
 				STRIP_SWIFT_SYMBOLS = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -9044,6 +9030,10 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = "";
+				WARNING_CFLAGS = (
+					"-Wnullable-to-nonnull-conversion",
+					"-Wnonnull",
+				);
 			};
 			name = Debug;
 		};
@@ -9060,6 +9050,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_UNDEFINED_BEHAVIOR_SANITIZER_NULLABILITY = YES;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
@@ -9074,6 +9065,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
@@ -9113,6 +9105,10 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"\"-Dnil=((id\\ _Nullable)__DARWIN_NULL)\"",
+					"\"-DNULL=((void *\\ _Nullable)0)\"",
+				);
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = NDEBUG;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -9120,6 +9116,10 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				USER_HEADER_SEARCH_PATHS = "";
+				WARNING_CFLAGS = (
+					"-Wnullable-to-nonnull-conversion",
+					"-Wnonnull",
+				);
 			};
 			name = Release;
 		};

@@ -5,6 +5,13 @@
 //  Created by Noah Nübling on 02.08.24.
 //
 
+///
+/// [Apr 2025] Created this for MFObserver.m, but turns out it's not necessary. See comments elsewhere.
+///     I'm also not sure this is safe
+///
+///     -> Don't use this
+///
+
 #import "DeallocTracker.h"
 #import "objc/runtime.h"
 

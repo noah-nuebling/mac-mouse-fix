@@ -87,13 +87,13 @@
     
     /// Create port
     CFStringRef messagePortName = (__bridge CFStringRef)(runningMainApp() ? kMFBundleIDApp : kMFBundleIDHelper);
-    CFMessagePortRef localPort = CFMessagePortCreateLocal(kCFAllocatorDefault, messagePortName, didReceiveMessage, nil, NULL);
+    CFMessagePortRef localPort = CFMessagePortCreateLocal(kCFAllocatorDefault, messagePortName, didReceiveMessage, NULL, NULL);
 
     /// Log
     DDLogInfo(@"Created localPort: %@", localPort);
     
     /// Validate
-    if (localPort == nil) {
+    if (localPort == NULL) {
         
         if (runningMainApp()) {
             DDLogInfo(@"Failed to create a local message port. It will probably work anyway for some reason");
@@ -291,7 +291,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     if (payload) {
         messageDict = @{
             kMFMessageKeyMessage: message,
-            kMFMessageKeyPayload: payload,
+            kMFMessageKeyPayload: (id _Nonnull)payload,
         };
     } else {
         messageDict = @{

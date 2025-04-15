@@ -48,7 +48,7 @@
     else return [resultNS intValue];
 }
 
-+ (NSString *)keyCharForLiteral:(NSString *)literalString {
++ (NSString *_Nullable)keyCharForLiteral:(NSString *)literalString {
     
     ///
     /// Returns the charCode for keyboard keys that can't easily be typed.

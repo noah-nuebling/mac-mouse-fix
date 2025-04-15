@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define getReturnAddress() \
     __builtin_return_address(0) /// If this fails, `backtrace()` should be more robust
 
-NSString *getExecutablePath(void);
+NSString *_Nullable getExecutablePath(void);
 NSString *getImagePath(void *address);
 NSString *getSymbol(void *address);
 

@@ -540,7 +540,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
                 [m addItem:subI];
             }
             i.submenu = m;
-            i.action = nil;
+            i.action = NULL;
         }
     }
     return i;

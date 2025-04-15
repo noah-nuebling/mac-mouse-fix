@@ -5,7 +5,7 @@
 //  Created by Noah Nübling on 14.04.25.
 //
 
-#pragma mark - Cleanup tests
+#pragma mark - Memory Cleanup Tests
 
 ///
 /// Test results [Apr 2025]

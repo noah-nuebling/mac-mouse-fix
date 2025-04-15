@@ -49,8 +49,8 @@ import Foundation
         
         let restoreButton = alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.commit", comment: ""))
         let cancelButton = alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.back", comment: ""))
-        restoreButton.keyEquivalent = IBUtility.keyChar(forLiteral: "return")
-        cancelButton.keyEquivalent = IBUtility.keyChar(forLiteral: "escape")
+        restoreButton.keyEquivalent = IBUtility.keyChar(forLiteral: "return")!
+        cancelButton.keyEquivalent = IBUtility.keyChar(forLiteral: "escape")!
         
         ///
         /// Get device info

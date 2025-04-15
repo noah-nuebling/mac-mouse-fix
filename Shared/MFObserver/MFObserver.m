@@ -7,8 +7,6 @@
 
 #import "MFObserver.h"
 #import "objc/runtime.h"
-#import "CoolMacros.h"
-#import "EXTScope.h"
 #import "objc/objc-sync.h"
 
 
@@ -60,6 +58,12 @@
 ///     Caveat:
 ///         - These bad Combine results were for using the `someObject.publisher(for:<keyPath>)` API which is actually a wrapper for KVO. When using the more swift-native `@Published` macro, Combine is almost as fast as our implementation:
 ///         -> Based on one test, ours is only  1.14x faster than Combine for the basic observation and 1.08x faster for the combineLatest observation when using `@Published` in Combine.
+///
+///     Update: [Apr 2025]
+///         Article on performance of different Observation APIs in Swift/objc: KVO, NSNotificationCenter, RsSwift, ReactiveSwift
+///             - Link: https://dmcyk.xyz/post/kvo-rx-nc-benchmarks/kvo-rx-nc-benchmarks/
+///             - From 2018 -> Might be outdated.
+///             - They also find KVO to be slow in Swift, their analysis shows it's due to Swift<->objc type bridging. (We also ran into performance issues with that, leading us to write `MF_SWIFT_UNBRIDGED` macros.)
 ///
 /// Technical details:
 ///     On thread safety and use of `@synchronized`:

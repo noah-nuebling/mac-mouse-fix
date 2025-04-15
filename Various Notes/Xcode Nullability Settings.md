@@ -114,7 +114,10 @@ Workaround from [2]:
 
 In case that GitHub comments gets deleted or something here's a summary of the workaround:
     - You add `"-Dnil=((id\ _Nullable)__DARWIN_NULL)"` to the `OTHER_CFLAGS` Xcode build-setting.
-    -> This redefines literal nil to have type `(id _Nullable)`, which causes the `-Wnullable-to-nonnull-conversion` warnings to apply to literal nil.  
+    -> This redefines literal nil to have type `(id _Nullable)`, which causes the `-Wnullable-to-nonnull-conversion` warnings to apply to literal nil.
+    Update: [Apr 15 2024] to make warnings appear for literal `NULL` as well I added `"-DNULL=((void *\ _Nullable)0)"`
+        - I'm not sure if redefining nil and NULL this way is totally safe, but it seem to work so far.
+        - ... I also don't know if redefining NULL like this even makes a difference (maybe the bug only applies to `nil`) Haven't tested at all [Apr 15 2025]
     
 ---
 

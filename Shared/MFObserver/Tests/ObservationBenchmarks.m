@@ -15,7 +15,12 @@
 #import "AppKit/AppKit.h"
 #import "EXTScope.h"
 
-#define stringf(format, args...) [NSString stringWithFormat:format, args]
+///
+/// [Apr 2025]
+///     Notes about benchmark results in MFObserver.m
+///     -> Summary: MFObserver is fastest observation API, but still much slower than direct function calls.
+///
+
 
 MFDataClass(TestObject, (MFDataPropPrimitive(NSInteger value)))
 

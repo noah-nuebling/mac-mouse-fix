@@ -14,6 +14,8 @@
 /// Update: [Apr 2025]
 ///     I haven't tested this much, I'm not sure this is safe.
 ///     E.g. – we isa swizzle – will there be interference if multiple modules try to isa-swizzle the object? (IIRC KVO will also isa-swizzle if automaticallyNotifiesObserversForKey: returns YES.)
+///
+///     -> Don't add this to compilation targets until it's tested.
 
 @implementation NSObject (MFKVOMutationSupport)
 

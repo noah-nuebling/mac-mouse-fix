@@ -65,12 +65,12 @@ static NSURL *_configURL;
 + (NSURL *)configURL {
     return _configURL;
 }
-+ (NSURL *)launchdPlistURL {
++ (NSURL *_Nullable)launchdPlistURL {
     NSString *launchdPlistRelativePathFromLibrary = [NSString stringWithFormat:@"LaunchAgents/%@.plist", kMFBundleIDHelper];
     NSURL *userLibURL = [NSFileManager.defaultManager URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask][0];
-    return  [userLibURL URLByAppendingPathComponent:launchdPlistRelativePathFromLibrary];
+    return [userLibURL URLByAppendingPathComponent:launchdPlistRelativePathFromLibrary];
 }
-+ (NSUserDefaults *)defaults {
++ (NSUserDefaults *_Nullable)defaults {
     
     /// This allows both the helper and the main app to write into the same user defaults
     
@@ -93,7 +93,7 @@ static NSURL *_configURL;
     
     if (self == Locator.class) {
         /// Get appSupportURL & configURL
-        NSURL *applicationSupportURL = [NSFileManager.defaultManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:NULL create:YES error:nil];
+        NSURL *applicationSupportURL = [NSFileManager.defaultManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:NULL create:YES error:NULL];
         _MFApplicationSupportFolderURL = [applicationSupportURL URLByAppendingPathComponent:kMFBundleIDApp];
         _configURL = [_MFApplicationSupportFolderURL URLByAppendingPathComponent:@"config.plist"];
     }

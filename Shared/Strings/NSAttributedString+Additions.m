@@ -988,7 +988,7 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
         range = *inRange;
     }
     
-    NSDictionary *originalAttributes = [self attributesAtIndex:0 effectiveRange:nil];
+    NSDictionary *originalAttributes = [self attributesAtIndex:0 effectiveRange:NULL];
     NSFont *originalFont = originalAttributes[NSFontAttributeName];
     
     if (originalFont == nil) {
@@ -1144,7 +1144,7 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     
     NSAttributedString *ret = self.copy;
     ret = [ret attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
-    ret = [ret attributedStringByAddingColor:NSColor.secondaryLabelColor forRange:nil];
+    ret = [ret attributedStringByAddingColor:NSColor.secondaryLabelColor forRange:NULL];
     
     return ret;
 }

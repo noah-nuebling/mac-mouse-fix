@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface IBUtility : NSObject
 
 + (NSEventModifierFlags)modifierMaskForLiteral:(NSString *)literalString;
-+ (NSString *)keyCharForLiteral:(NSString *)literalString;
++ (NSString *_Nullable)keyCharForLiteral:(NSString *)literalString;
 
 @end
 
