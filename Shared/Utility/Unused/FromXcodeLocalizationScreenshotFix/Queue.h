@@ -7,8 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
-/// We copied and adapted this fom MMF
-/// -> Should probably copy this back into MMF
+/// We copied and adapted this fom MMF (into xcode-localization-screenshot-fix)
+/// Update: [Apr 2025] Copied it back into MMF. But using this has literally 0 benefit over using NSMutableArray -> don't use this.
 
 #import <Foundation/Foundation.h>
 
