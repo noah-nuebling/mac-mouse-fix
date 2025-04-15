@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **April 2025**
 
+- 🇩🇰&nbsp;Johan&nbsp;Ohly - "Don't need any acknowledgement, I would just love per mouse inverse scrolling. One mouse requires it, while another doesn't. Thank you for this awesome software regardless."
 - 🇺🇸&nbsp;Kck
 - 🇭🇰&nbsp;Tian
 - 🇻🇳&nbsp;Thucth&nbsp;Qt
