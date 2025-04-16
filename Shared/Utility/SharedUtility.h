@@ -57,9 +57,6 @@
 ///     Check if an expression evaluates to an objc object.
 #define _isobject(expression) __builtin_types_compatible_p(typeof(expression), id)
 
-/// `ifthen()` macro
-/// MFDELETED
-
 /// `rangefromto` macro
 ///     Alternative to NSMakeRange(), lets you specify the range in terms of (firstindex, lastindex) instead of (firstindex, count) – which I find more intuitive.
 #define rangefromto(firstindex, lastindex) ({                     \

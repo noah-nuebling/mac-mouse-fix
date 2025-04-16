@@ -246,6 +246,18 @@
 		4FB8B2A32CCEBC4900A5A580 /* APIRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B2A12CCEBC4900A5A580 /* APIRequests.swift */; };
 		4FBC82962DAE93AD00354981 /* MFObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82872DAE93AD00354981 /* MFObserver.m */; };
 		4FBC829C2DAE93AD00354981 /* MFObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82872DAE93AD00354981 /* MFObserver.m */; };
+		4FBC833C2DAFB28B00354981 /* MFBenchmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83362DAFB28B00354981 /* MFBenchmark.m */; };
+		4FBC833D2DAFB28B00354981 /* EventLoggerForBradUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC833B2DAFB28B00354981 /* EventLoggerForBradUtility.m */; };
+		4FBC833E2DAFB28B00354981 /* MFLoop.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83342DAFB28B00354981 /* MFLoop.m */; };
+		4FBC833F2DAFB28B00354981 /* PrivateFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC832D2DAFB28B00354981 /* PrivateFunctions.m */; };
+		4FBC83412DAFB28B00354981 /* ListOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83322DAFB28B00354981 /* ListOperations.m */; };
+		4FBC83422DAFB28B00354981 /* SharedMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83302DAFB28B00354981 /* SharedMacros.m */; };
+		4FBC83432DAFB28B00354981 /* MFBenchmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83362DAFB28B00354981 /* MFBenchmark.m */; };
+		4FBC83442DAFB28B00354981 /* EventLoggerForBradUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC833B2DAFB28B00354981 /* EventLoggerForBradUtility.m */; };
+		4FBC83452DAFB28B00354981 /* MFLoop.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83342DAFB28B00354981 /* MFLoop.m */; };
+		4FBC83462DAFB28B00354981 /* PrivateFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC832D2DAFB28B00354981 /* PrivateFunctions.m */; };
+		4FBC83482DAFB28B00354981 /* ListOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83322DAFB28B00354981 /* ListOperations.m */; };
+		4FBC83492DAFB28B00354981 /* SharedMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83302DAFB28B00354981 /* SharedMacros.m */; };
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
 		4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */; };
 		4FC55B982915652C00663B24 /* Alerts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55B972915652C00663B24 /* Alerts.m */; };
@@ -2038,7 +2050,6 @@
 		4F28B7F52D49141E006928A6 /* SkyLight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SkyLight.framework; path = ../../../../../../System/Library/PrivateFrameworks/SkyLight.framework; sourceTree = "<group>"; };
 		4F2CC58627B8D2300084AACE /* HybridCurves.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HybridCurves.swift; sourceTree = "<group>"; };
 		4F2CC58827B8DA8B0084AACE /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
-		4F2E8FAC2D4FBD8200689058 /* EventLoggerForBradMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventLoggerForBradMacros.h; sourceTree = "<group>"; };
 		4F2E8FD12D52229100689058 /* NSCoderErrors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSCoderErrors.h; sourceTree = "<group>"; };
 		4F2E8FD22D52229100689058 /* NSCoderErrors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSCoderErrors.m; sourceTree = "<group>"; };
 		4F2E8FD52D52877F00689058 /* MFPlistEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFPlistEncoder.h; sourceTree = "<group>"; };
@@ -2282,6 +2293,18 @@
 		4FBC82912DAE93AD00354981 /* ObservationBenchmarks.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ObservationBenchmarks.m; sourceTree = "<group>"; };
 		4FBC82922DAE93AD00354981 /* ObservationBenchmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationBenchmarks.swift; sourceTree = "<group>"; };
 		4FBC82A12DAE93BD00354981 /* Xcode Nullability Settings.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Xcode Nullability Settings.md"; sourceTree = "<group>"; };
+		4FBC832C2DAFB28B00354981 /* PrivateFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrivateFunctions.h; sourceTree = "<group>"; };
+		4FBC832D2DAFB28B00354981 /* PrivateFunctions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrivateFunctions.m; sourceTree = "<group>"; };
+		4FBC832F2DAFB28B00354981 /* SharedMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMacros.h; sourceTree = "<group>"; };
+		4FBC83302DAFB28B00354981 /* SharedMacros.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMacros.m; sourceTree = "<group>"; };
+		4FBC83312DAFB28B00354981 /* ListOperations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListOperations.h; sourceTree = "<group>"; };
+		4FBC83322DAFB28B00354981 /* ListOperations.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListOperations.m; sourceTree = "<group>"; };
+		4FBC83332DAFB28B00354981 /* MFLoop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFLoop.h; sourceTree = "<group>"; };
+		4FBC83342DAFB28B00354981 /* MFLoop.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFLoop.m; sourceTree = "<group>"; };
+		4FBC83352DAFB28B00354981 /* MFBenchmark.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFBenchmark.h; sourceTree = "<group>"; };
+		4FBC83362DAFB28B00354981 /* MFBenchmark.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFBenchmark.m; sourceTree = "<group>"; };
+		4FBC833A2DAFB28B00354981 /* EventLoggerForBradUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventLoggerForBradUtility.h; sourceTree = "<group>"; };
+		4FBC833B2DAFB28B00354981 /* EventLoggerForBradUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventLoggerForBradUtility.m; sourceTree = "<group>"; };
 		4FBC9434260F8AA60062F186 /* MASShortcut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASShortcut.m; sourceTree = "<group>"; };
 		4FBC9436260F8AA60062F186 /* MASShortcut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASShortcut.h; sourceTree = "<group>"; };
 		4FBC9437260F8AA60062F186 /* MASKeyMasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASKeyMasks.h; sourceTree = "<group>"; };
@@ -7077,6 +7100,41 @@
 			path = MFObserver;
 			sourceTree = "<group>";
 		};
+		4FBC832E2DAFB28B00354981 /* PrivateFunctions */ = {
+			isa = PBXGroup;
+			children = (
+				4FBC832C2DAFB28B00354981 /* PrivateFunctions.h */,
+				4FBC832D2DAFB28B00354981 /* PrivateFunctions.m */,
+			);
+			path = PrivateFunctions;
+			sourceTree = "<group>";
+		};
+		4FBC83392DAFB28B00354981 /* Macros */ = {
+			isa = PBXGroup;
+			children = (
+				4FBC832F2DAFB28B00354981 /* SharedMacros.h */,
+				4FBC83302DAFB28B00354981 /* SharedMacros.m */,
+				4FBC83312DAFB28B00354981 /* ListOperations.h */,
+				4FBC83322DAFB28B00354981 /* ListOperations.m */,
+				4FBC83332DAFB28B00354981 /* MFLoop.h */,
+				4FBC83342DAFB28B00354981 /* MFLoop.m */,
+				4FBC83352DAFB28B00354981 /* MFBenchmark.h */,
+				4FBC83362DAFB28B00354981 /* MFBenchmark.m */,
+			);
+			path = Macros;
+			sourceTree = "<group>";
+		};
+		4FBC834A2DAFB2A500354981 /* FromEventLoggerForBrad */ = {
+			isa = PBXGroup;
+			children = (
+				4FBC83392DAFB28B00354981 /* Macros */,
+				4FBC832E2DAFB28B00354981 /* PrivateFunctions */,
+				4FBC833A2DAFB28B00354981 /* EventLoggerForBradUtility.h */,
+				4FBC833B2DAFB28B00354981 /* EventLoggerForBradUtility.m */,
+			);
+			path = FromEventLoggerForBrad;
+			sourceTree = "<group>";
+		};
 		4FBC9433260F8AA60062F186 /* MAS */ = {
 			isa = PBXGroup;
 			children = (
@@ -7528,7 +7586,6 @@
 		4FF6653625F2C7B000689B77 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
-				4F2E8FAC2D4FBD8200689058 /* EventLoggerForBradMacros.h */,
 				4FF6653E25F2C7B000689B77 /* SharedUtility.h */,
 				4FF6653B25F2C7B000689B77 /* SharedUtility.m */,
 				4FF797382C8245D700C18001 /* Links.h */,
@@ -7556,6 +7613,7 @@
 				4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */,
 				4FF8C89D28955DC4007EC31F /* CoolTimer.swift */,
 				4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */,
+				4FBC834A2DAFB2A500354981 /* FromEventLoggerForBrad */,
 				4FBDA14927B2246B0030E4EA /* SubPixelator */,
 				4FD860C2266EEA94004F76C8 /* Unused */,
 			);
@@ -8405,6 +8463,12 @@
 				4F39BC3B263AF2B000FDF692 /* SparkleUpdaterController.m in Sources */,
 				4FA40D0028A0CCCB00499E53 /* CombinedLinearCurve.swift in Sources */,
 				4F85C05428BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */,
+				4FBC833C2DAFB28B00354981 /* MFBenchmark.m in Sources */,
+				4FBC833D2DAFB28B00354981 /* EventLoggerForBradUtility.m in Sources */,
+				4FBC833E2DAFB28B00354981 /* MFLoop.m in Sources */,
+				4FBC833F2DAFB28B00354981 /* PrivateFunctions.m in Sources */,
+				4FBC83412DAFB28B00354981 /* ListOperations.m in Sources */,
+				4FBC83422DAFB28B00354981 /* SharedMacros.m in Sources */,
 				4FCABCF72933A7090018E538 /* Toasts.swift in Sources */,
 				4FA2F1262C29A125000C5535 /* NotificationLabel.m in Sources */,
 				4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */,
@@ -8572,6 +8636,12 @@
 				4F4C737D2C4FB06E001D97C3 /* NSString+Steganography.m in Sources */,
 				4FFA4E4628B7D2960062A1FE /* Replace.swift in Sources */,
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,
+				4FBC83432DAFB28B00354981 /* MFBenchmark.m in Sources */,
+				4FBC83442DAFB28B00354981 /* EventLoggerForBradUtility.m in Sources */,
+				4FBC83452DAFB28B00354981 /* MFLoop.m in Sources */,
+				4FBC83462DAFB28B00354981 /* PrivateFunctions.m in Sources */,
+				4FBC83482DAFB28B00354981 /* ListOperations.m in Sources */,
+				4FBC83492DAFB28B00354981 /* SharedMacros.m in Sources */,
 				4F2E8FD32D52229100689058 /* NSCoderErrors.m in Sources */,
 				4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */,
 				4FCEDC89292D6A8F00E7DA2A /* HashablePair.swift in Sources */,

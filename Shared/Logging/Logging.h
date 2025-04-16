@@ -118,3 +118,71 @@ NS_ASSUME_NONNULL_END
 #define DDLogVerbose(__format, __args...)  NSLog(@"Verbose: "   __format, ## __args)
 
 #endif
+
+/// mfassert()
+///     Custom assert implementation
+///
+///     Context: [Apr 2025]
+///             This originally came from
+///
+///     Examples:
+///         Usage:
+///             `mfassert(string == nil, "Expected 'string' to be nil. But it was '%@'", string);`
+///         Output:
+///             ```
+///             mfassert() failed.
+///               Asserted condition:    (string == nil)
+///               Reason:                Expected 'string' to be nil. But it was 'ABCDEFG'
+///               Location:              AppDelegate.m:62 (inside -[AppDelegate applicationDidFinishLaunching])
+///               Callers:               <stack-trace>
+///             ```
+///         You can also omit the 'reason' and simply type:
+///             `mfassert(string == nil);`
+///
+///     Behavioural details:
+///         - Will crash the program on assert-failure - unless the `NDEBUG` preprocessor flag is present (Just like the native `assert()` macro.)
+///         - Logging is performed through our standard `DDLogError()` mechanism.
+///             Thus, enabling or disabling logging is handled by the logging backend, independent of `NDEBUG`.
+///         - The 'reason' string – if provided – is formatted using `-[NSString stringWithFormat:]` –  allowing you to use the `%@` format specifier.
+///
+///     Alternatives:
+///          - Use this over `NSAssert()`, `NSCAssert()`, and `assert()`
+///              - Pro: Easy to type, nicer logging output, full control to change behavior in the future, doesn't throw exceptions (like NSAssert does) (Exceptions might be caught instead of crashing the program in some contexts), allows for logging assert-failures even in `NDEBUG` builds.
+///              - Contra: Possibly slower than `mfassert()` because it's not completely optimized out in `NDEBUG` builds – However, I expect the performance difference to be negligible.
+///
+///     Improvements:
+///         - Maybe use `CRSetCrashLogMessage()` for nicer crash reports. Apple's code uses it quite extensively. (abort() also uses it internally I think.) See GitHub search: `CRSetCrashLogMessage (owner:apple OR owner:apple-oss-distributions)`
+///
+///     Interesting:
+///         `__assert_rtn()` implementation: (I think) https://github.com/apple-oss-distributions/Libc/blob/af11da5ca9d527ea2f48bb7efbd0f0f2a4ea4812/gen/FreeBSD/assert.c#L48
+///         `__assert()` implementation(s): (I think) https://github.com/apple-oss-distributions/Libc/blob/af11da5ca9d527ea2f48bb7efbd0f0f2a4ea4812/include/_assert.h#L38
+
+#if NDEBUG
+    #define __mfassert_NDEBUG_is_present 1
+#else
+    #define __mfassert_NDEBUG_is_present 0
+#endif
+
+#define mfassert(condition, /* failurereason, formatarg1, formatarg2, ... */ ...)   \
+({                                                                               \
+    if (mfunlikely(!(condition))) { /** It's unlikely that the assert fails */                      \
+        DDLogError(                                                                 \
+            @"mfassert() failed."                                                   \
+            "\n  Asserted condition:    %s"                                         \
+            __VA_OPT__(                                                             \
+            "\n  Reason:                %@"                                         \
+            )                                                                       \
+            "\n  Location:              %s:%d (inside %s)"                          \
+            "\n  Callers: %@",                                                      \
+            #condition,                                                             \
+            __VA_OPT__(                                                             \
+            [NSString stringWithFormat:__VA_ARGS__],                                \
+            )                                                                       \
+            __FILE_NAME__, __LINE__, __FUNCTION__,                                  \
+            [NSThread callStackSymbols]                                             \
+        );                                                                          \
+        if (!__mfassert_NDEBUG_is_present) {                                        \
+            abort();                                                                \
+        }                                                                           \
+    }                                                                               \
+})
