@@ -15,6 +15,7 @@
 #import <objc/runtime.h>
 #import "Logging.h"
 #import "MFSemaphore.h"
+#import "SharedMacros.h"
 
 @implementation SharedUtility
 
@@ -313,6 +314,8 @@ static void iteratePropertiesOn(id _O_ obj, void(^_I_ callback)(objc_property_t 
 #pragma mark - Check if this is a prerelease version
 
 bool runningPreRelease(void) {
+    
+    /// TODO: [Apr 16 2025] Move this into Logging.h
 
 #if IS_XC_TEST
     assert(false);
@@ -489,6 +492,46 @@ inline bool runningHelper(void) {
 }
 
 #pragma mark - Debug
+
+/// Debug-printing for enums
+
+NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitToNameMap[_Nullable], int bitToNameMapCount) {
+    
+    /// Build result
+    NSMutableString *result = [NSMutableString string];
+    
+    int i = 0;
+    while (1) {
+        
+        /// Break
+        if (flags == 0) break;
+        
+        if ((flags & 1) != 0) { /// If `flags` contains bit `i`
+            
+            /// Insert separator
+            if (result.length > 0) {
+                [result appendString:@" | "];
+            }
+            
+            /// Get string describing bit `i`
+            NSString *bitName = safeindex(bitToNameMap, bitToNameMapCount, i, nil);
+            NSString *str = (bitName && bitName.length > 0) ? bitName : stringf(@"(1 << %d)", i);
+            
+            /// Append
+            [result appendString:str];
+        }
+        
+        /// Increment
+        flags >>= 1;
+        i++;
+    }
+    
+    /// Wrap result in ()
+    result = [NSMutableString stringWithFormat:@"(%@)", result];
+    
+    /// Return
+    return result;
+}
 
 /*
 + (NSString *)binaryRepresentation:(int64_t)value {
@@ -754,13 +797,6 @@ inline bool runningHelper(void) {
         }
     }
     return dstMutable;
-}
-
-+ (int8_t) signOf: (double)x { /// TODO: Remove this in favor of sign(double x)
-    return sign(x);
-}
-int8_t sign(double x) {
-    return (0 < x) - (x < 0);
 }
 
 + (void)resetDispatchGroupCount:(dispatch_group_t)group {

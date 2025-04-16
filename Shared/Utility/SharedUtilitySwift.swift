@@ -9,6 +9,11 @@
 
 import Cocoa
 
+func mfsign(_ value: some (Numeric & Comparable)) -> Int {
+    /// [Apr 2025] Swift reimplementation of `#define mfsign` C-macro
+    return (value > 0) ? 1 : (value < 0) ? -1 : 0
+}
+
 @objc class SharedUtilitySwift: NSObject {
     
     static func eval<V>(@SingleValueBuilder<V> _ value: () -> V) -> V {

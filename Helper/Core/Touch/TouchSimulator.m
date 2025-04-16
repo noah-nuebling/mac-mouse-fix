@@ -163,7 +163,7 @@ static NSMutableDictionary *_swipeInfo;
     /// Override end phase with canceled phase
     ///     Note: Would it make more sense for this to happen in the 'driver' of the event simulation? (As of [Feb 2025] the 'drivers' are Scroll.m and ModifiedDragOutputThreeFingerSwipe.m)
     if (phase == kIOHIDEventPhaseEnded) {
-        if ([SharedUtility signOf:_dockSwipeLastDelta] == [SharedUtility signOf:_dockSwipeOriginOffset]) {
+        if (mfsign(_dockSwipeLastDelta) == mfsign(_dockSwipeOriginOffset)) {
             phase = kIOHIDEventPhaseEnded;
         } else {
             phase = kIOHIDEventPhaseCancelled;

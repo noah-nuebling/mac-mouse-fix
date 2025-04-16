@@ -12,6 +12,7 @@
 #import "NSCoderErrors.h"
 #import "MFPlistEncoder.h"
 #import "SimpleUnboxing.h"
+#import "MFDefer.h"
 
 #import "objc/runtime.h"
 

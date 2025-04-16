@@ -25,6 +25,7 @@
 #import <IOKit/network/IONetworkLib.h>
 #import "Logging.h"
 #import "SharedUtility.h"
+#import "MFDefer.h"
 
 @interface MacAddress : NSObject @end
 

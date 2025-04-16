@@ -247,13 +247,11 @@
 		4FBC82962DAE93AD00354981 /* MFObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82872DAE93AD00354981 /* MFObserver.m */; };
 		4FBC829C2DAE93AD00354981 /* MFObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82872DAE93AD00354981 /* MFObserver.m */; };
 		4FBC833C2DAFB28B00354981 /* MFBenchmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83362DAFB28B00354981 /* MFBenchmark.m */; };
-		4FBC833D2DAFB28B00354981 /* EventLoggerForBradUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC833B2DAFB28B00354981 /* EventLoggerForBradUtility.m */; };
 		4FBC833E2DAFB28B00354981 /* MFLoop.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83342DAFB28B00354981 /* MFLoop.m */; };
 		4FBC833F2DAFB28B00354981 /* PrivateFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC832D2DAFB28B00354981 /* PrivateFunctions.m */; };
 		4FBC83412DAFB28B00354981 /* ListOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83322DAFB28B00354981 /* ListOperations.m */; };
 		4FBC83422DAFB28B00354981 /* SharedMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83302DAFB28B00354981 /* SharedMacros.m */; };
 		4FBC83432DAFB28B00354981 /* MFBenchmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83362DAFB28B00354981 /* MFBenchmark.m */; };
-		4FBC83442DAFB28B00354981 /* EventLoggerForBradUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC833B2DAFB28B00354981 /* EventLoggerForBradUtility.m */; };
 		4FBC83452DAFB28B00354981 /* MFLoop.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83342DAFB28B00354981 /* MFLoop.m */; };
 		4FBC83462DAFB28B00354981 /* PrivateFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC832D2DAFB28B00354981 /* PrivateFunctions.m */; };
 		4FBC83482DAFB28B00354981 /* ListOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83322DAFB28B00354981 /* ListOperations.m */; };
@@ -2303,8 +2301,6 @@
 		4FBC83342DAFB28B00354981 /* MFLoop.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFLoop.m; sourceTree = "<group>"; };
 		4FBC83352DAFB28B00354981 /* MFBenchmark.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFBenchmark.h; sourceTree = "<group>"; };
 		4FBC83362DAFB28B00354981 /* MFBenchmark.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFBenchmark.m; sourceTree = "<group>"; };
-		4FBC833A2DAFB28B00354981 /* EventLoggerForBradUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventLoggerForBradUtility.h; sourceTree = "<group>"; };
-		4FBC833B2DAFB28B00354981 /* EventLoggerForBradUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventLoggerForBradUtility.m; sourceTree = "<group>"; };
 		4FBC9434260F8AA60062F186 /* MASShortcut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASShortcut.m; sourceTree = "<group>"; };
 		4FBC9436260F8AA60062F186 /* MASShortcut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASShortcut.h; sourceTree = "<group>"; };
 		4FBC9437260F8AA60062F186 /* MASKeyMasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASKeyMasks.h; sourceTree = "<group>"; };
@@ -7114,12 +7110,12 @@
 			children = (
 				4FBC832F2DAFB28B00354981 /* SharedMacros.h */,
 				4FBC83302DAFB28B00354981 /* SharedMacros.m */,
+				4FBC83352DAFB28B00354981 /* MFBenchmark.h */,
+				4FBC83362DAFB28B00354981 /* MFBenchmark.m */,
 				4FBC83312DAFB28B00354981 /* ListOperations.h */,
 				4FBC83322DAFB28B00354981 /* ListOperations.m */,
 				4FBC83332DAFB28B00354981 /* MFLoop.h */,
 				4FBC83342DAFB28B00354981 /* MFLoop.m */,
-				4FBC83352DAFB28B00354981 /* MFBenchmark.h */,
-				4FBC83362DAFB28B00354981 /* MFBenchmark.m */,
 			);
 			path = Macros;
 			sourceTree = "<group>";
@@ -7129,8 +7125,6 @@
 			children = (
 				4FBC83392DAFB28B00354981 /* Macros */,
 				4FBC832E2DAFB28B00354981 /* PrivateFunctions */,
-				4FBC833A2DAFB28B00354981 /* EventLoggerForBradUtility.h */,
-				4FBC833B2DAFB28B00354981 /* EventLoggerForBradUtility.m */,
 			);
 			path = FromEventLoggerForBrad;
 			sourceTree = "<group>";
@@ -7588,13 +7582,13 @@
 			children = (
 				4FF6653E25F2C7B000689B77 /* SharedUtility.h */,
 				4FF6653B25F2C7B000689B77 /* SharedUtility.m */,
+				4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */,
 				4FF797382C8245D700C18001 /* Links.h */,
 				4FF797392C8245D700C18001 /* Links.m */,
 				4F0CFFE62C51878500C5D843 /* MFDataClass.h */,
 				4F0CFFE72C51878500C5D843 /* MFDataClass.m */,
 				4F0C00402C53273200C5D843 /* BidirectionalMap.h */,
 				4F0C00412C53273200C5D843 /* BidirectionalMap.m */,
-				4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */,
 				4F5FC0612D6206E3009DCF10 /* SimpleUnboxing.h */,
 				4F4C73F62C4FB4C2001D97C3 /* TreeNode.h */,
 				4F4C73F72C4FB4C2001D97C3 /* TreeNode.m */,
@@ -8464,7 +8458,6 @@
 				4FA40D0028A0CCCB00499E53 /* CombinedLinearCurve.swift in Sources */,
 				4F85C05428BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */,
 				4FBC833C2DAFB28B00354981 /* MFBenchmark.m in Sources */,
-				4FBC833D2DAFB28B00354981 /* EventLoggerForBradUtility.m in Sources */,
 				4FBC833E2DAFB28B00354981 /* MFLoop.m in Sources */,
 				4FBC833F2DAFB28B00354981 /* PrivateFunctions.m in Sources */,
 				4FBC83412DAFB28B00354981 /* ListOperations.m in Sources */,
@@ -8637,7 +8630,6 @@
 				4FFA4E4628B7D2960062A1FE /* Replace.swift in Sources */,
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,
 				4FBC83432DAFB28B00354981 /* MFBenchmark.m in Sources */,
-				4FBC83442DAFB28B00354981 /* EventLoggerForBradUtility.m in Sources */,
 				4FBC83452DAFB28B00354981 /* MFLoop.m in Sources */,
 				4FBC83462DAFB28B00354981 /* PrivateFunctions.m in Sources */,
 				4FBC83482DAFB28B00354981 /* ListOperations.m in Sources */,

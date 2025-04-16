@@ -14,6 +14,7 @@
 #import "NSCoderErrors.h"
 #import "MFCoding.h"
 #import "TreeNode.h"
+#import "MFDefer.h"
 
 #import "NSCharacterSet+Additions.h"
 

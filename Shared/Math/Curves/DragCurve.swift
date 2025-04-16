@@ -182,7 +182,7 @@ import Foundation
         
         assert(exponent >= 0)
         assert(coefficient > 0)
-        assert(SharedUtility.sign(of: d) == SharedUtility.sign(of: vs))
+        assert(mfsign(d) == mfsign(vs))
         assert(vs > 0)
         
         /// Store curve shape
@@ -260,7 +260,7 @@ import Foundation
         /// Validate velocities
         ///     This asserts that everything is positive, which makes self.isNegative unused.
         
-        assert(SharedUtility.sign(of: v0) == SharedUtility.sign(of: vs)) /// Same sign - Otherwise vs can't be reached at all
+        assert(mfsign(v0) == mfsign(vs)) /// Same sign - Otherwise vs can't be reached at all
         assert(vs != 0) /// A speed of zero is unreachable
         assert(abs(v0) > abs(vs)) /// v0 > vs - Otherwise vs can only be reached in the past. So not at all. Also ensures v0 is not 0 which is important, as well
         assert(v0 > 0) /// This code could probably deal with negative v0, but the calling code should never input a negative v0, so we're asserting that here, too
@@ -270,7 +270,7 @@ import Foundation
         ///     So if they are negative, we make everything positive and note that fact here, so we can do the main calculations as if v0 and vs were positive, and then flip the sign before we return the end result.
         ///     Actually I think we'll never use this, and this is untested, but we'll leave it in for now
         
-        self.isNegative = SharedUtility.sign(of: v0) == -1
+        self.isNegative = mfsign(v0) == -1
         
         /// Make positive if isNegative
         

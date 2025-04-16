@@ -168,7 +168,7 @@ void *_Nullable MFLoadSymbol_native(MFFramework framework, NSString *nonUndersco
     ///     Might cause the image to be umapped, causing the `result` symbol-pointer to become invalid.
     ///     > But I think `RTLD_NODELETE` prevents that.
     ///     > See discussion in `mfdlclose()`.
-    mfdefer ^{
+    MFDefer ^{
         if (handle) {
             int rt = dlclose(handle);
             if (rt != 0) { DDLogError(@"dlclose failed with error: %s", dlerror()); }
@@ -420,7 +420,7 @@ void *_Nullable mfdlsym(void *mfdlopen_handle, MFSymbolTableSection symtabSectio
             uint32_t strtab_offset = symtab[i].n_un.n_strx;
             const char *symname = (strtab_offset == 0) ? "" : ((char *)strtab + strtab_offset); /// The docs say that the symname is emptyString if the offset is 0. Not sure we need to explicitly implement this.
             
-            if ((false) && runningPrerelease()) {
+            if ((false) && runningPreRelease()) {
                 DDLogDebug(@"(bisection) sym: %s", symname);
                 validateSymbol(&symtab[i], symtabSection);
             }
@@ -445,7 +445,7 @@ void *_Nullable mfdlsym(void *mfdlopen_handle, MFSymbolTableSection symtabSectio
             uint32_t strtab_offset = symtab[i].n_un.n_strx;
             const char *symname = (strtab_offset == 0) ? "" : ((char *)strtab + strtab_offset);
             
-            if ((false) && runningPrerelease()) {
+            if ((false) && runningPreRelease()) {
                 DDLogDebug(@"(linearSearch) sym: %s", symname);
                 validateSymbol(&symtab[i], symtabSection);
             }

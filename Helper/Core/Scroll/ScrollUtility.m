@@ -147,7 +147,7 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
     if (n == 0 || m == 0) {
         return true;
     }
-    if ([SharedUtility signOf:n] == [SharedUtility signOf:m]) {
+    if (mfsign(n) == mfsign(m)) {
         return true;
     }
     return false;
@@ -172,7 +172,7 @@ static NSDictionary *_MFScrollPhaseToIOHIDEventPhase;
     
     /// Axis direction
     
-    MFScrollInversion inputAxisDirection = [SharedUtility signOf:inputDelta];
+    MFScrollInversion inputAxisDirection = mfsign(inputDelta);
     MFScrollInversion effectiveAxisDirection = inputAxisDirection * invertSetting;
     
     /// Direction

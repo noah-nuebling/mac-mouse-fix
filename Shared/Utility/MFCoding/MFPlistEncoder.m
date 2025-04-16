@@ -15,6 +15,7 @@
 #import "NSCoderErrors.h"
 #import "MFDataClass.h"
 #import "SimpleUnboxing.h"
+#import "MFDefer.h"
 
 #pragma mark - Failure macros
 ///     !! Keep in sync with MFPlistDecoder !!

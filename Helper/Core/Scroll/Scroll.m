@@ -1082,8 +1082,8 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         ///     Int deltas are generally truncated but also rounded up to be at least 1 (or -1). This also happens in real events.
         int64_t dyLineInt = (int64_t)dyLine;
         int64_t dxLineInt = (int64_t)dxLine;
-        if (fabs(dyLine) != 0 && llabs(dyLineInt) == 0) dyLineInt = sign(dyLine);
-        if (fabs(dxLine) != 0 && llabs(dxLineInt) == 0) dxLineInt = sign(dxLine);
+        if (fabs(dyLine) != 0 && llabs(dyLineInt) == 0) dyLineInt = mfsign(dyLine);
+        if (fabs(dxLine) != 0 && llabs(dxLineInt) == 0) dxLineInt = mfsign(dxLine);
         
         /// Get line deltas as fixed point number
         int64_t dyLineFixed = fixedScrollDelta(dyLine);
@@ -1140,7 +1140,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                     eventPhase = kIOHIDEventPhaseChanged;
                     
                     assert(eventDelta != 0);
-                    if (sign(eventDelta) > 0) {
+                    if (mfsign(eventDelta) > 0) {
                         eventDelta += 380/800.0;
                     } else {
                         eventDelta -= 250/800.0;
