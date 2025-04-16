@@ -6,41 +6,13 @@
 //
 
 /// mfonce
-///     boilerplate- and block-free replacement for `dispatch_once`.
+///     boilerplate- and block-free replacement for `dispatch_once()`.
 ///     `dispatch_once()` is more than good enough though, and this implementation is super complicated
 ///     -> Don't use this.
 ///
 ///     (Usage examples in MFOnceMacro.m)
 
 #if 0 /// Use `dispatch_once() instead`
-        
-/// Helper macros
-///     These are found in a documented form inside EventLoggerForBrad which we'll eventually merge into MMF.
-#define scopedstatement_start(statement)                                    \
-    for (                                                                   \
-        int __scopedstatement_oncetoken = 0;                                \
-        __scopedstatement_oncetoken == 0 ? ({ statement; true; }) : false;  \
-        __scopedstatement_oncetoken = 1                                     \
-    )
-
-#define scopedstatement_end(statement)                                 \
-    for (                                                           \
-        int __scopedstatement_oncetoken = 0;                           \
-        __scopedstatement_oncetoken == 0;                              \
-        ({ statement; __scopedstatement_oncetoken = 1; })              \
-    )
-
-#define scopedvar(declaration)                                                                  \
-    for (int __scopedvar_oncetoken = 0; __scopedvar_oncetoken == 0;)                            \
-    for (declaration;                   __scopedvar_oncetoken == 0; __scopedvar_oncetoken = 1)
-
-#define __deferred_concat(a, b) a##b
-#define _deferred_concat(a, b) __deferred_concat(a, b)
-
-#define __deferred_concat3(a, b, c) a##b##c
-#define _deferred_concat3(a, b, c) __deferred_concat3(a, b, c)
-
-#define _unique(identifier)     _deferred_concat3(identifier, _on_line_, __LINE__)
 
 /// mfonce
 

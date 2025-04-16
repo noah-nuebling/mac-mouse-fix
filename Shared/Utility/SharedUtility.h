@@ -58,9 +58,7 @@
 #define _isobject(expression) __builtin_types_compatible_p(typeof(expression), id)
 
 /// `ifthen()` macro
-/// boolean algrebra implication operator
-///     TODO: Replace this with the properly documented impl from EventLoggerForBrad
-#define ifthen(a, b) (!(a) || (b))
+/// MFDELETED
 
 /// `rangefromto` macro
 ///     Alternative to NSMakeRange(), lets you specify the range in terms of (firstindex, lastindex) instead of (firstindex, count) – which I find more intuitive.
@@ -244,7 +242,7 @@
 
 /// String (f)ormatting convenience.
 ///  Notes:
-///     - Don't use `stringf(@"%s", some_c_string)`, it breaks for emojis and you can just use `@(some_c_string)` instead.
+///     - Don't use `stringf(@"%s", some_c_string)`, it breaks for emojis and you can just use `@(some_c_string)` instead – (Update [2025]) However – that will crash if you pass it NULL.
 #define stringf(format, ...) [NSString stringWithFormat: (format), ## __VA_ARGS__]
 
 #define binarystring(__v) /** This is a macro to make this function generic. The output string's width will automatically match the byte count of the input type (by using sizeof()) */\

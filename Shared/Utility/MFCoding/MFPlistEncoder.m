@@ -11,7 +11,6 @@
 #import "MFPlistDecoder.h"
 
 #import "SharedUtility.h"
-#import "EventLoggerForBradMacros.h"
 #import "NSCharacterSet+Additions.h"
 #import "NSCoderErrors.h"
 #import "MFDataClass.h"

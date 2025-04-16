@@ -27,7 +27,6 @@
 #import "IOUtility.h"
 
 #import "Logging.h"
-#import "EventLoggerForBradMacros.h"
 
 #if IS_HELPER
 #import "HelperUtility.h"

@@ -143,7 +143,6 @@
 #import "SharedUtility.h"
 #import "MFPlistDecoder.h"
 #import "MFPlistEncoder.h"
-#import "EventLoggerForBradMacros.h"
 
 @implementation MFCoding
 
