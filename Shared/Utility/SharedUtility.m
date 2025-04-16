@@ -493,9 +493,35 @@ inline bool runningHelper(void) {
 
 #pragma mark - Debug
 
-/// Debug-printing for enums
-
-NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitToNameMap[_Nullable], int bitToNameMapCount) {
+NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitposToNameMap[_Nullable], int bitposToNameMapCount) {
+    
+    /**
+    Debug-printing for enums. [Apr 2025]
+        
+    Also see: `CodeStyle.md`
+    Usage example:
+        ```
+        NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags flags) {
+        
+            static NSString *map[] = {
+                [bitpos(kCGDisplayBeginConfigurationFlag)]      = @"BeginConfiguration",
+                [bitpos(kCGDisplayMovedFlag)]                   = @"Moved",
+                [bitpos(kCGDisplaySetMainFlag)]                 = @"SetMain",
+                [bitpos(kCGDisplaySetModeFlag)]                 = @"SetMode",
+                [bitpos(kCGDisplayAddFlag)]                     = @"Add",
+                [bitpos(kCGDisplayRemoveFlag)]                  = @"Remove",
+                [bitpos(kCGDisplayEnabledFlag)]                 = @"Enabled",
+                [bitpos(kCGDisplayDisabledFlag)]                = @"Disabled",
+                [bitpos(kCGDisplayMirrorFlag)]                  = @"Mirror",
+                [bitpos(kCGDisplayUnMirrorFlag)]                = @"UnMirror",
+                [bitpos(kCGDisplayDesktopShapeChangedFlag)]     = @"DesktopShapeChanged",
+            };
+            
+            NSString *result = bitflagstring(flags, map, arrcount(map));
+            return result;
+        };
+        ```
+    */
     
     /// Build result
     NSMutableString *result = [NSMutableString string];
@@ -514,7 +540,7 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitToN
             }
             
             /// Get string describing bit `i`
-            NSString *bitName = safeindex(bitToNameMap, bitToNameMapCount, i, nil);
+            NSString *bitName = safeindex(bitposToNameMap, bitposToNameMapCount, i, nil);
             NSString *str = (bitName && bitName.length > 0) ? bitName : stringf(@"(1 << %d)", i);
             
             /// Append
@@ -540,6 +566,7 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitToN
     /// Moved this from HelperUtility.m to SharedUtility.m. Other parts of the program need this in SharedUtility to compile. Not sure what happened here. I guess the merge got messed up. The arg type changed from `unsigned int` to `int64_t` I think.
     ///     Update: Oh but all usages of this are commented out.
     ///         Also, I think we had a macro for this that was more powerful in EventLoggerForBrad or somewhere. So we're commenting this out. Use the macro instead probably.
+    ///             Update: The macro was binarystring() I think
         
     uint64_t one = 1; /// A literal 1 is apparently 32 bits, so we need to declare it here to make it 64 bits. Declaring as unsigned only to silence an error when shiftting this left by 63 places.
     

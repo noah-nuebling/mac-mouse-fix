@@ -51,9 +51,9 @@
 ///     Check if an expression evaluates to an objc object.
 #define _isobject(expression) __builtin_types_compatible_p(typeof(expression), id)
 
-/// `rangefromto` macro
+/// `makerange_fromto` macro
 ///     Alternative to NSMakeRange(), lets you specify the range in terms of (firstindex, lastindex) instead of (firstindex, count) – which I find more intuitive.
-#define rangefromto(firstindex, lastindex) ({                     \
+#define makerange_fromto(firstindex, lastindex) ({                     \
     __auto_type __firstindex = (firstindex);                    \
     NSMakeRange(__firstindex, (lastindex) - __firstindex + 1);  \
 })
@@ -233,10 +233,17 @@
 
 /// String (f)ormatting convenience.
 ///  Notes:
-///     - Don't use `stringf(@"%s", some_c_string)`, it breaks for emojis and you can just use `@(some_c_string)` instead – (Update [2025]) However – that will crash if you pass it NULL.
+///     - Don't use `stringf(@"%s", some_c_string)`, it breaks for emojis and you can just use `@(some_c_string?:"")` instead – (Update [2025] – `?:""` since `@()` crashes if you pass it NULL.)
 #define stringf(format, ...) [NSString stringWithFormat: (format), ## __VA_ARGS__]
 
-#define binarystring(__v) /** This is a macro to make this function generic. The output string's width will automatically match the byte count of the input type (by using sizeof()) */\
+/// Debugging helper - get binary representation
+///     Discussion:
+///     - This is a macro to make this function generic -> The output string's width will automatically match the byte count of the input type (by using sizeof())
+///     Alternatives:
+///         - Consider using `bitflagstring()` to debug-print enums.
+///         - Previously we used a `binaryRepresentation` method which did the same thing
+
+#define binarystring(__v) \
     (NSString *) \
     ({ \
         typeof(__v) m_value = __v; /** We call it `m_value` so there's no conflict in case `__v` is `value`. `m_` stands for `macro`. */ \
@@ -264,47 +271,10 @@
 #define xxxNSLocalizedString(...)
 
 ///
-/// MFBenchmark macros
-///     - [ ] TODO: [Apr 2025] Merge with MFBenchmark.m?
-/// Example usage:
-///     ```
-///     MFBenchmarkBegin(coolBench);
-///     <code to measure>
-///     DDLogDebug(@"%s", MFBenchmarkResult(coolBench));
-///     ```
-/// Example output:
-///     `MFBenchmark coolBench: 0.002750 ms - Average: 0.025277 ms (11 samples)`
-///
-/// Explanation of weird macro syntax:
-/// - `({...})` is a GCC statement expression.
-///- `__bn` is the benchmark name `##` appends it to a variable name, `#__bn` turns it into a c-string.
-
-#define MFBenchmarkBegin(__benchmarkName) \
-    CFTimeInterval m_benchmarkTimestampStart_##__benchmarkName = CACurrentMediaTime();
-
-#define MFBenchmarkResult(__bn) \
-    ({ \
-        CFTimeInterval m_benchmarkTimestampEnd_##__bn = CACurrentMediaTime(); \
-        CFTimeInterval m_benchmarkDiff_##__bn = m_benchmarkTimestampEnd_##__bn - m_benchmarkTimestampStart_##__bn; \
-        \
-        static NSInteger m_benchmarkNOfSamples_##__bn = 0; \
-        static CFTimeInterval m_benchmarkAverage_##__bn = -1; \
-        m_benchmarkNOfSamples_##__bn += 1; \
-        if (m_benchmarkNOfSamples_##__bn == 1) { \
-            m_benchmarkAverage_##__bn = m_benchmarkDiff_##__bn; \
-        } else { \
-            m_benchmarkAverage_##__bn = (m_benchmarkDiff_##__bn/m_benchmarkNOfSamples_##__bn) + ((m_benchmarkAverage_##__bn/m_benchmarkNOfSamples_##__bn)*(m_benchmarkNOfSamples_##__bn-1)); \
-        } \
-        \
-        static char m_benchmarkResult_##__bn[512]; \
-        snprintf(m_benchmarkResult_##__bn, sizeof(m_benchmarkResult_##__bn), "MFBenchmark %s: %f ms - Average: %f ms (%ld samples)", #__bn, m_benchmarkDiff_##__bn*1000.0, m_benchmarkAverage_##__bn*1000.0, (long)m_benchmarkNOfSamples_##__bn); \
-        m_benchmarkResult_##__bn; \
-    })
-
-///
 /// Check if ptr is objc object
 ///     Copied from https://opensource.apple.com/source/CF/CF-635/CFInternal.h
-///     Also see: https://blog.timac.org/2016/1124-testing-if-an-arbitrary-pointer-is-a-valid-objective-c-object/
+///     Also see:
+///         - https://blog.timac.org/2016/1124-testing-if-an-arbitrary-pointer-is-a-valid-objective-c-object/
 #define CF_IS_TAGGED_OBJ(PTR)    ((uintptr_t)(PTR) & 0x1)
 
 ///
@@ -345,6 +315,8 @@
 ///     #define kMFLinkIDCapturedScrollingGuide @"CapturedScrollingGuide"
 ///     #define kMFLinkIDVenturaEnablingGuide @"VenturaEnablingGuide"
 ///     ```
+/// Update: [Apr 2025]
+///     Unused as of now.
 
 #define MFStringEnum(__enumName) \
     typedef NSString * __enumName NS_TYPED_ENUM; \

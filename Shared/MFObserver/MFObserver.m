@@ -8,6 +8,7 @@
 #import "MFObserver.h"
 #import "objc/runtime.h"
 #import "objc/objc-sync.h"
+#import "ListOperations.h"
 
 
 /// I think we can replace any need for reactive frameworks in our app with a very simple custom API providing a thin wrapper around Apple's Key-Value-Observation.
@@ -386,13 +387,6 @@ static NSArray<MFObserver *> *_Nonnull mfobs_observe_latest_values(NSArray<NSObj
     ///     - Using an NSArray won't let us reference the values weakly, leading to unavoidable retain cycles in some scenarios (When one of the latest values retains one of the observedObjects)
     ///     - Using an NSPointerArray lets us reference latestValues weakly. But using it made performance measurably worse. (IIRC)
     ///     - Update: [Apr 2025] Cleaned things up by using C array instead. (Had to wrap it in struct, see below.)
-    
-    /// Declare convenience macros
-    ///     TODO: Replace these with macros from our mac-mouse-fix utility headers
-    #define arrcount(arr) \
-        (sizeof(arr)/sizeof((arr)[0]))
-    #define loopc(varname, count) \
-        for (int64_t varname = 0; varname < count; varname++)
     
     /// Constants
     const int indexForWhichToReceiveInitialCallback = 0;

@@ -60,7 +60,7 @@ MFDataClassInterface2(MFDataClassBase, MFBenchResult,   /// Note: Why not just t
                       readonly, strong, nonnull, NSString *,        label,
                       readonly, assign,        , double,            duration)
 
-#define MFBENCH_ENABLE 1 /** Set 1 to enable benchmarks  */
+#define MFBENCH_ENABLE 0 /** Set 1 to enable benchmarks  */
 
 #if !MFBENCH_ENABLE
 
@@ -70,7 +70,7 @@ MFDataClassInterface2(MFDataClassBase, MFBenchResult,   /// Note: Why not just t
     
 #else
     
-    #define mfbench_init(max_benchmarks)                /** Creates various local variables in the current scope. TODO: Think about making these thread_load statics – That way we could benchmark inside multiple functions and aggregate the results. */ \
+    #define mfbench_init(max_benchmarks)                /** Creates various local variables in the current scope. TODO: Think about making these thread_local statics – That way we could benchmark inside multiple functions and aggregate the results. */ \
         int __mfbench_n = 0;                            /** Number of recorded benchmarks */ \
         int __mfbench_nmax = (max_benchmarks);          /** Benchmark buffer size */ \
         const char *__mfbench_labels[__mfbench_nmax];   /** Array holding benchmark labels */ \

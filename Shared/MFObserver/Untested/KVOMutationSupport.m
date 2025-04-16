@@ -98,13 +98,6 @@ static Class getMutationNotifierClassForClass(Class class) {
         
         /// Define macros
         ///     The way we swizzle with the BlockFactory pattern and macros follows the approach we used for the swizzling code in MMF.
-        
-            #define UNPACK(args...) \
-                args
-        
-            #define APPEND_ARGS(args...) \
-                , ## args  /// Takes arg list wrapped in `(some, parentheses)` and returns `, some, parentheses`, If the arglist is empty the `, ` is deleted. (Magic of ## operator)
-                    
 
             #define MakeBlockFactory(__callArgs, __declArgs, __callback) \
                 ^(SEL m_selector, void (*m_originalImplementation)(id, SEL APPEND_ARGS __declArgs)) { \
@@ -166,7 +159,6 @@ static Class getMutationNotifierClassForClass(Class class) {
         
         /// Cleanup macros
         #undef MakeBlockFactory
-        #undef APPEND_ARGS
         
         /// Create new subclass
         const char *subclassName = [[NSStringFromClass(class) stringByAppendingString:@"_MFMutationObservation"] cStringUsingEncoding:NSUTF8StringEncoding];

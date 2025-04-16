@@ -25,6 +25,18 @@
 /// Also see:
 /// Sample code on how to mutate Array values from within a function: https://stackoverflow.com/questions/45109161/is-there-a-way-to-override-the-copy-on-write-behavior-for-swift-arrays
 /// Also see CachedComputedPropertiesTests.xcodeproj
+///
+/// Update: [Apr 2025]
+///     I think the goal of this is how computed() works in Vue.js - a _lazy_, _cached_, _observable_, _computed_ value.
+///     But IIRC, I could never get this to work, or if I did it made things slower or something? Don't remember. I didn't end up using it.
+///     If I had to implement this again:
+///         - Would probably do it in objc. I think the keypath/kvc stuff is very slow in Swift. (See `MFObserver.h/.m`.) And KeyPath is very inflexible and annoying.
+///         - I wouldn't be sure this brings performance gains in many scenarios, since observation and caching and stuff is probably pretty expensive compared to simple function calls and adding integers and stuff.
+///         - Interesting:
+///             KVC has 'dependend-key' feature for observing computed values: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/KeyValueObserving/Articles/KVODependentKeys.html
+///     Maybe the 'need' for this also went down due to our usage of ReactiveSwift?
+///     Tangent:
+///         It's kinda crazy how the objc developers did all the 'reactive' stuff that drives modern web-dev in 2002 (I think I heard KVC is even older, but can't find sources.) They just packaged it in this super cumbersome, extremely Object-Oriented way so that you didn't actually wanna use it.
 
 import Foundation
 

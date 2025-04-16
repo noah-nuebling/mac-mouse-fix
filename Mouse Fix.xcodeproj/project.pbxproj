@@ -231,7 +231,6 @@
 		4FAA3DBC2C56802E00CBA413 /* XCUIElement+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FAA3DBB2C56802E00CBA413 /* XCUIElement+Additions.m */; };
 		4FAA5601293A41AF00BA782C /* BezierCappedAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAA5600293A41AF00BA782C /* BezierCappedAccelerationCurve.swift */; };
 		4FAA5602293A41AF00BA782C /* BezierCappedAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FAA5600293A41AF00BA782C /* BezierCappedAccelerationCurve.swift */; };
-		4FAD391426702CD4000CF4FA /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
 		4FB4F9FE260FDBC800806DDD /* RemapTableUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */; };
 		4FB4FA202611DD6000806DDD /* KeyCaptureScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB4FA1F2611DD6000806DDD /* KeyCaptureScrollView.m */; };
 		4FB8B2952CCDB94F00A5A580 /* MFPlistDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B2942CCDB94F00A5A580 /* MFPlistDecoder.m */; };
@@ -256,6 +255,8 @@
 		4FBC83462DAFB28B00354981 /* PrivateFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC832D2DAFB28B00354981 /* PrivateFunctions.m */; };
 		4FBC83482DAFB28B00354981 /* ListOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83322DAFB28B00354981 /* ListOperations.m */; };
 		4FBC83492DAFB28B00354981 /* SharedMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83302DAFB28B00354981 /* SharedMacros.m */; };
+		4FBC834B2DAFD7DB00354981 /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */; };
+		4FBC834C2DAFD7DB00354981 /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */; };
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
 		4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */; };
 		4FC55B982915652C00663B24 /* Alerts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55B972915652C00663B24 /* Alerts.m */; };
@@ -267,8 +268,6 @@
 		4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */; };
 		4FCC354D2C6296FF009E1908 /* CoolSFSymbolsFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC56DB32C625B9300CCB98C /* CoolSFSymbolsFont.m */; };
 		4FCC354F2C629F0F009E1908 /* CoolSFSymbols.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4FCC354E2C629F0F009E1908 /* CoolSFSymbols.otf */; };
-		4FCEDC88292D6A8F00E7DA2A /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */; };
-		4FCEDC89292D6A8F00E7DA2A /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */; };
 		4FCEDC92292D765600E7DA2A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC91292D765600E7DA2A /* Constants.swift */; };
 		4FCEDC93292D765600E7DA2A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC91292D765600E7DA2A /* Constants.swift */; };
 		4FD0A71127B295F600FFCD12 /* GeneralConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD0A71027B295F600FFCD12 /* GeneralConfig.swift */; };
@@ -278,7 +277,6 @@
 		4FD148D628AA43E900FE688C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FD148D528AA43E900FE688C /* MainMenu.xib */; };
 		4FD66E0827BB553800F67559 /* CGEventHIDEventBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0727BB553800F67559 /* CGEventHIDEventBridge.m */; };
 		4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD66E0A27BB9BAE00F67559 /* EventUtility.m */; };
-		4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */; };
 		4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */; };
 		4FD9A7D128BA2A810006DF4B /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */; };
 		4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */; };
@@ -294,8 +292,6 @@
 		4FDE75A728B25FB300662314 /* NSAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A628B25FB300662314 /* NSAttributedString+Extensions.swift */; };
 		4FDE75A928B269AE00662314 /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A828B269AE00662314 /* Randomizer.swift */; };
 		4FDE75AA28B269AE00662314 /* Randomizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FDE75A828B269AE00662314 /* Randomizer.swift */; };
-		4FDECCDE28A3E93100DDEE91 /* IsObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDECCDD28A3E93100DDEE91 /* IsObjC.m */; };
-		4FDECCDF28A3E93100DDEE91 /* IsObjC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDECCDD28A3E93100DDEE91 /* IsObjC.m */; };
 		4FE03A602BFF5F0600708454 /* CoolSUComparator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE03A5D2BFF5F0500708454 /* CoolSUComparator.m */; };
 		4FE03A612BFF5F0600708454 /* CoolSUUpdater.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE03A5F2BFF5F0600708454 /* CoolSUUpdater.m */; };
 		4FE1A1B92C56A50100CE3347 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE1A1B82C56A50100CE3347 /* Logging.m */; };
@@ -7116,17 +7112,11 @@
 				4FBC83322DAFB28B00354981 /* ListOperations.m */,
 				4FBC83332DAFB28B00354981 /* MFLoop.h */,
 				4FBC83342DAFB28B00354981 /* MFLoop.m */,
+				4F428CFF2CD6690F006322AB /* MFDefer.h */,
+				4F2E8FE12D53EB8D00689058 /* MFOnceMacro.h */,
+				4F2E8FE22D53EB8D00689058 /* MFOnceMacro.m */,
 			);
 			path = Macros;
-			sourceTree = "<group>";
-		};
-		4FBC834A2DAFB2A500354981 /* FromEventLoggerForBrad */ = {
-			isa = PBXGroup;
-			children = (
-				4FBC83392DAFB28B00354981 /* Macros */,
-				4FBC832E2DAFB28B00354981 /* PrivateFunctions */,
-			);
-			path = FromEventLoggerForBrad;
 			sourceTree = "<group>";
 		};
 		4FBC9433260F8AA60062F186 /* MAS */ = {
@@ -7304,9 +7294,12 @@
 			isa = PBXGroup;
 			children = (
 				4FD86088266E819A004F76C8 /* Pointers.swift */,
+				4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */,
 				4FD8607B266E65E9004F76C8 /* DerivedValueGenerator.swift old */,
 				4FD86081266E71A5004F76C8 /* DerivedValueGeneratorObjC.h old */,
 				4FD86082266E71A6004F76C8 /* DerivedValueGeneratorObjC.m old */,
+				4FDECCDC28A3E93100DDEE91 /* IsObjC.h */,
+				4FDECCDD28A3E93100DDEE91 /* IsObjC.m */,
 				4F4C73F82C4FB4CA001D97C3 /* FromXcodeLocalizationScreenshotFix */,
 			);
 			path = Unused;
@@ -7587,27 +7580,22 @@
 				4FF797392C8245D700C18001 /* Links.m */,
 				4F0CFFE62C51878500C5D843 /* MFDataClass.h */,
 				4F0CFFE72C51878500C5D843 /* MFDataClass.m */,
+				4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */,
 				4F0C00402C53273200C5D843 /* BidirectionalMap.h */,
 				4F0C00412C53273200C5D843 /* BidirectionalMap.m */,
 				4F5FC0612D6206E3009DCF10 /* SimpleUnboxing.h */,
 				4F4C73F62C4FB4C2001D97C3 /* TreeNode.h */,
 				4F4C73F72C4FB4C2001D97C3 /* TreeNode.m */,
-				4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */,
 				4FD031CB2D5EAAA7000EA331 /* MFCoding */,
 				4F8A8DC0287F885D00786BCC /* Shorthands.h */,
 				4FA06818291B2C4C00949B5F /* Shorthands.m */,
 				4FF27DD62B95B108004744E1 /* Shorthands.swift */,
-				4F2E8FE12D53EB8D00689058 /* MFOnceMacro.h */,
-				4F2E8FE22D53EB8D00689058 /* MFOnceMacro.m */,
 				4F1B418D2D49960E00026C94 /* MFSemaphore.h */,
 				4F1B418E2D49960E00026C94 /* MFSemaphore.m */,
-				4F428CFF2CD6690F006322AB /* MFDefer.h */,
-				4FDECCDC28A3E93100DDEE91 /* IsObjC.h */,
-				4FDECCDD28A3E93100DDEE91 /* IsObjC.m */,
-				4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */,
-				4FF8C89D28955DC4007EC31F /* CoolTimer.swift */,
 				4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */,
-				4FBC834A2DAFB2A500354981 /* FromEventLoggerForBrad */,
+				4FBC83392DAFB28B00354981 /* Macros */,
+				4FBC832E2DAFB28B00354981 /* PrivateFunctions */,
+				4FF8C89D28955DC4007EC31F /* CoolTimer.swift */,
 				4FBDA14927B2246B0030E4EA /* SubPixelator */,
 				4FD860C2266EEA94004F76C8 /* Unused */,
 			);
@@ -8404,7 +8392,6 @@
 				4F909D2A28A0C3D2009349A2 /* ResizingTabWindowController.swift in Sources */,
 				4FA06819291B2C4C00949B5F /* Shorthands.m in Sources */,
 				4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */,
-				4FDECCDE28A3E93100DDEE91 /* IsObjC.m in Sources */,
 				4F909D2228A0C3D2009349A2 /* ScrollTabController.swift in Sources */,
 				4F6F67A028A8141800C6C40F /* ButtonTabController.swift in Sources */,
 				4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */,
@@ -8444,7 +8431,6 @@
 				4FA40CFA28A0CCCA00499E53 /* PolynomialCappedAccelerationCurve.swift in Sources */,
 				4FCC354D2C6296FF009E1908 /* CoolSFSymbolsFont.m in Sources */,
 				4F7F47CB28A5A03100290BBD /* ReactiveConfig.swift in Sources */,
-				4FCEDC88292D6A8F00E7DA2A /* HashablePair.swift in Sources */,
 				4FE78C452C502A5F00C54103 /* NSString+Additions.m in Sources */,
 				4F909D3C28A0C3D2009349A2 /* ModCaptureFieldEditor.swift in Sources */,
 				4FFA4E3528B795F30062A1FE /* LicenseUtility.swift in Sources */,
@@ -8482,7 +8468,6 @@
 				4F44FF052606D73D00926A5E /* MFMessagePort.m in Sources */,
 				4FA40D0B28A0D87200499E53 /* DisplayLink.m in Sources */,
 				4FC55B982915652C00663B24 /* Alerts.m in Sources */,
-				4FAD391426702CD4000CF4FA /* DerivedProperty.swift in Sources */,
 				4F909D2928A0C3D2009349A2 /* TabViewControllerDisabling.swift in Sources */,
 				4FCEDC92292D765600E7DA2A /* Constants.swift in Sources */,
 				4FA40D0E28A0D87200499E53 /* DynamicSystemAnimator.swift in Sources */,
@@ -8512,6 +8497,7 @@
 				4FAA5601293A41AF00BA782C /* BezierCappedAccelerationCurve.swift in Sources */,
 				4FA40D1028A0D8F100499E53 /* VectorSubPixelator.m in Sources */,
 				4FA40D0228A0CE5B00499E53 /* VectorUtility.m in Sources */,
+				4FBC834B2DAFD7DB00354981 /* HashablePair.swift in Sources */,
 				4FF27DD72B95B108004744E1 /* Shorthands.swift in Sources */,
 				4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */,
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
@@ -8581,7 +8567,6 @@
 				4F4C73D82C4FB3FA001D97C3 /* LocalizedStringAnnotation.m in Sources */,
 				4F3A40AB266BBB6200436821 /* AccelerationBezier.swift in Sources */,
 				4F2E8FD82D52877F00689058 /* MFPlistEncoder.m in Sources */,
-				4FD860AA266EC24E004F76C8 /* DerivedProperty.swift in Sources */,
 				4FE6CBC428987E8B00B3E829 /* DynamicSystemAnimator.swift in Sources */,
 				4FF6669725F2C93A00689B77 /* Remap.m in Sources */,
 				4F1B83062606E68300AEAF37 /* RemapsAnalyzer.m in Sources */,
@@ -8636,7 +8621,6 @@
 				4FBC83492DAFB28B00354981 /* SharedMacros.m in Sources */,
 				4F2E8FD32D52229100689058 /* NSCoderErrors.m in Sources */,
 				4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */,
-				4FCEDC89292D6A8F00E7DA2A /* HashablePair.swift in Sources */,
 				4FAA3DAD2C55E94600CBA413 /* IBUtility.m in Sources */,
 				4FF6655125F2C7B000689B77 /* NSDictionary+Additions.m in Sources */,
 				4FF6668525F2C93A00689B77 /* Modifiers.m in Sources */,
@@ -8683,6 +8667,7 @@
 				4F5F3EF12756EC0400C350C0 /* RemapSwizzler.m in Sources */,
 				4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */,
 				4FFA4E3C28B79D9B0062A1FE /* NSAttributedString+Extensions.swift in Sources */,
+				4FBC834C2DAFD7DB00354981 /* HashablePair.swift in Sources */,
 				4FA5F08E2CE4CEF800ED2354 /* SymbolicHotKeys.m in Sources */,
 				4FF666A925F2C93A00689B77 /* HelperUtility.m in Sources */,
 				4FDE759B28B1401400662314 /* License.swift in Sources */,
@@ -8712,7 +8697,6 @@
 				4FF0255427B007FC00923107 /* ModifiedDragOutputFakeDrag.m in Sources */,
 				4F7F47C528A5A01600290BBD /* ReactiveConfig.swift in Sources */,
 				4FF8C89A28955491007EC31F /* ClickCycle.swift in Sources */,
-				4FDECCDF28A3E93100DDEE91 /* IsObjC.m in Sources */,
 				4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */,
 				4FE78C3B2C50177800C54103 /* DisableSwiftBridging.swift in Sources */,
 				4F8A8DBD287F203D00786BCC /* IOHIDAccelerationTable.cpp in Sources */,

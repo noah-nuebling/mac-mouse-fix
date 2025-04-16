@@ -988,11 +988,11 @@ TreeNode<Class> *_Nonnull extractClassesFromRawTypeString(NSString *_Nonnull raw
                 else if (chars[j] == '>')  bracketBalance--;
                 
                 else if (chars[j] == ',' && bracketBalance == 1) {
-                    [specializations addObject: [rawTypeString substringWithRange: rangefromto(i+1, j-1)]];
+                    [specializations addObject: [rawTypeString substringWithRange: makerange_fromto(i+1, j-1)]];
                     i = j;
                 }
                 if (bracketBalance <= 0) {
-                    [specializations addObject: [rawTypeString substringWithRange: rangefromto(i+1, j-1)]];
+                    [specializations addObject: [rawTypeString substringWithRange: makerange_fromto(i+1, j-1)]];
                     break;
                 }
             }

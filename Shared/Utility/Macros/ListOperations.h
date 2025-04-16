@@ -86,6 +86,8 @@
 ///         - `partres_updater` is an expression that modifies the `partres` using an `element` of the list.
 ///             After the `partres_updater` has been applied to every element of the list, the `partres` is the result of the macro.
 ///         - When list `count <= 0`, the `partres_initval` is returned verbatim.
+///     Is this useful:
+///         As of [Apr 2025] I haven't found a use for this. Reduce is way more confusing than a for-loop anyways imo.
 
 #define mfreduce(list, count, partres_varname, partres_initval, element_varname, partres_updater...) \
 (typeof(partres_initval))                               \
@@ -145,7 +147,7 @@
 ///           {"Alice", 25}, {"Bob", 25}, {"Charlie", 20}
 ///         };
 ///         __auto_type result = listmax(people, arrcount(people), p, p, a, b, ({
-///             (a.age != b.age) ? (a.age - b.age) : strcmp(a.name, b.name);
+///             (a.age - b.age) ?: strcmp(a.name, b.name);
 ///         }));
 ///         /// result.key = <bob's struct>, result.index = 1, result.element = <bob's struct>
 ///         ///     (Note how result.key and result.element are the same because with "... p, p, ..." we made key = element.)
@@ -192,7 +194,6 @@
 #define listmaxk(list, count, varname, keyfn...)                                                    _listmax((list), (count), varname, (double)(keyfn), __a, __b,  (__a - __b))                     /// Find maximum by "comparison (k)ey"
 #define listmink(list, count, varname, keyfn...)                                                    _listmax((list), (count), varname, (double)(keyfn), __a, __b, -(__a - __b))                     /// Find minimum by "comparison (k)ey"
 
-
 /// mfsort - in-place sort
 ///     Only works on C arrays, not NSArrays. (Cause we're using c's `qsort_b`.)
 ///
@@ -227,7 +228,7 @@
 ///           {"Alice", 25}, {"Bob", 25}, {"Charlie", 20}
 ///         };
 ///         sortlist(people, arrcount(people), p1, p2, ({
-///             (p1.age != p2.age) ? (p1.age - p2.age) : strcmp(p1.name, p2.name);
+///             (p1.age - p2.age) ?: strcmp(p1.name, p2.name);
 ///         }));
 ///         ```
 ///

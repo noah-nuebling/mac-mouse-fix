@@ -15,10 +15,11 @@
             - Readme.md contains more context
     - `EventLoggerForBrad`
         - [ ] Merged new Keyboard-Shortcut-Simulator
+        - [x] Merged all the crazy macros
+        - [x] Merged PrivateFunctions.m
         - Context: 
             - Originally an eventLogger I hacked together for a MMF user named Brad. But sorta evolved into a playground for CGEvents.
-            - In 2024, here we developed a new Keyboard-Shortcut-Simulator
+            - In 2024, here we developed a new Keyboard-Shortcut-Simulator, along with crazy macros, and PrivateFunctions.m (custom dynamic linker)
                 We waited to merge it into MMF since MMF's master branch had diverted from the feature-strings-catalog branch.
-                But in [Apr 2025] we merged the master and feature-strings-catalog branch and can now merge the Keyboard-Shortcut-Simulator.
-            - Also developed a lotta macros here, ...
+            - [Apr 16 2025] We merged the crazy macros and PrivateFunctions.m. Still need to work on Keyboard-Shortcut-Simulator before merging it.
         
