@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2025**
 
+- 🇨🇦&nbsp;Manan&nbsp;Jadhav
 - 🇨🇦&nbsp;Fausto&nbsp;Gonzalez - "Great product. 100% worth the value of it. Thanks!"
 - 🇩🇰&nbsp;Johan&nbsp;Ohly - "Don't need any acknowledgement, I would just love per mouse inverse scrolling. One mouse requires it, while another doesn't. Thank you for this awesome software regardless."
 - 🇺🇸&nbsp;Kck
