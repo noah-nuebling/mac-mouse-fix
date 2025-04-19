@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **April 2025**
 
+- 🇫🇮&nbsp;Jukka&nbsp;Laaksonen
 - 🇬🇧&nbsp;Phowe
 - 🇯🇵&nbsp;Alc&nbsp;@Abashiri&nbsp;Life&nbsp;Creator - "Thanks for creating a great application! The system is indispensable to the keyball39 scrolling function. And of course for all scrolling situations!"
 - 🇨🇦&nbsp;Manan&nbsp;Jadhav
