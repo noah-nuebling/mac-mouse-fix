@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2025**
 
+- 🇻🇳&nbsp;Error&nbsp;Ciao - "Keep coding & keep creating!"
 - 🇺🇸&nbsp;Noah - "Had to give extra for a fellow Noah"
 - 🇺🇸&nbsp;Lincoln - "Succeed in silence."
 - 🇫🇮&nbsp;Jukka&nbsp;Laaksonen
