@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2025**
 
+- 🇺🇸&nbsp;Rick&nbsp;Herrick - "Thanks!"
 - 🇩🇪&nbsp;Philipp&nbsp;Holzschneider - "This should come packaged with macOS!"
 - 🇻🇳&nbsp;Error&nbsp;Ciao - "Keep coding & keep creating!"
 - 🇺🇸&nbsp;Noah - "Had to give extra for a fellow Noah"
