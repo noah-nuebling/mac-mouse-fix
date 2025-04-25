@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **April 2025**
 
+- 🇺🇸&nbsp;Johan&nbsp;Lieu - "If you don’t stand for something, you’ll fall for anything."
 - 🇬🇧&nbsp;Ash - "Hanif"
 - 🇭🇺&nbsp;Szokatlan&nbsp;0All
 - 🇺🇸&nbsp;Joshua&nbsp;Garza - "Thank you for making Mac Mouse Fix! You are a huge help and a huge inspiration!"
