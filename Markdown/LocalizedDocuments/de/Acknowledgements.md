@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2025**
 
+- 🇺🇸&nbsp;Joshua&nbsp;Garza - "Thank you for making Mac Mouse Fix! You are a huge help and a huge inspiration!"
 - 🇫🇷&nbsp;Stephane
 - 🇺🇸&nbsp;Rick&nbsp;Herrick - "Thanks!"
 - 🇩🇪&nbsp;Philipp&nbsp;Holzschneider - "This should come packaged with macOS!"
