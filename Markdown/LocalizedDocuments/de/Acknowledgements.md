@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2025**
 
+- 🇺🇸&nbsp;Lia&nbsp;Durfee - "Thanks!"
 - 🇺🇸&nbsp;Johan&nbsp;Lieu - "If you don’t stand for something, you’ll fall for anything."
 - 🇬🇧&nbsp;Ash - "Hanif"
 - 🇭🇺&nbsp;Szokatlan&nbsp;0All
