@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2025**
 
+- 🇪🇸&nbsp;Andrea&nbsp;Mistrali - "Great job, awesome application!"
 - 🇰🇷&nbsp;Donghyun&nbsp;Shin
 - 🇺🇸&nbsp;Jhonzell
 - 🇺🇸&nbsp;Lia&nbsp;Durfee - "Thanks!"
