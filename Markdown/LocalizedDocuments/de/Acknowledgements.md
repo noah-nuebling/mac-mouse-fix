@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2025**
 
+- 🇺🇸&nbsp;Theo - "Thank you! Add mouse specific sensitivity maybe? <3"
 - 🇧🇷&nbsp;Fernando&nbsp;Weffort - "Thanks for the app!"
 - 🇪🇸&nbsp;Andrea&nbsp;Mistrali - "Great job, awesome application!"
 - 🇰🇷&nbsp;Donghyun&nbsp;Shin
