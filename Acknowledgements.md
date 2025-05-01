@@ -40,6 +40,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!
 
+**May 2025**
+
+- 🇺🇸&nbsp;Michael&nbsp;Sumner
+
 **April 2025**
 
 - 🇺🇸&nbsp;Theo - "Thank you! Add mouse specific sensitivity maybe? <3"
