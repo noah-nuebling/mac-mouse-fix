@@ -10,6 +10,7 @@ which already solves the duplicate-header-inclusion problem.
 
 Don't use this. We usually wan't our objc methods to be nullable/null-safe. 
 When we return nil from a method, it's is actually dangerous if Swift imports it as a non-optional.
+    Update: [May 2025] Since we enabled -Wnullable-to-nonnull-conversion warnings, I'm not sure this is dangerous anymore. (See `Xcode Nullability Settings.md`)
 
 Unfortunately there's only `NS_ASSUME_NONNULL` and no `NS_ASSUME_NULLABLE`, which is what we want.
 
@@ -38,12 +39,12 @@ Unfortunately there's only `NS_ASSUME_NONNULL` and no `NS_ASSUME_NULLABLE`, whic
     } MFMyEnum;
     
     NSString *MFMyEnum_ToString(MFMyEnum case) {
-        static const NString *strings[] = {  
+        static const NString *map[] = {  
             [kMFMyEnum_First]  = @"First",
             [kMFMyEnum_Second] = @"Second",
             [kMFMyEnum_Third]  = @"Third",
         };
-        NSString *result = safeindex(strings, arrcount(strings), case, nil);
+        NSString *result = safeindex(map, arrcount(map), case, nil);
         return result ?: stringf(@"%d", case);
     }
     ```
@@ -60,10 +61,10 @@ Such a `_ToString` function can also be added to existing enums from Apple's lib
 
 Alternatively to the ToString function, you could just define a bunch of NSString constants:
     ```
-    typedef MFMyEnum NSString *
-        static MFMyEnum kMFMyEnum_First    = @"First";
-        static MFMyEnum kMFMyEnum_Second   = @"Second";
-        static MFMyEnum kMFMyEnum_Third    = @"Third";
+    typedef NSString * MFMyEnum;
+        MFMyEnum static const kMFMyEnum_First    = @"First";
+        MFMyEnum static const kMFMyEnum_Second   = @"Second";
+        MFMyEnum static const kMFMyEnum_Third    = @"Third";
     ```
     Pro: 
         - This is a bit more concise than defining a separate `_ToString` function.
@@ -79,3 +80,5 @@ What about Apple's macros like `NS_ENUM` or `NS_TYPED_ENUM`?
     I don't remember the details but IIRC they just add magic to the Swift imports.
    ... I think they rename and namespace the enum-cases in Swift which makes them harder to search for in the codebase, and I think there were other issues, too.
    -> Don't use
+   Also see: 
+    - MFStringEnum macros [Apr 2025] (I might delete them at some point.)

@@ -497,7 +497,7 @@
     
         /// Check for circular refs
         ///     This prevents infinite loops if there are circular references in the datastructure. But [NSDictionary -description] seems to just infinite-loop in this case... Maybe this was overkill.
-        NSMutableArray *visitedObjects = threadobject([[NSMutableArray alloc] init]);
+        NSMutableArray *const visitedObjects = threadobject([[NSMutableArray alloc] init]);
         NSNumber *s = @((uintptr_t)self); /// We cast self to an NSNumber so that we effectively do pointer-based equality checking instead of using the full `-isEqual` implementation.
         BOOL didFindCircularRef = [visitedObjects containsObject: s];
         [visitedObjects addObject: s];

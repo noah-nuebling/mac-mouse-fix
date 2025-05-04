@@ -20,6 +20,14 @@
 ///         Thread-interaction points:
 ///             - Remaps loading
 ///             - <TODO: Think about other interaction points>
+///
+///    Update: [Apr 2025]
+///     Look into elevating thread-priority.
+///         TN2169 High Precision Timers in iOS / OS X: https://developer.apple.com/library/archive/technotes/tn2169/_index.html
+///             micropython GH Issue about improving timers: https://github.com/micropython/micropython/issues/8621
+///                 Sidenote: They say 'nice' does nothing on macOS. We're setting that in our launchd config.
+///                 SideSideNote: Is there a way to have _launchd_ start the MMF Helper faster after boot? Helper gets started *after* all the windowed apps, with all the background apps.
+///
 
 #import "GlobalEventTapThread.h"
 

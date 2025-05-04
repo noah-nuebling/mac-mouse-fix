@@ -27,7 +27,7 @@ static const char *_Nonnull MFFrameworkToNameMap[] = {
 
 typedef enum : int {
   kMFSymbolTableSectionAllSections,                     /// Iterate through all symbols.
-  kMFSymbolTableSectionLocal,                           /// Symbols that *are not* meant to be linked against from outside the image. But we'll do it anyways <evil laugh>. Might be faster than iterating through all symbols.
+  kMFSymbolTableSectionLocal,                           /// Symbols that *are not* meant to be linked against from outside the image. But we'll do it anyways! *evil laughter*. Might be faster than iterating through all symbols.
   kMFSymbolTableSectionExternallyDefined,               /// Symbols that *are* meant to be linked against from outside the image. Finding these symbols is faster since they are sorted, letting us use bisection.
   kMFSymbolTableSectionUndefinedSymbols,                /// Symbols that are not defined in the image, instead the image imports the definition from another image. (or something like that) Not sure there's any use to searching for these. These symbols are also sorted and fast-to-search-through.
 } MFSymbolTableSection;

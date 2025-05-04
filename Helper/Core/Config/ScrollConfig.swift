@@ -497,26 +497,26 @@ import Cocoa
     
     /// baseCurve params
     @objc let baseCurve: Bezier?
-    @objc let speedSmoothing: Double /// `speedSmoothing` replaces `baseCurve`. If it is active, the baseCurve will be dynamically calculated, such that the animation speed doesn't jump after a scrollwheel-tick occurs.
-    @objc let baseMsPerStepCurve: Curve? /// If this is not nil, the minStepDuration will be controlled by this curve instead of baseMsPerStep. The point at which this curve is sampled will increase from 0 to 1 as the time between physical scrollWheel ticks decreases.
-    @objc let baseMsPerStep: Int /// When using dragCurve that will make the actual msPerStep longer
+    @objc let speedSmoothing: Double        /// `speedSmoothing` replaces `baseCurve`. If it is active, the baseCurve will be dynamically calculated, such that the animation speed doesn't jump after a scrollwheel-tick occurs.
+    @objc let baseMsPerStep: Int            /// Duration of the baseCurve || When using dragCurve, that will make the actual msPerStep longer
+    @objc let baseMsPerStepCurve: Curve?    /// If this is not nil, the duration of the baseCurve will be controlled by this curve. The point at which this curve is sampled will increase from 0 to 1 as the time between physical scrollWheel ticks decreases.
     /// dragCurve params
     @objc let useDragCurve: Bool /// If false, use only baseCurve, and ignore dragCurve
     @objc let dragExponent: Double
     @objc let dragCoefficient: Double
     @objc let stopSpeed: Int
     /// Other params
-    @objc let sendGestureScrolls: Bool /// If false, send simple continuous scroll events (like MMF 2) instead of using GestureScrollSimulator
+    @objc let sendGestureScrolls: Bool  /// If false, send simple continuous scroll events (like MMF 2) instead of using GestureScrollSimulator
     @objc let sendMomentumScrolls: Bool /// Only works if sendGestureScrolls and useDragCurve is true. If true, make Scroll.m send momentumScroll events (what the Apple Trackpad sends after lifting your fingers off) when scrolling is controlled by the dragCurve (and in some other cases, see TouchAnimator). Only use this when the dragCurve closely mimicks the Apple Trackpads otherwise apps like Xcode will behave differently from other apps during momentum scrolling.
     
     /// Init
-    init(baseCurve: Bezier?, speedSmoothing: Double, baseMsPerStepCurve: Curve?, baseMsPerStep: Int, dragExponent: Double, dragCoefficient: Double, stopSpeed: Int, sendGestureScrolls: Bool, sendMomentumScrolls: Bool) {
+    init(baseCurve: Bezier?, speedSmoothing: Double, baseMsPerStep: Int, baseMsPerStepCurve: Curve?, dragExponent: Double, dragCoefficient: Double, stopSpeed: Int, sendGestureScrolls: Bool, sendMomentumScrolls: Bool) {
         
-        /// Init for using hybridCurve (baseCurve + dragCurve) or (speedSmoothingCurve + dragCurve).
+        /// Init for using hybridCurve      [(baseCurve + dragCurve) or (speedSmoothingCurve + dragCurve)]
         
         if sendMomentumScrolls { assert(sendGestureScrolls) }
-        assert((speedSmoothing != -1) ^ (baseCurve != nil))
-        assert((baseMsPerStepCurve == nil) ^ (baseMsPerStep == -1))
+        assert((baseCurve == nil)     ^ (speedSmoothing == -1))
+        assert((baseMsPerStep == -1)  ^ (baseMsPerStepCurve == nil))
         
         self.baseCurve = baseCurve
         self.speedSmoothing = speedSmoothing
@@ -531,17 +531,17 @@ import Cocoa
         self.sendGestureScrolls = sendGestureScrolls
         self.sendMomentumScrolls = sendMomentumScrolls
     }
-    init(baseCurve: Bezier?, msPerStep: Int, sendGestureScrolls: Bool) {
+    init(justBaseCurve baseCurve: Bezier?, speedSmoothing: Double, baseMsPerStep: Int, baseMsPerStepCurve: Curve?, sendGestureScrolls: Bool) {
         
-        assert(baseCurve != nil)
+        assert((baseCurve == nil)     ^ (speedSmoothing == -1))
+        assert((baseMsPerStep == -1)  ^ (baseMsPerStepCurve == nil))
         
         /// Init for using just baseCurve
         
-        self.baseMsPerStep = msPerStep
-        
         self.baseCurve = baseCurve
-        self.speedSmoothing = -1
-        self.baseMsPerStepCurve = nil
+        self.speedSmoothing = speedSmoothing
+        self.baseMsPerStepCurve = baseMsPerStepCurve
+        self.baseMsPerStep = baseMsPerStep
         
         self.useDragCurve = false
         self.dragExponent = -1
@@ -576,17 +576,56 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
 //            Bezier(controlPoints: [_P(0, 0), _P(0.31, 0.44), _P(0.66, 1), _P(1, 1)], defaultEpsilon: 0.001)
 //            ScrollConfig.linearCurve
 //            Bezier(controlPoints: [_P(0, 0), _P(0.23, 0.89), _P(0.52, 1), _P(1, 1)], defaultEpsilon: 0.001)
-        return MFScrollAnimationCurveParameters(baseCurve: baseCurve, msPerStep: 250, sendGestureScrolls: false)
+        return MFScrollAnimationCurveParameters(justBaseCurve: baseCurve, speedSmoothing: -1, baseMsPerStep: 250, baseMsPerStepCurve: nil, sendGestureScrolls: false)
         
     case kMFScrollAnimationCurveNameLowInertia:
 
-        /// vvv Higher baseMsPerStep
-//        return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.00, baseMsPerStepCurve: 90, baseMsPerStep: 160, dragExponent: 1.0, dragCoefficient: 23, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        /// Option 6:
+        ///     Context: [May 2025]
+        ///         Recently I felt like Option 3 is way too unresponsive. I'm doing a lot of 'scanning' of large text recently – quickly scrolling back and forth, and Option 3 feels wayy to 'gooey', so I'm experimenting with a new curve.
+        ///         I also felt like one design goal of the previous curves – making text visible during scroling – didn't matter to me much right now? I feel like super fast movement is fine – you can still follow it, as long as your eyes have some context clues through animation. Plus once you're used to the scrolling, your brain anticipates where things end up.
+        if _0 {
+            var baseSpeedupCurve: Curve
+            if (true)  {
+                /// Option 6.1
+                var tup: (Double, Double) = (-1, -1)
+                if (_0) { tup = (160, 90)                          }
+                if (_0) { tup = ((1000.0/60)*3, (1000.0/60)*3)     }
+                if (_0) { tup = ((1000.0/60)*12, (1000.0/60)*3)    }
+                if (_1) { tup = ((1000.0/60)*12, (1000.0/60)*5)    }
+                baseSpeedupCurve = Curve(rawCurve: { x in Math.scale(x, (0,1), tup) })
+            }
+            if (false) {
+                /// Option 6.2
+                let curvature = 4.0
+                let baseMsPerStepCurveMax = 200.0
+                let baseMsPerStepCurveMin = 90.0
+                if curvature == 0.0 {
+                    let e = { x in Math.scale(x, (0, 1), (baseMsPerStepCurveMax, baseMsPerStepCurveMin)) }
+                    baseSpeedupCurve = Curve(rawCurve: e)
+                } else {
+                    
+                    let e1 = { x in exp(x * curvature) - 1 }
+                    let e2 = { x in e1(x) / e1(1) }
+                    let e3 = CurveTools.transformCurve(e2) { y in Math.scale(y, (0, 1), (baseMsPerStepCurveMax, baseMsPerStepCurveMin)) }
+                    baseSpeedupCurve = Curve(rawCurve: e3)
+                }
+            }
+            return MFScrollAnimationCurveParameters(justBaseCurve: ScrollConfig.linearCurve, speedSmoothing:-1, baseMsPerStep:-1, baseMsPerStepCurve: baseSpeedupCurve, sendGestureScrolls: false)
+        }
+
+        /// Option 5: Higher baseMsPerStep
+        if _0 {
+            return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: -1, baseMsPerStep: -1, baseMsPerStepCurve: Curve(rawCurve: { x in Math.scale(x, (0,1), (90, 160)) }), dragExponent: 1.0, dragCoefficient: 23, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        }
         
-        /// vvv Combination of previous 2
-//        return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.00, baseMsPerStepCurve: 90, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        /// Option 4: Combination of previous 2 (below I think)
+        if _0 {
+            return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: -1, baseMsPerStep: -1, baseMsPerStepCurve: Curve(rawCurve: { x in Math.scale(x, (0,1), (90, 140)) }), dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        }
         
-        /// vvv This tries to 'feel' like MMF 2.
+        /// Option 3: This tries to 'feel' like MMF 2.
+        ///     (Update: [May 2025] This shipped with the latest version of MMF (3.0.3 and 3.0.4 Beta 1) – IIRC we tried Option 4 and Option 5 but went back to Option 3 before shipping)
         ///     - For medium and large scroll swipes it feels similarly responsive snappy to MMF 2 due to the 90 baseMsPerStepMin. (In MMF 2 the baseMsPerStep was 90)
         ///     - For single ticks on default settings, the speed feels similar to MMF 2 due to the 140 baseMsPerStep and due to the step size being larger than MMF 2.
         ///     - In MMF 2, exponent is 1.0 and coeff is 2.3. Here the coeff is 23. Not sure if that's the same but feels similar.
@@ -594,7 +633,7 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
         ///         - We've now replaced baseMsPerStepMin with baseMsPerStepCurve and changed all the parameters around. (See below for more info on that) Not sure this feels like MMF 2 anymore. But it feels really good.
         
         /// Define curve for the baseMsPerStepCurve speedup
-        /// 
+        ///
         /// Notes:
         ///
         /// - The reason why we introduced a curve, is that when we tried linear interpolation for the baseMsPerStepMin, we found that little 2-3 tick swipes were too fast, but larger/faster swipes were too slow. Initially, we tried to fix that by adding additional smoothing inside ScrollAnalyzer by initializing the `_tickTimeSmoother` with a value. However, this messed up the scroll distance acceleration, so we turned that back off. This curve is our second attempt at making the 2-3 tick swipes animate slower while making the larger or faster swipes animate faster. In contrast to the previous ScrollAnalyzer-based approach, this approach doesn't have a time component, where if you scroll at the same speed for a longer time it speeds up more. Not sure if this is a good or bad thing.
@@ -623,50 +662,53 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
         ///                 - I also tried 200.0, 120.0 - I thought 120 feelt less grating and confusing to eyes, but that made it feel a bit too unresponsive
         ///             - The max animation speed of this feels similar to the pre 3.0.1 algorithm. We did this whole baseMsPerStepCurve (and the predecessor baseMsPerStepMin) stuff because we thought that things felt too unresponsive and now it feels like we've arrived at something similar to the starting point. But, I really think this is at the upper end of animation speed that is nice to use, and the responsiveness is noticably better than pre 3.0.1. Controllability is also better I think.
         ///             - You'd think that the whole baseCurveSpeedup and curvature stuff would make the scrolling less predictable/controllable. Not totally sure, but I feel like for this curve if we turn the speedup off it becomes harder to control/predict. Update: I looked at the overall animation duration (including DragCurve and BaseCurve) and there's less variation in that with this speedup mechanism. Maybe decreased variability makes things more predictable / easy to control. See **Ideaaa** above for more on this.
-
-        let curvature = 4.0                  /* 5.0   4.0 */ /// Should be >= 0.0
-        let baseMsPerStepCurveMax = 180.0    /* 140.0 150.0  180.0  200.0 */
-        let baseMsPerStepCurveMin = 110.0    /* 60.0  90.0    110.0  120.0 */ /// MMF 2 feels more like 110 not 90 or 60
         
-        let baseSpeedupCurve: Curve
-        
-        if curvature == 0.0 {
-            let e = { x in
-                Math.scale(value: x, from: .unitInterval, to: Interval(baseMsPerStepCurveMax, baseMsPerStepCurveMin))
-            }
-            baseSpeedupCurve = Curve(rawCurve: e)
-        } else {
+        if _1 {
+            let curvature = 4.0                  /* 5.0   4.0 */ /// Should be >= 0.0
+            let baseMsPerStepCurveMax = 180.0    /* 140.0 150.0  180.0  200.0 */
+            let baseMsPerStepCurveMin = 110.0    /* 60.0  90.0    110.0  120.0 */ /// MMF 2 feels more like 110 not 90 or 60
             
-            let e1 = { x in exp(x * curvature) - 1 }
-            let e2 = { x in e1(x) / e1(1) }
-            let e3 = CurveTools.transformCurve(e2) { y in
-                Math.scale(value: y, from: .unitInterval, to: Interval(baseMsPerStepCurveMax, baseMsPerStepCurveMin))
+            let baseSpeedupCurve: Curve
+            
+            if curvature == 0.0 {
+                let e = { x in Math.scale(x, (0, 1), (baseMsPerStepCurveMax, baseMsPerStepCurveMin)) }
+                baseSpeedupCurve = Curve(rawCurve: e)
+            } else {
+                
+                let e1 = { x in exp(x * curvature) - 1 }
+                let e2 = { x in e1(x) / e1(1) }
+                let e3 = CurveTools.transformCurve(e2) { y in Math.scale(y, (0, 1), (baseMsPerStepCurveMax, baseMsPerStepCurveMin)) }
+                baseSpeedupCurve = Curve(rawCurve: e3)
             }
-            baseSpeedupCurve = Curve(rawCurve: e3)
+            
+            return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStep: -1, baseMsPerStepCurve: baseSpeedupCurve, dragExponent: 1.0, dragCoefficient: 23, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
         }
         
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepCurve: baseSpeedupCurve, baseMsPerStep: -1, dragExponent: 1.0, dragCoefficient: 23, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
-        
-        /// - vvv Pre 3.0.1 curve (I think)
+        /// Option 2: Pre 3.0.1 curve (I think)
         /// - I don't like this curve atm. It's still too slow. I'm currently 'tuned into' liking the MMF 2 algorithm and it's much quicker than this.
         /// - MMF 2 has baseMsPerStep 90, this makes medium and large scroll swipes feel much more responsive. But single scroll ticks feel too fast. Maybe we could implement an algorithm where the baseMSPerStep is variable and it shrinks on consecutive scroll swipes or as the scroll speed gets higher, or sth like that. Ideas:
         ///    - Add a cap to the base scroll speed.
         ///    - Make the msPerStep a mix between baseMSPerStep and the actual msPerStep of the scrollwheel. Maybe as soon as `scrollWheelMsPerStep < baseMSPerStep` we use `scrollWheelMsPerStep` or do an interpolation between the 2
         ///         Update: Implemented this with the `baseMsPerStepMin`param (Update: Now changed to `baseMsPerStepCurve`)
         
-//        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepCurve: nil, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        if _0 {
+            return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStep: 140, baseMsPerStepCurve: nil, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        }
         
-        /// - vvv I think I like this curve better. Still super responsive and much smoother feeling. But I'm not sure I'm 'tuned into' what the lowInertia should feel like. Bc when I designed it I really liked the snappy, 'immediate' feel, but now I don't like it anymore and wanna make everything much smoother. So I'm not sure I should change it now. Also we should adjust the speed curves if we adjust the feel of this so much.
+        /// Option 1: I think I like this curve better. Still super responsive and much smoother feeling. But I'm not sure I'm 'tuned into' what the lowInertia should feel like. Bc when I designed it I really liked the snappy, 'immediate' feel, but now I don't like it anymore and wanna make everything much smoother. So I'm not sure I should change it now. Also we should adjust the speed curves if we adjust the feel of this so much.
+        if _0 {
+            return MFScrollAnimationCurveParameters(baseCurve: nil,                      speedSmoothing: 0.15, baseMsPerStep: 175, baseMsPerStepCurve: nil, dragExponent: 0.9, dragCoefficient: 25, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        }
         
-//        return MFScrollAnimationCurveParameters(baseCurve: nil, speedSmoothing: 0.15, baseMsPerStepCurve: nil, baseMsPerStep: 175, dragExponent: 0.9, dragCoefficient: 25, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        fatalError()
         
     case kMFScrollAnimationCurveNameMediumInertia:
         
         fatalError()
         
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepCurve: nil, baseMsPerStep: 200, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStep: 200, baseMsPerStepCurve: nil, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepCurve: nil, baseMsPerStep: 190, dragExponent: 1.0, dragCoefficient: 17, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStep: 190, baseMsPerStepCurve: nil, dragExponent: 1.0, dragCoefficient: 17, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
         
     case kMFScrollAnimationCurveNameHighInertia:
         
@@ -679,41 +721,38 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
         ///     - I also heard some reports from people that scrolling in 3.0.1 is worse / performs worse than before. (I'm fairly sure we introduced speedSmoothing in 3.0.1) So maybe the performance issues could also have to do with speedSmoothing? (I don't think it should be performance intensive enough to make a difference though, but who knows?)
         ///     - However I also found that scrolling felt refreshingly responsive after turning speed smoothing off. Might be placebo, but I think I like it better.
         
-        return MFScrollAnimationCurveParameters(baseCurve: nil/*ScrollConfig.linearCurve*/, speedSmoothing: /*0.15*/0.0, baseMsPerStepCurve: nil, baseMsPerStep: 220, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: false, sendMomentumScrolls: false)
+        return MFScrollAnimationCurveParameters(baseCurve: nil/*ScrollConfig.linearCurve*/, speedSmoothing: /*0.15*/0.0, baseMsPerStep: 220, baseMsPerStepCurve: nil, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: false, sendMomentumScrolls: false)
         
     case kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim:
         /// Same as highInertia curve but with full trackpad simulation. The trackpad sim stuff doesn't really belong here I think.
-        return MFScrollAnimationCurveParameters(baseCurve: nil/*ScrollConfig.linearCurve*/, speedSmoothing: /*0.15*/0.0, baseMsPerStepCurve: nil, baseMsPerStep: 220, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: true, sendMomentumScrolls: true)
+        return MFScrollAnimationCurveParameters(baseCurve: nil/*ScrollConfig.linearCurve*/, speedSmoothing: /*0.15*/0.0, baseMsPerStep: 220, baseMsPerStepCurve: nil, dragExponent: 0.7, dragCoefficient: 40, stopSpeed: /*50*/30, sendGestureScrolls: true, sendMomentumScrolls: true)
         
     /// --- Dynamically applied ---
         
     case kMFScrollAnimationCurveNameTouchDriver:
-
         /// v Note: At the time of writing, this curve is equivalent to a BezierCappedAccelerationCurve with curvature 1.
         let baseCurve = Bezier(controlPoints: [_P(0, 0), _P(0, 0), _P(0.5, 1), _P(1, 1)], defaultEpsilon: 0.001)
-        return MFScrollAnimationCurveParameters(baseCurve: baseCurve, msPerStep: /*225*/250/*275*/, sendGestureScrolls: false)
+        return MFScrollAnimationCurveParameters(justBaseCurve: baseCurve,                   speedSmoothing:-1, baseMsPerStep: /*225*/250/*275*/, baseMsPerStepCurve:nil, sendGestureScrolls: false)
         
     case kMFScrollAnimationCurveNameTouchDriverLinear:
-        
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, msPerStep: 180/*200*/, sendGestureScrolls: false)
-    
+        return MFScrollAnimationCurveParameters(justBaseCurve: ScrollConfig.linearCurve,    speedSmoothing:-1, baseMsPerStep: 180/*200*/, baseMsPerStepCurve:nil, sendGestureScrolls: false)
     case kMFScrollAnimationCurveNameQuickScroll:
         
         /// - Almost the same as `highInertia` just more inertial. Actually same feel as trackpad-like parameters used in `GestureScrollSimulator` for autoMomentumScroll.
         /// - Should we use trackpad sim (sendMomentumScrolls and sendGestureScrolls) here?
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepCurve: nil, baseMsPerStep: /*220*/300, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 1, sendGestureScrolls: true, sendMomentumScrolls: true)
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStep: /*220*/300, baseMsPerStepCurve: nil, dragExponent: 0.7, dragCoefficient: 30, stopSpeed: 1, sendGestureScrolls: true, sendMomentumScrolls: true)
         
     case kMFScrollAnimationCurveNamePreciseScroll:
         
         /// Similar to `lowInertia`
 //        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, baseMsPerStep: 140, dragExponent: 1.0, dragCoefficient: 20, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStepCurve: nil, baseMsPerStep: 140, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, speedSmoothing: -1, baseMsPerStep: 140, baseMsPerStepCurve: nil, dragExponent: 1.05, dragCoefficient: 15, stopSpeed: 50, sendGestureScrolls: false, sendMomentumScrolls: false)
         
     /// --- Testing ---
         
     case kMFScrollAnimationCurveNameTest:
         
-        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve, msPerStep: 350, sendGestureScrolls: false)
+        return MFScrollAnimationCurveParameters(justBaseCurve: ScrollConfig.linearCurve, speedSmoothing:-1, baseMsPerStep: 350, baseMsPerStepCurve: nil, sendGestureScrolls: false)
         
     /// --- Other ---
     

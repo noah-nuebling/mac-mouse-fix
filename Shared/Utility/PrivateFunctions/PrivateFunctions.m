@@ -45,6 +45,7 @@
 ///     - Easiest way: `(lldb) image dump symtab <Framework/Image>`
 ///     - Additional info can be obtained using `nm` and `symbols` command-line-tools with various options.
 ///         -> if you wanna examine System libraries using `nm` – first extract them from the shared cache using `dyld-shared-cache-extractor`
+///             Update: [Apr 2025] `objdump` clt seems to find some stuff that nm doesn't – See "Searching symbol table alternatives" below.
 ///     - Use RuntimeBrowser.app (shows objc classes and methods, not C functions.)
 /// - Use `(lldb) breakpoint set <FunctionName>` to examine the function at runtime - this should help to figure out what the arguments and return-type are.
 ///
@@ -130,6 +131,19 @@
 /// ---------------
 /// - Apple's dlopen()/dlsym() source code: https://github.com/opensource-apple/dyld/blob/master/src/dyldAPIs.cpp
 ///         (Or perhaps this is the latest source code? - apple-oss-distributions is the 'official' repo I think: https://github.com/apple-oss-distributions/dyld/blob/main/dyld/DyldAPIs.cpp)
+/// - Post by Eskimo "Understanding Mach-O Symbols": https://developer.apple.com/forums/thread/775650#:~:text=In%20a%20Mach%2DO%20image%2C%20the%20symbol%20is%20typically%20imported,this%20symbol%20at%20link%20time.
+///     - From Mar 2025
+/// - Post by Eskimo "An Apple Library Primer": https://developer.apple.com/forums/thread/715385
+///     - Regularly updated [Sep 2022] - [Mar 2025]
+/// - Searching symbol table alternatives (to parsing macho header directly, like we're doing here): [Apr 2025]
+///     - For command-line, you can attach lldb to the process and then use `image lookup -rn "<pattern>"`
+///     - For IDA we wrote `mfsymgrep()` IDAPython function in [Apr 2025]
+///         - See `~/.idapro/` and our note `Reverse Engineering [Apr 2025].md`
+///     - For object-files, you can use llvm's `objdump -syms [...]`
+///         - I tried `nm` and `otool` but couldn't get them to print all symbols (Were missing `_$sSSN` IIRC.)
+///         - I heard of llvm-readobj and llvm-readelf, but haven't tried them
+///     - CoreSymbolication: (Private Framework)
+///         https://github.com/mountainstorm/CoreSymbolication
 
 @implementation PrivateFunctions
 

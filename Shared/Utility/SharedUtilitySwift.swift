@@ -9,6 +9,9 @@
 
 import Cocoa
 
+let _0 = false /// [May 2025] Make it easy to use 0 and 1 in if-statements to activate/deactivate code since I like doing that in C. || You can regex the codebase for these with`\W_1` / `\W_0` || ... Update: The Swift compiler won't understand which code branches are dead when using this which is super annoying – probably don't use this.
+let _1 = true
+
 func mfsign(_ value: some (Numeric & Comparable)) -> Int {
     /// [Apr 2025] Swift reimplementation of `#define mfsign` C-macro
     return (value > 0) ? 1 : (value < 0) ? -1 : 0

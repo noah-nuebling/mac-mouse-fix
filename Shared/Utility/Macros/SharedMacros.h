@@ -18,8 +18,18 @@
 
 /// Helper macros
 ///     To implement other macros
-#define UNPACK(args...) args /// This allows us to include `,` inside an argument to a macro (but the argument then needs to be wrapped inside `()` by the caller of the macro )
-#define APPEND_ARGS(args...) , ## args /// This is like UNPACK but it also automatically inserts a comma before the args. The ## deletes the comma, if `args` is empty. I have no idea why. But this lets us nicely append args to an existing list of arguments in a function call or function header.
+#define UNPACK(args...) args                /// This allows us to include `,` inside an argument to a macro (but the argument then needs to be wrapped inside `()` by the caller of the macro )
+#define APPEND_ARGS(args...) , ## args      /// This is like UNPACK but it also automatically inserts a comma before the args. The ## deletes the comma, if `args` is empty. I have no idea why. But this lets us nicely append args to an existing list of arguments in a function call or function header.
+
+#define TOSTR(x)    #x                      /// `#` operator but delayed – Sometimes necessary when order-of-operations matters
+#define TOSTR_(x)   TOSTR(x)                /// `#` operator but delayed even more
+
+#define _IFELSE_TRUE(iftrue, iffalse)                  UNPACK iftrue
+#define _IFELSE_TRUE_JUST_KIDDING(iftrue, iffalse)     UNPACK iffalse
+
+#define _IFEMPTY(iftrue, iffalse, ...)                 _IFELSE_TRUE ## __VA_OPT__(_JUST_KIDDING) (iftrue, iffalse)
+#define IFEMPTY(condition, body...)                    _IFEMPTY((body), (),     condition)
+#define IFEMPTY_NOT(condition, body...)                _IFEMPTY((),     (body), condition)
 
 /// `_O_` and `_I_` macros:
 ///     Shorthand for `_Nullable` and `_Nonnull`.
@@ -27,24 +37,33 @@
 ///         o -> nothing (`_Nullable`)
 ///         i -> something (`_Nonnull`)
 ///     Surrounding underscores make the identifiers unique and easily greppable
-///     [Apr 2025] Wrote these because we managed to enable compiler warnings for nullability (See `Xcode Nullability Settings.md`) but cluttering up business logic with `_Nullable` and `_Nonnull` is annoying.
+///     [Apr 2025] Wrote these because we managed to enable compiler warnings for nullability (See `Xcode Nullability Settings.md`) but cluttering up business logic with `_Nullable` and `_Nonnull` is a bit annoying.
 #define _O_ _Nullable
 #define _I_ _Nonnull
 
 /// `nowarn_begin()` and `nowarn_end()` macros:
-///     Temporarily disable all clang warnings (-Weverything).
+///     Temporarily disable clang warnings
 ///     Example usage:
-///     ```
-///     nowarn_begin();
-///     <Code that triggers warnings>
-///     nowarn_end();
-///     ```
+///         Silence *all* warnings
+///             ```
+///             nowarn_begin();
+///             <Code that triggers warnings>
+///             nowarn_end();
+///             ```
+///         Silence specific warnings
+///                 (See https://clang.llvm.org/docs/DiagnosticsReference.html)
+///             ```
+///             nowarn_begin(-Wundeclared-selector);
+///             <Code that triggers -Wundeclared-selector warnings>
+///             nowarn_end();
+///             ```
 
-#define nowarn_begin()                                      \
-    _Pragma("clang diagnostic push")                        \
-    _Pragma("clang diagnostic ignored \"-Weverything\"")    \
+#define nowarn_begin(w)                                                     \
+    _Pragma("clang diagnostic push")                                        \
+    IFEMPTY     (w, _Pragma("clang diagnostic ignored \"-Weverything\""))   \
+    IFEMPTY_NOT (w, _Pragma(TOSTR(clang diagnostic ignored #w)))            \
 
-#define nowarn_end()                                        \
+#define nowarn_end()                                                        \
     _Pragma("clang diagnostic pop")
 
 /// `_isobject()` – internal helper macro.
@@ -169,8 +188,8 @@
 
 /// `threadobject()` and `staticobject()`  macros – creates an objc object whose state is retained between invocations.
 ///     Scope:
-///     > `threadobject()` retains the state between all invocations on the same thread.
-///     > `staticobject()` retains the state between all invocations in the same process.
+///     > `threadobject()` retains the state between all invocations on the same thread. (like a `static __thread` variable)
+///     > `staticobject()` retains the state between all invocations in the same process. (like a `static` variable)
 ///
 ///     Example usage:
 ///     `staticobject()`:
@@ -200,7 +219,7 @@
 ///         - If your initial value is a compile-time-constant:          you can even initialize them very simply, like this `static int count = 99;`.
 ///         - If your initial value is not compile-time-constant:       you can use `dispatch_once()` (for static vars) or a `static __thread bool is_initialized` flag (for thread local vars.).
 
-#define staticobject(initializer_expr)                 \
+#define staticobject(initializer_expr)              \
     (typeof(initializer_expr))                      \
     ({                                              \
         static_assert(_isobject(initializer_expr), "Use `static` for static variables that are not Objective-C objects."); \
@@ -233,7 +252,7 @@
 
 /// String (f)ormatting convenience.
 ///  Notes:
-///     - Don't use `stringf(@"%s", some_c_string)`, it breaks for emojis and you can just use `@(some_c_string?:"")` instead – (Update [2025] – `?:""` since `@()` crashes if you pass it NULL.)
+///     - Don't use `stringf(@"%s", some_c_string)`, it breaks for emojis and you can just use `@(some_c_string ?: "")` instead – (Update [2025] – `?: ""` since `@()` crashes if you pass it NULL.)
 #define stringf(format, ...) [NSString stringWithFormat: (format), ## __VA_ARGS__]
 
 /// Debugging helper - get binary representation
@@ -292,9 +311,9 @@
 /// ... which would expand to:
 ///     ```
 ///     typedef NSString * MFLinkID NS_TYPED_ENUM;
-///     static MFLinkID * const kMFLinkIDCapturedButtonsGuide    = @"CapturedButtonsGuide";
-///     static MFLinkID * const kMFLinkIDCapturedScrollingGuide  = @"CapturedScrollingGuide";
-///     static MFLinkID * const kMFLinkIDVenturaEnablingGuide    = @"VenturaEnablingGuide";
+///     static MFLinkID const kMFLinkIDCapturedButtonsGuide    = @"CapturedButtonsGuide";
+///     static MFLinkID const kMFLinkIDCapturedScrollingGuide  = @"CapturedScrollingGuide";
+///     static MFLinkID const kMFLinkIDVenturaEnablingGuide    = @"VenturaEnablingGuide";
 ///     ```
 ///
 /// Discussion:
@@ -303,7 +322,7 @@
 ///
 /// Probably don't use this:
 ///     Using `NS_TYPED_ENUM` makes swift rename the cases. E.g. `kMFLinkIDCapturedButtonsGuide` -> `MFLinkID.capturedButtonsGuide`. However this breaks for some of our cases (MMFLActivate), and makes it harder to search the project for usages of the cases.
-///     The main benefit of this is that Swift lets you omit the enum name (so you just have to type `.capturedButtonsGuide` instead of `MFLinkID.capturedButtonsGuide`), but omitting stuff like that makes compile time slower afaik, which I really want to prevent - so I wouldn't do that anyways. (Swift compile times are painfully slow)
+///     The main benefit of this is that Swift lets you omit the enum name (so you just have to type `.capturedButtonsGuide` instead of `MFLinkID.capturedButtonsGuide`), but omitting stuff like that makes compile time slower afaik, which I really want to prevent - so I wouldn't do that anyways. (Swift compile times are painfully slow) (Update: [Apr 2025] I still don't like swift, and don't plan to use this but the reasoning here doesn't really make sense. I think compile times were so slow mainly due to app-signing or something and are ok now.)
 ///     So in conclusion - we don't want the renaming.
 ///
 ///     I think the renaming shenanigans is the whole reason why `NS_TYPED_ENUM` even exists? (Don't know of anything else that it does.) And the `MFStringEnum` macros exist to make `NS_TYPED_ENUM` easier to use for me.
@@ -311,12 +330,14 @@
 ///     That would look like this:
 ///     ```
 ///     typedef NSString * MFLinkID;
-///     #define kMFLinkIDCapturedButtonsGuide @"CapturedButtonsGuide"
-///     #define kMFLinkIDCapturedScrollingGuide @"CapturedScrollingGuide"
-///     #define kMFLinkIDVenturaEnablingGuide @"VenturaEnablingGuide"
+///     #define kMFLinkID_CapturedButtonsGuide      @"CapturedButtonsGuide"
+///     #define kMFLinkID_CapturedScrollingGuide    @"CapturedScrollingGuide"
+///     #define kMFLinkID_VenturaEnablingGuide      @"VenturaEnablingGuide"
 ///     ```
+///
 /// Update: [Apr 2025]
 ///     Unused as of now.
+///     Also see `CodeStyle.md`
 
 #define MFStringEnum(__enumName) \
     typedef NSString * __enumName NS_TYPED_ENUM; \
@@ -386,7 +407,7 @@
 
 /// Logical implication operator (Usually written as `a -> b`).
 ///     Meaning "if a is true, then b must be true as well."
-///     Example: `assert(ifthen(it_rains, it_is_wet))`
+///     Example: `assert(ifthen(it_rains, street_is_wet));`
 #define ifthen(a, b) (!(a) || (b))
 
 /// Helper macro: bitpos(): Get the position of the bit in a one-bit-mask
@@ -457,10 +478,12 @@
 ///         const char *fruit = safeindex(fruits, arrcount(fruits), 3, "<no fruit at index 3>");`
 ///         // Returns "<no fruit at index 3>"
 ///         ```
-#define safeindex(list, count, i, fallback) (typeof((list)[0])) ({ \
-    __auto_type __i = (i); \
-    __auto_type __cnt = (count); \
-    ((0 <= __i) && (0 < __cnt) && (__i < __cnt)) ? (list)[__i] : (fallback); /** We're making sure `count` and `i` are both positive before comparing them. Otherwise we might have subtle issues because `(int)-1 < (unsigned int)1` is false in C.*/\
+#define safeindex(list, count, i, fallback) /*(typeof((list)[0]))*/ ({          \
+    __auto_type __i = (i);                                                      \
+    __auto_type __cnt = (count);                                                \
+    nowarn_begin(-Wnullable-to-nonnull-conversion)                              /** -Wnullable-to-nonnull-conversion triggers here when the fallback is NULL (nonsensically, I think). Guess these quirks are why it's not enabled by default. See `Xcode Nullability Settings.md` */ \
+    ((0 <= __i) && (0 < __cnt) && (__i < __cnt)) ? (list)[__i] : (fallback);    /** We're making sure `count` and `i` are both positive before comparing them. Otherwise we might have subtle issues because `(int)-1 < (unsigned int)1` is false in C.*/\
+    nowarn_end()                                                                \
 })
 
 /// NULL-safe wrappers around common CF methods
@@ -490,8 +513,8 @@
 ///     - Returns 1 if positive, -1, if negative, 0 otherwise.
 ///     - Is a macro to work with different types, int, float, char, etc.
 ///     - Won't work if the input value is variable called `__x`
-///     - Sidenote: The natural type of this expression is `int`. `typeof(1 > 0)` is also int. I didn't know that. Also see: https://stackoverflow.com/a/7687444/10601702
 ///     - Called mfsign instead of sign to be greppable.
+///     - Sidenote: The natural type of this expression is `int`. `typeof(1 > 0)` is also int. I didn't know that. Also see: https://stackoverflow.com/a/7687444/10601702
 #define mfsign(x) (int) ({ __auto_type __x = (x); (__x > 0) - (0 > __x); })
 
 /// Branch-prediction hints

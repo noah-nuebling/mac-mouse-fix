@@ -182,7 +182,7 @@
           (f & kCGEventFlagMaskAlternate    ? @"⌥" : @"")   ,
           (f & kCGEventFlagMaskShift        ? @"⇧" : @"")   ,
           (f & kCGEventFlagMaskCommand      ? @"⌘" : @"")   ]
-//          (f & kCGEventFlagMaskSecondaryFn  ? @"🌎": @"")   ] /// Caution: Due to eternalmods, the fn flag doesn't always indicate that the fn/globe key is held. – See EventLoggerForBrad.
+//          (f & kCGEventFlagMaskSecondaryFn  ? @"🌐︎": @"")   ] /// Caution: Due to eternalmods, the fn flag doesn't always indicate that the fn/globe key is held. – See EventLoggerForBrad. || Note: [Apr 2025] 🌐︎ is actually a standard unicode symbol! I thought I had to use SFSymbols here – that makes things much easier.
     ;
     
     return kb;
@@ -241,7 +241,7 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
         @(kMFFunctionKeySHKDictation):              @[@"􀊰", @"mic"],
         @(kMFFunctionKeySHKSpotlight):              @[@"􀊫", @"magnifyingglass"],
         @(kMFFunctionKeySHKDoNotDisturb):           @[@"􀆹", @"moon"],
-        @(kMFFunctionKeySHKSwitchKeyboard):         @[@"􀆪", @"globe"],
+        @(kMFFunctionKeySHKSwitchKeyboard):         @[@"􀆪", @"globe"], /// Note: [Apr 2025] We could use the standard unicode character 🌐︎ instead of the SFSymbol
         @(kMFFunctionKeySHKLaunchpad):              @[@"􀇵", @"square.grid.3x2"],
         
         /// System events
@@ -344,6 +344,7 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
         NSNumber *symbolicHotkey;
         
         /// Try to retrieve from cache
+        ///     Note: [Apr 2025] We could use `CGSGetSymbolicHotKeyValue()` to confirm that the `_hotKeyCache` value is not out-of-date. But I guess that would happen in very rare edge-cases.
         symbolicHotkey = _hotKeyCache[@[@(keyCode), @(flags)]];
         
         /// If not found in cache - search new value

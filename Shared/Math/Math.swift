@@ -139,6 +139,12 @@ import Cocoa
         }
     }
     
+    class func scale(_ value: Double, _ from: (Double, Double), _ to: (Double, Double), checkBounds: Bool = true) -> Double {
+        /// [May 2025] Shorthand
+        ///     Commentary: Are these abstractions over something as simple as an 'interval' really worth it? This feels so heavy-handed. I don't think I would write it this way anymore.
+        Math.scale(value: value, from: Interval(from.0, from.1), to: Interval(to.0, to.1), allowOutOfBounds: !checkBounds)
+    }
+    
     @objc class func scale(value: Double, from originInterval: Interval, to targetInterval: Interval, allowOutOfBounds: Bool = false) -> Double {
         
         /// Notes:
