@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **May 2025**
 
+- 🇫🇮&nbsp;Lauri&nbsp;Kotilainen - "Love and support for indie developers"
 - 🇺🇸&nbsp;Jain&nbsp;Waldrip
 - 🇺🇸&nbsp;Xoxo
 - 🇺🇸&nbsp;Joonkyu

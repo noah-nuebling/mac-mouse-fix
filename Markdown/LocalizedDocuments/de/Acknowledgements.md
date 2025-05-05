@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Mai 2025**
 
+- 🇫🇮&nbsp;Lauri&nbsp;Kotilainen - "Love and support for indie developers"
 - 🇺🇸&nbsp;Jain&nbsp;Waldrip
 - 🇺🇸&nbsp;Xoxo
 - 🇺🇸&nbsp;Joonkyu
