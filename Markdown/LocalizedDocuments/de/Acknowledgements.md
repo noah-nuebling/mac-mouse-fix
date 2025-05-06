@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Mai 2025**
 
+- 🇷🇴&nbsp;Horatiu&nbsp;Purec
 - 🇺🇸&nbsp;Hooman&nbsp;Zaryoun - "Great app Noah!"
 - 🇳🇱&nbsp;Jeroen&nbsp;Bleijenberg
 - 🇺🇸&nbsp;Ziwei&nbsp;Zhang

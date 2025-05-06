@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **May 2025**
 
+- 🇷🇴&nbsp;Horatiu&nbsp;Purec
 - 🇺🇸&nbsp;Hooman&nbsp;Zaryoun - "Great app Noah!"
 - 🇳🇱&nbsp;Jeroen&nbsp;Bleijenberg
 - 🇺🇸&nbsp;Ziwei&nbsp;Zhang
