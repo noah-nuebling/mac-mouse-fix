@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Mai 2025**
 
+- 🇺🇸&nbsp;Mike&nbsp;Goggin - "Fixes what shouldn't have been broken in the first place. Finally get a first-class pointer experience in macOS without using Apple's ergonomically-challenged peripherals."
 - 🇷🇴&nbsp;Horatiu&nbsp;Purec
 - 🇺🇸&nbsp;Hooman&nbsp;Zaryoun - "Great app Noah!"
 - 🇳🇱&nbsp;Jeroen&nbsp;Bleijenberg
