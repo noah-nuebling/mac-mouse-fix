@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Mai 2025**
 
+- 🇩🇪&nbsp;Mark&nbsp;Eibes
 - 🇦🇺&nbsp;Kuangda&nbsp;He
 - 🇺🇸&nbsp;Andy&nbsp;Tinkham
 - 🇺🇸&nbsp;Jake&nbsp;Lorraine - "one of the best apps period!"
