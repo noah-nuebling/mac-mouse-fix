@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Mai 2025**
 
+- 🇩🇪&nbsp;Thomas&nbsp;Thönes - "Support your local open source dev!"
 - 🇯🇵&nbsp;Itami
 - 🇨🇿&nbsp;Dartus - "Great app, makes it easier to use mouse and touchpad at the same time."
 - 🇳🇱&nbsp;Rayquaza - "Roar!"
