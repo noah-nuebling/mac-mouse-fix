@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Mai 2025**
 
+- 🇺🇸&nbsp;Jam
 - 🇺🇸&nbsp;Joey&nbsp;Fitzpatrick - "From one developer to another, thanks for making a great piece of software :)"
 - 🇩🇪&nbsp;Thomas&nbsp;Thönes - "Support your local open source dev!"
 - 🇯🇵&nbsp;Itami
