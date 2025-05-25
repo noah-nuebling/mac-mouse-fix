@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **May 2025**
 
+- 🇩🇪&nbsp;Stefan
 - 🇺🇸&nbsp;Charlieb
 - 🇺🇸&nbsp;Jam
 - 🇺🇸&nbsp;Joey&nbsp;Fitzpatrick - "From one developer to another, thanks for making a great piece of software :)"
