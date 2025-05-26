@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **May 2025**
 
+- 🇳🇱&nbsp;Edgar&nbsp;Meeuwissen - "A small piece of software simple, yet great!"
 - 🇩🇪&nbsp;Stefan
 - 🇺🇸&nbsp;Charlieb
 - 🇺🇸&nbsp;Jam
