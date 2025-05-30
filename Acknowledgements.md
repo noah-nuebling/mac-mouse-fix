@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **May 2025**
 
+- 🇬🇧&nbsp;Sergio&nbsp;Lenzi
 - 🇺🇸&nbsp;Daira
 - 🇮🇹&nbsp;Mura&nbsp;Marco01
 - 🇨🇭&nbsp;Janosch&nbsp;Koepper
