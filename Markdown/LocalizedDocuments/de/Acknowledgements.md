@@ -38,6 +38,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den _Zucker-Kick_!
 
+**Juni 2025**
+
+- 🇺🇸&nbsp;Alberth&nbsp;Matos - "Thank you for the sanity-saving app!"
+
 **Mai 2025**
 
 - 🇬🇧&nbsp;Sergio&nbsp;Lenzi
