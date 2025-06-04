@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2025**
 
+- 🇨🇭&nbsp;Judy
 - 🇻🇳&nbsp;Do&nbsp;Van&nbsp;Cuong - "dovancuongadhp"
 - 🇺🇸&nbsp;Alberth&nbsp;Matos - "Thank you for the sanity-saving app!"
 
