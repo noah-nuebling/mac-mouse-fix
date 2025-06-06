@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **June 2025**
 
+- 🇳🇱&nbsp;Laurant&nbsp;Marijnissen - "Turns out this could've saved me buying a magic trackpad, it does exactly what I wanted from it :) Switching desktops has become incredibly smooth"
 - 🇨🇭&nbsp;Judy
 - 🇻🇳&nbsp;Do&nbsp;Van&nbsp;Cuong - "dovancuongadhp"
 - 🇺🇸&nbsp;Alberth&nbsp;Matos - "Thank you for the sanity-saving app!"
