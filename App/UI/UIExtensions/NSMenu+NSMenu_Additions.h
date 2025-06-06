@@ -13,6 +13,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSMenu (NSMenu_Additions)
 
+    /// Retrieve items by identifier
+    - (NSMenuItem * _Nullable)itemWithIdentifier:(NSUserInterfaceItemIdentifier)identifier;
+
+@end
+
+@interface NSPopUpButton (NSMenu_Additions)
+
+    /// Retrieve items by identifier
+    - (NSMenuItem * _Nullable)itemWithIdentifier:(NSUserInterfaceItemIdentifier)identifier;
+    - (void)selectItemWithIdentifier:(NSUserInterfaceItemIdentifier)identifier;
+
 @end
 
 NS_ASSUME_NONNULL_END

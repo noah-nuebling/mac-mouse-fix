@@ -218,6 +218,9 @@
 ///        How to initialize non-objects?
 ///         - If your initial value is a compile-time-constant:          you can even initialize them very simply, like this `static int count = 99;`.
 ///         - If your initial value is not compile-time-constant:       you can use `dispatch_once()` (for static vars) or a `static __thread bool is_initialized` flag (for thread local vars.).
+///
+///     Off-topic:
+///         - [ ] Go through MMF project and replace `static NSMutable...` with  staticobject / threadobject / NSCache. (NSMutableDictionary and NSMutableArray are not thread safe!) (Once we move everything to a single 'IOThread' some of this might be unnecessary.)
 
 #define staticobject(initializer_expr)              \
     (typeof(initializer_expr))                      \
@@ -358,7 +361,6 @@
     ///     ... which is equivalent to the following (minus deduplication of macro arg b):
     ///         `(a == b && b == c)`
     ///
-    /// -> Not sure this is sensible to use. I'm crazy.
 
     #define _allequal2(x, y)          ((x) == (y))
     #define _allequal3(x, y, rest)    ({ __auto_type __y3 = (y); (x) == __y3 && _allequal2(__y3, rest); })
@@ -447,9 +449,6 @@
 */
 #define sifelse __builtin_choose_expr
 
-/// array count convenience
-#define arrcount(x) (sizeof(x) / sizeof((x)[0]))
-
 /// Autotype convenience
 ///     Just `auto` wouldn't be searchable (and might produce conflict with C++ `auto` keyword?)
 #define auto_t __auto_type
@@ -509,6 +508,44 @@
 ///         ```
 #define swapvars(a, b) ({ __auto_type __tmp = a; a = b; b = __tmp; })
 
+/// safe comparison macros
+///     `< (lt)`, `<= (leq)`, `> (gt)`, and `>= (geq)` operators without the footgun.
+///     Explanation: The footgun is that the following evaluates to false, because the int gets converted to unsigned int and then underflows:
+///         ```
+///         int a = -1;
+///         unsigned int b = 1;
+///         int result = (a<b); // false!
+///         ```
+///     Alternative:
+///         Simply turn on the -Wsign-compare compiler warning. (Why isn't that on by default??) (Update: Just turned that on alongside -Wsign-conversion [May 20 2025])
+///     Context/TODO:
+///         Maybe remove these mflt, mfleq, ... macros, and write a note about the footgun and its solution (-Wsign-compare)
+///         There are several mentions elsewhere in this file of the `a<b` footgun. Maybe update/remove those, now that we found solution.
+///             Mentions: safeindex, mfsign, probably more...
+///             Here's example code that triggers the warning unless we cast to signed:
+///                 ```
+///                 int a = -1;
+///                 unsigned int b = 1;
+///                 MAX((long)a, (long)b);
+///                 ```
+#define mflt(a, b) ({                           \
+    __auto_type _a = (a);                       \
+    __auto_type _b = (b);                       \
+    __auto_type _cmp = mfsign(_b) - mfsign(_a); \
+    _cmp!=0 ? _cmp==1 : (_a<_b);                \
+})
+#define mfleq(a, b) ({              \
+    __auto_type _a = (a);           \
+    __auto_type _b = (b);           \
+    _a == _b || mflt(_a, _b);       \
+})
+#define mfgt(a, b) ({               \
+    !mfleq(_a, _b);                 \
+})
+#define mfgeq(a, b) ({              \
+    !mflt(_a, _b);                  \
+})
+
 /// mfsign()
 ///     - Returns 1 if positive, -1, if negative, 0 otherwise.
 ///     - Is a macro to work with different types, int, float, char, etc.
@@ -519,8 +556,8 @@
 
 /// Branch-prediction hints
 ///     Explanation and example: https://stackoverflow.com/a/133555/10601702
-#define mflikely(b)    (long)__builtin_expect((0!=(b)), 1)
-#define mfunlikely(b)  (long)__builtin_expect((0!=(b)), 0)
+#define mflikely(b)    (long)__builtin_expect(!!(b), 1)
+#define mfunlikely(b)  (long)__builtin_expect(!!(b), 0)
 
 /// Clamp
 ///     Notes:
@@ -532,17 +569,20 @@
 ///     - Generalization of modulo.
 ///     - Is a macro to work with multiple types.
 ///         ... should probably just make this a function that works on double.
-///     - Moves n into the half-open interval `[lower, upper)` (if includeUpperNotLower == false) or `(lower, upper]` (if includeUpperNotLower == true)
+///     - Moves n into the half-open interval `[lower, upper)` (if includeUpper == false) or `(lower, upper]` (if includeUpper == true)
 ///     - If lower > upper, the result will be mirrored (see code)  – feels like a natural extension of this operation?
 ///     -`mfcycle(n, 0, z, false)` is equivalent to `n % z`
 ///         ... Actually not quite true bc `%` is weird for negative inputs in C. Something about euclidian modulo iirc.
-#define mfcycle(n, lower, upper, includeUpperNotLower)                                      \
+/// Also see:
+///     [May 22 2025] mfround, mffloor, mfceil function in our IDAPython scripts – They use a similar idea of 'extending' round/floor/ceil
+///     Math.swift > cycle()
+#define mfcycle(n, lower, upper, includeUpper)                                              \
 (typeof((n)+(lower)+(upper)))                                                               \
 ({                                                                                          \
     typeof((n)+(lower)+(upper)) __n = (n);                                                  /** typeof((n)+(lower)+(upper))` should 'promote' the internal calculations to a type that can support them. E.g. if `n` is double but `lower` is int, the internal calculations (and return type) will be double */\
-    typeof(__n) __lower = (lower);                                                          /** We create local variables to prevent multiple-evaluation in case the macro args are complex expressions. || We prefix local vars with `__` to prevent conflicts in case a macro param is a variable of the same name. */ \
-    typeof(__n) __upper = (upper);                                                          \
-    bool __inclup = (includeUpperNotLower) != 0;                                            \
+    typeof(__n) __lower             = (lower);                                              /** We create local variables to prevent multiple-evaluation in case the macro args are complex expressions. || We prefix local vars with `__` to prevent conflicts in case a macro param is a variable of the same name. */ \
+    typeof(__n) __upper             = (upper);                                              \
+    bool __inclup                   = (includeUpper) != 0;                                  \
     if (__upper == __lower) { __n = __lower; }                                              \
     else {                                                                                  \
         if (__lower > __upper) {                                                            /** Mirror – If we didn't, there'd be an infinite loop. */ \

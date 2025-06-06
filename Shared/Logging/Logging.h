@@ -148,7 +148,7 @@ NS_ASSUME_NONNULL_END
 ///     Alternatives:
 ///          - Use this over `NSAssert()`, `NSCAssert()`, and `assert()`
 ///              - Pro: Easy to type, nicer logging output, full control to change behavior in the future, doesn't throw exceptions (like NSAssert does) (Exceptions might be caught instead of crashing the program in some contexts), allows for logging assert-failures even in `NDEBUG` builds.
-///              - Contra: Possibly slower than `mfassert()` because it's not completely optimized out in `NDEBUG` builds – However, I expect the performance difference to be negligible.
+///              - Contra: Possibly slower than `assert()` because it's not completely optimized out in `NDEBUG` builds – However, I expect the performance difference to be negligible.
 ///
 ///     Improvements:
 ///         - Maybe use `CRSetCrashLogMessage()` for nicer crash reports. Apple's code uses it quite extensively. (abort() also uses it internally I think.) See GitHub search: `CRSetCrashLogMessage (owner:apple OR owner:apple-oss-distributions)`
@@ -164,7 +164,7 @@ NS_ASSUME_NONNULL_END
 #endif
 
 #define mfassert(condition, /* failurereason, formatarg1, formatarg2, ... */ ...)   \
-({                                                                               \
+({                                                                                  \
     if (mfunlikely(!(condition))) { /** It's unlikely that the assert fails */                      \
         DDLogError(                                                                 \
             @"mfassert() failed."                                                   \

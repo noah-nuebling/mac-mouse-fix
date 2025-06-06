@@ -26,15 +26,15 @@
         __builtin_assume(_unique(__mfonce_didrun) == ~0);           /** Optimization. _dispatch_once() also does this. Perhaps this 'restores' some knowledge of the compiler after dispatch_compiler_barrier() destroys it? */\
     }                                                               \
     else                                                            \
-        scopedstatement_start(({                                \
-            objc_sync_enter(_unique(__mfonce_mutexkey));        /** Lock mutex */\
-        }))                                                     \
-            scopedstatement_end(({                                      \
+        _scopeins_statement_start(({                                \
+            objc_sync_enter(_unique(__mfonce_mutexkey));            /** Lock mutex */\
+        }))                                                         \
+            _scopeins_statement_end(({                              \
                 dispatch_compiler_barrier();                            /** This barrier makes sure didrun is only set *after* the user's block has fully run – even with compiler optimizations turned on. (I think.)*/\
                 _unique(__mfonce_didrun) = ~0;                          /** Set didrun */\
                 objc_sync_exit(_unique(__mfonce_mutexkey));             /** Unlock mutex */\
                 __builtin_assume(_unique(__mfonce_didrun) == ~0);       /** Optimization. Not sure this is necessary. */\
             }))                                                         \
-                if (_unique(__mfonce_didrun) != ~0)                 /** Only run user's block if didrun is still not set after acquiring the lock. */\
+                if (_unique(__mfonce_didrun) != ~0)                     /** Only run user's block if didrun is still not set after acquiring the lock. */\
 
 #endif

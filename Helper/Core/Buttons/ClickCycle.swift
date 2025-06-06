@@ -148,6 +148,7 @@ class ClickCycle: NSObject {
             }
             
             /// Update cycle
+            ///     [May 22 2025] intCycle is buggy! This code probably relies on the bug. TODO: Fix.
             state!.clickLevel = Math.intCycle(x: state!.clickLevel + 1, lower: 1, upper: maxClickLevel)
         }
         

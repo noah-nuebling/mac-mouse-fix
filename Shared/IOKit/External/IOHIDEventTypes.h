@@ -1,3 +1,8 @@
+/// Note by Noah [May 2025]
+///     Latest version of this file I could find: is in IOHIDFamily 1892. No idea what happened after: https://github.com/apple-oss-distributions/IOHIDFamily/tree/rel/IOHIDFamily-1892
+///     I don't know from which IOKit release the current copy of the file is from. I don't remember where it came from. Was it CalfTrailTouch? That would make it very old. [May 2025]
+///     Also see `EventLoggerForBrad > Investigate_ScrollEvents.m` where we analyzed Trackpad events and wanted to find the latest version of IOHIDEventTypes.h for that purpose which lead us to write this note. 
+
 /*
  *
  * @APPLE_LICENSE_HEADER_START@

@@ -11,7 +11,7 @@
 #import "NSCoderErrors.h"
 
 /// About MFPlistEncoder / MFPlistDecoder [Feb 2025]
-///     What: Converts between any object-graph and a "plist-object graph" consisting only of objects of one of the 7 plist types. (Which are documented here: https://developer.apple.com/documentation/corefoundation/cfpropertylistref?language=objc)
+///     What: Converts between any object-graph to a "plist-object graph" consisting only of objects of one of the 7 plist types. (Which are documented here: https://developer.apple.com/documentation/corefoundation/cfpropertylistref?language=objc)
 ///     How: All non-plist objects in the graph are converted to an NSDictionary holding the internal state, plus the class-name of the object. (Using the `kMFPlistCoder_ClassName` key)
 ///     Why: We wanna store our MFDataClass objects in our config.plist in a *human readable* way.
 ///         On human-readable: The structure of the original object-graph is directly reflected in the plist-object graph. With the non-plist objects simply being replaced by NSDictionary. So it's easy to inspect and debug the archive and to embed it into our MMF config.plist file.
@@ -19,6 +19,7 @@
 ///         Other alternatives:
 ///             - We could move to non-plist data storage for our object graphs like CoreData or plain NSData archives. However, that's much less human-readable and perhaps more complicated (in the case of CoreData)
 ///             - We could only use plist types to model our data (Where NSDictionary and NSArray are the only containers). But that kinda sucks, and so we introduced MFDataClass to replace NSDictionary in our data-models.
+///                     Update: Idea: [May 22 2025]: If I was Apple I might have introduced a dataclass feature into the language and made dataclasses plist types... Not totally sure that would be a great solution.
 ///
 ///     Is this overengineered?
 ///         Maybe? Probably? We only expect to use this for MFDataClass, and we only expect to ever put plist types and other MFDataClass instances into an MFDataClass (at least for MFDataClasses we'd wanna serialize.)
@@ -37,7 +38,7 @@
 ///         It should help to:
 ///             - Build trust with users
 ///             - Debug invalid configuration states more easily
-///             - Simplify my workflow (E.g. creating the 'default_config.plist' file, or editing the 'licenseStateCacheHash' manually to see if it makes the offline license validation fail.)
+///             - Simplify my workflow (E.g. creating the 'default_config.plist' file, or editing the 'licenseStateCacheHash' manually to see if it makes the offline license validation fail, which I did recently.)
 ///             - Perhaps allow different usecases like users editing config files directly or through a script. (Extremely niche but perhaps nice-to-have for some)
 ///         Also, theoretically I can reuse this data-modeling and storage system (MFDataClass + MFPlistEncoder) in the future for more parts of the app or even other apps. Hopefully the effort will pay off.
 ///

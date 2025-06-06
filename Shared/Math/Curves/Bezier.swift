@@ -664,6 +664,15 @@ import simd /// Vector stuff
         
         /// This is very inefficient, only meant for debugging
         /// Not totally sure if this works. It's sort of confusing and the results are weird and I had a a headache when I wrote this.
+        ///
+        /// Update: [Jun 2 2025] What does this do?
+        ///     As far as I understand, this samples the curve in `resolution` places and then searches for the largest (least accurate, fastest) epsilon, where the curve's y values still appear to be monotonically increasing when looking at the sampled points.
+        ///     This kinda makes sense to find the absolute highest epsilon that should be used, since non-monotonic samples could make animations have noticable 'jerks' where the animated element briefly moves in the *opposite* direction that it should.
+        ///     This method probably couldn't be used for inherently non-monotonic curves such as 'spring-like' curves that shoot over the target before settling. If we wanted to do that, we'd have to come up with something different.
+        ///     I think having a 'development-time' heuristic for finding usable epsilon makes sense as long as we don't have a more clear formula of coming up with a good epsilon
+        ///         I don't know what the choice of epsilon depends on – I suppose the resolution at which the curve is sampled, as well as the strength of curvature and the accuracy demands of the application domain all plays a role – perhaps other factors like the range of the input or output interval. I'm not sure. Perhaps we could do some internet research/some more thinking/maths to figure a more rigorous way of finding good Bezier epsilons. But for now this heuristic seems pretty practical.
+        ///         UPDATE: [Jun 2 2025] We created CurveVisualizer.swift as an alternative heuristic for finding reasonable epsilons – Just set an extremely low epsilon and then experiment with higher epsilons until you can see the graphs deviate.
+        ///
         
         if !runningPreRelease() {
             DDLogWarn("getMinEpsilon called in a non-prerelease. This is very slow.")

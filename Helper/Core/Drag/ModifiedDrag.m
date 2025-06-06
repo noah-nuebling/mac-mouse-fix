@@ -36,7 +36,13 @@
 
 @implementation ModifiedDrag
 
-/// TODO: Rename this to just `Drag`
+/// Notes:
+///     [Jun 2025]
+///         We've planned to add a feature for custom drag gestures at some point,
+///             I thought it should have some custom visual feedback for OneShot actions
+///             - IIRC I made some mockups in the big MMF Sketch project
+///             - "Gaussian Blur + Contrast" trick to simulate surface tension could be interesting. See: https://www.reddit.com/r/iOSProgramming/comments/1l2xxx5/bringing_emoji_reactions_to_life_a_creative_take/
+///     TODO: Rename this to just `Drag`
 
 /// Vars
 

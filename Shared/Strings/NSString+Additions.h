@@ -12,6 +12,7 @@
 
 @interface NSString (Additions)
 
+/// Note: [May 2025] Shouldn't the nullability annotations be outside the `MF_SWIFT_UNBRIDGED` macro?
 - (MF_SWIFT_UNBRIDGED(NSString              *_Nullable)) substringWithRegex: (MF_SWIFT_UNBRIDGED(NSString *_Nonnull))regex                                                                                                      NS_REFINED_FOR_SWIFT;
 - (MF_SWIFT_UNBRIDGED(NSAttributedString    *_Nonnull))  attributed                                                                                                                                                             NS_REFINED_FOR_SWIFT;
 - (MF_SWIFT_UNBRIDGED(NSString              *_Nonnull))  firstCapitalized                                                                                                                                                       NS_REFINED_FOR_SWIFT;

@@ -535,9 +535,8 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitpos
         if ((flags & 1) != 0) { /// If `flags` contains bit `i`
             
             /// Insert separator
-            if (result.length > 0) {
+            if (result.length > 0)
                 [result appendString:@" | "];
-            }
             
             /// Get string describing bit `i`
             NSString *bitName = safeindex(bitposToNameMap, bitposToNameMapCount, i, nil);

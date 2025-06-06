@@ -11,6 +11,10 @@ import Cocoa
 
 @objc class Math: NSObject {
     
+    class func clamp(_ x: Double, _ range: (Double, Double)) -> Double {
+        return min(max(x, range.0), range.1)
+    }
+    
     @objc class func intCycle(x: Int, lower: Int, upper: Int) -> Int {
         return Int(cycle(x: Double(x), lower: Double(lower), upper: Double(upper)))
     }
@@ -18,6 +22,9 @@ import Cocoa
     @objc class func cycle(x: Double, lower: Double, upper: Double) -> Double {
         /// Generalization of modulo.
         ///     `cycle(x: a, lower: 0, upper: n) = mod(a, n+1)`
+        ///
+        /// BUG: [May 22 2025] This has a bug since it includes the lower AND upper bound of the interval. See the newer mfcycle() implementation in C.
+        ///     Currently, only ClickCycle.swift uses this code and probably also relies on the bug.
         
         /// Validate
         assert(lower <= upper)
@@ -40,7 +47,7 @@ import Cocoa
     
     @objc class func bisect(searchRange: Interval, targetOutput: Double, epsilon: Double, function: (Double) -> Double) -> NSNumber? {
         /// This only works if 'function' is monotonically increasing (I think)
-        /// (Returning NSNumber so we can make it nullable. the value is double)
+        /// (Returning NSNumber so we can make it nullable. the value is double, Update: [May 2025] Why not return NAN?)
         
         /// Validate
         
@@ -174,6 +181,8 @@ import Cocoa
         /// Flip
         /// Notes:
         /// - Mirror unitValue at 0.5 on the number line
+        /// - [May 22 2025] This is overcomplicated. Instead of doing the scaling in terms of lower/upper, and flipping in-betwee, we can just do the scaling in terms of start/end and this flipping behavior arises naturally!
+        ///         It's really cool how the flipping behavior that 'felt natural' to me also turns out to be 'natural' in the maths. Thanks Claude! https://claude.ai/share/17b99253-c845-4b6e-88a2-e2687600942e
         if directionsAreOpposite(originInterval.direction, targetInterval.direction) {
             unitValue = unitValue - 2*(unitValue - 0.5)
         }

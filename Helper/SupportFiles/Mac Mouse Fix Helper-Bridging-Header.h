@@ -50,4 +50,6 @@
 #import "MFCoding.h"
 #import "NSData+Additions.h"
 
+#import "DevToggles.h" /// [May 2025] We don't need this in release builds
+
 //#import <CocoaLumberjack/CocoaLumberjack.h> /// Importing CocoaLumberjack/Swift with CocoaPods breaks my project. Can't use macros when importing this.

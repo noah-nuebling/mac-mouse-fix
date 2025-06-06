@@ -5754,6 +5754,19 @@
         }
       }
     },
+    "UHo-SY-RFf.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"Low\"; ObjectID = \"UHo-SY-RFf\"; Note = \"Scrolling > Smoothness > Low Option\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Low"
+          }
+        }
+      },
+      "shouldTranslate" : false
+    },
     "vbN-zN-z2V.title" : {
       "comment" : "Class = \"NSTextFieldCell\"; title = \"Keyboard Modifiers:\"; ObjectID = \"vbN-zN-z2V\"; Note = \"Scrolling > Keyboard Modifiers Label\";",
       "extractionState" : "extracted_with_value",

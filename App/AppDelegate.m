@@ -138,8 +138,10 @@
 #pragma mark - Init and Lifecycle
 
 /// Define Globals
+#if 0 /// Old MMF 1 stuff IIRC
 static NSDictionary *_scrollConfigurations;
 static NSDictionary *sideButtonActions;
+#endif
 
 + (void)load {
     

@@ -1,0 +1,269 @@
+{"app_name":"Mac Mouse Fix Helper","timestamp":"2025-05-29 11:21:49.00 +0200","app_version":"","slice_uuid":"1b071767-a2a3-3416-943c-37500bb073d8","build_version":"23849","platform":1,"bundleID":"com.nuebling.mac-mouse-fix.helper","share_with_app_devs":1,"is_first_party":0,"bug_type":"309","os_version":"macOS 15.5 (24F74)","roots_installed":0,"name":"Mac Mouse Fix Helper","incident_id":"77D477FF-583A-4646-90CF-F5D14ABDEE6C"}
+{
+  "uptime" : 100,
+  "procRole" : "Default",
+  "version" : 2,
+  "userID" : 501,
+  "deployVersion" : 210,
+  "modelCode" : "MacBookAir10,1",
+  "coalitionID" : 810,
+  "osVersion" : {
+    "train" : "macOS 15.5",
+    "build" : "24F74",
+    "releaseType" : "User"
+  },
+  "captureTime" : "2025-05-29 11:21:46.1435 +0200",
+  "codeSigningMonitor" : 1,
+  "incident" : "77D477FF-583A-4646-90CF-F5D14ABDEE6C",
+  "pid" : 731,
+  "translated" : false,
+  "cpuType" : "ARM-64",
+  "roots_installed" : 0,
+  "bug_type" : "309",
+  "procLaunch" : "2025-05-29 11:20:54.7335 +0200",
+  "procStartAbsTime" : 1186799253,
+  "procExitAbsTime" : 2420537076,
+  "procName" : "Mac Mouse Fix Helper",
+  "procPath" : "\/Users\/USER\/Library\/Developer\/Xcode\/DerivedData\/Mouse_Fix-ahqbyzbmudhlrygcyeksnrzoaapt\/Build\/Products\/Debug\/Mac Mouse Fix.app\/Contents\/Library\/LoginItems\/Mac Mouse Fix Helper.app\/Contents\/MacOS\/Mac Mouse Fix Helper",
+  "bundleInfo" : {"CFBundleVersion":"23849","CFBundleIdentifier":"com.nuebling.mac-mouse-fix.helper"},
+  "storeInfo" : {"deviceIdentifierForVendor":"5B76897F-CD1A-5E54-AFD1-77BEEAF35037","thirdParty":true},
+  "parentProc" : "launchd",
+  "parentPid" : 1,
+  "coalitionName" : "com.nuebling.mac-mouse-fix.helper",
+  "crashReporterKey" : "1F957103-C244-DA3E-DC88-C34A6640F23D",
+  "appleIntelligenceStatus" : {"state":"unavailable","reasons":["assetIsNotReady","notOptedIn","siriAssetIsNotReady"]},
+  "throttleTimeout" : 10,
+  "codeSigningID" : "com.nuebling.mac-mouse-fix.helper",
+  "codeSigningTeamID" : "",
+  "codeSigningFlags" : 570507781,
+  "codeSigningValidationCategory" : 1,
+  "codeSigningTrustLevel" : 4294967295,
+  "codeSigningAuxiliaryInfo" : 0,
+  "instructionByteStream" : {"beforePC":"IAAg1OgDACr0V7+pFAAAsJSeDpHV1jXQtSIJkbQGAPmoHgD59FfBqA==","atPC":"IAAg1AkACFHoAwAq6iMXMj8BCmtIAQBU9Fe\/qRQAALCU9g+R1dY10A=="},
+  "bootSessionUUID" : "09C2AC21-332A-4995-8F57-8AFFCC0C8371",
+  "sip" : "disabled",
+  "exception" : {"codes":"0x0000000000000001, 0x00000001857a3aa0","rawCodes":[1,6534347424],"type":"EXC_BREAKPOINT","signal":"SIGTRAP"},
+  "termination" : {"flags":0,"code":5,"namespace":"SIGNAL","indicator":"Trace\/BPT trap: 5","byProc":"exc handler","byPid":731},
+  "os_fault" : {"process":"Mac Mouse Fix Helper"},
+  "asi" : {"libsystem_platform.dylib":["BUG IN CLIENT OF LIBPLATFORM: Unlock of an os_unfair_lock not owned by current thread","Abort Cause 1"]},
+  "extMods" : {"caller":{"thread_create":0,"thread_set_state":0,"task_for_pid":0},"system":{"thread_create":0,"thread_set_state":0,"task_for_pid":0},"targeted":{"thread_create":0,"thread_set_state":0,"task_for_pid":0},"warnings":0},
+  "faultingThread" : 3,
+  "threads" : [{"id":7594,"threadState":{"x":[{"value":105553147977408},{"value":4310286080},{"value":5617262816},{"value":6168152952},{"value":16},{"value":22},{"value":0},{"value":17},{"value":105553147977408},{"value":259},{"value":419232},{"value":0},{"value":0},{"value":0},{"value":4294967251},{"value":2043},{"value":4310686370,"symbolLocation":2,"symbol":"OBJC_CLASS_$_Device"},{"sourceLine":258,"value":4307868860,"sourceFile":"Device.m","symbol":"-[Device wrapsIOHIDDevice:]","symbolLocation":0},{"value":0},{"value":105553180688384},{"value":0},{"value":320},{"value":8401718328,"symbolLocation":0,"symbol":"__kCFAllocatorNull"},{"value":105553152330240},{"value":105553133295952},{"value":105553148207840},{"value":105553152364800},{"value":384},{"value":6168191256}],"flavor":"ARM_THREAD_STATE64","lr":{"value":4308007620},"cpsr":{"value":1073745920},"fp":{"value":6168153104},"sp":{"value":6168152736},"esr":{"value":2181038087,"description":"(Instruction Abort) Translation fault"},"pc":{"value":4307868860},"far":{"value":4307868860}},"queue":"com.apple.main-thread","frames":[{"imageOffset":154812,"sourceLine":258,"sourceFile":"Device.m","symbol":"-[Device wrapsIOHIDDevice:]","imageIndex":1,"symbolLocation":0},{"imageOffset":293572,"sourceLine":71,"sourceFile":"DeviceManager.m","symbol":"+[DeviceManager attachedDeviceWithIOHIDDevice:]","imageIndex":1,"symbolLocation":252},{"imageOffset":228900,"sourceLine":142,"sourceFile":"ButtonInputReceiver.m","symbol":"eventTapCallback","imageIndex":1,"symbolLocation":1120},{"imageOffset":1657780,"symbol":"processEventTapData(void*, unsigned int, unsigned int, unsigned int, unsigned char*, unsigned int)","symbolLocation":560,"imageIndex":5},{"imageOffset":4372436,"symbol":"_XPostEventTapData","symbolLocation":344,"imageIndex":5},{"imageOffset":1659976,"symbol":"eventTapMessageHandler(__CFMachPort*, void*, long, void*)","symbolLocation":168,"imageIndex":5},{"imageOffset":692916,"symbol":"__CFMachPortPerform","symbolLocation":288,"imageIndex":6},{"imageOffset":512592,"symbol":"__CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE1_PERFORM_FUNCTION__","symbolLocation":60,"imageIndex":6},{"imageOffset":512376,"symbol":"__CFRunLoopDoSource1","symbolLocation":508,"imageIndex":6},{"imageOffset":506744,"symbol":"__CFRunLoopRun","symbolLocation":2200,"imageIndex":6},{"imageOffset":502872,"symbol":"CFRunLoopRunSpecific","symbolLocation":572,"imageIndex":6},{"imageOffset":799356,"symbol":"RunCurrentEventLoopInMode","symbolLocation":324,"imageIndex":7},{"imageOffset":812264,"symbol":"ReceiveNextEventCommon","symbolLocation":676,"imageIndex":7},{"imageOffset":2430084,"symbol":"_BlockUntilNextEventMatchingListInModeWithFilter","symbolLocation":76,"imageIndex":7},{"imageOffset":240308,"symbol":"_DPSNextEvent","symbolLocation":684,"imageIndex":8},{"imageOffset":10327472,"symbol":"-[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]","symbolLocation":688,"imageIndex":8},{"imageOffset":187492,"symbol":"-[NSApplication run]","symbolLocation":480,"imageIndex":8},{"imageOffset":17244,"symbol":"NSApplicationMain","symbolLocation":880,"imageIndex":8},{"imageOffset":190212,"sourceLine":15,"sourceFile":"main.m","symbol":"__debug_main_executable_dylib_entry_point","imageIndex":1,"symbolLocation":36},{"imageOffset":27544,"symbol":"start","symbolLocation":6076,"imageIndex":9}]},{"id":7669,"name":"com.nuebling.mac-mouse-fix.global-event-tap","threadState":{"x":[{"value":268451845},{"value":21592279046},{"value":8589934592},{"value":79177722101760},{"value":0},{"value":79177722101760},{"value":2},{"value":4294967295},{"value":0},{"value":17179869184},{"value":0},{"value":2},{"value":0},{"value":0},{"value":18435},{"value":0},{"value":18446744073709551569},{"value":8397809336},{"value":0},{"value":4294967295},{"value":2},{"value":79177722101760},{"value":0},{"value":79177722101760},{"value":6170467720},{"value":8589934592},{"value":21592279046},{"value":18446744073709550527},{"value":4412409862}],"flavor":"ARM_THREAD_STATE64","lr":{"value":6533903264},"cpsr":{"value":4096},"fp":{"value":6170467568},"sp":{"value":6170467488},"esr":{"value":1442840704,"description":" Address size fault"},"pc":{"value":6533827636},"far":{"value":0}},"frames":[{"imageOffset":3124,"symbol":"mach_msg2_trap","symbolLocation":8,"imageIndex":11},{"imageOffset":78752,"symbol":"mach_msg2_internal","symbolLocation":76,"imageIndex":11},{"imageOffset":38756,"symbol":"mach_msg_overwrite","symbolLocation":484,"imageIndex":11},{"imageOffset":4008,"symbol":"mach_msg","symbolLocation":24,"imageIndex":11},{"imageOffset":511612,"symbol":"__CFRunLoopServiceMachPort","symbolLocation":160,"imageIndex":6},{"imageOffset":505752,"symbol":"__CFRunLoopRun","symbolLocation":1208,"imageIndex":6},{"imageOffset":502872,"symbol":"CFRunLoopRunSpecific","symbolLocation":572,"imageIndex":6},{"imageOffset":1001236,"symbol":"CFRunLoopRun","symbolLocation":64,"imageIndex":6},{"imageOffset":182660,"sourceLine":110,"sourceFile":"GlobalEventTapThread.m","symbol":"+[GlobalEventTapThread threadWorkload]","imageIndex":1,"symbolLocation":148},{"imageOffset":342952,"symbol":"__NSThread__start__","symbolLocation":732,"imageIndex":12},{"imageOffset":27660,"symbol":"_pthread_start","symbolLocation":136,"imageIndex":13},{"imageOffset":7040,"symbol":"thread_start","symbolLocation":8,"imageIndex":13}]},{"id":7794,"name":"com.apple.NSEventThread","threadState":{"x":[{"value":268451845},{"value":21592279046},{"value":8589934592},{"value":196859826012160},{"value":0},{"value":196859826012160},{"value":2},{"value":4294967295},{"value":0},{"value":17179869184},{"value":0},{"value":2},{"value":0},{"value":0},{"value":45835},{"value":0},{"value":18446744073709551569},{"value":8397809336},{"value":0},{"value":4294967295},{"value":2},{"value":196859826012160},{"value":0},{"value":196859826012160},{"value":6172188808},{"value":8589934592},{"value":21592279046},{"value":18446744073709550527},{"value":4412409862}],"flavor":"ARM_THREAD_STATE64","lr":{"value":6533903264},"cpsr":{"value":4096},"fp":{"value":6172188656},"sp":{"value":6172188576},"esr":{"value":1442840704,"description":" Address size fault"},"pc":{"value":6533827636},"far":{"value":0}},"frames":[{"imageOffset":3124,"symbol":"mach_msg2_trap","symbolLocation":8,"imageIndex":11},{"imageOffset":78752,"symbol":"mach_msg2_internal","symbolLocation":76,"imageIndex":11},{"imageOffset":38756,"symbol":"mach_msg_overwrite","symbolLocation":484,"imageIndex":11},{"imageOffset":4008,"symbol":"mach_msg","symbolLocation":24,"imageIndex":11},{"imageOffset":511612,"symbol":"__CFRunLoopServiceMachPort","symbolLocation":160,"imageIndex":6},{"imageOffset":505752,"symbol":"__CFRunLoopRun","symbolLocation":1208,"imageIndex":6},{"imageOffset":502872,"symbol":"CFRunLoopRunSpecific","symbolLocation":572,"imageIndex":6},{"imageOffset":1435644,"symbol":"_NSEventThread","symbolLocation":140,"imageIndex":8},{"imageOffset":27660,"symbol":"_pthread_start","symbolLocation":136,"imageIndex":13},{"imageOffset":7040,"symbol":"thread_start","symbolLocation":8,"imageIndex":13}]},{"triggered":true,"id":7878,"threadState":{"x":[{"value":1},{"value":48651},{"value":0},{"value":105553133548000},{"value":0},{"value":0},{"value":114},{"value":12},{"value":1},{"value":0},{"value":11799523355},{"value":127},{"value":19},{"value":5578729248},{"value":8380811016,"symbolLocation":0,"symbol":"__CFConstantStringClassReference"},{"value":8380811016,"symbolLocation":0,"symbol":"__CFConstantStringClassReference"},{"value":11201353856},{"value":8397816416},{"value":0},{"value":5614119888},{"value":4310574456},{"value":196610},{"value":8380720000,"symbolLocation":2048,"symbol":"_dispatch_root_queues"},{"value":6174486752},{"value":0},{"value":105553128002432},{"value":0},{"value":0},{"value":276}],"flavor":"ARM_THREAD_STATE64","lr":{"value":6534325316},"cpsr":{"value":2147487744},"fp":{"value":6174483744},"sp":{"value":6174483728},"esr":{"value":4060086273,"description":"(Breakpoint) brk 1"},"pc":{"value":6534347424,"matchesCrashFrame":1},"far":{"value":0}},"queue":"com.nuebling.mac-mouse-fix.helper.scroll","frames":[{"imageOffset":27296,"symbol":"_os_unfair_lock_unowned_abort","symbolLocation":36,"imageIndex":14},{"imageOffset":5188,"symbol":"_os_unfair_lock_unlock_slow","symbolLocation":92,"imageIndex":14},{"imageOffset":272256,"symbol":"IOHIDDeviceGetProperty","symbolLocation":120,"imageIndex":15},{"imageOffset":194448,"sourceLine":279,"sourceFile":"Scroll.m","symbol":"heavyProcessing","imageIndex":1,"symbolLocation":340},{"imageOffset":194096,"sourceLine":248,"sourceFile":"Scroll.m","symbol":"__eventTapCallback_block_invoke","imageIndex":1,"symbolLocation":52},{"imageOffset":6956,"symbol":"_dispatch_call_block_and_release","symbolLocation":32,"imageIndex":16},{"imageOffset":112732,"symbol":"_dispatch_client_callout","symbolLocation":16,"imageIndex":16},{"imageOffset":41808,"symbol":"_dispatch_lane_serial_drain","symbolLocation":740,"imageIndex":16},{"imageOffset":44588,"symbol":"_dispatch_lane_invoke","symbolLocation":388,"imageIndex":16},{"imageOffset":86628,"symbol":"_dispatch_root_queue_drain_deferred_wlh","symbolLocation":292,"imageIndex":16},{"imageOffset":84712,"symbol":"_dispatch_workloop_worker_thread","symbolLocation":540,"imageIndex":16},{"imageOffset":11876,"symbol":"_pthread_wqthread","symbolLocation":292,"imageIndex":13},{"imageOffset":7028,"symbol":"start_wqthread","symbolLocation":8,"imageIndex":13}]},{"id":10828,"frames":[{"imageOffset":7020,"symbol":"start_wqthread","symbolLocation":0,"imageIndex":13}],"threadState":{"x":[{"value":6168752128},{"value":61191},{"value":6168215552},{"value":0},{"value":409604},{"value":18446744073709551615},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0}],"flavor":"ARM_THREAD_STATE64","lr":{"value":0},"cpsr":{"value":4096},"fp":{"value":0},"sp":{"value":6168752128},"esr":{"value":1442840704,"description":" Address size fault"},"pc":{"value":6534077292},"far":{"value":0}}},{"id":10829,"frames":[{"imageOffset":7020,"symbol":"start_wqthread","symbolLocation":0,"imageIndex":13}],"threadState":{"x":[{"value":6169325568},{"value":56363},{"value":6168788992},{"value":0},{"value":409604},{"value":18446744073709551615},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0},{"value":0}],"flavor":"ARM_THREAD_STATE64","lr":{"value":0},"cpsr":{"value":4096},"fp":{"value":0},"sp":{"value":6169325568},"esr":{"value":1442840704,"description":" Address size fault"},"pc":{"value":6534077292},"far":{"value":0}}}],
+  "usedImages" : [
+  {
+    "source" : "P",
+    "arch" : "arm64",
+    "base" : 4298686464,
+    "CFBundleIdentifier" : "com.nuebling.mac-mouse-fix.helper",
+    "size" : 16384,
+    "uuid" : "1b071767-a2a3-3416-943c-37500bb073d8",
+    "path" : "\/Users\/USER\/Library\/Developer\/Xcode\/DerivedData\/Mouse_Fix-ahqbyzbmudhlrygcyeksnrzoaapt\/Build\/Products\/Debug\/Mac Mouse Fix.app\/Contents\/Library\/LoginItems\/Mac Mouse Fix Helper.app\/Contents\/MacOS\/Mac Mouse Fix Helper",
+    "name" : "Mac Mouse Fix Helper",
+    "CFBundleVersion" : "23849"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64",
+    "base" : 4307714048,
+    "size" : 2785280,
+    "uuid" : "0fce1dc6-69fe-3daa-a0b9-f177da26c3e6",
+    "path" : "\/Users\/USER\/Library\/Developer\/Xcode\/DerivedData\/Mouse_Fix-ahqbyzbmudhlrygcyeksnrzoaapt\/Build\/Products\/Debug\/Mac Mouse Fix.app\/Contents\/Library\/LoginItems\/Mac Mouse Fix Helper.app\/Contents\/MacOS\/Mac Mouse Fix Helper.debug.dylib",
+    "name" : "Mac Mouse Fix Helper.debug.dylib"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 4300455936,
+    "CFBundleShortVersionString" : "2.0.0",
+    "CFBundleIdentifier" : "com.apple.iokit.IOHIDLib",
+    "size" : 98304,
+    "uuid" : "e414dd7a-f98a-34bb-b188-dfb4657ec69e",
+    "path" : "\/System\/Library\/Extensions\/IOHIDFamily.kext\/Contents\/PlugIns\/IOHIDLib.plugin\/Contents\/MacOS\/IOHIDLib",
+    "name" : "IOHIDLib",
+    "CFBundleVersion" : "2.0.0"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 4305666048,
+    "size" : 49152,
+    "uuid" : "d02a05cb-6440-3e7e-a02f-931734cab666",
+    "path" : "\/usr\/lib\/libobjc-trampolines.dylib",
+    "name" : "libobjc-trampolines.dylib"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 4400824320,
+    "CFBundleShortVersionString" : "327.5",
+    "CFBundleIdentifier" : "com.apple.AGXMetal13-3",
+    "size" : 6897664,
+    "uuid" : "bea42a86-a627-3c22-8eec-738c406242ff",
+    "path" : "\/System\/Library\/Extensions\/AGXMetal13_3.bundle\/Contents\/MacOS\/AGXMetal13_3",
+    "name" : "AGXMetal13_3",
+    "CFBundleVersion" : "327.5"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 6635024384,
+    "CFBundleShortVersionString" : "1.600.0",
+    "CFBundleIdentifier" : "com.apple.SkyLight",
+    "size" : 5395200,
+    "uuid" : "3a386772-a7fe-3359-aac4-1ae9c903cb49",
+    "path" : "\/System\/Library\/PrivateFrameworks\/SkyLight.framework\/Versions\/A\/SkyLight",
+    "name" : "SkyLight"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 6534549504,
+    "CFBundleShortVersionString" : "6.9",
+    "CFBundleIdentifier" : "com.apple.CoreFoundation",
+    "size" : 5500928,
+    "uuid" : "df489a59-b4f6-32b8-9bb4-9b832960aa52",
+    "path" : "\/System\/Library\/Frameworks\/CoreFoundation.framework\/Versions\/A\/CoreFoundation",
+    "name" : "CoreFoundation",
+    "CFBundleVersion" : "3502.1.401"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 6729895936,
+    "CFBundleShortVersionString" : "2.1.1",
+    "CFBundleIdentifier" : "com.apple.HIToolbox",
+    "size" : 3174368,
+    "uuid" : "9286e29f-fcee-31d0-acea-2842ea23bedf",
+    "path" : "\/System\/Library\/Frameworks\/Carbon.framework\/Versions\/A\/Frameworks\/HIToolbox.framework\/Versions\/A\/HIToolbox",
+    "name" : "HIToolbox"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 6601035776,
+    "CFBundleShortVersionString" : "6.9",
+    "CFBundleIdentifier" : "com.apple.AppKit",
+    "size" : 21568640,
+    "uuid" : "5d0da1bd-412c-3ed8-84e9-40ca62fe7b42",
+    "path" : "\/System\/Library\/Frameworks\/AppKit.framework\/Versions\/C\/AppKit",
+    "name" : "AppKit",
+    "CFBundleVersion" : "2575.60.5"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 6530269184,
+    "size" : 636112,
+    "uuid" : "9cf0401a-a938-389e-a77d-9e9608076ccf",
+    "path" : "\/usr\/lib\/dyld",
+    "name" : "dyld"
+  },
+  {
+    "size" : 0,
+    "source" : "A",
+    "base" : 0,
+    "uuid" : "00000000-0000-0000-0000-000000000000"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 6533824512,
+    "size" : 243284,
+    "uuid" : "60485b6f-67e5-38c1-aec9-efd6031ff166",
+    "path" : "\/usr\/lib\/system\/libsystem_kernel.dylib",
+    "name" : "libsystem_kernel.dylib"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 6557552640,
+    "CFBundleShortVersionString" : "6.9",
+    "CFBundleIdentifier" : "com.apple.Foundation",
+    "size" : 14586624,
+    "uuid" : "e8f6a451-0acc-3e05-b18f-fec6618ce44a",
+    "path" : "\/System\/Library\/Frameworks\/Foundation.framework\/Versions\/C\/Foundation",
+    "name" : "Foundation",
+    "CFBundleVersion" : "3502.1.401"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 6534070272,
+    "size" : 51784,
+    "uuid" : "647b91fc-96d3-3bbb-af08-970df45257c8",
+    "path" : "\/usr\/lib\/system\/libsystem_pthread.dylib",
+    "name" : "libsystem_pthread.dylib"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 6534320128,
+    "size" : 31568,
+    "uuid" : "519f3220-7499-334a-96d6-ccf3dc28f986",
+    "path" : "\/usr\/lib\/system\/libsystem_platform.dylib",
+    "name" : "libsystem_platform.dylib"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 6599659520,
+    "CFBundleShortVersionString" : "2.0.2",
+    "CFBundleIdentifier" : "com.apple.framework.IOKit",
+    "size" : 926528,
+    "uuid" : "d1ba721b-4309-3caf-81c7-595aef32f6a9",
+    "path" : "\/System\/Library\/Frameworks\/IOKit.framework\/Versions\/A\/IOKit",
+    "name" : "IOKit"
+  },
+  {
+    "source" : "P",
+    "arch" : "arm64e",
+    "base" : 6532288512,
+    "size" : 288576,
+    "uuid" : "8bf83cda-8db1-3d46-94b0-d811bd77e078",
+    "path" : "\/usr\/lib\/system\/libdispatch.dylib",
+    "name" : "libdispatch.dylib"
+  }
+],
+  "sharedCache" : {
+  "base" : 6529433600,
+  "size" : 5047205888,
+  "uuid" : "d7397d7f-8df9-3920-81a7-c0a144be9c51"
+},
+  "vmSummary" : "ReadOnly portion of Libraries: Total=950.4M resident=0K(0%) swapped_out_or_unallocated=950.4M(100%)\nWritable regions: Total=1.4G written=642K(0%) resident=626K(0%) swapped_out=16K(0%) unallocated=1.4G(100%)\n\n                                VIRTUAL   REGION \nREGION TYPE                        SIZE    COUNT (non-coalesced) \n===========                     =======  ======= \nActivity Tracing                   256K        1 \nCG image                            48K        2 \nColorSync                          560K       27 \nCoreAnimation                       96K        4 \nCoreGraphics                        48K        3 \nCoreUI image data                  192K        1 \nFoundation                          16K        1 \nKernel Alloc Once                   32K        1 \nMALLOC                             1.4G       65 \nMALLOC guard page                  288K       18 \nSTACK GUARD                       56.1M        6 \nStack                             10.6M        6 \nVM_ALLOCATE                        112K        7 \n__AUTH                            1510K      236 \n__AUTH_CONST                      26.4M      397 \n__CTF                               824        1 \n__DATA                            6332K      380 \n__DATA_CONST                      16.0M      403 \n__DATA_DIRTY                       711K      114 \n__FONT_DATA                        2352        1 \n__INFO_FILTER                         8        1 \n__LINKEDIT                       620.0M        6 \n__OBJC_RO                         61.4M        1 \n__OBJC_RW                         2396K        1 \n__TEXT                           330.3M      420 \n__TPRO_CONST                       128K        2 \ndyld private memory                160K        2 \nmapped file                      215.0M       25 \npage table in kernel               626K        1 \nshared memory                      848K       12 \n===========                     =======  ======= \nTOTAL                              2.7G     2145 \n",
+  "legacyInfo" : {
+  "threadTriggered" : {
+    "queue" : "com.nuebling.mac-mouse-fix.helper.scroll"
+  }
+},
+  "logWritingSignature" : "9dc619e79d047c9aa598a93e32e64cb6000e0c43",
+  "trialInfo" : {
+  "rollouts" : [
+    {
+      "rolloutId" : "64c025b28b7f0e739e4fbe58",
+      "factorPackIds" : {
+
+      },
+      "deploymentId" : 240000042
+    },
+    {
+      "rolloutId" : "645197bf528fbf3c3af54105",
+      "factorPackIds" : {
+        "SIRI_VALUE_INFERENCE_PERVASIVE_ENTITY_RESOLUTION" : "663e65b4a1526e1ca0e288a1"
+      },
+      "deploymentId" : 240000002
+    }
+  ],
+  "experiments" : [
+    {
+      "treatmentId" : "928dfbce-0cc0-4f29-866f-5542e51ad72e",
+      "experimentId" : "67f46e2984eaf455d73c609a",
+      "deploymentId" : 400000001
+    },
+    {
+      "treatmentId" : "f18344bb-554f-48ae-8449-e108a8813a55",
+      "experimentId" : "6685b5584477001000e8c6c9",
+      "deploymentId" : 400000009
+    }
+  ]
+}
+}

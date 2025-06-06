@@ -41,6 +41,7 @@ typedef enum {
     
     kMFScrollAnimationCurveNameNoInertia,
     
+    kMFScrollAnimationCurveNameVeryLowInertia,
     kMFScrollAnimationCurveNameLowInertia,
     kMFScrollAnimationCurveNameMediumInertia,
     kMFScrollAnimationCurveNameHighInertia,
@@ -69,6 +70,7 @@ typedef enum  {
 
 typedef enum {
     kMFScrollSmoothnessOff,
+    kMFScrollSmoothnessLow,
     kMFScrollSmoothnessRegular,
     kMFScrollSmoothnessHigh,
 } MFScrollSmoothness;

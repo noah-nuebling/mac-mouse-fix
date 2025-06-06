@@ -66,6 +66,9 @@ IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID) {
     /// Pass in the senderID obtained from a CGEvent from field 87
     ///     This uses a cache to avoid calling IOHIDDeviceCreate() (which is super slow) over and over.
     ///     \note Do we need to reset the cache at certain points? What do if a device is disconnected?
+    ///         Update: [May 2025] Just saw a crash which might be related to not resetting the cache. See Scroll.m:279 for more.
+    ///             But theoretically this should be fine I think? I think IOHIDDeviceRef should still be safe to use after disconnect, just if you try to read/write from it that should fail (I haven't tested this, and it would still be cleaner to return nil here after disconnect)
+    ///                 We could either use a weak reference or check if the IOHIDDeviceRef is still physically connected  before returning it. For a weak ref, we could create something like an MFWeakWrapper object or use NSMapTable with weak values. Using NSCache / staticobject() / threadobject() instead of raw static NSDictionary would probably be good. (static NSDictionary is also not thread-safe – as long as we're not using a single 'IOThread', that could be problematic.)
     
     static NSMutableDictionary *_hidDeviceCache = nil;
     if (_hidDeviceCache == nil) {
@@ -80,7 +83,7 @@ IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID) {
     
     IOHIDDeviceRef iohidDevice = copySendingDevice_Reliable(senderID);
     
-    _hidDeviceCache[@(senderID)] = (__bridge_transfer id _Nullable)(iohidDevice); /// Should we do this when the iohidDevice is NULL?
+    _hidDeviceCache[@(senderID)] = (__bridge_transfer id _Nullable)(iohidDevice); /// Should we do this when the iohidDevice is NULL? || [May 2025] Setting nil to an NSDictionary like this should simply remove the key. Casting to `_Nullable` here makes no sense.
     
     return iohidDevice;
 }
@@ -97,7 +100,7 @@ IOHIDDeviceRef copySendingDevice_Faster(uint64_t senderID) {
     
     io_service_t parent1;
     io_service_t parent2;
-    IORegistryEntryGetParentEntry(service, kIOServicePlane, &parent1);
+    IORegistryEntryGetParentEntry(service, kIOServicePlane, &parent1); /// Why are we return the return values here?
     IORegistryEntryGetParentEntry(parent1, kIOServicePlane, &parent2);
     
     IOHIDDeviceRef iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, parent2);

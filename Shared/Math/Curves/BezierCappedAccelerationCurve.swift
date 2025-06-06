@@ -48,7 +48,7 @@ class BezierCappedAccelerationCurve: AccelerationBezier {
     /// This class just adds an initializer for AccelerationBezier. Maybe it shouldn't be it's own class at all.
     ///     We made it its own class because that was necessary for the old implementation which you can find below.
     
-    @objc init(xMin: Double, yMin: Double, xMax: Double, yMax: Double, curvature curvatureArg: Double, reduceToCubic: Bool = false, defaultEpsilon: Double = 0.08) {
+    @objc init(xMin: Double, xMax: Double, yMin: Double, yMax: Double, curvature curvatureArg: Double, reduceToCubic: Bool = false, defaultEpsilon: Double = 0.08) {
         
         /// NOTES:
         /// Not sure the 0.08 default epsilon makes sense here
@@ -70,7 +70,7 @@ class BezierCappedAccelerationCurve: AccelerationBezier {
                 }
             }
             
-            var x = Math.scale(value: Double(i)/degree, from: .unitInterval, to: Interval(xMin, xMax), allowOutOfBounds: true)
+            var x = Math.scale(Double(i)/degree, (0, 1), (xMin, xMax), checkBounds: false)
             if x > xMax {
                 assert(isLast)
                 x = xMax

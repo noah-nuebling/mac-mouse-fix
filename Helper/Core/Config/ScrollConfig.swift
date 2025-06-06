@@ -59,6 +59,10 @@ import Cocoa
 //        ReactiveScrollConfig.shared.handleScrollConfigChanged(newValue: shared)
         SwitchMaster.shared.scrollConfigChanged(scrollConfig: shared)
     }
+    @objc static func devToggles_deleteCache() { /// [May 2025] Added this function as a hack for DevToggles.m
+        shared = ScrollConfig()
+        cache = nil
+    }
     private static var cache: [_HT<MFScrollModificationResult, MFAxis, CGDirectDisplayID>: ScrollConfig]? = nil
     
     // MARK: Overrides
@@ -307,7 +311,21 @@ import Cocoa
     
     @objc lazy var scrollSwipeMax_inTicks: Int = 11 /// Max number of ticks that we think can occur in a single swipe naturally (if the user isn't using a free-spinning scrollwheel). (See `consecutiveScrollSwipeCounter_ForFreeScrollWheel` definition for more info)
     
-    @objc lazy var consecutiveScrollTickIntervalMax: TimeInterval = 160/1000
+    @objc lazy var consecutiveScrollTickIntervalMax: TimeInterval = SharedUtilitySwift.eval {
+        
+        if (_1) { Double(devToggles_Lo)/1000 } /// DEBUG
+        else {
+            switch animationCurve {
+            case kMFScrollAnimationCurveNameNone:            160.0/1000
+            case kMFScrollAnimationCurveNameVeryLowInertia:  200.0/1000 /// Increasing this (vs the 160 we're using everywhere else) since we want the acceleration curve to kick in at lower finger-speeds [Jun 4 2025]
+            case kMFScrollAnimationCurveNameLowInertia:      160.0/1000
+            case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim: 160.0/1000
+            case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear:          160.0/1000
+            case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll:              160.0/1000
+            default: { assert(false); return -1.0 }()
+            }
+        }
+    }
     /// ^ Notes:
     ///     If more than `_consecutiveScrollTickIntervalMax` seconds passes between two scrollwheel ticks, then they aren't deemed consecutive.
     ///        other["consecutiveScrollTickIntervalMax"] as! Double;
@@ -327,11 +345,12 @@ import Cocoa
         let result: Double = SharedUtilitySwift.eval {
             
             switch animationCurve {
-            case kMFScrollAnimationCurveNameNone: 325.0
-            case kMFScrollAnimationCurveNameLowInertia: 375.0
+            case kMFScrollAnimationCurveNameNone:            325.0
+            case kMFScrollAnimationCurveNameVeryLowInertia:  375.0 /// Haven't considered this. (Only matters for fastScroll I think, which we've turned off for VeryLow) [Jun 2025]
+            case kMFScrollAnimationCurveNameLowInertia:      375.0
             case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim: 600.0
-            case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear: 375.0
-            case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll: 0.1234 /// Will be overriden
+            case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear:          375.0
+            case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll:              0.1234 /// Will be overriden
             default: -1.0
             }
         }
@@ -344,11 +363,12 @@ import Cocoa
         
         let result: Double = SharedUtilitySwift.eval {
             switch animationCurve {
-            case kMFScrollAnimationCurveNameNone: 16.0
-            case kMFScrollAnimationCurveNameLowInertia: 16.0
+            case kMFScrollAnimationCurveNameNone:           16.0
+            case kMFScrollAnimationCurveNameVeryLowInertia: 16.0 /// Haven't considered this [Jun 2025]
+            case kMFScrollAnimationCurveNameLowInertia:     16.0
             case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim: 12.0
-            case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear: 16.0
-            case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll: 0.1234 /// Will be overriden
+            case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear:          16.0
+            case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll:              0.1234 /// Will be overriden
             default: -1.0
             }
         }
@@ -389,20 +409,13 @@ import Cocoa
         
         switch animationCurve {
             
-        case kMFScrollAnimationCurveNameNone:
-            return ScrollSpeedupCurve(swipeThreshold: 6, initialSpeedup: 1.4, exponentialSpeedup: 3.0)
+        case kMFScrollAnimationCurveNameNone:           return ScrollSpeedupCurve(swipeThreshold: 6, initialSpeedup: 1.4,  exponentialSpeedup: 3.0)
+        case kMFScrollAnimationCurveNameVeryLowInertia: return ScrollSpeedupCurve(swipeThreshold: 1, initialSpeedup: 1,    exponentialSpeedup: 7.5) /// Turn off fastScroll, since we want _maximum control_ and linear feeling for this setting.
+        case kMFScrollAnimationCurveNameLowInertia:     return ScrollSpeedupCurve(swipeThreshold: 3, initialSpeedup: 1.33, exponentialSpeedup: 7.5)
             
-        case kMFScrollAnimationCurveNameLowInertia:
-            return ScrollSpeedupCurve(swipeThreshold: 3, initialSpeedup: 1.33, exponentialSpeedup: 7.5)
-            
-        case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim:
-            return ScrollSpeedupCurve(swipeThreshold: 2, initialSpeedup: 1.33, exponentialSpeedup: 7.5)
-            
-        case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear:
-            return ScrollSpeedupCurve(swipeThreshold: 3, initialSpeedup: 1.33, exponentialSpeedup: 7.5)
-            
-        case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll:
-            return nil as ScrollSpeedupCurve? /// Will be overriden
+        case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim: return ScrollSpeedupCurve(swipeThreshold: 2, initialSpeedup: 1.33, exponentialSpeedup: 7.5)
+        case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear:          return ScrollSpeedupCurve(swipeThreshold: 3, initialSpeedup: 1.33, exponentialSpeedup: 7.5)
+        case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll:              return nil as ScrollSpeedupCurve? /// Will be overriden
         
         default:
             assert(false)
@@ -416,9 +429,10 @@ import Cocoa
     
     @objc lazy var u_smoothness: MFScrollSmoothness = {
         switch c("smooth") as! String {
-        case "off": return kMFScrollSmoothnessOff
+        case "off":     return kMFScrollSmoothnessOff
+        case "low":     return kMFScrollSmoothnessLow
         case "regular": return kMFScrollSmoothnessRegular
-        case "high": return kMFScrollSmoothnessHigh
+        case "high":    return kMFScrollSmoothnessHigh
         default: fatalError()
         }
     }()
@@ -431,10 +445,10 @@ import Cocoa
         /// Maybe we should move the trackpad sim settings out of the MFScrollAnimationCurveName, (because that's weird?)
         
         switch u_smoothness {
-        case kMFScrollSmoothnessOff: return kMFScrollAnimationCurveNameNone
-        case kMFScrollSmoothnessRegular: return kMFScrollAnimationCurveNameLowInertia
-        case kMFScrollSmoothnessHigh:
-            return u_trackpadSimulation ? kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim : kMFScrollAnimationCurveNameHighInertia
+        case kMFScrollSmoothnessOff:        return kMFScrollAnimationCurveNameNone
+        case kMFScrollSmoothnessLow:        return kMFScrollAnimationCurveNameVeryLowInertia
+        case kMFScrollSmoothnessRegular:    return kMFScrollAnimationCurveNameLowInertia
+        case kMFScrollSmoothnessHigh:       return u_trackpadSimulation ? kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim : kMFScrollAnimationCurveNameHighInertia
         default: fatalError()
         }
     }()
@@ -457,10 +471,10 @@ import Cocoa
     
     @objc lazy var u_speed: MFScrollSpeed = {
         switch c("speed") as! String {
-        case "system": return kMFScrollSpeedSystem /// Ignore MMF acceleration algorithm and use values provided by macOS
-        case "low": return kMFScrollSpeedLow
-        case "medium": return kMFScrollSpeedMedium
-        case "high": return kMFScrollSpeedHigh
+        case "system":  return kMFScrollSpeedSystem /// Ignore MMF acceleration algorithm and use values provided by macOS
+        case "low":     return kMFScrollSpeedLow
+        case "medium":  return kMFScrollSpeedMedium
+        case "high":    return kMFScrollSpeedHigh
         default: fatalError()
         }
     }()
@@ -577,26 +591,93 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
 //            ScrollConfig.linearCurve
 //            Bezier(controlPoints: [_P(0, 0), _P(0.23, 0.89), _P(0.52, 1), _P(1, 1)], defaultEpsilon: 0.001)
         return MFScrollAnimationCurveParameters(justBaseCurve: baseCurve, speedSmoothing: -1, baseMsPerStep: 250, baseMsPerStepCurve: nil, sendGestureScrolls: false)
-        
-    case kMFScrollAnimationCurveNameLowInertia:
-
-        /// Option 6:
+    
+    case kMFScrollAnimationCurveNameVeryLowInertia:
+        /// Added [Jun 4 2025] to support a new "Smoothness: Low" option in the MMF interface.
+        ///     (kMFScrollAnimationCurveNameLowInertia) currently supports the "Smoothness: Regular" option.)
+        ///     (Maybe we should move this code into kMFScrollAnimationCurveNameNoInertia, buit I don't wanna delete any code right now)
         ///     Context: [May 2025]
-        ///         Recently I felt like Option 3 is way too unresponsive. I'm doing a lot of 'scanning' of large text recently – quickly scrolling back and forth, and Option 3 feels wayy to 'gooey', so I'm experimenting with a new curve.
+        ///         Recently I felt like Option 3 (in kMFScrollAnimationCurveNameLowInertia) is way too unresponsive. I'm doing a lot of 'scanning' of large text recently – quickly scrolling back and forth, and Option 3 feels wayy to 'gooey', so I'm experimenting with a new curve.
         ///         I also felt like one design goal of the previous curves – making text visible during scroling – didn't matter to me much right now? I feel like super fast movement is fine – you can still follow it, as long as your eyes have some context clues through animation. Plus once you're used to the scrolling, your brain anticipates where things end up.
-        if _0 {
-            var baseSpeedupCurve: Curve
-            if (true)  {
-                /// Option 6.1
+        ///     Inspiration:
+        ///         [May 17 2025] CLion's smooth scrolling looked quite good in this YouTube video: https://youtu.be/nnt5_qWX0eg. The CLion animation curve can be customized. The default might be https://cubic-bezier.com/#.17,.67,.83,.67 (those values are mentioned in the docs) ... But in the CLion Bezier editor it looks like the default settings are (0.25, 0.5, 0.5, 0.5). It's also possible that the default settings are different under Linux/Windows – the docs mention differences. The YouTuber might also have been using non-default settings. (Docs: https://www.jetbrains.com/help/clion/settings-appearance.html#ui?)
+        ///         [Jun 4 2025] Linux Firefox scrolling looked good in this Tscoding video: https://www.youtube.com/watch?v=G9piTswOQZY
+        ///             I have a theory that Firefox and Chrome might have different smoothing on macOS (compared to LInux/Window).
+        ///                 - This would sort of make sense since the default acceleration curves are totally different on macOS, which makes the smoothing feel different, too.
+        ///                 - Smooth scrolling not available in Chrome on macOS (?) https://www.reddit.com/r/chrome/comments/153tfev/smooth_scrolling_not_available_on_mac/
+        ///         [Jun 4 2025] SmoothFox.js for Firefox – I've seen this recommended. I should try it.
+        ///         [Jun 4 2025] I saw some Logitech Mouse have nice scrolling recently and some MMF user asked for less smoothing on GitHub recently after coming from Logitech's Driver. I remember I used to hate Logi Options scrolling but maybe they improved it or my tasted have changed?
+        if _1 {
+            var baseCurve:          Bezier?          = nil
+            var baseSpeedupCurve:   Curve?           = nil
+            
+            if (_1) {
+                /// Option 3
+                ///     Context: [Jun 2] I like the 6.2 values and have been using them over the last weeks.
+                ///         Only issues I noticed:
+                ///             - Things can feel a tad big abrupt at some points  ––– but I feel like it's a necessary tradeoff for having very short, responsive, predictable animations. (?)
+                ///             - Animations feel like they 'match' finger speed when moving finger slowly or quickly, but animations 'lag behind' finger movement a bit at medium speeds ––– 6.3 is trying to address that
+                ///         Plan 1:
+                ///             Add curvature to make animation higher at medium finger speed.
+                ///             Conclusion: [Jun 2 2025]|(Possibly premature) Not sure curve great here. Higher-medium speeds feel good now, but lower-medium speeds still feel too slow. We usually used the BezierCappedAccelerationCurveto scale animation *distance* relative to user input speed. (I found it nice for pointer acceleration and scroll acceleration) But here, we're scaling animation *duration* instead. It feels more sound to scale animation duration linearly relative to input speed. I feel like adjusting the lo-end and hi-end of when we start and stop to apply the linear acceleration might be more appropriate. Alternatively we could use a Cubic Bezier instead of BezierCappedAccelerationCurve to boost animation speed at lower-medium finger-speeds
+                ///         Plan 2:
+                ///             Adjust the `consecutiveScrollTickIntervalMax` up. [Jun 4 2025]
+                ///     Sidequest: (Maybe move these notes somewhere else) [Jun 2 2025]
+                ///         Looked into what 'defaultEpsilon' values to use for the BezierCappedAccelerationCurve here. I tested 0.001 and 300. Surprisingly, both were effectively the same in both speed and accuracy. Even though 300 basically turns off the entire algorithm after it makes its 'first guess', while 0.001 demands very high accuracy, and should cause the algorithm to run several newton/bisection iterations.
+                ///             It seems that  that the "initialGuess" of the newton algorithm is so good that doesn't ever need any further iterations even with epsilon 0.001. I'm not sure why this is. I think it might have to do with the range of x-values being small (0,1) while the range of y values is large (250,100) (The algorithm we're talking about tries to find a 't' for a given x value, and apparently the x and t values are (almost?) exactly equal here, which makes the 'initialGuess' of the algorithm highly accurate.)
+                ///             I've used CurveVisualizer.swift to test this (I built it for this purposes)
+                ///             Conclusion: You can use 0.001 as the 'defaultEpsilon'. it has no overhead and might make things more robust than a higher value if we change things later.
+                var curv: Double = 0.85
+                baseCurve = Bezier(controlPoints: [_P(0, 0), _P(0, 0), _P(curv, 1), _P(1, 1)], defaultEpsilon: 0.001)
+                var tup: (Double, Double) = ((1000.0/60)*15, (1000.0/60)*6)
+                var animationSpeedupCurvature: Double = -1
+                if (_0) { animationSpeedupCurvature = 1.0 } /// Makes for unpredictable, jerky speedup when trying to scroll slowly but then accidentally producing 2 wheel ticks that are a bit closer together [Jun 3 2025]
+                if (_1) { animationSpeedupCurvature = 0.00 } /// Turn off curvature, now that we've increased consecutiveScrollTickIntervalMax from 160 -> 200 ms
+                
+                baseSpeedupCurve = BezierCappedAccelerationCurve(xMin: 0, xMax: 1, yMin: tup.0, yMax: tup.1, curvature: animationSpeedupCurvature,
+                                                                 reduceToCubic: false, defaultEpsilon: 0.001)
+                
+                
+                /// DEBUG
+                if #available(macOS 15.0, *) {
+                    CurveVisualizer.setCurveTrace1(baseSpeedupCurve!.traceAsPoints(startX: 0.0, endX: 1.0, nOfSamples: 1000))
+                }
+            }
+            
+            if (_0)  {
+                /// Option 2
+                ///     Context: [May 10] A few days later, I wanted a bit more fluid, less unnatural/abrupt animations, so we added an ease-out instead of a linear curve
+                ///     Update [May 12] I liked 0.95, but a few days later, the abrupt stops feel offputting while scrolling slowly and continuously to scan for text in small IDA Output window. I scrolled at a speed right at the edge of where the animation becomes continuous - Solution idea: Maybe we could have a stronger ease-out while scrolling slowly but keep the mostly linear curve for faster movements? I generally prefer slower animation today and am Happy with Option 3. - Perhaps cause I'm more tired/relaxed than the last days. Update: Actually using 0.85 seems to solve the problem without making other stuff feel weird I think ... Update2: Nah 0.85 makes the speed feel 'inconsistent'. Update3: I played around with Firefox today and it also feels 'inconsistent'. The mostly linear animation curve is good because it keeps the animations speed steady and directly tied to the speed of the user's finger movement. But perhaps a hybrid solution where we have a smooth ease-out for slow finger movements but become close-to-linear at medium and fast finger movements would solve this.
+                ///         Update: [May 20] Setting the lo speed lower (20 frames is nice but I haven't tested much) Makes the problem with slow, continuous scrolling go away! ... But it makes medium-speed scrolls feel sluggish. This suggests that we could make this feel really great by keeping a linear animation curve but refining the speedup curve. Update 2: Actually with 15 frames it feels even better. Maybe we can keep the linear speedup curve like that.
+                var curv: Double = .nan
+                if (_0) { curv = 0.9 }
+                if (_0) { curv = 0.95 } /** I like 0.95. It's very subtle, might be placebo.  With 0.75 if felt the speed was too 'fluctuating' and inconsistent. But with 1.0 I felt the animation stop looks abrupt. */
+                if (_0) { curv = devToggles_C }
+                if (_1) { curv = 0.85 } /**[May 20 2025] I accidentally got used to this over the last few days and I like it now. Stops feel less abrupt than 0.95  */
+                print("ScrollConfig: DevToggles: curvature: \(curv)")
+                baseCurve = Bezier(controlPoints: [_P(0, 0), _P(0, 0), _P(curv, 1), _P(1, 1)], defaultEpsilon: 0.001)
                 var tup: (Double, Double) = (-1, -1)
-                if (_0) { tup = (160, 90)                          }
-                if (_0) { tup = ((1000.0/60)*3, (1000.0/60)*3)     }
-                if (_0) { tup = ((1000.0/60)*12, (1000.0/60)*3)    }
-                if (_1) { tup = ((1000.0/60)*12, (1000.0/60)*5)    }
+                if (_0) { tup = ((1000.0/60)*12, (1000.0/60)*6) }
+                if (_0) { tup = ((1000.0/60)*Double(devToggles_Lo), (1000.0/60)*Double(devToggles_Hi)) }
+                if (_1) { tup = ((1000.0/60)*15, (1000.0/60)*6) }
                 baseSpeedupCurve = Curve(rawCurve: { x in Math.scale(x, (0,1), tup) })
             }
-            if (false) {
-                /// Option 6.2
+            
+            if (_0)  {
+                /// Option 1
+                baseCurve = ScrollConfig.linearCurve
+                var tup: (Double, Double) = (-1, -1)
+                if (_0) { tup = (160, 90)                          }
+                if (_0) { tup = ((1000.0/60)*3,  (1000.0/60)*3)    }
+                if (_0) { tup = ((1000.0/60)*12, (1000.0/60)*3)    }
+                if (_0) { tup = ((1000.0/60)*12, (1000.0/60)*5)    }
+                if (_1) { tup = ((1000.0/60)*12, (1000.0/60)*6)    }
+                if (_0) { tup = ((1000.0/60)*12, (1000.0/60)*12)   }
+                baseSpeedupCurve = Curve(rawCurve: { x in Math.scale(x, (0,1), tup) })
+            }
+            if (_0) {
+                /// Option 0
+                baseCurve = ScrollConfig.linearCurve
                 let curvature = 4.0
                 let baseMsPerStepCurveMax = 200.0
                 let baseMsPerStepCurveMin = 90.0
@@ -611,8 +692,12 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
                     baseSpeedupCurve = Curve(rawCurve: e3)
                 }
             }
-            return MFScrollAnimationCurveParameters(justBaseCurve: ScrollConfig.linearCurve, speedSmoothing:-1, baseMsPerStep:-1, baseMsPerStepCurve: baseSpeedupCurve, sendGestureScrolls: false)
+            return MFScrollAnimationCurveParameters(justBaseCurve: baseCurve!, speedSmoothing:-1, baseMsPerStep:-1, baseMsPerStepCurve: baseSpeedupCurve!, sendGestureScrolls: false)
         }
+        
+        fatalError()
+        
+    case kMFScrollAnimationCurveNameLowInertia:
 
         /// Option 5: Higher baseMsPerStep
         if _0 {
@@ -858,7 +943,17 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
         } else {
             curvature = CombinedLinearCurve(yValues: [4.25, 3.0, 2.25]).evaluate(atX: curvature_n)
         }
-        
+
+    } else if smoothness == kMFScrollSmoothnessLow { /// kMFScrollAnimationCurveNameVeryLowInertia
+
+        minSens =   CombinedLinearCurve(yValues: [30.0, 60.0, 120.0]).evaluate(atX: minSend_n)
+        maxSens =   CombinedLinearCurve(yValues: [90.0, 120.0, 180.0]).evaluate(atX: maxSens_n)
+        if !precise {
+            curvature = CombinedLinearCurve(yValues: [0.25, 0.0, 0.0]).evaluate(atX: curvature_n)
+        } else {
+            curvature = CombinedLinearCurve(yValues: [0.75, 0.75, 0.25]).evaluate(atX: curvature_n)
+        }
+
     } else if smoothness == kMFScrollSmoothnessRegular {
 
         minSens =   CombinedLinearCurve(yValues: [/*20.0, 40.0,*/ 30.0, 60.0, 120.0]).evaluate(atX: minSend_n)
@@ -924,7 +1019,7 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
     let xMax: Double = 1 / consecutiveScrollTickInterval_AccelerationEnd
     let yMax: Double = maxSens
     
-    let curve = BezierCappedAccelerationCurve(xMin: xMin, yMin: yMin, xMax: xMax, yMax: yMax, curvature: curvature, reduceToCubic: false, defaultEpsilon: 0.05)
+    let curve = BezierCappedAccelerationCurve(xMin: xMin, xMax: xMax, yMin: yMin, yMax: yMax, curvature: curvature, reduceToCubic: false, defaultEpsilon: 0.05)
     
     /// Debug
     

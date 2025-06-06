@@ -19,7 +19,7 @@
 ///         However, they are still going to be *interaction-points between the IOThread and mainThread* which have high potential for race-conditions.
 ///         Thread-interaction points:
 ///             - Remaps loading
-///             - <TODO: Think about other interaction points>
+///             - <TODO: Think about/document other interaction points>
 ///
 ///    Update: [Apr 2025]
 ///     Look into elevating thread-priority.
@@ -27,6 +27,8 @@
 ///             micropython GH Issue about improving timers: https://github.com/micropython/micropython/issues/8621
 ///                 Sidenote: They say 'nice' does nothing on macOS. We're setting that in our launchd config.
 ///                 SideSideNote: Is there a way to have _launchd_ start the MMF Helper faster after boot? Helper gets started *after* all the windowed apps, with all the background apps.
+///     Update: [May 2025]
+///         Safari is about as stuttery as MMF while fingers are on the Trackpad, but during momentum-scrolling Safari is much smoother with a Trackpad than MMF. So there must be a way to make things smoother, perhaps by improving the pacing of sent events. Not sure I wrote about this elsewhere. Not sure this belongs here. Also see DisplayLink.m and the kMFDisplayLinkWorkTypeEventSending fiasco.
 ///
 
 #import "GlobalEventTapThread.h"

@@ -98,6 +98,7 @@
 		4F5F3EF12756EC0400C350C0 /* RemapSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF02756EC0400C350C0 /* RemapSwizzler.m */; };
 		4F5F3EF32756F1DB00C350C0 /* ScrollModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */; };
 		4F626E99292A842D00E6FFD5 /* KeyCaptureMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F626E98292A842D00E6FFD5 /* KeyCaptureMode.m */; };
+		4F67978C2DCFB76100516167 /* DevToggles.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F67978B2DCFB76100516167 /* DevToggles.m */; };
 		4F6F67A028A8141800C6C40F /* ButtonTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6F679F28A8141800C6C40F /* ButtonTabController.swift */; };
 		4F70ECB7267E810900325A76 /* IOUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECB6267E810900325A76 /* IOUtility.m */; };
 		4F79A7EF26042E2E00076A7E /* Toast.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F79A7EE26042E2E00076A7E /* Toast.xib */; };
@@ -193,6 +194,7 @@
 		4FA2F1262C29A125000C5535 /* NotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* NotificationLabel.m */; };
 		4FA2F13D2C2B0932000C5535 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */; };
 		4FA2F13E2C2B0932000C5535 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */; };
+		4FA3ACC62DED91E100A460FD /* CurveVisualizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA3ACC02DED4AE600A460FD /* CurveVisualizer.swift */; };
 		4FA40CEF28A0CA0A00499E53 /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CEE28A0CA0A00499E53 /* ReactiveSwift */; };
 		4FA40CF228A0CA3900499E53 /* ReactiveCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CF128A0CA3900499E53 /* ReactiveCocoa */; };
 		4FA40CF628A0CCC600499E53 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD50266AC10C003935EA /* Math.swift */; };
@@ -2117,6 +2119,8 @@
 		4F616D6027BDCD56004A6A72 /* ScrollConfigTesting.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ScrollConfigTesting.md; sourceTree = "<group>"; };
 		4F626E97292A842D00E6FFD5 /* KeyCaptureMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCaptureMode.h; sourceTree = "<group>"; };
 		4F626E98292A842D00E6FFD5 /* KeyCaptureMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyCaptureMode.m; sourceTree = "<group>"; };
+		4F67978A2DCFB76100516167 /* DevToggles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DevToggles.h; sourceTree = "<group>"; };
+		4F67978B2DCFB76100516167 /* DevToggles.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DevToggles.m; sourceTree = "<group>"; };
 		4F6F679F28A8141800C6C40F /* ButtonTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTabController.swift; sourceTree = "<group>"; };
 		4F70ECAC267E442D00325A76 /* PointerSpeedExperiments2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeedExperiments2.h; sourceTree = "<group>"; };
 		4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeedExperiments2.m; sourceTree = "<group>"; };
@@ -2247,6 +2251,7 @@
 		4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		4FA2F13F2C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/ButtonOptionsViewController.xcstrings; sourceTree = "<group>"; };
 		4FA2F1402C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/AuthorizeAccessibilityView.xcstrings; sourceTree = "<group>"; };
+		4FA3ACC02DED4AE600A460FD /* CurveVisualizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveVisualizer.swift; sourceTree = "<group>"; };
 		4FA40CF528A0CBA600499E53 /* Mac Mouse Fix-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FA5F08C2CE4CEF800ED2354 /* SymbolicHotKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SymbolicHotKeys.h; sourceTree = "<group>"; };
 		4FA5F08D2CE4CEF800ED2354 /* SymbolicHotKeys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SymbolicHotKeys.m; sourceTree = "<group>"; };
@@ -2577,6 +2582,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4F14C0AF2C8EFA43002502BB /* Strings */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (4F14C0B22C8EFA6E002502BB /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Strings; sourceTree = "<group>"; };
 		4F1668042C6AA96A009E4924 /* LocalizedDocuments */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LocalizedDocuments; sourceTree = "<group>"; };
+		4FD98B302DE86F100039B102 /* Crash Reports */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Crash Reports"; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -6563,6 +6569,7 @@
 				4F4C73A92C4FB28C001D97C3 /* .gitmodules */,
 				4F214C212B2E140A00DD3957 /* .gitignore */,
 				4F0C003B2C525F6C00C5D843 /* Localization Notes */,
+				4FD98B302DE86F100039B102 /* Crash Reports */,
 				4FEB6616279376C200E6A111 /* Various Notes */,
 			);
 			name = Other;
@@ -7707,6 +7714,8 @@
 		4FF6660C25F2C93A00689B77 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				4F67978A2DCFB76100516167 /* DevToggles.h */,
+				4F67978B2DCFB76100516167 /* DevToggles.m */,
 				4FD0A71027B295F600FFCD12 /* GeneralConfig.swift */,
 				4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */,
 				4FCB2609292F91D70066EE56 /* ReactiveScrollConfig.swift */,
@@ -7988,6 +7997,7 @@
 				4F2CC58627B8D2300084AACE /* HybridCurves.swift */,
 				4F2CC58827B8DA8B0084AACE /* Line.swift */,
 				4F1D58182881D880002EB119 /* CombinedLinearCurve.swift */,
+				4FA3ACC02DED4AE600A460FD /* CurveVisualizer.swift */,
 				4FBDA14A27B225210030E4EA /* Unused */,
 			);
 			path = Curves;
@@ -8557,6 +8567,7 @@
 				4F44FF042606D73D00926A5E /* MFMessagePort.m in Sources */,
 				4F1D7F4728A4639800253407 /* MenuBarItem.swift in Sources */,
 				4F8CF95728686C0100BF5E55 /* PolynomialRegression.m in Sources */,
+				4F67978C2DCFB76100516167 /* DevToggles.m in Sources */,
 				4FFA4E3628B795F30062A1FE /* LicenseUtility.swift in Sources */,
 				4F8B7E6727B4E32600598B65 /* TouchAnimatorBase.swift in Sources */,
 				4FA0681A291B2C4C00949B5F /* Shorthands.m in Sources */,
@@ -8598,6 +8609,7 @@
 				4FF6669225F2C93A00689B77 /* RoughScroll_old_.m in Sources */,
 				4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */,
 				4FF6669825F2C93A00689B77 /* SubPixelator.m in Sources */,
+				4FA3ACC62DED91E100A460FD /* CurveVisualizer.swift in Sources */,
 				4F44794328B55F6300AD1979 /* CAAnimation+Extensions.swift in Sources */,
 				4FE40B97283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */,
 				4F8A8DC2287F967000786BCC /* TestAccelerationCurve.swift in Sources */,
@@ -9079,6 +9091,8 @@
 				WARNING_CFLAGS = (
 					"-Wnullable-to-nonnull-conversion",
 					"-Wnonnull",
+					"-Wsign-compare",
+					"-Wsign-conversion",
 				);
 			};
 			name = Debug;
@@ -9165,6 +9179,8 @@
 				WARNING_CFLAGS = (
 					"-Wnullable-to-nonnull-conversion",
 					"-Wnonnull",
+					"-Wsign-compare",
+					"-Wsign-conversion",
 				);
 			};
 			name = Release;
