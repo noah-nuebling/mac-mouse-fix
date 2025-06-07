@@ -30,8 +30,8 @@ It introduces a new offline licensing system, and fixes several important bugs.
 
 ### Enhanced Privacy & Efficiency
 
-3.0.4 introduces a new offline license validation system that minimizes internet connections as much as possible.
-This improves privacy and saves your computer's system resources.
+3.0.4 introduces a new offline license validation system that minimizes internet connections as much as possible.\
+This improves privacy and saves your computer's system resources.\
 When licensed, the app now operates 100% offline!
 
 <details>
@@ -52,9 +52,13 @@ Also see <a href=https://gumroad.com/privacy>Gumroad's privacy policy</a> and th
 - Fixed a bug where keyboard shortcuts in System Settings would sometimes get deleted when using Mac Mouse Fix 'Click' actions such as 'Mission Control'. 
 - Fixed [a bug](https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aopen%20label%3A%22%27Free%20days%20are%20over%27%20bug%22) where the app would sometimes stop working and show a notification that the 'Free days are over' to users who had already bought the app. 
     -  If you experienced this bug, I sincerely apologize for the inconvenience. You can apply for a [refund here](https://redirect.macmousefix.com/?message=&target=mmf-apply-for-refund). 
+- Improved the way the application retrieves its main window, which may have fixed a bug where the 'Activate License' screen sometimes fails to appear. 
+
+### Usability Improvements
+
 - Made it impossible to enter spaces and linebreaks in the text field on the 'Activate License' screen. 
     - This was a common point of confusion, because it is very easy to accidentally select a hidden linebreak when copying your license key from Gumroad's emails.  
-- Improved the way the application retrieves its main window, which may have fixed a bug where the 'Activate License' screen sometimes fails to appear. 
+- These update notes are automatically translated for non-English users (Powered by Claude). I hope this is helpful! If you encounter any problems with it, let me know. This is a first glimpse of a new translation system that I've been developing over the past year.
 
 ### Dropped (Unofficial) Support for macOS 10.14 Mojave
 
