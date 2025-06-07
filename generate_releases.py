@@ -330,7 +330,7 @@ def _validate_locales():
     assert os.path.exists(p), f"Wanted to validate locales, but main repo Xcode project not found at expected location: {p}"
     loc_dev, loc_trans = mflocales.find_xcode_project_locales(p)
     assert loc_dev == source_locale,                            f"Source locale doesn't match main repo: '{loc_dev}' vs '{source_locale}'"
-    assert set(loc_trans) == set(locales)-{source_locale},      f"Translation locales don't match main repo. Symmetric difference: {set(loc_trans).symmetric_difference(set(locales))}"
+    assert set(loc_trans) == set(locales)-{source_locale},      f"Translation locales don't match main repo. Symmetric difference: {set(loc_trans).symmetric_difference(set(locales))}. App locales: ({loc_trans}), Hardcoded locales: ({locales})"
 _validate_locales()
 
 # Sort locales
