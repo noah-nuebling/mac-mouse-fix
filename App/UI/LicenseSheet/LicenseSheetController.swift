@@ -294,7 +294,7 @@ import CocoaLumberjackSwift
     func controlTextDidChange(_ obj: Notification) {
         
         /// Trim whitespace
-        licenseField.stringValue = (licenseField.stringValue as NSString).stringByTrimmingWhiteSpace() as String
+        licenseField.stringValue = (licenseField.stringValue as NSString).stringByTrimmingWhiteSpace() as String /// [Jun 6 2025] On the feature-strings-catalog branch we replaced this with stringByRemovingAllWhiteSpace(). Should consider backporting to master since we get quite a lot of support requests about this e.g. https://github.com/noah-nuebling/mac-mouse-fix/issues/1396
         
         /// Update UI
         updateUIToLicenseField()
@@ -355,16 +355,13 @@ import CocoaLumberjackSwift
         if openInstance != nil { return }
         openInstance = LicenseSheetController()
         
-        guard let tabViewController = MainAppState.shared.tabViewController else {
-            assert(false) /// This assert fails sometimes when clicking the Activate License link on Gumroad while having the debugger attached.
-            return
-        }
+        guard let tabViewController = MainAppState.shared.tabViewController else { assert(false); return }
         tabViewController.presentAsSheet(openInstance!)
     }
     
     @objc static func remove() {
         
-        guard let tabViewController = MainAppState.shared.tabViewController else { assert(false); return } /// [Jan 2025] Just saw this assert(false) with a debugger attached, but didn't investigate further. Didn't see it after, so seems to be very rare.
+        guard let tabViewController = MainAppState.shared.tabViewController else { assert(false); return }
         tabViewController.dismiss(openInstance!)
         
         openInstance = nil

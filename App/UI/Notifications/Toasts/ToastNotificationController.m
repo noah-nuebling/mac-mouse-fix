@@ -116,7 +116,7 @@ static double _toastAnimationOffset = 20;
     
     /// Get existing notif instance and close
     NSPanel *w = (NSPanel *)_instance.window;
-    NSWindow *mainW = NSApp.mainWindow;
+    NSWindow *mainW = MainAppState.shared.window;
     [w close];
     
     /// Set message text and text attributes to label

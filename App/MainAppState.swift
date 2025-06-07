@@ -22,19 +22,25 @@ import ReactiveSwift
     @objc var window: ResizingTabWindow? {
         
         /// Notes:
-        ///     Not sure what we're doing here. `NSApp.mainWindow` was nil under obscure circumstances (see https://github.com/noah-nuebling/mac-mouse-fix/issues/735) so we added the windowController stuff.
+        ///     Not sure what we're doing here. `NSApp.mainWindow` was nil under obscure circumstances (see https://github.com/noah-nuebling/mac-mouse-fix/issues/735) so we added the `ResizingTabWindowController.window` stuff.
+        ///     Update: [Jun 6 2025] Over the last months I saw LicenseSheetController.add() and LicenseSheetController.remove() fail in the debugger and in reports from users. I suspect this was because we were still using NSApp.mainWindow instead of MainAppState.shared.window. I now replaced all uses of NSApp.mainWindow across the app (I think). Maybe we should disable NSApp.mainWindow to prevent further accidental use.
+        ///             Old verbose notes: (Probably delete these.)
+        ///                 (On LicenseSheetController.remove():)   [Jan 2025] Just saw this assert(false) with a debugger attached, but didn't investigate further. Didn't see it after, so seems to be very rare.
+        ///                 (On LicenseSheetController.add():)          This assert fails sometimes when clicking the Activate License link on Gumroad while having the debugger attached. || [Jun 6 2025] Just saw this assert fail again with debugger attached || [Jun 6 2025] I've heard this breaking for ppl sometimes.
+        ///                                              I assumed this was due to the `macmousefix:activate` link breaking due to a bug in Apple's URL handling system but `macmousefix:` links aren't used at all when clicking the 'Activate License' link on the About Tab! (In 3.0.4 src code). That means this bug probably happens for other users as well. ... Investigating the code, it looks like `NSApp.mainWindow` returns nil. So we should choose a better method of getting the main MMF window.
         
-        var result = ResizingTabWindowController.window
+        var result = ResizingTabWindowController.window     /// [Jun 6 2025] Could also use `[AppDelegate mainWindow]`. Not sure there's any difference. Should probably unify these accessors.
         if result == nil {
+            assert(false) /// [Jun 6 2025] Not sure this ever fails. If it does fail, I doubt that NSApp.mainWindow will succeed (but not sure)
             result = NSApp.mainWindow as? ResizingTabWindow
         }
         return result
     }
     @objc var appDelegate: AppDelegate {
-        return NSApp.delegate as! AppDelegate
+        return NSApp.delegate as! AppDelegate /// [Jun 2025] Could also use `[AppDelegate instance]`. Not sure there's any difference. Should probably unify these accessors.
     }
     @objc var tabViewController: TabViewController? {
-        let controller = NSApp.mainWindow?.contentViewController as! TabViewController?
+        let controller = MainAppState.shared.window?.contentViewController as! TabViewController?
         return controller
     }
     

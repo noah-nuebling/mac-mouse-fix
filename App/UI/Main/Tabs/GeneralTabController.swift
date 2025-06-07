@@ -163,7 +163,7 @@ class GeneralTabController: NSViewController {
                             /// - We put a period at the end of this UI string. Usually we don't put periods for short UI strings, but it just feels wrong in this case?
                             /// - The default duration `kMFToastDurationAutomatic` felt too short in this case. I wonder why that is? I think this toast is one of, if not the shortest toasts - maybe it has to do with that? Maybe it feels like it should display longer, because there's a delay until it shows up so it's harder to get back to? Maybe our tastes for how long the toasts should be changed? Maybe we should adjust the formula for `kMFToastDurationAutomatic`?
                             
-                            if let window = NSApp.mainWindow {
+                            if let window = MainAppState.shared.window {
                                 let rawMessage = NSLocalizedString("enable-timeout-toast", comment: "First draft: If you have **problems enabling** the app, click&nbsp;[here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861).")
                                 ToastNotificationController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage)!, to: window, forDuration: 10.0)
                             }
@@ -184,7 +184,7 @@ class GeneralTabController: NSViewController {
                         if messageRaw != "" {
                             let message = NSMutableAttributedString(coolMarkdown: messageRaw)
                             DispatchQueue.main.async { /// UI stuff needs to be called from the main thread
-                                if let window = NSApp.mainWindow, let message = message {
+                                if let window = MainAppState.shared.window, let message = message {
                                     ToastNotificationController.attachNotification(withMessage: message, to: window, forDuration: kMFToastDurationAutomatic)
                                 }
                             }

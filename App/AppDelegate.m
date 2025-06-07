@@ -58,10 +58,10 @@
 
 /// TODO: Remove these in favor of MainAppState.swift
 
-+ (AppDelegate *)instance {
++ (AppDelegate *)instance { /// [Jun 6 2025] Probably remove this and use MainAppState.shared.appDelegate instead.
     return (AppDelegate *)NSApp.delegate;
 }
-+ (NSWindow *)mainWindow {
++ (NSWindow *)mainWindow { /// [Jun 6 2025] Maybe unify this with MainAppState.shared.window
     return self.instance.window;
 }
 
@@ -193,7 +193,7 @@ static NSDictionary *sideButtonActions;
     if ((NO)) {
         NSTitlebarAccessoryViewController *viewController = [[NSTitlebarAccessoryViewController alloc] initWithNibName:@"MyTitlebarAccessoryViewController" bundle:nil];
         viewController.layoutAttribute = NSLayoutAttributeRight;
-        [NSApp.mainWindow addTitlebarAccessoryViewController:viewController];
+        [MainAppState.shared.window addTitlebarAccessoryViewController:viewController];
     }
     
     /// Update licenseConfig
