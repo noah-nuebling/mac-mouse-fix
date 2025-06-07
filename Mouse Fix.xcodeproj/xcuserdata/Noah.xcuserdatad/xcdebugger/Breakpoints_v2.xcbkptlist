@@ -556,8 +556,8 @@
             filePath = "App/UI/LicenseSheet/LicenseSheetController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "364"
-            endingLineNumber = "364"
+            startingLineNumber = "367"
+            endingLineNumber = "367"
             landmarkName = "remove()"
             landmarkType = "7">
          </BreakpointContent>

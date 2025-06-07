@@ -294,7 +294,10 @@ import CocoaLumberjackSwift
     func controlTextDidChange(_ obj: Notification) {
         
         /// Trim whitespace
-        licenseField.stringValue = (licenseField.stringValue as NSString).stringByTrimmingWhiteSpace() as String /// [Jun 6 2025] On the feature-strings-catalog branch we replaced this with stringByRemovingAllWhiteSpace(). Should consider backporting to master since we get quite a lot of support requests about this e.g. https://github.com/noah-nuebling/mac-mouse-fix/issues/1396
+        ///     [Jun 7 2025] Backported usage of `stringByRemovingAllWhiteSpace()` (instead of `stringByTrimmingWhiteSpace()`) to master from feature-strings-catalog branch.
+        ///         I backported this since it'll probably take a while until we can ship feature-strings-catalog, and we receive relatively frequent support requests about this, such as this recent one: https://github.com/noah-nuebling/mac-mouse-fix/issues/1396
+        ///         Context: (Which we mighttt want to keep when merging this into feature-strings-catalog): I could very easily reproduce this issue, by opening one of Gumroad's license-key emails, such as [this one](message:<0100019746619cff-10c3aa60-a576-48c2-ac20-4f9d846abdbd-000000@email.amazonses.com>), and simply dragging slightly too far when selecting the license key for copy-pasting.
+        licenseField.stringValue = (licenseField.stringValue as NSString).stringByRemovingAllWhiteSpace() as String
         
         /// Update UI
         updateUIToLicenseField()

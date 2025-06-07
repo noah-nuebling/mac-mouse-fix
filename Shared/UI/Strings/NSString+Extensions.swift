@@ -39,4 +39,8 @@ import Foundation
     @objc func stringByTrimmingWhiteSpace() -> NSString {
         return self.attributed().trimmingWhitespace().string as NSString /// This is pretty inefficient but probably doesn't matter
     }
+    
+    @objc func stringByRemovingAllWhiteSpace() -> NSString { /// [Jun 7 2025] Backported to master from feature-strings-catalog branch.
+        return self.attributed().removingAllWhitespace().string as NSString
+    }
 }

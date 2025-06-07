@@ -30,6 +30,30 @@
     return s;
 }
 
+- (NSAttributedString *)attributedStringByRemovingAllWhitespace {
+    
+    ///
+    /// Remove all whitespace and newline chars from the string
+    ///
+    
+    /// [Jun 7 2025] Backported to master from feature-strings-catalog branch
+    
+    NSCharacterSet *whitespaceAndNewlineChars = NSCharacterSet.whitespaceAndNewlineCharacterSet;
+    
+    NSMutableAttributedString *s = self.mutableCopy;
+    NSRange searchRange = NSMakeRange(0, s.length);
+    
+    while (true) {
+        NSRange whitespace = [s.string rangeOfCharacterFromSet:whitespaceAndNewlineChars options:0 range:searchRange];
+        if (whitespace.location == NSNotFound) break;
+        [s deleteCharactersInRange:whitespace];
+        searchRange = NSMakeRange(whitespace.location, s.length - whitespace.location);
+        assert(searchRange.location + searchRange.length == s.length); /// End of the search range should always be the end of the string
+    }
+    
+    return s;
+}
+
 - (NSAttributedString *)attributedStringByTrimmingWhitespace {
     
     /// Deletes leading, trailing, and duplicate whitespace from a string.
