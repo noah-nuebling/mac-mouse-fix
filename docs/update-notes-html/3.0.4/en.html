@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.4</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Note to Mac Mouse Fix 2 Users</strong></p>
+
+<p>With the introduction of Mac Mouse Fix 3, the pricing model of the
+
+app has changed:</p>
+
+<ul>
+
+<li><strong>Mac Mouse Fix 2</strong><br />
+
+Remains 100% free, and I plan to keep supporting it.<br />
+
+<strong>Skip this update</strong> to keep using Mac Mouse Fix 2.
+
+Download the latest version of Mac Mouse Fix 2 <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest">here</a>.</li>
+
+<li><strong>Mac Mouse Fix 3</strong><br />
+
+Free for 30 days, costs a few dollars to own.<br />
+
+<strong>Update now</strong> to get Mac Mouse Fix 3!</li>
+
+</ul>
+
+<p>You can learn more about the pricing and features of Mac Mouse Fix 3
+
+on the <a href="https://macmousefix.com/">new website</a>.</p>
+
+<p>Thanks for using Mac Mouse Fix! :)</p>
+
+<hr />
+
+<p><strong>ℹ️ Note to Mac Mouse Fix 3 Buyers</strong></p>
+
+<p>If you accidentally updated to Mac Mouse Fix 3 without knowing that
+
+it’s not free anymore, I’d like to offer you a <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund">refund</a>.</p>
+
+<p>The latest version of Mac Mouse Fix 2 stays <strong>entirely
+
+free</strong>, and you can download it <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest">here</a>.</p>
+
+<p>I’m sorry for the hassle, and I hope everyone is ok with this as a
+
+solution!</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.4</strong> improves privacy, efficiency,
+
+and reliability.<br />
+
+It introduces a new offline licensing system, and fixes several
+
+important bugs.</p>
+
+<h3 id="enhanced-privacy-efficiency">Enhanced Privacy &amp;
+
+Efficiency</h3>
+
+<p>3.0.4 introduces a new offline license validation system that
+
+minimizes internet connections as much as possible. This improves
+
+privacy and saves your computer’s system resources. When licensed, the
+
+app now operates 100% offline!</p>
+
+<details>
+
+<summary>
+
+<b>Click here for more details</b>
+
+</summary>
+
+<p>Previous versions validated licenses online at every launch,
+
+potentially allowing connection logs to be stored by third-party servers
+
+(GitHub and Gumroad). The new system eliminates unnecessary connections
+
+– after the initial license activation, it only connects to the internet
+
+if local license data is corrupted. <br><br> While no user behavior was
+
+ever recorded by me personally, the previous system theoretically
+
+allowed third-party servers to log IP addresses and connection times.
+
+Gumroad could also log your license key and potentially correlate it to
+
+any personal info they recorded about you when you bought Mac Mouse Fix.
+
+<br><br> I didn’t consider these subtle privacy issues when I built the
+
+original licensing system, but now, Mac Mouse Fix is as private and
+
+internet-free as possible! <br><br> Also see
+
+<a href=https://gumroad.com/privacy>Gumroad’s privacy policy</a> and
+
+this
+
+<a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>GitHub
+
+comment</a> of mine.</p>
+
+</details>
+
+<h3 id="bug-fixes">Bug Fixes</h3>
+
+<ul>
+
+<li>Fixed a bug where macOS would sometimes get stuck when using ‘Click
+
+and Drag’ for ‘Spaces &amp; Mission Control’.</li>
+
+<li>Fixed a bug where keyboard shortcuts in System Settings would
+
+sometimes get deleted when using Mac Mouse Fix ‘Click’ actions such as
+
+‘Mission Control’.</li>
+
+<li>Fixed <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aopen%20label%3A%22%27Free%20days%20are%20over%27%20bug%22">a
+
+bug</a> where the app would sometimes stop working and show a
+
+notification that the ‘Free days are over’ to users who had already
+
+bought the app.
+
+<ul>
+
+<li>If you experienced this bug, I sincerely apologize for the
+
+inconvenience. You can apply for a <a
+
+href="https://redirect.macmousefix.com/?message=&amp;target=mmf-apply-for-refund">refund
+
+here</a>.</li>
+
+</ul></li>
+
+<li>Made it impossible to enter spaces and linebreaks in the text field
+
+on the ‘Activate License’ screen.
+
+<ul>
+
+<li>This was a common point of confusion, because it is very easy to
+
+accidentally select a hidden linebreak when copying your license key
+
+from Gumroad’s emails.<br />
+
+</li>
+
+</ul></li>
+
+<li>Improved the way the application retrieves its main window, which
+
+may have fixed a bug where the ‘Activate License’ screen sometimes fails
+
+to appear.</li>
+
+</ul>
+
+<h3 id="dropped-unofficial-support-for-macos-10.14-mojave">Dropped
+
+(Unofficial) Support for macOS 10.14 Mojave</h3>
+
+<p>Mac Mouse Fix 3 officially supports macOS 11 Big Sur and later.
+
+However, for users willing to accept some glitches and graphical issues,
+
+Mac Mouse Fix 3.0.3 and earlier could still be used on macOS 10.14.4
+
+Mojave.</p>
+
+<p>Mac Mouse Fix 3.0.4 drops that support and <strong>now requires macOS
+
+10.15 Catalina</strong>.<br />
+
+I apologize for any inconvenience caused by this. This change allowed me
+
+to implement the improved licensing system using modern Swift features.
+
+Mojave users can continue using Mac Mouse Fix <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3">3.0.3</a>
+
+or the <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest">latest
+
+version of Mac Mouse Fix 2</a>. I hope that’s a good solution for
+
+everyone.</p>
+
+<h3 id="under-the-hood-improvements">Under-the-hood Improvements</h3>
+
+<ul>
+
+<li>Implemented a new ‘MFDataClass’ system allowing for more powerful
+
+data modeling while keeping Mac Mouse Fix’s config file human-readable
+
+and human-editable.</li>
+
+<li>Built support for adding payment platforms other than Gumroad. So in
+
+the future, there might be localized checkouts, and the app could be
+
+sold to different countries.</li>
+
+<li>Improved logging which allows me to create more effective “Debug
+
+Builds” for users who experience hard-to-reproduce bugs.</li>
+
+<li>Many other small improvements and cleanup work.</li>
+
+</ul>
+
+<p><em>Edited with excellent assistance from Claude.</em></p>
+
+<hr />
+
+<p>Also check out the previous release <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3"><strong>3.0.3</strong></a>.</p>
+
+</body>
+
+</html>

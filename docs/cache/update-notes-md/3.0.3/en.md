@@ -1,30 +1,3 @@
-**ℹ️ Note to Mac Mouse Fix 2 Users**
-
- With the introduction of Mac Mouse Fix 3, the pricing model of the app has changed:
- 
- - **Mac Mouse Fix 2**\
- Remains 100% free, and I plan to keep supporting it.\
-**Skip this update** to keep using Mac Mouse Fix 2. Download the latest version of Mac Mouse Fix 2 [here](https://redirect.macmousefix.com/?target=mmf2-latest).
- - **Mac Mouse Fix 3**\
- Free for 30 days, costs a few dollars to own.\
- **Update now** to get Mac Mouse Fix 3!
-
-You can learn more about the pricing and features of Mac Mouse Fix 3 on the [new website](https://macmousefix.com/).
-
-Thanks for using Mac Mouse Fix! :)
-
----
-
-**ℹ️ Note to Mac Mouse Fix 3 Buyers**
-
-If you accidentally updated to Mac Mouse Fix 3 without knowing that it's not free anymore, I'd like to offer you a [refund](https://redirect.macmousefix.com/?target=mmf-apply-for-refund).
-
-The latest version of Mac Mouse Fix 2 stays **entirely free**, and you can download it [here](https://redirect.macmousefix.com/?target=mmf2-latest).
-
-I'm sorry for the hassle, and I hope everyone is ok with this as a solution!
-
----
-
 Mac Mouse Fix **3.0.3** is ready for macOS 15 Sequoia. It also fixes some stability issues and provides several small improvements.
 
 ### macOS 15 Sequoia support
