@@ -134,8 +134,8 @@
                                                 <action selector="performMiniaturize:" target="Ady-hI-5gd" id="Zyv-vp-Dxq"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Zoom" keyEquivalent="z" id="ZfY-xQ-tQl">
-                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" control="YES" option="YES" command="YES"/>
+                                        <menuItem title="Zoom" id="ZfY-xQ-tQl">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="performZoom:" target="Ady-hI-5gd" id="TMh-lF-HyL"/>
                                             </connections>
