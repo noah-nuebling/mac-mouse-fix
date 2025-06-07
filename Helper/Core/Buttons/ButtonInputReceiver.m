@@ -163,6 +163,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 #endif
     }
     
+    /// NOTE
+    ///     [Jun 7 2025]  I plan to blacklist drawing tablets. I bought a Wacom Intuos S. See https://github.com/noah-nuebling/mac-mouse-fix/issues/1233
+    ///         Meta: Messing up the drawing tablets is a consequence of the `NO_FILTER` mechanism (above) I think. But my intuition is that a Blacklist will cause less issues than a Whitelist overall.
+    ///              Random note: Once we have user-controlled device-specific-settings we'll have to change this up tho.
+    ///         Random note: I also looked at LinearMouse and MOS source code to see if they're filtering drawing tablets, but I couldn't find anything.
+    
     /// Log
     DDLogDebug(@"Input Receiver - Device for CG Button Input - iohidDevice: %@, device: %@", iohidDevice, device);
     
