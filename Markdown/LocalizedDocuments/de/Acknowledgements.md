@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2025**
 
+- 🇵🇱&nbsp;Metagrid&nbsp;Pro&nbsp;Team - "Love the app - keep the good work!"
 - 🇳🇱&nbsp;Laurant&nbsp;Marijnissen - "Turns out this could've saved me buying a magic trackpad, it does exactly what I wanted from it :) Switching desktops has become incredibly smooth"
 - 🇨🇭&nbsp;Judy
 - 🇻🇳&nbsp;Do&nbsp;Van&nbsp;Cuong - "dovancuongadhp"
