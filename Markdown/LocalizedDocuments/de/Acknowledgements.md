@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2025**
 
+- 🇩🇪&nbsp;A&nbsp;Random&nbsp;Guy - "Thank you!"
 - 🇦🇹&nbsp;Florian&nbsp;H&nbsp; - "TYSM!"
 - 🇺🇸&nbsp;Taktec
 - 🇬🇧&nbsp;Ross&nbsp;Tomlinson - "Turns every mouse into a truly magic mouse!"
