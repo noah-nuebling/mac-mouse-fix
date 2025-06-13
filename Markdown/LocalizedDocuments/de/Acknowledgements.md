@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2025**
 
+- 🇨🇭&nbsp;Thoeme&nbsp;M
 - 🇵🇱&nbsp;Lukas&nbsp;Slazak
 - 🇨🇿&nbsp;Weathergraph&nbsp;App - "Beautiful weather forecast app for iPhone, Apple Watch and mac, built with a help of Mac Mouse Fix :)"
 - 🇩🇪&nbsp;A&nbsp;Random&nbsp;Guy - "Thank you!"
