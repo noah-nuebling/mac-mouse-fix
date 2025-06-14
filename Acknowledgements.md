@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **June 2025**
 
+- 🇨🇭&nbsp;Benjamin
 - 🇨🇭&nbsp;Thoeme&nbsp;M
 - 🇵🇱&nbsp;Lukas&nbsp;Slazak
 - 🇨🇿&nbsp;Weathergraph&nbsp;App - "Beautiful weather forecast app for iPhone, Apple Watch and mac, built with a help of Mac Mouse Fix :)"
