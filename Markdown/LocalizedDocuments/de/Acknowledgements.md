@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2025**
 
+- 🇺🇸&nbsp;Noah&nbsp;Guilbault - "Support developers!"
 - 🇺🇸&nbsp;John&nbsp;Doe
 - 🇨🇭&nbsp;Benjamin
 - 🇨🇭&nbsp;Thoeme&nbsp;M
