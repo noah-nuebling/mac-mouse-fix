@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **June 2025**
 
+- 🇺🇸&nbsp;John&nbsp;Doe
 - 🇨🇭&nbsp;Benjamin
 - 🇨🇭&nbsp;Thoeme&nbsp;M
 - 🇵🇱&nbsp;Lukas&nbsp;Slazak
