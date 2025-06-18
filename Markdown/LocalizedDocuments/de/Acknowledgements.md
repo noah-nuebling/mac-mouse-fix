@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2025**
 
+- 🇩🇪&nbsp;Armin&nbsp;Sengbusch - "Great App! Works totally reliable!"
 - 🇨🇦&nbsp;Jesus&nbsp;Loves&nbsp;You - "Rev 21:4"
 - 🇺🇸&nbsp;Noah&nbsp;Guilbault - "Support developers!"
 - 🇺🇸&nbsp;John&nbsp;Doe
