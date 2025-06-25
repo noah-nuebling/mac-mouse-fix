@@ -83,7 +83,7 @@
 
 /// Basic observation callbacks
 avail typedef id MFObserver_CallbackBlock;
-avail typedef void (^MFObserver_CallbackBlock_New)(nnullid newValue);
+avail typedef void (^MFObserver_CallbackBlock_New)(nnullid newValue); /// [Jun 2025] This cannot be nil since KVO passes NSNull to signal that the observed property is nil (Tested [Jun 2025] Tahoe Beta 1)
 avail typedef void (^MFObserver_CallbackBlock_OldAndNew)(nullid oldValue, nnullid newValue);
 
 /// Observe-latest callbacks
