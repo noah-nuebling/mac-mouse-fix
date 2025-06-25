@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **June 2025**
 
+- 🇺🇸&nbsp;Matthew&nbsp;Wey
 - 🇧🇩&nbsp;A&nbsp;N&nbsp;Tasin
 - 🇺🇸&nbsp;Kenneth&nbsp;Pochubay
 - 🇩🇪&nbsp;Armin&nbsp;Sengbusch - "Great App! Works totally reliable!"
