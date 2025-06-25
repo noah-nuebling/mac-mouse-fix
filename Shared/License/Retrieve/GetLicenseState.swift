@@ -10,6 +10,7 @@
 import CocoaLumberjackSwift
 import CryptoKit
 
+@MainActor
 @objc class GetLicenseState : NSObject {
 
     /// -> This class retrieves instances of the `MFLicenseState` dataclass
@@ -30,7 +31,7 @@ import CryptoKit
         return result
     }
     
-    public static func get(_callingFunc: String = #function) async -> MFLicenseState {
+    public static func get(_callingFunc: String = #function) async -> MFLicenseState { assert(Thread.isMainThread)
         
         /// This function determines the current licenseState of the application.
         ///     To do this, it checks the `licenseServer`, `cache`, `fallback` values, and `special conditions`
@@ -132,7 +133,7 @@ import CryptoKit
     
     /// Server/cache/fallback/overrides interfaces
     
-    public static func licenseStateFromOverrides() async -> MFLicenseState? {
+    public static func licenseStateFromOverrides() async -> MFLicenseState? { assert(Thread.isMainThread)
         
         /// Old notes:
         ///     - (This note is totally outdated as of Oct 2024 ->) Instead of using a licenseReason, we could also pass that info through the error. That might be better since we'd have one less argument and the the errors can also contain dicts with custom info. Maybe you could think about the error as it's used currently as the "unlicensed reason" (Update: LicenseReason has been removed and merged into MFLicenseTypeInfo. Current system is nice. No need to merge everything into errors I think.)
@@ -353,7 +354,7 @@ import CryptoKit
             return result
     }
 
-    public static func licenseStateFromServer(key: String, incrementActivationCount: Bool, licenseConfig: MFLicenseConfig) async -> (licenseState: MFLicenseState?, error: NSError?) {
+    public static func licenseStateFromServer(key: String, incrementActivationCount: Bool, licenseConfig: MFLicenseConfig) async -> (licenseState: MFLicenseState?, error: NSError?) { assert(Thread.isMainThread)
     
         /// This function tries to retrieve the MFLicenseState from the known licenseServers.
         ///     If we don't receive clear information from any of the licenseServers about whether the license is valid or not, we return `nil`
@@ -408,7 +409,7 @@ import CryptoKit
             let productPermalink = "mmfinappusd"
             
             /// Talk to Gumroad
-            var (serverResponseDict, communicationError, urlResponse) = await sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
+            var (serverResponseDict, communicationError, urlResponse) = await APIRequests.sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
                                                                                    args: ["product_permalink": productPermalink,
                                                                                           "license_key": key,
                                                                                           "increment_uses_count": incrementActivationCount ? "true" : "false"])
@@ -425,7 +426,7 @@ import CryptoKit
                 assert((urlResponse as? HTTPURLResponse)?.statusCode == 404)
                 
                 /// If license doesn't exist for new product, try old product
-                (serverResponseDict, communicationError, urlResponse) = await sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
+                (serverResponseDict, communicationError, urlResponse) = await APIRequests.sendDictionaryBasedAPIRequest(requestURL: gumroadAPIURL.appending("/licenses/verify"),
                                                                                    args: ["product_permalink": productPermalinkOld,
                                                                                           "license_key": key,
                                                                                           "increment_uses_count": incrementActivationCount ? "true" : "false"])

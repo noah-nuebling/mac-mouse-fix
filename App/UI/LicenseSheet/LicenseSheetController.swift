@@ -10,6 +10,7 @@
 import Cocoa
 import CocoaLumberjackSwift
 
+@MainActor /// [Jun 2025] Don't think this needs to be @MainActor but it's easier to just make all the Licensing stuff MainActor. (See discussion in `License/README.md`)
 @objc class LicenseSheetController: NSViewController, NSTextFieldDelegate {
 
     /// Vars
@@ -92,7 +93,7 @@ import CocoaLumberjackSwift
         /// Notes
         /// - @MainActor so all licensing code runs on the mainthread.
         
-        Task.detached(priority: .userInitiated, operation: { @MainActor in
+        Task.init(priority: .userInitiated, operation: { @MainActor in assert(Thread.isMainThread)
             
             /// Get licenseConfig
             /// Notes:
@@ -137,7 +138,7 @@ import CocoaLumberjackSwift
                 assert(override.isLicensed == true)
             }
             
-            /// Dispatch to mainThread because UI stuff needs to be controlled by main
+            /// Dispatch to mainThread because UI stuff needs to be controlled by main. || Update: [Jun 2025] All license stuff is on the mainThread now, so this is probably unnecessary.
             DispatchQueue.main.async {
             
                 /// Display user feedback

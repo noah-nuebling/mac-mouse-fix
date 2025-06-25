@@ -114,6 +114,9 @@ static NSURL *defaultConfigURL(void) {
 void commitConfig(void) {
     /// Convenience function for notifying other modules of the changed config (and writing to file)
     
+    /// Validate
+    assert(NSThread.isMainThread);
+    
     /// Write to file
     [Config.shared writeConfigToFile];
     

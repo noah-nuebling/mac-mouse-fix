@@ -9,13 +9,14 @@
 
 import CocoaLumberjackSwift
 
+@MainActor
 @objc class GetLicenseConfig : NSObject {
     
     /// -> This class retrieves instances of the `MFLicenseConfig` dataclass
     
     /// Main interface
     
-    @objc static func get(_callingFunc: String = #function) async -> MFLicenseConfig {
+    @objc static func get(_callingFunc: String = #function) async -> MFLicenseConfig { assert(Thread.isMainThread)
     
         /// Remember:
         ///     For offline validation to work - only call this function on code-paths where it's absolutely necessary.
@@ -40,7 +41,7 @@ import CocoaLumberjackSwift
     /// Server/cache/fallback interfaces
     
     @Atomic private static var inMemoryCache: MFLicenseConfig? = nil /// We should really be using a semaphore or mutex, but Swift async doesn't allow that (bc Swift is stinky). Using atomic should be ok. More on this below. (Oct 2024)
-    private static func licenseConfigFromServer() async -> MFLicenseConfig? {
+    private static func licenseConfigFromServer() async -> MFLicenseConfig? { assert(Thread.isMainThread)
     
         ///     Explanation of our offline validation strategy: [Nov 2024]
         ///         We wanna do offline validation. That means we want to avoid internet connections in our licensing code unless absolutely necessary.

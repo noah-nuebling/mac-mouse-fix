@@ -142,12 +142,12 @@ class AboutTabController: NSViewController {
         /// Start an async context
         /// Notes:
         /// - @MainActor so all licensing code runs on the mainthread.
-        Task.detached(priority: .userInitiated, operation: { @MainActor in
+        Task.init(priority: .userInitiated, operation: { @MainActor in assert(Thread.isMainThread)
             
             let licenseState = await GetLicenseState.get()
                 
             if licenseState.isLicensed {
-                DispatchQueue.main.async { self.updateUI_WithIsLicensedTrue(licenseState: licenseState) } /// Dispatch to main bc UI updates need to run on main.
+                DispatchQueue.main.async { self.updateUI_WithIsLicensedTrue(licenseState: licenseState) } /// Dispatch to main bc UI updates need to run on main. Update: [Jun 2025] This is probably unnecessary now that we're running all the License stuff on the main thread anyways.
             } else {
                 let licenseConfig = await GetLicenseConfig.get() /// Only get the licenseConfig if the app *is not* licensed - that way, if the app *is* licensed through offline validation, we can avoid all internet connections.
                 let trialState = GetTrialState.get(licenseConfig)
@@ -315,6 +315,9 @@ class AboutTabController: NSViewController {
     func updateUI_WithIsLicensedFalse(licenseConfig: MFLicenseConfig, trialState: MFTrialState) {
         
             /// Also see `updateUI_WithIsLicensedTrue()` - the first few lines are logically identical and should be kept in sync
+            
+            /// Valdiate
+            assert(Thread.isMainThread)
             
             /// Guard: no change from 'current' values
             let isLicensed = false

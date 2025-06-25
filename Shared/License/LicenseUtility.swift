@@ -53,7 +53,7 @@ func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
     return (result, error)
 }
 
-@objc class LicenseUtility: NSObject {
+@objc class LicenseUtility: NSObject { /// [Jun 2025] Not annotating with @MainActor since all the functions here are stateless, 'pure' functions, and annotating with @MainActor makes Swift compiler force us to also annotate other stuff. (See discussion in License/README.md)
     
     @objc static func buyMMF(licenseConfig: MFLicenseConfig, locale: Locale, useQuickLink: Bool) {
         
