@@ -166,9 +166,29 @@ static NSDictionary *sideButtonActions;
 {
     self = [super init];
     if (self) {
+    
         /// Init URL handling
         ///     Doesn't work if done in applicationDidFinishLaunching or + initialize
         [NSAppleEventManager.sharedAppleEventManager setEventHandler:self andSelector:@selector(handleURLWithEvent:reply:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
+        
+        /// Tahoe Compacting [Jun 2025] || (Tahoe Beta 2)
+        ///     Here, we make the layout compact on macOS 26 Tahoe.
+        ///     Buttons are larger under macOS Tahoe, this makes quite a few of our pixel-perfect layouts look ugly. (E.g. the hints which are supposed to be lined up with the checkbox labels.)
+        ///     Since much of our App is built with Interface Builder (which can't do version-dependent layout), we can only fix the layouts for Tahoe by breaking them for previous macOS versions – except if we use `prefersCompactControlSizeMetrics`, which makes the control sizes under Tahoe match older macOS versions.
+        ///     Here, we apply `prefersCompactControlSizeMetrics` to the contentViews of every window that is ever opened by the app. The property then cascades down to all subviews.
+        ///     Future plans:
+        ///         - We should rewrite the UI in pure code (No interface builder), and then adopt the modern UI style that is seen in System Settings. That style looked kinda ugly in previous macOS versions, but it's the best-looking style  under Tahoe.
+        ///     References:
+        ///         - _WWDC 25 - Build an AppKit app with the new design_ at  at 13:10 (https://developer.apple.com/videos/play/wwdc2025/310/)
+        ///         - The `swiftui-test-tahoe-beta` project.
+        ///     Sidenote:
+        ///         - I found the `_NSWindowDidBecomeVisible` notification by setting a breakpoint inside `__CFNOTIFICATIONCENTER_IS_CALLING_OUT_TO_AN_OBSERVER__`
+        
+        [NSNotificationCenter.defaultCenter addObserverForName: @"_NSWindowDidBecomeVisible" object: nil queue: nil usingBlock: ^void (NSNotification * _Nonnull notification) {
+            if (@available(macOS 26.0, *)) {
+                ((NSWindow *)notification.object).contentView.prefersCompactControlSizeMetrics = YES;
+            }
+        }];
     }
     return self;
 }
@@ -186,7 +206,7 @@ static NSDictionary *sideButtonActions;
     DDLogInfo(@"Mac Mouse Fix finished launching");
     
 #pragma mark Experiments
-    
+
     /// Test titlebarAccessory
     ///     Trying to add accessoryView to titlebar. We want this for app specific settings. Doesn't work so far
     ///     \note This *is* successfully added when we open the main app through the StatusBarItem (using NSWorkspace and the bundle URL)
