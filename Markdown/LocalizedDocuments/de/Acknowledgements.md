@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2025**
 
+- 🇺🇸&nbsp;Sky&nbsp;I&nbsp; - "Support good developers making great software!!!"
 - 🇺🇸&nbsp;Matthew&nbsp;Wey
 - 🇧🇩&nbsp;A&nbsp;N&nbsp;Tasin
 - 🇺🇸&nbsp;Kenneth&nbsp;Pochubay
