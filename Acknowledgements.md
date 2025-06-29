@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **June 2025**
 
+- 🇦🇺&nbsp;Tim - "Been a massive ergonomic and productivity boost. Nice work."
 - 🇺🇸&nbsp;Sky&nbsp;I&nbsp; - "Support good developers making great software!!!"
 - 🇺🇸&nbsp;Matthew&nbsp;Wey
 - 🇧🇩&nbsp;A&nbsp;N&nbsp;Tasin
