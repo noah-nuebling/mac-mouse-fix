@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
-	<string>20G1427</string>
+	<string>25A5295e</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.27.3</string>
+	<string>1.27.3-10-g776495f9</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleSupportedPlatforms</key>
@@ -29,25 +29,25 @@
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
-	<string>13A1030d</string>
+	<string>25A5295e</string>
 	<key>DTPlatformName</key>
 	<string>macosx</string>
 	<key>DTPlatformVersion</key>
-	<string>12.0</string>
+	<string>26.0</string>
 	<key>DTSDKBuild</key>
-	<string>21A344</string>
+	<string>25A5295e</string>
 	<key>DTSDKName</key>
-	<string>macosx12.0</string>
+	<string>macosx26.0</string>
 	<key>DTXcode</key>
-	<string>1310</string>
+	<string>2600</string>
 	<key>DTXcodeBuild</key>
-	<string>13A1030d</string>
+	<string>17A5241o</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSBackgroundOnly</key>
 	<string>1</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.9</string>
+	<string>10.11</string>
 	<key>LSUIElement</key>
 	<string>1</string>
 	<key>NSMainNibFile</key>
