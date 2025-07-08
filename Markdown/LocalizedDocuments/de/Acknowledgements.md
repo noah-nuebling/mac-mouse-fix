@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2025**
 
+- 🇫🇮&nbsp;Miika&nbsp;M - "Works like a charm"
 - 🇰🇬&nbsp;Coolqwebs
 
 **Juni 2025**

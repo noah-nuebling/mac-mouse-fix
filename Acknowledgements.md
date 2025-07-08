@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **July 2025**
 
+- 🇫🇮&nbsp;Miika&nbsp;M - "Works like a charm"
 - 🇰🇬&nbsp;Coolqwebs
 
 **June 2025**
