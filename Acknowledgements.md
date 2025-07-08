@@ -40,6 +40,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!
 
+**July 2025**
+
+- 🇰🇬&nbsp;Coolqwebs
+
 **June 2025**
 
 - 🇦🇺&nbsp;Tim - "Been a massive ergonomic and productivity boost. Nice work."

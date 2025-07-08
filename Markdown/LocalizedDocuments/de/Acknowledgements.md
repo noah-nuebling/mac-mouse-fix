@@ -38,6 +38,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den _Zucker-Kick_!
 
+**Juli 2025**
+
+- 🇰🇬&nbsp;Coolqwebs
+
 **Juni 2025**
 
 - 🇦🇺&nbsp;Tim - "Been a massive ergonomic and productivity boost. Nice work."
