@@ -141,8 +141,42 @@ static NSDictionary *sideButtonActions;
     
     if (self == [AppDelegate class]) {
         
-        /// Why don't we do these things in applicationDidFinishLaunching?
+        /// Why don't we do all these things in applicationDidFinishLaunching?
         ///     TODO: Try moving this to applicationDidFinishLaunching, so we have a unified entryPoint.
+        
+        ({
+            /// Tahoe Compacting [Jun 2025] || (Tahoe Beta 2)
+            ///     We make the layout compact on macOS 26 Tahoe by setting  `prefersCompactControlSizeMetrics` on all the windows.
+            ///     Buttons are larger under macOS Tahoe, this makes quite a few of our pixel-perfect layouts look ugly. (E.g. the hints which are supposed to be lined up with the checkbox labels – actually can't think of anything else right now.)
+            ///     Since much of our App is built with Interface Builder (which can't do version-dependent layout), we can only fix the layouts for Tahoe by breaking them for previous macOS versions – except if we use `.prefersCompactControlSizeMetrics`, which makes the control sizes under Tahoe match older macOS versions.
+            ///     Here, we apply `prefersCompactControlSizeMetrics` to the contentViews of (almost) every window that is ever opened by the app. The property then cascades down to all subviews.
+            ///     Future plans:
+            ///         - We should rewrite the UI in pure code (No interface builder), and then adopt the modern UI style that is seen in System Settings. That style looked kinda ugly in previous macOS versions, but it's the best-looking style  under Tahoe.
+            ///         - Buttons in sheets should probably be made large and rounded to be 'concentric' with window corners
+            ///         - Before we make any larger changes to the UI on master branch we need to merge feature-strings-catalog – since that also has a lot of UI changes which will lead to merge conflicts [Jul 9 2025]
+            ///     References:
+            ///         - _WWDC 25 - Build an AppKit app with the new design_ at  at 13:10 (https://developer.apple.com/videos/play/wwdc2025/310/)
+            ///         - The `swiftui-test-tahoe-beta` project.
+            ///         - Our purecode rewrite of the Sparke SUUpdateAlert: https://github.com/noah-nuebling/Sparkle/blob/modernize-update-alert/Sparkle/SUUpdateAlert_CodeOnly.m
+            ///     Sidenote:
+            ///         - I found the `_NSWindowDidBecomeVisible` notification which we're observing here by setting a breakpoint inside `__CFNOTIFICATIONCENTER_IS_CALLING_OUT_TO_AN_OBSERVER__`
+            ///
+            ///     Update: [Jul 2025] We tried to set  .prefersCompactControlSizeMetrics for the entire app in one central place right here, but there was random jank where the controls flashed larger right after opening the window. So we're setting  `prefersCompactControlSizeMetrics` inside our window controllers, and only verify here. Just search for `prefersCompactControlSizeMetrics` to find all the places.
+            
+            if (!runningPreRelease()) {
+                [NSNotificationCenter.defaultCenter addObserverForName: /*@"_NSWindowDidBecomeVisible"*/ @"_NSWindowDidBecomeVisible" object: nil queue: nil usingBlock: ^void (NSNotification * _Nonnull notification) {
+                    if (@available(macOS 26.0, *)) {
+                        NSWindow *win = (NSWindow *)notification.object;
+                        assert(win.contentView.prefersCompactControlSizeMetrics == YES
+                            || isclassd(win, _NSAlertPanel)                         /// NSAlert windows
+                            || isclassd(win, NSPopupMenuWindow)                     /// NSMenu windows
+                            || [win.frameAutosaveName isEqual: @"SUStatusFrame"]    /// Sparkle window
+                            || [win.frameAutosaveName isEqual: @"SUUpdateAlert"]    /// Sparkle window
+                        );
+                    }
+                }];
+            }
+        });
         
         /// Setup CocoaLumberjack
         [SharedUtility setupBasicCocoaLumberjackLogging];
@@ -170,25 +204,6 @@ static NSDictionary *sideButtonActions;
         /// Init URL handling
         ///     Doesn't work if done in applicationDidFinishLaunching or + initialize
         [NSAppleEventManager.sharedAppleEventManager setEventHandler:self andSelector:@selector(handleURLWithEvent:reply:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
-        
-        /// Tahoe Compacting [Jun 2025] || (Tahoe Beta 2)
-        ///     Here, we make the layout compact on macOS 26 Tahoe.
-        ///     Buttons are larger under macOS Tahoe, this makes quite a few of our pixel-perfect layouts look ugly. (E.g. the hints which are supposed to be lined up with the checkbox labels.)
-        ///     Since much of our App is built with Interface Builder (which can't do version-dependent layout), we can only fix the layouts for Tahoe by breaking them for previous macOS versions – except if we use `prefersCompactControlSizeMetrics`, which makes the control sizes under Tahoe match older macOS versions.
-        ///     Here, we apply `prefersCompactControlSizeMetrics` to the contentViews of every window that is ever opened by the app. The property then cascades down to all subviews.
-        ///     Future plans:
-        ///         - We should rewrite the UI in pure code (No interface builder), and then adopt the modern UI style that is seen in System Settings. That style looked kinda ugly in previous macOS versions, but it's the best-looking style  under Tahoe.
-        ///     References:
-        ///         - _WWDC 25 - Build an AppKit app with the new design_ at  at 13:10 (https://developer.apple.com/videos/play/wwdc2025/310/)
-        ///         - The `swiftui-test-tahoe-beta` project.
-        ///     Sidenote:
-        ///         - I found the `_NSWindowDidBecomeVisible` notification by setting a breakpoint inside `__CFNOTIFICATIONCENTER_IS_CALLING_OUT_TO_AN_OBSERVER__`
-        
-        [NSNotificationCenter.defaultCenter addObserverForName: @"_NSWindowDidBecomeVisible" object: nil queue: nil usingBlock: ^void (NSNotification * _Nonnull notification) {
-            if (@available(macOS 26.0, *)) {
-                ((NSWindow *)notification.object).contentView.prefersCompactControlSizeMetrics = YES;
-            }
-        }];
     }
     return self;
 }

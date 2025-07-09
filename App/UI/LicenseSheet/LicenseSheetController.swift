@@ -337,6 +337,11 @@ import CocoaLumberjackSwift
         ///     (Oct 2024) This is the only thing that updates `self.initialKey`. After activating a new key, this needs to be called, otherwise things break.
         ///         TODO: Check if this is always called after activating a new key.
         
+        /// Adjust look for macOS Tahoe
+        if #available(macOS 26.0, *) {
+            self.view.prefersCompactControlSizeMetrics = true;
+        }
+        
         /// Load existing key into licenseField
         var key: String = ""
         if let k = SecureStorage.get("License.key") as? String {
@@ -356,6 +361,8 @@ import CocoaLumberjackSwift
     
     @objc static func add() {
         
+        assert(Thread.isMainThread)
+        
         if openInstance != nil { return }
         openInstance = LicenseSheetController()
         
@@ -364,6 +371,8 @@ import CocoaLumberjackSwift
     }
     
     @objc static func remove() {
+        
+        assert(Thread.isMainThread)
         
         guard let tabViewController = MainAppState.shared.tabViewController else { assert(false); return }
         tabViewController.dismiss(openInstance!)
