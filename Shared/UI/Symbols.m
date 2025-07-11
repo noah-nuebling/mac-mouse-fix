@@ -10,6 +10,7 @@
 #import "Symbols.h"
 #import "NSAttributedString+Additions.h"
 #import "NSImage+Additions.h"
+#import "SharedUtility.h"
 
 @implementation Symbols
 
@@ -139,9 +140,11 @@
     }
     
     /// Fix fallback tint
-    ///     Set it to NSColor.textColor - does that always make sense? Should we make the fallback color a parameter?
     if (*usingBundledFallback) {
-        symbol = [symbol coolTintedImage:symbol color:NSColor.textColor];
+        if ((0)) /// [Jun 2025] Disabling cause `coolTintedImage` messes up the sizing of custom symbols like `mf.menubar.arrow.left.rectangle.v2` on Tahoe Beta 2. Setting template=YES seems to work, too. (But if not, this could introduce visual bugs – Should perhaps test this change under older macOS versions)
+            symbol = [symbol coolTintedImage: symbol color: NSColor.textColor]; /// Set it to NSColor.textColor - does that always make sense?
+        if ((1))
+            symbol.template = YES;
     }
     
     /// Store description

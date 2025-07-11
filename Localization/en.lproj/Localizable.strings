@@ -161,8 +161,17 @@
 /* First draft: Choose keys that are only available on Apple keyboards */
 "effect.apple-keys-submenu.hint" = "Choose keys that are only available on Apple keyboards";
 
+/* First draft: Exclusive Keys || Note: '' will be prepended to this string, so it will appear as ' Exclusive Keys' in the UI. */
+"effect.apple-keys-submenu.tahoe" = "Exclusive Keys";
+
 /* First draft: Works like pressing '%@' on an Apple keyboard */
 "effect.apple-shortcut.hint" = "Works like pressing '%@' on an Apple keyboard";
+
+/* First draft: Show Apps */
+"effect.apps" = "Show Apps";
+
+/* First draft: Open the apps section in Spotlight */
+"effect.apps.hint" = "Open the apps section in Spotlight";
 
 /* First draft: Back */
 "effect.back" = "Back";
@@ -376,6 +385,12 @@
 
 /* First draft: Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad */
 "scroll-effect.4-pinch.hint" = "Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad";
+
+/* First draft: Desktop & Apps */
+"scroll-effect.4-pinch.tahoe" = "Desktop & Apps";
+
+/* First draft: Scroll up to show your Apps and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad */
+"scroll-effect.4-pinch.tahoe.hint" = "Scroll up to show your Apps and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad";
 
 /* First draft: App Switcher */
 "scroll-effect.app-switcher" = "App Switcher";

@@ -72,6 +72,7 @@
 		4F6B02C028AD9E4400B5BA93 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 4F6B02C228AD9E4400B5BA93 /* Localizable.stringsdict */; };
 		4F6F67A028A8141800C6C40F /* ButtonTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6F679F28A8141800C6C40F /* ButtonTabController.swift */; };
 		4F70ECB7267E810900325A76 /* IOUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECB6267E810900325A76 /* IOUtility.m */; };
+		4F7277FA2E21998B002DDD4A /* TahoeSymbols.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F7277F82E219980002DDD4A /* TahoeSymbols.xcassets */; };
 		4F79A7EF26042E2E00076A7E /* ToastNotification.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F79A7EE26042E2E00076A7E /* ToastNotification.xib */; };
 		4F79A81C2604317200076A7E /* ToastNotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A81B2604317200076A7E /* ToastNotificationController.m */; };
 		4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F79A82A2605074000076A7E /* NSAttributedString+Additions.m */; };
@@ -2058,6 +2059,8 @@
 		4F70ECAD267E442D00325A76 /* PointerSpeedExperiments2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeedExperiments2.m; sourceTree = "<group>"; };
 		4F70ECB5267E810900325A76 /* IOUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOUtility.h; sourceTree = "<group>"; };
 		4F70ECB6267E810900325A76 /* IOUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOUtility.m; sourceTree = "<group>"; };
+		4F7277F72E219980002DDD4A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4F7277F82E219980002DDD4A /* TahoeSymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = TahoeSymbols.xcassets; sourceTree = "<group>"; };
 		4F77F7C728808DAE00847D0E /* PolyFitNumPy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolyFitNumPy.swift; sourceTree = "<group>"; };
 		4F79A7EE26042E2E00076A7E /* ToastNotification.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToastNotification.xib; sourceTree = "<group>"; };
 		4F79A81A2604317200076A7E /* ToastNotificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToastNotificationController.h; sourceTree = "<group>"; };
@@ -6449,6 +6452,15 @@
 			path = ButtonTab;
 			sourceTree = "<group>";
 		};
+		4F7277F92E219980002DDD4A /* Tahoe Symbols */ = {
+			isa = PBXGroup;
+			children = (
+				4F7277F82E219980002DDD4A /* TahoeSymbols.xcassets */,
+				4F7277F72E219980002DDD4A /* README.md */,
+			);
+			path = "Tahoe Symbols";
+			sourceTree = "<group>";
+		};
 		4F74ADC228A7E58500901D69 /* KeyCaptureView */ = {
 			isa = PBXGroup;
 			children = (
@@ -7280,6 +7292,7 @@
 		4FF665D425F2C92700689B77 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4F7277F92E219980002DDD4A /* Tahoe Symbols */,
 				4F7D97A428AEB14A00C11E79 /* README.md */,
 				4F7D97A228AEB04D00C11E79 /* Westfalia-Regular.otf */,
 				4FF665D525F2C92700689B77 /* Assets.xcassets */,
@@ -7867,6 +7880,7 @@
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
 				4FFA4E4028B7D0610062A1FE /* SharedSFSymbols.xcassets in Resources */,
 				4F909D2F28A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib in Resources */,
+				4F7277FA2E21998B002DDD4A /* TahoeSymbols.xcassets in Resources */,
 				4FD148D128AA428000FE688C /* ButtonOptionsViewController.xib in Resources */,
 				4F143E462B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */,
 			);
