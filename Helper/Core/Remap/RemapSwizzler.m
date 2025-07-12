@@ -242,7 +242,7 @@ NSArray<NSDictionary *> *internalSubSetsFilteredOut(NSArray<NSDictionary *> *mod
     
     NSMutableArray *filteredModifiers = [NSMutableArray array];
     
-    for (int i = 0; i < modifiers.count; i++) {
+    for (int i = 0; i < modifiers.count; i++) { /// [Jun 2025] Could theoretically speed this up by iterating backwards I think
         
         NSDictionary *precond = modifiers[i];
         

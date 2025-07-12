@@ -67,6 +67,15 @@ static id _localEventMonitor;
     }
 }
 
+- (void) windowDidLoad {
+    [super windowDidLoad];
+    
+    /// Make views compact on Tahoe (Does this even make any difference on Toasts?) [Jul 9 2025]
+    if (@available(macOS 26.0, *)) {
+        self.window.contentView.prefersCompactControlSizeMetrics = YES;
+    }
+}
+
 static double _animationDurationFadeIn = 0.3;
 static double _animationDurationFadeOut = 0.2;
 static double _toastAnimationOffset = 20;

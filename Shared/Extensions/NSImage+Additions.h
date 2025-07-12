@@ -13,6 +13,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSImage (Additions)
 
+typedef struct {
+    uint8_t r, g, b, a;
+} MF_RGBAPixel;
+void MF_RGBAPixel_setA(MF_RGBAPixel *px, uint8_t newAlpha);
+- (instancetype) mf_imageByModifyingRGBAPixels: (void (^) (MF_RGBAPixel *px, size_t x, size_t y, size_t w, size_t h)) modifierBlock;
+
 - (NSImage *)coolTintedImage:(NSImage *)image color:(NSColor *)color;
 
 @end

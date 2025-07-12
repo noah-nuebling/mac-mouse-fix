@@ -160,6 +160,13 @@
 #define isclass(x, classname) \
     [[(x) class] isKindOfClass: object_getClass([classname class])]
 
+/// isclassd
+///     isclass, but (d)ynamic. Meaning the compiler doesn't have to know about the class we're comparing against.
+///     Added [Jun 29 2025]
+
+#define isclassd(x, classname) \
+    [[(x) class] isKindOfClass: object_getClass(NSClassFromString(@#classname))]
+
 /// `isprotocol` macro
 ///     - Works on normal objects and class objects just like `isclass()`
 ///     - The docs say this is slow, and to use -[respondsToSelector:] instead See: https://developer.apple.com/documentation/objectivec/nsobject/1418893-conformstoprotocol?language=objc

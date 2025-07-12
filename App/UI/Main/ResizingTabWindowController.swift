@@ -18,6 +18,11 @@ class ResizingTabWindowController: NSWindowController, NSWindowDelegate {
         
         super.windowDidLoad()
         let thewindow = window as! ResizingTabWindow
+               
+        /// Make views compact on Tahoe
+        if #available(macOS 26.0, *) {
+            thewindow.contentView?.prefersCompactControlSizeMetrics = true;
+        }
         
         /// Restore position
         ///     src: https://developer.apple.com/forums/thread/679764
