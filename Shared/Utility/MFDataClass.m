@@ -375,6 +375,9 @@
             ///         On over-validation:
             ///             It seems that excessive validation has *caused* hard-to-debug issues here – instead of preventing them.
             ///             Therefore I think it's best to only validate against clearly wrong cases and try to let KVC do its thing otherwise.
+            ///             In a broader sense:
+            ///                 90% of the code in MFDataClass is just validation. The core is super simple, but by trying to exhaust all the edgecases and validate every uncertain thing automatically, it becomes 10x more complex, and - at least in this case – *more* brittle. When I wrote this, it became this weird obsession to validate everything. And most of this validation is just to conform to NSSecureCoding, which I don't even think brings any real security for data-modeling. (Discussed this more elsewhere) I feel like I'm on the Swift compiler team. Also see discussion on `MFDataClassBase_Simplified` in the header.
+            ///                 Meta: [Jul 2025] This discussion is kinda redundant with the discussion at the top of the header. Should maybe consolidate / delete
             ///
             ///     What validation does KVC Perform?:
             ///         KVC's `setValue:forKey:` will throw an exception when trying to set an NSValue with a type encoding that doesn't match the property's type encoding
