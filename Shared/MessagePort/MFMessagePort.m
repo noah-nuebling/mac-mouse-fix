@@ -80,20 +80,21 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:YES];
     } else if ([message isEqualToString:@"helperEnabledWithNoAccessibility"]) {
         
-        BOOL isStrange = false;
-        if (@available(macOS 13, *)) {
+        BOOL isStrange = NO;
+        if (isavailable(13.0, 15.0)) { if (@available(macOS 13.0, *)) {
             isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload:payload];
-        }
+        }}
+
         if (!isStrange) {
             [AuthorizeAccessibilityView add];
         }
+        
     } else if ([message isEqualToString:@"helperEnabled"]) {
         
-        BOOL isStrange = false;
-        if (@available(macOS 13, *)) {
+        BOOL isStrange = NO;
+        if (isavailable(13.0, 15.0)) { if (@available(macOS 13.0, *)) {
             isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload:payload];
-        }
-        
+        }}
         if (!isStrange) { /// Helper matches mainApp instance.
             
             /// Bring mainApp for foreground

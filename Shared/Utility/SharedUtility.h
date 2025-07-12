@@ -261,6 +261,32 @@
         [NSString stringWithUTF8String: bit_str]; \
     })
 
+/// `isavailable()` macro - Return true iff `lo <= currentMacOSVersion < hi`.
+///     Tip: To remove one of the bounds, use `1` or `INT_MAX`.
+///     Usage example:
+///         ```
+///         if (isavailable(13.0, 15.0)) {
+///             if (@available(macOS 13.0, *)) {        // A second @available() guard of exactly this form might be necessary to silence compiler warnings about API-availability
+///                 NSLog(@"Running macOS 13 or 14!");
+///             }
+///         }
+///         else {
+///             NSLog(@"Not running macOS 13 or 14!");
+///         }
+///         ```
+///     Meta:
+///         - If you only need a lower bound, probably just use `if (@available(xxx, *)` directly.
+///         - This might not be worth adding to the codebase. (Just like a lot of these macros) We'll probably use it rarely. And NSProcessInfo should also work fine. But I like how the syntax for specifying versions here is closer to @available() than NSProcessInfo.
+#define isavailable(lo_inclusive, hi_exclusive) ({          \
+    bool _isavailable = false;                              \
+    if (@available(macOS lo_inclusive, *)) {                \
+        if (@available(macOS hi_exclusive, *)) { } else {   \
+            _isavailable = true;                            \
+        }                                                   \
+    }                                                       \
+    _isavailable;                                           \
+})
+
 /// Check if ptr is objc object
 ///     Copied from https://opensource.apple.com/source/CF/CF-635/CFInternal.h
 ///     Also see: https://blog.timac.org/2016/1124-testing-if-an-arbitrary-pointer-is-a-valid-objective-c-object/
