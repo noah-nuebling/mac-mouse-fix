@@ -54,6 +54,7 @@ class TrialSectionManager {
         if #available(macOS 11.0, *) {
             currentSection.imageView!.symbolConfiguration = .init(pointSize: 13, weight: .regular, scale: .large)
         }
+        currentSection.imageView!.isHidden = false /// [Jul 2025] Context: Regex for `imageView.\.isHidden`
         currentSection.imageView!.image = Symbols.image(withSymbolName: imageName)
         
         /// Set string
@@ -158,10 +159,12 @@ class TrialSectionManager {
                 if #available(macOS 11.0, *) { newSection.imageView?.symbolConfiguration = .init(pointSize: 13, weight: .medium, scale: .large) }
                 
                 /// Set image
+                newSection.imageView?.isHidden = false
                 newSection.imageView?.image = image
                 
                 /// Setup hyperlink
                 ///     I've heard of the activate link not working for some people. I think I even experienced it, once. Perhaps, the app's ability to handle `macmousefix:` links breaks sometimes. Feels like it might be a bug/security feature in macOS?
+                ///         Update: [Jul 2025] I think it was a bug with how we retrieved the ResizingTabWindow which we fixed a while ago.
                 
                 let linkTitle = NSLocalizedString("trial-notif.activate-license-button", comment: "First draft: Activate License")
                 let linkAddress = "macmousefix:activate"

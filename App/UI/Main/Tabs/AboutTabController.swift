@@ -308,7 +308,11 @@ class AboutTabController: NSViewController {
             assignAttributedStringKeepingBase(&trialSectionManager!.currentSection.textField!.attributedStringValue, messageAttributed)
             
             /// Remove calendar image
-            trialSectionManager!.currentSection.imageView!.image = nil
+            /// [Jul 2025]
+            ///     The stackview will automatically adjust the layout after setting .isHidden
+            ///     Before [Jul 2025], we used to hide the imageView by simply settings its .image to nil, but that won't cause the stackview to adapt its layout. So now we're setting .isHidden. To keep the existing behavior without introducing new bugs and edgecases, we also now unset .isHidden, whereever the .image is set to !=nil. Regex for `imageView.\.image` for context. This is code is horrible x| .
+            trialSectionManager?.currentSection.imageView?.isHidden = true
+            trialSectionManager?.currentSection.imageView?.image = nil
         
     }
     

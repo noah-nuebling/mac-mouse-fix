@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24093.8" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24093.8"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -2303,11 +2303,11 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                             <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="3dR-uI-bFa" userLabel="BottomRow">
                                                 <rect key="frame" x="0.0" y="2" width="2258" height="213"/>
                                                 <subviews>
-                                                    <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="VXa-4N-Q6J" userLabel="Trial cell" customClass="TrialSection" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                        <rect key="frame" x="1020" y="12" width="219" height="189"/>
+                                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="7" horizontalStackHuggingPriority="750" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C9V-HB-2aU" customClass="TrialSection" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                        <rect key="frame" x="1029" y="-27" width="217" height="189"/>
                                                         <subviews>
                                                             <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Qse-14-whX">
-                                                                <rect key="frame" x="2" y="85.5" width="21" height="19"/>
+                                                                <rect key="frame" x="0.0" y="85.5" width="21" height="19"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="21" id="RSh-9n-AMC"/>
                                                                     <constraint firstAttribute="height" constant="9" id="hqs-Af-z3e"/>
@@ -2325,7 +2325,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                                 </userDefinedRuntimeAttributes>
                                                             </imageView>
                                                             <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="pEg-Ae-guC">
-                                                                <rect key="frame" x="28" y="87" width="193" height="16"/>
+                                                                <rect key="frame" x="26" y="87" width="193" height="16"/>
                                                                 <textFieldCell key="cell" alignment="center" title="&lt;Day 2/14 of your test period&gt;" usesSingleLineMode="YES" id="cul-5Z-iUo">
                                                                     <font key="font" metaFont="system"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -2333,32 +2333,24 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                                 </textFieldCell>
                                                             </textField>
                                                         </subviews>
-                                                        <constraints>
-                                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="pEg-Ae-guC" secondAttribute="bottom" id="G2y-3i-f6E"/>
-                                                            <constraint firstAttribute="trailing" secondItem="pEg-Ae-guC" secondAttribute="trailing" priority="999" id="J8h-Mc-mEd"/>
-                                                            <constraint firstItem="Qse-14-whX" firstAttribute="centerY" secondItem="VXa-4N-Q6J" secondAttribute="centerY" id="R2k-Jc-MTz"/>
-                                                            <constraint firstItem="pEg-Ae-guC" firstAttribute="leading" secondItem="VXa-4N-Q6J" secondAttribute="leading" constant="30" id="RyA-9L-3YA"/>
-                                                            <constraint firstAttribute="bottom" secondItem="Qse-14-whX" secondAttribute="bottom" priority="999" id="VLT-kY-YXQ"/>
-                                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="pEg-Ae-guC" secondAttribute="trailing" id="bGG-gL-HzJ"/>
-                                                            <constraint firstItem="Qse-14-whX" firstAttribute="centerX" secondItem="VXa-4N-Q6J" secondAttribute="leading" constant="13" id="bTe-h0-UxG"/>
-                                                            <constraint firstItem="pEg-Ae-guC" firstAttribute="centerY" secondItem="VXa-4N-Q6J" secondAttribute="centerY" id="haz-6b-x2U"/>
-                                                            <constraint firstAttribute="bottom" secondItem="pEg-Ae-guC" secondAttribute="bottom" priority="999" id="tNI-Gp-F36"/>
-                                                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Qse-14-whX" secondAttribute="bottom" id="tOt-3d-R6o"/>
-                                                        </constraints>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
-                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="NO"/>
-                                                        </userDefinedRuntimeAttributes>
+                                                        <visibilityPriorities>
+                                                            <integer value="1000"/>
+                                                            <integer value="1000"/>
+                                                        </visibilityPriorities>
+                                                        <customSpacing>
+                                                            <real value="3.4028234663852886e+38"/>
+                                                            <real value="3.4028234663852886e+38"/>
+                                                        </customSpacing>
                                                         <connections>
-                                                            <outlet property="imageView" destination="Qse-14-whX" id="4Ho-TH-TnT"/>
-                                                            <outlet property="textField" destination="pEg-Ae-guC" id="j9g-av-rxq"/>
+                                                            <outlet property="imageView" destination="Qse-14-whX" id="wVu-K1-Fj3"/>
+                                                            <outlet property="textField" destination="pEg-Ae-guC" id="Yv9-aw-HkI"/>
                                                         </connections>
-                                                    </customView>
+                                                    </stackView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="VXa-4N-Q6J" firstAttribute="top" secondItem="3dR-uI-bFa" secondAttribute="top" constant="12" id="Tnx-Qr-7cD"/>
-                                                    <constraint firstItem="VXa-4N-Q6J" firstAttribute="centerY" secondItem="3dR-uI-bFa" secondAttribute="centerY" id="now-7p-xxv"/>
-                                                    <constraint firstItem="VXa-4N-Q6J" firstAttribute="centerX" secondItem="3dR-uI-bFa" secondAttribute="centerX" id="xSs-Uv-cVP"/>
+                                                    <constraint firstItem="C9V-HB-2aU" firstAttribute="centerY" secondItem="3dR-uI-bFa" secondAttribute="centerY" id="jiw-6e-UBt"/>
+                                                    <constraint firstItem="C9V-HB-2aU" firstAttribute="centerX" secondItem="3dR-uI-bFa" secondAttribute="centerX" id="tic-bQ-6Nc"/>
+                                                    <constraint firstItem="C9V-HB-2aU" firstAttribute="top" secondItem="3dR-uI-bFa" secondAttribute="top" constant="12" id="vBo-Ll-F5d"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
@@ -2422,7 +2414,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                         <outlet property="moneyCell" destination="15g-eT-Sq8" id="zZ1-w3-fe4"/>
                         <outlet property="moneyCellImage" destination="dnN-4Q-oW6" id="Wfc-ft-E3q"/>
                         <outlet property="moneyCellLink" destination="X0k-mF-gia" id="Rnt-tA-JLe"/>
-                        <outlet property="trialCell" destination="VXa-4N-Q6J" id="zqX-mC-UEW"/>
+                        <outlet property="trialCell" destination="C9V-HB-2aU" id="TP2-ib-83U"/>
                         <outlet property="versionField" destination="7TJ-vr-aAK" id="Jw9-cl-KD9"/>
                     </connections>
                 </viewController>
