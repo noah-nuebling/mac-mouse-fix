@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **July 2025**
 
+- 🇦🇹&nbsp;Patrykh - "Jedna z najlepszych aplikacji na Maca Mini. W końcu moja myszka działa jak powinna!"
 - 🇺🇸&nbsp;Yida
 - 🇸🇬&nbsp;Agile&nbsp;Shady&nbsp;Moaner
 - 🇺🇸&nbsp;Cassandra&nbsp;J&nbsp;Mckee
