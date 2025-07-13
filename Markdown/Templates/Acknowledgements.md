@@ -147,7 +147,6 @@ Mac Mouse Fix was built with the help of these **great libraries**:
 - [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack) - Fast & simple, yet powerful & flexible logging
 - [Swift Markdown](https://github.com/apple/swift-markdown) - Parse, build, edit, and analyze Markdown documents
 - [Sparkle](https://github.com/sparkle-project/Sparkle) - A software update framework for macOS
-- [SnapKit](https://github.com/SnapKit/SnapKit) - Making Auto Layout easy on both iOS and macOS
 - [MASShortcut](https://github.com/shpakovski/MASShortcut) - API and user interface for recording, storing & using system-wide keyboard shortcuts
 - [CGSInternal](https://github.com/NUIKit/CGSInternal) - A collection of private CoreGraphics routines
 - Dependencies of Mac Mouse Fix's scripts:<br>
