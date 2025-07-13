@@ -121,14 +121,14 @@ class TrialNotificationController: NSWindowController {
             
             /// Setup tracking area
             ///     Explanation for the width and height calculations:
-            ///     - It's in the bottom section below the horizontal line. 20 is the padding around the trialSection.
-            ///     - It's in the left half of the window. So where the trial section is. Not in the right half where the pay button is.
+            ///     - The tracking area matches the bottom slice of the notification, below the horizontal line. 20 px is the vertical padding around the trialSection.
+            ///     - Why choose the entire vertical slice? This feels similar to the TrialSection tracking area on the About Tab. Also, when the user hovers the "$2.99" button at the right side of the bottom slice, they will trigger the hover effect and discover the convenient "Activate License" link.
             ///
             ///     Update: I don't like it! So we're disabling the switching on hover now.
             ///         This means we're not really using the main functionality of the trialSectionManager anywhere right now. It still works fine but maybe refactor?
-            ///     Update 2: [Jul 2025] I've wished for the "Activate License" button on the TrialNotification a few times recently. It feels a bit weird to use in its current form, but it's too useful -> Enabling this now.
+            ///     Update 2: [Jul 2025] I've wished for the "Activate License" button on the TrialNotification a few times recently. While it may feel a bit weird to use in its current form, it's just too useful -> Enabling this now.
             
-            let trackingRect = NSRect(x: 0, y: 0, width: window.frame.width / 2.0, height: 20 + trialSection.frame.height + 20)
+            let trackingRect = NSRect(x: 0, y: 0, width: window.frame.width, height: 20 + trialSection.frame.height + 20)
             trackingArea = NSTrackingArea(rect: trackingRect, options: [.activeAlways, .mouseEnteredAndExited], owner: self)
             trialSection.superview!.addTrackingArea(trackingArea!)
             
