@@ -24,6 +24,7 @@ class AboutTabController: NSViewController {
     
     var trialSectionManager: TrialSectionManager?
     @IBOutlet weak var trialCell: TrialSection! /// TODO: Rename to trialSection
+    @IBOutlet weak var trialSectionContainer: NSView!
     
     var payButtonWrapper: NSView? = nil
     var payButtonwrapperConstraints: [NSLayoutConstraint] = []
@@ -98,6 +99,12 @@ class AboutTabController: NSViewController {
         /// Init trialSectionManager
         ///     The manager swaps out the trialSection and stuff, so always access the trialSection through the manager!
         trialSectionManager = TrialSectionManager(trialCell)
+        
+        /// Lower-bound trialSection width
+        ///     [Jul 2025] This is a bit of a hack. This currently prevents the freeCountry message from being cut-off in Chinese (in which the AboutTab is very narrow.)
+        ///     If we set a constraint preventing the trialSection from being clipped directly, that will jankily change the AboutTab width as the AboutTab opens the first time. Not sure why.  Hardcoding a minimum width seems to fix this just fine.
+        ///     Of the 3 Chinese variants MMF supports, "(Simplified)" is the worst and is what this lower bound is based on.
+        trialSectionContainer.widthAnchor.constraint(greaterThanOrEqualToConstant: 400.0).isActive = true
         
         /// Get licensing info
         ///     Notes:
