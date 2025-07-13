@@ -76,7 +76,7 @@ class TrialSectionManager {
     
     /// Interface
     
-    func showInitial(animate: Bool = true) {
+    func showInitial(animate: Bool = true, hAnchor: MFHAnchor = .center) {
         
         /// This code is a little convoluted. showTrial and showActivate are almost copy-pasted, except for setting up in newSection in mouseEntered.
             
@@ -96,7 +96,7 @@ class TrialSectionManager {
             
             assert(self.animationInterruptor == nil)
             
-            self.animationInterruptor = ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection, doAnimate: animate) {
+            self.animationInterruptor = ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection, hAnchor: hAnchor, doAnimate: animate) {
                 
                 DDLogDebug("triall enter finish")
                 
@@ -117,7 +117,7 @@ class TrialSectionManager {
 
     }
     
-    func showAlternate(animate: Bool = true) {
+    func showAlternate(animate: Bool = true, hAnchor: MFHAnchor = .center) {
         
         let workload = {
             
@@ -183,7 +183,7 @@ class TrialSectionManager {
                 
                 assert(self.animationInterruptor == nil)
                 
-                self.animationInterruptor = ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection, doAnimate: animate) {
+                self.animationInterruptor = ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection, hAnchor: hAnchor, doAnimate: animate) {
                     
                     DDLogDebug("triall exit finish")
                     

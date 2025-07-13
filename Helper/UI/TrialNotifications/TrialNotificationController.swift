@@ -124,13 +124,13 @@ class TrialNotificationController: NSWindowController {
             ///     - It's in the bottom section below the horizontal line. 20 is the padding around the trialSection.
             ///     - It's in the left half of the window. So where the trial section is. Not in the right half where the pay button is.
             ///
-  
-            /// Edit: I don't like it! So we're disabling the switching on hover now.
-            ///     This means we're not really using the main functionality of the trialSectionManager anywhere right now. It still works fine but maybe refactor?
+            ///     Update: I don't like it! So we're disabling the switching on hover now.
+            ///         This means we're not really using the main functionality of the trialSectionManager anywhere right now. It still works fine but maybe refactor?
+            ///     Update 2: [Jul 2025] I've wished for the "Activate License" button on the TrialNotification a few times recently. It feels a bit weird to use in its current form, but it's too useful -> Enabling this now.
             
-//            let trackingRect = NSRect(x: 0, y: 0, width: window.frame.width / 2.0, height: 20 + trialSection.frame.height + 20)
-//            trackingArea = NSTrackingArea(rect: trackingRect, options: [.activeAlways, .mouseEnteredAndExited], owner: self)
-//            trialSection.superview!.addTrackingArea(trackingArea!)
+            let trackingRect = NSRect(x: 0, y: 0, width: window.frame.width / 2.0, height: 20 + trialSection.frame.height + 20)
+            trackingArea = NSTrackingArea(rect: trackingRect, options: [.activeAlways, .mouseEnteredAndExited], owner: self)
+            trialSection.superview!.addTrackingArea(trackingArea!)
             
             /// Init the payButton
             /// May be more elegant to do this from IB directly but whatever
@@ -341,14 +341,14 @@ class TrialNotificationController: NSWindowController {
     override func mouseEntered(with event: NSEvent) {
         
         DispatchQueue.main.async {
-            self.trialSectionManager.showAlternate()
+            self.trialSectionManager.showAlternate(animate: true, hAnchor: .leading)
         }
     }
 
     override func mouseExited(with event: NSEvent) {
             
         DispatchQueue.main.async {
-            self.trialSectionManager.showInitial()
+            self.trialSectionManager.showInitial(animate: true, hAnchor: .leading)
         }
     }
     

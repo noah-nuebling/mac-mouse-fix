@@ -448,13 +448,13 @@ class AboutTabController: NSViewController {
     override func mouseEntered(with event: NSEvent) {
         
         DispatchQueue.main.async {
-            self.trialSectionManager?.showAlternate()
+            self.trialSectionManager?.showAlternate(animate: true, hAnchor: .center)
         }
     }
     override func mouseExited(with event: NSEvent) {
         
         DispatchQueue.main.async {
-            self.trialSectionManager?.showInitial()
+            self.trialSectionManager?.showInitial(animate: true, hAnchor: .center)
         }
     }
 }
