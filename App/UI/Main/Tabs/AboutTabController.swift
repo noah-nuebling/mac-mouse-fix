@@ -414,15 +414,17 @@ class AboutTabController: NSViewController {
             self.payButtonWrapper!.layer?.masksToBounds = false
             
             self.payButtonWrapper!.addSubview(payButton)
-            self.payButtonWrapper!.snp.makeConstraints { make in
-                make.top.equalTo(payButton.snp.top)
-                make.centerY.equalTo(payButton.snp.centerY)
-                make.leading.equalTo(payButton.snp.leading)
-            }
+            NSLayoutConstraint.activate([
+                self.payButtonWrapper!.topAnchor.constraint(equalTo: payButton.topAnchor),
+                self.payButtonWrapper!.centerYAnchor.constraint(equalTo: payButton.centerYAnchor),
+                self.payButtonWrapper!.leadingAnchor.constraint(equalTo: payButton.leadingAnchor)
+            ])
+            
             
             /// Create Apple Pay badge
             let image = NSImage(named: "ApplePay")!
             let badge = NSImageView(image: image)
+            badge.translatesAutoresizingMaskIntoConstraints = false
             
             badge.enableAntiAliasing()
 
@@ -432,11 +434,11 @@ class AboutTabController: NSViewController {
             
             /// Insert Apple Pay badge into wrapper
             self.payButtonWrapper!.addSubview(badge)
-            badge.snp.makeConstraints { make in
-                make.centerY.equalTo(payButton.snp.centerY)
-                make.leading.equalTo(payButton.snp.trailing).offset(9)
-                make.width.equalTo(20)
-            }
+            NSLayoutConstraint.activate([
+                badge.centerYAnchor.constraint(equalTo: payButton.centerYAnchor),
+                badge.leadingAnchor.constraint(equalTo: payButton.trailingAnchor, constant: 9),
+                badge.widthAnchor.constraint(equalToConstant: 20)
+            ])
             
             /// Insert wrapper into UI
             self.payButtonwrapperConstraints = transferredSuperViewConstraints(fromView: self.moneyCellLink, toView: self.payButtonWrapper!, transferSizeConstraints: false)

@@ -337,10 +337,8 @@ class TabViewController: NSTabViewController {
             
             /// Add constraints to imageView
             unselectedTabImageView.translatesAutoresizingMaskIntoConstraints = false
-            unselectedTabImageView.snp.makeConstraints { make in
-                make.centerY.equalTo(destinationTab.snp.centerY)
-                make.centerX.equalTo(destinationTab.snp.centerX)
-            }
+            unselectedTabImageView.centerYAnchor.constraint(equalTo: destinationTab.centerYAnchor).isActive = true
+            unselectedTabImageView.centerXAnchor.constraint(equalTo: destinationTab.centerXAnchor).isActive = true
         }
         
         /// Store old tab size
