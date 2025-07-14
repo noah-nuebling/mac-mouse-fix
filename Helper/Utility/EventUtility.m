@@ -16,6 +16,8 @@
 #import "CGEventHIDEventBridge.h"
 #import "VectorUtility.h"
 
+#import "libproc.h"
+
 @implementation EventUtility
 
 extern CFTimeInterval CATimeWithHostTime(UInt64 mach_absolute_time); /// I saw this in assembly but linking failed I think. Update: We built our own implementation of this at SharedUtility > machTimeToSeconds()
@@ -25,6 +27,77 @@ extern CFTimeInterval CATimeWithHostTime(UInt64 mach_absolute_time); /// I saw t
 int64_t fixedScrollDelta(double scrollDelta) {
     /// We round instead of just truncating because that makes the values look more like real scrollWheel values. Probably doesn't make a difference.
     return (int64_t)round(scrollDelta * pow(2, 16));
+}
+
+#pragma mark - Event filtering
+
+bool CGEvent_IsWacomEvent(CGEventRef event) {
+    
+    /// Determine if event comes from Wacom device
+    /// Discussion:
+    ///     - This is used in the eventTapCallback of `Scroll.m` [Jul 2025]
+    ///     - This is aimed at fixing interference with Wacom Tablets. Should solve https://github.com/noah-nuebling/mac-mouse-fix/issues/1233
+    ///     - Testing results: This successfully fixes scrolling in my testing. I didn't test other wacom features. The driver always crashed when I tried to send keyboard shortcuts via the ExpressKeys.
+    ///         Tested: Wacom Intuos S CTL-4100, Tablet Driver Version 6.4.10-3, macOS Sequoia 15.5, Intel Mac Mini 2018
+    ///     - Scope and Long term plans:
+    ///         - I'm not applying this in ButtonInputReceiver.m since I don't know of any specific issues there, and I don't wanna cause accidental regressions – this is supposed to be a hotfix. [Jul 2025]
+    ///         - I think generally, intercepting button events from a userspace driver (like the Wacom one) shouldn't cause issues – while intercepting (and then trying to smooth and accelerate) scroll events is more likely to cause issues. (but might be totally wrong.) Based on this I thought it might make sense to ignore all scroll events that appear to come from a userspace driver – but I'm not sure and I don't wanna cause accidental regresssions, so I'm keeping it Wacom-specific for now [Jul 2025]
+    ///             - We should probably also be ignoring non-wacom drawing tablets though.
+    ///         - In `ButtonInputReceiver.m` I also discuss the idea of just filtering events based on attachedDevices – that feels like the simplest, most robust approach in a way, but I don't wanna change architecture now [Jul 2025]
+    ///     - Caching & Performance:
+    ///         - Running this on every scrollEvent produced by my Wacom Intuos S (which I think must be at least 60 fps) on 2018 Intel Mac Mini has pretty small CPU impact. IIRC ~0.3 without caching, and ~0.1 with caching.
+    ///         - I disabled caching, cause I was worried about the small chance of the cache becoming stale due to pid reuse (pid was the cacheKey). I hadn't really thought that through though.
+    ///     - How do other apps do this?
+    ///         I looked at LinearMouse and MOS source code to see if they're filtering drawing tablets, but I couldn't see anything specific.
+    ///         Update: [Jul 2025] Tested the Wacom with MOS and scrolling got super fast – so no filtering in place.
+    ///     Also see:
+    ///         - `EventLoggerForBrad > Investigate_Wacom.m`
+    ///             -> Here we found that looking at the sender fields is probably the only reliable way to differentiate the Wacom's scroll events. Field 102 was also interesting – it always contained 63
+    ///         - Other notes and code about event-filtering in `ButtonInputReceiver.m` and `Scroll.m`
+    
+    /// Get sender pid
+    ///     Meta: I think presence of a pid generally indicates that the event has been generated artificially by a userspace driver, instead of by a IOKit/DriverKit driver (I think, I haven't tested this much, but this is how things look comparing Wacom driver's scroll events vs real mouse scroll events. [Jul 2025])
+    int64_t sender_pid = CGEventGetIntegerValueField(event, kCGEventSourceUnixProcessID);
+    if (!sender_pid) return false;
+    
+    /// Sanity check
+    ///     Presence of `kMFCGEventFieldSenderID` indicates an ioreg sender while `kCGEventSourceUnixProcessID` indicates a userspace sender. I don't expect both to be present
+    assert(CGEventGetIntegerValueField(event, (CGEventField)kMFCGEventFieldSenderID) == 0);
+    
+    /// Calculate
+    NSString *senderPath = GetPathForPid((pid_t)sender_pid);
+    bool result = [[[senderPath lastPathComponent] lowercaseString] containsString: @"wacom"]; /// Specifically, we saw the `Wacom_IOManager` process send the events. [Jul 2025]
+    
+    /// Return
+    return result;
+}
+
+NSString *_Nullable GetPathForPid(pid_t sender_pid) {
+    
+    /// Meta: This doesn't really belong in EventUtility.m [Jul 2025]
+    
+    /// Get pid's executable path
+    ///     Discussion on using `proc_pidpath`: [Jul 2025]
+    ///         - This API is totally undocumented and finnicky, but I can't find a better option.
+    ///         - It has 0 documentation that  I could find, but there are some SO posts about it. Also XNU source code and tests show how to use it.
+    ///         - `NSRunningApplication` is nicer but can't find `Wacom_IODriver` process. (Can it only find processes running in an app bundle? I thought otherwise, but memory is fuzzy.)
+    ///         - I also tried the simpler `proc_name()` function, but it's seems to have a 32 char limit
+    ///     Safety:
+    ///         - I tested entering an invalid pid, and our error-handling works.
+    
+    /// Calculate result
+    char sender_path[PROC_PIDPATHINFO_MAXSIZE];
+    int sender_path_len = proc_pidpath(sender_pid, sender_path, sizeof(sender_path));
+    
+    /// Handle errors
+    if (sender_path_len <= 0) {
+        DDLogError(@"Getting path for event sender pid %u failed with error: %s", sender_pid, strerror(errno));
+        return nil;
+    }
+    
+    /// Return
+    NSString *result = @(sender_path);
+    return result;
 }
 
 #pragma mark - Sending device

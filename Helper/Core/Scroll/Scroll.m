@@ -212,13 +212,8 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         
         return event;
     }
-    
-    /// Testing
-    
-//    IOHIDDeviceRef sendingDev = CGEventGetSendingDevice(event);
 
     /// Return non-scrollwheel events unaltered
-    
     int64_t isPixelBased     = CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
     int64_t scrollPhase      = CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
     int64_t scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
@@ -233,9 +228,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         return event;
     }
     
+    /// Filter out scroll events by wacom tablet
+    if (CGEvent_IsWacomEvent(event))
+        return event;
+    
     /// Get timestamp
     ///     Get timestamp here instead of _scrollQueue for accurate timing
-    
     CFTimeInterval tickTime = CGEventGetTimestampInSeconds(event);
     
     /// Create copy of event
