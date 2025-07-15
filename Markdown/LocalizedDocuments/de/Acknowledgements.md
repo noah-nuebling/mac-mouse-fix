@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2025**
 
+- 🇺🇸&nbsp;Anonymous - "Turned my Kensington Trackball into the tool it was always meant to be."
 - 🇺🇸&nbsp;Belkmaster5000 - "Fixed a lot of annoying "Mac-isms" for me. Thank you!"
 - 🇦🇹&nbsp;Patrykh - "Jedna z najlepszych aplikacji na Maca Mini. W końcu moja myszka działa jak powinna!"
 - 🇺🇸&nbsp;Yida
