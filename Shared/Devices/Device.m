@@ -258,7 +258,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 - (BOOL)isEqualToDevice:(Device *)device {
     
     /// What does this function do? Why do we have 2 equality check functions?
-    return CFEqual(self.iohidDevice, device.iohidDevice);
+    return CFEqual(self.iohidDevice, device.iohidDevice); /// [Jul 2025] I just saw this crash when detaching/attaching a mouse while the app was starting. || Looks like the second .iohidDevice arg for CFEqual was NULL, which is expected for StrangeDevice. I actually wonder why we haven't seen this crash more often. We should replace all the CF functions with NULL-safe alternatives! || Context: The crashing code was invoked by the code `state!.device != device` inside ClickCycle.swift
 }
 - (BOOL)isEqual:(Device *)other {
     
@@ -270,7 +270,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     } else if (![other isKindOfClass:self.class]) { ///  Check for class equality
         return NO;
     } else {
-        return [self isEqualToDevice:other];;
+        return [self isEqualToDevice:other];
     }
 }
 
