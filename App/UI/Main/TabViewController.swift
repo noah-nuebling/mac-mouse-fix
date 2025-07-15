@@ -9,7 +9,6 @@
 ///     Inspiration:  https://gist.github.com/mminer/caec00d2165362ff65e9f1f728cecae2
 
 import Cocoa
-import SnapKit
 import CocoaLumberjackSwift
 
 class TabViewController: NSTabViewController {
