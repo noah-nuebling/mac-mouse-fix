@@ -942,6 +942,16 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 /// Send normal gesture scroll
                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase autoMomentumScroll:NO invertedFromDevice:_scrollConfig.invertedFromDevice];
                 
+                /// Send momentumBegin and momentumEnd events with zero deltas to prevent momentum scrolling from starting in apps like Xcode
+                ///     This is the same thing we were doing in the deactivated code in `cancel(forAutoMomentumScroll:)`. [Jul 2025]
+                ///         The comments there speak of some jank that can be prevented by sending the momentumEnd event with a delay, but changing thread-scheduling here feels too risky for a hot-fix like this I also don't notice jank right now. [Jul 2025]|
+                ///         (Sidenote: Once we put everything on IOThread these kinds of changes should be less scary) 
+                if (animatorPhase == kMFAnimationCallbackPhaseCanceled) {
+                    assert(eventPhase == kIOHIDEventPhaseEnded);
+                    [GestureScrollSimulator postMomentumScrollDirectlyWithDeltaX:0 deltaY:0 momentumPhase:kCGMomentumScrollPhaseBegin invertedFromDevice:_scrollConfig.invertedFromDevice];
+                    [GestureScrollSimulator postMomentumScrollDirectlyWithDeltaX:0 deltaY:0 momentumPhase:kCGMomentumScrollPhaseEnd invertedFromDevice:_scrollConfig.invertedFromDevice];
+                }
+                
                 /// Debug
                 DDLogDebug(@"Scroll.m: \nHybrid event - gesture: (%lld, %lld, %d)", dx, dy, eventPhase);
                 

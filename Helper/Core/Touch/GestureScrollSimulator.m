@@ -91,10 +91,13 @@ static dispatch_queue_t _momentumQueue;
     if (phase != kIOHIDEventPhaseEnded && dx == 0.0 && dy == 0.0) {
         /// Maybe kIOHIDEventPhaseBegan events from the Trackpad driver can also contain zero-deltas? I don't think so by I'm not sure.
         /// Real trackpad driver seems to only produce zero deltas when phase is kIOHIDEventPhaseEnded.
-        ///     - (And probably also if phase is kIOHIDEventPhaseCancelled or kIOHIDEventPhaseMayBegin, but we're not using those here - IIRC those are only produced when the user touches the trackpad but doesn't begin scrolling before lifting fingers off again)
-        /// The main practical reason we're emulating this behavour of the trackpad driver because of this: There are certain apps (or views?) which create their own momentum scrolls and ignore the momentum scroll deltas contained in the momentum scroll events we send. E.g. Xcode or the Finder collection view. I think that these views ignore all zero-delta events when they calculate what the initial momentum scroll speed should be. (It's been months since I discovered that though, so maybe I'm rememvering wrong) We want to match these apps momentum scroll algortihm closely to provide a consisten experience. So we're not sending the zero-delta events either and ignoring them for the purposes of our momentum scroll calculation and everything else.
+        ///     - (And probably also if phase is kIOHIDEventPhaseCancelled or kIOHIDEventPhaseMayBegin, but we're not using those here - IIRC those are only produced when the user touches the trackpad but doesn't begin scrolling before lifting fingers off again || Update [Jul 2025] This matches my current observations of trackpad events.)
+        ///     Update: [Jul 2025] Don't get confused: Our *animator* is producing`kMFAnimationCallbackPhaseCanceled` events, but those get mapped to `kIOHIDEventPhaseEnded`.
+        /// The main practical reason we're emulating this behavour of the trackpad driver because of this: There are certain apps (or views?) which create their own momentum scrolls and ignore the momentum scroll deltas contained in the momentum scroll events we send. E.g. Xcode or the Finder collection view. I think that these views ignore all zero-delta events when they calculate what the initial momentum scroll speed should be. (It's been months since I discovered that though, so maybe I'm rememvering wrong) We want to match these app's momentum scroll algortihm closely to provide a consistent experience. So we're not sending the zero-delta events either and ignoring them for the purposes of our momentum scroll calculation and everything else.
+        ///     Update: [Jul 2025] I've added an assert(false) here. It seems our algorithms don't produce those unwanted 0-deltas, which is good.
         
         DDLogWarn(@"Trying to post gesture scroll with zero deltas while phase is not kIOHIDEventPhaseEnded - ignoring");
+        assert(false);
         
         return;
     }

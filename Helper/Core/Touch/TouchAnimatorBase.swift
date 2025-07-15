@@ -55,7 +55,7 @@ import QuartzCore
         case kMFAnimationCallbackPhaseEnd:
             return IOHIDEventPhaseBits(kIOHIDEventPhaseEnded)
         case kMFAnimationCallbackPhaseCanceled:
-            return IOHIDEventPhaseBits(kIOHIDEventPhaseCancelled)
+            return IOHIDEventPhaseBits(kIOHIDEventPhaseEnded) /// `Canceled` maps to `Ended`. Real trackpad never sends `kIOHIDEventPhaseCancelled`, except when resting fingers and then lifting them off without beginning a scroll, which we're not interested in simulating. [Jul 2025]
         default:
             fatalError()
         }
@@ -328,7 +328,7 @@ import QuartzCore
         cancel(forAutoMomentumScroll: false)
     }
     
-    @objc (cancel_forAutoMomentumScroll:) func cancel(forAutoMomentumScroll: Bool) {
+    @objc(cancel_forAutoMomentumScroll:) func cancel(forAutoMomentumScroll: Bool) {
         
         /// We're using the async call with flags because creating the dispatchworkitemflags for the normal one is somehow pretty slow.
         displayLink.dispatchQueue.async(flags: defaultDFs) {
@@ -358,7 +358,7 @@ import QuartzCore
                     if forAutoMomentumScroll {
                         
                         /// Notes:
-                        ///   - If the animator is started and then immediately stopped, we usally just want to ignore that and just not call the callback (Why do we even want that? I guess performance, but when does this happen?). But for autoMomentumScroll in GestureScrollSimulator we DO want to send start and cancel events if started and then immediately stepped. Otherwise, app like Xcode might continue momentumScrolling.
+                        ///   - If the animator is started and then immediately stopped, we usally just want to ignore that and just not call the callback (Why do we even want that? I guess performance, but when does this happen?). But for autoMomentumScroll in GestureScrollSimulator we DO want to send start and cancel events if started and then immediately stopped. Otherwise, app like Xcode might continue momentumScrolling.
                         ///   - Specifically, this is necessary when momentumScrolling is used by GestureScrollSimulator when it itself is used in Scroll.m when ending an animation and immediately suppressing momentumScroll. Feels like we're implementing some pretty specific high level behaviour in this very low level class. Maybe we need to restructure our abstractions.
                         ///   - Calling callback with start phase here might be totally unnecessary Edit: Nope is necessary to fix the Safari weirdness. (Edit: Which Safari weirdness? I think it had something to do with overscrolling, but not sure.)
                         ///   - Maybe we should spread out the start phase and canceled phase callbacks over time? Maybe call the canceled phase callback from the displayLinkCallback?? There an issue in Safari. When you scroll into the rubberband and then back Safari will add momentum. (Even though Safari normally never adds its own momentum I think). This momentum can't even be stopped by touching the trackpad, so idk what we could do about it.
@@ -367,6 +367,8 @@ import QuartzCore
                         ///
                         ///     Edit: Getting this new dispatchQueue everytime seems to be super slow, so we'll try to use the displayLink queue instead.
                         ///     Edit2: Nope I made a mistake, this is never even called in the configuration I was testing (it's only called for non-inertial gesture scrolling, which we're currently not using in the app anymore)
+                        
+                        assert(false) /// This is not called anymore according to comment above.
                         
                         DDLogDebug("TouchAnimator: Sending extra momentum cancel events even though momentumScrolling hasn't started")
                         
