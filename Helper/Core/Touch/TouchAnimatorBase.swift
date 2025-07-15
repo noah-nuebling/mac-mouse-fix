@@ -367,6 +367,7 @@ import QuartzCore
                         ///
                         ///     Edit: Getting this new dispatchQueue everytime seems to be super slow, so we'll try to use the displayLink queue instead.
                         ///     Edit2: Nope I made a mistake, this is never even called in the configuration I was testing (it's only called for non-inertial gesture scrolling, which we're currently not using in the app anymore)
+                        ///     Edit3: [Jul 2025] This code is disabled and also this approach is wrong. We're now instead sending a kIOHIDEventPhaseMayBegin followed by a kIOHIDEventPhaseMayCanceled event. This is implemented in Scroll.m (for Scrollwheel) and GestureScrollSimulator.m (for Click and Drag)
                         
                         assert(false) /// This is not called anymore according to comment above.
                         
