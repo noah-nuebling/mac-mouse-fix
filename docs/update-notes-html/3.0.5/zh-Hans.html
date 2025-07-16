@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-Hans" xml:lang="zh-Hans">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI 翻译</strong></p>
+
+<p>此发行说明由 Claude AI 翻译。可能包含错误。<br />
+
+查看英文原版，请<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.5">点击这里</a>。</p>
+
+<hr />
+
+<p><strong>ℹ️ Mac Mouse Fix 2 用户须知</strong></p>
+
+<p>随着 Mac Mouse Fix 3 的推出，应用的定价模式有所改变：</p>
+
+<ul>
+
+<li><strong>Mac Mouse Fix 2</strong><br />
+
+保持完全免费，我计划继续支持。<br />
+
+<strong>跳过此更新</strong>继续使用 Mac Mouse Fix 2。在<a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=zh-Hans">这里</a>下载最新版本的
+
+Mac Mouse Fix 2。</li>
+
+<li><strong>Mac Mouse Fix 3</strong><br />
+
+30天免费试用，之后需要支付几美元购买。<br />
+
+<strong>立即更新</strong>获取 Mac Mouse Fix 3！</li>
+
+</ul>
+
+<p>你可以在<a href="https://macmousefix.com/">新网站</a>了解更多关于 Mac
+
+Mouse Fix 3 的定价和功能。</p>
+
+<p>感谢使用 Mac Mouse Fix！:)</p>
+
+<hr />
+
+<p><strong>ℹ️ Mac Mouse Fix 3 购买者须知</strong></p>
+
+<p>如果你在不知道软件不再免费的情况下意外更新到了 Mac Mouse Fix
+
+3，我很乐意为你提供<a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=zh-Hans">退款</a>。</p>
+
+<p>Mac Mouse Fix 2 的最新版本仍然<strong>完全免费</strong>，你可以在<a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=zh-Hans">这里</a>下载。</p>
+
+<p>对带来的不便我深表歉意，希望这个解决方案能让大家满意！</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.5</strong>
+
+修复了多个bug，提升了性能，并对应用进行了一些优化。<br />
+
+同时兼容 macOS 26 Tahoe。</p>
+
+<h3 id="改进触控板滚动模拟">改进触控板滚动模拟</h3>
+
+<ul>
+
+<li>滚动系统现在可以模拟触控板的双指轻点来使应用停止滚动。
+
+<ul>
+
+<li>这修复了在运行 iPhone 或 iPad
+
+应用时，用户停止滚动后经常会继续滚动的问题。</li>
+
+</ul></li>
+
+<li>修复了模拟手指离开触控板时的不一致问题。
+
+<ul>
+
+<li>这可能在某些情况下导致了不理想的行为。</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="macos-26-tahoe-兼容性">macOS 26 Tahoe 兼容性</h3>
+
+<p>在运行 macOS 26 Tahoe Beta
+
+版时，应用现在可以使用，且大部分UI正常工作。</p>
+
+<h3 id="性能提升">性能提升</h3>
+
+<p>改进了”滚动和导航”手势中点击并拖动的性能。<br />
+
+根据我的测试，CPU使用率降低了约50%！</p>
+
+<p><strong>背景</strong></p>
+
+<p>在”滚动和导航”手势期间，Mac Mouse Fix
+
+会在透明窗口中绘制一个虚拟鼠标指针，同时将真实鼠标指针锁定在原位。这确保了无论你将鼠标移动多远，都可以继续滚动最初开始滚动的UI元素。<br />
+
+</p>
+
+<p>通过关闭这个透明窗口上未使用的默认 macOS
+
+事件处理，实现了性能的提升。</p>
+
+<h3 id="bug修复">Bug修复</h3>
+
+<ul>
+
+<li>现在忽略 Wacom 绘图板的滚动事件。
+
+<ul>
+
+<li>此前，Mac Mouse Fix 导致 Wacom 绘图板出现不稳定的滚动，如 <span
+
+class="citation" data-cites="frenchie1980">@frenchie1980</span> 在
+
+GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>
+
+中报告的那样。（谢谢！）</li>
+
+</ul></li>
+
+<li>修复了在 Mac Mouse Fix 3.0.4 中作为新许可系统一部分引入的 Swift
+
+Concurrency 代码没有在正确线程上运行的bug。
+
+<ul>
+
+<li>这导致了 macOS Tahoe
+
+上的崩溃，也可能导致了其他与许可相关的零星bug。</li>
+
+</ul></li>
+
+<li>改进了离线许可解码代码的稳健性。
+
+<ul>
+
+<li>这解决了 Apple API 中的一个问题，该问题导致在我的 Intel Mac Mini
+
+上离线许可验证总是失败。我猜测这在所有 Intel Mac
+
+上都会发生，这也可能是为什么”免费天数已结束”bug（在3.0.4中已经解决）仍然发生在一些用户身上，如
+
+<span class="citation" data-cites="toni20k5267">@toni20k5267</span> 在
+
+GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>
+
+中报告的那样。（谢谢！）</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="用户体验改进">用户体验改进</h3>
+
+<ul>
+
+<li>禁用了为解决阻止用户启用 Mac Mouse Fix 的 macOS bug
+
+而提供分步解决方案的对话框。
+
+<ul>
+
+<li>这些问题只在 macOS 13 Ventura 和 14 Sonoma
+
+上出现。现在，这些对话框只在相关的 macOS 版本上显示。</li>
+
+<li>这些对话框也更难触发 – 此前它们有时会在不太有帮助的情况下显示。</li>
+
+</ul></li>
+
+<li>在”免费天数已结束”通知上直接添加了”激活许可证”链接。
+
+<ul>
+
+<li>这使激活 Mac Mouse Fix 许可证变得更加简单方便。</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="视觉优化">视觉优化</h3>
+
+<ul>
+
+<li>略微改进了”软件更新”窗口的外观。现在它更适合 macOS 26 Tahoe。
+
+<ul>
+
+<li>这是通过自定义 Mac Mouse Fix 用于处理更新的”Sparkle
+
+1.27.3”框架的默认外观实现的。</li>
+
+</ul></li>
+
+<li>通过略微加宽窗口，修复了”关于”标签页底部的文字在中文界面有时被截断的问题。</li>
+
+<li>修复了”关于”标签页底部文字的居中问题。</li>
+
+<li>修复了导致”按钮”标签页中”键盘快捷键…“选项下方空间过小的bug。</li>
+
+</ul>
+
+<h3 id="底层更改">底层更改</h3>
+
+<ul>
+
+<li>移除了对”SnapKit”框架的依赖
+
+<ul>
+
+<li>这略微降低了应用的大小，从19.8 MB降至19.5 MB</li>
+
+</ul></li>
+
+<li>代码库中的其他各种小改进。</li>
+
+</ul>
+
+<p><em>在 Claude 的出色协助下编辑。</em></p>
+
+<hr />
+
+<p>另请查看之前的版本 <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.4&amp;locale=zh-Hans"><strong>3.0.4</strong></a>。</p>
+
+</body>
+
+</html>

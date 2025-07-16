@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Note to Mac Mouse Fix 2 Users</strong></p>
+
+<p>With the introduction of Mac Mouse Fix 3, the pricing model of the
+
+app has changed:</p>
+
+<ul>
+
+<li><strong>Mac Mouse Fix 2</strong><br />
+
+Remains 100% free, and I plan to keep supporting it.<br />
+
+<strong>Skip this update</strong> to keep using Mac Mouse Fix 2.
+
+Download the latest version of Mac Mouse Fix 2 <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest">here</a>.</li>
+
+<li><strong>Mac Mouse Fix 3</strong><br />
+
+Free for 30 days, costs a few dollars to own.<br />
+
+<strong>Update now</strong> to get Mac Mouse Fix 3!</li>
+
+</ul>
+
+<p>You can learn more about the pricing and features of Mac Mouse Fix 3
+
+on the <a href="https://macmousefix.com/">new website</a>.</p>
+
+<p>Thanks for using Mac Mouse Fix! :)</p>
+
+<hr />
+
+<p><strong>ℹ️ Note to Mac Mouse Fix 3 Buyers</strong></p>
+
+<p>If you accidentally updated to Mac Mouse Fix 3 without knowing that
+
+it’s not free anymore, I’d like to offer you a <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund">refund</a>.</p>
+
+<p>The latest version of Mac Mouse Fix 2 stays <strong>entirely
+
+free</strong>, and you can download it <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest">here</a>.</p>
+
+<p>I’m sorry for the hassle, and I hope everyone is ok with this as a
+
+solution!</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.5</strong> fixes several bugs, improves
+
+performance, and adds a bit of polish to the app.<br />
+
+It’s also compatible with macOS 26 Tahoe.</p>
+
+<h3 id="improved-simulation-of-trackpad-scrolling">Improved Simulation
+
+of Trackpad Scrolling</h3>
+
+<ul>
+
+<li>The scrolling system can now simulate a two-finger tap on the
+
+trackpad to make applications stop scrolling.
+
+<ul>
+
+<li>This fixes an issue when running iPhone or iPad apps, where
+
+scrolling would often keep going after the user chose to stop.</li>
+
+</ul></li>
+
+<li>Fixed inconsistent simulation of lifting fingers off the trackpad.
+
+<ul>
+
+<li>This may have caused suboptimal behavior in some situations.</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="macos-26-tahoe-compatibility">macOS 26 Tahoe Compatibility</h3>
+
+<p>When running the macOS 26 Tahoe Beta, the app is now usable, and most
+
+of the UI works correctly.</p>
+
+<h3 id="performance-enhancement">Performance Enhancement</h3>
+
+<p>Improved performance of the Click and Drag to “Scroll &amp; Navigate”
+
+gesture.<br />
+
+In my testing, CPU usage has been reduced by ~50%!</p>
+
+<p><strong>Background</strong></p>
+
+<p>During the “Scroll &amp; Navigate” gesture, Mac Mouse Fix draws a
+
+fake mouse cursor in a transparent window, while locking the real mouse
+
+cursor in place. This ensures that you can keep scrolling the UI element
+
+that you started scrolling on, no matter how far you move your
+
+mouse.<br />
+
+</p>
+
+<p>The improved performance was achieved by turning off the default
+
+macOS event handling on this transparent window, which wasn’t used
+
+anyway.</p>
+
+<h3 id="bug-fixes">Bug Fixes</h3>
+
+<ul>
+
+<li>Now ignoring scroll events from Wacom drawing tablets.
+
+<ul>
+
+<li>Before, Mac Mouse Fix was causing erratic scrolling on Wacom
+
+tablets, as reported by <span class="citation"
+
+data-cites="frenchie1980">@frenchie1980</span> in GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>.
+
+(Thanks!)</li>
+
+</ul></li>
+
+<li>Fixed a bug where the Swift Concurrency code, which was introduced
+
+as part of the new licensing system in Mac Mouse Fix 3.0.4, didn’t run
+
+on the correct thread.
+
+<ul>
+
+<li>This caused crashes on macOS Tahoe, and it also likely caused other
+
+sporadic bugs around licensing.</li>
+
+</ul></li>
+
+<li>Improved robustness of the code that decodes offline licenses.
+
+<ul>
+
+<li>This works around an issue in Apple’s APIs that caused offline
+
+license validation to always fail on my Intel Mac Mini. I assume that
+
+this happened on all Intel Macs, and that it was the reason why the
+
+“Free days are over” bug (which was already addressed in 3.0.4) still
+
+occurred for some people, as reported by <span class="citation"
+
+data-cites="toni20k5267">@toni20k5267</span> in GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>.
+
+(Thank you!)</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="ux-improvements">UX Improvements</h3>
+
+<ul>
+
+<li>Disabled dialogs that provided step-by-step solutions for macOS bugs
+
+that prevented users from enabling Mac Mouse Fix.
+
+<ul>
+
+<li>These issues only occurred on macOS 13 Ventura and 14 Sonoma. Now,
+
+these dialogs only appear on those macOS versions where they are
+
+relevant.</li>
+
+<li>The dialogs are also a bit harder to trigger – before, they
+
+sometimes showed up in situations where they weren’t very helpful.</li>
+
+</ul></li>
+
+<li>Added an “Activate License” link directly on the “Free days are
+
+over” notification.
+
+<ul>
+
+<li>This makes activating a Mac Mouse Fix license even more nice and
+
+easy.</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="visual-enhancements">Visual Enhancements</h3>
+
+<ul>
+
+<li>Slightly improved the look of the “Software Update” window. Now it
+
+fits better with macOS 26 Tahoe.
+
+<ul>
+
+<li>This was done by customizing the default look of the “Sparkle
+
+1.27.3” framework which Mac Mouse Fix uses to handle updates.</li>
+
+</ul></li>
+
+<li>Fixed issue where the text at the bottom of the About tab was
+
+sometimes cut off in Chinese, by making the window slightly wider.</li>
+
+<li>Fixed centering of the text at the bottom of the About tab.</li>
+
+<li>Fixed a bug that caused the space under the “Keyboard Shortcut…”
+
+option on the Buttons tab to be too small.</li>
+
+</ul>
+
+<h3 id="under-the-hood-changes">Under-The-Hood Changes</h3>
+
+<ul>
+
+<li>Removed dependency on the “SnapKit” framework
+
+<ul>
+
+<li>This slightly lowers the size of the app from 19.8 to 19.5 MB</li>
+
+</ul></li>
+
+<li>Various other small improvements in the codebase.</li>
+
+</ul>
+
+<p><em>Edited with excellent assistance from Claude.</em></p>
+
+<hr />
+
+<p>Also check out the previous release <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.4"><strong>3.0.4</strong></a>.</p>
+
+</body>
+
+</html>
