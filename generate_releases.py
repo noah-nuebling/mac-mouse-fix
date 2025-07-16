@@ -514,6 +514,9 @@ def generate():
                     Path(md_path_temp).write_text(combined_md)
                     print(f"Wrote combined markdown to '{md_path_temp}'")
 
+                    # Check if pandoc is installed
+                    assert shutil.which("pandoc") is not None, "Error: Pandoc is not installed. Install via `brew install pandoc`."
+
                     # Convert combined md release notes to HTML 
                     release_notes_html = mfutils.runclt(
                         "pandoc"
@@ -767,7 +770,7 @@ def generate():
             download_mmf()
             
             # Log
-            print(f"Process MMF asset {"(freshly downloaded)" if did_download else "(cached)"}) from '{download_link}'...")
+            print(f"Process MMF asset {"(freshly downloaded)" if did_download else "(cached)"} from '{download_link}'...")
 
             # Get edSignature
             signature_and_length = mfutils.runclt(f"./{path_sparkle_project}/bin/sign_update {download_zip_path}")
@@ -927,6 +930,9 @@ def generate():
             f.write(appcast_content_string)
         with open(path_appcast_pre, "w") as f:
             f.write(appcast_pre_content_string)
+
+        # Print 
+        print("DONE!")
 
         # Cleanup & exit
         clean_up(folder_downloads)
@@ -1092,7 +1098,7 @@ def _let_claude_translate(locale: str, english_textttt: str|LocalizableString) -
     # Lazily create anthropic client (Store it on the function object)
     if not hasattr(_let_claude_translate, "anthropic_client"):
         api_key = args.anthropic_api_key
-        assert api_key is not None, "Error: No anthropic API key found (Provide it via arg or environment var)."
+        assert api_key is not None, "Error: No anthropic API key found (Provide it via arg or environment var). E.g. `export ANTHROPIC_API_KEY=<api_key>`."
         _let_claude_translate.anthropic_client = anthropic.Anthropic(api_key=api_key)
         assert _let_claude_translate.anthropic_client is not None, f"Error: No anthropic API client couldn't be created. api_key: {api_key}"
     anthropic_client = _let_claude_translate.anthropic_client
