@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2025**
 
+- 🇦🇹&nbsp;Steven&nbsp;Taskin - "No more spongy mouse"
 - 🇺🇸&nbsp;Ben&nbsp;(Make&nbsp;For&nbsp;Life&nbsp;Workshop) - "Thanks for making this!"
 - 🇺🇸&nbsp;Anonymous - "Turned my Kensington Trackball into the tool it was always meant to be."
 - 🇺🇸&nbsp;Belkmaster5000 - "Fixed a lot of annoying "Mac-isms" for me. Thank you!"
