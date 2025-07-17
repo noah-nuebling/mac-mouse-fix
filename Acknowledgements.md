@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **July 2025**
 
+- 🇺🇸&nbsp;James&nbsp;Kelly - "Shiny!"
 - 🇧🇷&nbsp;Eduardo&nbsp;Spotti - "Seja generoso"
 - 🇺🇸&nbsp;Saurabh - "Amazing utility!"
 - 🇺🇦&nbsp;Segemun - "This app fixed my mouse and possibly my trust in humanity"
