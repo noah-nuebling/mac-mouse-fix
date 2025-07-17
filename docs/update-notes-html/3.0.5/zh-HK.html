@@ -108,13 +108,13 @@ href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=z
 
 href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=zh-HK">這裡</a>下載。</p>
 
-<p>為造成的不便深表歉意，希望大家能接受這個解決方案！</p>
+<p>為造成的不便深表歉意，希望這個解決方案能讓大家滿意！</p>
 
 <hr />
 
 <p>Mac Mouse Fix <strong>3.0.5</strong>
 
-修復了多個錯誤，提升了性能，並為應用程式增添了一些改進。<br />
+修復了多個錯誤，提升了性能，並對應用程式進行了一些優化。<br />
 
 同時也支援 macOS 26 Tahoe。</p>
 
@@ -158,11 +158,9 @@ href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=zh-HK">這
 
 <p>在”滾動和導航”手勢期間，Mac Mouse Fix
 
-會在透明窗口中繪製一個假的滑鼠游標，同時將真實游標鎖定在原位。這確保你無論將滑鼠移動多遠，都可以繼續滾動最初選定的界面元素。<br />
+會在透明窗口中繪製一個虛擬滑鼠指針，同時將真實滑鼠指針鎖定在原位。這確保你可以繼續滾動最初選定的界面元素，無論你將滑鼠移動多遠。</p>
 
-</p>
-
-<p>通過關閉這個透明窗口上原本未使用的 macOS
+<p>通過關閉這個透明窗口上本來就沒用到的 macOS
 
 默認事件處理，實現了性能的提升。</p>
 
@@ -174,7 +172,7 @@ href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=zh-HK">這
 
 <ul>
 
-<li>之前，Mac Mouse Fix 導致 Wacom 繪圖板出現不穩定的滾動，如 <span
+<li>之前，Mac Mouse Fix 在 Wacom 繪圖板上造成了不穩定的滾動，如 <span
 
 class="citation" data-cites="frenchie1980">@frenchie1980</span> 在
 
@@ -186,15 +184,15 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>
 
 </ul></li>
 
-<li>修復了在 Mac Mouse Fix 3.0.4 中引入的新授權系統中，Swift Concurrency
+<li>修復了 Swift Concurrency 代碼（在 Mac Mouse Fix 3.0.4
 
-代碼未在正確線程上運行的錯誤。
+中作為新授權系統的一部分引入）沒有在正確線程上運行的錯誤。
 
 <ul>
 
-<li>這導致在 macOS Tahoe
+<li>這導致了 macOS Tahoe
 
-上崩潰，也可能導致其他與授權相關的零星錯誤。</li>
+上的崩潰，也可能導致了其他與授權相關的零星錯誤。</li>
 
 </ul></li>
 
@@ -208,13 +206,21 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>
 
 上都會發生，這也可能是為什麼”免費天數已結束”錯誤（在 3.0.4
 
-中已解決）仍然發生在一些用戶身上，如 <span class="citation"
+中已經解決）仍然發生在一些用戶身上，如 <span class="citation"
 
 data-cites="toni20k5267">@toni20k5267</span> 在 GitHub Issue <a
 
 href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>
 
-中報告的那樣。（謝謝！）</li>
+中報告的那樣。（謝謝！）
+
+<ul>
+
+<li>如果你遇到了”免費天數已結束”錯誤，我深表歉意！你可以在<a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=zh-HK">這裡</a>申請退款。</li>
+
+</ul></li>
 
 </ul></li>
 
@@ -234,7 +240,7 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>
 
 上出現。現在，這些對話框只會在相關的 macOS 版本上顯示。</li>
 
-<li>這些對話框也更難觸發 – 之前它們有時會在不太有幫助的情況下顯示。</li>
+<li>這些對話框也更難觸發 - 之前它們有時會在不太有幫助的情況下顯示。</li>
 
 </ul></li>
 
@@ -242,7 +248,7 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>
 
 <ul>
 
-<li>這使啟用 Mac Mouse Fix 授權變得更加方便簡單。</li>
+<li>這使啟用 Mac Mouse Fix 授權變得更加方便！</li>
 
 </ul></li>
 
@@ -262,11 +268,11 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>
 
 </ul></li>
 
-<li>通過略微加寬窗口，修復了”關於”標籤頁底部的文字在中文環境下有時會被截斷的問題。</li>
+<li>通過略微加寬窗口，修復了”關於”標籤頁底部的文字在中文界面有時會被截斷的問題。</li>
 
-<li>修復了”關於”標籤頁底部文字的居中問題。</li>
+<li>修復了”關於”標籤頁底部文字略微偏離中心的問題。</li>
 
-<li>修復了導致”按鈕”標籤頁上”鍵盤快捷鍵…“選項下方空間過小的錯誤。</li>
+<li>修復了”按鈕”標籤頁上”鍵盤快捷鍵…“選項下方空間過小的錯誤。</li>
 
 </ul>
 
@@ -274,11 +280,11 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>
 
 <ul>
 
-<li>移除了對”SnapKit”框架的依賴
+<li>移除了對”SnapKit”框架的依賴。
 
 <ul>
 
-<li>這使應用程式的大小從 19.8 MB 略微降低到 19.5 MB</li>
+<li>這使應用程式的大小從 19.8 MB 略微降低到 19.5 MB。</li>
 
 </ul></li>
 

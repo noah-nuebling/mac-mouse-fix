@@ -50,7 +50,7 @@ In my testing, CPU usage has been reduced by ~50%!
 
 **Background**
 
-During the "Scroll & Navigate" gesture, Mac Mouse Fix draws a fake mouse cursor in a transparent window, while locking the real mouse cursor in place. This ensures that you can keep scrolling the UI element that you started scrolling on, no matter how far you move your mouse. \
+During the "Scroll & Navigate" gesture, Mac Mouse Fix draws a fake mouse cursor in a transparent window, while locking the real mouse cursor in place. This ensures that you can keep scrolling the UI element that you started scrolling on, no matter how far you move your mouse.
 
 The improved performance was achieved by turning off the default macOS event handling on this transparent window, which wasn't used anyway.
 
@@ -67,6 +67,7 @@ The improved performance was achieved by turning off the default macOS event han
     - This caused crashes on macOS Tahoe, and it also likely caused other sporadic bugs around licensing.
 - Improved robustness of the code that decodes offline licenses.
     - This works around an issue in Apple's APIs that caused offline license validation to always fail on my Intel Mac Mini. I assume that this happened on all Intel Macs, and that it was the reason why the "Free days are over" bug (which was already addressed in 3.0.4) still occurred for some people, as reported by @toni20k5267 in GitHub Issue [#1356](https://github.com/noah-nuebling/mac-mouse-fix/issues/1356). (Thank you!)
+        - If you experienced the "Free days are over" bug, I'm sorry about that! You can get a refund [here](https://redirect.macmousefix.com/?target=mmf-apply-for-refund).
      
      
 
@@ -77,20 +78,20 @@ The improved performance was achieved by turning off the default macOS event han
     - The dialogs are also a bit harder to trigger – before, they sometimes showed up in situations where they weren't very helpful.
     
 - Added an "Activate License" link directly on the "Free days are over" notification. 
-    - This makes activating a Mac Mouse Fix license even more nice and easy.
+    - This makes activating a Mac Mouse Fix license even more hassle-free!
 
 ### Visual Enhancements
 
 - Slightly improved the look of the "Software Update" window. Now it fits better with macOS 26 Tahoe. 
     - This was done by customizing the default look of the "Sparkle 1.27.3" framework which Mac Mouse Fix uses to handle updates.
 - Fixed issue where the text at the bottom of the About tab was sometimes cut off in Chinese, by making the window slightly wider.
-- Fixed centering of the text at the bottom of the About tab.
+- Fixed the text at the bottom of the About tab being slightly off-center.
 - Fixed a bug that caused the space under the "Keyboard Shortcut..." option on the Buttons tab to be too small. 
 
 ### Under-The-Hood Changes
 
-- Removed dependency on the "SnapKit" framework
-    - This slightly lowers the size of the app from 19.8 to 19.5 MB
+- Removed dependency on the "SnapKit" framework.
+    - This slightly lowers the size of the app from 19.8 to 19.5 MB.
 - Various other small improvements in the codebase.
 
 *Edited with excellent assistance from Claude.*
