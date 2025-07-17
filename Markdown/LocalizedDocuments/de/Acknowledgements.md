@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2025**
 
+- 🇺🇦&nbsp;Segemun - "This app fixed my mouse and possibly my trust in humanity"
 - 🇦🇹&nbsp;Steven&nbsp;Taskin - "No more spongy mouse"
 - 🇺🇸&nbsp;Ben&nbsp;(Make&nbsp;For&nbsp;Life&nbsp;Workshop) - "Thanks for making this!"
 - 🇺🇸&nbsp;Anonymous - "Turned my Kensington Trackball into the tool it was always meant to be."
