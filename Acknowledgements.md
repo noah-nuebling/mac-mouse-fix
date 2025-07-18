@@ -42,6 +42,8 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **July 2025**
 
+- 🇮🇩&nbsp;Kumparan - "Bicara Fakta Lewat Berita"
+- 🇺🇸&nbsp;Kausinkonfusion - "Worked perfectly first try, so I bought it."
 - 🇺🇸&nbsp;James&nbsp;Kelly - "Shiny!"
 - 🇧🇷&nbsp;Eduardo&nbsp;Spotti - "Seja generoso"
 - 🇺🇸&nbsp;Saurabh - "Amazing utility!"
