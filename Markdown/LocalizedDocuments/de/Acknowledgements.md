@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2025**
 
+- 🇺🇸&nbsp;Colin&nbsp;Sheridan - "The most deserved milkshake in the history of macOS utility creator milkshake purchases..."
 - 🇺🇸&nbsp;Joey&nbsp;:)
 - 🇺🇸&nbsp;Janmaitland
 - 🇮🇩&nbsp;Kumparan - "Bicara Fakta Lewat Berita"
