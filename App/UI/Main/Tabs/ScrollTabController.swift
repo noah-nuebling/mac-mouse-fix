@@ -99,7 +99,7 @@ class ScrollTabController: NSViewController {
          
         trackpadSection.reactive.isCollapsed <~ smooth.producer.map({ $0 != "high" })
         
-        let MF_TEST = 1
+        let MF_TEST = 0
         if MF_TEST == 0 { /// Remove the experimental "low" option in release builds
             smoothPicker.menu?.item(withIdentifier: NSUserInterfaceItemIdentifier("low"))?.isHidden = true
         }

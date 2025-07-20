@@ -37,17 +37,17 @@ struct CurveVisualizer_View: View {
             
             ForEach(curveTrace1, id: \.self) { item in
                 LineMark(
-                    x: PlottableValue.value("X", item.x.native),
-                    y: PlottableValue.value("Y", item.y.native),
-                    series: .value("Plot", "1")
+                    x: PlottableValue.value(Text(verbatim: "X"), item.x.native),
+                    y: PlottableValue.value(Text(verbatim: "Y"), item.y.native),
+                    series: .value(Text(verbatim: "Plot"), "1")
                 )
                 .foregroundStyle(.blue)
             }
             ForEach(curveTrace2, id: \.self) { item in
                 LineMark(
-                    x: PlottableValue.value("X", item.x.native),
-                    y: PlottableValue.value("Y", item.y.native),
-                    series: .value("Plot", "2")
+                    x: PlottableValue.value(Text(verbatim: "X"), item.x.native),
+                    y: PlottableValue.value(Text(verbatim: "Y"), item.y.native),
+                    series: .value(Text(verbatim: "Plot"), "2")
                 )
                 .foregroundStyle(.red)
             }

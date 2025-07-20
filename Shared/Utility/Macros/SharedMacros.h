@@ -508,44 +508,6 @@
 ///         ```
 #define swapvars(a, b) ({ __auto_type __tmp = a; a = b; b = __tmp; })
 
-/// safe comparison macros
-///     `< (lt)`, `<= (leq)`, `> (gt)`, and `>= (geq)` operators without the footgun.
-///     Explanation: The footgun is that the following evaluates to false, because the int gets converted to unsigned int and then underflows:
-///         ```
-///         int a = -1;
-///         unsigned int b = 1;
-///         int result = (a<b); // false!
-///         ```
-///     Alternative:
-///         Simply turn on the -Wsign-compare compiler warning. (Why isn't that on by default??) (Update: Just turned that on alongside -Wsign-conversion [May 20 2025])
-///     Context/TODO:
-///         Maybe remove these mflt, mfleq, ... macros, and write a note about the footgun and its solution (-Wsign-compare)
-///         There are several mentions elsewhere in this file of the `a<b` footgun. Maybe update/remove those, now that we found solution.
-///             Mentions: safeindex, mfsign, probably more...
-///             Here's example code that triggers the warning unless we cast to signed:
-///                 ```
-///                 int a = -1;
-///                 unsigned int b = 1;
-///                 MAX((long)a, (long)b);
-///                 ```
-#define mflt(a, b) ({                           \
-    __auto_type _a = (a);                       \
-    __auto_type _b = (b);                       \
-    __auto_type _cmp = mfsign(_b) - mfsign(_a); \
-    _cmp!=0 ? _cmp==1 : (_a<_b);                \
-})
-#define mfleq(a, b) ({              \
-    __auto_type _a = (a);           \
-    __auto_type _b = (b);           \
-    _a == _b || mflt(_a, _b);       \
-})
-#define mfgt(a, b) ({               \
-    !mfleq(_a, _b);                 \
-})
-#define mfgeq(a, b) ({              \
-    !mflt(_a, _b);                  \
-})
-
 /// mfsign()
 ///     - Returns 1 if positive, -1, if negative, 0 otherwise.
 ///     - Is a macro to work with different types, int, float, char, etc.

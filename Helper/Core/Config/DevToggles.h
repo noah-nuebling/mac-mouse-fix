@@ -11,7 +11,7 @@
 
 /// Note: [Jun 2025] These variables purposefully have generic names so they can be used in different context.
 
-#define MF_TEST 1
+#define MF_TEST 0
 
 #if MF_TEST /// Don't use these in prod builds!
 

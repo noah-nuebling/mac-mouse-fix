@@ -313,17 +313,14 @@ import Cocoa
     
     @objc lazy var consecutiveScrollTickIntervalMax: TimeInterval = SharedUtilitySwift.eval {
         
-        if (_1) { Double(devToggles_Lo)/1000 } /// DEBUG
-        else {
-            switch animationCurve {
-            case kMFScrollAnimationCurveNameNone:            160.0/1000
-            case kMFScrollAnimationCurveNameVeryLowInertia:  200.0/1000 /// Increasing this (vs the 160 we're using everywhere else) since we want the acceleration curve to kick in at lower finger-speeds [Jun 4 2025]
-            case kMFScrollAnimationCurveNameLowInertia:      160.0/1000
-            case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim: 160.0/1000
-            case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear:          160.0/1000
-            case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll:              160.0/1000
-            default: { assert(false); return -1.0 }()
-            }
+        switch animationCurve {
+        case kMFScrollAnimationCurveNameNone:            160.0/1000
+        case kMFScrollAnimationCurveNameVeryLowInertia:  /*200.0*/160.0/1000 /// Increasing this to 200 (vs the 160 we're using everywhere else) since we want the acceleration curve to kick in at lower finger-speeds [Jun 4 2025] || Update: [Jul 2025] IIRC, I decided lowering to 200 didn't make sense and 160 was already the lowest thing that feels "consecutive" at all, and what we probably want to do instead is change the shape of the acceleration curve.
+        case kMFScrollAnimationCurveNameLowInertia:      160.0/1000
+        case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim: 160.0/1000
+        case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear:          160.0/1000
+        case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll:              160.0/1000
+        default: { assert(false); return -1.0 }()
         }
     }
     /// ^ Notes:
@@ -607,6 +604,8 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
         ///                 - Smooth scrolling not available in Chrome on macOS (?) https://www.reddit.com/r/chrome/comments/153tfev/smooth_scrolling_not_available_on_mac/
         ///         [Jun 4 2025] SmoothFox.js for Firefox – I've seen this recommended. I should try it.
         ///         [Jun 4 2025] I saw some Logitech Mouse have nice scrolling recently and some MMF user asked for less smoothing on GitHub recently after coming from Logitech's Driver. I remember I used to hate Logi Options scrolling but maybe they improved it or my tasted have changed?
+        
+        #if false /// [Jul 2025] Would like to use `MF_TEST 0` here, but not sure how in Swift
         if _1 {
             var baseCurve:          Bezier?          = nil
             var baseSpeedupCurve:   Curve?           = nil
@@ -701,6 +700,8 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
             }
             return MFScrollAnimationCurveParameters(justBaseCurve: baseCurve!, speedSmoothing:-1, baseMsPerStep:-1, baseMsPerStepCurve: baseSpeedupCurve!, sendGestureScrolls: false)
         }
+        
+        #endif
         
         fatalError()
         

@@ -11,6 +11,8 @@
 /// [May 2025] Interface for playing around with the app's behavior without recompiling
 ///     E.g. modifying animation curves
 ///
+///     Update: [Jul 2025] We had the idea of just putting all the params into Config.plist again (like in older MMF versions) so we can play around with them by just editing config.plist. But in the short-term DevToggles.m should be useful.
+///
 
 #import "DevToggles.h"
 #import "Logging.h"
@@ -28,7 +30,7 @@ CFMachPortRef _tap = NULL;
 
 #pragma mark - Event listener
 
-#define MF_TEST 1 /// Deactivate this before shipping the app!
+#define MF_TEST 0 /// Deactivate this before shipping the app!
 #if MF_TEST
 
     @implementation NSObject (DevToggles_OnLoad)

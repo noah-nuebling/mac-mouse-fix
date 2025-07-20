@@ -2273,6 +2273,7 @@
 		4FB4FA1E2611DD6000806DDD /* KeyCaptureScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCaptureScrollView.h; sourceTree = "<group>"; };
 		4FB4FA1F2611DD6000806DDD /* KeyCaptureScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyCaptureScrollView.m; sourceTree = "<group>"; };
 		4FB5FE8A27AE563F0092C9B4 /* MFScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFScrollView.h; sourceTree = "<group>"; };
+		4FB898952E2D5B4D00523B37 /* Clang Diagnostic Flags - Sign.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Clang Diagnostic Flags - Sign.md"; sourceTree = "<group>"; };
 		4FB8B2932CCDB94F00A5A580 /* MFPlistDecoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFPlistDecoder.h; sourceTree = "<group>"; };
 		4FB8B2942CCDB94F00A5A580 /* MFPlistDecoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFPlistDecoder.m; sourceTree = "<group>"; };
 		4FB8B2972CCEBAD300A5A580 /* GetLicenseState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetLicenseState.swift; sourceTree = "<group>"; };
@@ -7483,6 +7484,7 @@
 			children = (
 				4FBC827A2DAE8EF800354981 /* Side-Repos 2024.md */,
 				4FBC82A12DAE93BD00354981 /* Xcode Nullability Settings.md */,
+				4FB898952E2D5B4D00523B37 /* Clang Diagnostic Flags - Sign.md */,
 				4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */,
 				4FEB6618279376C200E6A111 /* notes.md */,
 				4FC778302D66693E00488468 /* Localization Notes.md */,
