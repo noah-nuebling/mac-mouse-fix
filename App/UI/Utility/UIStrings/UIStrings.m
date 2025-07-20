@@ -178,11 +178,11 @@
     NSString *kb = @"";
     CGEventFlags f = flags;
     kb = [NSString stringWithFormat:@"%@%@%@%@",
-          (f & kCGEventFlagMaskControl      ? @"^" : @"")   ,
+          (f & kCGEventFlagMaskControl      ? @"⌃" : @"")   ,
           (f & kCGEventFlagMaskAlternate    ? @"⌥" : @"")   ,
           (f & kCGEventFlagMaskShift        ? @"⇧" : @"")   ,
           (f & kCGEventFlagMaskCommand      ? @"⌘" : @"")   ]
-//          (f & kCGEventFlagMaskSecondaryFn  ? @"🌐︎": @"")   ] /// Caution: Due to eternalmods, the fn flag doesn't always indicate that the fn/globe key is held. – See EventLoggerForBrad. || Note: [Apr 2025] 🌐︎ is actually a standard unicode symbol! I thought I had to use SFSymbols here – that makes things much easier.
+//          (f & kCGEventFlagMaskSecondaryFn  ? @"🌐︎": @"")   ] /// Caution: Due to eternalmods, the fn flag doesn't always indicate that the fn/globe key is held. – See EventLoggerForBrad. || Note: [Apr 2025] 🌐︎ is actually a standard unicode symbol! I thought I had to use SFSymbols here – that makes things much easier. || Update: [Jul 2025] On machines without a globe key, `fn ` should perhaps be used. See https://gist.github.com/zmwangx/10571883?permalink_comment_id=5683354#gistcomment-5683354
     ;
     
     return kb;
