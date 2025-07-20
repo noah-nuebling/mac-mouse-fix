@@ -23,3 +23,8 @@
                 We waited to merge it into MMF since MMF's master branch had diverted from the feature-strings-catalog branch.
             - [Apr 16 2025] We merged the crazy macros and PrivateFunctions.m. Still need to work on Keyboard-Shortcut-Simulator before merging it.
         
+[Jul 2025]
+    - In 2025, we created a `swiftui-test-tahoe-beta/` repo where we rewrote the scrolling tab of MMF in the style of macOS System Settings using 3 approaches: SwiftUI, Interface Builder, and pure objc+AppKit. 
+        Nothing there is important enough to merge, but the if we rewrite the UI, we should reference this. The`mfl_` objc microframework and the `MFTargetActionObserver.m` implementations demonstrate interesting approaches. 
+        Sidenote: In our fork of the Sparkle/modernize-update-alert branch, we reimplemented the SUUpdateAlert using an `sui_` microframework which follows the same idea as the`mfl_` one – maybe we can reference that, too, in the future.
+    - Meta: Maybe this shouldn't be called "Side-Repos 2024" anymore now, since it includes a 2025 side-repo.
