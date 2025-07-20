@@ -124,7 +124,7 @@
     NSString *kb = @"";
     CGEventFlags f = flags;
     kb = [NSString stringWithFormat:@"%@%@%@%@",
-           (f & kCGEventFlagMaskControl ?    @"^" : @"")
+           (f & kCGEventFlagMaskControl ?    @"⌃" : @"")
           ,(f & kCGEventFlagMaskAlternate ?  @"⌥" : @"")
           ,(f & kCGEventFlagMaskShift ?      @"⇧" : @"")
           ,(f & kCGEventFlagMaskCommand ?    @"⌘" : @"")
