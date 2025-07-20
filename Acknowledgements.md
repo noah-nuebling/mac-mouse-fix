@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **July 2025**
 
+- 🇦🇹&nbsp;Denis&nbsp;Andrejew - "Keep up the good work!"
 - 🇺🇸&nbsp;Colin&nbsp;Sheridan - "The most deserved milkshake in the history of macOS utility creator milkshake purchases..."
 - 🇺🇸&nbsp;Joey&nbsp;:)
 - 🇺🇸&nbsp;Janmaitland
