@@ -46,11 +46,12 @@ import ReactiveSwift
         /// - Logically, the `is-disabled-toast` and the `is-strange-helper-toast` belong together since they both give UI feedback about a failure to enable the helper. It would be nice if they were in the same place in code as well
         
         
-        /// Update: [Jun 2025] Disable if not running macOS 13 Ventura or 14 Sonoma
+        /// Update: [Jul 13 2025] Disable if not running macOS 13 Ventura or 14 Sonoma
         ///     On other versions, macOS should automatically switch to launching the right helper version, and no uninstall-and-restart should be required. (Giving users instructions to uninstall-and-restart was the main purpose of this.)
-        ///     Perhaps there's still some utility in detecting strange helpers to improve edge-cases, but I'm not sure of that, so I'll disable this code now for other macOS versions [Jun 2025]
-        ///     Also see `enable-timeout-toast` discussion in `GeneralTabController.swift` where the alert we're creating here is referred to as `is-strange-helper-alert` [Jun 2025]
+        ///     Perhaps there's still some utility in detecting strange helpers to improve edge-cases, but I'm not sure of that, so I'll disable this code now for other macOS versions [Jul 2025]
+        ///     Also see `enable-timeout-toast` discussion in `GeneralTabController.swift` where the alert we're creating here is referred to as `is-strange-helper-alert` [Jul 2025]
         ///         Uncertainty: I'm pretty sure that the issue that the `is-strange-helper-alert` was addressing went away at the same time as the issue that the `enable-timeout-toast` was addressing – in macOS 15 Sequoia. But not 100% sure.
+        /// Update: [Jul 17 2025] This issue (https://github.com/noah-nuebling/mac-mouse-fix/issues/1464) in 3.0.5 might have been prevented by disabling strange helpers! Perhaps we should re-enable that feature without calling `AlertCreator.showStrangeHelperMessage()`
         
         let osVersion = ProcessInfo.processInfo.operatingSystemVersion.majorVersion
         if osVersion < 13 || 14 < osVersion {

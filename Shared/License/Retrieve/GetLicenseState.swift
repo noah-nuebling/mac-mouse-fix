@@ -498,7 +498,7 @@ import CryptoKit
         
         /// 'Post-processing' on the parsedServerResponse: Validate activation count
         if parsedServerResponse.isValidKey == .valid {
-            let isSuspiciousActivationCount = (parsedServerResponse.nOfActivations ?? Int.max) > licenseConfig.maxActivations
+            let isSuspiciousActivationCount = (parsedServerResponse.nOfActivations ?? Int.max) > licenseConfig.maxActivations /// [Jul 2025] When activating bulk purchases on Gumroad, it still only produces one license key. I think we'd have to multiply the licenseConfig.maxActivations with the number of seats to support this.
             if isSuspiciousActivationCount {
                 parsedServerResponse.error = NSError(domain: MFLicenseErrorDomain, code: Int(kMFLicenseErrorCodeInvalidNumberOfActivations), userInfo: ["nOfActivations": parsedServerResponse.nOfActivations ?? -1, "maxActivations": licenseConfig.maxActivations])
                 parsedServerResponse.isValidKey = .invalid

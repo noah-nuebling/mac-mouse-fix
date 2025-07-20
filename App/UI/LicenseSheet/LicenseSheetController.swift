@@ -375,9 +375,9 @@ import CocoaLumberjackSwift
         assert(Thread.isMainThread)
         
         guard let tabViewController = MainAppState.shared.tabViewController else { assert(false); return }
-        tabViewController.dismiss(openInstance!)
-        
-        openInstance = nil
+        guard let openInstance else { DDLogDebug("LicenseSheetController.remove() called even though openInstance is nil"); return } /// self.openInstance is nil when clicking the back button before the server can respond to clicking the "Activate License" button which will lead to remove() being called twice – This is relevant when the server takes a while to respond. This caused crashes for Ali in this email: (message:<C1EE2023-A0D4-4E24-997F-CAED98598A3A@gmail.com>)
+        tabViewController.dismiss(openInstance)
+        self.openInstance = nil
     }
     
     /// Define errors
