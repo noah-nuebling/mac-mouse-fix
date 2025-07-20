@@ -158,7 +158,7 @@ IB_DESIGNABLE
     
     NSMutableAttributedString *underlinedString = [[NSMutableAttributedString alloc] initWithAttributedString: self.attributedStringValue];
     NSRange wholeStringRange = NSMakeRange(0, [underlinedString length]);
-    [underlinedString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:wholeStringRange];
+    [underlinedString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleSingle) range:wholeStringRange]; /// In Chinese, the underline is weirdly thin, except if the text contains some roman characters. I think this is an Apple bug (macOS 15.5, [Jul 2025])
     self.attributedStringValue = underlinedString;
     
 //    [NSCursor.pointingHandCursor push]; // This is maybe a little tacky, cause nothing else in the UI does this
