@@ -26,6 +26,25 @@
 
 /// -------------------------
 
+/// `vardesc` and `vardescl` macros
+///  Naming:
+///      vardesc -> (var)iable (desc)ription
+///      vardescl -> (var)iable (desc)ription with (l)inebreaks
+///  For a given set of expressions, captures their source text and corresponding value and inserts them into the output string in a key-value style. All values have to be objects.
+///  This is similar to NSDictionaryOfVariableBindings() – But this is better-suited for debug-printing because: Dictionaries don't preserve order. Dictionaries can't contain nil. Using NSDictionaryOfVariableBindings requires importing NSLayoutConstraint.h
+///  Example usage:
+///      ```
+///      NSLog(@"Local variables %@", vardesc(@(some_int), some_object)); // Prints: `Local variables: { @(some_int) = 79 | some_object = Turns out I'm a string! }`
+///      ```
+#define vardesc(vars...)  _vardesc(false, @#vars, vars)         /** Need to stringify `vars` here not inside `_vardesc`, otherwise sourcetext of passed-in macros will be expanded. Not sure why [Jul 2025] */
+#define vardescl(vars...) _vardesc(true,  @#vars, vars)
+
+#define _vardesc(linebreaks, keys, vars...) ({                  \
+    id _values[] = { vars };                                    /** Using a C array instead of NSArray to be able to capture nil. NSDictionaryOfVariableBindings uses a variadic function. */\
+    __vardesc(keys, _values, arrcount(_values), (linebreaks));  \
+})
+NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullable __strong *_Nonnull values, size_t count, bool linebreaks);
+
 /// `nowarn_begin()` and `nowarn_end()` macros:
 ///     Temporarily disable all clang warnings (-Weverything).
 ///     Example usage:
