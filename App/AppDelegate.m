@@ -54,7 +54,7 @@
     if (beingEnabled) {
         /// We won't enable the UI here directly. Instead, we'll do that from the `handleHelperEnabledMessage` method
     } else { /// Being disabled
-        [self enableUI:NO];
+        [self updateUIEnabledStateWithEnable:NO];
     }
     
     [HelperServices enableHelperAsUserAgent:beingEnabled onComplete:^(NSError * _Nullable error) {
@@ -79,9 +79,10 @@
 }
 + (void)handleHelperEnabledMessage {
     
+    /// Enable UI
+    [self.instance updateUIEnabledStateWithEnable:YES];
+    
     if (self.instance.UIDisabled) {
-        /// Enable UI
-        [self.instance enableUI:YES];
         /// Flash Notification
 //        NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Mac Mouse Fix will stay enabled after you restart your Mac"];
 //        message = [message attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
@@ -147,13 +148,12 @@ static NSDictionary *sideButtonActions;
     
 }
 
-- (void)applicationWillFinishLaunching:(NSNotification *)notification {
-
-}
-
-- (void)applicationDidFinishLaunching:(NSNotification *)notification {
+- (void)awakeFromNib {
     
-    NSLog(@"Mac Mouse Fix finished launching");
+    /// Tahoe compacting
+    if (@available(macOS 26.0, *)) { /// We usually like calling this in windowDidLoad or viewDidLoad, but not sure how to do this here.
+        self.window.contentView.prefersCompactControlSizeMetrics = YES;
+    }
     
     /// Do weird tweaks for Ventura
     ///     It seems that NSBox adds horizontal padding of 1 px around its contentView in Ventura (Beta). Here we compensate for that.
@@ -161,11 +161,15 @@ static NSDictionary *sideButtonActions;
     if (@available(macos 13.0, *)) {
         self.preferenceBox.contentViewMargins = NSMakeSize(-1, 0);
     }
+}
+
+- (void)applicationWillFinishLaunching:(NSNotification *)notification {
+
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)notification {
     
-    /// Tahoe compacting
-    if (@available(macOS 26.0, *)) {
-        self.window.contentView.prefersCompactControlSizeMetrics = YES;
-    }
+    NSLog(@"Mac Mouse Fix finished launching");
     
     /// Load UI
     
@@ -287,7 +291,7 @@ NSTimer *removeAccOverlayTimer;
 - (BOOL)UIDisabled {
     return !self.enableMouseFixCheckBox.state;
 }
-- (void)enableUI:(BOOL)enb {
+- (void)updateUIEnabledStateWithEnable:(BOOL)enb {
     
     /// Get state
     self.enableMouseFixCheckBox.state = enb;
@@ -303,6 +307,9 @@ NSTimer *removeAccOverlayTimer;
             [(NSControl *)v setEnabled:enb];
         }
     }
+    
+    /// Scroll speed slider
+    _scrollStepSizeSlider.enabled = enb && _scrollEnableCheckBox.state;
 }
 
 - (void)updateUI {
@@ -313,7 +320,6 @@ NSTimer *removeAccOverlayTimer;
     /// enableCheckbox
     BOOL enable = HelperServices.helperIsActive;
 //    _enableMouseFixCheckBox.state = enable ? 1 : 0;
-    [self enableUI:enable];
     
     [ConfigFileInterface_App loadConfigFromFile];
     
@@ -329,15 +335,12 @@ NSTimer *removeAccOverlayTimer;
         _scrollEnableCheckBox.state = 0;
     }
     
-    // Scroll speed slider
-    _scrollStepSizeSlider.enabled = _scrollEnableCheckBox.state;
-    
     // Invert checkbox
     _invertScrollCheckBox.state = [scrollConfigFromFile[@"direction"] integerValue] == -1 ? 1 : 0;
     
     NSString *activeScrollSmoothnessConfiguration = @"Normal";
     
-    // Slider
+    // Scroll speed slider
     double pxStepSizeRelativeToConfigRange;
     NSArray *range = _scrollConfigurations[activeScrollSmoothnessConfiguration][0];
     double lowerLm = [range[0] floatValue];
@@ -347,6 +350,9 @@ NSTimer *removeAccOverlayTimer;
     pxStepSizeRelativeToConfigRange = (pxStepSize - lowerLm) / (upperLm - lowerLm);
     
     _scrollStepSizeSlider.doubleValue = pxStepSizeRelativeToConfigRange;
+    
+    // Update enabled state
+    [self updateUIEnabledStateWithEnable:enable];
     
 }
 
