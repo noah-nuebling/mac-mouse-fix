@@ -93,7 +93,7 @@
     [MoreSheet.instance begin];
 }
 - (IBAction)scrollEnableCheckBox:(id)sender {
-    [self disableScrollSettings:@(_scrollEnableCheckBox.state)];
+    _scrollStepSizeSlider.enabled = _scrollEnableCheckBox.state;
     [self UIChanged:NULL];
 }
 - (IBAction)UIChanged:(id)sender { // TODO: consider removing
@@ -298,13 +298,6 @@ NSTimer *removeAccOverlayTimer;
             [(NSControl *)v setEnabled:enb];
         }
     }
-    /// Forgot what this does
-    if (enb) {
-        [self disableScrollSettings:@(_scrollEnableCheckBox.state)];
-    }
-}
-- (void)disableScrollSettings:(NSNumber *)enable {
-    _scrollStepSizeSlider.enabled = enable.boolValue;
 }
 
 - (void)updateUI {
@@ -330,6 +323,9 @@ NSTimer *removeAccOverlayTimer;
     else {
         _scrollEnableCheckBox.state = 0;
     }
+    
+    // Scroll speed slider
+    _scrollStepSizeSlider.enabled = _scrollEnableCheckBox.state;
     
     // Invert checkbox
     _invertScrollCheckBox.state = [scrollConfigFromFile[@"direction"] integerValue] == -1 ? 1 : 0;
