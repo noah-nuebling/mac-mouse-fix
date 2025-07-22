@@ -42,6 +42,10 @@ static BOOL _pointerIsInsideAddField;
     NSTrackingArea *addTrackingArea = [[NSTrackingArea alloc] initWithRect:self.addField.frame options:NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingEnabledDuringMouseDrag owner:self userInfo:nil];
     // (Well I can't use ad tracking cause I claim to be privacy focused on the website, but at least I can use add tracking! Hmu if you can think of a way to monetize that.)
     [self.window.contentView addTrackingArea:addTrackingArea];
+    // Tahoe compacting
+    if (@available(macOS 26.0, *)) {
+        self.window.contentView.prefersCompactControlSizeMetrics = YES;
+    }
 }
 
 // UI callbacks

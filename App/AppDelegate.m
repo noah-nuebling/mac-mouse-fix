@@ -162,6 +162,11 @@ static NSDictionary *sideButtonActions;
         self.preferenceBox.contentViewMargins = NSMakeSize(-1, 0);
     }
     
+    /// Tahoe compacting
+    if (@available(macOS 26.0, *)) {
+        self.window.contentView.prefersCompactControlSizeMetrics = YES;
+    }
+    
     /// Load UI
     
     [self updateUI];

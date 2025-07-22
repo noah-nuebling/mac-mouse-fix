@@ -42,6 +42,15 @@ AuthorizeAccessibilityView *_accViewController;
 }
 
 ///
+/// Lifecycle
+///
+
+- (void)viewDidLoad {
+    if (@available(macOS 26.0, *))
+        self.view.prefersCompactControlSizeMetrics = YES;
+}
+
+///
 /// Add & Remove
 ///
 
