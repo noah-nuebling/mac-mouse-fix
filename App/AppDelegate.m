@@ -161,6 +161,9 @@ static NSDictionary *sideButtonActions;
     if (@available(macos 13.0, *)) {
         self.preferenceBox.contentViewMargins = NSMakeSize(-1, 0);
     }
+    
+    /// Load UI state
+    [self updateUI];
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
@@ -170,10 +173,6 @@ static NSDictionary *sideButtonActions;
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
     
     NSLog(@"Mac Mouse Fix finished launching");
-    
-    /// Load UI
-    
-    [self updateUI];
     
     /// Update app-launch counters
     
