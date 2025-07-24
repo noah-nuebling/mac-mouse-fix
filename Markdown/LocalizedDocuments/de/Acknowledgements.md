@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2025**
 
+- 🇺🇸&nbsp;Charles - "This. fixes. EVERYTHING."
 - 🇸🇬&nbsp;Hanleiqin - "Thank you for making the world a better place."
 - 🇺🇸&nbsp;Kris&nbsp;Niles
 - 🇺🇸&nbsp;Append
