@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **July 2025**
 
+- 🇸🇬&nbsp;Hanleiqin - "Thank you for making the world a better place."
 - 🇺🇸&nbsp;Kris&nbsp;Niles
 - 🇺🇸&nbsp;Append
 - 🇺🇸&nbsp;Qihao&nbsp;Hong - "goated - keep up the good work"
