@@ -663,6 +663,9 @@ def user_message(sale, name):
         
         name = name.replace(nbsp, ' ')
         
+        if name == "🇦🇺 Haodi Wang":
+            name = "🇨🇳 Haodi Wang"
+
         if name == "🇹🇼 Eugene" and message == "Taiwan no.1":
             message = ''
             break
