@@ -454,9 +454,10 @@ def display_name(sale):
     name = ''
 
     # Special requests & rules
+    
     if sale['email'] == 'rawad.aboud@icloud.com': # Gumroad api says he's from IL-TA (Tel Aviv, Israel), but he's Palestinian. See [this mail](message:<8C5D64EE-447A-4A65-89A4-27F99115C986@icloud.com>)
         return '🇵🇸 Rawad Aboud'
-    if sale['email'] == 'whdi@foxmail.com': # Requested to use Chinese flag instead of Australian
+    if sale['email'] == 'whdi@foxmail.com': # Requested to use Chinese flag. Update: OMG why did I use the email 🤦🤦🤦. Don't do that anymore and look into rewriting git history if someone complains.
         return "🇨🇳 Haodi Wang"
 
     # Get user-provided name field
@@ -469,6 +470,7 @@ def display_name(sale):
             name = sale['full_name']
     
     # Fall back to email-based heuristic
+    #   Update: [Jul 2025] I don't think we should be doing this at all. I think I wrote this before there was a name field. But now that there is a name field, we should just respect it if people don't enter a name.
     if name == '':
         
         # Get email
