@@ -160,7 +160,7 @@ class TrialNotificationController: NSWindowController {
             /// - Can't do this with autolayout ugh. Also can't use NSTextField, which would support autolayout, because it doesn't support links.
             /// - With body.frame.width we use the width from IB
             /// - By setting priority to 999 we give priority to the min height from IB. That's so the MMF Icon which is centered to the textField doesn't get too close to the the dismiss button.
-            let size = bodyMarkdown.size(atMaxWidth: body.frame.width)
+            let size = body.frame.size /*bodyMarkdown.size(atMaxWidth: body.frame.width)*/ /// Update: [Jul 2025] `NSAttributedString sizeAtMaxWidth:` was too short in Chinese. But simply using the NSTextView's height (`body.frame.size.height`) works! I think we shouldn't have a scrollView around the textView here. We never want anything to be cut off.
             let bodyHeight = bodyScrollView.heightAnchor.constraint(equalToConstant: size.height)
             bodyHeight.priority = .init(999) /// Give the min height from IB priority
             bodyHeight.isActive = true
