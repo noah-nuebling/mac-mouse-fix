@@ -181,14 +181,9 @@ class GeneralTabController: NSViewController {
                                 enableTimeoutDisposable?.dispose()
                                 
                                 /// Show user feedback
-                                /// Notes:
-                                /// - We put a period at the end of this UI string. Usually we don't put periods for short UI strings, but it just feels wrong in this case?
-                                /// - The default duration `kMFToastDurationAutomatic` felt too short in this case. I wonder why that is? I think this toast is one of, if not the shortest toasts - maybe it has to do with that? Maybe it feels like it should display longer, because there's a delay until it shows up so it's harder to get back to? Maybe our tastes for how long the toasts should be changed? Maybe we should adjust the formula for `kMFToastDurationAutomatic`?
-                                
                                 if let window = MainAppState.shared.window {
                                     if window.attachedSheet == nil { /// [Jul 2025] Prevent the toast from showing up behind the accessibility sheet. This is still kinda jank but since this code only runs on macOS 13 and 14 (as of [Jul 2025]), it's not worth fixing. A better way would be to have the `mergedSignal` listen to anything that indicates the user no longer waiting for the helper being enabled: window resigning key, sheet being attached, tab being switched, helper sending mainApp any message, perhaps more I can't think of rn. Probably using NSNotificationCenter for this would be good.
-                                        let rawMessage = NSLocalizedString("enable-timeout-toast", comment: "First draft: If you have **problems enabling** the app, click&nbsp;[here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861).")
-                                        ToastNotificationController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage)!, to: window, forDuration: 10.0)
+                                        Toasts.showSimpleToast(name: "k-enable-timeout-toast")
                                     }
                                 }
                             })

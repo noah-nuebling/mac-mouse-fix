@@ -16,6 +16,8 @@
 #import "TreeNode.h"
 #import "MFDefer.h"
 
+#import "Logging.h"
+
 #import "NSCharacterSet+Additions.h"
 
 @implementation MFDataClassBase

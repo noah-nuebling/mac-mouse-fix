@@ -5,6 +5,8 @@
 //  Created by Noah Nübling on 10.02.25.
 //
 
+#import "SharedMacros.h"
+
 #pragma mark - vardesc macro
 
 NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullable __strong *_Nonnull values, size_t count, bool linebreaks) {

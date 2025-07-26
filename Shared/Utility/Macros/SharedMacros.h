@@ -14,6 +14,8 @@
 ///
 /// -------------------------------------
 
+#import <Foundation/Foundation.h>
+
 #pragma mark - Macros from mac-mouse-fix > SharedUtility.h
 
 /// Helper macros
