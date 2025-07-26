@@ -75,7 +75,7 @@ class GeneralTabController: NSViewController {
         /// Sync enabledToggle with Helper enabledState
         ///
         
-        let enableTimeout = 3.0
+        let enableTimeout = 7.0
         var enableTimeoutDisposable: Disposable? = nil
         var enableTimeoutTimer: DispatchSourceTimer? = nil
         
@@ -92,83 +92,110 @@ class GeneralTabController: NSViewController {
                     
                     if error == nil {
                         
-                        /// Notes:
-                        /// - Unfortunately there's a whole class of errors with enabling MMF under macOS 13 Ventura and later using the SMAppService API, where the error that the API returns is nil and there seems to be no direct way of finding out that things failed. None of these issues seem to have been fixed currently under macOS 14.2
-                        ///     To help the user in these cases:
-                        ///     - In the case that the system launches a 'strange' instance of MMF Helper which comes from another version of Mac Mouse Fix. We use `MessagePortUtility.checkHelperStrangenessReact()` to detect that and provide solution steps to the user.
-                        ///     - For cases where the system doesn't seem to launch any instance of MMF Helper at all, we set a timout here and then show a toast that refers users to a help page.
-                        
-                        
-                        /// Clean up
-                        enableTimeoutDisposable?.dispose()
-                        enableTimeoutTimer?.cancel()
-                        
-                        /// Create a signal that fires when either the app is enabled or a strange helper is detected.
-                        let mergedSignal: Signal<Void, Never> = Signal.merge(
-                            EnabledState.shared.signal.filter({ $0 == true }).map({ _ in () }),
-                            MessagePortUtility.shared.strangeHelperDetected.map({ _ in () })
-                        )
-                        
-                        /// Observe the signal
-                        enableTimeoutDisposable = mergedSignal.observeValues({ _ in
+                        if #available(macOS 15.0, *) {
                             
+                            /// [Jul 2025] The strange issues with enabling have been fixed by Apple since macOS 15.0 Sequoia. (Source: Enabling Guide: https://github.com/noah-nuebling/mac-mouse-fix/discussions/861)
+                            ///     Due to this, the instructions on the `enable-timeout-toast` and the `is-strange-helper-alert` are outdated.
+                            ///     We didn't get around to disabling those alerts during macOS 15's lifecycle, but now we're finally doing it during the macOS 26 Tahoe Beta.
                             ///
-                            /// Enabling __has not__ timed out
-                            ///
+                            ///     Reasons for disabling the alerts:
+                            ///         - The alerts' instructions were outdated.
+                            ///         - The `enable-timeout-toast` would show still show up in weird situations.
+                            ///             - Specifically, the `enable-timeout-toast` would show when enabling the helper for the first time, which sometimes took macOS a while. When macOS eventually did enable the helper, the accessibility sheet would show up, but then the  `enable-timeout-toast` would show up *behind* the accessibility sheet, which is janky.
+                            ///     On keeping the alerts:
+                            ///         - There are still rare situations where the app won't enable
+                            ///             - But simply restarting the app always fixes this in my experience.
+                            ///             - (I assume this is some quirk of LaunchServices, not a bug in MMF which we can fix.)
+                            ///         - The guide that `enable-timeout-toast` linked to had a comment section (https://github.com/noah-nuebling/mac-mouse-fix/discussions/861)
+                            ///             - But this had no comments In 2025 so far [Jul 2025]
+                            ///         - If we ever wanna re-install `enable-timeout-toast` we need to fix the jank first! I added an `if window.attachedSheet == nil` check below to help but it's still kinda janky [Jul 2025]
+                        }
+                        else if #available(macOS 13.0, *) {
+                        
+                            /// Notes:
+                            /// - Unfortunately there's a whole class of errors with enabling MMF under macOS 13 Ventura and later using the SMAppService API, where the error that the API returns is nil and there seems to be no direct way of finding out that things failed. None of these issues seem to have been fixed currently under macOS 14.2
+                            ///     To help the user in these cases:
+                            ///     - In the case that the system launches a 'strange' instance of MMF Helper which comes from another version of Mac Mouse Fix. We use `MessagePortUtility.checkHelperStrangenessReact()` to detect that and provide solution steps to the user.
+                            ///     - For cases where the system doesn't seem to launch any instance of MMF Helper at all, we set a timout here and then show a toast that refers users to a help page.
+                            
                             
                             /// Clean up
                             enableTimeoutDisposable?.dispose()
                             enableTimeoutTimer?.cancel()
-                        })
-                        
-                        /// Set up a timer that fires `enableTimeout` seconds after the user clicked
-                        let timeSinceUserClick = CACurrentMediaTime() - userClickTS
-                        var timerFireTime = DispatchTime.now() + enableTimeout - timeSinceUserClick
-                        enableTimeoutTimer = DispatchSource.makeTimerSource(flags: [], queue: .main) /// Using main queue here since we're drawing UI from the callback
-                        enableTimeoutTimer?.schedule(deadline: timerFireTime)
-                        enableTimeoutTimer?.setEventHandler(qos: .userInitiated, flags: [], handler: {
-  
-                            ///
-                            /// Enabling __has__ timed out
-                            ///
                             
-                            /// Extend the enable timeout if the CPU is busy.
-                            /// Notes:
-                            /// -  We added this so the enableTimeout isn't triggered when the computer is starting up. I think what we really wanna be doing here is wait for all the login items to start before starting the enableTimeout. The login items are only started after most of the windows are restored. The CPU usage is an okay way to detect this startup sequence but far from perfect. The CPU usage will continute to be high during startup after the login items have been started. Also CPU can be high in other circumstances. CPU usage will be high in more cases than the ones we want to detect. But I think it's better to show `k-enable-timeout-toast` too little than too much since I don't want to confuse/clutter up normal users with it and users that actually can't enable Mac Mouse Fix are gonna find the toast, even if it doesn't show up 100% consistently.
-                            /// - It's conceivable that on weaker machines the CPU usage never goes below our thrwshold and therefore the enable-timeout-message is never shown.
+                            /// Create a signal that fires when either the app is enabled or a strange helper is detected.
+                            let mergedSignal: Signal<Void, Never> = Signal.merge(
+                                EnabledState.shared.signal.filter({ $0 == true }).map({ _ in () }),
+                                MessagePortUtility.shared.strangeHelperDetected.map({ _ in () })
+                            )
                             
-                            if let cpuUsage = Utility_App.cpuUsage(includingNice: false) {
+                            /// Observe the signal
+                            enableTimeoutDisposable = mergedSignal.observeValues({ _ in
                                 
-                                var mightBeStartingUp = false
+                                ///
+                                /// Enabling __has not__ timed out
+                                ///
                                 
-                                for coreUsage in cpuUsage {
-                                    if coreUsage.floatValue >= 0.5 {
-                                        mightBeStartingUp = true
-                                        break
+                                /// Clean up
+                                enableTimeoutDisposable?.dispose()
+                                enableTimeoutTimer?.cancel()
+                            })
+                            
+                            /// Set up a timer that fires `enableTimeout` seconds after the user clicked
+                            let timeSinceUserClick = CACurrentMediaTime() - userClickTS
+                            var timerFireTime = DispatchTime.now() + enableTimeout - timeSinceUserClick
+                            enableTimeoutTimer = DispatchSource.makeTimerSource(flags: [], queue: .main) /// Using main queue here since we're drawing UI from the callback
+                            enableTimeoutTimer?.schedule(deadline: timerFireTime, repeating: .never, leeway: .nanoseconds(0))
+                            enableTimeoutTimer?.setEventHandler(qos: .userInitiated, flags: [], handler: {
+      
+                                ///
+                                /// Enabling __has__ timed out
+                                ///
+                                
+                                /// Extend the enable timeout if the CPU is busy.
+                                /// Notes:
+                                /// -  We added this so the enableTimeout isn't triggered when the computer is starting up. I think what we really wanna be doing here is wait for all the login items to start before starting the enableTimeout. The login items are only started after most of the windows are restored. The CPU usage is an okay way to detect this startup sequence but far from perfect. The CPU usage will continute to be high during startup after the login items have been started. Also CPU can be high in other circumstances. CPU usage will be high in more cases than the ones we want to detect. But I think it's better to show enable-timeout-toast too little than too much since I don't want to confuse/clutter up normal users with it and users that actually can't enable Mac Mouse Fix are gonna find the toast, even if it doesn't show up 100% consistently.
+                                /// - It's conceivable that on weaker machines the CPU usage never goes below our thrwshold and therefore the enable-timeout-message is never shown.
+                                
+                                if let cpuUsage = Utility_App.cpuUsage(includingNice: false) {
+                                    
+                                    var mightBeStartingUp = false
+                                    
+                                    for coreUsage in cpuUsage {
+                                        if coreUsage.floatValue >= 0.5 {
+                                            mightBeStartingUp = true
+                                            break
+                                        }
+                                    }
+                                    
+                                    if mightBeStartingUp {
+                                        timerFireTime = timerFireTime + enableTimeout
+                                        enableTimeoutTimer?.schedule(deadline: timerFireTime)
+                                        
+                                        DDLogDebug("GeneralTabController - might be starting up - extending enable timeout. CPU usage: \(cpuUsage)")
+                                        return
                                     }
                                 }
                                 
-                                if mightBeStartingUp {
-                                    timerFireTime = timerFireTime + enableTimeout
-                                    enableTimeoutTimer?.schedule(deadline: timerFireTime)
-                                    
-                                    DDLogDebug("GeneralTabController - might be starting up - extending enable timeout. CPU usage: \(cpuUsage)")
-                                    return
+                                /// Clean up
+                                enableTimeoutDisposable?.dispose()
+                                
+                                /// Show user feedback
+                                /// Notes:
+                                /// - We put a period at the end of this UI string. Usually we don't put periods for short UI strings, but it just feels wrong in this case?
+                                /// - The default duration `kMFToastDurationAutomatic` felt too short in this case. I wonder why that is? I think this toast is one of, if not the shortest toasts - maybe it has to do with that? Maybe it feels like it should display longer, because there's a delay until it shows up so it's harder to get back to? Maybe our tastes for how long the toasts should be changed? Maybe we should adjust the formula for `kMFToastDurationAutomatic`?
+                                
+                                if let window = MainAppState.shared.window {
+                                    if window.attachedSheet == nil { /// [Jul 2025] Prevent the toast from showing up behind the accessibility sheet. This is still kinda jank but since this code only runs on macOS 13 and 14 (as of [Jul 2025]), it's not worth fixing. A better way would be to have the `mergedSignal` listen to anything that indicates the user no longer waiting for the helper being enabled: window resigning key, sheet being attached, tab being switched, helper sending mainApp any message, perhaps more I can't think of rn. Probably using NSNotificationCenter for this would be good.
+                                        let rawMessage = NSLocalizedString("enable-timeout-toast", comment: "First draft: If you have **problems enabling** the app, click&nbsp;[here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861).")
+                                        ToastNotificationController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage)!, to: window, forDuration: 10.0)
+                                    }
                                 }
-                            }
-                            
-                            /// Clean up
-                            enableTimeoutDisposable?.dispose()
-                            
-                            /// Show user feedback
-                            Toasts.showSimpleToast(name: "k-enable-timeout-toast")
-                            
-                        })
-                        enableTimeoutTimer?.resume()
+                            })
+                            enableTimeoutTimer?.resume()
+                        }
                         
-                        
-                        
-                    } else {
+                    } else { /// error != nil
                         
                         guard let error = error else { assert(false); return }
                         
@@ -177,6 +204,7 @@ class GeneralTabController: NSViewController {
                             
                             Toasts.showSimpleToast(name: "k-is-disabled-toast")
                         }
+                        else { assert(false) }
                     }
                 })
                 

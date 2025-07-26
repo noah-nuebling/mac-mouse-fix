@@ -53,6 +53,8 @@ class TrialSectionManager {
         if #available(macOS 11.0, *) {
             currentSection.imageView!.symbolConfiguration = .init(pointSize: 13, weight: .regular, scale: .large)
         }
+
+        currentSection.imageView!.isHidden = false /// [Jul 2025] Context: Regex for `imageView.\.isHidden`
         currentSection.imageView!.image = SFSymbolStrings.image(withSymbolName: imageName)
         
         /// Set string
@@ -74,7 +76,7 @@ class TrialSectionManager {
     
     /// Interface
     
-    func showInitial(animate: Bool = true) {
+    func showInitial(animate: Bool = true, hAnchor: MFHAnchor = .center) {
         
         /// This code is a little convoluted. showTrial and showActivate are almost copy-pasted, except for setting up in newSection in mouseEntered.
             
@@ -94,7 +96,7 @@ class TrialSectionManager {
             
             assert(self.animationInterruptor == nil)
             
-            self.animationInterruptor = ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection, doAnimate: animate) {
+            self.animationInterruptor = ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection, hAnchor: hAnchor, doAnimate: animate) {
                 
                 DDLogDebug("triall enter finish")
                 
@@ -115,7 +117,7 @@ class TrialSectionManager {
 
     }
     
-    func showAlternate(animate: Bool = true) {
+    func showAlternate(animate: Bool = true, hAnchor: MFHAnchor = .center) {
         
         let workload = {
             
@@ -157,10 +159,12 @@ class TrialSectionManager {
                 if #available(macOS 11.0, *) { newSection.imageView?.symbolConfiguration = .init(pointSize: 13, weight: .medium, scale: .large) }
                 
                 /// Set image
+                newSection.imageView?.isHidden = false
                 newSection.imageView?.image = image
                 
                 /// Setup hyperlink
                 ///     I've heard of the activate link not working for some people. I think I even experienced it, once. Perhaps, the app's ability to handle `macmousefix:` links breaks sometimes. Feels like it might be a bug/security feature in macOS?
+                ///         Update: [Jul 2025] I think it was a bug with how we retrieved the ResizingTabWindow which we fixed a while ago.
                 
                 let linkTitle = NSLocalizedString("trial-notif.activate-license-button", comment: "")
                 let link = Hyperlink(title: linkTitle, linkID: kMFLinkIDMMFLActivate, alwaysTracking: true, leftPadding: 30)
@@ -178,7 +182,7 @@ class TrialSectionManager {
                 
                 assert(self.animationInterruptor == nil)
                 
-                self.animationInterruptor = ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection, doAnimate: animate) {
+                self.animationInterruptor = ReplaceAnimations.animate(ogView: ogSection, replaceView: newSection, hAnchor: hAnchor, doAnimate: animate) {
                     
                     DDLogDebug("triall exit finish")
                     

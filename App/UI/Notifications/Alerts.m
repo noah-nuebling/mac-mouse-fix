@@ -9,6 +9,7 @@
 
 #import "Alerts.h"
 #import "NSAttributedString+Additions.h"
+#import "Mac_Mouse_Fix-Swift.h"
 
 #pragma mark - NSAlert subclass
 
@@ -154,7 +155,7 @@
     
     /// Show
     if (asSheet) {
-        [alert beginSheetModalForWindow:NSApp.mainWindow completionHandler:^(NSModalResponse returnCode) {}];
+        [alert beginSheetModalForWindow:MainAppState.shared.window completionHandler:^(NSModalResponse returnCode) {}];
     } else {
         [alert runModal];
     }

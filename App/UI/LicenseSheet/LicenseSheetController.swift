@@ -9,6 +9,7 @@
 
 import Cocoa
 
+@MainActor /// [Jun 2025] Don't think this needs to be @MainActor but it's easier to just make all the Licensing stuff MainActor. (See discussion in `License/README.md`)
 @objc class LicenseSheetController: NSViewController, NSTextFieldDelegate {
 
     /// Vars
@@ -89,7 +90,7 @@ import Cocoa
         /// Notes
         /// - @MainActor so all licensing code runs on the mainthread.
         
-        Task.detached(priority: .userInitiated, operation: { @MainActor in
+        Task.init(priority: .userInitiated, operation: { @MainActor in assert(Thread.isMainThread)
             
             /// Get licenseConfig
             /// Notes:
@@ -133,7 +134,7 @@ import Cocoa
                 assert(override.isLicensed == true)
             }
             
-            /// Dispatch to mainThread because UI stuff needs to be controlled by main
+            /// Dispatch to mainThread because UI stuff needs to be controlled by main. || Update: [Jun 2025] All license stuff is on the mainThread now, so this is probably unnecessary.
             DispatchQueue.main.async {
             
                 /// Display user feedback
@@ -186,6 +187,7 @@ import Cocoa
     func controlTextDidChange(_ obj: Notification) {
         
         /// Trim whitespace
+        /// [Jul 2025] This fixes common issues, which you can reproduce like this: Open one of Gumroad's license-key emails, and simply drag slightly too far when selecting the license key for copy-pasting, then you'd select an extra linebreak.
         licenseField.stringValue = (licenseField.stringValue as NSString).stringByRemovingAllWhiteSpace() as String
         
         /// Update UI
@@ -225,6 +227,11 @@ import Cocoa
         ///     (Oct 2024) This is the only thing that updates `self.initialKey`. After activating a new key, this needs to be called, otherwise things break.
         ///         TODO: Check if this is always called after activating a new key.
         
+        /// Adjust look for macOS Tahoe
+        if #available(macOS 26.0, *) {
+            self.view.prefersCompactControlSizeMetrics = true;
+        }
+        
         /// Load existing key into licenseField
         var key: String = ""
         if let k = SecureStorage.get("License.key") as? String {
@@ -244,22 +251,23 @@ import Cocoa
     
     @objc static func add() {
         
+        assert(Thread.isMainThread)
+        
         if openInstance != nil { return }
         openInstance = LicenseSheetController()
         
-        guard let tabViewController = MainAppState.shared.tabViewController else {
-            assert(false) /// This assert fails sometimes when clicking the Activate License link on Gumroad while having the debugger attached.
-            return
-        }
+        guard let tabViewController = MainAppState.shared.tabViewController else { assert(false); return }
         tabViewController.presentAsSheet(openInstance!)
     }
     
     @objc static func remove() {
         
-        guard let tabViewController = MainAppState.shared.tabViewController else { assert(false); return } /// [Jan 2025] Just saw this assert(false) with a debugger attached, but didn't investigate further. Didn't see it after, so seems to be very rare.
-        tabViewController.dismiss(openInstance!)
+        assert(Thread.isMainThread)
         
-        openInstance = nil
+        guard let tabViewController = MainAppState.shared.tabViewController else { assert(false); return }
+        guard let openInstance else { DDLogDebug("LicenseSheetController.remove() called even though openInstance is nil"); return } /// self.openInstance is nil when clicking the back button before the server can respond to clicking the "Activate License" button which will lead to remove() being called twice – This is relevant when the server takes a while to respond. This caused crashes for Ali in this email: (message:<C1EE2023-A0D4-4E24-997F-CAED98598A3A@gmail.com>)
+        tabViewController.dismiss(openInstance)
+        self.openInstance = nil
     }
     
     /// Define errors

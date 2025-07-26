@@ -27,7 +27,8 @@
 
 import Cocoa
 
-@objc class TrialCounter: NSObject {
+
+@objc class TrialCounter: NSObject { /// Not annotated with @MainActor since we want `handleUse` to be callable from different threads without overhead, and this doesn't have any `async` functions. (See discussion in `License/README.md`)
     
     /// Singleton
     @objc static let shared = TrialCounter()
@@ -64,11 +65,10 @@ import Cocoa
             
         /// Start an async-context
         ///     Notes:
-        ///     - We're using .detached because .init schedules on the current Actor according to the docs. We're not trying to use any Actors.
         ///     - Using priority .background because it makes sense?
         ///     - @MainActor so all Licensing code runs on the main-thread
-        Task.detached(priority: .background, operation: { @MainActor in
-        
+        Task.init(priority: .background, operation: { @MainActor in assert(Thread.isMainThread)
+            
             /// Check licensing state
             let licenseState = await GetLicenseState.get()
             
@@ -173,7 +173,7 @@ import Cocoa
         ///     Update: (Oct 2024) now using `Task` instead of dispatch queue so we can use async/await
         /// - Update: Now using @MainActor so all licensing code runs on the mainthread. (Hope that won't bring back the 'obscure concurrency crash'?)
         
-        Task.detached(priority: .background, operation: { @MainActor in
+        Task.init(priority: .background, operation: { @MainActor in assert(Thread.isMainThread)
             
             /// Update state
             ///     Notes:

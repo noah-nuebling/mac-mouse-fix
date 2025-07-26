@@ -93,7 +93,7 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
 /**
     Define constants
      
-        TODO: (This is a dependency of shkBindingIsUsable) Delete this when copying over KeyboardSimulator.h from EventLoggerForBrad.
+        TODO: (This is a dependency of searchVKCForStr) Delete this when copying over KeyboardSimulator.h from EventLoggerForBrad.
 
  */
 
@@ -101,9 +101,18 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
     #define kMFModifierFlagsNull            (0)                          /// We're using this with the types `CGSModifierFlags` and `CGEventFlags`
     #define kMFVK_Null                      ((CGKeyCode)65535)
     #define kMFHIDUsage_KeyboardNull        ((uint16_t)0)                /// Related constants are defined in IOKit e.g. `kHIDUsage_KeyboardA`
+    #define kMFVK_FirstAppleKey             0x80
 
 /// Define 'outOfReach' vkc
     #define kMFVK_OutOfReach                ((CGKeyCode)400)             /// I don't think I've seen a vkc above 200 produced by my keyboard, but we use 400 just to be safely out of reach of a real kb
+
+
+/// Define MFKeyboardType stuff
+///     TODO: (This is a dependency of searchVKCForStr) Delete this when copying over MFKeyboardSimulationData.h from EventLoggerForBrad
+typedef CGEventSourceKeyboardType MFKeyboardType;
+extern MFKeyboardType SLSGetLastUsedKeyboardID(void); /// Not sure about sizeof(returnType). `LMGetKbdType()` is `UInt8`, but `CGEventSourceKeyboardType` is `uint32_t` - both seem to contain the same constants though.
+#define MFKeyboardTypeCurrent() ((MFKeyboardType)SLSGetLastUsedKeyboardID())
+const MFKeyboardType kMFKeyboardTypeNull = 0;
 
 + (void)post:(CGSSymbolicHotKey)shk {
 
@@ -126,25 +135,50 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
         ///
         ///  TODO: Merge this note ^ and (the dispatching to the CFRunLoopGetMain()) into EventLoggerForBrad before we replace this.
        
-        unichar keyEquivalent;
-        CGKeyCode virtualKeyCode;
-        CGSModifierFlags modifierFlags;
-        CGSGetSymbolicHotKeyValue(shk, &keyEquivalent, &virtualKeyCode, &modifierFlags);
+        unichar             keq_fromSHKAPI;
+        CGKeyCode           vkc_fromSHKAPI;
+        CGSModifierFlags    mods_fromSHKAPI;
+        CGSGetSymbolicHotKeyValue(shk, &keq_fromSHKAPI, &vkc_fromSHKAPI, &mods_fromSHKAPI);
         
-        BOOL hotkeyIsEnabled = CGSIsSymbolicHotKeyEnabled(shk);
-        BOOL oldBindingIsUsable = shkBindingIsUsable(virtualKeyCode, keyEquivalent, modifierFlags);
+        /// Find the vkc that will trigger the shk.
+        ///     [Jul 2025] In EventLoggerForBrad, from what I see, we also handle "shiftKeyEquivalents" and different keyboard types in this search for. But that complicates the code and I think only improves behavior in very unlikely edge-cases.
+        ///     [Jul 2025] Edge-cases, where this fails:
+        ///         1. Set Mission Control to Shift-Control-Option-Command-X, then switch to Akan layout, then trigger Mission Control with MMF -> The shortcut gets deleted. This happens because the shortcut is not reachable on the Akan layout.
+        ///         2. Set Mission Control to Option-', then switch to German layout, then trigger Mission Control with MMF -> The shortcut gets deleted. The shortcut is actually still reachable in German through Option-# (Since the #-key produces ' while holding shift.) This could be fixed by implementing the "shiftKeyEquivalent" stuff from EventLoggerForBrad.
+        ///         3. Probably, if you switch keyboard type to JIS, and then assign a shortcut to one of the extra keys like the Yen key, and then switch back to ANSI, you can provoke a scenario where this deletes the shortcut, even though it could've just attached a different keyboard type to the event and then successfully reached the shk. But I can't manage to switch the keyboard type rn, so not testing this. There was some trick to it that I forgot for switching keyboard type – maybe restarting?
+        ///         TODO: Maybe backport this commentary to EventLoggerForBrad, so we have a clearer picture of what the edgecases are that all that complication in the code actually solves (Right now I'm thinking: They're all really unlikely and perhaps don't justify putting that complexity into the codebase.)
         
-        DDLogDebug(@"[SymbolicHotKeys +post:] hotkeyIsEnabled: %d, oldBindingIsUsable: %d,\nkeyEquivalent: %d, VKC: %d, modifierFlags: %@", hotkeyIsEnabled, oldBindingIsUsable, keyEquivalent, virtualKeyCode, binarystring(modifierFlags));
-        
-        if (!hotkeyIsEnabled) {
-            CGSSetSymbolicHotKeyEnabled(shk, true);
+        CGKeyCode vkc_reachable;
+        {
+            if (!CGSIsSymbolicHotKeyEnabled(shk))
+                vkc_reachable = kMFVK_Null;
+            else {
+                if (keq_fromSHKAPI == kMFKeyEquivalentNull) /// If there is no `keyEquivalent` for a CGSHotKey then macOS will use the VKC instead and everything should work fine. Otherwise, the `keyEquivalent` needs to match.
+                    vkc_reachable = vkc_fromSHKAPI;
+                else {
+                    CGKeyCode vkc_bestGuess = vkc_fromSHKAPI;
+                    NSString *keq_toSearchFor = [NSString stringWithCharacters: &keq_fromSHKAPI length: 1];
+                    CGKeyCode vkc_fromKBLayout = searchVKCForStr(MFKeyboardTypeCurrent(), getCurrentKeyboardLayoutForKbShortcuts(), vkc_bestGuess, keq_toSearchFor, kMFModifierFlagsNull);
+                    vkc_reachable = vkc_fromKBLayout; /// This can be `kMFVK_Null`
+                }
+            }
         }
+        
+        DDLogDebug(@"[SymbolicHotKeys +post:] CurrentBinding: %@", vardesc(@(shk), @(keq_fromSHKAPI), @(vkc_fromSHKAPI), binarystring(mods_fromSHKAPI), @(vkc_reachable)));
+        
+        BOOL oldBindingIsUsable = vkc_reachable != kMFVK_Null;
+        
         if (!oldBindingIsUsable) {
             
-            /// Temporarily set a usable binding for our shk
-            unichar newKeyEquivalent = kMFKeyEquivalentNull;
-            CGKeyCode newVirtualKeyCode = kMFVK_OutOfReach + (CGKeyCode)shk;
-            CGSModifierFlags newModifierFlags = kCGSNumericPadKeyMask | kCGSFunctionKeyMask;
+            /// Permantently set a usable binding for our shk and enable it
+            ///     [Jul 2025] In older macOS versions, we tried to temporarily create this usable binding and then restore it. But this doesn't seem to reliably work under macOS 15 Sequoia, or macOS 26 Tahoe – so to achieve reliability we have to create a permanent binding, but one which is not reachable from a real keyboard, as not to change the user's keyboard's behavior.
+            ///     TODO: [Jul 2025] IIRC, in EventLoggerForBrad, we still try to temporarily set a usable binding and then reset this – but that doesn't work so we should adopt the approach we're using here. (shkBindingIsUsable() was used for the old approach, but now deleted – should probably also be deleted from EventLoggerForBrad)
+            
+            CGSSetSymbolicHotKeyEnabled(shk, true);
+            
+            unichar          keq_new = kMFKeyEquivalentNull;
+            CGKeyCode        vkc_new = (CGKeyCode)shk + kMFVK_OutOfReach;
+            CGSModifierFlags mods_new = kCGSNumericPadKeyMask | kCGSFunctionKeyMask;
             /// ^ Why use fn flag? The fn flag indicates either the fn modifier being held or a function key being pressed.
             ///     1. Function keys can be directly mapped to features like Mission Control.
             ///     2. Normal keys like 'P' cannot be mapped to features like Mission Control without any modifiers being held.
@@ -154,80 +188,35 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
             ///     Note:
             ///         In the new keyboard simulation code we built inside `EventLoggerForBrad`, we have more sophisticated logic for this stuff, which will completely replace this.
             ///         TODO: Maybe merge this note into EventLoggerForBrad before we replace this?
-            CGError err = CGSSetSymbolicHotKeyValue(shk, newKeyEquivalent, newVirtualKeyCode, newModifierFlags);
+            
+            CGError err = CGSSetSymbolicHotKeyValue(shk, keq_new, vkc_new, mods_new);
             if (err != kCGErrorSuccess) {
-                DDLogError(@"Error setting shk params: %d", err); /// We still post the keyboard events in this case, bc maybe it will still worked despite the error?
+                DDLogError(@"[SymbolicHotKeys +post:] Error setting shk params: %d", err); /// We still post the keyboard events in this case, bc maybe it will still worked despite the error?
+                assert(false);
             }
-        
             /// Post keyboard events
-            postKeyboardEventsForSymbolicHotKey(newVirtualKeyCode, keyEquivalent, newModifierFlags);
+            postKeyboardEventsForSymbolicHotKey(vkc_new, mods_new);
         } else {
-                
             /// Post keyboard events
-            postKeyboardEventsForSymbolicHotKey(virtualKeyCode, keyEquivalent, modifierFlags);
+            postKeyboardEventsForSymbolicHotKey(vkc_reachable, mods_fromSHKAPI);
         }
-        
-        /// Restore original binding after short delay
-        ///     TODO: Merge this cleaned up NSTimer code into EventLoggerForBrad before we replace this.
-        ///         (-> Also, don't forget to consider adding a semaphore or NSOperationQueue or sth to ensure correct order-of-operations. See `Bookmark aka Todo.md` inside EventLoggerForBrad.)
-        if (!hotkeyIsEnabled || !oldBindingIsUsable) {
-            
-            /// Get runLoop
-            CFRunLoopRef rl = CFRunLoopGetCurrent();
-            
-            if ((0)) { /// Unnecessary, since we're now scheduling all this stuff to run on the main runLoop
-                /// Check runLoop
-                CFStringRef rlMode = CFRunLoopCopyCurrentMode(rl);
-                MFDefer ^{ if (rlMode) CFRelease(rlMode); };
-                bool rlIsRunning = rlMode != NULL;
-                
-                /// Fallback to main runLoop
-                if (!rlIsRunning) {
-                    DDLogWarn(@"Current thread's rl is not running. Using main rl instead.");
-                    /// ^ If our threading architecture wasn't scuffed, this should never happen. But it currently does [Jan 2025] for shk's mapped to a single click when there's a double click action. (If that shk's binding is 'unusable' or disabled.)
-                    ///     – that's because the single click trigger then runs on the `com.nuebling.mac-mouse-fix.buttons` queue which doesn't have a rl.
-                    ///     (Note if you wanna test this: The LookUp shk (Command-Control-D) is 'unusable' under the Dvorak layout – which should cause this codepath to be executed.)
-                    rl = CFRunLoopGetMain();
-                }
-            }
-            
-            /// Create timer
-            NSTimer *timer = [NSTimer timerWithTimeInterval:50.0/1000.0 repeats:NO block:^(NSTimer * _Nonnull timer) {
-                
-                /// Log
-                DDLogDebug(@"SymbolicHotKeys: timerCallback running on thread: %@", NSThread.currentThread);
-                
-                /// Restore enabled-state
-                CGSSetSymbolicHotKeyEnabled(shk, hotkeyIsEnabled);
-                
-                /// Restore old "unusable" binding
-                ///     We wanna do this for the case that the binding *is* actually usable with a physical keyboard, but "unusable" for our code due to keyboard layout complications (See `shkBindingIsUsable()`)
-                if (!oldBindingIsUsable) {
-                    CGSSetSymbolicHotKeyValue(shk, keyEquivalent, virtualKeyCode, modifierFlags);
-                }
-            }];
-            
-            /// Schedule timer
-            CFRunLoopAddTimer(rl, (__bridge CFRunLoopTimerRef)timer, kCFRunLoopCommonModes);
-        }
-       
     });
 }
 
-static void postKeyboardEventsForSymbolicHotKey(CGKeyCode virtualKeyCode, unichar keyEquivalent, CGSModifierFlags modifierFlags) {
+static void postKeyboardEventsForSymbolicHotKey(CGKeyCode vkc, CGSModifierFlags mods) {
     
     /// Constants
     const CGEventTapLocation tapLoc = kCGSessionEventTap;
-    const CGEventSourceRef source = NULL;
+    const CGEventSourceRef   source = NULL;
     
     /// Create key events
-    CGEventRef keyDown = CGEventCreateKeyboardEvent(source, virtualKeyCode, true);
-    CGEventRef keyUp = CGEventCreateKeyboardEvent(source, virtualKeyCode, false);
+    CGEventRef keyDown = CGEventCreateKeyboardEvent(source, vkc, true);
+    CGEventRef keyUp   = CGEventCreateKeyboardEvent(source, vkc, false);
     
     /// Set modifierFlags
     CGEventFlags originalModifierFlags = getModifierFlagsWithEvent(keyDown);
-    CGEventSetFlags(keyDown, (CGEventFlags)modifierFlags);
-    CGEventSetFlags(keyUp, originalModifierFlags); /// Restore original keyboard modifier flags state on key up. This seems to fix `[Modifiers getCurrentModifiers]`
+    CGEventSetFlags(keyDown, (CGEventFlags)mods);
+    CGEventSetFlags(keyUp,   originalModifierFlags); /// Restore original keyboard modifier flags state on key up. This seems to fix `[Modifiers getCurrentModifiers]`
     
     /// Send key events
     CGEventPost(tapLoc, keyDown);
@@ -237,71 +226,9 @@ static void postKeyboardEventsForSymbolicHotKey(CGKeyCode virtualKeyCode, unicha
     CFRelease(keyUp);
 }
 
-/// Define MFKeyboardType stuff
-///     TODO: (This is a dependency of shkBindingIsUsable) Delete this when copying over MFKeyboardSimulationData.h from EventLoggerForBrad
-typedef CGEventSourceKeyboardType MFKeyboardType;
-extern MFKeyboardType SLSGetLastUsedKeyboardID(void); /// Not sure about sizeof(returnType). `LMGetKbdType()` is `UInt8`, but `CGEventSourceKeyboardType` is `uint32_t` - both seem to contain the same constants though.
-#define MFKeyboardTypeCurrent() ((MFKeyboardType)SLSGetLastUsedKeyboardID())
-const MFKeyboardType kMFKeyboardTypeNull = 0;
-
-static BOOL shkBindingIsUsable(CGKeyCode virtualKeyCode, unichar keyEquivalent, CGSModifierFlags modifierFlags) {
-    
-    /// TODO: Copy over docs from EventLoggerForBrad (Or just replace entire function, which should have the same result.)
-
-    /// Check if VKC is empty
-    if (virtualKeyCode == kMFVK_Null) { /// Can the `virtualKeyCode` ever be empty with only the `keyEquivalent` filled? Logically it should work, but I've never seen that.
-        DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to empty VKC");
-        return NO;
-    }
-    
-    /// Check if VKC is out of reach
-    if ((false)) { /// We don't need to check for this, because while an 'out of reach' VKC can (probably) never be triggered with a real keyboard, we should still be able to trigger it programmatically.
-        if (virtualKeyCode >= kMFVK_OutOfReach) {
-            DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to out-of-reach VKC");
-            return NO;
-        }
-    }
-    
-    /// Check if flags are empty
-    if ((false)) { /// Empty flags are sometimes expected and necessary for the SHK to work. E.g. 188, which has VKC 179 and is equivalent to hitting the globe key.
-        if (modifierFlags == kMFModifierFlagsNull) {
-            DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to empty modifierFlags");
-            return NO;
-        }
-    }
-    
-    /// Check if flags are unexpected
-    if ((false)) { /// It seems there need to be some flags for the SHK to be triggered successfully, but I'm not sure these are all the possible flags - so we're turning this test off to avoid false negatives for the 'isUsable' question.
-        if (1 != (modifierFlags & (kCGSAlphaShiftKeyMask|kCGSShiftKeyMask|kCGSControlKeyMask|kCGSAlternateKeyMask|kCGSCommandKeyMask|kCGSNumericPadKeyMask|kCGSHelpKeyMask|kCGSFunctionKeyMask))) {
-            DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to unexpected modifierFlags: %d", modifierFlags);
-            return NO;
-        }
-    }
-    
-    /// Check if the VKC matches the keyEquivalent
-    ///     under the current keyboardLayout and current keyboardType
-    if (keyEquivalent != kMFKeyEquivalentNull) { /// If there is no `keyEquivalent` for a CGSHotKey then macOS will use the VKC instead and everything should work fine. Otherwise, the `keyEquivalent` needs to match.
-        
-        UInt8 kbType = MFKeyboardTypeCurrent();
-        const UCKeyboardLayout *layout = getCurrentKeyboardLayoutForKbShortcuts();
-        NSString *nomodsChars = getStrForVKC(kbType, layout, virtualKeyCode, kMFModifierFlagsNull); /// Should we also check the `shiftChars`, additionally to the `nomodsChars`? We do that in the regular keyboardSimulator code. Contra: I think it should be rare for SHKs to be defined in terms of a 'shiftKeyEquivalent'...? Not sure.
-        if (!nomodsChars || nomodsChars.length != 1) {
-            DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to empty charsForVKC");
-            return NO;
-        }
-        if (keyEquivalent != [nomodsChars characterAtIndex:0]) {
-            DDLogDebug(@"SymbolicHotKeys: isUsable: Not usable due to char mismatch: keyEquivalent: %c, charsForVKC: %@", keyEquivalent, nomodsChars);
-            return NO;
-        }
-    }
-    
-    /// Passed all tests
-    return YES;
-}
-
 #pragma mark - Random helper macros
 
-/// TODO: (This is a dependency of shkBindingIsUsable) Delete these when you copy over all the macros from EventLoggerForBrad
+/// TODO: (This is a dependency of searchVKCForStr) Delete these when you copy over all the macros from EventLoggerForBrad
 
 /// Convenience macro
 #define MFTISInputSourcePropertyIsTrue(src, prop) ({ \
@@ -312,7 +239,52 @@ static BOOL shkBindingIsUsable(CGKeyCode virtualKeyCode, unichar keyEquivalent, 
 
 #pragma mark - Keyboard layout helper function
 
-/// TODO: (This is a dependency of shkBindingIsUsable) Remove this when copying over KeyboardSimulator.m from EventLoggerForBrad
+CGKeyCode searchVKCForStr(MFKeyboardType keyboardType, const UCKeyboardLayout *keyboardLayout, CGKeyCode bestGuessResult, NSString *cr_unicodeString, CGEventFlags cr_flags) {
+        
+        /// TODO: Copied from EventLoggerForBrad – delete when we merge that.
+        
+        /// Inversion of  `getStrForVKC()`
+        ///     - Given a `keyboardType` keyboard using the `keyboardLayout` layout – Finds the vkc for the key which produces `cr_unicodeString` when pressed while holding the modifier keys specified in `cr_flags`.
+        ///         `cr_` stands for 'criterion'. The unicodeString and the flags are the criterion by which we search for vkc's.
+        ///     - If the `bestGuessResult` is correct, that will speed up the operation.
+        ///     - It does this by iterating all character-generating vkc's (Potentially slow?)
+        ///     - Returns `kMFVK_Null` if no such vkc can be found.
+    
+        /// Make sure unicodeString exists.
+        if (!cr_unicodeString || cr_unicodeString.length == 0) {
+            return kMFVK_Null; /// Immediately give up since no keyboard-key can satisfy this empty/nil unicodeString criterion.
+        }
+        
+        if (bestGuessResult != kMFVK_Null) {
+            
+            /// Validate
+            if (!(bestGuessResult < kMFVK_FirstAppleKey)) {
+                DDLogError(@"bestGuessResult seems to be an Apple key. (%d) Those don't generate unicodeStrings, which means we can't search for them using this function. [Dec 2024]", bestGuessResult);
+                assert(false);
+            }
+            
+            /// Check bestGuess
+            NSString *str = getStrForVKC(keyboardType, keyboardLayout, bestGuessResult, cr_flags);
+            if ([str isEqual:cr_unicodeString]) {
+                return bestGuessResult; /// Criterion fulfilled by bestGuess
+            }
+        }
+        
+        /// Iterate potentially character-generating vkc's up to `kMFVK_FirstAppleKey`
+        ///     On optimization: `kMFVK_FirstAppleKey` is 128 – iterating this many times feels slow, but I think it'll actually be super fast. Don't prematurely optimize.
+        ///         If we reallyyy wanted to optimize this we could parallelize this I think?
+        for (CGKeyCode vkc = 0; vkc < kMFVK_FirstAppleKey; vkc++) {
+            NSString *str = getStrForVKC(keyboardType, keyboardLayout, vkc, cr_flags);
+            if ([str isEqual:cr_unicodeString]) {
+                return vkc;
+            }
+        }
+        
+        /// Return
+        return kMFVK_Null;
+}
+
+/// TODO: (This is a dependency of searchVKCForStr) Remove this when copying over KeyboardSimulator.m from EventLoggerForBrad
 
 NSString *getStrForVKC(MFKeyboardType keyboardType, const UCKeyboardLayout *keyboardLayout, CGKeyCode vkc, CGEventFlags flags) {
 
@@ -450,7 +422,7 @@ NSString *getStrForVKC(MFKeyboardType keyboardType, const UCKeyboardLayout *keyb
 
 #pragma mark - Keyboard layouts
 /// Helper functions
-/// TODO: (This is a dependency of shkBindingIsUsable) Delete this when you copy over KeyboardSimulator.m from EventLoggerForBrad
+/// TODO: (This is a dependency of searchVKCForStr) Delete this when you copy over KeyboardSimulator.m from EventLoggerForBrad
 
 const UCKeyboardLayout *getCurrentKeyboardLayoutForKbShortcuts(void) {
     

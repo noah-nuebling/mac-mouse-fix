@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface EventUtility : NSObject
 
 int64_t fixedScrollDelta(double scrollDelta);
+bool CGEvent_IsWacomEvent(CGEventRef event);
 IOHIDDeviceRef _Nullable CGEventGetSendingDevice(CGEventRef cgEvent);
 //IOHIDDeviceRef _Nullable HIDEventGetSendingDevice(HIDEvent *event);
 IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID);

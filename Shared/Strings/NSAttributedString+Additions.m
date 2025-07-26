@@ -460,6 +460,12 @@
         /// TextKit v1 implementation
         ///     Originally Copied from here https://stackoverflow.com/a/33903242/10601702
         
+        /// [Jul 2025] Note from master branch (Copying this over while merging master into feature-strings-catalog) (master used a slightly older implementation of the TextKit v1 implementation, so this might not apply here)
+        ///     I think the text on the TrialNotification was too short in Chinese due to this. (See 83c6812740c176f8b2ec084c7d5798a5d2968b57)
+        ///     I did some minimal testing on the TrialNotification and this seemed consistently smaller than the real size of the NSTextView when there were Chinese characters, while matching exactly, when there were only English characters. Update: Yep the Toasts are also too small in Chinese due to this. (macOS Sequoia 15.5)
+        ///     TODO: Maybe review other uses of this in Chinese.
+        ///     If this doesn't work reliably, perhaps you always have to layout your NSTextView / NSTextField and then measure that. Or perhaps you can solve all this stuff by just using autolayout constraints directly?
+        
         ///
         /// Create objects
         ///

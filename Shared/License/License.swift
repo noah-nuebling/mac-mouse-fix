@@ -25,6 +25,7 @@ import Cocoa
 
 // MARK: - Main class
 
+@MainActor
 @objc class License: NSObject {
     
     // MARK: Lvl 3
@@ -37,9 +38,8 @@ import Cocoa
         
         /// Start an async-context
         ///     Notes:
-        ///     - We're using .detached because .init schedules on the current Actor according to the docs. We're not trying to use any Actors.
         ///     - @MainActor so all licensing code runs on the main thread.
-        Task.detached(priority: (triggeredByUser ? .userInitiated : .background), operation: { @MainActor in
+        Task.init(priority: (triggeredByUser ? .userInitiated : .background), operation: { @MainActor in assert(Thread.isMainThread)
             
             /// Get licensing state
             let licenseState = await GetLicenseState.get()
@@ -114,11 +114,12 @@ import Cocoa
         /// Sidenote:
         ///     - The preliminary values are obtained and returned from this function all-at-once. For the proper values, they should be obtained only as needed in order to avoid unnecessary internet connections.
         
+        assert(Thread.isMainThread)
+        
         let licenseState = GetLicenseState.get_Preliminary()
         let licenseConfig = GetLicenseConfig.get_Preliminary()
         let trialState = GetTrialState.get(licenseConfig)
         
-        /// Return
         return (licenseConfig, licenseState, trialState)
         
     }

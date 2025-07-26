@@ -8,6 +8,7 @@
 //
 
 import Cocoa
+import CocoaLumberjackSwift
 
 func MFCatch<R, E>(_ workload: () throws(E) -> R) -> (R?, E?) {
     
@@ -53,7 +54,7 @@ func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
     return (result, error)
 }
 
-@objc class LicenseUtility: NSObject {
+@objc class LicenseUtility: NSObject { /// [Jun 2025] Not annotating with @MainActor since all the functions here are stateless, 'pure' functions, and annotating with @MainActor makes Swift compiler force us to also annotate other stuff. (See discussion in License/README.md)
     
     @objc static func buyMMF(licenseConfig: MFLicenseConfig, locale: Locale, useQuickLink: Bool) {
         
@@ -130,15 +131,31 @@ func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
     }
     
     @objc static func currentRegionCode() -> String? {
+        /// Notes:
+        /// – Intended behavior: This is supposed to return the system's country code as set in System Settings.
+        /// - History of approaches:
+        ///     - `Locale.current.language.region?.identifier`, but that gave weird results. E.g. gave China, even though first lang in Preferences was English (US), Region was Germany, and China was only the last language.
+        ///     - Then we used `Locale.current.region?.identifier` (and `Locale.current.regionCode` as fallback on older macOS)
+        
+        /// When testing region and language with Xcode I saw some discrepancies. [Jul 2025]
+        ///     I set region to "China mainland" and language to "Chinese (Hong Kong)" on macOS 26 Tahoe Beta 3 and then looked at `Locale.current`
+        ///     System Settings:
+        ///         `zh_HK@calendar=gregorian;rg=cnzzzz`
+        ///             -> .region is CN and .variant is nil
+        ///     Xcode:
+        ///         `zh-HK_CN`
+        ///             -> .region is HK and .variant is CN
+        ///     Conclusion:
+        ///         Based on this, I'm not 100% sure if the current approach of `Locale.current.region?.identifier` always returns the system's region as set in system settings – which is the intended behavior. We could use the .variant to solve this specific test-case, but I'm not sure if that could introduce other issues. [Jul 2025]
         
         let result: String?
         if #available(macOS 13, *) {
-            /// Notes:
-            /// - We previously used `Locale.current.language.region?.identifier` here, but that gave weird results. E.g. gave China, even thought first lang in System Preferences was English (US), Region was Germany, and China was only the last language.
             result = Locale.current.region?.identifier
         } else {
             result = Locale.current.regionCode
         }
+        
+        DDLogDebug("LicenseUtility.swift: Retrieved regionCode '\(result ?? "(nil)")' from current locale '\(Locale.current)'")
         
         return result
     }

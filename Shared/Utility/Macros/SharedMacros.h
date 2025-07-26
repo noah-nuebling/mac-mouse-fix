@@ -41,6 +41,25 @@
 #define _O_ _Nullable
 #define _I_ _Nonnull
 
+/// `vardesc` and `vardescl` macros
+///  Naming:
+///      vardesc -> (var)iable (desc)ription
+///      vardescl -> (var)iable (desc)ription with (l)inebreaks
+///  For a given set of expressions, captures their source text and corresponding value and inserts them into the output string in a key-value style. All values have to be objects.
+///  This is similar to NSDictionaryOfVariableBindings() – But this is better-suited for debug-printing because: Dictionaries don't preserve order. Dictionaries can't contain nil. Using NSDictionaryOfVariableBindings requires importing NSLayoutConstraint.h
+///  Example usage:
+///      ```
+///      NSLog(@"Local variables %@", vardesc(@(some_int), some_object)); // Prints: `Local variables: { @(some_int) = 79 | some_object = Turns out I'm a string! }`
+///      ```
+#define vardesc(vars...)  _vardesc(false, @#vars, vars)         /** Need to stringify `vars` here not inside `_vardesc`, otherwise sourcetext of passed-in macros will be expanded. Not sure why [Jul 2025] */
+#define vardescl(vars...) _vardesc(true,  @#vars, vars)
+
+#define _vardesc(linebreaks, keys, vars...) ({                  \
+    id _values[] = { vars };                                    /** Using a C array instead of NSArray to be able to capture nil. NSDictionaryOfVariableBindings uses a variadic function. */\
+    __vardesc(keys, _values, arrcount(_values), (linebreaks));  \
+})
+NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullable __strong *_Nonnull values, size_t count, bool linebreaks);
+
 /// `nowarn_begin()` and `nowarn_end()` macros:
 ///     Temporarily disable clang warnings
 ///     Example usage:
@@ -179,6 +198,12 @@
 #define isclass(x, classname) \
     [[(x) class] isKindOfClass: object_getClass([classname class])]
 
+/// `isclassd` macro
+///     `isclass`, but (d)ynamic. Meaning the compiler doesn't have to know about the class we're comparing against.
+
+#define isclassd(x, classname) \
+    [[(x) class] isKindOfClass: object_getClass(NSClassFromString(@#classname))]
+
 /// `isprotocol` macro
 ///     - Works on normal objects and class objects just like `isclass()`
 ///     - The docs say this is slow, and to use -[respondsToSelector:] instead See: https://developer.apple.com/documentation/objectivec/nsobject/1418893-conformstoprotocol?language=objc
@@ -284,6 +309,34 @@
         } \
         [NSString stringWithUTF8String: bit_str]; \
     })
+
+/// `isavailable()` macro
+///     Return true iff `lo <= currentMacOSVersion < hi`.
+///     Tip: To remove one of the bounds, use `1` or `INT_MAX`.
+///     Usage example:
+///         ```
+///         if (isavailable(13.0, 15.0)) {
+///             if (@available(macOS 13.0, *)) {        // A second @available() guard of exactly this form might be necessary to silence compiler warnings about API-availability
+///                 NSLog(@"Running macOS 13 or 14!");
+///             }
+///         }
+///         else {
+///             NSLog(@"Not running macOS 13 or 14!");
+///         }
+///         ```
+///     Meta:
+///         - If you only need a lower bound, probably just use `if (@available(xxx, *)` directly.
+///         - To silence compiler warnings for new APIs, you still need to use `if (@available(xxx, *)` in addition to this, which is awkward.
+///         - This might not be worth adding to the codebase. (Just like a lot of these macros) We'll probably use it rarely. And NSProcessInfo should also work fine. But I like how the syntax for specifying versions here is closer to @available() than NSProcessInfo.
+#define isavailable(lo_inclusive, hi_exclusive) ({          \
+    bool _isavailable = false;                              \
+    if (@available(macOS lo_inclusive, *)) {                \
+        if (@available(macOS hi_exclusive, *)) { } else {   \
+            _isavailable = true;                            \
+        }                                                   \
+    }                                                       \
+    _isavailable;                                           \
+})
 
 ///
 /// Define xxxNSLocalizedString macro,

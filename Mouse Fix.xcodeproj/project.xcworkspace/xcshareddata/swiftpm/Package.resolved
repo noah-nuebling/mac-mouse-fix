@@ -1,5 +1,5 @@
 {
-  "originHash" : "263fa0b214486a0f74878ca90bc2f572ebd3ad86fc464e367fbc9d1d403d2f60",
+  "originHash" : "54177197936880d0d6879fffbfb2ff42113b6abdd83294ea3d390f7f6dbccf4f",
   "pins" : [
     {
       "identity" : "cocoalumberjack",
@@ -26,15 +26,6 @@
       "state" : {
         "revision" : "40c465af19b993344e84355c00669ba2022ca3cd",
         "version" : "7.1.1"
-      }
-    },
-    {
-      "identity" : "snapkit",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SnapKit/SnapKit",
-      "state" : {
-        "revision" : "2842e6e84e82eb9a8dac0100ca90d9444b0307f4",
-        "version" : "5.7.1"
       }
     },
     {

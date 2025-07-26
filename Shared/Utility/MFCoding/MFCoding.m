@@ -389,7 +389,7 @@ id<NSCoding> MFDecodeFromArchiveDict(NSDictionary *archiveDict, BOOL requireSecu
 
 #pragma mark - Load Tests
 
-#define MF_TEST 0 /** Using `MF_TEST` consistently seems like a nice convention to make these random, scattered load-tests greppable. */
+#define MF_TEST 0 /** Using `MF_TEST` consistently seems like a nice convention to make these random, scattered load-tests greppable. TODO: Move explanation of MF_TEST into CodeStyle.md */
 
 #if MF_TEST
 

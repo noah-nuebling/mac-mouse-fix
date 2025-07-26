@@ -285,7 +285,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         ///         I don't know why this could happen, since a `device` instance retains its `.iohidDevice` instance, so it should never become NULL. Maybe there was a race condition?
         
         if (other.iohidDevice == NULL) {
-            assert(false); /// Should never happen since Device instances retain their .iohidDevice's
+            assert(false); /// Should never happen since Device instances retain their .iohidDevice's || Update: [Jul 2025] I think this is expected for StrangeDevice (at least on master branch, writing this on feature-strings-catalog). I actually wonder why we haven't seen this crash more often. We should replace all the CF functions with NULL-safe alternatives such as MFCFEqual!
             return NO;
         }
         if (self.iohidDevice == NULL) {

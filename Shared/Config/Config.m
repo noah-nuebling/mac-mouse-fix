@@ -37,7 +37,7 @@
 
 @implementation Config {
     
-    NSString*_configFilePath; /// Should probably use `Locator.m` to find config and defaultConfig
+    NSString*_configFilePath; /// [Jun 2025] This is currently unused. We're using Locator.m instead.
     NSString *_bundleIDOfAppWhichCausesAppOverride;
 //    NSDictionary *_stringToEventFlagMask; /// Delete this
 }
@@ -113,6 +113,9 @@ static NSURL *defaultConfigURL(void) {
 
 void commitConfig(void) {
     /// Convenience function for notifying other modules of the changed config (and writing to file)
+    
+    /// Validate
+    assert(NSThread.isMainThread);
     
     /// Write to file
     [Config.shared writeConfigToFile];
@@ -444,7 +447,7 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
             abort();
         }
         if (currentVersionNS == nil) {
-            DDLogWarn(@"repairConfig: Couldn't get current configVersion. Something is weird.");
+            DDLogWarn(@"repairConfig: Couldn't get current configVersion. Something is weird."); /// [Jun 2025] Is this really 'weird'? Don't we hit this when no config exists?
             goto replace;
         }
         int currentVersion = currentVersionNS.intValue;

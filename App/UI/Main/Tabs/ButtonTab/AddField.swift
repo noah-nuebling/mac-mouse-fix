@@ -56,6 +56,10 @@ import Cocoa
     
     func updateColors() {
         
+        /// Note: [Jul 2025]
+        ///     I just tried replacing manual 'updateColors()' invocations with a custom dynamic color created via `+[NSColor colorWithName:dynamicProvider:]`. However, this seemed to break desktop tinting on macOS Tahoe Beta 2. We could probably use private NSColor methods to get tinting to work on custom dynamic colors, but that's probably not worth it. Also filed feedback FB18739714 with Apple.
+        ///         Also see:  [Jun 2025]  `mfl_dynamiccolor()` wrapper around  `+[NSColor colorWithName:dynamicProvider:]` which we wrote in the `swiftui-test-tahoe-beta` project.
+        
         /// We use non-transparent colors so the shadows don't bleed through
         
         /// Init

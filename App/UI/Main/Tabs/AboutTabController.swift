@@ -23,6 +23,7 @@ class AboutTabController: NSViewController {
     
     var trialSectionManager: TrialSectionManager?
     @IBOutlet weak var trialCell: TrialSection! /// TODO: Rename to trialSection
+    @IBOutlet weak var trialSectionContainer: NSView!
     
     var payButtonWrapper: NSView? = nil
     var payButtonwrapperConstraints: [NSLayoutConstraint] = []
@@ -100,6 +101,12 @@ class AboutTabController: NSViewController {
         ///     The manager swaps out the trialSection and stuff, so always access the trialSection through the manager!
         trialSectionManager = TrialSectionManager(trialCell)
         
+        /// Lower-bound trialSection width
+        ///     [Jul 2025] This is a bit of a hack. This currently prevents the freeCountry message from being cut-off in Chinese (in which the AboutTab is very narrow.)
+        ///     If we set a constraint preventing the trialSection from being clipped directly, that will jankily change the AboutTab width as the AboutTab opens the first time. Not sure why.  Hardcoding a minimum width seems to fix this just fine.
+        ///     Of the 3 Chinese variants MMF supports, "(Simplified)" is the worst and is what this lower bound is based on.
+        trialSectionContainer.widthAnchor.constraint(greaterThanOrEqualToConstant: 400.0).isActive = true
+        
         /// Get licensing info
         ///     Notes:
         ///     - Not using the completionHandler of `Licensing.licensingState` here since it's asynchronous. However, calling `licensingState()` will update isLicensed and then the UI will update. We could also have separated ConfigValue for the daysOfUse config value, but I don't think it'll be noticable if that doesn't update totally correctl
@@ -143,12 +150,12 @@ class AboutTabController: NSViewController {
         /// Start an async context
         /// Notes:
         /// - @MainActor so all licensing code runs on the mainthread.
-        Task.detached(priority: .userInitiated, operation: { @MainActor in
+        Task.init(priority: .userInitiated, operation: { @MainActor in assert(Thread.isMainThread)
             
             let licenseState = await GetLicenseState.get()
                 
             if licenseState.isLicensed {
-                DispatchQueue.main.async { self.updateUI_WithIsLicensedTrue(licenseState: licenseState) } /// Dispatch to main bc UI updates need to run on main.
+                DispatchQueue.main.async { self.updateUI_WithIsLicensedTrue(licenseState: licenseState) } /// Dispatch to main bc UI updates need to run on main. Update: [Jun 2025] This is probably unnecessary now that we're running all the License stuff on the main thread anyways.
             } else {
                 let licenseConfig = await GetLicenseConfig.get() /// Only get the licenseConfig if the app *is not* licensed - that way, if the app *is* licensed through offline validation, we can avoid all internet connections.
                 let trialState = GetTrialState.get(licenseConfig)
@@ -309,13 +316,20 @@ class AboutTabController: NSViewController {
             assignAttributedStringKeepingBase(&trialSectionManager!.currentSection.textField!.attributedStringValue, messageAttributed)
             
             /// Remove calendar image
-            trialSectionManager!.currentSection.imageView!.image = nil
+            /// [Jul 2025]
+            ///     The stackview will automatically adjust the layout after setting .isHidden
+            ///     Before [Jul 2025], we used to hide the imageView by simply settings its .image to nil, but that won't cause the stackview to adapt its layout. So now we're setting .isHidden. To keep the existing behavior without introducing new bugs and edgecases, we also now unset .isHidden, whereever the .image is set to !=nil. Regex for `imageView.\.image` for context. This is code is horrible x| .
+            trialSectionManager?.currentSection.imageView?.isHidden = true
+            trialSectionManager?.currentSection.imageView?.image = nil
         
     }
     
     func updateUI_WithIsLicensedFalse(licenseConfig: MFLicenseConfig, trialState: MFTrialState) {
         
             /// Also see `updateUI_WithIsLicensedTrue()` - the first few lines are logically identical and should be kept in sync
+            
+            /// Valdiate
+            assert(Thread.isMainThread)
             
             /// Guard: no change from 'current' values
             let isLicensed = false
@@ -401,15 +415,17 @@ class AboutTabController: NSViewController {
             self.payButtonWrapper!.layer?.masksToBounds = false
             
             self.payButtonWrapper!.addSubview(payButton)
-            self.payButtonWrapper!.snp.makeConstraints { make in
-                make.top.equalTo(payButton.snp.top)
-                make.centerY.equalTo(payButton.snp.centerY)
-                make.leading.equalTo(payButton.snp.leading)
-            }
+            NSLayoutConstraint.activate([
+                self.payButtonWrapper!.topAnchor.constraint(equalTo: payButton.topAnchor),
+                self.payButtonWrapper!.centerYAnchor.constraint(equalTo: payButton.centerYAnchor),
+                self.payButtonWrapper!.leadingAnchor.constraint(equalTo: payButton.leadingAnchor)
+            ])
+            
             
             /// Create Apple Pay badge
             let image = NSImage(named: "ApplePay")!
             let badge = NSImageView(image: image)
+            badge.translatesAutoresizingMaskIntoConstraints = false
             
             badge.enableAntiAliasing()
 
@@ -419,11 +435,11 @@ class AboutTabController: NSViewController {
             
             /// Insert Apple Pay badge into wrapper
             self.payButtonWrapper!.addSubview(badge)
-            badge.snp.makeConstraints { make in
-                make.centerY.equalTo(payButton.snp.centerY)
-                make.leading.equalTo(payButton.snp.trailing).offset(9)
-                make.width.equalTo(20)
-            }
+            NSLayoutConstraint.activate([
+                badge.centerYAnchor.constraint(equalTo: payButton.centerYAnchor),
+                badge.leadingAnchor.constraint(equalTo: payButton.trailingAnchor, constant: 9),
+                badge.widthAnchor.constraint(equalToConstant: 20)
+            ])
             
             /// Insert wrapper into UI
             self.payButtonwrapperConstraints = transferredSuperViewConstraints(fromView: self.moneyCellLink, toView: self.payButtonWrapper!, transferSizeConstraints: false)
@@ -442,13 +458,13 @@ class AboutTabController: NSViewController {
     override func mouseEntered(with event: NSEvent) {
         
         DispatchQueue.main.async {
-            self.trialSectionManager?.showAlternate()
+            self.trialSectionManager?.showAlternate(animate: true, hAnchor: .center)
         }
     }
     override func mouseExited(with event: NSEvent) {
         
         DispatchQueue.main.async {
-            self.trialSectionManager?.showInitial()
+            self.trialSectionManager?.showInitial(animate: true, hAnchor: .center)
         }
     }
 }

@@ -68,11 +68,13 @@
         
     BOOL isGroupRow = rowView.subviews.count == 1;
     
-    if (!isGroupRow) {
-        RemapTableCellView *leftCell = [rowView viewAtColumn:0];
-        RemapTableCellView *rightCell = [rowView viewAtColumn:1];
-        [leftCell coolInitAsTriggerCellWithColumnWidth:triggerColumWidth];
-        [rightCell coolInitAsEffectCellWithColumnWidth:effectColumnWidth];
+    if ((0)) { /// [Jun 2025] This code doesn't do anything, and on On Tahoe Beta, it caused 'unrecognized selector' exceptions.My theory is that the `coolInitAs...` methods get incorrectly optimized out by the compiler. || TODO: [ ] Delete this all.
+        if (!isGroupRow) {
+            RemapTableCellView *leftCell = [rowView viewAtColumn:0];
+            RemapTableCellView *rightCell = [rowView viewAtColumn:1];
+            [leftCell coolInitAsTriggerCellWithColumnWidth:triggerColumWidth];
+            [rightCell coolInitAsEffectCellWithColumnWidth:effectColumnWidth];
+        }
     }
 }
 

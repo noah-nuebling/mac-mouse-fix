@@ -9,7 +9,7 @@
 ///     Inspiration:  https://gist.github.com/mminer/caec00d2165362ff65e9f1f728cecae2
 
 import Cocoa
-import SnapKit
+import CocoaLumberjackSwift
 
 class TabViewController: NSTabViewController {
     
@@ -438,10 +438,8 @@ class TabViewController: NSTabViewController {
             
             /// Add constraints to imageView
             unselectedTabImageView.translatesAutoresizingMaskIntoConstraints = false
-            unselectedTabImageView.snp.makeConstraints { make in
-                make.centerY.equalTo(destinationTab.snp.centerY)
-                make.centerX.equalTo(destinationTab.snp.centerX)
-            }
+            unselectedTabImageView.centerYAnchor.constraint(equalTo: destinationTab.centerYAnchor).isActive = true
+            unselectedTabImageView.centerXAnchor.constraint(equalTo: destinationTab.centerXAnchor).isActive = true
         }
         
         /// Store old tab size

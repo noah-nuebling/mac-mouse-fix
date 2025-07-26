@@ -28,7 +28,7 @@ import ReactiveSwift
     let strangeHelperDetected: Signal<String, Never>
     private let strangeHelperDetectedInput: Signal<String, Never>.Observer
     
-    @available(macOS 13, *)
+    @available(macOS, introduced: 13.0, deprecated: 15.0, message: "Strange-helper-checks should only be necessary on macOS 13 and 14.")
     @objc func checkHelperStrangenessReact(payload: NSObject) -> Bool {
         
         /// Handle enabling of strange helper under Ventura
@@ -40,7 +40,6 @@ import ReactiveSwift
         ///
         /// Notes:
         /// - Checking for strange helper also makes sense pre-Ventura. But strange helper stuff shouldn't  ever be a problem preVentura. The reaction doesn't make any sense pre-Ventura. (Because we show step-by-step instructions that only apply to Ventura)
-        /// - The payload needs to have values for keys "bundleVersion" and "mainAppURL", otherwise crash
         /// - Unregistering the helper doesn't work immediately. Takes like 5 seconds. Not sure why. When debugging it doesn't happen. Might be some timeout in the API.
         /// - Not sure if just using `enableHelperAsUserAgent:` is enough. Does this call `launchctl remove`? Does it kill strange helpers that weren't started by launchd? That might be necessary in some situations. Edit: pretty sure it's good enough. It will simply unregister the strange helper that was just registered and sent this message. We don't need to do anything else.
         /// - Logically, the `k-is-disabled-toast` and the `is-strange-helper-alert` belong together since they both give UI feedback about a failure to enable the helper. It would be nice if they were in the same place in code as well
@@ -53,9 +52,19 @@ import ReactiveSwift
         ///
         
         
-        /// Guard running Ventura
         
-//        if #available(macOS 13.0, *) {} else { return false }
+        /// Update: [Jul 13 2025] Disable if not running macOS 13 Ventura or 14 Sonoma
+        ///     On other versions, macOS should automatically switch to launching the right helper version, and no uninstall-and-restart should be required. (Giving users instructions to uninstall-and-restart was the main purpose of this.)
+        ///     Perhaps there's still some utility in detecting strange helpers to improve edge-cases, but I'm not sure of that, so I'll disable this code now for other macOS versions [Jul 2025]
+        ///     Also see `enable-timeout-toast` discussion in `GeneralTabController.swift` where the alert we're creating here is referred to as `is-strange-helper-alert` [Jul 2025]
+        ///         Uncertainty: I'm pretty sure that the issue that the `is-strange-helper-alert` was addressing went away at the same time as the issue that the `enable-timeout-toast` was addressing – in macOS 15 Sequoia. But not 100% sure.
+        /// Update: [Jul 17 2025] This issue (https://github.com/noah-nuebling/mac-mouse-fix/issues/1464) in 3.0.5 might have been prevented by disabling strange helpers! Perhaps we should re-enable that feature without calling `AlertCreator.showStrangeHelperMessage()`
+        
+        let osVersion = ProcessInfo.processInfo.operatingSystemVersion.majorVersion
+        if osVersion < 13 || 14 < osVersion {
+            assert(false);
+            return false;
+        }
         
         /// Determine strangeness
         
@@ -80,7 +89,6 @@ import ReactiveSwift
             
             /// Disable helper
             HelperServices.enableHelperAsUserAgent(false)
-            
             
             /// Find strangeHelper URL
             

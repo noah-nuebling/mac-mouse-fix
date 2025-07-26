@@ -211,13 +211,8 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         
         return event;
     }
-    
-    /// Testing
-    
-//    IOHIDDeviceRef sendingDev = CGEventGetSendingDevice(event);
 
     /// Return non-scrollwheel events unaltered
-    
     int64_t isPixelBased     = CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
     int64_t scrollPhase      = CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
     int64_t scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
@@ -232,9 +227,12 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         return event;
     }
     
+    /// Filter out scroll events by wacom tablet
+    if (CGEvent_IsWacomEvent(event))
+        return event;
+    
     /// Get timestamp
     ///     Get timestamp here instead of _scrollQueue for accurate timing
-    
     CFTimeInterval tickTime = CGEventGetTimestampInSeconds(event);
     
     /// Create copy of event
@@ -954,6 +952,18 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 /// Send normal gesture scroll
                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:eventPhase autoMomentumScroll:NO invertedFromDevice:_scrollConfig.invertedFromDevice];
                 
+                /// Simulate tap to prevent momentum scrolling
+                ///     - Send kIOHIDEventPhaseMayBegin and kIOHIDEventPhaseCancelled events to prevent momentum scrolling from starting in apps like Xcode
+                ///     - This is the only way I found to reliably prevent auto-momentumscroll in when running iPad apps like Downpay.
+                ///     - The MayBegin and Cancelled events are sent by a real trackpad when putting two fingers on the Trackpad and then lifting them off without actually scrolling. So I think we can think of these events simulating a quick tap with 2 fingers on the Trackpad.
+                ///     - We're *only* ever sending kIOHIDEventPhaseMayBegin and kIOHIDEventPhaseCancelled events to simulate a tap to stop momentum scrolling. On a real Trackpad, they also only seem to occur for taps. We're currently simulating taps in Scroll.m (for scrollwheel scrolling) and GestureScrollSimulator.m (for Click and Drag scrolling) [Jul 2025]
+                if (animatorPhase == kMFAnimationCallbackPhaseCanceled) {
+                    assert(eventPhase == kIOHIDEventPhaseEnded);
+                    
+                    [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseMayBegin autoMomentumScroll:NO invertedFromDevice:_scrollConfig.invertedFromDevice];
+                    [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseCancelled autoMomentumScroll:NO invertedFromDevice:_scrollConfig.invertedFromDevice];
+                }
+                
                 /// Debug
                 DDLogDebug(@"Scroll.m: \nHybrid event - gesture: (%lld, %lld, %d)", dx, dy, eventPhase);
                 
@@ -991,6 +1001,14 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 
                 /// Send momentum event
                 [GestureScrollSimulator postMomentumScrollDirectlyWithDeltaX:dx deltaY:dy momentumPhase:momentumPhase invertedFromDevice:_scrollConfig.invertedFromDevice];
+                
+                /// Simulate tap to prevent momentum scrolling
+                ///     [Jul 2025] Simulating the tap shouldn't usually be necessary for kMFAnimationCallbackPhaseEnd, since in that case the scrolling should naturally have slowed down to the point where there is no further automatic momentum scrolling. But Always doing it should make things more robust.
+                ///     [Jul 2025] Doing this for kMFAnimationCallbackPhaseCanceled is necessary to get reliable scroll canceling in DownPay iPad app..
+                if (animatorPhase == kMFAnimationCallbackPhaseEnd || animatorPhase == kMFAnimationCallbackPhaseCanceled) {
+                    [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseMayBegin autoMomentumScroll:NO invertedFromDevice:_scrollConfig.invertedFromDevice];
+                    [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseCancelled autoMomentumScroll:NO invertedFromDevice:_scrollConfig.invertedFromDevice];
+                }
                 
                 /// Debug
                 DDLogDebug(@"Scroll.m: \nHybrid event - momentum: (%lld, %lld, %d)", dx, dy, momentumPhase);

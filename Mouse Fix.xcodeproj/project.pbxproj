@@ -165,7 +165,6 @@
 		4F909D4628A0C4C2009349A2 /* NSArray+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D4328A0C4C2009349A2 /* NSArray+Extensions.swift */; };
 		4F909D4728A0C4C2009349A2 /* Collection+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D4428A0C4C2009349A2 /* Collection+Extensions.swift */; };
 		4F909D4828A0C4C2009349A2 /* Collection+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D4428A0C4C2009349A2 /* Collection+Extensions.swift */; };
-		4F909D5128A0C6F3009349A2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4F909D5028A0C6F3009349A2 /* SnapKit */; };
 		4F90CF002C8B89CD00834A90 /* InformationDensity.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F90CEFF2C8B89CD00834A90 /* InformationDensity.md */; };
 		4F90CF012C8B89CD00834A90 /* InformationDensity.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F90CEFF2C8B89CD00834A90 /* InformationDensity.md */; };
 		4F9111F9289FF34D00D2DD8C /* sm_launchd.plist in Copy sm_launchd.plist */ = {isa = PBXBuildFile; fileRef = 4F9111F4289FF03200D2DD8C /* sm_launchd.plist */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -464,6 +463,7 @@
 		4F09284928B8EE7200BDC2FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LicenseSheetController.xib; sourceTree = "<group>"; };
 		4F09BF57288355170080A5F8 /* PollingRateMeasurer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollingRateMeasurer.swift; sourceTree = "<group>"; };
 		4F0B8B172C58156F002715FF /* XCUIElement+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCUIElement+Additions.h"; sourceTree = "<group>"; };
+		4F09CF772DF44D9D00C75249 /* MMF - Update Checklist - Template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "MMF - Update Checklist - Template.md"; sourceTree = "<group>"; };
 		4F0BDC782B446A3C00AE65C1 /* acknowledgements_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = acknowledgements_template.md; sourceTree = "<group>"; };
 		4F0BDC792B446A3C00AE65C1 /* readme_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme_template.md; sourceTree = "<group>"; };
 		4F0BDC7B2B446A3C00AE65C1 /* acknowledgements_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = acknowledgements_template.md; sourceTree = "<group>"; };
@@ -2115,7 +2115,6 @@
 		4F5F3EF02756EC0400C350C0 /* RemapSwizzler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapSwizzler.m; sourceTree = "<group>"; };
 		4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollModifiers.swift; sourceTree = "<group>"; };
 		4F5FC0612D6206E3009DCF10 /* SimpleUnboxing.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SimpleUnboxing.h; sourceTree = "<group>"; };
-		4F5FC1152D63B036009DCF10 /* MMF - Update Checklist - Template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "MMF - Update Checklist - Template.md"; sourceTree = "<group>"; };
 		4F616D6027BDCD56004A6A72 /* ScrollConfigTesting.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ScrollConfigTesting.md; sourceTree = "<group>"; };
 		4F626E97292A842D00E6FFD5 /* KeyCaptureMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCaptureMode.h; sourceTree = "<group>"; };
 		4F626E98292A842D00E6FFD5 /* KeyCaptureMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyCaptureMode.m; sourceTree = "<group>"; };
@@ -2610,7 +2609,6 @@
 				4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */,
 				4FA40CF228A0CA3900499E53 /* ReactiveCocoa in Frameworks */,
 				4F58FE122C571DE200926A00 /* CocoaLumberjackSwift in Frameworks */,
-				4F909D5128A0C6F3009349A2 /* SnapKit in Frameworks */,
 				4F28B7F62D49141F006928A6 /* SkyLight.framework in Frameworks */,
 				4FA40CEF28A0CA0A00499E53 /* ReactiveSwift in Frameworks */,
 			);
@@ -7486,11 +7484,11 @@
 				4FBC82A12DAE93BD00354981 /* Xcode Nullability Settings.md */,
 				4FB898952E2D5B4D00523B37 /* Clang Diagnostic Flags - Sign.md */,
 				4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */,
+				4F09CF772DF44D9D00C75249 /* MMF - Update Checklist - Template.md */,
 				4FEB6618279376C200E6A111 /* notes.md */,
 				4FC778302D66693E00488468 /* Localization Notes.md */,
 				4FE8FC792929D8AC0002583B /* On Bundle Size & Deployment Target.md */,
 				4F1B41A72D4C06AC00026C94 /* CodeStyle.md */,
-				4F5FC1152D63B036009DCF10 /* MMF - Update Checklist - Template.md */,
 			);
 			path = "Various Notes";
 			sourceTree = "<group>";
@@ -8102,7 +8100,6 @@
 			);
 			name = "Mac Mouse Fix";
 			packageProductDependencies = (
-				4F909D5028A0C6F3009349A2 /* SnapKit */,
 				4FA40CEE28A0CA0A00499E53 /* ReactiveSwift */,
 				4FA40CF128A0CA3900499E53 /* ReactiveCocoa */,
 				4F58FE0F2C571DDD00926A00 /* CocoaLumberjack */,
@@ -8206,7 +8203,6 @@
 			mainGroup = 4FCECD7721092354001F1078;
 			packageReferences = (
 				4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
-				4F909D4F28A0C6F3009349A2 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				4FA40CED28A0CA0A00499E53 /* XCRemoteSwiftPackageReference "ReactiveSwift" */,
 				4FA40CF028A0CA3900499E53 /* XCRemoteSwiftPackageReference "ReactiveCocoa" */,
 			);
@@ -9336,14 +9332,6 @@
 				minimumVersion = 3.7.2;
 			};
 		};
-		4F909D4F28A0C6F3009349A2 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
 		4FA40CED28A0CA0A00499E53 /* XCRemoteSwiftPackageReference "ReactiveSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveCocoa/ReactiveSwift";
@@ -9382,11 +9370,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4FA40CF028A0CA3900499E53 /* XCRemoteSwiftPackageReference "ReactiveCocoa" */;
 			productName = ReactiveCocoa;
-		};
-		4F909D5028A0C6F3009349A2 /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4F909D4F28A0C6F3009349A2 /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
 		};
 		4FA40CEE28A0CA0A00499E53 /* ReactiveSwift */ = {
 			isa = XCSwiftPackageProductDependency;

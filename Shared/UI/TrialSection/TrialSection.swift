@@ -7,9 +7,15 @@
 // --------------------------------------------------------------------------
 //
 
+/// History:
+///     - [Jul 2025] Turned this from a NSView subclass to an NSStackView subclass. This simplifies the constraints in Interface Builder, and allows us to remove the `imageView` without leaving a blank space in the layout. Now, the trial section at the bottom of the About Tab is centered!
+///
+/// Discussion:
+///     - [Jul 2025] This whole TrialSection stuff feels so hacky, and I feel like the abstractions that we chose are super bad. Usually I went into UI code with an attitude of "I'm just gonna hack something together without thinking it through, it'll work fine" but here. Usually, this has worked pretty well, but here, the bad code has genuinely caused worse UI and bugs, and increased programming time.
+
 import Cocoa
 
-class TrialSection: NSView, NSSecureCoding {
+class TrialSection: NSStackView, NSSecureCoding {
     
     /// Vars
 

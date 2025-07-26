@@ -146,7 +146,10 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     ///     - Set the `NO_FILTER` preprocessor macro to disable filtering. This allows artificial events to be processed, which we plan to use so that playbacks of event recordings from our CGEventRecorder work.
     ///     - I'm not sure `NO_FILTER` should be a preprocessor macro? Maybe we should put it in Constants or config or something.
     ///     - We're leaving `NO_FILTER` on for now, because I can't really think of a good reason to filter, and maybe some people will benefit. E.g. I remember some dude with a hackintosh had a PS-2 mouse that was seemingly filtered out, and he'll be happy about this.
-    ///
+    ///         Update: [Jul 2025] Lack of filtering on *scrolling* caused interference with Wacom drawing tablets. I don't rememember hearing about interference due to lack (or presence) of the *button* filtering.
+    ///             -> For now, I'm keeping NO_FILTER enabled here, and installing a hotfix filter for wacoms in Scroll.m
+    ///             -> Big Picture: I'm really not sure how to handle the event-filtering – should it be a blacklist or whitelist ? Should it be the same for all events or should it perhaps be a whitelist for scrolling and blacklist for buttons (intercepting scrolling feels more likely to cause issues, as in the Wacom case)
+    ///                 Case for simply making all event-filtering based on attachedDevices: I think once we have user-controlled device-specific-settings there might be stronger architectural reasons to whitelist based on attachedDevices – intuitively this also feels like the most sensible, straight-forward approach. If there are special cases we can still add an extra whitelist on-top. Also, IIRC we changed NO_FILTER to be always-on based on vibes not based on specific problems that the attachedDevices-based filter caused – I think this is the way to go. Maybe for MMF 4.
     
     if (iohidDevice == NULL || device == nil) {
 

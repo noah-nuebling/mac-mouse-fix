@@ -275,7 +275,7 @@
             /// Validated/"secure" decoding
 
             /// Guard valueNotFound
-            if (![coder containsValueForKey:key]) {
+            if (![coder containsValueForKey: key]) {
                 assert(false);
                 failWithError(NSCoderValueNotFoundError, @"No value found for key while decoding %@.%@", [self class], key);
             }
@@ -366,37 +366,135 @@
                 failWithError(NSCoderReadCorruptError, @"Unexpectedly found nil while decoding non-nullable property %@.%@.", [self class], key);
             }
             
-            /// Check boxed type
-            if (isNonObjectValue) {
+            /// Validate NSNumber
+            ///     Validate whether the decoded number fits into the property's type without data loss. We can't simply check for type-equivalence because the  exact NSNumber-type isn't preserved when encoding and then decoding.
+            ///
+            ///     Background / History.:
+            ///         [Jun 26 2025] We used to validate an exact match of the objCTypes of all non-object-types here, (Commit where we removed that should be 8b87849b672be5ec8ce370c02290a94a1f6de8fe) but yesterday, when I ran  on an Intel 2018 Mac Mini on macOS 15.5, I saw the decoding of MFLicenseState would always fail, because isLicensed was decoded as a `q` (long long), while the code was expecting a `c` (signed char) (`c` is the objCType of CFBoolean on macOS.)
+            ///         I found that this happens because `[self valueForKey: @"isLicensed"]` (Which we use when *en*coding) produces a CFNumber on the Intel Mac Mini, while On my M1 MBA running Tahoe Beta 2, it produces a CFBoolean. This is strange. Especially considering that, when using KVC to get a @YES from a dictionary it produces a CFBoolean on both the Mac Mini and the M1 MBA. I assume this difference is due to Intel vs Apple Silicon. I think otherwise I would've noticed the issue when originally developing this code on the M1 MBA under macOS 15.
+            ///
+            ///         On over-validation:
+            ///             It seems that excessive validation has *caused* hard-to-debug issues here – instead of preventing them.
+            ///             Therefore I think it's best to only validate against clearly wrong cases and try to let KVC do its thing otherwise.
+            ///             In a broader sense:
+            ///                 90% of the code in MFDataClass is just validation. The core is super simple, but by trying to exhaust all the edgecases and validate every uncertain thing automatically, it becomes 10x more complex, and - at least in this case – *more* brittle. When I wrote this, it became this weird obsession to validate everything. And most of this validation is just to conform to NSSecureCoding, which I don't even think brings any real security for data-modeling. (Discussed this more elsewhere) I feel like I'm on the Swift compiler team. Also see discussion on `MFDataClassBase_Simplified` in the header.
+            ///                 Meta: [Jul 2025] This discussion is kinda redundant with the discussion at the top of the header. Should maybe consolidate / delete
+            ///
+            ///     What validation does KVC Perform?:
+            ///         KVC's `setValue:forKey:` will throw an exception when trying to set an NSValue with a type encoding that doesn't match the property's type encoding
+            ///             (I tested setting a pointer-typed NSValue to a BOOL prop and that failed, I also tested setting NSPoint to a BOOL prop and it error'd with `@"-[NSConcreteValue charValue]: unrecognized selector sent to instance [...]"`)
+            ///             It's different in case both the NSValue and the property are numbers – In that case, KVC seems to do a best effort conversion between the number types, which will truncate floats, and overflow/underflow values to fit into the property. E.g. when setting @(128) to a BOOL value it ends up being set to  -127 (Because BOOL is a signed char and 128 will overflow). KVC `setValue:forKey:` seems to never throw an exception when setting to and object-type property, even if the types don't match.
+            ///             -> This is based on (not that thorough) testing on [Jun 26 2025]
+            ///             -> What this NSNumber validation below does is check that those "potentially lossy" KVC number coercions don't lose us any information.
+            ///
+            ///     References:
+            ///         This KVC doc says that BOOL (B) is signed char (c) on macOS for historical reasons: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/KeyValueCoding/DataTypes.html#//apple_ref/doc/uid/20002171-BAJEAIEE
+            
+            if (runningPreRelease()) { /// Disabling all custom NSNumber validation in release builds, cause I feel like the chance of causing problems due to false negatives in the validation is greater than the chance of us preventing issues. –– Just let KVC do its thing. See "On over-validation" above.
                 
-                /// Cast to NSValue
-                NSValue *nsValue = (NSValue *)value;
-
-                /// Get type encodings
-                const char *propertyTypeEncoding = [typeEncoding cStringUsingEncoding: NSUTF8StringEncoding]; /// Why are we boxing here? Perhaps we should handle all these type encoding strings as `const char *` instead of boxing/converting them back and forth? Or use NSSimpleCString as a more lightweight wrapper? ... Eh benchmark first before optimizing though.
-                const char *nsValueTypeEncoding = [nsValue objCType];
+                #define debug_failWithError(code_, messageAndFormatArgs...) ({                  /** Drop-in replacement for failWithError for this code section which only runs in debug/prerelease mode..*/ \
+                    DDLogError(@"Decode failed with code: " #code_ ". Message: " messageAndFormatArgs); \
+                    exit(1);                                                                    \
+                })
                 
-                /// Special case: Booleans
-                ///     For boolean properties, the decoded NSValue seems to just use 'c' (char) while the property encoding uses 'B' (boolean). I also checked `ivar_getTypeEncoding()` and it's also `B` so won't help.
-                ///     Possible explanation: This KVC doc says that BOOL is char on macOS for historical reasons: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/KeyValueCoding/DataTypes.html#//apple_ref/doc/uid/20002171-BAJEAIEE
-                if (strcmp(propertyTypeEncoding, "B") == 0) {
-                    propertyTypeEncoding = "c";
-                }
-                #if !TARGET_OS_OSX
-                static_assert(false, "Our bool code probably only handles macOS");
-                #endif
+                ifcastn(value, NSNumber, decodedNum) {
                 
-                /// Check if types match
-                if (strcmp(nsValueTypeEncoding, propertyTypeEncoding) != 0) {
-                    assert(false);
-                    failWithError(NSCoderReadCorruptError, @"Type mismatch while decoding non-object property %@.%@. Expected: %s. Found: %s", [self class], key, propertyTypeEncoding, nsValueTypeEncoding);
+                    /// Define standard numeric type encodings
+                    ///     References:
+                    ///         Clang source code –  getObjCEncodingForPrimitiveType() – https://clang.llvm.org/doxygen/ASTContext_8cpp_source.html#l08744
+                    ///         NSHipster – Type Encodings – https://nshipster.com/type-encodings/
+                    #define enc_int            "csilqt"
+                    #define enc_uint           "CSILQT"
+                    #define enc_bool           "B"
+                    #define enc_float          "fdD"
+                    
+                    /// Get type encoding
+                    const char *propertyTypeEncoding = [typeEncoding cStringUsingEncoding: NSUTF8StringEncoding]; /// Why are we boxing here? Perhaps we should handle all these type encoding strings as `const char *` instead of boxing/converting them back and forth? Or use NSSimpleCString as a more lightweight wrapper? ... Eh benchmark first before optimizing though.
+                    if (strlen(propertyTypeEncoding) != 1) assert(false);
+                    
+                    bool propIsWhole    = strchr((enc_int enc_uint enc_bool), propertyTypeEncoding[0]);
+                    bool propIsDecimal  = strchr((enc_float), propertyTypeEncoding[0]);
+                    assert(propIsWhole || propIsDecimal);
+                    
+                    /// Validate no-truncation
+                    if (propIsWhole) {
+                        double dbl = [decodedNum doubleValue];
+                        if (floor(dbl) != dbl) {
+                            assert(false);
+                            debug_failWithError(NSCoderReadCorruptError, @"Decoded non-whole number %f for property %@.%@ with whole-number type %s", dbl, [self class], key, propertyTypeEncoding);
+                        }
+                    }
+                    
+                    /// Validate no overflow/underflow
+                    ({
+                        #define xxx(n, fmt, lo, hi) ({                  \
+                            if (!( (lo) <= (n) && (n) <= (hi) )) {      \
+                                assert(false);                          \
+                                debug_failWithError(NSCoderReadCorruptError, @"Decoded number " fmt " does not fit into property %@.%@ of type %s", n, [self class], key, propertyTypeEncoding);   \
+                            }                                           \
+                        })
+                        
+                        NSUInteger propSize;
+                        NSGetSizeAndAlignment(propertyTypeEncoding, &propSize, NULL);
+                        
+                        /// Validate int overflow/underflow
+                        if (propIsWhole) {
+                            bool propIsBool     = strchr((enc_bool), propertyTypeEncoding[0]); /// [Jun 26 2025] This check actually doesn't work because `BOOL` props have type-encoding `c` not `B` – I'm not sure if there's a way to differentiate BOOL from char at runtime. (Except by checking for CFBoolean, which isn't reliable on my Mac Mini) (See above at "historical reasons")
+                            bool propIsUnsigned = strchr((enc_uint), propertyTypeEncoding[0]);
+                            bool propIsSigned   = strchr((enc_int), propertyTypeEncoding[0]);
+                            #if !TARGET_OS_OSX
+                            static_assert(false, "Our bool code probably only handles macOS");
+                            #endif
+                            
+                            if (propIsBool) {
+                                long long n = [decodedNum longLongValue];
+                                xxx(n, "%lld", 0, 1);
+                            }
+                            else if (propIsUnsigned) {
+                                if ([decodedNum doubleValue] < 0) debug_failWithError(NSCoderReadCorruptError, @"Decoded number %@ is negative but property %@.%@ is unsigned", decodedNum, [self class], key); /// [Jun 2025] Unsure about this validation. NSNumber might not preserve signedness.
+                                unsigned long long n = [decodedNum unsignedLongLongValue];
+                                if      (propSize == 1)  xxx(n, "%llu", 0, UINT8_MAX);
+                                else if (propSize == 2)  xxx(n, "%llu", 0, UINT16_MAX);
+                                else if (propSize == 4)  xxx(n, "%llu", 0, UINT32_MAX);
+                                else if (propSize == 8)  {}
+                                else assert(false);
+                            }
+                            else if (propIsSigned) {
+                                long long n = [decodedNum longLongValue];
+                                if      (propSize == 1)  xxx(n, "%lld", INT8_MIN, INT8_MAX);
+                                else if (propSize == 2)  xxx(n, "%lld", INT16_MIN, INT16_MAX);
+                                else if (propSize == 4)  xxx(n, "%lld", INT32_MIN, INT32_MAX);
+                                else if (propSize == 8)  {}
+                                else assert(false);
+                            }
+                            else assert(false);
+                        }
+                        
+                        /// Validate float precision loss / overflow / weirdness
+                        if (propIsDecimal) {
+                            double n = [decodedNum doubleValue];
+                            if (isnan(n))           debug_failWithError(NSCoderReadCorruptError, @"Decoded value for property %@.%@ is nan", [self class], key);
+                            if (isinf(n))           debug_failWithError(NSCoderReadCorruptError, @"Decoded value for property %@.%@ is inf", [self class], key);
+                            if      (propSize == 4) { if (((float)n) != n) debug_failWithError(NSCoderReadCorruptError, @"Decoded number %f cannot be represented by property %@.%@ of type float", n, [self class], key); }
+                            else if (propSize == 8) {}
+                            else assert(false);
+                        }
+                        
+                        #undef xxx
+                    });
                 }
             }
             
-            /// Passed all validations!
+            /// Passed all custom validations!
             ///     > Store the decoded value inside the self.key property
             ///     Note that this is a KVC function which will automatically unbox the value (if it's an NSValue)
-            [self setValue: value forKey: key];
+            ///     Why the `@try-@catch`? –– This should catch invalid NSValue conversions See "What validation does KVC Perform?" above.
+            @try {
+                [self setValue: value forKey: key];
+            } @catch (NSException *exception) {
+                assert(false);
+                failWithError(NSCoderReadCorruptError, @"Setting decoded value %@ for property %@.%@ via KVC caused an exception: %@", value, [self class], key, exception);
+            }
             
         }   /// End of `if (coder.requiresSecureCoding)`
     

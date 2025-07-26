@@ -14,3 +14,6 @@ Here, we document, what exactly changed as we increased the configVersion
 - "License.trial.lastUseDate" is now stored in `SecureStorage` instead of config. 
     - This is to prevent bug where trial counter would go up too fast when the user switched between machines frequently (I think it resolves this) (See https://github.com/noah-nuebling/mac-mouse-fix/discussions/743#discussioncomment-8050398)
     - This should require any config repairing.
+
+
+    Update: [Jun 7 2025] ... Oup we forgot to ever update this. It's probably better to keep comments like these local to the updating code. 

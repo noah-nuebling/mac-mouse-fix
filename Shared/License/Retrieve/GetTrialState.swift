@@ -7,6 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
+@MainActor
 @objc class GetTrialState : NSObject {
     
     /// -> This class retrieves instances of the `MFTrialState` dataclass
@@ -18,7 +19,7 @@
 #elseif FORCE_NOT_EXPIRED
         let daysOfUse = 0
 #else
-        let daysOfUse = TrialCounter.daysOfUse
+        let daysOfUse = TrialCounter.daysOfUse /// [Jun 2025] This complains about MainActor isolation if we don't make the enclosing function @MainActor.
 #endif
         
         let trialDays = licenseConfig.trialDays

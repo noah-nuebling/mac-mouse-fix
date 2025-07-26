@@ -224,4 +224,7 @@ fileprivate class Canvas: NSWindow {
     /// Developer docs say to not override this
 //        return nil
 //    }
+    override func sendEvent(_ event: NSEvent) { /// [Jul 2025] This cuts twoFinger Click and Drag CPU usage from 40% to 20% on my 2018 Mac Mini! (Using 1000 HZ polling rate) ––– I think before, the NSWindow was trying to process all the mouseMoved events, 
+        return
+    }
 }

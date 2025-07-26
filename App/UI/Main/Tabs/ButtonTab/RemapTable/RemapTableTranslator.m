@@ -520,9 +520,10 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             i.alternate = YES;
             i.keyEquivalentModifierMask = NSEventModifierFlagOption;
         }
-        if ([itemModel[@"hideable"] isEqual:@YES]) {
+        if ([itemModel[@"hideable"] isEqual:@YES]) { /// See: https://stackoverflow.com/a/66699734/10601702
             NSMenuItem *h = [[NSMenuItem alloc] init];
-            h.view = [[NSView alloc] initWithFrame:NSZeroRect];
+            h.view = [[NSView alloc] initWithFrame: NSZeroRect];
+            h.hidden = YES; /// [Jul 2025] Necessary for correct layout as of macOS Tahoe Beta 3
             h.enabled = NO; /// Prevent the zero-height item from being selected by keyboard. This only works if `autoenablesItems == NO` on the PopUpButton
             [enclosingMenu addItem:h];
             i.alternate = YES;

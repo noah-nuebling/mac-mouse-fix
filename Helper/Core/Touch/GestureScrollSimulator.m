@@ -87,13 +87,17 @@ static dispatch_queue_t _momentumQueue;
     
     /// Validate input
     
-    if (phase != kIOHIDEventPhaseEnded && dx == 0.0 && dy == 0.0) {
+    if (!ifthen(dx == 0.0 && dy == 0.0,
+                phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseMayBegin || phase == kIOHIDEventPhaseCancelled))
+    {
         /// Maybe kIOHIDEventPhaseBegan events from the Trackpad driver can also contain zero-deltas? I don't think so by I'm not sure.
-        /// Real trackpad driver seems to only produce zero deltas when phase is kIOHIDEventPhaseEnded.
-        ///     - (And probably also if phase is kIOHIDEventPhaseCancelled or kIOHIDEventPhaseMayBegin, but we're not using those here - IIRC those are only produced when the user touches the trackpad but doesn't begin scrolling before lifting fingers off again)
-        /// The main practical reason we're emulating this behavour of the trackpad driver because of this: There are certain apps (or views?) which create their own momentum scrolls and ignore the momentum scroll deltas contained in the momentum scroll events we send. E.g. Xcode or the Finder collection view. I think that these views ignore all zero-delta events when they calculate what the initial momentum scroll speed should be. (It's been months since I discovered that though, so maybe I'm rememvering wrong) We want to match these apps momentum scroll algortihm closely to provide a consisten experience. So we're not sending the zero-delta events either and ignoring them for the purposes of our momentum scroll calculation and everything else.
+        /// Real trackpad driver seems to only produce zero deltas when phase is kIOHIDEventPhaseEnded, kIOHIDEventPhaseMayBegin, or kIOHIDEventPhaseCancelled.
+        ///     MayBegin and Cancelled are only produced when the user puts two fingers on the Trackpad and then lifts them back off without scrolling.
+        /// The main practical reason we're emulating this behavour of the trackpad driver because of this: There are certain apps (or views?) which create their own momentum scrolls and ignore the momentum scroll deltas contained in the momentum scroll events we send. E.g. Xcode or the Finder collection view. I think that these views ignore all zero-delta events when they calculate what the initial momentum scroll speed should be. (It's been months since I discovered that though, so maybe I'm rememvering wrong) We want to match these app's momentum scroll algortihm closely to provide a consistent experience. So we're not sending the zero-delta events either and ignoring them for the purposes of our momentum scroll calculation and everything else.
+        ///     Update: [Jul 2025] I've added an assert(false) here. It seems our algorithms don't produce those unwanted 0-deltas, which is good.
         
-        DDLogWarn(@"Trying to post gesture scroll with zero deltas while phase is not kIOHIDEventPhaseEnded - ignoring");
+        DDLogWarn(@"Trying to post gesture scroll with zero deltas while phase is not Ended, MayBegin, or Cancelled - ignoring");
+        assert(false);
         
         return;
     }
@@ -124,7 +128,7 @@ static dispatch_queue_t _momentumQueue;
         /// Reset subpixelator
         [_scrollLinePixelator reset];
     }
-    if (phase == kIOHIDEventPhaseBegan || phase == kIOHIDEventPhaseChanged) {
+    if (phase == kIOHIDEventPhaseBegan || phase == kIOHIDEventPhaseChanged || phase == kIOHIDEventPhaseMayBegin || phase == kIOHIDEventPhaseCancelled) {
         
         /// Get vectors
         
@@ -158,10 +162,10 @@ static dispatch_queue_t _momentumQueue;
     } else if (phase == kIOHIDEventPhaseEnded) {
         
         /// Post `ended` event
-        [GestureScrollSimulator postGestureScrollEventWithGestureVector:(Vector){}
-                                                       scrollVectorLine:(Vector){}
-                                                    scrollVectorLineInt:(Vector){}
-                                                      scrollVectorPoint:(Vector){}
+        [GestureScrollSimulator postGestureScrollEventWithGestureVector:(Vector){0}
+                                                       scrollVectorLine:(Vector){0}
+                                                    scrollVectorLineInt:(Vector){0}
+                                                      scrollVectorPoint:(Vector){0}
                                                                   phase:kIOHIDEventPhaseEnded
                                                           momentumPhase:0
                                                      invertedFromDevice:invertedFromDevice];
@@ -401,6 +405,31 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
                                                                   phase:kIOHIDEventPhaseUndefined
                                                           momentumPhase:momentumPhase
                                                      invertedFromDevice:invertedFromDevice];
+        
+        /// Simulate tap to prevent auto-momentumScroll
+        ///     [Jul 2025] Also see Scroll.m where we do the same thing
+        ///     Discussion: Currently we simulate the tap in 3 places:
+        ///         1. Cancellation of scrollwheel gesture phase. 2. Cancellation or end of scrollwheel momentum phase. 3. Cancellation or end of Click and Drag momentum phase (that's this code)
+        ///         -> We're not simulating the tap during Click and Drag gesture phase, because cancellation during this phase is currently impossible AFAIK. (Just like cancellation of a real Trackpad scroll during the gesture phase is impossible – lifting the finger will *end* the gesture phase not, *cancel* it.)
+        if (animationPhase == kMFAnimationCallbackPhaseEnd || animationPhase == kMFAnimationCallbackPhaseCanceled) {
+        
+            [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
+                                                           scrollVectorLine:zeroVector
+                                                        scrollVectorLineInt:zeroVector
+                                                          scrollVectorPoint:zeroVector
+                                                                      phase:kIOHIDEventPhaseMayBegin
+                                                              momentumPhase:kCGMomentumScrollPhaseNone
+                                                         invertedFromDevice:invertedFromDevice];
+                                                         
+            [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
+                                                           scrollVectorLine:zeroVector
+                                                        scrollVectorLineInt:zeroVector
+                                                          scrollVectorPoint:zeroVector
+                                                                      phase:kIOHIDEventPhaseCancelled
+                                                              momentumPhase:kCGMomentumScrollPhaseNone
+                                                         invertedFromDevice:invertedFromDevice];
+        }
+        
         /// Call momentumScrollStart callback
         if (animationPhase == kMFAnimationCallbackPhaseStart) {
             if (_momentumScrollCallback != NULL) _momentumScrollCallback();
