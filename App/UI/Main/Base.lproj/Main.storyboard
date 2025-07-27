@@ -281,10 +281,10 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="4" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6xF-Pl-4RE" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                <rect key="frame" x="30" y="20" width="312" height="264"/>
+                                <rect key="frame" x="30" y="20" width="312" height="278"/>
                                 <subviews>
                                     <stackView orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="999" verticalStackHuggingPriority="1000" horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0BS-nv-t3O" userLabel="Enable section">
-                                        <rect key="frame" x="0.0" y="214" width="312" height="50"/>
+                                        <rect key="frame" x="0.0" y="228" width="312" height="50"/>
                                         <beginningViews>
                                             <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D4U-Df-iCp" userLabel="Text center">
                                                 <rect key="frame" x="0.0" y="0.0" width="16" height="50"/>
@@ -339,19 +339,23 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="249.99998474121094" horizontalClippingResistancePriority="999" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcq-dN-YnA" userLabel="Main Hidable Section" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="312" height="210"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="312" height="224"/>
                                         <subviews>
                                             <customView horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="zUc-6f-AlY" userLabel="EnableIndent">
-                                                <rect key="frame" x="0.0" y="192" width="310" height="18"/>
+                                                <rect key="frame" x="0.0" y="192" width="277" height="32"/>
                                                 <subviews>
                                                     <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="0gD-iB-vff" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                        <rect key="frame" x="-2" y="0.0" width="264" height="14"/>
-                                                        <textFieldCell key="cell" controlSize="small" alignment="left" title="Mac Mouse Fix will stay enabled after you close it" id="bew-ni-FnZ">
+                                                        <rect key="frame" x="-2" y="0.0" width="231" height="28"/>
+                                                        <textFieldCell key="cell" controlSize="small" alignment="left" id="bew-ni-FnZ">
                                                             <font key="font" metaFont="smallSystem"/>
+                                                            <string key="title">Mac Mouse Fix stays enabled after you quit
+the app</string>
                                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <attributedString key="userComments">
-                                                                <fragment content="General &gt; Enable Mac Mouse Fix Toggle &gt; Hint"/>
+                                                                <fragment>
+                                                                    <string key="content">General &gt; Enable Mac Mouse Fix Toggle &gt; Hint || NOTE: Primarily meant to teach the right mental model to users who have the common misconception that they need to make MMF a 'Login Item' to keep it working. The terminology is meant to match the 'Enable Mac Mouse Fix' toggle and the 'Quit Mac Mouse Fix' menubar item.</string>
+                                                                </fragment>
                                                             </attributedString>
                                                         </textFieldCell>
                                                         <attributedString key="userComments">
