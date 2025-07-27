@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2025**
 
+- 🇦🇺&nbsp;Herridge&nbsp;2
 - 🇺🇸&nbsp;Vinchenzo&nbsp;Barbarino - "love this app!"
 - 🇨🇳 Haodi Wang - "Super Awesome Tool - Love You, Lucy"
 - 🇺🇸&nbsp;Charles - "This. fixes. EVERYTHING."
