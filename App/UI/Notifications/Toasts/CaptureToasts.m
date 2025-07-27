@@ -282,7 +282,7 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
     if ([simpleKey isEqual:@"link"] && result != nil && result.length > 0) {
         NSString *linkURL = nil;
         if (inputType == kMFCapturedInputTypeButtons) {
-            linkURL = [Links link:kMFLinkIDCapturedButtonsGuide];
+            linkURL = [Links link:kMFLinkID_CapturedButtonsGuide];
         } else if (inputType == kMFCapturedInputTypeScroll) {
             linkURL = @"";
         } else {

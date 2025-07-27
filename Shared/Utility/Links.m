@@ -21,85 +21,94 @@
     
     NSString *currentLocale = NSBundle.mainBundle.preferredLocalizations.firstObject ?: @"";
     
-    NSDictionary<NSString *, NSString *(^)(void)> *map = @{
-            
-            /// `macmousefix:` links
-            kMFLinkIDMMFLActivate: ^{
-                return @"macmousefix:activate";
-            },
-            
-            /// General
-            
-            kMFLinkIDBuyMeAMilkshake: ^{
-                return redirectionServiceLink(@"buy-me-a-milkshake", nil, nil, @{ @"locale": currentLocale }); /// Note: We might want to move this link to GitHub Sponsors (https://github.com/sponsors/noah-nuebling) at some point.
-            },
-            
-            /// Non-browser links
-            ///     Don't use redirection service for these so the browser isn't opened.
-            kMFLinkIDMacOSSettingsLoginItems: ^{
-                /// Note: This is used on the 'is-disabled-toast' toast, which we only need to show on macOS 13 Ventura and later (Because it lets you disable background items from the system settings.)
-                return @"x-apple.systempreferences:com.apple.LoginItems-Settings.extension";
-            },
-            kMFLinkIDMacOSSettingsPrivacyAndSecurity: ^{
-                /// Notes:
-                /// - This is used on the accessibility sheet.
-                /// - This link works on pre-Ventura *System Preferences* as well as Ventura-and-later *System Settings*. Evidence that this works pre-Ventura: This link shows up on a GitHub Gist which documents pre-Ventura System Preferences urls: https://gist.github.com/rmcdongit/f66ff91e0dad78d4d6346a75ded4b751
-                return @"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility";
-            },
-            
-            kMFLinkIDMailToNoah: ^{
-                return @"mailto:noah.n.public@gmail.com";
-            },
-            
-            /// Main places
-            kMFLinkIDWebsite: ^{
-                return @"https://macmousefix.com/"; /// No need for redirection-service since this has javascript to adapt its locale to the user's browser settings, and if we ever change the domain, we'll set up a redirect directly on the page.
-            },
-            kMFLinkIDGitHub: ^{
-                return redirectionServiceLink(@"mmf-github", nil, nil, @{ @"locale": currentLocale });
-            },
-            kMFLinkIDAcknowledgements: ^{
-                return redirectionServiceLink(@"mmf-acknowledgements", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/blob/master/Acknowledgements.md
-            },
-            kMFLinkIDLocalizationContribution: ^{
-                return redirectionServiceLink(@"mmf-localization-contribution", nil, nil, @{ @"locale": currentLocale });
-            },
-            
-            /// Feedback
-            kMFLinkIDFeedbackBugReport: ^{
-                return redirectionServiceLink(@"mmf-feedback-bug-report", nil, nil, @{ @"locale": currentLocale }); ///  https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report
-            },
-            kMFLinkIDFeedbackFeatureRequest: ^{
-                return redirectionServiceLink(@"mmf-feedback-feature-request", nil, nil, @{ @"locale": currentLocale });
-            },
-            
-            /// Help
-            kMFLinkIDAuthorizeAccessibilityHelp: ^{ /// This link is opened when clicking `Help` on the Accessibility Sheet.
-                return redirectionServiceLink(@"mmf-authorize-accessibility-help", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/101
-            },
-            
-            /// Guides
-            kMFLinkIDGuidesAndCommunity: ^{ /// Note: This link is found under `Help > View Guides or Ask the Community` and links to the GitHub Discussions page (as of Sep 2024) I'm not sure it makes sense to put this in the redirection-service, as it's very specific.
-                return redirectionServiceLink(@"mmf-guides-and-community", nil, nil, @{ @"locale": currentLocale });
-            },
-            kMFLinkIDGuides: ^{
-                return redirectionServiceLink(@"mmf-guides", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/categories/guides
-            },
-            kMFLinkIDCapturedButtonsGuide: ^{
-                return redirectionServiceLink(@"mmf-captured-buttons-guide", nil, nil, @{ @"locale": currentLocale });
-            },
-            kMFLinkIDVenturaEnablingGuide: ^{
-                return redirectionServiceLink(@"mmf-ventura-enabling-guide", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/861
-            },
-            
-            kMFLinkIDCapturedScrollingGuide: ^{
-                assert(false); /// We don't have a guide for scroll-capturing atm (01.09.2024) I think we probably don't need one unless people have frequent questions.
-                return nil;
-            },
-    };
     
-    NSString *(^getter)(void) = map[linkID];
-    NSString *result = getter ? getter() : nil;
+    NSString *result = nil;
+    {
+        #define xxx(linkID_) else if ([linkID_ isEqual: linkID])
+        if ((0)) {}
+                
+        /// `macmousefix:` links
+        xxx(kMFLinkID_MMFLActivate) {
+            result = @"macmousefix:activate";
+        }
+        
+        /// General
+        xxx(kMFLinkID_BuyMeAMilkshake) {
+            result = redirectionServiceLink(@"buy-me-a-milkshake", nil, nil, @{ @"locale": currentLocale }); /// Note: We might want to move this link to GitHub Sponsors (https://github.com/sponsors/noah-nuebling) at some point.
+        }
+        
+        /// Non-browser links
+        ///     Don't use redirection service for these so the browser isn't opened.
+        xxx(kMFLinkID_MacOSSettingsLoginItems) {
+            /// Note: This is used on the 'is-disabled-toast' toast, which we only need to show on macOS 13 Ventura and later (Because it lets you disable background items from the system settings.)
+            result = @"x-apple.systempreferences:com.apple.LoginItems-Settings.extension";
+        }
+        xxx(kMFLinkID_MacOSSettingsPrivacyAndSecurity) {
+            /// Notes:
+            /// - This is used on the accessibility sheet.
+            /// - This link works on pre-Ventura *System Preferences* as well as Ventura-and-later *System Settings*. Evidence that this works pre-Ventura: This link shows up on a GitHub Gist which documents pre-Ventura System Preferences urls: https://gist.github.com/rmcdongit/f66ff91e0dad78d4d6346a75ded4b751
+            result = @"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility";
+        }
+        
+        xxx(kMFLinkID_MailToNoah) {
+            result = @"mailto:noah.n.public@gmail.com";
+        }
+        
+        /// Main places
+        xxx(kMFLinkID_Website) {
+            result = @"https://macmousefix.com/"; /// No need for redirection-service since this has javascript to adapt its locale to the user's browser settings, and if we ever change the domain, we'll set up a redirect directly on the page.
+        }
+        xxx(kMFLinkID_GitHub) {
+            result = redirectionServiceLink(@"mmf-github", nil, nil, @{ @"locale": currentLocale });
+        }
+        xxx(kMFLinkID_Acknowledgements) {
+            result = redirectionServiceLink(@"mmf-acknowledgements", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/blob/master/Acknowledgements.md
+        }
+        xxx(kMFLinkID_HelpTranslate) {
+            result = redirectionServiceLink(@"mmf-localization-contribution", nil, nil, @{ @"locale": currentLocale }); /// [Jul 2025] I kinda wanna rename `mmf-localization-contribution` to `mmf-help-translate` but I'm not sure we've used it somewhere already.
+        }
+        
+        /// Feedback
+        xxx(kMFLinkID_Feedback) {
+            result = redirectionServiceLink(@"mmf-feedback", nil, nil, @{ @"locale": currentLocale });
+        }
+        xxx(kMFLinkID_FeedbackBugReport) {
+            result = redirectionServiceLink(@"mmf-feedback-bug-report", nil, nil, @{ @"locale": currentLocale }); ///  https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report
+        }
+        xxx(kMFLinkID_FeedbackFeatureRequest) {
+            result = redirectionServiceLink(@"mmf-feedback-feature-request", nil, nil, @{ @"locale": currentLocale });
+        }
+        
+        /// Help
+        xxx(kMFLinkID_AuthorizeAccessibilityHelp) { /// This link is opened when clicking `Help` on the Accessibility Sheet.
+            result = redirectionServiceLink(@"mmf-authorize-accessibility-help", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/101
+        }
+        
+        /// Guides
+        xxx(kMFLinkID_GuidesAndCommunity) { /// Note: This link is found under `Help > View Guides or Ask the Community` and links to the GitHub Discussions page (as of Sep 2024) I'm not sure it makes sense to put this in the redirection-service, as it's very specific.
+            result = redirectionServiceLink(@"mmf-guides-and-community", nil, nil, @{ @"locale": currentLocale });
+        }
+        xxx(kMFLinkID_Guides) {
+            result = redirectionServiceLink(@"mmf-guides", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/categories/guides
+        }
+        xxx(kMFLinkID_CapturedButtonsGuide) {
+            result = redirectionServiceLink(@"mmf-captured-buttons-guide", nil, nil, @{ @"locale": currentLocale });
+        }
+        xxx(kMFLinkID_VenturaEnablingGuide) {
+            result = redirectionServiceLink(@"mmf-ventura-enabling-guide", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/861
+        }
+        
+        xxx(kMFLinkID_CapturedScrollingGuide) {
+            assert(false); /// We don't have a guide for scroll-capturing atm (01.09.2024) I think we probably don't need one unless people have frequent questions.
+            result = nil;
+        }
+        
+        else {
+            result = nil; /// [Jul 2025] Expected for the "Send Me an Email" link
+        }
+        
+        #undef xxx
+    }
     
     DDLogDebug(@"Links.m: Generated link: %@ -> %@", linkID, result);
     

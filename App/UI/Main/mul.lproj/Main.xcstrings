@@ -546,60 +546,60 @@
       }
     },
     "5yb-g8-Kcg.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Write a Feature Request\"; ObjectID = \"5yb-g8-Kcg\"; Note = \"About > Feature Request Link\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Help Translate\"; ObjectID = \"5yb-g8-Kcg\"; Note = \"About > Help Translate Link\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Schlage ein Feature vor"
+            "value" : "Hilf beim Übersetzen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Write a Feature Request"
+            "value" : "Help Translate"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Demander une nouvelle fonctionnalité"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "기능개선 요청하기"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Solicite um Recurso"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Đề xuất tính năng mới"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "填写一个功能请求"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "填寫一個功能請求"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "填寫一個功能請求"
           }
         }
@@ -1688,60 +1688,60 @@
       }
     },
     "bQf-qv-mvB.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"File a Bug Report\"; ObjectID = \"bQf-qv-mvB\"; Note = \"About > Bug Report Link\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Submit Feedback\"; ObjectID = \"bQf-qv-mvB\"; Note = \"About > Submit Feedback Link\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Erstatte einen Fehlerbericht"
+            "value" : "Feedback einreichen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "File a Bug Report"
+            "value" : "Submit Feedback"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Signaler un bug"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "버그 제보하기"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Reportar um problema"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Gửi báo cáo lỗi"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "提交错误报告"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "回報錯誤"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "報告錯誤"
           }
         }
