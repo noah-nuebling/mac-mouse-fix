@@ -127,138 +127,135 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     DDLogInfo(@"Received Message: %@ with payload: %@", message, payload);
     
     /// Process message
-    __block NSObject *response = nil;
-    const NSDictionary<NSString *, void (^)(void)> *commandMap;
+    NSObject *response = nil;
     
     /// Handle commands
-    ///     Discussion: [Apr 2025] We're using dict-of-blocks for cleaner syntax than if-else. If I wrote this now, I'd probably use macros to make the if-else more concise.
-    ///         Performance: dict-of-blocks pattern seems slow, but I've benchmarked the pattern a bit inside MarkdownParser.m, and it didn't seem to be any slower in practise than a native C-switch.
+    ///     Note: [Jul 2025] We're using NSString to identify the commands. I think this is what `SInt32 messageID` is for, but it's nice to be able to debug-print the strings. To replicate that with `SInt32 messageID`, we might wanna use a `FOR_EACH` macro or `X-MACRO` ... or just keep using strings, it works fine.
+    
+    #define xxx(message_) else if ([message_ isEqual: message])
     
 #if IS_MAIN_APP
- 
-     commandMap = @{
     
-        @"addModeFeedback": ^{
-            [MainAppState.shared.buttonTabController handleAddModeFeedbackWithPayload:(NSDictionary *)payload];
-        },
-        @"keyCaptureModeFeedback": ^{
-            [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:NO];
-        },
-        @"keyCaptureModeFeedbackWithSystemEvent": ^{
-            [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:YES];
-        },
-        @"helperEnabledWithNoAccessibility": ^{
-            
-            BOOL isStrange = NO;
-            if (isavailable(13.0, 15.0)) { if (@available(macOS 13.0, *)) {
-                isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload:payload];
-            }}
-            if (!isStrange) {
-                [AuthorizeAccessibilityView add];
-            }
-        },
-        @"helperEnabled": ^{
-            
-            BOOL isStrange = NO;
-            if (isavailable(13.0, 15.0)) { if (@available(macOS 13.0, *)) {
-                isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload:payload];
-            }}
-            
-            if (!isStrange) { /// Helper matches mainApp instance.
-                
-                /// Bring mainApp for foreground
-                /// Notes:
-                /// - In some places like when the accessibilitySheet is dismissed, we have other methods for bringing mainApp to the foreground that might be unnecessary now that we're doing this. Edit: We stopped the accessibility enabling code from activating the app.
-                /// - (September 2024) activateIgnoringOtherApps: is deprecated under macOS 15.0 Sequoia. (But it still seems to work based on my superficial testing before 3.0.3 release.) TODO: Use new cooperative activation APIs instead. (Article: https://developer.apple.com/documentation/appkit/nsapplication/passing_control_from_one_app_to_another_with_cooperative_activation?language=objc)
-                
-                [NSApp activateIgnoringOtherApps:YES];
-                
-                /// Dismiss accessibilitySheet
-                ///     This is unnecessary under Ventura since `activateIgnoringOtherApps` will trigger `ResizingTabWindowController.windowDidBecomeMain()` which will also call `[AuthorizeAccessibilityView remove]`. But it's better to be safe and explicit about this.
-                [AuthorizeAccessibilityView remove];
-                
-                /// Notify rest of the app
-                [EnabledState.shared reactToDidBecomeEnabled];
-            }
-            
-        },
-        @"helperDisabled": ^{
-            [EnabledState.shared reactToDidBecomeDisabled];
-        },
-        @"configFileChanged": ^{
-            [Config loadFileAndUpdateStates];
-        },
-        @"showNextToastOrSheetWithSection": ^{
-            BOOL moreToastsToGo = [ToastAndSheetTests showNextTestWithSection:(id)payload]; /// If this is true, we haven't ran out of test-toasts for this section, yet.
-            response = @(moreToastsToGo);
-        },
-        @"didShowAllToastsAndSheets": ^{
-            BOOL didShowAll = [ToastAndSheetTests didShowAllToastsAndSheets];
-            response = @(didShowAll);
+    if ((0)) {}
+    xxx(@"addModeFeedback") {
+        [MainAppState.shared.buttonTabController handleAddModeFeedbackWithPayload:(NSDictionary *)payload];
+    }
+    xxx(@"keyCaptureModeFeedback") {
+        [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:NO];
+    }
+    xxx(@"keyCaptureModeFeedbackWithSystemEvent") {
+        [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:YES];
+    }
+    xxx(@"helperEnabledWithNoAccessibility") {
+        
+        BOOL isStrange = NO;
+        if (isavailable(13.0, 15.0)) { if (@available(macOS 13.0, *)) {
+            isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload:payload];
+        }}
+        if (!isStrange) {
+            [AuthorizeAccessibilityView add];
         }
-    };
+    }
+    xxx(@"helperEnabled") {
+        
+        BOOL isStrange = NO;
+        if (isavailable(13.0, 15.0)) { if (@available(macOS 13.0, *)) {
+            isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload:payload];
+        }}
+        
+        if (!isStrange) { /// Helper matches mainApp instance.
+            
+            /// Bring mainApp for foreground
+            /// Notes:
+            /// - In some places like when the accessibilitySheet is dismissed, we have other methods for bringing mainApp to the foreground that might be unnecessary now that we're doing this. Edit: We stopped the accessibility enabling code from activating the app.
+            /// - (September 2024) activateIgnoringOtherApps: is deprecated under macOS 15.0 Sequoia. (But it still seems to work based on my superficial testing before 3.0.3 release.) TODO: Use new cooperative activation APIs instead. (Article: https://developer.apple.com/documentation/appkit/nsapplication/passing_control_from_one_app_to_another_with_cooperative_activation?language=objc)
+            
+            [NSApp activateIgnoringOtherApps:YES];
+            
+            /// Dismiss accessibilitySheet
+            ///     This is unnecessary under Ventura since `activateIgnoringOtherApps` will trigger `ResizingTabWindowController.windowDidBecomeMain()` which will also call `[AuthorizeAccessibilityView remove]`. But it's better to be safe and explicit about this.
+            [AuthorizeAccessibilityView remove];
+            
+            /// Notify rest of the app
+            [EnabledState.shared reactToDidBecomeEnabled];
+        }
+        
+    }
+    xxx(@"helperDisabled") {
+        [EnabledState.shared reactToDidBecomeDisabled];
+    }
+    xxx(@"configFileChanged") {
+        [Config loadFileAndUpdateStates];
+    }
+    xxx(@"showNextToastOrSheetWithSection") {
+        BOOL moreToastsToGo = [ToastAndSheetTests showNextTestWithSection:(id)payload]; /// If this is true, we haven't ran out of test-toasts for this section, yet.
+        response = @(moreToastsToGo);
+    }
+    xxx(@"didShowAllToastsAndSheets") {
+        BOOL didShowAll = [ToastAndSheetTests didShowAllToastsAndSheets];
+        response = @(didShowAll);
+    }
+    else {
+        DDLogInfo(@"Unknown message received: %@", message);
+    }
 
 #elif IS_HELPER
     
-    commandMap = @{
-        @"configFileChanged": ^{
-            [Config loadFileAndUpdateStates];
-        },
-        @"terminate": ^{
+    if ((0)) ;
+    xxx(@"configFileChanged") {
+        [Config loadFileAndUpdateStates];
+    }
+    xxx(@"terminate") {
 //            [NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]]; /// This creates an infinite loop or something? The statement below is never executed.
-            [NSApp terminate:NULL];
-        },
-        @"checkAccessibility": ^{
-            BOOL isTrusted = [AccessibilityCheck checkAccessibilityAndUpdateSystemSettings];
-            response = @(isTrusted);
-        },
-        @"enableAddMode": ^{
-            BOOL success = [Remap enableAddMode];
-            response = @(success);
-        },
-        @"disableAddMode": ^{
-            BOOL success = [Remap disableAddMode];
-            response = @(success);
-        },
-        @"enableKeyCaptureMode": ^{
-            [KeyCaptureMode enable];
-        },
-        @"disableKeyCaptureMode": ^{
-            [KeyCaptureMode disable];
-        },
-        @"getActiveDeviceInfo": ^{
+        [NSApp terminate:NULL];
+    }
+    xxx(@"checkAccessibility") {
+        BOOL isTrusted = [AccessibilityCheck checkAccessibilityAndUpdateSystemSettings];
+        response = @(isTrusted);
+    }
+    xxx(@"enableAddMode") {
+        BOOL success = [Remap enableAddMode];
+        response = @(success);
+    }
+    xxx(@"disableAddMode") {
+        BOOL success = [Remap disableAddMode];
+        response = @(success);
+    }
+    xxx(@"enableKeyCaptureMode") {
+        [KeyCaptureMode enable];
+    }
+    xxx(@"disableKeyCaptureMode") {
+        [KeyCaptureMode disable];
+    }
+    xxx(@"getActiveDeviceInfo") {
+        
+        Device *dev = HelperState.shared.activeDevice;
+        if (dev != NULL) {
             
-            Device *dev = HelperState.shared.activeDevice;
-            if (dev != NULL) {
-                
-                response = @{
-                    @"name": dev.name == nil ? @"" : dev.name,
-                    @"manufacturer": dev.manufacturer == nil ? @"" : dev.manufacturer,
-                    @"nOfButtons": @(dev.nOfButtons),
-                };
-            }
-        },
-        @"updateActiveDeviceWithEventSenderID": ^{
-            /// We can't just pass over the CGEvent from the mainApp because the senderID isn't stored when serializing CGEvents
-            uint64_t senderID = [(NSNumber *)payload unsignedIntegerValue];
-            [HelperState.shared updateActiveDeviceWithEventSenderID:senderID];
-        },
-        @"getBundleVersion": ^{
-            response = @(Locator.bundleVersion);
-        },
-    };
+            response = @{
+                @"name": dev.name == nil ? @"" : dev.name,
+                @"manufacturer": dev.manufacturer == nil ? @"" : dev.manufacturer,
+                @"nOfButtons": @(dev.nOfButtons),
+            };
+        }
+    }
+    xxx(@"updateActiveDeviceWithEventSenderID") {
+        /// We can't just pass over the CGEvent from the mainApp because the senderID isn't stored when serializing CGEvents
+        uint64_t senderID = [(NSNumber *)payload unsignedIntegerValue];
+        [HelperState.shared updateActiveDeviceWithEventSenderID:senderID];
+    }
+    xxx(@"getBundleVersion") {
+        response = @(Locator.bundleVersion);
+    }
+    else {
+        DDLogInfo(@"Unknown message received: %@", message);
+    }
     
 #else
     abort();
 #endif
     
-    /// Execute command
-    void (^command)(void) = commandMap[message];
-    if (command != nil) {
-        command();
-    } else {
-        DDLogInfo(@"Unknown message received: %@", message);
-    }
+    #undef xxx
     
     /// Return response
     if (response != nil) {
