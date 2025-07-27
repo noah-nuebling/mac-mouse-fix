@@ -26,3 +26,8 @@ Other:
     still didn't parse properly in Chinese, because the combination of `'` and lack of spaces in Chinese somehow messed it up. But now with the new cjk markdown parser, everything
      seems to be working well!
 
+Update: [Jul 2025] cmark/cjk had a few more commits in August and September 2024. The commit we used (07c7662ddbaa04f868354ae69979af521384a546) has been removed from the branch (Maybe squashed or something? Idk git) They haven't made a full release, yet.
+    I'll just stay on 07c7662ddbaa04f868354ae69979af521384a546 for now, as long as there are no problems with it.
+    Sidenotes: 
+        - Seems like swift-cmark might implement this faster (See: https://github.com/swiftlang/swift-cmark/pull/78) maybe we should switch to it (I assume it functions as a drop-in-replacement for cmark)
+        - Thought about adding this as a submodule to keep track of changes more easily ... but why would we want that. I don't wanna keep track of changes – I only wanna update if there's a concrete reason. I feel like this only complicates. things.
