@@ -330,6 +330,7 @@ NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullab
 ///         - If you only need a lower bound, probably just use `if (@available(xxx, *)` directly.
 ///         - To silence compiler warnings for new APIs, you still need to use `if (@available(xxx, *)` in addition to this, which is awkward.
 ///         - This might not be worth adding to the codebase. (Just like a lot of these macros) We'll probably use it rarely. And NSProcessInfo should also work fine. But I like how the syntax for specifying versions here is closer to @available() than NSProcessInfo.
+///         - Update: [Jul 2025] We should probably turn this into isunavailable() instead of this range-based check. Because, if we need a lower-bound, we're still going to have `if @available(xxx, *)` in addition to this.
 #define isavailable(lo_inclusive, hi_exclusive) ({          \
     bool _isavailable = false;                              \
     if (@available(macOS lo_inclusive, *)) {                \
