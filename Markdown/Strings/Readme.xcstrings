@@ -1,7 +1,7 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "01:localization.progress" : {
+    "01: localization.progress" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -18,7 +18,7 @@
         }
       }
     },
-    "02:localization.translate-prompt" : {
+    "02: localization.translate-prompt" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -35,7 +35,7 @@
         }
       }
     },
-    "03:intro.title" : {
+    "03: intro.title" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -52,7 +52,7 @@
         }
       }
     },
-    "04:intro.subtitle" : {
+    "04: intro.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -69,7 +69,7 @@
         }
       }
     },
-    "05:intro.links.website" : {
+    "05: intro.links.website" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -86,7 +86,7 @@
         }
       }
     },
-    "06:intro.links.help" : {
+    "06: intro.links.help" : {
       "comment" : "Note: &nbsp; creates a so called 'non-breaking-space' character, which is like a normal space that prevents line breaks. &amp; creates an ampersand (&) character",
       "extractionState" : "manual",
       "localizations" : {
@@ -104,7 +104,7 @@
         }
       }
     },
-    "07:intro.links.releases" : {
+    "07: intro.links.releases" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -121,7 +121,7 @@
         }
       }
     },
-    "08:intro.links.acknowledgements" : {
+    "08: intro.links.acknowledgements" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -138,7 +138,7 @@
         }
       }
     },
-    "09:intro.downloads-badge-label" : {
+    "09: intro.downloads-badge-label" : {
       "comment" : "Note: This label will be shown next to a box containing the number of times Mac Mouse Fix has been downloaded so far",
       "extractionState" : "manual",
       "localizations" : {
@@ -156,7 +156,7 @@
         }
       }
     },
-    "10:tips.swish" : {
+    "10: tips.swish" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -173,7 +173,7 @@
         }
       }
     },
-    "11:tips.apple-keys" : {
+    "11: tips.apple-keys" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -190,7 +190,7 @@
         }
       }
     },
-    "12:questions.apple-silicon" : {
+    "12: questions.apple-silicon" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -207,7 +207,7 @@
         }
       }
     },
-    "13:questions.click-delay" : {
+    "13: questions.click-delay" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -224,7 +224,7 @@
         }
       }
     },
-    "14:questions.blender" : {
+    "14: questions.blender" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -241,7 +241,7 @@
         }
       }
     },
-    "15:questions.app-expose" : {
+    "15: questions.app-expose" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -258,7 +258,7 @@
         }
       }
     },
-    "16:questions.mouse-support" : {
+    "16: questions.mouse-support" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -275,7 +275,7 @@
         }
       }
     },
-    "17:questions.magic-mouse-support" : {
+    "17: questions.magic-mouse-support" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -292,7 +292,7 @@
         }
       }
     },
-    "18:questions.tilt-wheel" : {
+    "18: questions.tilt-wheel" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -309,7 +309,7 @@
         }
       }
     },
-    "19:questions.pointer-acceleration" : {
+    "19: questions.pointer-acceleration" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -326,7 +326,7 @@
         }
       }
     },
-    "20:questions.data-collection" : {
+    "20: questions.data-collection" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -343,7 +343,7 @@
         }
       }
     },
-    "21:questions.refund-policy" : {
+    "21: questions.refund-policy" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -360,7 +360,7 @@
         }
       }
     },
-    "22:questions.open-source" : {
+    "22: questions.open-source" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -377,7 +377,7 @@
         }
       }
     },
-    "23:questions.free-for-donators" : {
+    "23: questions.free-for-donators" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -394,7 +394,62 @@
         }
       }
     },
-    "24:contributing.feedback" : {
+    "24: questions.app-specific-settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Are there 'App-Specific Settings' or 'Profiles'?**"
+          }
+        }
+      }
+    },
+    "25: questions.license-sharing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**How many devices can I use my license on?**"
+          }
+        }
+      }
+    },
+    "26: questions.license-future-versions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Will my license work with future versions?**"
+          }
+        }
+      }
+    },
+    "27: questions.version-2-vs-3" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**What's the difference between Mac Mouse Fix 2 and 3?**"
+          }
+        }
+      }
+    },
+    "28: questions.mouse-buttons-not-working" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Why aren't all buttons on my mouse recognized?**"
+          }
+        }
+      }
+    },
+    "29: contributing.feedback" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -411,7 +466,7 @@
         }
       }
     },
-    "25:contributing.money" : {
+    "30: contributing.money" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -428,7 +483,7 @@
         }
       }
     },
-    "26:contributing.translations" : {
+    "31: contributing.translations" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -445,7 +500,7 @@
         }
       }
     },
-    "27:contributing.code" : {
+    "32: contributing.code" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -462,7 +517,7 @@
         }
       }
     },
-    "28:contributing.footer" : {
+    "33: contributing.footer" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -479,7 +534,7 @@
         }
       }
     },
-    "29:intro.body" : {
+    "34: intro.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -496,7 +551,7 @@
         }
       }
     },
-    "30:features" : {
+    "35: features" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -513,7 +568,7 @@
         }
       }
     },
-    "31:install" : {
+    "36: install" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -530,7 +585,7 @@
         }
       }
     },
-    "32:macos-compat" : {
+    "37: macos-compat" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -547,7 +602,7 @@
         }
       }
     },
-    "33:price" : {
+    "38: price" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -564,7 +619,7 @@
         }
       }
     },
-    "34:uninstall" : {
+    "39: uninstall" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -581,7 +636,7 @@
         }
       }
     },
-    "35:what-people-say" : {
+    "40: what-people-say" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -598,7 +653,7 @@
         }
       }
     },
-    "36:tips" : {
+    "41: tips" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -615,7 +670,7 @@
         }
       }
     },
-    "37:tips.swish.body" : {
+    "42: tips.swish.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -632,7 +687,7 @@
         }
       }
     },
-    "38:tips.apple-keys.body" : {
+    "43: tips.apple-keys.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -649,7 +704,7 @@
         }
       }
     },
-    "39:questions" : {
+    "44: questions" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -666,7 +721,7 @@
         }
       }
     },
-    "40:questions.apple-silicon.body" : {
+    "45: questions.apple-silicon.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -683,7 +738,7 @@
         }
       }
     },
-    "41:questions.click-delay.body" : {
+    "46: questions.click-delay.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -700,7 +755,7 @@
         }
       }
     },
-    "42:questions.blender.body" : {
+    "47: questions.blender.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -717,7 +772,7 @@
         }
       }
     },
-    "43:questions.app-expose.body" : {
+    "48: questions.app-expose.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -734,24 +789,24 @@
         }
       }
     },
-    "44:questions.mouse-support.body" : {
+    "49: questions.mouse-support.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Kurze Antwort: Wahrscheinlich schon. Wenn du es genau wissen möchtest, lade am besten Mac Mouse Fix herunter und probiere es aus.\n\nMac Mouse Fix funktioniert gut mit den meisten Mäusen. Allerdings kann Mac Mouse Fix bei bestimmten Mäusen, die für die Verwendung mit hauseigenen Treibern wie Logitech Options entwickelt wurden, derzeit nicht alle Tasten erkennen. \n  \nDas liegt daran, dass diese Mäuse mit einem speziellen, hauseigenen Protokoll und nicht mit dem Standard-USB-Protokoll mit deinem Computer kommunizieren. <br>\nIch würde gerne irgendwann volle Kompatibilität für diese Mäuse hinzufügen, aber das ist viel Arbeit und wird nicht so bald kommen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Short answer: Probably. If you want to know for sure, it's best to download Mac Mouse Fix and try it out.\n\nMac Mouse Fix works very well with most mice. However, on certain mice designed to be used with proprietary driver software like Logitech Options, Mac Mouse Fix can't recognize all the buttons at the moment. \n\nThat's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol.<br>\nI would love to add full compatibility for these mice at some point, but it's a ton of work and it won't be coming soon."
+            "value" : "Probably. If you want to know for sure, it's best to download Mac Mouse Fix and try it out.\n\nMac Mouse Fix works very well with most mice. However, on certain mice designed to be used with proprietary driver software like Logitech Options, Mac Mouse Fix can't recognize all the buttons at the moment. \n\nThat's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol.<br>\nI would love to add full compatibility for these mice at some point, but it's a ton of work and it won't be coming soon."
           }
         }
       }
     },
-    "45:questions.magic-mouse-support.body" : {
+    "50: questions.magic-mouse-support.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -768,7 +823,7 @@
         }
       }
     },
-    "46:questions.tilt-wheel.body" : {
+    "51: questions.tilt-wheel.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -785,7 +840,7 @@
         }
       }
     },
-    "47:questions.pointer-acceleration.body" : {
+    "52: questions.pointer-acceleration.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -802,7 +857,7 @@
         }
       }
     },
-    "48:questions.data-collection.body" : {
+    "53: questions.data-collection.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -819,7 +874,7 @@
         }
       }
     },
-    "49:questions.refund-policy.body" : {
+    "54: questions.refund-policy.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -836,7 +891,7 @@
         }
       }
     },
-    "50:questions.open-source.body" : {
+    "55: questions.open-source.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -853,7 +908,7 @@
         }
       }
     },
-    "51:questions.free-for-donators.body" : {
+    "56: questions.free-for-donators.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -870,7 +925,62 @@
         }
       }
     },
-    "52:contributing" : {
+    "57: questions.app-specific-settings.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "In **Mac Mouse Fix 2** you can disable certain features for specific apps under `More... > App-specific settings`.\n\nFor **Mac Mouse Fix 3**, both **app-specific settings** and **mouse-specific settings** are planned, but so far, there's no timeline for when they will release.\n\n- **Workaround** \\\n    Until **app-specific settings** arrive in Mac Mouse Fix 3, you can do this:\n    - Open the `General` tab\n    - Turn on `Show in Menu Bar`\n    - Now you can **toggle features** like Smooth Scrolling directly from the Menu Bar\n\nI'm interested to hear *how you want to use these features*! Feel free to submit a [feature request]({url}) – your input will help me make the features as great as possible!"
+          }
+        }
+      }
+    },
+    "58: questions.license-sharing.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your license is meant to 'just work' on **all your Macs**. \\\nThe goal is that you just buy a license, activate it, and never have to worry about it again. \\\nIf you log in with the same Apple Account, the license will even sync automatically to your other devices via iCloud!\n\nIf you encounter problems activating your license, please [send me an email]({url}). \\\nI sometimes take a while to answer. I'm sorry about this. But I will get back!\n\nThere is one restriction: \\\nLicenses are not meant to be shared publicly. One license is meant for one person. Publicly shared licenses might be invalidated. (Your mom is not 'the public' and sharing with her is ok!)"
+          }
+        }
+      }
+    },
+    "59: questions.license-future-versions.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your license covers all Mac Mouse Fix 3.x versions. \\\nFuture versions, like 4.0, may require a new purchase, but I'll try to avoid this, unless it's necessary to support continued development of the app."
+          }
+        }
+      }
+    },
+    "60: questions.version-2-vs-3.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Monetization:** \\\nMac Mouse Fix 2 is 100% free, and I plan to keep supporting it. \\\nMac Mouse Fix 3 is free for 30 days, then costs a few bucks to own. \n\n**Features:** \\\nHere's a [feature comparison]({url}). I wrote it shortly after Mac Mouse Fix 3 released – so it may be slightly out of date. \\\nYou can also download Mac Mouse Fix 2 and 3 for free to evaluate them yourself!"
+          }
+        }
+      }
+    },
+    "61: questions.mouse-buttons-not-working.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Please see the previous answer to \"Is my mouse supported?\" \\\n(TODO: Move this closer to \"Is my mouse supported?\")"
+          }
+        }
+      }
+    },
+    "62: contributing" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -887,7 +997,7 @@
         }
       }
     },
-    "53:contributing.feedback.body" : {
+    "63: contributing.feedback.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -904,7 +1014,7 @@
         }
       }
     },
-    "54:contributing.money.body" : {
+    "64: contributing.money.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -921,7 +1031,7 @@
         }
       }
     },
-    "55:contributing.translations.body" : {
+    "65: contributing.translations.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -938,7 +1048,7 @@
         }
       }
     },
-    "56:contributing.code.body" : {
+    "66: contributing.code.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {

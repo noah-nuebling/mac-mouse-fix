@@ -71,8 +71,8 @@ This document is `0%` translated into `🇹🇭 ไทย`<br>To help translate,
 <div align="center">
     <table>
         <th><a href=https://macmousefix.com/>Website&nbsp;↗</a></th>
-        <td><a href=https://redirect.macmousefix.com/?target=mmf-help-and-feedback&locale=th>Help&nbsp;&amp;&nbsp;Feedback</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose -->
-        <td><a href=https://redirect.macmousefix.com/?target=mmf-releases&locale=th>Releases</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/releases -->
+        <td><a href=https://redirect.macmousefix.com/?locale=th&target=mmf-help-and-feedback>Help&nbsp;&amp;&nbsp;Feedback</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose -->
+        <td><a href=https://redirect.macmousefix.com/?locale=th&target=mmf-releases>Releases</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/releases -->
         <td><a href="Acknowledgements.md">Acknowledgements</a></td> 
     </table>
     <img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?color=25c65f&label=Downloads">
@@ -146,7 +146,7 @@ You can download older versions of Mac Mouse Fix under [Releases](https://github
 
 The latest version of Mac Mouse Fix is made for **macOS 11 Big Sur** or later.
   
-If you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 High Sierra**, you can use the [latest version of Mac Mouse Fix 2](https://redirect.macmousefix.com/?message=&target=mmf2-latest&locale=th). Mac Mouse Fix 3.0.0 and later might still work on your machine, but they will have visual issues and some features might not work properly.
+If you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 High Sierra**, you can use the [latest version of Mac Mouse Fix 2](https://redirect.macmousefix.com/?locale=th&target=mmf2-latest). Mac Mouse Fix 3.0.0 and later might still work on your machine, but they will have visual issues and some features might not work properly.
     
 If you're on macOS **10.12 Sierra**, or **10.11 El Capitan**, you can use Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) or below.
 
@@ -237,7 +237,7 @@ On the [website](https://macmousefix.com/) you can find a collection of nice thi
 
 - **Is my mouse supported?**
 
-    Short answer: Probably. If you want to know for sure, it's best to download Mac Mouse Fix and try it out.
+    Probably. If you want to know for sure, it's best to download Mac Mouse Fix and try it out.
   
   Mac Mouse Fix works very well with most mice. However, on certain mice designed to be used with proprietary driver software like Logitech Options, Mac Mouse Fix can't recognize all the buttons at the moment. 
   
@@ -307,6 +307,131 @@ On the [website](https://macmousefix.com/) you can find a collection of nice thi
 
     Yes! See the [Acknowledgements](Acknowledgements.md#-paypal-donations) for more info.
 
+```
+>>> TODO: Translate and review the following Q&A Questions <<<
+
+(These are frequently asked questions I saw while going through 4 months of email in [Feb 2025])
+(The first few are License/payment-related questions – Maybe move these to/link these from Gumroad?)
+Meta todo: 
+  1. This is quite a lot of stuff – Do we really need to add these all? 
+    - If people can't pay they should probably just reach out to me and this Q&A entry won't help 
+    I think? 
+    - The Windows and iPad questions are not that frequent and generally don't prevent 
+    existing users from using the app – so maybe it shouldn't take up space here? 
+    - The Login Item question might be solved with better UX, but not sure how 
+      (IIRC, MMF 3 already made this question much rarer due to the label below the switch.)
+  2. Review all the links, the names of options in MMF and macOS, the grammar and phrasing, etc.
+```
+
+- **Are there 'App-Specific Settings' or 'Profiles'?**
+  
+    In **Mac Mouse Fix 2** you can disable certain features for specific apps under `More... > App-specific settings`.
+  
+  For **Mac Mouse Fix 3**, both **app-specific settings** and **mouse-specific settings** are planned, but so far, there's no timeline for when they will release.
+  
+  - **Workaround** \
+      Until **app-specific settings** arrive in Mac Mouse Fix 3, you can do this:
+      - Open the `General` tab
+      - Turn on `Show in Menu Bar`
+      - Now you can **toggle features** like Smooth Scrolling directly from the Menu Bar
+  
+  I'm interested to hear *how you want to use these features*! Feel free to submit a [feature request](https://redirect.macmousefix.com/?locale=th&target=mmf-feedback-feature-request) – your input will help me make the features as great as possible!
+  <!-- ^^^ It's not a perfect solution, but I hope it helps a little until app-specific settings arrive. -->
+  <!-- ^^^ Note: Us having to explain points at a bit of a UX failure I think. -->
+
+- **How many devices can I use my license on?**
+  
+    Your license is meant to 'just work' on **all your Macs**. \
+  The goal is that you just buy a license, activate it, and never have to worry about it again. \
+  If you log in with the same Apple Account, the license will even sync automatically to your other devices via iCloud!
+  
+  If you encounter problems activating your license, please [send me an email](https://redirect.macmousefix.com/?locale=th&target=mailto-noah). \
+  I sometimes take a while to answer. I'm sorry about this. But I will get back!
+  
+  There is one restriction: \
+  Licenses are not meant to be shared publicly. One license is meant for one person. Publicly shared licenses might be invalidated. (Your mom is not 'the public' and sharing with her is ok!)
+
+  <!-- ^^^ Note: ChatGPT tells me I should mention that ppl can still use the license after they *upgrade* to a new device. Don't think that's necessary -->
+  <!-- ^^^ TODO: Consider linking / copying this on the (Gumroad) checkout page. Ppl may not find it here. -->
+
+- **Will my license work with future versions?**
+   
+    Your license covers all Mac Mouse Fix 3.x versions. \
+  Future versions, like 4.0, may require a new purchase, but I'll try to avoid this, unless it's necessary to support continued development of the app.
+
+- **What's the difference between Mac Mouse Fix 2 and 3?**
+  
+    **Monetization:** \
+  Mac Mouse Fix 2 is 100% free, and I plan to keep supporting it. \
+  Mac Mouse Fix 3 is free for 30 days, then costs a few bucks to own. 
+  
+  **Features:** \
+  Here's a [feature comparison](https://redirect.macmousefix.com/?locale=th&target=mmf-version-2-vs-3). I wrote it shortly after Mac Mouse Fix 3 released – so it may be slightly out of date. \
+  You can also download Mac Mouse Fix 2 and 3 for free to evaluate them yourself!
+
+- **Why aren't all buttons on my mouse recognized?**
+
+    Please see the previous answer to "Is my mouse supported?" \
+  (TODO: Move this closer to "Is my mouse supported?")
+
+<!--
+
+>>> [Jun 2025] These questions are super rare – I think I just added it here cause I find it interesting.
+      ... If we ever wanna add these commented-out sections, we should probably edit them and make sure the links are correct and localized, too.
+
+
+- **Will there be an iPad or Windows version of the app?** 
+
+  That would be really cool, but it's not coming any time soon. iPad is currently lacking the necessary APIs, and either way I'd have to rewrite most of the app, which would take a lot of time. For now, I'm focused on making the macOS version as great as possible.
+
+  (I wrote more about this [here](https://github.com/noah-nuebling/mac-mouse-fix/issues/1437))
+
+-->
+
+<!--
+
+>>> [Jun 2025] People will email me anyways, this doesn't really add anything I think.
+
+- **I can't pay for the app. What can I do?** 
+
+  I want Mac Mouse Fix to be accessible to everyone. If you can't pay for the app due to regional restrictions or any other reason, please [send me an email](https://redirect.macmousefix.com/?locale=th&target=mailto-noah). Unfortunately, it may take me a while to answer, but I will get back eventually, and work on finding a solution.
+
+-->
+
+<!--
+
+ >>> [Jul 2025] The fact that ppl continue to be confused about this is kind of a UX failure. This explanation shouldn't be necessary. I tweaked the UI text and hope it's better now.
+
+- **Why does the Mac Mouse Fix window open when I start my Mac?** 
+
+  This is likely because you've set Mac Mouse Fix as a macOS Login Item. Please see [Apple's Guide](https://support.apple.com/en-me/guide/mac-help/mh15189/mac) on how to manage Login Items. 
+  
+  Mac Mouse Fix works differently from many other apps. Once the 'Enable Mac Mouse Fix' switch is turned on, the app continues to affect your mouse even after you close the app or restart your computer. This means you don't need to add it as a Login Item to keep it working.
+
+  **Background Info**
+
+  This works because your mouse is not directly affected by the 'Mac Mouse Fix' app, but instead by the 'Mac Mouse Fix Helper' process, which runs in the background as long as the 'Enable Mac Mouse Fix' switch is turned on.
+
+-->
+
+<!--
+>>> [Jun 2025] Commenting this out cause it's rare, and it's a stopgap measuere, and it' too much work to make good rn. Also, the scroll-uncapture notifications in feature-strings-catalog might clear up this confusion. Might re-enable if ppl continue to be confused. But perhaps, the 'how to stop MMF from intercepting Scroll / Buttons' stuff should be its own section. Sloppily wrote this, needs more editing <<<
+
+- **Why do the 'Scrolling' and 'Buttons' items in the Menu Bar get re-enabled?**
+    
+  The Menu Bar buttons are meant to quickly, and temporarily turn off certain features while you're working in incompatible apps. 
+  This is intended as a stop-gap-measure while there's no 'App-Specific Settings' feature, yet. \
+  Curently the UI would break if these are enabled, so when you open the Buttons tab or Scrolling tab, they get toggled and stuff.
+  To edit the settings in a permanent way, you can edit the settings in 'Buttons' and 'Scrolling' Tab. 
+  
+  To completely turn off all effects of Mac Mouse Fix on your buttons, delete all the actions on the 'Buttons' tab. \
+  To completely turn off all effects of Mac Mouse Fix on your scroll wheel, configure the 'Scrolling' tab like this:
+  <Insert screenshot>
+  
+  I know the current solution isn't amazing. But it allowed me to ship MMF 3.
+  I plan to eventually replace the buttons in the Menu Bar with powerful App-Specific Settings. 
+-->
+
 <a name="how-you-can-contribute"></a> 
 ## How you can contribute
 
@@ -341,7 +466,7 @@ Check out the [Acknowledgements](Acknowledgements.md) for more info on who has a
 - **Contributing code**
 
     <!-- 
-      Old note from readme.contributing.code.body:
+      Old note from contributing.code.body:
       I should mention people who contributed code on the acknowledgements page. They are already in the update notes. 
     -->
 
@@ -350,64 +475,3 @@ Check out the [Acknowledgements](Acknowledgements.md) for more info on who has a
   However, I might not accept all pull requests. If you want to make sure that your work is not wasted, you can submit an initial pull request that only *describes* the changes you want to make, but contains little or no code. Then I can give you feedback and tell you if I would adopt the changes you want to make in that way.
 
 **Thank you** to everyone who has already contributed and supported me in trying to make the best mouse driver *of all time*! :)🚀
-
-  <!--
-    <a name="background"></a> 
-    ## Background
-
-    <details>
-      <summary>Background</summary>
-
-    <br>
-    Hi I'm Noah!
-
-    #### Initial Release
-
-    In 2019, during my first semester break, I released Mac Mouse Fix - a simple way to make your mouse better! It was a simple portfolio/passion project and I didn't really expect people to use it, but people ended up really liking it and even bought me some milkshakes, which was a great feeling! :) Here's what I wrote on the Mac Mouse Fix website back then:
-
-    > My name is Noah and I made Mac Mouse Fix. When I started this project I was completely new to software development, but with the power of Google, Stack Overflow, and Apple's Developer Documentation at my fingertips I managed to learn what is necessary to deliver a solid little app that I hope will be useful for you guys. Working on Mac Mouse Fix made me discover a passion for programming, and led me to enroll in a Computer Science Degree at college, which has been awesome so far. I probably won't have a lot of time to work on Mac Mouse Fix during the semester, but please feel free to make your own contributions to Mac Mouse Fix on GitHub!
-
-    I think what people really appreciated about the first version of Mac Mouse Fix was that it was free and very simple and felt almost like a native part of macOS. The feature-set was quite limited but well-implemented and people who only wanted those features were really happy with the app.
-
-    #### Mac Mouse Fix 2 & Innovations
-
-    After that, I kept developing Mac Mouse Fix on and off between my studies. I discovered ways of simulating Apple Trackpad gestures that were never previously discovered, as far as I know. And I also developed a really innovative UI for remapping mouse buttons that is both more simple and more flexible than anything I've seen before. 
-
-    I released the coolest benefits of these innovations with Mac Mouse Fix 2 in 2020. It let you Click and Drag to use Mission Control and Spaces in a way that feels just as fluid and native as swiping on a Trackpad, and it also let you do 7 things with just one button and allowed for endless customizations due to the super nice remapping UI.
-
-    I also figured out how to adjust the pointer speed under macOS which no software could do before except for SteerMouse and its spin-off CursorSense. Unfortunately, I haven't been able to release features based on this technology, yet, but because Mac Mouse Fix is open source, other apps like LinearMouse have been able to ship features based on the things I discovered back then.
-
-    #### Mac Mouse Fix 3 & Mental Health
-
-    After Mac Mouse Fix 2 was released, I kept working on the project during semester breaks. My goal was now to turn Mac Mouse Fix into a full-fledged Trackpad replacement. All the pieces were almost in place to let Mac Mouse Fix bring all the smooth Gestures and workflows that people are used to from a Trackpad to any cheap mouse.
-
-    So I began working on the necessary features to make this a reality. I was close, but making it really good ended up being much harder than I anticipated. I worked for months, discovering low-level hacks in macOS and implementing complex maths to finally end up with a system that allows you to use **all** the Trackpad gestures straight from your mouse in a way that feels just as polished, intuitive and seamless as a real Trackpad!
-
-    I also developed an innovative, beautifully animated UI for Mac Mouse Fix that dynamically hides or shows UI elements to provide powerful customization options while being super simple to use. In my opinion, the UI provides some of the sleekest, nicest settings of any app on macOS.
-
-    (Sorry if I'm tooting my own horn too much here, but I think it's really cool)
-
-    Especially since around the time that I released Mac Mouse Fix 2, I have unfortunately struggled a lot with my mental health. And after starting University with really good grades and a nice social life, I unfortunately became too depressed and anxious to finish my degree. Due to my autism and mental health issues, I think I also unfortunately won't be able to hold a normal job anytime soon.<br>
-    However, I have a lot of passion for working on Mac Mouse Fix and I think I can do it well, despite my mental health struggles. So I made the plan to try to be financially independent through app development. In Fall of 2023, I set my sights towards working on Mac Mouse Fix full-time and slowly, but deliberately turning it into the best mouse driver ever (🚀🚀🚀) and an app that any Mac user with a mouse can appreciate and benefit from. 
-
-    I released Mac Mouse Fix 3 in 2023 with the tagline 'Make Your $10 Mouse Better Than an Apple Trackpad!'. It's free for 30 days and costs $1.99 to own. I hope that's a fair price that anyone can afford while allowing me to make a living. So far it looks like I can live off of the sales revenues! Meaning that I can keep working on Mac Mouse Fix full time and turn it into the best app that I possibly can.
-
-    Thanks so much to everyone for their support, be it through financial support, by giving constructive feedback, or by simply sharing their excitement about the app with me. Thanks! :) <3
-
-    Noah<br>
-    (January 7th 2023)
-
-  -->
-
-  <!--
-
-    I also updated the UI to house all the options for the new features that were - and will be - added. In my opinion, the UI provides some of the sleekest and most beautiful settings of any app on macOS. On first glance it looks very much like any native macOS app, but there are beautiful animations throughout giving it a highly polished feel, and you will only see options that are relevant to you at the moment, because the UI smartly hides and reveals sections based on context. This way I hope I can retain the extremely simple and intuitive setup of older versions of MMF while still providing options for many features.
-    
-    In the process of that I also had to completely rewrite large parts of the Mac Mouse Fix source code such as the entire scrolling system.
-    
-    I also created an innovative new UI for Mac Mouse Fix that feels extremely polished, allows for housing much more options, while still being extremely simple to use, and feeling like a better version of native macOS settings UIs. The UI dynamically resizes itself, and it hides and reveals options with beautiful animations. That way, the UI is as simple and clean and non-overwhelming as possible while still providing a lot more options than before, and the animations make it feel really beautiful and dynamic.
-
-  -->
-
-
-</details>

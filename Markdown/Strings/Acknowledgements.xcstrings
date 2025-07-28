@@ -1,7 +1,7 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "01:localization.progress" : {
+    "01: localization.progress" : {
       "comment" : ".",
       "extractionState" : "manual",
       "localizations" : {
@@ -19,7 +19,7 @@
         }
       }
     },
-    "02:localization.translate-prompt" : {
+    "02: localization.translate-prompt" : {
       "comment" : "Note: {url} will be replaced by a link. Make sure to type \"{url}\" exactly like in the original for the text-replacement to work.",
       "extractionState" : "manual",
       "localizations" : {
@@ -37,7 +37,7 @@
         }
       }
     },
-    "03:intro" : {
+    "03: intro" : {
       "comment" : ".",
       "extractionState" : "manual",
       "localizations" : {
@@ -55,7 +55,7 @@
         }
       }
     },
-    "04:translations" : {
+    "04: translations" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -72,7 +72,7 @@
         }
       }
     },
-    "05:money" : {
+    "05: money" : {
       "comment" : "Note: {sales_count} will be replaced by the number of times Mac Mouse Fix has been sold. Make sure to type \"{sales_count}\" exactly like in the original for the text-replacement to work.",
       "extractionState" : "manual",
       "localizations" : {
@@ -90,7 +90,7 @@
         }
       }
     },
-    "06:money.generous" : {
+    "06: money.generous" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -107,7 +107,7 @@
         }
       }
     },
-    "07:money.very-generous" : {
+    "07: money.very-generous" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -124,7 +124,7 @@
         }
       }
     },
-    "08:money.github-sponsors" : {
+    "08: money.github-sponsors" : {
       "comment" : ".",
       "extractionState" : "manual",
       "localizations" : {
@@ -142,7 +142,7 @@
         }
       }
     },
-    "09:money.paypal-donations" : {
+    "09: money.paypal-donations" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -159,7 +159,7 @@
         }
       }
     },
-    "10:software" : {
+    "10: software" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -176,7 +176,7 @@
         }
       }
     },
-    "11:software.inspiration" : {
+    "11: software.inspiration" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -193,20 +193,20 @@
         }
       }
     },
-    "12:software.libraries" : {
+    "12: software.libraries" : {
       "comment" : "Note: Don't forget the `<br>`, it inserts a line<br>eak.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mac Mouse Fix wurde mithilfe dieser **hervorragenden Softwarebibliotheken** erstellt:\n\n- [ReactiveSwift]({url_1}) - Ströme von Werten im Laufe der Zeit. Maßgeschneidert für Swift.\n- [CocoaLumberjack]({url_2}) - Schnelles und einfaches, aber leistungsstarkes und flexibles Logging-System.\n- [Swift Markdown]({url_3}) - Analysiere, erstelle, bearbeite und analysiere Markdown-Dokumente.\n- [Sparkle]({url_4}) - Ein Software-Update-Framework für macOS.\n- [SnapKit]({url_5}) - Macht Auto Layout sowohl auf iOS als auch auf OS X einfach.\n- [MASShortcut]({url_6}) - API und Benutzeroberfläche zum Aufzeichnen, Speichern und Verwenden systemweiter Tastenkürzel\n- [CGSInternal]({url_7}) - Eine Sammlung privater CoreGraphics-Routinen\n- Abhängigkeiten der Skripte von Mac Mouse Fix:<br>\n  [Update- und Statistikskripte]({url_8}) | [Markdown-Generierungsskript]({url_9}) | [.strings-Datei Synchronisierungsskript]({url_10}) | [\"State of Localization\"-Skript]({url_11})\n- Abhängigkeiten der [Mac Mouse Fix Feedback Assistant]({url_12}) Web-App [hier]({url_13})\n- Abhängigkeiten der [Mac Mouse Fix Website]({url_14}) findest du [hier]({url_15})"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [SnapKit]({url_5}) - Making Auto Layout easy on both iOS and macOS\n- [MASShortcut]({url_6}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_7}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_8}) | [Markdown generator script]({url_9}) | [.strings file sync script]({url_10}) | [\"State of Localization\" script]({url_11})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_12}) web app [here]({url_13})\n- Dependencies of the [Mac Mouse Fix Website]({url_14}) are available [here]({url_15})"
+            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [MASShortcut]({url_5}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_6}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_7}) | [Markdown generator script]({url_8}) | [.strings file sync script]({url_9}) | [\"State of Localization\" script]({url_10})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_11}) web app [here]({url_12})\n- Dependencies of the [Mac Mouse Fix Website]({url_13}) are available [here]({url_14})"
           }
         }
       }
