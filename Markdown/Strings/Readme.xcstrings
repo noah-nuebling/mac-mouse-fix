@@ -259,8 +259,15 @@
       }
     },
     "16: questions.app-specific-settings" : {
+      "comment" : "Don't translate \"More... > App-specific settings\" – Mac Mouse Fix 2 doesn't support localization.",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Gibt es “App-spezifische Einstellungen” oder “Profile”?**"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -289,10 +296,16 @@
     "18: questions.mouse-buttons-not-working" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Manche Tasten meiner Maus werden nicht erkannt**"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "**Some buttons on my mouse do not work**"
+            "value" : "**Some buttons on my mouse are not recognized**"
           }
         }
       }
@@ -351,6 +364,12 @@
     "22: questions.version-2-vs-3" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Was ist der Unterschied zwischen Mac Mouse Fix 2 und 3?**"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -379,6 +398,12 @@
     "24: questions.license-sharing" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Auf wie vielen Geräten kann ich meine Lizenz verwenden?**"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -390,6 +415,12 @@
     "25: questions.license-future-versions" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Funktioniert meine Lizenz mit künftigen Versionen?**"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -790,12 +821,19 @@
       }
     },
     "49: questions.app-specific-settings.body" : {
+      "comment" : "1) Don't translate \"More... > App-specific settings\" - that's because Mac Mouse Fix 2 doesn't support localization. 2) In English, the words \"Mac Mouse Fix\" are exactly aligned in the first two lines that start with \"In Mac Mouse Fix 2...\" and \"In Mac Mouse Fix 3...\". I think the alignment makes the text easier to scan. Maybe it's worth doing something similar in your translation.",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In **Mac Mouse Fix 2** kannst du **Funktionen wie flüssiges Scrollen abstellen** unter `More… > App-specific settings`.\n\nIn **Mac Mouse Fix 3** existiert diese Funktion noch nicht. <br>\n'App-spezifische Einstellungen' sowie 'Maus-spezifische Einstellungen' sind geplant, aber ich habe noch keinen Zeitplan dafür, wann sie veröffentlicht werden.\n\n**Übergangslösung** <br>\nBis 'App-spezifische Einstellungen' in Mac Mouse Fix 3 verfügbar sind, kannst du folgendes tun:\n- Öffne den `Allgemein`-Tab\n- Aktiviere `In der Menüleiste anzeigen`\n- Jetzt kannst du **Funktionen wie flüssiges Scrollen** direkt über die Menüleiste **abstellen**\n\nIch bin interessiert zu hören, was dein *Anwendungsfall* ist. Du kannst gerne eine [Funktionsanfrage]({url}) stellen. Dein Beitrag wird helfen, die Funktion so gut wie möglich zu gestalten, wenn sie dann verfügbar ist."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "In **Mac Mouse Fix 2** you can disable certain features for specific apps under `More... > App-specific settings`.\n\nFor **Mac Mouse Fix 3**, both **app-specific settings** and **mouse-specific settings** are planned, but so far, there's no timeline for when they will release.\n\n- **Workaround** \\\n    Until **app-specific settings** arrive in Mac Mouse Fix 3, you can do this:\n    - Open the `General` tab\n    - Turn on `Show in Menu Bar`\n    - Now you can **toggle features** like Smooth Scrolling directly from the Menu Bar\n\nI'm interested to hear *how you want to use these features*! Feel free to submit a [feature request]({url}) – your input will help me make the features as great as possible!"
+            "value" : "In Mac Mouse Fix 2, you can **disable features like Smooth Scrolling** under `More... > App-specific settings`.\n\nIn Mac Mouse Fix 3, this feature doesn't exist yet. <br>\nBoth 'app-specific settings' and 'mouse-specific settings' are planned, but I don't have a timeline yet for when they'll be released.\n\n**Workaround** <br>\nUntil 'app-specific settings' arrive in Mac Mouse Fix 3, you can do this:\n- Open the `General` tab\n- Turn on `Show in Menu Bar`\n- Now you can **disable features like Smooth Scrolling** directly from the Menu Bar\n\nI'm interested to hear what your *use case* is. Feel free to submit a [feature request]({url}). Your input will help make the feature as good as possible once it arrives."
           }
         }
       }
@@ -805,8 +843,8 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kurze Antwort: Wahrscheinlich schon. Wenn du es genau wissen möchtest, lade am besten Mac Mouse Fix herunter und probiere es aus.\n\nMac Mouse Fix funktioniert gut mit den meisten Mäusen. Allerdings kann Mac Mouse Fix bei bestimmten Mäusen, die für die Verwendung mit hauseigenen Treibern wie Logitech Options entwickelt wurden, derzeit nicht alle Tasten erkennen. \n  \nDas liegt daran, dass diese Mäuse mit einem speziellen, hauseigenen Protokoll und nicht mit dem Standard-USB-Protokoll mit deinem Computer kommunizieren. <br>\nIch würde gerne irgendwann volle Kompatibilität für diese Mäuse hinzufügen, aber das ist viel Arbeit und wird nicht so bald kommen."
+            "state" : "translated",
+            "value" : "Wahrscheinlich schon. Wenn du es genau wissen möchtest, lade am besten Mac Mouse Fix herunter und probiere es aus.\n\nMac Mouse Fix funktioniert gut mit den meisten Mäusen. Allerdings kann Mac Mouse Fix bei bestimmten Mäusen, die für die Verwendung mit hauseigenen Treibern wie Logitech Options entwickelt wurden, derzeit nicht alle Tasten erkennen. \n  \nDas liegt daran, dass diese Mäuse mit einem speziellen, hauseigenen Protokoll und nicht mit dem Standard-USB-Protokoll mit deinem Computer kommunizieren. <br>\nIch würde gerne irgendwann volle Kompatibilität für diese Mäuse hinzufügen, aber das ist viel Arbeit und wird nicht so bald kommen."
           }
         },
         "en" : {
@@ -820,10 +858,16 @@
     "51: questions.mouse-buttons-not-working.body" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Siehe die Frage **\"Wird meine Maus unterstützt?\"** oben."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Please see the question **\"Is my mouse supported?\"** above."
+            "value" : "See the question **\"Is my mouse supported?\"** above."
           }
         }
       }
@@ -882,10 +926,16 @@
     "55: questions.version-2-vs-3.body" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Monetarisierung:**<br>\nMac Mouse Fix 2 ist 100% kostenlos, und ich plane, es weiterhin zu unterstützen. <br>\nMac Mouse Fix 3 ist 30 Tage lang kostenlos, danach kostet es ein paar Euro zum Besitzen.\n\n**Funktionen:** <br>\nHier ist ein [Funktionsvergleich]({url_1}). Den habe ich geschrieben kurz nachdem Mac Mouse Fix 3 erschienen ist – er könnte also leicht veraltet sein. <br>\nDu kannst auch Mac Mouse Fix [2]({url_2}) und [3]({url_3}) kostenlos herunterladen, um sie selbst zu testen!"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "**Monetization:** \\\nMac Mouse Fix 2 is 100% free, and I plan to keep supporting it. \\\nMac Mouse Fix 3 is free for 30 days, then costs a few bucks to own. \n\n**Features:** \\\nHere's a [feature comparison]({url}). I wrote it shortly after Mac Mouse Fix 3 released – so it may be slightly out of date. \\\nYou can also download Mac Mouse Fix 2 and 3 for free to evaluate them yourself!"
+            "value" : "**Monetization:** <br>\nMac Mouse Fix 2 is 100% free, and I plan to keep supporting it. <br>\nMac Mouse Fix 3 is free for 30 days, then costs a few bucks to own. \n\n**Features:** <br>\nHere's a [feature comparison]({url_1}). I wrote it shortly after Mac Mouse Fix 3 released – so it may be slightly out of date. <br>\nYou can also download Mac Mouse Fix [2]({url_2}) and [3]({url_3}) for free to evaluate them yourself!"
           }
         }
       }
@@ -910,10 +960,16 @@
     "57: questions.license-sharing.body" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Lizenz funktioniert auf **all deinen Macs**. <br>\nDas Ziel ist es, dass du eine Lizenz kaufen kannst, sie aktivierst, und dir dann keine Gedanken mehr darüber machen musst. <br>\nWenn du dich mit demselben Apple Account anmeldest, wird die Lizenz sogar automatisch über iCloud mit deinen anderen Geräten synchronisiert!\n\nFalls du Probleme bei der Aktivierung deiner Lizenz hast, kannst du [eine E-Mail schreiben]({url}). <br>\nIch brauche manchmal eine Weile zum Antworten. Das tut mir leid. Aber ich melde mich zurück! \n\nEs gibt eine Einschränkung: <br>\nLizenzen sind nicht dafür gedacht, öffentlich verteilt zu werden. Eine Lizenz ist für eine Person gedacht. Öffentlich geteilte Lizenzen könnten ungültig gemacht werden. (Deine Mama ist nicht “die Öffentlichkeit” und das Teilen mit ihr ist ok!)"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Your license is meant to 'just work' on **all your Macs**. \\\nThe goal is that you just buy a license, activate it, and never have to worry about it again. \\\nIf you log in with the same Apple Account, the license will even sync automatically to your other devices via iCloud!\n\nIf you encounter problems activating your license, please [send me an email]({url}). \\\nI sometimes take a while to answer. I'm sorry about this. But I will get back!\n\nThere is one restriction: \\\nLicenses are not meant to be shared publicly. One license is meant for one person. Publicly shared licenses might be invalidated. (Your mom is not 'the public' and sharing with her is ok!)"
+            "value" : "Your license works on **all your Macs**. <br>\nThe goal is that you can just buy a license, activate it, and never have to worry about it again. <br>\nIf you log in with the same Apple Account, the license will even sync automatically to your other devices via iCloud!\n\nIf you encounter problems activating your license, you can [send me an email]({url}). <br>\nI sometimes take a while to answer. I'm sorry about this. But I will get back to you!\n\nThere is one restriction: <br>\nLicenses are not meant to be shared publicly. One license is meant for one person. Publicly shared licenses might be invalidated. (Your mom is not 'the public' and sharing with her is ok!)"
           }
         }
       }
@@ -921,10 +977,16 @@
     "58: questions.license-future-versions.body" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deine Lizenz deckt alle Mac Mouse Fix 3.x Versionen ab. \n\nKünftige Versionen, wie 4.0, könnten einen neuen Kauf erfordern, aber ich werde versuchen, dies zu vermeiden, es sei denn es ist notwendig, um die Weiterentwicklung der App zu unterstützen."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Your license covers all Mac Mouse Fix 3.x versions. \\\nFuture versions, like 4.0, may require a new purchase, but I'll try to avoid this, unless it's necessary to support continued development of the app."
+            "value" : "Your license covers all Mac Mouse Fix 3.x versions.\n\nFuture versions, like 4.0, may require a new purchase, but I'll try to avoid this, unless it's necessary to support the continued development of the app."
           }
         }
       }

@@ -237,17 +237,18 @@ On the [website](https://macmousefix.com/) you can find a collection of nice thi
 
 - **Are there 'App-Specific Settings' or 'Profiles'?**
   
-    In **Mac Mouse Fix 2** you can disable certain features for specific apps under `More... > App-specific settings`.
+    In Mac Mouse Fix 2, you can **disable features like Smooth Scrolling** under `More... > App-specific settings`.
   
-  For **Mac Mouse Fix 3**, both **app-specific settings** and **mouse-specific settings** are planned, but so far, there's no timeline for when they will release.
+  In Mac Mouse Fix 3, this feature doesn't exist yet. <br>
+  Both 'app-specific settings' and 'mouse-specific settings' are planned, but I don't have a timeline yet for when they'll be released.
   
-  - **Workaround** \
-      Until **app-specific settings** arrive in Mac Mouse Fix 3, you can do this:
-      - Open the `General` tab
-      - Turn on `Show in Menu Bar`
-      - Now you can **toggle features** like Smooth Scrolling directly from the Menu Bar
+  **Workaround** <br>
+  Until 'app-specific settings' arrive in Mac Mouse Fix 3, you can do this:
+  - Open the `General` tab
+  - Turn on `Show in Menu Bar`
+  - Now you can **disable features like Smooth Scrolling** directly from the Menu Bar
   
-  I'm interested to hear *how you want to use these features*! Feel free to submit a [feature request](https://redirect.macmousefix.com/?locale=it&target=mmf-feedback-feature-request) – your input will help me make the features as great as possible!
+  I'm interested to hear what your *use case* is. Feel free to submit a [feature request](https://redirect.macmousefix.com/?locale=it&target=mmf-feedback-feature-request). Your input will help make the feature as good as possible once it arrives.
   <!-- ^^^ It's not a perfect solution, but I hope it helps a little until app-specific settings arrive. -->
   <!-- ^^^ Note: Us having to explain points at a bit of a UX failure I think. -->
 
@@ -260,9 +261,9 @@ On the [website](https://macmousefix.com/) you can find a collection of nice thi
   That's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol.<br>
   I would love to add full compatibility for these mice at some point, but it's a ton of work and it won't be coming soon.
 
-- **Some buttons on my mouse do not work**
+- **Some buttons on my mouse are not recognized**
 
-    Please see the question **"Is my mouse supported?"** above.
+    See the question **"Is my mouse supported?"** above.
 
 - **Is the Magic Mouse supported?**
 
@@ -298,13 +299,13 @@ On the [website](https://macmousefix.com/) you can find a collection of nice thi
 
 - **What's the difference between Mac Mouse Fix 2 and 3?**
   
-    **Monetization:** \
-  Mac Mouse Fix 2 is 100% free, and I plan to keep supporting it. \
+    **Monetization:** <br>
+  Mac Mouse Fix 2 is 100% free, and I plan to keep supporting it. <br>
   Mac Mouse Fix 3 is free for 30 days, then costs a few bucks to own. 
   
-  **Features:** \
-  Here's a [feature comparison](https://redirect.macmousefix.com/?locale=it&target=mmf-version-2-vs-3). I wrote it shortly after Mac Mouse Fix 3 released – so it may be slightly out of date. \
-  You can also download Mac Mouse Fix 2 and 3 for free to evaluate them yourself!
+  **Features:** <br>
+  Here's a [feature comparison](https://redirect.macmousefix.com/?locale=it&target=mmf-version-2-vs-3). I wrote it shortly after Mac Mouse Fix 3 released – so it may be slightly out of date. <br>
+  You can also download Mac Mouse Fix [2](https://redirect.macmousefix.com/?locale=it&target=mmf2-latest) and [3](https://macmousefix.com/) for free to evaluate them yourself!
 
 - **Does Mac Mouse Fix collect my data?**
 
@@ -314,14 +315,14 @@ On the [website](https://macmousefix.com/) you can find a collection of nice thi
 
 - **How many devices can I use my license on?**
   
-    Your license is meant to 'just work' on **all your Macs**. \
-  The goal is that you just buy a license, activate it, and never have to worry about it again. \
+    Your license works on **all your Macs**. <br>
+  The goal is that you can just buy a license, activate it, and never have to worry about it again. <br>
   If you log in with the same Apple Account, the license will even sync automatically to your other devices via iCloud!
   
-  If you encounter problems activating your license, please [send me an email](https://redirect.macmousefix.com/?locale=it&target=mailto-noah). \
-  I sometimes take a while to answer. I'm sorry about this. But I will get back!
+  If you encounter problems activating your license, you can [send me an email](https://redirect.macmousefix.com/?locale=it&target=mailto-noah). <br>
+  I sometimes take a while to answer. I'm sorry about this. But I will get back to you!
   
-  There is one restriction: \
+  There is one restriction: <br>
   Licenses are not meant to be shared publicly. One license is meant for one person. Publicly shared licenses might be invalidated. (Your mom is not 'the public' and sharing with her is ok!)
 
   <!-- ^^^ Note: ChatGPT tells me I should mention that ppl can still use the license after they *upgrade* to a new device. Don't think that's necessary -->
@@ -329,8 +330,9 @@ On the [website](https://macmousefix.com/) you can find a collection of nice thi
 
 - **Will my license work with future versions?**
    
-    Your license covers all Mac Mouse Fix 3.x versions. \
-  Future versions, like 4.0, may require a new purchase, but I'll try to avoid this, unless it's necessary to support continued development of the app.
+    Your license covers all Mac Mouse Fix 3.x versions.
+  
+  Future versions, like 4.0, may require a new purchase, but I'll try to avoid this, unless it's necessary to support the continued development of the app.
 
 - **Is there a refund policy?**
 
@@ -403,11 +405,11 @@ On the [website](https://macmousefix.com/) you can find a collection of nice thi
 - **Why do the 'Scrolling' and 'Buttons' items in the Menu Bar get re-enabled?**
     
   The Menu Bar buttons are meant to quickly, and temporarily turn off certain features while you're working in incompatible apps. 
-  This is intended as a stop-gap-measure while there's no 'App-Specific Settings' feature, yet. \
+  This is intended as a stop-gap-measure while there's no 'App-Specific Settings' feature, yet. <br>
   Curently the UI would break if these are enabled, so when you open the Buttons tab or Scrolling tab, they get toggled and stuff.
   To edit the settings in a permanent way, you can edit the settings in 'Buttons' and 'Scrolling' Tab. 
   
-  To completely turn off all effects of Mac Mouse Fix on your buttons, delete all the actions on the 'Buttons' tab. \
+  To completely turn off all effects of Mac Mouse Fix on your buttons, delete all the actions on the 'Buttons' tab. <br>
   To completely turn off all effects of Mac Mouse Fix on your scroll wheel, configure the 'Scrolling' tab like this:
   <Insert screenshot>
   
