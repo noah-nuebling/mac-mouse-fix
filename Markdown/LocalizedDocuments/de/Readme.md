@@ -233,7 +233,23 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
   defaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock
   ```
   
-    <!-- NOTES: Maybe we should automate this. For context, see Issue https://github.com/noah-nuebling/mac-mouse-fix/issues/387 -->
+    <!-- ^^^ NOTES: Maybe we should automate this. For context, see Issue https://github.com/noah-nuebling/mac-mouse-fix/issues/387 -->
+
+- **Are there 'App-Specific Settings' or 'Profiles'?**
+  
+    In **Mac Mouse Fix 2** you can disable certain features for specific apps under `More... > App-specific settings`.
+  
+  For **Mac Mouse Fix 3**, both **app-specific settings** and **mouse-specific settings** are planned, but so far, there's no timeline for when they will release.
+  
+  - **Workaround** \
+      Until **app-specific settings** arrive in Mac Mouse Fix 3, you can do this:
+      - Open the `General` tab
+      - Turn on `Show in Menu Bar`
+      - Now you can **toggle features** like Smooth Scrolling directly from the Menu Bar
+  
+  I'm interested to hear *how you want to use these features*! Feel free to submit a [feature request](https://redirect.macmousefix.com/?locale=de&target=mmf-feedback-feature-request) – your input will help me make the features as great as possible!
+  <!-- ^^^ It's not a perfect solution, but I hope it helps a little until app-specific settings arrive. -->
+  <!-- ^^^ Note: Us having to explain points at a bit of a UX failure I think. -->
 
 - **Wird meine Maus unterstützt?**
 
@@ -243,6 +259,10 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
     
   Das liegt daran, dass diese Mäuse mit einem speziellen, hauseigenen Protokoll und nicht mit dem Standard-USB-Protokoll mit deinem Computer kommunizieren. <br>
   Ich würde gerne irgendwann volle Kompatibilität für diese Mäuse hinzufügen, aber das ist viel Arbeit und wird nicht so bald kommen.
+
+- **Some buttons on my mouse do not work**
+
+    Please see the question **"Is my mouse supported?"** above.
 
 - **Wird die Magic Mouse unterstützt?**
 
@@ -277,12 +297,42 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
   Ich plane, in Zukunft sehr gute Möglichkeiten zur Verbesserung der Zeigerbeschleunigung hinzuzufügen, aber ich weiß noch nicht, wann das kommt.
   
 
+- **What's the difference between Mac Mouse Fix 2 and 3?**
+  
+    **Monetization:** \
+  Mac Mouse Fix 2 is 100% free, and I plan to keep supporting it. \
+  Mac Mouse Fix 3 is free for 30 days, then costs a few bucks to own. 
+  
+  **Features:** \
+  Here's a [feature comparison](https://redirect.macmousefix.com/?locale=de&target=mmf-version-2-vs-3). I wrote it shortly after Mac Mouse Fix 3 released – so it may be slightly out of date. \
+  You can also download Mac Mouse Fix 2 and 3 for free to evaluate them yourself!
+
 - **Sammelt Mac Mouse Fix meine Daten?**
 
     Mac Mouse Fix hat keine Werbung und sammelt keine persönlichen Informationen über dich.
   
   Jedoch sammelt der Verkaufsanbieter Gumroad.com im Moment des Kaufs von Mac Mouse Fix einige persönliche Informationen, wie z.B. deine E-Mail-Adresse. Diese Informationen sind für mich sichtbar. Die Informationen sind notwendig, um Rückerstattungen ausstellen zu können, dir einen Lizenzschlüssel per E-Mail zu senden, usw. Ich kann diese Datensammlung nicht deaktivieren. Um mehr über die gesammelten Daten beim Kauf von Mac Mouse Fix zu erfahren, siehe die [Datenschutzrichtlinie](https://gumroad.com/privacy) von Gumroad.
   
+
+- **How many devices can I use my license on?**
+  
+    Your license is meant to 'just work' on **all your Macs**. \
+  The goal is that you just buy a license, activate it, and never have to worry about it again. \
+  If you log in with the same Apple Account, the license will even sync automatically to your other devices via iCloud!
+  
+  If you encounter problems activating your license, please [send me an email](https://redirect.macmousefix.com/?locale=de&target=mailto-noah). \
+  I sometimes take a while to answer. I'm sorry about this. But I will get back!
+  
+  There is one restriction: \
+  Licenses are not meant to be shared publicly. One license is meant for one person. Publicly shared licenses might be invalidated. (Your mom is not 'the public' and sharing with her is ok!)
+
+  <!-- ^^^ Note: ChatGPT tells me I should mention that ppl can still use the license after they *upgrade* to a new device. Don't think that's necessary -->
+  <!-- ^^^ TODO: Consider linking / copying this on the (Gumroad) checkout page. Ppl may not find it here. -->
+
+- **Will my license work with future versions?**
+   
+    Your license covers all Mac Mouse Fix 3.x versions. \
+  Future versions, like 4.0, may require a new purchase, but I'll try to avoid this, unless it's necessary to support continued development of the app.
 
 - **Gibt es eine Rückerstattungsrichtlinie?**
 
@@ -309,73 +359,6 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
 - **Kann ich Mac Mouse Fix kostenlos bekommen, wenn ich bereits gespendet habe?**
 
     Ja! Siehe die [Danksagungen](Acknowledgements.md#-paypal-donations) für mehr Informationen.
-
-```
->>> TODO: Translate and review the following Q&A Questions <<<
-
-(These are frequently asked questions I saw while going through 4 months of email in [Feb 2025])
-(The first few are License/payment-related questions – Maybe move these to/link these from Gumroad?)
-Meta todo: 
-  1. This is quite a lot of stuff – Do we really need to add these all? 
-    - If people can't pay they should probably just reach out to me and this Q&A entry won't help 
-    I think? 
-    - The Windows and iPad questions are not that frequent and generally don't prevent 
-    existing users from using the app – so maybe it shouldn't take up space here? 
-    - The Login Item question might be solved with better UX, but not sure how 
-      (IIRC, MMF 3 already made this question much rarer due to the label below the switch.)
-  2. Review all the links, the names of options in MMF and macOS, the grammar and phrasing, etc.
-```
-
-- **Are there 'App-Specific Settings' or 'Profiles'?**
-  
-    In **Mac Mouse Fix 2** you can disable certain features for specific apps under `More... > App-specific settings`.
-  
-  For **Mac Mouse Fix 3**, both **app-specific settings** and **mouse-specific settings** are planned, but so far, there's no timeline for when they will release.
-  
-  - **Workaround** \
-      Until **app-specific settings** arrive in Mac Mouse Fix 3, you can do this:
-      - Open the `General` tab
-      - Turn on `Show in Menu Bar`
-      - Now you can **toggle features** like Smooth Scrolling directly from the Menu Bar
-  
-  I'm interested to hear *how you want to use these features*! Feel free to submit a [feature request](https://redirect.macmousefix.com/?locale=de&target=mmf-feedback-feature-request) – your input will help me make the features as great as possible!
-  <!-- ^^^ It's not a perfect solution, but I hope it helps a little until app-specific settings arrive. -->
-  <!-- ^^^ Note: Us having to explain points at a bit of a UX failure I think. -->
-
-- **How many devices can I use my license on?**
-  
-    Your license is meant to 'just work' on **all your Macs**. \
-  The goal is that you just buy a license, activate it, and never have to worry about it again. \
-  If you log in with the same Apple Account, the license will even sync automatically to your other devices via iCloud!
-  
-  If you encounter problems activating your license, please [send me an email](https://redirect.macmousefix.com/?locale=de&target=mailto-noah). \
-  I sometimes take a while to answer. I'm sorry about this. But I will get back!
-  
-  There is one restriction: \
-  Licenses are not meant to be shared publicly. One license is meant for one person. Publicly shared licenses might be invalidated. (Your mom is not 'the public' and sharing with her is ok!)
-
-  <!-- ^^^ Note: ChatGPT tells me I should mention that ppl can still use the license after they *upgrade* to a new device. Don't think that's necessary -->
-  <!-- ^^^ TODO: Consider linking / copying this on the (Gumroad) checkout page. Ppl may not find it here. -->
-
-- **Will my license work with future versions?**
-   
-    Your license covers all Mac Mouse Fix 3.x versions. \
-  Future versions, like 4.0, may require a new purchase, but I'll try to avoid this, unless it's necessary to support continued development of the app.
-
-- **What's the difference between Mac Mouse Fix 2 and 3?**
-  
-    **Monetization:** \
-  Mac Mouse Fix 2 is 100% free, and I plan to keep supporting it. \
-  Mac Mouse Fix 3 is free for 30 days, then costs a few bucks to own. 
-  
-  **Features:** \
-  Here's a [feature comparison](https://redirect.macmousefix.com/?locale=de&target=mmf-version-2-vs-3). I wrote it shortly after Mac Mouse Fix 3 released – so it may be slightly out of date. \
-  You can also download Mac Mouse Fix 2 and 3 for free to evaluate them yourself!
-
-- **Why aren't all buttons on my mouse recognized?**
-
-    Please see the previous answer to "Is my mouse supported?" \
-  (TODO: Move this closer to "Is my mouse supported?")
 
 <!--
 
