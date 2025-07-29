@@ -238,13 +238,12 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
   In Mac Mouse Fix 3 existiert diese Funktion noch nicht. <br>
   'App-spezifische Einstellungen' sowie 'Maus-spezifische Einstellungen' sind geplant, aber ich habe noch keinen Zeitplan dafür, wann sie veröffentlicht werden.
   
-  **Übergangslösung** <br>
-  Bis 'App-spezifische Einstellungen' in Mac Mouse Fix 3 verfügbar sind, kannst du folgendes tun:
+  **TIp:** Bis 'App-spezifische Einstellungen' in Mac Mouse Fix 3 verfügbar sind, kannst du folgendes tun:
   - Öffne den `Allgemein`-Tab
   - Aktiviere `In der Menüleiste anzeigen`
   - Jetzt kannst du **Funktionen wie flüssiges Scrollen** direkt über die Menüleiste **abstellen**
   
-  Ich bin interessiert zu hören, was dein *Anwendungsfall* ist. Du kannst gerne eine [Funktionsanfrage](https://redirect.macmousefix.com/?locale=de&target=mmf-feedback-feature-request) stellen. Dein Beitrag wird helfen, die Funktion so gut wie möglich zu gestalten, wenn sie dann verfügbar ist.
+  Ich bin auch interessiert zu hören, was dein *Anwendungsfall* ist. Du kannst gerne eine [Funktionsanfrage](https://redirect.macmousefix.com/?locale=de&target=mmf-feedback-feature-request) stellen. Dein Beitrag wird helfen, die Funktion so gut wie möglich zu gestalten, wenn sie dann verfügbar ist.
   <!-- ^^^ It's not a perfect solution, but I hope it helps a little until app-specific settings arrive. -->
   <!-- ^^^ Note: Us having to explain points at a bit of a UX failure I think. -->
 

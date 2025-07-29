@@ -242,13 +242,12 @@ On the [website](https://macmousefix.com/) you can find a collection of nice thi
   In Mac Mouse Fix 3, this feature doesn't exist yet. <br>
   Both 'app-specific settings' and 'mouse-specific settings' are planned, but I don't have a timeline yet for when they'll be released.
   
-  **Workaround** <br>
-  Until 'app-specific settings' arrive in Mac Mouse Fix 3, you can do this:
+  **Tip:** Until 'app-specific settings' arrive in Mac Mouse Fix 3, you can do this:
   - Open the `General` tab
   - Turn on `Show in Menu Bar`
   - Now you can **disable features like Smooth Scrolling** directly from the Menu Bar
   
-  I'm interested to hear what your *use case* is. Feel free to submit a [feature request](https://redirect.macmousefix.com/?locale=nl&target=mmf-feedback-feature-request). Your input will help make the feature as good as possible once it arrives.
+  I'm also interested to hear what your *use case* is. Feel free to submit a [feature request](https://redirect.macmousefix.com/?locale=nl&target=mmf-feedback-feature-request). Your input will help make the feature as good as possible once it arrives.
   <!-- ^^^ It's not a perfect solution, but I hope it helps a little until app-specific settings arrive. -->
   <!-- ^^^ Note: Us having to explain points at a bit of a UX failure I think. -->
 

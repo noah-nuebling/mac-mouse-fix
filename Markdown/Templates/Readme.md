@@ -334,13 +334,12 @@ comment:
   In Mac Mouse Fix 3, this feature doesn't exist yet. <br>
   Both 'app-specific settings' and 'mouse-specific settings' are planned, but I don't have a timeline yet for when they'll be released.
 
-  **Workaround** <br>
-  Until 'app-specific settings' arrive in Mac Mouse Fix 3, you can do this:
+  **Tip:** Until 'app-specific settings' arrive in Mac Mouse Fix 3, you can do this:
   - Open the `General` tab
   - Turn on `Show in Menu Bar`
   - Now you can **disable features like Smooth Scrolling** directly from the Menu Bar
   
-  I'm interested to hear what your *use case* is. Feel free to submit a [feature request](https://redirect.macmousefix.com/?locale={locale_code}&target=mmf-feedback-feature-request). Your input will help make the feature as good as possible once it arrives.
+  I'm also interested to hear what your *use case* is. Feel free to submit a [feature request](https://redirect.macmousefix.com/?locale={locale_code}&target=mmf-feedback-feature-request). Your input will help make the feature as good as possible once it arrives.
   ```
   comment: 1) Don't translate "More... > App-specific settings" - that's because Mac Mouse Fix 2 doesn't support localization. 2) In English, the words "Mac Mouse Fix" are exactly aligned in the first two lines that start with "In Mac Mouse Fix 2..." and "In Mac Mouse Fix 3...". I think the alignment makes the text easier to scan. Maybe it's worth doing something similar in your translation.
   ```
