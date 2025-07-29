@@ -182,7 +182,7 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
 
 - **Fenster einfach per Klicken und Ziehen verwalten**
 
-    [Swish](https://highlyopinionated.co/swish/) ist meine bevorzugte Methode, um Fenster unter macOS zu verwalten. Es ermöglicht dir, mit einem einfachen Wischen auf dem Trackpad jedes Fenster so zu positionieren, dass es die Hälfte, ein Viertel oder den ganzen Bildschirm einnimmt.
+  [Swish](https://highlyopinionated.co/swish/) ist meine bevorzugte Methode, um Fenster unter macOS zu verwalten. Es ermöglicht dir, mit einem einfachen Wischen auf dem Trackpad jedes Fenster so zu positionieren, dass es die Hälfte, ein Viertel oder den ganzen Bildschirm einnimmt.
   
   Swish ist für Trackpad-Gesten konzipiert, aber mit Mac Mouse Fix kannst du es von jeder Drittanbieter-Maus aus verwenden! Öffne dazu einfach Mac Mouse Fix und stelle für eine beliebige Taste die "Klicken und Ziehen" Aktion auf "Scrollen & Navigieren", dann kannst du Fenster mit einem einfachen Klicken und Ziehen positionieren.
   
@@ -190,7 +190,7 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
 
 - **Bildschirmhelligkeit, Audio-Lautstärke oder Medienwiedergabe direkt von deiner Maus aus steuern**
 
-    Mac Mouse Fix ermöglicht es dir, **jede Taste auf deiner Tastatur** direkt von deiner Maus aus zu verwenden -
+  Mac Mouse Fix ermöglicht es dir, **jede Taste auf deiner Tastatur** direkt von deiner Maus aus zu verwenden -
   sogar spezielle Tasten, die nur auf Apple-Tastaturen zu finden sind und mit denen du Bildschirmhelligkeit, Audio-Lautstärke, Medienwiedergabe und mehr steuern kannst.
   
   Wenn du keine Apple-Tastatur zur Hand hast, **halte die Optionstaste (⌥)** gedrückt, um die speziellen Apple-Tasten auszuwählen.
@@ -202,16 +202,16 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
 
 - **Läuft Mac Mouse Fix nativ auf Apple Silicon?**
     
-    Ja, Mac Mouse Fix läuft zu 100% nativ auf Apple Silicon.
+  Ja, Mac Mouse Fix läuft zu 100% nativ auf Apple Silicon.
 
 - **Warum gibt es eine Verzögerung, wenn ich klicke?**
 
-    Wenn du klickst, wartet Mac Mouse Fix möglicherweise ab, um zu sehen, ob du doppelklickst.<br>
+  Wenn du klickst, wartet Mac Mouse Fix möglicherweise ab, um zu sehen, ob du doppelklickst.<br>
   Um die Verzögerung für eine Taste zu entfernen, lösche alle "Doppelklick"-Aktionen für diese Taste.
 
 - **Wie kann ich in 3D-Apps wie Blender um Objekte kreisen?**
 
-    In 3D-Apps wie Blender kreist man normalerweise um Objekte, indem man die mittlere Maustaste klickt und zieht.<br>
+  In 3D-Apps wie Blender kreist man normalerweise um Objekte, indem man die mittlere Maustaste klickt und zieht.<br>
   Aber wenn du in Mac Mouse Fix der mittleren Maustaste Aktionen zuweist, dann funktioniert das nicht mehr.
     
   Um das zu lösen, gibt es 2 Optionen, von denen ich weiß:
@@ -220,7 +220,7 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
 
 - **Kann ich App Exposé durch eine Klick-und-Zieh-Geste öffnen?** <!-- Hinweis: Wir verwenden hier App Exposé und in MMF ‘Programmfenster’. Nicht sicher, ob das gut ist. Ich fand das allerdings klarer. --> <!-- Note: We're using App Exposé here and Application Windows in MMF. Not sure that's great. I felt this was clearer though. -->
 
-    Ja! Wähle einfach die Aktion 'Spaces & Mission Control', dann klicke und ziehe *nach unten*.
+  Ja! Wähle einfach die Aktion 'Spaces & Mission Control', dann klicke und ziehe *nach unten*.
   
   Wenn das nicht funktioniert, liegt es wahrscheinlich daran, dass die Trackpad-Geste für 'App Exposé' auf deinem Mac deaktiviert ist.<br>
   Du kannst die Geste in den Systemeinstellungen aktivieren, oder indem du den folgenden Befehl im Terminal ausführst:
@@ -233,7 +233,7 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
 
 - **Gibt es “App-spezifische Einstellungen” oder “Profile”?**
   
-    In **Mac Mouse Fix 2** kannst du **Funktionen wie flüssiges Scrollen abstellen** unter `More… > App-specific settings`.
+  In **Mac Mouse Fix 2** kannst du **Funktionen wie flüssiges Scrollen abstellen** unter `More… > App-specific settings`.
   
   In **Mac Mouse Fix 3** existiert diese Funktion noch nicht. <br>
   'App-spezifische Einstellungen' sowie 'Maus-spezifische Einstellungen' sind geplant, aber ich habe noch keinen Zeitplan dafür, wann sie veröffentlicht werden.
@@ -250,7 +250,7 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
 
 - **Wird meine Maus unterstützt?**
 
-    Wahrscheinlich schon. Wenn du es genau wissen möchtest, lade am besten Mac Mouse Fix herunter und probiere es aus.
+  Wahrscheinlich schon. Wenn du es genau wissen möchtest, lade am besten Mac Mouse Fix herunter und probiere es aus.
   
   Mac Mouse Fix funktioniert gut mit den meisten Mäusen. Allerdings kann Mac Mouse Fix bei bestimmten Mäusen, die für die Verwendung mit hauseigenen Treibern wie Logitech Options entwickelt wurden, derzeit nicht alle Tasten erkennen. 
     
@@ -259,11 +259,11 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
 
 - **Manche Tasten meiner Maus werden nicht erkannt**
 
-    Siehe die Frage **"Wird meine Maus unterstützt?"** oben.
+  Siehe die Frage **"Wird meine Maus unterstützt?"** oben.
 
 - **Wird die Magic Mouse unterstützt?**
 
-    Ich werde eventuell in Zukunft Funktionen bauen, die die Apple Magic Mouse verbessern, aber derzeit hat Mac Mouse Fix keinen Effekt auf die Magic Mouse.
+  Ich werde eventuell in Zukunft Funktionen bauen, die die Apple Magic Mouse verbessern, aber derzeit hat Mac Mouse Fix keinen Effekt auf die Magic Mouse.
   
     <!-- You can use SteerMouse or proprietary driver like Logitech Options instead. -->
 
@@ -283,20 +283,20 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
 
 - **Werden kippbare Scrollräder unterstützt?**
 
-    Einige Mäuse ermöglichen es dir, das Scrollrad nach links oder rechts zu kippen, um horizontal zu scrollen. Mac Mouse Fix macht, dass sich das natürlicher und leichter zu steuern anfühlt. Derzeit ist es aber nicht möglich, andere Aktionen, wie beispielsweise das Wechseln zwischen Desktops, durch Kippen des Scrollrads auszulösen. Ich würde diese Funktion wirklich gerne irgendwann implementieren, aber es ist sehr viel Arbeit und wird nicht sehr bald kommen.
+  Einige Mäuse ermöglichen es dir, das Scrollrad nach links oder rechts zu kippen, um horizontal zu scrollen. Mac Mouse Fix macht, dass sich das natürlicher und leichter zu steuern anfühlt. Derzeit ist es aber nicht möglich, andere Aktionen, wie beispielsweise das Wechseln zwischen Desktops, durch Kippen des Scrollrads auszulösen. Ich würde diese Funktion wirklich gerne irgendwann implementieren, aber es ist sehr viel Arbeit und wird nicht sehr bald kommen.
   
     <!-- This is so hard, because it would require reprogramming the mouse so that it sends button-signals instead of sending scroll-signals, when you tilt the scroll wheel. And to reprogram the mouse, would require communicating with the it through the custom vendor-specific protocol. And that's not easy. For many mice it's not even possible. -->
 
 - **Zeigerbeschleunigung ausschalten**
 
-    Mac Mouse Fix erlaubt es dir nicht, die Zeigerbeschleunigung auszuschalten, aber wenn du auf **macOS 14 Sonoma** oder später bist, kannst du die Zeigerbeschleunigung unter `Systemeinstellungen > Maus > Weitere Optionen... > Zeigerbeschleunigung` ausschalten.
+  Mac Mouse Fix erlaubt es dir nicht, die Zeigerbeschleunigung auszuschalten, aber wenn du auf **macOS 14 Sonoma** oder später bist, kannst du die Zeigerbeschleunigung unter `Systemeinstellungen > Maus > Weitere Optionen... > Zeigerbeschleunigung` ausschalten.
   
   Ich plane, in Zukunft sehr gute Möglichkeiten zur Verbesserung der Zeigerbeschleunigung hinzuzufügen, aber ich weiß noch nicht, wann das kommt.
   
 
 - **Was ist der Unterschied zwischen Mac Mouse Fix 2 und 3?**
   
-    **Monetarisierung:**<br>
+  **Monetarisierung:**<br>
   Mac Mouse Fix 2 ist 100% kostenlos, und ich plane, es weiterhin zu unterstützen. <br>
   Mac Mouse Fix 3 ist 30 Tage lang kostenlos, danach kostet es ein paar Euro zum Besitzen.
   
@@ -306,14 +306,14 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
 
 - **Sammelt Mac Mouse Fix meine Daten?**
 
-    Mac Mouse Fix hat keine Werbung und sammelt keine persönlichen Informationen über dich.
+  Mac Mouse Fix hat keine Werbung und sammelt keine persönlichen Informationen über dich.
   
   Jedoch sammelt der Verkaufsanbieter Gumroad.com im Moment des Kaufs von Mac Mouse Fix einige persönliche Informationen, wie z.B. deine E-Mail-Adresse. Diese Informationen sind für mich sichtbar. Die Informationen sind notwendig, um Rückerstattungen ausstellen zu können, dir einen Lizenzschlüssel per E-Mail zu senden, usw. Ich kann diese Datensammlung nicht deaktivieren. Um mehr über die gesammelten Daten beim Kauf von Mac Mouse Fix zu erfahren, siehe die [Datenschutzrichtlinie](https://gumroad.com/privacy) von Gumroad.
   
 
 - **Auf wie vielen Geräten kann ich meine Lizenz verwenden?**
   
-    Deine Lizenz funktioniert auf **all deinen Macs**. <br>
+  Deine Lizenz funktioniert auf **all deinen Macs**. <br>
   Das Ziel ist es, dass du eine Lizenz kaufen kannst, sie aktivierst, und dir dann keine Gedanken mehr darüber machen musst. <br>
   Wenn du dich mit demselben Apple Account anmeldest, wird die Lizenz sogar automatisch über iCloud mit deinen anderen Geräten synchronisiert!
   
@@ -328,19 +328,19 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
 
 - **Funktioniert meine Lizenz mit künftigen Versionen?**
    
-    Deine Lizenz deckt alle Mac Mouse Fix 3.x Versionen ab. 
+  Deine Lizenz deckt alle Mac Mouse Fix 3.x Versionen ab. 
   
   Künftige Versionen, wie 4.0, könnten einen neuen Kauf erfordern, aber ich werde versuchen, dies zu vermeiden, es sei denn es ist notwendig, um die Weiterentwicklung der App zu unterstützen.
 
 - **Gibt es eine Rückerstattungsrichtlinie?**
 
-    Es gibt keine offizielle Rückerstattungsrichtlinie, aber die App ist 30 Tage lang kostenlos.
+  Es gibt keine offizielle Rückerstattungsrichtlinie, aber die App ist 30 Tage lang kostenlos.
   
   Wenn du nach dem Kauf der App Probleme hast, kontaktiere mich einfach, und ich werde mein Bestes geben zu helfen.
 
 - **Wird Mac Mouse Fix weiterhin Open Source sein, jetzt da es monetarisiert ist?**
 
-    Ja, Mac Mouse Fix wird weiterhin Open Source sein!
+  Ja, Mac Mouse Fix wird weiterhin Open Source sein!
   
   Ich ermutige jeden, den Quellcode von Mac Mouse Fix in eigenen Projekten zu verwenden, solange sie keine einfache Kopie von Mac Mouse Fix veröffentlichen.
   
@@ -356,7 +356,7 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
 
 - **Kann ich Mac Mouse Fix kostenlos bekommen, wenn ich bereits gespendet habe?**
 
-    Ja! Siehe die [Danksagungen](Acknowledgements.md#-paypal-donations) für mehr Informationen.
+  Ja! Siehe die [Danksagungen](Acknowledgements.md#-paypal-donations) für mehr Informationen.
 
 <!--
 
@@ -431,18 +431,18 @@ Schau dir die [Danksagungen](Acknowledgements.md) an, um mehr darüber zu erfahr
 
 - **Feedback geben**
     
-    Du kannst helfen, indem du deine **Ideen**, **Probleme** und **Rückmeldungen** über den [Feedback-Assistenten](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) teilst.
+  Du kannst helfen, indem du deine **Ideen**, **Probleme** und **Rückmeldungen** über den [Feedback-Assistenten](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) teilst.
 
 - **Geld beitragen**
   
-    Ich hoffe, mich finanziell durch Mac Mouse Fix erhalten zu können. So kann ich weiter an dem Projekt arbeiten und es verbessern. Wenn du dabei helfen möchtest, kannst du:
+  Ich hoffe, mich finanziell durch Mac Mouse Fix erhalten zu können. So kann ich weiter an dem Projekt arbeiten und es verbessern. Wenn du dabei helfen möchtest, kannst du:
   1. Mac Mouse Fix kaufen, indem du auf den Button in der App klickst oder [hier](https://noahnuebling.gumroad.com/l/mmfinappusd).
   2. Mir auf PayPal ein [Trinkgeld](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ARSTVR6KFB524&source=url&lc=en_US) geben. Ich verdiene nicht viel Geld damit, aber es ist immer nett und motivierend, eine Spende zu erhalten.
   3. Mich auf GitHub [sponsorn](https://github.com/sponsors/noah-nuebling). Ein monatlicher Beitrag ist eine großartige Möglichkeit, das Projekt zu unterstützen und mir dabei zu helfen, ein stabileres Einkommen zu haben.
 
 - **Übersetzungen hinzufügen**
   
-    Mac Mouse Fix ist auf Englisch und Deutsch verfügbar, sowie den Sprachen, die in den [Danksagungen](Acknowledgements.md) aufgelistet sind.
+  Mac Mouse Fix ist auf Englisch und Deutsch verfügbar, sowie den Sprachen, die in den [Danksagungen](Acknowledgements.md) aufgelistet sind.
     
   Wenn du **beim Übersetzen des Projekts helfen** möchtest, sieh dir das [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731) an.<br>
   Wenn du **fehlende oder suboptimale Übersetzungen** melden möchtest, ist das auch sehr hilfreich! Die beste Art um Probleme zu melden, ist einen Kommentar unter dem [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731) zu hinterlassen.
@@ -454,7 +454,7 @@ Schau dir die [Danksagungen](Acknowledgements.md) an, um mehr darüber zu erfahr
       I should mention people who contributed code on the acknowledgements page. They are already in the update notes. 
     -->
 
-    Wenn du Code beitragen möchtest, ist das super! Ich freue mich über alle [Pull-Requests](https://github.com/noah-nuebling/mac-mouse-fix/pulls).
+  Wenn du Code beitragen möchtest, ist das super! Ich freue mich über alle [Pull-Requests](https://github.com/noah-nuebling/mac-mouse-fix/pulls).
     
   Allerdings werde ich vielleicht nicht alle Pull-Requests akzeptieren. Wenn du sicherstellen willst, dass deine Arbeit nicht umsonst ist, kannst du einen ersten Pull-Request stellen, der nur die Änderungen *beschreibt*, die du vornehmen möchtest, jedoch keinen, oder nur wenig Code enthält. Dann kann ich dir Feedback geben und dir sagen, ob ich die Änderungen, die du vornehmen möchtest, so übernehmen würde.
 
