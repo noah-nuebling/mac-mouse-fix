@@ -233,9 +233,9 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
 
 - **Gibt es “App-spezifische Einstellungen” oder “Profile”?**
   
-  In **Mac Mouse Fix 2** kannst du **Funktionen wie flüssiges Scrollen abstellen** unter `More… > App-specific settings`.
+  In Mac Mouse Fix 2 kannst du **Funktionen wie flüssiges Scrollen abstellen** unter `More… > App-specific settings`.
   
-  In **Mac Mouse Fix 3** existiert diese Funktion noch nicht. <br>
+  In Mac Mouse Fix 3 existiert diese Funktion noch nicht. <br>
   'App-spezifische Einstellungen' sowie 'Maus-spezifische Einstellungen' sind geplant, aber ich habe noch keinen Zeitplan dafür, wann sie veröffentlicht werden.
   
   **Übergangslösung** <br>
