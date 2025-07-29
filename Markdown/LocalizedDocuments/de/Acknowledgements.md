@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2025**
 
+- 🇧🇪&nbsp;A&nbsp;Belgian&nbsp;Dude - "MMF était foormidaaable, Logitech était fort minable"
 - 🇺🇸&nbsp;James&nbsp;Brookes
 - 🇦🇺&nbsp;Herridge&nbsp;2
 - 🇺🇸&nbsp;Vinchenzo&nbsp;Barbarino - "love this app!"
