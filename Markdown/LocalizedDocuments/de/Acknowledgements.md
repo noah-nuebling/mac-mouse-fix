@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2025**
 
+- 🇺🇸&nbsp;Applehater - "Thank you for making my life easier"
 - 🇺🇸&nbsp;Amit&nbsp;Phabba - "This small thing has made a big difference in my workflow."
 - 🇧🇪&nbsp;A&nbsp;Belgian&nbsp;Dude - "MMF était foormidaaable, Logitech était fort minable"
 - 🇺🇸&nbsp;James&nbsp;Brookes
