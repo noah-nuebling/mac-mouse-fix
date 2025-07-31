@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **July 2025**
 
+- 🇮🇩&nbsp;Papatongmann - "Thank you for making the greatest milkshake of all time"
 - 🇺🇸&nbsp;Applehater - "Thank you for making my life easier"
 - 🇺🇸&nbsp;Amit&nbsp;Phabba - "This small thing has made a big difference in my workflow."
 - 🇧🇪&nbsp;A&nbsp;Belgian&nbsp;Dude - "MMF était foormidaaable, Logitech était fort minable"
