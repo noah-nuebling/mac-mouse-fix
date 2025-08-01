@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2025**
 
+- 🇺🇸&nbsp;Melina&nbsp;Blees
 - 🇮🇹&nbsp;Il&nbsp;Longo - "Great job Noah! Thanks a lot!"
 - 🇺🇸&nbsp;Chris&nbsp;C - "It just works™"
 
