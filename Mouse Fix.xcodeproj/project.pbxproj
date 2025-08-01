@@ -2538,6 +2538,7 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4F14C0AF2C8EFA43002502BB /* Strings */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Strings; sourceTree = "<group>"; };
 		4F1668042C6AA96A009E4924 /* LocalizedDocuments */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LocalizedDocuments; sourceTree = "<group>"; };
+		4F1758532E3CBC1700E2B268 /* Help */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Help; sourceTree = "<group>"; };
 		4F23379C2E36523200F4948C /* mac-mouse-fix-scripts */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "mac-mouse-fix-scripts"; sourceTree = "<group>"; };
 		4FD98B302DE86F100039B102 /* Crash Reports */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Crash Reports"; sourceTree = "<group>"; };
 		4FF6B93F2E3BC047000F925D /* Templates */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Templates; sourceTree = "<group>"; };
@@ -6470,6 +6471,7 @@
 				4F214C222B2E141900DD3957 /* Readme.md */,
 				4F2153272B2E150800DD3957 /* Acknowledgements.md */,
 				4F42304628CE6C1C003A41D3 /* License */,
+				4F1758532E3CBC1700E2B268 /* Help */,
 				4F0BDC722B446A3C00AE65C1 /* Markdown */,
 				4F39BC88263B68F400FDF692 /* xcconfig */,
 				4F0C00162C525AC000C5D843 /* .env */,

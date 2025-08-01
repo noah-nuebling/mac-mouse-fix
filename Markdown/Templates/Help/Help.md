@@ -1,15 +1,43 @@
-# Help
+# {{Mac Mouse Fix Support||title||}}
 
-## FAQ
+```
+key: title.body
+```
+Here is overview
+
+```
+comment:
+```
+
+## {{FAQ||faq||}}
+
+```
+key: faq.body
+```
 
 See [FAQ in Readme](<{language_root}Readme.md#questions>).
+```
+comment:
+```
 
-## Guides & Explanations
+## {{Guides & Explanations||guides-and-explanations||}}
+
+```
+key: guides-and-explanations.body
+```
 
 - [Captured Buttons (Mac Mouse Fix 2)](<{language_root}Help/Guides/Captured Buttons (Mac Mouse Fix 2).md>) (Only available in English, since Mac Mouse Fix 2 is only available in English)
 - [Captured Buttons (Mac Mouse Fix 3)](<{language_root}Help/Guides/Captured Buttons (Mac Mouse Fix 3).md>)
 
-#### Legacy Guides & Explanations
+```
+comment:
+```
+
+#### {{Legacy Guides & Explanations||guides-and-explanations.legacy||}}
+
+```
+key: guides-and-explanations.legacy.body
+```
 
 These Guides don't apply to the latest version of Mac Mouse Fix / macOS.
 These are only available in English.
@@ -18,11 +46,23 @@ These are only available in English.
 - [Granting Accessibility Access](<{language_root}Help/Legacy Guides/Granting Accessibility Access.md>) (Mac Mouse Fix 2.2.2 and above can fix this issue automatically if you're using macOS 10.15 Catalina or above)
 - [Opening Mac Mouse Fix & Malware Messages](<{language_root}Help/Legacy Guides/Opening Mac Mouse Fix & Malware Messages.md>) (Only applies to Mac Mouse Fix 2.2.3 and below)
 
-## Still have questions?
+```
+comment:
+```
 
+## {{Still have questions?||still-have-questions||}}
+
+```
+key: still-have-questions.body
+```
 Reach out [here](https://redirect.macmousefix.com/?locale={locale_code}&target=mmf-feedback-help-content)!
 
-I don't respond to all feedback, and when I do it might take me a while. I'm sorry about that. But I *will* read your feedback and do my best to improve the experience of using Mac Mouse Fix! <!-- Could mention that if they open an Issue others might help them ... But except for very widespread issues that's unlikely. So maybe bad to set high expectations? -->
+I don't respond to all feedback, and when I do it might take me a while. I'm sorry about that. But I *will* read your feedback and do my best to improve the experience of using Mac Mouse Fix! 
+```
+comment:
+```
+
+<!-- Could mention that if they open an Issue others might help them ... But except for very widespread issues that's unlikely. So maybe bad to set high expectations? -->
 
 <!--
 - [Send me an Email](https://redirect.macmousefix.com/?locale={locale_code}&target=mailto-noah)

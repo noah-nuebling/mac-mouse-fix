@@ -1,0 +1,176 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "01: title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix Support"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mac Mouse Fix Support"
+          }
+        }
+      }
+    },
+    "02: title.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hier findest du eine Übersicht von Seiten, die dir helfen können, Mac Mouse Fix besser zu verstehen oder Probleme zu lösen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Here is overview"
+          }
+        }
+      }
+    },
+    "03: faq" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fragen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "FAQ"
+          }
+        }
+      }
+    },
+    "04: faq.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Im Readme findest du eine [Übersicht an kurzen Antworten](<{url}>) auf Fragen, die du dir vielleicht über Mac Mouse Fix stellst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "See [FAQ in Readme](<{url}>)."
+          }
+        }
+      }
+    },
+    "05: guides-and-explanations" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anleitungen & Erklärungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Guides & Explanations"
+          }
+        }
+      }
+    },
+    "06: guides-and-explanations.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das Ziel von Mac Mouse Fix ist, dass du selbst herausfinden kannst wie es funktioniert, indem du es einfach benutzt. \n\nBei manchen Themen ist das jedoch schwierig, daher habe ich für Sie ausführlichere Erklärungen und Anleitungen geschrieben:\n\n- [Abgefangene Maustasten (Mac Mouse Fix 3)](<{url_2}>)\n- [Captured Buttons (Mac Mouse Fix 2)](<{url_1}>) \n    - *Nur auf Englisch verfügbar, da Mac Mouse Fix 2 nur auf Englisch verfügbar ist*"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "- [Captured Buttons (Mac Mouse Fix 2)](<{url_1}>) (Only available in English, since Mac Mouse Fix 2 is only available in English)\n- [Captured Buttons (Mac Mouse Fix 3)](<{url_2}>)"
+          }
+        }
+      }
+    },
+    "07: guides-and-explanations.legacy" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ältere Anleitungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Legacy Guides & Explanations"
+          }
+        }
+      }
+    },
+    "08: guides-and-explanations.legacy.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Anleitungen sind nicht länger notwending, wenn man die neuste Version von Mac Mouse Fix und von macOS verwendet.\n\nSie sind nur auf Englisch verfügbar.\n\n- [Enabling Mac Mouse Fix](<{url_1}>) \n    - Die beschriebenen Lösungsschritte treffen nur auf **macOS 13 Ventura** and **macOS 14 Sonoma** zu.\n- [Granting Accessibility Access](<{url_2}>) \n    - **Mac Mouse Fix 2.2.2 und neuer** kann diese Problem automatisch beheben, wenn man **macOS 10.15 Catalina oder neuer** verwendet.\n- [Opening Mac Mouse Fix & Malware Messages](<{url_3}>) \n    - Trifft nur auf **Mac Mouse Fix 2.2.3 und älter** zu."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "These Guides don't apply to the latest version of Mac Mouse Fix / macOS.\nThese are only available in English.\n\n- [Enabling Mac Mouse Fix](<{url_1}>) (Only applies to macOS 13 Ventura and macOS 14 Sonoma)\n- [Granting Accessibility Access](<{url_2}>) (Mac Mouse Fix 2.2.2 and above can fix this issue automatically if you're using macOS 10.15 Catalina or above)\n- [Opening Mac Mouse Fix & Malware Messages](<{url_3}>) (Only applies to Mac Mouse Fix 2.2.3 and below)"
+          }
+        }
+      }
+    },
+    "09: still-have-questions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch Fragen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Still have questions?"
+          }
+        }
+      }
+    },
+    "10: still-have-questions.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Wenn du noch weitere Fragen hast, [klicke hier]({url}).\n\nIch brauche oft länger um mir Nachrichten anzuschauen, und ich kann nicht auf alle Antworten. Aber ich schaue mir alles an, und tue mein bestes um die Nutzererfahrung von Mac Mouse Fix so gut wie möglich zu machen!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Reach out [here]({url})!\n\nI don't respond to all feedback, and when I do it might take me a while. I'm sorry about that. But I *will* read your feedback and do my best to improve the experience of using Mac Mouse Fix! "
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

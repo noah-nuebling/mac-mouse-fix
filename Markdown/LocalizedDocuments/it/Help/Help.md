@@ -23,14 +23,14 @@ These are only available in English.
 
 ## Still have questions?
 
-Reach out [here](https://redirect.macmousefix.com/?locale=en&target=mmf-feedback-help-content)!
+Reach out [here](https://redirect.macmousefix.com/?locale=it&target=mmf-feedback-help-content)!
 
 I don't respond to all feedback, and when I do it might take me a while. I'm sorry about that. But I *will* read your feedback and do my best to improve the experience of using Mac Mouse Fix! 
 
 <!-- Could mention that if they open an Issue others might help them ... But except for very widespread issues that's unlikely. So maybe bad to set high expectations? -->
 
 <!--
-- [Send me an Email](https://redirect.macmousefix.com/?locale=en&target=mailto-noah)
+- [Send me an Email](https://redirect.macmousefix.com/?locale=it&target=mailto-noah)
 -->
 
 
