@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2025**
 
+- 🇮🇹&nbsp;Il&nbsp;Longo - "Great job Noah! Thanks a lot!"
 - 🇺🇸&nbsp;Chris&nbsp;C - "It just works™"
 
 **July 2025**
