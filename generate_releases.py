@@ -995,13 +995,9 @@ def os_system_exc(s):
 #   - [Mar 2025] Leading and trailling whitespace seems to be lost after translation with Claude, so we shouldn't include them here.
 #   - [Mar 2025] Use upget_custom_string() to access (translated versions) of these. 
 #   - [Mar 2025] IMPORTANT: When you change the hint the deptracker won't notice. Delete all the translations to force regenerate.
-@dataclass
-class LocalizableString:
-    string: str
-    hint: str|None = None
 
-custom_strings_in_src_language: dict[str, LocalizableString] = {
-    'release-notes.disclaimer': LocalizableString(
+custom_strings_in_src_language: dict[str, mflocales.mf_localizable_str] = {
+    'release-notes.disclaimer': mflocales.mf_localizable_str(
         mfdedent(r""" 
             **ℹ️ Translated by AI**
 
@@ -1009,7 +1005,7 @@ custom_strings_in_src_language: dict[str, LocalizableString] = {
             For the original English version, [click here]({gh_releases_url}).
         """)
     ),
-    'release.disclaimer': LocalizableString(
+    'release.disclaimer': mflocales.mf_localizable_str(
         mfdedent(r"""
             <b>ℹ️ Translated by AI</b><br>
             This GitHub Release has been translated by the Claude AI. It may contain errors.<br>
@@ -1021,17 +1017,17 @@ custom_strings_in_src_language: dict[str, LocalizableString] = {
             (It's actually not, but the terms 'GitHub' and 'Release' do appear on the (English only) page, and so I think this will help users understand what we're referring to.)
         """)
     ),
-    'release.metadata': LocalizableString(
+    'release.metadata': mflocales.mf_localizable_str(
         r"**Release Date:** {date}",   
         hint="Metadata displayed right below the header of a release document for the Mac Mouse Fix app."
     ),
-    'release.assets': LocalizableString(
+    'release.assets': mflocales.mf_localizable_str(
         r"Assets",                     
         hint="This is a heading for a table showing downloadable files/resources for a release of the Mac Mouse Fix app."
     ),
 
     # Handwritten German versions (unused, just for reference, as of [Mar 2025])
-        '__de.release.disclaimer': LocalizableString(
+        '__de.release.disclaimer': mflocales.mf_localizable_str(
             mfdedent(r"""
                 <b>Von KI übersetzt</b><br>
                 Dies ist eine Übersetzung von einem <b><em>GitHub Release</em></b>.<br>
@@ -1039,10 +1035,10 @@ custom_strings_in_src_language: dict[str, LocalizableString] = {
                 Das ursprüngliche GitHub Release (auf englisch) findest du <a href="{gh_releases_url}">hier</a>.
             """)
         ),
-        '__de.release.metadata': LocalizableString(
+        '__de.release.metadata': mflocales.mf_localizable_str(
             "**Veröffentlichungsdatum:** {date}"
         ),
-        '__de.release.assets': LocalizableString(
+        '__de.release.assets': mflocales.mf_localizable_str(
             "Assets"
         ),
 }
@@ -1056,7 +1052,7 @@ def upget_custom_string(locale: str, strkey: str) -> str|None:
     # Derive stuff
     src_path:           str                 = getpath_custom_string(source_locale, strkey)
     translation_path:   str                 = getpath_custom_string(locale, strkey)
-    fresh_src:          LocalizableString   = custom_strings_in_src_language[strkey]
+    fresh_src:          mf_localizable_str   = custom_strings_in_src_language[strkey]
 
     # Write the fresh source-language-string to file
     #   Note: [Mar 2025] Is it inefficient to do this every time here? Maybe we could restrict this to only happen once per strkey, per program-run
@@ -1076,14 +1072,14 @@ def upget_custom_string(locale: str, strkey: str) -> str|None:
 # AI Translation
 #
 
-def _let_claude_translate(locale: str, english_textttt: str|LocalizableString) -> str:
+def _let_claude_translate(locale: str, english_textttt: str|mf_localizable_str) -> str:
 
     # [Mar 2025] Helper for upget_translation()
 
     # Preprocess args
     english_text: str = None
     localizer_hint: str = None
-    if isinstance(english_textttt, LocalizableString):
+    if isinstance(english_textttt, mf_localizable_str):
         english_text = english_textttt.string
         localizer_hint = english_textttt.hint
     else:
@@ -1205,7 +1201,7 @@ def _let_claude_translate(locale: str, english_textttt: str|LocalizableString) -
     return translation
 
 def upget_translation(
-    fresh_src: str|LocalizableString, 
+    fresh_src: str|mf_localizable_str, 
     translation_locale: str,
     src_path: str,
     translation_path: str,
@@ -1224,7 +1220,7 @@ def upget_translation(
 
     # Skip source language (English)
     if translation_locale == source_locale: 
-        return fresh_src.string if isinstance(fresh_src, LocalizableString) else fresh_src
+        return fresh_src.string if isinstance(fresh_src, mf_localizable_str) else fresh_src
 
     # Get & update translation
     translation = None
