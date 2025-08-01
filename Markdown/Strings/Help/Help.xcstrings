@@ -24,7 +24,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hier findest du eine Übersicht von Seiten, die dir helfen können, Mac Mouse Fix besser zu verstehen oder Probleme zu lösen."
+            "value" : "Verstehe Mac Mouse Fix besser und löse Probleme."
           }
         },
         "en" : {
@@ -58,7 +58,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Im Readme findest du eine [Übersicht an kurzen Antworten](<{url}>) auf Fragen, die du dir vielleicht über Mac Mouse Fix stellst."
+            "value" : "Kurze Antworten auf übliche Fragen [hier](<{url}>)."
           }
         },
         "en" : {
@@ -75,7 +75,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anleitungen & Erklärungen"
+            "value" : "Anleitungen"
           }
         },
         "en" : {
@@ -92,7 +92,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Das Ziel von Mac Mouse Fix ist, dass du selbst herausfinden kannst wie es funktioniert, indem du es einfach benutzt. \n\nBei manchen Themen ist das jedoch schwierig, daher habe ich für Sie ausführlichere Erklärungen und Anleitungen geschrieben:\n\n- [Abgefangene Maustasten (Mac Mouse Fix 3)](<{url_2}>)\n- [Captured Buttons (Mac Mouse Fix 2)](<{url_1}>) \n    - *Nur auf Englisch verfügbar, da Mac Mouse Fix 2 nur auf Englisch verfügbar ist*"
+            "value" : "Mac Mouse Fix soll sich selbst erklären, aber manchmal ist das schwierig.\n\n- [Abgefangene Maustasten](<{url_2}>) (Mac Mouse Fix 3)\n- [Captured Mouse Buttons](<{url_1}>) (Mac Mouse Fix 2)\n    - Nur auf Englisch verfügbar, da Mac Mouse Fix 2 nur auf Englisch verfügbar ist."
           }
         },
         "en" : {
@@ -126,7 +126,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diese Anleitungen sind nicht länger notwending, wenn man die neuste Version von Mac Mouse Fix und von macOS verwendet.\n\nSie sind nur auf Englisch verfügbar.\n\n- [Enabling Mac Mouse Fix](<{url_1}>) \n    - Die beschriebenen Lösungsschritte treffen nur auf **macOS 13 Ventura** and **macOS 14 Sonoma** zu.\n- [Granting Accessibility Access](<{url_2}>) \n    - **Mac Mouse Fix 2.2.2 und neuer** kann diese Problem automatisch beheben, wenn man **macOS 10.15 Catalina oder neuer** verwendet.\n- [Opening Mac Mouse Fix & Malware Messages](<{url_3}>) \n    - Trifft nur auf **Mac Mouse Fix 2.2.3 und älter** zu."
+            "value" : "Anleitungen für ältere Versionen von Mac Mouse Fix oder macOS. (Nur auf Englisch verfügbar.)\n\n- [Enabling Mac Mouse Fix](<{url_1}>) \n    - Für **macOS 13 Ventura** und **macOS 14 Sonoma**.\n- [Granting Accessibility Access](<{url_2}>) \n    - Für Nutzer von **Mac Mouse Fix 2.2.1** und älter oder **macOS 10.14 Mojave** und älter.\n- [Opening Mac Mouse Fix & Malware Messages](<{url_3}>) \n    - Für **Mac Mouse Fix 2.2.3** und älter."
           }
         },
         "en" : {
@@ -143,7 +143,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Noch Fragen?"
+            "value" : "Kontakt"
           }
         },
         "en" : {
@@ -159,8 +159,8 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Wenn du noch weitere Fragen hast, [klicke hier]({url}).\n\nIch brauche oft länger um mir Nachrichten anzuschauen, und ich kann nicht auf alle Antworten. Aber ich schaue mir alles an, und tue mein bestes um die Nutzererfahrung von Mac Mouse Fix so gut wie möglich zu machen!"
+            "state" : "translated",
+            "value" : "Noch Fragen? [Klicke hier]({url})."
           }
         },
         "en" : {
