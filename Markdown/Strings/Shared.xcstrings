@@ -1,0 +1,41 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "localization.progress-message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Dieses Dokument ist `{localization_progress}` übersetzt nach `{current_language}`\n\nUm beim Übersetzen zu helfen, klicke [hier]({url})!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`\nTo help translate, click [here]({url})!"
+          }
+        }
+      }
+    },
+    "localization.translate-prompt" : {
+      "comment" : "Note: {url} will be replaced by a link. Make sure to type \"{url}\" exactly like in the original for the text-replacement to work.)\nNOTE TO SELF: IIRC this hint was supposed to show up on the first string containing a url that localizers would see. It probably doesn't belong here.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Helfe beim Übersetzen!]({url})"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

@@ -1,66 +1,78 @@
-# {{Mac Mouse Fix Support||title||}}
+# {{Support||title||}}
 
 ```
 key: title.body
 ```
-Here is overview
+
+Help with questions and problems about Mac Mouse Fix.
 
 ```
 comment:
 ```
 
-## {{FAQ||faq||}}
+## {{Questions||faq||}}
 
 ```
 key: faq.body
 ```
-
-See [FAQ in Readme](<{language_root}Readme.md#questions>).
+Short answers to common questions [here](<{language_root}Readme.md#questions>).
 ```
 comment:
 ```
 
-## {{Guides & Explanations||guides-and-explanations||}}
+## {{Guides||guides-and-explanations||}}
 
 ```
 key: guides-and-explanations.body
 ```
 
-- [Captured Buttons (Mac Mouse Fix 2)](<{language_root}Help/Guides/Captured Buttons (Mac Mouse Fix 2).md>) (Only available in English, since Mac Mouse Fix 2 is only available in English)
-- [Captured Buttons (Mac Mouse Fix 3)](<{language_root}Help/Guides/Captured Buttons (Mac Mouse Fix 3).md>)
+Where possible, Mac Mouse Fix explains itself.
+But sometimes a guide helps!
+
+- [Captured Mouse Buttons](<{language_root}Help/Guides/Captured Buttons (Mac Mouse Fix 3).md>) (Mac Mouse Fix 3)
+- [Captured Mouse Buttons](<{language_root}Help/Guides/Captured Buttons (Mac Mouse Fix 2).md>) (Mac Mouse Fix 2) {english_only_tag}
+
 
 ```
 comment:
 ```
 
-#### {{Legacy Guides & Explanations||guides-and-explanations.legacy||}}
+### {{Older Guides||guides-and-explanations.legacy||}}
 
 ```
 key: guides-and-explanations.legacy.body
 ```
 
-These Guides don't apply to the latest version of Mac Mouse Fix / macOS.
-These are only available in English.
+Guides for older versions of Mac Mouse Fix or macOS. {english_only_tag}
 
-- [Enabling Mac Mouse Fix](<{language_root}Help/Legacy Guides/Enabling Mac Mouse Fix.md>) (Only applies to macOS 13 Ventura and macOS 14 Sonoma)
-- [Granting Accessibility Access](<{language_root}Help/Legacy Guides/Granting Accessibility Access.md>) (Mac Mouse Fix 2.2.2 and above can fix this issue automatically if you're using macOS 10.15 Catalina or above)
-- [Opening Mac Mouse Fix & Malware Messages](<{language_root}Help/Legacy Guides/Opening Mac Mouse Fix & Malware Messages.md>) (Only applies to Mac Mouse Fix 2.2.3 and below)
+- [Enabling Mac Mouse Fix](<{language_root}Help/Legacy Guides/Enabling Mac Mouse Fix.md>)
+    - For **macOS 13 Ventura** and **macOS 14 Sonoma**.
+- [Granting Accessibility Access](<{language_root}Help/Legacy Guides/Granting Accessibility Access.md>) 
+    - For users of **Mac Mouse Fix 2.2.1** and older or **macOS 10.14 Mojave** and older.
+- [Opening Mac Mouse Fix & Malware Messages](<{language_root}Help/Legacy Guides/Opening Mac Mouse Fix & Malware Messages.md>) 
+    - For **Mac Mouse Fix 2.2.3** and older.
 
 ```
 comment:
 ```
 
-## {{Still have questions?||still-have-questions||}}
+## {{Contact||still-have-questions||}}
+
 
 ```
 key: still-have-questions.body
 ```
-Reach out [here](https://redirect.macmousefix.com/?locale={locale_code}&target=mmf-feedback-help-content)!
-
-I don't respond to all feedback, and when I do it might take me a while. I'm sorry about that. But I *will* read your feedback and do my best to improve the experience of using Mac Mouse Fix! 
+Still have questions? Click [here](https://redirect.macmousefix.com/?locale={locale_code}&target=mmf-feedback-help-content).
 ```
 comment:
 ```
+
+<!--
+[Aug 2025] We thought about having a section here saying:
+    "Only available in {{english_only_tag_2}} – but feel free to write in your language!"
+
+... But I decided to omit that, since this link isn't really about the 'content' which the user may not want to click on if they can't understand the language, but just about reaching out. Also, we plan to localize the form at some point, so it being "English only" is temporary.
+-->
 
 <!-- Could mention that if they open an Issue others might help them ... But except for very widespread issues that's unlikely. So maybe bad to set high expectations? -->
 

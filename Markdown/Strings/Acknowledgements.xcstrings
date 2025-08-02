@@ -1,9 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "01: localization.progress" : {
+    "localization.progress" : {
       "comment" : ".",
-      "extractionState" : "manual",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -19,9 +19,9 @@
         }
       }
     },
-    "02: localization.translate-prompt" : {
+    "localization.translate-prompt" : {
       "comment" : "Note: {url} will be replaced by a link. Make sure to type \"{url}\" exactly like in the original for the text-replacement to work.",
-      "extractionState" : "manual",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -37,7 +37,7 @@
         }
       }
     },
-    "03: intro" : {
+    "01: intro" : {
       "comment" : ".",
       "extractionState" : "manual",
       "localizations" : {
@@ -55,7 +55,7 @@
         }
       }
     },
-    "04: translations" : {
+    "02: translations" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -72,7 +72,7 @@
         }
       }
     },
-    "05: money" : {
+    "03: money" : {
       "comment" : "Note: {sales_count} will be replaced by the number of times Mac Mouse Fix has been sold. Make sure to type \"{sales_count}\" exactly like in the original for the text-replacement to work.",
       "extractionState" : "manual",
       "localizations" : {
@@ -90,7 +90,7 @@
         }
       }
     },
-    "06: money.generous" : {
+    "04: money.generous" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -107,7 +107,7 @@
         }
       }
     },
-    "07: money.very-generous" : {
+    "05: money.very-generous" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -124,7 +124,7 @@
         }
       }
     },
-    "08: money.github-sponsors" : {
+    "06: money.github-sponsors" : {
       "comment" : ".",
       "extractionState" : "manual",
       "localizations" : {
@@ -142,7 +142,7 @@
         }
       }
     },
-    "09: money.paypal-donations" : {
+    "07: money.paypal-donations" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -159,7 +159,7 @@
         }
       }
     },
-    "10: software" : {
+    "08: software" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -176,7 +176,7 @@
         }
       }
     },
-    "11: software.inspiration" : {
+    "09: software.inspiration" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -193,7 +193,7 @@
         }
       }
     },
-    "12: software.libraries" : {
+    "10: software.libraries" : {
       "comment" : "Note: Don't forget the `<br>`, it inserts a line<br>eak.",
       "extractionState" : "manual",
       "localizations" : {

@@ -1,8 +1,8 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "01: localization.progress" : {
-      "extractionState" : "manual",
+    "localization.progress" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -18,8 +18,8 @@
         }
       }
     },
-    "02: localization.translate-prompt" : {
-      "extractionState" : "manual",
+    "localization.translate-prompt" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -35,7 +35,7 @@
         }
       }
     },
-    "03: intro.title" : {
+    "01: intro.title" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -52,7 +52,7 @@
         }
       }
     },
-    "04: intro.subtitle" : {
+    "02: intro.subtitle" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -69,7 +69,7 @@
         }
       }
     },
-    "05: intro.links.website" : {
+    "03: intro.links.website" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -86,7 +86,7 @@
         }
       }
     },
-    "06: intro.links.help" : {
+    "04: intro.links.help" : {
       "comment" : "Note: &nbsp; creates a so called 'non-breaking-space' character, which is like a normal space that prevents line breaks. &amp; creates an ampersand (&) character",
       "extractionState" : "manual",
       "localizations" : {
@@ -104,7 +104,7 @@
         }
       }
     },
-    "07: intro.links.releases" : {
+    "05: intro.links.releases" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -121,7 +121,7 @@
         }
       }
     },
-    "08: intro.links.acknowledgements" : {
+    "06: intro.links.acknowledgements" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -138,7 +138,7 @@
         }
       }
     },
-    "09: intro.downloads-badge-label" : {
+    "07: intro.downloads-badge-label" : {
       "comment" : "Note: This label will be shown next to a box containing the number of times Mac Mouse Fix has been downloaded so far",
       "extractionState" : "manual",
       "localizations" : {
@@ -156,7 +156,7 @@
         }
       }
     },
-    "10: intro.body" : {
+    "08: intro.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -173,7 +173,7 @@
         }
       }
     },
-    "11: features" : {
+    "09: features" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -190,7 +190,7 @@
         }
       }
     },
-    "12: install" : {
+    "10: install" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -207,7 +207,7 @@
         }
       }
     },
-    "13: macos-compat" : {
+    "11: macos-compat" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -224,7 +224,7 @@
         }
       }
     },
-    "14: price" : {
+    "12: price" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -241,7 +241,7 @@
         }
       }
     },
-    "15: uninstall" : {
+    "13: uninstall" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -258,7 +258,7 @@
         }
       }
     },
-    "16: what-people-say" : {
+    "14: what-people-say" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -275,7 +275,7 @@
         }
       }
     },
-    "17: tips" : {
+    "15: tips" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -292,7 +292,7 @@
         }
       }
     },
-    "18: tips.swish" : {
+    "16: tips.swish" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -309,7 +309,7 @@
         }
       }
     },
-    "19: tips.swish.body" : {
+    "17: tips.swish.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -326,7 +326,7 @@
         }
       }
     },
-    "20: tips.apple-keys" : {
+    "18: tips.apple-keys" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -343,7 +343,7 @@
         }
       }
     },
-    "21: tips.apple-keys.body" : {
+    "19: tips.apple-keys.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -360,7 +360,7 @@
         }
       }
     },
-    "22: questions" : {
+    "20: questions" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -377,7 +377,7 @@
         }
       }
     },
-    "23: questions.apple-silicon" : {
+    "21: questions.apple-silicon" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -394,7 +394,7 @@
         }
       }
     },
-    "24: questions.apple-silicon.body" : {
+    "22: questions.apple-silicon.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -411,7 +411,7 @@
         }
       }
     },
-    "25: questions.click-delay" : {
+    "23: questions.click-delay" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -428,7 +428,7 @@
         }
       }
     },
-    "26: questions.click-delay.body" : {
+    "24: questions.click-delay.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -445,7 +445,7 @@
         }
       }
     },
-    "27: questions.blender" : {
+    "25: questions.blender" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -462,7 +462,7 @@
         }
       }
     },
-    "28: questions.blender.body" : {
+    "26: questions.blender.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -479,7 +479,7 @@
         }
       }
     },
-    "29: questions.app-expose" : {
+    "27: questions.app-expose" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -496,7 +496,7 @@
         }
       }
     },
-    "30: questions.app-expose.body" : {
+    "28: questions.app-expose.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -513,7 +513,7 @@
         }
       }
     },
-    "31: questions.app-specific-settings" : {
+    "29: questions.app-specific-settings" : {
       "comment" : "Don't translate \"More... > App-specific settings\" – Mac Mouse Fix 2 doesn't support localization.",
       "extractionState" : "manual",
       "localizations" : {
@@ -531,7 +531,7 @@
         }
       }
     },
-    "32: questions.app-specific-settings.body" : {
+    "30: questions.app-specific-settings.body" : {
       "comment" : "1) Don't translate \"More... > App-specific settings\" - that's because Mac Mouse Fix 2 doesn't support localization. 2) In English, the words \"Mac Mouse Fix\" are exactly aligned in the first two lines that start with \"In Mac Mouse Fix 2...\" and \"In Mac Mouse Fix 3...\". I think the alignment makes the text easier to scan. Maybe it's worth doing something similar in your translation.",
       "extractionState" : "manual",
       "localizations" : {
@@ -549,7 +549,7 @@
         }
       }
     },
-    "33: questions.mouse-support" : {
+    "31: questions.mouse-support" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -566,7 +566,7 @@
         }
       }
     },
-    "34: questions.mouse-support.body" : {
+    "32: questions.mouse-support.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -583,7 +583,7 @@
         }
       }
     },
-    "35: questions.mouse-buttons-not-working" : {
+    "33: questions.mouse-buttons-not-working" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -600,7 +600,7 @@
         }
       }
     },
-    "36: questions.mouse-buttons-not-working.body" : {
+    "34: questions.mouse-buttons-not-working.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -617,7 +617,7 @@
         }
       }
     },
-    "37: questions.magic-mouse-support" : {
+    "35: questions.magic-mouse-support" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -634,7 +634,7 @@
         }
       }
     },
-    "38: questions.magic-mouse-support.body" : {
+    "36: questions.magic-mouse-support.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -651,7 +651,7 @@
         }
       }
     },
-    "39: questions.tilt-wheel" : {
+    "37: questions.tilt-wheel" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -668,7 +668,7 @@
         }
       }
     },
-    "40: questions.tilt-wheel.body" : {
+    "38: questions.tilt-wheel.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -685,7 +685,7 @@
         }
       }
     },
-    "41: questions.pointer-acceleration" : {
+    "39: questions.pointer-acceleration" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -702,7 +702,7 @@
         }
       }
     },
-    "42: questions.pointer-acceleration.body" : {
+    "40: questions.pointer-acceleration.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -719,7 +719,7 @@
         }
       }
     },
-    "43: questions.version-2-vs-3" : {
+    "41: questions.version-2-vs-3" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -736,7 +736,7 @@
         }
       }
     },
-    "44: questions.version-2-vs-3.body" : {
+    "42: questions.version-2-vs-3.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -753,7 +753,7 @@
         }
       }
     },
-    "45: questions.data-collection" : {
+    "43: questions.data-collection" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -770,7 +770,7 @@
         }
       }
     },
-    "46: questions.data-collection.body" : {
+    "44: questions.data-collection.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -787,7 +787,7 @@
         }
       }
     },
-    "47: questions.license-sharing" : {
+    "45: questions.license-sharing" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -804,7 +804,7 @@
         }
       }
     },
-    "48: questions.license-sharing.body" : {
+    "46: questions.license-sharing.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -821,7 +821,7 @@
         }
       }
     },
-    "49: questions.license-future-versions" : {
+    "47: questions.license-future-versions" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -838,7 +838,7 @@
         }
       }
     },
-    "50: questions.license-future-versions.body" : {
+    "48: questions.license-future-versions.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -855,7 +855,7 @@
         }
       }
     },
-    "51: questions.refund-policy" : {
+    "49: questions.refund-policy" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -872,7 +872,7 @@
         }
       }
     },
-    "52: questions.refund-policy.body" : {
+    "50: questions.refund-policy.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -889,7 +889,7 @@
         }
       }
     },
-    "53: questions.open-source" : {
+    "51: questions.open-source" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -906,7 +906,7 @@
         }
       }
     },
-    "54: questions.open-source.body" : {
+    "52: questions.open-source.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -923,7 +923,7 @@
         }
       }
     },
-    "55: questions.free-for-donators" : {
+    "53: questions.free-for-donators" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -940,7 +940,7 @@
         }
       }
     },
-    "56: questions.free-for-donators.body" : {
+    "54: questions.free-for-donators.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -957,7 +957,7 @@
         }
       }
     },
-    "57: contributing" : {
+    "55: contributing" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -974,7 +974,7 @@
         }
       }
     },
-    "58: contributing.feedback" : {
+    "56: contributing.feedback" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -991,7 +991,7 @@
         }
       }
     },
-    "59: contributing.feedback.body" : {
+    "57: contributing.feedback.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -1008,7 +1008,7 @@
         }
       }
     },
-    "60: contributing.money" : {
+    "58: contributing.money" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -1025,7 +1025,7 @@
         }
       }
     },
-    "61: contributing.money.body" : {
+    "59: contributing.money.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -1042,7 +1042,7 @@
         }
       }
     },
-    "62: contributing.translations" : {
+    "60: contributing.translations" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -1059,7 +1059,7 @@
         }
       }
     },
-    "63: contributing.translations.body" : {
+    "61: contributing.translations.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -1076,7 +1076,7 @@
         }
       }
     },
-    "64: contributing.code" : {
+    "62: contributing.code" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -1093,7 +1093,7 @@
         }
       }
     },
-    "65: contributing.code.body" : {
+    "63: contributing.code.body" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -1110,7 +1110,7 @@
         }
       }
     },
-    "66: contributing.footer" : {
+    "64: contributing.footer" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
