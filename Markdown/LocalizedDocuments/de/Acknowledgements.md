@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2025**
 
+- 🇩🇪&nbsp;Fabian&nbsp;Köhler - "Make a mouse actually usable under macOS"
 - 🇺🇸&nbsp;Melina&nbsp;Blees
 - 🇮🇹&nbsp;Il&nbsp;Longo - "Great job Noah! Thanks a lot!"
 - 🇺🇸&nbsp;Chris&nbsp;C - "It just works™"
