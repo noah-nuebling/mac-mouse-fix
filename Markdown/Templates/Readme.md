@@ -54,7 +54,7 @@
         <th><a href=https://macmousefix.com/>{{Website&nbsp;↗||intro.links.website||}}</a></th>
         <td><a href=https://redirect.macmousefix.com/?locale={locale_code}&target=mmf-help-and-feedback>{{Help&nbsp;&amp;&nbsp;Feedback||intro.links.help||Note: &nbsp; creates a so called 'non-breaking-space' character, which is like a normal space that prevents line breaks. &amp; creates an ampersand (&) character}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose -->
         <td><a href=https://redirect.macmousefix.com/?locale={locale_code}&target=mmf-releases>{{Releases||intro.links.releases||}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/releases -->
-        <td><a href="{language_root}Acknowledgements.md">{{Acknowledgements||intro.links.acknowledgements||}}</a></td> 
+        <td><a href="{language_root}Acknowledgements.md">{{Acknowledgements||intro.links.acknowledgements||}}</a></td>
     </table>
     <img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?color=25c65f&label={{Downloads||intro.downloads-badge-label||Note: This label will be shown next to a box containing the number of times Mac Mouse Fix has been downloaded so far }}">
 </div>

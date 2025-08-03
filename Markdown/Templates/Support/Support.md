@@ -1,8 +1,8 @@
-# {docname_support}
+```
+key: intro
+```
 
-```
-key: intro.body
-```
+# {docname_support}
 
 Help with problems and questions about Mac Mouse Fix.
 
@@ -10,58 +10,56 @@ Help with problems and questions about Mac Mouse Fix.
 comment:
 ```
 
-## {{Questions||questions||}}
+```
+key: questions
+```
+## Questions
 
-```
-key: questions.body
-```
 Short answers to common questions [here](<{language_root}Readme.md#questions>).
 ```
 comment:
 ```
 
-## {{Guides||guides||}}
-
 ```
-key: guides.body
+key: guides
 ```
+## Guides
 
 Where possible, Mac Mouse Fix explains itself.
 But sometimes a guide helps!
 
-- [{docname_captured_buttons_mmf3}](<{language_root}Support/Guides/Captured Buttons (Mac Mouse Fix 3).md>) (Mac Mouse Fix 3)
-- [{docname_captured_buttons_mmf2}](<{repo_root}Support/Guides/Captured Buttons (Mac Mouse Fix 2).md>) (Mac Mouse Fix 2) {only_in_english}
+- [{docname_captured_buttons_mmf3}](<{language_root}Support/Guides/CapturedButtonsMMF3.md>) (Mac Mouse Fix 3)
+- [{docname_captured_buttons_mmf2}](<{repo_root}Support/Guides/CapturedButtonsMMF2.md>) (Mac Mouse Fix 2) {only_in_english}
 
 
 ```
 comment:
 ```
 
-### {{Older Guides||guides.old||}}
+```
+key: guides.old
+```
 
-```
-key: guides.old.body
-```
+### Older Guides
 
 Guides for older versions of Mac Mouse Fix or macOS.
 
-- [{docname_enabling}](<{repo_root}Support/Legacy Guides/Enabling Mac Mouse Fix.md>) {only_in_english}
+- [{docname_enabling}](<{repo_root}Support/Guides/Old/Enabling.md>) {only_in_english}
     - For **macOS 13 Ventura** and **macOS 14 Sonoma**.
-- [{docname_ax_access}](<{repo_root}Support//Legacy Guides/Granting Accessibility Access.md>) {only_in_english}
+- [{docname_ax_access}](<{repo_root}Support/Guides/Old/AccessibilityAccess.md>) {only_in_english}
     - For users of **Mac Mouse Fix 2.2.1** and older, or **macOS 10.14 Mojave** and older.
-- [{docname_opening}](<{repo_root}Support//Legacy Guides/Opening Mac Mouse Fix & Malware Messages.md>) {only_in_english}
+- [{docname_opening}](<{repo_root}Support/Guides/Old/Opening.md>) {only_in_english}
     - For **Mac Mouse Fix 2.2.3** and older.
 
 ```
 comment:
 ```
 
-## {{Contact||contact||}}
-
-
 ```
-key: contact.body
+key: contact
 ```
+## Contact
+
 Still have questions? Click [here](https://redirect.macmousefix.com/?locale={locale_code}&target=mmf-feedback-help-content).
 ```
 comment:

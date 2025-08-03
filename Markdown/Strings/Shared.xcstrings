@@ -69,6 +69,74 @@
         }
       }
     },
+    "guide.footer.hope-it-helped.1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ich hoffe diese Anleitung war hilfreich!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "I hope this guide was helpful!"
+          }
+        }
+      }
+    },
+    "guide.footer.hope-it-helped.2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ich hoffe diese Information war nützlich!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "I hope this information was useful!"
+          }
+        }
+      }
+    },
+    "guide.footer.hope-it-helped.3" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ich hoffe diese Anleitung hat die Dinge aufgeklärt!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "I hope this guide cleared things up!"
+          }
+        }
+      }
+    },
+    "guide.footer.still-have-questions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch Fragen? Klicke [hier]({url})."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Still have questions? Click [here]({url})."
+          }
+        }
+      }
+    },
     "localization.progress-message" : {
       "comment" : ".",
       "extractionState" : "manual",

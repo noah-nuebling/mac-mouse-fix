@@ -1,4 +1,4 @@
-# Captured Buttons
+# {docname_captured_buttons_mmf2}
 
 When using Mac Mouse Fix, you might have come across a message saying that a button on your mouse has been 'captured' by Mac Mouse Fix.
 
@@ -52,12 +52,4 @@ To have Blender work properly with Mac Mouse Fix, you'll have to uncapture the M
 
 <!-- Hint: You can also assign the 'Middle Click' action to other any other trigger like 'Button 4 Hold' etc. Learn more about triggers in this guide -->
 
----
-
-I hope this helped you! If you have any questions you can:
-- Write a comment down below
-- [Open a new GitHub Discussion](https://github.com/noah-nuebling/mac-mouse-fix/discussions)
-- [Send me an Email](mailto:noah.n.public@gmail.com?)
-  - Please note that I get many emails and I don't have that much time, so I might take a long time to respond
-
-General feedback and improvement ideas for this guide are also very welcome of course!
+{guide_footer}

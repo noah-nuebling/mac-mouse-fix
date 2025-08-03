@@ -1,4 +1,4 @@
-# Opening Mac Mouse Fix & Malware Messages
+# {docname_opening}
 
 If you encountered a problem with opening the Mac Mouse Fix app, this guide will help you solve it.
 
@@ -61,12 +61,4 @@ See #95 to learn more about the issue.
 
 Simply [download](http://noah-nuebling.github.io/mac-mouse-fix-website) the latest version of Mac Mouse Fix. It should open normally.
 
----
-
-I hope this helped you! If you have any questions you can:
-- Write a comment down below
-- [Open a new GitHub Discussion](https://github.com/noah-nuebling/mac-mouse-fix/discussions)
-- [Send me an Email](mailto:noah.n.public@gmail.com?)
-  - Please note that I get many emails and I don't have that much time, so I might take a long time to respond
-
-General feedback and improvement ideas for this guide are also very welcome of course!
+{guide_footer}

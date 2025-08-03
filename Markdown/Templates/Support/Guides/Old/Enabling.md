@@ -1,4 +1,4 @@
-# Enabling Mac Mouse Fix
+# {docname_enabling}
 
 If you ran into a problem with enabling Mac Mouse Fix, this guide will help you solve it.
 
@@ -81,8 +81,6 @@ macOS might be trying to enable a different copy of Mac Mouse Fix than the one y
 - In case this approach doesn't work, try the **1. Solution** instead.
 <!-- - Mac Mouse Fix 3 and later try to automatically detect if there is a duplicate copy on your computer which prevents enabling. In that case, Mac Mouse Fix will show you solution steps right in the app. However, in case the automatic detection fails or in case you're using Mac Mouse Fix 2 then the 2. Solution might help you. -->
 
----
-
-I hope this helps! If you have any further questions or suggestions, let me know in a comment below.
-
 *This guide was written with the help of ChatGPT.*
+
+{guide_footer}

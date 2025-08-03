@@ -1,4 +1,4 @@
-# Granting Accessibility Access
+# {docname_ax_access}
 
 <!-- ## The guide below will help you grant Accessibility Access to Mac Mouse Fix Helper -->
 
@@ -110,12 +110,4 @@ Apple rewrote the 'System Preferences' app for macOS 13 Ventura and renamed it t
 - In several places the guide refers to a the list at 'System Settings > Privacy & Security > Accessibility'. On macOS 12 Monterey and below you can find this list under 'System Preferences > Security & Privacy > Privacy > Accessibility' instead.
 - The video footage and images for this Guide stem from the new System Settings introduced in macOS 13 Ventura. Things will look a little different under macOS 12 Monterey and below but the same issues can occur and the same solutions apply.
 
----
-
-I hope this Guide helped you! If you have any questions you can:
-- Write a comment down below
-- [Open a new GitHub Discussion](https://github.com/noah-nuebling/mac-mouse-fix/discussions)
-- [Send me an Email](mailto:noah.n.public@gmail.com?)
-  - Please note that I get many emails and I don't have that much time, so I might not be able to answer
-
-General feedback and improvement ideas for this guide are also very welcome of course!
+{guide_footer}

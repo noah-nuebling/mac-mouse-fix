@@ -2,6 +2,8 @@
 key: intro
 ```
 
+# {docname_captured_buttons_mmf3}
+
 When using Mac Mouse Fix, you might have come across a message saying that a button on your mouse has been 'captured' by Mac Mouse Fix.
 
 <img width="400" alt="Screen Shot 2021-05-27 at 21 29 49" src="https://user-images.githubusercontent.com/40808343/119886114-e79c9200-bf32-11eb-98a9-4a0e7daab465.png">
@@ -11,11 +13,12 @@ In this article, you'll learn what this means, what problems it might cause, and
 comment:
 ```
 
-### {{What does it mean for a button to be 'captured' by Mac Mouse Fix?||terminology||}}
+```
+key: terminology
+```
 
-```
-key: terminology.body
-```
+### What does it mean for a button to be 'captured' by Mac Mouse Fix?
+
 A mouse button that is captured by Mac Mouse Fix can't be seen by other apps or by macOS anymore.
 The functions which this button would normally perform won't work anymore while it is captured.
 
@@ -26,11 +29,12 @@ That's because Safari (or any other app) can't see when you click the Middle Mou
 comment:
 ```
 
-### {{How do I know which buttons are captured by Mac Mouse Fix?||which-buttons||}}
+```
+key: which-buttons
+```
 
-```
-key: which-buttons.body
-```
+### How do I know which buttons are captured by Mac Mouse Fix?
+
 Any button which shows up on the left side of the Action Table is captured by Mac Mouse Fix.
 
 In this image **Middle Button**, **Button 5**, and **Button 4** are captured <br>
@@ -41,11 +45,12 @@ Note that when you disable Mac Mouse Fix, it won't have any effect on your mouse
 comment:
 ```
 
-### {{How to uncapture a mouse button?||uncapturing||}}
+```
+key: uncapturing
+```
 
-```
-key: uncapturing.body
-```
+### How to uncapture a mouse button?
+
 To uncapture a mouse button, delete all rows in the Action Table which contain that button. 
 You can delete a row in the Action Table by selecting it and then clicking the '-' button.
 
@@ -54,11 +59,12 @@ https://user-images.githubusercontent.com/40808343/120056314-a348e900-c03b-11eb-
 comment:
 ```
 
-### {{What can I do to restore the original functionality of a button?||restoring||}}
+```
+key: restoring
+```
 
-```
-key: restoring.body
-```
+### What can I do to restore the original functionality of a button?
+
 To restore the original functionality of a button, you can uncapture the button as described above. 
 You can also always disable Mac Mouse Fix entirely to have your mouse behave exactly as it originally did.
 
@@ -67,11 +73,12 @@ For one scenario there's a neat workaround:
 comment:
 ```
 
-#### {{How to use the original functionality of clicking the Middle Mouse Button without uncapturing it?||restoring.middle-button||}}
+```
+key: restoring.middle-button
+```
 
-```
-key: restoring.middle-button.body
-```
+#### How to use the original functionality of clicking the Middle Mouse Button without uncapturing it?
+
 To use the original functionality of clicking Middle Mouse Button _without_ uncapturing it, you can choose the **'Middle Click' action**.
 
 <img width="400" alt="Screen Shot 2021-05-29 at 05 19 57" src="https://user-images.githubusercontent.com/40808343/120056598-97f6bd00-c03d-11eb-9784-e4a428910fb4.png">
@@ -87,18 +94,4 @@ comment:
 
 <!-- Hint: You can also assign the 'Middle Click' action to other any other trigger like 'Button 4 Hold' etc. Learn more about triggers in this guide -->
 
----
-
-```
-key: outro
-```
-I hope this helped you! If you have any questions you can:
-- Write a comment down below
-- [Open a new GitHub Discussion](https://github.com/noah-nuebling/mac-mouse-fix/discussions)
-- [Send me an Email](mailto:noah.n.public@gmail.com?)
-  - Please note that I get many emails and I don't have that much time, so I might take a long time to respond
-
-General feedback and improvement ideas for this guide are also very welcome of course!
-```
-comment:
-```
+{guide_footer}
