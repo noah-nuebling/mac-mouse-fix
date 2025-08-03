@@ -29,8 +29,8 @@ key: guides.body
 Where possible, Mac Mouse Fix explains itself.
 But sometimes a guide helps!
 
-- [{docname_guide_captured_buttons_mmf3}](<{language_root}Support/Guides/Captured Buttons (Mac Mouse Fix 3).md>) (Mac Mouse Fix 3)
-- [{docname_guide_captured_buttons_mmf2}](<{repo_root}Support/Guides/Captured Buttons (Mac Mouse Fix 2).md>) (Mac Mouse Fix 2) {only_in_english}
+- [{docname_captured_buttons_mmf3}](<{language_root}Support/Guides/Captured Buttons (Mac Mouse Fix 3).md>) (Mac Mouse Fix 3)
+- [{docname_captured_buttons_mmf2}](<{repo_root}Support/Guides/Captured Buttons (Mac Mouse Fix 2).md>) (Mac Mouse Fix 2) {only_in_english}
 
 
 ```
@@ -45,11 +45,11 @@ key: guides.old.body
 
 Guides for older versions of Mac Mouse Fix or macOS.
 
-- [{docname_guide_enabling}](<{repo_root}Support/Legacy Guides/Enabling Mac Mouse Fix.md>) {only_in_english}
+- [{docname_enabling}](<{repo_root}Support/Legacy Guides/Enabling Mac Mouse Fix.md>) {only_in_english}
     - For **macOS 13 Ventura** and **macOS 14 Sonoma**.
-- [{docname_guide_accessibility_access}](<{repo_root}Support//Legacy Guides/Granting Accessibility Access.md>) {only_in_english}
+- [{docname_ax_access}](<{repo_root}Support//Legacy Guides/Granting Accessibility Access.md>) {only_in_english}
     - For users of **Mac Mouse Fix 2.2.1** and older, or **macOS 10.14 Mojave** and older.
-- [{docname_guide_opening}](<{repo_root}Support//Legacy Guides/Opening Mac Mouse Fix & Malware Messages.md>) {only_in_english}
+- [{docname_opening}](<{repo_root}Support//Legacy Guides/Opening Mac Mouse Fix & Malware Messages.md>) {only_in_english}
     - For **Mac Mouse Fix 2.2.3** and older.
 
 ```
