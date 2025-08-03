@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2025**
 
+- 🇮🇩&nbsp;Candi&nbsp;Agusta&nbsp;Islamiano - "A must-have app for every Mac user with a third-party mouse. Thank you!"
 - 🇬🇧&nbsp;Kevin
 - 🇩🇪&nbsp;Fabian&nbsp;Köhler - "Make a mouse actually usable under macOS"
 - 🇺🇸&nbsp;Melina&nbsp;Blees
