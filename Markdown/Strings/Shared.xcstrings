@@ -1,37 +1,106 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "localization.progress-message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Dieses Dokument ist `{localization_progress}` übersetzt nach `{current_language}`\n\nUm beim Übersetzen zu helfen, klicke [hier]({url})!"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "This document is `{localization_progress}` translated into `{current_language}`\nTo help translate, click [here]({url})!"
-          }
-        }
-      }
-    },
-    "localization.translate-prompt" : {
-      "comment" : "Note: {url} will be replaced by a link. Make sure to type \"{url}\" exactly like in the original for the text-replacement to work.)\nNOTE TO SELF: IIRC this hint was supposed to show up on the first string containing a url that localizers would see. It probably doesn't belong here.",
+    "docname.acknowledgements" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[Helfe beim Übersetzen!]({url})"
+            "value" : "Danksagungen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
+            "value" : "Acknowledgements"
+          }
+        }
+      }
+    },
+    "docname.guide.captured-buttons" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abgefangene Maustasten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Captured Mouse Buttons"
+          }
+        }
+      }
+    },
+    "docname.readme" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Readme"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Readme"
+          }
+        }
+      }
+    },
+    "docname.support-overview" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Support"
+          }
+        }
+      }
+    },
+    "localization.progress-message" : {
+      "comment" : ".",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieses Dokument ist zu `{localization_progress}` übersetzt auf `{current_language}`\n[Beim Übersetzen helfen]({url})"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "This document is `{localization_progress}` translated into `{current_language}`\n[Help translate]({url})"
+          }
+        }
+      }
+    },
+    "localization.translate-prompt" : {
+      "comment" : "Note: {url} will be replaced by a link. Make sure to type \"{url}\" exactly like in the original for the text-replacement to work.)\nNOTE TO SELF: IIRC this hint was supposed to show up on the first string containing a url that localizers would see. It probably doesn't belong here.\n\nNote: 'Help translate!' should sound like an invitation, not a command. In German I rephrased it a bit to avoid the imperative form (I landed on 'Beim Übersetzen helfen!')",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "[🌎 Beim Übersetzen helfen!]({url})"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "[🌎 Help translate!]({url})"
           }
         }
       }
