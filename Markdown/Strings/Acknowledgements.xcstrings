@@ -1,42 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "localization.progress" : {
-      "comment" : ".",
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dieses Dokument ist zu `{localization_progress}` übersetzt nach `{current_language}`<br>\nUm beim Übersetzen zu helfen, klicke [hier]({url})!"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "This document is `{localization_progress}` translated into `{current_language}`<br>To help translate, click [here]({url})!"
-          }
-        }
-      }
-    },
-    "localization.translate-prompt" : {
-      "comment" : "Note: {url} will be replaced by a link. Make sure to type \"{url}\" exactly like in the original for the text-replacement to work.",
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "[Helfe dabei, Mac Mouse Fix in verschiedene Sprachen zu übersetzen!]({url})"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "[Help translate Mac Mouse Fix to different languages!]({url})"
-          }
-        }
-      }
-    },
     "01: intro" : {
       "comment" : ".",
       "extractionState" : "manual",
@@ -148,13 +112,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "### ✨ PayPal Spenden\n\nViele großzügige Leute haben mir auf PayPal Milchshakes spendiert, als Mac Mouse Fix noch komplett kostenlos war. Als Dankeschön könnt ihr eine kostenlose Lizenz bekommen. Schickt mir einfach eine E-Mail mit \"Free License\" im Betreff und hängt einen Screenshot der Spende an. Danke euch!\n\n*Es dauert vielleicht eine Weile, bis ich antworte. Wenn ihr die App schon gekauft habt, dann lasst mich wissen, mit welcher E-Mail, und ich erstatte euch den Betrag zurück.*"
+            "value" : "### ✨ PayPal Spenden\n\nViele großzügige Leute haben mir auf PayPal Milchshakes spendiert, als Mac Mouse Fix noch komplett kostenlos war. \n\nWenn du dazugehört hast, klicke [hier]({url}) um eine **kostenlose Lizenz** zu erhalten!"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with \"Free License\" in the subject and attach a screenshot of your donation. Thank you!\n\n*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*"
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free.\n\nIf you're among them, click [here]({url}) to receive a **free license**!"
           }
         }
       }

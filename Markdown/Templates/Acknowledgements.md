@@ -89,9 +89,10 @@ key: money.paypal-donations
 ```
 ### ✨ PayPal Donations
 
-Lots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free. As thanks, I will provide you with a free license. Just shoot me an email with "Free License" in the subject and attach a screenshot of your donation. Thank you!
+Lots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free.
 
-*I might be slow to respond. If you already bought the app, just let me know the email that you bought the app with, and I will refund you.*
+If you're among them, click [here](https://redirect.macmousefix.com/?locale={locale_code}&target=mmf-apply-for-milkshake-license) to receive a **free license**!
+
 ```
 comment:
 ```
