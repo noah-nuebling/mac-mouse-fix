@@ -209,6 +209,7 @@ assert os.path.basename(os.getcwd()) == 'mac-mouse-fix-update-feed', f"Running f
 argparser = argparse.ArgumentParser("")
 argparser.add_argument('--test-mode', action=argparse._StoreTrueAction)
 argparser.add_argument('--anthropic-api-key', default=os.environ.get("ANTHROPIC_API_KEY"))
+argparser.add_argument('--no-locale-validation', action=argparse._StoreTrueAction)
 args, unrecognized_args = argparser.parse_known_args()
 if unrecognized_args:
     print(f"Ignoring unrecognized args: {unrecognized_args}")
@@ -333,13 +334,12 @@ locales = [
 #       Meta: 
 #           [Mar 2025] Maybe this explanation should be moved to some central place since it concerns all the localizable repos in the MMF project
 print(f"Validating locales against main repo...")
-def _validate_locales():
+if not args.no_locale_validation:
     p = os.path.join('../mac-mouse-fix', mflocales.path_to_xcodeproj['mac-mouse-fix'])
     assert os.path.exists(p), f"Wanted to validate locales, but main repo Xcode project not found at expected location: {p}"
     loc_dev, loc_trans = mflocales.find_xcode_project_locales(p)
     assert loc_dev == source_locale,                            f"Source locale doesn't match main repo: '{loc_dev}' vs '{source_locale}'"
-    assert set(loc_trans) == set(locales)-{source_locale},      f"Translation locales don't match main repo. Symmetric difference: {set(loc_trans).symmetric_difference(set(locales))}. App locales: ({loc_trans}), Hardcoded locales: ({locales})"
-_validate_locales()
+    assert set(loc_trans) == set(locales)-{source_locale},      f"Translation locales don't match main repo. Symmetric difference: {set(loc_trans).symmetric_difference(set(locales))}. App locales: ({loc_trans}), Hardcoded locales: ({locales})\nPass --no-locale-validation to ignore the main repo and just use the locales hardcoded here."
 
 # Sort locales
 locales = mflocales.sorted_locales(locales, source_locale)
@@ -1050,9 +1050,9 @@ def upget_custom_string(locale: str, strkey: str) -> str|None:
     assert strkey in custom_strings_in_src_language,    f"Unknown string key {strkey}"
 
     # Derive stuff
-    src_path:           str                 = getpath_custom_string(source_locale, strkey)
-    translation_path:   str                 = getpath_custom_string(locale, strkey)
-    fresh_src:          mf_localizable_str   = custom_strings_in_src_language[strkey]
+    src_path:           str                             = getpath_custom_string(source_locale, strkey)
+    translation_path:   str                             = getpath_custom_string(locale, strkey)
+    fresh_src:          mflocales.mf_localizable_str    = custom_strings_in_src_language[strkey]
 
     # Write the fresh source-language-string to file
     #   Note: [Mar 2025] Is it inefficient to do this every time here? Maybe we could restrict this to only happen once per strkey, per program-run
@@ -1072,14 +1072,14 @@ def upget_custom_string(locale: str, strkey: str) -> str|None:
 # AI Translation
 #
 
-def _let_claude_translate(locale: str, english_textttt: str|mf_localizable_str) -> str:
+def _let_claude_translate(locale: str, english_textttt: str|mflocales.mf_localizable_str) -> str:
 
     # [Mar 2025] Helper for upget_translation()
 
     # Preprocess args
     english_text: str = None
     localizer_hint: str = None
-    if isinstance(english_textttt, mf_localizable_str):
+    if isinstance(english_textttt, mflocales.mf_localizable_str):
         english_text = english_textttt.string
         localizer_hint = english_textttt.hint
     else:
@@ -1201,7 +1201,7 @@ def _let_claude_translate(locale: str, english_textttt: str|mf_localizable_str) 
     return translation
 
 def upget_translation(
-    fresh_src: str|mf_localizable_str, 
+    fresh_src: str|mflocales.mf_localizable_str, 
     translation_locale: str,
     src_path: str,
     translation_path: str,
@@ -1220,7 +1220,7 @@ def upget_translation(
 
     # Skip source language (English)
     if translation_locale == source_locale: 
-        return fresh_src.string if isinstance(fresh_src, mf_localizable_str) else fresh_src
+        return fresh_src.string if isinstance(fresh_src, mflocales.mf_localizable_str) else fresh_src
 
     # Get & update translation
     translation = None
