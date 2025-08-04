@@ -506,7 +506,7 @@ comment:
   ```
   key: questions.free-for-donators.body
   ```
-  Yes! See the [Acknowledgements]({language_root}Acknowledgements.md#-paypal-donations) for more info.
+  Yes! If you donated via PayPal, click [here](https://redirect.macmousefix.com/?locale={locale_code}&target=mmf-apply-for-milkshake-license) to receive a **free license**.
   ```
   comment: 
   ```
