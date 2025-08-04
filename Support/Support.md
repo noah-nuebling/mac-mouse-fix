@@ -20,24 +20,23 @@ Short answers to common questions [here](<../Readme.md#questions>).
 Where possible, Mac Mouse Fix explains itself.
 But sometimes a guide helps!
 
-- [Captured Mouse Buttons](<../Support/Guides/Captured Buttons (Mac Mouse Fix 3).md>) (Mac Mouse Fix 3)
-- [Captured Mouse Buttons](<../Support/Guides/Captured Buttons (Mac Mouse Fix 2).md>) (Mac Mouse Fix 2) 
+- [Captured Mouse Buttons](<../Support/Guides/CapturedButtonsMMF3.md>) (Mac Mouse Fix 3)
+- [Captured Mouse Buttons](<../Support/Guides/CapturedButtonsMMF2.md>) (Mac Mouse Fix 2) 
 
 ### Older Guides
 
 Guides for older versions of Mac Mouse Fix or macOS.
 
-- [Enabling Mac Mouse Fix](<../Support/Legacy Guides/Enabling Mac Mouse Fix.md>) 
+- [Enabling Mac Mouse Fix](<../Support/Guides/Old/Enabling.md>) 
     - For **macOS 13 Ventura** and **macOS 14 Sonoma**.
-- [Granting Accessibility Access](<../Support//Legacy Guides/Granting Accessibility Access.md>) 
+- [Granting Accessibility Access](<../Support/Guides/Old/AccessibilityAccess.md>) 
     - For users of **Mac Mouse Fix 2.2.1** and older, or **macOS 10.14 Mojave** and older.
-- [Opening Mac Mouse Fix & Malware Messages](<../Support//Legacy Guides/Opening Mac Mouse Fix & Malware Messages.md>) 
+- [Opening Mac Mouse Fix & Malware Messages](<../Support/Guides/Old/Opening.md>) 
     - For **Mac Mouse Fix 2.2.3** and older.
 
 ## Contact
 
-
-Still have questions? Click [here](https://redirect.macmousefix.com/?locale=en&target=mmf-feedback-help-content).
+Still have questions? Click [here](https://redirect.macmousefix.com/?locale=en&target=mmf-support-still-have-questions).
 
 <!--
 [Aug 2025] We thought about having a section here saying:

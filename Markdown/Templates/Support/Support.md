@@ -60,7 +60,7 @@ key: contact
 ```
 ## Contact
 
-Still have questions? Click [here](https://redirect.macmousefix.com/?locale={locale_code}&target=mmf-feedback-help-content).
+Still have questions? Click [here](https://redirect.macmousefix.com/?locale={locale_code}&target=mmf-support-still-have-questions).
 ```
 comment:
 ```
