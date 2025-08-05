@@ -107,7 +107,9 @@ typedef enum {
 
 - (void)setUpNewDisplayLinkWithActiveDisplays {
     
-    /// Discussion [Apr 2025] Should be called `setupNew*CV*DisplayLink...`
+    /// Discussion
+    ///     [Apr 2025] Should be called `setupNew*CV*DisplayLink...`
+    ///     [Aug 2025] I think this might be the culprit in a common bug. See `notes-public > scrolling-stops-intermittently_apr-2025.md`
     
     CVReturn ret;
     

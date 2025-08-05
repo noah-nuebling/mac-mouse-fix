@@ -50,6 +50,8 @@ bool CGEvent_IsWacomEvent(CGEventRef event) {
     ///     - How do other apps do this?
     ///         I looked at LinearMouse and MOS source code to see if they're filtering drawing tablets, but I couldn't see anything specific.
     ///         Update: [Jul 2025] Tested the Wacom with MOS and scrolling got super fast – so no filtering in place.
+    ///         Update: [Aug 2025] MMF 2.2.1 actually implemented a fix for this that I forgot about ?? (See 2.2.1 update notes: https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.1)
+    ///             But from what I can tell, the 'fix' was checking `kCGTabletEventDeviceID` and that code is still active in MMF 3, so perhaps it just didn't fix things. .. Or Wacom changed their events and broke the fix or something?
     ///     Also see:
     ///         - `EventLoggerForBrad > Investigate_Wacom.m`
     ///             -> Here we found that looking at the sender fields is probably the only reliable way to differentiate the Wacom's scroll events. Field 102 was also interesting – it always contained 63
