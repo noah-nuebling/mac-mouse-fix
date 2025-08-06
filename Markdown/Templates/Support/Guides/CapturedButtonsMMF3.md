@@ -1,3 +1,46 @@
+
+<!--
+
+Planning for updated MMF 3 Captured Buttons Guide: [Aug 2025]
+
+- There are two aspects to the Guide:
+    - Practical user problems caused by capturing
+        - Helping people solve these are the core purpose of this Guide
+        - List of practical problems I can think of
+            - Terminal pasting, Browser-link-opening 
+                - (Due to Middle Click capturing)
+            - Blender orbiting 
+                - (Due to Middle Drag capturing)
+            - Browser back-and-forward 
+                - (Due to Side-Button Capturing) 
+                - (I don't remember actually hearing issue reports about this.)
+            - Video-game remapping of side-buttons 
+                - (Due to Side-Button Capturing) 
+                - (Which videogames do that?)
+            - Using MOS, Logi Options, or another smooth scrolling app for scrolling, and using MMF only for buttons
+                - (Due to scrollwheel capturing) 
+                - (Not sure if you need to fully uncapture to make this work – Can't you just turn off smooth-scrolling in MMF? But it would still be nice for users to know how to get MMF CPU usage during scrolling to 0% if they don't need it.)
+    - Instilling fundamental mental model of how capturing works
+        - If people understand this, they can then understand how to solve their specific practical problems. Maybe even ones we're not aware of.
+        - This may make up the majority of the content, but it's **in service** of people being able to solve the practical problems.
+
+Content:
+    - Core explanation of 'capturing' 
+        - should probably be shared for scrollwheel and buttons
+        - ... But that might make it more abstract and harder to understand? 
+    - Practical UI-based guides 'How do I know what is captured' and 'how to uncapture' 
+        - should probably be specific to scrollwheel / buttons and should probably use screenshots so it's very easy-to-follow
+    - Reference to practical problems (See above)
+        - People with those practical problems should be naturally guided to this article and it should be clear that they need to read this to sole the problem.
+            - Leading with the abstract explanations of what 'capturing' means might not make this obvious?
+                - Maybe list the practical issues explicitly in a scannable way.
+            - Think about the 'user journey' for people with those practical problems!
+        - Also write about how people can solve those practical issues caused by capturing *without* uncapturing (e.g. Middle Click action, Scroll & Navigate for Orbiting, etc.)
+            - I guess you could think of uncapturing as a bit of a nuclear/last resort option (?) (but useful to understand)
+        - Probably pull in the Blender Orbiting section from Readme > Questions
+            - Are there other sections we should pull in?
+-->
+
 ```
 key: intro
 ```

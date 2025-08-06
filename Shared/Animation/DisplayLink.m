@@ -110,10 +110,11 @@ typedef enum {
     /// Discussion
     ///     [Apr 2025] Should be called `setupNew*CV*DisplayLink...`
     ///     [Aug 2025] I think this might be the culprit in a common bug. See `notes-public > scrolling-stops-intermittently_apr-2025.md`
+    ///     [Aug 2025] Mos doesn't recreate the displaylink every time a new display is connected, so it's probably unnecessary. Why did we do this elaborate stuff without doing any testing?? This is so dumb.
     
     CVReturn ret;
     
-    if (_displayLink != nil) {
+    if (_displayLink != NULL) {
         CVReturn ret = CVDisplayLinkStop(_displayLink); /// [Apr 2025] Expected to be -6672 (DisplayLinkNotRunning)
         CVDisplayLinkRelease(_displayLink);
         DDLogDebug(@"DisplayLink.m: (%@) Deleted existing CVDisplayLink for displayLink. Code: %d", [self identifier], ret);
