@@ -60,6 +60,62 @@ typedef enum {
 
 @synthesize dispatchQueue=_displayLinkQueue;
 
+#pragma mark - Debug
+
+NSString *MFCVReturn_ToString(CVReturn ret) { /// [Aug 2025] Added for debugging. Not sure this is a great place for it.
+    static NSDictionary<NSNumber *, NSString *> *map;
+    static dispatch_once_t onceToken; dispatch_once(&onceToken, ^{
+        map = @{
+
+            @(kCVReturnSuccess)                         : /*0*/                 @"Success",
+            @(kCVReturnError)                           : /*-6660*/             @"Error/First",
+            @(kCVReturnInvalidArgument)                 : /*-6661*/             @"InvalidArgument",
+            @(kCVReturnAllocationFailed)                : /*-6662*/             @"AllocationFailed",
+            @(kCVReturnUnsupported)                     : /*-6663*/             @"Unsupported",
+
+            @(kCVReturnInvalidDisplay)                  : /*-6670*/             @"InvalidDisplay",
+            @(kCVReturnDisplayLinkAlreadyRunning)       : /*-6671*/             @"DisplayLinkAlreadyRunning",
+            @(kCVReturnDisplayLinkNotRunning)           : /*-6672*/             @"DisplayLinkNotRunning",
+            @(kCVReturnDisplayLinkCallbacksNotSet)      : /*-6673*/             @"DisplayLinkCallbacksNotSet",
+            
+            @(kCVReturnInvalidPixelFormat)              : /*-6680*/             @"InvalidPixelFormat",
+            @(kCVReturnInvalidSize)                     : /*-6681*/             @"InvalidSize",
+            @(kCVReturnInvalidPixelBufferAttributes)    : /*-6682*/             @"InvalidPixelBufferAttributes",
+            @(kCVReturnPixelBufferNotOpenGLCompatible)  : /*-6683*/             @"PixelBufferNotOpenGLCompatible",
+            @(kCVReturnPixelBufferNotMetalCompatible)   : /*-6684*/             @"PixelBufferNotMetalCompatible",
+            
+            @(kCVReturnWouldExceedAllocationThreshold)  : /*-6689*/             @"WouldExceedAllocationThreshold",
+            @(kCVReturnPoolAllocationFailed)            : /*-6690*/             @"PoolAllocationFailed",
+            @(kCVReturnInvalidPoolAttributes)           : /*-6691*/             @"InvalidPoolAttributes",
+            @(kCVReturnRetry)                           : /*-6692*/             @"Retry",
+            @(kCVReturnLast)                            : /*-6699*/             @"Last",
+        };
+    });
+    
+    NSString *result = map[@(ret)];
+    return result ?: stringf(@"%d", ret);
+};
+
+NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags flags) {
+    /// [Apr 2025] Added for debugging.
+    static NSString *map[] = {
+        [bitpos(kCGDisplayBeginConfigurationFlag)]      = @"BeginConfiguration",
+        [bitpos(kCGDisplayMovedFlag)]                   = @"Moved",
+        [bitpos(kCGDisplaySetMainFlag)]                 = @"SetMain",
+        [bitpos(kCGDisplaySetModeFlag)]                 = @"SetMode",
+        [bitpos(kCGDisplayAddFlag)]                     = @"Add",
+        [bitpos(kCGDisplayRemoveFlag)]                  = @"Remove",
+        [bitpos(kCGDisplayEnabledFlag)]                 = @"Enabled",
+        [bitpos(kCGDisplayDisabledFlag)]                = @"Disabled",
+        [bitpos(kCGDisplayMirrorFlag)]                  = @"Mirror",
+        [bitpos(kCGDisplayUnMirrorFlag)]                = @"UnMirror",
+        [bitpos(kCGDisplayDesktopShapeChangedFlag)]     = @"DesktopShapeChanged",
+    };
+    
+    NSString *result = bitflagstring(flags, map, arrcount(map));
+    return result;
+};
+
 #pragma mark - Lifecycle
 
 /// Convenience init
@@ -126,37 +182,38 @@ typedef enum {
     }
     
     /// Delete existing displayLink
-    if (_displayLink != nil) {
+    if (_displayLink != NULL) {
         CVReturn ret = CVDisplayLinkStop(_displayLink);
         assert(ret == kCVReturnDisplayLinkNotRunning);
         CVDisplayLinkRelease(_displayLink);
-        DDLogDebug(@"DisplayLink.m: (%@) Deleted existing CVDisplayLink for displayLink. Code: %d", [self identifier], ret);
+        _displayLink = NULL;
+        DDLogDebug(@"DisplayLink.m: (%@) Deleted existing CVDisplayLink for displayLink. Code: %@", [self identifier], MFCVReturn_ToString(ret));
     }
     
     /// Create new displayLink
     ///     [Aug 2025] I think silent failure of this probably causes the `scrolling-stops-intermittently_apr-2025.md` bug.
     ///         To address this, in case of failure, we retry in a loop and eventually crash the program. That way we should have better robustness and better debug data (crashlogs)
     {
-        const int max_tries = 20;       /// [Aug 2025] 20 is kinda arbitrary, but since this only seems to fail very rarely, and only runs in special situations like attaching a new display, there should be no performance impact to trying many times.
-        CVReturn ret  = kCVReturnLast;  /// [Aug 2025] Not sure what to initialize with
-        CVReturn ret2 = kCVReturnLast;
-        bool valid = false;
+        const int max_tries = 20;       /// [Aug 2025] 20 is kinda arbitrary, but since this only seems to fail very rarely, and only runs in special situations like launching the helper, so there should be no performance impact to trying many times.
+        CVReturn ret  = -1;             /// [Aug 2025] Init to silence stupid compiler warnings
+        CVReturn ret2 = -1;
         
         for (int i = 0; i < max_tries; i++) {
             
             ret  = CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
-            ret2 = CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, (__bridge void *_Nullable)(self)); /// [Aug 2025] Why is self `_Nullable`?
+            ret2 = CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, (__bridge void *_Nullable)(self)); /// [Aug 2025] Why is self `_Nullable`? || [Aug 2025] Test result: 'Silently' fails with kCVReturnInvalidArgument if you pass NULL as the `_displayLink`, that fits with our theory about this potentially causing `scrolling-stops-intermittently_apr-2025.md`.
             
-            valid = (ret == kCVReturnSuccess) && (ret2 == kCVReturnSuccess) && (_displayLink != NULL);
+            bool valid = (ret == kCVReturnSuccess) && (ret2 == kCVReturnSuccess) && (_displayLink != NULL);
             if (valid) {
-                DDLogDebug(@"DisplayLink.m: (%@) Created CVDisplayLink (%@) after %d tries", [self identifier], _displayLink, i+1);
-                break;
+                DDLogDebug(@"DisplayLink.m: (%@) Created CVDisplayLink (%@) on try %d", [self identifier], _displayLink, i);
+                return;
             }
             
             CVDisplayLinkRelease(_displayLink);
+            _displayLink = NULL; /// I'm pretty sure CVDisplayLinkCreateWithActiveCGDisplays() always overrides the `_displayLink` to be either NULL or valid. If it sometimes leaves the value untouched, then we'd have to set it to NULL after releasing to prevent use-after-free.
         }
         
-        if (!valid) mfabort(@"DisplayLink.m: (%@) Failed to create CVDisplayLink (%@) after %d tries. Last codes: (%d, %d)", [self identifier], _displayLink, max_tries, ret, ret2);
+        mfabort(@"DisplayLink.m: (%@) Failed to create CVDisplayLink (%@) after %d tries. Last codes: (%@, %@)", [self identifier], _displayLink, max_tries, MFCVReturn_ToString(ret), MFCVReturn_ToString(ret2));
     }
 }
 
@@ -513,26 +570,6 @@ typedef enum {
 }
 
 #pragma mark - Reconfiguration Callback
-
-NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags flags) {
-    /// [Apr 2025] Added for debugging.
-    static NSString *map[] = {
-        [bitpos(kCGDisplayBeginConfigurationFlag)]      = @"BeginConfiguration",
-        [bitpos(kCGDisplayMovedFlag)]                   = @"Moved",
-        [bitpos(kCGDisplaySetMainFlag)]                 = @"SetMain",
-        [bitpos(kCGDisplaySetModeFlag)]                 = @"SetMode",
-        [bitpos(kCGDisplayAddFlag)]                     = @"Add",
-        [bitpos(kCGDisplayRemoveFlag)]                  = @"Remove",
-        [bitpos(kCGDisplayEnabledFlag)]                 = @"Enabled",
-        [bitpos(kCGDisplayDisabledFlag)]                = @"Disabled",
-        [bitpos(kCGDisplayMirrorFlag)]                  = @"Mirror",
-        [bitpos(kCGDisplayUnMirrorFlag)]                = @"UnMirror",
-        [bitpos(kCGDisplayDesktopShapeChangedFlag)]     = @"DesktopShapeChanged",
-    };
-    
-    NSString *result = bitflagstring(flags, map, arrcount(map));
-    return result;
-};
 
 void displayReconfigurationCallback(CGDirectDisplayID display, CGDisplayChangeSummaryFlags flags, void *userInfo) {
     
