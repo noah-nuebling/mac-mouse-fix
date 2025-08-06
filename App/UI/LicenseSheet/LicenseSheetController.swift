@@ -282,9 +282,12 @@ import CocoaLumberjackSwift
             
             /// Display Toast
             ///     Notes:
-            ///     - Why are we using `self.view.window` here, and `MainAppState.shared.window` in other places? IIRC `MainAppState` is safer and works in more cases whereas self.view.window might be nil in more edge cases IIRC (e.g. when the LicenseSheet is just being loaded or sth? I don't know anymore.)
+            ///     - Why are we using `self.view.window!` here, and `MainAppState.shared.window` in other places?
+            ///         IIRC `MainAppState` is safer and works in more cases whereas self.view.window might be nil in more edge cases IIRC (e.g. when the LicenseSheet is just being loaded or sth? I don't know anymore.)
+            ///         Update [Aug 2025] `self.view.window!` seems to have caused this crash report on Tahoe Beta 5: https://github.com/noah-nuebling/mac-mouse-fix/issues/1432#issuecomment-3157295471
+            ///             > Swapped for `MainAppState.shared.window`. Now *all* uses of `[ToastNotificationController attachNotificationWithMessage:]` use `MainAppState.shared.window`. We could just build it into `[ToastNotificationController attachNotificationWithMessage:]`.
             ToastNotificationController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!,
-                                                           to: self.view.window!, /// Note: (Oct 2024) Might not wanna force-unwrap this
+                                                           to: MainAppState.shared.window!,
                                                            forDuration: kMFToastDurationAutomatic)
             
         }
