@@ -107,21 +107,57 @@ typedef enum {
 
 - (void)setUpNewDisplayLinkWithActiveDisplays {
     
-    /// Discussion [Apr 2025] Should be called `setupNew*CV*DisplayLink...`
+    /// Discussion [Apr 2025] Name should be `setupNew*CV*DisplayLink...`
     
-    CVReturn ret;
+    /// Validate thread
+    {
+        /// [Aug 2025] We're calling CVDisplayLinkStart() and CVDisplayLinkStop() from the mainThread, and apparently that fixed some issues, we also had some external doc that suggested mainThread should be used for some things. (See notes where we call CVDisplayLinkStart()/CVDisplayLinkStop()). I also just saw that CVDisplayLink is non-sendable.
+        ///     - My guess rn would be that each CVDisplayLink instance should only be interacted with from one thread.
+        ///     - On which threads is this called? [Aug 2025]
+        ///         - `[GestureScrollSimulator initialize]` calls this on `com.nuebling.mac-mouse-fix.helper.display-link` queue,
+        ///         - `[Scroll load_Manual]` calls this on mainThread.
+        ///         - `[ModifiedDragOutputTwoFingerSwipe load_Manual]` calls this on the mainThread.
+        ///         - If the displayLink is recreated after detaching/reattaching a display, it seems to always run on `com.nuebling.mac-mouse-fix.helper.display-link` (Haven't done too much testing or thinking here.)
+        ///         - (Haven't tested anything else)
+        ///     - Other thought: Since this is only called rarely, (and I think always *before* that displayLink is actually used) race-conditions might be rare. But rare issues match the sporadic nature of the `scrolling-stops-intermittently_apr-2025.md` issues, and CVDisplayLinkStart()/CVDisplayLinkStop() did randomly fail when we called them from a non-main-thread according to the notes
+        ///         ... but my gut feeling is that it's not about race-conditions.
+        
+        DDLogDebug(@"DisplayLink.m: (%@) Running -[setUpNewDisplayLinkWithActiveDisplays] on thread %@", [self identifier], NSThread.currentThread);
+    }
     
+    /// Delete existing displayLink
     if (_displayLink != nil) {
-        CVReturn ret = CVDisplayLinkStop(_displayLink); /// [Apr 2025] Expected to be -6672 (DisplayLinkNotRunning)
+        CVReturn ret = CVDisplayLinkStop(_displayLink);
+        assert(ret == kCVReturnDisplayLinkNotRunning);
         CVDisplayLinkRelease(_displayLink);
         DDLogDebug(@"DisplayLink.m: (%@) Deleted existing CVDisplayLink for displayLink. Code: %d", [self identifier], ret);
     }
     
-    ret             = CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
-    CVReturn ret2   = CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, (__bridge void *_Nullable)(self));
-    
-    DDLogDebug(@"DisplayLink.m: (%@) Created new CVDisplayLink. Codes: (%d, %d)", [self identifier], ret, ret2);
-    assert(ret == kCVReturnSuccess && ret2 == kCVReturnSuccess);
+    /// Create new displayLink
+    ///     [Aug 2025] I think silent failure of this probably causes the `scrolling-stops-intermittently_apr-2025.md` bug.
+    ///         To address this, in case of failure, we retry in a loop and eventually crash the program. That way we should have better robustness and better debug data (crashlogs)
+    {
+        const int max_tries = 20;       /// [Aug 2025] 20 is kinda arbitrary, but since this only seems to fail very rarely, and only runs in special situations like attaching a new display, there should be no performance impact to trying many times.
+        CVReturn ret  = kCVReturnLast;  /// [Aug 2025] Not sure what to initialize with
+        CVReturn ret2 = kCVReturnLast;
+        bool valid = false;
+        
+        for (int i = 0; i < max_tries; i++) {
+            
+            ret  = CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
+            ret2 = CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, (__bridge void *_Nullable)(self)); /// [Aug 2025] Why is self `_Nullable`?
+            
+            valid = (ret == kCVReturnSuccess) && (ret2 == kCVReturnSuccess) && (_displayLink != NULL);
+            if (valid) {
+                DDLogDebug(@"DisplayLink.m: (%@) Created CVDisplayLink (%@) after %d tries", [self identifier], _displayLink, i+1);
+                break;
+            }
+            
+            CVDisplayLinkRelease(_displayLink);
+        }
+        
+        if (!valid) mfabort(@"DisplayLink.m: (%@) Failed to create CVDisplayLink (%@) after %d tries. Last codes: (%d, %d)", [self identifier], _displayLink, max_tries, ret, ret2);
+    }
 }
 
 /// Dealloc
