@@ -54,7 +54,7 @@
     if (beingEnabled) {
         /// We won't enable the UI here directly. Instead, we'll do that from the `handleHelperEnabledMessage` method
     } else { /// Being disabled
-        [self enableUI:NO];
+        [self updateUIEnabledStateWithEnable:NO];
     }
     
     [HelperServices enableHelperAsUserAgent:beingEnabled onComplete:^(NSError * _Nullable error) {
@@ -79,9 +79,10 @@
 }
 + (void)handleHelperEnabledMessage {
     
+    /// Enable UI
+    [self.instance updateUIEnabledStateWithEnable:YES];
+    
     if (self.instance.UIDisabled) {
-        /// Enable UI
-        [self.instance enableUI:YES];
         /// Flash Notification
 //        NSAttributedString *message = [[NSAttributedString alloc] initWithString:@"Mac Mouse Fix will stay enabled after you restart your Mac"];
 //        message = [message attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
@@ -93,7 +94,7 @@
     [MoreSheet.instance begin];
 }
 - (IBAction)scrollEnableCheckBox:(id)sender {
-    [self disableScrollSettings:@(_scrollEnableCheckBox.state)];
+    _scrollStepSizeSlider.enabled = _scrollEnableCheckBox.state;
     [self UIChanged:NULL];
 }
 - (IBAction)UIChanged:(id)sender { // TODO: consider removing
@@ -147,13 +148,12 @@ static NSDictionary *sideButtonActions;
     
 }
 
-- (void)applicationWillFinishLaunching:(NSNotification *)notification {
-
-}
-
-- (void)applicationDidFinishLaunching:(NSNotification *)notification {
+- (void)awakeFromNib {
     
-    NSLog(@"Mac Mouse Fix finished launching");
+    /// Tahoe compacting
+    if (@available(macOS 26.0, *)) { /// We usually like calling this in windowDidLoad or viewDidLoad, but not sure how to do this here.
+        self.window.contentView.prefersCompactControlSizeMetrics = YES;
+    }
     
     /// Do weird tweaks for Ventura
     ///     It seems that NSBox adds horizontal padding of 1 px around its contentView in Ventura (Beta). Here we compensate for that.
@@ -162,9 +162,17 @@ static NSDictionary *sideButtonActions;
         self.preferenceBox.contentViewMargins = NSMakeSize(-1, 0);
     }
     
-    /// Load UI
-    
+    /// Load UI state
     [self updateUI];
+}
+
+- (void)applicationWillFinishLaunching:(NSNotification *)notification {
+
+}
+
+- (void)applicationDidFinishLaunching:(NSNotification *)notification {
+    
+    NSLog(@"Mac Mouse Fix finished launching");
     
     /// Update app-launch counters
     
@@ -282,7 +290,7 @@ NSTimer *removeAccOverlayTimer;
 - (BOOL)UIDisabled {
     return !self.enableMouseFixCheckBox.state;
 }
-- (void)enableUI:(BOOL)enb {
+- (void)updateUIEnabledStateWithEnable:(BOOL)enb {
     
     /// Get state
     self.enableMouseFixCheckBox.state = enb;
@@ -298,13 +306,9 @@ NSTimer *removeAccOverlayTimer;
             [(NSControl *)v setEnabled:enb];
         }
     }
-    /// Forgot what this does
-    if (enb) {
-        [self disableScrollSettings:@(_scrollEnableCheckBox.state)];
-    }
-}
-- (void)disableScrollSettings:(NSNumber *)enable {
-    _scrollStepSizeSlider.enabled = enable.boolValue;
+    
+    /// Scroll speed slider
+    _scrollStepSizeSlider.enabled = enb && _scrollEnableCheckBox.state;
 }
 
 - (void)updateUI {
@@ -315,7 +319,6 @@ NSTimer *removeAccOverlayTimer;
     /// enableCheckbox
     BOOL enable = HelperServices.helperIsActive;
 //    _enableMouseFixCheckBox.state = enable ? 1 : 0;
-    [self enableUI:enable];
     
     [ConfigFileInterface_App loadConfigFromFile];
     
@@ -336,7 +339,7 @@ NSTimer *removeAccOverlayTimer;
     
     NSString *activeScrollSmoothnessConfiguration = @"Normal";
     
-    // Slider
+    // Scroll speed slider
     double pxStepSizeRelativeToConfigRange;
     NSArray *range = _scrollConfigurations[activeScrollSmoothnessConfiguration][0];
     double lowerLm = [range[0] floatValue];
@@ -346,6 +349,9 @@ NSTimer *removeAccOverlayTimer;
     pxStepSizeRelativeToConfigRange = (pxStepSize - lowerLm) / (upperLm - lowerLm);
     
     _scrollStepSizeSlider.doubleValue = pxStepSizeRelativeToConfigRange;
+    
+    // Update enabled state
+    [self updateUIEnabledStateWithEnable:enable];
     
 }
 

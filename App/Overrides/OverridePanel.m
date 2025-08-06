@@ -113,6 +113,9 @@ NSDictionary *_columnIdentifierToKeyPath;
     // We set the size properly in IB, but when the first column had its `Resizing` property set to `Autoresizes with Table` (which we want it to do) then it would always end up a little smaller than the table for some reason
 //    NSTableColumn *col = _tableView.tableColumns[0];
 //    [col setWidth:col.maxWidth];
+    
+    if (@available(macOS 26.0, *))
+        self.window.contentView.prefersCompactControlSizeMetrics = YES;
 }
 
 - (void)setConfigFileToUI {

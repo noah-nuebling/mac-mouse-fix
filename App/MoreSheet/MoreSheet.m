@@ -102,6 +102,8 @@ static MoreSheet *_instance;
 - (void)windowDidLoad {
     [super windowDidLoad];
     [self updateUI];
+    if (@available(macOS 26.0, *))
+        self.window.contentView.prefersCompactControlSizeMetrics = YES;
 }
 
 - (void)updateUI {

@@ -24,6 +24,10 @@
 }
 
 - (void)awakeFromNib {
+        
+    if ((0)) /// This breaks the capture notifications. But is also unnecessary.
+        if (@available(macOS 26.0, *))
+            self.contentView.prefersCompactControlSizeMetrics = YES;
     
     // Trying to dismiss the notification window on click, but this doesn't work
     
