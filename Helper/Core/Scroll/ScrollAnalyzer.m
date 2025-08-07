@@ -183,7 +183,7 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
     /// Update `_consecutiveScrollSwipeCounter_ForFreeScrollWheel`
     ///     It's a little awkward to update this down here after the other swipe-updating code , but we need to do it this way because we need the `consecutiveTickCounter` to be updated after the stuff above but before this
     if ((0)) {  /// [Aug 2025] HOTFIX: Turning this whole mechanism off!
-                ///     The free-spinning mode on the MX Master doesn't need additional speedup! IIRC a few people have complained about this, too.
+                ///     The free-spinning mode on the MX Master doesn't need additional speedup! ('fastScroll') IIRC a few people have complained about this, too.
                 ///     Maybe you could think about a compromise where you only speed things up a little bit or something. But for a hotfix I think this delivers good value to the people.
                 ///     The decision to disable this may also affect decisions we made elsewhere in the codebase. IIRC we built in a cap for the animation-time to avoid the sped-up free-spinning from making it crazy long.
                 ///     TODO: If we decide to keep this turned off - simplify the code
