@@ -29,6 +29,8 @@
 /// `mfabort` macro
 ///     Like abort() but with the goal of writing a specific message into the crash report
 ///     (Writing the message into the crash-report doesn't work yet as of [Aug 2025])
+///     Note on old investigation: [Aug 2025]
+///         IIRC we did a longer investigation into writing custom messages into crash reports. I don't remember where. Maybe some side-repo? I remember finding some global c variable but it was ignored unless it was written to from the crash reporter module or something. I also remember discovering some elaborate private API (CFType-based I think), but not pursuing it further.
 ///     TODO: Move this into Logging.h when merging this code from master into feature-strings-catalog
 
 #define mfabort(format, args...) ({ \
@@ -45,7 +47,7 @@
 ///  This is similar to NSDictionaryOfVariableBindings() – But this is better-suited for debug-printing because: Dictionaries don't preserve order. Dictionaries can't contain nil. Using NSDictionaryOfVariableBindings requires importing NSLayoutConstraint.h
 ///  Example usage:
 ///      ```
-///      NSLog(@"Local variables %@", vardesc(@(some_int), some_object)); // Prints: `Local variables: { @(some_int) = 79 | some_object = Turns out I'm a string! }`
+///      NSLog(@"Local variables %@", vardesc(@(some_int), some_object)); // Prints: `Local variables: { @(some_int) = 79 | some_object = I'm a string! }`
 ///      ```
 #define vardesc(vars...)  _vardesc(false, @#vars, vars)         /** Need to stringify `vars` here not inside `_vardesc`, otherwise sourcetext of passed-in macros will be expanded. Not sure why [Jul 2025] */
 #define vardescl(vars...) _vardesc(true,  @#vars, vars)

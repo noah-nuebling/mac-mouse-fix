@@ -23,6 +23,9 @@
 NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullable __strong *_Nonnull values, size_t count, bool linebreaks) {
     
     /// Helper for the `vardesc` and `vardescl` macros
+    /// Optimization Idea: [Aug 2025] We could optimize by caching the processing of the `keys_commaSeparated` string.
+    ///     (This might already be extremely fast – string stuff is usually super fast – This is probably a waste of time! Measure first!)
+    ///     To obtain a globally unique cache key per vardesc invocation, we could perhaps use the address of a static var inside the macro as cache key (similar to `dispatch_once`) (Haven't thought this through too much, not sure there are better solutions)
     
     NSArray *keys = [keys_commaSeparated componentsSeparatedByString: @","];
     
