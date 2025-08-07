@@ -48,5 +48,6 @@
 #import "MacAddress.h"
 #import "MFCoding.h"
 #import "NSData+Additions.h"
+#import "MFModifiedAnimation.h"
 
 #endif /* Mac_Mouse_Fix_Bridging_Header_h */

@@ -269,6 +269,7 @@
 		4FEB66112793510800E6A111 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB66102793510800E6A111 /* CocoaLumberjackSwift */; };
 		4FEB66132793510C00E6A111 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB66122793510C00E6A111 /* CocoaLumberjack */; };
 		4FEB66152793510F00E6A111 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB66142793510F00E6A111 /* CocoaLumberjackSwift */; };
+		4FEBE65C2E44E26E005FF70E /* MFModifiedAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEBE65B2E44E26E005FF70E /* MFModifiedAnimation.m */; };
 		4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEC9667278BBDC600548604 /* NSColor+Additions.m */; };
 		4FED6600292B17C0009ABB89 /* Remap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FED65FF292B17C0009ABB89 /* Remap.swift */; };
 		4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0254D27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m */; };
@@ -2301,6 +2302,8 @@
 		4FEA63CE2921510E00E464D6 /* NSImage+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+Additions.h"; sourceTree = "<group>"; };
 		4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "SymbolicHotKeys Reference.txt"; sourceTree = "<group>"; };
 		4FEB6618279376C200E6A111 /* notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = notes.md; sourceTree = "<group>"; };
+		4FEBE65A2E44E26E005FF70E /* MFModifiedAnimation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFModifiedAnimation.h; sourceTree = "<group>"; };
+		4FEBE65B2E44E26E005FF70E /* MFModifiedAnimation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFModifiedAnimation.m; sourceTree = "<group>"; };
 		4FEC9666278BBDC600548604 /* NSColor+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSColor+Additions.h"; sourceTree = "<group>"; };
 		4FEC9667278BBDC600548604 /* NSColor+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Additions.m"; sourceTree = "<group>"; };
 		4FED65FF292B17C0009ABB89 /* Remap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Remap.swift; sourceTree = "<group>"; };
@@ -6441,6 +6444,8 @@
 			children = (
 				4F6F679F28A8141800C6C40F /* ButtonTabController.swift */,
 				4F4150652927B6A40040BA7D /* AddField.swift */,
+				4FEBE65A2E44E26E005FF70E /* MFModifiedAnimation.h */,
+				4FEBE65B2E44E26E005FF70E /* MFModifiedAnimation.m */,
 				4FA8A30C28A9509E001E740F /* Options */,
 				4FA911E4260D00CB00553CA8 /* RemapTable */,
 			);
@@ -7981,6 +7986,7 @@
 				4FA40CFC28A0CCCB00499E53 /* NaturalAccelerationCurve.swift in Sources */,
 				4FF6654625F2C7B000689B77 /* Locator.m in Sources */,
 				4F909D2A28A0C3D2009349A2 /* ResizingTabWindowController.swift in Sources */,
+				4FEBE65C2E44E26E005FF70E /* MFModifiedAnimation.m in Sources */,
 				4FA06819291B2C4C00949B5F /* Shorthands.m in Sources */,
 				4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */,
 				4FDECCDE28A3E93100DDEE91 /* IsObjC.m in Sources */,

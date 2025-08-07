@@ -175,16 +175,50 @@ import CocoaLumberjackSwift
             
             /// Animation curve
             
-            let animation = CASpringAnimation(speed: 2.25, damping: 1.0)
+            let animation       = CASpringAnimation(speed: 2.25, damping: 1.0)
             let bounceAnimation = CASpringAnimation(speed: 3.75, damping: 0.25, initialVelocity: -10)
-            
             let transformAnimation = playAcceptAnimation ? bounceAnimation : animation
-            let shadowAnimation: CAAnimation
-            if #available(macOS 13.0, *) {
-                shadowAnimation = transformAnimation
-            } else {
-                /// Pre-Ventura, having overshoot in the shadow animation causes visual glitches
-                shadowAnimation = animation
+            
+            
+            /// Make shadow animation.
+            ///     [Aug 2025] We used to just use the transformAnimation as the shadowAnimation.
+            ///     However, on some macOS versions, the overshoot caused visual glitches:
+            ///         - Pre-Ventura, having overshoot in the shadow animation causes visual glitches
+            ///         - [Aug 2025] the pre-Ventura glitches seem to be back – in macOS 15.5 Sequoia, on my 2018 Intel Mac Mini
+            ///             (I haven't tested if the glitches occur on macOS 14, too)
+            ///         - [Aug 2025] the pre-Ventura glitches are gone again – In macOS 26 Tahoe Beta 5, on my M1 MBA
+            ///
+            ///     Solutions we tried:
+            ///         - Always use the `animation` instead of the `bounceAnimation` for the shadow to prevent overshoot.
+            ///             > But that animation only removes the shadow shortly *after* the addField 'hits the ground', which looks a bit weird.
+            ///         - Always use the`bounceAnimation` for the shadow, but put a 'clamp' on it  to keep it from overshooting.
+            ///             > CoreAnimation doesn't let you do that. The CAAnimation objects are only parameter-holders for algorithms that run somewhere deep inside the CoreAnimation framework. (In a different process I think) The most customization you get is using a CASpringAnimation or CAMediaTimingFunction (cubic bezier). CAKeyFrameAnimation requires you to create an object for every keyframe. None of these are suited to creating a completely customized animation curve that could do something like 'clamping'.  (Might be wrong about all of this)
+            ///         - Measure the time when the animation first overshoots and create a shadow animation based on that.
+            ///             > This is what we're using as of [Aug 2025]
+            ///     Other solution ideas:
+            ///         - Perhaps we could've removed the visual glitches without removing the overshoot.
+            ///             > It's a bit weird how we're animating the shadow out by setting `NSShadow.clearShadow`, and I think that also interacts in complex ways with our `ReactiveAnimatorPropertyProxy`
+            let shadowAnimation: CABasicAnimation
+            do {
+                var firstOvershootTime = -1.0;
+                let fps = 60;
+                let samplesPerFrame = 10;
+                let samplesPerSecond = Int32(fps * samplesPerFrame) /// [Aug 2025] Making this many samples feels slow, but I think it's actually fast. To optimize I think we could reuse the transition-point-finder algorithm from BezierHybridCurve
+                let samples = mf_sampleCurve(transformAnimation, samplesPerSecond)
+                
+                if let samples {
+                    for (i, sample) in samples.enumerated() {
+                        if sample.doubleValue >= 1.0 {
+                            firstOvershootTime = Double(i) / Double(samplesPerSecond)
+                            break
+                        }
+                    }
+                }
+                if firstOvershootTime == -1.0 {
+                    firstOvershootTime = transformAnimation.duration
+                }
+                DDLogDebug("firstOvershootTime: \(firstOvershootTime)")
+                shadowAnimation = CABasicAnimation(name: .linear, duration: firstOvershootTime)
             }
             
             /// Play animation
