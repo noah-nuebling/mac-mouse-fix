@@ -395,7 +395,8 @@ void setSuppressionIntervalWithTimeInterval(CFTimeInterval interval) {
         /// Draw/move puppet cursor image
         if (fresh) {
             /// Draw puppetCursor
-            NSScreen *screenUnderMousePointer = [NSScreen screenUnderMousePointerWithEvent:NULL]; /// We could also use `_display`?
+            NSScreen *_Nullable screenUnderMousePointer = [NSScreen screenUnderMousePointerWithEvent:NULL]; /// We could also use `_display`?
+            screenUnderMousePointer = screenUnderMousePointer ?: NSScreen.screens[0]; /// [Aug 2025] Observed nil when no display cable plugged into Mac Mini – which lead to crashes when we passed this on to Swift as a non-optional
             [ScreenDrawer.shared drawWithView:_puppetCursorView atFrame:puppetImageFrameUnflipped onScreen:screenUnderMousePointer];
         } else {
             /// Reposition  puppet cursor!

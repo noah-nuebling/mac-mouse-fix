@@ -185,14 +185,16 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
     if (_displayLink != NULL) {
         CVReturn ret = CVDisplayLinkStop(_displayLink);
         assert(ret == kCVReturnDisplayLinkNotRunning);
+        DDLogDebug(@"DisplayLink.m: (%@) Deleting existing CVDisplayLink for displayLink. StopCode: %@", [self identifier], MFCVReturn_ToString(ret));
         CVDisplayLinkRelease(_displayLink);
         _displayLink = NULL;
-        DDLogDebug(@"DisplayLink.m: (%@) Deleted existing CVDisplayLink for displayLink. Code: %@", [self identifier], MFCVReturn_ToString(ret));
     }
     
     /// Create new displayLink
     ///     [Aug 2025] I think silent failure of this probably causes the `scrolling-stops-intermittently_apr-2025.md` bug.
     ///         To address this, in case of failure, we retry in a loop and eventually crash the program. That way we should have better robustness and better debug data (crashlogs)
+    ///     [Aug 2025] Will this enter a crash-cycle if no display is attached at all?
+    ///         Test result: Nope, seems like there is a dummy display in the API when no displayCable is attached to my Mac Mini 2018, and this code runs just fine. (However other parts of the codebase still experience assert-failures when no display is attached – Haven't looked into that.) See commit 6fa42122c7d38c315ad8f8f428e2b9b0fa5c8711.
     {
         const int max_tries = 20;       /// [Aug 2025] 20 is kinda arbitrary, but since this only seems to fail very rarely, and only runs in special situations like launching the helper, so there should be no performance impact to trying many times.
         CVReturn ret  = -1;             /// [Aug 2025] Init to silence stupid compiler warnings
@@ -555,14 +557,14 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
     }
     
     /// Set new display
-    CGError cgErr = CVDisplayLinkSetCurrentCGDisplay(_displayLink, displayID);
+    CVReturn ret = CVDisplayLinkSetCurrentCGDisplay(_displayLink, displayID);
     
     /// Log
-    DDLogDebug(@"DisplayLink.m: (%@) set to display %d. Error: %d", [self identifier], displayID, cgErr);
+    DDLogDebug(@"DisplayLink.m: (%@) set to display %d. Error: %d", [self identifier], displayID, ret);
     
-    if (cgErr) {
+    if (ret) {
         assert(false);
-        return cgErr;
+        return ret;
     }
     
     /// Return
