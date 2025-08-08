@@ -179,7 +179,6 @@ import CocoaLumberjackSwift
             let bounceAnimation = CASpringAnimation(speed: 3.75, damping: 0.25, initialVelocity: -10)
             let transformAnimation = playAcceptAnimation ? bounceAnimation : animation
             
-            
             /// Make shadow animation.
             ///     [Aug 2025] We used to just use the transformAnimation as the shadowAnimation.
             ///     However, on some macOS versions, the overshoot caused visual glitches:
@@ -192,7 +191,7 @@ import CocoaLumberjackSwift
             ///         - Always use the `animation` instead of the `bounceAnimation` for the shadow to prevent overshoot.
             ///             > But that animation only removes the shadow shortly *after* the addField 'hits the ground', which looks a bit weird.
             ///         - Always use the`bounceAnimation` for the shadow, but put a 'clamp' on it  to keep it from overshooting.
-            ///             - CoreAnimation doesn't let you do that. The CAAnimation objects are only parameter-holders for algorithms that run somewhere deep inside the CoreAnimation framework. (In a different process I think)
+            ///             - CoreAnimation doesn't let you do that. The CAAnimation objects are only parameter-holders for algorithms that run somewhere deep inside the CoreAnimation framework. (In a different process I think) (Might be wrong about this)
             ///             - The most customization you get is using a CASpringAnimation or CAMediaTimingFunction (cubic bezier). CAKeyFrameAnimation requires you to create an object for every keyframe. None of these are suited to creating a completely customized animation curve that could do something like 'clamping'.  (Might be wrong about all of this)
             ///             - Did a slight bit of reverse engineering on CASpringAnimation:
             ///                 CASpringAnimation seems to be copied into a C++ struct/class (`CA::Render::SpringAnimation::SpringAnimation()`) before actually being queried. The copying happens in `-[CASpringAnimation _copyRenderAnimationForLayer:]` and `-[CASpringAnimation _setCARenderAnimation:layer:]
@@ -200,25 +199,38 @@ import CocoaLumberjackSwift
             ///             > This is what we're using as of [Aug 2025]
             ///     Other solution ideas:
             ///         - Perhaps we could've removed the visual glitches without removing the overshoot.
-            ///             > It's a bit weird how we're animating the shadow out by setting `NSShadow.clearShadow`, and I think that also interacts in complex ways with our `ReactiveAnimatorPropertyProxy`
-            let shadowAnimation: CABasicAnimation
+            ///             > It's a bit weird how we're animating the shadow out by setting `NSShadow.clearShadow`, and I think that also interacts in complex ways with our `ReactiveAnimatorPropertyProxy`. Maybe the problem lies somewhere in there.
+            ///         - Use CVDisplayLink
+            ///             - This gives us full control over the animation, but loses the optimizations that CAAnimation claims (Doing the animations in the 'hardware' instead of the 'software'. See:  Core Animation Programming Guide > Core Animation Basics) (I have some reason to doubt that this matters)
+            
+            var shadowAnimation: CABasicAnimation
             do {
-                var firstOvershootTime = -1.0;
-                let fps = 60;
-                let samplesPerFrame = 10;
-                let samplesPerSecond = Int32(fps * samplesPerFrame) /// [Aug 2025] Making this many samples feels slow, but I think it's actually fast. To optimize I think we could reuse the transition-point-finder algorithm from BezierHybridCurve
-                let samples = MFCABasicAnimation_Sample(transformAnimation, samplesPerSecond)
-                
-                for (i, sample) in samples.enumerated() {
-                    if sample.doubleValue >= 1.0 {
-                        firstOvershootTime = Double(i) / Double(samplesPerSecond)
-                        break
+                if transformAnimation == animation {
+                    if (true) { shadowAnimation = transformAnimation }
+                    else      { shadowAnimation = CABasicAnimation(name: .linear, duration: transformAnimation.duration) } /// [Aug 2025] When we do this, the non-bouncy zoom-out animation of the addField seems much longer. (macOS 15.5, 2018 Mac Mini) Not sure what's going on. Perhaps getting `transformAnimation.duration` modifies the animation?
+                }
+                else if transformAnimation == bounceAnimation {
+                    var firstOvershootTime = -1.0;
+                    let framesPerSecond = 60;
+                    let samplesPerFrame = 10;
+                    let samplesPerSecond = Int32(framesPerSecond * samplesPerFrame) /// [Aug 2025] Making this many samples feels slow, but I think it's actually fast. To optimize I think we could lower the number of samples (haven't looked into when quality drops off), only calculate the samples up to the first overshoot, or reuse the transition-point-finder algorithm from BezierHybridCurve
+                    let samples = MFCABasicAnimation_Sample(transformAnimation, samplesPerSecond)
+                    
+                    for (i, sample) in samples.enumerated() {
+                        if sample.doubleValue >= 1.0 {
+                            firstOvershootTime = Double(i) / Double(samplesPerSecond)
+                            break
+                        }
+                    }
+                    if firstOvershootTime != -1.0 {
+                        shadowAnimation = CABasicAnimation(name: .linear, duration: firstOvershootTime)
+                    }
+                    else {
+                        assert(false)
+                        shadowAnimation = CABasicAnimation(name: .linear, duration: transformAnimation.duration) /// [Aug 2025] We only hit this case if it turns out the weird private stuff inside `MFCABasicAnimation_Sample()` is not portable and it fails.
                     }
                 }
-                if firstOvershootTime == -1.0 {
-                    firstOvershootTime = transformAnimation.duration
-                }
-                shadowAnimation = CABasicAnimation(name: .linear, duration: firstOvershootTime)
+                else { fatalError() }
             }
             
             /// Play animation
