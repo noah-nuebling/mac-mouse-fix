@@ -1150,7 +1150,8 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                     || [bundleID containsString:@"com.vivaldi.Vivaldi"]
                     || [bundleID containsString:@"com.brave.Browser"]) {
                     
-                    /// Using `containsString` to also catch other release channels like "com.google.Chrome.canary".
+                    /// Using `containsString` to also catch other release channels like "com.google.Chrome.canary" . Could perhaps use -hasPrefix: instead.
+                    /// [Aug 2025] Also see the 'Universal Back and Forward' stuff in Actions.m
                     /// TODO: Add other Chromium browsers with the same behaviour.
                     /// Notes:
                     /// - Blisk (org.blisk.Blisk) and Colibri (co.opqr.colibri) don't seem to support pinch to zoom.
