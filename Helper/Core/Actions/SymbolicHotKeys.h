@@ -9,13 +9,16 @@
 
 #import <Foundation/Foundation.h>
 #import "CGSHotKeys.h"
+#import "MFDataClass.h"
 
-NS_ASSUME_NONNULL_BEGIN
+MFDataClassInterface2(MFDataClassBase, MFVKCAndFlags, /// Belongs to `MFEmulateNSMenuItemRemapping()` [Aug 2025]
+    readwrite, assign, , CGKeyCode, vkc,
+    readwrite, assign, , CGEventFlags, modifierMask
+)
+MFVKCAndFlags *_Nonnull MFEmulateNSMenuItemRemapping(CGKeyCode vkc, CGEventFlags modifierMask);
 
 @interface SymbolicHotKeys : NSObject
 
-+ (void)post:(CGSSymbolicHotKey)shk;
++ (void) post: (CGSSymbolicHotKey)shk;
 
 @end
-
-NS_ASSUME_NONNULL_END

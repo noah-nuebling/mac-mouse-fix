@@ -63,6 +63,7 @@
 		4F5170162CBFD75C0018D388 /* MFDataClassImpls.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */; };
 		4F5170182CBFD7660018D388 /* MFDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170172CBFD7660018D388 /* MFDataClass.m */; };
 		4F5170192CBFD7660018D388 /* MFDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170172CBFD7660018D388 /* MFDataClass.m */; };
+		4F56919D2E473DA2004C6CC3 /* Universal Back and Forward.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F56919C2E473DA2004C6CC3 /* Universal Back and Forward.md */; };
 		4F5971E52901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5971E62901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5C2F802885C5D0001B9B8A /* HelperState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */; };
@@ -210,6 +211,7 @@
 		4FB8B2A22CCEBC4900A5A580 /* APIRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B2A12CCEBC4900A5A580 /* APIRequests.swift */; };
 		4FB8B2A32CCEBC4900A5A580 /* APIRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B2A12CCEBC4900A5A580 /* APIRequests.swift */; };
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
+		4FBD52622E47EFF400C39A44 /* TextInput.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBD52612E47EFF400C39A44 /* TextInput.framework */; };
 		4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */; };
 		4FC4F093292B1DB10046F61C /* RemapsAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC4F092292B1DB10046F61C /* RemapsAnalyzer.swift */; };
 		4FC55B982915652C00663B24 /* AlertCreator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55B972915652C00663B24 /* AlertCreator.m */; };
@@ -2042,6 +2044,7 @@
 		4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClassImpls.m; sourceTree = "<group>"; };
 		4F5170172CBFD7660018D388 /* MFDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClass.m; sourceTree = "<group>"; };
 		4F51701A2CBFD7730018D388 /* MFDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFDataClass.h; sourceTree = "<group>"; };
+		4F56919C2E473DA2004C6CC3 /* Universal Back and Forward.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Universal Back and Forward.md"; sourceTree = "<group>"; };
 		4F5971E42901763D00A32656 /* MathObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MathObjc.m; sourceTree = "<group>"; };
 		4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperState.swift; sourceTree = "<group>"; };
 		4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapsOverrider_old_.swift; sourceTree = "<group>"; };
@@ -2213,6 +2216,7 @@
 		4FBC9436260F8AA60062F186 /* MASShortcut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASShortcut.h; sourceTree = "<group>"; };
 		4FBC9437260F8AA60062F186 /* MASKeyMasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASKeyMasks.h; sourceTree = "<group>"; };
 		4FBC9439260F8AA60062F186 /* MASKeyCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASKeyCodes.h; sourceTree = "<group>"; };
+		4FBD52612E47EFF400C39A44 /* TextInput.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TextInput.framework; path = ../../../../../../System/Library/PrivateFrameworks/TextInput.framework; sourceTree = "<group>"; };
 		4FBDA14D27B241CE0030E4EA /* GlobalEventTapThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalEventTapThread.h; sourceTree = "<group>"; };
 		4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalEventTapThread.m; sourceTree = "<group>"; };
 		4FBE18BA2666EC4A002A6771 /* WannabePrefixHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WannabePrefixHeader.h; sourceTree = "<group>"; };
@@ -2528,6 +2532,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FEB660F2793510300E6A111 /* CocoaLumberjack in Frameworks */,
+				4FBD52622E47EFF400C39A44 /* TextInput.framework in Frameworks */,
 				4F7F47D028A5B5F200290BBD /* ReactiveCocoa in Frameworks */,
 				4FC8A7D328AAF900007DB982 /* Markdown in Frameworks */,
 				4F7F47CE28A5B5EC00290BBD /* ReactiveSwift in Frameworks */,
@@ -7101,6 +7106,7 @@
 		4FDECCD528A3A37800DDEE91 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4FBD52612E47EFF400C39A44 /* TextInput.framework */,
 				4F28B7F52D49141E006928A6 /* SkyLight.framework */,
 				4FDECCD728A3A37800DDEE91 /* Sparkle.framework */,
 				4FDECCD828A3A37800DDEE91 /* README.md */,
@@ -7487,6 +7493,7 @@
 			children = (
 				4FF6663A25F2C93A00689B77 /* Actions.h */,
 				4FF6663B25F2C93A00689B77 /* Actions.m */,
+				4F56919C2E473DA2004C6CC3 /* Universal Back and Forward.md */,
 				4FA5F08C2CE4CEF800ED2354 /* SymbolicHotKeys.h */,
 				4FA5F08D2CE4CEF800ED2354 /* SymbolicHotKeys.m */,
 				4FCEDC80292CDC8300E7DA2A /* Actions.swift */,
@@ -7899,6 +7906,7 @@
 				4F7F47D428A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
 				4FFA4E3D28B7A4310062A1FE /* Localizable.strings in Resources */,
 				4FD148C728AA416700FE688C /* MenuBarItem.xib in Resources */,
+				4F56919D2E473DA2004C6CC3 /* Universal Back and Forward.md in Resources */,
 				4FFA4E4128B7D0610062A1FE /* SharedSFSymbols.xcassets in Resources */,
 				4FD148D628AA43E900FE688C /* MainMenu.xib in Resources */,
 			);

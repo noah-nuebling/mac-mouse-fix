@@ -48,13 +48,9 @@
             ///     TODOs:
             ///         - TODO: Rename the kMF constants to reflect that this is about going Back and Forward, not about navigationSwipes.
             ///             [Aug 2025] Not doing that for the 3.0.6 hotfix, since it would require increasing the config-version, and I'm too lazy for that.
-            ///         - TODO: Look into if/how the bracket-based shortcuts break with other keyboard layouts.
             
-            #define isbundle(bundleid)  [bundleID hasPrefix: @bundleid]         /** [Aug 2025] Using `hasPrefix:` to also catch other release channels like "com.google.Chrome.canary", or maybe forks that didn't bother to change the bundleID. (?) */
-            #define fail()              ({ assert(false); goto end_label; })    /** [Aug 2025] We'll catch the failures during development, so simple is fine */
-            
+            #define fail() ({ assert(false); goto endof_universalBackForward; })       /** [Aug 2025] We'll catch the failures during development, so simple is fine */
             {
-            
                 NSString *dirString = actionDict[kMFActionDictKeyGenericVariant];
                 BOOL isleft  = [dirString isEqualToString: kMFNavigationSwipeVariantLeft];
                 BOOL isright = [dirString isEqualToString: kMFNavigationSwipeVariantRight];
@@ -62,14 +58,15 @@
                 if (phase == kMFActionPhaseEnd)     fail(); /// [Aug 2025] We'll have to update this when we support separate handling of button-up and button-down events
                 if (!(isleft || isright))           fail(); /// [Aug 2025] `kMFNavigationSwipeVariantUp` and `kMFNavigationSwipeVariantDown` are no longer supported (and they were never used AFAIK. `kMFActionDictTypeNavigationSwipe` serves as 'Universal Back and Forward' now. (We should rename it.)
                 
-                NSString *bundleID = [HelperUtility appUnderMousePointerWithEvent: NULL].bundleIdentifier;
-                
                 /// Choose the `bfmethod`
                 ///     Mnemonic: (method) for going (b)ack and (f)orward
+                
+                NSString *bundleID = [HelperUtility appUnderMousePointerWithEvent: NULL].bundleIdentifier;
+                #define isbundle(bundleid)  [bundleID hasPrefix: @bundleid]                             /** [Aug 2025] Using `hasPrefix:` to also catch other release channels like "com.google.Chrome.canary", or maybe forks that didn't bother to change the bundleID. (?) */
                 {
                     /// Fallback if we can't retrieve a bundleID
                     ///     Note: [Aug 2025] Not sure when this occurs. Maybe non-app executables or certain cross-platform apps? `bfmethod_mouseButton` seems most useful.
-                    if (bundleID == nil)                            goto bfmethod_mouseButton;
+                    if (bundleID == nil || bundleID.length == 0)    goto bfmethod_mouseButton;
                     
                     /// navigationSwipe overrides from linearmouse
                     ///     Note: linearmouse uses navigationSwipes for Firefox, but Firefox supports MB 4/5 now. (See `https://stackoverflow.com/a/68532003`). [Aug 2025]
@@ -97,16 +94,16 @@
                     if (isbundle("com.apple.Preview"))              goto bfmethod_commandBracket;
                 
                     /// Default
-                    if (isbundle("com.apple.")) goto bfmethod_navigationSwipe; /// Default to navigation swipes for Apple apps
-                    else                        goto bfmethod_mouseButton;     /// Default to MB 4/5 simulation for non-apple apps
+                    if (isbundle("com.apple."))                     goto bfmethod_navigationSwipe; /// Default to navigation swipes for Apple apps
+                    else                                            goto bfmethod_mouseButton;     /// Default to MB 4/5 simulation for non-apple apps
                 }
+                #undef isbundle
                 
                 /// Define the `bfmethods`
-                {
                 
-                    #define bfmethod(bfmethod_label) \
-                        goto end_label; bfmethod_label: {}; DDLogDebug(@"Actions.m: NavigationSwipe: Posting " #bfmethod_label);
-                    
+                #define bfmethod(bfmethod_label) \
+                    goto endof_bfmethods; bfmethod_label: {}; DDLogDebug(@"Actions.m: NavigationSwipe: Posting " #bfmethod_label);
+                {
                     bfmethod(bfmethod_mouseButton) {
                         if (isleft)     [ModificationUtility postMouseButtonClicks: 4 nOfClicks: 1];
                         else            [ModificationUtility postMouseButtonClicks: 5 nOfClicks: 1];
@@ -116,25 +113,23 @@
                         else            [TouchSimulator postNavigationSwipeEventWithDirection: kIOHIDSwipeRight];
                     }
                     bfmethod(bfmethod_commandBracket) {
-                        if (isleft)     postKeyboardShortcut(kVK_ANSI_LeftBracket,  (CGSModifierFlags)kCGEventFlagMaskCommand);
-                        else            postKeyboardShortcut(kVK_ANSI_RightBracket, (CGSModifierFlags)kCGEventFlagMaskCommand);
+                        MFVKCAndFlags *shortcut = MFEmulateNSMenuItemRemapping((isleft ? kVK_ANSI_LeftBracket : kVK_ANSI_RightBracket), kCGEventFlagMaskCommand);
+                        postKeyboardShortcut(shortcut.vkc,  (CGSModifierFlags)shortcut.modifierMask);
                     }
                     bfmethod(bfmethod_commandLeftRightArrow) {
                         if (isleft)     postKeyboardShortcut(kVK_LeftArrow,  (CGSModifierFlags)kCGEventFlagMaskCommand);
                         else            postKeyboardShortcut(kVK_RightArrow, (CGSModifierFlags)kCGEventFlagMaskCommand);
                     }
                     bfmethod(bfmethod_optionCommandBracket) {
-                        if (isleft)     postKeyboardShortcut(kVK_ANSI_LeftBracket,  (CGSModifierFlags)(kCGEventFlagMaskAlternate|kCGEventFlagMaskCommand));
-                        else            postKeyboardShortcut(kVK_ANSI_RightBracket, (CGSModifierFlags)(kCGEventFlagMaskAlternate|kCGEventFlagMaskCommand));
+                        MFVKCAndFlags *shortcut  = MFEmulateNSMenuItemRemapping((isleft ? kVK_ANSI_LeftBracket : kVK_ANSI_RightBracket), (kCGEventFlagMaskAlternate|kCGEventFlagMaskCommand));
+                        postKeyboardShortcut(shortcut.vkc,  (CGSModifierFlags)shortcut.modifierMask);
                     }
-                    
-                    #undef bfmethod
                 }
+                endof_bfmethods: {}
+                #undef bfmethod
             }
-                        
-            end_label: {}
+            endof_universalBackForward: {}
             #undef fail
-            #undef isbundle
             
         } else if ([actionType isEqualToString:kMFActionDictTypeSmartZoom]) {
             
@@ -212,12 +207,29 @@ static void postSystemDefinedEvent(MFSystemDefinedEventType type, NSEventModifie
 static void postKeyboardShortcut(CGKeyCode keyCode, CGSModifierFlags modifierFlags) {
     
     CGEventTapLocation tapLoc = kCGSessionEventTap;
-    
+
     /// Create key events
-    CGEventRef keyDown = CGEventCreateKeyboardEvent(NULL, keyCode, true);
     CGEventRef keyUp = CGEventCreateKeyboardEvent(NULL, keyCode, false);
+    CGEventRef keyDown = CGEventCreateKeyboardEvent(NULL, keyCode, true);
     CGEventSetFlags(keyDown, (CGEventFlags)modifierFlags);
     CGEventSetFlags(keyUp, (CGEventFlags)modifierFlags);
+    
+    /// Fix up keyboard type [Aug 2025]
+    ///     Explanation: [Aug 2025] When I attach 2 keyboards to my Mac, one ANSI, one JIS, then `CGEventCreateKeyboardEvent()` seems to not match the keyboard type retrieved any other way we know (MFKeyboardTypeCurrent(), LMGetKbdType(), LMGetKbdLast(), CGEventSourceCreate()).
+    ///         Even when you pass a CGEventSource with the desired keyboardType, CGEventCreateKeyboardEvent() just overrides it. It seems like a bug in CoreGraphics.
+    ///         In practise this messes up the 'Universal Back and Forward' feature we're building, cause `MFEmulateNSMenuItemRemapping()` assumes `MFKeyboardTypeCurrent()` when calculating the vkc that will trigger the shortcut.
+    ///         Observed on: macOS 15.5, 2018 Mac Mini, [Aug 2025]
+    {
+        
+        /// Definitions copied over from SymbolicHotKeys.m [Aug 2025]
+        typedef CGEventSourceKeyboardType MFKeyboardType;
+        extern MFKeyboardType SLSGetLastUsedKeyboardID(void); /// Not sure about sizeof(returnType). `LMGetKbdType()` is `UInt8`, but `CGEventSourceKeyboardType` is `uint32_t` - both seem to contain the same constants though.
+        #define MFKeyboardTypeCurrent() ((MFKeyboardType)SLSGetLastUsedKeyboardID())
+
+        /// Fixup
+        CGEventSetIntegerValueField(keyDown, kCGKeyboardEventKeyboardType, MFKeyboardTypeCurrent()); /// Keep in sync with `MFEmulateNSMenuItemRemapping()` to make 'Universal Back and Forward' feature work [Aug 2025]
+        CGEventSetIntegerValueField(keyUp,   kCGKeyboardEventKeyboardType, MFKeyboardTypeCurrent());
+    }
     
     /// Create modifier restore event
     ///  (Restoring original modifier state the way `postKeyboardEventsForSymbolicHotkey()` does leads to issues with triggering Spotlight)
