@@ -61,7 +61,7 @@
                 /// Choose the `bfmethod`
                 ///     Mnemonic: (method) for going (b)ack and (f)orward
                 
-                NSString *bundleID = [HelperUtility appUnderMousePointerWithEvent: NULL].bundleIdentifier;
+                NSString *bundleID = [HelperUtility appUnderMousePointerWithEvent: NULL].bundleIdentifier; /// [Aug 2025] Should we query frontmost app or app-under-mouse-pointer? I think navigation swipes only work when the app is frontmost *and* the mouse pointer is over the desired view. Meanwhile the keyboard shortcuts dont depend on mouse pointer position.
                 #define isbundle(bundleid)  [bundleID hasPrefix: @bundleid]                             /** [Aug 2025] Using `hasPrefix:` to also catch other release channels like "com.google.Chrome.canary", or maybe forks that didn't bother to change the bundleID. (?) */
                 {
                     /// Fallback if we can't retrieve a bundleID
@@ -219,6 +219,8 @@ static void postKeyboardShortcut(CGKeyCode keyCode, CGSModifierFlags modifierFla
     ///         Even when you pass a CGEventSource with the desired keyboardType, CGEventCreateKeyboardEvent() just overrides it. It seems like a bug in CoreGraphics.
     ///         In practise this messes up the 'Universal Back and Forward' feature we're building, cause `MFEmulateNSMenuItemRemapping()` assumes `MFKeyboardTypeCurrent()` when calculating the vkc that will trigger the shortcut.
     ///         Observed on: macOS 15.5, 2018 Mac Mini, [Aug 2025]
+    ///
+    ///     ! Keep this when merging with __EventLoggerForBrad__.
     {
         
         /// Definitions copied over from SymbolicHotKeys.m [Aug 2025]

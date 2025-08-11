@@ -775,8 +775,8 @@
             filePath = "Helper/Core/Actions/SymbolicHotKeys.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "690"
-            endingLineNumber = "690"
+            startingLineNumber = "691"
+            endingLineNumber = "691"
             landmarkName = "MFEmulateNSMenuItemRemapping(vkc, modifierMask)"
             landmarkType = "9">
          </BreakpointContent>
@@ -791,8 +791,8 @@
             filePath = "Helper/Core/Actions/SymbolicHotKeys.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "689"
-            endingLineNumber = "689"
+            startingLineNumber = "690"
+            endingLineNumber = "690"
             landmarkName = "MFEmulateNSMenuItemRemapping(vkc, modifierMask)"
             landmarkType = "9">
          </BreakpointContent>
@@ -807,8 +807,8 @@
             filePath = "Helper/Core/Actions/SymbolicHotKeys.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "771"
-            endingLineNumber = "771"
+            startingLineNumber = "772"
+            endingLineNumber = "772"
             landmarkName = "MFEmulateNSMenuItemRemapping(vkc, modifierMask)"
             landmarkType = "9">
          </BreakpointContent>
@@ -852,8 +852,8 @@
             filePath = "Helper/Core/Actions/Actions.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "238"
-            endingLineNumber = "238"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
             landmarkName = "postKeyboardShortcut(keyCode, modifierFlags)"
             landmarkType = "9">
          </BreakpointContent>
