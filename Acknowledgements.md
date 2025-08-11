@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2025**
 
+- 🇫🇷&nbsp;André - "C'est parfait , Merci !"
 - 🇳🇿&nbsp;Filter
 - 🇺🇸&nbsp;Brooklyn&nbsp;B - "Great work!"
 - 🇺🇦&nbsp;Roman&nbsp;Suvorov - "A bit of support for a fellow engineer"
