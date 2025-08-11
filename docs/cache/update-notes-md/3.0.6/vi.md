@@ -31,6 +31,7 @@ Nó cũng khắc phục một số lỗi và vấn đề.
 ### Cải thiện khả năng tương thích 'Quay lại' và 'Tiến tới'
 
 Các phím chuột được gán chức năng 'Quay lại' và 'Tiến tới' giờ đây **hoạt động với nhiều ứng dụng hơn**, bao gồm:
+
 - Visual Studio Code, Cursor, VSCodium, Windsurf, Zed, và các trình soạn thảo mã khác
 - Nhiều ứng dụng tích hợp của Apple như Preview, Notes, System Settings, App Store, Music, TV, Books, và Freeform
 - Adobe Acrobat
@@ -43,24 +44,25 @@ Hơn nữa, nó còn hỗ trợ một số ứng dụng thường yêu cầu ph�
 Mọi ứng dụng đã từng được [yêu cầu trong GitHub Issue](https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22) giờ đều được hỗ trợ! (Cảm ơn phản hồi của các bạn!)
 Nếu bạn tìm thấy bất kỳ ứng dụng nào chưa hoạt động, hãy cho tôi biết trong [yêu cầu tính năng](http://redirect.macmousefix.com/?target=mmf-feedback-feature-request).
 
-### Giải quyết lỗi 'Cuộn bị dừng không đều'
+### Giải quyết lỗi 'Cuộn ngừng hoạt động không thường xuyên'
 
-Một số người dùng gặp phải [vấn đề](https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20state%3Aclosed%20stops%20working%20label%3A%22Scroll%20Stops%20Working%20Intermittently%22) khi **cuộn mượt bị dừng** ngẫu nhiên.
+Một số người dùng gặp phải [vấn đề](https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20state%3Aclosed%20stops%20working%20label%3A%22Scroll%20Stops%20Working%20Intermittently%22) khi **cuộn mượt ngừng hoạt động** ngẫu nhiên.
 
-Mặc dù tôi chưa thể tái hiện vấn đề này, tôi đã triển khai một bản sửa lỗi tiềm năng:
+Mặc dù tôi chưa bao giờ có thể tái tạo vấn đề này, tôi đã triển khai một bản sửa lỗi tiềm năng:
 
 Ứng dụng sẽ thử lại nhiều lần khi việc thiết lập đồng bộ hóa màn hình thất bại. \
 Nếu vẫn không hoạt động sau khi thử lại, ứng dụng sẽ:
-- Khởi động lại tiến trình nền 'Mac Mouse Fix Helper', có thể giải quyết vấn đề
-- Tạo báo cáo sự cố, có thể giúp chẩn đoán lỗi
 
-Tôi hy vọng vấn đề đã được khắc phục! Nếu không, hãy cho tôi biết trong [báo cáo lỗi](http://redirect.macmousefix.com/?target=mmf-feedback-bug-report) hoặc qua [email](http://redirect.macmousefix.com/?target=mailto-noah).
+- Khởi động lại tiến trình nền 'Mac Mouse Fix Helper', điều này có thể giải quyết vấn đề
+- Tạo báo cáo sự cố, điều này có thể giúp chẩn đoán lỗi
+
+Tôi hy vọng vấn đề cuối cùng đã được khắc phục! Nếu không, hãy cho tôi biết trong [báo cáo lỗi](http://redirect.macmousefix.com/?target=mmf-feedback-bug-report) hoặc qua [email](http://redirect.macmousefix.com/?target=mailto-noah).
 
 ### Cải thiện hành vi con lăn cuộn tự do
 
 Mac Mouse Fix sẽ **không còn tăng tốc độ cuộn cho bạn** khi bạn để con lăn cuộn quay tự do trên chuột MX Master. (Hoặc bất kỳ chuột nào khác có con lăn cuộn tự do.)
 
-Mặc dù tính năng 'tăng tốc cuộn' này hữu ích trên các con lăn cuộn thông thường, nhưng trên con lăn cuộn tự do, nó có thể khiến việc kiểm soát trở nên khó khăn hơn.
+Mặc dù tính năng 'tăng tốc cuộn' này hữu ích trên các con lăn cuộn thông thường, nhưng trên con lăn cuộn tự do, nó có thể làm cho việc kiểm soát khó khăn hơn.
 
 **Lưu ý:** Mac Mouse Fix hiện không hoàn toàn tương thích với hầu hết các chuột Logitech, bao gồm cả MX Master. Tôi dự định thêm hỗ trợ đầy đủ, nhưng có thể sẽ mất một thời gian. Trong thời gian chờ đợi, trình điều khiển bên thứ ba tốt nhất có hỗ trợ Logitech mà tôi biết là [SteerMouse](https://plentycom.jp/en/steermouse/).
 
@@ -77,14 +79,14 @@ Mặc dù tính năng 'tăng tốc cuộn' này hữu ích trên các con lăn c
 - Đã sửa lỗi tab About đôi khi quá cao, được giới thiệu trong [3.0.5](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.5)
 - Văn bản trên thông báo 'Hết ngày dùng thử' không còn bị cắt trong tiếng Trung
 - Đã sửa lỗi hiển thị về bóng của trường '+' sau khi ghi lại đầu vào
-- Đã sửa lỗi hiếm gặp khi văn bản giữ chỗ trên màn hình 'Nhập Khóa Giấy Phép' xuất hiện không căn giữa
-- Đã vô hiệu hóa tự động hoàn thành văn bản Touch Bar trên màn hình 'Nhập Khóa Giấy Phép'
-- Đã sửa lỗi một số ký hiệu hiển thị trong ứng dụng có màu sắc không đúng sau khi chuyển đổi giữa chế độ tối/sáng
+- Đã sửa lỗi hiếm gặp khi văn bản giữ chỗ trên màn hình 'Nhập Khóa Giấy phép' xuất hiện không căn giữa
+- Đã vô hiệu hóa tự động hoàn thành văn bản Touch Bar trên màn hình 'Nhập Khóa Giấy phép'
+- Đã sửa lỗi một số ký hiệu hiển thị trong ứng dụng có màu sắc sai sau khi chuyển đổi giữa chế độ tối/sáng
 
 ### Cải thiện khác
 
 - Đã làm cho một số hoạt ảnh, như hoạt ảnh chuyển đổi tab, hiệu quả hơn một chút
-- Nhiều cải tiến nhỏ khác dưới nền tảng
+- Nhiều cải tiến nhỏ khác dưới nền
 
 *Được chỉnh sửa với sự hỗ trợ tuyệt vời của Claude.*
 

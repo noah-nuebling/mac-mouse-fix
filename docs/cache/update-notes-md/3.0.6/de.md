@@ -31,14 +31,15 @@ Außerdem wurden verschiedene Bugs und Probleme behoben.
 ### Verbesserte 'Zurück' und 'Vorwärts' Kompatibilität
 
 Die Maustasten-Zuweisungen für 'Zurück' und 'Vorwärts' **funktionieren jetzt in mehr Apps**, darunter:
+
 - Visual Studio Code, Cursor, VSCodium, Windsurf, Zed und andere Code-Editoren
-- Viele eingebaute Apple Apps wie Vorschau, Notizen, Systemeinstellungen, App Store, Musik, TV, Bücher und Freeform
+- Viele eingebaute Apple Apps wie Preview, Notizen, Systemeinstellungen, App Store, Musik, TV, Bücher und Freeform
 - Adobe Acrobat
 - Zotero
 - Und mehr!
 
 Die Implementierung ist inspiriert von der großartigen 'Universal Back and Forward' Funktion in [LinearMouse](https://github.com/linearmouse/linearmouse). Sie sollte alle Apps unterstützen, die auch LinearMouse unterstützt.\
-Darüber hinaus werden einige Apps unterstützt, die normalerweise Tastaturkürzel für Vor- und Zurück-Navigation benötigen, wie Systemeinstellungen, App Store, Apple Notizen und Adobe Acrobat. Mac Mouse Fix erkennt diese Apps jetzt und simuliert die entsprechenden Tastaturkürzel.
+Darüber hinaus werden einige Apps unterstützt, die normalerweise Tastaturkürzel für Vor und Zurück benötigen, wie Systemeinstellungen, App Store, Apple Notizen und Adobe Acrobat. Mac Mouse Fix erkennt diese Apps jetzt und simuliert die entsprechenden Tastaturkürzel.
 
 Jede App, die jemals in einem [GitHub Issue angefragt](https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22) wurde, sollte jetzt unterstützt werden! (Danke für das Feedback!)
 Falls du Apps findest, die noch nicht funktionieren, lass es mich in einer [Feature-Anfrage](http://redirect.macmousefix.com/?target=mmf-feedback-feature-request) wissen.
@@ -51,24 +52,25 @@ Obwohl ich das Problem nie selbst reproduzieren konnte, habe ich eine mögliche 
 
 Die App wird jetzt mehrmals versuchen, die Display-Synchronisation einzurichten, wenn es fehlschlägt.\
 Wenn es nach mehreren Versuchen immer noch nicht funktioniert, wird die App:
+
 - Den 'Mac Mouse Fix Helper' Hintergrundprozess neustarten, was das Problem möglicherweise löst
 - Einen Absturzbericht erstellen, der bei der Diagnose des Bugs helfen könnte
 
-Ich hoffe, das Problem ist jetzt endlich behoben! Falls nicht, lass es mich in einem [Bug-Report](http://redirect.macmousefix.com/?target=mmf-feedback-bug-report) oder per [E-Mail](http://redirect.macmousefix.com/?target=mailto-noah) wissen.
+Ich hoffe, das Problem ist jetzt endlich behoben! Falls nicht, lass es mich in einem [Fehlerbericht](http://redirect.macmousefix.com/?target=mmf-feedback-bug-report) oder per [E-Mail](http://redirect.macmousefix.com/?target=mailto-noah) wissen.
 
-### Verbessertes Verhalten bei Freilauf-Scrollrädern
+### Verbessertes Verhalten bei freilaufenden Scrollrädern
 
-Mac Mouse Fix wird **das Scrollen nicht mehr für dich beschleunigen**, wenn du das Scrollrad der MX Master Maus frei drehen lässt. (Oder bei jeder anderen Maus mit Freilauf-Scrollrad.)
+Mac Mouse Fix wird **das Scrollen nicht mehr für dich beschleunigen**, wenn du das Scrollrad der MX Master Maus (oder jeder anderen Maus mit freilaufendem Scrollrad) frei drehen lässt.
 
-Während diese 'Scroll-Beschleunigung' bei normalen Scrollrädern nützlich ist, kann sie bei einem Freilauf-Scrollrad die Kontrolle erschweren.
+Während diese 'Scroll-Beschleunigung' bei normalen Scrollrädern nützlich ist, kann sie bei einem freilaufenden Scrollrad die Kontrolle erschweren.
 
 **Hinweis:** Mac Mouse Fix ist derzeit nicht vollständig kompatibel mit den meisten Logitech-Mäusen, einschließlich der MX Master. Ich plane volle Unterstützung hinzuzufügen, aber das wird wahrscheinlich noch eine Weile dauern. In der Zwischenzeit ist der beste Drittanbieter-Treiber mit Logitech-Unterstützung, den ich kenne, [SteerMouse](https://plentycom.jp/en/steermouse/).
 
-### Bug-Fixes
+### Fehlerbehebungen
 
 - Ein Problem wurde behoben, bei dem Mac Mouse Fix manchmal Tastaturkürzel wieder aktivierte, die zuvor in den Systemeinstellungen deaktiviert wurden
 - Ein Absturz beim Klicken auf 'Lizenz aktivieren' wurde behoben
-- Ein Absturz beim Klicken auf 'Abbrechen' direkt nach dem Klick auf 'Lizenz aktivieren' wurde behoben (Danke für den Bericht, Ali!)
+- Ein Absturz beim Klicken auf 'Abbrechen' direkt nach dem Klick auf 'Lizenz aktivieren' wurde behoben (Danke für den Hinweis, Ali!)
 - Abstürze wurden behoben, die auftraten, wenn Mac Mouse Fix ohne angeschlossenen Bildschirm verwendet wurde
 - Ein Speicherleck und einige andere interne Probleme beim Wechseln zwischen Tabs in der App wurden behoben
 
@@ -79,7 +81,7 @@ Während diese 'Scroll-Beschleunigung' bei normalen Scrollrädern nützlich ist,
 - Ein visueller Fehler beim Schatten des '+' Feldes nach der Aufnahme einer Eingabe wurde behoben
 - Ein seltener Fehler wurde behoben, bei dem der Platzhaltertext im 'Lizenzschlüssel eingeben' Bildschirm nicht zentriert erschien
 - Touch Bar Textvervollständigung wurde im 'Lizenzschlüssel eingeben' Bildschirm deaktiviert
-- Ein Problem wurde behoben, bei dem einige in der App angezeigte Symbole nach dem Wechsel zwischen Hell-/Dunkel-Modus die falsche Farbe hatten
+- Ein Problem wurde behoben, bei dem einige in der App angezeigte Symbole nach dem Wechsel zwischen Hell-/Dunkelmodus die falsche Farbe hatten
 
 ### Weitere Verbesserungen
 

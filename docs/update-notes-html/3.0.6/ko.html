@@ -76,7 +76,7 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.6">여기�
 
 <li><strong>Mac Mouse Fix 2</strong><br />
 
-100% 무료로 유지되며, 계속해서 지원할 예정입니다.<br />
+계속해서 100% 무료이며, 지원도 계속할 예정입니다.<br />
 
 Mac Mouse Fix 2를 계속 사용하시려면 <strong>이 업데이트를
 
@@ -88,7 +88,7 @@ href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=ko">여기
 
 <li><strong>Mac Mouse Fix 3</strong><br />
 
-30일 무료 체험, 소유권은 몇 달러의 비용이 듭니다.<br />
+30일 무료 체험 후 소유권을 위해 몇 달러가 필요합니다.<br />
 
 Mac Mouse Fix 3를 사용하시려면 <strong>지금
 
@@ -114,9 +114,9 @@ href="https://macmousefix.com/">새 웹사이트</a>에서 자세히 알아보�
 
 href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=ko">환불</a>을
 
-제공해 드리고자 합니다.</p>
+제공해 드리고 싶습니다.</p>
 
-<p>Mac Mouse Fix 2의 최신 버전은 계속해서 <strong>완전 무료</strong>로
+<p>Mac Mouse Fix 2의 최신 버전은 계속 <strong>완전 무료</strong>로
 
 제공되며, <a
 
@@ -138,13 +138,25 @@ href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=ko">여기
 
 <p>‘뒤로’ 및 ‘앞으로’ 마우스 버튼 매핑이 이제 <strong>더 많은 앱에서
 
-작동</strong>합니다: - Visual Studio Code, Cursor, VSCodium, Windsurf,
+작동</strong>합니다:</p>
 
-Zed 및 기타 코드 에디터 - Preview, Notes, 시스템 설정, App Store, Music,
+<ul>
 
-TV, Books, Freeform 등 많은 Apple 기본 앱 - Adobe Acrobat - Zotero -
+<li>Visual Studio Code, Cursor, VSCodium, Windsurf, Zed 및 기타 코드
 
-기타 여러 앱!</p>
+편집기</li>
+
+<li>Preview, Notes, 시스템 설정, App Store, Music, TV, Books, Freeform
+
+등 많은 Apple 기본 앱</li>
+
+<li>Adobe Acrobat</li>
+
+<li>Zotero</li>
+
+<li>기타 여러 앱!</li>
+
+</ul>
 
 <p>이 구현은 <a
 
@@ -156,11 +168,9 @@ LinearMouse가 지원하는 모든 앱을 지원해야 합니다.<br />
 
 또한 시스템 설정, App Store, Apple Notes, Adobe Acrobat와 같이
 
-일반적으로 키보드 단축키로 뒤로/앞으로 이동해야 하는 앱들도 지원합니다.
+일반적으로 키보드 단축키가 필요한 앱도 지원합니다. Mac Mouse Fix는
 
-Mac Mouse Fix는 이러한 앱들을 감지하고 적절한 키보드 단축키를
-
-시뮬레이션합니다.</p>
+이러한 앱을 감지하고 적절한 키보드 단축키를 시뮬레이션합니다.</p>
 
 <p><a
 
@@ -174,11 +184,11 @@ href="http://redirect.macmousefix.com/?target=mmf-feedback-feature-request&amp;l
 
 요청</a>을 통해 알려주세요.</p>
 
-<h3 id="스크롤이-간헐적으로-작동하지-않는-버그-해결">‘스크롤이
+<h3 id="스크롤이-간헐적으로-작동-중지되는-버그-해결">‘스크롤이
 
-간헐적으로 작동하지 않는’ 버그 해결</h3>
+간헐적으로 작동 중지되는’ 버그 해결</h3>
 
-<p>일부 사용자들이 <strong>부드러운 스크롤이 무작위로 작동을
+<p>일부 사용자가 <strong>부드러운 스크롤이 무작위로 작동을
 
 멈추는</strong> <a
 
@@ -186,19 +196,21 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20state
 
 경험했습니다.</p>
 
-<p>제가 직접 문제를 재현하지는 못했지만, 잠재적인 해결책을
+<p>직접 문제를 재현하지는 못했지만, 잠재적인 해결책을 구현했습니다:</p>
 
-구현했습니다:</p>
+<p>이제 디스플레이 동기화 설정이 실패할 경우 여러 번 재시도합니다.<br />
 
-<p>이제 디스플레이 동기화 설정이 실패할 경우 앱이 여러 번
+여러 번 시도 후에도 작동하지 않으면:</p>
 
-재시도합니다.<br />
+<ul>
 
-여러 번 시도 후에도 작동하지 않으면 앱은: - 문제 해결을 위해 ‘Mac Mouse
+<li>문제 해결을 위해 ‘Mac Mouse Fix Helper’ 백그라운드 프로세스를
 
-Fix Helper’ 백그라운드 프로세스를 재시작합니다 - 버그 진단에 도움이 될
+재시작합니다</li>
 
-수 있는 충돌 보고서를 생성합니다</p>
+<li>버그 진단에 도움이 될 수 있는 충돌 보고서를 생성합니다</li>
+
+</ul>
 
 <p>이제 문제가 완전히 해결되었기를 바랍니다! 그렇지 않다면 <a
 
@@ -210,37 +222,37 @@ href="http://redirect.macmousefix.com/?target=mailto-noah&amp;locale=ko">이메�
 
 알려주세요.</p>
 
-<h3 id="프리스핀-스크롤-휠-동작-개선">프리스핀 스크롤 휠 동작 개선</h3>
+<h3 id="자유-회전-스크롤-휠-동작-개선">자유 회전 스크롤 휠 동작
 
-<p>이제 Mac Mouse Fix는 MX Master 마우스(또는 프리스핀 스크롤 휠이 있는
+개선</h3>
+
+<p>이제 Mac Mouse Fix는 MX Master 마우스(또는 자유 회전 스크롤 휠이 있는
 
 다른 마우스)에서 스크롤 휠을 자유롭게 회전시킬 때 <strong>더 이상 스크롤
 
 속도를 자동으로 높이지 않습니다</strong>.</p>
 
-<p>일반 스크롤 휠에서는 이 ‘스크롤 가속’ 기능이 유용하지만, 프리스핀
+<p>이 ‘스크롤 가속’ 기능은 일반 스크롤 휠에서는 유용하지만, 자유 회전
 
-스크롤 휠에서는 오히려 제어를 어렵게 만들 수 있습니다.</p>
+스크롤 휠에서는 제어를 더 어렵게 만들 수 있습니다.</p>
 
 <p><strong>참고:</strong> 현재 Mac Mouse Fix는 MX Master를 포함한
 
-대부분의 로지텍 마우스와 완벽하게 호환되지 않습니다. 완전한 지원을
+대부분의 Logitech 마우스와 완전히 호환되지 않습니다. 전체 지원을 추가할
 
-추가할 계획이지만 시간이 좀 걸릴 것 같습니다. 그동안에는 로지텍 지원이
+계획이지만 시간이 좀 걸릴 것 같습니다. 그동안 Logitech 지원이 있는 가장
 
-있는 최고의 서드파티 드라이버로 <a
+좋은 서드파티 드라이버는 <a
 
-href="https://plentycom.jp/en/steermouse/">SteerMouse</a>를
-
-추천드립니다.</p>
+href="https://plentycom.jp/en/steermouse/">SteerMouse</a>입니다.</p>
 
 <h3 id="버그-수정">버그 수정</h3>
 
 <ul>
 
-<li>Mac Mouse Fix가 시스템 설정에서 이전에 비활성화된 키보드 단축키를
+<li>시스템 설정에서 이전에 비활성화된 키보드 단축키를 Mac Mouse Fix가
 
-다시 활성화하는 문제 수정</li>
+가끔 다시 활성화하는 문제 수정</li>
 
 <li>‘라이선스 활성화’ 클릭 시 발생하는 충돌 수정</li>
 
@@ -252,7 +264,9 @@ href="https://plentycom.jp/en/steermouse/">SteerMouse</a>를
 
 할 때 발생하는 충돌 수정</li>
 
-<li>앱의 탭 전환 시 발생하는 메모리 누수 및 기타 내부 문제 수정</li>
+<li>앱에서 탭을 전환할 때 발생하는 메모리 누수 및 기타 내부 문제
+
+수정</li>
 
 </ul>
 
@@ -264,17 +278,17 @@ href="https://plentycom.jp/en/steermouse/">SteerMouse</a>를
 
 href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=ko">3.0.5</a>에서
 
-발생한 About 탭이 때때로 너무 높게 표시되는 문제 수정</li>
+발생한 정보 탭이 때때로 너무 높게 표시되는 문제 수정</li>
 
-<li>중국어에서 ‘무료 기간 종료’ 알림의 텍스트가 잘리는 문제 수정</li>
+<li>중국어에서 ‘무료 기간 종료’ 알림의 텍스트가 잘리지 않도록 수정</li>
 
 <li>입력 기록 후 ‘+’ 필드의 그림자에 발생하는 시각적 결함 수정</li>
 
-<li>‘라이선스 키 입력’ 화면에서 플레이스홀더 텍스트가 중앙에서 벗어나
+<li>‘라이선스 키 입력’ 화면의 자리 표시자 텍스트가 가끔 중앙에서 벗어나
 
 표시되는 드문 결함 수정</li>
 
-<li>‘라이선스 키 입력’ 화면에서 Touch Bar 텍스트 자동완성 비활성화</li>
+<li>‘라이선스 키 입력’ 화면에서 Touch Bar 텍스트 자동 완성 비활성화</li>
 
 <li>다크/라이트 모드 전환 후 앱에 표시되는 일부 기호의 색상이 잘못되는
 
@@ -286,13 +300,13 @@ href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;loc
 
 <ul>
 
-<li>탭 전환 애니메이션 등 일부 애니메이션의 효율성 개선</li>
+<li>탭 전환 애니메이션 등 일부 애니메이션의 효율성 약간 개선</li>
 
 <li>기타 여러 내부 개선사항</li>
 
 </ul>
 
-<p><em>Claude의 훌륭한 도움으로 편집되었습니다.</em></p>
+<p><em>Claude의 훌륭한 도움으로 편집됨.</em></p>
 
 <hr />
 

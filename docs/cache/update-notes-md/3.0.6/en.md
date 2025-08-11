@@ -31,6 +31,7 @@ It also addresses several bugs and issues.
 ### Improved 'Back' and 'Forward' Compatibility
 
 The 'Back' and 'Forward' mouse button mappings now **work in more apps**, including:
+
 - Visual Studio Code, Cursor, VSCodium, Windsurf, Zed, and other code editors
 - Many built-in Apple apps such as Preview, Notes, System Settings, App Store, Music, TV, Books, and Freeform
 - Adobe Acrobat
@@ -53,6 +54,7 @@ While I've never been able to reproduce the issue, I've implemented a potential 
 
 The app will now retry multiple times when setting up display-synchronization fails. \
 If it still doesn't work after retrying, the app will:
+
 - Restart the 'Mac Mouse Fix Helper' background process, which may resolve the issue
 - Produce a crash report, which may help diagnosing the bug
 
