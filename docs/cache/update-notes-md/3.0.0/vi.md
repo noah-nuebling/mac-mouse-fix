@@ -1,33 +1,33 @@
 # Mac Mouse Fix 3 đã có mặt! ⭐️
 
-3.0.0 là **bản cập nhật lớn nhất** từ trước đến nay của Mac Mouse Fix.\
+3.0.0 là **bản cập nhật lớn nhất** của Mac Mouse Fix từ trước đến nay. \
 Tổng hợp nhiều tính năng mà tôi đã làm việc trong thời gian dài để cuối cùng mang đến giá trị tuyệt vời này:
 
-**Biến chuột $10 của bạn thành tốt hơn cả Apple Trackpad!**
+**Biến chuột $10 của bạn thành công cụ tốt hơn cả Apple Trackpad!**
 
 ## Mac Mouse Fix 3 không còn miễn phí 100%
 
 Mac Mouse Fix 2 vẫn **hoàn toàn miễn phí**, và tôi dự định sẽ tiếp tục hỗ trợ nó.
 
-Mac Mouse Fix 3 **miễn phí trong 30 ngày** và sau đó có giá **$2.99** để sở hữu.\
+Mac Mouse Fix 3 **miễn phí trong 30 ngày** và sau đó có giá **$2.99** để sở hữu. \
 (Đó là giá vào tháng 8 năm 2025. Tôi có thể điều chỉnh giá sau này.)
 
 Tôi biết việc thu phí có thể không có vẻ tốt cho người dùng lúc đầu, nhưng tôi hy vọng cách thực hiện của tôi sẽ khiến mọi người đồng thuận.
 
 - **Không gây áp lực**
-   Ngày dùng thử chỉ được tính khi bạn thực sự sử dụng Mac Mouse Fix. Vì vậy không có áp lực phải dùng ứng dụng trước khi hết hạn, và bạn có thể quyết định có muốn mua ứng dụng hay không mà không bị căng thẳng.
+   Ngày dùng thử chỉ được tính khi bạn thực sự sử dụng Mac Mouse Fix. Vì vậy không có áp lực phải dùng ứng dụng trước khi hết hạn, và bạn có thể quyết định có nên mua ứng dụng hay không một cách thoải mái.
 - **Đồng bộ qua iCloud**
   Giấy phép của bạn được đồng bộ qua iCloud, nên nó sẽ tự động có sẵn trên tất cả máy tính của bạn!
 - **Thuận tiện**\
    Thanh toán và kích hoạt giấy phép rất nhanh chóng và trực quan. Và bạn thậm chí có thể thanh toán bằng **Apple Pay**!
 - **Dễ thương**\
-   Sau khi kích hoạt giấy phép, sẽ có một **lời cảm ơn ngẫu nhiên** dễ thương trong tab "About" :)
+   Sau khi kích hoạt giấy phép, sẽ có một **lời cảm ơn ngẫu nhiên** dễ thương trên tab "About" :)
 - **Bạn hỗ trợ dự án**\
    Bằng cách hỗ trợ tài chính cho dự án, bạn cho phép tôi tiếp tục làm việc hướng tới ước mơ biến Mac Mouse Fix thành trình điều khiển chuột *tốt nhất mọi thời đại*! 🚀
 
-Nếu bạn đã mua cho tôi một ly sữa lắc qua PayPal - cảm ơn bạn! Nhấp vào [đây](https://redirect.macmousefix.com/?locale=en&target=mmf-apply-for-milkshake-license) để nhận **giấy phép miễn phí**.
+Nếu bạn đã mua cho tôi một ly sữa lắc qua PayPal – cảm ơn bạn! Nhấp vào [đây](https://redirect.macmousefix.com/?locale=en&target=mmf-apply-for-milkshake-license) để nhận **giấy phép miễn phí**.
 
-Nếu bạn muốn tiếp tục sử dụng Mac Mouse Fix 2 - điều đó cũng không sao. Nó sẽ luôn miễn phí và tôi dự định đảm bảo nó tiếp tục hoạt động trên các phiên bản macOS trong tương lai.
+Nếu bạn muốn tiếp tục sử dụng Mac Mouse Fix 2 – điều đó cũng không sao. Nó sẽ luôn miễn phí và tôi dự định đảm bảo nó tiếp tục hoạt động trên các phiên bản macOS trong tương lai.
 
 Tìm hiểu thêm về việc thu phí trong Mac Mouse Fix 3 trên [website](https://macmousefix.com/#price).
 
@@ -35,24 +35,26 @@ Tôi hy vọng mọi người đều cảm thấy ổn về việc thu phí tron
 
 ## Chuyển lại Mac Mouse Fix 2, sau khi thử Mac Mouse Fix 3
 
-Bạn có thể thử MMF 3, và quay lại MMF 2 bất cứ lúc nào.
-Tuy nhiên, **cài đặt MMF 3 sẽ xóa các cài đặt của MMF 2**.
+Bạn có thể thử MMF 3, và quay lại MMF 2 bất cứ lúc nào. \
+Tuy nhiên, **cài đặt MMF 3 sẽ xóa các cài đặt MMF 2 của bạn**. \
 Đây là cách để **tránh mất cài đặt MMF 2** khi thử MMF 3:
 
 **Trước khi cập nhật lên MMF 3:**
+
 1. Mở màn hình 'More...' trong MMF 2, sau đó nhấp vào logo MMF ở góc trên bên trái trong khi giữ Command (⌘) và Shift (⇧) trên bàn phím. Thao tác này sẽ hiện một tệp tên 'config.plist' trong Finder. Tệp này chứa tất cả cài đặt của bạn.
 2. Lưu một bản sao của 'config.plist' để khôi phục sau này.
 3. Cập nhật lên MMF 3, và xem bạn có thích nó không!
 
 **Khi bạn muốn quay lại MMF 2:**
+
 1. [Tải MMF 2](https://redirect.macmousefix.com/?locale=en&target=mmf2-latest) lại.
 2. Hiện 'config.plist' trong Finder và thay thế nó bằng bản sao bạn đã tạo trước đó.
 
-*Nếu MMF 2 không kích hoạt sau khi quay lại, bạn có thể phải xóa MMF 3, sau đó dọn sạch thùng rác, và khởi động lại máy tính.*
+*Nếu MMF 2 không kích hoạt sau khi quay lại, bạn có thể cần xóa MMF 3, sau đó dọn sạch thùng rác, và khởi động lại máy tính.*
 
 Tôi hy vọng điều này giúp bạn yên tâm khi thử MMF 3.
 
-## Tính năng mới trong Mac Mouse Fix 3!
+## Các tính năng mới trong Mac Mouse Fix 3!
 
 Mac Mouse Fix 3 có **cuộn trang kiểu trackpad tuyệt vời**, **giao diện mới** đẹp mắt, và cho phép bạn **làm mọi thứ có thể làm trên trackpad** bằng cách giới thiệu một số cử chỉ mới.
 
@@ -66,19 +68,19 @@ Xem ghi chú phát hành cho [3.0.0 Beta 7](https://github.com/noah-nuebling/mac
 
 - **'Nhấp và Kéo' để 'Cuộn & Điều hướng'**
 
-    Bây giờ bạn có thể nhấp và kéo để mô phỏng vuốt bằng 2 ngón tay trên Apple trackpad. Điều này cho phép bạn duyệt hệ thống một cách dễ dàng vì nó cho phép bạn cuộn rất chính xác và linh hoạt theo 360°, quay lại và tiến tới trong Safari, xóa email nhanh chóng, và nhiều hơn nữa.
+    Giờ đây bạn có thể nhấp và kéo để mô phỏng vuốt bằng 2 ngón tay trên Apple trackpad. Điều này cho phép bạn duyệt hệ thống một cách dễ dàng vì nó cho phép bạn cuộn rất chính xác và linh hoạt theo 360°, quay lại và tiến tới trong Safari, xóa email nhanh chóng, và nhiều hơn nữa.
 
-    Bạn thậm chí có thể sử dụng [Swish](https://highlyopinionated.co/swish/) trực tiếp từ chuột của mình. Đó là một ứng dụng rất hay được thiết kế để cho phép bạn quản lý cửa sổ bằng cách vuốt trên trackpad. Nhưng bây giờ, bạn cũng có thể sử dụng nó với chuột! - Thực tế, bất cứ điều gì bạn có thể làm bằng cách vuốt trên trackpad đều hoạt động tốt với Mac Mouse Fix!
+    Bạn thậm chí có thể sử dụng [Swish](https://highlyopinionated.co/swish/) trực tiếp từ chuột của mình. Đó là một ứng dụng rất hay được thiết kế để cho phép bạn quản lý cửa sổ bằng cách vuốt trên trackpad. Nhưng giờ đây, bạn cũng có thể sử dụng nó với chuột! - Thực tế, bất cứ điều gì bạn có thể làm bằng cách vuốt trên trackpad đều hoạt động tốt như nhau với Mac Mouse Fix!
 
 - **Cử chỉ 'Nhấp và Cuộn'**
 
-    Bây giờ bạn có thể giữ nút chuột và sau đó cuộn để kích hoạt nhiều hành động khác nhau, như hiển thị desktop, phóng to hoặc thu nhỏ, và nhiều hơn nữa. Nó cảm giác rất nhạy và mượt mà, giống như trackpad.
+    Giờ đây bạn có thể giữ nút chuột và sau đó cuộn để kích hoạt nhiều hành động khác nhau, như hiển thị desktop, phóng to hoặc thu nhỏ, và nhiều hơn nữa. Nó cảm giác rất nhạy và mượt mà, giống như trackpad.
 
 - **Cuộn trang được xây dựng lại hoàn toàn**
 
-    Cuộn trang giờ đây đòi hỏi ít nỗ lực hơn và cảm giác mượt mà và thú vị hơn khi sử dụng. Nó cũng có thể mô phỏng vuốt trên trackpad. Điều này mang lại một số cải tiến nhỏ như nảy nhẹ khi bạn đến cuối trang, có thể quay lại và tiến tới trong Safari bằng cách cuộn ngang, tương thích tốt hơn với Preview.app, và hơn thế nữa.
+    Cuộn trang giờ đây yêu cầu ít nỗ lực hơn và cảm giác mượt mà và thú vị hơn khi sử dụng. Nó cũng có thể mô phỏng vuốt trên trackpad. Điều này mang lại một số tiện ích nhỏ như nảy nhẹ khi bạn đến cuối trang, có thể quay lại và tiến tới trong Safari bằng cách cuộn ngang, tương thích tốt hơn với Preview.app, và nhiều hơn nữa.
 
-    Truy cập [phần cuộn trang](https://macmousefix.com/#scroll) trên website mới để xem tính năng cuộn mới hoạt động. Tuy nhiên tôi nghĩ tốt nhất là bạn nên tự mình thử!
+    Truy cập [phần cuộn trang](https://macmousefix.com/#scroll) trên website mới để xem tính năng cuộn mới hoạt động. Tuy nhiên tôi nghĩ tốt nhất là tự mình thử nó!
 
 - **Giao diện mới tuyệt vời** 
 
@@ -102,4 +104,4 @@ Bản phát hành chính thức của Mac Mouse Fix 3.0.0 có một số cải t
 - Thêm "Version" trước số phiên bản trên tab "About" để dễ hiểu hơn
 - Cập nhật chuỗi giấy phép của ứng dụng "Mac Mouse Fix Helper"
 - Cải thiện cơ chế dự phòng cho các giá trị liên quan đến giấy phép khi không có kết nối internet
-- Cải thiện và dọn dẹp bên trong
+- Cải thiện và dọn dẹp nội bộ

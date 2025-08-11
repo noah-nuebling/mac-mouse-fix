@@ -1,6 +1,6 @@
 # Mac Mouse Fix 3 is here! ⭐️
 
-3.0.0 is the **biggest update ever** for Mac Mouse Fix.\
+3.0.0 is the **biggest update ever** for Mac Mouse Fix. \
 Bringing together many features that I've worked on for a long time to finally deliver this awesome value proposition:
 
 **Make your $10 mouse better than an Apple Trackpad!**
@@ -9,7 +9,7 @@ Bringing together many features that I've worked on for a long time to finally d
 
 Mac Mouse Fix 2 remains **100% free**, and I plan to keep supporting it. 
 
-Mac Mouse Fix 3 is **free for 30 days** and then costs **$2.99** to own.\
+Mac Mouse Fix 3 is **free for 30 days** and then costs **$2.99** to own. \
 (That's the price in August 2025. I might adjust the price down the line.)
 
 I know that monetization might not seem good for users at first glance, but I hope I've implemented it in a way that everyone can get on board with.
@@ -37,16 +37,18 @@ I hope everyone feels okay about monetization in Mac Mouse Fix 3 and **thank you
 
 
 
-You can try out MMF 3, and go back to MMF 2 at any time.
-However, **installing MMF 3 will delete your MMF 2 settings**.
+You can try out MMF 3, and go back to MMF 2 at any time. \
+However, **installing MMF 3 will delete your MMF 2 settings**. \
 Here's how to **avoid losing your MMF 2 settings** when trying out MMF 3:
 
 **Before updating to MMF 3:**
+
 1. Open the 'More...' screen in MMF 2, then click the MMF logo in the top left while holding Command (⌘) and Shift (⇧) on your keyboard. This will reveal a file called 'config.plist' in the Finder. This file contains all your settings.
 2. Save a copy of 'config.plist' to restore later.
 3. Update to MMF 3, and see if you like it!
 
 **When you want to go back to MMF 2:**
+
 1. [Download MMF 2](https://redirect.macmousefix.com/?locale=en&target=mmf2-latest) again.
 2. Reveal 'config.plist' in Finder and replace it with the copy you made earlier.
 

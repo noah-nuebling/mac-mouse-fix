@@ -2415,11 +2415,11 @@
         ]
     },
     "docs/cache/update-notes-md/3.0.0/de.md": {
-        "target_hash": "93c68e44c805f4cecd8a7f15556eec27",
+        "target_hash": "f1cf57f5022a69281e32850f53e8c9f1",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/en.md",
-                "source_hash": "1ab7ab8321d6b608d75fddabf9c43e19"
+                "source_hash": "aadee544438dfe797880bf9b9aaae2e8"
             }
         ]
     },
@@ -2442,29 +2442,29 @@
         ]
     },
     "docs/cache/update-notes-md/3.0.0/zh-Hans.md": {
-        "target_hash": "98250dff3ede825f745a99be321bc3dd",
+        "target_hash": "cd2d68d6bab9dff9dc661062e0221110",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/en.md",
-                "source_hash": "1ab7ab8321d6b608d75fddabf9c43e19"
+                "source_hash": "aadee544438dfe797880bf9b9aaae2e8"
             }
         ]
     },
     "docs/cache/update-notes-md/3.0.0/zh-Hant.md": {
-        "target_hash": "dfaf5f9c85d7ef3a3921ba18ffcdc40a",
+        "target_hash": "a816976b808bfbd2243747acb9b034d4",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/en.md",
-                "source_hash": "1ab7ab8321d6b608d75fddabf9c43e19"
+                "source_hash": "aadee544438dfe797880bf9b9aaae2e8"
             }
         ]
     },
     "docs/cache/update-notes-md/3.0.0/zh-HK.md": {
-        "target_hash": "47a2f3b29ea3cf199eb830d05cce6560",
+        "target_hash": "08588f842079940d92e77272acf8c04f",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/en.md",
-                "source_hash": "1ab7ab8321d6b608d75fddabf9c43e19"
+                "source_hash": "aadee544438dfe797880bf9b9aaae2e8"
             }
         ]
     },
@@ -2478,11 +2478,11 @@
         ]
     },
     "docs/update-notes-html/3.0.0/en.html": {
-        "target_hash": "6ca23bb9218d78404b8e9bca0f775e45",
+        "target_hash": "ba003550a73f62db6cb5f263920f0aa0",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/en.md",
-                "source_hash": "1ab7ab8321d6b608d75fddabf9c43e19"
+                "source_hash": "aadee544438dfe797880bf9b9aaae2e8"
             }
         ]
     },
@@ -2500,7 +2500,7 @@
         ]
     },
     "docs/update-notes-html/3.0.0/de.html": {
-        "target_hash": "607b3e66ccb5510e4c74882c5ae7dbd4",
+        "target_hash": "5da55189963636b49322f32557f2eee1",
         "sources": [
             {
                 "source_path": "docs/cache/custom-strings/release-notes.disclaimer/de.txt",
@@ -2508,7 +2508,7 @@
             },
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/de.md",
-                "source_hash": "93c68e44c805f4cecd8a7f15556eec27"
+                "source_hash": "f1cf57f5022a69281e32850f53e8c9f1"
             }
         ]
     },
@@ -2539,7 +2539,7 @@
         ]
     },
     "docs/update-notes-html/3.0.0/zh-Hans.html": {
-        "target_hash": "4524c760815c4ee1fef386237c7f24eb",
+        "target_hash": "56acddc3fa042b7d12bdcb628cb1ce9c",
         "sources": [
             {
                 "source_path": "docs/cache/custom-strings/release-notes.disclaimer/zh-Hans.txt",
@@ -2547,12 +2547,12 @@
             },
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/zh-Hans.md",
-                "source_hash": "98250dff3ede825f745a99be321bc3dd"
+                "source_hash": "cd2d68d6bab9dff9dc661062e0221110"
             }
         ]
     },
     "docs/update-notes-html/3.0.0/zh-Hant.html": {
-        "target_hash": "afb6c1cec57d1b011243b0f1f60b8b44",
+        "target_hash": "bdc674a97f475224281edc3df889cf35",
         "sources": [
             {
                 "source_path": "docs/cache/custom-strings/release-notes.disclaimer/zh-Hant.txt",
@@ -2560,12 +2560,12 @@
             },
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/zh-Hant.md",
-                "source_hash": "dfaf5f9c85d7ef3a3921ba18ffcdc40a"
+                "source_hash": "a816976b808bfbd2243747acb9b034d4"
             }
         ]
     },
     "docs/update-notes-html/3.0.0/zh-HK.html": {
-        "target_hash": "80f760dd1e013bc932883826c4cdc935",
+        "target_hash": "15e34eeff12e07199a721e7d4a6e83cf",
         "sources": [
             {
                 "source_path": "docs/cache/custom-strings/release-notes.disclaimer/zh-HK.txt",
@@ -2573,7 +2573,7 @@
             },
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/zh-HK.md",
-                "source_hash": "47a2f3b29ea3cf199eb830d05cce6560"
+                "source_hash": "08588f842079940d92e77272acf8c04f"
             }
         ]
     },
@@ -2612,11 +2612,11 @@
         ]
     },
     "docs/github-releases/de/3.0.0.md": {
-        "target_hash": "841361dbf401b978b44692fd572cbdd6",
+        "target_hash": "d525183ea8129daf449b5bd80fff4d82",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/de.md",
-                "source_hash": "93c68e44c805f4cecd8a7f15556eec27"
+                "source_hash": "f1cf57f5022a69281e32850f53e8c9f1"
             },
             {
                 "source_path": "docs/cache/custom-strings/release.disclaimer/de.txt",
@@ -2675,11 +2675,11 @@
         ]
     },
     "docs/github-releases/zh-Hans/3.0.0.md": {
-        "target_hash": "e8a2a1f8196e3ab9d5c0a9c3206d3981",
+        "target_hash": "467332530e3890ea1b129429c8aca26c",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/zh-Hans.md",
-                "source_hash": "98250dff3ede825f745a99be321bc3dd"
+                "source_hash": "cd2d68d6bab9dff9dc661062e0221110"
             },
             {
                 "source_path": "docs/cache/custom-strings/release.disclaimer/zh-Hans.txt",
@@ -2696,11 +2696,11 @@
         ]
     },
     "docs/github-releases/zh-Hant/3.0.0.md": {
-        "target_hash": "25629778246148a92bc5a95c9a5d555a",
+        "target_hash": "d73e9f15e9f8c5307c33420e62a7c76d",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/zh-Hant.md",
-                "source_hash": "dfaf5f9c85d7ef3a3921ba18ffcdc40a"
+                "source_hash": "a816976b808bfbd2243747acb9b034d4"
             },
             {
                 "source_path": "docs/cache/custom-strings/release.disclaimer/zh-Hant.txt",
@@ -2717,11 +2717,11 @@
         ]
     },
     "docs/github-releases/zh-HK/3.0.0.md": {
-        "target_hash": "40cbb7325ffb8b9fe8bf9976ae63cae6",
+        "target_hash": "5a307c3444e16ba96d904af70c9025bc",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/zh-HK.md",
-                "source_hash": "47a2f3b29ea3cf199eb830d05cce6560"
+                "source_hash": "08588f842079940d92e77272acf8c04f"
             },
             {
                 "source_path": "docs/cache/custom-strings/release.disclaimer/zh-HK.txt",
@@ -16839,11 +16839,11 @@
         ]
     },
     "docs/cache/update-notes-md/3.0.0/vi.md": {
-        "target_hash": "73fce9b7a3b646538430cc5c59dc914d",
+        "target_hash": "59225556997cd3d99320851152b81997",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/en.md",
-                "source_hash": "1ab7ab8321d6b608d75fddabf9c43e19"
+                "source_hash": "aadee544438dfe797880bf9b9aaae2e8"
             }
         ]
     },
@@ -16929,11 +16929,11 @@
         ]
     },
     "docs/cache/update-notes-md/3.0.0/ko.md": {
-        "target_hash": "97c722b532c4bc4c4cb2ada372ee82c1",
+        "target_hash": "0a010fb4fee8568fe5988faa8b513352",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/en.md",
-                "source_hash": "1ab7ab8321d6b608d75fddabf9c43e19"
+                "source_hash": "aadee544438dfe797880bf9b9aaae2e8"
             }
         ]
     },
@@ -17055,7 +17055,7 @@
         ]
     },
     "docs/update-notes-html/3.0.0/vi.html": {
-        "target_hash": "672f2ebcd27392eb2e54af6512b8e2df",
+        "target_hash": "9368fe7b232777c4f601d50ef2bc89f2",
         "sources": [
             {
                 "source_path": "docs/cache/custom-strings/release-notes.disclaimer/vi.txt",
@@ -17063,7 +17063,7 @@
             },
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/vi.md",
-                "source_hash": "73fce9b7a3b646538430cc5c59dc914d"
+                "source_hash": "59225556997cd3d99320851152b81997"
             }
         ]
     },
@@ -17185,7 +17185,7 @@
         ]
     },
     "docs/update-notes-html/3.0.0/ko.html": {
-        "target_hash": "cf6622cfcd8de19fd04ea373cfed8cc4",
+        "target_hash": "35043e83f83504a01ed393a20f965ca9",
         "sources": [
             {
                 "source_path": "docs/cache/custom-strings/release-notes.disclaimer/ko.txt",
@@ -17193,7 +17193,7 @@
             },
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/ko.md",
-                "source_hash": "97c722b532c4bc4c4cb2ada372ee82c1"
+                "source_hash": "0a010fb4fee8568fe5988faa8b513352"
             }
         ]
     },
@@ -17387,11 +17387,11 @@
         ]
     },
     "docs/github-releases/vi/3.0.0.md": {
-        "target_hash": "5a9dfac6ddc0a0f46b1e462bc774ce55",
+        "target_hash": "1be04b95463b09ef0c3fa44e6e81efd1",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/vi.md",
-                "source_hash": "73fce9b7a3b646538430cc5c59dc914d"
+                "source_hash": "59225556997cd3d99320851152b81997"
             },
             {
                 "source_path": "docs/cache/custom-strings/release.disclaimer/vi.txt",
@@ -17597,11 +17597,11 @@
         ]
     },
     "docs/github-releases/ko/3.0.0.md": {
-        "target_hash": "c408f48f6fd60924dfe03112aeda0055",
+        "target_hash": "51ae79fde6c9926e241377675f2f8dd7",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.0/ko.md",
-                "source_hash": "97c722b532c4bc4c4cb2ada372ee82c1"
+                "source_hash": "0a010fb4fee8568fe5988faa8b513352"
             },
             {
                 "source_path": "docs/cache/custom-strings/release.disclaimer/ko.txt",
@@ -37665,70 +37665,70 @@
         ]
     },
     "docs/cache/update-notes-md/3.0.5/de.md": {
-        "target_hash": "0312457345c0e0a4dfca081eab2d8f11",
+        "target_hash": "4cc817bba577082e48d3961fcdbddb9a",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/en.md",
-                "source_hash": "b2e2fd7bead3b6b1e8b4a0ca050681d0"
+                "source_hash": "8ed1000fc149be7b16bd1feb97f75f87"
             }
         ]
     },
     "docs/cache/update-notes-md/3.0.5/vi.md": {
-        "target_hash": "fc893693abb9f6215808775bbb9c8812",
+        "target_hash": "92bdac22bb61bfe9a75e3950d8e86a61",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/en.md",
-                "source_hash": "b2e2fd7bead3b6b1e8b4a0ca050681d0"
+                "source_hash": "8ed1000fc149be7b16bd1feb97f75f87"
             }
         ]
     },
     "docs/cache/update-notes-md/3.0.5/zh-Hans.md": {
-        "target_hash": "06f243ceb3f8fe32d8debc43e7c4e778",
+        "target_hash": "ade724c84e281ae04239c733aeb2cbdf",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/en.md",
-                "source_hash": "b2e2fd7bead3b6b1e8b4a0ca050681d0"
+                "source_hash": "8ed1000fc149be7b16bd1feb97f75f87"
             }
         ]
     },
     "docs/cache/update-notes-md/3.0.5/zh-Hant.md": {
-        "target_hash": "b6bb5cabdd484b762f6ca760112dfc19",
+        "target_hash": "782775952fdc7762e3e9fea331fc1394",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/en.md",
-                "source_hash": "b2e2fd7bead3b6b1e8b4a0ca050681d0"
+                "source_hash": "8ed1000fc149be7b16bd1feb97f75f87"
             }
         ]
     },
     "docs/cache/update-notes-md/3.0.5/zh-HK.md": {
-        "target_hash": "a6903ae5f42b46981d75ef138f7bad75",
+        "target_hash": "6a194c94c43346b4ab6898b53343c0f5",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/en.md",
-                "source_hash": "b2e2fd7bead3b6b1e8b4a0ca050681d0"
+                "source_hash": "8ed1000fc149be7b16bd1feb97f75f87"
             }
         ]
     },
     "docs/cache/update-notes-md/3.0.5/ko.md": {
-        "target_hash": "847750056c56652acc6fb06842608c87",
+        "target_hash": "8a19eec1fda549865a6cb2603e274084",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/en.md",
-                "source_hash": "b2e2fd7bead3b6b1e8b4a0ca050681d0"
+                "source_hash": "8ed1000fc149be7b16bd1feb97f75f87"
             }
         ]
     },
     "docs/update-notes-html/3.0.5/en.html": {
-        "target_hash": "f1560722166ebf2571e029cc51d60747",
+        "target_hash": "de3803b5238d3ef3514c45ee438579f9",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/en.md",
-                "source_hash": "b2e2fd7bead3b6b1e8b4a0ca050681d0"
+                "source_hash": "8ed1000fc149be7b16bd1feb97f75f87"
             }
         ]
     },
     "docs/update-notes-html/3.0.5/de.html": {
-        "target_hash": "b64c1f7a665696eddb0cd54f565cde72",
+        "target_hash": "99e44dc03c67dae420d74583c80b9fb3",
         "sources": [
             {
                 "source_path": "docs/cache/custom-strings/release-notes.disclaimer/de.txt",
@@ -37736,12 +37736,12 @@
             },
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/de.md",
-                "source_hash": "0312457345c0e0a4dfca081eab2d8f11"
+                "source_hash": "4cc817bba577082e48d3961fcdbddb9a"
             }
         ]
     },
     "docs/update-notes-html/3.0.5/vi.html": {
-        "target_hash": "6bc0cb75d2382558a61324a4ad180809",
+        "target_hash": "5d2c3c8d225de9496bf9987e55431c8f",
         "sources": [
             {
                 "source_path": "docs/cache/custom-strings/release-notes.disclaimer/vi.txt",
@@ -37749,12 +37749,12 @@
             },
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/vi.md",
-                "source_hash": "fc893693abb9f6215808775bbb9c8812"
+                "source_hash": "92bdac22bb61bfe9a75e3950d8e86a61"
             }
         ]
     },
     "docs/update-notes-html/3.0.5/zh-Hans.html": {
-        "target_hash": "a287b9f0fc210c0334216c816ccb8238",
+        "target_hash": "3facf3c254d6c78aa9ab5eb6e0dbf428",
         "sources": [
             {
                 "source_path": "docs/cache/custom-strings/release-notes.disclaimer/zh-Hans.txt",
@@ -37762,12 +37762,12 @@
             },
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/zh-Hans.md",
-                "source_hash": "06f243ceb3f8fe32d8debc43e7c4e778"
+                "source_hash": "ade724c84e281ae04239c733aeb2cbdf"
             }
         ]
     },
     "docs/update-notes-html/3.0.5/zh-Hant.html": {
-        "target_hash": "ccc93174ec4568062e8867dc121ac927",
+        "target_hash": "da92d0e1114f29635438d16e24c84ffa",
         "sources": [
             {
                 "source_path": "docs/cache/custom-strings/release-notes.disclaimer/zh-Hant.txt",
@@ -37775,12 +37775,12 @@
             },
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/zh-Hant.md",
-                "source_hash": "b6bb5cabdd484b762f6ca760112dfc19"
+                "source_hash": "782775952fdc7762e3e9fea331fc1394"
             }
         ]
     },
     "docs/update-notes-html/3.0.5/zh-HK.html": {
-        "target_hash": "e2a9d628fb9ae608af48dd300db57e85",
+        "target_hash": "59aa47697c0d0db675ae44ae660d722b",
         "sources": [
             {
                 "source_path": "docs/cache/custom-strings/release-notes.disclaimer/zh-HK.txt",
@@ -37788,12 +37788,12 @@
             },
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/zh-HK.md",
-                "source_hash": "a6903ae5f42b46981d75ef138f7bad75"
+                "source_hash": "6a194c94c43346b4ab6898b53343c0f5"
             }
         ]
     },
     "docs/update-notes-html/3.0.5/ko.html": {
-        "target_hash": "6e6e50ce3828293f7d527d857b59d13e",
+        "target_hash": "fd457b5ce72fb8ba095badf0410e65ee",
         "sources": [
             {
                 "source_path": "docs/cache/custom-strings/release-notes.disclaimer/ko.txt",
@@ -37801,16 +37801,16 @@
             },
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/ko.md",
-                "source_hash": "847750056c56652acc6fb06842608c87"
+                "source_hash": "8a19eec1fda549865a6cb2603e274084"
             }
         ]
     },
     "docs/github-releases/de/3.0.5.md": {
-        "target_hash": "608966675d43cc9ba3bbd6e3b5ee2a36",
+        "target_hash": "cefcb59ce6ce8c82f3c5e34f9c32c22f",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/de.md",
-                "source_hash": "0312457345c0e0a4dfca081eab2d8f11"
+                "source_hash": "4cc817bba577082e48d3961fcdbddb9a"
             },
             {
                 "source_path": "docs/cache/custom-strings/release.disclaimer/de.txt",
@@ -37827,11 +37827,11 @@
         ]
     },
     "docs/github-releases/vi/3.0.5.md": {
-        "target_hash": "cbcf3b71e85182055f8256ced58d3f1c",
+        "target_hash": "8154d6738ec73ec3f9537c2a3d62566d",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/vi.md",
-                "source_hash": "fc893693abb9f6215808775bbb9c8812"
+                "source_hash": "92bdac22bb61bfe9a75e3950d8e86a61"
             },
             {
                 "source_path": "docs/cache/custom-strings/release.disclaimer/vi.txt",
@@ -37848,11 +37848,11 @@
         ]
     },
     "docs/github-releases/zh-Hans/3.0.5.md": {
-        "target_hash": "7afe4f73455e98f990471addc41109a7",
+        "target_hash": "452d903f3af0ab61b97e63c2a8e8df15",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/zh-Hans.md",
-                "source_hash": "06f243ceb3f8fe32d8debc43e7c4e778"
+                "source_hash": "ade724c84e281ae04239c733aeb2cbdf"
             },
             {
                 "source_path": "docs/cache/custom-strings/release.disclaimer/zh-Hans.txt",
@@ -37869,11 +37869,11 @@
         ]
     },
     "docs/github-releases/zh-Hant/3.0.5.md": {
-        "target_hash": "556411966f667c05131e5b165e7fa6f4",
+        "target_hash": "bb5a1daaaafe15e43fb02dac2b815b74",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/zh-Hant.md",
-                "source_hash": "b6bb5cabdd484b762f6ca760112dfc19"
+                "source_hash": "782775952fdc7762e3e9fea331fc1394"
             },
             {
                 "source_path": "docs/cache/custom-strings/release.disclaimer/zh-Hant.txt",
@@ -37890,11 +37890,11 @@
         ]
     },
     "docs/github-releases/zh-HK/3.0.5.md": {
-        "target_hash": "a953133f6d01ba02d655c19ed3b2427c",
+        "target_hash": "e4155af835a773bcbd094831c2c30ad4",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/zh-HK.md",
-                "source_hash": "a6903ae5f42b46981d75ef138f7bad75"
+                "source_hash": "6a194c94c43346b4ab6898b53343c0f5"
             },
             {
                 "source_path": "docs/cache/custom-strings/release.disclaimer/zh-HK.txt",
@@ -37911,11 +37911,278 @@
         ]
     },
     "docs/github-releases/ko/3.0.5.md": {
-        "target_hash": "8b770bb467b2df470155786de31d5cbb",
+        "target_hash": "261f8cc0a553a89547e56dea8f6e4826",
         "sources": [
             {
                 "source_path": "docs/cache/update-notes-md/3.0.5/ko.md",
-                "source_hash": "847750056c56652acc6fb06842608c87"
+                "source_hash": "8a19eec1fda549865a6cb2603e274084"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.disclaimer/ko.txt",
+                "source_hash": "d00fe6bf28e13df39e6b63f530b37d0b"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.metadata/ko.txt",
+                "source_hash": "6f2547da54e2e1ac316f212ebe150698"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.assets/ko.txt",
+                "source_hash": "612ca27b100f86818f074f80bf8c7ad3"
+            }
+        ]
+    },
+    "docs/cache/update-notes-md/3.0.6/de.md": {
+        "target_hash": "3ad7cbe4ddc283d5b4ef1a06cd0ac22e",
+        "sources": [
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/en.md",
+                "source_hash": "0cd2ba870895db4a99a8768164e46c33"
+            }
+        ]
+    },
+    "docs/cache/update-notes-md/3.0.6/vi.md": {
+        "target_hash": "f3863c3679e79552fdf0a7d186750d02",
+        "sources": [
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/en.md",
+                "source_hash": "0cd2ba870895db4a99a8768164e46c33"
+            }
+        ]
+    },
+    "docs/cache/update-notes-md/3.0.6/zh-Hans.md": {
+        "target_hash": "ac77dc705e04359777f3e70d8f3bae5b",
+        "sources": [
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/en.md",
+                "source_hash": "0cd2ba870895db4a99a8768164e46c33"
+            }
+        ]
+    },
+    "docs/cache/update-notes-md/3.0.6/zh-Hant.md": {
+        "target_hash": "f46944954ec92afbc8c303cdca6bfa12",
+        "sources": [
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/en.md",
+                "source_hash": "0cd2ba870895db4a99a8768164e46c33"
+            }
+        ]
+    },
+    "docs/cache/update-notes-md/3.0.6/zh-HK.md": {
+        "target_hash": "711d2bda1796e2e31a6a03a9f7b6b442",
+        "sources": [
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/en.md",
+                "source_hash": "0cd2ba870895db4a99a8768164e46c33"
+            }
+        ]
+    },
+    "docs/cache/update-notes-md/3.0.6/ko.md": {
+        "target_hash": "3996a0ca998afc4fed1d836018f753da",
+        "sources": [
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/en.md",
+                "source_hash": "0cd2ba870895db4a99a8768164e46c33"
+            }
+        ]
+    },
+    "docs/update-notes-html/3.0.6/en.html": {
+        "target_hash": "681d69190e28e34219db6bc2448ef09a",
+        "sources": [
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/en.md",
+                "source_hash": "0cd2ba870895db4a99a8768164e46c33"
+            }
+        ]
+    },
+    "docs/update-notes-html/3.0.6/de.html": {
+        "target_hash": "41d0326bf5e7882a0ce581d8a19c1f57",
+        "sources": [
+            {
+                "source_path": "docs/cache/custom-strings/release-notes.disclaimer/de.txt",
+                "source_hash": "9653cf097928b0986cc26e958d328570"
+            },
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/de.md",
+                "source_hash": "3ad7cbe4ddc283d5b4ef1a06cd0ac22e"
+            }
+        ]
+    },
+    "docs/update-notes-html/3.0.6/vi.html": {
+        "target_hash": "0b5d278f20b690e5dc81d605b8fa720e",
+        "sources": [
+            {
+                "source_path": "docs/cache/custom-strings/release-notes.disclaimer/vi.txt",
+                "source_hash": "9bbc63cdb2004823cce976d4eb966db5"
+            },
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/vi.md",
+                "source_hash": "f3863c3679e79552fdf0a7d186750d02"
+            }
+        ]
+    },
+    "docs/update-notes-html/3.0.6/zh-Hans.html": {
+        "target_hash": "6882e96149646708e44c26df6e87d5cf",
+        "sources": [
+            {
+                "source_path": "docs/cache/custom-strings/release-notes.disclaimer/zh-Hans.txt",
+                "source_hash": "e6e04b6e328f19f5444bde85aa9f4390"
+            },
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/zh-Hans.md",
+                "source_hash": "ac77dc705e04359777f3e70d8f3bae5b"
+            }
+        ]
+    },
+    "docs/update-notes-html/3.0.6/zh-Hant.html": {
+        "target_hash": "05ce637c69ea7f682bbbea1979aa5e3c",
+        "sources": [
+            {
+                "source_path": "docs/cache/custom-strings/release-notes.disclaimer/zh-Hant.txt",
+                "source_hash": "935c15eec86bca957e50dbb6ae155142"
+            },
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/zh-Hant.md",
+                "source_hash": "f46944954ec92afbc8c303cdca6bfa12"
+            }
+        ]
+    },
+    "docs/update-notes-html/3.0.6/zh-HK.html": {
+        "target_hash": "68271a33481ea57cebc07be53a49b5dc",
+        "sources": [
+            {
+                "source_path": "docs/cache/custom-strings/release-notes.disclaimer/zh-HK.txt",
+                "source_hash": "d859f6611096699cbe648054f8886f74"
+            },
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/zh-HK.md",
+                "source_hash": "711d2bda1796e2e31a6a03a9f7b6b442"
+            }
+        ]
+    },
+    "docs/update-notes-html/3.0.6/ko.html": {
+        "target_hash": "053a62beff5a4d8b93fadd8d328263e4",
+        "sources": [
+            {
+                "source_path": "docs/cache/custom-strings/release-notes.disclaimer/ko.txt",
+                "source_hash": "93018a1a2bfab39294ac4ca312223e36"
+            },
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/ko.md",
+                "source_hash": "3996a0ca998afc4fed1d836018f753da"
+            }
+        ]
+    },
+    "docs/github-releases/de/3.0.6.md": {
+        "target_hash": "47c4dc357be3ec47e19e097eaef9d339",
+        "sources": [
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/de.md",
+                "source_hash": "3ad7cbe4ddc283d5b4ef1a06cd0ac22e"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.disclaimer/de.txt",
+                "source_hash": "ff3a0c647fb5aba99770735a868bf581"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.metadata/de.txt",
+                "source_hash": "1c5dcd4352e2da389f5125c7d37bd5ff"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.assets/de.txt",
+                "source_hash": "828f196bf6cb0832762b0af8eaf1414a"
+            }
+        ]
+    },
+    "docs/github-releases/vi/3.0.6.md": {
+        "target_hash": "8b8355fde303074cb05dd1541c506128",
+        "sources": [
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/vi.md",
+                "source_hash": "f3863c3679e79552fdf0a7d186750d02"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.disclaimer/vi.txt",
+                "source_hash": "ceb75f08241ff67f08356818c140a6bb"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.metadata/vi.txt",
+                "source_hash": "84a13cf1896de41ded2c5951121f6656"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.assets/vi.txt",
+                "source_hash": "8db0b20938fab694c86c6c58b7c93cd1"
+            }
+        ]
+    },
+    "docs/github-releases/zh-Hans/3.0.6.md": {
+        "target_hash": "2d4019aced3d5827f99b91ec008692f0",
+        "sources": [
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/zh-Hans.md",
+                "source_hash": "ac77dc705e04359777f3e70d8f3bae5b"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.disclaimer/zh-Hans.txt",
+                "source_hash": "44e4ae5ce35cb1467105ac36ea9dc355"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.metadata/zh-Hans.txt",
+                "source_hash": "dc411e72cd9119e9590d9ef32e3dbd7e"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.assets/zh-Hans.txt",
+                "source_hash": "eee83a9211a70f9dddd6bdac99f28511"
+            }
+        ]
+    },
+    "docs/github-releases/zh-Hant/3.0.6.md": {
+        "target_hash": "5cbdd54496c1bf789f889b826d081faf",
+        "sources": [
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/zh-Hant.md",
+                "source_hash": "f46944954ec92afbc8c303cdca6bfa12"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.disclaimer/zh-Hant.txt",
+                "source_hash": "c9d527e31eaefb5d6728df767a532a1b"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.metadata/zh-Hant.txt",
+                "source_hash": "e10ee75b493dd813d6397e80c27de2e5"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.assets/zh-Hant.txt",
+                "source_hash": "326a07ffb8ff4828a271fd8a1b8caa0c"
+            }
+        ]
+    },
+    "docs/github-releases/zh-HK/3.0.6.md": {
+        "target_hash": "54a2e1ea395adb5a2c18bc12f20998d0",
+        "sources": [
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/zh-HK.md",
+                "source_hash": "711d2bda1796e2e31a6a03a9f7b6b442"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.disclaimer/zh-HK.txt",
+                "source_hash": "f5a8e63af366fc7a82e12cba4ad1e317"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.metadata/zh-HK.txt",
+                "source_hash": "6801c9b9fbb9e08fbfc24b286be32b69"
+            },
+            {
+                "source_path": "docs/cache/custom-strings/release.assets/zh-HK.txt",
+                "source_hash": "326a07ffb8ff4828a271fd8a1b8caa0c"
+            }
+        ]
+    },
+    "docs/github-releases/ko/3.0.6.md": {
+        "target_hash": "d4d79ab1048751539b30a65b1c975145",
+        "sources": [
+            {
+                "source_path": "docs/cache/update-notes-md/3.0.6/ko.md",
+                "source_hash": "3996a0ca998afc4fed1d836018f753da"
             },
             {
                 "source_path": "docs/cache/custom-strings/release.disclaimer/ko.txt",

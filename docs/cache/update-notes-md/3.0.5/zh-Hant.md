@@ -1,91 +1,74 @@
-**ℹ️ Mac Mouse Fix 2 使用者須知**
-
-隨著 Mac Mouse Fix 3 的推出，應用程式的定價模式有所改變：
-
-- **Mac Mouse Fix 2**\
-仍然完全免費，我也計劃繼續支援。\
-**跳過此更新**以繼續使用 Mac Mouse Fix 2。在[這裡](https://redirect.macmousefix.com/?target=mmf2-latest)下載最新版本的 Mac Mouse Fix 2。
-- **Mac Mouse Fix 3**\
-30天免費試用，之後需要支付少許費用以擁有。\
-**立即更新**以取得 Mac Mouse Fix 3！
-
-你可以在[新網站](https://macmousefix.com/)了解更多關於 Mac Mouse Fix 3 的定價和功能。
-
-感謝使用 Mac Mouse Fix！:)
-
----
-
-**ℹ️ Mac Mouse Fix 3 購買者須知**
-
-如果你在不知情的情況下意外更新到需要付費的 Mac Mouse Fix 3，我願意提供[退款](https://redirect.macmousefix.com/?target=mmf-apply-for-refund)。
-
-Mac Mouse Fix 2 的最新版本仍然**完全免費**，你可以在[這裡](https://redirect.macmousefix.com/?target=mmf2-latest)下載。
-
-為造成的不便深表歉意，希望這個解決方案能讓大家接受！
-
----
-
 Mac Mouse Fix **3.0.5** 修復了多個錯誤，改善了性能，並為應用程式增添了一些細節改進。\
-同時也相容於 macOS 26 Tahoe。
+此版本也相容於 macOS 26 Tahoe。
 
 ### 改進觸控板滾動模擬
 
 - 滾動系統現在可以模擬觸控板的雙指輕點來使應用程式停止滾動。
-    - 這修復了在運行 iPhone 或 iPad 應用程式時，用戶停止滾動後經常會繼續滾動的問題。
+    - 這修復了在執行 iPhone 或 iPad 應用程式時，用戶想要停止滾動時經常會持續滾動的問題。
 - 修復了模擬手指離開觸控板時的不一致問題。
-    - 這可能在某些情況下導致次優的行為。
+    - 這可能在某些情況下導致了不理想的行為。
+
+
 
 ### macOS 26 Tahoe 相容性
 
-在運行 macOS 26 Tahoe Beta 版時，應用程式現在可以使用，且大部分界面都能正常運作。
+在執行 macOS 26 Tahoe Beta 版時，應用程式現在可以使用，且大部分使用者介面都能正常運作。
+
+
 
 ### 性能提升
 
-改善了「滾動和導航」手勢中點擊並拖動的性能。\
+改善了「滾動和導航」手勢中點擊並拖曳的性能。\
 根據我的測試，CPU 使用率降低了約 50%！
 
 **背景說明**
 
-在「滾動和導航」手勢期間，Mac Mouse Fix 會在透明視窗中繪製一個假的滑鼠游標，同時將真實游標鎖定在原位。這確保你無論將滑鼠移動多遠，都能繼續滾動最初選定的界面元素。
+在「滾動和導航」手勢期間，Mac Mouse Fix 會在透明視窗中繪製一個虛擬滑鼠游標，同時將真實游標鎖定在原位。這確保了無論你將滑鼠移動多遠，都能繼續在原始開始滾動的 UI 元素上進行滾動。
 
 通過關閉這個透明視窗上原本未使用的 macOS 預設事件處理，實現了性能的提升。
+
+
+
+
 
 ### 錯誤修復
 
 - 現在會忽略 Wacom 繪圖板的滾動事件。
-    - 之前，Mac Mouse Fix 在 Wacom 繪圖板上造成了不穩定的滾動，如 @frenchie1980 在 GitHub Issue [#1233](https://github.com/noah-nuebling/mac-mouse-fix/issues/1233) 中報告的那樣。（謝謝！）
+    - 之前，Mac Mouse Fix 在 Wacom 繪圖板上造成了不穩定的滾動，如 @frenchie1980 在 GitHub Issue [#1233](https://github.com/noah-nuebling/mac-mouse-fix/issues/1233) 中所報告。（謝謝！）
     
 - 修復了 Swift Concurrency 程式碼（在 Mac Mouse Fix 3.0.4 中作為新授權系統的一部分引入）未在正確執行緒上運行的錯誤。
     - 這導致了 macOS Tahoe 上的崩潰，也可能導致了其他與授權相關的零星錯誤。
-- 改進了離線授權解碼程式碼的穩定性。
-    - 這解決了 Apple API 的一個問題，該問題導致在我的 Intel Mac Mini 上離線授權驗證總是失敗。我認為這在所有 Intel Mac 上都會發生，這也可能是為什麼「免費天數已結束」錯誤（在 3.0.4 中已經解決）仍然發生在一些用戶身上，如 @toni20k5267 在 GitHub Issue [#1356](https://github.com/noah-nuebling/mac-mouse-fix/issues/1356) 中報告的那樣。（謝謝！）
+- 改善了離線授權解碼程式碼的穩定性。
+    - 這解決了 Apple API 的一個問題，該問題導致在我的 Intel Mac Mini 上離線授權驗證總是失敗。我推測這在所有 Intel Mac 上都會發生，這也可能是為什麼「免費天數已結束」錯誤（已在 3.0.4 中解決）仍然發生在某些人身上的原因，如 @toni20k5267 在 GitHub Issue [#1356](https://github.com/noah-nuebling/mac-mouse-fix/issues/1356) 中所報告。（謝謝！）
         - 如果你遇到了「免費天數已結束」錯誤，我深表歉意！你可以在[這裡](https://redirect.macmousefix.com/?target=mmf-apply-for-refund)申請退款。
+     
+     
 
 ### 使用者體驗改進
 
-- 停用了為解決 macOS 錯誤而提供的逐步解決方案對話框，這些錯誤會阻止用戶啟用 Mac Mouse Fix。
+- 停用了為 macOS 錯誤提供逐步解決方案的對話框，這些錯誤會阻止用戶啟用 Mac Mouse Fix。
     - 這些問題只在 macOS 13 Ventura 和 14 Sonoma 上出現。現在，這些對話框只會在相關的 macOS 版本上顯示。
     - 這些對話框也更難觸發 – 之前它們有時會在不太有幫助的情況下出現。
-
+    
 - 在「免費天數已結束」通知上直接添加了「啟用授權」連結。
     - 這使啟用 Mac Mouse Fix 授權變得更加便捷！
 
 ### 視覺改進
 
-- 稍微改進了「軟體更新」視窗的外觀。現在更符合 macOS 26 Tahoe 的風格。
-    - 這是通過自定義 Mac Mouse Fix 用於處理更新的「Sparkle 1.27.3」框架的預設外觀實現的。
-- 通過略微加寬視窗，修復了「關於」標籤頁底部的文字在中文環境下有時會被截斷的問題。
-- 修復了「關於」標籤頁底部文字略微偏離中心的問題。
-- 修復了「按鈕」標籤頁中「鍵盤快捷鍵...」選項下方空間過小的錯誤。
+- 稍微改善了「軟體更新」視窗的外觀。現在更符合 macOS 26 Tahoe 的風格。
+    - 這是通過自訂 Mac Mouse Fix 用於處理更新的「Sparkle 1.27.3」框架的預設外觀來實現的。
+- 通過略微加寬視窗，修復了「關於」分頁底部的文字在中文介面時有時會被截斷的問題。
+- 修復了「關於」分頁底部文字略微偏離中心的問題。
+- 修復了「按鈕」分頁中「鍵盤快捷鍵...」選項下方空間過小的錯誤。
 
 ### 底層更改
 
 - 移除了對「SnapKit」框架的依賴。
-    - 這使應用程式的大小從 19.8 MB 略微降低到 19.5 MB。
+    - 這將應用程式的大小從 19.8 MB 略微降低到 19.5 MB。
 - 程式碼庫中的其他各種小改進。
 
-*在 Claude 的出色協助下編輯。*
+*在 Claude 的協助下編輯完成。*
 
 ---
 
-另請查看先前的版本 [**3.0.4**](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.4)。
+另外查看先前的版本 [**3.0.4**](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.4)。

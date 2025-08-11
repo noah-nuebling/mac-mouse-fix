@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.6</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Von KI übersetzt</strong></p>
+
+<p>Diese Versionshinweise wurden von der Claude KI übersetzt. Sie können
+
+Fehler enthalten.<br />
+
+Die englische Originalversion findest du <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.6">hier</a>.</p>
+
+<hr />
+
+<p><strong>ℹ️ Hinweis für Mac Mouse Fix 2 Nutzer</strong></p>
+
+<p>Mit der Einführung von Mac Mouse Fix 3 hat sich das Preismodell der
+
+App geändert:</p>
+
+<ul>
+
+<li><strong>Mac Mouse Fix 2</strong><br />
+
+Bleibt zu 100% kostenlos und ich plane, es weiterhin zu
+
+unterstützen.<br />
+
+<strong>Überspringe dieses Update</strong>, um Mac Mouse Fix 2 weiter zu
+
+nutzen. Lade die neueste Version von Mac Mouse Fix 2 <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=de">hier</a>
+
+herunter.</li>
+
+<li><strong>Mac Mouse Fix 3</strong><br />
+
+30 Tage kostenlos, kostet dann ein paar Euro zum Kauf.<br />
+
+<strong>Jetzt updaten</strong>, um Mac Mouse Fix 3 zu erhalten!</li>
+
+</ul>
+
+<p>Mehr über die Preise und Funktionen von Mac Mouse Fix 3 erfährst du
+
+auf der <a href="https://macmousefix.com/">neuen Website</a>.</p>
+
+<p>Danke, dass du Mac Mouse Fix nutzt! :)</p>
+
+<hr />
+
+<p><strong>ℹ️ Hinweis für Mac Mouse Fix 3 Käufer</strong></p>
+
+<p>Falls du versehentlich auf Mac Mouse Fix 3 aktualisiert hast, ohne zu
+
+wissen, dass es nicht mehr kostenlos ist, biete ich dir eine <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=de">Rückerstattung</a>
+
+an.</p>
+
+<p>Die neueste Version von Mac Mouse Fix 2 bleibt <strong>komplett
+
+kostenlos</strong> und du kannst sie <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=de">hier</a>
+
+herunterladen.</p>
+
+<p>Tut mir leid für die Umstände, und ich hoffe, diese Lösung ist für
+
+alle in Ordnung!</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.6</strong> macht die ‘Zurück’- und
+
+‘Vorwärts’-Funktion mit mehr Apps kompatibel. Außerdem wurden
+
+verschiedene Bugs und Probleme behoben.</p>
+
+<h3 id="verbesserte-zurück-und-vorwärts-kompatibilität">Verbesserte
+
+‘Zurück’ und ‘Vorwärts’ Kompatibilität</h3>
+
+<p>Die Maustasten-Zuweisungen für ‘Zurück’ und ‘Vorwärts’
+
+<strong>funktionieren jetzt in mehr Apps</strong>, darunter: - Visual
+
+Studio Code, Cursor, VSCodium, Windsurf, Zed und andere Code-Editoren -
+
+Viele eingebaute Apple Apps wie Vorschau, Notizen, Systemeinstellungen,
+
+App Store, Musik, TV, Bücher und Freeform - Adobe Acrobat - Zotero - Und
+
+mehr!</p>
+
+<p>Die Implementierung ist inspiriert von der großartigen ‘Universal
+
+Back and Forward’ Funktion in <a
+
+href="https://github.com/linearmouse/linearmouse">LinearMouse</a>. Sie
+
+sollte alle Apps unterstützen, die auch LinearMouse unterstützt.<br />
+
+Darüber hinaus werden einige Apps unterstützt, die normalerweise
+
+Tastaturkürzel für Vor- und Zurück-Navigation benötigen, wie
+
+Systemeinstellungen, App Store, Apple Notizen und Adobe Acrobat. Mac
+
+Mouse Fix erkennt diese Apps jetzt und simuliert die entsprechenden
+
+Tastaturkürzel.</p>
+
+<p>Jede App, die jemals in einem <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22">GitHub
+
+Issue angefragt</a> wurde, sollte jetzt unterstützt werden! (Danke für
+
+das Feedback!) Falls du Apps findest, die noch nicht funktionieren, lass
+
+es mich in einer <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-feature-request&amp;locale=de">Feature-Anfrage</a>
+
+wissen.</p>
+
+<h3
+
+id="behebung-des-scrollen-funktioniert-zeitweise-nicht-bugs">Behebung
+
+des ‘Scrollen funktioniert zeitweise nicht’ Bugs</h3>
+
+<p>Einige Nutzer erlebten ein <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20state%3Aclosed%20stops%20working%20label%3A%22Scroll%20Stops%20Working%20Intermittently%22">Problem</a>,
+
+bei dem <strong>sanftes Scrollen</strong> zufällig aufhörte zu
+
+funktionieren.</p>
+
+<p>Obwohl ich das Problem nie selbst reproduzieren konnte, habe ich eine
+
+mögliche Lösung implementiert:</p>
+
+<p>Die App wird jetzt mehrmals versuchen, die Display-Synchronisation
+
+einzurichten, wenn es fehlschlägt.<br />
+
+Wenn es nach mehreren Versuchen immer noch nicht funktioniert, wird die
+
+App: - Den ‘Mac Mouse Fix Helper’ Hintergrundprozess neustarten, was das
+
+Problem möglicherweise löst - Einen Absturzbericht erstellen, der bei
+
+der Diagnose des Bugs helfen könnte</p>
+
+<p>Ich hoffe, das Problem ist jetzt endlich behoben! Falls nicht, lass
+
+es mich in einem <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-bug-report&amp;locale=de">Bug-Report</a>
+
+oder per <a
+
+href="http://redirect.macmousefix.com/?target=mailto-noah&amp;locale=de">E-Mail</a>
+
+wissen.</p>
+
+<h3 id="verbessertes-verhalten-bei-freilauf-scrollrädern">Verbessertes
+
+Verhalten bei Freilauf-Scrollrädern</h3>
+
+<p>Mac Mouse Fix wird <strong>das Scrollen nicht mehr für dich
+
+beschleunigen</strong>, wenn du das Scrollrad der MX Master Maus frei
+
+drehen lässt. (Oder bei jeder anderen Maus mit Freilauf-Scrollrad.)</p>
+
+<p>Während diese ‘Scroll-Beschleunigung’ bei normalen Scrollrädern
+
+nützlich ist, kann sie bei einem Freilauf-Scrollrad die Kontrolle
+
+erschweren.</p>
+
+<p><strong>Hinweis:</strong> Mac Mouse Fix ist derzeit nicht vollständig
+
+kompatibel mit den meisten Logitech-Mäusen, einschließlich der MX
+
+Master. Ich plane volle Unterstützung hinzuzufügen, aber das wird
+
+wahrscheinlich noch eine Weile dauern. In der Zwischenzeit ist der beste
+
+Drittanbieter-Treiber mit Logitech-Unterstützung, den ich kenne, <a
+
+href="https://plentycom.jp/en/steermouse/">SteerMouse</a>.</p>
+
+<h3 id="bug-fixes">Bug-Fixes</h3>
+
+<ul>
+
+<li>Ein Problem wurde behoben, bei dem Mac Mouse Fix manchmal
+
+Tastaturkürzel wieder aktivierte, die zuvor in den Systemeinstellungen
+
+deaktiviert wurden</li>
+
+<li>Ein Absturz beim Klicken auf ‘Lizenz aktivieren’ wurde behoben</li>
+
+<li>Ein Absturz beim Klicken auf ‘Abbrechen’ direkt nach dem Klick auf
+
+‘Lizenz aktivieren’ wurde behoben (Danke für den Bericht, Ali!)</li>
+
+<li>Abstürze wurden behoben, die auftraten, wenn Mac Mouse Fix ohne
+
+angeschlossenen Bildschirm verwendet wurde</li>
+
+<li>Ein Speicherleck und einige andere interne Probleme beim Wechseln
+
+zwischen Tabs in der App wurden behoben</li>
+
+</ul>
+
+<h3 id="visuelle-verbesserungen">Visuelle Verbesserungen</h3>
+
+<ul>
+
+<li>Ein Problem wurde behoben, bei dem der About-Tab manchmal zu hoch
+
+war, das in <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=de">3.0.5</a>
+
+eingeführt wurde</li>
+
+<li>Text in der ‘Kostenlose Tage sind vorbei’ Benachrichtigung wird in
+
+Chinesisch nicht mehr abgeschnitten</li>
+
+<li>Ein visueller Fehler beim Schatten des ‘+’ Feldes nach der Aufnahme
+
+einer Eingabe wurde behoben</li>
+
+<li>Ein seltener Fehler wurde behoben, bei dem der Platzhaltertext im
+
+‘Lizenzschlüssel eingeben’ Bildschirm nicht zentriert erschien</li>
+
+<li>Touch Bar Textvervollständigung wurde im ‘Lizenzschlüssel eingeben’
+
+Bildschirm deaktiviert</li>
+
+<li>Ein Problem wurde behoben, bei dem einige in der App angezeigte
+
+Symbole nach dem Wechsel zwischen Hell-/Dunkel-Modus die falsche Farbe
+
+hatten</li>
+
+</ul>
+
+<h3 id="weitere-verbesserungen">Weitere Verbesserungen</h3>
+
+<ul>
+
+<li>Einige Animationen, wie die Tab-Wechsel-Animation, wurden etwas
+
+effizienter gestaltet</li>
+
+<li>Verschiedene kleinere interne Verbesserungen</li>
+
+</ul>
+
+<p><em>Bearbeitet mit hervorragender Unterstützung von Claude.</em></p>
+
+<hr />
+
+<p>Sieh dir auch das vorherige Release <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=de">3.0.5</a>
+
+an</p>
+
+</body>
+
+</html>

@@ -1,6 +1,6 @@
 # Mac Mouse Fix 3 ist da! ⭐️
 
-3.0.0 ist das **größte Update aller Zeiten** für Mac Mouse Fix.\
+3.0.0 ist das **größte Update aller Zeiten** für Mac Mouse Fix. \
 Es vereint viele Features, an denen ich lange gearbeitet habe, um dieses großartige Versprechen einzulösen:
 
 **Mach deine 10€-Maus besser als ein Apple Trackpad!**
@@ -9,13 +9,13 @@ Es vereint viele Features, an denen ich lange gearbeitet habe, um dieses großar
 
 Mac Mouse Fix 2 bleibt weiterhin **100% kostenlos** und ich plane, es auch weiterhin zu unterstützen.
 
-Mac Mouse Fix 3 ist **30 Tage kostenlos** und kostet dann einmalig **2,99€**.\
+Mac Mouse Fix 3 ist **30 Tage kostenlos** und kostet dann einmalig **2,99€**. \
 (Das ist der Preis im August 2025. Der Preis könnte später angepasst werden.)
 
 Ich weiß, dass Monetarisierung auf den ersten Blick nicht gut für Nutzer klingen mag, aber ich hoffe, ich habe sie so umgesetzt, dass alle damit einverstanden sein können.
 
 - **Kein Zeitdruck**
-   Deine kostenlosen Tage werden nur gezählt, wenn du Mac Mouse Fix tatsächlich nutzt. Es gibt also keinen Druck, die App vor Ablauf der Zeit zu nutzen, und du kannst in Ruhe entscheiden, ob du die App kaufen möchtest.
+   Deine kostenlosen Tage werden nur gezählt, wenn du Mac Mouse Fix tatsächlich nutzt. So gibt es keinen Druck, die App vor Ablauf der Zeit zu nutzen, und du kannst in Ruhe entscheiden, ob du die App kaufen möchtest.
 - **Synchronisation über iCloud**
    Deine Lizenz wird über iCloud synchronisiert und ist automatisch auf allen deinen Computern verfügbar!
 - **Es ist bequem**\
@@ -25,7 +25,7 @@ Ich weiß, dass Monetarisierung auf den ersten Blick nicht gut für Nutzer kling
 - **Du unterstützt das Projekt**\
    Durch deine finanzielle Unterstützung ermöglichst du mir, weiter an meinem Traum zu arbeiten, Mac Mouse Fix zum besten Maustreiber *aller Zeiten* zu machen! 🚀
 
-Falls du mir bereits einen Milchshake via PayPal spendiert hast – danke! Klicke [hier](https://redirect.macmousefix.com/?locale=en&target=mmf-apply-for-milkshake-license), um eine **kostenlose Lizenz** zu erhalten.
+Falls du mir bereits einen Milchshake via PayPal gekauft hast – danke! Klicke [hier](https://redirect.macmousefix.com/?locale=en&target=mmf-apply-for-milkshake-license) für eine **kostenlose Lizenz**.
 
 Wenn du Mac Mouse Fix 2 weiter nutzen möchtest – auch das ist völlig in Ordnung. Es wird für immer kostenlos bleiben und ich plane sicherzustellen, dass es auch mit zukünftigen macOS-Versionen funktioniert.
 
@@ -35,16 +35,18 @@ Ich hoffe, alle sind mit der Monetarisierung in Mac Mouse Fix 3 einverstanden un
 
 ## Zurück zu Mac Mouse Fix 2 nach dem Testen von Mac Mouse Fix 3
 
-Du kannst MMF 3 ausprobieren und jederzeit zu MMF 2 zurückkehren.
-Allerdings **löscht die Installation von MMF 3 deine MMF 2 Einstellungen**.
-So kannst du **den Verlust deiner MMF 2 Einstellungen vermeiden**, wenn du MMF 3 ausprobierst:
+Du kannst MMF 3 ausprobieren und jederzeit zu MMF 2 zurückkehren. \
+Allerdings **löscht die Installation von MMF 3 deine MMF 2 Einstellungen**. \
+So kannst du **vermeiden, deine MMF 2 Einstellungen zu verlieren**, wenn du MMF 3 ausprobierst:
 
 **Vor dem Update auf MMF 3:**
+
 1. Öffne den 'Mehr...'-Bildschirm in MMF 2, klicke dann auf das MMF-Logo oben links während du Command (⌘) und Shift (⇧) auf deiner Tastatur hältst. Dies zeigt eine Datei namens 'config.plist' im Finder an. Diese Datei enthält alle deine Einstellungen.
 2. Speichere eine Kopie von 'config.plist' zur späteren Wiederherstellung.
 3. Update auf MMF 3 und schaue, ob es dir gefällt!
 
 **Wenn du zu MMF 2 zurückkehren möchtest:**
+
 1. [Lade MMF 2](https://redirect.macmousefix.com/?locale=en&target=mmf2-latest) erneut herunter.
 2. Zeige 'config.plist' im Finder an und ersetze sie durch die zuvor gespeicherte Kopie.
 
@@ -54,12 +56,12 @@ Ich hoffe, das gibt dir Sicherheit beim Ausprobieren von MMF 3.
 
 ## Neue Features in Mac Mouse Fix 3!
 
-Mac Mouse Fix 3 bietet ein fantastisches **neues Trackpad-ähnliches Scrollen**, eine schöne **neue Benutzeroberfläche** und ermöglicht dir, **alles zu tun, was du auf einem Trackpad tun kannst**, durch einige neue Gesten.
+Mac Mouse Fix 3 bietet ein fantastisches **neues trackpad-ähnliches Scrollen**, eine schöne **neue Benutzeroberfläche** und ermöglicht dir, **alles zu tun, was du auf einem Trackpad tun kannst**, durch einige neue Gesten.
 
-**Sieh es in Aktion:**
+**Sieh es in Aktion:** 
 Besuche die [neue Website](https://macmousefix.com) für Video-Demos aller Features.
 
-**Detailliertes Änderungsprotokoll:**
+**Detailliertes Changelog:** 
 Sieh dir die Release Notes für [3.0.0 Beta 7](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-7) und vorherige Betas an, um alle Änderungen zu erfahren.
 
 **Wichtigste neue Features:**
@@ -72,7 +74,7 @@ Sieh dir die Release Notes für [3.0.0 Beta 7](https://github.com/noah-nuebling/
 
 - **'Klicken und Scrollen'-Gesten**
 
-    Du kannst jetzt eine Maustaste gedrückt halten und dann scrollen, um verschiedene Aktionen auszuführen, wie zum Beispiel den Desktop anzeigen, ein- oder auszoomen und vieles mehr. Es fühlt sich super reaktionsschnell und flüssig an, genau wie ein Trackpad.
+    Du kannst jetzt eine Maustaste gedrückt halten und dann scrollen, um verschiedene Aktionen auszulösen, wie zum Beispiel den Desktop anzeigen, ein- oder auszoomen und vieles mehr. Es fühlt sich super reaktionsschnell und flüssig an, genau wie ein Trackpad.
 
 - **Komplett überarbeitetes Scrollen**
 
