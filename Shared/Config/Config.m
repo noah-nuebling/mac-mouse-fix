@@ -418,6 +418,14 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
     /// TODO: Check whether all default (as opposed to override) values exist in config file. If they don't, then everything breaks. Maybe do this by comparing with default_config. Edit: Not sure this is feasible, also the comparing with default_config breaks if we want to have keys that are optional.
     /// TODO: Consider porting this to Helper
     
+    /// [Aug 2025]
+    ///     This apparently fails sometimes and deletes user's settings. (See https://github.com/noah-nuebling/mac-mouse-fix/issues/1510)
+    ///         Improvement ideas:
+    ///         - Keep a copy of the old config file before replacing it. -> Better debugging.
+    ///         - Could any of the `goto replace;`s conditions be triggered by random file-system errors? Can `[NSMutableDictionary dictionaryWithContentsOfURL:]` and `[NSFileManager.defaultManager fileExistsAtPath:]` randomly fail? If so – perhaps use error-returning APIs and retry in a loop before just replacing config.plist.
+    ///             >>> Yes they can fail! See `dictionaryWithContentsOfURL:error:`.
+    ///             TODO: Make the file-system-reads more robust.
+    
      assert(runningMainApp());
     
     if (reason == kMFConfigRepairReasonLoad) {
