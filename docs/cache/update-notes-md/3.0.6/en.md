@@ -28,12 +28,12 @@ I'm sorry for the hassle, and I hope everyone is ok with this as a solution!
 Mac Mouse Fix **3.0.6** makes the 'Back' and 'Forward' feature compatible with more apps.
 It also addresses several bugs and issues.
 
-### Improved 'Back' and 'Forward' Compatibility
+### Improved 'Back' and 'Forward' Feature
 
 The 'Back' and 'Forward' mouse button mappings now **work in more apps**, including:
 
 - Visual Studio Code, Cursor, VSCodium, Windsurf, Zed, and other code editors
-- Many built-in Apple apps such as Preview, Notes, System Settings, App Store, Music, TV, Books, and Freeform
+- Many built-in Apple apps such as Preview, Notes, System Settings, App Store, and Music
 - Adobe Acrobat
 - Zotero
 - And more!
@@ -41,7 +41,7 @@ The 'Back' and 'Forward' mouse button mappings now **work in more apps**, includ
 The implementation is inspired by the great 'Universal Back and Forward' feature in [LinearMouse](https://github.com/linearmouse/linearmouse). It should support all apps that LinearMouse does. \
 Furthermore it supports some apps that normally require keyboard shortcuts to go back and forward, such as System Settings, App Store, Apple Notes, and Adobe Acrobat. Mac Mouse Fix will now detect those apps and simulate the appropriate keyboard shortcuts.
 
-Every app that's ever been [requested in a GitHub Issue](https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22) should be supported now! (Thanks for the feedback!)
+Every app that's ever been [requested in a GitHub Issue](https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22) should be supported now! (Thanks for the feedback!) \
 If you find any apps that don't work, yet, let me know in a [feature request](http://redirect.macmousefix.com/?target=mmf-feedback-feature-request).
 
 
@@ -52,19 +52,19 @@ Some users experienced an [issue](https://github.com/noah-nuebling/mac-mouse-fix
 
 While I've never been able to reproduce the issue, I've implemented a potential fix:
 
-The app will now retry multiple times when setting up display-synchronization fails. \
+The app will now retry multiple times, when setting up the display-synchronization fails. \
 If it still doesn't work after retrying, the app will:
 
 - Restart the 'Mac Mouse Fix Helper' background process, which may resolve the issue
-- Produce a crash report, which may help diagnosing the bug
+- Produce a crash report, which may help diagnose the bug
 
-I hope the problem is finally fixed now! If not, let me know in a [bug report](http://redirect.macmousefix.com/?target=mmf-feedback-bug-report) or via [email](http://redirect.macmousefix.com/?target=mailto-noah).
+I hope the problem is resolved now! If not, let me know in a [bug report](http://redirect.macmousefix.com/?target=mmf-feedback-bug-report) or via [email](http://redirect.macmousefix.com/?target=mailto-noah).
 
 
 
 ### Improved Free-Spinning Scroll Wheel Behavior
 
-Mac Mouse Fix will **no longer speed-up scrolling for you**, when you let the scroll wheel spin freely on the MX Master mouse. (Or any other mouse with a free-spinning scroll wheel.)
+Mac Mouse Fix will **no longer speed-up scrolling** for you, when you let the scroll wheel spin freely on the MX Master mouse. (Or any other mouse with a free-spinning scroll wheel.)
 
 While this 'scroll speedup' feature is useful on regular scroll wheels, on a free-spinning scroll wheel it can make things harder to control.
 
@@ -88,12 +88,12 @@ While this 'scroll speedup' feature is useful on regular scroll wheels, on a fre
 - Text on the 'Free days are over' notification is no longer cut off in Chinese
 - Fixed a visual glitch on the '+' field's shadow after recording an input
 - Fixed a rare glitch where the placeholder text on the 'Enter Your License Key' screen would appear off-center
-- Disabled Touch Bar text completion on the 'Enter Your License Key' screen 
 - Fixed an issue where some symbols displayed in the app  had the wrong color after switching between dark/light mode
 
 ### Other Improvements
 
 - Made some animations, such as the tab-switch animation, slightly more efficient  
+- Disabled Touch Bar text completion on the 'Enter Your License Key' screen 
 - Various smaller under-the-hood improvements
 
 *Edited with excellent assistance by Claude.*
