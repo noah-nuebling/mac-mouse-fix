@@ -34,7 +34,7 @@
 ///     TODO: Move this into Logging.h when merging this code from master into feature-strings-catalog
 
 #define mfabort(format, args...) ({ \
-    DDLogError(@"mfabort failure: " format, args); \
+    DDLogError(@"mfabort failure: " format, ## args); \
     [DDLog flushLog];               /** [Aug 2025] Without this, nothing would be logged, due to async logging of CocoaLumberjack and and the abort right after. But this should make it work (I think – haven't tested any of this.) Claude 4.0 also tells me to sleep for 10ms after flushing, but I don't trust it.*/\
     abort();                        \
 })

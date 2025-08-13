@@ -659,7 +659,10 @@ MFVKCAndFlags *_Nonnull MFEmulateNSMenuItemRemapping(CGKeyCode vkc, CGEventFlags
         
     /// Validate thread
     assert(NSThread.isMainThread && "The TIS APIs want to run on the main thread IIRC [Aug 2025]."); /// [Aug 2025] Currently running on mainThread since ButtonInputReceiver (and all the button handling that comes after it) runs on mainThread. (I think)
-        
+      
+    /// Null-check
+    if (vkc == kMFVK_Null) assert(false && "vkc arg is null.");
+      
     /// Prelude
     MFVKCAndFlags *_Nonnull in_vkcShortcut = [[MFVKCAndFlags alloc] initWith_vkc: vkc modifierMask: modifierMask];
     #define fail(reason_formatAndArgs...) ({                                                                \
@@ -716,7 +719,6 @@ MFVKCAndFlags *_Nonnull MFEmulateNSMenuItemRemapping(CGKeyCode vkc, CGEventFlags
         __block TISInputSourceRef abcInputSource = MFTISCopyInputSourceWithID(@"com.apple.keylayout.ABC");
         MFDefer ^{ MFCFRelease(abcInputSource); };
         const UCKeyboardLayout *abcLayout = MFTISGetLayoutPointerFromInputSource(abcInputSource);
-        if (!abcLayout) fail("abcLayout is nil");
         in_keq = getStrForVKC(kMFKeyboardTypeGenericANSI, abcLayout, in_vkcShortcut.vkc, kMFModifierFlagsNull);
         if (![in_keq length]) fail("in_keq is empty"); /// [Aug 2025] This would be empty for the arrowKeys I believe, but those don't get auto-remapped I think (So we don't need to use MFEmulateNSMenuItemRemapping()
     }
