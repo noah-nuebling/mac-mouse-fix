@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2025**
 
+- 🇩🇪&nbsp;Aayam&nbsp;Khadka - "Big love for the app from Nepal (Also i would like Nepal's flag on my name please.)"
 - 🇳🇴&nbsp;Bsa - "Great tool! Thanks :)"
 - 🇩🇪&nbsp;Ideenzentrum - "frische Ideen"
 - 🇺🇸&nbsp;Codylabby

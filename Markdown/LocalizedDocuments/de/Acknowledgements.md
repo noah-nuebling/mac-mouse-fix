@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2025**
 
+- 🇩🇪&nbsp;Aayam&nbsp;Khadka - "Big love for the app from Nepal (Also i would like Nepal's flag on my name please.)"
 - 🇳🇴&nbsp;Bsa - "Great tool! Thanks :)"
 - 🇩🇪&nbsp;Ideenzentrum - "frische Ideen"
 - 🇺🇸&nbsp;Codylabby
