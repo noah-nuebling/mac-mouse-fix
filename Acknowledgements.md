@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2025**
 
+- 🇳🇴&nbsp;Bsa - "Great tool! Thanks :)"
 - 🇩🇪&nbsp;Ideenzentrum - "frische Ideen"
 - 🇺🇸&nbsp;Codylabby
 - 🇫🇷&nbsp;André - "C'est parfait , Merci !"
