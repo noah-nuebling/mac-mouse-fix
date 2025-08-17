@@ -514,7 +514,7 @@ def display_name(sale):
     
     # Special requests & rules
     #   Note: [Jul 2025] Update: We used to use ppls email here (in mac-mouse-fix > markdown_generator.py and in mac-mouse-fix-scripts > _buildmd.py). Don't do that anymore and look into rewriting git history if someone complains.
-    if   name == "🇩🇪 Aayam Khadka"                name = "🇳🇵 Aayam Khadka"      # [Aug 2025] Requested Nepal's flag in the message
+    if   name == "🇩🇪 Aayam Khadka":               name = "🇳🇵 Aayam Khadka"      # [Aug 2025] Requested Nepal's flag in the message
     elif name == "🇺🇦 Github Com/Alex Danilenko":  name = "🇺🇦 Alex Danilenko"    # [Aug 2025] Accidentally entered wrong name
     elif name == "🇦🇺 Haodi Wang":                 name = "🇨🇳 Haodi Wang"        # Requested to use Chinese flag
     elif name == "🇮🇱 Rawad Aboud":                name = "🇵🇸 Rawad Aboud"       # Gumroad api says he's from IL-TA (Tel Aviv, Israel), but he's Palestinian. See [this mail](message:<8C5D64EE-447A-4A65-89A4-27F99115C986@icloud.com>)
