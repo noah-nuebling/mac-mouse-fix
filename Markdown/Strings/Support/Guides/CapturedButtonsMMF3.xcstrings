@@ -1,9 +1,15 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "1: intro" : {
+    "01: intro" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_buttons_mmf3}\n\nWenn du Mac Mouse Fix verwendest, bist du vielleicht schonmal auf eine Nachricht gestoßen, die besagt, dass eine Taste deiner Maus jetzt von Mac Mouse Fix 'abgefangen' wird.\n\n<img width=\"400\" alt=\"Screen Shot 2021-05-27 at 21 29 49\" src=\"https://user-images.githubusercontent.com/40808343/119886114-e79c9200-bf32-11eb-98a9-4a0e7daab465.png\">\n\nIn diesem Artikel erfährst du, was das bedeutet, welche Probleme es auslöst und wie du mit ihnen umgehen kannst."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -12,57 +18,325 @@
         }
       }
     },
-    "2: terminology" : {
+    "02: terminology" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### Was bedeutet 'abfangen' einer Maustaste?\n\nEine Maustaste, die von Mac Mouse Fix abgefangen wird, kann von anderen Apps und von macOS nicht mehr gesehen werden.\nDie Funktionen, die diese Taste normalerweise ausführen würde, funktionieren nicht, solange sie abgefangen wird.\n\n**Beispiel**\nNormalerweise kann man in Safari einen Link in einem neuen Tab öffnen, indem man den Link mit der mittleren Maustaste anklickt.\nDoch wenn die mittlere Maustaste von Mac Mouse Fix abgefangen wird, dann funktioniert das nicht mehr.\n\n### Warum werden Maustasten von Mac Mouse Fix abgefangen?\n\nMac Mouse Fix versteckt bestimmte Tasten vor anderen Apps, damit man beim Ausführen einer Mac Mouse Fix Geste (wie 'Doppelklicken' oder 'Klicken und Ziehen') nicht aus Versehen auch gleichzeitig eine andere Funktion auslöst (wie z.B. einen Link in Safari zu öffnen)"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "### What does it mean for a button to be 'captured' by Mac Mouse Fix?\n\nA mouse button that is captured by Mac Mouse Fix can't be seen by other apps or by macOS anymore.\nThe functions which this button would normally perform won't work anymore while it is captured.\n\nFor example, if 'Middle Mouse Button' **isn't captured** by Mac Mouse Fix, then clicking it over a link in Safari will open that link in a new tab.\nHowever, while Middle Mouse Button **is captured** by Mac Mouse Fix, clicking it over a link in Safari won't do anything. \nThat's because Safari (or any other app) can't see when you click the Middle Mouse Button while it is captured by Mac Mouse Fix."
+            "value" : "### What does it mean for a button to be 'captured' by Mac Mouse Fix?\n\nA mouse button that is captured by Mac Mouse Fix can't be seen by other apps or by macOS anymore.\nThe functions which this button would normally perform won't work anymore while it is captured.\n\n<!--\nWhen you install Mac Mouse Fix, you may notice that:\n1. The buttons on your mouse perform new functions, that are assigned in Mac Mouse Fix.\n2. Some of the old, familar functions of those buttons stop working. That's because they have been **captured** by Mac Mouse Fix.\n-->\n\nFor example, while the middle mouse button is captured, clicking it over a link in Safari will **not open that link in a new tab** like it would if Mac Mouse Fix was turned off.\n\nThat's because Safari (and any other app) can't see when you click the Middle Mouse Button while it is captured by Mac Mouse Fix.\n\n<!--\nWhen a mouse button is **captured** by Mac Mouse Fix, it takes **complete control** of that button and **other apps no longer get notified** when you press those buttons. (/ \"can no longer see\" those buttons.) \n-->\n\n<!--\nMac Mouse Fix needs to hide the button from other apps so that you can perform gestures and actions in Mac Mouse Fix without accidentally triggering functions on those other apps at the same time.\n-->"
           }
         }
       }
     },
-    "3: which-buttons" : {
+    "03: which-buttons" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### Woher weiß ich, welche Tasten von Mac Mouse Fix abgefangen werden?\n\nJede Taste, die links im 'Tasten'-Tab angezeigt wird, wird von Mac Mouse Fix abgefangen.\n\nIm folgenden Bild werden **'Mittlere Taste'**, **'Taste 5'** und **'Taste 4'** abgefangen: <br>\n<img width=\"700\" src=\"{repo_root}/Markdown/Media/ActionTableDE.png\">"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "### How do I know which buttons are captured by Mac Mouse Fix?\n\nAny button which shows up on the left side of the Action Table is captured by Mac Mouse Fix.\n\nIn this image **Middle Button**, **Button 5**, and **Button 4** are captured <br>\n<img width=\"400\" alt=\"Screen Shot 2021-05-29 at 04 44 50\" src=\"https://user-images.githubusercontent.com/40808343/120055995-d8543c00-c039-11eb-8c7b-049608197272.png\">\n\nNote that when you disable Mac Mouse Fix, it won't have any effect on your mouse or any of its buttons, regardless of whether they are captured or not."
+            "value" : "### How do I know which buttons are captured by Mac Mouse Fix?\n\nAny button which shows up on the left side of the Action Table is captured by Mac Mouse Fix.\n\nIn this image **Middle Button**, **Button 5**, and **Button 4** are captured <br>\n<!-- <img width=\"400\" alt=\"Screen Shot 2021-05-29 at 04 44 50\" src=\"https://user-images.githubusercontent.com/40808343/120055995-d8543c00-c039-11eb-8c7b-049608197272.png\"> -->\n<img width=\"700\" src=\"{repo_root}/Markdown/Media/ActionTableDE.png\">"
           }
         }
       }
     },
-    "4: uncapturing" : {
+    "04: uncapturing" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "### Wie verhindere ich, dass Mac Mouse Fix eine Maustaste abfängt?\n\nUm zu verhindern, dass Mac Mouse Fix eine Maustaste abfängt, lösche alle Einträge für diese Maustaste aus dem 'Tasten'-Tab.\nDu kannst einen Eintrag im 'Tasten'-Tab löschen, indem du die '-' Taste links anklickst.\n\nz.B. könnte man im folgenden Bild das Abfangen von **'Taste 4'** verhindern, indem man die beiden hervorgehobenen **'-'** Tasten anklickt:\n\n<!--\nVariants:\n- Im folgenden Bild könnte man die hervorgehobenen **'-'** Tasten klicken, damit **'Taste 4'** nicht länger von Mac Mouse Fix abgefangen wird:\n- Im folgenden Bild könnte man verhindern, dass **'Taste 4'** von Mac Mouse Fix abgefangen wird, indem man die beiden **'-'** Tasten klickt:\n- Im folgenden Bild könnte man das Abfangen von **'Taste 4'** verhindern, indem man die beiden **'-'** Tasten klickt:\n-->\n\n<img width=\"700\" src=\"{repo_root}/Markdown/Media/ActionTableDE2.png\">"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "### How to uncapture a mouse button?\n\nTo uncapture a mouse button, delete all rows in the Action Table which contain that button. \nYou can delete a row in the Action Table by selecting it and then clicking the '-' button.\n\nhttps://user-images.githubusercontent.com/40808343/120056314-a348e900-c03b-11eb-831b-ab44f0abf8ac.mov"
+            "value" : "### How to uncapture a mouse button?\n<!-- \n- [ ] TODO [Aug 2025]: Replace 'uncapture' with 'stop capturing' or whatever we're using in-app (Cause uncapture doesn't translate well I think?) \n    - [ ] Also reconsider the German phrasing we're currently using: \"verhindern, dass eine Maustaste abgefangen wird\"\n-->\n\n\nTo uncapture a mouse button, delete all rows in the Action Table which contain that button. \nYou can delete a row in the Action Table by clicking the '-' button.\n\nhttps://user-images.githubusercontent.com/40808343/120056314-a348e900-c03b-11eb-831b-ab44f0abf8ac.mov"
           }
         }
       }
     },
-    "5: restoring" : {
+    "05: restoring" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### Wie kann ich die ursprüngliche Funktion einer Taste wiederherstellen?\n\nDu kannst die ursprüngliche Funktion einer Taste wiederherstellen, indem du **verhinderst, dass die Taste abgefangen wird** – so wie oben beschrieben.\nDu kannst Mac Mouse Fix auch einfach **ausschalten** – dann werden keinerlei Tasten mehr abgefangen.\n\nFür manche Anwendungsfälle kannst du die ursprüngliche Funktion einer Taste wiederherstellen, **auch während die Taste abgefangen wird**, indem du der Taste bestimmte Aktionen in Mac Mouse Fix zuweist:"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "### What can I do to restore the original functionality of a button?\n\nTo restore the original functionality of a button, you can uncapture the button as described above. \nYou can also always disable Mac Mouse Fix entirely to have your mouse behave exactly as it originally did.\n\nFor one scenario there's a neat workaround:"
+            "value" : "### How can I restore the original functionality of a button?\n\nTo restore the original functionality of a button, you can **uncapture** the button as described above. \nYou can also always **disable Mac Mouse Fix entirely** to have your mouse behave exactly as it originally did.\n\nFor some use cases, you can restore the original functionality of a button **without uncapturing** it, by instead assigning specific actions inside Mac Mouse Fix:"
           }
         }
       }
     },
-    "6: restoring.middle-button" : {
+    "06: restoring.header.default" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Taste"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "#### How to use the original functionality of clicking the Middle Mouse Button without uncapturing it?\n\nTo use the original functionality of clicking Middle Mouse Button _without_ uncapturing it, you can choose the **'Middle Click' action**.\n\n<img width=\"400\" alt=\"Screen Shot 2021-05-29 at 05 19 57\" src=\"https://user-images.githubusercontent.com/40808343/120056598-97f6bd00-c03d-11eb-9784-e4a428910fb4.png\">\n\nIt will allow you to open links in a new tab, paste text in the Terminal, and do anything else that clicking the Middle Mouse Button normally does.\n\nNote that this workaround will only restore the original functionality of _clicking_ the Middle Mouse Button, and not of clicking and _dragging_ it. \nSo this won't allow you to pan around in 3d apps like Blender, unfortunately. \nTo have Blender work properly with Mac Mouse Fix, you'll have to uncapture the Middle Mouse Button as described above or disable Mac Mouse Fix whenever you're using Blender."
+            "value" : "Button"
+          }
+        }
+      }
+    },
+    "07: restoring.header.function" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Ursprüngliche Funktion"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Original function"
+          }
+        }
+      }
+    },
+    "08: restoring.header.action" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktion in Mac Mouse Fix"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Action in Mac Mouse Fix"
+          }
+        }
+      }
+    },
+    "09: restoring.row.1.default" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mittlere Maustaste<br>(Klicken)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Middle Mouse Button<br>(Click)"
+          }
+        }
+      }
+    },
+    "10: restoring.row.1.function" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Links im Browser in einem neuen Tab öffnen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Open browser tabs in background"
+          }
+        }
+      }
+    },
+    "11: restoring.row.1.action" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**'Mittelklick'**<br>(Kann dem **Klicken** einer Taste zugewiesen werden)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**'Middle Click'**<br>(Can be assigned to **clicking** a button)"
+          }
+        }
+      }
+    },
+    "12: restoring.row.2.default" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mittlere Maustaste<br>(Klicken)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Middle Mouse Button<br>(Click)"
+          }
+        }
+      }
+    },
+    "13: restoring.row.2.function" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text im Terminal einfügen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Paste text in Terminal"
+          }
+        }
+      }
+    },
+    "14: restoring.row.2.action" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**'Mittelklick'**<br>(Kann dem **Klicken** einer Taste zugewiesen werden)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**'Middle Click'**<br>(Can be assigned to **clicking** a button)"
+          }
+        }
+      }
+    },
+    "15: restoring.row.3.default" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maustaste 4 / Maustaste 5<br>(Klicken)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Mouse Button 4 / Mouse Button 5<br>(Click)"
+          }
+        }
+      }
+    },
+    "16: restoring.row.3.function" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zurück / Vorwärts<br>(In VSCode, Chrome und anderen Apps)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Back / Forward in VSCode, Chrome, etc."
+          }
+        }
+      }
+    },
+    "17: restoring.row.3.action" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**'Zurück'** / **'Vorwärts'**<br>(Kann dem **Klicken** einer Taste zugewiesen werden)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**'Back'** / **'Forward'**<br>(Can be assigned to **clicking** a button)"
+          }
+        }
+      }
+    },
+    "18: restoring.row.4.default" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mittlere Maustaste<br>(Klicken und Ziehen)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Middle Mouse Button<br>(Click and Drag)"
+          }
+        }
+      }
+    },
+    "19: restoring.row.4.function" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um Objekte in Blender (und anderen 3D-Apps) kreisen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Orbit around objects in 3D apps like Blender"
+          }
+        }
+      }
+    },
+    "20: restoring.row.4.action" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**'Scrollen & Navigieren'**<br>(Kann dem **Klicken und Ziehen** einer Taste zugewiesen werden)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**'Scroll & Navigate'**<br>(Can be assigned to **clicking and dragging** a button)"
           }
         }
       }
