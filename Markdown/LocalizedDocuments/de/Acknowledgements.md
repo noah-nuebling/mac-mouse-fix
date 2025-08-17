@@ -23,7 +23,7 @@ Danke, dass ihr Mac Mouse Fix zu Menschen auf der ganzen Welt gebracht habt.
 
 ## 💰 Geld
 
-Vielen Dank an alle, die mir einen Milchshake spendiert haben, und an alle **26600+** Personen, die Mac Mouse Fix gekauft haben.
+Vielen Dank an alle, die mir einen Milchshake spendiert haben, und an alle **26700+** Personen, die Mac Mouse Fix gekauft haben.
 Dank euch kann ich viel Zeit mit etwas verbringen, das ich sehr gerne mache. <!-- Ihr lasst mich spüren, dass es viele Menschen da draußen gibt, die die App schätzen und unterstützen möchten, und dank euch kann ich mehr Zeit in etwas investieren, das ich sehr gerne mache. -->
 
 Menschen, die mich durch den Kauf von Mac Mouse Fix zu einem höheren Preis als dem Standardpreis unterstützt haben, erhalten hier eine besondere Erwähnung:
@@ -42,7 +42,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 - 🇹🇭&nbsp;Chayanon&nbsp;Boontheeralert
 - 🇺🇸&nbsp;Gary - "Love my MacBook Air except when plugged into my docking station, the Logitech and Tecknet mouses (mice?) I was using didn't work well (but did work great with my Windows computer when in the docking station). Mac Mouse Fix now makes using the mouse a pleasure with smooth and reliable scrolling. No more unpredictable mouse movements. Thanks!!!"
-- 🇩🇪&nbsp;Aayam&nbsp;Khadka - "Big love for the app from Nepal (Also i would like Nepal's flag on my name please.)"
+- 🇳🇵&nbsp;Aayam&nbsp;Khadka - "Big love for the app from Nepal (Also i would like Nepal's flag on my name please.)"
 - 🇳🇴&nbsp;Bsa - "Great tool! Thanks :)"
 - 🇩🇪&nbsp;Ideenzentrum - "frische Ideen"
 - 🇺🇸&nbsp;Codylabby

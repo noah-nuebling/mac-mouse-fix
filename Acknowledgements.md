@@ -23,9 +23,9 @@ Thanks for bringing Mac Mouse Fix to people around the globe!
 
 ## 💰 Money
 
-<!-- Thanks so much to everyone who bought me a milkshake and to all 26600+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing. -->
+<!-- Thanks so much to everyone who bought me a milkshake and to all 26700+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing. -->
 
-Thanks so much to everyone who treated me to a milkshake and to all **26600+** people who bought Mac Mouse Fix.
+Thanks so much to everyone who treated me to a milkshake and to all **26700+** people who bought Mac Mouse Fix.
 Thanks to you, I can spend lots of time doing something I love. <!-- You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. -->
 
 People who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:
@@ -44,7 +44,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 - 🇹🇭&nbsp;Chayanon&nbsp;Boontheeralert
 - 🇺🇸&nbsp;Gary - "Love my MacBook Air except when plugged into my docking station, the Logitech and Tecknet mouses (mice?) I was using didn't work well (but did work great with my Windows computer when in the docking station). Mac Mouse Fix now makes using the mouse a pleasure with smooth and reliable scrolling. No more unpredictable mouse movements. Thanks!!!"
-- 🇩🇪&nbsp;Aayam&nbsp;Khadka - "Big love for the app from Nepal (Also i would like Nepal's flag on my name please.)"
+- 🇳🇵&nbsp;Aayam&nbsp;Khadka - "Big love for the app from Nepal (Also i would like Nepal's flag on my name please.)"
 - 🇳🇴&nbsp;Bsa - "Great tool! Thanks :)"
 - 🇩🇪&nbsp;Ideenzentrum - "frische Ideen"
 - 🇺🇸&nbsp;Codylabby
