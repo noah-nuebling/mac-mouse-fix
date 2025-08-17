@@ -36,7 +36,7 @@
         if (!timeLimit)
             [_condition wait];
         else {
-            didTimeOut = ![_condition waitUntilDate: timeLimit];
+            didTimeOut = ![_condition waitUntilDate: (id)timeLimit];
             if (didTimeOut) break;
             /// Note: Other implementations increment `_freeUnits` on timeout. We don't. With our implementation, the caller must simply make sure that `acquireUnit:` and `releaseUnit` invocations are balanced. (Regardless of whether `acquireUnit:` times out or not)
         }

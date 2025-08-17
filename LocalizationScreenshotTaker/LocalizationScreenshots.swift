@@ -16,8 +16,8 @@ final class LocalizationScreenshotClass: XCTestCase {
     ///
     
     /// Keep-in-sync with .app
-    let localizedStringAnnotationActivationArgumentForScreenshottedApp = "-MF_ANNOTATE_LOCALIZED_STRINGS"
-    let localizedStringAnnotationRegexForScreenshottedApp = "mfkey:(.+):(.*):" /// The first capture group is the localizationKey, the second capture group is the stringTableName
+    let localized_string_annotation_activation_argument_for_screenshotted_app = "-MF_ANNOTATE_LOCALIZED_STRINGS"
+    let localized_string_annotation_regex_for_screenshotted_app = "mfkey:(.+):(.*):" /// The first capture group is the localizationKey, the second capture group is the stringTableName
     
     /// Keep-in-sync with python script
     let xcode_screenshot_taker_output_dir_variable = "MF_LOCALIZATION_SCREENSHOT_OUTPUT_DIR"
@@ -43,19 +43,31 @@ final class LocalizationScreenshotClass: XCTestCase {
     /// Internal datatypes
     ///
     
-    struct ScreenshotAndMetadata {
+    struct ScreenshotAndMetadata : CustomStringConvertible {
+    
+        /// [Aug 2025] Swift/objc discussion: The whole reason I wrote LocalizationScreenshots.swift in Swift was because defining complex nested/serializable datastructures like this in objc felt way more cumbersome. But now we have MFDataClass, which would be much nicer to work with than this! Problems with the Swift approach: The struct names are too short/context-less without the namespace prefix, but extremely long with the namespace prefixes. Doesn't display well in the debugger due to length (`Localization_Screenshot_Taker.LocalizationScreenshotClass.ScreenshotAndMetadata.Metadata.Frame.String_.KeyAndTable`). Harder to grep for. ... Do namespaces just duck or am I using them wrong?
+        
+        var description: String { ScreenshotAndMetadata_description_from_key_value_pairs([("screenshot", screenshot), ("metadata", metadata)]) } /// [Aug 2025] Define custom descriptions because Swift's are extremely verbose due to namespacing. (Example: `Localization_Screenshot_Taker.LocalizationScreenshotClass.ScreenshotAndMetadata.Metadata.Frame.String_.KeyAndTable(key: <...>, table: <...>)`
         let screenshot: XCUIScreenshot
         let metadata: Metadata
-        struct Metadata {
-            let name: String
-            let frames: [Frame]
-            struct Frame {
+        
+        struct Metadata : CustomStringConvertible {
+            var description: String { ScreenshotAndMetadata_description_from_key_value_pairs([("screenshotName", screenshotName), ("screenshotAnnotations", screenshotAnnotations)]) }
+            let screenshotName: String
+            let screenshotAnnotations: [Frame]
+            
+            struct Frame : CustomStringConvertible {
+                var description: String { ScreenshotAndMetadata_description_from_key_value_pairs([("frame", frame.debugDescription), ("localizableStringsInFrame", localizableStringsInFrame)]) }
                 let frame: NSRect
-                let strings: [String_]
-                struct String_ {
-                    let string: String
-                    let keys: [KeyAndTable]
-                    struct KeyAndTable {
+                let localizableStringsInFrame: [String_] /// [Aug 2025] Why can there be multiple `String_`s per `Frame`? – This happens if one AXUIElement has multiple 'attributes' containing localizable strings. (E.g. tooltips are stored in a separate attribute)
+                
+                struct String_ : CustomStringConvertible {
+                    var description: String { ScreenshotAndMetadata_description_from_key_value_pairs([("uiString", uiString), ("stringAnnotations", stringAnnotations)]) }
+                    let uiString: String
+                    let stringAnnotations: [KeyAndTable] /// [Aug 2025] Why can there be multiple `KeyAndTable`s per `String_`? – This happens if a uiString is stitched together from multiple localizer-facing strings
+                    
+                    struct KeyAndTable : CustomStringConvertible {
+                        var description: String { ScreenshotAndMetadata_description_from_key_value_pairs([("key", key), ("table", table)]) }
                         let key: String
                         let table: String
                     }
@@ -65,8 +77,9 @@ final class LocalizationScreenshotClass: XCTestCase {
     }
     
     ///
-    /// Main routine
+    /// Global vars
     ///
+    
     var appSnap: XCUIElementSnapshot? = nil /// This probably get out of date when the app state changes
     var appAXUIElement: AXUIElement? = nil  /// This doesn't get out of date I think
     var _app: XCUIApplication? = nil
@@ -80,48 +93,172 @@ final class LocalizationScreenshotClass: XCTestCase {
     }
     var alreadyLoggedHitTestFailers: [AXUIElement] = []
     
-    func testTakeLocalizationScreenshots() throws {
+    ///
+    /// (shared) (f)unctions between different screenshot-taking tests
+    ///
+    
+    func sharedf_helper_url(_ mainApp: XCUIApplication) -> URL {
+        let result = URL(fileURLWithPath: (mainApp.value(forKey:"path") as! NSString).appendingPathComponent("Contents/Library/LoginItems/Mac Mouse Fix Helper.app"))
+        return result
+    }
+    
+    func sharedf_validate_that_main_app_is_enabled(_ window: XCUIElement, _ toolbarButtons: XCUIElementQuery) {
         
-        // --------------------------
-        // MARK: Main
-        // --------------------------
+        /// [Aug 2025] We launch the helper manually and only check that the mainApp has connected to the helper here. (Instead of trying to enable the helper through the mainApp UI)
+        ///     This lets us pass launchArguments to the helper (not sure that's always necessary / overcomplicates things tho)
+        
+        /// Go to general tab
+        toolbarButtons["general"].click()
+        coolWait()
+        
+        /// Find enable toggle
+        let switcherino = window.switches["axEnableToggle"].firstMatch
+        
+        /// Assert that the app is enabled
+        ///     We're launching the helper directly from the testRunner, so we can pass it arguments
+        if ((switcherino.value as! Int) != 1) {
+            XCTFail("Error: The app does not seem to be enabled, the test should do this automatically")
+        }
+    }
+    
+    func sharedf_do_test_intro(outputDir: String?, fallbackTempDirName: String?) -> URL {
         
         /// Configure test
         self.continueAfterFailure = false
         
         /// Get output folder
-        var outputDirectory: URL? = nil
+        var outputDir_URL: URL? = nil
         XCTContext.runActivity(named: "Get Output Folder") { activity in
-            let outputDirectoryPath = ProcessInfo.processInfo.environment[xcode_screenshot_taker_output_dir_variable]
-            if outputDirectoryPath != nil {
-                outputDirectory = URL(fileURLWithPath: outputDirectoryPath!).absoluteURL
+            if let outputDir {
+                outputDir_URL = URL(fileURLWithPath: outputDir).absoluteURL
             }
-            if outputDirectoryPath == nil {
-                let currentWorkingDirectory = FileManager().temporaryDirectory
-                outputDirectory = currentWorkingDirectory.appending(component: "MFLocalizationScreenshotsFallbackOutputFolder")
-                DDLogInfo("No output directory provided. Using \(outputDirectory!) as a fallback.")
+            else if let fallbackTempDirName {
+                outputDir_URL = FileManager().temporaryDirectory.appending(component: fallbackTempDirName)
+                DDLogInfo("No output directory provided. Using \(outputDir_URL!) as a fallback.")
             }
+            else { fatalError() }
         }
-        guard let outputDirectory = outputDirectory else { fatalError() }
+        guard let outputDir_URL else { fatalError() }
+        
+        /// Check ax permissions
+        ///     ([Aug 2025] We dive into the AX stuff underlying the XCUI stuff for some things (See AXUIElementCopyAttributeNames()])
+        let isTrusted = AXIsProcessTrustedWithOptions(nil);
+        assert(isTrusted)
+        
+        /// Return
+        return outputDir_URL
+    }
+    
+    func sharedf_find_elements_for_navigating_main_app() -> (NSScreen, XCUIElement, XCUIElementQuery, XCUIElement) {
+        let screen = NSScreen.main!
+        let window = app!.windows.firstMatch
+        let toolbarButtons = window.toolbars.firstMatch.children(matching: .button) /// `window.toolbarButtons` doesn't work for some reason.
+        let menuBar = app!.menuBars.firstMatch
+        return (screen, window, toolbarButtons, menuBar)
+    }
+    func sharedf_position_main_app_window(_ screen: NSScreen, _ window: XCUIElement, targetWindowY: Double) {
+        
+        /// `targetWindowY` arg is normalized between 0 and 1
+        
+        let targetWindowPosition = NSMakePoint(screen.frame.midX - window.frame.width/2.0, /// Just center the window horizontally
+                                               targetWindowY * (screen.frame.height - window.frame.height))
+        let appleScript = NSAppleScript(source: """
+        tell application "System Events"
+            set position of window 1 of process "Mac Mouse Fix" to {\(targetWindowPosition.x), \(targetWindowPosition.y)}
+        end tell
+        """)
+        var error: NSDictionary? = nil
+        appleScript?.executeAndReturnError(&error)
+        assert(error == nil)
+    }
+    
+    
+    func testTakeScreenshots_Documentation() throws {
+        
+        // --------------------------
+        // MARK: Main - Documentation Screenshots
+        // --------------------------
+        
+        /// [Aug 2025] Extending this code for taking screenshots for our `CapturedButtonsMMF3.md` guide.
+        ///     Why take these screenshots programmatically? – They update to new macOS / MMF designs, plus we can localize them.
+        ///     Main technological difference to `testTakeLocalizationScreenshots()`:
+        ///         For both, we want screenshots with red rectangles highlighting specific sections. The difference is that here, we need to draw the highlight rectangles on the images ourselves before rendering them out. Whereas for .xcloc files (which  `testTakeLocalizationScreenshots()` is for), we just create metadata that tells Xcode where to draw the highlight rectangles.
+        
+        /// Do test intro
+        let outputDir = sharedf_do_test_intro(outputDir: nil, fallbackTempDirName: "MF_DOC_SCREENSHOT_TEST")
+        
+        /// Launch main app.
+        var app = XCUIApplication()
+        app.launchArguments.append(localized_string_annotation_activation_argument_for_screenshotted_app)
+        app.launchArguments += ["-AppleLanguages", "(vi)"]
+        app.launch()
+        self.app = app
+        
+        /// Launch helper app
+        var helperApp = XCUIApplication(url: sharedf_helper_url(app))
+        helperApp.launchArguments.append(localized_string_annotation_activation_argument_for_screenshotted_app)
+        helperApp.launch()
+        
+        /// Find elements
+        let (screen, window, toolbarButtons, menuBar) = sharedf_find_elements_for_navigating_main_app()
+        
+        /// Validate mainApp enabled
+        sharedf_validate_that_main_app_is_enabled(window, toolbarButtons)
+        
+        /// Take screenshots
+        do {
+        
+            /// Switch to buttons tab
+            toolbarButtons["buttons"].click()
+            coolWait()
+            
+            /// Dismiss restoreDefaultsPopover, in case it pops up.
+            ///     [Aug 2025] Copied from `navigateAppAndTakeScreenshots()`. Not sure if necessary here.
+            hitEscape()
+            coolWait()
+            
+            /// Take screenshot!
+            var screenshotAndMetadata: ScreenshotAndMetadata? = takeLocalizationScreenshot(of: window, name: "ButtonsTab Screenshot For Documentation")
+            print("doc screenshot (and metadata): \(screenshotAndMetadata!)")
+            
+        }
+        
+        // TODO: Draw highlights around the desired uiStrings and render them out to a file and stuff
+    }
+    
+    ///
+    /// Main localizationScreenshot routine
+    ///
+    
+    func testTakeScreenshots_Localization() throws {
+        
+        // --------------------------
+        // MARK: Main - Localization Screenshots
+        // --------------------------
+        
+        /// Do test intro
+        let outputDir = sharedf_do_test_intro(
+            outputDir:            ProcessInfo.processInfo.environment[xcode_screenshot_taker_output_dir_variable],
+            fallbackTempDirName:  "MFLocalizationScreenshotsFallbackOutputFolder"
+        )
         
         /// Declare result
         var screenshotsAndMetaData: [ScreenshotAndMetadata?] = []
         
         /// Log
-        DDLogInfo("Localization Screenshot Test Runner launched with output directory: \(xcode_screenshot_taker_output_dir_variable): \(outputDirectory)")
+        DDLogInfo("Localization Screenshot Test Runner launched with output directory: \(xcode_screenshot_taker_output_dir_variable): \(outputDir)")
         
         var mainApp: XCUIApplication
         mainApp = XCUIApplication()
         
         /// Prepare helper app
         ///     We should launch the helper first, and not let the app enable it, so we can control its launchArguments.
-        let helperPath = (mainApp.value(forKey:"path") as! NSString).appendingPathComponent("Contents/Library/LoginItems/Mac Mouse Fix Helper.app")
-        let helperApp = XCUIApplication(url: URL(fileURLWithPath: helperPath))
-        helperApp.launchArguments.append(localizedStringAnnotationActivationArgumentForScreenshottedApp)
+        let helperApp = XCUIApplication(url: sharedf_helper_url(mainApp))
+        helperApp.launchArguments.append(localized_string_annotation_activation_argument_for_screenshotted_app)
         helperApp.launch()
         
         /// Prepare mainApp
-        mainApp.launchArguments.append(localizedStringAnnotationActivationArgumentForScreenshottedApp) /// `["-AppleLanguages", "(de)"]`
+        mainApp.launchArguments.append(localized_string_annotation_activation_argument_for_screenshotted_app) /// `["-AppleLanguages", "(de)"]`
         mainApp.launch()
         
         ///
@@ -131,7 +268,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Take helper screenshots
         app = helperApp
         XCTContext.runActivity(named: "Take Helper Screenshots") { activity in
-            screenshotsAndMetaData.append(contentsOf: navigateHelperAppAndTakeScreenshots(outputDirectory))
+            screenshotsAndMetaData.append(contentsOf: testTakeScreenshots_Localization_NavigateHelperAppAndTakeScreenshots(outputDir))
         }
         
         ///
@@ -141,7 +278,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Take mainApp screenshots
         app = mainApp
         XCTContext.runActivity(named: "Take MainApp Screenshots") { activity in
-            let newScreenshotsAndMetaData = navigateAppAndTakeScreenshots(outputDirectory)
+            let newScreenshotsAndMetaData = testTakeScreenshots_Localization_NavigateAppAndTakeScreenshots(outputDir)
             screenshotsAndMetaData.append(contentsOf: newScreenshotsAndMetaData)
         }
         /// Validate with mainApp
@@ -158,7 +295,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         ///
         
         XCTContext.runActivity(named: "Write results") { activity in
-            writeResults(screenshotsAndMetaData, outputDirectory)
+            testTakeScreenshots_Localization_writeResults(screenshotsAndMetaData, outputDir)
         }
     }
     
@@ -166,7 +303,7 @@ final class LocalizationScreenshotClass: XCTestCase {
     // MARK: Helper Screenshots
     // --------------------------
     
-    fileprivate func navigateHelperAppAndTakeScreenshots( _ outputDirectory: URL) -> [ScreenshotAndMetadata?] {
+    fileprivate func testTakeScreenshots_Localization_NavigateHelperAppAndTakeScreenshots( _ outputDirectory: URL) -> [ScreenshotAndMetadata?] {
         
         /// Declare result
         var result = [ScreenshotAndMetadata?]()
@@ -197,7 +334,7 @@ final class LocalizationScreenshotClass: XCTestCase {
     // MARK: Main App Screenshots
     // --------------------------
     
-    fileprivate func navigateAppAndTakeScreenshots( _ outputDirectory: URL) -> [ScreenshotAndMetadata?] {
+    fileprivate func testTakeScreenshots_Localization_NavigateAppAndTakeScreenshots( _ outputDirectory: URL) -> [ScreenshotAndMetadata?] {
         
         /// Declare result
         var result = [ScreenshotAndMetadata?]()
@@ -283,48 +420,14 @@ final class LocalizationScreenshotClass: XCTestCase {
             /// Return
             return toastScreenshots
         }
-        
-        /// Find screen
-        let screen = NSScreen.main!
-        
-        /// Find main window
-        let window = app!.windows.firstMatch
-        
-        /// Find tab buttons
-        let toolbarButtons = window.toolbars.firstMatch.children(matching: .button) /// `window.toolbarButtons` doesn't work for some reason.
-        
-        /// Find menuBar
-        let menuBar = app!.menuBars.firstMatch
+        /// Find navigation elements
+        let (screen, window, toolbarButtons, menuBar) = sharedf_find_elements_for_navigating_main_app()
         
         /// Position the window
-        let targetWindowY = 0.2 /// Normalized between 0 and 1
-        let targetWindowPosition = NSMakePoint(screen.frame.midX - window.frame.width/2.0, /// Just center the window horizontally
-                                               targetWindowY * (screen.frame.height - window.frame.height))
-        let appleScript = NSAppleScript(source: """
-        tell application "System Events"
-            set position of window 1 of process "Mac Mouse Fix" to {\(targetWindowPosition.x), \(targetWindowPosition.y)}
-        end tell
-        """)
-        var error: NSDictionary? = nil
-        appleScript?.executeAndReturnError(&error)
-        assert(error == nil)
+        sharedf_position_main_app_window(screen, window, targetWindowY: 0.2)
         
-        ///
         /// Validate that the app is enabled
-        ///
-        
-        /// Go to general tab
-        toolbarButtons["general"].click()
-        coolWait()
-        
-        /// Find enable toggle
-        let switcherino = window.switches["axEnableToggle"].firstMatch
-        
-        /// Assert that the app is enabled
-        ///     We're launching the helper directly from the testRunner, so we can pass it arguments
-        if ((switcherino.value as! Int) != 1) {
-            XCTFail("Error: The app does not seem to be enabled, the test should do this automatically")
-        }
+        sharedf_validate_that_main_app_is_enabled(window, toolbarButtons)
         
         ///
         /// Screenshot ButtonsTab
@@ -582,7 +685,9 @@ final class LocalizationScreenshotClass: XCTestCase {
     // MARK: Write results
     // --------------------------
     
-    fileprivate func writeResults(_ screenshotsAndMetadata: [ScreenshotAndMetadata?], _ outputDirectory: URL) {
+    fileprivate func testTakeScreenshots_Localization_writeResults(_ screenshotsAndMetadata: [ScreenshotAndMetadata?], _ outputDirectory: URL) {
+        
+        /// Write the screenshots and their metadata in the format found inside `.xcloc` localization catalogs [Aug 2025]
         
         /// Convert screenshotsAndMetadata to localizedStringData.plist structure
         var screenshotNameToScreenshotDataMap = [String: Data]()
@@ -594,12 +699,12 @@ final class LocalizationScreenshotClass: XCTestCase {
             var screenshotUsageCount = 0
             
             let screenshot = scr.screenshot
-            let screenshotName = scr.metadata.name
-            for fr in scr.metadata.frames {
+            let screenshotName = scr.metadata.screenshotName
+            for fr in scr.metadata.screenshotAnnotations {
                 let stringFrame = fr.frame
-                for str in fr.strings {
-                    let localizedString = str.string
-                    for k in str.keys {
+                for str in fr.localizableStringsInFrame {
+                    let localizedString = str.uiString
+                    for k in str.stringAnnotations {
                         let stringKey = k.key
                         var stringTable = k.table
                         
@@ -784,7 +889,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                 var localizationKeys = [ScreenshotAndMetadata.Metadata.Frame.String_.KeyAndTable]()
                 for secretMessage in secretMessages {
                     let secretMessage = secretMessage as String
-                    let regex = try NSRegularExpression(pattern: localizedStringAnnotationRegexForScreenshottedApp, options: [])
+                    let regex = try NSRegularExpression(pattern: localized_string_annotation_regex_for_screenshotted_app, options: [])
                     let matches = regex.matches(in: secretMessage, options: [.anchored], range: .init(location: 0, length: secretMessage.utf16.count)) /// NSString and related objc classes are based on UTF16 so we should do .utf16 afaik
                     assert(matches.count <= 1)
                     var newLocalizationKey: ScreenshotAndMetadata.Metadata.Frame.String_.KeyAndTable? = nil
@@ -802,7 +907,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                 }
                 /// Append to result
                 if localizationKeys.count > 0 {
-                    localizedStrings.append(ScreenshotAndMetadata.Metadata.Frame.String_(string: string, keys: localizationKeys))
+                    localizedStrings.append(ScreenshotAndMetadata.Metadata.Frame.String_(uiString: string, stringAnnotations: localizationKeys))
                 }
                 
             }
@@ -840,7 +945,7 @@ final class LocalizationScreenshotClass: XCTestCase {
             if let hittedAXUIElement = hittedAXUIElement, hittedAXUIElement == axuiElement {
             } else {
                 if !alreadyLoggedHitTestFailers.contains(axuiElement) {
-                    print("HitTest Failed: Skipping annotation of element: \(nodeSnapshot) || Skipped keys: \(localizedStrings.flatMap { s in s.keys.map { k in k.key } })") /// If hitTest fails, the element is probably invisible or covered by another element.
+                    print("HitTest Failed: Skipping annotation of element: \(nodeSnapshot) || Skipped keys: \(localizedStrings.flatMap { s in s.stringAnnotations.map { k in k.key } })") /// If hitTest fails, the element is probably invisible or covered by another element.
                     alreadyLoggedHitTestFailers.append(axuiElement) /// We want to log all the elements that are filtered out due to failed hitTests - to check if there are any false positives. (Check if we still end up with correct annotations for those hitTestFailers in the resulting .xcloc file)
                 }
                 continue
@@ -862,7 +967,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                            height: bsf*frame.height)
             
             /// Append to result
-            framesAndStringsAndKeys.append(ScreenshotAndMetadata.Metadata.Frame(frame: frame, strings: localizedStrings))
+            framesAndStringsAndKeys.append(ScreenshotAndMetadata.Metadata.Frame(frame: frame, localizableStringsInFrame: localizedStrings))
         }
         
         /// Filter out invalid frames
@@ -884,8 +989,8 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Store result
         if let f = validFramesAndStringsAndKeys {
             let thisResult = ScreenshotAndMetadata(screenshot: screenshot,
-                                                   metadata: ScreenshotAndMetadata.Metadata(name: screenshotBaseName,
-                                                                                            frames: f))
+                                                   metadata: ScreenshotAndMetadata.Metadata(screenshotName: screenshotBaseName,
+                                                                                            screenshotAnnotations: f))
             return thisResult
         } else {
             return nil
@@ -906,4 +1011,38 @@ final class LocalizationScreenshotClass: XCTestCase {
         usleep(useconds_t(Double(USEC_PER_SEC) * 0.5))
         app?._waitForQuiescence()
     }
+}
+
+func ScreenshotAndMetadata_description_from_key_value_pairs(_ pairs: [(String, CustomStringConvertible)]) -> String {
+    
+    /// [Aug 2025] Helper for printing `struct ScreenshotAndMetadata`, because default swift description is extremely verbose
+    ///     Have to define this far away, at file scope, cause of weird Swift compiler errors
+    
+    func addIndent(_ s: String) -> String { return s.replacingOccurrences(of: "(^|\n)(.)", with: "$1    $2", options: [.regularExpression]) } /// [Aug 2025] We have multiple implementations for indenting strings across the codebase but they didn't work properly here for some reason. (Tried `.string(byAddingIndent: 4, withCharacter: " ")`)
+    
+    var result = "{"
+    
+    for (i, (k, v)) in pairs.enumerated() {
+        result += "\n    "
+        
+        let vDesc: String
+        
+        if let v = v as? Swift.Array<CustomStringConvertible> {
+            let descs = v.map { x in x.description }
+            let descsHaveNoLinebreaks = descs.allSatisfy({ desc in !desc.contains("\n") })
+            if descsHaveNoLinebreaks    { vDesc = "[\(descs.joined(separator: ", "))]" }
+            else                        { vDesc = "[\n\(addIndent(descs.joined(separator: ",\n")))\n]" }
+        }
+        else { vDesc = v.description; }
+                    
+        if vDesc.contains("\n") {
+            result += "\(k):\n\(addIndent(vDesc))"
+        } else {
+            result += "\(k): \(vDesc)"
+        }
+    }
+    
+    result += "\n}"
+    
+    return result
 }

@@ -23,6 +23,7 @@
 		4F1667E92C6A679F009E4924 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F1667E82C6A679F009E4924 /* Readme.md */; };
 		4F1667EB2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F1667EA2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist */; };
 		4F1667EF2C6A6EA0009E4924 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F1667EE2C6A6EA0009E4924 /* MainMenu.xib */; };
+		4F1708BE2E51D60400945CF3 /* MFSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFSemaphore.m */; };
 		4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17D2E0292A635200EB07CA /* SwitchMaster.swift */; };
 		4F18464D2C533B5900D5E835 /* BidirectionalMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0C00412C53273200C5D843 /* BidirectionalMap.m */; };
 		4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AFE962670EBA900ECA424 /* DragCurve.swift */; };
@@ -8154,6 +8155,7 @@
 				4F18464D2C533B5900D5E835 /* BidirectionalMap.m in Sources */,
 				4F3A10E92C5ED9E50054B89E /* SharedUtility.m in Sources */,
 				4FE1A1BB2C56A50100CE3347 /* Logging.m in Sources */,
+				4F1708BE2E51D60400945CF3 /* MFSemaphore.m in Sources */,
 				4FAA3DBC2C56802E00CBA413 /* XCUIElement+Additions.m in Sources */,
 				4F47C11F2C58B321009F6CE7 /* MFMessagePort.m in Sources */,
 				4F58FE132C57297400926A00 /* Logging.swift in Sources */,
