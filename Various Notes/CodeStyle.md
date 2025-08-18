@@ -82,3 +82,46 @@ What about Apple's macros like `NS_ENUM` or `NS_TYPED_ENUM`?
    -> Don't use
    Also see: 
     - MFStringEnum macros [Apr 2025] (I might delete them at some point.)
+
+## Dict-of-blocks
+
+[Jul 2025]
+
+You can emulate a switch-statement that works on any objc object by using an NSDictionary filled with blocks. 
+
+Example:
+
+    ```
+    NSDictionary <NSString *, void (^)(void)> *dictswitch = @{
+        @"A": ^{ printf("Case A!\n"); },
+        @"B": ^{ printf("Case B!\n"); },
+    };
+    if (dictswitch[value]) dictswitch[value]();
+    else assert(false);
+    
+    ``` 
+
+I've benchmarked the pattern a bit inside MarkdownParser.m, and it didn't seem to be any slower than a native C-switch. I think there must be some crazy clang optimizations to make it this fast.
+
+However, in practise, I'd still prefer just use an if-else with macros. Benefits: You don't have to rely on magical clang optimizations to make this fast, and it's about as concise.
+
+Example:
+
+    ```
+    #define xxx(value_) else if ([value_ isEqual: value])
+    if ((0)) ;
+    xxx(@"A")   printf(@"Case A!\n");
+    xxx(@"B")   printf(@"Case B!\n");
+    else        assert(false);
+    #undef xxx
+    ```
+    
+For switching over integers we can also use our `bcase` and `fcase` macros, which are a thin wrapper around real, native C switches. 
+
+## Temporary local macros
+
+[Jul 2025]
+
+Sometimes it's nice to compress boilerplate with a local macro, that you #undef right after. 
+I tend to call these macros `xxx`. 
+Not sure why, but it seems to work better than trying to give it a more descriptive / longer name.

@@ -198,13 +198,14 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
         /// Handle all types of nodes
         ///     Notes:
         ///     - Nodes with a leaf-node-type are marked with 🍁. They only have enter events, no exit events.
-        ///     - The `command_map` dict is just a long switch / if-else statement, but the dict makes it more readable
         ///     - Performance testing: [Apr 2025]
         ///         Switch vs NSDictionary:
         ///             Instead of a C-switch, we used to use an NSDictionary containing objc-blocks. That seems slow, but from my benchmarking, the difference to the C-switch looks much smaller than the random fluctuations from run to run.
         ///             But we still stuck to switch since the code is a bit cleaner (at least with our bcase macros)
         ///         All the invocations of MarkdownParser take 10ths or 100ths of a millisecond, (and it's only called once per UI string, when the app first loads – I think)
         ///             -> Therefore, there is absolutely *zero* reason to try to optimize this any further.
+        ///     - `man 3 cmark-gfm` says: "Nodes must only be modified after an EXIT event, or an ENTER event for leaf nodes"
+        ///         - However we're not concerned about that since we're only analyzing, not modifying the nodes (I think) [Jul 2025]
         
         switch (node_type) {
             bcase(CMARK_NODE_NONE): {
@@ -261,21 +262,15 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
                             [prefix appendString:@"\n"];
                         }
                     }
-                    /// Append list maker (`-, 1., or 1)`) to prefix
+                    /// Append list marker (`-, 1., or 1)`) to prefix
                     cmark_list_type list_type = cmark_node_get_list_type(list_node);
-                    if (list_type == CMARK_BULLET_LIST) {
-                        [prefix appendString:@"• "];
-                    } else if (list_type == CMARK_ORDERED_LIST)  {
-                        if (cmark_node_get_list_delim(list_node) == CMARK_PAREN_DELIM) {
-                            [prefix appendFormat:@"%d) ", md_list_index];
-                        } else if (cmark_node_get_list_delim(list_node) == CMARK_PERIOD_DELIM) {
-                            [prefix appendFormat:@"%d. ", md_list_index];
-                        } else {
-                            assert(false);
-                        }
-                    } else {
-                        assert(false);
+                    if      (list_type == CMARK_BULLET_LIST) [prefix appendString:@"• "];
+                    else if (list_type == CMARK_ORDERED_LIST)  {
+                        if      (cmark_node_get_list_delim(list_node) == CMARK_PAREN_DELIM)     [prefix appendFormat:@"%d) ", md_list_index];
+                        else if (cmark_node_get_list_delim(list_node) == CMARK_PERIOD_DELIM)    [prefix appendFormat:@"%d. ", md_list_index];
+                        else                                                                    assert(false);
                     }
+                    else assert(false);
                                             
                     /// Extract list item content
                     ///     that was already added to dst by our child nodes.
@@ -316,7 +311,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
                 ///     We wrap unused placeholder strings in IB with `<angle brackets>`. This is parsed as a `CMARK_NODE_HTML_BLOCK`. (Or `CMARK_NODE_HTML_INLINE`)
                 ///     We attach these to dst to give users at least some context in case these placeholders make it through to the UI.
                 ///
-                dst = [dst attributedStringByAppending:@(cmark_node_get_literal(node)).attributed];
+                dst = [dst attributedStringByAppending:@(cmark_node_get_literal(node) ?: "").attributed];
             }
             bcase(CMARK_NODE_CUSTOM_BLOCK): {
                 
@@ -343,7 +338,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
             }
             bcase(CMARK_NODE_TEXT): {              /// == `CMARK_NODE_FIRST_INLINE` || 🍁
                 
-                NSString *node_text = @(cmark_node_get_literal(node));
+                NSString *node_text = @(cmark_node_get_literal(node) ?: "");
                 assert(did_enter); /// Leaf node
                 
                 
@@ -396,7 +391,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
                 
                 /// Append literal
                 ///     Explanation: See `CMARK_NODE_HTML_BLOCK`
-                NSString *literal = @(cmark_node_get_literal(node));
+                NSString *literal = @(cmark_node_get_literal(node) ?: "");
                 if (literal != nil && literal.length > 0) {
                     dst = [dst attributedStringByAppending:literal.attributed];
                 }
@@ -422,7 +417,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
             }
             bcase(CMARK_NODE_LINK): {
                 if (did_exit) {
-                    NSString *urlStr = @(cmark_node_get_url(node));
+                    NSString *urlStr = @(cmark_node_get_url(node) ?: "");
                     if (urlStr != nil && urlStr.length > 0) {
                         dst = [dst attributedStringByAddingHyperlink:[NSURL URLWithString:urlStr] forRange:&rangeOfExitedNodeInDst];
                     }

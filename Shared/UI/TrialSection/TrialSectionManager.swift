@@ -167,7 +167,7 @@ class TrialSectionManager {
                 ///         Update: [Jul 2025] I think it was a bug with how we retrieved the ResizingTabWindow which we fixed a while ago.
                 
                 let linkTitle = NSLocalizedString("trial-notif.activate-license-button", comment: "")
-                let link = Hyperlink(title: linkTitle, linkID: kMFLinkIDMMFLActivate, alwaysTracking: true, leftPadding: 30)
+                let link = Hyperlink(title: linkTitle, linkID: kMFLinkID_MMFLActivate, alwaysTracking: true, leftPadding: 30)
                 link?.font = NSFont.systemFont(ofSize: 13, weight: .regular)
                 
                 link?.translatesAutoresizingMaskIntoConstraints = false

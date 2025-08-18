@@ -1,0 +1,159 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "1: intro.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hilfe bei Problemen und Fragen zu Mac Mouse Fix."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Help with problems and questions about Mac Mouse Fix."
+          }
+        }
+      }
+    },
+    "2: questions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fragen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Questions"
+          }
+        }
+      }
+    },
+    "3: questions.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kurze Antworten auf häufige Fragen [hier](<{url}>)."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Short answers to common questions [here](<{url}>)."
+          }
+        }
+      }
+    },
+    "4: guides" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anleitungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Guides"
+          }
+        }
+      }
+    },
+    "5: guides.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wo es möglich ist, erklärt sich Mac Mouse Fix selbst.\nAber manchmal hilft eine Anleitung!\n\n- [{docname_captured_buttons_mmf3}](<{url_1}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_2}>) (Mac Mouse Fix 2) {only_in_english}"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Where possible, Mac Mouse Fix explains itself.\nBut sometimes a guide helps!\n\n- [{docname_captured_buttons_mmf3}](<{url_1}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_2}>) (Mac Mouse Fix 2) {only_in_english}"
+          }
+        }
+      }
+    },
+    "6: guides.old" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ältere Anleitungen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Older Guides"
+          }
+        }
+      }
+    },
+    "7: guides.old.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anleitungen für ältere Versionen von Mac Mouse Fix oder macOS.\n\n- [{docname_enabling}](<{url_1}>) {only_in_english}\n    - Für **macOS 13 Ventura** und **macOS 14 Sonoma**.\n- [{docname_ax_access}](<{url_2}>) {only_in_english}\n    - Für Nutzer von **Mac Mouse Fix 2.2.1** und älter, oder **macOS 10.14 Mojave** und älter.\n- [{docname_opening}](<{url_3}>) {only_in_english}\n    - Für **Mac Mouse Fix 2.2.3** und älter."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Guides for older versions of Mac Mouse Fix or macOS.\n\n- [{docname_enabling}](<{url_1}>) {only_in_english}\n    - For **macOS 13 Ventura** and **macOS 14 Sonoma**.\n- [{docname_ax_access}](<{url_2}>) {only_in_english}\n    - For users of **Mac Mouse Fix 2.2.1** and older, or **macOS 10.14 Mojave** and older.\n- [{docname_opening}](<{url_3}>) {only_in_english}\n    - For **Mac Mouse Fix 2.2.3** and older."
+          }
+        }
+      }
+    },
+    "8: contact" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontakt"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Contact"
+          }
+        }
+      }
+    },
+    "9: contact.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch Fragen? [Klicke hier]({url})."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Still have questions? Click [here]({url})."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

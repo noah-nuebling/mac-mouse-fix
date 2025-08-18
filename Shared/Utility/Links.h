@@ -26,36 +26,37 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NSString * MFLinkID;
 
 /// 'macmousefix:...' links
-#define kMFLinkIDMMFLActivate @"MMFLActivate"
+#define kMFLinkID_MMFLActivate    @"MMFLActivate"
 
 /// General
-#define kMFLinkIDBuyMeAMilkshake @"BuyMeAMilkshake"
+#define kMFLinkID_BuyMeAMilkshake @"BuyMeAMilkshake"
 
 /// Local links
-#define kMFLinkIDMacOSSettingsLoginItems @"MacOSSettingsLoginItems"
-#define kMFLinkIDMacOSSettingsPrivacyAndSecurity @"MacOSSettingsPrivacyAndSecurity"
-#define kMFLinkIDMailToNoah @"MailToNoah"
+#define kMFLinkID_MacOSSettingsLoginItems            @"MacOSSettingsLoginItems"
+#define kMFLinkID_MacOSSettingsPrivacyAndSecurity    @"MacOSSettingsPrivacyAndSecurity"
+#define kMFLinkID_MailToNoah                         @"MailToNoah"
 
 /// Main places
-#define kMFLinkIDWebsite @"Website"
-#define kMFLinkIDGitHub @"GitHub"
-#define kMFLinkIDAcknowledgements @"Acknowledgements"
-#define kMFLinkIDLocalizationContribution @"LocalizationContribution"
+#define kMFLinkID_Website                    @"Website"
+#define kMFLinkID_GitHub                     @"GitHub"
+#define kMFLinkID_Acknowledgements           @"Acknowledgements"
+#define kMFLinkID_HelpTranslate              @"HelpTranslate"
 
 /// Feedback
-#define kMFLinkIDFeedbackFeatureRequest @"FeedbackFeatureRequest"
-#define kMFLinkIDFeedbackBugReport @"FeedbackBugReport"
+#define kMFLinkID_Feedback               @"Feedback"
+#define kMFLinkID_FeedbackFeatureRequest @"FeedbackFeatureRequest"
+#define kMFLinkID_FeedbackBugReport      @"FeedbackBugReport"
 
 /// Help
-#define kMFLinkIDAuthorizeAccessibilityHelp @"AuthorizeAccessibilityHelp"
+#define kMFLinkID_AuthorizeAccessibilityHelp @"AuthorizeAccessibilityHelp"
 
 /// Guides
-#define kMFLinkIDGuidesAndCommunity @"GuidesAndCommunity"
-#define kMFLinkIDGuides @"Guides"
-#define kMFLinkIDCapturedButtonsGuide @"CapturedButtonsGuide"
-#define kMFLinkIDCapturedScrollingGuide @"CapturedScrollingGuide"
+#define kMFLinkID_GuidesAndCommunity     @"GuidesAndCommunity"
+#define kMFLinkID_Guides                 @"Guides"
+#define kMFLinkID_CapturedButtonsGuide   @"CapturedButtonsGuide"
+#define kMFLinkID_CapturedScrollingGuide @"CapturedScrollingGuide"
 
-#define kMFLinkIDVenturaEnablingGuide @"VenturaEnablingGuide"
+#define kMFLinkID_VenturaEnablingGuide   @"VenturaEnablingGuide"
 
 
 @interface Links : NSObject

@@ -546,60 +546,60 @@
       }
     },
     "5yb-g8-Kcg.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Write a Feature Request\"; ObjectID = \"5yb-g8-Kcg\"; Note = \"About > Feature Request Link\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Help Translate\"; ObjectID = \"5yb-g8-Kcg\"; Note = \"About > Help Translate Link\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Schlage ein Feature vor"
+            "value" : "Hilf beim Übersetzen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Write a Feature Request"
+            "value" : "Help Translate"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Demander une nouvelle fonctionnalité"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "기능개선 요청하기"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Solicite um Recurso"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Đề xuất tính năng mới"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "填写一个功能请求"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "填寫一個功能請求"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "填寫一個功能請求"
           }
         }
@@ -1327,60 +1327,60 @@
       }
     },
     "bew-ni-FnZ.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Mac Mouse Fix will stay enabled after you close it\"; ObjectID = \"bew-ni-FnZ\"; Note = \"General > Enable Mac Mouse Fix Toggle > Hint\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Mac Mouse Fix stays enabled after you quit\\nthe app\"; ObjectID = \"bew-ni-FnZ\"; Note = \"General > Enable Mac Mouse Fix Toggle > Hint || NOTE: Primarily meant to teach the right mental model to users who have the common misconception that they need to make MMF a 'Login Item' to keep it working. The terminology is meant to match the 'Enable Mac Mouse Fix' toggle and the 'Quit Mac Mouse Fix' menubar item.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mac Mouse Fix bleibt eingeschaltet, nachdem du\nes beendest"
+            "value" : "Mac Mouse Fix bleibt eingeschaltet nachdem du\ndie App beendest"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Mac Mouse Fix will stay enabled after you close it"
+            "value" : "Mac Mouse Fix stays enabled after you quit\nthe app"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mac Mouse Fix restera activé après l'avoir fermé"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mac Mouse Fix는 창을 닫아도 동작합니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "O Mac Mouse Fix continuará ativo mesmo depois que você fechá-lo"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mac Mouse Fix vẫn được bật khi bạn đóng nó"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "在您关闭Mac Mouse Fix后，它仍会保持启用状态"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "在您關閉Mac Mouse Fix後，它仍會保持啟用狀態"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "在你關閉Mac Mouse Fix後，它仍會保持啟用狀態"
           }
         }
@@ -1688,60 +1688,60 @@
       }
     },
     "bQf-qv-mvB.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"File a Bug Report\"; ObjectID = \"bQf-qv-mvB\"; Note = \"About > Bug Report Link\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Submit Feedback\"; ObjectID = \"bQf-qv-mvB\"; Note = \"About > Submit Feedback Link\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Erstatte einen Fehlerbericht"
+            "value" : "Feedback einreichen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "File a Bug Report"
+            "value" : "Submit Feedback"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Signaler un bug"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "버그 제보하기"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Reportar um problema"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Gửi báo cáo lỗi"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "提交错误报告"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "回報錯誤"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "報告錯誤"
           }
         }

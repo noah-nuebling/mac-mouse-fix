@@ -462,15 +462,9 @@
 		4F09284328B8E82B00BDC2FF /* LicenseSheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseSheetController.swift; sourceTree = "<group>"; };
 		4F09284928B8EE7200BDC2FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LicenseSheetController.xib; sourceTree = "<group>"; };
 		4F09BF57288355170080A5F8 /* PollingRateMeasurer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PollingRateMeasurer.swift; sourceTree = "<group>"; };
-		4F0B8B172C58156F002715FF /* XCUIElement+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCUIElement+Additions.h"; sourceTree = "<group>"; };
 		4F09CF772DF44D9D00C75249 /* MMF - Update Checklist - Template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "MMF - Update Checklist - Template.md"; sourceTree = "<group>"; };
-		4F0BDC782B446A3C00AE65C1 /* acknowledgements_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = acknowledgements_template.md; sourceTree = "<group>"; };
-		4F0BDC792B446A3C00AE65C1 /* readme_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme_template.md; sourceTree = "<group>"; };
-		4F0BDC7B2B446A3C00AE65C1 /* acknowledgements_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = acknowledgements_template.md; sourceTree = "<group>"; };
-		4F0BDC7C2B446A3C00AE65C1 /* readme_template.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = readme_template.md; sourceTree = "<group>"; };
+		4F0B8B172C58156F002715FF /* XCUIElement+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "XCUIElement+Additions.h"; sourceTree = "<group>"; };
 		4F0BDC812B446A3C00AE65C1 /* MarkdownReadme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = MarkdownReadme.md; sourceTree = "<group>"; };
-		4F0BDC832B446A3C00AE65C1 /* AppIconRound3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIconRound3.png; sourceTree = "<group>"; };
-		4F0BDC842B446A3C00AE65C1 /* Apple-Keys-Demo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Apple-Keys-Demo.gif"; sourceTree = "<group>"; };
 		4F0BED622C77B69F00979816 /* Choice of Languages.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Choice of Languages.md"; sourceTree = "<group>"; };
 		4F0C00162C525AC000C5D843 /* .env */ = {isa = PBXFileReference; lastKnownFileType = text; path = .env; sourceTree = "<group>"; };
 		4F0C003A2C525AC000C5D843 /* run */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run; sourceTree = "<group>"; };
@@ -2311,7 +2305,6 @@
 		4FC55B962915652C00663B24 /* Alerts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Alerts.h; sourceTree = "<group>"; };
 		4FC55B972915652C00663B24 /* Alerts.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Alerts.m; sourceTree = "<group>"; };
 		4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDefaults.swift; sourceTree = "<group>"; };
-		4FC56DAA2C6199EA00CCB98C /* createsfsymbols.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = createsfsymbols.py; sourceTree = "<group>"; };
 		4FC56DB22C625B9300CCB98C /* CoolSFSymbolsFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoolSFSymbolsFont.h; sourceTree = "<group>"; };
 		4FC56DB32C625B9300CCB98C /* CoolSFSymbolsFont.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoolSFSymbolsFont.m; sourceTree = "<group>"; };
 		4FC778302D66693E00488468 /* Localization Notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Localization Notes.md"; sourceTree = "<group>"; };
@@ -2387,30 +2380,6 @@
 		4FE78C432C502A5F00C54103 /* NSString+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additions.m"; sourceTree = "<group>"; };
 		4FE7A0DE28677AD600C33B37 /* Gain Curve Math.tex */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Gain Curve Math.tex"; sourceTree = "<group>"; };
 		4FE8FC792929D8AC0002583B /* On Bundle Size & Deployment Target.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "On Bundle Size & Deployment Target.md"; sourceTree = "<group>"; };
-		4FEA2E4A2C5458CA00C86D67 /* buildmd.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = buildmd.py; sourceTree = "<group>"; };
-		4FEA2E4B2C5458CA00C86D67 /* python_requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = python_requirements.txt; sourceTree = "<group>"; };
-		4FEA2E4D2C5458CA00C86D67 /* buildstrings.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = buildstrings.py; sourceTree = "<group>"; };
-		4FEA2E4F2C5458CA00C86D67 /* mfgithub.cpython-312.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "mfgithub.cpython-312.pyc"; sourceTree = "<group>"; };
-		4FEA2E502C5458CA00C86D67 /* mflocales.cpython-312.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "mflocales.cpython-312.pyc"; sourceTree = "<group>"; };
-		4FEA2E512C5458CA00C86D67 /* mfutils.cpython-312.pyc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "mfutils.cpython-312.pyc"; sourceTree = "<group>"; };
-		4FEA2E532C5458CA00C86D67 /* __init__.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = __init__.py; sourceTree = "<group>"; };
-		4FEA2E542C5458CA00C86D67 /* mfgithub.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = mfgithub.py; sourceTree = "<group>"; };
-		4FEA2E552C5458CA00C86D67 /* mflocales.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = mflocales.py; sourceTree = "<group>"; };
-		4FEA2E562C5458CA00C86D67 /* mflocales_old.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = mflocales_old.py; sourceTree = "<group>"; };
-		4FEA2E572C5458CA00C86D67 /* mfutils.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = mfutils.py; sourceTree = "<group>"; };
-		4FEA2E592C5458CA00C86D67 /* syncstrings.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = syncstrings.py; sourceTree = "<group>"; };
-		4FEA2E5B2C5458CA00C86D67 /* requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
-		4FEA2E5C2C5458CA00C86D67 /* uploadstrings.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = uploadstrings.py; sourceTree = "<group>"; };
-		4FEA2E5E2C5458CA00C86D67 /* requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
-		4FEA2E5F2C5458CA00C86D67 /* script.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
-		4FEA2E612C5458CA00C86D67 /* syncscripts.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = syncscripts.py; sourceTree = "<group>"; };
-		4FEA2E632C5458CA00C86D67 /* requirements.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = requirements.txt; sourceTree = "<group>"; };
-		4FEA2E642C5458CA00C86D67 /* script.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = script.py; sourceTree = "<group>"; };
-		4FEA2E662C5458CA00C86D67 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
-		4FEA2E682C5458CA00C86D67 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		4FEA2E692C5458CA00C86D67 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		4FEA2E6A2C5458CA00C86D67 /* run.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = run.py; sourceTree = "<group>"; };
-		4FEA2E6B2C5458CA00C86D67 /* StringsImport.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = StringsImport.md; sourceTree = "<group>"; };
 		4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+Additions.m"; sourceTree = "<group>"; };
 		4FEA63CE2921510E00E464D6 /* NSImage+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+Additions.h"; sourceTree = "<group>"; };
 		4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "SymbolicHotKeys Reference.txt"; sourceTree = "<group>"; };
@@ -2562,27 +2531,18 @@
 		4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseUtility.swift; sourceTree = "<group>"; };
 		4FFA4E3F28B7D0120062A1FE /* SharedSFSymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SharedSFSymbols.xcassets; sourceTree = "<group>"; };
 		4FFAD8EF28677F94005DD496 /* PointerConfigObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerConfigObjC.h; sourceTree = "<group>"; };
-		4FFB5F032C2FECDC0096AA3E /* Readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
-		4FFB5F042C2FECDD0096AA3E /* Acknowledgements.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Acknowledgements.md; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		4F14C0B22C8EFA6E002502BB /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Acknowledgements.xcstrings,
-				Readme.xcstrings,
-			);
-			target = 4F1667C82C6A6717009E4924 /* XCStringsDummyApp */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		4F14C0AF2C8EFA43002502BB /* Strings */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (4F14C0B22C8EFA6E002502BB /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Strings; sourceTree = "<group>"; };
+		4F14C0AF2C8EFA43002502BB /* Strings */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Strings; sourceTree = "<group>"; };
 		4F1668042C6AA96A009E4924 /* LocalizedDocuments */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LocalizedDocuments; sourceTree = "<group>"; };
+		4F1758532E3CBC1700E2B268 /* Help */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Help; sourceTree = "<group>"; };
+		4F23379C2E36523200F4948C /* mac-mouse-fix-scripts */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "mac-mouse-fix-scripts"; sourceTree = "<group>"; };
 		4FD98B302DE86F100039B102 /* Crash Reports */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "Crash Reports"; sourceTree = "<group>"; };
+		4FF6B93F2E3BC047000F925D /* Templates */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Templates; sourceTree = "<group>"; };
+		4FF6B9422E3BC07C000F925D /* Media */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Media; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2663,50 +2623,13 @@
 		4F0BDC722B446A3C00AE65C1 /* Markdown */ = {
 			isa = PBXGroup;
 			children = (
-				4F14C0AF2C8EFA43002502BB /* Strings */,
 				4F0BDC812B446A3C00AE65C1 /* MarkdownReadme.md */,
-				4F0BDC762B446A3C00AE65C1 /* Templates */,
+				4FF6B93F2E3BC047000F925D /* Templates */,
+				4F14C0AF2C8EFA43002502BB /* Strings */,
 				4F1668042C6AA96A009E4924 /* LocalizedDocuments */,
-				4F0BDC822B446A3C00AE65C1 /* Media */,
+				4FF6B9422E3BC07C000F925D /* Media */,
 			);
 			path = Markdown;
-			sourceTree = "<group>";
-		};
-		4F0BDC762B446A3C00AE65C1 /* Templates */ = {
-			isa = PBXGroup;
-			children = (
-				4FFB5F042C2FECDD0096AA3E /* Acknowledgements.md */,
-				4FFB5F032C2FECDC0096AA3E /* Readme.md */,
-				4F1668052C6AC116009E4924 /* Old (for reference) */,
-			);
-			path = Templates;
-			sourceTree = "<group>";
-		};
-		4F0BDC772B446A3C00AE65C1 /* de */ = {
-			isa = PBXGroup;
-			children = (
-				4F0BDC782B446A3C00AE65C1 /* acknowledgements_template.md */,
-				4F0BDC792B446A3C00AE65C1 /* readme_template.md */,
-			);
-			path = de;
-			sourceTree = "<group>";
-		};
-		4F0BDC7A2B446A3C00AE65C1 /* en-US */ = {
-			isa = PBXGroup;
-			children = (
-				4F0BDC7B2B446A3C00AE65C1 /* acknowledgements_template.md */,
-				4F0BDC7C2B446A3C00AE65C1 /* readme_template.md */,
-			);
-			path = "en-US";
-			sourceTree = "<group>";
-		};
-		4F0BDC822B446A3C00AE65C1 /* Media */ = {
-			isa = PBXGroup;
-			children = (
-				4F0BDC832B446A3C00AE65C1 /* AppIconRound3.png */,
-				4F0BDC842B446A3C00AE65C1 /* Apple-Keys-Demo.gif */,
-			);
-			path = Media;
 			sourceTree = "<group>";
 		};
 		4F0C003B2C525F6C00C5D843 /* Localization Notes */ = {
@@ -2733,15 +2656,6 @@
 				4F1667EE2C6A6EA0009E4924 /* MainMenu.xib */,
 			);
 			path = XCStringsDummyApp;
-			sourceTree = "<group>";
-		};
-		4F1668052C6AC116009E4924 /* Old (for reference) */ = {
-			isa = PBXGroup;
-			children = (
-				4F0BDC772B446A3C00AE65C1 /* de */,
-				4F0BDC7A2B446A3C00AE65C1 /* en-US */,
-			);
-			path = "Old (for reference)";
 			sourceTree = "<group>";
 		};
 		4F1793A725EEC8E500E8309B /* Frameworks */ = {
@@ -6557,11 +6471,12 @@
 				4F214C222B2E141900DD3957 /* Readme.md */,
 				4F2153272B2E150800DD3957 /* Acknowledgements.md */,
 				4F42304628CE6C1C003A41D3 /* License */,
+				4F1758532E3CBC1700E2B268 /* Help */,
 				4F0BDC722B446A3C00AE65C1 /* Markdown */,
 				4F39BC88263B68F400FDF692 /* xcconfig */,
-				4FEA2E6C2C5458CA00C86D67 /* mac-mouse-fix-scripts */,
 				4F0C00162C525AC000C5D843 /* .env */,
 				4F0C003A2C525AC000C5D843 /* run */,
+				4F23379C2E36523200F4948C /* mac-mouse-fix-scripts */,
 				4F1793A725EEC8E500E8309B /* Frameworks */,
 				4F214C232B2E144200DD3957 /* .git */,
 				4F2153222B2E145500DD3957 /* .github */,
@@ -7197,14 +7112,6 @@
 			path = Toasts;
 			sourceTree = "<group>";
 		};
-		4FC56DAB2C6199EA00CCB98C /* SFSymbolsFontCreate */ = {
-			isa = PBXGroup;
-			children = (
-				4FC56DAA2C6199EA00CCB98C /* createsfsymbols.py */,
-			);
-			path = SFSymbolsFontCreate;
-			sourceTree = "<group>";
-		};
 		4FC56DB52C62610300CCB98C /* SFSymbols */ = {
 			isa = PBXGroup;
 			children = (
@@ -7363,118 +7270,6 @@
 				4FE78C392C50177800C54103 /* DisableSwiftBridging.swift */,
 			);
 			path = DisableSwiftBridging;
-			sourceTree = "<group>";
-		};
-		4FEA2E4C2C5458CA00C86D67 /* MarkdownBuild */ = {
-			isa = PBXGroup;
-			children = (
-				4FEA2E4A2C5458CA00C86D67 /* buildmd.py */,
-				4FEA2E4B2C5458CA00C86D67 /* python_requirements.txt */,
-			);
-			path = MarkdownBuild;
-			sourceTree = "<group>";
-		};
-		4FEA2E4E2C5458CA00C86D67 /* MMFWebsite-StringsBuild */ = {
-			isa = PBXGroup;
-			children = (
-				4FEA2E4D2C5458CA00C86D67 /* buildstrings.py */,
-			);
-			path = "MMFWebsite-StringsBuild";
-			sourceTree = "<group>";
-		};
-		4FEA2E522C5458CA00C86D67 /* __pycache__ */ = {
-			isa = PBXGroup;
-			children = (
-				4FEA2E4F2C5458CA00C86D67 /* mfgithub.cpython-312.pyc */,
-				4FEA2E502C5458CA00C86D67 /* mflocales.cpython-312.pyc */,
-				4FEA2E512C5458CA00C86D67 /* mfutils.cpython-312.pyc */,
-			);
-			path = __pycache__;
-			sourceTree = "<group>";
-		};
-		4FEA2E582C5458CA00C86D67 /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				4FEA2E522C5458CA00C86D67 /* __pycache__ */,
-				4FEA2E532C5458CA00C86D67 /* __init__.py */,
-				4FEA2E542C5458CA00C86D67 /* mfgithub.py */,
-				4FEA2E552C5458CA00C86D67 /* mflocales.py */,
-				4FEA2E562C5458CA00C86D67 /* mflocales_old.py */,
-				4FEA2E572C5458CA00C86D67 /* mfutils.py */,
-			);
-			path = Shared;
-			sourceTree = "<group>";
-		};
-		4FEA2E5A2C5458CA00C86D67 /* StringsSync */ = {
-			isa = PBXGroup;
-			children = (
-				4FEA2E592C5458CA00C86D67 /* syncstrings.py */,
-			);
-			path = StringsSync;
-			sourceTree = "<group>";
-		};
-		4FEA2E5D2C5458CA00C86D67 /* StringsUpload */ = {
-			isa = PBXGroup;
-			children = (
-				4FEA2E5B2C5458CA00C86D67 /* requirements.txt */,
-				4FEA2E5C2C5458CA00C86D67 /* uploadstrings.py */,
-			);
-			path = StringsUpload;
-			sourceTree = "<group>";
-		};
-		4FEA2E602C5458CA00C86D67 /* StateOfLocalization */ = {
-			isa = PBXGroup;
-			children = (
-				4FEA2E5E2C5458CA00C86D67 /* requirements.txt */,
-				4FEA2E5F2C5458CA00C86D67 /* script.py */,
-			);
-			path = StateOfLocalization;
-			sourceTree = "<group>";
-		};
-		4FEA2E622C5458CA00C86D67 /* SyncScripts */ = {
-			isa = PBXGroup;
-			children = (
-				4FEA2E612C5458CA00C86D67 /* syncscripts.py */,
-			);
-			path = SyncScripts;
-			sourceTree = "<group>";
-		};
-		4FEA2E652C5458CA00C86D67 /* UpdateStrings */ = {
-			isa = PBXGroup;
-			children = (
-				4FEA2E632C5458CA00C86D67 /* requirements.txt */,
-				4FEA2E642C5458CA00C86D67 /* script.py */,
-			);
-			path = UpdateStrings;
-			sourceTree = "<group>";
-		};
-		4FEA2E672C5458CA00C86D67 /* z_Old */ = {
-			isa = PBXGroup;
-			children = (
-				4FEA2E602C5458CA00C86D67 /* StateOfLocalization */,
-				4FEA2E622C5458CA00C86D67 /* SyncScripts */,
-				4FEA2E652C5458CA00C86D67 /* UpdateStrings */,
-				4FEA2E662C5458CA00C86D67 /* Readme.md */,
-			);
-			path = z_Old;
-			sourceTree = "<group>";
-		};
-		4FEA2E6C2C5458CA00C86D67 /* mac-mouse-fix-scripts */ = {
-			isa = PBXGroup;
-			children = (
-				4FC56DAB2C6199EA00CCB98C /* SFSymbolsFontCreate */,
-				4FEA2E4C2C5458CA00C86D67 /* MarkdownBuild */,
-				4FEA2E4E2C5458CA00C86D67 /* MMFWebsite-StringsBuild */,
-				4FEA2E582C5458CA00C86D67 /* Shared */,
-				4FEA2E5A2C5458CA00C86D67 /* StringsSync */,
-				4FEA2E5D2C5458CA00C86D67 /* StringsUpload */,
-				4FEA2E672C5458CA00C86D67 /* z_Old */,
-				4FEA2E682C5458CA00C86D67 /* .gitignore */,
-				4FEA2E692C5458CA00C86D67 /* README.md */,
-				4FEA2E6A2C5458CA00C86D67 /* run.py */,
-				4FEA2E6B2C5458CA00C86D67 /* StringsImport.md */,
-			);
-			path = "mac-mouse-fix-scripts";
 			sourceTree = "<group>";
 		};
 		4FEB6616279376C200E6A111 /* Various Notes */ = {
