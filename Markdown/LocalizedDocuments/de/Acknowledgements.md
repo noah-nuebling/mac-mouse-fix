@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2025**
 
+- 🇺🇸&nbsp;Cole&nbsp;Tittle - "Solved mac's #1 problem - also Christ is King!"
 - 🇹🇭&nbsp;Chayanon&nbsp;Boontheeralert
 - 🇺🇸&nbsp;Gary - "Love my MacBook Air except when plugged into my docking station, the Logitech and Tecknet mouses (mice?) I was using didn't work well (but did work great with my Windows computer when in the docking station). Mac Mouse Fix now makes using the mouse a pleasure with smooth and reliable scrolling. No more unpredictable mouse movements. Thanks!!!"
 - 🇳🇵&nbsp;Aayam&nbsp;Khadka - "Big love for the app from Nepal (Also i would like Nepal's flag on my name please.)"
