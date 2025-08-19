@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2025**
 
+- 🇦🇹&nbsp;Michael
 - 🇺🇸&nbsp;David&nbsp;Stoline - "Thanks for making great software!"
 - 🇺🇸&nbsp;Cole&nbsp;Tittle - "Solved mac's #1 problem - also Christ is King!"
 - 🇹🇭&nbsp;Chayanon&nbsp;Boontheeralert
