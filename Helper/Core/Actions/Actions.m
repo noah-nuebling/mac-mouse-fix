@@ -48,6 +48,11 @@
             ///     TODOs:
             ///         - TODO: Rename the kMF constants to reflect that this is about going Back and Forward, not about navigationSwipes.
             ///             [Aug 2025] Not doing that for the 3.0.6 hotfix, since it would require increasing the config-version, and I'm too lazy for that.
+            ///     Bugs:
+            ///         - macOS `Mouse Shortcuts` interfere if we simulate MB 4/5.
+            ///             See: https://github.com/noah-nuebling/mac-mouse-fix/issues/1521
+            ///             Solution Ideas: - Send at different eventTap - User feedback ala Swish - Simulate navigationSwipes where possible - Some other hacks to keep macOS from diverting the events.
+            ///
             
             #define fail() ({ assert(false); goto endof_universalBackForward; })       /** [Aug 2025] We'll catch the failures during development, so simple is fine */
             {
