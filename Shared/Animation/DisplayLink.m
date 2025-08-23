@@ -191,7 +191,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
     }
     
     /// Create new displayLink
-    ///     [Aug 2025] I think silent failure of this probably causes the `scrolling-stops-intermittently_apr-2025.md` bug.
+    ///     [Aug 2025] I think silent failure of this probably causes the `scrolling-stops-intermittently_apr-2025.md` (Aka `Scroll Stops Working Intermittently`) bug.
     ///         To address this, in case of failure, we retry in a loop and eventually crash the program. That way we should have better robustness and better debug data (crashlogs)
     ///     [Aug 2025] Will this enter a crash-cycle if no display is attached at all?
     ///         Test result: Nope, seems like there is a dummy display in the API when no displayCable is attached to my Mac Mini 2018, and this code runs just fine. (However other parts of the codebase still experience assert-failures when no display is attached – Haven't looked into that.) See commit 6fa42122c7d38c315ad8f8f428e2b9b0fa5c8711.
@@ -654,7 +654,41 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         
     } else if (self->_optimizedWorkType == kMFDisplayLinkWorkTypeEventSending) {
         
-        ///
+        /// Deadlock: [Aug 2025] There's a deadlock here which causes smooth-scrolling to stop working.
+        {
+            ///     Context: We thought we fixed the `Scroll Stops Working Intermittently` bug in 3.0.6 by handling when `CVDisplayLinkCreateWithActiveCGDisplays()` fails (maybe that did fix some instances)
+            ///             But Joonas sent an email (`message:<9A015C69-0B52-407B-BA91-FDB35D527B6B@gmail.com>`) with a sample that clearly contains a **deadlock**.
+            ///     The deadlock happens because:
+            ///         - The thread running `displayLinkCallback()` acquires the private __CVDisplayLink lock first__, and then tries to `dispatch_sync` to our queue.
+            ///         - The thread running `Scroll.m > [_animator startWithParams: ...]` (And I think all other places interacting with the CVDisplayLink) acquires the __queue first__, and then acquires the private CVDisplayLink lock
+            ///             (implicitly by calling `CVDisplayLinkSetCurrentCGDisplay()` – I assume all interactions with the CVDisplayLink implicitly acquire the private lock)
+            ///         -> If one thread has lock A and the other thread has lock B, and they both wait on the other's lock – there's a deadlock.
+            ///     Ways to deal with the deadlock:
+            ///         1. Minimize the time that is spent inside displayLinkCallback before it dispatches to the queue.
+            ///             - This could minimize the bug but probably not entirely eliminate it.
+            ///             - Changes in timing may introduce new bugs
+            ///             -> TODO: To decide how/if to change the code – Look at how older MMF versions like 3.0.0 did things and when the `Scroll Stops Working Intermittently` bug started (we wrote about that in the MOS issue IIRC)
+            ///         2. Use `dispatch_async` instead of `dispatch_sync` inside the displayLinkCallback
+            ///             - Pro: Would solve the deadlock and I believe is close to how things would work with CADisplayLink – so I think performance isn't inherently bad – even if our workload doesn't execute on the special "high priority" displayLink thread. (Similarity to CADisplayLink is also interesting since we may want to transition to that eventually)
+            ///             - Contra: Changes the scheduling a lot and could cause or surface new bugs.
+            ///                 IIRC, during the MMF versions where we shipped the MFDisplayLinkWorkType stuff, there were strange bugs that I never understood (was it crashes?) – and I thought they might have been caused by these kinds of scheduling differences?
+            ///         3. Replace `dispatch_sync` with a custom recreation of `dispatch_sync` that can time out.
+            ///             - Pro: Should allow us to keep exactly the same scheduling, with a precise fix for the deadlock (The timeout)
+            ///             - Contra: Could degrade performance due to slightly more CPU work, and switching to another thread which may be 'lower priority'.
+            ///             - Contra: Frequent timeouts could lead to hangs and 'dropped scrolling frames'. (Still an improvement)
+            ///         4. Make the lock-acquisition order consistent:
+            ///             - Pro: Would completely eliminate the deadlock, and solve it in a 'theoretically correct' way.
+            ///             - Contra: Requires extracting the private lock from CVDisplayLink via reverse engineering (shouldn't be too bad – but we'd have to test that this works on all macOS versions we support, since this is CPP and we'd have to hardcode memory offsets I think.)
+            ///             - 2 Possible approaches:
+            ///                 4.1. Make it so the __queue lock is always acquired first__
+            ///                     Contra: Technically infeasible – would have to modify the CVDisplayLink code so that it acquires our queue lock before it acquires its private lock in preparation for calling `displayLinkCallback()`
+            ///                 4.2. Make it so the __CVDisplayLink lock is always acquired first__
+            ///                     Contra: Would require us to always lock the private lock before we dispatch to our queue. Not sure if this would cause new bugs. Not sure if it's ok to lock/unlock mutexes from different threads (which I think we'd have to do)
+            ///     TODO: [Aug 2025]
+            ///         - [ ] Look into shipping a hotfix / hot-improvement – 1. and 3. seem promising for a hotfix. 2. seems most promising for the long-term (with the CADisplayLink transition)
+        }
+        
+        
         /// Notes:
         /// - For workType eventSending, we execute the workload at the start of the next frame instead of right before the nextFrame. We hope that this will reduce stuttering in Safari and other apps.
         /// - From my understanding, timeInfo.thisFrame is in vsyncTime aka videoTime, and the dispatch_after call is in hostTime aka machTime. When the two time scales are out of sync, then that might lead to problems. I think you can sync them with rateScalar somehow, but not sure how that works.
