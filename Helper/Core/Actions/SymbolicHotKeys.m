@@ -96,7 +96,6 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
         TODO: (This is a dependency of searchVKCForStr) Delete this when copying over KeyboardSimulator.h from EventLoggerForBrad.
 
  */
-
     #define kMFKeyEquivalentNull            ((unichar)65535)
     #define kMFModifierFlagsNull            (0)                          /// We're using this with the types `CGSModifierFlags` and `CGEventFlags`
     #define kMFVK_Null                      ((CGKeyCode)65535)
@@ -105,19 +104,6 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
 
 /// Define 'outOfReach' vkc
     #define kMFVK_OutOfReach                ((CGKeyCode)400)             /// I don't think I've seen a vkc above 200 produced by my keyboard, but we use 400 just to be safely out of reach of a real kb
-
-/// Define MFKeyboardType stuff
-///     TODO: (This is a dependency of searchVKCForStr) Delete this when copying over MFKeyboardSimulationData.h from EventLoggerForBrad
-typedef enum : CGEventSourceKeyboardType {
-    kMFKeyboardTypeNull                                         = 0, /// The gestalt enum cases look like 0 is unused and can be used as NULL.
-    kMFKeyboardTypeGenericANSI                                  = gestaltThirdPartyANSIKbd, /// In the 'Keyboard Setup Assistant', macOS lets me choose between, ANSI (40) , ISO (41), and JIS (42) for my 3rd party keyboard.
-    kMFKeyboardTypeGenericISO                                   = gestaltThirdPartyISOKbd,
-    kMFKeyboardTypeGenericJIS                                   = gestaltThirdPartyJISKbd,
-    kMFKeyboardTypeM1MacBookAirANSI                             = 91, /// I see this value on my M1 MacBook Air with US Layout, not sure if it's also used for other keyboards.
-    kMFKeyboardTypeMagicKeyboardwithTouchIDISO                  = 83, /// I see this on "Magic Keyboard with Touch ID" with German QWERTZ layout (wihout numpad). System settings shows it has 'version' 1.4.8.
-} MFKeyboardType;
-extern MFKeyboardType SLSGetLastUsedKeyboardID(void); /// Not sure about sizeof(returnType). `LMGetKbdType()` is `UInt8`, but `CGEventSourceKeyboardType` is `uint32_t` - both seem to contain the same constants though.
-#define MFKeyboardTypeCurrent() ((MFKeyboardType)SLSGetLastUsedKeyboardID())
 
 + (void)post:(CGSSymbolicHotKey)shk {
 
@@ -586,6 +572,7 @@ TISInputSourceRef MFTISCopyInputSourceWithID(NSString *inputSourceID) {
 
 #import <AppKit/AppKit.h>
 
+API_AVAILABLE(macos(12.0))
 @interface TIKeyboardShortcut : NSObject
 
     /// Factory
@@ -600,7 +587,7 @@ TISInputSourceRef MFTISCopyInputSourceWithID(NSString *inputSourceID) {
     - (NSEventModifierFlags)    modifierFlags;
 @end
 
-@interface NSKeyboardShortcut : NSObject
+@interface NSKeyboardShortcut : NSObject /// [Aug 2025] Unused. Just for reference. Check if this works on older macOS before using it.
     + (NSKeyboardShortcut *) localizedShortcutWithKeyEquivalent: (NSString *)arg1 modifierMask: (NSEventModifierFlags)arg2 withAttributes: (NSDictionary *)arg3; /// Calls `[TIKeyboardShortcut localizedKeyboardShortcut:forKeyboardLayout:withAttributes:]`
 @end
 
@@ -622,12 +609,6 @@ MFDataClassImplement2(MFDataClassBase, MFVKCAndFlags,
 
 MFVKCAndFlags *_Nonnull MFEmulateNSMenuItemRemapping(CGKeyCode vkc, CGEventFlags modifierMask) {
 
-    /// What it does: [Aug 2025]
-    ///     - Takes a vkc+flags key combination
-    ///     - Converts vkc+flags -> keq+flags (Assuming ANSI keyboard with US/ABC layout.)
-    ///     - 'Localizes' the keq+flags key combination using the `NSMenuItem.allowsAutomaticKeyEquivalentLocalization` machinery.      (Uses the current system locale, keyboard layout, keyboard type as input)       (Implemented with private APIs)
-    ///     - Converts the localized keq+flags -> vkc+flags     (Using the current keyboardLayout and keyboardType)
-    ///     - Caches results for speed.
     ///
     /// Overview: [Aug 2025]
     ///     Apple applies automatic remapping to NSMenuItems' keyboardShortcuts.
@@ -636,6 +617,13 @@ MFVKCAndFlags *_Nonnull MFEmulateNSMenuItemRemapping(CGKeyCode vkc, CGEventFlags
     ///         - Our Apple Feedback report FB19033937
     ///         - The notes we wrote while implementing the advanced keyboard simulation in EventLoggerForBrad.
     ///                - (It was very advanced, and had solutions for many other complications of Apple's keyboard system, but it didn't have the MFEmulateNSMenuItemRemapping() feature – we built that on mac-mouse-fix > master for the 'Universal Back and Forward' feature.)
+    ///
+    /// What it does exactly: [Aug 2025]
+    ///     - Takes a vkc+flags key combination
+    ///     - Converts vkc+flags -> keq+flags (Assuming ANSI keyboard with US/ABC layout.)
+    ///     - 'Localizes' the keq+flags key combination using the `NSMenuItem.allowsAutomaticKeyEquivalentLocalization` machinery.      (Uses the current system locale, keyboard layout, keyboard type as input)       (Implemented with private APIs)     (Only on macOS 12.0+)
+    ///     - Converts the localized keq+flags -> vkc+flags     (Using the current keyboardLayout and keyboardType)
+    ///     - Caches results for speed.
     ///
     /// What we built this for specifically: [Aug 2025]
     ///     - We want to trigger system functions using keyboard shortcuts
@@ -736,8 +724,9 @@ MFVKCAndFlags *_Nonnull MFEmulateNSMenuItemRemapping(CGKeyCode vkc, CGEventFlags
     ///         - What does the `withLanguageID:` arg do? It's not passed into the lower-level `TIKeyboardShortcut` methods.
     ///         - [Aug 2025] Optimization idea: Skipping localization if `currentKBLayout` is ABC/US. But we're already caching.
     
-    TIKeyboardShortcut *out_keqShortcut;
-    {
+    NSString *out_keq;
+    NSEventModifierFlags out_modifierFlags;
+    if (@available(macOS 12.0, *) ) {
         NSDictionary *attrs = @{ /// Based on disassembly of `+[NSMenuItem updateKeyboardAwareShortcutsForMenu:ofCurrentSource:withLanguageID:]`    (Observed on macOS 15.5, 2018 Mac Mini, [Aug 2025])
             /// RTL
             ///     Originally: `@([NSApp userInterfaceLayoutDirection] == NSUserInterfaceLayoutDirectionRightToLeft && [item allowsAutomaticKeyEquivalentMirroring])`
@@ -748,13 +737,19 @@ MFVKCAndFlags *_Nonnull MFEmulateNSMenuItemRemapping(CGKeyCode vkc, CGEventFlags
             @"sel":           @"",                  /// Originally: `NSStringFromSelector(item.action)`
         };
         TIKeyboardShortcut *in_keqShortcut  = [TIKeyboardShortcut shortcutWithKeyEquivalent: in_keq modifierFlags: (NSEventModifierFlags)in_vkcShortcut.modifierMask];
-        
-        out_keqShortcut = [TIKeyboardShortcut localizedKeyboardShortcut: in_keqShortcut forKeyboardLayout: currentKBLayout_Name withAttributes: attrs];
+        TIKeyboardShortcut *out_keqShortcut = [TIKeyboardShortcut localizedKeyboardShortcut: in_keqShortcut forKeyboardLayout: currentKBLayout_Name withAttributes: attrs];
         if (!out_keqShortcut)                       fail(@"out_keqShortcut is nil");
         if (!out_keqShortcut.keyEquivalent.length)  fail(@"out_keqShortcut.keyEquivalent is empty");
+        out_keq           = out_keqShortcut.keyEquivalent;
+        out_modifierFlags = out_keqShortcut.modifierFlags;
         
-        /// Debug
-        DDLogDebug(@"MFEmulateNSMenuItemRemapping: localization state: %@", vardesc(currentKBLayout_Name, in_keqShortcut,out_keqShortcut, attrs));
+        DDLogDebug(@"MFEmulateNSMenuItemRemapping: localization state: %@", vardesc(currentKBLayout_Name, in_keqShortcut, out_keqShortcut, attrs));
+    }
+    else {
+        /// Turn the shortcut localization off pre-macOS 12.0 (Monterey)
+        ///     Doing this to prevent 3.0.6 linker crashes due to missing `TIKeyboardShortcut` symbol, but also, `.allowsAutomaticKeyEquivalentLocalization` was introduced in macOS 12.0, so the localization is probably not necessary.
+        out_keq           = in_keq;
+        out_modifierFlags = (NSEventModifierFlags)in_vkcShortcut.modifierMask;
     }
     
     /// Convert keq -> vkc
@@ -762,9 +757,9 @@ MFVKCAndFlags *_Nonnull MFEmulateNSMenuItemRemapping(CGKeyCode vkc, CGEventFlags
     MFVKCAndFlags *out_vkcShortcut;
     {
         const UCKeyboardLayout *currentKBLayout_Data = MFTISGetLayoutPointerFromInputSource(currentKBLayout_InputSource);
-        CGKeyCode out_vkc = searchVKCForStr(currentKBType_MF, currentKBLayout_Data, in_vkcShortcut.vkc, out_keqShortcut.keyEquivalent, kMFModifierFlagsNull); /// Should we search for shiftKeyEquivalents here? Currently, we only use this for localizing `[`and `]` for the 'Universal Back and Forward' feature and `kMFModifierFlagsNull` works fine [Aug 2025]
+        CGKeyCode out_vkc = searchVKCForStr(currentKBType_MF, currentKBLayout_Data, in_vkcShortcut.vkc, out_keq, kMFModifierFlagsNull); /// Should we search for shiftKeyEquivalents here? Currently, we only use this for localizing `[`and `]` for the 'Universal Back and Forward' feature – and `kMFModifierFlagsNull` works fine [Aug 2025]
          if (out_vkc == kMFVK_Null) fail(@"No vkc found for localized keq");
-         out_vkcShortcut = [[MFVKCAndFlags alloc] initWith_vkc: out_vkc modifierMask: (CGEventFlags)out_keqShortcut.modifierFlags];
+         out_vkcShortcut = [[MFVKCAndFlags alloc] initWith_vkc: out_vkc modifierMask: (CGEventFlags)out_modifierFlags];
     }
     
     /// Store cache

@@ -211,6 +211,8 @@ static void postSystemDefinedEvent(MFSystemDefinedEventType type, NSEventModifie
 
 static void postKeyboardShortcut(CGKeyCode keyCode, CGSModifierFlags modifierFlags) {
     
+    DDLogDebug(@"postKeyboardShortcut: Posting shortcut with %@", vardesc(@(keyCode), @(modifierFlags)));
+    
     CGEventTapLocation tapLoc = kCGSessionEventTap;
 
     /// Create key events
@@ -226,17 +228,8 @@ static void postKeyboardShortcut(CGKeyCode keyCode, CGSModifierFlags modifierFla
     ///         Observed on: macOS 15.5, 2018 Mac Mini, [Aug 2025]
     ///
     ///     ! Keep this when merging with __EventLoggerForBrad__.
-    {
-        
-        /// Definitions copied over from SymbolicHotKeys.m [Aug 2025]
-        typedef CGEventSourceKeyboardType MFKeyboardType;
-        extern MFKeyboardType SLSGetLastUsedKeyboardID(void); /// Not sure about sizeof(returnType). `LMGetKbdType()` is `UInt8`, but `CGEventSourceKeyboardType` is `uint32_t` - both seem to contain the same constants though.
-        #define MFKeyboardTypeCurrent() ((MFKeyboardType)SLSGetLastUsedKeyboardID())
-
-        /// Fixup
-        CGEventSetIntegerValueField(keyDown, kCGKeyboardEventKeyboardType, MFKeyboardTypeCurrent()); /// Keep in sync with `MFEmulateNSMenuItemRemapping()` to make 'Universal Back and Forward' feature work [Aug 2025]
-        CGEventSetIntegerValueField(keyUp,   kCGKeyboardEventKeyboardType, MFKeyboardTypeCurrent());
-    }
+    CGEventSetIntegerValueField(keyDown, kCGKeyboardEventKeyboardType, MFKeyboardTypeCurrent()); /// Keep in sync with `MFEmulateNSMenuItemRemapping()` to make 'Universal Back and Forward' feature work [Aug 2025]
+    CGEventSetIntegerValueField(keyUp,   kCGKeyboardEventKeyboardType, MFKeyboardTypeCurrent());
     
     /// Create modifier restore event
     ///  (Restoring original modifier state the way `postKeyboardEventsForSymbolicHotkey()` does leads to issues with triggering Spotlight)
