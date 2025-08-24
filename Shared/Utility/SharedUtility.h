@@ -26,6 +26,14 @@
 
 /// -------------------------
 
+/// `mferror` macro
+///     Shorthand for creating an NSError with a debug description (Uses `NSDebugDescriptionErrorKey`)
+///     Usage example:
+///         `mferror(NSCocoaErrorDomain, NSPropertyListReadCorruptError, @"Deserialized plist object from %@ is not a mutable dictionary. Is %@", url, [result class]);`
+
+#define mferror(domain_, code_, formatAndArgs_...) \
+    [NSError errorWithDomain: (domain_) code: (code_) userInfo: @{ NSDebugDescriptionErrorKey: stringf(@"" formatAndArgs_) }]
+
 /// `mfabort` macro
 ///     Like abort() but with the goal of writing a specific message into the crash report
 ///     (Writing the message into the crash-report doesn't work yet as of [Aug 2025])
