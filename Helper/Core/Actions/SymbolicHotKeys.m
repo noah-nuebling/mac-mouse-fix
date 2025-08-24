@@ -592,7 +592,7 @@ API_AVAILABLE(macos(12.0))
 @end
 
 @interface NSTextInputContext (MMFKEQStuff)
-    + (uint32_t) _currentKeyboardType;
+    + (uint32_t) _currentKeyboardType API_AVAILABLE(macos(12.0));
 @end
 @interface NSLocale (MMFKEQStuff)
     + (id) preferredLocale;
@@ -679,7 +679,9 @@ MFVKCAndFlags *_Nonnull MFEmulateNSMenuItemRemapping(CGKeyCode vkc, CGEventFlags
     NSString *currentKBLayout_Name = (__bridge id)TISGetInputSourceProperty(currentKBLayout_InputSource, kTISPropertyKeyLayoutName);
     NSString *currentLanguageCode = [[NSLocale preferredLocale] languageCode];  /// [Aug 2025] Using private `NSLocale.preferredLocale`. `NSLocale.currentLocale` only returns locales that the current app supports. (I think)
     MFKeyboardType currentKBType_MF = MFKeyboardTypeCurrent();
-    uint32_t currentKBType_TIC = [NSTextInputContext _currentKeyboardType];     /// [Aug 2025] Disassembly: Asserts mainThread, calls `KBGetLayoutType(LMGetKbdLast())` and then maps the resulting ANSI, JIS, ISO constants to 0,1,2 (and -1 on unknown). Sidenote: `LMGetKbdLast()` returns `MFKeyboardType`
+    uint32_t currentKBType_TIC;
+    if (@available(macOS 12.0, *))  currentKBType_TIC = [NSTextInputContext _currentKeyboardType];     /// [Aug 2025] Disassembly: Asserts mainThread, calls `KBGetLayoutType(LMGetKbdLast())` and then maps the resulting ANSI, JIS, ISO constants to 0,1,2 (and -1 on unknown). Sidenote: `LMGetKbdLast()` returns `MFKeyboardType`
+    else                            currentKBType_TIC = UINT32_MAX;
     {
         if (!currentKBLayout_Name)   fail("currentKBLayout_Name is nil");       /// May not be null for usage in cacheKey array
         if (!currentLanguageCode)    fail("currentLanguageCode is nil");
