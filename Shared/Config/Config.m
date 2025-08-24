@@ -8,6 +8,7 @@
 //
 
 /// Notes:
+/// - [Aug 2025] MMF 3 doesn't support app-specific settings, so all the 'overrides' stuff doesn't apply currently.
 /// - We're using our custom coolKeyPath API all over this class, instead of Apple's key-value-coding API (aka KVC) (See valueForKeyPath:). The main reason we do this, is so that, when we set a value at a keypPath which doesn't exist, yet using the function `setConfig(NSString *keyPath, NSObject *value)` then the keyPath is created automatically, instead of just failing. This has the benefit, of being more robust and we don't need to make sure, that all keyPaths already exist in the defaultConfig. In all the other places where we use the coolKeyPath API in this class, we only do this to stay consistent (at the time of writing). I'm not sure, whether our coolKeyPath API is slower that the KVC API. We transitioned over to coolKeyPath API without testing speed.
 /// - TODO: Test if the coolKeyPath API is slower than the KVC API and optimize
 /// - TODO: Implement callback when frontmost application changes - change settings accordingly
@@ -131,8 +132,11 @@ void commitConfig(void) {
 #pragma mark - React
 
 + (void)loadFileAndUpdateStates {
-    /// Note: This method used to be called `handleConfigFileChange`
-    [self.shared loadConfigFromFileAndRepair];
+    /// Notes:
+    ///     This method used to be called `handleConfigFileChange`
+    ///     TODO: [Aug 2025] Consider:
+    ///         Isn't it an error to call `[loadConfigFromFile]` without calling `[updateDerivedStates]` afterwards? - should we make loadConfigFromFile private?
+    [self.shared loadConfigFromFile];
     [self updateDerivedStates];
 }
 
@@ -199,7 +203,7 @@ void commitConfig(void) {
     return NO;
 }
 
-/// Applies AppOverrides from app with `bundleIdentifier` to `_config` and writes the result into `_configWithAppOverridesApplied`.
+/// Applies AppOverrides from app with `bundleIdentifier` to `self->_config` and writes the result into `_configWithAppOverridesApplied`.
 - (void)loadOverridesForApp:(NSString *)bundleID {
     
     /// Validate
@@ -211,7 +215,7 @@ void commitConfig(void) {
     _bundleIDOfAppWhichCausesAppOverride = bundleID;
     
     /// Get overrides for app
-    NSDictionary *overrides = [_config objectForKey:kMFConfigKeyAppOverrides];
+    NSDictionary *overrides = [self->_config objectForKey:kMFConfigKeyAppOverrides];
     NSDictionary *overridesForThisApp;
     for (NSString *b in overrides.allKeys) {
         if ([bundleID isEqualToString:b]) {
@@ -219,9 +223,9 @@ void commitConfig(void) {
         }
     }
     if (overridesForThisApp) {
-        _configWithAppOverridesApplied = [[SharedUtility dictionaryWithOverridesAppliedFrom:overridesForThisApp to:_config] mutableCopy];
+        _configWithAppOverridesApplied = [[SharedUtility dictionaryWithOverridesAppliedFrom:overridesForThisApp to:self->_config] mutableCopy];
     } else {
-        _configWithAppOverridesApplied = _config;
+        _configWithAppOverridesApplied = self->_config;
     }
 #endif
 }
@@ -320,7 +324,7 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
 - (void)writeConfigToFile {
     
     /**
-     Writes the `_config` dicitonary to the plist file at `_configURL`
+     Writes the `self->_config` dictionary to the plist file at `_configURL`
      You probably want to use `commitConfig()` instead of this
      */
     
@@ -346,12 +350,12 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
         /// Sidenote: It would be super nice here to be able to dump custom info into the assertion crash-report!
         ///     We should allow that when we overhaul the error reporting system.
         ///
-        bool isValid = CFPropertyListIsValid((__bridge void *)self.config, kCFPropertyListXMLFormat_v1_0);
+        bool isValid = CFPropertyListIsValid((__bridge void *)self->_config, kCFPropertyListXMLFormat_v1_0);
         assert(isValid);
     }
     
     NSError *serializeErr;
-    NSData *configData = [NSPropertyListSerialization dataWithPropertyList:self.config format:NSPropertyListXMLFormat_v1_0 options:0 error:&serializeErr];
+    NSData *configData = [NSPropertyListSerialization dataWithPropertyList:self->_config format:NSPropertyListXMLFormat_v1_0 options:0 error:&serializeErr];
     if (serializeErr) {
         DDLogInfo(@"ERROR serializing configDictFromFile: %@", serializeErr);
     }
@@ -363,223 +367,255 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
     DDLogInfo(@"Wrote config to file.");
 }
 
-- (void)loadConfigFromFileAndRepair {
+NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __autoreleasing _Nullable * _Nullable errPtr) {
     
-    /// Load data from plist file at `_configURL` into `_config` class variable
-    /// This only really needs to be called when `Config` is loaded, but I use it in other places as well, to make the program behave better, when I manually edit the config file.
+    /// Local helper function for reading our `config.plist` file. [Aug 2025]
+    ///
+    /// Alternative implementations:
+    ///     - Private `+[NSDictionary newWithContentsOf:immutable:error:]` does the exact same thing I think.
+    ///         - Public wrapper `[NSMutableDictionary dictionaryWithContentsOfURL:error:]` is declared to return an *immutable* NSDictionary so doesn't quite fit our needs.
+    /// Performance:
+    ///     - Don't think there's a performance benefit to using `NSPropertyListImmutable`. Evidence: Under macOS 26.0 Tahoe Beta, the system always seems to give us `__NSArrayM` `__NSDictionaryM` (mutable variants) even if we use the immutable `[NSDictionary dictionaryWithContentsOfURL:]` API.
+
+    #define fail(format, args...) ({                            \
+        DDLogDebug(@"_readDictPlist: " format, ## args);        \
+        return nil;                                             \
+    })
+
+    NSError *__autoreleasing localErr;
+    if (!errPtr) errPtr = &localErr;
+    *errPtr = nil;
     
-#if IS_MAIN_APP
-    [self repairConfigWithReason:kMFConfigRepairReasonLoad info:nil];
-#endif
+    NSData *data = [NSData dataWithContentsOfURL: url
+                                         options: 0 /// Not totally sure about the options. See https://stackoverflow.com/a/40125866/10601702
+                                           error: errPtr];
+    if (!data || *errPtr) fail("Reading url %@ failed with error %@", url, *errPtr);
     
-    NSData *configData = [NSData dataWithContentsOfURL:Locator.configURL];
-    NSError *readErr;
-    NSMutableDictionary *configDict = [NSPropertyListSerialization propertyListWithData:configData options:NSPropertyListMutableContainersAndLeaves format:nil error:&readErr];
-    if (readErr) {
-        DDLogInfo(@"Error Reading config File: %@", readErr);
-        // TODO: handle this error
+    NSMutableDictionary *result = [NSPropertyListSerialization propertyListWithData: data
+                                                                            options: (mutable ? NSPropertyListMutableContainersAndLeaves : NSPropertyListImmutable)
+                                                                             format: NULL
+                                                                              error: errPtr];
+    if (!*errPtr) {
+        if (!mutable && !isclass(result, NSDictionary))        *errPtr = mferror(NSCocoaErrorDomain, NSPropertyListReadCorruptError, @"Deserialized plist object from %@ is not a dictionary. Is %@",         url, [result class]); /// Error params mostly copied from private `+[NSDictionary newWithContentsOf:immutable:error:]`
+        if (mutable  && !isclass(result, NSMutableDictionary)) *errPtr = mferror(NSCocoaErrorDomain, NSPropertyListReadCorruptError, @"Deserialized plist object from %@ is not a mutable dictionary. Is %@", url, [result class]);
     }
+    if (!result || *errPtr) fail("Deserializing data at %@ failed with error %@. Result: %@", url, *errPtr, result);
     
-    DDLogDebug(@"Loaded config from file: %@", configDict);
+    return result;
+    #undef fail
+}
+
+- (void) loadConfigFromFile {
     
-    _config = configDict;
+    /// [Aug 2025] Load data from plist file at `Locator.configURL` into `self->_config` class variable
+    ///     This only really needs to be called when `Config` is loaded, but I use it in other places as well, to make the program behave better, when I manually edit the config file.
+    ///         Update: [Aug 2025] Outdated comment – I think this was referring to the `Handle_FSEventStreamCallback` stuff which is disabled currently.
     
-    /// Send reactive signal -> Disabled because callers of this function do that now
-//    [ReactiveConfig.shared reactWithNewConfig:configDict];
+    #if IS_MAIN_APP
+        [self _loadAndRepair];
+    #else
+        NSError *err = nil;
+        NSMutableDictionary *config = (id)_readDictPlist(Locator.configURL, true, &err);
+        if (!config || err) mfabort(@"Failed to read config file with error: %@. config: %@", err, config); /// [Aug 2025] Should we retry here before aborting?
+        self->_config = config;
+    #endif
     
-    /**
-     Here's the old `fillConfigFromFile()` loading code from Helper. (This is the loading code for mainApp)
-     
-     ```
-     NSFileManager *fileManager = [NSFileManager defaultManager];
-     if ( [fileManager fileExistsAtPath: _configFilePath] == TRUE ) {
-         
-         NSData *configFromFileData = [NSData dataWithContentsOfFile:_configFilePath];
-         NSError *err;
-         NSMutableDictionary *configFromFile = [NSPropertyListSerialization propertyListWithData:configFromFileData options:NSPropertyListMutableContainersAndLeaves format:nil error: &err];
-         
-         DDLogInfo(@"Loading new config from file: %@", configFromFile);
-         
-         _config = configFromFile;
-         
-         if ( ( ([[configFromFile allKeys] count] == 0) || (configFromFile == nil) || (err != nil) ) == FALSE ) {
-             // TODO: Do sth
-         }
-     }
-     ```
-     */
+    DDLogDebug(@"Loaded config from file: %@", self->_config);
+    
+    if ((0)) /// -> Disabled because callers of this function now send the reactive signal
+        [ReactiveConfig.shared reactWithNewConfig: self->_config];
 }
 
 #pragma mark - Repair
 
-- (void)repairConfigWithReason:(MFConfigRepairReason)reason info:(id _Nullable)info {
+- (void) _loadAndRepair {
     
-    /// Checks config for errors / incompatibilty and repairs it if necessary.
-    /// TODO: Check whether all default (as opposed to override) values exist in config file. If they don't, then everything breaks. Maybe do this by comparing with default_config. Edit: Not sure this is feasible, also the comparing with default_config breaks if we want to have keys that are optional.
-    /// TODO: Consider porting this to Helper
+    /// Internal helper for `-[loadConfigFromFile]`
+
+    /// Old todos:
+    ///     - Check whether all default (as opposed to override) values exist in config file. If they don't, then everything breaks. Maybe do this by comparing with default_config. Edit: Not sure this is feasible, also the comparing with default_config breaks if we want to have keys that are optional.
+    ///         [Aug 2025] 'Overrides' are currently not used since we don't have app-specific settings in MMF 3.
+    /// Other considerations:
+    ///     - Should we use NSFileCoordinator?
+    ///         [Aug 2025] I'm not totally sure what it does. But currently, only the mainApp (not the helper) manipulates the config – and it should only do that from the mainThread – If that's true, then I don't think we need additional coordination.
+    ///             Update: [Aug 2025] That is NOT true. The helper does manipulate the config in a few places. E.g. for offline validation in `GetLicenseState.swift` or for the `buttonKillSwitch` / `scrollKillSwitch`.
     
-    /// [Aug 2025]
-    ///     This apparently fails sometimes and deletes user's settings. (See https://github.com/noah-nuebling/mac-mouse-fix/issues/1510)
-    ///         Improvement ideas:
-    ///         - Keep a copy of the old config file before replacing it. -> Better debugging.
-    ///         - Could any of the `goto replace;`s conditions be triggered by random file-system errors? Can `[NSMutableDictionary dictionaryWithContentsOfURL:]` and `[NSFileManager.defaultManager fileExistsAtPath:]` randomly fail? If so – perhaps use error-returning APIs and retry in a loop before just replacing config.plist.
-    ///             >>> Yes they can fail! See `dictionaryWithContentsOfURL:error:`.
-    ///             TODO: Make the file-system-reads more robust.
-    
-     assert(runningMainApp());
-    
-    if (reason == kMFConfigRepairReasonLoad) {
+    /// Macros
+    {
+        /// `fail` macro – Crash if something goes wrong
+        ///     - [Aug 2025] We don't wanna accidentally reset the users config due to random file-read error – I think that caused the `Config Reset After Update` / `Config Reset Intermittently` bugs (https://github.com/noah-nuebling/mac-mouse-fix/issues/1510)
+        ///         Bug observations:
+        ///             - I got like 3 reports about random config-resets recently after 3.0.6, but never before. That's weird. Made me think that new macOS version triggered it. (Those reports caused us to rewrite this code in commit 5858a47a3)
+        ///             ... But while debugging the SLSGetLastUsedKeyboardID crashes on Catalina and Big Sur I think I encountered it a a few times. But then I couldn't reproduce it anymore. I think I set the click actions to `Command-,`, `Back`, and `Forward`. And then I made it crash and stuff and the settings got reset a few times. I decided to debug `SLSGetLastUsedKeyboardID` first, but then afterwards (I think i restarted) I couldn't reproduce it anymore.
+        ///                 Not sure what's going on. Also my brain is mush so my memory may be wrong.
+        ///                 Update: Tried to reproduce the bug on Catalina after the 5858a47a3 rewrite – didn't happen anymore.
+        ///             - [Aug 2025] After I wrote the new code, I installed 3.0.0, configured 'Back' and 'Forward' and then launched this build. And it deleted the config! No idea why. Can't reproduce it anymore. Checked the logs from fail() and log() macros and they didn't say anything about replacing IIRC.
+        ///                 Only explanation I can think of is that:
+        ///                     - 3.0.0 helper somehow replaced the config
+        ///                     - I was confused and remember wrong.
+        ///                 Thoughts on why this is so weird: ... Only Config.m even knows where the defaultConfig is afaik. And only loadConfigFromFile uses that info. So I really don't know how the app could've reset the config without logging something about that.
+        ///     - Other ideas for what to when things fail: (Instead of crashing or replacing)
+        ///         - Keep a copy of the old config file before replacing it. -> Better debugging.
+        ///         - Retry instead of crashing (Could build retry directly into `_readDictPlist()`)
+        #define fail(format, args...) \
+            mfabort(@"_loadAndRepair: " format, ## args);
         
-        /// Get config dicts
-        /// - We assign to `self.config` here, since repairConfig is called before actually loading `self.config`. Not sure if this is a shitty structure. We're loading the config from file 2x.
-        self.config = [NSMutableDictionary dictionaryWithContentsOfURL:Locator.configURL];
-        NSMutableDictionary *defaultConfig = [NSMutableDictionary dictionaryWithContentsOfURL:defaultConfigURL()];
-        
-        /// Get version objects
-        /// Notes:
-        /// - Need to get these up here for some reason so that goto statements work
-        NSNumber *currentVersionNS = (NSNumber *)[self.config objectForCoolKeyPath:@"Constants.configVersion"];
-        NSNumber *targetVersionNS = (NSNumber *)[defaultConfig objectForCoolKeyPath:@"Constants.configVersion"];
-        
-        /// Create config file if none exists
-        if (![NSFileManager.defaultManager fileExistsAtPath:Locator.configURL.path]) {
-            DDLogInfo(@"repairConfig: Config file doesn't exist. Creating a new one.");
-            [NSFileManager.defaultManager createDirectoryAtURL:Locator.configURL.URLByDeletingLastPathComponent withIntermediateDirectories:YES attributes:nil error:nil];
+        #define log(level, format, args...) \
+            DDLog ## level (@"_loadAndRepair: " format, ## args)
+    }
+    
+    /// Asserts
+    assert(runningMainApp());       /// [Aug 2025] I think we don't run this on the helper because we think it's a good idea that only the mainApp mutates the config (?) ... Nope the helper manipulates the config in several places – See `commitConfig()` invocations.
+    assert(NSThread.isMainThread);  /// [Aug 2025] All the config stuff is not thread safe and should only ever run on one thread I think.
+    
+    /// Declare
+    NSError *err = nil;
+    
+    /// Load default config
+    NSMutableDictionary *defaultConfig = (id)_readDictPlist(defaultConfigURL(), true, &err); /// Read as mutable, since we may assign `self->_config = defaultConfig`
+    if (!defaultConfig || err) fail(@"Loading defaultConfig failed with error: %@", err);
+    
+    /// Load `self->_config`
+    self->_config = (id)_readDictPlist(Locator.configURL, true, &err);
+    if (!self->_config || err) {
+        if (err.domain == NSCocoaErrorDomain && err.code == NSFileReadNoSuchFileError) { /// Create config file if none exists
+            log(Info, @"Config file doesn't exist. Creating a new one.");
+            err = nil; /// NSFileManager doesn't reset the error
+            bool success = [NSFileManager.defaultManager createDirectoryAtURL: Locator.configURL.URLByDeletingLastPathComponent withIntermediateDirectories: YES attributes: nil error: &err]; /// [Aug 2025] Not sure what to choose for the `attributes:`.
+            if (!success || err) fail(@"Creating directory for config failed with error %@", err);
             goto replace;
         }
-        
-        /// Unpack version objects and guard nil
-        
-        if (targetVersionNS == nil) {
-            DDLogError(@"repairConfig: Couldn't get default configVersion. MMF bundle must be corrupt/wrong.");
-            abort();
-        }
-        if (currentVersionNS == nil) {
-            DDLogWarn(@"repairConfig: Couldn't get current configVersion. Something is weird."); /// [Jun 2025] Is this really 'weird'? Don't we hit this when no config exists?
-            goto replace;
-        }
-        int currentVersion = currentVersionNS.intValue;
-        int targetVersion = targetVersionNS.intValue;
-        
-        /// It's all good if the config version matches
-        if (currentVersion == targetVersion) {
-            DDLogInfo(@"repairConfig: configVersion matches (%d) We can keep using the existing config...", currentVersion);
-            goto dontReplace;
-        }
-        /// If config is a downgrade, we don't bother repairing
-        if (currentVersion > targetVersion) {
-            DDLogInfo(@"repairConfig: configVersion decreased from %d to %d. Not repairing downgrades...", currentVersion, targetVersion);
-            goto replace;
-        }
-        
-        /// Attempt to repair config version upgrades
-        ///  Note: see README.md for context on what changed between versions
-        
-        DDLogInfo(@"repairConfig: configVersion increased from %d to %d. Trying to repair...", currentVersion, targetVersion);
-        
-        while (true) {
-            
-            if (currentVersion == 21) {
-                
-                /// 21 -> 22
-                ///     (21 is used in MMF 3.0.0 I think)
-                ///     (22 is used in MMF 3.0.2 I think)
-                
-                DDLogInfo(@"repairConfig: Upgrading configVersion from 21 to 22...");
-                
-                /// Move lastUseDate from config to SecureStorage.
-                NSObject *d = config(@"License.trial.lastUseDate");
-                [SecureStorage set:@"License.trial.lastUseDate" value:d];
-                removeFromConfig(@"License.trial.lastUseDate");
-                
-                currentVersion = 22;
-                
-            } else if (currentVersion == 22) {
-                
-                /// 22 -> 23
-                ///     (23 is used in MMF 3.0.2 and 3.0.3)
-                
-                DDLogInfo(@"repairConfig: Upgrading configVersion from 22 to 23...");
-                
-                /// Replace default config for 3 buttons
-                ///     NOTE: Maybe we should hardcode the replacement config for 3 buttons? Because the `defaultConfig` might change on future versions.
-                NSObject *d = [defaultConfig objectForCoolKeyPath:@"Constants.defaultRemaps.threeButtons"];
-                setConfig(@"Constants.defaultRemaps.threeButtons", d);
-                
-                currentVersion = 23;
-                
-            } else if (currentVersion == 23) {
-            
-                /// 23 -> 24
-                ///     (24 will be used in MMF 3.0.4 and later) [Feb 2025]
-                
-                DDLogInfo(@"repairConfig: Upgrading configVersion from 23 to 24...");
-                
-                /// Delete legacy MFLicenseState cache values
-                ///     MFLicense state cache moved to a dict at `License.licenseStateCache`, (I've just added that dict in `default_config.plist`) but cache values aren't important enough to copy over to the new location, so we just delete the old values.
-                ///     (Writing this 18 Oct 2024, working on `hyperwork` branch. 3.0.3 is the latest release.)
-                removeFromConfig(@"License.isLicensedCache");
-                removeFromConfig(@"License.licenseReasonCache");
-                
-                currentVersion = 24;
-                
-            } else {
-                
-                DDLogInfo(@"repairConfig: No upgrades from configVersion %d. Target is %d.", currentVersion, targetVersion);
+        else
+            fail(@"Loading config failed with error: %@", err);
+    }
+    
+    {
+        /// Extract versions
+        int currentVersion;
+        int targetVersion;
+        {
+            NSNumber *currentVersionNS = (NSNumber *)[self->_config objectForCoolKeyPath:@"Constants.configVersion"];
+            NSNumber *targetVersionNS  = (NSNumber *)[defaultConfig objectForCoolKeyPath:@"Constants.configVersion"];
+            if (!targetVersionNS)
+                fail("Couldn't get default configVersion. MMF bundle must be corrupt/wrong.");
+            if (!currentVersionNS) {
+                /// [Aug 2025] Not sure if we really wanna replace here. We really don't like false-positive replaces. But at this point we already successfully read the file so the content is probably truly corrupt. Perhaps we should replace here but keep a backup-copy? Crashing could also make sense.
+                log(Error, "Couldn't get current configVersion. Something is weird.");
                 goto replace;
             }
-            
-            if (currentVersion == targetVersion) {
-                
-                DDLogInfo(@"repairConfig: Config was repaired! It was upgraded to configVersion %d.", currentVersion);
-                
-                setConfig(@"Constants.configVersion", @(targetVersion));
-                commitConfig();
-                
-                goto dontReplace;
-            }
+            currentVersion = currentVersionNS.intValue;
+            targetVersion  = targetVersionNS.intValue;
         }
         
-    replace:
-        
-        /// Simply replace config with default config
-        
-        DDLogInfo(@"repairConfig: Replacing config with default config...");
-        self.config = defaultConfig;
-        commitConfig();
-        
-    dontReplace:
-        return;
-        
-    } else if (reason == kMFConfigRepairReasonIncompleteAppOverride) {
-        
-        /// Repair incomplete App override
-        ///     Do this by simply copying over the values from the default config
-        ///     TODO: Check if this works
-        
-        assert(false); /// Did some refactors and this is untested and unused at the moment.
-        
-        DDLogInfo(@"repairConfig: Repairing incomplete appOverrides...");
-        
-        NSAssert(info && [info isKindOfClass:[NSDictionary class]], @"Can't repair incomplete app override: invalid argument provided");
-        
-        NSString *bundleID = info[@"bundleID"]; /// Bundle ID of the app with the faulty override
-        NSString *bundleIDEscaped = [bundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
-        NSArray *keyPathsToDefaultValues = info[@"relevantKeyPaths"]; /// KeyPaths to the values of which at least one is missing
-        for (NSString *defaultKP in keyPathsToDefaultValues) {
-            NSString *overrideKP = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", bundleIDEscaped, defaultKP];
-            if ([_config objectForCoolKeyPath:overrideKP] == nil) {
-                /// If an override value doesn't exist at overrideKP, put default value at overrideKP.
-                [_config setObject:[_config objectForCoolKeyPath:defaultKP] forCoolKeyPath:overrideKP];
+        /// Check versions
+        if      (currentVersion == targetVersion) { /// If the config version matches – It's all good
+            log(Info, "configVersion matches (%d) We can keep using the existing config...", currentVersion);
+            goto dontReplace;
+        }
+        else if (currentVersion > targetVersion) {  /// If config is a downgrade – we don't bother repairing
+            log(Info, "configVersion decreased from %d to %d. Not repairing downgrades...", currentVersion, targetVersion);
+            goto replace;
+        }
+        else {                                      /// If config is an upgrade – Attempt to repair                 (See `ConfigReadme.md` for context on what changed between versions)
+            log(Info, "configVersion increased from %d to %d. Trying to repair...", currentVersion, targetVersion);
+            while (1) {
+                
+                if (currentVersion == 21) {
+                    
+                    /// 21 -> 22
+                    ///     (21 is used in MMF 3.0.0 I think)
+                    ///     (22 is used in MMF 3.0.2 I think)
+                    
+                    log(Info, "Upgrading configVersion from 21 to 22...");
+                    
+                    /// Move lastUseDate from config to SecureStorage.
+                    NSObject *d = config(@"License.trial.lastUseDate");
+                    [SecureStorage set:@"License.trial.lastUseDate" value:d];
+                    removeFromConfig(@"License.trial.lastUseDate");
+                    
+                    currentVersion = 22;
+                    
+                } else if (currentVersion == 22) {
+                    
+                    /// 22 -> 23
+                    ///     (23 is used in MMF 3.0.2 and 3.0.3)
+                    
+                    log(Info, "Upgrading configVersion from 22 to 23...");
+                    
+                    /// Replace default config for 3 buttons
+                    ///     NOTE: Maybe we should hardcode the replacement config for 3 buttons? Because the `defaultConfig` might change on future versions.
+                    NSObject *d = [defaultConfig objectForCoolKeyPath:@"Constants.defaultRemaps.threeButtons"];
+                    setConfig(@"Constants.defaultRemaps.threeButtons", d);
+                    
+                    currentVersion = 23;
+                    
+                } else if (currentVersion == 23) {
+                
+                    /// 23 -> 24
+                    ///     (24 will be used in MMF 3.0.4 and later) [Feb 2025]
+                    
+                    log(Info, "Upgrading configVersion from 23 to 24...");
+                    
+                    /// Delete legacy MFLicenseState cache values
+                    ///     MFLicense state cache moved to a dict at `License.licenseStateCache`, (I've just added that dict in `default_config.plist`) but cache values aren't important enough to copy over to the new location, so we just delete the old values.
+                    ///     (Writing this 18 Oct 2024, working on `hyperwork` branch. 3.0.3 is the latest release.)
+                    removeFromConfig(@"License.isLicensedCache");
+                    removeFromConfig(@"License.licenseReasonCache");
+                    
+                    currentVersion = 24;
+                    
+                } else {
+                    
+                    log(Info, "No upgrades from configVersion %d. Target is %d.", currentVersion, targetVersion);
+                    goto replace;
+                }
+                
+                if (currentVersion == targetVersion) {
+                    
+                    log(Info, "Config was repaired! It was upgraded to configVersion %d.", currentVersion);
+                    
+                    setConfig(@"Constants.configVersion", @(targetVersion));
+                    commitConfig();
+                    
+                    goto dontReplace;
+                }
             }
         }
-        commitConfig();
-        
-    } else {
-        
-        DDLogError(@"repairConfig: Unknown config repair reason. MMF is corrupt.");
-        exit(1);
     }
+    
+    replace:
+    {
+        log(Info, "Replacing config with default config...");
+        self->_config = defaultConfig;
+        commitConfig();
+    }
+    dontReplace: return;
+    
+    #undef fail
+    #undef log
+}
+
+- (void) repairIncompleteAppOverrideForBundleID: (NSString *)bundleID                            /// Bundle ID of the app with the faulty override
+                               relevantKeyPaths: (NSArray <NSString *> *)keyPathsToDefaultValues /// KeyPaths to the values of which at least one is missing
+{
+        
+    /// Repair incomplete App override
+    ///     Do this by simply copying over the values from the default config
+    ///     TODO: Check if this works
+    
+    assert(false); /// Did some refactors and this is untested and unused at the moment.
+    
+    DDLogInfo(@"Repairing incomplete appOverrides...");
+    
+    NSString *bundleIDEscaped = [bundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
+    for (NSString *defaultKP in keyPathsToDefaultValues) {
+        NSString *overrideKP = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", bundleIDEscaped, defaultKP];
+        if ([self->_config objectForCoolKeyPath:overrideKP] == nil) {
+            /// If an override value doesn't exist at overrideKP, put default value at overrideKP.
+            [self->_config setObject:[self->_config objectForCoolKeyPath:defaultKP] forCoolKeyPath:overrideKP];
+        }
+    }
+    commitConfig();
 }
 
 //- (void)replaceCurrentConfigWithDefaultConfig {
@@ -597,13 +633,13 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
 //    [MFMessagePort sendMessage:@"terminate" withPayload:nil waitForReply:NO];
 //    
 //    /// Update self (mainApp)
-////    [self loadConfigFromFileAndRepair];
+////    [self loadConfigFromFile];
 //    [Config loadFileAndUpdateStates];
 //
 //}
 
 - (void)cleanConfig {
-    NSMutableDictionary *appOverrides = _config[kMFConfigKeyAppOverrides];
+    NSMutableDictionary *appOverrides = self->_config[kMFConfigKeyAppOverrides];
     
     /// Note: We don't delete overrides for uninstalled apps because this might delete preinstalled overrides
     

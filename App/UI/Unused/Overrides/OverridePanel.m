@@ -73,7 +73,7 @@ NSDictionary *_columnIdentifierToKeyPath;
     };
     
     /// Load table
-    [Config.shared loadConfigFromFileAndRepair];
+    [Config.shared loadConfigFromFile];
     [self loadTableViewDataModelFromConfig];
     [_tableView reloadData];
 
@@ -435,10 +435,7 @@ NSMutableArray *_tableViewDataModel;
         }
         if (someNil) { /// Only some of the values controlled by the table don't exist in this AppOverride
             /// Fill out missing values with default ones
-            [Config.shared repairConfigWithReason:kMFConfigRepairReasonIncompleteAppOverride info:@{
-                    @"bundleID": bundleID,
-                    @"relevantKeyPaths": _columnIdentifierToKeyPath.allValues,
-            }];
+            [Config.shared repairIncompleteAppOverrideForBundleID: bundleID relevantKeyPaths: _columnIdentifierToKeyPath.allValues];
             [self loadTableViewDataModelFromConfig]; /// Restart the whole function. someNil will not occur next time because we filled out all the AppOverrides with some values missing.
             return;
         }

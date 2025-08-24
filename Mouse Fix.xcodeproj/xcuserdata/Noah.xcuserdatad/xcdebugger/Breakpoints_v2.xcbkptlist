@@ -14,8 +14,8 @@
             filePath = "Helper/Core/Actions/SymbolicHotKeys.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "234"
-            endingLineNumber = "234"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
             landmarkName = "SymbolicHotKeys"
             landmarkType = "3">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "Helper/Core/Actions/SymbolicHotKeys.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
+            startingLineNumber = "259"
+            endingLineNumber = "259"
             landmarkName = "searchVKCForStr(keyboardType, keyboardLayout, bestGuessResult, cr_unicodeString, cr_flags)"
             landmarkType = "9">
          </BreakpointContent>
@@ -743,8 +743,8 @@
             filePath = "Helper/Core/Actions/Actions.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
             landmarkName = "+executeActionArray:phase:"
             landmarkType = "7">
          </BreakpointContent>
@@ -759,8 +759,8 @@
             filePath = "Helper/Core/Actions/Actions.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
             landmarkName = "postKeyboardShortcut(keyCode, modifierFlags)"
             landmarkType = "9">
          </BreakpointContent>
@@ -775,8 +775,8 @@
             filePath = "Helper/Core/Actions/SymbolicHotKeys.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "691"
-            endingLineNumber = "691"
+            startingLineNumber = "679"
+            endingLineNumber = "679"
             landmarkName = "MFEmulateNSMenuItemRemapping(vkc, modifierMask)"
             landmarkType = "9">
          </BreakpointContent>
@@ -791,8 +791,8 @@
             filePath = "Helper/Core/Actions/SymbolicHotKeys.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "690"
-            endingLineNumber = "690"
+            startingLineNumber = "678"
+            endingLineNumber = "678"
             landmarkName = "MFEmulateNSMenuItemRemapping(vkc, modifierMask)"
             landmarkType = "9">
          </BreakpointContent>
@@ -807,8 +807,8 @@
             filePath = "Helper/Core/Actions/SymbolicHotKeys.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "772"
-            endingLineNumber = "772"
+            startingLineNumber = "767"
+            endingLineNumber = "767"
             landmarkName = "MFEmulateNSMenuItemRemapping(vkc, modifierMask)"
             landmarkType = "9">
          </BreakpointContent>
@@ -836,8 +836,8 @@
             filePath = "Helper/Core/Actions/Actions.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
+            startingLineNumber = "219"
+            endingLineNumber = "219"
             landmarkName = "postKeyboardShortcut(keyCode, modifierFlags)"
             landmarkType = "9">
          </BreakpointContent>
@@ -852,8 +852,8 @@
             filePath = "Helper/Core/Actions/Actions.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "240"
-            endingLineNumber = "240"
+            startingLineNumber = "238"
+            endingLineNumber = "238"
             landmarkName = "postKeyboardShortcut(keyCode, modifierFlags)"
             landmarkType = "9">
          </BreakpointContent>
@@ -868,10 +868,42 @@
             filePath = "Helper/Core/Actions/Actions.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "213"
-            endingLineNumber = "213"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
             landmarkName = "postKeyboardShortcut(keyCode, modifierFlags)"
             landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C504A6FA-A9D8-470D-8FD5-B3929DD979B8"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Config/Config.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "433"
+            endingLineNumber = "433"
+            landmarkName = "-_loadAndRepair"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AC91DA91-0378-4285-87B9-400FA685813A"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Shared/Config/Config.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "468"
+            endingLineNumber = "468"
+            landmarkName = "-_loadAndRepair"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
