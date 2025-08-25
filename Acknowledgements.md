@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2025**
 
+- 🇮🇱&nbsp;Arad&nbsp;Moraly - "A great yet simple solution for a real problem. You deserve to be paid for the service you provide, thank you!"
 - 🇩🇪&nbsp;Mr0Xf - "I was struggling with the Logitech Options+ app for years. Some time ago, it started working even worse — every time after unlocking my M1 MacBook Air, I had to wait around 10 seconds because this crapware needed to load itself, and my MX Master 3 would scroll in the opposite direction. It was a disgusting experience. In particular, I was unable to disable natural scrolling, because I frequently use a Magic Trackpad as an addition to my mouse. This app solved all my pain. Thanks a lot!"
 - 🇦🇹&nbsp;Michael
 - 🇺🇸&nbsp;David&nbsp;Stoline - "Thanks for making great software!"
