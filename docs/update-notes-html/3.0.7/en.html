@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.7</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p>Mac Mouse Fix <strong>3.0.7</strong> addresses several important
+
+bugs.</p>
+
+<h3 id="bug-fixes">Bug Fixes</h3>
+
+<ul>
+
+<li>App works again on <strong>older macOS versions</strong> (macOS
+
+10.15 Catalina and macOS 11 Big Sur)
+
+<ul>
+
+<li>Mac Mouse Fix 3.0.6 could not be enabled under those macOS versions
+
+because the improved ‘Back’ and ‘Forward’ feature introduced in Mac
+
+Mouse Fix 3.0.6 attempted to use macOS system APIs that weren’t
+
+available.</li>
+
+</ul></li>
+
+<li>Fixed issues with <strong>‘Back’ and ‘Forward’</strong> feature
+
+<ul>
+
+<li>The improved ‘Back’ and ‘Forward’ feature introduced in Mac Mouse
+
+Fix 3.0.6 will now always use the ‘main thread’ to ask macOS about which
+
+key-presses to simulate to go back and forward in the app you’re
+
+using.<br />
+
+This can prevent crashes and unreliable behavior in some
+
+situations.</li>
+
+</ul></li>
+
+<li>Attempted to fix bug where <strong>settings were randomly
+
+reset</strong> (See these <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20label%3A%22Config%20Reset%20Intermittently%22">GitHub
+
+Issues</a>)
+
+<ul>
+
+<li>I rewrote the code that loads the config file for Mac Mouse Fix to
+
+be more robust. When rare macOS file-system errors occurred, the old
+
+code could sometimes mistakenly think that the config file was corrupt
+
+and reset it to default.</li>
+
+</ul></li>
+
+<li>Reduced chances of a bug where <strong>scrolling stops
+
+working</strong>
+
+<ul>
+
+<li>This bug cannot be solved fully without deeper changes, which would
+
+likely cause other problems.<br />
+
+However, for the time being, I reduced the time-window where a
+
+‘deadlock’ can happen in the scrolling system, which should at least
+
+lower the chances of encountering this bug. This also makes the
+
+scrolling slightly more efficient.</li>
+
+<li>This bug has similar symptoms – but I think a different underlying
+
+reason – to the ‘Scroll Stops Working Intermittently’ bug which was
+
+addressed in the last release 3.0.6.</li>
+
+<li>(Thanks to Joonas for the feedback!)</li>
+
+</ul></li>
+
+</ul>
+
+<p>Thanks everyone for reporting the bugs!</p>
+
+<hr />
+
+<p>Also check out the previous release <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.6">3.0.6</a>.</p>
+
+</body>
+
+</html>

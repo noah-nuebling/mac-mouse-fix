@@ -6,6 +6,39 @@
     <description>Stable releases of Mac Mouse Fix</description>
     <language>en</language>
     <item>
+    <title>3.0.7 available!</title>
+    <pubDate>2025-08-25T09:09:18Z</pubDate>
+    <sparkle:minimumSystemVersion>10.15.0</sparkle:minimumSystemVersion>
+    <sparkle:releaseNotesLink xml:lang="en">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.7/en.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="de">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.7/de.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="vi">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.7/vi.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hans">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.7/zh-Hans.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-Hant">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.7/zh-Hant.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="zh-HK">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.7/zh-HK.html
+    </sparkle:releaseNotesLink>
+    <sparkle:releaseNotesLink xml:lang="ko">
+        https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/docs/update-notes-html/3.0.7/ko.html
+    </sparkle:releaseNotesLink>
+    <enclosure
+        url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.0.7/MacMouseFixApp.zip"
+        sparkle:version="24072"
+        sparkle:shortVersionString="3.0.7"
+        sparkle:edSignature="l3QdORp/wudEWPPEMkKE+NbA/MtWwexFdv+P4j2ctjl1Sx5POM57mxBZecd/M6/d40iYV4jpxFJA05626rM/CA==" length="7659508"
+        type="application/octet-stream"
+    />
+</item>
+<item>
     <title>3.0.6 available!</title>
     <pubDate>2025-08-11T19:16:03Z</pubDate>
     <sparkle:minimumSystemVersion>10.15.0</sparkle:minimumSystemVersion>

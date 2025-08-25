@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.7</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Von KI übersetzt</strong></p>
+
+<p>Diese Versionshinweise wurden von der Claude KI übersetzt. Sie können
+
+Fehler enthalten.<br />
+
+Die englische Originalversion findest du <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.7">hier</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.7</strong> behebt mehrere wichtige
+
+Fehler.</p>
+
+<h3 id="fehlerbehebungen">Fehlerbehebungen</h3>
+
+<ul>
+
+<li>App funktioniert wieder unter <strong>älteren
+
+macOS-Versionen</strong> (macOS 10.15 Catalina und macOS 11 Big Sur)
+
+<ul>
+
+<li>Mac Mouse Fix 3.0.6 konnte unter diesen macOS-Versionen nicht
+
+aktiviert werden, da die verbesserte ‘Zurück’ und ‘Vorwärts’ Funktion in
+
+Mac Mouse Fix 3.0.6 versuchte, macOS System-APIs zu verwenden, die nicht
+
+verfügbar waren.</li>
+
+</ul></li>
+
+<li>Probleme mit der <strong>‘Zurück’ und ‘Vorwärts’</strong> Funktion
+
+behoben
+
+<ul>
+
+<li>Die in Mac Mouse Fix 3.0.6 eingeführte verbesserte ‘Zurück’ und
+
+‘Vorwärts’ Funktion wird nun immer den ‘Hauptthread’ verwenden, um macOS
+
+nach den zu simulierenden Tastatureingaben für Vor- und Zurücknavigation
+
+in der verwendeten App zu fragen.<br />
+
+Dies kann Abstürze und unzuverlässiges Verhalten in manchen Situationen
+
+verhindern.</li>
+
+</ul></li>
+
+<li>Versuch, einen Fehler zu beheben, bei dem <strong>Einstellungen
+
+zufällig zurückgesetzt wurden</strong> (Siehe diese <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20label%3A%22Config%20Reset%20Intermittently%22">GitHub
+
+Issues</a>)
+
+<ul>
+
+<li>Ich habe den Code zum Laden der Konfigurationsdatei für Mac Mouse
+
+Fix robuster umgeschrieben. Bei seltenen macOS-Dateisystem-Fehlern
+
+konnte der alte Code manchmal fälschlicherweise annehmen, dass die
+
+Konfigurationsdatei beschädigt sei und setzte sie auf die
+
+Standardeinstellungen zurück.</li>
+
+</ul></li>
+
+<li>Reduzierte Wahrscheinlichkeit eines Fehlers, bei dem <strong>das
+
+Scrollen nicht mehr funktioniert</strong>
+
+<ul>
+
+<li>Dieser Fehler kann ohne tiefgreifendere Änderungen, die
+
+wahrscheinlich andere Probleme verursachen würden, nicht vollständig
+
+gelöst werden.<br />
+
+Allerdings habe ich vorerst das Zeitfenster reduziert, in dem ein
+
+‘Deadlock’ im Scrollsystem auftreten kann, was zumindest die
+
+Wahrscheinlichkeit verringern sollte, auf diesen Fehler zu stoßen. Dies
+
+macht das Scrollen auch etwas effizienter.</li>
+
+<li>Dieser Fehler hat ähnliche Symptome – aber ich denke einen anderen
+
+zugrundeliegenden Grund – wie der ‘Scroll funktioniert zeitweise nicht’
+
+Fehler, der in der letzten Version 3.0.6 behoben wurde.</li>
+
+<li>(Danke an Joonas für das Feedback!)</li>
+
+</ul></li>
+
+</ul>
+
+<p>Danke an alle fürs Melden der Fehler!</p>
+
+<hr />
+
+<p>Schau dir auch die vorherige Version <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.6&amp;locale=de">3.0.6</a>
+
+an.</p>
+
+</body>
+
+</html>

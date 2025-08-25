@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.7</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI가 번역함</strong></p>
+
+<p>이 릴리스 노트는 Claude AI가 번역했습니다. 오류가 있을 수
+
+있습니다.<br />
+
+영어 원문을 보시려면 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.7">여기를
+
+클릭하세요</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.7</strong>에서 여러 중요한 버그가
+
+수정되었습니다.</p>
+
+<h3 id="버그-수정">버그 수정</h3>
+
+<ul>
+
+<li><strong>이전 macOS 버전</strong>(macOS 10.15 Catalina 및 macOS 11
+
+Big Sur)에서 앱이 다시 작동됩니다
+
+<ul>
+
+<li>Mac Mouse Fix 3.0.6에서 도입된 개선된 ‘뒤로’ 및 ‘앞으로’ 기능이
+
+사용할 수 없는 macOS 시스템 API를 사용하려 했기 때문에 해당 macOS
+
+버전에서는 활성화할 수 없었습니다.</li>
+
+</ul></li>
+
+<li><strong>‘뒤로’ 및 ‘앞으로’</strong> 기능 관련 문제 수정
+
+<ul>
+
+<li>Mac Mouse Fix 3.0.6에서 도입된 개선된 ‘뒤로’ 및 ‘앞으로’ 기능이 이제
+
+항상 ’메인 스레드’를 사용하여 사용 중인 앱에서 뒤로 가기와 앞으로 가기를
+
+위해 어떤 키 입력을 시뮬레이션할지 macOS에 문의합니다.<br />
+
+이를 통해 일부 상황에서 발생하는 충돌과 불안정한 동작을 방지할 수
+
+있습니다.</li>
+
+</ul></li>
+
+<li><strong>설정이 무작위로 초기화되는</strong> 버그 수정 시도 (<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20label%3A%22Config%20Reset%20Intermittently%22">GitHub
+
+이슈</a> 참조)
+
+<ul>
+
+<li>Mac Mouse Fix의 설정 파일을 불러오는 코드를 더 견고하게 다시
+
+작성했습니다. 드문 macOS 파일 시스템 오류가 발생했을 때, 이전 코드는
+
+가끔 설정 파일이 손상되었다고 잘못 판단하여 기본값으로
+
+초기화했습니다.</li>
+
+</ul></li>
+
+<li><strong>스크롤이 작동하지 않는</strong> 버그 발생 가능성 감소
+
+<ul>
+
+<li>이 버그는 다른 문제를 일으킬 수 있는 더 깊은 수준의 변경 없이는
+
+완전히 해결할 수 없습니다.<br />
+
+하지만 당분간은 스크롤 시스템에서 ’교착 상태’가 발생할 수 있는 시간 창을
+
+줄여, 최소한 이 버그를 만날 가능성을 낮췄습니다. 이는 또한 스크롤을 약간
+
+더 효율적으로 만듭니다.</li>
+
+<li>이 버그는 이전 릴리스 3.0.6에서 해결된 ‘스크롤이 간헐적으로 작동하지
+
+않음’ 버그와 비슷한 증상을 보이지만, 근본적인 원인은 다른 것
+
+같습니다.</li>
+
+<li>(Joonas의 피드백에 감사드립니다!)</li>
+
+</ul></li>
+
+</ul>
+
+<p>버그를 제보해 주신 모든 분들께 감사드립니다!</p>
+
+<hr />
+
+<p>이전 릴리스 <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.6&amp;locale=ko">3.0.6</a>도
+
+확인해 보세요.</p>
+
+</body>
+
+</html>

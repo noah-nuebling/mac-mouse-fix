@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-Hant" xml:lang="zh-Hant">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.7</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ 由 AI 翻譯</strong></p>
+
+<p>此發行說明由 Claude AI 翻譯。可能包含錯誤。<br />
+
+查看英文原文，請<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.7">點擊此處</a>。</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.7</strong> 修復了幾個重要的錯誤。</p>
+
+<h3 id="錯誤修復">錯誤修復</h3>
+
+<ul>
+
+<li>應用程式在<strong>舊版 macOS</strong> （macOS 10.15 Catalina 和
+
+macOS 11 Big Sur）上重新運作
+
+<ul>
+
+<li>Mac Mouse Fix 3.0.6 在這些 macOS 版本上無法啟用，因為 3.0.6
+
+版本中引入的改進版「上一頁」和「下一頁」功能嘗試使用了不可用的 macOS
+
+系統 API。</li>
+
+</ul></li>
+
+<li>修復了<strong>「上一頁」和「下一頁」</strong>功能的問題
+
+<ul>
+
+<li>Mac Mouse Fix 3.0.6
+
+中引入的改進版「上一頁」和「下一頁」功能現在將始終使用「主執行緒」來詢問
+
+macOS 應該模擬哪些按鍵以在當前使用的應用程式中前後導航。<br />
+
+這可以防止在某些情況下出現崩潰和不穩定的行為。</li>
+
+</ul></li>
+
+<li>嘗試修復<strong>設定隨機重置</strong>的錯誤（參見這些 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20label%3A%22Config%20Reset%20Intermittently%22">GitHub
+
+Issues</a>）
+
+<ul>
+
+<li>我重寫了 Mac Mouse Fix
+
+載入設定檔的程式碼，使其更加穩健。當發生罕見的 macOS
+
+檔案系統錯誤時，舊程式碼有時會錯誤地認為設定檔已損壞並將其重置為預設值。</li>
+
+</ul></li>
+
+<li>降低了<strong>滾動停止運作</strong>錯誤的發生機率
+
+<ul>
+
+<li>這個錯誤無法在不進行深層更改的情況下完全解決，而深層更改可能會導致其他問題。<br />
+
+不過，目前我縮短了滾動系統中可能發生「死鎖」的時間窗口，這至少應該能降低遇到這個錯誤的機率。這也使滾動效率略有提升。</li>
+
+<li>這個錯誤的症狀與上一版本 3.0.6
+
+中解決的「滾動間歇性停止運作」錯誤相似，但我認為其根本原因不同。</li>
+
+<li>（感謝 Joonas 的回饋！）</li>
+
+</ul></li>
+
+</ul>
+
+<p>感謝大家回報錯誤！</p>
+
+<hr />
+
+<p>另外也請查看先前的版本 <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.6&amp;locale=zh-Hant">3.0.6</a>。</p>
+
+</body>
+
+</html>
