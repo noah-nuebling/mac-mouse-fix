@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2025**
 
+- 🇺🇸&nbsp;Daaren&nbsp;Durga
 - 🇺🇸&nbsp;Patrick&nbsp;D&nbsp;Moore
 - 🇬🇧&nbsp;Roxanne&nbsp;Marshall - "Absolutely BRILLIANT, having such a better experience on Mac now, I actually feel productive. Thanks so much :D"
 - 🇬🇧&nbsp;Tituss - "This is so smooth! Thank you so much! Please keep up the good work"
