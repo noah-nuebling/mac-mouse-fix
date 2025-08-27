@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2025**
 
+- 🇺🇸&nbsp;Chris&nbsp;Downs
 - 🇺🇸&nbsp;Daaren&nbsp;Durga
 - 🇺🇸&nbsp;Patrick&nbsp;D&nbsp;Moore
 - 🇬🇧&nbsp;Roxanne&nbsp;Marshall - "Absolutely BRILLIANT, having such a better experience on Mac now, I actually feel productive. Thanks so much :D"
