@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2025**
 
+- 🇺🇸&nbsp;Ajax&nbsp;Shung
 - 🇺🇸&nbsp;Chris&nbsp;Downs
 - 🇺🇸&nbsp;Daaren&nbsp;Durga
 - 🇺🇸&nbsp;Patrick&nbsp;D&nbsp;Moore
