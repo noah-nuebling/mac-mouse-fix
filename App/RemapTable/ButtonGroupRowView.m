@@ -52,32 +52,36 @@
     /// - Before Ventura, we just made the tableView have a "Horizontal Grid" in IB and that drew a line under the groupRow.
     ///     But in Ventura Beta, that doesn't seem to work anymore. There's no more line under the groupRow.
     ///  - So now we're drawing the bottom border manually!
-    ///  - Edit: Under 10.13 and 10.14 and MMF 2.2.2 the groupRow borders didn't display properly. We fixed that by removing the `[super drawRect:dirtyRect]` call and drawing the bottom border for those versions, just like we are for Ventura.
-    ///     - Tested this under. 10.13, 10.14, 12, and 13 -> Works fine on all these versions
+    ///     - Edit: Under 10.13 and 10.14 and MMF 2.2.2 the groupRow borders didn't display properly. We fixed that by removing the `[super drawRect:dirtyRect]` call and drawing the bottom border for those versions, just like we are for Ventura.
+    ///         - Tested this under. 10.13, 10.14, 12, and 13 -> Works fine on all these versions
+    ///     - Edit: [Aug 2025] [Tahoe Beta 8] This caused borders under the groupRows to be too thick. Simply disabling the code fixes it.
     ///  - TODO?: Test if it also works on Catalina and Big Sur
-
-    /// Get drawing rect
-    ///     Make it one px too wide and then clip top and sides to just end up drawing a line.
-    NSRect borderRect = NSInsetRect(dirtyRect, -1, 0);
     
-    /// Clip for border drawing
-    clippingRect = dirtyRect;
-    clippingRect = NSInsetRect(dirtyRect, 0, 0); /// Clip side borders
-    clippingRect.size.height -= 1; /// Clip top border
-    clippingRect.origin.y += 1;
-    NSRectClip(clippingRect);
-    
-    /// Get border color
-    NSColor *gridColor;
-    if (@available(macOS 10.14, *)) {
-        gridColor = NSColor.separatorColor;
-    } else {
-        gridColor = AppDelegate.instance.remapsTable.gridColor; /// Should be same as NSColor.gridColor
+    if (@available(macOS 26.0, *)) {}
+    else {
+        /// Get drawing rect
+        ///     Make it one px too wide and then clip top and sides to just end up drawing a line.
+        NSRect borderRect = NSInsetRect(dirtyRect, -1, 0);
+        
+        /// Clip for border drawing
+        clippingRect = dirtyRect;
+        clippingRect = NSInsetRect(dirtyRect, 0, 0); /// Clip side borders
+        clippingRect.size.height -= 1; /// Clip top border
+        clippingRect.origin.y += 1;
+        NSRectClip(clippingRect);
+        
+        /// Get border color
+        NSColor *gridColor;
+        if (@available(macOS 10.14, *)) {
+            gridColor = NSColor.separatorColor;
+        } else {
+            gridColor = AppDelegate.instance.remapsTable.gridColor; /// Should be same as NSColor.gridColor
+        }
+        NSBezierPath *borderPath = [NSBezierPath bezierPathWithRect:borderRect];
+        borderPath.lineWidth = 2;
+        [gridColor setStroke];
+        [borderPath stroke];
     }
-    NSBezierPath *borderPath = [NSBezierPath bezierPathWithRect:borderRect];
-    borderPath.lineWidth = 2;
-    [gridColor setStroke];
-    [borderPath stroke];
 }
 
 
