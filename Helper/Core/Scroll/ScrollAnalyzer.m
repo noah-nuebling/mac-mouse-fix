@@ -7,6 +7,17 @@
 // --------------------------------------------------------------------------
 //
 
+///
+/// - [Aug 2025] Improvement ideas:
+///     - Don't trigger fastScroll for slow-and-long scrolls.
+///         - I think that's the scenario where V-Coba describes triggering it accidentally here: https://github.com/noah-nuebling/mac-mouse-fix/issues/1512
+///         - `consecutiveScrollSwipeMinTickSpeed` already tries to address this.
+///             - Improvment ideas:
+///                 - Tune it up
+///                 - Measure the scrollwheel speed *during* swipes instead of overall? I'd say slow movement during a long swipe indicates the user wants deliberate slow-and-steady movement.
+///     - Disable fastScroll entirely
+///         - I think it's useful but I haven't tested how scrolling feels without it since it was introduced in one of the first MMF versions I think.
+
 #import "ScrollAnalyzer.h"
 #import <Cocoa/Cocoa.h>
 #import "Scroll.h"
@@ -26,7 +37,7 @@
         
         /// Setup smoothing algorithm for `timeBetweenTicks`
         
-        _tickTimeSmoother = [[RollingAverage alloc] initWithCapacity:3]; /// Capacity 1 turns off smoothing
+        _tickTimeSmoother = [[RollingAverage alloc] initWithCapacity: 3]; /// Capacity 1 turns off smoothing
         /// ^ No smoothing feels the best.
         ///     - Without smoothing, there will somemtimes randomly be extremely small `timeSinceLastTick` values. I was worried that these would overdrive the acceleration curve, producing extremely high `pxToScrollForThisTick` values at random. But since we've capped the acceleration curve to a maximum `pxToScrollForThisTick` this isn't a noticable issue anymore.
         ///     - No smoothing is way more responsive than RollingAverage

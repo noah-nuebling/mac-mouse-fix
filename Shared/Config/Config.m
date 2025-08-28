@@ -14,6 +14,14 @@
 /// - TODO: Implement callback when frontmost application changes - change settings accordingly
 ///     ^ Need this when application changes but mouse doesn't move (e.g. Command-Tab). Without this the app specific settings for the new app aren't applied
 ///     Maybe use NSWorkspaceDidActivateApplicationNotification?
+/// iCloud sync:
+///      [Aug 2025] `NSUbiquitousKeyValueStore` seems promising
+///         This article says it can be used on non-MAS apps, despite what the docs claim: https://blog.scottjlittle.net/2023/05/23/icloud-keyvalue-store.html
+///         Questions:
+///             - How to resolve conflicts?
+///             - What if 2 devices use different config versions?
+///             - How to sync with local config?
+///             - Will the 1 MB limit always be enough? (If it uses binary plist encoding, it's probably fine.)
 
 #import "Config.h"
 #import "AppDelegate.h"
