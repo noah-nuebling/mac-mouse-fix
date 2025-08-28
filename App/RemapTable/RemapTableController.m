@@ -236,16 +236,6 @@
     
     NSScrollView * scrollView = self.scrollView;
     
-    /// Get corner radius
-    ///     The cornerRadius of the Action Table should be equal to cornerRadius of surrounding NSBox
-    ///     Ideally we would access the cornerradius of the NSBox directly, but I don't know how
-    
-    CGFloat cr = 5.0;
-    
-    if (@available(macOS 11.0, *)) { } else {
-        cr = 4.0;
-    }
-    
     /// Shrink Action Table pre-Mojave
     ///     Otherwise it spills out of the surrounding NSBox. Not sure why
     
@@ -253,11 +243,30 @@
         scrollView.frame = NSInsetRect(scrollView.frame, 2, 2);
     }
     
+    /// Shrink Action Table on Tahoe
+    if (@available(macOS 26.0, *)) {
+        scrollView.frame = NSInsetRect(scrollView.frame, 1, 1);
+    }
+    
     scrollView.borderType = NSNoBorder;
     scrollView.wantsLayer = YES;
     scrollView.layer.masksToBounds = YES;
     scrollView.layer.borderWidth = 1.0;
-    scrollView.layer.cornerRadius = cr;
+    
+    /// Set corner radius
+    ///     The cornerRadius of the Action Table should be equal to cornerRadius of surrounding NSBox
+    ///     Ideally we would access the cornerradius of the NSBox directly, but I don't know how
+    if (@available(macOS 26.0, *)) {
+        scrollView.layer.cornerCurve = kCACornerCurveContinuous; /// [Aug 2025] [Tahoe Beta 8] NSBoxPrimary is now a 'squircle' (Looks exactly like a SwiftUI Groupbox)
+        scrollView.layer.cornerRadius = 13.0;                    /// [Aug 2025] Not sure if 12 or 13
+    }
+    else if (@available(macOS 11.0, *)) {
+        scrollView.layer.cornerRadius = 5.0;
+    }
+    else {
+        scrollView.layer.cornerRadius = 4.0;
+    }
+    
     
     scrollView.automaticallyAdjustsContentInsets = NO;
     scrollView.contentInsets = NSEdgeInsetsMake(1, 1, 1, 1); /// Insets so the content doesn't overlap with the border
