@@ -47,7 +47,7 @@ AuthorizeAccessibilityView *_accViewController;
 
 - (void)viewDidLoad {
     if (@available(macOS 26.0, *))
-        self.view.prefersCompactControlSizeMetrics = YES;
+        self.view.prefersCompactControlSizeMetrics = YES; /// [Aug 2025] This screen only contains links, not controls, so I think it makes no difference.
 }
 
 ///

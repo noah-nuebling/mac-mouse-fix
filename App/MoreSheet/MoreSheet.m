@@ -103,7 +103,7 @@ static MoreSheet *_instance;
     [super windowDidLoad];
     [self updateUI];
     if (@available(macOS 26.0, *))
-        self.window.contentView.prefersCompactControlSizeMetrics = YES;
+        self.window.contentView.prefersCompactControlSizeMetrics = YES; /// [Aug 2025] You can set this NO or YES – both look wrong size next to the 'Buy me a milkshake' button.
 }
 
 - (void)updateUI {

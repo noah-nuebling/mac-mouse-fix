@@ -152,7 +152,7 @@ static NSDictionary *sideButtonActions;
     
     /// Tahoe compacting
     if (@available(macOS 26.0, *)) { /// We usually like calling this in windowDidLoad or viewDidLoad, but not sure how to do this here.
-        self.window.contentView.prefersCompactControlSizeMetrics = YES;
+        self.window.contentView.prefersCompactControlSizeMetrics = YES; /// [Aut 28 2025] [Tahoe Beta 8] Without this, everything looks a bit squished / too big / wrong
     }
     
     /// Do weird tweaks for Ventura

@@ -25,9 +25,8 @@
 
 - (void)awakeFromNib {
         
-    if ((0)) /// This breaks the capture notifications. But is also unnecessary.
-        if (@available(macOS 26.0, *))
-            self.contentView.prefersCompactControlSizeMetrics = YES;
+    if (@available(macOS 26.0, *))
+        self.contentView.prefersCompactControlSizeMetrics = YES; /// [Aug 2025] [Tahoe Beta 8] Setting to YES doesn't seem to make a differences. On an older beta, I noted that it 'breaks' the capture notifications.
     
     // Trying to dismiss the notification window on click, but this doesn't work
     

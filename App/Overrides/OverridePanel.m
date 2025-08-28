@@ -115,7 +115,7 @@ NSDictionary *_columnIdentifierToKeyPath;
 //    [col setWidth:col.maxWidth];
     
     if (@available(macOS 26.0, *))
-        self.window.contentView.prefersCompactControlSizeMetrics = YES;
+        self.window.contentView.prefersCompactControlSizeMetrics = YES; /// [Aug 28 2025] [Tahoe Beta 8) Without this, the OK button clips and the -/+ button looks squished.
 }
 
 - (void)setConfigFileToUI {

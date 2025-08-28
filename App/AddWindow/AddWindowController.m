@@ -44,7 +44,7 @@ static BOOL _pointerIsInsideAddField;
     [self.window.contentView addTrackingArea:addTrackingArea];
     // Tahoe compacting
     if (@available(macOS 26.0, *)) {
-        self.window.contentView.prefersCompactControlSizeMetrics = YES;
+        self.window.contentView.prefersCompactControlSizeMetrics = YES; /// [Aug 2025] Big 'Cancel' button looks weird.
     }
 }
 
