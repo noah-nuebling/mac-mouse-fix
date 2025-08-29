@@ -914,6 +914,20 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     deleteButton.action = @selector(inRowRemoveButtonAction:);
     deleteButton.target = self.controller;
     
+    /**
+        [Aug 2025] Under macOS Tahoe, the deleteButton appears visually wider than it is specified. It's click-target doesn't match the oversized visuals
+            - (All this goes away if you use `UIDesignRequiresCompatibility`, which we plan to ship MMF 3 with for now.)
+            - This can be fixed by replacing the NSButton with an NSSegmentedControl with 1 segment.
+    
+            Symbol weight on the NSSegmentedControl can't be changed in IB, we could do it here like this in code: (Copied from `Repro-Buttons-Too-Wide` project)
+            ```
+                NSImageSymbolConfiguration *symbolConfig = [NSImageSymbolConfiguration configurationWithPointSize: 11 weight: NSFontWeightBold scale: NSImageSymbolScaleMedium];
+                NSImage *newImage = [[_segmentedControl imageForSegment: 0] imageWithSymbolConfiguration: symbolConfig];
+                [_segmentedControl setImage: newImage forSegment: 0];
+            ```
+            Also see:
+                - `notes repo > macOS 26 Tahoe - MMF Issues.md`
+    */
     /// Override image on older macOS
     ///  Explanation: Try to fix weird margins / dimensions under older macOS versions. So far nothing works.
     ///  Note: Also see where we override plusIconView.image in ButtonTabController
