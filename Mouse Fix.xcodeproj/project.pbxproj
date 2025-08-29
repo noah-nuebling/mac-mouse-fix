@@ -24,6 +24,7 @@
 		4F1667EB2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F1667EA2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist */; };
 		4F1667EF2C6A6EA0009E4924 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F1667EE2C6A6EA0009E4924 /* MainMenu.xib */; };
 		4F1708BE2E51D60400945CF3 /* MFSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFSemaphore.m */; };
+		4F1713532E6201FE00FFE14A /* storyboard-notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F1713522E6201FE00FFE14A /* storyboard-notes.md */; };
 		4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17D2E0292A635200EB07CA /* SwitchMaster.swift */; };
 		4F18464D2C533B5900D5E835 /* BidirectionalMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0C00412C53273200C5D843 /* BidirectionalMap.m */; };
 		4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AFE962670EBA900ECA424 /* DragCurve.swift */; };
@@ -488,6 +489,7 @@
 		4F1667E82C6A679F009E4924 /* Readme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Readme.md; sourceTree = "<group>"; };
 		4F1667EA2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XCStringsDummyApp-Info.plist"; sourceTree = "<group>"; };
 		4F1667EE2C6A6EA0009E4924 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		4F1713522E6201FE00FFE14A /* storyboard-notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "storyboard-notes.md"; sourceTree = "<group>"; };
 		4F17D2E0292A635200EB07CA /* SwitchMaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchMaster.swift; sourceTree = "<group>"; };
 		4F18466A2C53AD6D00D5E835 /* Automatic Localization Screenshots.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Automatic Localization Screenshots.md"; sourceTree = "<group>"; };
 		4F18A85727BF6E0200A5703B /* IOHIDEvent-Reconstructed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOHIDEvent-Reconstructed.h"; sourceTree = "<group>"; };
@@ -6716,6 +6718,7 @@
 				4F909CFB28A0C3D2009349A2 /* ViewController.m */,
 				4F909CFC28A0C3D2009349A2 /* Main.storyboard */,
 				4F909CFA28A0C3D2009349A2 /* TabViewController.swift */,
+				4F1713522E6201FE00FFE14A /* storyboard-notes.md */,
 				4F909CFF28A0C3D2009349A2 /* TabViewControllerDisabling.swift */,
 				4F909CF928A0C3D2009349A2 /* TabItemControllerProtocol.swift */,
 				4F909CFE28A0C3D2009349A2 /* ResizingTabWindow.swift */,
@@ -8053,6 +8056,7 @@
 				4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */,
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
 				4F90CF012C8B89CD00834A90 /* InformationDensity.md in Resources */,
+				4F1713532E6201FE00FFE14A /* storyboard-notes.md in Resources */,
 				4F909D2F28A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib in Resources */,
 				4FD148D128AA428000FE688C /* ButtonOptionsViewController.xib in Resources */,
 			);
