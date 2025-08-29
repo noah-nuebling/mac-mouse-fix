@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2025**
 
+- 🇺🇸&nbsp;Jan&nbsp;Isley
 - 🇨🇦&nbsp;Brody - "railway.com"
 - 🇺🇸&nbsp;Ajax&nbsp;Shung
 - 🇺🇸&nbsp;Chris&nbsp;Downs
