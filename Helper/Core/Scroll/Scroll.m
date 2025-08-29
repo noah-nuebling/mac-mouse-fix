@@ -488,6 +488,11 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         /// Notes:
         /// - We implemented this here without much consideration to play around with it. I haven't really thought about the control flow and stuff - maybe it's not super clean to just return here? Maybe we should set pxToScrollForThisTick to zero? Idk. But I've been using it for a while and it works well.
         /// - We used to have a threshold for the currentAnimationSpeed of 200 to actually cancel the animator, but it seems to feel nicer to just set the threshold to 0. At this point it might be simpler or more efficient to not use the `currentAnimationSpeed` here or use something else instead. Buttt the performance impact reallyyy shouldn't be significant and it works fine so it's whatever.
+        /// - Improvement idea: [Aug 2025]
+        ///     - Swallow the first 2 or 3 ticks of the scrollSwipe instead of just the 1st one.
+        ///         - Benefit:                  This would make it physically easier to avoid accidentally scrolling in the opposite direction
+        ///         - Implementation:     Should probably implement this in ScrollAnalyzer.m instead of doing a hack here
+        ///         - Credit for idea:       This email by 'A day of Software Engineer': (message:<510CF7AC-5BE0-4CED-BF9A-A3A3327EE2A5@gmail.com>)
         
         double currentAnimationSpeed = magnitudeOfVector(_animator.getLastAnimationSpeed);
         if (_lastScrollAnalysisResult.scrollDirectionDidChange && currentAnimationSpeed > 0) {
