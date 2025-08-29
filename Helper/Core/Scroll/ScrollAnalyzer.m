@@ -7,6 +7,9 @@
 // --------------------------------------------------------------------------
 //
 
+/// [Aug 2025] Terminology: Instead of **scrollSwipe** we could use:
+///     - In code:                        scrollBurst                                                                               (But I guess scrollSwipe is also fine for code,  since I know what it means.)
+///     - In user-facing text:      'turns/rolls/flicks/strokes/movements of the scroll wheel'       (Or we can avoid referring to the concept directly and say something like 'keep scrolling in the same direction quickly for a while and scrolling will become very fast.')
 ///
 /// - [Aug 2025] Improvement ideas:
 ///     - Don't trigger fastScroll for slow-and-long scrolls.
