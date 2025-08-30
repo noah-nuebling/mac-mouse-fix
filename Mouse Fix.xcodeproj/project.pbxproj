@@ -61,6 +61,7 @@
 		4F44794328B55F6300AD1979 /* CAAnimation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0C28A0C3D2009349A2 /* CAAnimation+Extensions.swift */; };
 		4F44FF042606D73D00926A5E /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
 		4F44FF052606D73D00926A5E /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
+		4F4C66172E636584005C2612 /* NSBox+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C66162E636584005C2612 /* NSBox+Additions.m */; };
 		4F5170152CBFD75C0018D388 /* MFDataClassImpls.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */; };
 		4F5170162CBFD75C0018D388 /* MFDataClassImpls.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */; };
 		4F5170182CBFD7660018D388 /* MFDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170172CBFD7660018D388 /* MFDataClass.m */; };
@@ -2045,6 +2046,8 @@
 		4F428D072CD8C688006322AB /* MFCoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFCoding.swift; sourceTree = "<group>"; };
 		4F44FF022606D73D00926A5E /* MFMessagePort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFMessagePort.h; sourceTree = "<group>"; };
 		4F44FF032606D73D00926A5E /* MFMessagePort.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFMessagePort.m; sourceTree = "<group>"; };
+		4F4C66132E6361CC005C2612 /* NSBox+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSBox+Additions.h"; sourceTree = "<group>"; };
+		4F4C66162E636584005C2612 /* NSBox+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBox+Additions.m"; sourceTree = "<group>"; };
 		4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClassImpls.m; sourceTree = "<group>"; };
 		4F5170172CBFD7660018D388 /* MFDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClass.m; sourceTree = "<group>"; };
 		4F51701A2CBFD7730018D388 /* MFDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFDataClass.h; sourceTree = "<group>"; };
@@ -6650,6 +6653,8 @@
 				4FEC9667278BBDC600548604 /* NSColor+Additions.m */,
 				4F854D7A2789146900B46E9D /* NSMenu+NSMenu_Additions.h */,
 				4F854D7B2789146900B46E9D /* NSMenu+NSMenu_Additions.m */,
+				4F4C66132E6361CC005C2612 /* NSBox+Additions.h */,
+				4F4C66162E636584005C2612 /* NSBox+Additions.m */,
 			);
 			path = UIExtensions;
 			sourceTree = "<group>";
@@ -8051,6 +8056,7 @@
 				4F3E067E26A2F97D000C9E06 /* URLMenuItem.m in Sources */,
 				4FD3250728E2810200256967 /* Device.m in Sources */,
 				4FE03A612BFF5F0600708454 /* CoolSUUpdater.m in Sources */,
+				4F4C66172E636584005C2612 /* NSBox+Additions.m in Sources */,
 				4FF6660225F2C92700689B77 /* ClickableImageView.m in Sources */,
 				4F7D97A628AEB2EE00C11E79 /* AboutTabController.swift in Sources */,
 				4F79A81C2604317200076A7E /* ToastNotificationController.m in Sources */,
