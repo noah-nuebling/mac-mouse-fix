@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2025**
 
+- 🇺🇸&nbsp;Zach&nbsp;Swanson
 - 🇺🇸&nbsp;Jan&nbsp;Isley
 - 🇨🇦&nbsp;Brody - "railway.com"
 - 🇺🇸&nbsp;Ajax&nbsp;Shung
