@@ -118,15 +118,16 @@ import CocoaLumberjackSwift
             effectView.layer?.masksToBounds = true
             
             /// Make the `NSVisualEffectView` outline match the `NSBox` exactly
+            ///     Also see `[RemapTableController viewDidLoad]` – In MMF 2, the RemapTable had to line up exactly with an NSBox surrounding it – so some of the same knowledge is encoded there.
+            effectView.layer?.cornerRadius = MFNSBoxCornerRadius()
             if #available(macOS 26.0, *) {
                 effectView.layer?.cornerCurve = .continuous
-                effectView.layer?.cornerRadius = 13 /// [Aug 2025] Not sure if 12 or 13
             }
             else if #available(macOS 11.0, *) {
-                assert(false) /// TODO: Fill in
+                
             }
             else {
-                assert(false) /// TODO: Fill in
+                effectView.frame = self.bounds.insetBy(dx: 3, dy: 3).offsetBy(dx: 0, dy: 1) /// [Aug 2025] Probably not pixel perfect but MMF 3 looks crappy pre-Big Sur anyways.
             }
             
             self._directlyAddSubview(effectView, positioned: .below, relativeTo: nil)

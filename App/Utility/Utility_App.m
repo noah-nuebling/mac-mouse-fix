@@ -14,6 +14,12 @@
 
 @implementation Utility_App
 
+ CGFloat MFNSBoxCornerRadius(void) {
+    if      ((0) && @available(macOS 26.0, *)) return 13.0; /// Not sure if 12 or 13
+    else if (@available(macOS 11.0, *)) return 5.0;
+    else                                return 4.0;
+};
+
 + (void)centerWindow:(NSWindow *)win atPoint:(NSPoint)pt {
     
     NSRect frm = win.frame;
