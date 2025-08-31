@@ -279,7 +279,7 @@ import CocoaLumberjackSwift
                 ///     New Idea: Maybe we should use liquid glass for the AddField, or emulate the amount of shadowing on LiquidGlass.
                 ///         Problem: I don't think Liquid Glass supports raising and lowering (Public APIs are very rudimentary as of Tahoe Beta 8)
 
-                s.shadowBlurRadius  = 2.5 /// [Aug 2025] Raise slightly more than under Sequoia – not sure this is too much – makes the shadow look more natural and less 'sharp' on the inner edges in light mode. The amount of raising also feels more 'perspectivally' correct with the amount the AddField moves upwards – giving a slightly better illusion of raising.
+                s.shadowBlurRadius  = 2.5 /// [Aug 2025] Raise slightly more than under Sequoia – not sure this is too much – makes the shadow look more natural and less 'sharp' on the inner edges in light mode. (Could've maybe achieved the same thing by just changing the shadowColor) The amount of raising also feels more 'perspectivally' correct with the amount the AddField moves upwards – giving a slightly better illusion of raising.
                 s.shadowColor       = .shadowColor.withAlphaComponent(isDarkMode ? 0.3 : 0.175)
                 s.shadowOffset      = .init(width: 0, height: -2)
             } else {

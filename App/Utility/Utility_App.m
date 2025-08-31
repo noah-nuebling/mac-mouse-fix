@@ -47,7 +47,7 @@ CGRect MFCGRectInset(CGRect rect, NSEdgeInsets insets) {
     _MFNSBoxDispatch()
     
     tahoe:          return 13.0; /// Not sure if 12 or 13
-    tahoe_compat:   return 6.5;  /// Tahoe Beta 8
+    tahoe_compat:   return 6.5;  /// Tahoe Beta 8.  – Why is this different from sequoia? – Did we measure wrong? Does it depend on screen resolution?
     sequoia:        return 5.0;
     catalina:       return 4.0;
 };
