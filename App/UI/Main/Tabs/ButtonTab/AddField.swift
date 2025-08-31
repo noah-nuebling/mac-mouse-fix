@@ -110,16 +110,21 @@ import CocoaLumberjackSwift
         
         if (self.subviews(withIdentifier: "MFDesktopTintingView").count == 0)
         {
+            
+            let debug_makeEdgeAlignmentsVisible = false /// [Aug 2025] Earlier I could visualize another issue on Tahoe Beta 8, but I forgot how: The NSVisualEffectView doesn't draw the tinted material to the full size of the view when the AddField is zoomed. That causes the edges of the AddField to be a little faint when it is zoomed. But it's not super noticeable.
+            
             let effectView: NSView
-            if (true) {
+            
+            if (!debug_makeEdgeAlignmentsVisible) {
                 effectView = NSVisualEffectView()
                 (effectView as! NSVisualEffectView).material = NSVisualEffectView.Material.windowBackground /// [Aug 2025] `-[_NSBoxMaterialCapableCustomView _updateSubviews]` used `-[NSColor _getSemanticallyEquivalentVisualEffectMaterial:]`, but we define the `NSVisualEffectViewMaterial` directly.
             }
             else {
-                /// TODO: Delete this (Testing code for setting if our corners line up)
                 effectView = NSView()
                 effectView.wantsLayer = true
                 effectView.layer?.backgroundColor = NSColor.white.cgColor
+                effectView.layer?.borderWidth = 1;
+                effectView.layer?.borderColor = NSColor.systemRed.cgColor
             }
             
             effectView.identifier = NSUserInterfaceItemIdentifier("MFDesktopTintingView")
@@ -127,18 +132,14 @@ import CocoaLumberjackSwift
             effectView.wantsLayer = true
             effectView.layer?.masksToBounds = true
             
-            /// Make the `NSVisualEffectView` outline match the `NSBox` exactly, so the shaddow looks like it belongs to the `NSBox`
-            ///     Also see `[RemapTableController viewDidLoad]` – In MMF 2, the RemapTable had to line up exactly with an NSBox surrounding it – so some of the same knowledge about NSBox sizes should be encoded there.
-            
+            /// Make the `NSVisualEffectView` outline match the `NSBox` exactly, so the shadow looks like it belongs to the `NSBox`
             effectView.layer?.cornerRadius = MFNSBoxCornerRadius()
+            effectView.layer?.cornerCurve  = MFNSBoxCornerCurve()
+            effectView.frame               = MFCGRectInset(self.bounds, MFNSBoxInsets())
             
-            if #available(macOS 26.0, *) {
-                effectView.frame = self.bounds
-                effectView.layer?.cornerCurve = .continuous
-            } else if #available(macOS 11.0, *) {
-                effectView.frame = self.bounds.offsetBy(dx: 0, dy: 1).insetBy(dx: 3, dy: 3) /// [Aug 2025] Trivia: These weird insets only appear on NSPrimaryBox, not NSCustomBox [Aug 2025]
-            } else {
-                effectView.frame = self.bounds.offsetBy(dx: 0, dy: 1).insetBy(dx: 3, dy: 3) /// [Aug 2025] Not sure if pixel perfect but MMF 3 looks crappy pre-Big Sur anyways.
+            if (debug_makeEdgeAlignmentsVisible) {
+                effectView.layer?.backgroundColor = .white;
+                effectView.frame = MFCGRectInset(effectView.frame, .init(top: 1, left: 1, bottom: 1, right: 1))
             }
             
             self._directlyAddSubview(effectView, positioned: .below, relativeTo: nil)
@@ -270,12 +271,22 @@ import CocoaLumberjackSwift
             var isDarkMode = checkDarkMode()
 
             let s = NSShadow()
-            let shadowAlpha: Double
-            if #available(macOS 26.0, *) { shadowAlpha = isDarkMode ? 0.75  : 0.125 } /// [Aug 2025] lighten the shadow on Tahoe since everything's lighter. TODO: Play around a little bit to perfect it.
-            else                         { shadowAlpha = isDarkMode ? 0.50  : 0.200 } /// Lightened these colors in bb92a481e
-            s.shadowColor       = .shadowColor.withAlphaComponent(shadowAlpha)
-            s.shadowOffset      = .init(width: 0, height: -2)
-            s.shadowBlurRadius  = 1.5
+            if #available(macOS 26.0, *), !MFRunningCompatMode() {
+            
+                /// [Aug 2025] Discussion: Tahoe Design:
+                ///     Problem: Under tahoe there aren't anymore 'sharp' shadows, so this may feel out of place.
+                ///     Original Idea: On Sequoia we wanted to have a subtle effect that looks like the field raises very  slightly – Maybe we should rethink this for Tahoe.
+                ///     New Idea: Maybe we should use liquid glass for the AddField, or emulate the amount of shadowing on LiquidGlass.
+                ///         Problem: I don't think Liquid Glass supports raising and lowering (Public APIs are very rudimentary as of Tahoe Beta 8)
+
+                s.shadowBlurRadius  = 2.5 /// [Aug 2025] Raise slightly more than under Sequoia – not sure this is too much – makes the shadow look more natural and less 'sharp' on the inner edges in light mode. The amount of raising also feels more 'perspectivally' correct with the amount the AddField moves upwards – giving a slightly better illusion of raising.
+                s.shadowColor       = .shadowColor.withAlphaComponent(isDarkMode ? 0.3 : 0.175)
+                s.shadowOffset      = .init(width: 0, height: -2)
+            } else {
+                s.shadowBlurRadius  = 1.5
+                s.shadowColor       = .shadowColor.withAlphaComponent(isDarkMode ? 0.50  : 0.200) /// Lightened these colors in bb92a481e when we switched to NSBoxPrimary
+                s.shadowOffset      = .init(width: 0, height: -2)
+            }
 
             self.wantsLayer = true
             self.layer?.masksToBounds = false

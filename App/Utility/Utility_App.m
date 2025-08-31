@@ -10,15 +10,70 @@
 #import "Utility_App.h"
 #import <AppKit/AppKit.h>
 #import "NSArray+Additions.h"
+#import "Constants.h"
 @import Darwin.sys.sysctl;
 
 @implementation Utility_App
 
+/// Compatibility design
+
+bool MFRunningCompatMode(void) {
+    return [NSBundle.mainBundle.infoDictionary[@"UIDesignRequiresCompatibility"] boolValue];
+}
+
+/// CGRect NSEdgeInsets
+
+CGRect MFCGRectInset(CGRect rect, NSEdgeInsets insets) {
+    rect.origin.x += insets.left;
+    rect.origin.y += insets.top;
+    rect.size.width  -= (insets.left + insets.right);
+    rect.size.height -= (insets.top  + insets.bottom);
+    return rect;
+}
+
+/// Define dimensions of NSBox
+///     Also see `[RemapTableController viewDidLoad]` – In MMF 2, the RemapTable had to line up exactly with an NSBox surrounding it – so some of the same knowledge about NSBox sizes should be encoded there.
+
+#define _MFNSBoxDispatch()                                      \
+    if (@available(macOS 26.0, *)) {                            \
+        if (MFRunningCompatMode())          goto tahoe_compat;  \
+        else                                goto tahoe;         \
+    }                                                           \
+    else if (@available(macOS 11.0, *))     goto sequoia;       \
+    else                                    goto catalina;      \
+
  CGFloat MFNSBoxCornerRadius(void) {
-    if      ((0) && @available(macOS 26.0, *)) return 13.0; /// Not sure if 12 or 13
-    else if (@available(macOS 11.0, *)) return 5.0;
-    else                                return 4.0;
+    
+    _MFNSBoxDispatch()
+    
+    tahoe:          return 13.0; /// Not sure if 12 or 13
+    tahoe_compat:   return 6.5;  /// Tahoe Beta 8
+    sequoia:        return 5.0;
+    catalina:       return 4.0;
 };
+
+CALayerCornerCurve MFNSBoxCornerCurve(void) {
+    
+    _MFNSBoxDispatch()
+    
+    tahoe:              return kCACornerCurveContinuous;
+    tahoe_compat:       return kCACornerCurveCircular;
+    sequoia:            return kCACornerCurveCircular;
+    catalina:           return kCACornerCurveCircular;
+}
+
+NSEdgeInsets MFNSBoxInsets(void) {
+        
+    /// How far the visible part of the NSBox is inset from the actual view edges.
+    ///     Necessary to know for inserting custom views directly into the NSBox.
+    
+    _MFNSBoxDispatch()
+    
+    tahoe:          return (NSEdgeInsets){ .top = 0, .bottom = 0,  .left = 0,  .right = 0 };
+    tahoe_compat:   return (NSEdgeInsets){ .top = 0, .bottom = 0,  .left = 0,  .right = 0 }; /// Tahoe Beta 8
+    sequoia:        return (NSEdgeInsets){ .top = 4, .bottom = 2,  .left = 3,  .right = 3 }; /// [Aug 2025] Trivia: These weird insets only appear on NSPrimaryBox, not NSCustomBox [Aug 2025]
+    catalina:       return (NSEdgeInsets){ .top = 4, .bottom = 2,  .left = 3,  .right = 3 }; /// [Aug 2025] Not sure if pixel perfect but MMF 3 looks crappy pre-Big Sur anyways.
+}
 
 + (void)centerWindow:(NSWindow *)win atPoint:(NSPoint)pt {
     
