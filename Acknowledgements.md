@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **August 2025**
 
+- 🇵🇱&nbsp;Wkanas
 - 🇺🇸&nbsp;Zach&nbsp;Swanson
 - 🇺🇸&nbsp;Jan&nbsp;Isley
 - 🇨🇦&nbsp;Brody - "railway.com"

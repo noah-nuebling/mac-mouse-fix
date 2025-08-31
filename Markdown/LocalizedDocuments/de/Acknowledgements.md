@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2025**
 
+- 🇵🇱&nbsp;Wkanas
 - 🇺🇸&nbsp;Zach&nbsp;Swanson
 - 🇺🇸&nbsp;Jan&nbsp;Isley
 - 🇨🇦&nbsp;Brody - "railway.com"
