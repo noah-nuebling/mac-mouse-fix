@@ -271,7 +271,7 @@ import CocoaLumberjackSwift
             var isDarkMode = checkDarkMode()
 
             let s = NSShadow()
-            if #available(macOS 26.0, *), !MFRunningCompatMode() {
+            if #available(macOS 26.0, *), !runningCompatMode() {
             
                 /// [Aug 2025] Discussion: Tahoe Design:
                 ///     Problem: Under tahoe there aren't anymore 'sharp' shadows, so this may feel out of place.
