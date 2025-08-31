@@ -270,16 +270,12 @@ import CocoaLumberjackSwift
             var isDarkMode = checkDarkMode()
 
             let s = NSShadow()
-            if #available(macOS 26.0, *) {
-                s.shadowColor = .shadowColor.withAlphaComponent(isDarkMode ? 0.75 : 0.125) /// [Aug 2025] lighten the shadow on Tahoe since everything's lighter. TODO: Play around a little bit to perfect it.
-                s.shadowOffset = .init(width: 0, height: -2)
-                s.shadowBlurRadius = 1.5
-            }
-            else {
-                s.shadowColor = .shadowColor.withAlphaComponent(isDarkMode ? 0.75 : 0.225)
-                s.shadowOffset = .init(width: 0, height: -2)
-                s.shadowBlurRadius = 1.5
-            }
+            let shadowAlpha: Double
+            if #available(macOS 26.0, *) { shadowAlpha = isDarkMode ? 0.75  : 0.125 } /// [Aug 2025] lighten the shadow on Tahoe since everything's lighter. TODO: Play around a little bit to perfect it.
+            else                         { shadowAlpha = isDarkMode ? 0.50  : 0.200 } /// Lightened these colors in bb92a481e
+            s.shadowColor       = .shadowColor.withAlphaComponent(shadowAlpha)
+            s.shadowOffset      = .init(width: 0, height: -2)
+            s.shadowBlurRadius  = 1.5
 
             self.wantsLayer = true
             self.layer?.masksToBounds = false
