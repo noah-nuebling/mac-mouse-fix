@@ -103,31 +103,42 @@ import CocoaLumberjackSwift
         
         /// Insert a NSVisualEffectView into the box
         ///     - We have to insert the `NSVisualEffectView` after `super.layout()` because the view that draws the NSBox's appearance is inserted in `[NSBox layout]` as the lowest subview, and we need to insert our `NSVisualEffectView` *below  that*.
-        ///         - Observed this on macOS Tahoe Beta 8 – hopefully it'll work on older macOS versions, too.
-        ///         - Trivia: On Tahoe Beta 8, when using NSPrimaryBox, this drawing-view seems to be a straight up SwiftUI GroupBox. (`NSCoreHostingView<AppKitBoxView>` IIRC)
-        ///     - [Aug 2025] This code is closely based off of disassembly of `-[_NSBoxMaterialCapableCustomView _updateSubviews]`
+        ///         - Observed this on macOS Tahoe Beta 8 – seems to work on older macOS versions, too.
+        ///         - Trivia: On Tahoe and Sequoia, when using NSPrimaryBox, this drawing-view seems to be a straight up SwiftUI GroupBox. (`NSCoreHostingView<AppKitBoxView>` IIRC)
+        ///     - This code is closely based off of disassembly of `-[_NSBoxMaterialCapableCustomView _updateSubviews]` (On Tahoe Beta 8, [Aug 2025])
         ///         - `_NSBoxMaterialCapableCustomView` is the custom view that draws the NSBox's appearance, when .boxType is NSCustomBox and the color is one that activates wallpaper tinting on NSBox like `.controlBackgroundColor`. `_NSBoxMaterialCapableCustomView` uses an `NSVisualEffectView` to achieve the tinting, just like we do here.
-        do {
+        
+        if (self.subviews(withIdentifier: "MFDesktopTintingView").count == 0)
+        {
+            let effectView: NSView
+            if (true) {
+                effectView = NSVisualEffectView()
+                (effectView as! NSVisualEffectView).material = NSVisualEffectView.Material.windowBackground /// [Aug 2025] `-[_NSBoxMaterialCapableCustomView _updateSubviews]` used `-[NSColor _getSemanticallyEquivalentVisualEffectMaterial:]`, but we define the `NSVisualEffectViewMaterial` directly.
+            }
+            else {
+                /// TODO: Delete this (Testing code for setting if our corners line up)
+                effectView = NSView()
+                effectView.wantsLayer = true
+                effectView.layer?.backgroundColor = NSColor.white.cgColor
+            }
             
-            let effectView = NSVisualEffectView(frame: self.bounds)
-            
+            effectView.identifier = NSUserInterfaceItemIdentifier("MFDesktopTintingView")
             effectView.autoresizingMask = [.width, .height]
-            effectView.material = NSVisualEffectView.Material.windowBackground /// [Aug 2025] `-[_NSBoxMaterialCapableCustomView _updateSubviews]` used `-[NSColor _getSemanticallyEquivalentVisualEffectMaterial:]`, but we define the `NSVisualEffectViewMaterial` directly.
-            
             effectView.wantsLayer = true
             effectView.layer?.masksToBounds = true
             
-            /// Make the `NSVisualEffectView` outline match the `NSBox` exactly
-            ///     Also see `[RemapTableController viewDidLoad]` – In MMF 2, the RemapTable had to line up exactly with an NSBox surrounding it – so some of the same knowledge is encoded there.
+            /// Make the `NSVisualEffectView` outline match the `NSBox` exactly, so the shaddow looks like it belongs to the `NSBox`
+            ///     Also see `[RemapTableController viewDidLoad]` – In MMF 2, the RemapTable had to line up exactly with an NSBox surrounding it – so some of the same knowledge about NSBox sizes should be encoded there.
+            
             effectView.layer?.cornerRadius = MFNSBoxCornerRadius()
+            
             if #available(macOS 26.0, *) {
+                effectView.frame = self.bounds
                 effectView.layer?.cornerCurve = .continuous
-            }
-            else if #available(macOS 11.0, *) {
-                
-            }
-            else {
-                effectView.frame = self.bounds.insetBy(dx: 3, dy: 3).offsetBy(dx: 0, dy: 1) /// [Aug 2025] Probably not pixel perfect but MMF 3 looks crappy pre-Big Sur anyways.
+            } else if #available(macOS 11.0, *) {
+                effectView.frame = self.bounds.offsetBy(dx: 0, dy: 1).insetBy(dx: 3, dy: 3) /// [Aug 2025] Trivia: These weird insets only appear on NSPrimaryBox, not NSCustomBox [Aug 2025]
+            } else {
+                effectView.frame = self.bounds.offsetBy(dx: 0, dy: 1).insetBy(dx: 3, dy: 3) /// [Aug 2025] Not sure if pixel perfect but MMF 3 looks crappy pre-Big Sur anyways.
             }
             
             self._directlyAddSubview(effectView, positioned: .below, relativeTo: nil)
