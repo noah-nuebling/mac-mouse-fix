@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2025**
 
+- 🇺🇸&nbsp;Allen&nbsp;Hayward - "Thank you"
 - 🇵🇱&nbsp;Wkanas
 - 🇺🇸&nbsp;Zach&nbsp;Swanson
 - 🇺🇸&nbsp;Jan&nbsp;Isley
