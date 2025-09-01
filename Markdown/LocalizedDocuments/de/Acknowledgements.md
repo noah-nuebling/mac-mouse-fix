@@ -38,6 +38,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den _Zucker-Kick_!
 
+**September 2025**
+
+- 🇺🇸&nbsp;Tyler
+
 **August 2025**
 
 - 🇺🇸&nbsp;Frederick&nbsp;W&nbsp;Keepers
