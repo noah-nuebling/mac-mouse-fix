@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **September 2025**
 
+- 🇧🇷&nbsp;Neto&nbsp;Nemesis
 - 🇺🇸&nbsp;Tyler
 
 **August 2025**

@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2025**
 
+- 🇧🇷&nbsp;Neto&nbsp;Nemesis
 - 🇺🇸&nbsp;Tyler
 
 **August 2025**
