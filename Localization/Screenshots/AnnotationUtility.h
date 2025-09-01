@@ -49,19 +49,22 @@ void swizzleMethodOnClassAndSubclasses(Class baseClass, NSDictionary<MFClassSear
 /// Note:
 ///     We had an older alternate factory-maker that used inline typedef to be more neat and totally properly typed, but it seemed to break autocomplete
 
-#define MakeInterceptorFactory(__MethodReturnType, __MethodArguments, __OnIntercept...) \
+#define InterceptorFactory_Begin(methodReturnType, methodArguments) \
     (id)                                                                            /** Cast the entire factory block to id to silence type-checker */ \
-    ^InterceptorBlock (Class m_originalClass, SEL m__cmd, __MethodReturnType (*m_originalImplementation)(id self, SEL _cmd APPEND_ARGS __MethodArguments)) /** Return type and args of the factory  block */ \
-    {                                                                               /** Body of the factory block */ \
-        return ^__MethodReturnType (id m_self APPEND_ARGS __MethodArguments)        /** Return type and args of the interceptor block */ \
-            __OnIntercept;                                                          /**  Body of the interceptor block - the code that the caller of the macro provided. This will be executed when the method is intercepted. Needs to be the varargs (...) to prevent weird compiler errors. */ \
-    } \
+    ^InterceptorBlock (Class m_originalClass, SEL m_cmd, methodReturnType (*m_originalImplementation)(id self, SEL _cmd APPEND_ARGS methodArguments)) /** Header of the factory block */ \
+    {                                                                               \
+        return ^methodReturnType (id m_self APPEND_ARGS methodArguments)            /** Header of the interceptor block */ \
+        {                                                                           /** After this the macro user can type the body of the interceptor block. This will be executed when the method is intercepted. */ \
+
+#define InterceptorFactory_End() \
+    };}
+
 
 /// Convenience macros
-///     To be used inside the `__OnIntercept` codeblock passed to the `MakeInterceptorFactory()` macro
+///     To be used inside the codeblock after the `InterceptorFactory_Begin()` macro
 
 #define OGImpl(args...) \
-    m_originalImplementation(m_self, m__cmd APPEND_ARGS(args))
+    m_originalImplementation(m_self, m_cmd ,## args)
 
 #pragma mark - Recursions
 
@@ -80,6 +83,9 @@ Class getMetaClass(id obj);
 NSString *listMethods(id obj);
 NSString *listSuperClasses(id obj);
 NSString *blockDescription(id block);
+
+#pragma mark - Other
+CGRect MFCGRectFlip(CGRect rect, CGFloat parentRectHeight);
 
 
 @end

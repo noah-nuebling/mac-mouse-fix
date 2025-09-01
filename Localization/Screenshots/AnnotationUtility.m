@@ -15,6 +15,7 @@
 #import "objc/runtime.h"
 #import "mach-o/dyld.h"
 #import "Logging.h"
+#import "MFLoop.h"
 
 ///
 /// Utility functions copied over from the xcode-localization-screenshot-fix repo
@@ -38,7 +39,7 @@
 ///     For example, in the implementation of `swizzleMethodOnClassAndSubclasses()` this lead to infinite loops when swizzling a method whose original implementation calls the superclass implementation when we're also replacing that superclass implementation with the same interceptor.  (We deleted the detailed notes on that, I think in commit fc3064033f974c454aebb479f20bb0cc3d0eebb6 of the xcode-localization-screenshot-fix repo)
 ///
 ///     The only solution I could think of is to store a reference to the original implementation inside the function definition. That's what the interceptor factory does.
-///     Use the MakeInterceptorFactory() macro to easily create an interceptor factory.
+///     Use the `InterceptorFactory_Begin()` macro to easily create an interceptor factory.
 ///
 /// We're sort of re-implementing https://github.com/rabovik/RSSwizzle here, but without thread-saftey and some other features. (But with slightly simpler syntax and powerful subclass-swizzling)
 ///
@@ -198,7 +199,6 @@ NSString *getSymbol(void *address) {
     return result;
 }
 
-
 NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria) {
     
     /// Searches classes in the objc runtime by different criteria.
@@ -208,7 +208,12 @@ NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria
     /// Notes:
     /// - I just did some testing with `namePrefix` searchCriterion set to our class `LoggingSwift` and it doesn't seem to work (Summer 2024, macOS Sequoia Beta)
     /// - Benchmark: Finding a subclass defined in the current executable took 1.2ms (Summer 2024, macOS Sequoia Beta)
-    ///     -> I wrote this for hacking, but I think it should be ok to use in our production code.
+    ///     -> I wrote this for hacking, but I think it should be ok to use in our production code to set up swizzling.
+    /// - Optimization potential: [Aug 2025]
+    ///     - `copyFrameworkPath()` may be sped up by using `RTLD_NOLOAD` or by simply checking if the framework files exist instead of using dlopen() (It only uses dlopen to confirm that a framework exists at path X)
+    /// - Caution: [Aug 2025]
+    ///     - I've never shipped such low-level, complicated C code. It's very hard for me to not write bugs here!
+    ///         - Perhaps I could use higher-level Objective-C for some of this?. It's mostly just a wrapper around `objc_enumerateClasses()` and `dlopen()`. They probably take up the bulk of the runtime and if so, there's no sense in 'optimizing' the rest of the function.
     /// - The `@"framework"` search criterion can be a name of a system framework such as "AppKit" or an absolute path to an image such as the `executablePath` of the current process, which will only search classes that were declared in the current executable. If The `@"framework"` is empty, all framworks in the runtime will be searched which can be slow but useful for hacking and exploring and stuff. The underlying `objc_enumerateClasses` searches the caller's image when passing in NULL but this class can only search the callers image by passing the callers executablePath to `objc_enumerateClasses`. Not sure if that's bad for performance. Now that we use this in production code, it would probably be better to define a special constant like `__mfall__` that searches all frameworks and have the null-case be to only search the callers image, just like `objc_enumerateClasses`. But honestly the performance impact is probably negligible.
     /// - Update: [Apr 2025] When you know the class name, it''s probably better to use `NSClassFromString()`
     
@@ -222,12 +227,8 @@ NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria
     NSString *frameworkNameNS = criteria[MFClassSearchCriterionFrameworkName];
     
     /// Map emptyString to nil
-    if (namePrefixNS != nil && namePrefixNS.length == 0) {
-        namePrefixNS = nil;
-    }
-    if (frameworkNameNS != nil && frameworkNameNS.length == 0) {
-        frameworkNameNS = nil;
-    }
+    if (namePrefixNS    && !namePrefixNS.length)    namePrefixNS = nil;
+    if (frameworkNameNS && !frameworkNameNS.length) frameworkNameNS = nil;
     
     /// Validate
     /// - at least one criterion
@@ -247,78 +248,79 @@ NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria
     /// Preprocess namePrefix
     ///     -> Convert it to c string
     const char *namePrefix = NULL;
-    if (namePrefixNS) {
-        namePrefix = [namePrefixNS cStringUsingEncoding:NSUTF8StringEncoding];
-    }
+    if (namePrefixNS) namePrefix = [namePrefixNS cStringUsingEncoding: NSUTF8StringEncoding];
     
     /// Preprocess frameworkName
     ///     -> Get framework paths
     
     unsigned int frameworkCount;
-    const char **frameworkPaths = NULL;
+    const char *_Nonnull *_Nonnull frameworkPaths;
+    bool individualFrameworkPathsNeedToBeFreed;
     
-    if (frameworkNameNS != nil) {
-        const char *frameworkName = [frameworkNameNS cStringUsingEncoding:NSUTF8StringEncoding]; /// `char *` wil never be empty bc we map empty NSString to nil above.
-        const char *frameworkPath = searchFrameworkPath(frameworkName);
-        frameworkPaths = malloc(sizeof(char *)); /// We malloc here to keep memory situation symmetrical with the `objc_copyImageNames()` call.
-        *frameworkPaths = frameworkPath;
+    if (frameworkNameNS) {
+        const char *frameworkName = [frameworkNameNS cStringUsingEncoding: NSUTF8StringEncoding]; /// `char *` wil never be empty bc we map empty `frameworkNameNS` to nil above.
+        char * frameworkPath = copyFrameworkPath(frameworkName);
         frameworkCount = 1;
+        frameworkPaths = malloc(sizeof(char *) * frameworkCount); /// We malloc here to keep memory situation symmetrical with the `objc_copyImageNames()` call.
+        *frameworkPaths = frameworkPath;
+        individualFrameworkPathsNeedToBeFreed = true;
     } else {
         /// If the caller hasn't specified a framework, get *all* the frameworks.
         ///     There are 46977 classes in all the frameworks, but it's still quite fast, especially with the macOS 13.0+ implementation.
         frameworkPaths = objc_copyImageNames(&frameworkCount);
+        individualFrameworkPathsNeedToBeFreed = false;
     }
     
     /// Get framework handles from framework paths
-    void *frameworkHandles[frameworkCount];
-    for (int i = 0; i < frameworkCount; i++) {
-        const char *frameworkPath = frameworkPaths[i];
-        frameworkHandles[i] = dlopen(frameworkPath, RTLD_LAZY | RTLD_GLOBAL); /// Maybe we could/should use `RTLD_NOLOAD` here for better performance?
-        if (frameworkHandles[i] == NULL) {
-            NSLog(@"Error: dlopen failed to open framework at path %s with error %s", frameworkPath, dlerror());
+    void **frameworkHandles = calloc(frameworkCount, sizeof(void *));
+    loopc(i, frameworkCount) {
+        frameworkHandles[i] = dlopen(frameworkPaths[i], RTLD_LAZY | RTLD_GLOBAL); /// Maybe we could/should use `RTLD_NOLOAD` here for better performance? [Aug 2025] Question is – do we want to search through opened images or all images? I think all images is fine.
+        if (!frameworkHandles[i]) {
+            NSLog(@"Error: dlopen failed to open framework at path %s with error %s", frameworkPaths[i], dlerror());
             assert(false);
         }
-        assert(frameworkHandles[i] != NULL);
     }
     
     /// Find classes
     NSMutableArray *result = [NSMutableArray array];
-    
-    for (int i = 0; i < frameworkCount; i++) {
+    loopc(i, frameworkCount) {
             
-        if (frameworkHandles[i] == NULL) continue;
+        if (!frameworkHandles[i]) continue;
         
         if (@available(macOS 13.0, *)) {
             objc_enumerateClasses(frameworkHandles[i], namePrefix, protocol, baseClass, ^(Class _Nonnull aClass, BOOL * _Nonnull stop) {
-                [result addObject:aClass];
+                [result addObject: aClass];
             });
-        } else {
+        }
+        else {
             unsigned int classCount;
             const char **classNames = objc_copyClassNamesForImage(frameworkPaths[i], &classCount);
-            for (int i = 0; i < classCount; i++) {
+            loopc(i, classCount) {
                 Class class = objc_getClass(classNames[i]);
-                bool hasNamePrefix      = namePrefix == NULL ? true :   strncmp(namePrefix, classNames[i], strlen(namePrefix)) == 0;
-                bool conformsToProtocol = protocol == nil ? true :      class_conformsToProtocol(class, protocol);
-                bool isSubclass         = baseClass == nil ? true :     classIsSubclass(class, baseClass) && class != baseClass; /// Filter out baseClass since that's how `objc_copyClassNamesForImage()` works.
-                if (hasNamePrefix && conformsToProtocol && isSubclass) {
-                    [result addObject:class];
-                }
+                bool hasNamePrefix      = !namePrefix ? true : strncmp(namePrefix, classNames[i], strlen(namePrefix)) == 0;
+                bool conformsToProtocol = !protocol   ? true : class_conformsToProtocol(class, protocol);
+                bool isSubclass         = !baseClass  ? true : classIsSubclass(class, baseClass) && class != baseClass; /// Filter out baseClass since that's how `objc_copyClassNamesForImage()` works.
+                if (hasNamePrefix && conformsToProtocol && isSubclass) [result addObject:class];
             }
             free(classNames);
         }
     }
     
-    /// Release stuff
-    free(frameworkPaths);
-    for (int i = 0; i < frameworkCount; i++) {
-        dlclose(frameworkHandles[i]);
+    /// Free stuff
+    
+    cleanup: {
+        if (individualFrameworkPathsNeedToBeFreed)
+            loopc(i, frameworkCount) free((void *)frameworkPaths[i]);
+        free(frameworkPaths);
+        loopc(i, frameworkCount) if (frameworkHandles[i]) dlclose(frameworkHandles[i]);
+        free(frameworkHandles);
     }
     
     /// Return
     return result;
 }
 
-const char *searchFrameworkPath(const char *frameworkName) {
+char *_Nonnull copyFrameworkPath(const char *frameworkName) {
     
     /// Can't get dlopen to find any frameworks without hardcoding the path, so we're making our own framework searcher
     /// 
@@ -327,13 +329,21 @@ const char *searchFrameworkPath(const char *frameworkName) {
     ///   entitlements, then all environment variables are ignored, and only a full
     ///   path can be used."
     
+    /// Declare result
+    char *result = NULL;
+    
+    /// Declare vars that need to be free'd at the end
+    char *frameworkSubpath = NULL;
+    char *frameworkSubpath2 = NULL;
+    const char **imagePaths = NULL;
+    
     /// If frameworkName looks like an absolute path, then return it verbatim
     if (frameworkName[0] == '/') { /// This crashes if we pass an empty name
-        return frameworkName;
+        result = strdup(frameworkName);
+        goto cleanup;
     }
     
     /// Preprocess framework name
-    char *frameworkSubpath = NULL;
     asprintf(&frameworkSubpath, "%s.framework/%s", frameworkName, frameworkName);
     
     /// Define constants
@@ -344,66 +354,62 @@ const char *searchFrameworkPath(const char *frameworkName) {
     };
     
     /// Search for the framework
-    const char *result = NULL;
-    for (int i = 0; i < sizeof(frameworkSearchPaths)/sizeof(char *); i++) {
+    loopc(i, arrcount(frameworkSearchPaths)) {
         
-        const char *frameworkSearchPath = frameworkSearchPaths[i];
+        char *frameworkPath = NULL;
+        asprintf(&frameworkPath, "%s/%s", frameworkSearchPaths[i], frameworkSubpath);
         
-        char *frameworkPath;
-        asprintf(&frameworkPath, "%s/%s", frameworkSearchPath, frameworkSubpath);
+        void *frameworkHandle = dlopen(frameworkPath, RTLD_LAZY | RTLD_GLOBAL); /// Should we use `RTLD_NOLOAD`? Not sure about the option flags. || Also see the other place in this file where we're calling dlopen()
         
-        void *handle = dlopen(frameworkPath, RTLD_LAZY | RTLD_GLOBAL); /// Should we use `RTLD_NOLOAD`? Not sure about the option flags.
-        
-        bool frameworkWasFound = handle != NULL;
-        if (frameworkWasFound) {
-            int closeRet = dlclose(handle);
-            if (closeRet != 0) {
+        if (frameworkHandle) {
+            int ret = dlclose(frameworkHandle);
+            if (ret) {
                 char *error = dlerror();
                 DDLogError(@"dlclose failed with error %s", error);
                 assert(false);
             }
         }
         
-        if (frameworkWasFound) {
+        if (frameworkHandle) {
             result = frameworkPath;
             break;
         }
+        
+        free(frameworkPath);
     }
     
     /// Return frameworkPath
-    if (result != NULL) {
-        return result;
-    }
+    if (result) goto cleanup;
     
     ///
     /// Fallback: objc runtime
     ///
     
     /// Not sure this is even slower than the main approach. (If not then this should be the main approach) Should be more robust than the main approach though.
-    
-    char *frameworkSubpath2 = NULL; /// Why are we using another subpath: When using dlopen `...AppKit.framework/AppKit` works, but in the objc imageNames `...AppKit.framework/Versions/C/AppKit` appears.
-    asprintf(&frameworkSubpath2, "%s.framework", frameworkName);
+    asprintf(&frameworkSubpath2, "%s.framework", frameworkName); /// Why are we using another subpath: When using dlopen `...AppKit.framework/AppKit` works, but in the objc imageNames `...AppKit.framework/Versions/C/AppKit` appears.
     
     unsigned int imageCount;
-    const char **imagePaths = objc_copyImageNames(&imageCount); /// The API is called imageNames, but it returns full framework paths from what I can tell.
-    
-    for (int i = 0; i < imageCount; i++) {
-        const char *imagePath = imagePaths[i];
-        bool frameworkSubpathIsInsideImagepath = strstr(imagePath, frameworkSubpath2) != NULL;
-        if (frameworkSubpathIsInsideImagepath) {
-            result = imagePath;
+    imagePaths = objc_copyImageNames(&imageCount); /// The API is called imageNames, but it returns full framework paths from what I can tell.
+    loopc(i, imageCount) {
+        if (strstr(imagePaths[i], frameworkSubpath2)) { /// If framework paths are substrings of other framework paths this could give us the wrong result. We really wanna match at the end of the string.
+            result = strdup(imagePaths[i]);
             break;
         }
     }
     
-    free(imagePaths);
-    
-    if (result == NULL) {
-        DDLogWarn(@"Error: Couldn't find framework with name %s", frameworkName);
+    if (!result) {
+        DDLogError(@"Error: Couldn't find framework with name %s", frameworkName);
         assert(false);
+        exit(1); /// [Aug 2025] The caller expects a non-null return value (otherwise it will pass NULL to dlopen and open the current image)
     }
-    return result;
     
+    cleanup: {
+        free(imagePaths);
+        free(frameworkSubpath);
+        free(frameworkSubpath2);
+    }
+    
+    return result;
 }
 
 
@@ -859,3 +865,10 @@ NSString *typeNameFromEncoding(const char *typeEncoding) { /// Credit ChatGPT & 
 
 
 @end
+
+#pragma mark - Other
+
+CGRect MFCGRectFlip(CGRect rect, CGFloat parentRectHeight) {
+    rect.origin.y = parentRectHeight - (rect.origin.y + rect.size.height);
+    return rect;
+}
