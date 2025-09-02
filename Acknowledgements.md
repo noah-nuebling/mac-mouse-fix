@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2025**
 
+- 🇺🇸&nbsp;Patrick&nbsp;Cleavelin - "More important than my editor."
 - 🇺🇸&nbsp;Caldwellbutler
 - 🇩🇪&nbsp;Sidoubleyou
 - 🇧🇷&nbsp;Neto&nbsp;Nemesis
