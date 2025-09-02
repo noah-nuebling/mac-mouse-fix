@@ -89,7 +89,7 @@ struct loop_range {
     _loop_over_range(varname, ((struct loop_range){ ._step = (step), ._lower = (lower), ._upper = (upper) }))
 
 #define loopc(varname, count) /** (c)onveniently iterate all indexes of an array, given the (c)ount. */ \
-    for (int64_t varname = 0; varname < (count); varname++)
+    for (typeof((count) + 0) varname = 0; varname < (count); varname++)
 
 #pragma mark - Unused
 
