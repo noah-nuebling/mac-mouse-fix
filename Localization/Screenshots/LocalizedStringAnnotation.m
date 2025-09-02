@@ -17,21 +17,28 @@
 
 @implementation LocalizedStringAnnotation
 
-+ (NSString *)annotationStringWithKey:(NSString *)key table:(NSString *_Nullable)table {
++ (NSString *) annotateString: (NSString *)string withKey: (NSString *)key table: (NSString *_Nullable)table {
     
     /// Notes:
     ///     - We keep the format string short to stay under the 512 character XCUITest limit. (Update: We removed the limit by getting the raw AXUIElement)
     ///     - Pattern recognition would break if key or table name contain `:`
-    ///     - If table is nill the formatted string would include literal "(null)", so we map to empty string.
     ///     - I've seen our' current secretMessage encoding break the UI text a little bit:
     ///         - Markdown __underscore emphasis__ is not parsed anymore - (we had the same issue with chinese - the `__` syntax  requires spaces to work while `**` does not. ZeroWidthSpace is not enough. We should just switch over to using `**`)
     ///         - Markdown parsing normally removes anything over a double linebreak. But not when the secretMessage is in the blank space.
     ///         - Pluralized localizedStrings break from our annotations it seems. Update: Fixed.
     
-    NSString *annotation = stringf(@"mfkey:%@:%@:", key, table ?: @"");
-    NSString *secretMessage = [annotation encodedAsSecretMessage];
-    return secretMessage;
+    NSString *prefix = [stringf(@"<mfkey:%@:%@>", key, (table ?: @"")) encodedAsSecretMessage];
+    NSString *suffix = [stringf(@"</mfkey>") encodedAsSecretMessage];
+    return stringf(@"%@%@%@", prefix, string, suffix);
+}
+
++ (NSAttributedString *) annotateAttributedString: (NSAttributedString *)string withKey: (NSString *)key table: (NSString *_Nullable)table {
     
+    /// Keep in-sync with `annotateString:withKey:table:`
+    
+    NSString *prefix = [stringf(@"<mfkey:%@:%@>", key, (table ?: @"")) encodedAsSecretMessage];
+    NSString *suffix = [stringf(@"</mfkey>") encodedAsSecretMessage];
+    return [NSAttributedString attributedStringWithAttributedFormat: @"%@%@%@".attributed args: @[prefix.attributed, string, suffix.attributed]];
 }
 
 id nsLocalizedStringBySwappingOutUnderlyingString(id nsLocalizedString, NSString *underlyingString) {
@@ -51,14 +58,10 @@ id nsLocalizedStringBySwappingOutUnderlyingString(id nsLocalizedString, NSString
     return nsLocalizedString;
 }
 
-void doBreak(NSString *context) {
-    
-}
-
 + (void)swizzleNSBundle {
         
     /// Swizzle
-    swizzleMethodOnClassAndSubclasses([NSBundle class], @{ @"framework": @"AppKit" }, @selector(localizedStringForKey:value:table:), MakeInterceptorFactory(NSString *, (NSString *key, NSString *value, NSString *table), {
+    swizzleMethodOnClassAndSubclasses([NSBundle class], @{ @"framework": @"AppKit" }, @selector(localizedStringForKey:value:table:), InterceptorFactory_Begin(NSString *, (NSString *key, NSString *value, NSString *table))
         
         /// Call og
         NSString *result = OGImpl(key, value, table);
@@ -67,8 +70,7 @@ void doBreak(NSString *context) {
         if (isOurBundle) {
             
             /// Add secret message
-            NSString *annotation = [self annotationStringWithKey:key table:table];
-            NSString *annotatedString = [annotation stringByAppendingString:result]; /// We prepend the annotation because XCUITest will seemingly cut of the string at 512 chars. By putting the annotation first it should be before the cutoff. (Update: Removed the 512 character cutoff.)
+            NSString *annotatedString = [self annotateString: result withKey: key table: table];
             
             /// Handle pluralized strings
             if ([result isKindOfClass:NSClassFromString(@"__NSLocalizedString")]) {
@@ -76,9 +78,7 @@ void doBreak(NSString *context) {
             } else {
                 result = annotatedString;
             }
-            
-            /// TEST
-            doBreak(result);
+
             
             /// Log
             DDLogDebug(@"LocalizedStringAnnotation: Annotated: \"%@\": \"%@\" (table: %@)", key, result, table);
@@ -86,9 +86,12 @@ void doBreak(NSString *context) {
         
         /// Return
         return result;
-    }));
+    InterceptorFactory_End());
     
-    swizzleMethodOnClassAndSubclasses([NSBundle class], @{ @"framework": @"AppKit" }, @selector(localizedAttributedStringForKey:value:table:), MakeInterceptorFactory(NSAttributedString *, (NSString *key, NSString *value, NSString *table), {
+    swizzleMethodOnClassAndSubclasses([NSBundle class], @{ @"framework": @"AppKit" }, @selector(localizedAttributedStringForKey:value:table:), InterceptorFactory_Begin(NSAttributedString *, (NSString *key, NSString *value, NSString *table))
+        
+        /// [Sep 2025] Don't think we need this.
+        ///     Our code never uses `localizedAttributedStringForKey:value:table:` – only available in macOS 12.0+
         
         /// Call og
         NSAttributedString *result = OGImpl(key, value, table);
@@ -97,8 +100,7 @@ void doBreak(NSString *context) {
         if (isOurBundle) {
             
             /// Add secret message
-            NSString *annotation = [self annotationStringWithKey:key table:table];
-            result = [[annotation attributed] attributedStringByAppending:result];
+            result = [self annotateAttributedString: result withKey: key table: table];
             
             /// Handle pluralized strings
             if ([result isKindOfClass:NSClassFromString(@"__NSLocalizedString")]) {
@@ -111,7 +113,7 @@ void doBreak(NSString *context) {
         
         /// Return
         return result;
-    }));
+    InterceptorFactory_End());
     
     
 

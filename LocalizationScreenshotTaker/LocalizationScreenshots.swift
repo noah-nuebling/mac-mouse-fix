@@ -8,6 +8,7 @@
 //
 
 import XCTest
+import Vision
 
 final class LocalizationScreenshotClass: XCTestCase {
     
@@ -17,7 +18,8 @@ final class LocalizationScreenshotClass: XCTestCase {
     
     /// Keep-in-sync with .app
     let localized_string_annotation_activation_argument_for_screenshotted_app = "-MF_ANNOTATE_LOCALIZED_STRINGS"
-    let localized_string_annotation_regex_for_screenshotted_app = "mfkey:(.+):(.*):" /// The first capture group is the localizationKey, the second capture group is the stringTableName
+    let localized_string_annotation_prefix_regex = "<mfkey:(.+):(.*)>" /// The first capture group is the localizationKey, the second capture group is the stringTableName
+    let localized_string_annotation_suffix       = "</mfkey>"
     
     /// Keep-in-sync with python script
     let xcode_screenshot_taker_output_dir_variable = "MF_LOCALIZATION_SCREENSHOT_OUTPUT_DIR"
@@ -45,9 +47,9 @@ final class LocalizationScreenshotClass: XCTestCase {
     
     struct ScreenshotAndMetadata : CustomStringConvertible {
     
-        /// [Aug 2025] Swift/objc discussion: The whole reason I wrote LocalizationScreenshots.swift in Swift was because defining complex nested/serializable datastructures like this in objc felt way more cumbersome. But now we have MFDataClass, which would be much nicer to work with than this! Problems with the Swift approach: The struct names are too short/context-less without the namespace prefix, but extremely long with the namespace prefixes. Doesn't display well in the debugger due to length (`Localization_Screenshot_Taker.LocalizationScreenshotClass.ScreenshotAndMetadata.Metadata.Frame.String_.KeyAndTable`). Harder to grep for. ... Do namespaces just duck or am I using them wrong?
+        /// [Aug 2025] Swift/objc discussion: The whole reason I wrote LocalizationScreenshots.swift in Swift was because defining complex nested/serializable datastructures like this in objc felt way more cumbersome. But now we have MFDataClass, which would be much nicer to work with than this! Problems with the Swift approach: The struct names are too short/context-less without the namespace prefix, but extremely long with the namespace prefixes. Doesn't display well in the debugger due to length (`Localization_Screenshot_Taker.LocalizationScreenshotClass.ScreenshotAndMetadata.Metadata.Frame.String_.XCStringsData`). Harder to grep for. ... Do namespaces just duck or am I using them wrong?
         
-        var description: String { ScreenshotAndMetadata_description_from_key_value_pairs([("screenshot", screenshot), ("metadata", metadata)]) } /// [Aug 2025] Define custom descriptions because Swift's are extremely verbose due to namespacing. (Example: `Localization_Screenshot_Taker.LocalizationScreenshotClass.ScreenshotAndMetadata.Metadata.Frame.String_.KeyAndTable(key: <...>, table: <...>)`
+        var description: String { ScreenshotAndMetadata_description_from_key_value_pairs([("screenshot", screenshot), ("metadata", metadata)]) } /// [Aug 2025] Define custom descriptions because Swift's are extremely verbose due to namespacing. (Example: `Localization_Screenshot_Taker.LocalizationScreenshotClass.ScreenshotAndMetadata.Metadata.Frame.String_.XCStringsData(key: <...>, table: <...>)`
         let screenshot: XCUIScreenshot
         let metadata: Metadata
         
@@ -64,12 +66,13 @@ final class LocalizationScreenshotClass: XCTestCase {
                 struct String_ : CustomStringConvertible {
                     var description: String { ScreenshotAndMetadata_description_from_key_value_pairs([("uiString", uiString), ("stringAnnotations", stringAnnotations)]) }
                     let uiString: String
-                    let stringAnnotations: [KeyAndTable] /// [Aug 2025] Why can there be multiple `KeyAndTable`s per `String_`? – This happens if a uiString is stitched together from multiple localizer-facing strings
+                    let stringAnnotations: [XCStringsData] /// [Aug 2025] Why can there be multiple `XCStringsData`s per `String_`? – This happens if a uiString is stitched together from multiple localizer-facing strings
                     
-                    struct KeyAndTable : CustomStringConvertible {
+                    struct XCStringsData : CustomStringConvertible {
                         var description: String { ScreenshotAndMetadata_description_from_key_value_pairs([("key", key), ("table", table)]) }
                         let key: String
                         let table: String
+                        let uiString: String    /// [Sep 2025] This is the exact string as it appears in the UI (including %@ substitutions)
                     }
                 }
             }
@@ -97,12 +100,12 @@ final class LocalizationScreenshotClass: XCTestCase {
     /// (shared) (f)unctions between different screenshot-taking tests
     ///
     
-    func sharedf_helper_url(_ mainApp: XCUIApplication) -> URL {
+    func sharedfunctions_helper_url(_ mainApp: XCUIApplication) -> URL {
         let result = URL(fileURLWithPath: (mainApp.value(forKey:"path") as! NSString).appendingPathComponent("Contents/Library/LoginItems/Mac Mouse Fix Helper.app"))
         return result
     }
     
-    func sharedf_validate_that_main_app_is_enabled(_ window: XCUIElement, _ toolbarButtons: XCUIElementQuery) {
+    func sharedfunctions_validate_that_main_app_is_enabled(_ window: XCUIElement, _ toolbarButtons: XCUIElementQuery) {
         
         /// [Aug 2025] We launch the helper manually and only check that the mainApp has connected to the helper here. (Instead of trying to enable the helper through the mainApp UI)
         ///     This lets us pass launchArguments to the helper (not sure that's always necessary / overcomplicates things tho)
@@ -121,7 +124,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         }
     }
     
-    func sharedf_do_test_intro(outputDir: String?, fallbackTempDirName: String?) -> URL {
+    func sharedfunctions_do_test_intro(outputDir: String?, fallbackTempDirName: String?) -> URL {
         
         /// Configure test
         self.continueAfterFailure = false
@@ -141,7 +144,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         guard let outputDir_URL else { fatalError() }
         
         /// Check ax permissions
-        ///     ([Aug 2025] We dive into the AX stuff underlying the XCUI stuff for some things (See AXUIElementCopyAttributeNames()])
+        ///     ([Aug 2025] We need AX permissions because we dive into the AX stuff underlying the XCUI stuff for some things (See AXUIElementCopyAttributeNames()])
         let isTrusted = AXIsProcessTrustedWithOptions(nil);
         assert(isTrusted)
         
@@ -149,14 +152,14 @@ final class LocalizationScreenshotClass: XCTestCase {
         return outputDir_URL
     }
     
-    func sharedf_find_elements_for_navigating_main_app() -> (NSScreen, XCUIElement, XCUIElementQuery, XCUIElement) {
+    func sharedfunctions_find_elements_for_navigating_main_app() -> (NSScreen, XCUIElement, XCUIElementQuery, XCUIElement) {
         let screen = NSScreen.main!
         let window = app!.windows.firstMatch
         let toolbarButtons = window.toolbars.firstMatch.children(matching: .button) /// `window.toolbarButtons` doesn't work for some reason.
         let menuBar = app!.menuBars.firstMatch
         return (screen, window, toolbarButtons, menuBar)
     }
-    func sharedf_position_main_app_window(_ screen: NSScreen, _ window: XCUIElement, targetWindowY: Double) {
+    func sharedfunctions_position_main_app_window(_ screen: NSScreen, _ window: XCUIElement, targetWindowY: Double) {
         
         /// `targetWindowY` arg is normalized between 0 and 1
         
@@ -179,13 +182,43 @@ final class LocalizationScreenshotClass: XCTestCase {
         // MARK: Main - Documentation Screenshots
         // --------------------------
         
-        /// [Aug 2025] Extending this code for taking screenshots for our `CapturedButtonsMMF3.md` guide.
+        /// [Aug 2025] Writing this for taking screenshots for our `CapturedButtonsMMF3.md` guide.
         ///     Why take these screenshots programmatically? – They update to new macOS / MMF designs, plus we can localize them.
-        ///     Main technological difference to `testTakeLocalizationScreenshots()`:
-        ///         For both, we want screenshots with red rectangles highlighting specific sections. The difference is that here, we need to draw the highlight rectangles on the images ourselves before rendering them out. Whereas for .xcloc files (which  `testTakeLocalizationScreenshots()` is for), we just create metadata that tells Xcode where to draw the highlight rectangles.
+        ///     Main technological difference to `testTakeScreenshots_Localization()`:
+        ///         For both, we want screenshots with red rectangles highlighting specific sections. The difference is that here, we need to draw the highlight rectangles on the images ourselves before rendering them out. Whereas for .xcloc files (which  `testTakeScreenshots_Localization()` is for), we just create metadata that tells Xcode where to draw the highlight rectangles.
+        
+        /// [Aug 2025] Override remaps
+        /**
+                [Aug 2025] defines the following entries for the remapsTable]
+                    1. Middle click -> Smart Zoom
+                    2. Click Button 5 + Click Middle Button -> Mission Control
+                    3. Click Button 4 -> Launchpad
+                    4. Click and Drag Button 4 -> Scroll & Navigate
+                
+                We plan to use this in the CapturedButtonsGuideMMF3.md
+                    There we plan to use two screenshots with the same base pic with different highlights:
+                        1. First pic highlighted the first occurence of Middle Button, Button 5, and Button 4
+                        2. The second pic highlighted 'Button 4' and the two '-' buttons under 'Button 4'
+
+                TODOs:
+                - Generate the screenshots programmatically
+                - DELETE unnecessary comments above
+             */
+        do {
+            /// Sidenote:
+            ///     [Aug 2025] I tried to define `CapturedButtonsGuideMMF3_ScreenshotRemaps` as Swift by converting the plist to Swift source code via plutil, but plutil converted empty dict to empty array which made MMF crash.
+        
+            let configURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!.appending(path: "/com.nuebling.mac-mouse-fix/config.plist")
+            let remapsOverrideURL = URL(fileURLWithPath: currentFilePath().deletingLastPathComponent + "/CapturedButtonsGuideMMF3_ScreenshotRemaps.plist")
+
+            let remaps = NSDictionary(contentsOf: remapsOverrideURL)!                                      /// Read
+            var config = NSDictionary(contentsOf: configURL)?.mutableCopy() as! NSMutableDictionary        /// Read
+            config["Remaps"] = remaps["Remaps"]                                                            /// Modify
+            try config.write(to: configURL)                                                                /// Write
+        }
         
         /// Do test intro
-        let outputDir = sharedf_do_test_intro(outputDir: nil, fallbackTempDirName: "MF_DOC_SCREENSHOT_TEST")
+        let outputDir = sharedfunctions_do_test_intro(outputDir: nil, fallbackTempDirName: "MF_DOC_SCREENSHOT_TEST")
         
         /// Launch main app.
         var app = XCUIApplication()
@@ -195,15 +228,15 @@ final class LocalizationScreenshotClass: XCTestCase {
         self.app = app
         
         /// Launch helper app
-        var helperApp = XCUIApplication(url: sharedf_helper_url(app))
+        var helperApp = XCUIApplication(url: sharedfunctions_helper_url(app))
         helperApp.launchArguments.append(localized_string_annotation_activation_argument_for_screenshotted_app)
         helperApp.launch()
         
         /// Find elements
-        let (screen, window, toolbarButtons, menuBar) = sharedf_find_elements_for_navigating_main_app()
+        let (screen, window, toolbarButtons, menuBar) = sharedfunctions_find_elements_for_navigating_main_app()
         
         /// Validate mainApp enabled
-        sharedf_validate_that_main_app_is_enabled(window, toolbarButtons)
+        sharedfunctions_validate_that_main_app_is_enabled(window, toolbarButtons)
         
         /// Take screenshots
         do {
@@ -220,8 +253,119 @@ final class LocalizationScreenshotClass: XCTestCase {
             /// Take screenshot!
             var screenshotAndMetadata: ScreenshotAndMetadata? = takeLocalizationScreenshot(of: window, name: "ButtonsTab Screenshot For Documentation")
             print("doc screenshot (and metadata): \(screenshotAndMetadata!)")
+            let image = screenshotAndMetadata!.screenshot.image /// Shorthand for later
             
+            
+            /// keys we prolly wanna highlight:
+            ///     First screenshot:
+            ///     - trigger.y.group-row.button-name.middle
+            ///     - trigger.y.group-row.button-name.numbered
+            ///     - trigger.substring.button-name.numbered
+            ///     Second screenshot:
+            ///     - trigger.y.group-row.button-name.numbered
+            ///     - The two minus buttons (Don't have localized strings attached to them I think)
+            
+            struct ToHighlight {
+                var frame: NSRect
+                var uiString: String
+                var recognizedString: String?
+            }
+            var framesToHighlight = [ToHighlight]()
+            
+            outerLoop: for annotation in screenshotAndMetadata!.metadata.screenshotAnnotations {
+                for locstring in annotation.localizableStringsInFrame {
+                    for stringAnnotation in locstring.stringAnnotations {
+                        for desiredKey in ["trigger.y.group-row.button-name.middle",
+                                           "trigger.y.group-row.button-name.numbered",
+                                           "trigger.substring.button-name.numbered"]
+                        {
+                            if desiredKey == stringAnnotation.key {
+                                framesToHighlight += [ToHighlight.init(
+                                    frame: MFCGRectFlip(annotation.frame, image.size.height), /// [Au 2025] Flip the frame cause the VNImage framework expects that.
+                                    uiString: stringAnnotation.uiString)
+                                ]
+                                continue outerLoop;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            /// BOOKMARK (TODO):
+            ///     - [ ] Make `NSString+Steganography.m` insert an end-marker so we can extract exactly where a localizable string starts and ends in the UIString
+            ///         -> Then use this with OCR to exactly highlight a localizable string.
+            ///         - [ ] Also remove the then-unnecessary change where `NSString+Steganography.m` inserts the localizer-facing string verbatim (we don't need that)
+            
+            /// Use OCR to shrink the frames
+            if (true) {
+                
+                let requestHandler = VNImageRequestHandler(cgImage: image.cgImage(forProposedRect: nil, context: nil, hints: nil)!, orientation: .up, options: [:])
+                
+                for (i, var frameToHighlight) in framesToHighlight.enumerated() {
+                    let request = VNRecognizeTextRequest(completionHandler: nil)
+                      request.recognitionLevel = .accurate   /// [Sep 2025] Observed `.fast` give wrong resuts for Vietnamese. But `.accurate` apparently has boundingBox bug (See: https://stackoverflow.com/q/61214811/10601702)
+                    request.usesLanguageCorrection = false /// Doesn't work in Chinese according to docs? And may not be necessary
+                    if (true) {
+                    request.regionOfInterest = VNNormalizedRectForImageRect(frameToHighlight.frame, Int(image.size.width), Int(image.size.height))
+                    }
+                    
+                    if (false) {
+                        let supportedLanguages = try request.supportedRecognitionLanguages()
+                        print(supportedLanguages)
+                    }
+                    try requestHandler.perform([request])
+                    assert(!request.results!.isEmpty)
+                    
+                    var foundResult: VNRecognizedTextObservation? = nil
+                    var foundCandidate: VNRecognizedText? = nil
+                    
+                    assert( /// Assert: Only 1 candidate
+                        request.results?.count == 1 &&
+                        request.results?.first?.topCandidates(999).count == 1
+                   )
+                    
+                    for result in request.results! {
+                        for candidate in result.topCandidates(999) {
+                            if candidate.string.contains(frameToHighlight.uiString) {
+                                foundResult = result
+                                foundCandidate = candidate
+                                break
+                            }
+                        }
+                    }
+                    assert(foundCandidate != nil)
+                    assert(foundResult != nil)
+                    
+                    let foundBoundingBox        = try foundCandidate!.boundingBox(for: foundCandidate!.string.range(of: frameToHighlight.uiString)!)
+                    let foundBoundingBox_AsRect = VNImageRectForNormalizedRect(foundBoundingBox!.boundingBox, Int(image.size.width), Int(image.size.height))
+                    frameToHighlight.frame = foundBoundingBox_AsRect
+                    frameToHighlight.recognizedString = foundCandidate?.string
+                    framesToHighlight[i] = frameToHighlight /// Have to do weird shenanigans here due to Swift stdlib value type 'simplification' I think.
+                }
+            }
+            
+            
+            
+            /// Draw the image
+            let resultImage = NSImage.init(size: image.size, flipped: false) { rect in
+                
+                NSGraphicsContext.current!.saveGraphicsState() /// Is this necessary? [Aug 2025]
+                image.draw(in: rect)
+                    
+                /// Draw the rectangles
+                for frameToHighlight in framesToHighlight {
+                    NSColor.systemRed.setStroke()
+                    let rectPath = NSBezierPath(rect: frameToHighlight.frame)
+                    rectPath.lineWidth = 3
+                    rectPath.stroke()
+                }
+                NSGraphicsContext.current!.restoreGraphicsState()
+                return true
+            }
+            
+            print(resultImage)
         }
+        
         
         // TODO: Draw highlights around the desired uiStrings and render them out to a file and stuff
     }
@@ -237,7 +381,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         // --------------------------
         
         /// Do test intro
-        let outputDir = sharedf_do_test_intro(
+        let outputDir = sharedfunctions_do_test_intro(
             outputDir:            ProcessInfo.processInfo.environment[xcode_screenshot_taker_output_dir_variable],
             fallbackTempDirName:  "MFLocalizationScreenshotsFallbackOutputFolder"
         )
@@ -253,7 +397,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         
         /// Prepare helper app
         ///     We should launch the helper first, and not let the app enable it, so we can control its launchArguments.
-        let helperApp = XCUIApplication(url: sharedf_helper_url(mainApp))
+        let helperApp = XCUIApplication(url: sharedfunctions_helper_url(mainApp))
         helperApp.launchArguments.append(localized_string_annotation_activation_argument_for_screenshotted_app)
         helperApp.launch()
         
@@ -421,13 +565,13 @@ final class LocalizationScreenshotClass: XCTestCase {
             return toastScreenshots
         }
         /// Find navigation elements
-        let (screen, window, toolbarButtons, menuBar) = sharedf_find_elements_for_navigating_main_app()
+        let (screen, window, toolbarButtons, menuBar) = sharedfunctions_find_elements_for_navigating_main_app()
         
         /// Position the window
-        sharedf_position_main_app_window(screen, window, targetWindowY: 0.2)
+        sharedfunctions_position_main_app_window(screen, window, targetWindowY: 0.2)
         
         /// Validate that the app is enabled
-        sharedf_validate_that_main_app_is_enabled(window, toolbarButtons)
+        sharedfunctions_validate_that_main_app_is_enabled(window, toolbarButtons)
         
         ///
         /// Screenshot ButtonsTab
@@ -853,7 +997,7 @@ final class LocalizationScreenshotClass: XCTestCase {
             AXUIElementCopyAttributeNames(axuiElement, &attrNames)
             
             /// Iterate attr names and get their values + any secret messages
-            var stringsAndSecretMessages: [String: [NSString]] = [:]
+            var stringsAndSecretMessages: [String: [FoundSecretMessage]] = [:]
             for attrName in (attrNames! as NSArray) {
                 
                 /// Get axAttr value
@@ -866,7 +1010,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                 }
                 
                 /// Extract any secret messages
-                let secretMessages = string.secretMessages() as! [NSString]
+                let secretMessages = string.secretMessages() as! [FoundSecretMessage]
                 
                 /// Skip if no secret messages
                 if secretMessages.count == 0 {
@@ -886,30 +1030,41 @@ final class LocalizationScreenshotClass: XCTestCase {
             /// Extract localization key+table from each secret message
             var localizedStrings = [ScreenshotAndMetadata.Metadata.Frame.String_]()
             for (string, secretMessages) in stringsAndSecretMessages {
-                var localizationKeys = [ScreenshotAndMetadata.Metadata.Frame.String_.KeyAndTable]()
+                
+                var localizationKeys = [ScreenshotAndMetadata.Metadata.Frame.String_.XCStringsData]()
+                var prefixStack: [(found: FoundSecretMessage, key: String, table: String)]  = []
                 for secretMessage in secretMessages {
-                    let secretMessage = secretMessage as String
-                    let regex = try NSRegularExpression(pattern: localized_string_annotation_regex_for_screenshotted_app, options: [])
-                    let matches = regex.matches(in: secretMessage, options: [.anchored], range: .init(location: 0, length: secretMessage.utf16.count)) /// NSString and related objc classes are based on UTF16 so we should do .utf16 afaik
-                    assert(matches.count <= 1)
-                    var newLocalizationKey: ScreenshotAndMetadata.Metadata.Frame.String_.KeyAndTable? = nil
-                    if let match = matches.first {
-                        assert(match.numberOfRanges == 3) /// Full match + 2 capture groups
-                        if let keyRange = Range(match.range(at: 1), in: secretMessage),
-                           let tableRange = Range(match.range(at: 2), in: secretMessage) {
-                            
-                            newLocalizationKey = .init(key: String(secretMessage[keyRange]), table: String(secretMessage[tableRange]))
-                        }
+                    if localized_string_annotation_suffix == secretMessage.secretMessage { /// Parse suffix
+                        let lastPrefix = prefixStack.popLast()!
+                        let prefixEnd = lastPrefix.found.rangeInString.upperBound
+                        let suffixStart = secretMessage.rangeInString.lowerBound
+                        let uiStringAfterLastPrefix = (string as NSString).substring(with: NSMakeRange(
+                            prefixEnd,
+                            suffixStart - prefixEnd
+                        ))
+                        localizationKeys.append(ScreenshotAndMetadata.Metadata.Frame.String_.XCStringsData(key: lastPrefix.key, table: lastPrefix.table, uiString: uiStringAfterLastPrefix))
                     }
-                    if let n = newLocalizationKey {
-                        localizationKeys.append(n)
+                    else { /// Parse Prefix
+                    
+                        let prefix_regex = try NSRegularExpression(pattern: localized_string_annotation_prefix_regex, options: [])
+                        let prefix_matches = prefix_regex.matches(in: secretMessage.secretMessage, options: [.anchored], range: .init(location: 0, length: secretMessage.secretMessage.utf16.count)) /// NSString and related objc classes are based on UTF16 so we should do .utf16 afaik
+                        assert(prefix_matches.count <= 1)
+                        
+                        
+                        if let match = prefix_matches.first {
+                            assert(match.numberOfRanges == 3) /// Full match + 3 capture groups
+                            if let keyRange   = Range(match.range(at: 1), in: secretMessage.secretMessage),
+                               let tableRange = Range(match.range(at: 2), in: secretMessage.secretMessage)
+                            {
+                                prefixStack.append((secretMessage, key: String(secretMessage.secretMessage[keyRange]), table: String(secretMessage.secretMessage[tableRange])))
+                            }
+                        }
                     }
                 }
                 /// Append to result
                 if localizationKeys.count > 0 {
                     localizedStrings.append(ScreenshotAndMetadata.Metadata.Frame.String_(uiString: string, stringAnnotations: localizationKeys))
                 }
-                
             }
             
             /// Guard: No localizedStrings for this node
@@ -1045,4 +1200,8 @@ func ScreenshotAndMetadata_description_from_key_value_pairs(_ pairs: [(String, C
     result += "\n}"
     
     return result
+}
+
+func currentFilePath(_path: NSString = #file) -> NSString {
+    return _path
 }

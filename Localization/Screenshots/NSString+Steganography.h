@@ -9,16 +9,19 @@
 
 #import <Foundation/Foundation.h>
 #import "DisableSwiftBridging.h"
+#import "MFDataClass.h"
 
-
-NS_ASSUME_NONNULL_BEGIN
+MFDataClassInterface2(MFDataClassBase, FoundSecretMessage,
+    readwrite, strong, nonnull, NSString *, secretMessage,
+    readwrite, assign,        , NSRange,    rangeInString
+)
 
 @interface NSAttributedString (MFSteganography)
 
 /// Interface
 
 - (MF_SWIFT_UNBRIDGED(NSAttributedString *))attributedStringByAppendingStringAsSecretMessage:(MF_SWIFT_UNBRIDGED(NSString *))message NS_REFINED_FOR_SWIFT;
-- (MF_SWIFT_UNBRIDGED(NSArray<NSString *> *))secretMessages NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSArray<FoundSecretMessage *> *))secretMessages NS_REFINED_FOR_SWIFT;
 
 @end
 
@@ -28,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (MF_SWIFT_UNBRIDGED(NSString *))stringByAppendingStringAsSecretMessage:(MF_SWIFT_UNBRIDGED(NSString *))message NS_REFINED_FOR_SWIFT;
 - (MF_SWIFT_UNBRIDGED(NSString *))encodedAsSecretMessage NS_REFINED_FOR_SWIFT;
-- (MF_SWIFT_UNBRIDGED(NSArray<NSString *> *))secretMessages NS_REFINED_FOR_SWIFT;
+- (MF_SWIFT_UNBRIDGED(NSArray<FoundSecretMessage *> *))secretMessages NS_REFINED_FOR_SWIFT;
 - (MF_SWIFT_UNBRIDGED(NSString *))withoutSecretMessages NS_REFINED_FOR_SWIFT;
 
 /// Internal
@@ -43,5 +46,3 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)UTF32CharacterDescription;
 
 @end
-
-NS_ASSUME_NONNULL_END

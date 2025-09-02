@@ -42,7 +42,7 @@ AXUIElementRef getAXUIElementForXCElementSnapshot(id<XCUIElementSnapshot> snapsh
     /// - We want to do this so there's context for localizers about where an NSMenu appears inside the app (If you just screenshot the entire parent window, the NSMenu will be cut off if it extendes beyond the window bounds, but if you screenshot the NSMenu, there is no context.)
     /// - If the `screenshotFrame` we output includes off-screen areas, those will automatically be excluded from the screenshots that the XCUI framework takes.
     
-    swizzleMethodOnClassAndSubclasses([XCUIElement class], @{ @"framework": @"XCTest" }, @selector(screenshotFrame), MakeInterceptorFactory(NSRect, (), {
+    swizzleMethodOnClassAndSubclasses([XCUIElement class], @{ @"framework": @"XCTest" }, @selector(screenshotFrame), InterceptorFactory_Begin(NSRect, ())
         
         /// Call original implementation
         NSRect r = OGImpl();
@@ -92,7 +92,7 @@ AXUIElementRef getAXUIElementForXCElementSnapshot(id<XCUIElementSnapshot> snapsh
             /// Return
             return r;
         }
-    }));
+    InterceptorFactory_End());
 }
 
 @end

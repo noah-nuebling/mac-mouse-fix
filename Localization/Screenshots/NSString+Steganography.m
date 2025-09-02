@@ -18,6 +18,11 @@
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #endif
 
+MFDataClassImplement2(MFDataClassBase, FoundSecretMessage,
+    readwrite, strong, nonnull, NSString *, secretMessage,
+    readwrite, assign,        , NSRange,    rangeInString
+)
+
 @implementation NSAttributedString (MFSteganography)
 
 - (NSAttributedString *)attributedStringByAppendingStringAsSecretMessage:(NSString *)message {
@@ -26,7 +31,7 @@
     return result;
 }
 
-- (NSArray<NSString *> *)secretMessages {
+- (NSArray<FoundSecretMessage *> *)secretMessages {
     NSArray *result = [self.string secretMessages];
     return result;
 }
@@ -125,7 +130,7 @@ static NSRegularExpression *secretMessageRegex(void) {
     return result;
 }
 
-- (NSArray<NSString *> *)secretMessages {
+- (NSArray<FoundSecretMessage *> *)secretMessages {
  
     /// Declare result
     NSMutableArray *result = [NSMutableArray array];
@@ -140,7 +145,8 @@ static NSRegularExpression *secretMessageRegex(void) {
         NSRange r = [match range];
         NSString *encodedMessage = [self substringWithRange:r];
         NSString *decodedMessage = [encodedMessage decodedAsSecretMessage];
-        [result addObject:decodedMessage];
+        
+        [result addObject: [[FoundSecretMessage alloc] initWith_secretMessage: decodedMessage rangeInString: r]];
     }
     
     /// Return
@@ -342,7 +348,7 @@ static NSRegularExpression *secretMessageRegex(void) {
     UTF32Char buffer[characters.count + 1]; /// Don't need the + 1 (null terminator) here I think.
     int i = 0;
     for (NSNumber *character in characters) {
-        UTF32Char c = [character intValue];
+        UTF32Char c = [character unsignedIntValue];
         buffer[i] = c;
         i++;
     }
@@ -467,7 +473,7 @@ static NSRegularExpression *secretMessageRegex(void) {
     for (int i = 0; i < UTF32Chars.count; i++) {
         
         /// Get UTF32Char
-        UTF32Char c = [UTF32Chars[i] intValue];
+        UTF32Char c = [UTF32Chars[i] unsignedIntValue];
         
         /// Append to result when we hit a byte divider
         BOOL isByteDivider = i % 9 == 0;

@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>App - Iterate.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
 		<key>App - Release.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -400,7 +405,7 @@
 		<key>XCStringsDummyApp.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>9</integer>
+			<integer>10</integer>
 		</dict>
 		<key>xcstrings dummy target.xcscheme_^#shared#^_</key>
 		<dict>
