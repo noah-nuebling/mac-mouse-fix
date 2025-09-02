@@ -175,7 +175,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
     + (NSString *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName { \
         return @{ \
             @(#n1):     @[@(#u1), @(#t1)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
     { \
@@ -214,7 +214,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
         return @{ \
             @(#n1):     @[@(#u1), @(#t1)], \
             @(#n2):     @[@(#u2), @(#t2)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -263,7 +263,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n1):     @[@(#u1), @(#t1)], \
             @(#n2):     @[@(#u2), @(#t2)], \
             @(#n3):     @[@(#u3), @(#t3)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -322,7 +322,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n2):     @[@(#u2), @(#t2)], \
             @(#n3):     @[@(#u3), @(#t3)], \
             @(#n4):     @[@(#u4), @(#t4)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -391,7 +391,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n3):     @[@(#u3), @(#t3)], \
             @(#n4):     @[@(#u4), @(#t4)], \
             @(#n5):     @[@(#u5), @(#t5)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -470,7 +470,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n4):     @[@(#u4), @(#t4)], \
             @(#n5):     @[@(#u5), @(#t5)], \
             @(#n6):     @[@(#u6), @(#t6)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -559,7 +559,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n5):     @[@(#u5), @(#t5)], \
             @(#n6):     @[@(#u6), @(#t6)], \
             @(#n7):     @[@(#u7), @(#t7)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -658,7 +658,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n6):     @[@(#u6), @(#t6)], \
             @(#n7):     @[@(#u7), @(#t7)], \
             @(#n8):     @[@(#u8), @(#t8)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -767,7 +767,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n7):     @[@(#u7), @(#t7)], \
             @(#n8):     @[@(#u8), @(#t8)], \
             @(#n9):     @[@(#u9), @(#t9)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -886,7 +886,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n8):     @[@(#u8), @(#t8)], \
             @(#n9):     @[@(#u9), @(#t9)], \
             @(#n10):    @[@(#u10), @(#t10)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -1015,7 +1015,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n9):     @[@(#u9), @(#t9)], \
             @(#n10):    @[@(#u10), @(#t10)], \
             @(#n11):    @[@(#u11), @(#t11)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -1154,7 +1154,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n10):    @[@(#u10), @(#t10)], \
             @(#n11):    @[@(#u11), @(#t11)], \
             @(#n12):    @[@(#u12), @(#t12)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -1303,7 +1303,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n11):    @[@(#u11), @(#t11)], \
             @(#n12):    @[@(#u12), @(#t12)], \
             @(#n13):    @[@(#u13), @(#t13)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -1462,7 +1462,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n12):    @[@(#u12), @(#t12)], \
             @(#n13):    @[@(#u13), @(#t13)], \
             @(#n14):    @[@(#u14), @(#t14)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -1631,7 +1631,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n13):    @[@(#u13), @(#t13)], \
             @(#n14):    @[@(#u14), @(#t14)], \
             @(#n15):    @[@(#u15), @(#t15)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
