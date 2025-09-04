@@ -410,13 +410,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		4F8B01AF2C348A3A00F3AF8D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 4FCECD7821092354001F1078 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 4F94F5ED25E5EC2500D9F24A;
-			remoteInfo = "Mac Mouse Fix";
-		};
 		4F94F73525E6138800D9F24A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4FCECD7821092354001F1078 /* Project object */;
@@ -7881,7 +7874,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				4F8B01B02C348A3A00F3AF8D /* PBXTargetDependency */,
 			);
 			name = "Localization Screenshot Taker";
 			productName = AppUITests;
@@ -8532,11 +8524,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		4F8B01B02C348A3A00F3AF8D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 4F94F5ED25E5EC2500D9F24A /* Mac Mouse Fix */;
-			targetProxy = 4F8B01AF2C348A3A00F3AF8D /* PBXContainerItemProxy */;
-		};
 		4F94F73625E6138800D9F24A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4FCECD7F21092354001F1078 /* Mac Mouse Fix Helper */;
@@ -8675,6 +8662,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = LocalizationScreenshotTaker/LocalizationScreenshotTaker.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -8695,6 +8683,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.noah-nuebling.localization-screenshot-taker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_XC_TEST REPLACE_COCOALUMBERJACK";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "LocalizationScreenshotTaker/LocalizationScreenshotTaker-Bridging-Header.h";
@@ -8711,6 +8700,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_ENTITLEMENTS = LocalizationScreenshotTaker/LocalizationScreenshotTaker.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LM5Z78756B;
@@ -8727,6 +8717,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.noah-nuebling.localization-screenshot-taker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_XC_TEST REPLACE_COCOALUMBERJACK";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "LocalizationScreenshotTaker/LocalizationScreenshotTaker-Bridging-Header.h";
@@ -8954,6 +8945,7 @@
 				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				EXCLUDED_ARCHS = "";
 				EXCLUDED_SOURCE_FILE_NAMES = "*_old_*";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
