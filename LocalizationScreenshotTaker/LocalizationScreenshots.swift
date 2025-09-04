@@ -7,6 +7,11 @@
 // --------------------------------------------------------------------------
 //
 
+/// __Caution:__ Running these tests __does not build the MMF app__! [Sep 2025]
+///     - Achieved this by making `Build Phases > Target Dependencies` empty
+///     - You have to build the MMF target manually
+///     -> This greatly speeds up iteration time, since it doesn't have to build the whole project every time you make a change to the automation/'test' code.
+
 import XCTest
 import Vision
 
@@ -41,6 +46,12 @@ final class LocalizationScreenshotClass: XCTestCase {
         let bundleID: String
     }
     
+    /// Keep in sync with project structure
+    ///     (Paths relative to the project-root)
+    func repoRoot() -> String { return (NSString(#file).deletingLastPathComponent as NSString).deletingLastPathComponent }
+    let CapturedButtonsGuideMMF3_ScreenshotPath1 = "Markdown/Media/%@/CapturedButtons1.jpg" /// The `%@` is to be replaced with the locale code.
+    let CapturedButtonsGuideMMF3_ScreenshotPath2 = "Markdown/Media/%@/CapturedButtons2.jpg"
+    
     ///
     /// Internal datatypes
     ///
@@ -54,8 +65,10 @@ final class LocalizationScreenshotClass: XCTestCase {
         let metadata: Metadata
         
         struct Metadata : CustomStringConvertible {
-            var description: String { ScreenshotAndMetadata_description_from_key_value_pairs([("screenshotName", screenshotName), ("screenshotAnnotations", screenshotAnnotations)]) }
+            var description: String { ScreenshotAndMetadata_description_from_key_value_pairs([("screenshotName", screenshotName), ("snapshotTree", "<description prolly to long and not useful>"), ("screenshotAnnotations", screenshotAnnotations)]) }
             let screenshotName: String
+            let screenshotFrame: NSRect                     /// [Aug 2025] Position of the screenshot relative to the screen. Used to convert frames of `XCUIElementSnapshot`s into screenshot-space.
+            let snapshotTree: TreeNode<XCUIElementSnapshot> /// [Aug 2025] Only used for `testTakeScreenshots_Documentation()`, not for `testTakeScreenshots_Localization()` – Should we use the same datastructure for both?
             let screenshotAnnotations: [Frame]
             
             struct Frame : CustomStringConvertible {
@@ -99,32 +112,20 @@ final class LocalizationScreenshotClass: XCTestCase {
     ///
     /// (shared) (f)unctions between different screenshot-taking tests
     ///
+    func sharedf_mainapp_url() -> URL  { return URL(fileURLWithPath: XCUIApplication().value(forKey: "path") as! String) }
+    func sharedf_helper_url() -> URL   { return sharedf_mainapp_url().appendingPathComponent("Contents/Library/LoginItems/Mac Mouse Fix Helper.app") }
     
-    func sharedfunctions_helper_url(_ mainApp: XCUIApplication) -> URL {
-        let result = URL(fileURLWithPath: (mainApp.value(forKey:"path") as! NSString).appendingPathComponent("Contents/Library/LoginItems/Mac Mouse Fix Helper.app"))
-        return result
-    }
-    
-    func sharedfunctions_validate_that_main_app_is_enabled(_ window: XCUIElement, _ toolbarButtons: XCUIElementQuery) {
+    func sharedf_validate_that_main_app_is_enabled(_ window: XCUIElement, _ toolbarButtons: XCUIElementQuery) {
         
         /// [Aug 2025] We launch the helper manually and only check that the mainApp has connected to the helper here. (Instead of trying to enable the helper through the mainApp UI)
         ///     This lets us pass launchArguments to the helper (not sure that's always necessary / overcomplicates things tho)
         
-        /// Go to general tab
-        toolbarButtons["general"].click()
-        coolWait()
-        
-        /// Find enable toggle
-        let switcherino = window.switches["axEnableToggle"].firstMatch
-        
-        /// Assert that the app is enabled
-        ///     We're launching the helper directly from the testRunner, so we can pass it arguments
-        if ((switcherino.value as! Int) != 1) {
+        if (!toolbarButtons["scrolling"].isEnabled) {
             XCTFail("Error: The app does not seem to be enabled, the test should do this automatically")
         }
     }
     
-    func sharedfunctions_do_test_intro(outputDir: String?, fallbackTempDirName: String?) -> URL {
+    func sharedf_do_test_intro(outputDir: String?, fallbackTempDirName: String?) -> URL {
         
         /// Configure test
         self.continueAfterFailure = false
@@ -152,14 +153,14 @@ final class LocalizationScreenshotClass: XCTestCase {
         return outputDir_URL
     }
     
-    func sharedfunctions_find_elements_for_navigating_main_app() -> (NSScreen, XCUIElement, XCUIElementQuery, XCUIElement) {
+    func sharedf_find_elements_for_navigating_main_app() -> (NSScreen, XCUIElement, XCUIElementQuery, XCUIElement) {
         let screen = NSScreen.main!
         let window = app!.windows.firstMatch
         let toolbarButtons = window.toolbars.firstMatch.children(matching: .button) /// `window.toolbarButtons` doesn't work for some reason.
         let menuBar = app!.menuBars.firstMatch
         return (screen, window, toolbarButtons, menuBar)
     }
-    func sharedfunctions_position_main_app_window(_ screen: NSScreen, _ window: XCUIElement, targetWindowY: Double) {
+    func sharedf_position_main_app_window(_ screen: NSScreen, _ window: XCUIElement, targetWindowY: Double) {
         
         /// `targetWindowY` arg is normalized between 0 and 1
         
@@ -173,6 +174,100 @@ final class LocalizationScreenshotClass: XCTestCase {
         var error: NSDictionary? = nil
         appleScript?.executeAndReturnError(&error)
         assert(error == nil)
+    }
+    
+    struct StringLocation {
+        var uiString: String
+        var roughBoundingBox: NSRect?
+        var exactBoundingBox: NSRect?
+    }
+    func sharedf_find_exact_bounding_boxes_using_ocr(_ screenshotAndMetadata: ScreenshotAndMetadata, desiredKeys: [String]) throws -> [StringLocation] {
+        
+        var result = [StringLocation]()
+        
+        /// Extract the `roughBoundingBox`es and `uiStrings` for the `desiredKeys` from the `screenshotAndMetadata`
+        outerLoop: for annotation in screenshotAndMetadata.metadata.screenshotAnnotations {
+            for locstring in annotation.localizableStringsInFrame {
+                for stringAnnotation in locstring.stringAnnotations {
+                    for desiredKey in desiredKeys
+                    {
+                        if desiredKey == stringAnnotation.key {
+                            result.append(StringLocation.init(
+                                uiString: stringAnnotation.uiString,
+                                roughBoundingBox: MFCGRectFlip(annotation.frame, screenshotAndMetadata.screenshot.image.size.height) /// [Aug 2025] Flip the frame cause the VNImage framework expects that.`
+                            ))
+                            continue outerLoop;
+                        }
+                    }
+                }
+            }
+        }
+        
+        /// Use OCR to find the `exactBoundingBox`es
+        do {
+            let requestHandler = VNImageRequestHandler(cgImage: screenshotAndMetadata.screenshot.image.cgImage(forProposedRect: nil, context: nil, hints: nil)!)
+            let request = VNRecognizeTextRequest(completionHandler: nil)
+            request.automaticallyDetectsLanguage = true
+            /// Ideas:
+            ///     For the `VNRecognizeTextRequest` we could pass in more information like `recognitionLanguages`, `usesLanguageCorrection`, `customWords` or `regionOfInterest`. But this works fine. [Sep 2025]
+            ///         We actually tried using `regionOfInterest`. I guess that would be more efficient. But it seems to make the boundingBoxes buggy (See: FB20053876)
+            try requestHandler.perform([request])
+            outerLoop: for i in result.indices {
+                for requestResult in request.results! {
+                    for candidate in requestResult.topCandidates(999) {
+                        if candidate.string.contains(result[i].uiString) {
+                            let foundBoundingBox        = try candidate.boundingBox(for: candidate.string.range(of: result[i].uiString)!)
+                            let foundBoundingBox_AsRect = VNImageRectForNormalizedRect(
+                                foundBoundingBox!.boundingBox,
+                                Int(screenshotAndMetadata.screenshot.image.size.width),
+                                Int(screenshotAndMetadata.screenshot.image.size.height)
+                            )
+                            if !result[i].roughBoundingBox!.insetBy(dx: -20, dy: -20) /// [Sep 2025] Observing 6 to be necessary on the x axis for `taste 5 klicken + mittlere Taste klicken` in German. || Update: Now suddenly `dx:-16` is necessary for `5 Düğmesi` (Worked find before)
+                                .contains(foundBoundingBox_AsRect) { continue }
+                            /// Shrink the frame to the recognized region
+                            do {
+                                var foundBoundingBox_AsRect_YAdjusted = foundBoundingBox_AsRect
+                                foundBoundingBox_AsRect_YAdjusted.origin.y = result[i].roughBoundingBox!.origin.y       /// Actually, the OCR tends to make the frames a bit too small on the Y-axis so we use the `roughBoundingBox`'s values for that.
+                                foundBoundingBox_AsRect_YAdjusted.size.height = result[i].roughBoundingBox!.size.height
+                                var frameToHighlight = result[i]
+                                frameToHighlight.exactBoundingBox = foundBoundingBox_AsRect_YAdjusted
+                                result[i] = frameToHighlight
+                            }
+
+                            continue outerLoop
+                        }
+                    }
+                }
+                assert(false, "No piece of recognized text found that matches \(result[i].uiString) in region of the image \(result[i].roughBoundingBox!)")
+            }
+        }
+        
+        return result
+    }
+    
+    func sharedf_snapshot_frame_to_screenshot_frame(_ snapshot_frame: NSRect, screenshot_frame_in_screen: NSRect) -> NSRect {
+        
+        /// Convert from the frame of an `XCUIElementSnapshot` into the frame of that element in a screenshot of the app.
+        ///     [Sep 2025] The result seems to be exactly the frame that an .xcloc file expects. For other APIs (like VNImage) we need to apply `MFCGRectFlip()` before passing these frames in.
+        
+        /// Convert from screen coordinate system to screenshot's coordinate system
+        ///     This is a few pixels off from what I measured with PixelSnap 2 and the values in Interface Builder, but that should be ok.
+        
+        var frame = snapshot_frame
+        frame = NSRect(x: frame.minX - screenshot_frame_in_screen.minX,
+                       y: frame.minY - screenshot_frame_in_screen.minY,
+                       width: frame.width,
+                       height: frame.height)
+        
+        /// Scale to screenshot resolution
+        ///     The screenshot will usually have double resolution compared the internal coordinate system. Retina stuff I think.
+        let bsf = NSScreen.screens[0].backingScaleFactor /// Not sure it matters which screen we use.
+        frame = NSRect(x: bsf*frame.minX,
+                       y: bsf*frame.minY,
+                       width: bsf*frame.width,
+                       height: bsf*frame.height)
+        
+        return frame
     }
     
     
@@ -204,6 +299,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                 - Generate the screenshots programmatically
                 - DELETE unnecessary comments above
              */
+        
         do {
             /// Sidenote:
             ///     [Aug 2025] I tried to define `CapturedButtonsGuideMMF3_ScreenshotRemaps` as Swift by converting the plist to Swift source code via plutil, but plutil converted empty dict to empty array which made MMF crash.
@@ -218,156 +314,191 @@ final class LocalizationScreenshotClass: XCTestCase {
         }
         
         /// Do test intro
-        let outputDir = sharedfunctions_do_test_intro(outputDir: nil, fallbackTempDirName: "MF_DOC_SCREENSHOT_TEST")
+        let outputDir = sharedf_do_test_intro(outputDir: nil, fallbackTempDirName: "MF_DOC_SCREENSHOT_TEST")
         
-        /// Launch main app.
-        var app = XCUIApplication()
-        app.launchArguments.append(localized_string_annotation_activation_argument_for_screenshotted_app)
-        app.launchArguments += ["-AppleLanguages", "(vi)"]
-        app.launch()
-        self.app = app
+        var localizations =
+            //["ko"]
+            Bundle(url: sharedf_mainapp_url())!.localizations.filter { $0 != "Base" }
         
-        /// Launch helper app
-        var helperApp = XCUIApplication(url: sharedfunctions_helper_url(app))
-        helperApp.launchArguments.append(localized_string_annotation_activation_argument_for_screenshotted_app)
-        helperApp.launch()
-        
-        /// Find elements
-        let (screen, window, toolbarButtons, menuBar) = sharedfunctions_find_elements_for_navigating_main_app()
-        
-        /// Validate mainApp enabled
-        sharedfunctions_validate_that_main_app_is_enabled(window, toolbarButtons)
-        
-        /// Take screenshots
-        do {
-        
-            /// Switch to buttons tab
-            toolbarButtons["buttons"].click()
-            coolWait()
-            
-            /// Dismiss restoreDefaultsPopover, in case it pops up.
-            ///     [Aug 2025] Copied from `navigateAppAndTakeScreenshots()`. Not sure if necessary here.
-            hitEscape()
-            coolWait()
-            
-            /// Take screenshot!
-            var screenshotAndMetadata: ScreenshotAndMetadata? = takeLocalizationScreenshot(of: window, name: "ButtonsTab Screenshot For Documentation")
-            print("doc screenshot (and metadata): \(screenshotAndMetadata!)")
-            let image = screenshotAndMetadata!.screenshot.image /// Shorthand for later
-            
-            
-            /// keys we prolly wanna highlight:
-            ///     First screenshot:
-            ///     - trigger.y.group-row.button-name.middle
-            ///     - trigger.y.group-row.button-name.numbered
-            ///     - trigger.substring.button-name.numbered
-            ///     Second screenshot:
-            ///     - trigger.y.group-row.button-name.numbered
-            ///     - The two minus buttons (Don't have localized strings attached to them I think)
-            
-            struct ToHighlight {
-                var frame: NSRect
-                var uiString: String
-                var recognizedString: String?
-            }
-            var framesToHighlight = [ToHighlight]()
-            
-            outerLoop: for annotation in screenshotAndMetadata!.metadata.screenshotAnnotations {
-                for locstring in annotation.localizableStringsInFrame {
-                    for stringAnnotation in locstring.stringAnnotations {
-                        for desiredKey in ["trigger.y.group-row.button-name.middle",
-                                           "trigger.y.group-row.button-name.numbered",
-                                           "trigger.substring.button-name.numbered"]
-                        {
-                            if desiredKey == stringAnnotation.key {
-                                framesToHighlight += [ToHighlight.init(
-                                    frame: MFCGRectFlip(annotation.frame, image.size.height), /// [Au 2025] Flip the frame cause the VNImage framework expects that.
-                                    uiString: stringAnnotation.uiString)
-                                ]
-                                continue outerLoop;
-                            }
-                        }
-                    }
-                }
-            }
-            
-            /// BOOKMARK (TODO):
-            ///     - [ ] Make `NSString+Steganography.m` insert an end-marker so we can extract exactly where a localizable string starts and ends in the UIString
-            ///         -> Then use this with OCR to exactly highlight a localizable string.
-            ///         - [ ] Also remove the then-unnecessary change where `NSString+Steganography.m` inserts the localizer-facing string verbatim (we don't need that)
-            
-            /// Use OCR to shrink the frames
-            if (true) {
-                
-                let requestHandler = VNImageRequestHandler(cgImage: image.cgImage(forProposedRect: nil, context: nil, hints: nil)!, orientation: .up, options: [:])
-                
-                for (i, var frameToHighlight) in framesToHighlight.enumerated() {
-                    let request = VNRecognizeTextRequest(completionHandler: nil)
-                      request.recognitionLevel = .accurate   /// [Sep 2025] Observed `.fast` give wrong resuts for Vietnamese. But `.accurate` apparently has boundingBox bug (See: https://stackoverflow.com/q/61214811/10601702)
-                    request.usesLanguageCorrection = false /// Doesn't work in Chinese according to docs? And may not be necessary
-                    if (true) {
-                    request.regionOfInterest = VNNormalizedRectForImageRect(frameToHighlight.frame, Int(image.size.width), Int(image.size.height))
-                    }
-                    
-                    if (false) {
-                        let supportedLanguages = try request.supportedRecognitionLanguages()
-                        print(supportedLanguages)
-                    }
-                    try requestHandler.perform([request])
-                    assert(!request.results!.isEmpty)
-                    
-                    var foundResult: VNRecognizedTextObservation? = nil
-                    var foundCandidate: VNRecognizedText? = nil
-                    
-                    assert( /// Assert: Only 1 candidate
-                        request.results?.count == 1 &&
-                        request.results?.first?.topCandidates(999).count == 1
-                   )
-                    
-                    for result in request.results! {
-                        for candidate in result.topCandidates(999) {
-                            if candidate.string.contains(frameToHighlight.uiString) {
-                                foundResult = result
-                                foundCandidate = candidate
-                                break
-                            }
-                        }
-                    }
-                    assert(foundCandidate != nil)
-                    assert(foundResult != nil)
-                    
-                    let foundBoundingBox        = try foundCandidate!.boundingBox(for: foundCandidate!.string.range(of: frameToHighlight.uiString)!)
-                    let foundBoundingBox_AsRect = VNImageRectForNormalizedRect(foundBoundingBox!.boundingBox, Int(image.size.width), Int(image.size.height))
-                    frameToHighlight.frame = foundBoundingBox_AsRect
-                    frameToHighlight.recognizedString = foundCandidate?.string
-                    framesToHighlight[i] = frameToHighlight /// Have to do weird shenanigans here due to Swift stdlib value type 'simplification' I think.
-                }
-            }
-            
-            
-            
-            /// Draw the image
-            let resultImage = NSImage.init(size: image.size, flipped: false) { rect in
-                
-                NSGraphicsContext.current!.saveGraphicsState() /// Is this necessary? [Aug 2025]
-                image.draw(in: rect)
-                    
-                /// Draw the rectangles
-                for frameToHighlight in framesToHighlight {
-                    NSColor.systemRed.setStroke()
-                    let rectPath = NSBezierPath(rect: frameToHighlight.frame)
-                    rectPath.lineWidth = 3
-                    rectPath.stroke()
-                }
-                NSGraphicsContext.current!.restoreGraphicsState()
-                return true
-            }
-            
-            print(resultImage)
+        let localization_ToContinueFrom: String? =
+            nil
+            //"tr"; /// Set this in case of interruption to avoid redoing all the already-completed localizations
+        if let localization_ToContinueFrom {
+            localizations = Array(localizations.suffix(from: localizations.firstIndex(of: localization_ToContinueFrom)!))
         }
         
+        for languageCode in localizations {
+            
+            /// Launch main app.
+            let app = sharedf_launch_app(
+                url: sharedf_mainapp_url(),
+                args: [
+                    localized_string_annotation_activation_argument_for_screenshotted_app,
+                    "-AppleLanguages", "(\(languageCode))"
+                ],
+                env: [:],
+                leave_app_running: (localizations.count <= 1 ? true : false) /// Restart the app so its using the right language we specified ––– or leave it running for faster iterations if there's only one language
+            )
+            
+            self.app = app
+            
+            /// Launch helper app
+            let helperApp = sharedf_launch_app(
+                url: sharedf_helper_url(),
+                args: [
+                    localized_string_annotation_activation_argument_for_screenshotted_app,
+                    "-AppleLanguages", "(\(languageCode))"
+                ],
+                env: [:],
+                leave_app_running: (localizations.count <= 1 ? true : false)
+            )
+            
+            /// Find elements
+            let (screen, window, toolbarButtons, menuBar) = sharedf_find_elements_for_navigating_main_app()
+                
+            /// Navigate to the buttons tab
+            do {
+                
+                /// Validate mainApp enabled
+                sharedf_validate_that_main_app_is_enabled(window, toolbarButtons)
+                
+                /// Switch to buttons tab
+                toolbarButtons["buttons"].click()
+                coolWait()
+                
+                /// Dismiss restoreDefaultsPopover, in case it pops up.
+                ///     [Aug 2025] Copied from `navigateAppAndTakeScreenshots()`. Not sure if necessary here.
+                hitEscape()
+                coolWait()
+            }
+            
+            /// Take screenshots
+            do {
+                
+                /// Take screenshot!
+                var screenshotAndMetadata: ScreenshotAndMetadata? = takeLocalizationScreenshot(of: window, name: "ButtonsTab Screenshot For Documentation")
+                print("doc screenshot (and metadata): \(screenshotAndMetadata!)")
+                let image = screenshotAndMetadata!.screenshot.image /// Shorthand for later
+                
+                
+                /// keys we prolly wanna highlight:
+                ///     First screenshot:
+                ///     - trigger.y.group-row.button-name.middle
+                ///     - trigger.y.group-row.button-name.numbered
+                ///     - trigger.substring.button-name.numbered
+                ///     Second screenshot:
+                ///     - trigger.y.group-row.button-name.numbered
+                ///     - The two minus buttons (Don't have localized strings attached to them I think)
+                
+                /// Find boundingBoxes
+                
+                var boundingBoxes1 = [NSRect]()
+                var boundingBoxes2 = [NSRect]()
+                
+                do {
+                    /// boundingBoxes for first image
+                    do {
+                        /// Highlight the first appearance of "Middle Button", "Button 5" and "Button 4", respectively
+                        let searchedStrings = try sharedf_find_exact_bounding_boxes_using_ocr(screenshotAndMetadata!, desiredKeys: [
+                            "trigger.y.group-row.button-name.middle",
+                            "trigger.substring.button-name.numbered",
+                            "trigger.y.group-row.button-name.numbered",
+                        ])
+                        for string in searchedStrings {
+                            boundingBoxes1.append(string.exactBoundingBox!)
+                        }
+                    }
+                    
+                    /// boundingBoxes for second image
+                    do {
+                        
+                        /// Highlight the "Button 4" groupRow
+                        let locatedLocalizedStrings = try sharedf_find_exact_bounding_boxes_using_ocr(screenshotAndMetadata!, desiredKeys: [
+                            "trigger.y.group-row.button-name.numbered"
+                        ])
+                        assert(locatedLocalizedStrings.count == 1)
+                        boundingBoxes2.append(locatedLocalizedStrings[0].exactBoundingBox!)
+                        
+                        /// Highlight the '-' buttons below the "Button 4" groupRow
+                        for node in screenshotAndMetadata!.metadata.snapshotTree.depthFirstEnumerator() {
+                            let node = node as! TreeNode<XCUIElementSnapshot>
+                            let elementSnapshot = node.representedObject!
+                            if (elementSnapshot.elementType == .button && elementSnapshot.identifier == "deleteButton") {
+                                var frame = sharedf_snapshot_frame_to_screenshot_frame(elementSnapshot.frame, screenshot_frame_in_screen: screenshotAndMetadata!.metadata.screenshotFrame)
+                                frame = MFCGRectFlip(frame, screenshotAndMetadata!.screenshot.image.size.height)
+                                if locatedLocalizedStrings[0].exactBoundingBox!.maxY < frame.minY { continue } /// We only wanna highlight the `deleteButton`s *below* the "Button 4" group row
+                                frame = frame.insetBy(dx: -5, dy: -5)                                          /// Put small margin around the highlighted element for better visuals
+                                boundingBoxes2.append(frame)
+                            }
+                        }
+                    }
+                }
+                
+                /// Create images with markup and write them to file
+                let allBoundingBoxes = [boundingBoxes1, boundingBoxes2]
+                let allFilePaths     = [CapturedButtonsGuideMMF3_ScreenshotPath1, CapturedButtonsGuideMMF3_ScreenshotPath2]
+                let allUrls          = allFilePaths.map({ URL(fileURLWithPath: repoRoot() + "/" + String(format: $0, languageCode)) })
+                for i in 0...1 {
+                
+                    /// Draw the images (with boundingBoxes)
+                    let resultImage = NSImage.init(size: image.size, flipped: false) { rect in
+                        image.draw(in: rect)
+                        for var frameToHighlight in allBoundingBoxes[i] {
+                            NSColor.systemRed.setStroke()
+                            let rectPath = NSBezierPath()
+                            rectPath.lineWidth = 3
+                            frameToHighlight = frameToHighlight.insetBy(dx: -rectPath.lineWidth/2, dy: -rectPath.lineWidth/2) /// Make the line appear *outside* the frame
+                            rectPath.appendRect(frameToHighlight)
+                            rectPath.stroke()
+                        }
+                        return true
+                    }
+                    /// Write the images to file
+                        
+                    let cgImage = resultImage.cgImage(forProposedRect: nil, context: nil, hints: [:])!
+                    let imageRep = NSBitmapImageRep(cgImage: cgImage) /// Could also use `CGImageDestinationCreateWithURL()` – not sure if there are differences - we care about having small, high-quality output (Since I plan to check in these images into git and display them to users in our docs)
+                    let data = imageRep.representation(using: .jpeg, properties: [.compressionFactor : 0.0]) /// Lowest quality. TODO: Optimize. Idea: Downscale and compress less?
+                    
+                    try! FileManager.default.createDirectory(at: allUrls[i].deletingLastPathComponent(), withIntermediateDirectories: true, attributes: [:])
+                    try! data?.write(to: allUrls[i], options: [.atomic])
+                }
+                NSWorkspace.shared.activateFileViewerSelecting(allUrls)
+            }
+        }
+    }
+    
+    func sharedf_launch_app(url: URL, args: [String], env: [String: String], leave_app_running: Bool) -> XCUIApplication {
         
-        // TODO: Draw highlights around the desired uiStrings and render them out to a file and stuff
+        if (leave_app_running) { /// This will not kill the app after the testrunner quits. And when the app is already running, it will attach the testrunner to the running app – the goal of this is to help speed-up iteration during development.
+            
+            let alreadyRunning = XCUIApplication(url: url).state == .notRunning
+            if alreadyRunning || true { /// Open even if already running, to bring it to the foreground. Otherwise I see weird errors on .click() later [Sep 4 2025]
+                let config = NSWorkspace.OpenConfiguration()
+                config.arguments = args
+                config.environment = env
+                let semaphore = DispatchSemaphore(value: 0)
+                NSWorkspace.shared.openApplication(at: url, configuration: config) { runningApp, err in semaphore.signal() }
+                semaphore.wait() /// Wait until the app has opened.
+            }
+            var xcapp: XCUIApplication
+            while (true) { /// Wait some more (not sure why this is necessary) [Sep 2025, Tahoe Beta 8]
+                xcapp = XCUIApplication(url: url)
+                if xcapp.state != .notRunning { break }
+            }
+
+            return xcapp
+        }
+        else {
+            let xcapp = XCUIApplication(url: url)
+            xcapp.launchArguments = args
+            xcapp.launchEnvironment = env
+            xcapp.launch()
+            if (false) {
+                let succ = xcapp.wait(for: .runningBackground, timeout: 100) /// Launch the app and wait until it has opened
+                assert(succ)
+            }
+            return xcapp
+        }
     }
     
     ///
@@ -381,7 +512,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         // --------------------------
         
         /// Do test intro
-        let outputDir = sharedfunctions_do_test_intro(
+        let outputDir = sharedf_do_test_intro(
             outputDir:            ProcessInfo.processInfo.environment[xcode_screenshot_taker_output_dir_variable],
             fallbackTempDirName:  "MFLocalizationScreenshotsFallbackOutputFolder"
         )
@@ -392,12 +523,12 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Log
         DDLogInfo("Localization Screenshot Test Runner launched with output directory: \(xcode_screenshot_taker_output_dir_variable): \(outputDir)")
         
-        var mainApp: XCUIApplication
-        mainApp = XCUIApplication()
+        var mainApp = XCUIApplication()
+        NSWorkspace.shared.openApplication(at: sharedf_mainapp_url(), configuration: NSWorkspace.OpenConfiguration())
         
         /// Prepare helper app
         ///     We should launch the helper first, and not let the app enable it, so we can control its launchArguments.
-        let helperApp = XCUIApplication(url: sharedfunctions_helper_url(mainApp))
+        let helperApp = XCUIApplication(url: sharedf_helper_url())
         helperApp.launchArguments.append(localized_string_annotation_activation_argument_for_screenshotted_app)
         helperApp.launch()
         
@@ -565,13 +696,13 @@ final class LocalizationScreenshotClass: XCTestCase {
             return toastScreenshots
         }
         /// Find navigation elements
-        let (screen, window, toolbarButtons, menuBar) = sharedfunctions_find_elements_for_navigating_main_app()
+        let (screen, window, toolbarButtons, menuBar) = sharedf_find_elements_for_navigating_main_app()
         
         /// Position the window
-        sharedfunctions_position_main_app_window(screen, window, targetWindowY: 0.2)
+        sharedf_position_main_app_window(screen, window, targetWindowY: 0.2)
         
         /// Validate that the app is enabled
-        sharedfunctions_validate_that_main_app_is_enabled(window, toolbarButtons)
+        sharedf_validate_that_main_app_is_enabled(window, toolbarButtons)
         
         ///
         /// Screenshot ButtonsTab
@@ -940,8 +1071,6 @@ final class LocalizationScreenshotClass: XCTestCase {
     }
     
     func _takeLocalizationScreenshot(of topLevelElement: XCUIElement, name screenshotBaseName: String) throws -> ScreenshotAndMetadata? {
-            
-
         
         /// Windows and the menuBar are examples of topLevelElements
         ///     If we screenshot them separately we can screenshot all the UI our app is displaying without screenshotting the whole screen.
@@ -985,8 +1114,8 @@ final class LocalizationScreenshotClass: XCTestCase {
             
             /// Unpack node
             let node = nodeAsAny as! TreeNode<XCUIElementSnapshot>
-            let nodeSnapshot = node.representedObject!
-                    
+            let nodeSnapshot: XCUIElementSnapshot = node.representedObject!
+            
             /// Get the underlying AXUIElement
             ///     (since its strings dont have 512 character limit we see in the nodeSnapshot.dictionaryRepresentation())
             ///     (We made a bunch of other decisions based on the 512 character limit, such as using space-efficient quaternaryEncoding for the secretMessages, now the limit doesn't exist anymore.)
@@ -1106,22 +1235,11 @@ final class LocalizationScreenshotClass: XCTestCase {
                 continue
             }
             
-            /// Convert from screen coordinate system to screenshot's coordinate system
-            ///     This is a few pixels off from what I measured with PixelSnap 2 and the values in Interface Builder, but that should be ok.
-            frame = NSRect(x: frame.minX - screenshotFrame.minX,
-                           y: frame.minY - screenshotFrame.minY,
-                           width: frame.width,
-                           height: frame.height)
-            
-            /// Scale to screenshot resolution
-            ///     The screenshot will usually have double resolution compared the internal coordinate system. Retina stuff I think.
-            let bsf = NSScreen.screens[0].backingScaleFactor /// Not sure it matters which screen we use.
-            frame = NSRect(x: bsf*frame.minX,
-                           y: bsf*frame.minY,
-                           width: bsf*frame.width,
-                           height: bsf*frame.height)
+            /// Convert coordinate system of frame from screen coords to screenshot coords
+            frame = sharedf_snapshot_frame_to_screenshot_frame(frame, screenshot_frame_in_screen: screenshotFrame)
             
             /// Append to result
+            
             framesAndStringsAndKeys.append(ScreenshotAndMetadata.Metadata.Frame(frame: frame, localizableStringsInFrame: localizedStrings))
         }
         
@@ -1145,6 +1263,8 @@ final class LocalizationScreenshotClass: XCTestCase {
         if let f = validFramesAndStringsAndKeys {
             let thisResult = ScreenshotAndMetadata(screenshot: screenshot,
                                                    metadata: ScreenshotAndMetadata.Metadata(screenshotName: screenshotBaseName,
+                                                                                            screenshotFrame: screenshotFrame,
+                                                                                            snapshotTree: tree,
                                                                                             screenshotAnnotations: f))
             return thisResult
         } else {
