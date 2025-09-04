@@ -7,6 +7,14 @@
 // --------------------------------------------------------------------------
 //
 
+///
+/// [Sep 2025]
+///     The encoding we're doing here is kinda stupid and obfuscated.
+///         Currently: We make an NSArray of UTF32 characters and convert it to an NSArray of bits and then an NSArray of quaternary digits or something. Too many conversion steps.
+///         Instead: We could simply go over the bits of the string directly and immediately map those to invisible characters. (Or map pairs of bits to invisible characters to get the 'quaternary' encoding)
+///         However: This is just used in our build scripts and it works and is fast enough – so no reason to change it.
+///
+
 #import "NSString+Steganography.h"
 #import "NSAttributedString+Additions.h"
 #import "NSString+Additions.h"
@@ -155,8 +163,8 @@ static NSRegularExpression *secretMessageRegex(void) {
 
 - (NSString *)decodedAsSecretMessage {
         
-    NSInteger startLength = [self secretMessageStartSequence].count;
-    NSInteger endLength = [self secretMessageEndSequence].count;
+    NSUInteger startLength = [self secretMessageStartSequence].count;
+    NSUInteger endLength = [self secretMessageEndSequence].count;
     NSRange coreRange = NSMakeRange(startLength, self.length - startLength - endLength);
     NSString *coreMessage = [self substringWithRange:coreRange];
     
@@ -205,7 +213,7 @@ static NSRegularExpression *secretMessageRegex(void) {
     
     for (NSArray<NSNumber *> *byte in [self binaryArray]) {
         
-        for (int i = 0; i < 8; i += 2) {
+        for (NSUInteger i = 0; i < 8; i += 2) {
             
             int a = [byte[i] intValue];
             int b = [byte[i+1] intValue];
@@ -223,11 +231,11 @@ static NSRegularExpression *secretMessageRegex(void) {
         
     NSMutableArray<NSArray<NSNumber *> *> *binaryArray = [NSMutableArray array];
     
-    for (int i = 0; i < digits.count; i += 4) {
+    for (NSUInteger i = 0; i < digits.count; i += 4) {
         
         NSMutableArray *byte = [NSMutableArray array];
         
-        for (int j = 0; j < 4; j++) {
+        for (NSUInteger j = 0; j < 4; j++) {
             int quartDigit = [digits[i+j] intValue];
             [byte addObject:@((quartDigit & 2) != 0)]; /// Measure large bit of quart digit
             [byte addObject:@((quartDigit & 1) != 0)];  /// Measure small bit of quart digit
@@ -253,7 +261,7 @@ static NSRegularExpression *secretMessageRegex(void) {
     
     const char *str = [self cStringUsingEncoding:NSUTF8StringEncoding];
     
-    for (int i = 0; i < strlen(str); i++) {
+    for (size_t i = 0; i < strlen(str); i++) {
         
         char c = str[i];
         NSMutableArray *byte = [NSMutableArray array];
@@ -278,7 +286,7 @@ static NSRegularExpression *secretMessageRegex(void) {
     
     char resultCString[characters.count + 1];
     
-    for (int i = 0; i < characters.count; i++) {
+    for (NSUInteger i = 0; i < characters.count; i++) {
         
         NSArray<NSNumber *> *characterBits = characters[i];
         
@@ -333,7 +341,7 @@ static NSRegularExpression *secretMessageRegex(void) {
     
     /// Convert to NSArray
     NSMutableArray *result = [NSMutableArray array];
-    for (int i = 0; i < self.length; i++) {
+    for (NSUInteger i = 0; i < self.length; i++) {
         UTF32Char c = buffer[i];
         [result addObject:@(c)];
     }
@@ -470,7 +478,7 @@ static NSRegularExpression *secretMessageRegex(void) {
     
     /// Iterate UTF32 chars
     BOOL isFirstIter = YES;
-    for (int i = 0; i < UTF32Chars.count; i++) {
+    for (NSUInteger i = 0; i < UTF32Chars.count; i++) {
         
         /// Get UTF32Char
         UTF32Char c = [UTF32Chars[i] unsignedIntValue];

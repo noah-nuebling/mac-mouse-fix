@@ -16,6 +16,8 @@ MFDataClassInterface2(MFDataClassBase, FoundSecretMessage,
     readwrite, assign,        , NSRange,    rangeInString
 )
 
+NS_ASSUME_NONNULL_BEGIN /// [Sep 2025] I haven't checked if these are actually  all nonnull but it kinda looks like it? This code is only used for buildscripts anyways, so it shouldn't matter.
+
 @interface NSAttributedString (MFSteganography)
 
 /// Interface
@@ -46,3 +48,5 @@ MFDataClassInterface2(MFDataClassBase, FoundSecretMessage,
 - (NSString *)UTF32CharacterDescription;
 
 @end
+
+NS_ASSUME_NONNULL_END
