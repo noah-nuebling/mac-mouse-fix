@@ -8,8 +8,6 @@
 //
 
 #import "XCUIElement+Additions.h"
-#import "objc/runtime.h"
-@import XCTest;
 
 /// Wrappers for Swift
 ///     We can't import `XCElementSnapshot` into Swift - due to linker errors - and so we have to expose these wrappers using`id<XCUIElementSnapshot>` to Swift instead.)

@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-@import XCTest;
+#import "XCTest/XCTest.h"
 #import "AnnotationUtility.h"
 
 ///
@@ -83,6 +83,7 @@ AXUIElementRef _Nullable getAXUIElementForXCElementSnapshot(id<XCUIElementSnapsh
 ///
 /// Update:
 ///     This is not needed - I found a simpler way: I can link XCElementSnapshot etc fine in objc and then write a wrapper to call from swift.
+///         Update: [Sep 2025] Given my recent experience, I think I could've probably solved all this by adding some private XC framework in the Xcode project menu. (Just like we add SkyLight.framework to get the linker to find all that)
 ///
 /// Usage example:
 ///         To make a c function that calls `-[XCElementSnapshot suggestedHitpointsInRect:cacheResults:]` add this in the .m file:            (Note how `:` is replaced with `__`, since `:` is not allowed in a c-function name)
