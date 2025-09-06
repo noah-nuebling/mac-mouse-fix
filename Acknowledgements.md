@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2025**
 
+- 🇺🇸&nbsp;Harrison&nbsp;Hall - "One of the best Mac Apps"
 - 🇧🇷&nbsp;Jose&nbsp;Tiburcio&nbsp;Ribeiro&nbsp;Netto - "Best utility app ever! Now I don't have to use the MX Master 3 brick."
 - 🇺🇸&nbsp;Patrick&nbsp;Cleavelin - "More important than my editor."
 - 🇺🇸&nbsp;Caldwellbutler
