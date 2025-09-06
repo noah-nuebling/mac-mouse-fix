@@ -40,7 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **September 2025**
 
-- 🇦🇺&nbsp;Zetaloop&nbsp;(//Change&nbsp;Country&nbsp;To&nbsp;China&nbsp;Plz) - "Awesome opensource spirit + code that inspired my project uwu"
+- 🇨🇳&nbsp;Zetaloop - "Awesome opensource spirit + code that inspired my project uwu"
 - 🇺🇸&nbsp;Harrison&nbsp;Hall - "One of the best Mac Apps"
 - 🇧🇷&nbsp;Jose&nbsp;Tiburcio&nbsp;Ribeiro&nbsp;Netto - "Best utility app ever! Now I don't have to use the MX Master 3 brick."
 - 🇺🇸&nbsp;Patrick&nbsp;Cleavelin - "More important than my editor."
