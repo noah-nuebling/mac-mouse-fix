@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2025**
 
+- 🇺🇸&nbsp;Doug&nbsp;Melville - "Bulletproof software that feels mac-native and solves a long-standing problem with style. Worth every penny and then some."
 - 🇬🇧&nbsp;Michael&nbsp;Maddern
 - 🇦🇺&nbsp;Zetaloop&nbsp;(//Change&nbsp;Country&nbsp;To&nbsp;China&nbsp;Plz) - "Awesome opensource spirit + code that inspired my project uwu"
 - 🇺🇸&nbsp;Harrison&nbsp;Hall - "One of the best Mac Apps"
