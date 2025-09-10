@@ -35,6 +35,23 @@
         }
       }
     },
+    "docname.captured-scroll-wheels" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abfangen des Scrollrads"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Capturing of the Scroll Wheel"
+          }
+        }
+      }
+    },
     "docname.readme" : {
       "extractionState" : "manual",
       "localizations" : {

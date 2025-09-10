@@ -66,6 +66,23 @@ AXUIElementRef getAXUIElementForXCElementSnapshot(id<XCUIElementSnapshot> snapsh
             
             /// Return
             return r;
+        
+        } else if (self.elementType == XCUIElementTypeDialog) { /// This logic is meant for **Toasts** – Our ToastNotifications appear as `XCUIElementTypeDialog` elements. Not sure how the classification works
+            
+            /// Get data
+            XCUIElement *mainWindow = [[self.application windows] firstMatch];
+            NSRect winFrame = [mainWindow screenshotFrame];
+            
+            /// Make screenshotFrame
+            ///     Goals for the frame:
+            ///         1. We want to capture the desktop behing the left, top, right edges of the window just like we do for XCUIElementTypeWindow
+            ///         2. But we also want to center the Toast vertically, to emphasize it.
+            ///     Purpose: This will be used in `CapturedButtonsMMF3.md` (where it should look really nice) and in the localizer screenshot (Where the look doesn't matter as much but might as well use the same logic) [Sep 2025]
+            double frameHeight = 2 * (NSMidY(r) - NSMinY(winFrame));
+            NSRect result = NSMakeRect(winFrame.origin.x, winFrame.origin.y, winFrame.size.width, frameHeight);
+            
+            /// Return
+            return result;
             
         } else {
         
@@ -75,8 +92,9 @@ AXUIElementRef getAXUIElementForXCElementSnapshot(id<XCUIElementSnapshot> snapsh
                 extension = 100;
             } else if (self.elementType == XCUIElementTypeSheet) {
                 extension = 100;
-            } else if (self.elementType == XCUIElementTypeDialog) { /// Our toastNotifications appear as dialog elements. Not sure how the classification works
-                extension = 100;
+            } else if (self.elementType == XCUIElementTypeWindow) {
+                if ((0)) extension = 70; /// Matches margins in our old `Captured Buttons #112`. To be used in new `CapturedButtonsGuideMMF3.md` [Sep 8 2025]
+                else     extension = 30; /// Looks better? [Sep 8 2025]
             } else if (self.elementType == XCUIElementTypePopover) {
                 extension = 90;                                    /// Popovers already have an extended screenshot frame naturally
             } else {

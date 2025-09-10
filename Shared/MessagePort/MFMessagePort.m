@@ -195,6 +195,11 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         BOOL didShowAll = [ToastAndSheetTests didShowAllToastsAndSheets];
         response = @(didShowAll);
     }
+    xxx(@"showCaptureToast") {
+        NSSet<NSNumber *> *before = ((NSDictionary *)payload)[@"before"];
+        NSSet<NSNumber *> *after  = ((NSDictionary *)payload)[@"after"];
+        [ToastAndSheetTests showCaptureToastBefore: before after: after];
+    }
     else {
         DDLogInfo(@"Unknown message received: %@", message);
     }

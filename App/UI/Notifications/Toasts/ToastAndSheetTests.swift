@@ -86,6 +86,10 @@ import Foundation
         return moreToastsToGo
     }
     
+    @objc class func showCaptureToast(before: Set<NSNumber>, after: Set<NSNumber>) {
+        CaptureToasts.showButtonCaptureToastWith(before: before, after: after)
+    }
+    
     @objc class func didShowAllToastsAndSheets() -> Bool {
         
         var result = true

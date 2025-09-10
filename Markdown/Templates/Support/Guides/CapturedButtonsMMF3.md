@@ -46,6 +46,14 @@ Content:
 
 <!-- 
     Philosophical: The current draft explains the reasoning and addresses the problem cases I'm aware of in great detail. The old version just tried to instill fundamental understanding of capturing and let users figure out their usecases (and mentions some problem-cases briefly at the end to say "here's how to solve this without uncapturing")
+
+    Update: [Sep 2025] It seems we since went back to something closer to the old structure.
+
+        New Philosophical thoughts: I think I program too much. I was too in my head with this. This isn't about making some technically perfect thing, it's just about helping people solve problems with the app.
+-->
+
+<!-- 
+
 -->
 
 <!--
@@ -210,86 +218,21 @@ comment:
 | {{Mouse Button 4 / Mouse Button 5<br>(Click)||restoring.row.3.default||}} | {{Back / Forward in VSCode, Chrome, etc.||restoring.row.3.function||}} | {{**'Back'** / **'Forward'**<br>(Can be assigned to **clicking** a button)||restoring.row.3.action||}} |
 | {{Middle Mouse Button<br>(Click and Drag)||restoring.row.4.default||}} | {{Orbit around objects in 3D apps like Blender||restoring.row.4.function||}} | {{**'Scroll & Navigate'**<br>(Can be assigned to **clicking and dragging** a button)||restoring.row.4.action||}} |
 
-By assigning these actions, you can keep using the desired original function of a button, but while also using Mac Mouse Fix to assign many additional functions to the button via **double clicking**, **clicking and dragging**, etc.
-
-TODO:
-- [ ] Maybe add screenshot of how to select the actions in MMF?
+<!-- 
+Should we add explanations / context for the table above?
+- [ ] Maybe add screenshot of how to select the actions in MMF? (as in the MMF2 Guide.)
 - [ ] Maybe explain how **'Zurück'** / **'Vorwärts'** simulate MB 4/5 clicks in third-party apps
 - [ ] Maybe explain how **'Scrollen & Navigieren'** simulates 2-finger Trackpad swipes
-
-<!--
-
-    | Funktion | Standardmäßige Taste (wenn nicht abgefangen) | Aktion in Mac Mouse Fix |
-    |----------|-----------------------------------|-------------------------|
-    | Browser-Tabs im Hintergrund öffnen | Mittlere Maustaste<br>(Klicken) | **'Mittelklick'**<br>(Kann dem **Klicken** einer Taste zugewiesen werden) |
-    | Text im Terminal einfügen | Mittlere Maustaste<br>(Klicken) | **'Mittelklick'**<br>(Kann dem **Klicken** einer Taste zugewiesen werden) |
-    | Zurück und Vorwärts in VSCode, Chrome, etc. | Maustaste 4 / Maustaste 5<br>(Klicken) | **'Zurück'** / **'Vorwärts'**<br>(Kann dem **Klicken** einer Taste zugewiesen werden) |
-    | Um Objekte in 3D-Apps wie Blender kreisen | Mittlere Maustaste<br>(Klicken und Ziehen) | **'Scrollen & Navigieren'** <br> (Kann dem **Klicken und Ziehen** einer Taste zugewiesen werden) |
-
-
-
-    <table>
-        <thead>
-            <tr>
-                <th>Funktion</th>
-                <th>Standardmäßige Taste (wenn nicht abgefangen)</th>
-                <th>Aktion in Mac Mouse Fix</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Browser-Tabs im Hintergrund öffnen</td>
-                <td>Mittlere Maustaste<br>(Klicken)</td>
-                <td><b>'Mittelklick'</b><br>(Kann dem <b>Klicken</b> einer Taste zugewiesen werden)</td>
-            </tr>
-            <tr>
-                <td>Text im Terminal einfügen</td>
-                <td>Mittlere Maustaste<br>(Klicken)</td>
-                <td><b>'Mittelklick'</b><br>(Kann dem <b>Klicken</b> einer Taste zugewiesen werden)</td>
-            </tr>
-            <tr>
-                <td>Zurück und Vorwärts in VSCode, Chrome, etc.</td>
-                <td>Maustaste 4 / Maustaste 5<br>(Klicken)</td>
-                <td><b>'Zurück'</b> / <b>'Vorwärts'</b><br>(Kann dem <b>Klicken</b> einer Taste zugewiesen werden)</td>
-            </tr>
-            <tr>
-                <td>Um Objekte in 3D-Apps wie Blender kreisen</td>
-                <td>Mittlere Maustaste<br>(Klicken und Ziehen)</td>
-                <td><b>'Scrollen & Navigieren'</b><br>(Kann dem <b>Klicken und Ziehen</b> einer Taste zugewiesen werden)</td>
-            </tr>
-        </tbody>
-    </table>
-
-    - Weise einer Taste die **’Mittelklick’** Aktion zu, um
-        - Im **Browser** Tabs im Hintergrund öffnen
-        - Im **Terminal** Text einzufügen
-    - Weise einer Taste die **'Zurück'** oder **'Vor'** Aktion zu, um 
-        - In **VSCode, Chrome, etc.** vor und zurück zu navigieren
-    - Weise dem Klicken und Ziehen einer Taste die Aktion **'Scrollen & Navigieren'** zu, um 
-        - In 3D-Modellierungs-Apps wie **Blender** um Objekte zu kreisen.
-
-    ---
-
-    - Um im Browser **Tabs im Hintergrund öffnen**,
-        weise einer Taste die Aktion **'Mittelklick'** zu.
-
-    - Um im Terminal **Text einzufügen**,
-        weise einer Taste die Aktion **'Mittelklick'** zu.
-
-    - Um in 3D-Modellierungs-Apps wie Blender **um Objekte zu kreisen**,
-        weise dem Klicken und Ziehen einer Taste die Aktion **'Scrollen & Navigieren'** zu.
-        
-    - Um in VSCode, Chrome, etc. **vor und zurück zu navigieren**,
-        weise einer Taste die Aktion **'Zurück'** oder **'Vor'** zu.
-
-    - **Triggering custom bindings for mouse buttons in games or pro apps**
-        → Assign the **'Back', 'Forward', or 'Middle Click' action** to clicking a button in MMF.
-        ('Middle Click' will trigger Mouse Button 3 bindings. 'Back' and 'Forward' will trigger Mouse Button 4 and 5 bindings.)
-        (This only works for _click_ based bindings, not _click and drag_ based bindings.)
-
 -->
 
 
+```
+key: restoring.footer
+```
+So kannst du weiter **wie gewohnt** die Taste verwenden, aber ihr **zusätzlich** auch noch andere Funktionen zuweisen!
+```
+comment: 
+```
 
 
 <!-- 
@@ -301,19 +244,20 @@ TODO:
 
 <!-- Hint: You can also assign the 'Middle Click' action to other any other trigger like 'Button 4 Hold' etc. Learn more about triggers in this guide -->
 
-### Sidenote: Capturing of Scroll Wheels
+```
+key: also-see
+```
 
-Just like Mac Mouse Fix takes control of mouse buttons, it also takes control of the scroll wheel.
+## Also see
 
-There are less reasons to prevent Mac Mouse Fix from capturing the scroll wheel, 
-but it may be useful if you'd like another app like [MOS]() to handle scrolling on your mouse instead of MMF.
+- [{docname_captured_scroll_wheels}](<{language_root}Support/Guides/CapturedScrollWheels.md>)
 
-To disable capturing of the scrollwheel, go to the 'Scrolling' tab and set all the settings to match the native scrolling in macOS (Smoothness: Off, Speed: macOS, etc.)
-After doing that, you should see a notification that tells you that scrolling is no longer captured by Mac Mouse Fix.
+```
+comment:
+```
 
-Now when you scroll, Mac Mouse Fix will not intercept the scrolling at all. It will not use any CPU when you're scrolling. And it will not change the behavior or interfere in any way.
+<br>
 
-TODO:
-- [ ] Consider: Is it really 'capturing' for the scrollwheel? Cause MMF doesn't hide the scroll-events or prevent any default-actions in the same way it does for mouse buttons. It's more about intercepting or altering the scroll events, not blocking or 'hiding' the scrollwheel. So maybe we should use another term?
+---
 
 {guide_footer}

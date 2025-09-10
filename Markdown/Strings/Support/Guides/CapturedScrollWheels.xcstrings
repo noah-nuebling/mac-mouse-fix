@@ -1,0 +1,23 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "1: everything" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_scroll_wheels}\n\nGenau so wie [Mac Mouse Fix Maustasten abfängt](<{url_1}>), **fängt es auch das Scrollrad deiner Maus ab**. \n\nUnd genau so wie bei den Maustasten, kannst du das Abfangen des Scrollrads verhindern, indem du Mac Mouse Fix auf bestimmte Art und Weise einstellst.\n\nIm Vergleich mit den Tasten gibt weniger Gründe, das Abfangen des Scrollrades zu verhindern, aber es kann manchmal nützlich sein, z.B. wenn du statt Mac Mouse Fix eine andere App wie [MOS]({url_2}) verwenden möchtest um dein Scrollrad zu handhaben.\n\n**Um das Abfangen des Scrollrads zu verhindern:** \n\n1. Gehe in Mac Mouse Fix zum ‘Scrollen’ Tab\n2. Schalte alle Optionen aus\n    - Im Falle der ‘Tempo’ Option, setze sie sie auf ‘macOS’\n    - Lösche alle Sondertasten indem du auf den ‘x’ Knopf neben der Sondertaste klickst\n\nDanach solltest du eine Nachricht sehen, die besagt, dass das Scrollrad nun nicht länger abgefangen wird.\n\nJetzt wird sich dein Scrollrad genau so verhalten, als wäre Mac Mouse Fix ausgeschaltet. Mac Mouse Fix wird keine Prozessorleistung mehr verwenden, wenn du das Scrollrad bewegst. Andere Apps wie MOS können volle Kontrolle über das Scrollrad übernehmen.\n\n## Siehe auch\n\n- [{docname_captured_buttons_mmf3}](<{url_3}>)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# {docname_captured_scroll_wheels}\n\nJust like Mac Mouse Fix takes captures mouse buttons (See '[{docname_captured_buttons_mmf3}](<{url_1}>)'), it also **captures the scroll wheel**.\n\nAnd just like with buttons, you can prevent capturing of the scrollwheel by configuring the settings in Mac Mouse Fix in a specific way.\n\nThere are less reasons to prevent Mac Mouse Fix from capturing the scroll wheel compared to buttons,\nbut it may be useful if you'd like another app like [MOS]({url_2}) to handle scrolling on your mouse instead of MMF, or if you prefer completely native scrolling behavior.\n\n**To disable capturing of the scrollwheel**: Go to the 'Scrolling' tab and set all the settings to match the native scrolling behavior in macOS. (Smoothness: Off, Speed: macOS, etc.)\nAfter doing that, you should see a notification that tells you that scrolling is no longer captured by Mac Mouse Fix.\n\nNow when you scroll, Mac Mouse Fix will use no more CPU when you're scrolling. And it will not change the behavior or interfere in any way.\n\n\n## Also see\n\n- [{docname_captured_buttons_mmf3}](<{url_3}>)"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
