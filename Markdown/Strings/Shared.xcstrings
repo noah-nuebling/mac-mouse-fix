@@ -41,13 +41,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abfangen des Scrollrads"
+            "value" : "Abgefangene Scrollräder"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Capturing of the Scroll Wheel"
+            "value" : "Captured Scroll Wheels"
           }
         }
       }

@@ -1,36 +1,66 @@
 ```
-key: everything
+key: intro
 ```
 
 # {docname_captured_scroll_wheels}
 
-Just like Mac Mouse Fix takes captures mouse buttons (See '[{docname_captured_buttons_mmf3}](<{language_root}Support/Guides/CapturedButtonsMMF3.md>)'), it also **captures the scroll wheel**.
+Mac Mouse Fix **captures your mouse's scroll wheel by default**, similar to how it [captures mouse buttons](<{language_root}Support/Guides/CapturedButtonsMMF3.md>).
 
-And just like with buttons, you can prevent capturing of the scrollwheel by configuring the settings in Mac Mouse Fix in a specific way.
+```
+comment:
+```
 
-There are less reasons to prevent Mac Mouse Fix from capturing the scroll wheel compared to buttons,
-but it may be useful if you'd like another app like [MOS](https://mos.caldis.me/) to handle scrolling on your mouse instead of MMF, or if you prefer completely native scrolling behavior.
+```
+key: uncapturing
+```
 
-**To disable capturing of the scrollwheel**: Go to the 'Scrolling' tab and set all the settings to match the native scrolling behavior in macOS. (Smoothness: Off, Speed: macOS, etc.)
-After doing that, you should see a notification that tells you that scrolling is no longer captured by Mac Mouse Fix.
+**To prevent scroll wheel capture:**
 
-Now when you scroll, Mac Mouse Fix will use no more CPU when you're scrolling. And it will not change the behavior or interfere in any way.
+1. Go to the 'Scrolling' tab in Mac Mouse Fix
+2. Turn off **all** options
+    - In case of the 'Speed' option, set it to 'macOS'
+    - Remove all entries under 'Keyboard Modifiers' by clicking the 'x' button next to each modifier
 
+After this, you should see a message indicating that the scroll wheel is no longer being captured.
+
+```
+comment:
+```
+
+```
+key: uncapturing-purpose
+```
+
+**What happens when the scroll wheel is *no longer* being captured?**
+
+Mac Mouse Fix will then completely ignore your scroll wheel – it won't use any processor power or battery charge during scrolling, or interfere in any way. This gives you complete freedom to use other apps like [MOS](https://mos.caldis.me/) to handle your scroll wheel.
+
+```
+comment:
+```
+
+```
+key: also-see
+```
 
 ## Also see
 
 - [{docname_captured_buttons_mmf3}](<{language_root}Support/Guides/CapturedButtonsMMF3.md>)
 
+*(Edited with excellent assistance by Claude 3.5 Sonnet)*
+
 ```
 comment:
 ```
+
+{guide_footer}
 
 <!--
     Notes / thoughts: 
 
     - Should we call it 'capturing' for the scrollwheel? [Sep 2025]
       - Contra: MMF doesn't hide the scroll-events or prevent any default-actions in the same way it does for mouse buttons. 
-      - Pro: Capturing is just used like 'Intercepting' by us. The 'hiding from other apps' thing that happens for buttons isn't inherent
+      - Pro: Capturing is just used like 'Intercepting' by us. The 'hiding from other apps' thing that happens for buttons isn't inherent (But is pretty core to our 'CapturedButtonsMMF3' explation)
     - Should this article even exist? [Sep 2025]
         - - I don't think it's relevant to many users, 
         - + I think it may prevent confusion if we have consistent Capture Toasts for both the 'Capturing sideeffects' on the Buttons and the Scrolling Tab?
@@ -44,6 +74,9 @@ comment:
             - - More effort
             - - Less laid back / conversational tone (?) (Not sure why I value that. Feels sorta appropriate for this. Since in some way explaining how to use 'competitor' apps might seem like a conflict of interest and sorta weird if I do it in a sterile tone or something? Not sure I'm making any sense.)
             - Easier to parse for readers
+        - Should the 'how to uncapture' explanation really be first? [Sep 10 2025]
+            - - Most people might come from the uncapturing notification – They'll already know how to uncapture.
+            - + The '**What happens when the scroll wheel is *no longer* being captured?**' explanation below feels more natural after the explanation of how to uncapture. (And I think *no longer* is less likely to be missed.)
     - Everything takes me so much time
         - We should just ship this and if I really hate it later I can change it. It won't affect very many people I think.
 -->

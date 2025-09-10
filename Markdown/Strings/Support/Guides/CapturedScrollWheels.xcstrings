@@ -1,19 +1,71 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "1: everything" : {
+    "1: intro" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "# {docname_captured_scroll_wheels}\n\nGenau so wie [Mac Mouse Fix Maustasten abfängt](<{url_1}>), **fängt es auch das Scrollrad deiner Maus ab**. \n\nUnd genau so wie bei den Maustasten, kannst du das Abfangen des Scrollrads verhindern, indem du Mac Mouse Fix auf bestimmte Art und Weise einstellst.\n\nIm Vergleich mit den Tasten gibt weniger Gründe, das Abfangen des Scrollrades zu verhindern, aber es kann manchmal nützlich sein, z.B. wenn du statt Mac Mouse Fix eine andere App wie [MOS]({url_2}) verwenden möchtest um dein Scrollrad zu handhaben.\n\n**Um das Abfangen des Scrollrads zu verhindern:** \n\n1. Gehe in Mac Mouse Fix zum ‘Scrollen’ Tab\n2. Schalte alle Optionen aus\n    - Im Falle der ‘Tempo’ Option, setze sie sie auf ‘macOS’\n    - Lösche alle Sondertasten indem du auf den ‘x’ Knopf neben der Sondertaste klickst\n\nDanach solltest du eine Nachricht sehen, die besagt, dass das Scrollrad nun nicht länger abgefangen wird.\n\nJetzt wird sich dein Scrollrad genau so verhalten, als wäre Mac Mouse Fix ausgeschaltet. Mac Mouse Fix wird keine Prozessorleistung mehr verwenden, wenn du das Scrollrad bewegst. Andere Apps wie MOS können volle Kontrolle über das Scrollrad übernehmen.\n\n## Siehe auch\n\n- [{docname_captured_buttons_mmf3}](<{url_3}>)"
+            "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **fängt standardmäßig das Scrollrad deiner Maus ab**, ähnlich wie es [Maustasten abfängt](<{url}>).\n"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "# {docname_captured_scroll_wheels}\n\nJust like Mac Mouse Fix takes captures mouse buttons (See '[{docname_captured_buttons_mmf3}](<{url_1}>)'), it also **captures the scroll wheel**.\n\nAnd just like with buttons, you can prevent capturing of the scrollwheel by configuring the settings in Mac Mouse Fix in a specific way.\n\nThere are less reasons to prevent Mac Mouse Fix from capturing the scroll wheel compared to buttons,\nbut it may be useful if you'd like another app like [MOS]({url_2}) to handle scrolling on your mouse instead of MMF, or if you prefer completely native scrolling behavior.\n\n**To disable capturing of the scrollwheel**: Go to the 'Scrolling' tab and set all the settings to match the native scrolling behavior in macOS. (Smoothness: Off, Speed: macOS, etc.)\nAfter doing that, you should see a notification that tells you that scrolling is no longer captured by Mac Mouse Fix.\n\nNow when you scroll, Mac Mouse Fix will use no more CPU when you're scrolling. And it will not change the behavior or interfere in any way.\n\n\n## Also see\n\n- [{docname_captured_buttons_mmf3}](<{url_3}>)"
+            "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **captures your mouse's scroll wheel by default**, similar to how it [captures mouse buttons](<{url}>)."
+          }
+        }
+      }
+    },
+    "2: uncapturing" : {
+      "comment" : "For the step-by-step instructions, make sure to mirror the strings that are seen on the ‘Scrolling’ Tab.\n\nHow to find the strings seen on the ‘Scrolling’ Tab:\n\nAt the time of writing [Sep 2025], most strings on the ‘Scrolling’ Tab have a comment containing ‘Scrolling >’, but this may change and I may forget to update this comment.\n\nHow to find the strings used in the message that pops up to indicate that capturing was disabled:\n\nSearch for ‘capture-toast.scroll.uncaptured’ ",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Um das Abfangen des Scrollrads zu verhindern:** \n\n1. Gehe in Mac Mouse Fix zum ‘Scrollen’ Tab\n2. Schalte alle Optionen aus\n    - Im Falle der ‘Tempo’ Option, setze sie auf ‘macOS’\n    - Lösche alle Sondertasten, indem du auf den ‘x’ Knopf neben jeder Sondertaste klickst\n\nDanach solltest du eine Nachricht sehen, die besagt, dass das Scrollrad nun nicht länger abgefangen wird.\n"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**To prevent scroll wheel capture:**\n\n1. Go to the 'Scrolling' tab in Mac Mouse Fix\n2. Turn off **all** options\n    - In case of the 'Speed' option, set it to 'macOS'\n    - Remove all entries under 'Keyboard Modifiers' by clicking the 'x' button next to each modifier\n\nAfter this, you should see a message indicating that the scroll wheel is no longer being captured."
+          }
+        }
+      }
+    },
+    "3: uncapturing-purpose" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Was passiert wenn das Scrollrad *nicht länger* abgefangen wird?** \n\nMac Mouse Fix ignoriert dann dein Scrollrad komplett – Es wird beim Scrollen keine Prozessorleistung oder Batterieladung mehr verwenden oder sich in irgendeiner Weise einmischen. So hast du die volle Freiheit, andere Apps wie [MOS]({url}) zu verwenden um dein Scrollrad zu handhaben.\n"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**What happens when the scroll wheel is *no longer* being captured?**\n\nMac Mouse Fix will then completely ignore your scroll wheel – it won't use any processor power or battery charge during scrolling, or interfere in any way. This gives you complete freedom to use other apps like [MOS]({url}) to handle your scroll wheel."
+          }
+        }
+      }
+    },
+    "4: also-see" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Siehe auch\n\n- [{docname_captured_buttons_mmf3}](<{url}>)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## Also see\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Edited with excellent assistance by Claude 3.5 Sonnet)*"
           }
         }
       }
