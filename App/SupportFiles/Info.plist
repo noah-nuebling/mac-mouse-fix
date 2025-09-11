@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>24301</string>
+	<string>24305</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>NSHumanReadableCopyright</key>
@@ -52,6 +52,6 @@
 	<key>SUPublicEDKey</key>
 	<string>ZC69ciDfGYN4t3kwRiPc2SC7J4hchv9w+FfVv59r4+U=</string>
 	<key>UIDesignRequiresCompatibility</key>
-	<false/>
+	<true/>
 </dict>
 </plist>
