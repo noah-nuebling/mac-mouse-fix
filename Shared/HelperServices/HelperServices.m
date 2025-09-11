@@ -234,26 +234,15 @@
 
 #pragma mark Killall Helpers
 
-+ (void)killAllHelpers {
++ (void) killAllHelpers {
     
     /// The updated helper application will subsequently be launched by launchd due to the keepAlive attribute in Mac Mouse Fix Helper's launchd.plist
     /// This is untested but it's copied over from the old Updating mechanism, so I trust that it works in this context, too.
     /// At time of writing, this is only used by Sparkle update mechanism. We have a separate killAllHelpers method we use internally. Kind of weird. Should probably unify.
+    /// Update: [Sep 11 2025] Unified this by simply dispatching to -[terminateAllHelperInstances].
+    ///     Before, this wasn't killing "all" helpers, it was only killing the helper in the current bundle! Now it kills *all* helpers – including strange ones. This change could break something. But all our notes and the method naming suggest we were already expecting it to behave this way.
     
-    BOOL helperNeutralized = NO;
-    for (NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper]) {
-        if ([app.bundleURL isEqualTo: Locator.helperOriginalBundle.bundleURL]) {
-            [app terminate];
-            helperNeutralized = YES;
-            break;
-        }
-    }
-    
-    if (helperNeutralized) {
-        NSLog(@"Helper has been neutralized");
-    } else {
-        NSLog(@"No helper found to neutralize");
-    }
+    [self terminateAllHelperInstances];
 }
 
 #pragma mark Restart Helper

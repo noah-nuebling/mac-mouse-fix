@@ -86,6 +86,11 @@ import ReactiveSwift
             /// Disable helper
             HelperServices.enableHelperAsUserAgent(false)
             
+            /// Kill stray helpers
+            ///     Only relevant for debugging I think – where we may start helpers manually instead of through launchd. [Sep 2025]
+            ///     `HelperServices.enableHelperAsUserAgent` already kills stray helpers – but only when *enabling* not when disabling. Maybe we should change that. [Sep 2025]
+            HelperServices.killAllHelpers()
+            
             /// Find strangeHelper URL
             var strangeURL = (dict?["mainAppURL"] as? NSURL)?.absoluteString ?? ""
             do {
