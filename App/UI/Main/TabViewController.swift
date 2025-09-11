@@ -253,6 +253,18 @@ class TabViewController: NSTabViewController {
         /// Debug
         DDLogDebug("TBS tabview willAppear")
         
+        /// Initialize things
+        ///     [Sep 2025] Moved from viewDidAppear() to viewWillAppear() in MMF 3.0.8 to prevent occasional flashing of the window at the wrong size.
+        do {
+            /// Hide tabBar icons pre-Big Sur
+            ///  Because the scaling and resolution of the fallback images is terrible and I don't know how to fix. (Haven't spent too much time but I don't see an obvious way)
+            if #available(macOS 11.0, *) { } else {
+                self.window?.toolbar?.displayMode = .labelOnly
+            }
+            
+            /// Configure tabs
+            configureTabs()
+        }
     }
     
     override func viewDidAppear() {
@@ -260,21 +272,6 @@ class TabViewController: NSTabViewController {
         
         /// Debug
         DDLogDebug("TBS tabview didAppear")
-        
-        /// Hide tabBar icons pre-Big Sur
-        ///  Because the scaling and resolution of the fallback images is terrible and I don't know how to fix. (Haven't spent too much time but I don't see an obvious way)
-        
-        if #available(macOS 11.0, *) { } else {
-            self.window?.toolbar?.displayMode = .labelOnly
-        }
-        
-        /// Configure tabs
-        ///     This sometimes doesn't work
-        
-//        if let tabID = tabViewItem?.identifier as! NSString?, tabID == "initial" {
-            configureTabs()
-//        }
-        
     }
     
     override func viewWillDisappear() {
