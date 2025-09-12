@@ -256,9 +256,11 @@
     /// Set corner radius
     ///     The cornerRadius of the Action Table should be equal to cornerRadius of surrounding NSBox
     ///     Ideally we would access the cornerradius of the NSBox directly, but I don't know how
-    if (@available(macOS 26.0, *)) {
-        scrollView.layer.cornerCurve = kCACornerCurveContinuous; /// [Aug 2025] [Tahoe Beta 8] NSBoxPrimary is now a 'squircle' (Looks exactly like a SwiftUI Groupbox)
-        scrollView.layer.cornerRadius = 13.0;                    /// [Aug 2025] Not sure if 12 or 13
+    if ((0)) {                                                       /// [Sep 2025] Activated `UIDesignRequiresCompatibility` for now.
+        if (@available(macOS 26.0, *)) {
+            scrollView.layer.cornerCurve = kCACornerCurveContinuous; /// [Aug 2025] [Tahoe Beta 8] NSBoxPrimary is now a 'squircle' (Looks exactly like a SwiftUI Groupbox)
+            scrollView.layer.cornerRadius = 13.0;                    /// [Aug 2025] Not sure if 12 or 13
+        }
     }
     else if (@available(macOS 11.0, *)) {
         scrollView.layer.cornerRadius = 5.0;
