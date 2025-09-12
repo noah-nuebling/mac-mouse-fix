@@ -7,56 +7,12 @@
 // --------------------------------------------------------------------------
 //
 
-
-/// Old notes from `updateColors()`
-///     (That function has now been deleted [Aug 2025])
-///     This explain the history of how we used to handle colors and how we arrived at the current approach (Using an `NSVisualEffectView`) [Aug 2025]
-///     Old Notes:
-///         Explanation / why this is complicated [Aug 2025]
-///         We want the AddField to simply look like a NSPrimaryBox with a '+' in the middle.
-///         And that's exactly what the AddField was in MMF 2
-///         However, in MMF 3, we wanted to a an effect where the AddField raises slightly when you hover over it. The 'raise' effect applies a shadow to the AddField.
-///         Problem:
-///             NSPrimaryBox is transparent, so when you apply a shadow to make it look raised up, it just looks blurry!
-///         Solution ideas:
-///         - Apply non-transparent custom colors
-///             -> but those don't support wallpaper tinting, which ends up looking broken.
-///         - Override draw()
-///             - Old comment said it breaks desktop tinting even if we just call super.draw() [Aug 2025]
-///         - Choose specific *system* NSColors for which NSBox *does* enable wallpaper tinting:
-///             -> The solution we shipped for MMF 3
-///                 – This made the code a bit more complicated and less maintainable since we have to draw an NSCustomBox which emulates an NSPrimaryBox. We also didn't manage to perfectly emulate the look, since only 4 NSColors were available (See below)
-///         - Try to render a custom NSShadow to a bitmap and then draw that
-///             -> Too complicated (See 35742760e0bb0c126e16183f11f65532953822cb)
-///         - Set .windowBackgroundColor to the NSBox's CAlayer
-///             -> This allows you to use NSPrimaryBox instead of NSCustomBox, which simplifies things.
-///             -> Almost works but also doesn't support wallpaper tinting.
-///         - Try to find some private API that gives you the 'wallpaperTintColor' and then mix that in with your NSColors
-///             -> I don't think this exists. Evidence:
-///                 - When you set one of the special system colors that enable wallpaper tinting to NSBox, the NSBox will actually secretly insert an *NSVisualEffectView* as its subview. Also, other views than NSBox don't support wallpaper tinting at all. So it seems wallpaper tinting always requires an NSVisualEffectView and cannot be done at the NSColor level (Which would be much simpler and more flexible, and which the NSColor docs kinda made me think)
-///                     Also see: Disassembly of `[_NSBoxMaterialCapableCustomView _updateSubviews]` on macOS Tahoe Beta 8
-///                 - This kind of makes sense from a security perspective. If apps could directly access the colors of the windows behind them, then they could possibly reconstruct a sharp image of the background-windows via "multi-frame super-resolution" techniques. I assume that, instead, the `NSVisualEffectBlendingModeBehindWindow` happens in that background process that does the CALayer rendering or whatever. [Aug 2025]
-///         - Take a screenshot of a tinted view and then sample the color to get the 'wallpaperTintColor' to mix with your NSColors.
-///             -> This could work – IIRC, we're already taking such screnshots for the ResizingTabWindow transitions ... but that's using the deprecated CGWindowListCreateImage() API.
-///         - Put our own NSVisualEffectView behind / inside the NSBox
-///             -> Since this is what NSBox does natively (See above), it may be the most robust approach.
-///             -> This way we could simply keep using NSPrimaryBox, to get the desired styling with little effort
-///             -> Changed to this approach after MMF 3.0.7
 ///
-///         Also see:
-///             - This old, reverted commit from 2022 35742760e0bb0c126e16183f11f65532953822cb
-///                 - Here, we tried to render the NSShadow to a bitmap (See above)
-///                 - We also found 4 NSColors for which NSBox enables wallpaper tinting: .controlBackgroundColor, .textBackgroundColor, .underPageBackgroundColor, .windowBackgroundColor
-///                     (found them by searching for 'background', maybe there are more)
-///             - The commit before we removed all the old comments in `updateColors()`, and wrote one, comprehensive comment up top [Aug 2025] e7fc400a0ac84baba4b9ad2548f3cdecf906272c
-///             - The solidColor methods from NSColor+Additions.m – Older comments said we tried those here but they didn't work
-///             - `[NSAppearance performAsCurrentDrawingAppearance:]` -> This lets you correctly 'flatten' an NSColor to a CGColor or RGB while respecting darkmode/lightmode
-///                 - See: https://stackoverflow.com/a/79490975/10601702
-///                 - Didn't end up using this (Can't support desktop tinting – need `NSVisualEffectView` for that I think.
+/// [Sep 12 2025] Context:
+///     Replaced with `AddField_New.swift` for macOS Tahoe, but then reverted to this . See `AddField_New.swift` for more.
 ///
-///         Sidenotes:
-///             - We could simplify some of the `updateColors()` code using `+[NSColor colorWithName:dynamicProvider:]` instead of listening to darkmode changes directly. However, that had a bug that broke desktop tinting on earlier Tahoe Betas until we filed FB18739714 with Apple. (Thanks to that Apple Engineer!) (I assume it was also broken on Sequoia, but I didn't test.)
-///                 - Also see:  [Jun 2025]  `mfl_dynamiccolor()` wrapper around  `+[NSColor colorWithName:dynamicProvider:]` which we wrote in the `swiftui-test-tahoe-beta` project.
+///     We reverted by copy-pasting commit d814e3d
+///
 
 import Cocoa
 import CocoaLumberjackSwift
@@ -66,84 +22,204 @@ import CocoaLumberjackSwift
     /// Storage
     
     @IBOutlet var plusIconView: NSImageView!
-    func plusIconViewBaseColor() -> NSColor { return NSColor.systemGray }
+    
+    /// Drawing
+    ///     Overriding draw() breaks desktop tinting even if we just call super.draw()
+    
+//    override func draw(_ dirtyRect: NSRect) {
+//        super.draw(dirtyRect)
+//
+//        // Drawing code here.
+//    }
     
     var appearanceObservation: NSKeyValueObservation? = nil
     
     func coolInit() {
         
-        /// Layer
-        self.wantsLayer = true /// [Aug 2025] Not sure if necessary
-        
-        /// Override plusIcon on older macOS
+        /// Override icon on older macOS
         /// Explanation: We bundle an svg fallback for the SFSymbol that is used by default, but the resolution is wayy to low it's rendered too large. Maybe there's a more elegant solution but this should work.
         /// Notes:
         /// - Actually maybe we should just use NSAddTemplate in the first place even on newer macOS?
         /// - I think this makes it unnecessary that we bundle the svg fallback for the 'add' SFSymbol
         
-        if #available(macOS 11.0, *) { }
-        else                         { plusIconView.image = NSImage(named: NSImage.addTemplateName) }
+        if #available(macOS 11.0, *) { } else {
+            plusIconView.image = NSImage(named: NSImage.addTemplateName)
+        }
         
-        /// Set plusIcon color
-        if #available(macOS 10.14, *) { plusIconView.contentTintColor = plusIconViewBaseColor() }
-        
-        /// Use standard box
-        self.boxType = .primary
-                
         /// Fix hover animations
         ///     Need to set some shadow before (and not directly, synchronously before) the hover animation first plays. No idea why this works
         self.shadow = .clearShadow
         plusIconView.shadow = .clearShadow
         
+        /// Make colors non-transparent
+        updateColors()
+        
+        /// Observe darkmode changes to update colors (we do the same thing in RemapTable)
+        if #available(macOS 10.14, *) {
+            appearanceObservation = NSApp.observe(\.effectiveAppearance) { nsApp, change in
+                self.updateColors()
+            }
+        }
     }
     
-    override func layout() {
-            
-        super.layout()
+    func updateColors() {
         
-        /// Insert a NSVisualEffectView into the box
-        ///     - We have to insert the `NSVisualEffectView` after `super.layout()` because the view that draws the NSBox's appearance is inserted in `[NSBox layout]` as the lowest subview, and we need to insert our `NSVisualEffectView` *below  that*.
-        ///         - Observed this on macOS Tahoe Beta 8 – seems to work on older macOS versions, too.
-        ///         - Trivia: On Tahoe and Sequoia, when using NSPrimaryBox, this drawing-view seems to be a straight up SwiftUI GroupBox. (`NSCoreHostingView<AppKitBoxView>` IIRC)
-        ///     - This code is closely based off of disassembly of `-[_NSBoxMaterialCapableCustomView _updateSubviews]` (On Tahoe Beta 8, [Aug 2025])
-        ///         - `_NSBoxMaterialCapableCustomView` is the custom view that draws the NSBox's appearance, when .boxType is NSCustomBox and the color is one that activates wallpaper tinting on NSBox like `.controlBackgroundColor`. `_NSBoxMaterialCapableCustomView` uses an `NSVisualEffectView` to achieve the tinting, just like we do here.
+        /// Explanation / why this is complicated [Aug 2025]
+        ///     We want the AddField to simply look like a NSPrimaryBox with a '+' in the middle.
+        ///     And that's exactly what the AddField was in MMF 2
+        ///     However, in MMF 3, we wanted to a an effect where the AddField raises slightly when you hover over it. The 'raise' effect applies a shadow to the AddField.
+        ///     Problem:
+        ///         NSPrimaryBox is transparent, so when you apply a shadow to make it look raised up, it just looks blurry!
+        ///     Solution ideas:
+        ///     - Apply non-transparent custom colors
+        ///         -> but those don't support wallpaper tinting, which ends up looking broken.
+        ///     - Choose specific *system* NSColors for which NSBox *does* enable wallpaper tinting:
+        ///         -> The solution we shipped for MMF 3
+        ///             – This made the code a bit more complicated and less maintainable since we have to draw an NSCustomBox which emulates an NSPrimaryBox. We also didn't manage to perfectly emulate the look, since only a few colors were available.
+        ///     - Try to render a custom NSShadow to a bitmap and then draw that
+        ///         -> Too complicated (See 35742760e0bb0c126e16183f11f65532953822cb)
+        ///     - Set .windowBackgroundColor to the NSBox's CAlayer
+        ///         -> Almost works but also doesn't support wallpaper tinting.
+        ///         -> This allows you to use NSPrimaryBox instead of NSCustomBox.
+        ///     - Try to find some private API that gives you the 'wallpaperTintColor' and then mix that in with your NSColors
+        ///         -> I don't think this exists. Evidence:
+        ///             - When you set one of the special system colors that enable wallpaper tinting to NSBox, the NSBox will actually secretly insert an *NSVisualEffectsView* as its subview. Also, other views than NSBox don't support wallpaper tinting at all. So it seems wallpaper tinting always requires an NSVisualEffectsView and cannot be done at the NSColor level (Which would be much simpler and more flexible, and which I originally assumed)
+        ///                 Also see: Assembly of `[_NSBoxMaterialCapableCustomView _updateSubviews]` on macOS Tahoe Beta 8
+        ///             - This kind of makes sense from a security perspective. If apps could directly access the colors of the windows behind them, then they could possibly reconstruct a sharp image of the background-windows via "multi-frame super-resolution" techniques. I assume that, instead, the `NSVisualEffectBlendingModeBehindWindow` happens in that background process that does the CALayer rendering or whatever. [Aug 2025]
+        ///     - Take a screenshot of a tinted view and then sample the color to get the 'wallpaperTintColor' to mix with your NSColors.
+        ///         -> This could work – IIRC, we're already taking such screnshots for the ResizingTabWindow transitions ... Update: True, but it's using the deprecated CGWindowListCreateImage() API.
+        ///     - Put our own NSVisualEffectsView behind / inside the NSBox
+        ///         -> Since this is what NSBox does natively (See above), it may be the most robust approach.
+        ///         -> This way we could simply keep using NSPrimaryBox, to get the desired styling with little effort
+        ///
+        ///     Also see:
+        ///         - This old, reverted commit from 2022 35742760e0bb0c126e16183f11f65532953822cb
+        ///             - Here, we tried to do custom drawing for the shadow
+        ///             - We also found 4 NSColors for which NSBox enables wallpaper tinting: .controlBackgroundColor, .textBackgroundColor, .underPageBackgroundColor, .windowBackgroundColor
+        ///                 (found them by searching for 'background', maybe there are more)
+        ///         - Commit before we removed all the old comments, and wrote one, comprehensive comment up top [Aug 2025] e7fc400a0ac84baba4b9ad2548f3cdecf906272c
+        ///         - The solidColor methods from NSColor+Additions.m – In older notes we said we tried those here but they didn't work
+        ///
+        ///     Sidenotes:
+        ///         - We could simplify some of the code that shipped for MMF 3 a little but using `+[NSColor colorWithName:dynamicProvider:]` However, that had a bug that broke desktop tinting on earlier Tahoe Betas until we filed FB18739714 with Apple. (Thanks!) (I assume it was also broken on Sequoia, but I didn't test.)
+        ///             - Also see:  [Jun 2025]  `mfl_dynamiccolor()` wrapper around  `+[NSColor colorWithName:dynamicProvider:]` which we wrote in the `swiftui-test-tahoe-beta` project.
         
-        if (self.subviews(withIdentifier: "MFDesktopTintingView").count == 0)
-        {
+        /// TESTING
+        /// Set NSPrimaryBox style
+        if (false), #available(macOS 26.0, *) {
             
-            let debug_makeEdgeAlignmentsVisible = false /// [Aug 2025] Earlier I could visualize another issue on Tahoe Beta 8, but I forgot how: The NSVisualEffectView doesn't draw the tinted material to the full size of the view when the AddField is zoomed. That causes the edges of the AddField to be a little faint when it is zoomed. But it's not super noticeable.
+            self.wantsLayer = true
+            self.boxType = .primary /// [Aug 2025] This doesn't really belong in 'updateColors()' – TODO: maybe clean this up.
             
-            let effectView: NSView
-            
-            if (!debug_makeEdgeAlignmentsVisible) {
-                effectView = NSVisualEffectView()
-                (effectView as! NSVisualEffectView).material = NSVisualEffectView.Material.windowBackground /// [Aug 2025] `-[_NSBoxMaterialCapableCustomView _updateSubviews]` used `-[NSColor _getSemanticallyEquivalentVisualEffectMaterial:]`, but we define the `NSVisualEffectViewMaterial` directly.
+            if (false) {
+                DispatchQueue.main.async {
+                    (MainAppState.shared.window?.effectiveAppearance ?? NSApp.effectiveAppearance).performAsCurrentDrawingAppearance { /// [Aug 2025] seems to be necessary as of Tahoe Beta 8. Not sure why. Otherwise the color will never change when appearance changes after the app is first launched. Credit: https://stackoverflow.com/a/79490975/10601702
+                        self.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
+                    }
+                }
             }
-            else {
-                effectView = NSView()
-                effectView.wantsLayer = true
-                effectView.layer?.backgroundColor = NSColor.white.cgColor
-                effectView.layer?.borderWidth = 1;
-                effectView.layer?.borderColor = NSColor.systemRed.cgColor
-            }
-            
-            effectView.identifier = NSUserInterfaceItemIdentifier("MFDesktopTintingView")
-            effectView.autoresizingMask = [.width, .height]
-            effectView.wantsLayer = true
-            effectView.layer?.masksToBounds = true
-            
-            /// Make the `NSVisualEffectView` outline match the `NSBox` exactly, so the shadow looks like it belongs to the `NSBox`
-            effectView.layer?.cornerRadius = MFNSBoxCornerRadius()
-            effectView.layer?.cornerCurve  = MFNSBoxCornerCurve()
-            effectView.frame               = MFCGRectInset(self.bounds, MFNSBoxInsets())
-            
-            if (debug_makeEdgeAlignmentsVisible) {
-                effectView.layer?.backgroundColor = .white;
-                effectView.frame = MFCGRectInset(effectView.frame, .init(top: 1, left: 1, bottom: 1, right: 1))
+            if (true) {
+                self.boxType = .custom
+                if (false)  { self.fillColor = .windowBackgroundColor }
+                else        { self.fillColor = .systemGreen }
             }
             
-            self._directlyAddSubview(effectView, positioned: .below, relativeTo: nil)
+            /// Make the layer corners match the NSPrimaryBox
+            do {
+                self.layer?.cornerCurve = .continuous
+                self.layer?.cornerRadius = 13 /// [Aug 2025] Not sure if 12 or 13
+            }
         }
+        else {
+            
+            /// Prepare
+            self.wantsLayer = true
+            let isDarkMode = checkDarkMode()
+
+            /// Update fillColor
+            do {
+
+                /// v New systemColor approach
+                /// Color choice notes: `[Pre-Tahoe]`
+                ///     - I found these colors that support tinting (found them by searching for 'background', maybe there are more):
+                ///         - .controlBackgroundColor, .textBackgroundColor, .underPageBackgroundColor, .windowBackgroundColor
+                ///     - Lightmode: .underPageBackgroundColor is not semantic but it looks perfect.
+                ///     - Darkmode: .controlBackgroundColor looks good while tinting, but is too dark otherwise. .textBackgroundColor is the same. .underPageBackgroundColor is even darker. -> best choice is .windowBackgroundColor
+                if isDarkMode   { self.fillColor = .windowBackgroundColor }
+                else            { self.fillColor = .underPageBackgroundColor }
+                
+                /// v Old solidColor approach
+                
+                if (false) {
+                
+                    /// Get baseColor
+                    let baseColor: NSColor = isDarkMode ? .black : .white
+
+                    /// Define baseColor blending fractions
+                    let fillFraction = isDarkMode ? 0.1 : 0.25
+                    let borderFraction = isDarkMode ? 0.1 : 0.25
+                
+                    var quarternayLabelColor: NSColor
+                    if isDarkMode {
+                        quarternayLabelColor = NSColor(red: 57/255, green: 57/255, blue: 57/255, alpha: 1.0)
+                    } else {
+                        quarternayLabelColor = NSColor(red: 227/255, green: 227/255, blue: 227/255, alpha: 1.0)
+                    }
+            
+                    self.fillColor = quarternayLabelColor.blended(withFraction: fillFraction, of: baseColor)!
+                }
+            }
+            
+            /// Update borderColor
+            do {
+                /// v New systemColor approach
+                ///     Using systemColors now to properly support desktop tinting. Also the transparency isn't an issue at all here, not sure why we did the old solidColor approach in the first place
+                
+                if #available(macOS 10.14, *)   { self.borderColor = .separatorColor }
+                else                            { self.borderColor = .gridColor }
+                
+                /// v Old solidColor approach
+                ///     This is really just .separatorColor without transparency
+                
+                if (false) {
+                
+                    /// Get baseColor
+                    let baseColor: NSColor = isDarkMode ? .black : .white
+
+                    /// Define baseColor blending fractions
+                    let fillFraction = isDarkMode ? 0.1 : 0.25
+                    let borderFraction = isDarkMode ? 0.1 : 0.25
+                
+                    let separatorColor: NSColor
+                    if isDarkMode {
+                        separatorColor = NSColor(red: 77/255, green: 77/255, blue: 77/255, alpha: 1.0)
+                    } else {
+                        separatorColor = NSColor(red: 198/255, green: 198/255, blue: 198/255, alpha: 1.0)
+                    }
+            
+                    self.borderColor = separatorColor.blended(withFraction: borderFraction, of: baseColor)!
+                }
+            }
+            
+            /// Make border thicker in darkmode
+            ///     Since the addField is now the same color as the windowBackground in darkmode we want to give it more visual presence this way
+            
+            if isDarkMode {
+                self.borderWidth = 1.5
+            } else {
+                self.borderWidth = 1.0
+            }
+        
+        }
+        
+        /// Update plusIcon color
+        if #available(macOS 10.14, *) {
+            plusIconView.contentTintColor = plusIconViewBaseColor()
+        }
+        
+        /// Testing
+        ///     Doesn't seem to change anything
+        self.needsDisplay = true
     }
     
     /// Visual FX
@@ -271,21 +347,15 @@ import CocoaLumberjackSwift
             var isDarkMode = checkDarkMode()
 
             let s = NSShadow()
-            if #available(macOS 26.0, *), !runningCompatMode() {
-            
-                /// [Aug 2025] Discussion: Tahoe Design:
-                ///     Problem: Under tahoe there aren't anymore 'sharp' shadows, so this may feel out of place.
-                ///     Original Idea: On Sequoia we wanted to have a subtle effect that looks like the field raises very  slightly – Maybe we should rethink this for Tahoe.
-                ///     New Idea: Maybe we should use liquid glass for the AddField, or emulate the amount of shadowing on LiquidGlass.
-                ///         Problem: I don't think Liquid Glass supports raising and lowering (Public APIs are very rudimentary as of Tahoe Beta 8)
-
-                s.shadowBlurRadius  = 2.5 /// [Aug 2025] Raise slightly more than under Sequoia – not sure this is too much – makes the shadow look more natural and less 'sharp' on the inner edges in light mode. (Could've maybe achieved the same thing by just changing the shadowColor) The amount of raising also feels more 'perspectivally' correct with the amount the AddField moves upwards – giving a slightly better illusion of raising.
-                s.shadowColor       = .shadowColor.withAlphaComponent(isDarkMode ? 0.3 : 0.175)
-                s.shadowOffset      = .init(width: 0, height: -2)
-            } else {
-                s.shadowBlurRadius  = 1.5
-                s.shadowColor       = .shadowColor.withAlphaComponent(isDarkMode ? 0.50  : 0.200) /// Lightened these colors in bb92a481e when we switched to NSBoxPrimary
-                s.shadowOffset      = .init(width: 0, height: -2)
+            if #available(macOS 26.0, *) {
+                s.shadowColor = .shadowColor.withAlphaComponent(isDarkMode ? 0.75 : 0.125) /// [Aug 2025] lighten the shadow on Tahoe since everything's lighter. TODO: Play around a little bit to perfect it.
+                s.shadowOffset = .init(width: 0, height: -2)
+                s.shadowBlurRadius = 1.5
+            }
+            else {
+                s.shadowColor = .shadowColor.withAlphaComponent(isDarkMode ? 0.75 : 0.225)
+                s.shadowOffset = .init(width: 0, height: -2)
+                s.shadowBlurRadius = 1.5
             }
 
             self.wantsLayer = true
@@ -318,7 +388,10 @@ import CocoaLumberjackSwift
 //                }
 //            })
         }
+
     }
+    
+    private func plusIconViewBaseColor() -> NSColor { return NSColor.systemGray }
     
     private func checkDarkMode() -> Bool {
         
