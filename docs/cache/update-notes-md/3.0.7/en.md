@@ -13,7 +13,7 @@ Mac Mouse Fix **3.0.7** addresses several important bugs.
      - This bug cannot be solved fully without deeper changes, which would likely cause other problems. \
       However, for the time being, I reduced the time-window where a 'deadlock' can happen in the scrolling system, which should at least lower the chances of encountering this bug. This also makes the scrolling slightly more efficient. 
     - This bug has similar symptoms – but I think a different underlying reason – to the 'Scroll Stops Working Intermittently' bug which was addressed in the last release 3.0.6.
-    - (Thanks to Joonas for the feedback!) 
+    - (Thanks to Joonas for the diagnostics!) 
 
 Thanks everyone for reporting the bugs! 
 
