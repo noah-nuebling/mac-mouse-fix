@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **September 2025**
 
+- 🇻🇳&nbsp;Uwu&nbsp;Ki136
 - 🇺🇸&nbsp;Jpthek9 - "Nibs -- thanks for this tool!"
 - 🇺🇸&nbsp;Doug&nbsp;Melville - "Bulletproof software that feels mac-native and solves a long-standing problem with style. Worth every penny and then some."
 - 🇬🇧&nbsp;Michael&nbsp;Maddern
