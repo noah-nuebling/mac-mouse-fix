@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **September 2025**
 
+- 🇺🇸&nbsp;Shep - "In Christ all things hold together – Colossians 1:17"
 - 🇻🇳&nbsp;Uwu&nbsp;Ki136
 - 🇺🇸&nbsp;Jpthek9 - "Nibs -- thanks for this tool!"
 - 🇺🇸&nbsp;Doug&nbsp;Melville - "Bulletproof software that feels mac-native and solves a long-standing problem with style. Worth every penny and then some."
