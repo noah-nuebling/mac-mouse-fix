@@ -2538,8 +2538,23 @@
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4F62EDFC2E795BDB00F44EE2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Acknowledgements.xcstrings,
+				Readme.xcstrings,
+				Shared.xcstrings,
+				Support/Guides/CapturedButtonsMMF3.xcstrings,
+				Support/Guides/CapturedScrollWheels.xcstrings,
+				Support/Support.xcstrings,
+			);
+			target = 4F1667C82C6A6717009E4924 /* XCStringsDummyApp */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		4F14C0AF2C8EFA43002502BB /* Strings */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Strings; sourceTree = "<group>"; };
+		4F14C0AF2C8EFA43002502BB /* Strings */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (4F62EDFC2E795BDB00F44EE2 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Strings; sourceTree = "<group>"; };
 		4F1668042C6AA96A009E4924 /* LocalizedDocuments */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LocalizedDocuments; sourceTree = "<group>"; };
 		4F1708BD2E51BA9300945CF3 /* Support */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Support; sourceTree = "<group>"; };
 		4F23379C2E36523200F4948C /* mac-mouse-fix-scripts */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = "mac-mouse-fix-scripts"; sourceTree = "<group>"; };

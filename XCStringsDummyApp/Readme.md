@@ -20,3 +20,8 @@ There, you'll find more explanations about how and why the DummyTarget was creat
 ### Other
 
 We made this objc for hopefully faster build times.
+
+### Questions
+
+[Sep 2025] `Product > Export Localizations...` always builds the Mac Mouse Fix target, which is probably slowest part of the export.
+    But why does it do that? Why not the other targets? Is there a build-setting to turn this off? Mysterious.
