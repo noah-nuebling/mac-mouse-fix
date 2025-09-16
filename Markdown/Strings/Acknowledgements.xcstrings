@@ -2,7 +2,6 @@
   "sourceLanguage" : "en",
   "strings" : {
     "01: intro" : {
-      "comment" : ".",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -90,7 +89,6 @@
       }
     },
     "06: money.github-sponsors" : {
-      "comment" : ".",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {

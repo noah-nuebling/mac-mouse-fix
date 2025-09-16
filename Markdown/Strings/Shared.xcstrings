@@ -173,7 +173,7 @@
       }
     },
     "localization.translate-prompt" : {
-      "comment" : "Note: {url} will be replaced by a link. Make sure to type \"{url}\" exactly like in the original for the text-replacement to work.)\nNOTE TO SELF: IIRC this hint was supposed to show up on the first string containing a url that localizers would see. It probably doesn't belong here.\n\nNote: 'Help translate!' should sound like an invitation, not a command. In German I rephrased it a bit to avoid the imperative form (I landed on 'Beim Übersetzen helfen!')",
+      "comment" : "Note: 'Help translate!' should sound like an invitation, not a command. In German I rephrased it a bit to avoid the imperative form (I landed on 'Beim Übersetzen helfen!')",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {

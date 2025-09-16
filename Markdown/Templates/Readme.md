@@ -52,11 +52,11 @@
 <div align="center">
     <table>
         <th><a href=https://macmousefix.com/>{{Website&nbsp;↗||intro.links.website||}}</a></th>
-        <td><a href=https://redirect.macmousefix.com/?locale={locale_code}&target=mmf-help-and-feedback>{{Help&nbsp;&amp;&nbsp;Feedback||intro.links.help||Note: &nbsp; creates a so called 'non-breaking-space' character, which is like a normal space that prevents line breaks. &amp; creates an ampersand (&) character}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose -->
+        <td><a href=https://redirect.macmousefix.com/?locale={locale_code}&target=mmf-help-and-feedback>{{Help&nbsp;&amp;&nbsp;Feedback||intro.links.help||}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/issues/new/choose -->
         <td><a href=https://redirect.macmousefix.com/?locale={locale_code}&target=mmf-releases>{{Releases||intro.links.releases||}}</a></td> <!-- Note: Should probably use direct link instead of redirection-service: https://github.com/noah-nuebling/mac-mouse-fix/releases -->
         <td><a href="{language_root}Acknowledgements.md">{{Acknowledgements||intro.links.acknowledgements||}}</a></td>
     </table>
-    <img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?color=25c65f&label={{Downloads||intro.downloads-badge-label||Note: This label will be shown next to a box containing the number of times Mac Mouse Fix has been downloaded so far }}">
+    <img src="https://img.shields.io/github/downloads/noah-nuebling/mac-mouse-fix/total?color=25c65f&label={{Downloads||intro.downloads-badge-label||}}">
 </div>
 
 <br>
@@ -323,7 +323,7 @@ comment:
   
   I'm also interested to hear what your *use case* is. Feel free to submit a [feature request](https://redirect.macmousefix.com/?locale={locale_code}&target=mmf-feedback-feature-request). Your input will help make the feature as good as possible once it arrives.
   ```
-  comment: 1) Don't translate "More... > App-specific settings" - that's because Mac Mouse Fix 2 doesn't support localization. 2) In English, the words "Mac Mouse Fix" are exactly aligned in the first two lines that start with "In Mac Mouse Fix 2..." and "In Mac Mouse Fix 3...". I think the alignment makes the text easier to scan. Maybe it's worth doing something similar in your translation.
+  comment:
   ```
   <!-- ^^^ It's not a perfect solution, but I hope it helps a little until app-specific settings arrive. -->
   <!-- ^^^ Note: Us having to explain points at a bit of a UX failure I think. -->

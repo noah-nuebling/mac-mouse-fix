@@ -7,7 +7,7 @@ Big thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome 
 
 I want to especially thank the people and projects named in this document.
 ```
-comment: .
+comment:
 ```
 
 <a name="translations"></a> 
@@ -43,7 +43,7 @@ Thanks to you, I can spend lots of time doing something I love.
 
 People who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:
 ```
-comment: Note: {sales_count} will be replaced by the number of times Mac Mouse Fix has been sold. Make sure to type "{sales_count}" exactly like in the original for the text-replacement to work.
+comment:
 ```
 
 <a name="generous-contributors"></a> 
@@ -80,7 +80,7 @@ key: money.github-sponsors
 
 **Huge thanks** to [anyone](https://github.com/sponsors/noah-nuebling#sponsors) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)
 ```
-comment: .
+comment:
 ```
 
 <a name="paypal-donations"></a> 
@@ -138,7 +138,7 @@ Mac Mouse Fix was built with the help of these **great libraries**:
 - Dependencies of the [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) web app [here](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)
 - Dependencies of the [Mac Mouse Fix Website](https://macmousefix.com/) are available [here](https://github.com/noah-nuebling/mac-mouse-fix-website/blob/main/package.json)
 ```
-comment: Note: Don't forget the `<br>`, it inserts a line<br>eak.
+comment:
 ```
 
 <!-- ^^^ Note: The double space after <br> is not necessary for the formatting to work here, so we don't have to tell localizers.
