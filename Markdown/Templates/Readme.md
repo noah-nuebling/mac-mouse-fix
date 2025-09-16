@@ -272,6 +272,9 @@ comment:
   comment: 
   ```
 
+<!--
+  <<< [Sep 2025] Commenting this out because we moved this info into CapturedButtonsMMF3.md - maybe we should link to it here? >>>
+
 - {{**How can I orbit around objects in 3D apps like Blender?**||questions.blender||}}
 
   ```
@@ -286,7 +289,7 @@ comment:
   ```
   comment: 
   ```
-
+-->
 - {{**Can I open App Exposé through a Click and Drag Gesture?**||questions.app-expose||}} <!-- Note: We're using App Exposé here and Application Windows in MMF. Not sure that's great. I felt this was clearer though. -->
 
   ```
