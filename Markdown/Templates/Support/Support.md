@@ -28,6 +28,7 @@ key: guides
 Where possible, Mac Mouse Fix explains itself.
 But sometimes a guide helps!
 
+- [{docname_captured_scroll_wheels}](<{language_root}Support/Guides/CapturedScrollWheels.md>)
 - [{docname_captured_buttons_mmf3}](<{language_root}Support/Guides/CapturedButtonsMMF3.md>) (Mac Mouse Fix 3)
 - [{docname_captured_buttons_mmf2}](<{repo_root}Support/Guides/CapturedButtonsMMF2.md>) (Mac Mouse Fix 2) {only_in_english}
 

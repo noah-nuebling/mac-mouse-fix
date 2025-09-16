@@ -41,13 +41,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "## Anleitungen\n\nWo es möglich ist, erklärt sich Mac Mouse Fix selbst.\nAber manchmal hilft eine Anleitung!\n\n- [{docname_captured_buttons_mmf3}](<{url_1}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_2}>) (Mac Mouse Fix 2) {only_in_english}"
+            "value" : "## Anleitungen\n\nWo es möglich ist, erklärt sich Mac Mouse Fix selbst.\nAber manchmal hilft eine Anleitung!\n\n- [{docname_captured_scroll_wheels}](<{url_1}>)\n- [{docname_captured_buttons_mmf3}](<{url_2}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_3}>) (Mac Mouse Fix 2) {only_in_english}"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "## Guides\n\nWhere possible, Mac Mouse Fix explains itself.\nBut sometimes a guide helps!\n\n- [{docname_captured_buttons_mmf3}](<{url_1}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_2}>) (Mac Mouse Fix 2) {only_in_english}"
+            "value" : "## Guides\n\nWhere possible, Mac Mouse Fix explains itself.\nBut sometimes a guide helps!\n\n- [{docname_captured_scroll_wheels}](<{url_1}>)\n- [{docname_captured_buttons_mmf3}](<{url_2}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_3}>) (Mac Mouse Fix 2) {only_in_english}"
           }
         }
       }
