@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.8</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p>Mac Mouse Fix <strong>3.0.8</strong> solves UI issues and more.</p>
+
+<h3 id="ui-issues"><strong>UI Issues</strong></h3>
+
+<ul>
+
+<li>Disabled the new design on macOS 26 Tahoe. Now the app will look and
+
+function like it did on macOS 15 Sequoia.
+
+<ul>
+
+<li>I did this because some of Apple’s redesigned UI elements still have
+
+issues. For example, the ‘-’ buttons on the ‘Buttons’ tab weren’t always
+
+clickable.</li>
+
+<li>The UI may look a little outdated on macOS 26 Tahoe now. But it
+
+should be fully functional and polished just like before.</li>
+
+</ul></li>
+
+<li>Fixed a bug where the ‘Free days are over’ notification would get
+
+stuck in the top-right screen corner.
+
+<ul>
+
+<li>Thanks to <a href="https://github.com/Sashpuri">Sashpuri</a> and
+
+others for reporting it!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="ui-polish"><strong>UI Polish</strong></h3>
+
+<ul>
+
+<li>Disabled the green traffic light button in the main Mac Mouse Fix
+
+window.
+
+<ul>
+
+<li>The button didn’t do anything, since the window cannot be resized
+
+manually.</li>
+
+</ul></li>
+
+<li>Fixed an issue where some of the horizontal lines in the table on
+
+the ‘Buttons’ tab were too dark under macOS 26 Tahoe.</li>
+
+<li>Fixed a bug where the “Primary Mouse Button can’t be used” message
+
+on the ‘Buttons’ tab would sometimes be cut off under macOS 26
+
+Tahoe.</li>
+
+<li>Fixed a typo in the German interface. Courtesy of GitHub user <a
+
+href="https://github.com/i-am-the-slime">i-am-the-slime</a>.
+
+Thanks!</li>
+
+<li>Solved an issue where the MMF window would sometimes briefly flash
+
+at the wrong size when opening the window on macOS 26 Tahoe.</li>
+
+</ul>
+
+<h3 id="other-changes"><strong>Other Changes</strong></h3>
+
+<ul>
+
+<li>Improved behavior when trying to enable Mac Mouse Fix while multiple
+
+instances of Mac Mouse Fix are running on the computer.
+
+<ul>
+
+<li>Mac Mouse Fix will now try to disable the other instance of Mac
+
+Mouse Fix more diligently.</li>
+
+<li>This may improve edge cases where Mac Mouse Fix could not be
+
+enabled.</li>
+
+</ul></li>
+
+<li>Under-the-hood changes and cleanup.</li>
+
+</ul>
+
+<hr />
+
+<p>Also check out what’s new in the previous version <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.7">3.0.7</a>.</p>
+
+</body>
+
+</html>
