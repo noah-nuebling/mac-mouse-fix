@@ -216,6 +216,12 @@ static double _toastAnimationOffset = 20;
     preAnimFrame.origin.y += _toastAnimationOffset;
     [w setFrame:preAnimFrame display:NO];
     
+    /// Fix layout bug [Sep 2025]
+    ///     Observed on: Tahoe RC, with UIDesignRequiresCompatibility – Never observed this before. May be a Tahoe bug.
+    ///     Description of what I observed: After triggering the forbidden capture notifications for the primary and secondary button a few times, all of a sudden the text starts wrapping incorrectly and the bottom of the text becomes cut off. This seems to be due to `_instance.label.frame`s right edge being inset by 4 pixels from its superview for some reason.
+    {
+        _instance.label.frame = _instance.label.superview.bounds;
+    }
     /// Animate
     [NSAnimationContext beginGrouping];
     NSAnimationContext.currentContext.duration = _animationDurationFadeIn;

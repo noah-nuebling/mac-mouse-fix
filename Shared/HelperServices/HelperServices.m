@@ -131,139 +131,118 @@
     [self enableHelperAsUserAgent:NO onComplete:nil];
 }
 
-+ (void)enableHelperAsUserAgent:(BOOL)enable onComplete:(void (^ _Nullable)(NSError * _Nullable error))onComplete {
++ (void)enableHelperAsUserAgent: (BOOL)enable onComplete: (void (^ _Nullable)(NSError * _Nullable error))onComplete {
     
     /// Register/unregister the helper as a User Agent with launchd so it runs in the background - also launches/terminates helper
     /// Not sure if we should use this directly. Using EnabledState.shared.enable() / disable() is probably better
     ///
-    /// I refactored HelperServices, which is very dangerous. Haven't tested it properly at the time of writing, especially pre-Ventura.
-    ///     I think 07e861de4504daad9996a40ce32c4aea5c87552a is the last commit before the changes.
+    /// Change log:
+    ///     - I refactored HelperServices, which is very dangerous. Haven't tested it properly at the time of writing, especially pre-Ventura.
+    ///         I think 07e861de4504daad9996a40ce32c4aea5c87552a is the last commit before the changes.
+    ///     - [Sep 2025] Cleaned things up and added `[HelperServices terminateAllHelperInstances]` to the 13.0 codepath in commit 0cca8824055724afc6c66498fe7d8b798ad412c9
+    
+    /// Old note: [Sep 2025]
+    ///     We used to try to detect if a strange helper was currently registered and then unregister that, but our technique for detection doesn't work anymore since macOS 13.0, so we deleted that code.
+    ///     Above the code were the following comments:
+    ///         Unregister strange helper
+    ///             Notes:
+    ///             - Under Ventura 13.0 we can't automatically fix it when a strange helper is registered. When we try to register the right helper, it will always register the strange one. The user has to uninstall the strange helper and then empty the trash and then restart to fix things
+    ///             - So removing the strange helper service won't help and leads to weird stuff where the helper seems to be started twice next time that it is registered.
+    ///             -> So we're disabling this for now. Hopefully Apple will fix this at some point.
+    ///                 Update: [Sep 2025] Apple did fix things in macOS 15.0 Sequoia! We're also unregistering strange helpers in some cases when they message us over MFMessagePort. And before we enable here, we also unregister the helper – Should already be pretty robust even without strange helper detection here.
+    ///                     Also see notes elsewhere about `is-strange-helper-alert`. [Sep 2025]
     
     if (@available(macOS 13.0, *)) {
         
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
                 
-            ///
             /// Cleanup
-            ///
-            
-            /// Edit: I'm not totally sure what the reason is for the differences between this and what we do pre macOS 13.
-            /// - Why aren't we terminating other helper instance here?
-            
-            /// Remove __app__ launchd.plist
-            removeLaunchdPlist();
-            
-            /// Remove __prefpane__ launchd.plist
-            removePrefpaneLaunchdPlist();
-            
-            /// Unregister old helper from launchd
-            removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
-            
-            /// Unregister strange helper
-            /// Notes:
-            /// - Under Ventura 13.0 we can't automatically fix it when a strange helper is registered. When we try to register the right helper, it will always register the strange one. The user has to uninstall the strange helper and then empty the trash and then restart to fix things
-            /// - So removing the strange helper service won't help and leads to weird stuff where the helper seems to be started twice next time that it is registered.
-            /// -> So we're disabling this for now. Hopefully Apple will fix this at some point.
-            
-//            if ([self strangeHelperIsRegisteredWithLaunchdIdentifier:kMFLaunchdHelperIdentifierSM]) {
-//                removeServiceWithIdentifier(kMFLaunchdHelperIdentifierSM);
-//            }
-            
-            /// Unregister if enabling
-            /// - This is necessary for enabling to work after updating to new version in the same place while the old helper is still running
-            /// - removeServiceWithIdentifier() also works for this, but it leads to the helper weirdly enabling twice which causes the `is-strange-helper-toast` message to be shown twice
-            
-            if (enable) {
-                [self enableHelper_SM:NO];
+            ///     Remove residue & prevent interference
+            {
+                
+                /// Delete legacy launchd.plist files
+                removeLaunchdPlist();
+                removePrefpaneLaunchdPlist();
+                
+                /// Unregister pre-SM helper from launchd
+                removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
+                
+                if (enable) {
+                    /// Unregister if enabling
+                    /// - This is necessary for enabling to work after updating to new version in the same place while the old helper is still running
+                    /// - removeServiceWithIdentifier() also works for this, but it leads to the helper weirdly enabling twice which causes the `is-strange-helper-toast` message to be shown twice
+                    ///     Update: [Sep 2025] This sounds like a bug on Apple's side that may have been fixed along with the other bugs on newer macOS versions.
+                    [self enableHelper_SM: NO];
+                
+                    /// Kill non-launchd helpers
+                    ///     Non-launchd helpers can only normally happen during debugging I think.
+                    [HelperServices terminateAllHelperInstances];
+                }
             }
             
-            ///
-            /// Enable helper
-            /// 
+            /// Enable helper 
+            ///     Do this on some global queue. Xcode complains if you do this on mainThread because it can lead to unresponsive UI.
+            NSError *error = [self enableHelper_SM: enable];
             
-            /// Do this on some global queue. Xcode complains if you do this on mainThread because it can lead to unresponsive UI.
-            
-            NSError *error = [self enableHelper_SM:enable];
-            
-            ///
             /// Call onComplete
-            ///
             if (onComplete != nil) onComplete(error);
         });
         
     } else {
         
-        ///
         /// Generate / repair launchd.plist
-        ///
-        
         [HelperServices repairLaunchdPlist];
         
-        ///
         /// Cleanup
         ///     Remove residue & prevent interference
-        
-        /// Remove old prefpane launchd.plist
-        /// Notes:
-        /// - We could only do this only if strangeHelperIsRegisteredWithLaunchd, but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
-        removePrefpaneLaunchdPlist();
-        
-        /// Unregister strange helper
-        if ([self strangeHelperIsRegisteredWithLaunchdIdentifier:kMFLaunchdHelperIdentifier]) {
-            removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
+        {
+            /// Remove old prefpane launchd.plist
+            /// Notes:
+            /// - We could only do this only if strangeHelperIsRegisteredWithLaunchd, but users have been having some weirdd issues after upgrading to the app version and I don't know why. I feel like this might make things slightly more robust.
+            removePrefpaneLaunchdPlist();
+            
+            /// Unregister strange helper
+            if ([self strangeHelperIsRegisteredWithLaunchdIdentifier: kMFLaunchdHelperIdentifier]) {
+                removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
+            }
+            
+            if (enable) {
+                
+                /// Kill & unregister if we're enabling
+                ///
+                /// Doing this because sometimes there's a weird bug where the main app won't recognize the helper as enabled even though it is. The code down below for enabling will then fail, when the user tries to check the enable checkbox.
+                /// So we're removing the helper from launchd before trying to enable to hopefully fix this. Edit: seems to fix it!
+                /// I'm pretty sure that if we didn't check for `launchdPathIsBundlePath` in `strangeHelperIsRegisteredWithLaunchd` this issue whave occured and we wouldn't need this workaround. But I'm not sure anymore why we do that so it's not smart to remove it.
+                /// Edit: I think the specific issue I saw only happens when there are two instances of MMF open at the same time.
+                
+                removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
+                
+                /// Kill non-launchd helpers
+                ///     Non-launchd helpers can only normally happen during debugging I think
+                [HelperServices terminateAllHelperInstances];
+                
+            }
         }
         
-        if (enable) {
-            
-            /// Kill & unregister if we're enabling
-            ///
-            /// Doing this because sometimes there's a weird bug where the main app won't recognize the helper as enabled even though it is. The code down below for enabling will then fail, when the user tries to check the enable checkbox.
-            /// So we're removing the helper from launchd before trying to enable to hopefully fix this. Edit: seems to fix it!
-            /// I'm pretty sure that if we didn't check for `launchdPathIsBundlePath` in `strangeHelperIsRegisteredWithLaunchd` this issue whave occured and we wouldn't need this workaround. But I'm not sure anymore why we do that so it's not smart to remove it.
-            /// Edit: I think the specific issue I saw only happens when there are two instances of MMF open at the same time.
-            
-            removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
-            
-            /// Kill non-launchd helpers
-            ///     Non-launchd helpers can only normally happen during debugging I think
-            [HelperServices terminateAllHelperInstances];
-            
-        }
-        
-        ///
         /// Enable helper
-        ///
         enableHelper_PList(enable);
         
-        ///
         /// Call onComplete
-        ///
         if (onComplete != nil) onComplete(nil);
     }
 }
 
 #pragma mark Killall Helpers
 
-+ (void)killAllHelpers {
++ (void) killAllHelpers {
     
     /// The updated helper application will subsequently be launched by launchd due to the keepAlive attribute in Mac Mouse Fix Helper's launchd.plist
     /// This is untested but it's copied over from the old Updating mechanism, so I trust that it works in this context, too.
     /// At time of writing, this is only used by Sparkle update mechanism. We have a separate killAllHelpers method we use internally. Kind of weird. Should probably unify.
+    /// Update: [Sep 11 2025] Unified this by simply dispatching to -[terminateAllHelperInstances].
+    ///     Before, this wasn't killing "all" helpers, it was only killing the helper in the current bundle! Now it kills *all* helpers – including strange ones. This change could break something. But all our notes and the method naming suggest we were already expecting it to behave this way.
     
-    BOOL helperNeutralized = NO;
-    for (NSRunningApplication *app in [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper]) {
-        if ([app.bundleURL isEqualTo: Locator.helperOriginalBundle.bundleURL]) {
-            [app terminate];
-            helperNeutralized = YES;
-            break;
-        }
-    }
-    
-    if (helperNeutralized) {
-        NSLog(@"Helper has been neutralized");
-    } else {
-        NSLog(@"No helper found to neutralize");
-    }
+    [self terminateAllHelperInstances];
 }
 
 #pragma mark Restart Helper
@@ -548,11 +527,15 @@ NSString *launchctl_print(NSString *identifier) {
     }
 }
 
-+ (BOOL)strangeHelperIsRegisteredWithLaunchdIdentifier:(NSString *)identifier {
++ (BOOL) strangeHelperIsRegisteredWithLaunchdIdentifier: (NSString *)identifier {
     
     /// Check if helper is registered with launchd from some other location
     
-    NSString *launchdPath = [self executablePathForLaunchdIdentifier:identifier];
+    if (@available(macOS 13.0, *)) {
+        assert(false && "This method's helper method +[executablePathForLaunchdIdentifier:] doesn't work on macOS 13.0+ as of [Sep 2025]");
+        return NO;
+    }
+    NSString *launchdPath = [self executablePathForLaunchdIdentifier: identifier];
     BOOL launchdPathExists = launchdPath.length != 0;
     
     if (launchdPathExists) {

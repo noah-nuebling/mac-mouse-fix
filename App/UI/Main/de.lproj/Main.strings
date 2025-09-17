@@ -159,7 +159,7 @@
 "SaY-fF-d1s.title" = "Du wirst über Updates benachrichtigt werden,\nwenn du dieses Fenster öffnest"; // !IS_OK
 
 /* Class = "NSTextFieldCell"; title = "Smoothness:"; ObjectID = "SjO-Dq-CEX"; Note = "Scrolling > Smoothness Label"; */
-"SjO-Dq-CEX.title" = "Flüssgkeit:"; // !IS_OK
+"SjO-Dq-CEX.title" = "Flüssigkeit:"; // !IS_OK
 
 /* Class = "NSTextFieldCell"; title = "Buy Me a Milkshake :)"; ObjectID = "TrI-uu-DEN"; */
 "TrI-uu-DEN.title" = "Spendier mir einen Milchshake :)"; /// "KAUF MIR NEN MILCHSHAKE :)";

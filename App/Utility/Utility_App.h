@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Utility_App : NSObject
 
-bool MFRunningCompatMode(void);
+bool runningCompatMode(void);
 
 CGRect MFCGRectInset(CGRect rect, NSEdgeInsets insets);
 

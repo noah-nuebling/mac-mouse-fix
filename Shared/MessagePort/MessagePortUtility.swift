@@ -29,7 +29,6 @@ import ReactiveSwift
     let strangeHelperDetected: Signal<String, Never>
     private let strangeHelperDetectedInput: Signal<String, Never>.Observer
     
-    @available(macOS, introduced: 13.0, deprecated: 15.0, message: "Strange-helper-checks should only be necessary on macOS 13 and 14.")
     @objc func checkHelperStrangenessReact(payload: NSObject) -> Bool {
         
         /// Handle enabling of strange helper under Ventura
@@ -45,18 +44,22 @@ import ReactiveSwift
         /// - Not sure if just using `enableHelperAsUserAgent:` is enough. Does this call `launchctl remove`? Does it kill strange helpers that weren't started by launchd? That might be necessary in some situations. Edit: pretty sure it's good enough. It will simply unregister the strange helper that was just registered and sent this message. We don't need to do anything else.
         /// - Logically, the `is-disabled-toast` and the `is-strange-helper-toast` belong together since they both give UI feedback about a failure to enable the helper. It would be nice if they were in the same place in code as well
         
-        
         /// Update: [Jul 13 2025] Disable if not running macOS 13 Ventura or 14 Sonoma
         ///     On other versions, macOS should automatically switch to launching the right helper version, and no uninstall-and-restart should be required. (Giving users instructions to uninstall-and-restart was the main purpose of this.)
         ///     Perhaps there's still some utility in detecting strange helpers to improve edge-cases, but I'm not sure of that, so I'll disable this code now for other macOS versions [Jul 2025]
         ///     Also see `enable-timeout-toast` discussion in `GeneralTabController.swift` where the alert we're creating here is referred to as `is-strange-helper-alert` [Jul 2025]
         ///         Uncertainty: I'm pretty sure that the issue that the `is-strange-helper-alert` was addressing went away at the same time as the issue that the `enable-timeout-toast` was addressing – in macOS 15 Sequoia. But not 100% sure.
         /// Update: [Jul 17 2025] This issue (https://github.com/noah-nuebling/mac-mouse-fix/issues/1464) in 3.0.5 might have been prevented by disabling strange helpers! Perhaps we should re-enable that feature without calling `AlertCreator.showStrangeHelperMessage()`
+        /// Update: [Sep 11 2025]... I re-enabled this feature on all macOS versions, in (3638e9ecf431a80eb7d5a392b64d1051c8dfe663) but without calling `AlertCreator.showStrangeHelperMessage()` on all of them.
+        ///     Here's another note I wrote elsewhere about why re-enabling the feature is good:
+        ///         [Sep 2025] On macOS 15.0 and 26.0 when this code was disabled, there could be weird situations where the `AuthorizeAccessibilitySheet` shows up for the strange helper and then you end up granting the wong helper AX access. -> This has been frustrating during development of the localization screenshot stuff. Might cause issues for users too in some edge-cases.
         
-        let osVersion = ProcessInfo.processInfo.operatingSystemVersion.majorVersion
-        if osVersion < 13 || 14 < osVersion {
-            assert(false);
-            return false;
+        if (false) { /// Disabled – see notes above.
+            let osVersion = ProcessInfo.processInfo.operatingSystemVersion.majorVersion
+            if osVersion < 13 || 14 < osVersion {
+                assert(false);
+                return false;
+            }
         }
         
         /// Determine strangeness
@@ -83,31 +86,39 @@ import ReactiveSwift
             /// Disable helper
             HelperServices.enableHelperAsUserAgent(false)
             
+            /// Kill stray helpers
+            ///     Only relevant for debugging I think – where we may start helpers manually instead of through launchd. [Sep 2025]
+            ///     `HelperServices.enableHelperAsUserAgent` already kills stray helpers – but only when *enabling* not when disabling. Maybe we should change that. [Sep 2025]
+            HelperServices.killAllHelpers()
+            
             /// Find strangeHelper URL
-            
             var strangeURL = (dict?["mainAppURL"] as? NSURL)?.absoluteString ?? ""
-            
-            if strangeURL == "" {
-                /// Try alternative method for finding URL
-                if #available(macOS 12.0, *) {
-                    for appURL in NSWorkspace.shared.urlsForApplications(withBundleIdentifier: kMFBundleIDApp) {
-                        if appURL != Locator.mainAppBundle().bundleURL {
+            do {
+                if strangeURL == "" {
+                    /// Try alternative method for finding URL
+                    if #available(macOS 12.0, *) {
+                        for appURL in NSWorkspace.shared.urlsForApplications(withBundleIdentifier: kMFBundleIDApp) {
+                            if appURL != Locator.mainAppBundle().bundleURL {
+                                strangeURL = appURL.absoluteString
+                            }
+                        }
+                    } else {
+                        let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: kMFBundleIDApp)
+                        if let appURL = appURL, appURL != Locator.mainAppBundle().bundleURL {
                             strangeURL = appURL.absoluteString
                         }
-                    }
-                } else {
-                    let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: kMFBundleIDApp)
-                    if let appURL = appURL, appURL != Locator.mainAppBundle().bundleURL {
-                        strangeURL = appURL.absoluteString
                     }
                 }
             }
             
             /// Notify other parts of app
+            ///     [Sep 2025] The `strangeHelperDetected` signal is only used on macOS 13 and 14 from my understanding. I guess we could disable it on other versions.
             strangeHelperDetectedInput.send(value: strangeURL)
             
             /// Notify user
-            AlertCreator.showStrangeHelperMessage(withStrangeURL: strangeURL)
+            if #available(macOS 13.0, *) { if #unavailable(macOS 15.0) { /// See notes above [Sep 2025]
+                AlertCreator.showStrangeHelperMessage(withStrangeURL: strangeURL)
+            }}
         }
         
         /// Return

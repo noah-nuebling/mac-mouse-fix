@@ -17,7 +17,7 @@
 
 /// Compatibility design
 
-bool MFRunningCompatMode(void) {
+bool runningCompatMode(void) {
     return [NSBundle.mainBundle.infoDictionary[@"UIDesignRequiresCompatibility"] boolValue];
 }
 
@@ -36,20 +36,20 @@ CGRect MFCGRectInset(CGRect rect, NSEdgeInsets insets) {
 
 #define _MFNSBoxDispatch()                                      \
     if (@available(macOS 26.0, *)) {                            \
-        if (MFRunningCompatMode())          goto tahoe_compat;  \
+        if (runningCompatMode())            goto tahoe_compat;  \
         else                                goto tahoe;         \
     }                                                           \
-    else if (@available(macOS 11.0, *))     goto sequoia;       \
-    else                                    goto catalina;      \
+    else if (@available(macOS 11.0, *))     goto bigsur;        \
+    else                                    goto pre_bigsur;    \
 
  CGFloat MFNSBoxCornerRadius(void) {
     
     _MFNSBoxDispatch()
     
     tahoe:          return 13.0; /// Not sure if 12 or 13
-    tahoe_compat:   return 6.5;  /// Tahoe Beta 8.  – Why is this different from sequoia? – Did we measure wrong? Does it depend on screen resolution?
-    sequoia:        return 5.0;
-    catalina:       return 4.0;
+    tahoe_compat:   return 5.5;  /// Measured 6.5 on Tahoe Beta 8.  – Why is this different from bigsur? – Did we measure wrong? Does it depend on screen resolution? Should we use kCACornerCurveContinuous? ... Set it back to 5.5 cause that looked better
+    bigsur:         return 5.0;
+    pre_bigsur:     return 4.0;
 };
 
 CALayerCornerCurve MFNSBoxCornerCurve(void) {
@@ -58,8 +58,8 @@ CALayerCornerCurve MFNSBoxCornerCurve(void) {
     
     tahoe:              return kCACornerCurveContinuous;
     tahoe_compat:       return kCACornerCurveCircular;
-    sequoia:            return kCACornerCurveCircular;
-    catalina:           return kCACornerCurveCircular;
+    bigsur:             return kCACornerCurveCircular;
+    pre_bigsur:         return kCACornerCurveCircular;
 }
 
 NSEdgeInsets MFNSBoxInsets(void) {
@@ -71,8 +71,8 @@ NSEdgeInsets MFNSBoxInsets(void) {
     
     tahoe:          return (NSEdgeInsets){ .top = 0, .bottom = 0,  .left = 0,  .right = 0 };
     tahoe_compat:   return (NSEdgeInsets){ .top = 0, .bottom = 0,  .left = 0,  .right = 0 }; /// Tahoe Beta 8
-    sequoia:        return (NSEdgeInsets){ .top = 4, .bottom = 2,  .left = 3,  .right = 3 }; /// [Aug 2025] Trivia: These weird insets only appear on NSPrimaryBox, not NSCustomBox [Aug 2025]
-    catalina:       return (NSEdgeInsets){ .top = 4, .bottom = 2,  .left = 3,  .right = 3 }; /// [Aug 2025] Not sure if pixel perfect but MMF 3 looks crappy pre-Big Sur anyways.
+    bigsur:         return (NSEdgeInsets){ .top = 4, .bottom = 2,  .left = 3,  .right = 3 }; /// [Aug 2025] Trivia: These weird insets only appear on NSPrimaryBox, not NSCustomBox [Aug 2025]
+    pre_bigsur:     return (NSEdgeInsets){ .top = 4, .bottom = 2,  .left = 3,  .right = 3 }; /// [Aug 2025] Not sure if pixel perfect but MMF 3 looks crappy pre-Big Sur anyways.
 }
 
 + (void)centerWindow:(NSWindow *)win atPoint:(NSPoint)pt {

@@ -79,22 +79,17 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     } else if ([message isEqualToString:@"keyCaptureModeFeedbackWithSystemEvent"]) {
         [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:YES];
     } else if ([message isEqualToString:@"helperEnabledWithNoAccessibility"]) {
-        
-        BOOL isStrange = NO;
-        if (isavailable(13.0, 15.0)) { if (@available(macOS 13.0, *)) {
-            isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload:payload];
-        }}
-
+        /// Notes:
+        ///     - [Sep 2025] What is the logic for when we call checkHelperStrangenessReactWithPayload:?
+        ///         When the mainApp is started while the helper is already running, it checks if the helper is enabled by sending it "getBundleVersion" -> Maybe we should call `checkHelperStrangenessReactWithPayload:` there as well?
+        BOOL isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload: payload];
         if (!isStrange) {
             [AuthorizeAccessibilityView add];
         }
         
     } else if ([message isEqualToString:@"helperEnabled"]) {
         
-        BOOL isStrange = NO;
-        if (isavailable(13.0, 15.0)) { if (@available(macOS 13.0, *)) {
-            isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload:payload];
-        }}
+        BOOL isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload: payload];
         if (!isStrange) { /// Helper matches mainApp instance.
             
             /// Bring mainApp for foreground
@@ -268,7 +263,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     if (payload) {
         messageDict = @{
             kMFMessageKeyMessage: message,
-            kMFMessageKeyPayload: payload, /// This crashes if payload is nil for some reason
+            kMFMessageKeyPayload: payload, /// This crashes if payload is nil for some reason ... Update: [Sep 2025] that's how NSDictionaries work. Could use `?? [NSNull null]`
         };
     } else {
         messageDict = @{
