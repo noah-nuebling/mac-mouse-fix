@@ -2332,13 +2332,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@ wird jetzt von Mac Mouse Fix abgefangen."
+                      "value" : "%2$@ wird jetzt von Mac Mouse Fix abgefangen."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@ werden jetzt von Mac Mouse Fix abgefangen."
+                      "value" : "%2$@ werden jetzt von Mac Mouse Fix abgefangen."
                     }
                   }
                 }
@@ -2359,13 +2359,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%@ is now captured by Mac Mouse Fix."
+                      "value" : "%2$@ is now captured by Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%@ are now captured by Mac Mouse Fix."
+                      "value" : "%2$@ are now captured by Mac Mouse Fix."
                     }
                   }
                 }
@@ -2386,13 +2386,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@ a été capturé par Mac Mouse Fix."
+                      "value" : "%2$@ a été capturé par Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@ ont été capturés par Mac Mouse Fix."
+                      "value" : "%2$@ ont été capturés par Mac Mouse Fix."
                     }
                   }
                 }
@@ -2413,7 +2413,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@ 은 이제 Mac Mouse Fix에서 캡처합니다."
+                      "value" : "%2$@ 은 이제 Mac Mouse Fix에서 캡처합니다."
                     }
                   }
                 }
@@ -2434,13 +2434,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@ foi capturado pelo Mac Mouse Fix."
+                      "value" : "%2$@ foi capturado pelo Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@ foram capturados pelo Mac Mouse Fix."
+                      "value" : "%2$@ foram capturados pelo Mac Mouse Fix."
                     }
                   }
                 }
@@ -2488,7 +2488,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@ đã được ghi nhận bởi Mac Mouse Fix."
+                      "value" : "%2$@ đã được ghi nhận bởi Mac Mouse Fix."
                     }
                   }
                 }
@@ -2509,7 +2509,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@被Mac Mouse Fix捕获到。"
+                      "value" : "%2$@被Mac Mouse Fix捕获到。"
                     }
                   }
                 }
@@ -2530,7 +2530,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@被Mac Mouse Fix擷取到。"
+                      "value" : "%2$@被Mac Mouse Fix擷取到。"
                     }
                   }
                 }
@@ -2551,7 +2551,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@被Mac Mouse Fix截取到。"
+                      "value" : "%2$@被Mac Mouse Fix截取到。"
                     }
                   }
                 }
@@ -2887,13 +2887,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@ wird nicht länger von Mac Mouse Fix abgefangen."
+                      "value" : "%2$@ wird nicht länger von Mac Mouse Fix abgefangen."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@ werden nicht länger von Mac Mouse Fix abgefangen."
+                      "value" : "%2$@ werden nicht länger von Mac Mouse Fix abgefangen."
                     }
                   }
                 }
@@ -2914,13 +2914,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%@ is no longer captured by Mac Mouse Fix."
+                      "value" : "%2$@ is no longer captured by Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%@ are no longer captured by Mac Mouse Fix."
+                      "value" : "%2$@ are no longer captured by Mac Mouse Fix."
                     }
                   }
                 }
@@ -2941,13 +2941,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@ n'est plus capturé par Mac Mouse Fix."
+                      "value" : "%2$@ n'est plus capturé par Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@ ne sont plus capturés par Mac Mouse Fix."
+                      "value" : "%2$@ ne sont plus capturés par Mac Mouse Fix."
                     }
                   }
                 }
@@ -2968,7 +2968,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@ 은 더 이상 Mac Mouse Fix에서 캡처하지 않습니다."
+                      "value" : "%2$@ 은 더 이상 Mac Mouse Fix에서 캡처하지 않습니다."
                     }
                   }
                 }
@@ -2989,13 +2989,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@ não é mais capturado pelo Mac Mouse Fix."
+                      "value" : "%2$@ não é mais capturado pelo Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@ não são mais capturados pelo Mac Mouse Fix."
+                      "value" : "%2$@ não são mais capturados pelo Mac Mouse Fix."
                     }
                   }
                 }
@@ -3043,7 +3043,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@ không còn ghi nhận bởi Mac Mouse Fix."
+                      "value" : "%2$@ không còn ghi nhận bởi Mac Mouse Fix."
                     }
                   }
                 }
@@ -3064,7 +3064,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@不再被Mac Mouse Fix所捕获。"
+                      "value" : "%2$@不再被Mac Mouse Fix所捕获。"
                     }
                   }
                 }
@@ -3085,7 +3085,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@不再被Mac Mouse Fix所擷取。"
+                      "value" : "%2$@不再被Mac Mouse Fix所擷取。"
                     }
                   }
                 }
@@ -3106,7 +3106,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
-                      "value" : "%@不再被Mac Mouse Fix所截取。"
+                      "value" : "%2$@不再被Mac Mouse Fix所截取。"
                     }
                   }
                 }

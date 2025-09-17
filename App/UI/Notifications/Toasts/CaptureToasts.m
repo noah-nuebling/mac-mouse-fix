@@ -152,9 +152,11 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
     NSString *uncapturedItemEnumeration = [UIStrings naturalLanguageListFromStringArray:uncapturedItemArray];
     
     /// Get raw strings
-    NSString *capturedBodyRaw = stringf(getLocalizedString(kMFCapturedInputTypeButtons, @"captured.body"), capturedItemEnumeration, capturedCount);
-    NSString *uncapturedBodyRaw = stringf(getLocalizedString(kMFCapturedInputTypeButtons, @"uncaptured.body"), uncapturedItemEnumeration, uncapturedCount);
-    NSString *capturedHintRaw = stringf(getLocalizedString(kMFCapturedInputTypeButtons, @"captured.hint"), capturedCount);
+    ///     Hack: [Sep 2025] We're using `%2$@` in the format string to get at arg2 (`capturedItemEnumeration`), while having arg1 (`capturedCount`) control the pluralization (but without _literally_ showing up in the string). This seems to be undocumented behavior.
+    ///         See this SO post for another solution: https://stackoverflow.com/a/56843090/10601702
+    NSString *capturedBodyRaw   = stringf(getLocalizedString(kMFCapturedInputTypeButtons, @"captured.body"),   capturedCount, capturedItemEnumeration);
+    NSString *uncapturedBodyRaw = stringf(getLocalizedString(kMFCapturedInputTypeButtons, @"uncaptured.body"), uncapturedCount, uncapturedItemEnumeration);
+    NSString *capturedHintRaw   = stringf(getLocalizedString(kMFCapturedInputTypeButtons, @"captured.hint"),   capturedCount);
     NSString *uncapturedHintRaw = stringf(getLocalizedString(kMFCapturedInputTypeButtons, @"uncaptured.hint"), uncapturedCount);
     
     /// Validate
