@@ -31,10 +31,7 @@
 }
 
 - (NSString *_Nonnull)firstCapitalized {
-    NSString *firstChar = [self substringToIndex:1];
-    NSString *rest = [self substringFromIndex:1];
-    
-    return [[[firstChar capitalizedString] stringByAppendingString:rest] copy]; /// Why copy?
+    return [self.attributed attributedStringByCapitalizingFirst].string;
 }
 - (NSString *_Nonnull)stringByRemovingAllWhiteSpace {
     return [self.attributed attributedStringByRemovingAllWhitespace].string;

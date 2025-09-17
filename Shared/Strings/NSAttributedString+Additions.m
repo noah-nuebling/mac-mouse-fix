@@ -10,6 +10,8 @@
 #import "NSAttributedString+Additions.h"
 #import <Cocoa/Cocoa.h>
 #import "MarkdownParser/MarkdownParser.h"
+#import "MFLoop.h"
+
 
 #if IS_MAIN_APP
 #import "Mac_Mouse_Fix-Swift.h"
@@ -25,13 +27,41 @@
 
 - (NSAttributedString *)attributedStringByCapitalizingFirst {
     
+    /// Notes:
+    ///     - The code for finding the first letter is I think only necessary for skipping over the zero-width characters we insert when taking screenshots (See `NSString+Steganography.m`) [Sep 2025]
+    ///     - Could we just use `-[NSAttributedString localizedCapitalizedString]`? [Sep 2025]
+    
+    /// Null check
     if (self.length == 0) {
-        return self.copy;
+        return [self copy];
     }
     
-    NSMutableAttributedString *s = self.mutableCopy;
-    [s replaceCharactersInRange:NSMakeRange(0, 1) withString:[[s.string substringToIndex:1] localizedUppercaseString]];
+    /// Find the first letter
+    NSUInteger firstLetterIndex = NSUIntegerMax;
+    {
+        unichar chars[self.length];
+        [self.string getCharacters: chars];
+        
+        loopc(i, self.length) {
+            if ([NSCharacterSet.letterCharacterSet characterIsMember: chars[i]]) {
+                firstLetterIndex = i;
+                break;
+            }
+        }
+    }
     
+    /// Guard no letters
+    if (firstLetterIndex == NSUIntegerMax) {
+        assert(false && "No letters found to capitalize");
+        return [self copy];
+    }
+    
+    /// Uppercase the first letter
+    NSMutableAttributedString *s = [self mutableCopy];
+    NSRange firstLetterRange = NSMakeRange(firstLetterIndex, 1);
+    [s replaceCharactersInRange: firstLetterRange withString: [[s.string substringWithRange: firstLetterRange] localizedUppercaseString]];
+    
+    /// Return
     return s;
 }
 
