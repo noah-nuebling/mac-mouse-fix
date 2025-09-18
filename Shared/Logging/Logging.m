@@ -47,9 +47,9 @@
     
     /// Call swift setup
     if (swiftSubclass != nil) {
-        nowarn_begin()
+        nowarn_push()
         [swiftSubclass performSelector:@selector(setUpDDLogSwift)];
-        nowarn_end()
+        nowarn_pop()
     }
     
     if ((NO) /*runningPreRelease()*/) {

@@ -14,7 +14,7 @@
 
 #pragma mark - Convenience macros
 
-#define makeCharSet(str) (NSCharacterSet *) ({                                                 \
+#define makeCharSet(str) (NSCharacterSet *) ({                              \
     static NSCharacterSet *result = nil;                                    \
     static dispatch_once_t onceToken;                                       \
     dispatch_once(&onceToken, ^{                                            \

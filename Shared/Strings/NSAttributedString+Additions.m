@@ -11,7 +11,7 @@
 #import <Cocoa/Cocoa.h>
 #import "MarkdownParser/MarkdownParser.h"
 #import "MFLoop.h"
-
+#import "NSString+Steganography.h"
 
 #if IS_MAIN_APP
 #import "Mac_Mouse_Fix-Swift.h"
@@ -28,7 +28,7 @@
 - (NSAttributedString *)attributedStringByCapitalizingFirst {
     
     /// Notes:
-    ///     - The code for finding the first letter is I think only necessary for skipping over the zero-width characters we insert when taking screenshots (See `NSString+Steganography.m`) [Sep 2025]
+    ///     - The code for finding the first letter is I think only necessary for skipping over the zero-width characters we insert when taking screenshots (See `NSString+Steganography.m` and `-MF_ANNOTATE_LOCALIZED_STRINGS`) [Sep 2025]
     ///     - Could we just use `-[NSAttributedString localizedCapitalizedString]`? [Sep 2025]
     
     /// Null check
@@ -96,105 +96,61 @@
     ///     Performance:
     ///     - I was somehow worrying about the performance of this but I used an MFBenchmark and it takes 0.003 ms on averate (3/1000 of a millisecond), so nothing to worry about.
     
+    /// Null check
+    if (!self.length) return [self copy];
     
-    /// Mutable copy
+    /// Create mutable result
     NSMutableAttributedString *s = [self mutableCopy];
     
-    /// Handle edge case
-    if (self.length == 0) {
-        return s;
-    }
-    
-    /// Declare chars to trim
+    /// Create shorthands
+    #define str(i) [s.string characterAtIndex: i] /// [Sep 2025] We could use `-[NSString getCharacters:]` for similar ergonomics with better performance, but we'd have to repeat that every time that we modify the string.
     NSCharacterSet *whitespaceChars = NSCharacterSet.whitespaceCharacterSet;
     NSCharacterSet *whitespaceAndNewlineChars = NSCharacterSet.whitespaceAndNewlineCharacterSet;
     
-    /// Count leading whitespace
-    NSInteger i = 0;
-    while (true) {
-        
-        /// Break
-        if (i >= s.length) break;
-        
-        /// Get c
-        unichar c = [s.string characterAtIndex:i];
-        
-        /// Break
-        BOOL isWhitespace = [whitespaceAndNewlineChars characterIsMember:c];
-        if (!isWhitespace) break;
-        
-        /// Increment
-        i++;
-    }
-    /// Remove leading whitespace
-    if (i > 0) {
-        [s deleteCharactersInRange:NSMakeRange(0, i)];
+    /// Skip over secretMessage
+    ///     Skip over the zero-width characters we insert when taking screenshots (See `NSString+Steganography.m`) [Sep 2025]
+    NSInteger realStartIndex = 0;
+    if ([NSProcessInfo.processInfo.arguments containsObject:@"-MF_ANNOTATE_LOCALIZED_STRINGS"]) {
+        loopc(i, s.length) {
+            BOOL isSecretMessageChar = [[NSString secretMessageChars] characterIsMember: str(i)]; /// [Sep 2025] Maybe we should use `-[NSString secretMessages]` instead?
+            if (!isSecretMessageChar) {
+                realStartIndex = (NSInteger)i;
+                break;
+            }
+        }
     }
     
-    if ((YES)) {
-        
-        ///
-        /// New implementation
-        ///
-        
-        /// Count trailing whitespace
-        i = s.length - 1;
-        while (true) {
+    nowarn_push(-Wsign-conversion)
+    nowarn_push(-Wsign-compare)
+    {
+        /// Remove leading whitespace
+        NSInteger i;            /// Caution: [Sep 2025] May not be unsigned, otherwise the backwards loop underflows and goes on forever.
+                                ///         But this way we get lots of signed/unsigned warnings! Not sure how to deal with this except `nowarn_push`. See `Clang Diagnostic Flags - Sign.md`
+        for (i = realStartIndex; i < s.length; i++)
+            if (![whitespaceAndNewlineChars characterIsMember: str(i)]) break;
+        if (realStartIndex < i) [s deleteCharactersInRange: NSMakeRange(realStartIndex, i - realStartIndex)]; /// (i-1) is the last of the leading whitespace chars
             
-            /// Break
-            if (i < 0) break;
-            
-            /// Get c
-            unichar c = [s.string characterAtIndex:i];
-            
-            /// Break
-            BOOL isWhitespace = [whitespaceAndNewlineChars characterIsMember:c];
-            if (!isWhitespace) break;
-            
-            /// Decrement
-            i--;
-        }
         /// Remove trailling whitespace
-        if (i < s.length - 1) {
-            NSInteger nOfTraillingWhitespaces = (s.length - 1) - i; /// We started i at s.length-1, and decremented it for every whitespace char we found.
-            NSRange trailingWSRange = NSMakeRange(s.length - nOfTraillingWhitespaces, nOfTraillingWhitespaces);
-            assert(trailingWSRange.location + trailingWSRange.length == s.length); /// The range should end at the end of the string.
-            [s deleteCharactersInRange:trailingWSRange];
-        }
+        for (i = (s.length - 1); i >= realStartIndex; i--)
+            if (![whitespaceAndNewlineChars characterIsMember: str(i)]) break;
+        if ((i+1) < s.length) [s deleteCharactersInRange: NSMakeRange(i+1, s.length - (i+1))]; /// (i+1) is the first of the trailing whitespace chars
         
         /// Remove duplicates
         ///     Note how we're using `whitespaceChars` here not `whitespaceAndNewlineChars`. Since we don't want to remove double linebreaks.
-        ///     This
-        NSInteger i = 0;
-        while (true) {
-            
-            /// Break
-            ///     Only continue if there are at least two chars left in the string that we haven't looked at
-            BOOL cIsBeforeLastChar = i < s.length - 1;
-            if (!cIsBeforeLastChar) break;
-            
-            /// Check `str[i]` isWhitespace?
-            unichar c = [s.string characterAtIndex:i];
-            BOOL cIsWhitespace = [whitespaceChars characterIsMember:c];
-            if (cIsWhitespace) {
-                
-                /// Check `str[i+1]` isWhitespace?
-                unichar d = [s.string characterAtIndex:i+1];
-                BOOL dIsWhitespace = [whitespaceChars characterIsMember:d];
-                if (dIsWhitespace) {
-                    /// Found duplicate whitespace - delete the first one!
-                    [s deleteCharactersInRange:NSMakeRange(i, 1)];
-                } else {
-                    /// Found non-duplicate whitespace
-                    i++;
-                }
-            } else {
-                /// Found non-whitespace
-                i++;
+        for (i = realStartIndex; i+1 < s.length; i++) {
+            if (
+                [whitespaceChars characterIsMember: str(i)] &&
+                [whitespaceChars characterIsMember: str(i+1)]
+            ) {
+                [s deleteCharactersInRange: NSMakeRange(i, 1)]; /// Found duplicate whitespace - delete the first one, and don't increment i
+                i--;
             }
         }
-        
-    } else { /// If NO
+    }
+    nowarn_pop()
+    nowarn_pop()
+    
+    if ((0)) {
         
         /// Old backwards looping implementation
         ///     (Might be more efficient, since it does duplicate removal and removal of trailing chars in one, but it's harder to read, and doesn't let us apply different character sets for trailing removal vs duplicate removal)
@@ -244,6 +200,7 @@
     
     /// Return
     return s;
+    #undef str
 }
 
 #pragma mark Append

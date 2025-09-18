@@ -20,32 +20,32 @@ NS_ASSUME_NONNULL_BEGIN /// [Sep 2025] I haven't checked if these are actually  
 
 @interface NSAttributedString (MFSteganography)
 
-/// Interface
-
-- (MF_SWIFT_UNBRIDGED(NSAttributedString *))attributedStringByAppendingStringAsSecretMessage:(MF_SWIFT_UNBRIDGED(NSString *))message NS_REFINED_FOR_SWIFT;
-- (MF_SWIFT_UNBRIDGED(NSArray<FoundSecretMessage *> *))secretMessages NS_REFINED_FOR_SWIFT;
+    /// Interface
+    - (MF_SWIFT_UNBRIDGED(NSAttributedString *))attributedStringByAppendingStringAsSecretMessage:(MF_SWIFT_UNBRIDGED(NSString *))message NS_REFINED_FOR_SWIFT;
+    - (MF_SWIFT_UNBRIDGED(NSArray<FoundSecretMessage *> *))secretMessages NS_REFINED_FOR_SWIFT;
 
 @end
 
 @interface NSString (MFSteganography)
 
-/// Interface
+    /// Interface
 
-- (MF_SWIFT_UNBRIDGED(NSString *))stringByAppendingStringAsSecretMessage:(MF_SWIFT_UNBRIDGED(NSString *))message NS_REFINED_FOR_SWIFT;
-- (MF_SWIFT_UNBRIDGED(NSString *))encodedAsSecretMessage NS_REFINED_FOR_SWIFT;
-- (MF_SWIFT_UNBRIDGED(NSArray<FoundSecretMessage *> *))secretMessages NS_REFINED_FOR_SWIFT;
-- (MF_SWIFT_UNBRIDGED(NSString *))withoutSecretMessages NS_REFINED_FOR_SWIFT;
+    - (MF_SWIFT_UNBRIDGED(NSString *))stringByAppendingStringAsSecretMessage:(MF_SWIFT_UNBRIDGED(NSString *))message NS_REFINED_FOR_SWIFT;
+    - (MF_SWIFT_UNBRIDGED(NSString *))encodedAsSecretMessage NS_REFINED_FOR_SWIFT;
+    - (MF_SWIFT_UNBRIDGED(NSArray<FoundSecretMessage *> *))secretMessages NS_REFINED_FOR_SWIFT;
+    - (MF_SWIFT_UNBRIDGED(NSString *))withoutSecretMessages NS_REFINED_FOR_SWIFT;
+    + (MF_SWIFT_UNBRIDGED(NSCharacterSet *))secretMessageChars NS_REFINED_FOR_SWIFT; /// [Sep 2025] Too lazy to actually implement a Swift bridge.
 
-/// Internal
+    /// Internal
 
-- (NSString *)decodedAsSecretMessage;
+    - (NSString *)decodedAsSecretMessage;
 
-+ (NSString *)stringWithBinaryArray:(NSArray<NSArray<NSNumber *> *> *)characters;
-- (NSArray<NSArray<NSNumber *> *> *)binaryArray;
+    + (NSString *)stringWithBinaryArray:(NSArray<NSArray<NSNumber *> *> *)characters;
+    - (NSArray<NSArray<NSNumber *> *> *)binaryArray;
 
-+ (NSString *)stringWithUTF32Characters:(NSArray<NSNumber *> *)characters;
-- (NSArray<NSNumber *> *)UTF32Characters;
-- (NSString *)UTF32CharacterDescription;
+    + (NSString *)stringWithUTF32Characters:(NSArray<NSNumber *> *)characters;
+    - (NSArray<NSNumber *> *)UTF32Characters;
+    - (NSString *)UTF32CharacterDescription;
 
 @end
 

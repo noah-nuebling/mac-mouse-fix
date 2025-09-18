@@ -62,29 +62,29 @@
 })
 NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullable __strong *_Nonnull values, size_t count, bool linebreaks);
 
-/// `nowarn_begin()` and `nowarn_end()` macros:
+/// `nowarn_push()` and `nowarn_pop()` macros:
 ///     Temporarily disable clang warnings
 ///     Example usage:
 ///         Silence *all* warnings
 ///             ```
-///             nowarn_begin();
+///             nowarn_push();
 ///             <Code that triggers warnings>
-///             nowarn_end();
+///             nowarn_pop();
 ///             ```
 ///         Silence specific warnings
 ///                 (See https://clang.llvm.org/docs/DiagnosticsReference.html)
 ///             ```
-///             nowarn_begin(-Wundeclared-selector);
+///             nowarn_push(-Wundeclared-selector);
 ///             <Code that triggers -Wundeclared-selector warnings>
-///             nowarn_end();
+///             nowarn_pop();
 ///             ```
 
-#define nowarn_begin(w)                                                     \
+#define nowarn_push(w)                                                     \
     _Pragma("clang diagnostic push")                                        \
     IFEMPTY     (w, _Pragma("clang diagnostic ignored \"-Weverything\""))   \
     IFEMPTY_NOT (w, _Pragma(TOSTR(clang diagnostic ignored #w)))            \
 
-#define nowarn_end()                                                        \
+#define nowarn_pop()                                                        \
     _Pragma("clang diagnostic pop")
 
 /// `_isobject()` – internal helper macro.
@@ -536,9 +536,9 @@ NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullab
 #define safeindex(list, count, i, fallback) /*(typeof((list)[0]))*/ ({          \
     __auto_type __i = (i);                                                      \
     __auto_type __cnt = (count);                                                \
-    nowarn_begin(-Wnullable-to-nonnull-conversion)                              /** -Wnullable-to-nonnull-conversion triggers here when the fallback is NULL (nonsensically, I think). Guess these quirks are why it's not enabled by default. See `Xcode Nullability Settings.md` */ \
+    nowarn_push(-Wnullable-to-nonnull-conversion)                              /** -Wnullable-to-nonnull-conversion triggers here when the fallback is NULL (nonsensically, I think). Guess these quirks are why it's not enabled by default. See `Xcode Nullability Settings.md` */ \
     ((0 <= __i) && (0 < __cnt) && (__i < __cnt)) ? (list)[__i] : (fallback);    /** We're making sure `count` and `i` are both positive before comparing them. Otherwise we might have subtle issues because `(int)-1 < (unsigned int)1` is false in C.*/\
-    nowarn_end()                                                                \
+    nowarn_pop()                                                                \
 })
 
 /// NULL-safe wrappers around common CF methods

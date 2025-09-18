@@ -54,6 +54,8 @@ MFDataClassImplement2(MFDataClassBase, FoundSecretMessage,
 
 typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     
+    /// Note: [Sep 2025] None of the 5 characters we use (0x200C, 0x200D, 0x2060, 0x2062, 0x2063) are part of `NSCharacterSet.whitespaceAndNewlineCharacterSet`
+    
     /// For steganography. Based on this readme https://github.com/Endrem/Zero-Width-Characters
     MFZeroWidthCharacterSpace                       = 0x200B,       /// This one get removed when we apply stripWhitespace()
     MFZeroWidthCharacterNonJoiner                   = 0x200C,       /// We use this to encode 0
@@ -75,11 +77,22 @@ typedef NS_ENUM(UTF32Char, MFZeroWidthCharacter) {
     
 };
 
++ (NSCharacterSet *) secretMessageChars {
+    /// All the characters used in our secret messages [Sep 2025]
+    ///     Note: [Sep 2025] Could use `-fobjc-constant-literals` if our deployment target was macOS 11+ (See: https://developer.apple.com/forums/thread/783930)
+    static NSCharacterSet *result = nil; static dispatch_once_t onceToken; dispatch_once(&onceToken, ^{
+        result = [NSCharacterSet characterSetWithCharactersInString: @"\u200C\u200D\u2060\u2062\u2063"];
+    });
+    return result;
+}
+
 ///
 /// Base-4 secret message encoding/decoding
 ///
 
 - (NSArray<NSNumber *> *)secretMessageStartSequence {
+
+    
     NSArray *result = @[@0x2063, @0x200C, @0x2063, @0x200D, @0x2063]; /// 2063 is only used in the start/end sequence not in the secretMessage's body
     return result;
 }
