@@ -113,8 +113,8 @@
         map = @{
             @1: NSLocalizedString(@"trigger.y.group-row.button-name.primary",     @""), /// The '.y.' is just used to group things in the .xcstrings file. Not sure if smart.
             @2: NSLocalizedString(@"trigger.y.group-row.button-name.secondary",   @""),
-            @3: NSLocalizedString(@"trigger.y.group-row.button-name.middle",      @"Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions (e.g. 'Mission Control' or 'Scroll & Navigate') which are triggered by the same button. (I hope this is understandable! If not, please let me know so I can improve this. Thank you.)"),
-            @-1: NSLocalizedString(@"trigger.y.group-row.button-name.numbered",   @"Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - If you haven't filled those out, yet, you might want to fill them out first to figure out the capitalization, and then come back to fill out the button-names here. (This is just a guideline, if you have a specific reason to deviate it's up to your best judgement.)"),
+            @3: NSLocalizedString(@"trigger.y.group-row.button-name.middle",      @"Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions which are triggered by the same button."),
+            @-1: NSLocalizedString(@"trigger.y.group-row.button-name.numbered",   @"Note: The comment next to capture-toast.button-name.numbered also applies here."),
         };
         
     } else if (context == kMFButtonStringUsageContextCaptureNotification) {
@@ -122,8 +122,14 @@
         map = @{
             @1: NSLocalizedString(@"capture-toast.button-name.primary",     @""),
             @2: NSLocalizedString(@"capture-toast.button-name.secondary",   @""),
-            @3: NSLocalizedString(@"capture-toast.button-name.middle",      @"Note: These button names will be inserted into other \"capture-toast.[...]\" strings. Example: Middle Button and Button 4 are now captured by Mac Mouse Fix."),
-            @-1: NSLocalizedString(@"capture-toast.button-name.numbered",   @"Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back to fill out the button-names here. (This is just a guideline, if you have a specific reason to deviate it's up to your best judgement.)"),
+            @3: NSLocalizedString(
+                @"capture-toast.button-name.middle",
+                @"Note: These button names will be inserted into other \"capture-toast.buttons.[...]\" strings.\n"
+                "\n"
+                "Example: \n"
+                "Middle Button and Button 4 are now captured by Mac Mouse Fix."
+            ),
+            @-1: NSLocalizedString(@"capture-toast.button-name.numbered",   @"Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back here. See trigger.substring.button-modifier.2 for tips on how to capitalize these strings."),
         };
         
     } else {

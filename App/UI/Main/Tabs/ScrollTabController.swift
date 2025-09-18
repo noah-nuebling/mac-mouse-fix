@@ -125,7 +125,7 @@ class ScrollTabController: NSViewController {
         ///     -> Do the same thing for all UI strings with non-semantic linebreaks. (non-semantic means they linebreak exists to make the layout look good not to separate text logically.)
         precise.bindingTarget <~ preciseToggle.reactive.boolValues
         preciseToggle.reactive.boolValue <~ precise.producer
-        let preciseHintRaw = NSLocalizedString("precise-scrolling-hint", comment: "Note: The line break is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version.")
+        let preciseHintRaw = NSLocalizedString("precise-scrolling-hint", comment: "Note: The line break is there so the layout of the Scroll tab doesn't become too wide which looks weird. Feel free to set a linebreak that you think will work well, but don't sweat it. I'll look over this after you submit your translations and make sure the linebreak doesn't make the Scroll tab too wide.")
         preciseHint.attributedStringValue = NSAttributedString(attributedMarkdown: preciseHintRaw.attributed().fillingOutBaseAsHint())!
         
         /// Generate macOS hint string

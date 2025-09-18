@@ -483,7 +483,7 @@ import Foundation
             ///     -> I think this problem will be resolved by us using `**` instead of `__` for emphasis.
             /// TODO: The 'Don't remind me again' checkbox at the bottom of the popover is loaded directly from the nib file. So it's localizable string is in a totally different place. This might be confusing for localizers.
             
-            let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "Note: The linebreak is so the popover doesn't become too wide. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version."), deviceName)
+            let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "Note: The linebreak is so the popover doesn't become too wide. See the comment next to precise-scrolling-hint"), deviceName)
             
             if let attributes = restoreDefaultPopover_stringAttributesFromIB, let newString = NSAttributedString(coolMarkdown: message, fillOutBase: false)?.addingStringAttributes(asBase: attributes) {
                 

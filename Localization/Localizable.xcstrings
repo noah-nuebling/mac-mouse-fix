@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "accessibility.settings-link.pre-ventura" : {
-      "comment" : "Note: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The string for Ventura and later is defined in another file, this is the string for earlier versions || Example: 1. Open 'Security & Privacy' Preferences 2. Switch on 'Mac Mouse Fix Helper'",
+      "comment" : "Example: \n   1. Open 'Security & Privacy' Preferences\n   2. Switch on 'Mac Mouse Fix Helper'\n\nBackground: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The string for Ventura and later is defined in another file, this is the string for earlier versions",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2057,7 +2057,7 @@
       "shouldTranslate" : false
     },
     "capture-toast.button-name.middle" : {
-      "comment" : "Note: These button names will be inserted into other \"capture-toast.[...]\" strings. Example: Middle Button and Button 4 are now captured by Mac Mouse Fix.",
+      "comment" : "Note: These button names will be inserted into other \"capture-toast.buttons.[...]\" strings.\n\nExample: \nMiddle Button and Button 4 are now captured by Mac Mouse Fix.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2122,12 +2122,12 @@
       }
     },
     "capture-toast.button-name.numbered" : {
-      "comment" : "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back to fill out the button-names here. (This is just a guideline, if you have a specific reason to deviate it's up to your best judgement.)",
+      "comment" : "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back here. See trigger.substring.button-modifier.2 for tips on how to capitalize these strings.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "taste %@"
+            "state" : "translated",
+            "value" : "Taste %@"
           }
         },
         "en" : {
@@ -2317,7 +2317,7 @@
       }
     },
     "capture-toast.buttons.captured.body" : {
-      "comment" : "Note: This is a \"pluralizable\" string, which means it has different versions depending on how many buttons the string is talking about. Click the disclosure triangles (>) to edit the different versions of the string. Do not localize \"@pluralizable\" - it's a placeholder. || Note 2: \"%@\" will be the names of the captured buttons. Example where those buttons are \"Middle Button\" and \"Button 4\": Middle Button and Button 4 are now captured by Mac Mouse Fix.",
+      "comment" : "Note: This is a \"pluralizable\" string, which means it has different versions depending on how many buttons the string is talking about. Click the disclosure triangles (>) to edit the different versions of the string. Do not localize \"@pluralizable\" - it's just a placeholder. \n\nNote 2: \"%2$@\" will be replaced with the names of the captured buttons.\nExample where those buttons are \"Middle Button\" and \"Button 4\":\n\"Middle Button and Button 4 are now captured by Mac Mouse Fix.\"",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2562,7 +2562,7 @@
       }
     },
     "capture-toast.buttons.captured.hint" : {
-      "comment" : "Note: The core idea that we want to convey with these ui strings is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since I think it sounds nicer in English. In your language, you might want to use something closer to 'intercept'.",
+      "comment" : "Note: The core idea that we want to convey with these ui strings is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since I think it sounds nicer in English. In your language, you might want to use something closer to 'intercept'.\n\nAlso see: The CapturedButtonsMMF3 document which explains the concept in more detail.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2807,7 +2807,7 @@
       }
     },
     "capture-toast.buttons.link" : {
-      "comment" : "",
+      "comment" : "Note: This links to the CapturedButtonsMMF3 document.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3876,7 +3876,7 @@
       }
     },
     "effect.app-expose" : {
-      "comment" : "Note: Under macOS Sonoma, this feature is called 'App Exposé' in trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'Exposé' felt like like an outdated term.",
+      "comment" : "Note: Apple refers to this feature by different names like 'Application Windows' or 'App Exposé'. In English I chose the same name that is used in Keyboard Shortcut settings.\n\nBackground: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'App Exposé' felt a bit outdated. (Exposé was the precursor to Mission Control I think)",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -4006,7 +4006,7 @@
       }
     },
     "effect.apple-keys-submenu" : {
-      "comment" : "Note: This is the title for a hidden submenu that lets you remap your buttons to keyboard keys that only appear on Apple Keyboards such as the 'Brightness Up' or 'Do Not Disturb' keys. ",
+      "comment" : "Note: This is the title for a hidden submenu that lets you remap your buttons to keyboard keys that only appear on Apple Keyboards such as the 'Brightness Up' or 'Do Not Disturb' keys. (You can hold option (⎇) to reveal the submenu)",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5956,7 +5956,7 @@
       }
     },
     "enable-timeout-toast" : {
-      "comment" : "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. \"&nbsp;\" is a so called \"HTML Character Entity\".",
+      "comment" : "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\".",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7982,7 +7982,7 @@
       }
     },
     "precise-scrolling-hint" : {
-      "comment" : "Note: The line break is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version.",
+      "comment" : "Note: The line break is there so the layout of the Scroll tab doesn't become too wide which looks weird. Feel free to set a linebreak that you think will work well, but don't sweat it. I'll look over this after you submit your translations and make sure the linebreak doesn't make the Scroll tab too wide.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8437,7 +8437,7 @@
       }
     },
     "restore-default-buttons-popover.body" : {
-      "comment" : "Note: The linebreak is so the popover doesn't become too wide. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version.",
+      "comment" : "Note: The linebreak is so the popover doesn't become too wide. See the comment next to precise-scrolling-hint",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8502,7 +8502,7 @@
       }
     },
     "revive-toast" : {
-      "comment" : "Note: \"%1$@\" will be the list of enabled features, \"%2$@\" will be the menubar icon || Note: The described feature lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.",
+      "comment" : "Note: \"%1$@\" will be a list of mouse features like \"Scrolling\" or \"Buttons\" for which Mac Mouse Fix was enabled. \"%2$@\" will be the menubar icon\n\nNote 2: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8567,7 +8567,7 @@
       }
     },
     "revive-toast.feature-buttons" : {
-      "comment" : "Note: This string will be inserted into the \"revive-toast\" message",
+      "comment" : "Note: This string will be inserted into the \"revive-toast\" message\nNote 2: These 'feature names' should match the tabs seen in the MMF UI. To find the strings used for the tabs, search for localized strings with a comment containing \"Tab Title\" e.g. \"Buttons Tab Title\".",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10452,7 +10452,7 @@
       }
     },
     "thanks.10" : {
-      "comment" : "Note: The weird ones are really rare. Feel free to change them to anything you feel like to leave a little easter egg!",
+      "comment" : "Note: The weird ones are rare. Feel free to change them if you'd like to leave a little easter egg.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11817,7 +11817,7 @@
       }
     },
     "trigger.substring.button-modifier.2" : {
-      "comment" : "Note: All the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using \"Title Case\", but this isn't common in other languages. For example, in German, the substring \"Double Click %@ +\" should be localized as \"doppelklicke %@ +\" and \"Click and Drag %@\" as \"klicke %@ und ziehe\". Notice that not even the first word is capitalized in German. That's because these substrings are joined programmatically to create a combined string. The substrings start with a lowercase letter, to avoid random capitalization in the middle of the combined string. The first word of the combined string will be capitalized programmatically. Therefore, unless your language has special capitalization rules (such as \"Title Case\" in English), these substrings should probably be all-lowercase, just like German. (Or, if you use a non-standard way to capitalize I think that's also ok, as long as it's reasonably consistent) I know this is a bit complicated, but I hope it's still understandable! If anything's unclear, please let me know and I'll try to explain it and improve these comments. Thank you.",
+      "comment" : "Note: All the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using \"Title Case\", but this isn't common in other languages. For example, in German, the substring \"Double Click %@ +\" should be localized as \"doppelklicke %@ +\" and \"Click and Drag %@\" as \"klicke %@ und ziehe\". Notice that not even the first word is capitalized in German. That's because these substrings are joined programmatically to create a combined string. The substrings start with a lowercase letter, to avoid random capitalization in the middle of the combined string. The first word of the combined string will be capitalized programmatically. Therefore, unless your language has special capitalization rules (such as \"Title Case\" in English, or capitalization of nouns in German), these substrings should probably be all-lowercase, just like the German examples above. (Or, if you use a non-standard way to capitalize I think that's also ok, as long as it's reasonably consistent) I know this is a bit complicated, but I hope it's still understandable! If anything's unclear, please let me know and I'll try to explain it and make things easier in the future. Thank you.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12016,8 +12016,8 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "taste %@"
+            "state" : "translated",
+            "value" : "Taste %@"
           }
         },
         "en" : {
@@ -13117,7 +13117,7 @@
       }
     },
     "trigger.y.group-row.button-name.middle" : {
-      "comment" : "Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions (e.g. 'Mission Control' or 'Scroll & Navigate') which are triggered by the same button. (I hope this is understandable! If not, please let me know so I can improve this. Thank you.)",
+      "comment" : "Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions which are triggered by the same button.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13182,12 +13182,12 @@
       }
     },
     "trigger.y.group-row.button-name.numbered" : {
-      "comment" : "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - If you haven't filled those out, yet, you might want to fill them out first to figure out the capitalization, and then come back to fill out the button-names here. (This is just a guideline, if you have a specific reason to deviate it's up to your best judgement.)",
+      "comment" : "Note: The comment next to capture-toast.button-name.numbered also applies here.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "taste %@"
+            "state" : "translated",
+            "value" : "Taste %@"
           }
         },
         "en" : {
@@ -13377,7 +13377,7 @@
       }
     },
     "trigger.z.drag-particle" : {
-      "comment" : "Note: This word will be emphasized in strings such as \"Double Click and Drag %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with \"trigger.substring.drag.[...]\". If this this is not possible in your language, please let me know so I can adjust the code. Thank you.",
+      "comment" : "Note: This word will be emphasized in strings such as \"Double Click and Drag %@\".\nFor the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with\n\"trigger.substring.drag.[...]\".\n\nIf that's not possible in your language, let me know and I will improve the implementation. Thank you!",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -13436,7 +13436,7 @@
       }
     },
     "trigger.z.scroll-particle" : {
-      "comment" : "Note: This word will be emphasized in strings such as \"Click and Scroll %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in the strings whose keys begin with \"trigger.substring.scroll.[...]\"",
+      "comment" : "Note: This word will be emphasized in strings such as \"Click and Scroll %@\".\nFor the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in the strings whose keys begin with\n\"trigger.substring.scroll.[...]\"\n\n\nAlso see the comment next to \"trigger.z.drag-particle\".",
       "localizations" : {
         "de" : {
           "stringUnit" : {

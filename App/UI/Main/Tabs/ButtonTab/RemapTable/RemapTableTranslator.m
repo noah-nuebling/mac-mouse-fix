@@ -182,10 +182,18 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMissionControl)
         }}, /// I removed actions that are redundant to the Click and Drag for Spaces & Mission Control feature in 3.0.0 Beta 6 but  people complained https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue+label%3A%223.0.0+Beta+6+Removed+Actions%22
-        @{@"ui": NSLocalizedString(@"effect.app-expose", @"Note: Under macOS Sonoma, this feature is called 'App Exposé' in trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'Exposé' felt like like an outdated term."), @"tool": NSLocalizedString(@"effect.app-expose.hint", @""), @"dict": @{
+        @{
+            @"ui": NSLocalizedString(
+                @"effect.app-expose",
+                @"Note: Apple refers to this feature by different names like 'Application Windows' or 'App Exposé'. In English I chose the same name that is used in Keyboard Shortcut settings.\n"
+                "\n"
+                "Background: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'App Exposé' felt a bit outdated. (Exposé was the precursor to Mission Control I think)"),
+            @"tool": NSLocalizedString(@"effect.app-expose.hint", @""),
+            @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHAppExpose)
-        }},
+            }
+        },
         @{@"ui": NSLocalizedString(@"effect.desktop", @""), @"tool": NSLocalizedString(@"effect.desktop.hint", @""), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHShowDesktop)
@@ -316,7 +324,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     }
     
     [oneShotEffectsTable insertObject:@{
-        @"ui": NSLocalizedString(@"effect.apple-keys-submenu", @"Note: This is the title for a hidden submenu that lets you remap your buttons to keyboard keys that only appear on Apple Keyboards such as the 'Brightness Up' or 'Do Not Disturb' keys. "),
+        @"ui": NSLocalizedString(@"effect.apple-keys-submenu", @"Note: This is the title for a hidden submenu that lets you remap your buttons to keyboard keys that only appear on Apple Keyboards such as the 'Brightness Up' or 'Do Not Disturb' keys. (You can hold option (⎇) to reveal the submenu)"),
         @"tool": NSLocalizedString(@"effect.apple-keys-submenu.hint", @""),
         @"alternate": @YES,
         @"submenu": submenu
@@ -813,13 +821,27 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         ///     - 26.08.2024: I saw the French and Brazillian loclizers not capitalize and spell the drag-particles exactly as they are in the trigger.substring.[...] strings.
         ///                 So we added more extensive comments and added `.z.` in the key so that translators see the drag-particles *after* the trigger.substring.[...] strings - hopefully making it more understandable how the particles affect the substrings.
         
-        NSString *dragParticle =    NSLocalizedString(@"trigger.z.drag-particle",  @"Note: This word will be emphasized in strings such as \"Double Click and Drag %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with \"trigger.substring.drag.[...]\". If this this is not possible in your language, please let me know so I can adjust the code. Thank you."); // || Note: This word will be emphasized in 'Action Table Trigger Strings' such as 'Double Click and Drag %@'. For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with 'trigger.substring.drag.[...]'");
-        NSString *scrollParticle =  NSLocalizedString(@"trigger.z.scroll-particle", @"Note: This word will be emphasized in strings such as \"Click and Scroll %@\". For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in the strings whose keys begin with \"trigger.substring.scroll.[...]\"");
+        NSString *dragParticle =    NSLocalizedString(
+            @"trigger.z.drag-particle",
+            @"Note: This word will be emphasized in strings such as \"Double Click and Drag %@\".\n"
+            "For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with\n"
+            "\"trigger.substring.drag.[...]\"."
+            "\n"
+            "\nIf that's not possible in your language, let me know and I will improve the implementation. Thank you!"
+        );
+        NSString *scrollParticle =  NSLocalizedString(
+            @"trigger.z.scroll-particle",
+            @"Note: This word will be emphasized in strings such as \"Click and Scroll %@\".\n"
+            "For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in the strings whose keys begin with\n"
+            "\"trigger.substring.scroll.[...]\"\n"
+            "\n"
+            "\nAlso see the comment next to \"trigger.z.drag-particle\"."
+        );
         
-        tr = [tr attributedStringByAddingSemiBoldForSubstring:dragParticle];
-        tr = [tr attributedStringByAddingSemiBoldForSubstring:scrollParticle];
-        tr = [tr attributedStringBySettingSemiBoldColorForSubstring:dragParticle];
-        tr = [tr attributedStringBySettingSemiBoldColorForSubstring:scrollParticle];
+        tr = [tr attributedStringByAddingSemiBoldForSubstring: dragParticle];
+        tr = [tr attributedStringByAddingSemiBoldForSubstring: scrollParticle];
+        tr = [tr attributedStringBySettingSemiBoldColorForSubstring: dragParticle];
+        tr = [tr attributedStringBySettingSemiBoldColorForSubstring: scrollParticle];
     }
     
     /// Validate
@@ -850,7 +872,10 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             ///         - It shows up close to the top of the "trigger.substrings.[...]" in the .xcstrings file, when sorting alphabetically.
             ///         - If we put the explanation on the very first of the "trigger.substrings" ("trigger.substring.button-modifier.1"), then we'd have multiple "|| Note:" sections in the same string comment - I think this increases chances of localizers missing the notes.
             ///     - Our examples of the German strings are slightly wrong - we altered them to better be able to drive home the point that not even the first word of the string should be capitalized.
-            buttonModString = stringf(NSLocalizedString(@"trigger.substring.button-modifier.2", @"Note: All the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using \"Title Case\", but this isn't common in other languages. For example, in German, the substring \"Double Click %@ +\" should be localized as \"doppelklicke %@ +\" and \"Click and Drag %@\" as \"klicke %@ und ziehe\". Notice that not even the first word is capitalized in German. That's because these substrings are joined programmatically to create a combined string. The substrings start with a lowercase letter, to avoid random capitalization in the middle of the combined string. The first word of the combined string will be capitalized programmatically. Therefore, unless your language has special capitalization rules (such as \"Title Case\" in English), these substrings should probably be all-lowercase, just like German. (Or, if you use a non-standard way to capitalize I think that's also ok, as long as it's reasonably consistent) I know this is a bit complicated, but I hope it's still understandable! If anything's unclear, please let me know and I'll try to explain it and improve these comments. Thank you."), buttonStr);
+            buttonModString = stringf(NSLocalizedString(
+                @"trigger.substring.button-modifier.2",
+                @"Note: All the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using \"Title Case\", but this isn't common in other languages. For example, in German, the substring \"Double Click %@ +\" should be localized as \"doppelklicke %@ +\" and \"Click and Drag %@\" as \"klicke %@ und ziehe\". Notice that not even the first word is capitalized in German. That's because these substrings are joined programmatically to create a combined string. The substrings start with a lowercase letter, to avoid random capitalization in the middle of the combined string. The first word of the combined string will be capitalized programmatically. Therefore, unless your language has special capitalization rules (such as \"Title Case\" in English, or capitalization of nouns in German), these substrings should probably be all-lowercase, just like the German examples above. (Or, if you use a non-standard way to capitalize I think that's also ok, as long as it's reasonably consistent) I know this is a bit complicated, but I hope it's still understandable! If anything's unclear, please let me know and I'll try to explain it and make things easier in the future. Thank you."
+            ), buttonStr);
         } else if (lvl.intValue == 3) {
             buttonModString = stringf(NSLocalizedString(@"trigger.substring.button-modifier.3", @""), buttonStr);
         } else {

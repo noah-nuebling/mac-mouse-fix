@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24123.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24118.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24123.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24118.1"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -287,7 +287,7 @@
                                         <rect key="frame" x="0.0" y="228" width="312" height="50"/>
                                         <beginningViews>
                                             <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D4U-Df-iCp" userLabel="Text center">
-                                                <rect key="frame" x="0.0" y="0.0" width="18" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="16" height="50"/>
                                                 <subviews>
                                                     <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="jTe-ie-zgb">
                                                         <rect key="frame" x="-2" y="17" width="156" height="17"/>
@@ -312,12 +312,12 @@
                                         </beginningViews>
                                         <middleViews>
                                             <customView horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EhX-kX-uDg" userLabel="Spacer">
-                                                <rect key="frame" x="26" y="0.0" width="260" height="50"/>
+                                                <rect key="frame" x="24" y="0.0" width="264" height="50"/>
                                             </customView>
                                         </middleViews>
                                         <endViews>
                                             <button horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sZr-Bl-L7e" userLabel="Enabled Toggle">
-                                                <rect key="frame" x="294" y="0.0" width="18" height="50"/>
+                                                <rect key="frame" x="293" y="-3" width="22" height="56"/>
                                                 <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" controlSize="large" state="on" inset="2" id="iOT-qL-bLt">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -385,7 +385,7 @@ the app</string>
                                                 </constraints>
                                             </customView>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ncd-ap-KlE">
-                                                <rect key="frame" x="0.0" y="143" width="312" height="16"/>
+                                                <rect key="frame" x="-2" y="142" width="314" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Show in Menu Bar" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ILO-GQ-vNk">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -436,7 +436,7 @@ smooth scrolling</string>
                                                 </constraints>
                                             </customView>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QDk-6I-X23">
-                                                <rect key="frame" x="0.0" y="58" width="312" height="16"/>
+                                                <rect key="frame" x="-2" y="57" width="314" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Check for Updates" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tdD-8Q-JB2">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -453,7 +453,7 @@ smooth scrolling</string>
                                                         <rect key="frame" x="20" y="0.0" width="361" height="50"/>
                                                         <subviews>
                                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fB0-6j-bId">
-                                                                <rect key="frame" x="0.0" y="36" width="112" height="14"/>
+                                                                <rect key="frame" x="-1" y="35" width="115" height="16"/>
                                                                 <buttonCell key="cell" type="check" title="Get Beta Versions" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="Mck-5W-5lv">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="smallSystem"/>
@@ -592,10 +592,10 @@ this window</string>
                                         </connections>
                                     </box>
                                     <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="OIq-v6-9Zy" userLabel="HintWrap">
-                                        <rect key="frame" x="0.0" y="248" width="541" height="50"/>
+                                        <rect key="frame" x="0.0" y="244" width="541" height="54"/>
                                         <subviews>
                                             <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="7En-Ho-Dyb" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                <rect key="frame" x="18" y="12" width="505" height="38"/>
+                                                <rect key="frame" x="18" y="12" width="505" height="42"/>
                                                 <textFieldCell key="cell" alignment="center" id="N7H-9j-DIr">
                                                     <font key="font" metaFont="smallSystem"/>
                                                     <string key="title">Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.
@@ -616,7 +616,7 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                                         </constraints>
                                     </customView>
                                     <scrollView horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" borderType="none" autohidesScrollers="YES" horizontalLineScroll="39" horizontalPageScroll="10" verticalLineScroll="39" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" horizontalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="OGV-uF-BjJ" userLabel="TableScrollView" customClass="MFScrollView">
-                                        <rect key="frame" x="0.0" y="49" width="541" height="191"/>
+                                        <rect key="frame" x="0.0" y="45" width="541" height="191"/>
                                         <clipView key="contentView" autoresizesSubviews="NO" drawsBackground="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fkp-gm-SVn" customClass="MFClipView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="541" height="191"/>
                                             <subviews>
@@ -651,7 +651,7 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                                                                             </textFieldCell>
                                                                         </textField>
                                                                         <button identifier="deleteButton" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="jay-o9-Pic" customClass="RemapTableButton" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                            <rect key="frame" x="1" y="13" width="15" height="15"/>
+                                                                            <rect key="frame" x="-5" y="6" width="27" height="26"/>
                                                                             <buttonCell key="cell" type="push" bezelStyle="rounded" image="minus" catalog="system" imagePosition="only" alignment="center" controlSize="small" scrollable="YES" lineBreakMode="clipping" borderStyle="border" inset="2" id="853-ko-QVC">
                                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                                 <font key="font" metaFont="smallSystem"/>
@@ -717,10 +717,10 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView identifier="effectCell" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-SW-Ew3" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                                                    <rect key="frame" x="312" y="0.0" width="236" height="39"/>
+                                                                    <rect key="frame" x="312" y="0.0" width="223" height="39"/>
                                                                     <subviews>
                                                                         <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pw9-ZH-Tb7">
-                                                                            <rect key="frame" x="3" y="8" width="230" height="24"/>
+                                                                            <rect key="frame" x="0.0" y="6" width="224" height="25"/>
                                                                             <popUpButtonCell key="cell" type="push" title="&lt;Mission Control and Spaces&gt;" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" selectedItem="4Cx-DN-qX3" id="Bar-EF-HdH">
                                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                                 <font key="font" metaFont="message"/>
@@ -748,24 +748,24 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                                                                     <rect key="frame" x="312" y="39" width="220" height="39"/>
                                                                     <subviews>
                                                                         <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="psy-Jg-KLq">
-                                                                            <rect key="frame" x="3" y="8" width="214" height="24"/>
+                                                                            <rect key="frame" x="-4" y="3" width="228" height="32"/>
                                                                             <buttonCell key="cell" type="push" bezelStyle="rounded" alignment="center" state="on" borderStyle="border" focusRingType="exterior" imageScaling="proportionallyDown" inset="2" id="GlI-fZ-rlc">
                                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                                 <font key="font" metaFont="system"/>
                                                                             </buttonCell>
                                                                         </button>
                                                                         <scrollView focusRingType="exterior" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="Smf-ho-S4B" customClass="KeyCaptureScrollView">
-                                                                            <rect key="frame" x="3" y="8" width="214" height="24"/>
+                                                                            <rect key="frame" x="3" y="10" width="214" height="20"/>
                                                                             <clipView key="contentView" focusRingType="exterior" drawsBackground="NO" id="KlB-Im-8jc">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="214" height="24"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="214" height="20"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <subviews>
                                                                                     <textView identifier="keyCaptureView" focusRingType="exterior" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" spellingCorrection="YES" id="piW-Ox-vLv" customClass="KeyCaptureView">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="211" height="23"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="211" height="19"/>
                                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                                        <size key="minSize" width="211" height="23"/>
+                                                                                        <size key="minSize" width="211" height="19"/>
                                                                                         <size key="maxSize" width="302" height="10000000"/>
                                                                                         <attributedString key="textStorage">
                                                                                             <fragment content="Text go here">
@@ -841,10 +841,10 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                                         </scroller>
                                     </scrollView>
                                     <stackView distribution="equalSpacing" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="250" verticalStackHuggingPriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Z1h-11-Um4" userLabel="ButtonsStack">
-                                        <rect key="frame" x="0.0" y="0.0" width="541" height="41"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="541" height="37"/>
                                         <subviews>
                                             <button horizontalHuggingPriority="1000" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="am9-X6-JrT">
-                                                <rect key="frame" x="0.0" y="14" width="83" height="24"/>
+                                                <rect key="frame" x="-7" y="7" width="93" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Options..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hur-83-2a2">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -858,7 +858,7 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                                                 <accessibility identifier="axButtonsOptionsButton"/>
                                             </button>
                                             <button horizontalHuggingPriority="1000" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="JHB-lg-H8e">
-                                                <rect key="frame" x="405" y="14" width="136" height="24"/>
+                                                <rect key="frame" x="402" y="7" width="146" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Restore Defaults..." bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lrw-Lp-nQ4">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -945,7 +945,7 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
                         <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="PRU-rA-I4Y">
-                            <rect key="frame" x="147" y="12" width="159" height="16"/>
+                            <rect key="frame" x="144" y="11" width="163" height="18"/>
                             <buttonCell key="cell" type="check" title="Don't remind me again" bezelStyle="regularSquare" imagePosition="left" inset="2" id="bgk-wr-o8T">
                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                 <font key="font" metaFont="system"/>
@@ -998,10 +998,10 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                 <rect key="frame" x="30" y="20" width="350" height="439"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ew8-Wm-Z08">
-                                        <rect key="frame" x="0.0" y="415" width="179" height="24"/>
+                                        <rect key="frame" x="0.0" y="419" width="166" height="20"/>
                                         <subviews>
                                             <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="FCc-U0-c29" userLabel="Smoothness:">
-                                                <rect key="frame" x="-2" y="4" width="83" height="16"/>
+                                                <rect key="frame" x="-2" y="2" width="83" height="16"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Smoothness:" id="SjO-Dq-CEX">
                                                     <font key="font" usesAppearanceFont="YES"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1012,7 +1012,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                 </textFieldCell>
                                             </textField>
                                             <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="saP-aP-bnv">
-                                                <rect key="frame" x="87" y="0.0" width="92" height="24"/>
+                                                <rect key="frame" x="84" y="-4" width="86" height="25"/>
                                                 <popUpButtonCell key="cell" type="push" title="Off" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="4gx-d0-WNb" id="LBG-Mq-hAQ">
                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="message"/>
@@ -1054,7 +1054,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TFj-AL-hbW">
-                                        <rect key="frame" x="0.0" y="347" width="350" height="60"/>
+                                        <rect key="frame" x="0.0" y="351" width="350" height="60"/>
                                         <subviews>
                                             <customView verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="9fp-mG-Lpx" userLabel="Spacer">
                                                 <rect key="frame" x="0.0" y="60" width="99" height="0.0"/>
@@ -1063,7 +1063,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                 </constraints>
                                             </customView>
                                             <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="BaB-SW-lek" userLabel="Trackpad Toggle">
-                                                <rect key="frame" x="0.0" y="36" width="146" height="16"/>
+                                                <rect key="frame" x="-2" y="35" width="150" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Trackpad Simulation" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="N65-aN-Hxp">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1109,13 +1109,13 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                         </customSpacing>
                                     </stackView>
                                     <customView verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="R6A-ti-FG4" userLabel="Spacer">
-                                        <rect key="frame" x="0.0" y="339" width="350" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="343" width="350" height="0.0"/>
                                         <constraints>
                                             <constraint firstAttribute="height" id="Dh0-br-i3S"/>
                                         </constraints>
                                     </customView>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dtR-AX-YsY" userLabel="Reverse Direction Toggle">
-                                        <rect key="frame" x="0.0" y="315" width="350" height="16"/>
+                                        <rect key="frame" x="-2" y="318" width="352" height="18"/>
                                         <buttonCell key="cell" type="check" title="Reverse Direction" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gK0-1z-Pjv">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -1125,10 +1125,10 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                         </buttonCell>
                                     </button>
                                     <customView verticalHuggingPriority="999" translatesAutoresizingMaskIntoConstraints="NO" id="PDb-87-6bc" userLabel="Divider">
-                                        <rect key="frame" x="0.0" y="289" width="350" height="18"/>
+                                        <rect key="frame" x="0.0" y="285" width="350" height="26"/>
                                         <subviews>
                                             <box horizontalHuggingPriority="1000" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="dvw-oy-SUP">
-                                                <rect key="frame" x="0.0" y="6" width="350" height="6"/>
+                                                <rect key="frame" x="0.0" y="6" width="350" height="14"/>
                                             </box>
                                         </subviews>
                                         <constraints>
@@ -1139,10 +1139,10 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                         </constraints>
                                     </customView>
                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ajf-ff-OPq">
-                                        <rect key="frame" x="0.0" y="257" width="145" height="24"/>
+                                        <rect key="frame" x="0.0" y="257" width="132" height="20"/>
                                         <subviews>
                                             <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="T0R-D1-tZu">
-                                                <rect key="frame" x="-2" y="4" width="47" height="16"/>
+                                                <rect key="frame" x="-2" y="2" width="47" height="16"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Speed:" id="l7d-al-Y14">
                                                     <font key="font" usesAppearanceFont="YES"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1153,7 +1153,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                 </textFieldCell>
                                             </textField>
                                             <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AUN-SK-ju7">
-                                                <rect key="frame" x="51" y="0.0" width="94" height="24"/>
+                                                <rect key="frame" x="48" y="-4" width="88" height="25"/>
                                                 <popUpButtonCell key="cell" type="push" title="macOS" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="fW3-4Q-yB8" id="4Es-L9-Mle">
                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="message"/>
@@ -1205,7 +1205,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                 </constraints>
                                             </customView>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5rO-m9-I0Q">
-                                                <rect key="frame" x="0.0" y="22" width="78" height="16"/>
+                                                <rect key="frame" x="-2" y="21" width="82" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Precision" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4hf-tQ-y76">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1600,7 +1600,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                 <rect key="frame" x="0.0" y="0.0" width="479" height="151"/>
                                 <subviews>
                                     <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YcZ-TL-GLg">
-                                        <rect key="frame" x="82" y="115" width="71" height="16"/>
+                                        <rect key="frame" x="82" y="113" width="71" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Sensitivity:" id="XAP-He-hda">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1611,14 +1611,14 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                         </textFieldCell>
                                     </textField>
                                     <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2hn-s0-Fxz">
-                                        <rect key="frame" x="168" y="115" width="183" height="16"/>
+                                        <rect key="frame" x="166" y="105" width="187" height="28"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="183" id="tKb-Iu-He9"/>
                                         </constraints>
                                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="1" doubleValue="0.30857103924418605" tickMarkPosition="below" numberOfTickMarks="5" sliderType="linear" id="rfH-Df-tXx"/>
                                     </slider>
                                     <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="43j-d0-v0H">
-                                        <rect key="frame" x="69" y="59" width="84" height="16"/>
+                                        <rect key="frame" x="69" y="57" width="84" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Acceleration:" id="3a9-XG-oHg">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1629,10 +1629,10 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                         </textFieldCell>
                                     </textField>
                                     <stackView autoresizesSubviews="NO" distribution="fill" orientation="vertical" alignment="leading" spacing="7" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="iFK-rA-4bs" userLabel="Acc Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                        <rect key="frame" x="166" y="20" width="251" height="59"/>
+                                        <rect key="frame" x="166" y="20" width="251" height="55"/>
                                         <subviews>
                                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jfw-rP-c9y">
-                                                <rect key="frame" x="0.0" y="35" width="187" height="24"/>
+                                                <rect key="frame" x="-3" y="31" width="194" height="25"/>
                                                 <popUpButtonCell key="cell" type="push" title="Off" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="PdO-dH-G7Y" id="QLj-t5-G1g">
                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="message"/>
@@ -1701,7 +1701,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                         </customSpacing>
                                     </stackView>
                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fRV-ZK-msp">
-                                        <rect key="frame" x="163" y="99" width="29" height="14"/>
+                                        <rect key="frame" x="163" y="95" width="29" height="14"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Low" id="DNu-D4-tBY">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -1712,7 +1712,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                         </textFieldCell>
                                     </textField>
                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gh3-uq-9m8">
-                                        <rect key="frame" x="235" y="99" width="50" height="14"/>
+                                        <rect key="frame" x="235" y="95" width="50" height="14"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Medium" id="YDr-ez-VKk">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -1723,7 +1723,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                         </textFieldCell>
                                     </textField>
                                     <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uSx-Gs-ivn">
-                                        <rect key="frame" x="323" y="99" width="33" height="14"/>
+                                        <rect key="frame" x="323" y="95" width="33" height="14"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="High" id="wJW-hQ-lUc">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -1734,7 +1734,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                         </textFieldCell>
                                     </textField>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bMA-KL-0jb" customClass="SensitivityDisplay" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                                        <rect key="frame" x="368" y="110" width="46" height="27"/>
+                                        <rect key="frame" x="365" y="104" width="52" height="34"/>
                                         <buttonCell key="cell" type="bevel" title="&lt;0.6x&gt;" bezelStyle="regularSquare" alignment="center" state="on" borderStyle="border" inset="2" id="S55-uf-Xij">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -1937,7 +1937,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                 <rect key="frame" x="1270" y="0.0" width="706" height="50"/>
                                                 <subviews>
                                                     <imageView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="FUu-Vm-nqE">
-                                                        <rect key="frame" x="3" y="16" width="20.5" height="19"/>
+                                                        <rect key="frame" x="3" y="16.5" width="20.5" height="18"/>
                                                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="Upm-7C-ya2">
                                                             <imageReference key="image" image="arrow.triangle.branch" catalog="system" symbolScale="default"/>
                                                         </imageCell>

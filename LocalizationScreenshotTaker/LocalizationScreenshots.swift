@@ -236,7 +236,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                                 Int(screenshotAndMetadata.screenshot.image.size.width),
                                 Int(screenshotAndMetadata.screenshot.image.size.height)
                             )
-                            if !result[i].roughBoundingBox!.insetBy(dx: -20, dy: -20) /// [Sep 2025] Observing 6 to be necessary on the x axis for `taste 5 klicken + mittlere Taste klicken` in German. || Update: Now suddenly `dx:-16` is necessary for `5 Düğmesi` (Worked find before)
+                            if !result[i].roughBoundingBox!.insetBy(dx: -20, dy: -20) /// [Sep 2025] Observing 6 to be necessary on the x axis for `Taste 5 klicken + mittlere Taste klicken` in German. || Update: Now suddenly `dx:-16` is necessary for `5 Düğmesi` (Worked find before)
                                 .contains(foundBoundingBox_AsRect) { continue }
                             /// Shrink the frame to the recognized region
                             do {

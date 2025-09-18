@@ -25,7 +25,7 @@ import Foundation
             /// - Why are we dispatching `k-is-disabled-toast` to the main thread by not this? (They are called from almost the same place)
             
             if let window = NSApp.mainWindow {
-                var rawMessage = NSLocalizedString("enable-timeout-toast", comment: "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. \"&nbsp;\" is a so called \"HTML Character Entity\".")
+                var rawMessage = NSLocalizedString("enable-timeout-toast", comment: "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\".")
                 rawMessage = String(format: rawMessage, Links.link(kMFLinkID_VenturaEnablingGuide) ?? "")
                 ToastController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage)!, to: window, forDuration: 10.0)
                 
@@ -102,7 +102,13 @@ import Foundation
         /// Get revived-features string
         var revivedFeaturesList: [String] = []
         if showButtons {
-            revivedFeaturesList.append(NSLocalizedString("revive-toast.feature-buttons", comment: "Note: This string will be inserted into the \"revive-toast\" message"))
+            revivedFeaturesList.append(NSLocalizedString(
+                "revive-toast.feature-buttons",
+                comment: """
+                Note: This string will be inserted into the \"revive-toast\" message
+                Note 2: These 'feature names' should match the tabs seen in the MMF UI. To find the strings used for the tabs, search for localized strings with a comment containing "Tab Title" e.g. "Buttons Tab Title".
+                """
+            ))
         }
         if showScroll {
             revivedFeaturesList.append(NSLocalizedString("revive-toast.feature-scrolling", comment: ""))
@@ -110,7 +116,16 @@ import Foundation
         let revivedFeatures = UIStrings.naturalLanguageList(fromStringArray: revivedFeaturesList)
         
         /// Build message string
-        let messageRaw = String(format: NSLocalizedString("revive-toast", comment: "Note: \"%1$@\" will be the list of enabled features, \"%2$@\" will be the menubar icon || Note: The described feature lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch."), revivedFeatures, "%@")
+        let messageRaw = String(
+            format: NSLocalizedString(
+                "revive-toast",
+                comment: """
+                Note: \"%1$@\" will be a list of mouse features like \"Scrolling\" or \"Buttons\" for which Mac Mouse Fix was enabled. \"%2$@\" will be the menubar icon
+                
+                Note 2: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.
+                """
+            ),
+            revivedFeatures, "%@")
         var message = NSAttributedString(coolMarkdown: messageRaw)!
         let symbolString = SFSymbolStrings.string(withSymbolName: "CoolMenuBarIcon", stringFallback: "<Mac Mouse Fix Menu Bar Item>", font: ToastController.defaultFont()) ///NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
         message = NSAttributedString(attributedFormat: message, args: [symbolString])

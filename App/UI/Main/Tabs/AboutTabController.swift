@@ -287,7 +287,7 @@ class AboutTabController: NSViewController {
                     (NSLocalizedString("thanks.09", comment: ""), weight: 0.05),
                     
                     /// Extremely rare
-                    (NSLocalizedString("thanks.10", comment: "Note: The weird ones are really rare. Feel free to change them to anything you feel like to leave a little easter egg!"), weight: 0.01),
+                    (NSLocalizedString("thanks.10", comment: "Note: The weird ones are rare. Feel free to change them if you'd like to leave a little easter egg."), weight: 0.01),
                     (NSLocalizedString("thanks.11", comment: ""), weight: 0.01),
                     (NSLocalizedString("thanks.12", comment: ""), weight: 0.01),
                     (NSLocalizedString("thanks.13", comment: ""), weight: 0.01),
