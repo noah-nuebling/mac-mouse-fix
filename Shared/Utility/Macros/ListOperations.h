@@ -55,7 +55,7 @@
 ({                                                                          \
     __auto_type __list   = (list);                                          /** `__auto_type` makes this work with different sub[scriptable] types, such as C arrays, C ptrs and NSArrays! */ \
     int64_t     __result = -1;                                              /** Return-1 if no match is found */\
-    loopr(__i, (step), (lower), (upper)) {                                  \
+    loopc(__i, (lower), (upper), (step)) {                                  \
         __auto_type varname = __list[__i];                                  \
         if (condition) {                                                    \
             __result = __i;                                                 \

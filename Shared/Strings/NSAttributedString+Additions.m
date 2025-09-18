@@ -120,24 +120,28 @@
         }
     }
     
-    nowarn_push(-Wsign-conversion)
-    nowarn_push(-Wsign-compare)
+    nowarn_push(-Wsign-conversion)      /// Caution: [Sep 2025] The loop variable (i) may not be unsigned, otherwise the backwards loop underflows and goes on forever.
+    nowarn_push(-Wsign-compare)         ///         But this way we get lots of signed/unsigned warnings! Not sure how to deal with this except `nowarn_push`. See `Clang Diagnostic Flags - Sign.md`
     {
         /// Remove leading whitespace
-        NSInteger i;            /// Caution: [Sep 2025] May not be unsigned, otherwise the backwards loop underflows and goes on forever.
-                                ///         But this way we get lots of signed/unsigned warnings! Not sure how to deal with this except `nowarn_push`. See `Clang Diagnostic Flags - Sign.md`
-        for (i = realStartIndex; i < s.length; i++)
-            if (![whitespaceAndNewlineChars characterIsMember: str(i)]) break;
-        if (realStartIndex < i) [s deleteCharactersInRange: NSMakeRange(realStartIndex, i - realStartIndex)]; /// (i-1) is the last of the leading whitespace chars
+        loopc(i, realStartIndex, s.length, +1) {
+            if (![whitespaceAndNewlineChars characterIsMember: str(i)]) {
+                [s deleteCharactersInRange: NSMakeRange(realStartIndex, i - realStartIndex)]; /// (i-1) is the last of the leading whitespace chars
+                break;
+            }
+            if (i == s.length-1) [s deleteCharactersInRange: NSMakeRange(realStartIndex, s.length - realStartIndex)]; /// Edge case: Reached the end of the string and it's all whitespace – delete it all.
+        }
             
         /// Remove trailling whitespace
-        for (i = (s.length - 1); i >= realStartIndex; i--)
-            if (![whitespaceAndNewlineChars characterIsMember: str(i)]) break;
-        if ((i+1) < s.length) [s deleteCharactersInRange: NSMakeRange(i+1, s.length - (i+1))]; /// (i+1) is the first of the trailing whitespace chars
+        loopc(i, realStartIndex, s.length, -1)
+            if (![whitespaceAndNewlineChars characterIsMember: str(i)]) {
+                [s deleteCharactersInRange: NSMakeRange(i+1, s.length - (i+1))]; /// (i+1) is the first of the trailing whitespace chars
+                break;
+            }
         
         /// Remove duplicates
         ///     Note how we're using `whitespaceChars` here not `whitespaceAndNewlineChars`. Since we don't want to remove double linebreaks.
-        for (i = realStartIndex; i+1 < s.length; i++) {
+        loopc(i, realStartIndex, s.length-1, +1) /// Only iterate up to the second-last element. [Sep 2025]
             if (
                 [whitespaceChars characterIsMember: str(i)] &&
                 [whitespaceChars characterIsMember: str(i+1)]
@@ -145,7 +149,6 @@
                 [s deleteCharactersInRange: NSMakeRange(i, 1)]; /// Found duplicate whitespace - delete the first one, and don't increment i
                 i--;
             }
-        }
     }
     nowarn_pop()
     nowarn_pop()

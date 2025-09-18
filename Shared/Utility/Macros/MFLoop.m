@@ -18,13 +18,13 @@
 }
 
 /// vvv Unused
-///     arrayslicing API (`loops()`) is worse than generic API `loopr()` – so we're disabling it.
+///     arrayslicing API (`loops()`) is worse than generic API `loopc()` – so we're disabling it.
 
 //static inline struct loop_range _arrslice_preprocess(int64_t list_count, int64_t step, int64_t lower, bool lower_isendrel, int64_t upper, bool upper_isendrel) {
 //    
-//    /// Helper function – Converts arrayslice params to params for our loopr() macro
+//    /// Helper function – Converts arrayslice params to params for our loopc() macro
 //
-//    #define nullslice (struct loop_range){ ._step = 1, ._lower = 0, ._upper = -1 }; /// These params disable the loopr.
+//    #define nullslice (struct loop_range){ ._step = 1, ._lower = 0, ._upper = -1 }; /// These params disable the loopc.
 //
 //    /** Validate count  */
 //    if (list_count < 0) {
@@ -65,7 +65,7 @@
 //    
 ////    if (buffer_count < 0) {
 ////        mfassert(false, "arraysliceb: buffer_count is not greater zero (%lld)", buffer_count);
-////        return (struct arrslice_loop_range){ ._step = 1, ._lower = 0, ._upper = -1 }; /// These params will  will cause The loopr() to iterate 0 times
+////        return (struct arrslice_loop_range){ ._step = 1, ._lower = 0, ._upper = -1 }; /// These params will  will cause The loopc() to iterate 0 times
 ////    }
 ////    if (upper-lower+1 > buffer_count) {
 ////        mfassert(false, "arraysliceb: Calculated slice is too large for buffer. buffer count: %lld, slice [%lld, %lld] [%lld elements]", (int64_t)buffer_count, (int64_t)lower, (int64_t)upper, (int64_t)upper-lower+1);
