@@ -33,6 +33,8 @@ typedef enum {
 } MFCapturedInputType;
 
 #define hintSeparatorSize 4.0
+#define useSmallHintStyling false /// Turning off the small hint styling, since that's not used anywhere else in MMF. We should probably build the small hints into ToastController.m and transition the entire app. However, the hints currently feel a bit too long without the small style. (I think hints being wider than the main body feels wrong) [Sep 19 2025]
+
 
 + (void)showScrollWheelCaptureToast:(BOOL)hasBeenCaptured {
     
@@ -105,26 +107,34 @@ static NSAttributedString *createSimpleNotificationBody(BOOL didGetCaptured, MFC
     
     /// Get learn more string
     NSString *learnMoreStringRaw = getLocalizedString(inputType, @"link");
-    NSAttributedString *learnMoreString = learnMoreStringRaw ? [NSAttributedString attributedStringWithCoolMarkdown:learnMoreStringRaw] : nil;
+    NSAttributedString *learnMoreString = learnMoreStringRaw ? [NSAttributedString attributedStringWithCoolMarkdown: learnMoreStringRaw] : nil;
     
     /// Apply markdown to rawBody
-    NSAttributedString *body = [NSAttributedString attributedStringWithCoolMarkdown:rawBody];
+    NSAttributedString *body = [NSAttributedString attributedStringWithCoolMarkdown: rawBody];
     
     if (rawHint.length > 0) {
         
-        /// Style hint
-        NSAttributedString *hint = [NSAttributedString attributedStringWithCoolMarkdown:rawHint];
-        hint = [hint attributedStringByAddingHintStyle];
+        /// Apply markdown to hint
+        NSAttributedString *hint = [NSAttributedString attributedStringWithCoolMarkdown: rawHint];
         
-        /// Attach hint
-        NSAttributedString *separator = [@"\n\n".attributed attributedStringBySettingFontSize:hintSeparatorSize];
-        body = [[body attributedStringByAppending:separator] attributedStringByAppending:hint];
+        if ((useSmallHintStyling)) {
+            /// Style hint
+            hint = [hint attributedStringByAddingHintStyle];
+            
+            /// Attach hint
+            NSAttributedString *separator = [@"\n\n".attributed attributedStringBySettingFontSize: hintSeparatorSize];
+            body = astringf(@"%@%@%@", body, separator, hint);
+        }
+        else {
+            /// Attach hint
+            body = astringf(@"%@\n%@", body, hint);
+        }
     }
     
     /// Attach learnMore string
     if (learnMoreString != nil && learnMoreString.length > 0) {
         NSAttributedString *separator = @"\n\n".attributed;
-        body = [[body attributedStringByAppending:separator] attributedStringByAppending:learnMoreString];
+        body = astringf(@"%@%@%@", body, separator, learnMoreString);
     }
     
     /// Return
@@ -142,7 +152,7 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
     
     /// Add markdown emphasis to items
     NSString *(^addMDEmphasis)(NSString *) = ^NSString *(NSString *item) {
-        return [[@"**" stringByAppendingString:item] stringByAppendingString:@"**"];
+        return stringf(@"**%@**", item);
     };
     capturedItemArray = [capturedItemArray map:addMDEmphasis];
     uncapturedItemArray = [uncapturedItemArray map:addMDEmphasis];
@@ -172,14 +182,11 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
     }
     
     /// Apply Markdown
-    NSAttributedString *capturedBody = [NSAttributedString attributedStringWithCoolMarkdown:capturedBodyRaw];
-    NSAttributedString *uncapturedBody = [NSAttributedString attributedStringWithCoolMarkdown:uncapturedBodyRaw];
-    NSAttributedString *capturedHint = [NSAttributedString attributedStringWithCoolMarkdown:capturedHintRaw];
-    NSAttributedString *uncapturedHint = [NSAttributedString attributedStringWithCoolMarkdown:uncapturedHintRaw];
+    NSAttributedString *capturedBody   = [NSAttributedString attributedStringWithCoolMarkdown: capturedBodyRaw];
+    NSAttributedString *uncapturedBody = [NSAttributedString attributedStringWithCoolMarkdown: uncapturedBodyRaw];
+    NSAttributedString *capturedHint   = [NSAttributedString attributedStringWithCoolMarkdown: capturedHintRaw];
+    NSAttributedString *uncapturedHint = [NSAttributedString attributedStringWithCoolMarkdown: uncapturedHintRaw];
     
-    /// Style the hints
-    capturedHint = [capturedHint attributedStringByAddingHintStyle];
-    uncapturedHint = [uncapturedHint attributedStringByAddingHintStyle];
     
     /// Capitalize the two bodys
     ///     Note: That's because the start of the body might be the natural language list, which is not capitalized.
@@ -192,29 +199,39 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
     /// - But first we check for `capturedCount > 0` before attaching to body. We wouldn't have to do this if the trimming we do afterwards trimmed linebreaks. But it doesn't. Maybe we should make it trim linebreaks?
     
     if (capturedCount > 0) {
-        body = [body attributedStringByAppending:capturedBody];
+        body = astringf(@"%@%@", body, capturedBody);
         if (capturedHint.length > 0) {
-            NSAttributedString *hintSeparator = [@"\n\n".attributed attributedStringBySettingFontSize:hintSeparatorSize];
-            body = [[body attributedStringByAppending:hintSeparator] attributedStringByAppending:capturedHint];
+            if ((useSmallHintStyling)) {
+                capturedHint = [capturedHint attributedStringByAddingHintStyle];
+                NSAttributedString *hintSeparator = [@"\n\n".attributed attributedStringBySettingFontSize: hintSeparatorSize];
+                body = astringf(@"%@%@%@", body, hintSeparator, capturedHint);
+            } else {
+                body = astringf(@"%@\n%@", body, uncapturedHint);
+            }
         }
         NSAttributedString *mainSeparator = @"\n\n".attributed;
-        body = [body attributedStringByAppending:mainSeparator];
+        body = astringf(@"%@%@", body, mainSeparator);
     }
     if (uncapturedCount > 0) {
-        body = [body attributedStringByAppending:uncapturedBody];
+        body = astringf(@"%@%@", body, uncapturedBody);
         if (uncapturedHint.length > 0) {
-            NSAttributedString *hintSeparator = [@"\n\n".attributed attributedStringBySettingFontSize:hintSeparatorSize];
-            body = [[body attributedStringByAppending:hintSeparator] attributedStringByAppending:uncapturedHint];
+            if ((useSmallHintStyling)) {
+                uncapturedHint = [uncapturedHint attributedStringByAddingHintStyle];
+                NSAttributedString *hintSeparator = [@"\n\n".attributed attributedStringBySettingFontSize: hintSeparatorSize];
+                body = astringf(@"%@%@%@", body, hintSeparator, uncapturedHint);
+            } else {
+                body = astringf(@"%@\n%@", body, uncapturedHint);
+            }
         }
         NSAttributedString *mainSeparator = @"\n\n".attributed;
-        body = [body attributedStringByAppending:mainSeparator];
+        body = astringf(@"%@%@", body, mainSeparator);
     }
         
     /// Get learn more string
-    NSAttributedString *learnMoreString = [NSAttributedString attributedStringWithCoolMarkdown:getLocalizedString(kMFCapturedInputTypeButtons, @"link")];
+    NSAttributedString *learnMoreString = [NSAttributedString attributedStringWithCoolMarkdown: getLocalizedString(kMFCapturedInputTypeButtons, @"link")];
     
     /// Attach learnMore string to body
-    body = [body attributedStringByAppending:learnMoreString];
+    body = astringf(@"%@%@", body, learnMoreString);
     
     /// Trim
     body = [body attributedStringByTrimmingWhitespace];

@@ -208,7 +208,7 @@
 
 #pragma mark Append
 
-- (NSAttributedString *)attributedStringByAppending:(NSAttributedString *)string {
+- (NSAttributedString *)attributedStringByAppending:(NSAttributedString *)string { /// [Sep 2025] This probably shouldn't exist using astringf macro directly is more readable and both map to `attributedStringWithFormat:`
     return [NSAttributedString attributedStringWithFormat:@"%@%@" args:@[self, string]];
 }
 
@@ -226,33 +226,41 @@
 + (NSAttributedString *)attributedStringWithAttributedFormat:(NSAttributedString *)format args:(NSArray<NSAttributedString *> *)args {
     
     /// Replaces occurences of %@ in the attributedString with the args
-    ///     Also see lib function `initWithFormat:options:locale:`
+    ///     Also see lib function `initWithFormat:options:locale:` (Only available on macOS 12.0)
+    ///         We could also make an attributed variant of -[NSArray componentsJoinedByString:] if this is too slow
     
     /// Early return
     if (args.count == 0) return format;
-    if ([format.string isEqual:@""]) return format;
+    if ([format.string isEqual: @""]) return format;
     
     /// Get mutable copy
     ///     On Ventura Beta, `format.mutableCopy` returns creates unreadable data, if format is an empty string.
     NSMutableAttributedString *mutableFormat = format.mutableCopy;
     
-    /// Loop
-    int i = 0;
-    while (true) {
+    int i;
+    for (i = 0; ; i++) {
         
-        /// Update replace range
-        ///     Not sure if the localized is necessary/good here?
-        NSRange replaceRange = [mutableFormat.string localizedStandardRangeOfString:@"%@"];
+        /// Find the next format specifier to replace
+        NSRange replaceRange = [mutableFormat.string localizedStandardRangeOfString: @"%@"]; /// Not sure if the localized is necessary/good here?
+        
+        /// Break
         if (replaceRange.location == NSNotFound) break;
         
-        /// Replace
-        [mutableFormat replaceCharactersInRange:replaceRange withAttributedString:args[i]];
+        /// Validate
+        if ((int)args.count <= i) {
+            assert(false && "attributedStringWithAttributedFormat: More format specifiers than args");
+            break;
+        }
         
-        /// Update array index
-        i++;
-        if (args.count <= i) break;
+        /// Replace
+        [mutableFormat replaceCharactersInRange: replaceRange withAttributedString: args[(unsigned int)i]];
     }
     
+    /// Validate
+    if (i < (int)args.count)
+        assert(false && "attributedStringWithAttributedFormat: Fewer format specifiers than args");
+    
+    /// Return
     return mutableFormat;
 }
 

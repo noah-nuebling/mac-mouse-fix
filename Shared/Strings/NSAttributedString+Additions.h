@@ -24,6 +24,11 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
 - (NSAttributedString *)attributedStringByAppending:(NSAttributedString *)string;
 + (NSAttributedString *)attributedStringWithAttributedFormat:(NSAttributedString *)format args:(NSArray<NSAttributedString *> *)args;
+    #define astringf(format, args_...) /** NSAttributedString equivalent for our stringf macro. */\
+        [NSAttributedString \
+            attributedStringWithAttributedFormat: (NSAttributedString *)([(format) isKindOfClass: [NSString class]] ? [(NSString *)(format) attributed] : (format)) /** Automatically map NSString to NSAttributedString for convenience */\
+            args: @[args_]\
+        ]
 + (NSAttributedString * _Nullable)attributedStringWithCoolMarkdown:(NSString *)md;
 + (NSAttributedString * _Nullable)attributedStringWithCoolMarkdown:(NSString *)md fillOutBase:(BOOL)fillOutBase;
 + (NSAttributedString * _Nullable)attributedStringWithAttributedMarkdown:(NSAttributedString *)md;
