@@ -19,9 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 ///
 
 #define kMFToastDurationAutomatic -1.0
-+ (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)window forDuration:(NSTimeInterval)showDuration;
-+ (void)closeNotificationWithFadeOut;
-+ (NSFont *)defaultFont;
++ (void) attachNotificationWithMessage: (NSAttributedString *)message forDuration: (NSTimeInterval)showDuration;
++ (void) closeNotificationWithFadeOut;
++ (NSFont *) defaultFont;
 
 @end
 

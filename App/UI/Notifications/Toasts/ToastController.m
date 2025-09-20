@@ -92,18 +92,16 @@ typedef enum {
 } ToastNotificationAlignment;
 
 /// Convenience function
-+ (void) attachNotificationWithMessage: (NSAttributedString *)message toWindow: (NSWindow *)window forDuration: (NSTimeInterval)showDuration {
-    
-    [self attachNotificationWithMessage: message toWindow: window forDuration: showDuration alignment: kToastNotificationAlignment_TopMiddle];
++ (void) attachNotificationWithMessage: (NSAttributedString *)message forDuration: (NSTimeInterval)showDuration {
+    [self attachNotificationWithMessage: message forDuration: showDuration alignment: kToastNotificationAlignment_TopMiddle];
 }
 
-+ (void) attachNotificationWithMessage: (NSAttributedString *)message toWindow: (NSWindow *)attachWindow forDuration: (NSTimeInterval)showDuration alignment: (ToastNotificationAlignment)alignment {
++ (void) attachNotificationWithMessage: (NSAttributedString *)message forDuration: (NSTimeInterval)showDuration alignment: (ToastNotificationAlignment)alignment {
 
     /// Usage:
     /// - Pass `kMFToastDurationAutomatic` to `showDuration` to get the default duration
     ///
     /// Implementation notes:
-    ///     - Remember: Don't try to get the 'mainWindow' (`MainAppState.shared.window`) just use the `attachWindow` argument [Sep 2025]
     ///     - Discussion: Why calculate the layout manually instead of using autolayout? [Sep 2025]
     ///         - Our `NotificationLabel` is an NSTextView, and NSTextView doesn't report an intrinsicContentSize, so autolayout doesn't know how big the NSTextView needs to be to prevent clipping content.
     ///         - Alternatives to manual calculation:
@@ -127,6 +125,15 @@ typedef enum {
     ///     Cleaned this up and deleted a bunch of old stuff in commit a95d5cddcc46acfc22d2113ce28aa4c146ff8587 [Sep 2025]
     
     
+    /// Find windows
+    ///     Why does our code need 2 windows? [Sep 2025]
+    ///         The parent window should be the frontMost sheet, otherwise the toast will appear in the background with a dark overlay
+    ///         The position should be relative to the mainWindow though, so the toast isn't crammed into a little sheet.
+    NSWindow *parentWindow = MainAppState.shared.frontMostWindowOrSheet;
+    NSWindow *mainWindow   = MainAppState.shared.window;
+    if (!parentWindow) parentWindow = mainWindow; /// Not sure this ever happens but why not [Sep 2025]
+    if (!mainWindow) return;
+    
     /// Process showDuration
     if (showDuration < 0) {
         assert(showDuration == kMFToastDurationAutomatic);
@@ -136,8 +143,50 @@ typedef enum {
     }
     
     /// Process message
-    message = [message attributedStringByAddingStringAttributesAsBase: _labelAttributesFromIB];
-    message = [message attributedStringByFillingOutBase];
+    ///
+    /// TEMP TODO / BOOKMARK:
+    ///     - [ ] Write comments about what we're doing here
+    ///     - [ ] The capture subtitle is totally wrong in English!
+    ///     - [ ] The learn more link is also small due to hint style. Could/should we make it big? If so - how?
+    ///     - [ ] The lines of the messageSubtitle contain too many words when we're on the Buttons tab (cause it's wideeee). Maybe cap the toast width for readability.
+    
+    {
+        
+        message = [message attributedStringByAddingStringAttributesAsBase: _labelAttributesFromIB]; /// This makes the text centered. Not sure if anything else [Sep 2025]
+            
+        /// Give first line 'title' style and give remaining lines 'hint' style
+        ///     Discussion: [Sep 2025]
+        ///         Context / Why we're doing this:
+        ///             Before, the toast messages were single localizable strings with some markdown markup.
+        ///             But the way the messages were written there was this pattern, where the first line was also an easily scannable 'title' and the next lines gave extra context.
+        ///                 We also often made the whole or parts of the first line bold to make it more 'title-ly'
+        ///             Problem: The problem was that for our new capture Toast messages (`%2$@ is no longer captured by Mac Mouse Fix\nThe button now works as if Mac Mouse Fix was disabled`),
+        ///                 the second line was longer than the first, which made it not feel like its 'secondary' to the first line anymore.
+        ///                 Only solutions I could think of is a) shorten the second line, or b) make it feel 'secondary' by changing the font.
+        ///                     We first implemented the different font in CapturedToasts.m (See `useSmallHintStyling`), but having this style *only* for the CaptureToasts also felt weird.
+        ///                     So we're activating this style for all the Toasts here!
+        ///         Questionable:
+        ///             - This is a little 'magical'. We could instead have separate args for the title and subtitle, but then we'd kinda have to split up all the localizable strings into title and subtitle and I'm too lazy for that now. This approach also may be more flexible, since the caller could theoretically override the hint styling, which I might use for the 'Learn More' links at the end of the CaptureToasts.
+        ///             - `attributedStringByTrimmingWhitespace` is a bit of a hack. Before, we had some toasts with a single and others with a double linebreak after the first 'title' line. But that looks weird now. The 'semantic' difference is still in the localizable strings but not displayed anymore.
+        {
+            auto splitMessage = [message split: @"\n" maxSplit: 1];
+            auto messageTitle    = splitMessage.firstObject;
+            auto messageSubtitle = splitMessage.lastObject;
+            
+            messageTitle    = [messageTitle    attributedStringByTrimmingWhitespace];
+            messageSubtitle = [messageSubtitle attributedStringByTrimmingWhitespace];
+            
+            messageTitle    = [messageTitle    attributedStringByFillingOutBase];
+            if ((1)) messageSubtitle = [messageSubtitle attributedStringByAddingHintStyle]; /// Style everything after the first line as greyed out, small, hint text || `attributedStringByFillingOutBaseAsHint` instead of `attributedStringByFillingOutBase` doesn't work. Not sure why [Sep 2025]
+            else     messageSubtitle = [messageSubtitle attributedStringByFillingOutBase];
+            
+            #define hintSeparatorSize 4.0
+            NSAttributedString *separator = [@"\n\n".attributed attributedStringBySettingFontSize: hintSeparatorSize];
+            
+            message = astringf(@"%@%@%@", (id)messageTitle, separator, (messageSubtitle ?: [@"" attributed]));
+        }
+    }
+    
     
     /// Set message
     [_instance.label.textStorage setAttributedString: message];
@@ -146,9 +195,9 @@ typedef enum {
     DDLogDebug(@"Attaching notification with attributed string: %@", message);
     
     /// Get constants
-    double attachWindowTitleBarHeight = 17; /// [Sep 2025] This should be varied by macOS version! (Or maybe there's a builtin method for this?) (Maybe see our pull request for Sparkle where we measured titlebar sizes in different macOS versions IIRC.)
+    double mainWindowTitleBarHeight = 17; /// [Sep 2025] This should be varied by macOS version! (Or maybe there's a builtin method for this?) (Maybe see our pull request for Sparkle where we measured titlebar sizes in different macOS versions IIRC.)
     
-    NSEdgeInsets toastMargins = {0,0,0,0}; /// Margin between the toastWindow and the attachWindow it sits inside
+    NSEdgeInsets toastMargins = {0,0,0,0}; /// Margin between the toastWindow and the mainWindow it sits inside
     _toastAnimationOffset = 0;
     {
         if (alignment == kToastNotificationAlignment_TopMiddle) {
@@ -191,10 +240,6 @@ typedef enum {
     
     /// Set Toast frame
     {
-    
-        /// Add width constraint to prevent Toast from spilling out of the window it's attached to
-        // attachWindow.frame.size.width - 2*sideMargin;
-        
         /// Get margins between text and window edge
         auto textMargins = (NSEdgeInsets){
             .top    = _instance.label.textContainerInset.height,
@@ -204,7 +249,7 @@ typedef enum {
         };
         
         /// Calculate the text size
-        CGFloat maxTextWidth = attachWindow.frame.size.width
+        CGFloat maxTextWidth = mainWindow.frame.size.width
                                     - toastMargins.left - toastMargins.right
                                     - textMargins.left - textMargins.right;
         NSSize newTextSize = [_instance.label.attributedString sizeAtMaxWidth: maxTextWidth];
@@ -226,18 +271,18 @@ typedef enum {
         {
             if (alignment == kToastNotificationAlignment_TopMiddle) {
             
-                newToastOrigin.x = NSMidX(attachWindow.frame) - (newToastSize.width / 2);
-                newToastOrigin.y = (attachWindow.frame.origin.y + attachWindow.frame.size.height - attachWindowTitleBarHeight - toastMargins.top) - newToastSize.height;
+                newToastOrigin.x = NSMidX(mainWindow.frame) - (newToastSize.width / 2);
+                newToastOrigin.y = (mainWindow.frame.origin.y + mainWindow.frame.size.height - mainWindowTitleBarHeight - toastMargins.top) - newToastSize.height;
             }
             else if (alignment == kToastNotificationAlignment_BottomRight) {
             
-                newToastOrigin.x = attachWindow.frame.origin.x + attachWindow.frame.size.width - newToastSize.width - toastMargins.right;
-                newToastOrigin.y = attachWindow.frame.origin.y + toastMargins.bottom;
+                newToastOrigin.x = mainWindow.frame.origin.x + mainWindow.frame.size.width - newToastSize.width - toastMargins.right;
+                newToastOrigin.y = mainWindow.frame.origin.y + toastMargins.bottom;
             }
             else if (alignment == kToastNotificationAlignment_BottomMiddle) {
             
-                newToastOrigin.x = NSMidX(attachWindow.frame) - (newToastSize.width / 2);
-                newToastOrigin.y = attachWindow.frame.origin.y + toastMargins.bottom;
+                newToastOrigin.x = NSMidX(mainWindow.frame) - (newToastSize.width / 2);
+                newToastOrigin.y = mainWindow.frame.origin.y + toastMargins.bottom;
             }
             else assert(false);
         }
@@ -247,11 +292,11 @@ typedef enum {
     }
     
     /// Attach Toast as child window
-    [attachWindow addChildWindow: toastWindow ordered: NSWindowAbove];
+    [parentWindow addChildWindow: toastWindow ordered: NSWindowAbove];
     
-    /// Make the attachWindow key
+    /// Make the parentWindow key
     ///     ([Sep 2025] is this necessary? We're not bringing the window to front, so what does this even do?)
-    [attachWindow makeKeyWindow];
+    [parentWindow makeKeyWindow];
     
     /// Fade and animate the notification window in
     {
@@ -281,15 +326,16 @@ typedef enum {
         ///     Since we track mouseHover now, we might be able to reuse that here, instead of this hit-test stuff obsolete? Edit: I don't think so, since here, we don't *only* check if the cursor is over the toast.
         
         /// Get mouse location in the main content views' coordinate system. Need this to do a hit-test later.
-        NSPoint locWindow = [attachWindow convertRectFromScreen: (NSRect){ .origin = loc }].origin; /// convertPointFromScreen: only available in 10.12+
-        NSPoint locContentView = [attachWindow.contentView convertPoint: locWindow fromView: nil];
+        ///     Note: Should we treat clicks in the mainWindow's contentView differently when there's a sheet in front of it (then `parentWindow` is the sheet) [Sep 2025]
+        NSPoint locWindow = [mainWindow convertRectFromScreen: (NSRect){ .origin = loc }].origin; /// convertPointFromScreen: only available in 10.12+
+        NSPoint locContentView = [mainWindow.contentView convertPoint: locWindow fromView: nil];
         
         /// Analyze where the user clicked
         BOOL locIsOverNotification = [NSWindow windowNumberAtPoint: NSEvent.mouseLocation belowWindowWithWindowNumber: 0] == _instance.window.windowNumber; /// So notification isn't dismissed when we click on it. Not sure if necessary when we're using `locIsOverMainWindowContentView`.
-        BOOL locIsOverAttachWindowContentView = [attachWindow.contentView hitTest: locContentView] != nil; /// So that we can drag the window by its titlebar without dismissing the notification.
+        BOOL locIsOverMainWindowContentView = [mainWindow.contentView hitTest: locContentView] != nil; /// So that we can drag the window by its titlebar without dismissing the notification.
         
         /// Close the notification
-        if (!locIsOverNotification && locIsOverAttachWindowContentView) {
+        if (!locIsOverNotification && locIsOverMainWindowContentView) {
             [_showDurationTimer invalidate];
             [self closeNotificationWithFadeOut];
         }

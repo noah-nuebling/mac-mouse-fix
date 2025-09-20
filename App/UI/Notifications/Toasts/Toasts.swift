@@ -21,15 +21,11 @@ import Foundation
             /// Notes:
             /// - We put a period at the end of this UI string. Usually we don't put periods for short UI strings, but it just feels wrong in this case?
             /// - The default duration `kMFToastDurationAutomatic` felt too short in this case. I wonder why that is? I think this toast is one of, if not the shortest toasts - maybe it has to do with that? Maybe it feels like it should display longer, because there's a delay until it shows up so it's harder to get back to? Maybe our tastes for how long the toasts should be changed? Maybe we should adjust the formula for `kMFToastDurationAutomatic`?
-            /// - Is there a reason we use NSApp.mainWindow and if let here? We wrote this much later than the other toasts so maybe I just changed my style?
             /// - Why are we dispatching `k-is-disabled-toast` to the main thread by not this? (They are called from almost the same place)
             
-            if let window = NSApp.mainWindow {
-                var rawMessage = NSLocalizedString("enable-timeout-toast", comment: "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\".")
-                rawMessage = String(format: rawMessage, Links.link(kMFLinkID_VenturaEnablingGuide) ?? "")
-                ToastController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage)!, to: window, forDuration: 10.0)
-                
-            }
+            var rawMessage = NSLocalizedString("enable-timeout-toast", comment: "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\".")
+            rawMessage = String(format: rawMessage, Links.link(kMFLinkID_VenturaEnablingGuide) ?? "")
+            ToastController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage)!, forDuration: 10.0)
         },
         "k-is-disabled-toast": {
             var messageRaw = NSLocalizedString("is-disabled-toast", comment: "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings here.")
@@ -38,7 +34,7 @@ import Foundation
             let message = NSMutableAttributedString(coolMarkdown: messageRaw)
             DispatchQueue.main.async { /// UI stuff needs to be called from the main thread
                 if let window = NSApp.mainWindow, let message = message {
-                    ToastController.attachNotification(withMessage: message, to: window, forDuration: kMFToastDurationAutomatic)
+                    ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
                 }
             }
         },
@@ -47,25 +43,25 @@ import Foundation
         "k-forbidden-capture-toast.1": {
             let messageRaw = NSLocalizedString("forbidden-capture-toast.1", comment: "Note: This message shows when the user tries to assign an action to the primary mouse button (aka left click) inside Mac Mouse Fix.")
             let message = NSAttributedString(coolMarkdown: messageRaw)!;
-            ToastController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
+            ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
         },
         "k-forbidden-capture-toast.2": {
             let messageRaw = NSLocalizedString("forbidden-capture-toast.2", comment: "")
             let message = NSAttributedString(coolMarkdown: messageRaw)!;
-            ToastController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
+            ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
         },
         "k-already-using-defaults-toast.3": {
             let messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "") /// Old note: (Removed because doesn't help localizers I think. We dont' wanna train localizers to ignore comments, so we don't want useless ones.) "Note: This text is displayed in a notification after the user tries to load the default settings for mice with 3 buttons on the Buttons Tab.")
             let message = NSAttributedString(coolMarkdown: messageRaw)!
             DispatchQueue.main.async {
-                ToastController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
+                ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
             }
         },
         "k-already-using-defaults-toast.5": {
             let messageRaw = NSLocalizedString("already-using-defaults-toast.5", comment: "")
             let message = NSAttributedString(coolMarkdown: messageRaw)!
             DispatchQueue.main.async {
-                ToastController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
+                ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
             }
         },
     ]
@@ -131,6 +127,6 @@ import Foundation
         message = NSAttributedString(attributedFormat: message, args: [symbolString])
         
         /// Show message
-        ToastController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
+        ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
     }
 }

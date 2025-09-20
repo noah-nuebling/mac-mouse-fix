@@ -33,7 +33,7 @@ typedef enum {
 } MFCapturedInputType;
 
 #define hintSeparatorSize 4.0
-#define useSmallHintStyling false /// Turning off the small hint styling, since that's not used anywhere else in MMF. We should probably build the small hints into ToastController.m and transition the entire app. However, the hints currently feel a bit too long without the small style. (I think hints being wider than the main body feels wrong) [Sep 19 2025]
+#define useSmallHintStyling false /// Turning off the small hint styling, since that's not used anywhere else in MMF. We should probably build the small hints into ToastController.m and transition the entire app. However, the hints currently feel a bit too long without the small style. (I think hints being wider than the main body feels wrong) [Sep 19 2025] || Update: [Sep 20 2025] Implemented small hints across the app in ToastController.m!
 
 
 + (void)showScrollWheelCaptureToast:(BOOL)hasBeenCaptured {
@@ -42,7 +42,7 @@ typedef enum {
     NSAttributedString *body = createSimpleNotificationBody(hasBeenCaptured, kMFCapturedInputTypeScroll);
     
     /// Show notification
-    [ToastController attachNotificationWithMessage:body toWindow:MainAppState.shared.window forDuration:kMFToastDurationAutomatic];
+    [ToastController attachNotificationWithMessage: body forDuration: kMFToastDurationAutomatic];
 }
 
 + (void)showButtonCaptureToastWithBeforeSet:(NSSet<NSNumber *> *)beforeSet afterSet:(NSSet<NSNumber *> *)afterSet {
@@ -82,7 +82,7 @@ typedef enum {
         NSAttributedString *body = createButtonsNotificationBody(capturedButtonStringArray, uncapturedButtonStringArray);
         
         /// Show notification
-        [ToastController attachNotificationWithMessage:body toWindow:MainAppState.shared.window forDuration:kMFToastDurationAutomatic];
+        [ToastController attachNotificationWithMessage: body forDuration: kMFToastDurationAutomatic];
     }
 }
 
@@ -127,6 +127,7 @@ static NSAttributedString *createSimpleNotificationBody(BOOL didGetCaptured, MFC
         }
         else /// Attach hint
             body = astringf(@"%@\n%@", body, hint);
+
     }
     
     /// Attach learnMore string

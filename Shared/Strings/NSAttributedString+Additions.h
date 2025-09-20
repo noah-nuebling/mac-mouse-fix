@@ -29,6 +29,9 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
             attributedStringWithAttributedFormat: (NSAttributedString *)([(format) isKindOfClass: [NSString class]] ? [(NSString *)(format) attributed] : (format)) /** Automatically map NSString to NSAttributedString for convenience */\
             args: @[args_]\
         ]
+
+- (NSArray<NSAttributedString *> *) split: (NSString *)separator maxSplit: (int)maxSplit;
+
 + (NSAttributedString * _Nullable)attributedStringWithCoolMarkdown:(NSString *)md;
 + (NSAttributedString * _Nullable)attributedStringWithCoolMarkdown:(NSString *)md fillOutBase:(BOOL)fillOutBase;
 + (NSAttributedString * _Nullable)attributedStringWithAttributedMarkdown:(NSAttributedString *)md;

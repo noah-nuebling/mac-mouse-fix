@@ -71,6 +71,8 @@
     /// Remove all whitespace and newline chars from the string
     ///
     
+    /// Used by the licenseField [Sep 2025]
+    
     NSCharacterSet *whitespaceAndNewlineChars = NSCharacterSet.whitespaceAndNewlineCharacterSet;
     
     NSMutableAttributedString *s = self.mutableCopy;
@@ -262,6 +264,43 @@
     
     /// Return
     return mutableFormat;
+}
+
+#pragma mark Split string
+
+- (NSArray<NSAttributedString *> *) split: (NSString *)separator maxSplit: (int)maxSplit {
+    
+    /// Overview: Like `-[NSString componentsSeparatedByString:]`, but for NSAttributedString and the API is a bit more like Python's `str.split()`
+    /// Question: Is it a good idea to make the method name shorter and more Python-y instead of following the verbose naming scheme of the other methods? [Sep 2025]
+    /// Usage:
+    ///     Pass in -1 for maxSplit to turn it off.
+    
+    auto result = [NSMutableArray new];
+    
+    auto restRange = NSMakeRange(0, self.length);
+    
+    for (int split = 1; ; split++) {
+        
+        if (maxSplit > 0)
+            if (split > maxSplit)
+                break;
+        
+        auto separatorRange = [self.string
+            rangeOfString: separator
+            options: 0          /// Could use `NSRegularExpressionSearch`? But we don't need that right now.
+            range: restRange
+            locale: nil
+        ];
+        
+        if (separatorRange.location == NSNotFound) break;
+        
+        [result addObject: [self attributedSubstringFromRange: NSMakeRange(restRange.location, separatorRange.location - restRange.location)]];
+        
+        restRange = NSMakeRange(NSMaxRange(separatorRange), self.length - NSMaxRange(separatorRange));
+    }
+    [result addObject: [self attributedSubstringFromRange: restRange]];
+    
+    return result;
 }
 
 #pragma mark Padding
