@@ -36,34 +36,39 @@ static ToastController *_instance;
 static NSDictionary *_labelAttributesFromIB;
 static id _localClickMonitor;
 static id _localEscapeKeyMonitor;
+static NSTimer *_showDurationTimer = nil;
 
 + (void)initialize {
     
     if (self == [ToastController class]) {
         
-        /// Setup window closing notification
-        [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(windowResignKey:) name:NSWindowDidResignKeyNotification object:nil];
+        /// Setup callback when the parent window closes
+        [NSNotificationCenter.defaultCenter addObserver: self selector: @selector(windowResignKey:) name: NSWindowDidResignKeyNotification object: nil];
+        
+        /// Create singleton
+        _instance = [[ToastController alloc] initWithWindowNibName: @"Toast"];
         
         /// Setup notfication window
-        _instance = [[ToastController alloc] initWithWindowNibName:@"Toast"];
-        
         NSPanel *w = (NSPanel *)_instance.window;
-        
-        w.styleMask =  NSWindowStyleMaskTitled | NSWindowStyleMaskFullSizeContentView;
-        w.titlebarAppearsTransparent  =   YES;
-        w.titleVisibility             =   NSWindowTitleHidden;
-        w.movable = NO;
+        {
+            w.styleMask =  NSWindowStyleMaskTitled | NSWindowStyleMaskFullSizeContentView;
+            w.titlebarAppearsTransparent  =   YES;
+            w.titleVisibility             =   NSWindowTitleHidden;
+            w.movable = NO;
+        }
         
         /// Remove scrollView edge insets, because those are nothing but trouble (cause links to be not clickable and stuff)
         NSScrollView *scrollView = (NSScrollView *)_instance.label.superview.superview;
-        scrollView.automaticallyAdjustsContentInsets = NO; // Doesn't remove insets // Probably calling this too late
-        scrollView.contentInsets = NSEdgeInsetsMake(0, 0, 0, 0);
-        /// Disable scrollView elasticity while we're at it to make it seem like it's not even there
-        scrollView.verticalScrollElasticity = NSScrollElasticityNone;
-        scrollView.horizontalScrollElasticity = NSScrollElasticityNone;
+        {
+            scrollView.automaticallyAdjustsContentInsets = NO; /// Doesn't remove insets // Probably calling this too late
+            scrollView.contentInsets = NSEdgeInsetsMake(0, 0, 0, 0);
+            /// Disable scrollView elasticity while we're at it to make it seem like it's not even there
+            scrollView.verticalScrollElasticity = NSScrollElasticityNone;
+            scrollView.horizontalScrollElasticity = NSScrollElasticityNone;
+        }
         
         /// Get default label text attributes
-        _labelAttributesFromIB = [_instance.label.attributedString attributesAtIndex:0 effectiveRange:nil];
+        _labelAttributesFromIB = [_instance.label.attributedString attributesAtIndex: 0 effectiveRange: NULL];
     }
 }
 
@@ -81,24 +86,46 @@ static double _animationDurationFadeOut = 0.2;
 static double _toastAnimationOffset = 20;
 
 typedef enum {
-    kToastNotificationAlignmentTopMiddle, /// Only kToastNotificationAlignmentTopMiddle is used.
-    kToastNotificationAlignmentBottomRight,
-    kToastNotificationAlignmentBottomMiddle,
+    kToastNotificationAlignment_TopMiddle, /// Only `kToastNotificationAlignment_TopMiddle` is used.
+    kToastNotificationAlignment_BottomRight,
+    kToastNotificationAlignment_BottomMiddle,
 } ToastNotificationAlignment;
 
 /// Convenience function
-+ (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)window forDuration:(NSTimeInterval)showDuration {
++ (void) attachNotificationWithMessage: (NSAttributedString *)message toWindow: (NSWindow *)window forDuration: (NSTimeInterval)showDuration {
     
-    [self attachNotificationWithMessage:message toWindow:window forDuration:showDuration alignment:kToastNotificationAlignmentTopMiddle];
+    [self attachNotificationWithMessage: message toWindow: window forDuration: showDuration alignment: kToastNotificationAlignment_TopMiddle];
 }
 
-+ (void)attachNotificationWithMessage:(NSAttributedString *)message toWindow:(NSWindow *)attachWindow forDuration:(NSTimeInterval)showDuration alignment:(ToastNotificationAlignment)alignment {
++ (void) attachNotificationWithMessage: (NSAttributedString *)message toWindow: (NSWindow *)attachWindow forDuration: (NSTimeInterval)showDuration alignment: (ToastNotificationAlignment)alignment {
 
-    /// Arguments:
+    /// Usage:
     /// - Pass `kMFToastDurationAutomatic` to `showDuration` to get the default duration
+    ///
+    /// Implementation notes:
+    ///     - Remember: Don't try to get the 'mainWindow' (`MainAppState.shared.window`) just use the `attachWindow` argument [Sep 2025]
+    ///     - Discussion: Why calculate the layout manually instead of using autolayout? [Sep 2025]
+    ///         - Our `NotificationLabel` is an NSTextView, and NSTextView doesn't report an intrinsicContentSize, so autolayout doesn't know how big the NSTextView needs to be to prevent clipping content.
+    ///         - Alternatives to manual calculation:
+    ///             1. Use NSTextField
+    ///                 - Pro: It *does* report an intrinsicContentSize, and could solve this layout, which would simplify the code a bit.
+    ///                     > See our `NSTextViewSizeExperiments` test project.
+    ///                 - Con: I thought there was a specific reason that we used NSTextView over NSTextField. But I can't find notes on it [Sep 2025]
+    ///                     - Ah I think NSTextField didn't support clickable links or something?
+    ///                         (^ Should maybe test this and then clarify these notes)
+    ///             2. Override NSTextView's intrinsicContentSize
+    ///                 - Contra: To make it work properly is more complicated than the current solution since we'd have to
+    ///                     use private APIs and make the layout engine give us 2 passes and stuff (since the desired height depends on the width that the layoutEngine grants us.)
+    ///                     > See our `NSTextViewSizeExperiments` test project
+    ///                     ... The only reason to implement this might be if we need auto-resizing NSTextViews in multiple places in the app, but I don't think we do [Sep 2025]
+    ///
+    /// Future ideas:
+    ///     - For the Tahoe overhaul, maybe change the look to be capsule shaped like native iOS Toasts? (https://x.com/jsngr/status/1340317069359919104) [Sep 2025]
+    ///     - Maybe make the text selectable / copy-paste able [Sep 2025]
+    ///
+    /// Protocol:
+    ///     Cleaned this up and deleted a bunch of old stuff in commit a95d5cddcc46acfc22d2113ce28aa4c146ff8587 [Sep 2025]
     
-    /// Override default font size from interface builder. This also overrides font size we set to `message` before passing it to this function which might be bad.
-//    message = [message attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
     
     /// Process showDuration
     if (showDuration < 0) {
@@ -108,137 +135,145 @@ typedef enum {
         showDuration *= [LocalizationUtility informationDensityOfCurrentLanguage]; /// Why would we multiply with information density if the duration is specified by the caller? Note: this Is called with 10.0 at k-enable-timeout-toast, in all other cases it's called with automatic duration (Summer 2024)
     }
     
-    /// Constants
-    double mainWindowTitleBarHeight = 0.0;
-    double topEdgeMargin = 0.0;
-    double sideMargin = 0.0;
-    double bottomMargin = 0.0;
+    /// Process message
+    message = [message attributedStringByAddingStringAttributesAsBase: _labelAttributesFromIB];
+    message = [message attributedStringByFillingOutBase];
     
-    if (alignment == kToastNotificationAlignmentTopMiddle) {
-        mainWindowTitleBarHeight = 17;
-        topEdgeMargin = 5.0; /// 0.0 // -25.0
-        sideMargin = 2; /// In MMF 3 the views are so narrow that the notifications maybe should be allowed to spill out.
-        _toastAnimationOffset = 20;
-    } else if (alignment == kToastNotificationAlignmentBottomRight){
-        bottomMargin = 10;
-        sideMargin = 5;
-        _toastAnimationOffset = -20;
-    } else if (alignment == kToastNotificationAlignmentBottomMiddle) {
-        bottomMargin = 10;
-        sideMargin = 5;
-        _toastAnimationOffset = -20;
-    } else assert(false);
+    /// Set message
+    [_instance.label.textStorage setAttributedString: message];
+
+    /// Debug
+    DDLogDebug(@"Attaching notification with attributed string: %@", message);
+    
+    /// Get constants
+    double attachWindowTitleBarHeight = 17; /// [Sep 2025] This should be varied by macOS version! (Or maybe there's a builtin method for this?) (Maybe see our pull request for Sparkle where we measured titlebar sizes in different macOS versions IIRC.)
+    
+    NSEdgeInsets toastMargins = {0,0,0,0}; /// Margin between the toastWindow and the attachWindow it sits inside
+    _toastAnimationOffset = 0;
+    {
+        if (alignment == kToastNotificationAlignment_TopMiddle) {
+            toastMargins = (NSEdgeInsets) {
+                .top    = 5.0,           /// 0.0 // -25.0
+                .left   = 2,             /// In MMF 3 the views are so narrow that the notifications maybe should be allowed to spill out.
+                .right  = 2,
+                .bottom = CGFLOAT_MAX,   /// Unused
+            };
+            _toastAnimationOffset = 20;
+        }
+        else if (alignment == kToastNotificationAlignment_BottomRight) {
+            toastMargins = (NSEdgeInsets) {
+                .top    = CGFLOAT_MAX,
+                .left   = 5,
+                .right  = 5,
+                .bottom = 10,
+            };
+            _toastAnimationOffset = -20;
+        }
+        else if (alignment == kToastNotificationAlignment_BottomMiddle) {
+            toastMargins = (NSEdgeInsets) {
+                .top    = CGFLOAT_MAX,
+                .left   = 5,
+                .right  = 5,
+                .bottom = 10,
+            };
+            _toastAnimationOffset = -20;
+        }
+        else assert(false);
+    }
     
     /// Close existing notification
     ///     This is a TEST to maybe prevent seeming raceconditions seen during our LocalizationScreenshot tests where the escapeKey monitor seemingly never got removed after screenshotting toasts on the licensesheet window.
     [self closeNotificationWithFadeOut];
     
-    /// Execution
-    
     /// Get existing notif instance and close
-    NSPanel *w = (NSPanel *)_instance.window;
-    NSWindow *mainW = MainAppState.shared.window;
-    [w close];
+    NSPanel *toastWindow = (NSPanel *)_instance.window;
+    [toastWindow close];
     
-    /// Set message text and text attributes to label
-    message = [message copy];
-    NSDictionary *baseAttributes = _labelAttributesFromIB;
-    message = [message attributedStringByAddingStringAttributesAsBase:baseAttributes];
-    message = [message attributedStringByFillingOutBase];
+    /// Set Toast frame
+    {
     
-    [_instance.label.textStorage setAttributedString:message];
-
-    DDLogDebug(@"Attaching notification with attributed string: %@", message);
+        /// Add width constraint to prevent Toast from spilling out of the window it's attached to
+        // attachWindow.frame.size.width - 2*sideMargin;
+        
+        /// Get margins between text and window edge
+        auto textMargins = (NSEdgeInsets){
+            .top    = _instance.label.textContainerInset.height,
+            .left   = _instance.label.textContainerInset.width,
+            .bottom = _instance.label.textContainerInset.height,
+            .right  = _instance.label.textContainerInset.width
+        };
+        
+        /// Calculate the text size
+        CGFloat maxTextWidth = attachWindow.frame.size.width
+                                    - toastMargins.left - toastMargins.right
+                                    - textMargins.left - textMargins.right;
+        NSSize newTextSize = [_instance.label.attributedString sizeAtMaxWidth: maxTextWidth];
+        
+        /// Adjust newTextSize for lineFragmentPadding.
+        ///     See https://stackoverflow.com/questions/13621084/boundingrectwithsize-for-nsattributedstring-returning-wrong-size
+        ///     ... Actually this breaks short "Primary Mouse Button can't be used" notifications.
+        ///     Update: Seems necessary after updating sizeAtMaxWidth to new TextKit 2 methods. ... Update2: And it works perfectly with the TextKit 1 methods as well after we fixed them.
+        newTextSize.width += _instance.label.textContainer.lineFragmentPadding * 2;
+        
+        /// Calculate the new toast size
+        NSSize newToastSize = (NSSize) {
+            .width  = newTextSize.width + textMargins.left + textMargins.right,
+            .height = newTextSize.height + textMargins.top + textMargins.bottom
+        };
+        
+        /// Calculate the Toasts position
+        NSPoint newToastOrigin = {};
+        {
+            if (alignment == kToastNotificationAlignment_TopMiddle) {
+            
+                newToastOrigin.x = NSMidX(attachWindow.frame) - (newToastSize.width / 2);
+                newToastOrigin.y = (attachWindow.frame.origin.y + attachWindow.frame.size.height - attachWindowTitleBarHeight - toastMargins.top) - newToastSize.height;
+            }
+            else if (alignment == kToastNotificationAlignment_BottomRight) {
+            
+                newToastOrigin.x = attachWindow.frame.origin.x + attachWindow.frame.size.width - newToastSize.width - toastMargins.right;
+                newToastOrigin.y = attachWindow.frame.origin.y + toastMargins.bottom;
+            }
+            else if (alignment == kToastNotificationAlignment_BottomMiddle) {
+            
+                newToastOrigin.x = NSMidX(attachWindow.frame) - (newToastSize.width / 2);
+                newToastOrigin.y = attachWindow.frame.origin.y + toastMargins.bottom;
+            }
+            else assert(false);
+        }
+        
+        /// Set new Toasts frame
+        [toastWindow setFrame: (NSRect){ .origin = newToastOrigin, .size = newToastSize } display: YES];
+    }
     
-    /// Set notification frame
+    /// Attach Toast as child window
+    [attachWindow addChildWindow: toastWindow ordered: NSWindowAbove];
     
-    /// Calc size to fit content
-    NSRect newWindowFrame = w.frame;
-    
-    /// Get insets around label
-    ///     We used to implement the insets by just having an actual margin between the scrollView and the windowFrame. But this cut off emojis a little bit, so we are now setting the insets via textContainerInsets instead. We changed a few things for this.
-    ///     Last commit before the change: 47d97be6482df3c37898c3c6cd5c21c6be02ab4a
-    
-//    NSRect notifFrame = w.frame;
-    
-//    NSRect scrollViewFrame = label.superview.superview.frame; /// Label is embedded in clipView and ScrollView
-    
-    /// Old method
-//    CGFloat bottomInset = scrollViewFrame.origin.y;
-//    CGFloat topInset = notifFrame.size.height - (scrollViewFrame.size.height + bottomInset);
-//    CGFloat leftInset = scrollViewFrame.origin.x;
-//    CGFloat rightInset = notifFrame.size.width - (scrollViewFrame.size.width + leftInset);
-//    assert(leftInset == rightInset);
-    
-    /// New method
-    CGFloat bottomInset = _instance.label.textContainerInset.height;
-    CGFloat topInset = _instance.label.textContainerInset.height;
-    CGFloat leftInset = _instance.label.textContainerInset.width;
-    CGFloat rightInset = _instance.label.textContainerInset.width;
-    
-    /// Calculate new text size
-    CGFloat maxTextWidth = mainW.frame.size.width - 2*sideMargin - leftInset - rightInset;
-    NSSize newTextSize = [_instance.label.attributedString sizeAtMaxWidth:maxTextWidth];
-    
-    /// Adjust newTextSize for lineFragmentPadding.
-    ///     See https://stackoverflow.com/questions/13621084/boundingrectwithsize-for-nsattributedstring-returning-wrong-size
-    ///     ... Actually this breaks short "Primary Mouse Button can't be used" notifications.
-    ///     Update: Seems necessary after updating sizeAtMaxWidth to new TextKit 2 methods. ... Update2: And it works perfectly with the TextKit 1 methods as well after we fixed them.
-    CGFloat padding = _instance.label.textContainer.lineFragmentPadding; /// TESTING
-    newTextSize.width += padding * 2;
-    
-    /// Calculate new window frame
-    NSSize newWindowSize = NSMakeSize(newTextSize.width + leftInset + rightInset, newTextSize.height + topInset + bottomInset);
-    newWindowFrame.size = newWindowSize;
-    
-    /// Calc Position
-    
-    if (alignment == kToastNotificationAlignmentTopMiddle) {
-        /// Top middle alignment
-        newWindowFrame.origin.x = NSMidX(mainW.frame) - (newWindowSize.width / 2);
-        newWindowFrame.origin.y = (mainW.frame.origin.y + mainW.frame.size.height - (mainWindowTitleBarHeight + topEdgeMargin)) - newWindowSize.height;
-    } else if (alignment == kToastNotificationAlignmentBottomRight) {
-        /// Bottom right alignment
-        newWindowFrame.origin.x = mainW.frame.origin.x + mainW.frame.size.width - newWindowFrame.size.width - sideMargin;
-        newWindowFrame.origin.y = mainW.frame.origin.y + bottomMargin;
-    } else if (alignment == kToastNotificationAlignmentBottomMiddle) {
-        newWindowFrame.origin.x = NSMidX(mainW.frame) - (newWindowSize.width / 2);
-        newWindowFrame.origin.y = mainW.frame.origin.y + bottomMargin;
-    } else assert(false);
-    
-    /// Set new notification frame
-    [w setFrame:newWindowFrame display:YES];
-    
-    /// Set label frame (Don't actually need this if we set autoresizing for the label in IB, which we do)
-//    NSRect newLabelFrame = label.superview.superview.frame;
-//    newLabelFrame.size = newTextSize;
-//    newLabelFrame.origin.x = NSMidX(label.superview.bounds) - (newTextSize.width / 2);
-//    newLabelFrame.origin.y = NSMidY(label.superview.bounds) - (newTextSize.height / 2);
-//    [label setFrame:newLabelFrame];
-    
-    /// Attach notif as child window to attachWindow
-    [attachWindow addChildWindow:w ordered:NSWindowAbove];
+    /// Make the attachWindow key
+    ///     ([Sep 2025] is this necessary? We're not bringing the window to front, so what does this even do?)
     [attachWindow makeKeyWindow];
     
     /// Fade and animate the notification window in
-    /// Set pre animation alpha
-    w.alphaValue = 0.0;
-    
-    /// Set pre animation position
-    NSRect targetFrame = w.frame;
-    NSRect preAnimFrame = w.frame;
-    preAnimFrame.origin.y += _toastAnimationOffset;
-    [w setFrame:preAnimFrame display:NO];
-    
-    /// Animate
-    [NSAnimationContext beginGrouping];
-    NSAnimationContext.currentContext.duration = _animationDurationFadeIn;
-    w.animator.alphaValue = 1.0;
-    [w.animator setFrame:targetFrame display:YES];
-    [NSAnimationContext endGrouping];
+    {
+        /// Set pre animation alpha
+        toastWindow.alphaValue = 0.0;
+        
+        /// Set pre animation position
+        NSRect targetFrame = toastWindow.frame;
+        NSRect preAnimFrame = toastWindow.frame;
+        preAnimFrame.origin.y += _toastAnimationOffset;
+        [toastWindow setFrame: preAnimFrame display:NO];
+        
+        /// Animate
+        [NSAnimationContext beginGrouping];
+        NSAnimationContext.currentContext.duration = _animationDurationFadeIn;
+        toastWindow.animator.alphaValue = 1.0;
+        [toastWindow.animator setFrame: targetFrame display: YES];
+        [NSAnimationContext endGrouping];
+    }
     
     /// Close if user clicks elsewhere
-    _localClickMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskLeftMouseDown) handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
+    _localClickMonitor = [NSEvent addLocalMonitorForEventsMatchingMask: (NSEventMaskLeftMouseDown) handler: ^NSEvent * _Nullable(NSEvent * _Nonnull event) {
         
         NSPoint loc = NSEvent.mouseLocation;
         
@@ -246,16 +281,15 @@ typedef enum {
         ///     Since we track mouseHover now, we might be able to reuse that here, instead of this hit-test stuff obsolete? Edit: I don't think so, since here, we don't *only* check if the cursor is over the toast.
         
         /// Get mouse location in the main content views' coordinate system. Need this to do a hit-test later.
-        NSView *mainContentView = MainAppState.shared.window.contentView;
-        NSPoint locWindow = [MainAppState.shared.window convertRectFromScreen:(NSRect){.origin=loc}].origin; /// convertPointFromScreen: only available in 10.12+
-        NSPoint locContentView = [mainContentView convertPoint:locWindow fromView:nil];
+        NSPoint locWindow = [attachWindow convertRectFromScreen: (NSRect){ .origin = loc }].origin; /// convertPointFromScreen: only available in 10.12+
+        NSPoint locContentView = [attachWindow.contentView convertPoint: locWindow fromView: nil];
         
         /// Analyze where the user clicked
-        BOOL locIsOverNotification = [NSWindow windowNumberAtPoint:NSEvent.mouseLocation belowWindowWithWindowNumber:0] == _instance.window.windowNumber; /// So notification isn't dismissed when we click on it. Not sure if necessary when we're using `locIsOverMainWindowContentView`.
-        BOOL locIsOverMainWindowContentView = [mainContentView hitTest:locContentView] != nil; /// So that we can drag the window by its titlebar without dismissing the notification.
+        BOOL locIsOverNotification = [NSWindow windowNumberAtPoint: NSEvent.mouseLocation belowWindowWithWindowNumber: 0] == _instance.window.windowNumber; /// So notification isn't dismissed when we click on it. Not sure if necessary when we're using `locIsOverMainWindowContentView`.
+        BOOL locIsOverAttachWindowContentView = [attachWindow.contentView hitTest: locContentView] != nil; /// So that we can drag the window by its titlebar without dismissing the notification.
         
         /// Close the notification
-        if (!locIsOverNotification && locIsOverMainWindowContentView) {
+        if (!locIsOverNotification && locIsOverAttachWindowContentView) {
             [_showDurationTimer invalidate];
             [self closeNotificationWithFadeOut];
         }
@@ -266,7 +300,7 @@ typedef enum {
     
     /// Close if user hits escape
     ///     Adding this to more easily automate the UI for our localizationScreenshots, but I think it's also nice UX.
-    _localEscapeKeyMonitor = [NSEvent addLocalMonitorForEventsMatchingMask:(NSEventMaskKeyDown) handler:^NSEvent * _Nullable(NSEvent * _Nonnull event) {
+    _localEscapeKeyMonitor = [NSEvent addLocalMonitorForEventsMatchingMask: (NSEventMaskKeyDown) handler: ^NSEvent * _Nullable(NSEvent * _Nonnull event) {
         
         /// Guard: is escape key
         BOOL isEscape = event.keyCode == kVK_Escape;
@@ -284,15 +318,26 @@ typedef enum {
     /// Track mouse hover
     ///     This is to keep the notification from timing out, if the cursor hovers over it
     
-    _toastTrackingArea = [[NSTrackingArea alloc] initWithRect:w.contentView.bounds
-                                                                options:NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways
-                                                                  owner:self userInfo:nil];
+    _toastTrackingArea = [[NSTrackingArea alloc] initWithRect: toastWindow.contentView.bounds
+                                                      options: NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways
+                                                        owner: self
+                                                     userInfo: nil];
     
-    [w.contentView addTrackingArea:_toastTrackingArea];
+    [toastWindow.contentView addTrackingArea: _toastTrackingArea];
     
     /// Track showDuration
+    ///     On retain cycles: `self` is a Class not an instance, and `_showDurationTimer` is a static var, so neither get retained when the block captures them (I think) [Sep 2025]
     [_showDurationTimer invalidate];
-    _showDurationTimer = [NSTimer scheduledTimerWithTimeInterval:showDuration target:self selector:@selector(onShowDurationExpired:) userInfo:nil repeats:NO];
+    _showDurationTimer = [NSTimer scheduledTimerWithTimeInterval: showDuration repeats: NO block: ^(NSTimer * _Nonnull timer) {
+        
+        /// Invalidate the timer
+        ///     Note: After the timer fires, I thought it invalidates itself, but `timer.isValid` seems to be true in here (if I didn't test wrong)
+        [_showDurationTimer invalidate];
+        _showDurationTimer = nil; /// [Sep 2025] Capturing the outer timer variable so we can set it to nil
+        
+        /// Signal the decide method
+        [self decideOverNotificationClose];
+    }];
 }
 
 #pragma mark Track toastHover
@@ -300,33 +345,12 @@ typedef enum {
 static NSTrackingArea *_toastTrackingArea;
 static BOOL _mouseIsOverToast = NO;
 
-+ (void)mouseEntered:(NSEvent *)event {
-    /// The mouse has entered the notifications content view
-    
++ (void)mouseEntered:(NSEvent *)event { /// The mouse has entered the notifications content view
     _mouseIsOverToast = YES;
     [self decideOverNotificationClose];
 }
-+ (void)mouseExited:(NSEvent *)event {
-    /// The mouse has left the notifications content view
-    
++ (void)mouseExited:(NSEvent *)event { /// The mouse has left the notifications content view
     _mouseIsOverToast = NO;
-    [self decideOverNotificationClose];
-}
- 
-#pragma mark Track showDuration
-
-static NSTimer *_showDurationTimer;
-+ (void)onShowDurationExpired:(NSTimer *)timer {
-    
-    /// Validate
-    assert([timer isEqual:_showDurationTimer]);
-    
-    /// Invalidate the timer
-    ///     Note: After the timer fires, I thought it invalidates itself, but `timer.isValid` seems to be true in here (if I didn't test wrong)
-    [_showDurationTimer invalidate];
-    _showDurationTimer = nil;
-    
-    /// Signal the decide method
     [self decideOverNotificationClose];
 }
 
@@ -339,7 +363,7 @@ static NSTimer *_showDurationTimer;
 
 #pragma mark Close the Toast
 
-+ (void)decideOverNotificationClose {
++ (void) decideOverNotificationClose {
     
     BOOL showDurationIsOver = _showDurationTimer == nil;
     
@@ -389,11 +413,11 @@ static void cleanupForNotificationClose(void) {
     
     /// Remove the local event monitors
     if (_localClickMonitor != nil) {
-        [NSEvent removeMonitor:_localClickMonitor];
+        [NSEvent removeMonitor: _localClickMonitor];
         _localClickMonitor = nil;
     }
     if (_localEscapeKeyMonitor != nil) {
-        [NSEvent removeMonitor:_localEscapeKeyMonitor];
+        [NSEvent removeMonitor: _localEscapeKeyMonitor];
         _localEscapeKeyMonitor = nil;
     }
     
@@ -401,7 +425,7 @@ static void cleanupForNotificationClose(void) {
     /// Notes:
     /// - This is necessary to deactivate the tracking area, otherwise mouseExited: and mouseEntered: keep getting called. We also have to do this before replacing `_instance.window` with a new window instance for it work I think. I think we could theoretically do this right before we replace the content of `_instance.window`, but I think it's easier to do it here.
     NSPanel *w = (id)_instance.window;
-    [w.contentView removeTrackingArea:_toastTrackingArea];
+    [w.contentView removeTrackingArea: _toastTrackingArea];
     [w.contentView updateTrackingAreas]; /// Not sure what this does, or if it's necessary
 }
 
@@ -417,7 +441,7 @@ static void cleanupForNotificationClose(void) {
     
     NSWindow *closedWindow = notification.object;
     
-    if ([_instance.window.parentWindow isEqual:closedWindow]) {
+    if ([_instance.window.parentWindow isEqual: closedWindow]) {
         [_showDurationTimer invalidate];
         [self closeNotificationImmediately];
     }

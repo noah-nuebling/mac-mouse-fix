@@ -125,10 +125,8 @@ static NSAttributedString *createSimpleNotificationBody(BOOL didGetCaptured, MFC
             NSAttributedString *separator = [@"\n\n".attributed attributedStringBySettingFontSize: hintSeparatorSize];
             body = astringf(@"%@%@%@", body, separator, hint);
         }
-        else {
-            /// Attach hint
+        else /// Attach hint
             body = astringf(@"%@\n%@", body, hint);
-        }
     }
     
     /// Attach learnMore string
