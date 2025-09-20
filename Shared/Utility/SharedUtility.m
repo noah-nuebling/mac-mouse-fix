@@ -266,19 +266,19 @@ static void iterateIvarsOn(id obj, void(^callback)(Ivar ivar, BOOL *stop)) {
 //    });
 //}
 
-static void iterateMethodsOn(id _O_ obj, void(^_I_ callback)(Method _I_ method, struct objc_method_description *_I_ description, BOOL *_I_ stop)) {
+static void iterateMethodsOn(id _Nullable obj, void(^_Nonnull callback)(Method _Nonnull method, struct objc_method_description *_Nonnull description, BOOL *_Nonnull stop)) {
     
     /// To iterate class methods, pass in [obj class]
     
-    Class _O_ class = [obj class];
+    Class _Nullable class = [obj class];
     
     unsigned int nMethods;
-    Method _Nonnull *_O_ methodList = class_copyMethodList(class, &nMethods);
+    Method _Nonnull *_Nullable methodList = class_copyMethodList(class, &nMethods);
     
     for (int i = 0; i < nMethods; i++) {
         
-        Method _I_ m = methodList[i];
-        struct objc_method_description *_I_ d = method_getDescription(m);
+        Method _Nonnull m = methodList[i];
+        struct objc_method_description *_Nonnull d = method_getDescription(m);
         
         BOOL shouldStop = NO;
         callback(m, d, &shouldStop);
@@ -288,18 +288,18 @@ static void iterateMethodsOn(id _O_ obj, void(^_I_ callback)(Method _I_ method, 
     free(methodList);
 }
 
-static void iteratePropertiesOn(id _O_ obj, void(^_I_ callback)(objc_property_t _I_ property, NSString *_O_ name, NSString *_O_ attributes, BOOL *_I_ stop)) {
+static void iteratePropertiesOn(id _Nullable obj, void(^_Nonnull callback)(objc_property_t _Nonnull property, NSString *_Nullable name, NSString *_Nullable attributes, BOOL *_Nonnull stop)) {
     
-    Class _O_ class = [obj class];
+    Class _Nullable class = [obj class];
     
     /// Properties
     unsigned int nProperties;
-    objc_property_t _I_ *_O_ propertyList = class_copyPropertyList(class, &nProperties);
+    objc_property_t _Nonnull *_Nullable propertyList = class_copyPropertyList(class, &nProperties);
     
     for (int i = 0; i < nProperties; i++) {
-        objc_property_t _I_ m = propertyList[i];
-        const char *_I_ name = property_getName(m);
-        const char *_O_ attrs = property_getAttributes(m);
+        objc_property_t _Nonnull m = propertyList[i];
+        const char *_Nonnull name = property_getName(m);
+        const char *_Nullable attrs = property_getAttributes(m);
         BOOL shouldStop = NO;
         callback(m, @(name), @(attrs ?: ""), &shouldStop);
         if (shouldStop) break;
@@ -486,8 +486,8 @@ inline bool runningHelper(void) {
 }
 + (void)destroyFSEventStream:(FSEventStreamRef _Nullable)stream {
     if (stream != NULL) {
-        FSEventStreamInvalidate((void *_I_)stream);
-        FSEventStreamRelease((void *_I_)stream);
+        FSEventStreamInvalidate((void *_Nonnull)stream);
+        FSEventStreamRelease((void *_Nonnull)stream);
     }
 }
 
@@ -760,7 +760,7 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitpos
     }
 }
 
-+ (id _O_)deepCopyOf:(id _O_)object {
++ (id _Nullable)deepCopyOf:(id _Nullable)object {
 
     /// TODO: Replace this with the error-returning implementation (below)
     
@@ -774,7 +774,7 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitpos
     return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:object]];
 }
 
-+ (id<NSCoding>_O_)deepCopyOf:(id<NSCoding> _I_)original error:(NSError *_O_ *_O_)error {
++ (id<NSCoding>_Nullable)deepCopyOf:(id<NSCoding> _Nonnull)original error:(NSError *_Nullable *_Nullable)error {
     
     /// Copied this from the Swift implementation in SharedUtilitySwift, since the Swift implementation wasn't compatible with ObjC. We still like to keep both around since the Swift version is nicer with it's generic types. Maybe generics are also possible in this form in ObjC but I don't know how.
     /// The simpler default methods only work with `NSSecureCoding` objects. This implementation also works with `NSCoding` objects.

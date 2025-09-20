@@ -33,15 +33,46 @@
 #define IFEMPTY(condition, body...)                    _IFEMPTY((body), (),     condition)
 #define IFEMPTY_NOT(condition, body...)                _IFEMPTY((),     (body), condition)
 
-/// `_O_` and `_I_` macros:
-///     Shorthand for `_Nullable` and `_Nonnull`.
-///     Mnemonics:
-///         o -> nothing (`_Nullable`)
-///         i -> something (`_Nonnull`)
-///     Surrounding underscores make the identifiers unique and easily greppable
-///     [Apr 2025] Wrote these because we managed to enable compiler warnings for nullability (See `Xcode Nullability Settings.md`) but cluttering up business logic with `_Nullable` and `_Nonnull` is a bit annoying.
-#define _O_ _Nullable
-#define _I_ _Nonnull
+#define FOR_EACH(macro, macroargs...) \
+    _FOR_EACH_SELECTOR(macroargs, _FOR_EACH_20, _FOR_EACH_19, _FOR_EACH_18, _FOR_EACH_17, _FOR_EACH_16, _FOR_EACH_15, _FOR_EACH_14, _FOR_EACH_13, _FOR_EACH_12, _FOR_EACH_11, _FOR_EACH_10, _FOR_EACH_9, _FOR_EACH_8, _FOR_EACH_7, _FOR_EACH_6, _FOR_EACH_5, _FOR_EACH_4, _FOR_EACH_3, _FOR_EACH_2, _FOR_EACH_1)(macro, macroargs)
+    
+#define _FOR_EACH_SELECTOR(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, macroname, ...) macroname
+
+#define _FOR_EACH_1(macro, macroarg)          macro(macroarg)
+#define _FOR_EACH_2(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_1(macro, rest)
+#define _FOR_EACH_3(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_2(macro, rest)
+#define _FOR_EACH_4(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_3(macro, rest)
+#define _FOR_EACH_5(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_4(macro, rest)
+#define _FOR_EACH_6(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_5(macro, rest)
+#define _FOR_EACH_7(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_6(macro, rest)
+#define _FOR_EACH_8(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_7(macro, rest)
+#define _FOR_EACH_9(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_8(macro, rest)
+#define _FOR_EACH_10(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_9(macro, rest)
+#define _FOR_EACH_11(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_10(macro, rest)
+#define _FOR_EACH_12(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_11(macro, rest)
+#define _FOR_EACH_13(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_12(macro, rest)
+#define _FOR_EACH_14(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_13(macro, rest)
+#define _FOR_EACH_15(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_14(macro, rest)
+#define _FOR_EACH_16(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_15(macro, rest)
+#define _FOR_EACH_17(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_16(macro, rest)
+#define _FOR_EACH_18(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_17(macro, rest)
+#define _FOR_EACH_19(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_18(macro, rest)
+#define _FOR_EACH_20(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_19(macro, rest)
+
+/// weakify/strongify macros
+///     These are used to prevent retain cycles when using objc blocks.
+///     Commentary: [Sep 2025]
+///         - Traditionally defined in libextobjc/EXTScope.h as @weakify and @strongify.
+///         - I thought we had that in the MMF project? But I can't find it. Might as well do our own simplified implementation.
+
+#define weakify(varnames...)   FOR_EACH(_weakify, varnames)
+#define strongify(varnames...) FOR_EACH(_strongify, varnames)
+
+#define _weakify(varname) \
+    __weak __auto_type _weakified_##varname = varname;
+
+#define _strongify(varname) \
+    __strong __auto_type varname = _weakified_##varname;
 
 /// `vardesc` and `vardescl` macros
 ///  Naming:
@@ -409,6 +440,18 @@ NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullab
 /// -------------------------------------
 
 #if 0
+
+    /// `_O_` and `_I_` macros:
+    ///     Shorthand for `_Nullable` and `_Nonnull`.
+    ///     Mnemonics:
+    ///         o -> nothing (`_Nullable`)
+    ///         i -> something (`_Nonnull`)
+    ///     Surrounding underscores make the identifiers unique and easily greppable
+    ///     [Apr 2025] Wrote these because we managed to enable compiler warnings for nullability (See `Xcode Nullability Settings.md`) but cluttering up business logic with `_Nullable` and `_Nonnull` is a bit annoying.
+    ///     [Sep 2025] These just look too weird. Haven't gotten myself to get used to them. Removing this for now.
+    #define _O_ _Nullable
+    #define _I_ _Nonnull
+
     /// `allequal` macro
     /// Example usage:
     ///     `allequal(a, b, c)`
@@ -507,7 +550,8 @@ NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullab
 
 /// Autotype convenience
 ///     Just `auto` wouldn't be searchable (and might produce conflict with C++ `auto` keyword?)
-#define auto_t __auto_type
+///         Update: [Sep 2025] Actually I don't care about greppability for this. Renamed to `auto`
+#define auto __auto_type
 
 /// isbetween macro
 ///     Checks whether `lower <= x <= upper`
