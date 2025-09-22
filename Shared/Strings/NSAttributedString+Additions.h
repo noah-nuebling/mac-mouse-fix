@@ -49,7 +49,7 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 - (NSAttributedString *)attributedStringByFillingOutBase;
 - (NSAttributedString *)attributedStringByFillingOutBaseAsHint;
 
-- (NSAttributedString *)attributedStringByAddingStringAttributesAsBase:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes;
+- (NSAttributedString *)attributedStringByAddingAttributesAsBase:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes;
 + (NSAttributedString *)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)url;
 - (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *)url forSubstring:(NSString *)substring;
 - (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *_Nonnull)aURL forRange:(const NSRangePointer _Nullable)range;
@@ -58,12 +58,16 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 - (NSAttributedString *)attributedStringByAddingBoldForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingBoldForRange:(const NSRangePointer _Nullable)range;
 - (NSAttributedString *)attributedStringByAddingItalicForRange:(const NSRangePointer _Nullable)range;
+- (NSAttributedString *)attributedStringByAddingSemiBoldForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingItalicForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingAlignment:(NSTextAlignment)alignment forRange:(const NSRangePointer _Nullable)rangeIn;
 - (NSAttributedString *)attributedStringByAddingParagraphSpacing:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range;
-- (NSAttributedString *)attributedStringBySettingWeight:(NSInteger)weight;
-- (NSAttributedString *)attributedStringBySettingThinForSubstring:(NSString *)subStr;
-- (NSAttributedString *)attributedStringByAddingSemiBoldForSubstring:(NSString *)subStr;
+
+#if 0
+    - (NSAttributedString *)attributedStringBySettingWeight:(NSInteger)weight;
+    - (NSAttributedString *)attributedStringBySettingThinForSubstring:(NSString *)subStr;
+#endif
+
 - (NSAttributedString *)attributedStringBySettingFontSize:(CGFloat)size;
 - (NSAttributedString *)attributedStringByAddingColor:(NSColor *)color forSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingColor:(NSColor *)color forRange:(const NSRangePointer _Nullable)range;

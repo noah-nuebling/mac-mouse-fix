@@ -485,7 +485,7 @@ import Foundation
             
             let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "Note: The linebreak is so the popover doesn't become too wide. See the comment next to precise-scrolling-hint"), deviceName)
             
-            if let attributes = restoreDefaultPopover_stringAttributesFromIB, let newString = NSAttributedString(coolMarkdown: message, fillOutBase: false)?.addingStringAttributes(asBase: attributes) {
+            if let attributes = restoreDefaultPopover_stringAttributesFromIB, let newString = NSAttributedString(coolMarkdown: message, fillOutBase: false)?.addingAttributes(asBase: attributes) {
                 
                 self.restoreDefaultPopoverLabel.attributedStringValue = newString
             }

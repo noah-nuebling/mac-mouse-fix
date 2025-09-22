@@ -75,13 +75,13 @@
     
     NSCharacterSet *whitespaceAndNewlineChars = NSCharacterSet.whitespaceAndNewlineCharacterSet;
     
-    NSMutableAttributedString *s = self.mutableCopy;
+    NSMutableAttributedString *s = [self mutableCopy];
     NSRange searchRange = NSMakeRange(0, s.length);
     
     while (true) {
-        NSRange whitespace = [s.string rangeOfCharacterFromSet:whitespaceAndNewlineChars options:0 range:searchRange];
+        NSRange whitespace = [s.string rangeOfCharacterFromSet: whitespaceAndNewlineChars options: 0 range: searchRange];
         if (whitespace.location == NSNotFound) break;
-        [s deleteCharactersInRange:whitespace];
+        [s deleteCharactersInRange: whitespace];
         searchRange = NSMakeRange(whitespace.location, s.length - whitespace.location);
         assert(searchRange.location + searchRange.length == s.length); /// End of the search range should always be the end of the string
     }
@@ -236,8 +236,8 @@
     if ([format.string isEqual: @""]) return format;
     
     /// Get mutable copy
-    ///     On Ventura Beta, `format.mutableCopy` returns creates unreadable data, if format is an empty string.
-    NSMutableAttributedString *mutableFormat = format.mutableCopy;
+    ///     On Ventura Beta, `[format mutableCopy]` returns creates unreadable data, if format is an empty string.
+    NSMutableAttributedString *mutableFormat = [format mutableCopy];
     
     int i;
     for (i = 0; ; i++) {
@@ -364,7 +364,7 @@
     /// Add padding
     ///     This doesn't work (trying to use from `ScrollTabController.swift` to display a `ToastNofification`. Maybe the notification overrides the attributes or something? However I think the vertical spacing in the notification changes when we set kerning. Weirddd.)
     /// Using `paddingStringWithWidth:` to create separate padding strings didn't work either.
-    mainString = [mainString attributedStringByAddingStringAttributes:@{
+    mainString = [mainString attributedStringByAddingAttributes: @{
         NSKernAttributeName: @(hPadding)
     } forRange:NULL];
     
@@ -612,7 +612,6 @@
 }
 
 #pragma mark Fill out base
-/// Need this to make size code work
 
 - (NSAttributedString *)attributedStringByFillingOutBase {
     
@@ -624,7 +623,7 @@
         NSFontWeightTrait: @(NSFontWeightMedium),
     };
     
-    return [self attributedStringByAddingStringAttributesAsBase:attributesDictionary];
+    return [self attributedStringByAddingAttributesAsBase:attributesDictionary];
 }
 
 - (NSAttributedString *)attributedStringByFillingOutBaseAsHint {
@@ -635,21 +634,21 @@
         NSFontWeightTrait: @(NSFontWeightRegular), /// Not sure whether to use medium or regular here
     };
     
-    return [self attributedStringByAddingStringAttributesAsBase:attributesDictionary];
+    return [self attributedStringByAddingAttributesAsBase:attributesDictionary];
 }
 
-- (NSAttributedString *)attributedStringByAddingStringAttributesAsBase:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes {
+- (NSAttributedString *)attributedStringByAddingAttributesAsBase:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes {
     
     /// Create string by adding values from `baseAttributes`, without overriding any of the attributes set for `self`
     
-    NSMutableAttributedString *s = self.mutableCopy;
+    NSMutableAttributedString *result = [self mutableCopy];
     
-    [s addAttributes:baseAttributes range:NSMakeRange(0, s.length)]; /// Base attributes will override string attributes
-    [self enumerateAttributesInRange:NSMakeRange(0, s.length) options:0 usingBlock:^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
-        [s addAttributes:attrs range:range];
+    [result addAttributes:baseAttributes range:NSMakeRange(0, result.length)]; /// Base attributes will override string attributes
+    [self enumerateAttributesInRange:NSMakeRange(0, result.length) options:0 usingBlock:^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
+        [result addAttributes:attrs range:range];
     }]; /// Override base attributes with original string attributes to undo overrides of original string attributes
     
-    return s.copy; /// Why are we copying here?
+    return result;
 }
 
 #pragma mark Assign while keeping base
@@ -660,12 +659,8 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     
     /// There are some places where we still do this manually which we could replace with this. Search for "attributesAtIndex:" to find them.
     
-    /// Get old attributes
-    NSAttributedString *s = *assignee;
-    NSDictionary<NSAttributedStringKey, id> *oldAttributes = [s attributesAtIndex:0 effectiveRange:NULL];
-    
-    /// Add old attributes as base
-    newValue = [newValue attributedStringByAddingStringAttributesAsBase:oldAttributes];
+    /// Add assignee's attributes as base for the newValue
+    newValue = [newValue attributedStringByAddingAttributesAsBase: [*assignee attributesAtIndex: 0 effectiveRange: NULL]];
     
     /// Fill out base with default attributes just to be sure everything is filled out
     newValue = [newValue attributedStringByFillingOutBase];
@@ -704,475 +699,323 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     return result;
 }
 
-#pragma mark - CORE: String attrs
-///
+#pragma mark - CORE: Add stringAttributes
 
-
-- (NSAttributedString *)attributedStringByAddingStringAttributes:(NSDictionary<NSAttributedStringKey, id> *)attributes forRange:(const NSRangePointer _Nullable)inRange {
+- (NSAttributedString *)attributedStringByAddingAttributes: (NSDictionary<NSAttributedStringKey, id> *)attributes forRange:(const NSRangePointer _Nullable)inRange {
     
-    /// Set range to cover whole string if NULL
+    /// Notes:
+    ///     Also see `attributedStringByModifyingAttribute:` below
     
     NSRange range;
-    if (inRange == NULL) {
-        range = NSMakeRange(0, self.length);
-    } else {
-        range = *inRange;
-    }
+    if (inRange == NULL)    range = NSMakeRange(0, self.length);
+    else                    range = *inRange;
     
-    /// Create mutable copy
-    NSMutableAttributedString *ret = self.mutableCopy;
+    NSMutableAttributedString *ret = [self mutableCopy];
+
+    [ret addAttributes: attributes range: range];
     
-    /// Call lib method
-    [ret addAttributes:attributes range:range];
-    
-    /// Return
     return ret;
 }
 
-- (NSAttributedString *)attributedStringByAddingStringAttributes:(NSDictionary<NSAttributedStringKey, id> *)attributes forSubstring:(NSString *)substring {
+- (NSAttributedString *)attributedStringByAddingAttributes: (NSDictionary<NSAttributedStringKey, id> *)attributes forSubstring:(NSString *)substring {
     
     NSRange range = [self.string rangeOfString:substring];
-    return [self attributedStringByAddingStringAttributes:attributes forRange:&range];
+    return [self attributedStringByAddingAttributes: attributes forRange:&range];
 }
 
-#pragma mark Color
+    #pragma mark Color
 
-- (NSAttributedString *)attributedStringByAddingColor:(NSColor *)color forSubstring:(NSString *)subStr {
-    
-    assert(subStr != nil);
-    
-    return [self attributedStringByAddingStringAttributes:@{
-        NSForegroundColorAttributeName: color //NSColor.secondaryLabelColor
-    } forSubstring:subStr];
-}
-
-- (NSAttributedString *)attributedStringByAddingColor:(NSColor *)color forRange:(const NSRangePointer _Nullable)range {
-    
-    return [self attributedStringByAddingStringAttributes:@{
-        NSForegroundColorAttributeName: color //NSColor.secondaryLabelColor
-    } forRange:range];
-}
-
-#pragma mark Baseline offset
-
-- (NSAttributedString *)attributedStringByAddingBaseLineOffset:(CGFloat)offset forRange:(const NSRangePointer _Nullable)range {
-    /// Offset in points
-    
-    return [self attributedStringByAddingStringAttributes:@{
-        NSBaselineOffsetAttributeName: @(offset),
-    } forRange:range];
-}
-
-#pragma mark Hyperlink
-
-+ (NSAttributedString *)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)url {
-    
-    /// Note: is .mutableCopy really necessary here?
-    NSAttributedString *string = [[NSAttributedString alloc] initWithString:inString];
-    string = [string attributedStringByAddingHyperlink:url forRange:NULL];
-    
-    return string;
-}
-
-- (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *)url forSubstring:(NSString *)substring {
-    
-    NSRange subRange = [self.string rangeOfString:substring];
-    return [self attributedStringByAddingHyperlink:url forRange:&subRange];
-}
-
-- (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *_Nonnull)aURL forRange:(const NSRangePointer _Nullable)range {
-    
-    /// Notes:
-    /// - Making the text blue explicitly doesn't seem to be necessary. The links will still be blue if we don't do this.
-    /// - Adding an underline explicitlyis unnecessary in NSTextView but necessary in NSTextField
-    
-    return [self attributedStringByAddingStringAttributes:@{
-        NSLinkAttributeName: aURL.absoluteString,
-        NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),
-        //        NSForegroundColorAttributeName: NSColor.blueColor,
-    } forRange:range];
-}
-
-
-- (NSAttributedString *)attributedStringByAddingFont:(NSFont *)font forRange:(const NSRangePointer _Nullable)range {
-    
-    NSAttributedString *result = [self attributedStringByAddingStringAttributes:@{
-        NSFontAttributeName: font,
-    } forRange:range];
-    
-    return result;
-}
-
-
-#pragma mark - META CORE: Modify attrs
-
-- (NSAttributedString *)attributedStringByModifyingAttribute:(NSAttributedStringKey)attribute forRange:(const NSRangePointer _Nullable)inRange modifier:(id _Nullable (^)(id _Nullable attributeValue))modifier {
-    
-    NSRange range;
-    if (inRange == NULL) {
-        range = NSMakeRange(0, self.length);
-    } else {
-        range = *inRange;
+    - (NSAttributedString *)attributedStringByAddingColor:(NSColor *)color forSubstring:(NSString *)subStr {
+        
+        assert(subStr != nil);
+        
+        return [self attributedStringByAddingAttributes: @{
+            NSForegroundColorAttributeName: color //NSColor.secondaryLabelColor
+        } forSubstring:subStr];
     }
-    
-    NSMutableAttributedString *result = self.mutableCopy;
-    
-    [self enumerateAttribute:attribute inRange:range options:0 usingBlock:^(id _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+
+    - (NSAttributedString *)attributedStringByAddingColor:(NSColor *)color forRange:(const NSRangePointer _Nullable)range {
+        
+        return [self attributedStringByAddingAttributes: @{
+            NSForegroundColorAttributeName: color //NSColor.secondaryLabelColor
+        } forRange:range];
+    }
+
+    #pragma mark Baseline offset
+
+    - (NSAttributedString *)attributedStringByAddingBaseLineOffset:(CGFloat)offset forRange:(const NSRangePointer _Nullable)range {
+        /// Offset in points
+        
+        return [self attributedStringByAddingAttributes: @{
+            NSBaselineOffsetAttributeName: @(offset),
+        } forRange:range];
+    }
+
+    #pragma mark Hyperlink
+
+    + (NSAttributedString *)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)url {
+        
+        NSAttributedString *string = [[NSAttributedString alloc] initWithString: inString];
+        string = [string attributedStringByAddingHyperlink: url forRange: NULL];
+        
+        return string;
+    }
+
+    - (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *)url forSubstring:(NSString *)substring {
+        
+        NSRange subRange = [self.string rangeOfString:substring];
+        return [self attributedStringByAddingHyperlink:url forRange:&subRange];
+    }
+
+    - (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *_Nonnull)aURL forRange:(const NSRangePointer _Nullable)range {
         
         /// Notes:
-        /// Should we pass in `stop` to the callback?
-        /// Do we need to copy the value or sth?
+        /// - Making the text blue explicitly doesn't seem to be necessary. The links will still be blue if we don't do this.
+        /// - Adding an underline explicitlyis unnecessary in NSTextView but necessary in NSTextField
         
+        return [self attributedStringByAddingAttributes: @{
+            NSLinkAttributeName: aURL.absoluteString ?: @"",
+            NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),
+            //        NSForegroundColorAttributeName: NSColor.blueColor,
+        } forRange:range];
+    }
+
+
+    - (NSAttributedString *)attributedStringByAddingFont:(NSFont *)font forRange:(const NSRangePointer _Nullable)range {
+        
+        NSAttributedString *result = [self attributedStringByAddingAttributes: @{
+            NSFontAttributeName: font,
+        } forRange:range];
+        
+        return result;
+    }
+
+
+#pragma mark - CORE: Modify stringAttributes
+
+- (NSAttributedString *) attributedStringByModifyingAttribute: (NSAttributedStringKey)attribute forRange: (const NSRangePointer _Nullable)inRange modifier: (id _Nullable (^)(id _Nullable attributeValue))modifier {
+    
+    /// Explanation:
+    ///     This here is more powerful, callback-based equivalent to `attributedStringByAddingAttributes: `,
+    ///         which allows us to 'modify' attributes instead of just setting them. This is crucial for complex nested attributes like the font (`NSFontAttributeName`) [Sep 2025]
+    
+    NSRange range;
+    if (inRange == NULL) range = NSMakeRange(0, self.length);
+    else                 range = *inRange;
+    
+    NSMutableAttributedString *result = [self mutableCopy];
+    
+    [self enumerateAttribute: attribute inRange: range options: 0 usingBlock: ^void (id _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+        
+        /// Notes:
+        ///     - Should we pass in `stop` to the callback?
+        ///     - Do we need to copy the value or sth?
+        ///     - Pretty sure `addAttribute:` overrides the existing attribute;
         id newValue = modifier(value);
-        [result addAttribute:attribute value:newValue range:range];
+        [result addAttribute: attribute value: newValue range: range];
     }];
     
     return result;
 }
 
-- (NSAttributedString *)attributedStringByModifyingAttribute:(NSAttributedStringKey)attribute forSubstring:(NSString *)substring modifier:(id _Nullable(^)(id _Nullable attributeValue))modifier {
-    
-    NSRange range = [self.string rangeOfString:substring];
-    return [self attributedStringByModifyingAttribute:attribute forRange:&range modifier:modifier];
-}
-
-#pragma mark - CORE: Paragraph style
-
-- (NSAttributedString *)attributedStringByModifyingParagraphStyleForRange:(const NSRangePointer _Nullable)inRange modifier:(NSParagraphStyle *_Nullable (^)(NSMutableParagraphStyle *_Nullable style))modifier {
-    
-    return [self attributedStringByModifyingAttribute:NSParagraphStyleAttributeName forRange:inRange modifier:^id _Nullable(id  _Nullable attributeValue) {
+    - (NSAttributedString *) attributedStringByModifyingAttribute: (NSAttributedStringKey)attribute forSubstring: (NSString *)substring modifier: (id _Nullable(^)(id _Nullable attributeValue))modifier {
         
-        NSMutableParagraphStyle *newValue = ((NSMutableParagraphStyle *)attributeValue).mutableCopy;
-        if (newValue == nil) {
-            newValue = [NSMutableParagraphStyle new];
-        }
-        return modifier(newValue);
-    }];
-}
-
-- (NSAttributedString *)attributedStringByModifyingParagraphStyleForSubstring:(NSString *)substring modifier:(NSParagraphStyle *_Nullable (^)(NSMutableParagraphStyle *_Nullable style))modifier {
-    
-    NSRange subRange = [self.string rangeOfString:substring];
-    return [self attributedStringByModifyingParagraphStyleForRange:&subRange modifier:modifier];
-    
-}
-
-#pragma mark Paragraph spacing
-
-- (NSAttributedString *)attributedStringByAddingParagraphSpacing:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range {
-    
-    return [self attributedStringByModifyingParagraphStyleForRange:range modifier:^NSParagraphStyle * _Nullable(NSMutableParagraphStyle * _Nullable style) {
-        style.paragraphSpacing = spacing;
-        return style;
-    }];
-}
-
-#pragma mark Alignment
-
-- (NSAttributedString *)attributedStringByAddingAlignment:(NSTextAlignment)alignment forRange:(const NSRangePointer _Nullable)rangeIn {
-    
-    return [self attributedStringByModifyingParagraphStyleForRange:rangeIn modifier:^NSParagraphStyle * _Nullable(NSMutableParagraphStyle * _Nullable style) {
-        style.alignment = alignment;
-        return style;
-    }];
-}
-
-//- (NSAttributedString *)attributedStringByAddingAlignment:(NSTextAlignment)alignment forSubstring:(NSString * _Nullable)subStr {
-//
-//    return [self attributedStringByModifyingAttribute:NSParagraphStyleAttributeName forSubstring:subStr modifier:^NSParagraphStyle *(NSParagraphStyle *value) {
-//
-//        NSMutableParagraphStyle *newValue = value.mutableCopy;
-//        if (newValue == nil) {
-//            newValue = [NSMutableParagraphStyle new];
-//        }
-//        newValue.alignment = alignment;
-//        return newValue;
-//    }];
-//}
-
-#pragma mark - CORE: Font attributes
-/// Font attributes are a subset of attributed string attributes.
-///     It might be smart to use our function for adding string attributes instead of the function for adding font attributes
-
-- (NSAttributedString *)attributedStringByAddingFontAttributes:(NSDictionary<NSFontDescriptorAttributeName,id> *)attributes forRange:(const NSRangePointer _Nullable)inRange {
-    
-    /// TODO: Use `attributedStringByModifyingAttribute:`
-    
-    NSRange range;
-    if (inRange == NULL) {
-        range = NSMakeRange(0, self.length);
-    } else {
-        range = *inRange;
+        NSRange range = [self.string rangeOfString: substring];
+        return [self attributedStringByModifyingAttribute: attribute forRange: &range modifier: modifier];
     }
-    
-    NSMutableAttributedString *ret = self.mutableCopy;
-    
-    [self enumerateAttribute:NSFontAttributeName inRange:range options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
-        NSFont *currentFont = (NSFont *)value;
+
+    #pragma mark - CORE: Paragraph style
+
+    - (NSAttributedString *)attributedStringByModifyingParagraphStyleForRange:(const NSRangePointer _Nullable)inRange modifier:(NSParagraphStyle *_Nullable (^)(NSMutableParagraphStyle *_Nullable style))modifier {
         
-        if (currentFont == nil) {
-            currentFont = [NSFont systemFontOfSize:NSFont.systemFontSize];
-        }
-        NSFontDescriptor *newDescriptor = [currentFont.fontDescriptor fontDescriptorByAddingAttributes:attributes];
-        
-        NSFont *newFont = [NSFont fontWithDescriptor:newDescriptor size:currentFont.pointSize];
-        
-        [ret addAttribute:NSFontAttributeName value:newFont range:range];
-    }];
-    return ret;
-}
-
-#pragma mark CORE: Font traits
-/// Font traits are a subset of font attributes
-///     We have a completely separate function for adding font traits (instead of utilitzing the func for adding font attributes), so that we can add font traits without overriding exising ones. Not sure if this separate func is actually necessary to achieve this.
-
-- (NSAttributedString *)attributedStringByAddingFontTraits:(NSDictionary<NSFontDescriptorTraitKey, id> *)traits forRange:(const NSRangePointer _Nullable)inRange {
-    
-    /// TODO: Move this to modifyFont core
-    
-    /// This might mutate the font and the size
-    ///  (If there's no font, yet, this will assign systemFont at default size.)
-    
-    NSRange range;
-    if (inRange == NULL) {
-        range = NSMakeRange(0, self.length);
-    } else {
-        range = *inRange;
-    }
-    
-    NSMutableAttributedString *ret = self.mutableCopy;
-    [self enumerateAttribute:NSFontAttributeName inRange:range options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
-        
-        NSFont *currentFont = (NSFont *)value;
-        
-        if (currentFont == nil) {
-            //            assert(false);
-            currentFont = [NSFont systemFontOfSize:NSFont.systemFontSize];
-        }
-        
-        /// Get existing traits
-        NSDictionary<NSFontDescriptorTraitKey, id> *currentTraits = [currentFont.fontDescriptor fontAttributes][NSFontTraitsAttribute];
-        if (currentTraits == nil) {
-            currentTraits = [NSMutableDictionary dictionary];
-        }
-        /// Override with new traits
-        NSMutableDictionary *newTraits = currentTraits.mutableCopy;
-        for (NSFontDescriptorTraitKey key in traits.allKeys) {
-            newTraits[key] = traits[key];
-        }
-        
-        /// Set new overriden traits
-        NSFontDescriptor *newDescriptor = [currentFont.fontDescriptor fontDescriptorByAddingAttributes:@{
-            NSFontTraitsAttribute: newTraits
-        }];
-        NSFont *newFont = [NSFont fontWithDescriptor:newDescriptor size:currentFont.pointSize];
-        
-        [ret addAttribute:NSFontAttributeName value:newFont range:range];
-    }];
-    
-    return ret;
-}
-
-- (NSAttributedString *)attributedStringByAddingFontTraits:(NSDictionary<NSFontDescriptorTraitKey, id> *)traits forSubstring:(NSString *)substring {
-    
-    NSRange range = [self.string rangeOfString:substring];
-    return [self attributedStringByAddingFontTraits:traits forRange:&range];
-}
-
-- (NSAttributedString *)attributedStringByAddingFontTraits:(NSDictionary<NSFontDescriptorTraitKey, id> *)traits {
-    
-    assert(false); /// Just pass nil for the range to achieve the same thing
-    
-    NSRange range = NSMakeRange(0, self.length);
-    return [self attributedStringByAddingFontTraits:traits forRange:&range];
-}
-
-
-
-#pragma mark Weight
-
-- (NSAttributedString *)attributedStringByAddingWeight:(NSFontWeight)weight {
-    
-    assert(false); /// Just pass nil for the range to achieve the same thing
-    
-    return [self attributedStringByAddingFontTraits:@{
-        NSFontWeightTrait: @(weight),
-    }];
-}
-
-- (NSAttributedString *)attributedStringByAddingWeight:(NSFontWeight)weight forRange:(const NSRangePointer _Nullable)range {
-    
-    ///  Weight is a double between -1 and 1
-    ///  You can use predefined constants starting with NSFontWeight, such as NSFontWeightBold
-    return [self attributedStringByAddingFontTraits:@{
-        NSFontWeightTrait: @(weight),
-    } forRange:range];
-}
-
-- (NSAttributedString *)attributedStringByAddingWeight:(NSFontWeight)weight forSubstring:(NSString *)string {
-    
-    return [self attributedStringByAddingFontTraits:@{
-        NSFontWeightTrait: @(weight)
-    } forSubstring:string];
-}
-
-#pragma mark CORE: Symbolic font traits
-/// Symbolic font traits are an abstract and easy way to control font traits and font attributes
-
-- (NSAttributedString *)attributedStringByAddingSymbolicFontTraits:(NSFontDescriptorSymbolicTraits)traits forRange:(const NSRangePointer _Nullable)inRange {
-    
-    /// This might unintentionally mutate  font and size!
-    /// (If there's no font, yet, this will asign systemFont at default size)
-    
-    NSRange range;
-    if (inRange == NULL) {
-        range = NSMakeRange(0, self.length);
-    } else {
-        range = *inRange;
-    }
-    
-    NSDictionary *originalAttributes = [self attributesAtIndex:0 effectiveRange:NULL];
-    NSFont *originalFont = originalAttributes[NSFontAttributeName];
-    
-    if (originalFont == nil) {
-//        assert(false);
-        originalFont = [NSFont systemFontOfSize:NSFont.systemFontSize];
-    }
-    
-    NSFontDescriptor *newFontDescriptor = [originalFont.fontDescriptor fontDescriptorWithSymbolicTraits:traits];
-    NSFont *newFont = [NSFont fontWithDescriptor:newFontDescriptor size:originalFont.pointSize];
-    
-    NSMutableAttributedString *ret = [[NSMutableAttributedString alloc] initWithAttributedString:self];
-    [ret addAttribute:NSFontAttributeName value:newFont range:range];
-    
-    return ret;
-}
-- (NSAttributedString *)attributedStringByAddingSymbolicFontTraits:(NSFontDescriptorSymbolicTraits)traits forSubstring:(NSString *)subStr {
-    
-    NSRange range = [self.string rangeOfString:subStr];
-    return [self attributedStringByAddingSymbolicFontTraits:traits forRange:&range];
-}
-
-#pragma mark Bold
-
-- (NSAttributedString *)attributedStringByAddingBoldForSubstring:(NSString *)subStr {
-    return [self attributedStringByAddingSymbolicFontTraits:NSFontDescriptorTraitBold forSubstring:subStr];
-}
-    
-- (NSAttributedString *)attributedStringByAddingBoldForRange:(const NSRangePointer _Nullable)range {
-    return [self attributedStringByAddingSymbolicFontTraits:NSFontDescriptorTraitBold forRange:range];
-}
-
-#pragma mark Italic
-
-- (NSAttributedString *)attributedStringByAddingItalicForSubstring:(NSString *)subStr {
-    return [self attributedStringByAddingSymbolicFontTraits:NSFontDescriptorTraitItalic forSubstring:subStr];
-}
-
-- (NSAttributedString *)attributedStringByAddingItalicForRange:(const NSRangePointer _Nullable)range {
-    return [self attributedStringByAddingSymbolicFontTraits:NSFontDescriptorTraitItalic forRange:range];
-}
-
-#pragma mark - Weird CORES
-/// Using  weird methods that can't be reduced to the other CORE methods
-///
-///
-
-#pragma mark Font size
-
-- (NSAttributedString *)attributedStringBySettingFontSize:(CGFloat)size {
-    
-    /// TODO: Move this to modifiyFont core
-    
-    /// I think it is more  ideal to use `attributedStringByAddingFontAttributes:` (ideally build a wrapper around it for setting size)
-    ///  NSFontManager is not intended for this, this is probably slower than using `attributedStringByAddingFontAttributes:`.
-    ///
-    /// How to use:
-    /// - You can pass in NSFont.smallSystemFontSize, which is 11.0
-    /// - You can pass in NSFont.systemFontSize, which is 13.0 I believe
-    /// - You can pass in other arbitrary floating point numbers
-    
-    
-    NSMutableAttributedString *ret = self.mutableCopy;
-    NSRange enumerateRange = NSMakeRange(0, self.length);
-    
-    [self enumerateAttribute:NSFontAttributeName inRange:enumerateRange options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
-        
-        NSFont *currentFont = (NSFont *)value;
-        if (currentFont == nil) {
-            currentFont = [NSFont systemFontOfSize:NSFont.systemFontSize];
-        }
+        return [self attributedStringByModifyingAttribute: NSParagraphStyleAttributeName forRange:inRange modifier:^id _Nullable(id  _Nullable attributeValue) {
             
-        NSFont *newFont = [NSFont fontWithDescriptor:currentFont.fontDescriptor size:size];
-        
-        [ret addAttribute:NSFontAttributeName value:newFont range:range];
-    }];
-    
-    
-    return ret;
-}
-
-#pragma mark Weight
-
-- (NSMutableAttributedString *)attributedStringBySettingWeight:(NSInteger)weight forRange:(const NSRangePointer _Nullable)inRange {
-
-    /// TODO: Move this to modifyFont core
-    
-    /// Notes:
-    /// - This uses NSFontManager init to get a font of the desired size. Should probably stop using this at some point.
-    /// - Weight is int between 0 and 15. 5 is normal weight
-    ///   - I think it is more  ideal to use `attributedStringByAddingFontTraits:` (or `attributedStringByAddingWeight:` which is built on it)
-    ///   - This function is for legacy. It only allows 15 weights and is incompatible with NSFontWeight. NSFontManager is not intended for this I think. Remove this eventually in favour of `attributedStringByAddingWeight:`
-    /// - This will also add systemFont at default size to subRange if there is no font, yet
-
-    NSRange range;
-    if (inRange == NULL) {
-        range = NSMakeRange(0, self.length);
-    } else {
-        range = *inRange;
+            NSMutableParagraphStyle *newValue = ((NSMutableParagraphStyle *)attributeValue).mutableCopy;
+            if (newValue == nil) {
+                newValue = [NSMutableParagraphStyle new];
+            }
+            return modifier(newValue);
+        }];
     }
-    
-    NSMutableAttributedString *ret = self.mutableCopy;
 
-    [self enumerateAttribute:NSFontAttributeName inRange:range options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
-        NSFont *currentFont = (NSFont *)value;
-
-        if (currentFont == nil) {
-            currentFont = [NSFont systemFontOfSize:NSFont.systemFontSize];
+        - (NSAttributedString *)attributedStringByModifyingParagraphStyleForSubstring:(NSString *)substring modifier:(NSParagraphStyle *_Nullable (^)(NSMutableParagraphStyle *_Nullable style))modifier {
+            
+            NSRange subRange = [self.string rangeOfString: substring];
+            return [self attributedStringByModifyingParagraphStyleForRange: &subRange modifier: modifier];
+            
         }
 
-        NSString *fontFamily = currentFont.familyName;
-        NSFontTraitMask traits = [NSFontManager.sharedFontManager traitsOfFont:currentFont];
-//        NSInteger originalWeight = [NSFontManager.sharedFontManager weightOfFont:currentFont];
-        CGFloat size = currentFont.pointSize;
+        #pragma mark Paragraph spacing
 
-        NSFont *newFont = [NSFontManager.sharedFontManager fontWithFamily:fontFamily traits:traits weight:weight size:size];
+        - (NSAttributedString *)attributedStringByAddingParagraphSpacing:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range {
+            
+            return [self attributedStringByModifyingParagraphStyleForRange:range modifier:^NSParagraphStyle * _Nullable(NSMutableParagraphStyle * _Nullable style) {
+                style.paragraphSpacing = spacing;
+                return style;
+            }];
+        }
 
-        [ret addAttribute:NSFontAttributeName value:newFont range:range];
-    }];
-    return ret;
-}
+        #pragma mark Alignment
 
-- (NSMutableAttributedString *)attributedStringBySettingWeight:(NSInteger)weight forSubstring:(NSString * _Nonnull)subStr {
-    NSRange subRange = [self.string rangeOfString:subStr];
-    return [self attributedStringBySettingWeight:weight forRange:&subRange];
-}
+        - (NSAttributedString *)attributedStringByAddingAlignment:(NSTextAlignment)alignment forRange:(const NSRangePointer _Nullable)rangeIn {
+            
+            return [self attributedStringByModifyingParagraphStyleForRange:rangeIn modifier:^NSParagraphStyle * _Nullable(NSMutableParagraphStyle * _Nullable style) {
+                style.alignment = alignment;
+                return style;
+            }];
+        }
 
-- (NSMutableAttributedString *)attributedStringBySettingWeight:(NSInteger)weight {
-    return [self attributedStringBySettingWeight:weight forRange:NULL];
-}
+    //- (NSAttributedString *)attributedStringByAddingAlignment:(NSTextAlignment)alignment forSubstring:(NSString * _Nullable)subStr {
+    //
+    //    return [self attributedStringByModifyingAttribute:NSParagraphStyleAttributeName forSubstring:subStr modifier:^NSParagraphStyle *(NSParagraphStyle *value) {
+    //
+    //        NSMutableParagraphStyle *newValue = value.mutableCopy;
+    //        if (newValue == nil) {
+    //            newValue = [NSMutableParagraphStyle new];
+    //        }
+    //        newValue.alignment = alignment;
+    //        return newValue;
+    //    }];
+    //}
 
-- (NSAttributedString *)attributedStringBySettingThinForSubstring:(NSString *)subStr {
+    #pragma mark - CORE: Modify Font
+    /// Fonts are 'nested' inside stringAttributes
 
-    NSInteger weight = 3;
+    - (NSAttributedString *) attributedStringByModifyingFontForRange: (const NSRangePointer _Nullable)inRange modifier: (NSFontDescriptor * (^)(NSFontDescriptor *fontDescriptor))modifier {
+        
+        /// This (and all the other methods that depend on it) might unintentionally mutate font and size!
+        ///     (If there's no font, yet, this will asign systemFont at default size)
 
-    return [self attributedStringBySettingWeight:weight forSubstring:subStr];
-}
+        auto result = [self attributedStringByModifyingAttribute: NSFontAttributeName forRange: inRange modifier: ^NSFont * _Nullable (NSFont *_Nullable font) {
+            
+            if (!font) font = [NSFont systemFontOfSize: NSFont.systemFontSize];
+            
+            auto fontDescriptor = (NSFontDescriptor *)[font fontDescriptor];
+            auto newFontDescriptor = modifier(fontDescriptor);
+            auto newFont = [NSFont fontWithDescriptor: newFontDescriptor size: 0.0]; /// 0.0 Should make the method take the fontSize specified by the descriptor [Sep 2025]
+            
+            return newFont;
+        }];
+        
+        return result;
+    }
 
-- (NSAttributedString *)attributedStringByAddingSemiBoldForSubstring:(NSString *)subStr {
-    double weight = 7; // 8;
-    return [self attributedStringBySettingWeight:weight forSubstring:subStr];
-}
+        #pragma mark - CORE: Modify fontAttributes
+        /// fontAttributes are 'nested' inside fonts
+
+        - (NSAttributedString *) attributedStringByModifyingFontAttributesForRange: (const NSRangePointer _Nullable)inRange modifier: (void (^)(NSMutableDictionary<NSFontDescriptorAttributeName, id> *fontAttributes))modifier {
+            
+            /// [Sep 2025] This has a 'sister method' `attributedStringByModifyingAttribute:` which takes a fontAttributeName – this method doiesn't take a fontDescriptorAttributeName since we're using NSMutableDictionary and the API is easier this way and stuff.
+
+            auto result = [self attributedStringByModifyingFontForRange: inRange modifier: ^NSFontDescriptor *(NSFontDescriptor *fontDescriptor) {
+                auto fontAttributes = (NSDictionary *)fontDescriptor.fontAttributes;
+                
+                auto newFontAttributes = (NSMutableDictionary *)[fontAttributes mutableCopy];
+                modifier(newFontAttributes);
+                
+                auto newFontDescriptor = [NSFontDescriptor fontDescriptorWithFontAttributes: newFontAttributes]; /// Is `fontDescriptorByAddingAttributes:` useful? [Sep 2025]
+                return newFontDescriptor;
+            }];
+            
+            return result;
+        }
+
+            #pragma mark Font size
+
+            - (NSAttributedString *) attributedStringBySettingFontSize: (CGFloat)newFontSize {
+                
+                /// How to use:
+                /// - You can pass in NSFont.smallSystemFontSize, which is 11.0
+                /// - You can pass in NSFont.systemFontSize, which is 13.0 I believe
+                /// - You can pass in other arbitrary floating point numbers
+                
+                auto result = [self attributedStringByModifyingFontAttributesForRange: NULL modifier: ^(NSMutableDictionary<NSFontDescriptorAttributeName,id> *fontAttributes) {
+                    fontAttributes[NSFontSizeAttribute] = @(newFontSize);
+                }];
+                
+                return result;
+            }
+            
+            #pragma mark CORE: fontTraits
+            /// fontTraits are 'nested' inside' fontAttributes
+
+            - (NSAttributedString *) attributedStringByAddingFontTraits: (NSDictionary<NSFontDescriptorTraitKey, id> *)fontTraitsToAdd forRange: (const NSRangePointer _Nullable)inRange {
+                
+                auto result = [self attributedStringByModifyingFontAttributesForRange: inRange modifier: ^(NSMutableDictionary<NSFontDescriptorAttributeName,id> *fontAttributes) {
+                    
+                    NSDictionary<NSFontDescriptorTraitKey, id> *fontTraits = fontAttributes[NSFontTraitsAttribute];
+                    if (!fontTraits) fontTraits = [NSMutableDictionary dictionary]; /// [Sep 2021] Not sure if necessary
+                    
+                    NSMutableDictionary *newFontTraits = [fontTraits mutableCopy];
+                    [newFontTraits addEntriesFromDictionary: fontTraitsToAdd];
+                    
+                    fontAttributes[NSFontTraitsAttribute] = newFontTraits;
+                }];
+
+                return result;
+            }
+
+            - (NSAttributedString *) attributedStringByAddingFontTraits: (NSDictionary<NSFontDescriptorTraitKey, id> *)traits forSubstring: (NSString *)substring {
+                
+                NSRange range = [self.string rangeOfString: substring];
+                return [self attributedStringByAddingFontTraits: traits forRange: &range];
+            }
+
+                #pragma mark Weight
+
+                - (NSAttributedString *) attributedStringByAddingWeight: (NSFontWeight)weight forRange: (const NSRangePointer _Nullable)range {
+                    
+                    ///  Weight is a double between -1 and 1
+                    ///  You can use predefined constants starting with NSFontWeight, such as NSFontWeightBold
+                    return [self attributedStringByAddingFontTraits: @{
+                        NSFontWeightTrait: @(weight),
+                    } forRange: range];
+                }
+
+                - (NSAttributedString *) attributedStringByAddingWeight: (NSFontWeight)weight forSubstring: (NSString *)string {
+                    
+                    return [self attributedStringByAddingFontTraits: @{
+                        NSFontWeightTrait: @(weight)
+                    } forSubstring: string];
+                }
+
+        #pragma mark CORE: symbolicFontTraits
+        /// Symbolic font traits are an abstract and easier way to control fontTraits and fontAttributes
+
+        - (NSAttributedString *) attributedStringByAddingSymbolicFontTraits: (NSFontDescriptorSymbolicTraits)traits forRange: (const NSRangePointer _Nullable)inRange {
+            
+            auto result = [self attributedStringByModifyingFontForRange: inRange modifier: ^NSFontDescriptor *(NSFontDescriptor *fontDescriptor) {
+                NSFontDescriptor *newFontDescriptor = [fontDescriptor fontDescriptorWithSymbolicTraits: traits];
+                return newFontDescriptor;
+            }];
+            
+            return result;
+        }
+        - (NSAttributedString *) attributedStringByAddingSymbolicFontTraits: (NSFontDescriptorSymbolicTraits)traits forSubstring: (NSString *)subStr {
+            
+            NSRange range = [self.string rangeOfString: subStr];
+            return [self attributedStringByAddingSymbolicFontTraits: traits forRange: &range];
+        }
+
+            #pragma mark Bold
+
+            - (NSAttributedString *) attributedStringByAddingBoldForSubstring: (NSString *)subStr {
+                return [self attributedStringByAddingSymbolicFontTraits: NSFontDescriptorTraitBold forSubstring: subStr];
+            }
+                
+            - (NSAttributedString *) attributedStringByAddingBoldForRange: (const NSRangePointer _Nullable)range {
+                return [self attributedStringByAddingSymbolicFontTraits: NSFontDescriptorTraitBold forRange: range];
+            }
+
+            #pragma mark Italic
+
+            - (NSAttributedString *) attributedStringByAddingItalicForSubstring: (NSString *)subStr {
+                return [self attributedStringByAddingSymbolicFontTraits: NSFontDescriptorTraitItalic forSubstring: subStr];
+            }
+
+            - (NSAttributedString *) attributedStringByAddingItalicForRange: (const NSRangePointer _Nullable)range {
+                return [self attributedStringByAddingSymbolicFontTraits: NSFontDescriptorTraitItalic forRange: range];
+            }
 
 #pragma mark - Special usecases
 
@@ -1186,28 +1029,94 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     ///     - Our ToastNotifications use NSTextViews to be able to display links properly.
     
     NSAttributedString *ret = self.copy;
-    ret = [ret attributedStringBySettingFontSize:NSFont.smallSystemFontSize];
-    ret = [ret attributedStringByAddingColor:NSColor.secondaryLabelColor forRange:NULL];
+    ret = [ret attributedStringBySettingFontSize: NSFont.smallSystemFontSize];
+    ret = [ret attributedStringByAddingColor: NSColor.secondaryLabelColor forRange: NULL];
     
     return ret;
+}
+
+- (NSAttributedString *) attributedStringByAddingSemiBoldForSubstring: (NSString *)subStr {
+    
+    /// Notes:
+    ///     - Old impl used `NSFontManager` with weight 7 (8 commented out) [Sep 2025]
+    ///     - We're implementing bold and italic with `NSFontDescriptorSymbolicTraits`, but that doesn't seem to support semibold [Sep 2025]
+    ///         (Maybe we should just not use symbolicTraits at all? Doesn't seem super powerful.
+    
+    return [self attributedStringByAddingWeight: NSFontWeightSemibold forSubstring: subStr];
 }
 
 - (NSAttributedString *)attributedStringBySettingSemiBoldColorForSubstring:(NSString *)subStr {
     
     /// I can't really get a semibold. It's too thick or too thin. So I'm trying to make it appear thicker by darkening the color.
-    
-    NSMutableAttributedString *ret = self.mutableCopy;
-    NSRange subRange = [self.string rangeOfString:subStr];
+    ///     Update: [Sep 2025] We're no longer using `NSFontManager` so this may no longer be true.
     
     NSColor *color;
+    if ((0)) color = [NSColor.textColor colorWithAlphaComponent: 1.0];   /// Custom colors disable the automatic color inversion when selecting a tableViewCell. See https://stackoverflow.com/a/29860102/10601702
+    else     color = NSColor.controlTextColor;                           /// This is almost black and automatically inverts. See: http://sethwillits.com/temp/nscolor/
     
-//    color = [NSColor.textColor colorWithAlphaComponent:1.0]; /// Custom colors disable the automatic color inversion when selecting a tableViewCell. See https://stackoverflow.com/a/29860102/10601702
-    color = NSColor.controlTextColor; /// This is almost black and automatically inverts. See: http://sethwillits.com/temp/nscolor/
+    auto result = [self attributedStringByAddingAttributes:  @{
+        NSForegroundColorAttributeName: color
+    } forSubstring:subStr];
     
-    [ret addAttribute:NSForegroundColorAttributeName value:color range:subRange];
-    
-    return ret;
+    return result;
 }
 
+
+#if 0
+    #pragma mark Weight (legacy)
+
+    - (NSMutableAttributedString *)attributedStringBySettingWeight:(NSInteger)weight forRange:(const NSRangePointer _Nullable)inRange {
+        
+        /// Notes:
+        /// - This uses NSFontManager init to get a font of the desired size. Should probably stop using this at some point.
+        /// - Weight is int between 0 and 15. 5 is normal weight
+        ///   - I think it is more  ideal to use `attributedStringByAddingFontTraits:` (or `attributedStringByAddingWeight:` which is built on it)
+        ///   - This function is for legacy. It only allows 15 weights and is incompatible with NSFontWeight. NSFontManager is not intended for this I think. Remove this eventually in favour of `attributedStringByAddingWeight:`
+        /// - This will also add systemFont at default size to subRange if there is no font, yet
+
+        NSRange range;
+        if (inRange == NULL) {
+            range = NSMakeRange(0, self.length);
+        } else {
+            range = *inRange;
+        }
+        
+        NSMutableAttributedString *ret = [self mutableCopy];
+
+        [self enumerateAttribute:NSFontAttributeName inRange:range options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+            NSFont *currentFont = (NSFont *)value;
+
+            if (currentFont == nil) {
+                currentFont = [NSFont systemFontOfSize:NSFont.systemFontSize];
+            }
+
+            NSString *fontFamily = currentFont.familyName;
+            NSFontTraitMask traits = [NSFontManager.sharedFontManager traitsOfFont:currentFont];
+    //        NSInteger originalWeight = [NSFontManager.sharedFontManager weightOfFont:currentFont];
+            CGFloat size = currentFont.pointSize;
+
+            NSFont *newFont = [NSFontManager.sharedFontManager fontWithFamily:fontFamily traits:traits weight:weight size:size];
+
+            [ret addAttribute:NSFontAttributeName value:newFont range:range];
+        }];
+        return ret;
+    }
+
+    - (NSMutableAttributedString *)attributedStringBySettingWeight:(NSInteger)weight forSubstring:(NSString * _Nonnull)subStr {
+        NSRange subRange = [self.string rangeOfString:subStr];
+        return [self attributedStringBySettingWeight:weight forRange:&subRange];
+    }
+
+    - (NSMutableAttributedString *)attributedStringBySettingWeight:(NSInteger)weight {
+        return [self attributedStringBySettingWeight:weight forRange:NULL];
+    }
+
+    - (NSAttributedString *)attributedStringBySettingThinForSubstring:(NSString *)subStr {
+
+        NSInteger weight = 3;
+
+        return [self attributedStringBySettingWeight:weight forSubstring:subStr];
+    }
+#endif
 
 @end

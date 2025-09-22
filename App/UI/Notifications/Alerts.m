@@ -124,9 +124,9 @@
     
     NSAttributedString *body = [NSAttributedString attributedStringWithCoolMarkdown:bodyRaw];
     if (@available(macOS 11.0, *)) {
-        body = [body attributedStringByAddingAlignment:NSTextAlignmentCenter forRange:nil];
+        body = [body attributedStringByAddingAlignment: NSTextAlignmentCenter forRange: NULL];
     } else { /// The ways this looks pre-Big Sur is untested at the time of writing
-        body = [body attributedStringByAddingAlignment:NSTextAlignmentNatural forRange:nil];
+        body = [body attributedStringByAddingAlignment: NSTextAlignmentNatural forRange: NULL];
     }
     
     /// Create alert

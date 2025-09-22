@@ -152,7 +152,7 @@ typedef enum {
     
     {
         
-        message = [message attributedStringByAddingStringAttributesAsBase: _labelAttributesFromIB]; /// This makes the text centered. Not sure if anything else [Sep 2025]
+        message = [message attributedStringByAddingAttributesAsBase: _labelAttributesFromIB]; /// This makes the text centered. Not sure if anything else [Sep 2025]
             
         /// Give first line 'title' style and give remaining lines 'hint' style
         ///     Discussion: [Sep 2025]
@@ -169,7 +169,7 @@ typedef enum {
         ///             - This is a little 'magical'. We could instead have separate args for the title and subtitle, but then we'd kinda have to split up all the localizable strings into title and subtitle and I'm too lazy for that now. This approach also may be more flexible, since the caller could theoretically override the hint styling, which I might use for the 'Learn More' links at the end of the CaptureToasts.
         ///             - `attributedStringByTrimmingWhitespace` is a bit of a hack. Before, we had some toasts with a single and others with a double linebreak after the first 'title' line. But that looks weird now. The 'semantic' difference is still in the localizable strings but not displayed anymore.
         {
-            auto splitMessage = [message split: @"\n" maxSplit: 1];
+            auto splitMessage    = [message split: @"\n" maxSplit: 1];
             auto messageTitle    = splitMessage.firstObject;
             auto messageSubtitle = splitMessage.lastObject;
             
@@ -178,7 +178,7 @@ typedef enum {
             
             messageTitle    = [messageTitle    attributedStringByFillingOutBase];
             if ((1)) messageSubtitle = [messageSubtitle attributedStringByAddingHintStyle]; /// Style everything after the first line as greyed out, small, hint text || `attributedStringByFillingOutBaseAsHint` instead of `attributedStringByFillingOutBase` doesn't work. Not sure why [Sep 2025]
-            else     messageSubtitle = [messageSubtitle attributedStringByFillingOutBase];
+            else     messageSubtitle = [messageSubtitle attributedStringByFillingOutBaseAsHint];
             
             #define hintSeparatorSize 4.0
             NSAttributedString *separator = [@"\n\n".attributed attributedStringBySettingFontSize: hintSeparatorSize];
@@ -240,7 +240,7 @@ typedef enum {
     
     /// Set Toast frame
     {
-        /// Get margins between text and window edge
+        /// Get margins between text and edge of the toast window
         auto textMargins = (NSEdgeInsets){
             .top    = _instance.label.textContainerInset.height,
             .left   = _instance.label.textContainerInset.width,
@@ -307,13 +307,15 @@ typedef enum {
         NSRect targetFrame = toastWindow.frame;
         NSRect preAnimFrame = toastWindow.frame;
         preAnimFrame.origin.y += _toastAnimationOffset;
-        [toastWindow setFrame: preAnimFrame display:NO];
+        [toastWindow setFrame: preAnimFrame display: NO];
         
         /// Animate
         [NSAnimationContext beginGrouping];
-        NSAnimationContext.currentContext.duration = _animationDurationFadeIn;
-        toastWindow.animator.alphaValue = 1.0;
-        [toastWindow.animator setFrame: targetFrame display: YES];
+        {
+            NSAnimationContext.currentContext.duration = _animationDurationFadeIn;
+            toastWindow.animator.alphaValue = 1.0;
+            [toastWindow.animator setFrame: targetFrame display: YES];
+        }
         [NSAnimationContext endGrouping];
     }
     
