@@ -1019,7 +1019,7 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
 #pragma mark - Special usecases
 
-- (NSAttributedString *)attributedStringByAddingHintStyle {
+- (NSAttributedString *) attributedStringByAddingHintStyle {
     
     /// Notes:
     /// - The is the style of the small grey 'hint' texts we see all over the the General Tab and other Tabs. However those are mostly defined inside Interface Builder.
@@ -1038,14 +1038,15 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 - (NSAttributedString *) attributedStringByAddingSemiBoldForSubstring: (NSString *)subStr {
     
     /// Notes:
-    ///     - Old impl used `NSFontManager` with weight 7 (8 commented out) [Sep 2025]
+    ///     - Old impl used `NSFontManager` with weight 7 (weight 8 was commented out)
+    ///         This seems to match `NSFontWeightMedium`, not `NSFontWeightSemibold`, so we're using `NSFontWeightMedium` [Sep 2025]
     ///     - We're implementing bold and italic with `NSFontDescriptorSymbolicTraits`, but that doesn't seem to support semibold [Sep 2025]
-    ///         (Maybe we should just not use symbolicTraits at all? Doesn't seem super powerful.
+    ///         (Maybe we should just not use symbolicTraits at all, and instead use fontTraits and fontAttributes directly? symbolicTraits don't seem super useful.)
     
-    return [self attributedStringByAddingWeight: NSFontWeightSemibold forSubstring: subStr];
+    return [self attributedStringByAddingWeight: NSFontWeightMedium forSubstring: subStr];
 }
 
-- (NSAttributedString *)attributedStringBySettingSemiBoldColorForSubstring:(NSString *)subStr {
+- (NSAttributedString *) attributedStringBySettingSemiBoldColorForSubstring: (NSString *)subStr {
     
     /// I can't really get a semibold. It's too thick or too thin. So I'm trying to make it appear thicker by darkening the color.
     ///     Update: [Sep 2025] We're no longer using `NSFontManager` so this may no longer be true.
@@ -1054,9 +1055,9 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     if ((0)) color = [NSColor.textColor colorWithAlphaComponent: 1.0];   /// Custom colors disable the automatic color inversion when selecting a tableViewCell. See https://stackoverflow.com/a/29860102/10601702
     else     color = NSColor.controlTextColor;                           /// This is almost black and automatically inverts. See: http://sethwillits.com/temp/nscolor/
     
-    auto result = [self attributedStringByAddingAttributes:  @{
+    auto result = [self attributedStringByAddingAttributes: @{
         NSForegroundColorAttributeName: color
-    } forSubstring:subStr];
+    } forSubstring: subStr];
     
     return result;
 }
