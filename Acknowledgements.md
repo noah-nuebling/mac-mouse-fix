@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2025**
 
+- 🇺🇸&nbsp;Landowu - "can't imagine using my mac without it after the trial ended. it's peak!!"
 - 🇺🇸&nbsp;Tommy&nbsp;Hogue
 - 🇳🇱&nbsp;Roel - "Open source <3 and great utility"
 - 🇬🇧&nbsp;Ollie
