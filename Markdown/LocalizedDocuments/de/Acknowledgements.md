@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **September 2025**
 
+- 🇳🇱&nbsp;Roel - "Open source <3 and great utility"
 - 🇬🇧&nbsp;Ollie
 - 🇿🇦&nbsp;Achater1949
 - 🇩🇪&nbsp;Jannik&nbsp;Stockert
