@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2025**
 
+- 🇺🇸&nbsp;Tommy&nbsp;Hogue
 - 🇳🇱&nbsp;Roel - "Open source <3 and great utility"
 - 🇬🇧&nbsp;Ollie
 - 🇿🇦&nbsp;Achater1949
