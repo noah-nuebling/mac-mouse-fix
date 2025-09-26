@@ -33,6 +33,12 @@
     
     /// Override text selection method to disallow selection
     ///     Selection is fine in itself but it looks weird since the window can't become key so it's always grey
+    ///     Update: [Sep 2025] Just allowed the window to be key (In `Toasts.m`). Don't see a problem with that. (macOS 15) Now the text selection looks normal and we allowed it, too.
+    ///         If the Toast being key causes problems, there are potential alternative ways to get the text selection to look normal without being key. See: https://stackoverflow.com/a/34578400/10601702
+    ///
+    
+    if ((1)) /// Allow selection after all [Sep 2025]
+        [super setSelectedRanges: ranges affinity: affinity stillSelecting: stillSelectingFlag];
 }
 
 @end

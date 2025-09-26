@@ -137,18 +137,12 @@ typedef enum {
     /// Process showDuration
     if (showDuration < 0) {
         assert(showDuration == kMFToastDurationAutomatic);
-        showDuration = message.length * 0.08 * [LocalizationUtility informationDensityOfCurrentLanguage];
+        showDuration = (message.length * [LocalizationUtility informationDensityOfCurrentLanguage]) * 0.08;
     } else {
         showDuration *= [LocalizationUtility informationDensityOfCurrentLanguage]; /// Why would we multiply with information density if the duration is specified by the caller? Note: this Is called with 10.0 at k-enable-timeout-toast, in all other cases it's called with automatic duration (Summer 2024)
     }
     
     /// Process message
-    ///
-    /// TEMP TODO / BOOKMARK:
-    ///     - [ ] Write comments about what we're doing here
-    ///     - [ ] The capture subtitle is totally wrong in English!
-    ///     - [ ] The learn more link is also small due to hint style. Could/should we make it big? If so - how?
-    ///     - [ ] The lines of the messageSubtitle contain too many words when we're on the Buttons tab (cause it's wideeee). Maybe cap the toast width for readability.
     
     {
         /// Give first line 'title' style and give remaining lines 'hint' style
@@ -190,10 +184,11 @@ typedef enum {
     [_instance.label.textStorage setAttributedString: message];
 
     /// Debug
-    DDLogDebug(@"Attaching notification with attributed string: %@", message);
+    DDLogDebug(@"Toast has attributed string: %@", message);
     
     /// Get constants
-    double mainWindowTitleBarHeight = 17; /// [Sep 2025] This should be varied by macOS version! (Or maybe there's a builtin method for this?) (Maybe see our pull request for Sparkle where we measured titlebar sizes in different macOS versions IIRC.)
+    
+    double mainWindowTitleBarHeight = 17; /// [Sep 2025] This should probably be varied by macOS version! (Or maybe there's a builtin method for this?) (Maybe see our pull request for Sparkle where we measured titlebar sizes in different macOS versions IIRC.)
     
     NSEdgeInsets toastMargins = {0,0,0,0}; /// Margin between the toastWindow and the mainWindow it sits inside
     _toastAnimationOffset = 0;
@@ -247,10 +242,34 @@ typedef enum {
         };
         
         /// Calculate the text size
-        CGFloat maxTextWidth = mainWindow.frame.size.width
-                                    - toastMargins.left - toastMargins.right
-                                    - textMargins.left - textMargins.right;
-        NSSize newTextSize = [_instance.label.attributedString sizeAtMaxWidth: maxTextWidth];
+        NSSize newTextSize;
+        {
+            
+            CGFloat maxTextWidth = CGFLOAT_MAX;
+            {
+                /// Make sure toast doesn't spill out of parent window
+                maxTextWidth = MIN(maxTextWidth,
+                    mainWindow.frame.size.width
+                        - toastMargins.left - toastMargins.right
+                        - textMargins.left - textMargins.right
+                );
+                
+                /// Make the `messageTitle` (first line) determine the width (So the `messageSubtitle` can't be wider than the `messageTitle`)
+                maxTextWidth = MIN(maxTextWidth,
+                    [[[_instance.label.attributedString split: @"\n" maxSplit: 1] firstObject] sizeAtMaxWidth: maxTextWidth].width
+                );
+                
+                /// Make sure lines don't get too long
+                ///     - At width 300.0, the subtitles using hint-style (`-[attributedStringByFillingOutBaseAsHint]`) have ~50 characters per line  (50-75 is considered optimal in English) [Sep 2025]
+                ///     - I tried scaling by `-[informationDensityOfCurrentLanguage]` but that made the Toasts too narrow in Chinese. Also see `InformationDensity.md` [Sep 2025]
+                if ((0)) /// Turning this off: Now that we have the first line determine the width, maybe this is unnecessary. So the only effect this could have is wrapping the first line, which may look weird. [Sep 2025]
+                    maxTextWidth = MIN(maxTextWidth, 300.0);
+                
+            }
+            
+            /// Get the size
+            newTextSize = [_instance.label.attributedString sizeAtMaxWidth: maxTextWidth];
+        }
         
         /// Adjust newTextSize for lineFragmentPadding.
         ///     See https://stackoverflow.com/questions/13621084/boundingrectwithsize-for-nsattributedstring-returning-wrong-size
@@ -315,6 +334,9 @@ typedef enum {
             [toastWindow.animator setFrame: targetFrame display: YES];
         }
         [NSAnimationContext endGrouping];
+        
+        /// Debug
+        DDLogDebug(@"Toast frames: before=%@, after=%@", @(preAnimFrame), @(targetFrame));
     }
     
     /// Close if user clicks elsewhere

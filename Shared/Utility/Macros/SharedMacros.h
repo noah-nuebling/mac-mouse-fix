@@ -314,10 +314,21 @@ NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullab
         __result;                                                       \
     })
 
-/// String (f)ormatting convenience.
+/// stringf – (string) (f)ormatting convenience.
 ///  Notes:
 ///     - Don't use `stringf(@"%s", some_c_string)`, it breaks for emojis and you can just use `@(some_c_string ?: "")` instead – (Update [2025] – `?: ""` since `@()` crashes if you pass it NULL.)
 #define stringf(format, ...) [NSString stringWithFormat: (format), ## __VA_ARGS__]
+
+/// astringf – like (stringf) but for NS(A)ttributedStrings.
+///     Only supports inserting other NSAttributedStrings with `%@` [Sep 2025]
+///     It's a wrapper around `[NSAttributedString attributedStringWithAttributedFormat:]` defined in `NSAttributedString+Additions.h` [Sep 2025]
+
+#define astringf(format, args_...) ({                   \
+    NSAttributedString *__strong _args[] = { args_ };   \
+    id _format = (format);                              \
+    _format = isclass((_format), NSString) ? [_format attributed] : (_format); /** Automatically map NSString to NSAttributedString for convenience */  \
+    [NSAttributedString attributedStringWithAttributedFormat: _format args: _args argcount: arrcount(_args)];                        \
+})
 
 /// Debugging helper - get binary representation
 ///     Discussion:

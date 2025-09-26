@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSAttributedString (Additions)
@@ -22,14 +23,8 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 - (NSAttributedString *)attributedStringByRemovingAllWhitespace;
 - (NSAttributedString *)attributedStringByTrimmingWhitespace;
 
-- (NSAttributedString *)attributedStringByAppending:(NSAttributedString *)string;
-+ (NSAttributedString *)attributedStringWithAttributedFormat:(NSAttributedString *)format args:(NSArray<NSAttributedString *> *)args;
-    #define astringf(format, args_...) /** NSAttributedString equivalent for our stringf macro. */\
-        [NSAttributedString \
-            attributedStringWithAttributedFormat: (NSAttributedString *)([(format) isKindOfClass: [NSString class]] ? [(NSString *)(format) attributed] : (format)) /** Automatically map NSString to NSAttributedString for convenience */\
-            args: @[args_]\
-        ]
-
+- (NSAttributedString *) attributedStringByAppending: (NSAttributedString *)string;
++ (NSAttributedString *) attributedStringWithAttributedFormat: (NSAttributedString *)format args: (NSAttributedString *__strong _Nullable [_Nonnull])args argcount: (int)argcount;
 - (NSArray<NSAttributedString *> *) split: (NSString *)separator maxSplit: (int)maxSplit;
 
 + (NSAttributedString * _Nullable)attributedStringWithCoolMarkdown:(NSString *)md;

@@ -212,29 +212,25 @@
 
 #pragma mark Append
 
-- (NSAttributedString *)attributedStringByAppending:(NSAttributedString *)string { /// [Sep 2025] This probably shouldn't exist using astringf macro directly is more readable and both map to `attributedStringWithFormat:`
-    return [NSAttributedString attributedStringWithFormat:@"%@%@" args:@[self, string]];
+- (NSAttributedString *) attributedStringByAppending: (NSAttributedString *)string { /// [Sep 2025] This probably shouldn't exist using astringf macro directly is more readable and both map to `attributedStringWithAttributedFormat:`
+    
+    return [NSAttributedString attributedStringWithAttributedFormat: [@"%@%@" attributed] args: (id[]){ self, string } argcount: 2];
 }
 
 #pragma mark Replace substring
 
-+ (NSAttributedString *)attributedStringWithFormat:(NSString *)format args:(NSArray<NSAttributedString *> *)args {
-    
-    /// Convert format to attributed
-    NSAttributedString *attributedFormat = [[NSAttributedString alloc] initWithString:format];
-    
-    /// Call core method
-    return [self attributedStringWithAttributedFormat:attributedFormat args:args];
-}
-
-+ (NSAttributedString *)attributedStringWithAttributedFormat:(NSAttributedString *)format args:(NSArray<NSAttributedString *> *)args {
++ (NSAttributedString *) attributedStringWithAttributedFormat: (NSAttributedString *)format args: (NSAttributedString *__strong _Nullable [_Nonnull])args argcount: (int)argcount; {
     
     /// Replaces occurences of %@ in the attributedString with the args
-    ///     Also see lib function `initWithFormat:options:locale:` (Only available on macOS 12.0)
-    ///         We could also make an attributed variant of -[NSArray componentsJoinedByString:] if this is too slow
+    ///     Usage tip:                  Use the astringf() macro which wraps this.
+    ///     Also see:                     lib function `initWithFormat:options:locale:` (Only available on macOS 12.0)
+    ///     Optimization idea:      We could also make an attributed variant of -[NSArray componentsJoinedByString:] if this is too slow
+    ///     Implementation note: We're using a C array instead of NSArray to not crash when an arg is nil.
+    ///         We currently map nil to @"", unlike native string formatting which maps to @"(null)" IIRC. Not sure this makes sense. [Sep 2025]
+    ///         Swift note: The C array makes this a bit annoying to call from Swift. Should probably create a convenience wrapper if we use it more from Swift.
     
     /// Early return
-    if (args.count == 0) return format;
+    if (argcount == 0) return format;
     if ([format.string isEqual: @""]) return format;
     
     /// Get mutable copy
@@ -251,17 +247,17 @@
         if (replaceRange.location == NSNotFound) break;
         
         /// Validate
-        if ((int)args.count <= i) {
+        if (argcount <= i) {
             assert(false && "attributedStringWithAttributedFormat: More format specifiers than args");
             break;
         }
         
         /// Replace
-        [mutableFormat replaceCharactersInRange: replaceRange withAttributedString: args[(unsigned int)i]];
+        [mutableFormat replaceCharactersInRange: replaceRange withAttributedString: args[i] ?: [@"" attributed]];
     }
     
     /// Validate
-    if (i < (int)args.count)
+    if (i < argcount)
         assert(false && "attributedStringWithAttributedFormat: Fewer format specifiers than args");
     
     /// Return

@@ -43,7 +43,7 @@
 }
 
 - (BOOL)canBecomeKeyWindow {
-    return NO;
+    return YES; /// This was always set to NO. Don't remember why. Set it to YES now to make text selection look normal. This also makes the Toast a bit more prominent I think. [Sep 2025]
 }
 
 - (void)mouseDown:(NSEvent *)event { /// Is never never called

@@ -124,7 +124,8 @@ import Foundation
             revivedFeatures, "%@")
         var message = NSAttributedString(coolMarkdown: messageRaw, fillOutBase: false)!
         let symbolString = SFSymbolStrings.string(withSymbolName: "CoolMenuBarIcon", stringFallback: "<Mac Mouse Fix Menu Bar Item>", font: ToastController.defaultFont()) ///NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
-        message = NSAttributedString(attributedFormat: message, args: [symbolString])
+        var args: [NSAttributedString?] = [symbolString]
+        message = NSAttributedString(attributedFormat: message, args: &args, argcount: Int32(args.count))
         
         /// Show message
         ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)

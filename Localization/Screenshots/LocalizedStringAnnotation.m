@@ -38,7 +38,7 @@
     
     NSString *prefix = [stringf(@"<mfkey:%@:%@>", key, (table ?: @"")) encodedAsSecretMessage];
     NSString *suffix = [stringf(@"</mfkey>") encodedAsSecretMessage];
-    return [NSAttributedString attributedStringWithAttributedFormat: @"%@%@%@".attributed args: @[prefix.attributed, string, suffix.attributed]];
+    return astringf(@"%@%@%@", [prefix attributed], string, [suffix attributed]);
 }
 
 id nsLocalizedStringBySwappingOutUnderlyingString(id nsLocalizedString, NSString *underlyingString) {

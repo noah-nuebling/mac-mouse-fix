@@ -233,7 +233,7 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
     NSAttributedString *learnMoreString = [NSAttributedString attributedStringWithCoolMarkdown: getLocalizedString(kMFCapturedInputTypeButtons, @"link") fillOutBase: false];
     
     /// TEST: Override learn more string size to be system default size despite being part of the 'subtitle' of the Toast
-    if ((0)) learnMoreString = [learnMoreString attributedStringBySettingFontSize: NSFont.systemFontSize];
+    if ((1)) learnMoreString = [learnMoreString attributedStringBySettingFontSize: NSFont.systemFontSize];
     
     /// Attach learnMore string to body
     body = astringf(@"%@%@", body, learnMoreString);
