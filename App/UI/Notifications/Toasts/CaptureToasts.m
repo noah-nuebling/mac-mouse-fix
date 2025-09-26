@@ -208,7 +208,7 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
                 NSAttributedString *hintSeparator = [@"\n\n".attributed attributedStringBySettingFontSize: hintSeparatorSize];
                 body = astringf(@"%@%@%@", body, hintSeparator, capturedHint);
             } else {
-                body = astringf(@"%@\n%@", body, uncapturedHint);
+                body = astringf(@"%@\n%@", body, capturedHint);
             }
         }
         NSAttributedString *mainSeparator = @"\n\n".attributed;
