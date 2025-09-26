@@ -151,9 +151,6 @@ typedef enum {
     ///     - [ ] The lines of the messageSubtitle contain too many words when we're on the Buttons tab (cause it's wideeee). Maybe cap the toast width for readability.
     
     {
-        
-        message = [message attributedStringByAddingAttributesAsBase: _labelAttributesFromIB]; /// This makes the text centered. Not sure if anything else [Sep 2025]
-            
         /// Give first line 'title' style and give remaining lines 'hint' style
         ///     Discussion: [Sep 2025]
         ///         Context / Why we're doing this:
@@ -177,14 +174,15 @@ typedef enum {
             messageSubtitle = [messageSubtitle attributedStringByTrimmingWhitespace];
             
             messageTitle    = [messageTitle    attributedStringByFillingOutBase];
-            if ((1)) messageSubtitle = [messageSubtitle attributedStringByAddingHintStyle]; /// Style everything after the first line as greyed out, small, hint text || `attributedStringByFillingOutBaseAsHint` instead of `attributedStringByFillingOutBase` doesn't work. Not sure why [Sep 2025]
-            else     messageSubtitle = [messageSubtitle attributedStringByFillingOutBaseAsHint];
+            messageSubtitle = [messageSubtitle attributedStringByFillingOutBaseAsHint]; /// Style everything after the first line as greyed out, small, hint text
             
             #define hintSeparatorSize 4.0
             NSAttributedString *separator = [@"\n\n".attributed attributedStringBySettingFontSize: hintSeparatorSize];
             
             message = astringf(@"%@%@%@", (id)messageTitle, separator, (messageSubtitle ?: [@"" attributed]));
         }
+        
+        message = [message attributedStringByAddingAttributesAsBase: _labelAttributesFromIB]; /// This makes the text centered. Not sure if anything else [Sep 2025]
     }
     
     

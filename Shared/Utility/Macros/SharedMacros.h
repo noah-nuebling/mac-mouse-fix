@@ -64,6 +64,7 @@
 ///     Commentary: [Sep 2025]
 ///         - Traditionally defined in libextobjc/EXTScope.h as @weakify and @strongify.
 ///         - I thought we had that in the MMF project? But I can't find it. Might as well do our own simplified implementation.
+///         - ... I didn't actually end up using this [Sep 2025]
 
 #define weakify(varnames...)   FOR_EACH(_weakify, varnames)
 #define strongify(varnames...) FOR_EACH(_strongify, varnames)
@@ -227,6 +228,8 @@ NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullab
 ///         Meta: I think I used `object_getClass()` because I read somewhere that it is safer than some alternative.
 ///             I though the alternative might be `-isSubclassOfClass:` but I think the alternative was actually `objc_getMetaClass()` and I read about this here: https://stackoverflow.com/a/20833446/10601702
 ///
+
+#import <objc/runtime.h> /// Necessary for `object_getClass`
 
 #define isclass(x, classname) \
     [[(x) class] isKindOfClass: object_getClass([classname class])]

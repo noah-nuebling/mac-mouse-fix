@@ -12,6 +12,8 @@
 #import "MarkdownParser/MarkdownParser.h"
 #import "MFLoop.h"
 #import "NSString+Steganography.h"
+#import "NSDictionary+Additions.h"
+
 
 #if IS_MAIN_APP
 #import "Mac_Mouse_Fix-Swift.h"
@@ -611,6 +613,81 @@
     /// Need this for sizeAtMaxWidth: to work properly for some button capture notifications with long lines which need to be broken. Using result1, sometimes the returned line width is too wide and we end up clipping the last line because sizeAtMaxWidth doesn't get that there needs to be a line break. (That's my theory at least)
 }
 
+#pragma mark intentionalFontAttributes
+
+typedef struct { NSFont *font; bool fallBackToCurrentFontAttributes; } getIntentionalFontAttributes_args; /// [Sep 2025] If C could just do type inference for designated initializers, this boilerplate wouldn't be necessary. Macros don't really help either I think.
+NSMutableDictionary<NSFontDescriptorAttributeName, id> *getIntentionalFontAttributes(getIntentionalFontAttributes_args args) {
+    #define getIntentionalFontAttributes(args...) getIntentionalFontAttributes((getIntentionalFontAttributes_args){ args })
+    
+    /**
+        Explanation: What are we doing here? What are 'intentionalFontAttributes'? [Sep 2025]
+        Problem:
+            When we manipulate a NSFont on an NSAttributedString, we can only do that (in a sane way?) by converting the NSFont into a fontAttributes dict, then manipulating that, and then converting that back to an NSFont.
+            There are some problems with this:
+                1. Problem: If you only want to specify a specific font attribute, like 'bold', you still have to create a whole NSFont with size and fontName and stuff to be able to store that on the NSAttributedString.
+                    - Then, you can no longer tell apart, which attributes of the font were 'intentionally' set and which were just a byproduct of having to create an NSFont to hold the attribute you wanted to specify.
+                        - This is a problem for our 'asBase' mechanism which wants to set a set of 'base' attributes on the NSAttributedString, except if those attributes have already been specified before.
+                2. Problem: The conversion between NSFont and fontAttributes is not always reversible. Multiple attributes you specified may get folded into a single or other attributes when converting back from the NSFont.
+                    - But I think this also only matters when you wanna keep track of which attributes you 'intentionally' set so you can ignore the others for the 'asBase' mechanism
+
+        Solution:
+            We attach a dict of 'intentionalAttributes' to the NSFont, and then when we manipulate the font, we don't try to extract the attributes directly from the font but from the attached 'intentionalAttributes', which only contains the attributes we actually specified.
+            This makes the 'asBase' mechanism work correctly for NSFonts nested inside NSAttributedStrings.
+        
+        Sidenote:
+            Aside from NSFont, I think there are other objects nested inside NSAttributedStrings like NSParapraphstyle (or whatever it's called) which have similar problems with 'asBase' but we haven't run into those problems, yet.
+        
+        Criticisms:
+            - We were doing fine without this. This might have been a waste of time:
+                - I think the the 'asBase' mechanism could be entirely avoided, if we refactored our code such that we're simply setting the attributes we want as base *before* the other attributes.
+                    Counterpoint: I'm not sure how much work it would be to refactor, and it is quite nice to have.
+                - The 'asBase' mechanism mostly worked already, I think the only problem is that making a word bold also specifies a fontFamily and fontSize for it. But we don't want to use a font aside from the system one and we don't need asBase for the fontSize except if we want different fontSizes in the same string which is rare.
+                - The only practical problem I encountered was when writing that mechanism where the second and following lines of Toasts automatically becomes small hint text,
+                    But then I wanted to override the text size for the 'learn more' at the very bottom to be normal sized. This works now. But I decided it looks bad and so now we don't even need the intentionalFontAttributes stuff afaik.
+                        -> I should've probably just prototyped this, instead of trying to fix a 'fundamental problem' that we don't even really have. Counterpoint: Perhaps it will be a bit easier to prototype and play around in the future with the 'asBase' mechanism working more robustly.
+            - macOS 12.0 can do this out of the box
+                - macOS 12.0 brought native markdown support NSAttributedString. While doing this, they added NSAttributedString attributes, for specifying things like bold and italic *directly* on the NSAttributedString, instead of on an NSFont nested inside the NSAttributedString.
+                    This solves all these problems. So we're kinda only doing this to support macOS 10.15 and macOS 11.0, and it took quite a bit of time, which may not be worth it. [Sep 2025]
+                    -> We probably should have used the macOS 12.0 mechanism, with a fallback that looks a bit ugly but still works for older versions.
+                        But this works now, so oh well.
+        Lesson:
+            Simple beats correct! Stop trying to make theoretically 'correct' solutions that add more complexity than they are worth. A simple hack is better than a 'correct' general solution that solves the same problem with more complexity. I don't think this is always always true, but I sway too much in the other direction lately.
+            
+            Hack that would've worked in this case:
+                We could've just added an optional arg to the ToastController that says "don't add hint styling here, let the caller handle it all". Then we could've made the 'learn more' link larger very easily. (See above.) (And then we would've discovered we don't even like that.)
+                
+                Once the hack got annoying we should've probably switched to the native macOS 12.0 solution.
+                
+            Nuance:
+                We shouldn't have tried to 'fix the infrastructure', but the nuance is that I didn't know how much work it would be to 'fix the infrastructure'. You only get a sense for the complexity once you're halfway through the refactor. Where it then feels harder to throw all that away and go back to a hack. (Mind is already occupied and immersed in the problem, I may have added other bits of valuable code and comments in the big refactor that would be work to salvage, you really wanna finish it and feel like you don't have time to go back to the drawing board.) But maybe I should've explored the hack first? – Yes I should have. Especially since I discovered I don't even want the functionality right now.
+                    Anotherrr nuance: This just started as a bug investigation. But as soon as I understood the problem and understood that you need slightly gnarly 'infrastructure hacks' like this I should've perhaps abandoned this approach and switched to hacks. I could've just left a note about the bug and moved on without trying to fix it.
+    
+        Sidenote on asBase:
+            I think we originally only created the asBase mechanism to make the `-[NSAttributedString sizeAtMaxWidth:]` method work which is used when we do programmatic layout in ToastController.m (Tried to switch to autolayout, but that's complicated. See b423681c3c319774baad4b76ae9de1829519797c or the commit before.) That makes me think – Perhaps there's some way more simple way to solve all this?
+            
+        Sidenote on why 'fixing the infrastructure' is compelling:
+            It feels like you're making yourself more 'powerful' in the long run. Sometimes this is true, but here it was quite a niche thing and probably not worth it. (It didn't take that much time, but these kinds of bad overengeneering decisions add up I think.)
+    */
+    
+    /// Helper function
+    
+    static const char *MFintentionalFontAttributesKey = "MFintentionalFontAttributesKey";
+    
+    if (!args.font) return nil;
+    
+    NSMutableDictionary *result = objc_getAssociatedObject(args.font, MFintentionalFontAttributesKey);
+    if (!result) {
+        if (args.fallBackToCurrentFontAttributes) {
+            result = [[[args.font fontDescriptor] fontAttributes] mutableCopy]; /// If we call `objc_setAssociatedObject` here, the text becomes really fat when this is called in `attributedStringByAddingAttributesAsBase:`. I'm not sure why. Maybe this fallback mechanism doesn't belong here. [Sep 2025]
+        }
+        else {
+            result = [NSMutableDictionary new];
+            objc_setAssociatedObject(args.font, MFintentionalFontAttributesKey, result, OBJC_ASSOCIATION_RETAIN);
+        }
+    }
+    return result;
+}
+
 #pragma mark Fill out base
 
 - (NSAttributedString *)attributedStringByFillingOutBase {
@@ -643,12 +720,34 @@
     
     NSMutableAttributedString *result = [self mutableCopy];
     
-    [result addAttributes:baseAttributes range:NSMakeRange(0, result.length)]; /// Base attributes will override string attributes
-    [self enumerateAttributesInRange:NSMakeRange(0, result.length) options:0 usingBlock:^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
-        [result addAttributes:attrs range:range];
-    }]; /// Override base attributes with original string attributes to undo overrides of original string attributes
+    /// Add baseAttributes
+    ///     baseAttributes will override current attributes
+    [result addAttributes: baseAttributes range: NSMakeRange(0, result.length)];
     
-    return result;
+    /// Add original string attributes
+    ///     to undo overrides by the baseAttributes
+    [self enumerateAttributesInRange: NSMakeRange(0, result.length) options: 0 usingBlock: ^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
+            
+        { /// Skip font (Cause we handle that separately below)
+            NSMutableDictionary *attrs2 = [attrs mutableCopy];
+            attrs2[NSFontAttributeName] = nil;
+            attrs = attrs2;
+        }
+        
+        [result addAttributes: attrs range: range];
+    }];
+    
+    /// Add original font attributes
+    ///     (But only the intentional ones)
+    __block NSAttributedString *result2 = result;
+    [self enumerateAttribute: NSFontAttributeName inRange: NSMakeRange(0, result.length) options: 0 usingBlock: ^(NSFont *_Nullable originalFont, NSRange range, BOOL * _Nonnull stop) {
+        result2 = [result2 attributedStringByModifyingFontAttributesForRange: &range modifier: ^MFNSFontAttributes(MFNSFontAttributes fontAttributes) {
+             MFNSFontAttributes intentionalFontAttributes = getIntentionalFontAttributes(originalFont, .fallBackToCurrentFontAttributes = true);
+             return intentionalFontAttributes;
+        }];
+    }];
+    
+    return result2;
 }
 
 #pragma mark Assign while keeping base
@@ -878,43 +977,64 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     //    }];
     //}
 
-    #pragma mark - CORE: Modify Font
-    /// Fonts are 'nested' inside stringAttributes
-
-    - (NSAttributedString *) attributedStringByModifyingFontForRange: (const NSRangePointer _Nullable)inRange modifier: (NSFontDescriptor * (^)(NSFontDescriptor *fontDescriptor))modifier {
-        
-        /// This (and all the other methods that depend on it) might unintentionally mutate font and size!
-        ///     (If there's no font, yet, this will asign systemFont at default size)
-
-        auto result = [self attributedStringByModifyingAttribute: NSFontAttributeName forRange: inRange modifier: ^NSFont * _Nullable (NSFont *_Nullable font) {
-            
-            if (!font) font = [NSFont systemFontOfSize: NSFont.systemFontSize];
-            
-            auto fontDescriptor = (NSFontDescriptor *)[font fontDescriptor];
-            auto newFontDescriptor = modifier(fontDescriptor);
-            auto newFont = [NSFont fontWithDescriptor: newFontDescriptor size: 0.0]; /// 0.0 Should make the method take the fontSize specified by the descriptor [Sep 2025]
-            
-            return newFont;
-        }];
-        
-        return result;
-    }
-
         #pragma mark - CORE: Modify fontAttributes
-        /// fontAttributes are 'nested' inside fonts
+        /// fontAttributes are 'nested' inside fonts which are 'nested' inside stringAttributes
+        
+        typedef NSDictionary<NSFontDescriptorAttributeName, id> * MFNSFontAttributes;
 
-        - (NSAttributedString *) attributedStringByModifyingFontAttributesForRange: (const NSRangePointer _Nullable)inRange modifier: (void (^)(NSMutableDictionary<NSFontDescriptorAttributeName, id> *fontAttributes))modifier {
+        - (NSAttributedString *) attributedStringByModifyingFontAttributesForRange: (const NSRangePointer _Nullable)inRange modifier: (MFNSFontAttributes (^)(MFNSFontAttributes fontAttributes))modifier {
+        
+            auto result = [self attributedStringByModifyingAttribute: NSFontAttributeName forRange: inRange modifier: ^NSFont *_Nullable(NSFont *_Nullable font) {
+                    
+                /// Convert font to attributes
+                NSMutableDictionary<NSFontDescriptorAttributeName, id> *fontAttributes = nil;
+                if (!font) fontAttributes = [NSMutableDictionary new]; /// Create *empty* dict, which signals that none of the attributes of the font we *will* create below are 'intentional'. [Sep 2025]
+                else       fontAttributes = getIntentionalFontAttributes(font, .fallBackToCurrentFontAttributes = true); /// If there is no intentionalFontAttributes dict on the font, yet, that means it's a font that has been created and attached to the string outside of NSAttributedString+Additions.m, and we consider *all* its attributes 'intentional'. [Sep 2025]
+                
+                /// Get new attributes from modifier closure.
+                ///     Old note: Could maybe use `fontDescriptorByAddingAttributes:` instead [Sep 2025]
+                auto newFontAttributes = modifier(fontAttributes);
+                [fontAttributes applyOverridesFromDictionary: newFontAttributes];
             
-            /// [Sep 2025] This has a 'sister method' `attributedStringByModifyingAttribute:` which takes a fontAttributeName – this method doiesn't take a fontDescriptorAttributeName since we're using NSMutableDictionary and the API is easier this way and stuff.
-
-            auto result = [self attributedStringByModifyingFontForRange: inRange modifier: ^NSFontDescriptor *(NSFontDescriptor *fontDescriptor) {
-                auto fontAttributes = (NSDictionary *)fontDescriptor.fontAttributes;
                 
-                auto newFontAttributes = (NSMutableDictionary *)[fontAttributes mutableCopy];
-                modifier(newFontAttributes);
+                NSFont *newFont;
+                {
+                    /// Apply system default font as fallback.
+                    ///     Overview:
+                    ///         If you don't specify any attributes, the font will be Helvetica at size 12.0 instead of the default system font.
+                    ///         If you use `[NSFont systemFontOfSize: NSFont.systemFontSize]` it will have exactly the two attributes we're using as fallbacks here:  `@"NSCTFontUIUsageAttribute"` and `NSFontSizeAttribute`.
+                    ///     On 'intentional':
+                    ///         We don't consider these fallback values 'intentional', they're just fallbacks that match how the system would display a string if it had no attributes. [Sep 2025]
+                    ///     On `NSCTFontUIUsageAttribute` [Sep 2025]
+                    ///         This is a private attribute that seems to be used for the systemFonts instead of a font name/family.
+                    ///             It seems to encapsulate both the weight and font family. The weight can be overriden by `NSFontTraitsAttribute` but the font seemingly cannot be overriden, so we don't wanna set this if there's already a font. (Reality check: I don't *use* any other fonts so this is overengineering.)
+                    ///     Criticism: We could just use `[NSFont systemFontOfSize: NSFont.systemFontSize]` if it wasn't for the getIntentionalFontAttributes() mechanism. -> Complexity of the getIntentionalFontAttributes() mechanism may not be worth it.
+                    
+                    NSMutableDictionary *fontAttributesForFont;
+                    {
+                        fontAttributesForFont = [fontAttributes mutableCopy];
+                        if (
+                            !fontAttributesForFont[@"NSCTFontUIUsageAttribute"] && /// Discussion on `NSCTFontUIUsageAttribute` above [Sep 2025]
+                            !fontAttributesForFont[NSFontFamilyAttribute] &&
+                            !fontAttributesForFont[NSFontNameAttribute]           /// I know fonts can be specified with NSFontFamilyAttribute and NSFontNameAttribute but there may be more.
+                        ) {
+                            fontAttributesForFont[@"NSCTFontUIUsageAttribute"] = @"CTFontRegularUsage";
+                        }
+                        if (!fontAttributesForFont[NSFontSizeAttribute]) fontAttributesForFont[NSFontSizeAttribute] = @(NSFont.systemFontSize);
+                    }
+                    
+                    /// Convert font attributes to font
+                    newFont = [NSFont
+                        fontWithDescriptor: [NSFontDescriptor fontDescriptorWithFontAttributes: fontAttributesForFont]
+                        size: 0.0  /// `size: 0.0` Should make the font use the fontSize specified by the fontDescriptor || UIFont docs document this behavior but NSFont docs don't [Sep 2025]
+                    ];
+                }
                 
-                auto newFontDescriptor = [NSFontDescriptor fontDescriptorWithFontAttributes: newFontAttributes]; /// Is `fontDescriptorByAddingAttributes:` useful? [Sep 2025]
-                return newFontDescriptor;
+                /// Store the attributes that were used to create the font on the newFont
+                [getIntentionalFontAttributes(newFont, .fallBackToCurrentFontAttributes = false) setDictionary: fontAttributes];
+                
+                /// Return
+                return newFont;
             }];
             
             return result;
@@ -929,8 +1049,8 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
                 /// - You can pass in NSFont.systemFontSize, which is 13.0 I believe
                 /// - You can pass in other arbitrary floating point numbers
                 
-                auto result = [self attributedStringByModifyingFontAttributesForRange: NULL modifier: ^(NSMutableDictionary<NSFontDescriptorAttributeName,id> *fontAttributes) {
-                    fontAttributes[NSFontSizeAttribute] = @(newFontSize);
+                auto result = [self attributedStringByModifyingFontAttributesForRange: NULL modifier: ^MFNSFontAttributes (MFNSFontAttributes fontAttributes) {
+                    return @{ NSFontSizeAttribute: @(newFontSize) };
                 }];
                 
                 return result;
@@ -941,15 +1061,8 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
             - (NSAttributedString *) attributedStringByAddingFontTraits: (NSDictionary<NSFontDescriptorTraitKey, id> *)fontTraitsToAdd forRange: (const NSRangePointer _Nullable)inRange {
                 
-                auto result = [self attributedStringByModifyingFontAttributesForRange: inRange modifier: ^(NSMutableDictionary<NSFontDescriptorAttributeName,id> *fontAttributes) {
-                    
-                    NSDictionary<NSFontDescriptorTraitKey, id> *fontTraits = fontAttributes[NSFontTraitsAttribute];
-                    if (!fontTraits) fontTraits = [NSMutableDictionary dictionary]; /// [Sep 2021] Not sure if necessary
-                    
-                    NSMutableDictionary *newFontTraits = [fontTraits mutableCopy];
-                    [newFontTraits addEntriesFromDictionary: fontTraitsToAdd];
-                    
-                    fontAttributes[NSFontTraitsAttribute] = newFontTraits;
+                auto result = [self attributedStringByModifyingFontAttributesForRange: inRange modifier: ^MFNSFontAttributes (MFNSFontAttributes fontAttributes) {
+                    return @{ NSFontTraitsAttribute: fontTraitsToAdd }; /// Only need to return the things we want to add, because the caller will use `applyOverridesFromDictionary:` and fontTraits are also a dict so it will recurse into that. [Sep 2025]
                 }];
 
                 return result;
@@ -981,12 +1094,13 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
         #pragma mark CORE: symbolicFontTraits
         /// Symbolic font traits are an abstract and easier way to control fontTraits and fontAttributes
-
+        /// Discussion: [Sep 2025] Only interesting things this can do is italic and monospace, neither of which are currently used by MMF. We're currently also using it for bold text, but that could be achieved with normal fontTraits (`NSFontWeightTrait`)
+        
         - (NSAttributedString *) attributedStringByAddingSymbolicFontTraits: (NSFontDescriptorSymbolicTraits)traits forRange: (const NSRangePointer _Nullable)inRange {
             
-            auto result = [self attributedStringByModifyingFontForRange: inRange modifier: ^NSFontDescriptor *(NSFontDescriptor *fontDescriptor) {
-                NSFontDescriptor *newFontDescriptor = [fontDescriptor fontDescriptorWithSymbolicTraits: traits];
-                return newFontDescriptor;
+            auto result = [self attributedStringByModifyingFontAttributesForRange: inRange modifier: ^MFNSFontAttributes(MFNSFontAttributes fontAttributes) {
+                auto newFontAttributes = [[[NSFontDescriptor new] fontDescriptorWithSymbolicTraits: traits] fontAttributes];
+                return newFontAttributes;
             }];
             
             return result;

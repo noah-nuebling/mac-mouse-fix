@@ -13,7 +13,7 @@ import Foundation
     
     @objc static func showDeactivationToast() {
         let messageRaw = NSLocalizedString("license-toast.deactivate", comment: "")
-        let message = NSAttributedString(coolMarkdown: messageRaw)!
+        let message = NSAttributedString(coolMarkdown: messageRaw, fillOutBase: false)!
         ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
     }
     
@@ -26,7 +26,7 @@ import Foundation
             message = NSLocalizedString("license-toast.already-active", comment: "")
         }
         
-        ToastController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!, /// Is it safe to force-unwrap this?
+        ToastController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message, fillOutBase: false)!, /// Is it safe to force-unwrap this?
                                            forDuration: kMFToastDurationAutomatic)
     }
     
@@ -135,7 +135,7 @@ import Foundation
         ///     Notes:
         ///     - Why are we using `self.view.window` here, and `MainAppState.shared.window` in other places? IIRC `MainAppState` is safer and works in more cases whereas self.view.window might be nil in more edge cases IIRC (e.g. when the LicenseSheet is just being loaded or sth? I don't know anymore.)
         ///     - Update: [Apr 2025] While merging master into feature-strings-catalog: Changed `.shared.window!` to `shared.frontMostWindowOrSheet!` across this file. Not sure if correct.
-        ToastController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!,
+        ToastController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message, fillOutBase: false)!,
                                            forDuration: kMFToastDurationAutomatic)
     }
     

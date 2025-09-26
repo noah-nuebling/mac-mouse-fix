@@ -802,9 +802,13 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitpos
 
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst {
     
-    // TODO: Consider returning a mutable dict to avoid constantly using `- mutableCopy`. Maybe even alter `dst` in place and return nothing (And rename to `applyOverridesFrom:to:`).
-    /// Copy all leaves (elements which aren't dictionaries) from `src` to `dst`. Return the result. (`dst` itself isn't altered)
-    /// Recursively search for leaves in `src`. For each srcLeaf found, create / replace a leaf in `dst` at a keyPath identical to the keyPath of srcLeaf and with the value of srcLeaf.
+    /// Optimization idea:
+    ///     TODO: Consider returning a mutable dict to avoid constantly using `- mutableCopy`. Maybe even alter `dst` in place and return nothing (And rename to `applyOverridesFrom:to:`).
+    ///     Copy all leaves (elements which aren't dictionaries) from `src` to `dst`. Return the result. (`dst` itself isn't altered)
+    ///     Recursively search for leaves in `src`. For each srcLeaf found, create / replace a leaf in `dst` at a keyPath identical to the keyPath of srcLeaf and with the value of srcLeaf.
+    ///
+    /// Organization idea: [Sep 2025]
+    ///     Probably replace this with new `-[NSMutableDictionary applyOverridesFromDictionary:]`
     
     NSMutableDictionary *dstMutable = [dst mutableCopy];
     if (dstMutable == nil) {

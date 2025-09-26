@@ -16,6 +16,7 @@
 
 #import "NSDictionary+Additions.h"
 #import "NSArray+Additions.h"
+#import "SharedMacros.h"
 
 #pragma mark - Utiliy
 
@@ -90,6 +91,32 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
             thisNode[key] = newNextNode;
             thisNode = (NSMutableDictionary *)newNextNode;
         }
+    }
+}
+
+
+- (void) applyOverridesFromDictionary: (NSDictionary *_Nullable)other {
+    
+    /// Overview:  Similar to Foundation method `-[NSMutableDictionary addEntriesFromDictionary:]`, but 'deeply' merges nested dicts instead of just overriding them. [Sep 2025]
+    /// Also see: `+[SharedUtility dictionaryWithOverridesAppliedFrom:to:]` (which should probably be replaced with this) [Sep 2025]
+    
+    for (id otherKey in other) {
+        
+        id otherObject = other[otherKey];
+        id selfObject = self[otherKey];
+        
+        if (
+            isclass(otherObject, NSDictionary) &&
+            isclass(selfObject, NSDictionary)
+        ) {
+            if (!isclass(selfObject, NSMutableDictionary)) {
+                selfObject = [selfObject mutableCopy];
+                self[otherKey] = selfObject;
+            }
+            [selfObject applyOverridesFromDictionary: otherObject]; /// Recurse
+        }
+        else
+            self[otherKey] = otherObject;
     }
 }
 
