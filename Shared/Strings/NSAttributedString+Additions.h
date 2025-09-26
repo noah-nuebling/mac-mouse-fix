@@ -62,6 +62,7 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 - (NSAttributedString *)attributedStringByAddingItalicForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingAlignment:(NSTextAlignment)alignment forRange:(const NSRangePointer _Nullable)rangeIn;
 - (NSAttributedString *)attributedStringByAddingParagraphSpacing:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range;
+- (NSAttributedString *)attributedStringByAddingLineSpacing:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range;
 
 #if 0
     - (NSAttributedString *)attributedStringBySettingWeight:(NSInteger)weight;

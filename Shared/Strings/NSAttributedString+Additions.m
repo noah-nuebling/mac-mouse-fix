@@ -447,51 +447,51 @@
         ///     v2 APIs were introduced in macOS 12
         ///     See WWDC intro: https://developer.apple.com/videos/play/wwdc2021/10061/
         
-        ///
         /// Create objects
-        ///
+        NSTextLayoutManager *textLayoutManager;
+        NSTextContentStorage *textContentStorage;
+        NSTextContainer *textContainer;
+        {
         
-        /// Create v2 layoutMgr
-        NSTextLayoutManager *textLayoutManager = [[NSTextLayoutManager alloc] init];
+            /// Create v2 layoutMgr
+            textLayoutManager = [[NSTextLayoutManager alloc] init];
+            
+            /// Create v2 contentMgr
+            textContentStorage = [[NSTextContentStorage alloc] init];
+            
+            /// Create container
+            textContainer = [[NSTextContainer alloc] initWithSize: CGSizeMake(maxWidth, CGFLOAT_MAX)]; /// `initWithContainerSize:` was deprecated in macOS 12
+            textContainer.lineFragmentPadding = 0; /// 5.0 by default which makes the result always be smaller than the maxWidth (I think) [Sep 2025]
+        }
         
-        /// Create v2 contentMgr
-        NSTextContentStorage *textContentStorage = [[NSTextContentStorage alloc] init];
-        
-        /// Create container
-        NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(maxWidth, CGFLOAT_MAX)]; /// `initWithContainerSize:` was deprecated in macOS 12
-        
-        ///
         /// Link objects
-        ///
+        {
+            /// Link contentMgr -> self
+            [textContentStorage setAttributedString:self];
+            
+            /// Link layoutMgr -> container
+            [textLayoutManager setTextContainer:textContainer];
+            
+            /// Link layoutMgr -> contentMgr
+            [textLayoutManager replaceTextContentManager:textContentStorage];
+            [textContentStorage setPrimaryTextLayoutManager:textLayoutManager]; /// Not sure if necessary
+        }
         
-        /// Link contentMgr -> self
-        [textContentStorage setAttributedString:self];
-        
-        /// Link layoutMgr -> container
-        [textLayoutManager setTextContainer:textContainer];
-        
-        /// Link layoutMgr -> contentMgr
-        [textLayoutManager replaceTextContentManager:textContentStorage];
-        [textContentStorage setPrimaryTextLayoutManager:textLayoutManager]; /// Not sure if necessary
-        
-        ///
         /// Get size from layoutMgr
-        ///
+        __block NSRect resultRect;
+        {
+            /// On options:
+            ///     - `NSTextLayoutFragmentEnumerationOptionsEnsuresExtraLineFragment` is for ensuring layout consistency with editable text, which we don't need here.
+            ///     - `NSTextLayoutFragmentEnumerationOptionsEstimatesSize` is a faster, but less accurate alternative to `NSTextLayoutFragmentEnumerationOptionsEnsuresLayout`
+            resultRect = NSZeroRect;
+            NSTextLayoutFragmentEnumerationOptions enumerationOptions = NSTextLayoutFragmentEnumerationOptionsEnsuresLayout;
+            [textLayoutManager enumerateTextLayoutFragmentsFromLocation:nil options:enumerationOptions usingBlock:^BOOL(NSTextLayoutFragment * _Nonnull layoutFragment) {
+                resultRect = NSUnionRect(resultRect, layoutFragment.layoutFragmentFrame);
+                return YES;
+            }];
+        }
         
-        /// On options:
-        ///     - `NSTextLayoutFragmentEnumerationOptionsEnsuresExtraLineFragment` is for ensuring layout consistency with editable text, which we don't need here.
-        ///     - `NSTextLayoutFragmentEnumerationOptionsEstimatesSize` is a faster, but less accurate alternative to `NSTextLayoutFragmentEnumerationOptionsEnsuresLayout`
-        
-        __block NSRect resultRect = NSZeroRect;
-        NSTextLayoutFragmentEnumerationOptions enumerationOptions = NSTextLayoutFragmentEnumerationOptionsEnsuresLayout;
-        [textLayoutManager enumerateTextLayoutFragmentsFromLocation:nil options:enumerationOptions usingBlock:^BOOL(NSTextLayoutFragment * _Nonnull layoutFragment) {
-            resultRect = NSUnionRect(resultRect, layoutFragment.layoutFragmentFrame);
-            return YES;
-        }];
-        
-        ///
         /// Return
-        ///
         return resultRect.size;
         
     } else {
@@ -505,48 +505,43 @@
         ///     TODO: Maybe review other uses of this in Chinese.
         ///     If this doesn't work reliably, perhaps you always have to layout your NSTextView / NSTextField and then measure that. Or perhaps you can solve all this stuff by just using autolayout constraints directly?
         
-        ///
         /// Create objects
-        ///
-        
-        /// Create layoutMgr
-        NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
+        NSLayoutManager *layoutManager;
+        NSTextStorage *textStorage;
+        NSTextContainer *textContainer;
+        {
+            /// Create layoutMgr
+            layoutManager = [[NSLayoutManager alloc] init];
 
-        /// Create content
-        NSTextStorage *textStorage = [[NSTextStorage alloc] init];
+            /// Create content
+            textStorage = [[NSTextStorage alloc] init];
+            
+            /// Create container
+            textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(maxWidth, CGFLOAT_MAX)];
+            textContainer.lineFragmentPadding = 0.0; /// Copied from the TextKit v2 implementation. Untested [Sep 2025]
+        }
         
-        /// Create container
-        NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:CGSizeMake(maxWidth, CGFLOAT_MAX)];
-
-        
-        ///
         /// Link objects
-        ///
-        
-        /// Link content -> self
-        [textStorage setAttributedString:self]; /// This needs to happen before other linking steps, otherwise it won't work. Not sure why.
-        
-        /// Link layoutMgr -> container
-        [layoutManager addTextContainer:textContainer];
-        
-        /// Link layoutMgr -> content
-        [layoutManager replaceTextStorage:textStorage];
-        [textStorage addLayoutManager:layoutManager]; /// Not sure if necessary
+        {
+            /// Link content -> self
+            [textStorage setAttributedString:self]; /// This needs to happen before other linking steps, otherwise it won't work. Not sure why.
+            
+            /// Link layoutMgr -> container
+            [layoutManager addTextContainer:textContainer];
+            
+            /// Link layoutMgr -> content
+            [layoutManager replaceTextStorage:textStorage];
+            [textStorage addLayoutManager:layoutManager]; /// Not sure if necessary
+        }
 
-        ///
         /// Force glyph generation & layout
-        ///
         NSInteger numberOfGlyphs = [layoutManager numberOfGlyphs];                  /// Forces glyph generation
         [layoutManager ensureLayoutForGlyphRange:NSMakeRange(0, numberOfGlyphs)];   /// Forces layout
         
-        ///
         /// Get size from layoutMgr
-        ///
         NSSize size = [layoutManager usedRectForTextContainer:textContainer].size;
         
-        ///
         /// Return
-        ///
         return size;
     }
 
@@ -950,6 +945,16 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
             
             return [self attributedStringByModifyingParagraphStyleForRange:range modifier:^NSParagraphStyle * _Nullable(NSMutableParagraphStyle * _Nullable style) {
                 style.paragraphSpacing = spacing;
+                return style;
+            }];
+        }
+        
+        #pragma mark Line spacing
+
+        - (NSAttributedString *)attributedStringByAddingLineSpacing:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range {
+            
+            return [self attributedStringByModifyingParagraphStyleForRange:range modifier:^NSParagraphStyle * _Nullable(NSMutableParagraphStyle * _Nullable style) {
+                style.lineSpacing = spacing;
                 return style;
             }];
         }
