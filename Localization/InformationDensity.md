@@ -1,4 +1,29 @@
-# Information Density
+
+# Localizing line widths: [Sep 2025]
+
+- In English we like to use 50-75 characters per line which is generally considered optimal.
+- I considered using informationDensity for scaling line-widths, but that doesn't seem to make sense.
+    - Chinese ideal line length is 75 characters.
+        Source for the ideal chinese width: https://research.utwente.nl/en/publications/initial-exploration-of-ideal-line-length-for-chinese-technical-te
+    - Using our "hintStyle" (`-[attributedStringByFillingOutBaseAsHint]`), that translates to the following visual line widths:
+        Chinese: 75 characters = width 900
+        English: 50 characters = width 300
+        -> So by that logic Chinese wants
+            - 1.5x more characters per line.
+            - 3x visually wider lines
+            - 4.5x more information per line (1.5x more characters per line at 3x more information per character)
+    -> Not sure what the pattern is here, but scaling line-widths by information density doesn't seem to make sense.
+    -> Claude suggested that perhaps, line widths are more about visual processing factors and difficulty of the 'return sweep' after reaching the end of a line.
+        Apparently Chinese makes the return sweep easier due to more distinct characters which allows for longer lines.
+        Doubt:
+            I found a recommendation for Japanese (which uses many Chinese characters) to "Keep line length between 15 and 35 characters." ... that goes against this explanation.
+    - More Doubts:
+        - I went to CCP website and some other websites and the longest lines I've seen were like 50 characters. On US DOE website I found 162 character line immediately. -> Casts doubt that Chinese really prefers so much longer lines.
+        - These 'optimal line length' numbers I'm finding might be sorta arbitrary. (Especially for other languages than English since I'm searching in English and there aren't too many sources.)
+    
+    -> Conclusion: Just keep the max line widths the same as in English I guess.
+
+# Finding Information Densities
 
 We found the 'information density' values used in LocalizationUtility.m through a process of:
 
