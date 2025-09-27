@@ -507,11 +507,35 @@ static void cleanupForNotificationClose(void) {
     /// This hacky solution might cause more weirdness and jank than it's worth.
     /// Edit: Under MMF 3 there are situations where it's sometimes nice if the Toast still stays up when the app is in the background. E.g. the `is-strange-helper-alert` contains a list of instruction containing a link into Finder. When you click the link it's nice if the instructions stay up. -> Consider changing / removing this
     
-    NSWindow *closedWindow = notification.object;
+    if ((1)) {
     
-    if ([_instance.window.parentWindow isEqual: closedWindow]) {
-        [_showDurationTimer invalidate];
-        [self closeNotificationImmediately];
+        NSWindow *closedWindow = notification.object;
+    
+        if ([_instance.window.parentWindow isEqual: closedWindow]) {
+            [_showDurationTimer invalidate];
+            [self closeNotificationImmediately];
+        }
+    }
+    else {
+        
+        /// Code we wrote for when Toast window can become key. (See `NotificationLabel.m` for discussion) [Sep 2025]
+    
+        NSWindow *oldKeyWindow = notification.object;
+        NSWindow *newKeyWindow = NSApp.keyWindow; /// I hope this is reliable [Sep 2025]
+        
+        if (
+            ( /// oldKeyWindow is one of 'our' windows
+                [oldKeyWindow  isEqual: _instance.window.parentWindow] ||
+                [oldKeyWindow  isEqual: _instance.window]
+            )
+            && !( /// newKeyWindow is *not* one of 'our' windows
+                [newKeyWindow isEqual: _instance.window.parentWindow] ||
+                [newKeyWindow isEqual: _instance.window]
+            )
+        ) {
+            [_showDurationTimer invalidate];
+            [self closeNotificationImmediately];
+        }
     }
 }
 
