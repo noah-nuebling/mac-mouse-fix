@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2025**
 
+- 🇺🇸&nbsp;Miguel&nbsp;H
 - 🇩🇪&nbsp;Michi&nbsp;Berg - "Woooow! Even the $10 are way below that it's worth!!!"
 - 🇺🇸&nbsp;Landowu - "can't imagine using my mac without it after the trial ended. it's peak!!"
 - 🇺🇸&nbsp;Tommy&nbsp;Hogue
