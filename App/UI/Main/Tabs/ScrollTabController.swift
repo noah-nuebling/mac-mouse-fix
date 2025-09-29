@@ -124,7 +124,7 @@ class ScrollTabController: NSViewController {
         ///     -> Do the same thing for all UI strings with non-semantic linebreaks. (non-semantic means they linebreak exists to make the layout look good not to separate text logically.)
         precise.bindingTarget <~ preciseToggle.reactive.boolValues
         preciseToggle.reactive.boolValue <~ precise.producer
-        let preciseHintRaw = NSLocalizedString("precise-scrolling-hint", comment: "Note: The line break is there so the layout of the Scroll tab doesn't become too wide which looks weird. Feel free to set a linebreak that you think will work well, but don't sweat it. I'll look over this after you submit your translations and make sure the linebreak doesn't make the Scroll tab too wide.")
+        let preciseHintRaw = NSLocalizedString("precise-scrolling-hint", comment: ".")
         preciseHint.attributedStringValue = NSAttributedString(attributedMarkdown: preciseHintRaw.attributed().fillingOutBaseAsHint())!
         
         /// Hardcode tab width
@@ -149,7 +149,7 @@ class ScrollTabController: NSViewController {
                 mouseSettingsURL = "file:///System/Library/PreferencePanes/Mouse.prefPane"
                 mouseSettingsURL = "" /// Disable for now (see above)
             }
-            let macOSHintRaw = String(format: NSLocalizedString("macos-scrolling-hint", comment: ""), UIStrings.systemSettingsName(), mouseSettingsURL)
+            let macOSHintRaw = String(format: NSLocalizedString("macos-scrolling-hint", comment: "%1$@ will be the name of the System Settings app.\n\nConsider putting the destination in the System Settings on its own line just like English to make the text easier to scan."), UIStrings.systemSettingsName(), mouseSettingsURL)
         
             /// Install the macOSHint.
             ///     We manually make the macOSHint width equal the preciseSection width, because if the width changes the window resizes from the left edge which looks crappy.

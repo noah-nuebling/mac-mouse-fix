@@ -7982,7 +7982,7 @@
       }
     },
     "precise-scrolling-hint" : {
-      "comment" : "Note: The line break is there so the layout of the Scroll tab doesn't become too wide which looks weird. Feel free to set a linebreak that you think will work well, but don't sweat it. I'll look over this after you submit your translations and make sure the linebreak doesn't make the Scroll tab too wide.",
+      "comment" : ".",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7993,7 +7993,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scroll precisely, even without a keyboard modifier,\nby moving the scroll wheel *slowly*"
+            "value" : "Scroll precisely, even without a keyboard modifier, by moving the scroll wheel *slowly*"
           }
         },
         "fr" : {
@@ -8437,7 +8437,7 @@
       }
     },
     "restore-default-buttons-popover.body" : {
-      "comment" : "Note: The linebreak is so the popover doesn't become too wide. See the comment next to precise-scrolling-hint",
+      "comment" : "Note: The linebreak is so the popover doesn't become too wide.",
       "localizations" : {
         "de" : {
           "stringUnit" : {

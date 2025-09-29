@@ -482,11 +482,18 @@ import Foundation
             /// I wrote this note: "In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug"
             ///     -> I think this problem will be resolved by us using `**` instead of `__` for emphasis.
             /// TODO: The 'Don't remind me again' checkbox at the bottom of the popover is loaded directly from the nib file. So it's localizable string is in a totally different place. This might be confusing for localizers.
+            /// On hardcoding popover width: We considered hardcoding the popover width instead of giving localizers control via the linebreak, just like we did for tabs (See `applyHardcodedTabWidth()`,
+            ///     but decided against because:
+            ///         - The popover looks fine even if the text is super wide – perhaps the main purpose of the linebreak is semantic not for controlling width. [Sep 2025]
+            ///         - All the localizers except Turkish did put a nice-looking linebreak – and even Turkish looks fine.
+            ///         - Chinese and Korean didn't put linebreaks at all and are pretty wide, making them wrap seems awkward.
+            ///         - There's no big layout that depends on this, just the little popover which contains this text and a little checkbox below. So localizers don't control stuff they don't see (which was the case before `applyHardcodedTabWidth()`)
             
-            let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "Note: The linebreak is so the popover doesn't become too wide. See the comment next to precise-scrolling-hint"), deviceName)
+            let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "Note: The linebreak is so the popover doesn't become too wide."), deviceName)
             
-            if let attributes = restoreDefaultPopover_stringAttributesFromIB, let newString = NSAttributedString(coolMarkdown: message, fillOutBase: false)?.addingAttributes(asBase: attributes) {
-                
+            if let attributes = restoreDefaultPopover_stringAttributesFromIB,
+               let newString = NSAttributedString(coolMarkdown: message, fillOutBase: false)?.addingAttributes(asBase: attributes)
+           {
                 self.restoreDefaultPopoverLabel.attributedStringValue = newString
             }
             

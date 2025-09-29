@@ -11,16 +11,6 @@ import Foundation
 
 func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController, widthControllingTextFields: [NSTextField?]) -> Void {
 
-    /// TODO: [Sep 28 2025]
-    ///     Update / remove all the stuff pertaining to 'semanting linebreaks'
-    ///         - Localizer hints & code-comments:
-    ///             - [ ] Go over localizer hints for all the hints on the General and Scrolling Tabs
-    ///                 - Also adjust the related code comments
-    ///                 - Some of them mention that you *don't* have to set linebreaks to control the width – remove that too.
-    ///             - [ ] Go over the other localizer hint mentioning 'too wide'
-    ///             - [ ] Check if there are any other localizable strings with 'width-controlling linebreaks'?
-
-
     /// TODO:
     ///     - [ ] Set widths for Turkish
     ///         There are already some Turkish strings but too few to make decisions [Sep 2025]
@@ -75,7 +65,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
         
         var windowWidth = map[LocalizationUtility.currentLanguageCode() ?? ""]
         if (windowWidth == nil) {
-            assert(false)
+            //assert(false)
             windowWidth = map["en"]! /// Fallback in case I forget to update the map for a new language [Sep 2025]
         }
         

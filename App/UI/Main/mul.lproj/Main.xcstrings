@@ -1087,7 +1087,7 @@
       }
     },
     "AHn-zX-g4d.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Move between pages in Safari by scrolling horizontally, and more\"; ObjectID = \"AHn-zX-g4d\"; Note = \"Scrolling > Trackpad Simulation Toggle > Hint || NOTE: this text will automaticlly linebreak to adapt to the width of the Scrolling Tab. You don't need to set linebreaks to make it look correct. || NOTE 2: There are multiple screenshots for this text. If you're using Xcode, click the arrows in the QuickLook window to see them.\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Move between pages in Safari by scrolling horizontally, and more\"; ObjectID = \"AHn-zX-g4d\"; Note = \"Scrolling > Trackpad Simulation Toggle > Hint || NOTE 2: There are multiple screenshots for this text. If you're using Xcode, click the arrows in the QuickLook window to see them.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -1147,24 +1147,24 @@
       }
     },
     "AqN-zN-yDS.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Lets you quickly turn off or on features like\\nsmooth scrolling\"; ObjectID = \"AqN-zN-yDS\"; Note = \"General > Show in Menu Bar Toggle > Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version.\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Lets you quickly turn off or on features like smooth scrolling\"; ObjectID = \"AqN-zN-yDS\"; Note = \"General > Show in Menu Bar Toggle > Hint\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Lässt dich schnell Features wie \nflüssiges Scrollen an- und abschalten"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Lets you quickly turn off or on features like\nsmooth scrolling"
+            "value" : "Lets you quickly turn off or on features like smooth scrolling"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Permet d'activer ou de désactiver rapidement\nles fonctionnalités comme le défilement doux"
           }
         },
@@ -1176,7 +1176,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Permite ativar ou desativar rapidamente recursos como\nrolagem suave"
           }
         },
@@ -1327,19 +1327,19 @@
       }
     },
     "bew-ni-FnZ.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Mac Mouse Fix stays enabled after you quit\\nthe app\"; ObjectID = \"bew-ni-FnZ\"; Note = \"General > Enable Mac Mouse Fix Toggle > Hint || NOTE: Primarily meant to teach the right mental model to users who have the common misconception that they need to make MMF a 'Login Item' to keep it working. The terminology is meant to match the 'Enable Mac Mouse Fix' toggle and the 'Quit Mac Mouse Fix' menubar item.\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Mac Mouse Fix stays enabled after you quit the app\"; ObjectID = \"bew-ni-FnZ\"; Note = \"General > Enable Mac Mouse Fix Toggle > Hint || NOTE: Primarily meant to teach the right mental model to users who have the common misconception that they need to make MMF a 'Login Item' to keep it working. The terminology is meant to match the 'Enable Mac Mouse Fix' toggle and the 'Quit Mac Mouse Fix' menubar item.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mac Mouse Fix bleibt eingeschaltet nachdem du\ndie App beendest"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Mac Mouse Fix stays enabled after you quit\nthe app"
+            "value" : "Mac Mouse Fix stays enabled after you quit the app"
           }
         },
         "fr" : {
@@ -5334,7 +5334,7 @@
       "shouldTranslate" : false
     },
     "SaY-fF-d1s.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"You'll be notified of updates when you open\\nthis window\"; ObjectID = \"SaY-fF-d1s\"; Note = \"General > Check for Updates Toggle > Hint || NOTE: There's a linebreak here to prevent the General Tab from becoming too wide, which looks weird. You can set the linebreak to your own taste. || Hint: if text in your language is typically around X times longer than English, then the lines here probably should not be much longer than X times the English version.\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"You'll be notified of updates when you open this window\"; ObjectID = \"SaY-fF-d1s\"; Note = \"General > Check for Updates Toggle > Hint\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -5346,12 +5346,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "You'll be notified of updates when you open\nthis window"
+            "value" : "You'll be notified of updates when you open this window"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Vous serez prévenu d'une nouvelle mise à jour\n lorsque vous ouvrirez cette fenêtre"
           }
         },
@@ -5363,7 +5363,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Você será notificado sobre atualizações ao abrir\nesta janela"
           }
         },
