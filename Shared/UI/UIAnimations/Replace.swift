@@ -15,13 +15,8 @@ extension NSView {
     
     /// Interface
     
-    func animatedReplace(with view: NSView) {
-        
-        ReplaceAnimations.animate(ogView: self, replaceView: view, hAnchor: .leading, vAnchor: .center, doAnimate: true)
-    }
-    
-    func unanimatedReplace(with view: NSView) {
-        ReplaceAnimations.animate(ogView: self, replaceView: view, hAnchor: .leading, vAnchor: .center, doAnimate: false)
+    func animatedReplace(with view: NSView, doAnimate: Bool = true) {
+        ReplaceAnimations.animate(ogView: self, replaceView: view, hAnchor: .leading, vAnchor: .center, doAnimate: doAnimate)
     }
 }
 

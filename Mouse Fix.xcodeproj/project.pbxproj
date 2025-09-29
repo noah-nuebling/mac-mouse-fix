@@ -15,6 +15,8 @@
 		4F0C00422C53273200C5D843 /* BidirectionalMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0C00412C53273200C5D843 /* BidirectionalMap.m */; };
 		4F0C00432C53273200C5D843 /* BidirectionalMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0C00412C53273200C5D843 /* BidirectionalMap.m */; };
 		4F0D906C2E89731D005859A0 /* TabControllerUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0D906B2E89731C005859A0 /* TabControllerUtility.swift */; };
+		4F0D90722E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0D90712E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m */; };
+		4F0D90732E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0D90712E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m */; };
 		4F12525C2CAA88A400A079BD /* UNIXSignals.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F12523D2CA9421600A079BD /* UNIXSignals.m */; };
 		4F12952028D2D5E1009A49AB /* NSTextField+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */; };
 		4F143E462B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */; };
@@ -478,6 +480,8 @@
 		4F0CFFE72C51878500C5D843 /* MFDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClass.m; sourceTree = "<group>"; };
 		4F0D906B2E89731C005859A0 /* TabControllerUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabControllerUtility.swift; sourceTree = "<group>"; };
 		4F0D906F2E8A773E005859A0 /* Lowering Build Times.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Lowering Build Times.md"; sourceTree = "<group>"; };
+		4F0D90702E8A9D5F005859A0 /* NSLayoutConstraint+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+Additions.h"; sourceTree = "<group>"; };
+		4F0D90712E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+Additions.m"; sourceTree = "<group>"; };
 		4F12523C2CA9421600A079BD /* UNIXSignals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UNIXSignals.h; sourceTree = "<group>"; };
 		4F12523D2CA9421600A079BD /* UNIXSignals.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UNIXSignals.m; sourceTree = "<group>"; };
 		4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+Extentions.swift"; sourceTree = "<group>"; };
@@ -2626,6 +2630,8 @@
 				4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */,
 				4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */,
 				4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */,
+				4F0D90702E8A9D5F005859A0 /* NSLayoutConstraint+Additions.h */,
+				4F0D90712E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m */,
 				4F909D0928A0C3D2009349A2 /* UIAnimations */,
 				4FA2F1252C29A11D000C5535 /* Notifications */,
 			);
@@ -8244,6 +8250,7 @@
 				4FF665FE25F2C92700689B77 /* main.m in Sources */,
 				4FB8B2962CCDB94F00A5A580 /* MFPlistDecoder.m in Sources */,
 				4F909D2528A0C3D2009349A2 /* TabViewController.swift in Sources */,
+				4F0D90722E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m in Sources */,
 				4F1B832D26081A5500AEAF37 /* CaptureToasts.m in Sources */,
 				4FC8A7D928AD3FC7007DB982 /* RemapTableCellView.swift in Sources */,
 				4FEA63CF2921510F00E464D6 /* NSImage+Additions.m in Sources */,
@@ -8429,6 +8436,7 @@
 				4F85C05128BBDBDC00E96E9C /* NSImageView+Extensions.swift in Sources */,
 				4FA13FC428B3A2E0005C68FC /* TrialNotificationController.swift in Sources */,
 				4F262CF22C64B6E000773789 /* MarkdownParser.m in Sources */,
+				4F0D90732E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m in Sources */,
 				4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */,
 				4FBC829C2DAE93AD00354981 /* MFObserver.m in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,

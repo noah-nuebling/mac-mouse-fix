@@ -22,10 +22,12 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
     ///         - [x] Remove the linebreak in Korean
     ///             - AHn-zX-g4d.title (This is not width-determining, so shouldn't have any linebreaks to begin with)
     ///             - AqN-zN-yDS.title (widthDetermining)
-    ///                 ... [ ] Or just give Korean an explicit width
+    ///                 ... [x] Or just give Korean an explicit width
     ///         - Translated strings:
     ///             - [ ] Remove 'z' after `Aumentar ou diminuir`
-    ///         - [ ] Test if the macOSHint being swapped in still works (Scrolling Tab)
+    ///         - [x] Fix macOSHint  swap-in jank  (Scrolling Tab)
+    ///         - [x] Check if the macOSHint replace animation have jitter that wasn't there before.
+    ///             - Jitter was there before.
 
 
     /// Determine width for this tab
