@@ -52,7 +52,7 @@
 		<key>Localization Screenshot Taker.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>10</integer>
+			<integer>9</integer>
 		</dict>
 		<key>Mac Mouse Fix Helper.xcscheme_^#shared#^_</key>
 		<dict>
@@ -410,7 +410,7 @@
 		<key>XCStringsDummyApp.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>14</integer>
+			<integer>10</integer>
 		</dict>
 		<key>xcstrings dummy target.xcscheme_^#shared#^_</key>
 		<dict>

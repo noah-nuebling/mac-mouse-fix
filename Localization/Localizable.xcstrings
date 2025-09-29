@@ -7331,7 +7331,7 @@
       }
     },
     "macos-scrolling-hint" : {
-      "comment" : "",
+      "comment" : "%1$@ will be the name of the System Settings app.\n\nConsider putting the destination in the System Settings on its own line just like English to make the text easier to scan.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -7354,7 +7354,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "[%1$@ > 마우스 > 스크롤 속도](%2$@)에서 속도를 설정합니다."
+            "value" : "[%1$@ > 마우스 > 스크롤 속도](%2$@)에서\n속도를 설정합니다."
           }
         },
         "pt-BR" : {

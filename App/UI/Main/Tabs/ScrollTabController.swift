@@ -127,86 +127,95 @@ class ScrollTabController: NSViewController {
         let preciseHintRaw = NSLocalizedString("precise-scrolling-hint", comment: "Note: The line break is there so the layout of the Scroll tab doesn't become too wide which looks weird. Feel free to set a linebreak that you think will work well, but don't sweat it. I'll look over this after you submit your translations and make sure the linebreak doesn't make the Scroll tab too wide.")
         preciseHint.attributedStringValue = NSAttributedString(attributedMarkdown: preciseHintRaw.attributed().fillingOutBaseAsHint())!
         
-        /// Generate macOS hint string
-        /// Notes:
-        ///   - Under Ventura, you can open the mouse prefpane with the URL `x-apple.systempreferences:com.apple.Mouse-Settings.extension`, but it only works when a mouse is attached and otherwise it will give weird errors, so we're not using it now. We might want to use it if  we test whether a mouse is attached beforehand, or if future Ventura Betas give less janky errors
-        ///     - A nice solution was if we had a reactive `activeDevice` class which we could attach to and update this stuff whenever it changes. See `MessagePortUtility_App.getActiveDeviceInfo()`
-        ///   - Pre-Ventura you can open the prefPane with `file:///System/Library/PreferencePanes/Mouse.prefPane` but clicking that link inside the macOSHint just reveals the `.prefPane` file in Finder under Big Sur instead of opening it.
-        
-        var mouseSettingsURL: NSString
-        if #available(macOS 13.0, *) {
-            
-            mouseSettingsURL = "x-apple.systempreferences:com.apple.Mouse-Settings.extension"
-            mouseSettingsURL = "" /// Disable for now (see above)
-        } else {
-            mouseSettingsURL = "file:///System/Library/PreferencePanes/Mouse.prefPane"
-            mouseSettingsURL = "" /// Disable for now (see above)
-        }
-        
-        /// Determine tab width
+        /// Hardcode tab width
         ///     Do this before installing the macOS hint so it can accurately calculate the size of stuff [Sep 2025]
         applyHardcodedTabWidth("scrolling", self, widthControllingTextFields: [preciseHint]) /// The `macOSHint` below is not 'widthDetermining' so we don't need to pass it in here.
-
-        /// Install the macOSHint.
-        ///     We manually make the macOSHint width equal the preciseSection width, because if the width changes the window resizes from the left edge which looks crappy.
-        ///     This is a really hacky solution. Move this logic into CollapsableStackView (maybe rename to AnimatingStackView or sth).
-        ///         Make a method `register(switchableViews:forArrangedSubview:)` which calculates a size that fits all those views, and then you switch between them with `switchTo(view:)`..
-        
-        let macOSHintRaw = String(format: NSLocalizedString("macos-scrolling-hint", comment: ""), UIStrings.systemSettingsName(), mouseSettingsURL)
-        let macOSHint = CoolNSTextField(hintWithAttributedString: NSAttributedString(coolMarkdown: macOSHintRaw, fillOutBase: false)!)
-        
+    
+        /// Set up macOSHint
         do {
-            macOSHint.translatesAutoresizingMaskIntoConstraints = false
-            macOSHint.setContentHuggingPriority(.required, for: .horizontal)
-            macOSHint.setContentHuggingPriority(.required, for: .vertical)
-            macOSHint.cell?.wraps = true
+    
+            /// Generate macOS hint string
+            /// Notes:
+            ///   - Under Ventura, you can open the mouse prefpane with the URL `x-apple.systempreferences:com.apple.Mouse-Settings.extension`, but it only works when a mouse is attached and otherwise it will give weird errors, so we're not using it now. We might want to use it if  we test whether a mouse is attached beforehand, or if future Ventura Betas give less janky errors
+            ///     - A nice solution was if we had a reactive `activeDevice` class which we could attach to and update this stuff whenever it changes. See `MessagePortUtility_App.getActiveDeviceInfo()`
+            ///   - Pre-Ventura you can open the prefPane with `file:///System/Library/PreferencePanes/Mouse.prefPane` but clicking that link inside the macOSHint just reveals the `.prefPane` file in Finder under Big Sur instead of opening it.
             
-            let macOSHintIndent = NSView()
-            do {
-                macOSHintIndent.translatesAutoresizingMaskIntoConstraints = false
-            }
-            
-            do {
-                macOSHintIndent.addSubview(macOSHint)
+            var mouseSettingsURL: NSString
+            if #available(macOS 13.0, *) {
                 
-                macOSHint.leadingAnchor .constraint(equalTo: macOSHintIndent/*.layoutMarginsGuide*/.leadingAnchor).isActive = true
-                macOSHint.trailingAnchor.constraint(equalTo: macOSHintIndent.trailingAnchor).isActive = true
-                macOSHint.topAnchor     .constraint(equalTo: macOSHintIndent.topAnchor).isActive = true
-                macOSHint.bottomAnchor  .constraint(equalTo: macOSHintIndent.bottomAnchor).isActive = true
+                mouseSettingsURL = "x-apple.systempreferences:com.apple.Mouse-Settings.extension"
+                mouseSettingsURL = "" /// Disable for now (see above)
+            } else {
+                mouseSettingsURL = "file:///System/Library/PreferencePanes/Mouse.prefPane"
+                mouseSettingsURL = "" /// Disable for now (see above)
             }
+            let macOSHintRaw = String(format: NSLocalizedString("macos-scrolling-hint", comment: ""), UIStrings.systemSettingsName(), mouseSettingsURL)
+        
+            /// Install the macOSHint.
+            ///     We manually make the macOSHint width equal the preciseSection width, because if the width changes the window resizes from the left edge which looks crappy.
+            ///     This is a really hacky solution. Move this logic into CollapsableStackView (maybe rename to AnimatingStackView or sth).
+            ///         Make a method `register(switchableViews:forArrangedSubview:)` which calculates a size that fits all those views, and then you switch between them with `switchTo(view:)`..
             
-            /// Create explicit width constraints, that match the natural width of the preciseSection
-            ///     - macOSHintIndent needs the width constraint so the layout stays the same width when it is swapped in (See notes above under `Install the macOSHint`) [Sep 2025]
-            ///     - preciseSection needs the width constraint to not become temporarily too wide during animation. This is probably a bug in our replaceAnimations. This only became necessary after `applyHardcodedTabWidth()` [Sep 2025]
+            let macOSHint = CoolNSTextField(hintWithAttributedString: NSAttributedString(coolMarkdown: macOSHintRaw, fillOutBase: false)!)
+            
             do {
+                macOSHint.translatesAutoresizingMaskIntoConstraints = false
+                macOSHint.setContentHuggingPriority(.required, for: .horizontal)
+                macOSHint.setContentHuggingPriority(.required, for: .vertical)
+                macOSHint.cell?.wraps = true
                 
-                let preciseWidth: CGFloat
+                let macOSHintIndent = NSView()
                 do {
-                    self.view.needsLayout = true /// Layout self.view, that's where `applyHardcodedTabWidth()` applies its width constraint.
-                    self.view.layoutSubtreeIfNeeded()
-                    preciseWidth = preciseSection.frame.width /// [Sep 2025] Previously used .fittingSize instead of .frame, but after `applyHardcodedTabWidth()` that was way too wide. (Prolly returns the 'desired' width where the hint text isn't wrapped.
+                    macOSHintIndent.translatesAutoresizingMaskIntoConstraints = false
                 }
                 
-                preciseSection .widthAnchor.constraint(equalToConstant: preciseWidth).addingIdentifier("preciseSectionWidth").isActive = true
-                macOSHintIndent.widthAnchor.constraint(equalToConstant: preciseWidth).addingIdentifier("macOSHintIndentWidth").isActive = true
-            }
-        
-            do {
-            
-                let preciseSectionRetained: NSStackView? = self.preciseSection /// [Sep 2025] Why do we need this?
-                var macOSHintIsDisplaying = false
-                var isInitialized = false
+                do {
+                    macOSHintIndent.addSubview(macOSHint)
+                    
+                    macOSHint.leadingAnchor .constraint(equalTo: macOSHintIndent/*.layoutMarginsGuide*/.leadingAnchor).isActive = true
+                    macOSHint.trailingAnchor.constraint(equalTo: macOSHintIndent.trailingAnchor).isActive = true
+                    macOSHint.topAnchor     .constraint(equalTo: macOSHintIndent.topAnchor).isActive = true
+                    macOSHint.bottomAnchor  .constraint(equalTo: macOSHintIndent.bottomAnchor).isActive = true
+                }
                 
-                scrollSpeed.producer.startWithValues { speed in
-                    if speed == "system" && !macOSHintIsDisplaying {
-                        self.preciseSection.animatedReplace(with: macOSHintIndent, doAnimate: isInitialized)
-                        macOSHintIsDisplaying = true
-                    } else if speed != "system" && macOSHintIsDisplaying {
-                        assert(isInitialized)
-                        macOSHintIndent.animatedReplace(with: preciseSectionRetained!, doAnimate: isInitialized)
-                        macOSHintIsDisplaying = false
+                /// Create explicit width constraints, that match the natural width of the preciseSection
+                ///     Reasons:
+                ///     - macOSHintIndent needs the width constraint so the window stays the same width when it is swapped in (See notes above under `Install the macOSHint`) [Sep 2025]
+                ///     - preciseSection needs the width constraint to not become temporarily too wide during animation. This is probably a bug in our replaceAnimations. This only became necessary after `applyHardcodedTabWidth()` [Sep 2025]
+                ///     Brittle hacks around measuring size: [Sep 2025]
+                ///         - What we wanna do here is measure the 'natural' size of the `preciseSection` and then make the view we swap it out for (`macOSHintIndent`) the same width using a layout constraint.
+                ///         - The problem is that I cannot figure out how to accurately measure the 'natural' size of the preciseSection here.
+                ///             - I think it might be impossible in viewDidLoad()? See https://stackoverflow.com/a/28263756/10601702. [Sep 2025]
+                ///         - We happened to sorta randomly find 2 ways to accurately measure the `preciseSection` in certain circumstances:
+                ///             - 1. When none of the textFields in the preciseSection were wrapping, we could measure its size using `.fittingSize` (Cause that size doesn't depend on the rest of the layout, it's just an intrinsic property.)
+                ///             - 2. After making the textFields wrapping and using `applyHardcodedTabWidth()`, somehow `layoutSubtreeIfNeeded()` works. But it breaks if we don't set an explicit width constraint (We wanted to do that in `applyHardcodedTabWidth()` for Chinese but disabling that, since it breaks this).
+                do {
+                    let preciseSectionWidth: CGFloat
+                    do {
+                        self.view.needsLayout = true        /// Layout `self.view`, since that's where `applyHardcodedTabWidth()` applies its width constraint. [Sep 2025]
+                        self.view.layoutSubtreeIfNeeded()
+                        preciseSectionWidth = preciseSection.frame.width
                     }
-                    isInitialized = true
+                    preciseSection .widthAnchor.constraint(equalToConstant: preciseSectionWidth).addingIdentifier("preciseSectionWidth").isActive = true
+                    macOSHintIndent.widthAnchor.constraint(equalToConstant: preciseSectionWidth).addingIdentifier("macOSHintIndentWidth").isActive = true
+                }
+            
+                do {
+                    let preciseSectionRetained: NSStackView? = self.preciseSection /// [Sep 2025] Why do we need this?
+                    var macOSHintIsDisplaying = false
+                    var isInitialized = false
+                    
+                    scrollSpeed.producer.startWithValues { speed in
+                        if speed == "system" && !macOSHintIsDisplaying {
+                            self.preciseSection.animatedReplace(with: macOSHintIndent, doAnimate: isInitialized)
+                            macOSHintIsDisplaying = true
+                        } else if speed != "system" && macOSHintIsDisplaying {
+                            assert(isInitialized)
+                            macOSHintIndent.animatedReplace(with: preciseSectionRetained!, doAnimate: isInitialized)
+                            macOSHintIsDisplaying = false
+                        }
+                        isInitialized = true
+                    }
                 }
             }
         }
