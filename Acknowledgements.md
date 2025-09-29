@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2025**
 
+- 🇺🇸&nbsp;Cj&nbsp;Parmenter - "Mac Mouse Fix is a thing of beauty. Thank you!"
 - 🇯🇵&nbsp;Nabekou0729
 - 🇯🇵&nbsp;豊田幸雄 - "便利なツールをありがとう。頑張ってください！"
 - 🇺🇸&nbsp;Miguel&nbsp;H
