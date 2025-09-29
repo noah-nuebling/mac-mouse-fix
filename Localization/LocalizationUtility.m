@@ -11,9 +11,12 @@
 
 @implementation LocalizationUtility
 
++ (NSString *) currentLanguageCode {
+    return [NSLocale.currentLocale objectForKey: NSLocaleLanguageCode];
+}
+
 + (double)informationDensityOfCurrentLanguage {
-    NSString *languageCode = [NSLocale.currentLocale objectForKey:NSLocaleLanguageCode];
-    return [self informationDensityOfLanguage:languageCode];
+    return [self informationDensityOfLanguage: [self currentLanguageCode]];
 }
 
 + (double)informationDensityOfLanguage:(NSString *)languageCode {

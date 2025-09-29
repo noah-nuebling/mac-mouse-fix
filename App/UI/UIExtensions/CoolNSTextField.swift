@@ -19,12 +19,6 @@ class MarkdownTextField: CoolNSTextField {
         
         /// Init super
         super.init(coder: coder)
-
-        /// Debug
-        
-//        if stringValue.localizedCaseInsensitiveContains("double click") {
-//
-//        }
         
         /// Configure
         configureForAttributedString()
@@ -32,18 +26,22 @@ class MarkdownTextField: CoolNSTextField {
         /// Increase paragraph spacing
         /// - (Should parametrize this probably and put it into CoolNSTextField but whatever)
         /// - Turing this off, because 1. Any linebreak with a `\n` character is considered a new paragraph, so this messes up existing UI strings 2. If we're using several paragraphs in any of the UI text we need to STOP. cause that's too much text.
-//        self.attributedStringValue = self.attributedStringValue.addingParagraphSpacing(5.0, for: nil)
+        if (false) {
+            self.attributedStringValue = self.attributedStringValue.addingParagraphSpacing(5.0, for: nil)
+        }
         
         /// Fill out attributedString
         ///     With textField properties
-//        var str = self.attributedStringValue.copy() as! NSAttributedString /// attributedStringValue is empty from what I've seen
-//        if let font = self.font {
-//            str = str.adding(font, for: nil)
-//        }
-//        str = str.adding(self.alignment, forSubstring: nil)
-//        if let color = self.textColor {
-//            str = str.adding(color, for: nil)
-//        }
+        if (false) {
+            var str = self.attributedStringValue.copy() as! NSAttributedString /// attributedStringValue is empty from what I've seen
+            if let font = self.font {
+                str = str.adding(font, for: nil)
+            }
+            str = str.adding(self.alignment, for: nil)
+            if let color = self.textColor {
+                str = str.adding(color, for: nil)
+            }
+        }
         
         /// Parse md
         /// - We need to pass in the original markdown string so the original attributes can be kept as base. Otherwise the font will be set to system default font at default size on markup elements where e.g. bold is applied and that will make the bodl text much too large.

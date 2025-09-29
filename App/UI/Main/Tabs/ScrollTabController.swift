@@ -91,7 +91,6 @@ class ScrollTabController: NSViewController {
         /// There was some reason we don't use viewDidLoad here, and instead we use awakeFromNib. I think it had to do with preventing animations from playing when the app starts right into this tab or sth. But maybe it's just unnecessary.
         /// Edit: The replacing between the macOSHint and the preciseSection broke when we used awakeFromNib. Not totally sure why. Let's hope viewDidLoad works after all.
         
-        
         /// Smooth
         
         smooth.bindingTarget <~ smoothPicker.reactive.selectedIdentifiers.map({ $0!.rawValue })
@@ -151,37 +150,42 @@ class ScrollTabController: NSViewController {
         ///         Make a method `register(switchableViews:forArrangedSubview:)` which calculates a size that fits all those views, and then you switch between them with `switchTo(view:)`..
         
         let macOSHint = CoolNSTextField(hintWithAttributedString: NSAttributedString(coolMarkdown: macOSHintRaw, fillOutBase: false)!)
-        
-        macOSHint.translatesAutoresizingMaskIntoConstraints = false
-        macOSHint.setContentHuggingPriority(.required, for: .horizontal)
-        macOSHint.setContentHuggingPriority(.required, for: .vertical)
-        macOSHint.cell?.wraps = true
-        let macOSHintIndent = NSView()
-        macOSHintIndent.translatesAutoresizingMaskIntoConstraints = false
-        macOSHintIndent.addSubview(macOSHint)
-        macOSHint.leadingAnchor.constraint(equalTo: macOSHintIndent/*.layoutMarginsGuide*/.leadingAnchor).isActive = true
-        macOSHint.trailingAnchor.constraint(equalTo: macOSHintIndent.trailingAnchor).isActive = true
-        macOSHint.topAnchor.constraint(equalTo: macOSHintIndent.topAnchor).isActive = true
-        macOSHint.bottomAnchor.constraint(equalTo: macOSHintIndent.bottomAnchor).isActive = true
-        preciseSection.needsLayout = true
-        preciseSection.window?.layoutIfNeeded()
-        let preciseWidth = preciseSection.fittingSize.width
-        macOSHintIndent.widthAnchor.constraint(equalToConstant: preciseWidth).isActive = true
-        let preciseSectionRetained: NSStackView? = self.preciseSection
-        var macOSHintIsDisplaying = false
-        if scrollSpeed.get() == "system" {
-            self.preciseSection.unanimatedReplace(with: macOSHintIndent)
-            macOSHintIsDisplaying = true
-        }
-        scrollSpeed.producer.skip(first: 1).startWithValues { speed in /// Are we sure to `skip(first: 1)` here?
-            if speed == "system" && !macOSHintIsDisplaying {
-                self.preciseSection.animatedReplace(with: macOSHintIndent)
+        do {
+            macOSHint.translatesAutoresizingMaskIntoConstraints = false
+            macOSHint.setContentHuggingPriority(.required, for: .horizontal)
+            macOSHint.setContentHuggingPriority(.required, for: .vertical)
+            macOSHint.cell?.wraps = true
+            let macOSHintIndent = NSView()
+            macOSHintIndent.translatesAutoresizingMaskIntoConstraints = false
+            macOSHintIndent.addSubview(macOSHint)
+            macOSHint.leadingAnchor.constraint(equalTo: macOSHintIndent/*.layoutMarginsGuide*/.leadingAnchor).isActive = true
+            macOSHint.trailingAnchor.constraint(equalTo: macOSHintIndent.trailingAnchor).isActive = true
+            macOSHint.topAnchor.constraint(equalTo: macOSHintIndent.topAnchor).isActive = true
+            macOSHint.bottomAnchor.constraint(equalTo: macOSHintIndent.bottomAnchor).isActive = true
+            preciseSection.needsLayout = true
+            preciseSection.window?.layoutIfNeeded()
+            let preciseWidth = preciseSection.fittingSize.width
+            macOSHintIndent.widthAnchor.constraint(equalToConstant: preciseWidth).isActive = true
+            let preciseSectionRetained: NSStackView? = self.preciseSection
+            var macOSHintIsDisplaying = false
+            if scrollSpeed.get() == "system" {
+                self.preciseSection.unanimatedReplace(with: macOSHintIndent)
                 macOSHintIsDisplaying = true
-            } else if speed != "system" && macOSHintIsDisplaying {
-                macOSHintIndent.animatedReplace(with: preciseSectionRetained!)
-                macOSHintIsDisplaying = false
+            }
+            scrollSpeed.producer.skip(first: 1).startWithValues { speed in /// Are we sure to `skip(first: 1)` here?
+                if speed == "system" && !macOSHintIsDisplaying {
+                    self.preciseSection.animatedReplace(with: macOSHintIndent)
+                    macOSHintIsDisplaying = true
+                } else if speed != "system" && macOSHintIsDisplaying {
+                    macOSHintIndent.animatedReplace(with: preciseSectionRetained!)
+                    macOSHintIsDisplaying = false
+                }
             }
         }
+        
+                        
+        /// Determine tab width
+        applyHardcodedTabWidth("scrolling", self, widthControllingTextFields: [preciseHint]) /// The `macOSHint` below is not 'widthDetermining' so we don't need to pass it in here.
         
         /// Scrollwheel capture notifications
         /// Notes:

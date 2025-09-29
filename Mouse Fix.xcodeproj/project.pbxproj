@@ -14,6 +14,7 @@
 		4F09284828B8EE7200BDC2FF /* LicenseSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F09284A28B8EE7200BDC2FF /* LicenseSheetController.xib */; };
 		4F0C00422C53273200C5D843 /* BidirectionalMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0C00412C53273200C5D843 /* BidirectionalMap.m */; };
 		4F0C00432C53273200C5D843 /* BidirectionalMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0C00412C53273200C5D843 /* BidirectionalMap.m */; };
+		4F0D906C2E89731D005859A0 /* TabControllerUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0D906B2E89731C005859A0 /* TabControllerUtility.swift */; };
 		4F12525C2CAA88A400A079BD /* UNIXSignals.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F12523D2CA9421600A079BD /* UNIXSignals.m */; };
 		4F12952028D2D5E1009A49AB /* NSTextField+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */; };
 		4F143E462B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */; };
@@ -475,6 +476,7 @@
 		4F0C00412C53273200C5D843 /* BidirectionalMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BidirectionalMap.m; sourceTree = "<group>"; };
 		4F0CFFE62C51878500C5D843 /* MFDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFDataClass.h; sourceTree = "<group>"; };
 		4F0CFFE72C51878500C5D843 /* MFDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClass.m; sourceTree = "<group>"; };
+		4F0D906B2E89731C005859A0 /* TabControllerUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabControllerUtility.swift; sourceTree = "<group>"; };
 		4F12523C2CA9421600A079BD /* UNIXSignals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UNIXSignals.h; sourceTree = "<group>"; };
 		4F12523D2CA9421600A079BD /* UNIXSignals.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UNIXSignals.m; sourceTree = "<group>"; };
 		4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+Extentions.swift"; sourceTree = "<group>"; };
@@ -6751,6 +6753,7 @@
 				4F909CF728A0C3D2009349A2 /* ScrollTabController.swift */,
 				4F909CF828A0C3D2009349A2 /* PointerTabController.swift */,
 				4F7D97A528AEB2EE00C11E79 /* AboutTabController.swift */,
+				4F0D906B2E89731C005859A0 /* TabControllerUtility.swift */,
 			);
 			path = Tabs;
 			sourceTree = "<group>";
@@ -8242,6 +8245,7 @@
 				4F5971E52901763D00A32656 /* MathObjc.m in Sources */,
 				4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */,
 				4F909CF028A0C3B7009349A2 /* MainAppState.swift in Sources */,
+				4F0D906C2E89731D005859A0 /* TabControllerUtility.swift in Sources */,
 				4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */,
 				4FF1DC7B2CC1130700A839AB /* License.m in Sources */,
 				4FA40CF628A0CCC600499E53 /* Math.swift in Sources */,

@@ -446,7 +446,7 @@ class TabViewController: NSTabViewController {
         
         if let originTabViewItem = tabView.selectedTabViewItem {
             self.tabViewSizes[originTabViewItem] = originTabViewItem.view?.frame.size
-            DDLogDebug("Storing size \(String(describing: originTabViewItem.view?.frame.size)) for tab \(originTabViewItem.identifier!)")
+            DDLogDebug("TBS Storing size \(String(describing: originTabViewItem.view?.frame.size)) for tab \(originTabViewItem.identifier!)")
         }
         
         /// Set alpha on fading in view. Necessary for fadeIn animations to work?
@@ -531,11 +531,22 @@ class TabViewController: NSTabViewController {
         if size == nil || (tabViewItem.identifier as? String) == "general" {
             
             /// Manually calculate the size of the tab
-            
-            let view = tabViewItem.view
-            view?.needsLayout = true
-            view?.layoutSubtreeIfNeeded() /// Seems like it's not needed sure if needed
-            size = view?.frame.size
+            ///     Why set window size to 99999? [Sep 2025]
+            ///         Reason: We're enlarging window to make the layout favor large size in case of ambiguity. Otherwise calculated tab size will differ depending on size of tab we're switching *from*.
+            ///         Observation details: Observed these ambiguities after setting horizontalCompressionResistance `< 1000`(enabling wrapping) on the hint texts on the general tab to allow the hint texts to wrap naturally when we hardcode a tab-width. (See `applyHardcodedTabWidth()`). Observed this on on macOS 15.
+            ///             These ambiguities do not show up as purple warnings in the view hierarchy debugger. They seem to be a bug in the autolayout system for wrapping NSTextFields. (which we know uses a special complicated two-pass layout algo – see our `NSTextViewSizeExperiments` test project.) [Sep 2025]
+            ///         Update: [Sep 2025] This should no longer be necessary, since we're now preventing the ambiguity by either turning off wrapping or hardcoding an exact width for the window in `applyHardcodedTabWidth()` (Cause the ambiguities still caused text to wrap unexpectedly, even though we could get the tab width to be consistent with the code below.)
+            if let oldWindowSize = self.window?.contentView?.frame.size {
+                self.window?.setContentSize(NSSize(width: 99999, height: 99999))
+                do {
+                    if (true) { /// Somehow this is not necessary in all my tests [Sep 2025]
+                        tabViewItem.view?.needsLayout = true
+                        tabViewItem.view?.layoutSubtreeIfNeeded()
+                    }
+                    size = tabViewItem.view?.frame.size
+                }
+                self.window?.setContentSize(oldWindowSize)
+            }
         }
         
         /// Setup constraints for resizing
@@ -669,6 +680,7 @@ class TabViewController: NSTabViewController {
         /// Insert new constraints
         ///
         
+        
         injectedConstraints = []
         
         /// Add in size constraints
@@ -742,7 +754,9 @@ class TabViewController: NSTabViewController {
         }
         
         switch attributeOnTarget {
-        case .leading, .trailing, .bottom, .top: /// Aren't there other constraints we should remove?
+        case .leading, .trailing, .bottom, .top /// Aren't there other constraints we should remove?
+                , .width                        /// Added .width to support `applyHardcodedTabWidth` [Sep 2025]
+        :
             return true
         default:
             return false
