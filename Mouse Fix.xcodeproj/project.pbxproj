@@ -477,6 +477,7 @@
 		4F0CFFE62C51878500C5D843 /* MFDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFDataClass.h; sourceTree = "<group>"; };
 		4F0CFFE72C51878500C5D843 /* MFDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClass.m; sourceTree = "<group>"; };
 		4F0D906B2E89731C005859A0 /* TabControllerUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabControllerUtility.swift; sourceTree = "<group>"; };
+		4F0D906F2E8A773E005859A0 /* Lowering Build Times.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Lowering Build Times.md"; sourceTree = "<group>"; };
 		4F12523C2CA9421600A079BD /* UNIXSignals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UNIXSignals.h; sourceTree = "<group>"; };
 		4F12523D2CA9421600A079BD /* UNIXSignals.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UNIXSignals.m; sourceTree = "<group>"; };
 		4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+Extentions.swift"; sourceTree = "<group>"; };
@@ -2662,6 +2663,16 @@
 				4F0C003C2C525F8500C5D843 /* Misappropriating XCStrings.md */,
 			);
 			path = "Localization Notes";
+			sourceTree = "<group>";
+		};
+		4F0D906D2E8A770B005859A0 /* Xcode Project Settings */ = {
+			isa = PBXGroup;
+			children = (
+				4FBC82A12DAE93BD00354981 /* Xcode Nullability Settings.md */,
+				4FB898952E2D5B4D00523B37 /* Clang Diagnostic Flags - Sign.md */,
+				4F0D906F2E8A773E005859A0 /* Lowering Build Times.md */,
+			);
+			path = "Xcode Project Settings";
 			sourceTree = "<group>";
 		};
 		4F1667E32C6A6782009E4924 /* XCStringsDummyApp */ = {
@@ -7299,8 +7310,7 @@
 			isa = PBXGroup;
 			children = (
 				4FBC827A2DAE8EF800354981 /* Side-Repos 2024.md */,
-				4FBC82A12DAE93BD00354981 /* Xcode Nullability Settings.md */,
-				4FB898952E2D5B4D00523B37 /* Clang Diagnostic Flags - Sign.md */,
+				4F0D906D2E8A770B005859A0 /* Xcode Project Settings */,
 				4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */,
 				4F09CF772DF44D9D00C75249 /* MMF - Update Checklist - Template.md */,
 				4FEB6618279376C200E6A111 /* notes.md */,
@@ -8870,8 +8880,9 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = "";
 				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
+				ENABLE_DEBUG_DYLIB = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				EXCLUDED_ARCHS = "";
@@ -8962,6 +8973,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
+				ENABLE_DEBUG_DYLIB = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;

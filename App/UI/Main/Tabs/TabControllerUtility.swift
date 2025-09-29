@@ -23,11 +23,6 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
     ///             - AHn-zX-g4d.title (This is not width-determining, so shouldn't have any linebreaks to begin with)
     ///             - AqN-zN-yDS.title (widthDetermining)
     ///                 ... [ ] Or just give Korean an explicit width
-    ///         - Cut down build times:
-    ///             - [ ] Set build setting from 'DWARF with dSYM file' to just 'DWARF' (for DEBUG builds)
-    ///             - [ ] Turn off ENABLE_DEBUG_DYLIB (This turns off SwiftUI previews afaik, but dramatically reduces incremental build times mostly due to remove 4 targets that need to be signed otherwise.) (See: https://developer.apple.com/documentation/xcode/understanding-build-product-layout-changes)
-    ///                 Cut down from 10 -> 4 seconds
-    ///             - [ ] Add a 'Fast Build' or 'Iterate' build scheme which doesn't attach a debugger.
     ///         - Translated strings:
     ///             - [ ] Remove 'z' after `Aumentar ou diminuir`
     ///         - [ ] Test if the macOSHint being swapped in still works (Scrolling Tab)
