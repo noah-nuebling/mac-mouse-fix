@@ -210,6 +210,34 @@
     #undef str
 }
 
+#pragma mark Replace substring
+
+- (NSAttributedString *) attributedStringByReplacing: (NSString *)old with: (NSAttributedString *)new {
+    return [self attributedStringByReplacing: old with: new count: -1];
+}
+- (NSAttributedString *) attributedStringByReplacing: (NSString *)old with: (NSAttributedString *)new count: (int)count {
+    
+    /// Replaces occurrences of `searchedString` with `replacementString`.
+    ///     Replaces at most `count` occurences. To replace *all* occurences, set `count` to -1.
+    
+    NSMutableAttributedString *result = [self mutableCopy];
+    
+    if ([old isEqual: new.string]) return result; /// Prevent infinite loop in edge case.
+    
+    for (int i = 0;; i++) {
+
+        if (count > 0)
+            if (i >= count) break;
+    
+        NSRange replaceRange = [result.string rangeOfString: old]; /// Could activate regex here [Sep 2025]
+        if (replaceRange.location == NSNotFound) break;
+        
+        [result replaceCharactersInRange: replaceRange withAttributedString: new];
+    }
+    
+    return result;
+}
+
 #pragma mark Append
 
 - (NSAttributedString *) attributedStringByAppending: (NSAttributedString *)string { /// [Sep 2025] This probably shouldn't exist using astringf macro directly is more readable and both map to `attributedStringWithAttributedFormat:`
@@ -217,7 +245,7 @@
     return [NSAttributedString attributedStringWithAttributedFormat: [@"%@%@" attributed] args: (id[]){ self, string } argcount: 2];
 }
 
-#pragma mark Replace substring
+#pragma mark Formatting
 
 + (NSAttributedString *) attributedStringWithAttributedFormat: (NSAttributedString *)format args: (NSAttributedString *__strong _Nullable [_Nonnull])args argcount: (int)argcount; {
     
@@ -241,7 +269,7 @@
     for (i = 0; ; i++) {
         
         /// Find the next format specifier to replace
-        NSRange replaceRange = [mutableFormat.string localizedStandardRangeOfString: @"%@"]; /// Not sure if the localized is necessary/good here?
+        NSRange replaceRange = [mutableFormat.string rangeOfString: @"%@"];
         
         /// Break
         if (replaceRange.location == NSNotFound) break;

@@ -23,6 +23,8 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 - (NSAttributedString *)attributedStringByRemovingAllWhitespace;
 - (NSAttributedString *)attributedStringByTrimmingWhitespace;
 
+- (NSAttributedString *) attributedStringByReplacing: (NSString *)searchedString with: (NSAttributedString *)replacementString;
+- (NSAttributedString *) attributedStringByReplacing: (NSString *)searchedString with: (NSAttributedString *)replacementString count: (int)count;
 - (NSAttributedString *) attributedStringByAppending: (NSAttributedString *)string;
 + (NSAttributedString *) attributedStringWithAttributedFormat: (NSAttributedString *)format args: (NSAttributedString *__strong _Nullable [_Nonnull])args argcount: (int)argcount;
 - (NSArray<NSAttributedString *> *) split: (NSString *)separator maxSplit: (int)maxSplit;
