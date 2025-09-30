@@ -3457,7 +3457,7 @@
       "shouldTranslate" : false
     },
     "capture-toast.scroll.link" : {
-      "comment" : "",
+      "comment" : "Note: This links to the CapturedScrollWheels document",
       "localizations" : {
         "de" : {
           "stringUnit" : {

@@ -110,7 +110,7 @@ static NSAttributedString *createSimpleNotificationBody(BOOL didGetCaptured, MFC
     NSAttributedString *learnMoreString = learnMoreStringRaw ? [NSAttributedString attributedStringWithCoolMarkdown: learnMoreStringRaw fillOutBase: NO] : nil;
     
     /// TEST: Override learn more string size to be system default size despite being part of the 'subtitle' of the Toast
-    if ((0)) learnMoreString = [learnMoreString attributedStringBySettingFontSize: NSFont.systemFontSize];
+    if ((1)) learnMoreString = [learnMoreString attributedStringBySettingFontSize: NSFont.systemFontSize];
     
     /// Apply markdown to rawBody
     NSAttributedString *body = [NSAttributedString attributedStringWithCoolMarkdown: rawBody fillOutBase: NO];
@@ -296,12 +296,12 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
         map = @{
             
             @"captured.body": NSLocalizedString(@"capture-toast.scroll.captured.body", @""),
-            @"captured.hint": @"", /// NSLocalizedString(@"capture-toast.scroll.captured.hint", @""),
+            @"captured.hint": NSLocalizedString(@"capture-toast.scroll.captured.hint", @""),
             
             @"uncaptured.body": NSLocalizedString(@"capture-toast.scroll.uncaptured.body", @""),
             @"uncaptured.hint": NSLocalizedString(@"capture-toast.scroll.uncaptured.hint", @""),
             
-//            @"link": NSLocalizedString(@"capture-toast.scroll.link", @""),
+            @"link": NSLocalizedString(@"capture-toast.scroll.link", @"Note: This links to the CapturedScrollWheels document"),
         };
     } else {
         assert(false); /// We haven't implemented the other inputTypes, yet.
@@ -312,15 +312,19 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
     NSString *result = map[simpleKey];
     
     /// Insert url
-    if ([simpleKey isEqual:@"link"] && result != nil && result.length > 0) {
+    if ([simpleKey isEqual: @"link"] && result.length) {
         NSString *linkURL = nil;
-        if (inputType == kMFCapturedInputTypeButtons) {
-            linkURL = [Links link:kMFLinkID_CapturedButtonsGuide];
-        } else if (inputType == kMFCapturedInputTypeScroll) {
-            linkURL = @"";
-        } else {
-            assert(false);
-            linkURL = @"";
+        switch (inputType) {
+            bcase(kMFCapturedInputTypeButtons): {
+                linkURL = [Links link: kMFLinkID_CapturedButtonsGuide];
+            }
+            bcase(kMFCapturedInputTypeScroll): {
+                linkURL = [Links link: kMFLinkID_CapturedScrollWheelsGuide];
+            }
+            bcase(): {
+                assert(false);
+                linkURL = @"";
+            }
         }
         result = stringf(result, linkURL);
     }

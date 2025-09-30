@@ -94,13 +94,11 @@
         xxx(kMFLinkID_CapturedButtonsGuide) {
             result = redirectionServiceLink(@"mmf-captured-buttons-guide", nil, nil, @{ @"locale": currentLocale });
         }
+        xxx(kMFLinkID_CapturedScrollWheelsGuide) {
+            result = redirectionServiceLink(@"mmf-captured-scroll-wheels-guide", nil, nil, @{ @"locale": currentLocale });
+        }
         xxx(kMFLinkID_VenturaEnablingGuide) {
             result = redirectionServiceLink(@"mmf-ventura-enabling-guide", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/861
-        }
-        
-        xxx(kMFLinkID_CapturedScrollingGuide) {
-            assert(false); /// We don't have a guide for scroll-capturing atm (01.09.2024) I think we probably don't need one unless people have frequent questions.
-            result = nil;
         }
         
         else {

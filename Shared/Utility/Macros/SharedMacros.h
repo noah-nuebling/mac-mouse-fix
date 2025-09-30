@@ -408,16 +408,16 @@ NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullab
 ///     ```
 ///     MFStringEnum(MFLinkID)
 ///     MFStringEnumCase(kMFLinkID, CapturedButtonsGuide)
-///     MFStringEnumCase(kMFLinkID, CapturedScrollingGuide)
+///     MFStringEnumCase(kMFLinkID, CapturedScrollWheelsGuide)
 ///     MFStringEnumCase(kMFLinkID, VenturaEnablingGuide)
 ///     ```
 ///
 /// ... which would expand to:
 ///     ```
 ///     typedef NSString * MFLinkID NS_TYPED_ENUM;
-///     static MFLinkID const kMFLinkIDCapturedButtonsGuide    = @"CapturedButtonsGuide";
-///     static MFLinkID const kMFLinkIDCapturedScrollingGuide  = @"CapturedScrollingGuide";
-///     static MFLinkID const kMFLinkIDVenturaEnablingGuide    = @"VenturaEnablingGuide";
+///     static MFLinkID const kMFLinkIDCapturedButtonsGuide       = @"CapturedButtonsGuide";
+///     static MFLinkID const kMFLinkIDCapturedScrollWheelsGuide  = @"CapturedScrollWheelsGuide";
+///     static MFLinkID const kMFLinkIDVenturaEnablingGuide       = @"VenturaEnablingGuide";
 ///     ```
 ///
 /// Discussion:
@@ -435,7 +435,7 @@ NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullab
 ///     ```
 ///     typedef NSString * MFLinkID;
 ///     #define kMFLinkID_CapturedButtonsGuide      @"CapturedButtonsGuide"
-///     #define kMFLinkID_CapturedScrollingGuide    @"CapturedScrollingGuide"
+///     #define kMFLinkID_CapturedScrollWheelsGuide @"CapturedScrollWheelsGuide"
 ///     #define kMFLinkID_VenturaEnablingGuide      @"VenturaEnablingGuide"
 ///     ```
 ///
