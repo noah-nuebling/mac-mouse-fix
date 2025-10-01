@@ -97,7 +97,7 @@ class GeneralTabController: NSViewController {
                         
                         if #available(macOS 15.0, *) {
                             
-                            /// [Jul 2025] The strange issues with enabling have been fixed by Apple since macOS 15.0 Sequoia. (Source: Enabling Guide: https://github.com/noah-nuebling/mac-mouse-fix/discussions/861)
+                            /// [Jul 2025] The strange issues with enabling have been fixed by Apple since macOS 15.0 Sequoia. (Source: Enabling Guide: https://redirect.macmousefix.com/?target=mmf-ventura-enabling-guide)
                             ///     Due to this, the instructions on the `enable-timeout-toast` and the `is-strange-helper-alert` are outdated.
                             ///     We didn't get around to disabling those alerts during macOS 15's lifecycle, but now we're finally doing it during the macOS 26 Tahoe Beta.
                             ///
@@ -109,7 +109,7 @@ class GeneralTabController: NSViewController {
                             ///         - There are still rare situations where the app won't enable
                             ///             - But simply restarting the app always fixes this in my experience.
                             ///             - (I assume this is some quirk of LaunchServices, not a bug in MMF which we can fix.)
-                            ///         - The guide that `enable-timeout-toast` linked to had a comment section (https://github.com/noah-nuebling/mac-mouse-fix/discussions/861)
+                            ///         - The guide that `enable-timeout-toast` linked to had a comment section (https://redirect.macmousefix.com/?target=mmf-ventura-enabling-guide)
                             ///             - But this had no comments In 2025 so far [Jul 2025]
                             ///         - If we ever wanna re-install `enable-timeout-toast` we need to fix the jank first! I added an `if window.attachedSheet == nil` check below to help but it's still kinda janky [Jul 2025]
                         }

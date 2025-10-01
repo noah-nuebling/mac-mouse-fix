@@ -22,7 +22,7 @@ In this Guide you'll learn about common issues with granting Accessibility Acces
 - 2.2.2 release (Where we implemented an automatic fix for these issues.): https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.2
 - 2.2.2 changelog: https://github.com/noah-nuebling/mac-mouse-fix/compare/2.2.1...2.2.2
 - Code comment about the fix only working on 10.15 or later: https://github.com/noah-nuebling/mac-mouse-fix/blob/ad9dde2771c49b5734d6696840c551ba90e88d6f/Helper/Accessibility/AccessibilityCheck.m#L77
-- Enabling MMF Guide where there is a similar infobox: https://github.com/noah-nuebling/mac-mouse-fix/discussions/861
+- Enabling MMF Guide where there is a similar infobox: https://redirect.macmousefix.com/?target=mmf-ventura-enabling-guide
 
 
 **Notes** for writing the [!NOTE] info box:

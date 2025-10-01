@@ -22,7 +22,7 @@ Link section with pipe-symbols instead of html table:
 <h3 align="center">
 <a href=https://noah-nuebling.github.io/mac-mouse-fix-website>Download</a> |
 <a href=https://github.com/noah-nuebling/mac-mouse-fix/releases>Releases</a> |
-<a href=https://github.com/noah-nuebling/mac-mouse-fix/discussions>Help &  Feedback</a>
+<a href=>Help &  Feedback</a>
 </h3>
 ```
 
@@ -34,7 +34,7 @@ Link section with pipe-symbols instead of html table:
   <summary>󠁧󠁿{current_language}</summary>
 	
 {language_list}
-  [Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
+  [Help translate Mac Mouse Fix to different languages!](https://redirect.macmousefix.com/?target=mmf-localization-contribution)
 </details>
 
 <!-- ||| Head Section ||| -->
@@ -196,7 +196,7 @@ These cool articles were written about MMF
   
   To solve this, I know of 2 options:
   1. Assign clicking and dragging one of the buttons of your mouse to the "Scroll & Navigate" feature. This feature simulates swiping with 2 fingers on an Apple Trackpad. This will, among other things, let you orbit in 3D apps! 
-  2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it in Mac Mouse Fix. See [this guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) for more info.
+  2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it in Mac Mouse Fix. See [this guide](https://redirect.macmousefix.com/?target=mmf-captured-buttons-guide) for more info.
 
 - **Can I open App Exposé through a Click and Drag Gesture?** <!-- Note: We're using App Exposé here and Application Windows in MMF. Not sure that's great. I felt this was clearer though. -->
 
@@ -309,8 +309,8 @@ Check out the [Acknowledgements]({language_root}Acknowledgements.md) for more in
   
   Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements]({language_root}Acknowledgements.md).
 
-  If you would like to **help translate the project**, see the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).\
-  If you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731).
+  If you would like to **help translate the project**, see the [Localization Guide](https://redirect.macmousefix.com/?target=mmf-localization-contribution).\
+  If you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Localization Guide](https://redirect.macmousefix.com/?target=mmf-localization-contribution).
 
 - **Contributing code**
 

@@ -225,7 +225,7 @@ class ScrollTabController: NSViewController {
         /// - You can find discussion of the design-thoughts behind this inside `getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:`
         /// - How to ship this:
         ///     - We're introducing new localizable strings, so we should ship this in a major update with a Beta version
-        ///     - Once we shipped it, we should probably update the Captured Buttons Guide: https://github.com/noah-nuebling/mac-mouse-fix/discussions/112 - or create a new guide.
+        ///     - Once we shipped it, we should probably update the Captured Buttons Guide: https://redirect.macmousefix.com/?target=mmf-captured-buttons-guide - or create a new guide.
         
         let modProducer = SignalProducer.combineLatest(horizontalMod.producer, zoomMod.producer, swiftMod.producer, preciseMod.producer) /// We could reuse this down in the Keyboard modifier section, but currently, we're not
         let captureProducer = SignalProducer.combineLatest(smooth.producer, reverseDirection.producer, scrollSpeed.producer, modProducer).combinePrevious()

@@ -2,15 +2,15 @@ blank_issues_enabled: true # [Mar 2025] had to set this to true to not break MMF
 
 contact_links:
   - name: Need help?
-    url: https://github.com/noah-nuebling/mac-mouse-fix/discussions
+    url: https://redirect.macmousefix.com/?target=mmf-guides-and-community
     about: View guides or ask the community
   - name: Bug report
-    url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report
+    url: https://redirect.macmousefix.com/?target=mmf-feedback-bug-report
     about: Report a bug
   - name: Enhancement request
-    url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=feature-request
+    url: https://redirect.macmousefix.com/?target=mmf-feedback-feature-request
     about: Suggest a new feature, UI changes, or other improvements
   # [Mar 2025] vvv Disabling since we're forced to set `blank_issues_enabled: true`
   # - name: Free form feedback
-  #  url: https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=other
+  #  url: https://redirect.macmousefix.com/?target=mmf-feedback-other
   #  about: Write free form feedback

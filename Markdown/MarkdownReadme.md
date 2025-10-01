@@ -69,7 +69,7 @@ https://rhysd.github.io/actionlint/
 
 #### Localization
 
-See the MMF Localization Guide: https://github.com/noah-nuebling/mac-mouse-fix/discussions/731
+See the MMF Localization Guide: https://redirect.macmousefix.com/?target=mmf-localization-contribution
 
 #### Gumroad API
 
