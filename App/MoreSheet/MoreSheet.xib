@@ -187,7 +187,7 @@ Turn this off and on again to check for updates immediately.</string>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://github.com/noah-nuebling/mac-mouse-fix/discussions/categories/guides"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="href" value="https://redirect.macmousefix.com/?target=mmf-guides"/>
                             <userDefinedRuntimeAttribute type="number" keyPath="rMrgn">
                                 <integer key="value" value="25"/>
                             </userDefinedRuntimeAttribute>
