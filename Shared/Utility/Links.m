@@ -80,7 +80,7 @@
         }
         
         /// Help
-        xxx(kMFLinkID_AuthorizeAccessibilityHelp) { /// This link is opened when clicking `Help` on the Accessibility Sheet.
+        xxx(kMFLinkID_AuthorizeAccessibilityHelp) { /// This link is opened when clicking `Help` on the Accessibility Sheet. Update: [Oct 2025] Removed that link now. Reasoning: I haven't ever seen the bug since we installed the automatic fix in 2.2.2, and there haven't been any (on-topic) comments on the Guide since then. If there are problems, people can access help from elsewhere. See note `MMF - Discontinuing GitHub Discussions.md`.
             result = redirectionServiceLink(@"mmf-authorize-accessibility-help", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/101
         }
         

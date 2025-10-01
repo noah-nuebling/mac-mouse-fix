@@ -63,7 +63,7 @@
     },
     "04N-yp-Qg1.title" : {
       "comment" : "Class = \"NSTextFieldCell\"; title = \"Help\"; ObjectID = \"04N-yp-Qg1\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
