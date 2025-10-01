@@ -4,8 +4,13 @@
 
 - [Jul 2025] Tip: Enable `markdown.preview.breaks` to match rendering on GitHub
 
-### Note
+### Notes
 - The strings in Markdown.xcstrings are set to 'manual' to prevent Xcode from deleting them. However they are actually managed by our mac-mouse-fix-scripts scripts and updated based on the markdown templates. Any manual edits will be overridden!
+
+### Ideas
+
+- [ ] Maybe add `Command-Scroll doesn't work?` to `Readme.md > Questions`. [Oct 2025]
+    (People ask about this pretty often. I think it's due to Logitech Options interference?)
 
 # vvv This is all old and probably outdated vvv
 
