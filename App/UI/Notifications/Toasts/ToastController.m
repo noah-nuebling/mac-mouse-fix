@@ -181,7 +181,7 @@ typedef enum {
             }
         }
         
-        message = [message attributedStringByAddingAttributesAsBase: _labelAttributesFromIB]; /// This makes the text centered. Not sure if anything else [Sep 2025]
+        message = [message attributedStringByAddingAttributesAsBase: _labelAttributesFromIB]; /// This makes the text centered, prevents orphaned words (`NSLineBreakStrategyPushOut`). Not sure if anything else [Sep 2025]
     }
     
     
