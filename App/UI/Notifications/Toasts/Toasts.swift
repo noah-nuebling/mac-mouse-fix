@@ -112,17 +112,22 @@ import Foundation
         let revivedFeatures = UIStrings.naturalLanguageList(fromStringArray: revivedFeaturesList)
         
         /// Build message string
-        let messageRaw = String(
+        var messageRaw = String(
             format: NSLocalizedString(
                 "revive-toast",
                 comment: """
-                Note: \"%1$@\" will be a list of mouse features like \"Scrolling\" or \"Buttons\" for which Mac Mouse Fix was enabled. \"%2$@\" will be the menubar icon
+                Note: \"%1$@\" will be a list of mouse features like \"Scrolling\" or \"Buttons\" for which Mac Mouse Fix was enabled. \"%2$@\" will be revive-toast.menu-bar.
                 
                 Note 2: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.
                 """
             ),
-            revivedFeatures, "%@")
+            revivedFeatures,
+            NSLocalizedString("revive-toast.menu-bar", comment: "%@ will be the menubar icon of Mac Mouse Fix")
+                .replacingOccurrences(of: " ", with: "\u{A0}") /// Replace with non-breaking space to prevent the CoolMenuBarIcon from being orphaned on a separate line.)
+        )
+        
         var message = NSAttributedString(coolMarkdown: messageRaw, fillOutBase: false)!
+        
         let symbolString = SFSymbolStrings.string(withSymbolName: "CoolMenuBarIcon", stringFallback: "<Mac Mouse Fix Menu Bar Item>", font: ToastController.defaultFont()) ///NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
         var args: [NSAttributedString?] = [symbolString]
         message = NSAttributedString(attributedFormat: message, args: &args, argcount: Int32(args.count))
