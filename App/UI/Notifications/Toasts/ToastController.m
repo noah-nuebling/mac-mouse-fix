@@ -161,19 +161,24 @@ typedef enum {
         ///             - `attributedStringByTrimmingWhitespace` is a bit of a hack. Before, we had some toasts with a single and others with a double linebreak after the first 'title' line. But that looks weird now. The 'semantic' difference is still in the localizable strings but not displayed anymore.
         {
             auto splitMessage    = [message split: @"\n" maxSplit: 1];
-            auto messageTitle    = splitMessage.firstObject;
-            auto messageSubtitle = splitMessage.lastObject;
-            
-            messageTitle    = [messageTitle    attributedStringByTrimmingWhitespace];
-            messageSubtitle = [messageSubtitle attributedStringByTrimmingWhitespace];
-            
-            messageTitle    = [messageTitle    attributedStringByFillingOutBase];
-            messageSubtitle = [messageSubtitle attributedStringByFillingOutBaseAsHint]; /// Style everything after the first line as greyed out, small, hint text
-            
-            #define hintSeparatorSize 4.0
-            NSAttributedString *separator = [@"\n\n".attributed attributedStringBySettingFontSize: hintSeparatorSize];
-            
-            message = astringf(@"%@%@%@", (id)messageTitle, separator, (messageSubtitle ?: [@"" attributed]));
+            if (splitMessage.count > 1) {
+                auto messageTitle    = splitMessage.firstObject;
+                auto messageSubtitle = splitMessage.lastObject;
+                
+                messageTitle    = [messageTitle    attributedStringByTrimmingWhitespace];
+                messageSubtitle = [messageSubtitle attributedStringByTrimmingWhitespace]; /// Remove double linebreaks. See discussion above.
+                
+                messageTitle    = [messageTitle    attributedStringByFillingOutBase];
+                messageSubtitle = [messageSubtitle attributedStringByFillingOutBaseAsHint]; /// Style everything after the first line as greyed out, small, hint text
+                
+                #define hintSeparatorSize 4.0
+                NSAttributedString *separator = [@"\n\n".attributed attributedStringBySettingFontSize: hintSeparatorSize];
+                
+                message = astringf(@"%@%@%@", (id)messageTitle, separator, messageSubtitle);
+            }
+            else {
+                message = [message attributedStringByFillingOutBase];
+            }
         }
         
         message = [message attributedStringByAddingAttributesAsBase: _labelAttributesFromIB]; /// This makes the text centered. Not sure if anything else [Sep 2025]
