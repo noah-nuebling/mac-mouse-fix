@@ -5956,7 +5956,7 @@
       }
     },
     "enable-timeout-toast" : {
-      "comment" : "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\".",
+      "comment" : "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which looks like a normal space, but it prevents linebreaks. We're using this to prevent the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\" if you wanna look it up.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8502,18 +8502,18 @@
       }
     },
     "revive-toast" : {
-      "comment" : "Note: \"%1$@\" will be a list of mouse features like \"Scrolling\" or \"Buttons\" for which Mac Mouse Fix was enabled. \"%2$@\" will be the menubar icon\n\nNote 2: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.",
+      "comment" : "Note: \"%1$@\" will be a list of mouse features like \"Scrolling\" or \"Buttons\" for which Mac Mouse Fix was enabled. \"%2$@\" will be the menu bar icon.\n\nNote 2: \"&nbsp;\" Creates a \"non-breaking space\" character which prevents the menu bar icon from ending up on a separate line from the text \"Menu Bar\". \n\nNote 3: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mac Mouse Fix **aktiviert** für %1$@\nEs war in der Menüleiste %2$@ deaktiviert worden"
+            "state" : "needs_review",
+            "value" : "Mac Mouse Fix **aktiviert** für %1$@\nEs war in der Menüleiste&nbsp;%2$@ deaktiviert worden"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Enabled** Mac Mouse Fix for %1$@\nIt had been disabled from the Menu Bar %2$@"
+            "value" : "**Enabled** Mac Mouse Fix for %1$@\nIt had been disabled from the Menu&nbsp;Bar&nbsp;%2$@"
           }
         },
         "fr" : {

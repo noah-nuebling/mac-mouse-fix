@@ -61,7 +61,7 @@ import Foundation
         /// Process info
         ///     Note: Use non-breaking-space for nicer layout for long mouse names. (E.g. my VXE mouse connected over BT has the name "RivieraWaves SAS VXE R1SE+")
         ///         Update: Actually like the layout less with nbsp.
-//        name = name?.replacingOccurrences(of: " ", with: "\u{00a0}") as NSString?
+//        name = name?.replacingOccurrences(of: " ", with: "&nbsp;") as NSString?
         
         ///
         /// Add accessoryView

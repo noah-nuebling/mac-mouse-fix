@@ -23,7 +23,7 @@ import Foundation
             /// - The default duration `kMFToastDurationAutomatic` felt too short in this case. I wonder why that is? I think this toast is one of, if not the shortest toasts - maybe it has to do with that? Maybe it feels like it should display longer, because there's a delay until it shows up so it's harder to get back to? Maybe our tastes for how long the toasts should be changed? Maybe we should adjust the formula for `kMFToastDurationAutomatic`?
             /// - Why are we dispatching `k-is-disabled-toast` to the main thread by not this? (They are called from almost the same place)
             
-            var rawMessage = NSLocalizedString("enable-timeout-toast", comment: "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\".")
+            var rawMessage = NSLocalizedString("enable-timeout-toast", comment: "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which looks like a normal space, but it prevents linebreaks. We're using this to prevent the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\" if you wanna look it up.") /// [Oct 2025] Actually, we're using `NSLineBreakStrategyPushOut` now, so the manual &nbsp; may not be necessary anymore.
             rawMessage = String(format: rawMessage, Links.link(kMFLinkID_VenturaEnablingGuide) ?? "")
             ToastController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage, fillOutBase: false)!, forDuration: 10.0)
         },
@@ -116,12 +116,14 @@ import Foundation
             format: NSLocalizedString(
                 "revive-toast",
                 comment: """
-                Note: \"%1$@\" will be a list of mouse features like \"Scrolling\" or \"Buttons\" for which Mac Mouse Fix was enabled. \"%2$@\" will be the menubar icon
+                Note: "%1$@" will be a list of mouse features like "Scrolling" or "Buttons" for which Mac Mouse Fix was enabled. "%2$@" will be the menu bar icon.
                 
-                Note 2: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.
+                Note 2: "&nbsp;" Creates a "non-breaking space" character which prevents the menu bar icon from ending up on a separate line from the text "Menu Bar". 
+                
+                Note 3: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.
                 """
             ),
-            revivedFeatures, "%@")
+            revivedFeatures, "%@") /// Note on `&nbsp;`: [Sep 2025] We're already using `NSLineBreakStrategyPushOut` to prevent orphaned words, but it doesn't seem to work for the CoolMenuBarIcon.
         var message = NSAttributedString(coolMarkdown: messageRaw, fillOutBase: false)!
         let symbolString = SFSymbolStrings.string(withSymbolName: "CoolMenuBarIcon", stringFallback: "<Mac Mouse Fix Menu Bar Item>", font: ToastController.defaultFont()) ///NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
         var args: [NSAttributedString?] = [symbolString]
