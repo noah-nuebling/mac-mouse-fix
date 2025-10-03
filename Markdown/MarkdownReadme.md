@@ -7,10 +7,14 @@
 ### Notes
 - The strings in Markdown.xcstrings are set to 'manual' to prevent Xcode from deleting them. However they are actually managed by our mac-mouse-fix-scripts scripts and updated based on the markdown templates. Any manual edits will be overridden!
 
-### Ideas
+### Ideas for Readme.md
 
 - [ ] Maybe add `Command-Scroll doesn't work?` to `Readme.md > Questions`. [Oct 2025]
     (People ask about this pretty often. I think it's due to Logitech Options interference?)
+
+- [ ] Perhaps add link from `revive-toast` to some help resource. E.g. `questions.app-specific-settings` / `CapturedButtonsGuideMMF3.md` / `CapturedScrollWheels.md` [Oct 2025]  
+    (People ask about this relatively often) (... It'll probably be a while before we can introduce proper app-specific settings.)
+    (Or just add a subtitle: "To permanently disable Mac Mouse Fix for Scrolling, *uncaptured the scroll wheel* – learn more" || Is it bad that we use different terms here? "Enable" vs "Capture"?)
 
 # vvv This is all old and probably outdated vvv
 
