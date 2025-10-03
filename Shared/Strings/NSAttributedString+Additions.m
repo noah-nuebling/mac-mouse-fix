@@ -247,7 +247,7 @@
 
 #pragma mark Formatting
 
-+ (NSAttributedString *) attributedStringWithAttributedFormat: (NSAttributedString *)format args: (NSAttributedString *__strong _Nullable [_Nonnull])args argcount: (int)argcount; {
++ (NSAttributedString *) attributedStringWithAttributedFormat: (NSAttributedString *)format args: (NSAttributedString *__strong _Nullable [_Nonnull])args argcount: (int)argcount {
     
     /// Replaces occurences of %@ in the attributedString with the args
     ///     Usage tip:                  Use the astringf() macro which wraps this.
@@ -261,32 +261,35 @@
     if (argcount == 0) return format;
     if ([format.string isEqual: @""]) return format;
     
-    /// Get mutable copy
+    /// Find all format specifiers
+    auto searchRange = NSMakeRange(0, format.length);
+    auto *formatSpecifierRanges = [NSMutableData new]; /// Using NSMutableData to store NSRanges instead of NSMutableArray cause it's faster maybe? [Sep 2025]
+    int i;
+    for (i = 0; ; i++) {
+        NSRange formatSpecifierRange = [format.string rangeOfString: @"%@" options: 0 range: searchRange]; /// Find the next format specifier to replace
+        if (formatSpecifierRange.location == NSNotFound) break;
+        [formatSpecifierRanges appendBytes: &formatSpecifierRange length: sizeof(NSRange)]; /// Store found range
+        searchRange = NSMakeRange(NSMaxRange(formatSpecifierRange), format.length - NSMaxRange(formatSpecifierRange)); /// Update searchRange
+    }
+    
+    if (i != argcount) {
+        assert(false && "attributedStringWithAttributedFormat: Number of format specifiers doesn't match number of args");
+        i = MIN(i, argcount);
+    }
+    
+    /// Get mutable copy of format
     ///     On Ventura Beta, `[format mutableCopy]` returns creates unreadable data, if format is an empty string.
     NSMutableAttributedString *mutableFormat = [format mutableCopy];
     
-    int i;
-    for (i = 0; ; i++) {
-        
-        /// Find the next format specifier to replace
-        NSRange replaceRange = [mutableFormat.string rangeOfString: @"%@"];
-        
-        /// Break
-        if (replaceRange.location == NSNotFound) break;
-        
-        /// Validate
-        if (argcount <= i) {
-            assert(false && "attributedStringWithAttributedFormat: More format specifiers than args");
-            break;
-        }
-        
-        /// Replace
-        [mutableFormat replaceCharactersInRange: replaceRange withAttributedString: args[i] ?: [@"" attributed]];
+    /// Replace
+    ///     Note: [Sep 2025] We replace in a second pass from finding the formatSpecifiers, so we don't find formatSpecifiers *contained* inside the replacement strings.
+    int offset = 0;
+    loopc(j, i) {
+        auto replaceRange = ((NSRange *)[formatSpecifierRanges bytes])[j];
+        replaceRange.location += offset; /// This converts signed to unsigned, which I'd expect to underflow, but somehow works correctly in my godbolt testing. (Also see `Clang Diagnostic Flags - Sign.md`)
+        [mutableFormat replaceCharactersInRange: replaceRange withAttributedString: args[j] ?: [@"" attributed]];
+        offset += args[j].length - replaceRange.length;
     }
-    
-    /// Validate
-    if (i < argcount)
-        assert(false && "attributedStringWithAttributedFormat: Fewer format specifiers than args");
     
     /// Return
     return mutableFormat;
