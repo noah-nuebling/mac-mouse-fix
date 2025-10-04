@@ -1,5 +1,5 @@
 Babel==2.14.0
-certifi==2023.11.17
+certifi==2024.7.4
 charset-normalizer==3.3.2
 gitdb==4.0.11
 GitPython==3.1.41
