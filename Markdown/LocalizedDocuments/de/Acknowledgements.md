@@ -38,6 +38,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den _Zucker-Kick_!
 
+**Oktober 2025**
+
+- 🇺🇸&nbsp;Apolopa
+
 **September 2025**
 
 - 🇺🇸&nbsp;Jason&nbsp;S&nbsp;

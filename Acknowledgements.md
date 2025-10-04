@@ -40,6 +40,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!
 
+**October 2025**
+
+- 🇺🇸&nbsp;Apolopa
+
 **September 2025**
 
 - 🇺🇸&nbsp;Jason&nbsp;S&nbsp;
