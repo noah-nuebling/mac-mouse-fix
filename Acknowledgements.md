@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **October 2025**
 
+- 🇦🇺&nbsp;Henry - "Saved me from Logitech's horrid application. Enjoy the milkshake Noah!"
 - 🇺🇸&nbsp;Apolopa
 
 **September 2025**
