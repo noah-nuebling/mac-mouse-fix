@@ -642,7 +642,7 @@ NSMutableDictionary<NSFontDescriptorAttributeName, id> *getIntentionalFontAttrib
     #define getIntentionalFontAttributes(args...) getIntentionalFontAttributes((getIntentionalFontAttributes_args){ args })
     
     /**
-        Explanation: What are we doing here? What are 'intentionalFontAttributes'? [Sep 2025]
+        Explanation: What are we doing here? What are 'intentionalFontAttributes' (Aka 'intentionalAttributes')? [Sep 2025]
         Problem:
             When we manipulate a NSFont on an NSAttributedString, we can only do that (in a sane way?) by converting the NSFont into a fontAttributes dict, then manipulating that, and then converting that back to an NSFont.
             There are some problems with this:
@@ -968,10 +968,19 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
         #pragma mark Paragraph spacing
 
-        - (NSAttributedString *)attributedStringByAddingParagraphSpacing:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range {
+        - (NSAttributedString *)attributedStringByAddingParagraphSpacing:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range { /// Note: [Oct 2025] A 'paragraph' seems to be delineated by any `\n`, not just `\n\n` (blank line). Use `attributedStringByAddingBlankLineHeight:` instead.
             
             return [self attributedStringByModifyingParagraphStyleForRange:range modifier:^NSParagraphStyle * _Nullable(NSMutableParagraphStyle * _Nullable style) {
                 style.paragraphSpacing = spacing;
+                return style;
+            }];
+        }
+        #pragma mark Paragraph spacing before
+
+        - (NSAttributedString *)attributedStringByAddingParagraphSpacingBefore:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range {
+            
+            return [self attributedStringByModifyingParagraphStyleForRange:range modifier:^NSParagraphStyle * _Nullable(NSMutableParagraphStyle * _Nullable style) {
+                style.paragraphSpacingBefore = spacing;
                 return style;
             }];
         }
@@ -1075,13 +1084,17 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
             #pragma mark Font size
 
             - (NSAttributedString *) attributedStringBySettingFontSize: (CGFloat)newFontSize {
+                return [self attributedStringBySettingFontSize: newFontSize forRange: NULL];
+            }
+
+            - (NSAttributedString *) attributedStringBySettingFontSize: (CGFloat)newFontSize forRange: (const NSRangePointer _Nullable)range {
                 
                 /// How to use:
                 /// - You can pass in NSFont.smallSystemFontSize, which is 11.0
                 /// - You can pass in NSFont.systemFontSize, which is 13.0 I believe
                 /// - You can pass in other arbitrary floating point numbers
                 
-                auto result = [self attributedStringByModifyingFontAttributesForRange: NULL modifier: ^MFNSFontAttributes (MFNSFontAttributes fontAttributes) {
+                auto result = [self attributedStringByModifyingFontAttributesForRange: range modifier: ^MFNSFontAttributes (MFNSFontAttributes fontAttributes) {
                     return @{ NSFontSizeAttribute: @(newFontSize) };
                 }];
                 
@@ -1164,6 +1177,37 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
             }
 
 #pragma mark - Special usecases
+
+- (NSAttributedString *) attributedStringByAddingBlankLineHeight: (CGFloat)height forRange:(const NSRangePointer _Nullable)range {
+
+    assert(false); /// Unused and untested [Oct 2025]
+
+    NSAttributedString * result = [self copy]; /// Not sure if copy is necessary here [Oct 2025]
+
+    auto searchRange = NSMakeRange(0, self.length);
+
+    while (1) {
+        auto blankLinesRange = [result.string rangeOfString: @"(\n){2,}" options: NSRegularExpressionSearch range: searchRange];
+        if (blankLinesRange.location == NSNotFound) break;
+        
+        /// Modify blankLine height
+        {
+            if ((0)) {
+                /// Notes: [Oct 2025]
+                ///     - The ParagraphSpacing controls the height of *any* linebreaks not just double linebreaks, so we can't just use that to specifically control blankLine height.
+                ///     - The ParagraphSpacing *also influences* the overall height of blank lines but we'll ignore that for now.
+                result = [result attributedStringByAddingParagraphSpacing: height forRange: &blankLinesRange];
+            }
+            else {
+                result = [result attributedStringBySettingFontSize: height forRange: &blankLinesRange];
+            }
+        }
+        
+        searchRange = NSMakeRange(NSMaxRange(blankLinesRange), self.length - NSMaxRange(blankLinesRange));
+    }
+    
+    return result;
+};
 
 - (NSAttributedString *) attributedStringByAddingHintStyle {
     

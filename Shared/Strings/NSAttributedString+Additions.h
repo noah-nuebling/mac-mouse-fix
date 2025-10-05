@@ -58,6 +58,7 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 - (NSAttributedString *)attributedStringByAddingSemiBoldForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingItalicForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingAlignment:(NSTextAlignment)alignment forRange:(const NSRangePointer _Nullable)rangeIn;
+- (NSAttributedString *)attributedStringByAddingParagraphSpacingBefore:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range;
 - (NSAttributedString *)attributedStringByAddingParagraphSpacing:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range;
 - (NSAttributedString *)attributedStringByAddingLineSpacing:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range;
 
@@ -70,8 +71,9 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 - (NSAttributedString *)attributedStringByAddingColor:(NSColor *)color forSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingColor:(NSColor *)color forRange:(const NSRangePointer _Nullable)range;
 
-- (NSAttributedString *)attributedStringBySettingSemiBoldColorForSubstring:(NSString *)subStr;
+- (NSAttributedString *) attributedStringByAddingBlankLineHeight: (CGFloat)height forRange:(const NSRangePointer _Nullable)range;
 - (NSAttributedString *)attributedStringByAddingHintStyle;
+- (NSAttributedString *)attributedStringBySettingSemiBoldColorForSubstring:(NSString *)subStr;
 
 - (NSSize)sizeAtMaxWidth:(CGFloat)maxWidth;
 - (CGFloat)heightAtWidth:(CGFloat)width;
