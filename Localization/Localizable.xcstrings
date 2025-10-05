@@ -5822,13 +5822,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wenn du **Probleme** hast, die App **einzuschalten**, klicke&nbsp;[hier](%@)."
+            "value" : "Wenn du **Probleme** hast, die App **einzuschalten**, klicke&nbsp;[hier](%@)"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "If you have **problems enabling** the app, click&nbsp;[here](%@)."
+            "value" : "If you have **problems enabling** the app, click&nbsp;[here](%@)"
           }
         },
         "fr" : {
@@ -6661,24 +6661,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diese Lizenz ist **bereits aktiviert**!"
+            "value" : "Deine App **ist bereits** mit diesem Schlüssel **lizenziert**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This license is **already activated**!"
+            "value" : "Your app is **already licensed** with this key"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Cette licence est **déjà activée** !"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "이 라이센스는 **이미 활성화**되어있습니다!"
           }
         },
@@ -6690,31 +6690,31 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Bu lisans **zaten etkin**!"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Bản quyền này đã được **kích hoạt từ trước**!"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "此许可证**已激活**!"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "此許可證**已啟用**!"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "此許可證**已啟用**!"
           }
         }
@@ -6790,14 +6790,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Diese Lizenz **konnte nicht aktiviert werden**, aber Mac Mouse Fix ist momentan **in deinem Land kostenlos**!"
+            "state" : "needs_review",
+            "value" : "Diese Lizenz **konnte nicht aktiviert werden**, aber Mac Mouse Fix ist momentan **in deinem Land kostenlos**."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This license **could not be activated** but Mac Mouse Fix is currently **free in your country**!"
+            "value" : "This license **could not be activated** but Mac Mouse Fix is currently **free in your country**."
           }
         },
         "fr" : {
