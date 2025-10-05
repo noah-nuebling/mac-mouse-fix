@@ -6995,24 +6995,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Beim Lizenzserver ist ein Fehler aufgetreten**\n\nEr sagt:\n\n%@"
+            "value" : "Ein **Fehler mit dem Lizenzserver** ist aufgetreten\n\nEs heißt:\n\n%@"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**An error with the licensing server occured**\n\nIt says:\n\n%@"
+            "value" : "An **error with the licensing server** occurred\n\nIt says:\n\n%@"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Une erreur avec le serveur de licences s'est produite**\n\nElle dit :\n\n%@"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**라이센스 서버 에러가 발생하였습니다.**\n\n에러 정보:\n\n%@"
           }
         },
@@ -7024,31 +7024,31 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Lisans sunucusunda bir hata oluştu**\n\nŞöyle diyor:\n\n%@"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Có lỗi xảy ra với máy chủ quản lý bản quyền**\n\nNó phản hồi rằng:\n\n%@"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**许可证服务器发生错误**\n\n服务器回应：\n\n%@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**許可證伺服器發生錯誤**\n\n伺服器回應：\n\n%@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**許可證伺服器發生錯誤**\n\n伺服器回應：\n\n%@"
           }
         }
@@ -7060,24 +7060,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Es besteht keine Verbindung zum Internet**\n\nProbiere nochmal, deine Lizenz zu aktivieren, wenn dein Computer online ist."
+            "value" : "Es gibt ein **Problem mit der Internetverbindung**\n\nStelle sicher, dass dein Computer online ist und keine Firewalls Mac Mouse Fix daran hindern, sich mit dem Internet zu verbinden.\n\nWenn das das Problem nicht löst, kontaktiere mich [hier](%@)."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**There is no connection to the internet**\n\nTry activating your license again when your computer is online."
+            "value" : "There is a **problem with the internet connection**\n\nMake sure your computer is online and no firewalls are blocking Mac Mouse Fix from connecting to the internet.\n\nIf this doesn't solve the problem, contact me [here](%@)."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Il n'y a pas de connexion à Internet**\n\nRéessayer d'activer votre licence quand votre ordinateur sera à nouveau en ligne."
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**인터넷 연결이 없습니다.**\n\n컴퓨터를 인터넷에 연결한 후에 다시 시도하십시오."
           }
         },
@@ -7089,31 +7089,31 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**İnternet bağlantısı yok**\n\nBilgisayarınız çevrimiçi olduğunda lisansınızı tekrar etkinleştirmeyi deneyin."
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Hiện không có kết nối internet**\n\nThử kích hoạt bản quyền của bạn khi kết nối khả dụng."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**没有接入互联网**\n\n当您的电脑接入互联网时再次尝试激活许可证。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**沒有Internet連線**\n\n當您的電腦連線時再次嘗試啟用許可證。"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**沒有互聯網連線**\n\n當你的電腦連線時再次嘗試啟用許可證。"
           }
         }
@@ -7124,13 +7124,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Es gab ein Problem beim Lizenzserver**\n\nBitte versuche es später noch einmal.\n\nWenn das Problem weiterhin besteht, kontaktiere mich bitte [hier](%@)."
+            "value" : "Es gibt ein **Problem beim Lizenzserver**\n\nBitte versuche es später noch einmal.\n\nWenn das Problem weiterhin besteht, kontaktiere mich [hier](%@)."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**There was an issue with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, please reach out to me [here](%@)."
+            "value" : "There is a **problem with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, contact me [here](%@)."
           }
         }
       }
@@ -7141,24 +7141,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Ein unbekannter Fehler ist aufgetreten:**\n\n%@"
+            "value" : "Ein **unbekannter Fehler** ist aufgetreten:\n\n%@"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**An unknown error occurred:**\n\n%@"
+            "value" : "An **unknown error** occurred:\n\n%@"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Une erreur inconnue s'est produite :**\n\n%@"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**알 수 없는 에러가 발생하였습니다:**\n\n%@"
           }
         },
@@ -7170,31 +7170,31 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Bilinmeyen bir hata oluştu:**\n\n%@"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Một lỗi không rõ đã xảy ra:**\n\n%@"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**发生了未知错误：**\n\n%@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**發生了未知錯誤：**\n\n%@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**發生了未知錯誤：**\n\n%@"
           }
         }
@@ -7206,13 +7206,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**'%@'** ist kein gültiger Lizenzschlüssel\n\nStelle sicher, dass du deinen Schlüssel genau so eingibst, wie du ihn erhalten hast, ohne führende oder nachfolgende Leerzeichen, Zeilenumbrüche oder andere extra Zeichen."
+            "value" : "**'%@'** ist kein gültiger Lizenzschlüssel\n\nStelle sicher, dass du deinen Mac Mouse Fix Schlüssel genau so eingibst, wie du ihn erhalten hast."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**'%@'** is not a valid license key\n\nMake sure you enter your key exactly as you received it, without leading or trailing spaces, line breaks, or other extra characters."
+            "value" : "**'%@'** is not a valid license key\n\nMake sure you enter your Mac Mouse Fix key exactly as you received it."
           }
         },
         "fr" : {

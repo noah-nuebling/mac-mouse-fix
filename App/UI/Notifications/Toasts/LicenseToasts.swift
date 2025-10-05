@@ -54,6 +54,8 @@ import Foundation
             if let error = error {
                 
                 if error.domain == NSURLErrorDomain {
+                    /// Discussion of `license-toast.no-internet` UI string [Oct 2025]
+                    ///     - This isn't about having 'no internet' (as the UI text previously implied)  it's about MMF not reaching the Gumroad server. IIRC this shows up for Chinese users where Gumroad is blocked, and I remember a bunch of support requests from users confused about this. I don't know how to test the Great Firewall, so we adjusted the UI text and mentioned 'firewalls' to work better for Chinese users.
                     message = NSLocalizedString("license-toast.no-internet", comment: "")
                 } else if error.domain == MFLicenseErrorDomain {
                     
@@ -96,11 +98,10 @@ import Foundation
                         if let gumroadMessage = error.userInfo["message"] as? String {
                             
                             switch gumroadMessage {
-                                /// Discussion on `license-toast.unknown-key` text:
-                                ///     The `license-toast.unknown-key` error message used to just say `**'%@'** is not a known license key\n\nPlease try a different key` which felt a little rude or unhelpful for people who misspelled the key, or accidentally pasted/entered a newline (which I sometimes received support requests about)
-                                ///     So we added the tip to remove whitespace in the error message. But then, we also made it impossible to enter any whitespace into the licenseKey textfield to begin with, so giving the tip to remove whitespace is a little unnecessary now. But I already wrote this and it sounds friendlier than just saying 'check if you misspelled' - I think? Might change this later.
-                                ///     Update: [Apr 2025] 'Sounding friendly' but actually just wasting ppl's time is not a good idea.
-                                ///         TODO: Change this string
+                                /// Considerations that went into the `license-toast.unknown-key` UI  text: [Oct 2025]
+                                ///     - Only scenarios where this shows up: 1. User makes mistake while hand-copiing / copy-pasting wrong from the license key website/email. 2. User copied the key for another software, not MMF. 3. User just tries random entries.
+                                ///     - Whitespace and linebreaks are being removed programmatically now, so we don't need to hint about that. (That used to be a common issue.)
+                                ///     - Also see this Claude conversation: https://claude.ai/share/f47aced0-6330-461d-9c60-8b29f5315fd7
                                 /// Architecture: [Apr 2025]
                                 ///     `"message": "That license does not exist for the provided product."` is part of the error-response json from the Gumroad API.
                                 ///     Maybe it would be better to create an MFDataClass for the Gumroad response, so all 'knowledge' about the Gumroad API response format is centralized in one place in our code.
