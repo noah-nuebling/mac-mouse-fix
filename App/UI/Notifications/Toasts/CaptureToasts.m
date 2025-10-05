@@ -32,10 +32,6 @@ typedef enum {
     kMFCapturedInputTypeHorizontalAndVerticalScroll,
 } MFCapturedInputType;
 
-#define hintSeparatorSize 4.0
-#define useSmallHintStyling false /// Turning off the small hint styling, since that's not used anywhere else in MMF. We should probably build the small hints into ToastController.m and transition the entire app. However, the hints currently feel a bit too long without the small style. (I think hints being wider than the main body feels wrong) [Sep 19 2025] || Update: [Sep 20 2025] Implemented small hints across the app in ToastController.m!
-
-
 + (void)showScrollWheelCaptureToast:(BOOL)hasBeenCaptured {
     
     /// Create toast body
@@ -120,17 +116,8 @@ static NSAttributedString *createSimpleNotificationBody(BOOL didGetCaptured, MFC
         /// Apply markdown to hint
         NSAttributedString *hint = [NSAttributedString attributedStringWithCoolMarkdown: rawHint fillOutBase: NO];
         
-        if ((useSmallHintStyling)) {
-            /// Style hint
-            hint = [hint attributedStringByAddingHintStyle];
-            
-            /// Attach hint
-            NSAttributedString *separator = [@"\n\n".attributed attributedStringBySettingFontSize: hintSeparatorSize];
-            body = astringf(@"%@%@%@", body, separator, hint);
-        }
-        else /// Attach hint
-            body = astringf(@"%@\n%@", body, hint);
-
+        /// Attach hint
+        body = astringf(@"%@\n%@", body, hint);
     }
     
     /// Attach learnMore string
@@ -203,30 +190,16 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
     if (capturedCount > 0) {
         body = astringf(@"%@%@", body, capturedBody);
         if (capturedHint.length > 0) {
-            if ((useSmallHintStyling)) {
-                capturedHint = [capturedHint attributedStringByAddingHintStyle];
-                NSAttributedString *hintSeparator = [@"\n\n".attributed attributedStringBySettingFontSize: hintSeparatorSize];
-                body = astringf(@"%@%@%@", body, hintSeparator, capturedHint);
-            } else {
-                body = astringf(@"%@\n%@", body, capturedHint);
-            }
+            body = astringf(@"%@\n%@", body, capturedHint);
         }
-        NSAttributedString *mainSeparator = @"\n\n".attributed;
-        body = astringf(@"%@%@", body, mainSeparator);
+        body = astringf(@"%@%@", body, [@"\n\n" attributed]);
     }
     if (uncapturedCount > 0) {
         body = astringf(@"%@%@", body, uncapturedBody);
         if (uncapturedHint.length > 0) {
-            if ((useSmallHintStyling)) {
-                uncapturedHint = [uncapturedHint attributedStringByAddingHintStyle];
-                NSAttributedString *hintSeparator = [@"\n\n".attributed attributedStringBySettingFontSize: hintSeparatorSize];
-                body = astringf(@"%@%@%@", body, hintSeparator, uncapturedHint);
-            } else {
-                body = astringf(@"%@\n%@", body, uncapturedHint);
-            }
+            body = astringf(@"%@\n%@", body, uncapturedHint);
         }
-        NSAttributedString *mainSeparator = @"\n\n".attributed;
-        body = astringf(@"%@%@", body, mainSeparator);
+        body = astringf(@"%@%@", body, [@"\n\n" attributed]);
     }
         
     /// Get learn more string
