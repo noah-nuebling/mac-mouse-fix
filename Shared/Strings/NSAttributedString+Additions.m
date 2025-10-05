@@ -282,7 +282,7 @@
     NSMutableAttributedString *mutableFormat = [format mutableCopy];
     
     /// Replace
-    ///     Note: [Sep 2025] We replace in a second pass from finding the formatSpecifiers, so we don't find formatSpecifiers *contained* inside the replacement strings.
+    ///     Note: [Sep 2025] We replace in a second pass after finding the formatSpecifiers, so we don't replace formatSpecifiers *contained inside* the replacement strings.
     int offset = 0;
     loopc(j, i) {
         auto replaceRange = ((NSRange *)[formatSpecifierRanges bytes])[j];

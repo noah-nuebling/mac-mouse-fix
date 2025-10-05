@@ -316,7 +316,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                 if transientUIElement.exists && transientUIElement.isHittable {
                     isSheet = true
                 } else {
-                    assert(false)
+                    assert(false, "_sharedf_take_toast_screenshot: No transient UI element found.")
                 }
             }
         }
