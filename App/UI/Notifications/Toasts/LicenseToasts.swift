@@ -99,9 +99,13 @@ import Foundation
                             
                             switch gumroadMessage {
                                 /// Considerations that went into the `license-toast.unknown-key` UI  text: [Oct 2025]
-                                ///     - Only scenarios where this shows up: 1. User makes mistake while hand-copiing / copy-pasting wrong from the license key website/email. 2. User copied the key for another software, not MMF. 3. User just tries random entries.
-                                ///     - Whitespace and linebreaks are being removed programmatically now, so we don't need to hint about that. (That used to be a common issue.)
-                                ///     - Also see this Claude conversation: https://claude.ai/share/f47aced0-6330-461d-9c60-8b29f5315fd7
+                                ///     Design:
+                                ///         - Only scenarios where this shows up: 1. User makes mistake while hand-copiing / copy-pasting wrong from the license key website/email. 2. User copied the key for another software, not MMF. 3. User just tries random entries.
+                                ///         - Whitespace and linebreaks are being removed programmatically now, so we don't need to hint about that. (That used to be a common issue.)
+                                ///         - Also see this Claude conversation: https://claude.ai/share/f47aced0-6330-461d-9c60-8b29f5315fd7
+                                ///     Technical:
+                                ///         - Putting quotes inside emphasis (which we used to do for `license-toast.unknown-key`) breaks markdown parsing of emphasis when `NSString+Steganography.m` is active. -> Therefore we're putting the quotes '**outside**' the emphasis.
+                                ///             See `MarkdownParser.m` for minimal repro. [Oct 2025]
                                 /// Architecture: [Apr 2025]
                                 ///     `"message": "That license does not exist for the provided product."` is part of the error-response json from the Gumroad API.
                                 ///     Maybe it would be better to create an MFDataClass for the Gumroad response, so all 'knowledge' about the Gumroad API response format is centralized in one place in our code.

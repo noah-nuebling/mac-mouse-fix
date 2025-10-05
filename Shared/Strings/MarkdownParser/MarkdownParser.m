@@ -15,9 +15,30 @@
 #import "NSString+Additions.h"
 #import "NSAttributedString+Additions.h"
 
-///
-/// Notes:
-///
+/**
+ 
+    Notes:
+        - Markdown parsing bug when using `NSString+Steganography.m` [Oct 2025]
+            - The zero-width unicode characters we're using in `NSString+Steganography.m` trigger a bug where the parsing of **emphasis** doesn't work when the content of the emphasis begins with a single quote (`'`)
+                - Minimal repro:
+                    ```
+                    [NSAttributedString attributedStringWithCoolMarkdown: @""
+                        "Titletitletitle title title title\n"
+                        ""          "**'asdfsaf'** noononono\n"   /// Works
+                        " "         "**'asdfsaf'** noononono\n"   /// Works
+                        "\u200B"    "**'asdfsaf'** noononono\n"   /// Doesn't work
+                        "\u2060"    "**'asdfsaf'** noononono\n"   /// Doesn't work
+                        "\u200C"    "**'asdfsaf'** noononono\n"   /// Doesn't work
+                        "\u200D"    "**'asdfsaf'** noononono\n"   /// Doesn't work
+                        "\u2062"    "**'asdfsaf'** noononono\n"   /// Doesn't work
+                        "\u2063"    "**'asdfsaf'** noononono\n"   /// Doesn't work
+                        "\u2063"    "**"asdfsaf"** noononono\n"   /// Doesn't work (Using double quotes)
+                        "\u2063"    "**asdfsaf** noononono\n"     /// Works        (Using no quotes)
+                    ];
+                    ```
+                -  Reproduction environment: We're using some weird commit of the the markdown library on the CJK branch or some stuff. Wrote more about this elsewhere. [Oct 2025]
+                - Impact: This currently affects the `license-toast.unknown-key` UI string. [Oct 2025]
+*/
 
 @implementation MarkdownParser
 

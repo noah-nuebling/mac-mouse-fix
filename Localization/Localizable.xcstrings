@@ -7206,61 +7206,61 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**'%@'** ist kein gültiger Lizenzschlüssel\n\nStelle sicher, dass du deinen Mac Mouse Fix Schlüssel genau so eingibst, wie du ihn erhalten hast."
+            "value" : "'**%@**' ist kein gültiger Lizenzschlüssel\n\nStelle sicher, dass du deinen Mac Mouse Fix Schlüssel genau so eingibst, wie du ihn erhalten hast."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**'%@'** is not a valid license key\n\nMake sure you enter your Mac Mouse Fix key exactly as you received it."
+            "value" : "'**%@**' is not a valid license key\n\nMake sure you enter your Mac Mouse Fix key exactly as you received it."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**« %@ »** n'est pas une clé de licence connue\n\nVeuillez essayer une clé différente"
+            "value" : "« **%@** » n'est pas une clé de licence connue\n\nVeuillez essayer une clé différente"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**'%@'** 키는 올바르지 않은 라이센스 키입니다.\n\n다시 입력하십시오."
+            "value" : "'**%@**' 키는 올바르지 않은 라이센스 키입니다.\n\n다시 입력하십시오."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**'%@'** não é uma chave de licença válida\n\nTente uma chave diferente"
+            "value" : "'**%@**' não é uma chave de licença válida\n\nTente uma chave diferente"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**'%@'** bilinen bir lisans anahtarı değil\n\nLütfen farklı bir anahtar deneyin"
+            "value" : "'**%@**' bilinen bir lisans anahtarı değil\n\nLütfen farklı bir anahtar deneyin"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Không thể xác định **'%@'** là một khóa kích hoạt\n\nVui lòng thử một khóa khác"
+            "value" : "Không thể xác định '**%@**' là một khóa kích hoạt\n\nVui lòng thử một khóa khác"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**“%@”**并不是已知的许可证。\n请换一个许可证再试。"
+            "value" : "“**%@**”并不是已知的许可证。\n请换一个许可证再试。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**「%@」**並不是已知的許可證。\n請換一個許可證再試。"
+            "value" : "「**%@**」並不是已知的許可證。\n請換一個許可證再試。"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**「%@」**並不是已知的許可證。\n請換一個許可證再試。"
+            "value" : "「**%@**」並不是已知的許可證。\n請換一個許可證再試。"
           }
         }
       }
