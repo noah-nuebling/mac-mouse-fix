@@ -119,6 +119,7 @@ typedef enum {
     ///
     /// Future ideas:
     ///     - For the Tahoe overhaul, maybe change the look to be capsule shaped like native iOS Toasts? (https://x.com/jsngr/status/1340317069359919104) [Sep 2025]
+    ///         - Under Sequoia, the Toasts look almost identical to popovers – maybe we should keep that similarity for Tahoe.
     ///     - Maybe make the text selectable / copy-paste able [Sep 2025]
     ///
     /// Protocol:
