@@ -6936,7 +6936,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This license could not be activated** but Mac Mouse Fix is currently **free in your country**!"
+            "value" : "This license **could not be activated** but Mac Mouse Fix is currently **free in your country**!"
           }
         },
         "fr" : {
