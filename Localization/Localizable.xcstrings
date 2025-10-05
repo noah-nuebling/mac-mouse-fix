@@ -3366,14 +3366,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Scrollen** wird jetzt von Mac Mouse Fix abgefangen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Scrolling** is now captured by Mac Mouse Fix."
+            "value" : "**Scrolling** is now captured by Mac Mouse Fix"
           }
         },
         "ko" : {
@@ -7466,24 +7466,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ich lese und schätze alle E-Mails, auch wenn ich nicht auf alle antworten kann"
+            "value" : "Ich kann nur selten antworten, aber ich lese alle Nachrichten und das Feedback hilft mir dabei, Mac Mouse Fix zu verbessern. Danke für dein Feedback und deine Geduld."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "I read and appreciate all emails, even though I can't respond to all"
+            "value" : "I can only rarely respond, but I read all messages and the feedback helps me improve Mac Mouse Fix. Thank you for your feedback and your patience."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Je lis et j'apprécie tous vos e-mails, même si je ne peux pas répondre à tout le monde"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "전부 답장할 수는 없지만, 항상 모든 이메일을 읽어보고 있습니다."
           }
         },
@@ -7495,31 +7495,31 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Hepsine cevap verebilmesem de tüm e-postaları okuyorum ve değer veriyorum"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Tôi sẽ đọc và trân trọng tất cả các email gửi về, mặc dù có thể tôi sẽ không phản hồi tất cả"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "我无法回复所有的邮件，但我会阅读并感谢所有的反馈"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "我無法回覆所有的郵件，但我會閱讀並感謝所有的使用者意見"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "我無法回覆所有的郵件，但我會閱讀並感謝所有的用戶意見"
           }
         }
