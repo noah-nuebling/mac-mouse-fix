@@ -2122,7 +2122,7 @@
       }
     },
     "capture-toast.button-name.numbered" : {
-      "comment" : "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back here. See trigger.substring.button-modifier.2 for tips on how to capitalize these strings.",
+      "comment" : "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back here. See trigger.substring.button-modifier.2 for tips on how to capitalize those strings.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2577,13 +2577,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "Andere Apps können sie nicht mehr sehen"
+                      "value" : "Andere Apps können die Taste nicht mehr sehen"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "Andere Apps können sie nicht mehr sehen"
+                      "value" : "Andere Apps können diese Tasten nicht mehr sehen"
                     }
                   }
                 }
@@ -3131,14 +3131,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "Die Taste funktioniert jetzt, als wäre Mac Mouse Fix ausgeschaltet"
+                      "state" : "new",
+                      "value" : ""
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "Die Tasten funktionieren jetzt, als wäre Mac Mouse Fix ausgeschaltet"
+                      "state" : "new",
+                      "value" : ""
                     }
                   }
                 }
@@ -3158,14 +3158,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "The button now works as if Mac Mouse Fix was disabled"
+                      "state" : "new",
+                      "value" : ""
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "These buttons now work as if Mac Mouse Fix was disabled"
+                      "state" : "new",
+                      "value" : ""
                     }
                   }
                 }
@@ -3186,13 +3186,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "new",
-                      "value" : "The button now works as if Mac Mouse Fix was disabled."
+                      "value" : ""
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "new",
-                      "value" : "These buttons now work as if Mac Mouse Fix was disabled."
+                      "value" : ""
                     }
                   }
                 }
@@ -3359,7 +3359,8 @@
             }
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "capture-toast.scroll.captured.body" : {
       "comment" : "",
@@ -3375,36 +3376,6 @@
             "state" : "translated",
             "value" : "**Scrolling** is now captured by Mac Mouse Fix"
           }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.body"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.body"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.body"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.body"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.body"
-          }
         }
       }
     },
@@ -3413,44 +3384,8 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : ""
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ""
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.hint"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.hint"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.hint"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.hint"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.hint"
           }
         }
       },
@@ -3535,85 +3470,11 @@
             "state" : "translated",
             "value" : "**Scrolling** is no longer captured by Mac Mouse Fix"
           }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.body"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.body"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.body"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.body"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.body"
-          }
         }
       }
     },
     "capture-toast.scroll.uncaptured.hint" : {
-      "comment" : "",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scrollen funktioniert jetzt, als wäre Mac Mouse Fix ausgeschaltet"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scrolling now works as if Mac Mouse Fix was disabled"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.hint"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.hint"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.hint"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.hint"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.hint"
-          }
-        }
-      }
+      "shouldTranslate" : false
     },
     "drag-effect.dock-swipe" : {
       "comment" : "",

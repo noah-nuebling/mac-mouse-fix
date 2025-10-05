@@ -129,7 +129,7 @@
                 "Example: \n"
                 "Middle Button and Button 4 are now captured by Mac Mouse Fix."
             ),
-            @-1: NSLocalizedString(@"capture-toast.button-name.numbered",   @"Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back here. See trigger.substring.button-modifier.2 for tips on how to capitalize these strings."),
+            @-1: NSLocalizedString(@"capture-toast.button-name.numbered",   @"Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back here. See trigger.substring.button-modifier.2 for tips on how to capitalize those strings."),
         };
         
     } else {
