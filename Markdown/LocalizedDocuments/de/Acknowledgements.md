@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Oktober 2025**
 
+- 🇺🇸&nbsp;Anish&nbsp;Parikh&nbsp;/&nbsp;Tec - "Great product!"
 - 🇺🇸&nbsp;Jbatez
 - 🇦🇺&nbsp;Henry - "Saved me from Logitech's horrid application. Enjoy the milkshake Noah!"
 - 🇺🇸&nbsp;Apolopa
