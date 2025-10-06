@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **October 2025**
 
+- 🇺🇸&nbsp;Root&nbsp;32 - "mos is sketchy"
 - 🇺🇸&nbsp;Anish&nbsp;Parikh&nbsp;/&nbsp;Tec - "Great product!"
 - 🇺🇸&nbsp;Jbatez
 - 🇦🇺&nbsp;Henry - "Saved me from Logitech's horrid application. Enjoy the milkshake Noah!"
