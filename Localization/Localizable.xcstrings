@@ -5817,7 +5817,7 @@
       }
     },
     "enable-timeout-toast" : {
-      "comment" : "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which looks like a normal space, but it prevents linebreaks. We're using this to prevent the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\" if you wanna look it up.",
+      "comment" : "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which looks like a normal space, but it prevents linebreaks. We're using this to prevent the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\".",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6071,7 +6071,7 @@
       }
     },
     "is-disabled-toast" : {
-      "comment" : "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings here.",
+      "comment" : "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6591,7 +6591,7 @@
       }
     },
     "license-toast.activation-overload" : {
-      "comment" : "Note: \"%2$d\", \"%3$d\", and \"%1$@\" are so-called \"C Format Specifers\". They will be replaced by numbers or text when the program runs. Make sure to type the format specifiers exactly like in English so that the text-replacement-code works correctly.",
+      "comment" : "Note: \"%2$d\", \"%3$d\", and \"%1$@\" are so-called \"C Format Specifers\". They will be replaced by numbers or text when the program runs. Make sure to type the format specifiers exactly like in the English version so that the text-replacement-code works correctly.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8298,7 +8298,7 @@
       }
     },
     "restore-default-buttons-popover.body" : {
-      "comment" : "Note: The linebreak is so the popover doesn't become too wide.",
+      "comment" : "Note: There's a linebreak in English so the popover doesn't become too wide and to aid with readability.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9728,7 +9728,7 @@
       }
     },
     "thanks.01" : {
-      "comment" : "",
+      "comment" : "Note: The weird thank-you messages are rare. Feel free to change them if you'd like to leave an easter egg. You can also leave them blank, just make sure to fill out thanks.01 - thanks.03",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9798,24 +9798,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🌟 Dankeschön, dass du Mac Mouse Fix gekauft hast!"
+            "value" : "🙌 Danke, dass du Mac Mouse Fix gekauft hast!"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🌟 Thanks for purchasing Mac Mouse Fix!"
+            "value" : "🙌 Thank you for buying Mac Mouse Fix!"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🌟 Merci d'avoir acheté Mac Mouse Fix !"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🌟 Mac Mouse Fix를 결제해주셔서 감사합니다!"
           }
         },
@@ -9833,25 +9833,25 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🌟 Cảm ơn bạn đã mua Mac Mouse Fix!"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🌟感谢购买Mac Mouse Fix！"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🌟感謝購買Mac Mouse Fix！"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🌟感謝購買Mac Mouse Fix！"
           }
         }
@@ -9928,24 +9928,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🙌 Danke, dass du Mac Mouse Fix gekauft hast!"
+            "value" : "🌟 Dankeschön, dass du Mac Mouse Fix gekauft hast!"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🙌 Thank you for buying Mac Mouse Fix!"
+            "value" : "🌟 Thanks for purchasing Mac Mouse Fix!"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🙌 Merci d'avoir acheté Mac Mouse Fix !"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🙌 Mac Mouse Fix를 구입해주셔서 감사합니다!"
           }
         },
@@ -9963,25 +9963,25 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🙌 Cảm ơn bạn đã mua Mac Mouse Fix!"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🙌感谢您购买Mac Mouse Fix！"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🙌感謝您購買Mac Mouse Fix！"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🙌感謝你購買Mac Mouse Fix！"
           }
         }
@@ -10313,7 +10313,7 @@
       }
     },
     "thanks.10" : {
-      "comment" : "Note: The weird ones are rare. Feel free to change them if you'd like to leave a little easter egg.",
+      "comment" : ".",
       "localizations" : {
         "de" : {
           "stringUnit" : {

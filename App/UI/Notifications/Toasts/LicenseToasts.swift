@@ -65,7 +65,7 @@ import Foundation
                         
                         let nOfActivations = (error.userInfo["nOfActivations"] as? Int) ?? -1
                         let maxActivations = (error.userInfo["maxActivations"] as? Int) ?? -1
-                        let messageFormat = NSLocalizedString("license-toast.activation-overload", comment: "Note: \"%2$d\", \"%3$d\", and \"%1$@\" are so-called \"C Format Specifers\". They will be replaced by numbers or text when the program runs. Make sure to type the format specifiers exactly like in English so that the text-replacement-code works correctly.") /// We do the localizer hint with the c-format-specifier-explanation on this string since it's the most complicated one atm. I feel like if we do the explanation on a simpler string, localizers might miss details on this one. E.g. usage of `d` instead `@` in some specifiers.
+                        let messageFormat = NSLocalizedString("license-toast.activation-overload", comment: "Note: \"%2$d\", \"%3$d\", and \"%1$@\" are so-called \"C Format Specifers\". They will be replaced by numbers or text when the program runs. Make sure to type the format specifiers exactly like in the English version so that the text-replacement-code works correctly.") /// We do the localizer hint with the c-format-specifier-explanation on this string since it's the most complicated one atm. I feel like if we do the explanation on a simpler string, localizers might miss details on this one. E.g. usage of `d` instead `@` in some specifiers.
                         message = String(format: messageFormat, (Links.link(kMFLinkID_MailToNoah) ?? ""), nOfActivations, maxActivations)
                         
                     case kMFLicenseErrorCodeServerResponseInvalid:

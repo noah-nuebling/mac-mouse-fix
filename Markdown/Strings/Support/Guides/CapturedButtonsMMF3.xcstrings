@@ -37,7 +37,7 @@
       }
     },
     "03: which-buttons" : {
-      "comment" : "{img} will be replaced by a screenshot of the ‘Buttons’ tab where you can see 3 buttons being captured: ‘Middle Button’, ‘Button 5’ and ‘Button 4’ (In that order)\n\nTo help the reader make the connection between the text and the screenshot, keep the order of the buttons and use the same terminology seen on the ‘Buttons’ tab.",
+      "comment" : "{img} will be replaced by a screenshot of the ‘Buttons’ tab where you can see 3 buttons being captured: ‘Middle Button’, ‘Button 5’ and ‘Button 4’ (In that order)\n\nTo help the reader make the connection between the text and the screenshot, keep the order of the buttons and match the terminology that is seen on the ‘Buttons’ tab. \n\nSearch for 'trigger.substring.button-name' inside 'Localizable' to find the button names used on the 'Buttons' tab.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -90,6 +90,7 @@
       }
     },
     "06: restoring.header.default" : {
+      "comment" : "Header of the 1st column of the table\n\nThe 1st column describes which mouse button triggers the 'Original Function' by default (when Mac Mouse Fix is not enabled)",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -107,6 +108,7 @@
       }
     },
     "07: restoring.header.function" : {
+      "comment" : "Header of the 2nd column of the table\n\nThe 2nd column describes the 'Original Function' triggered by the mouse button described in the 1st column.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -124,6 +126,7 @@
       }
     },
     "08: restoring.header.action" : {
+      "comment" : "Header of the 3rd column of the table\n\nThe 3rd column describes the option that can be assigned inside Mac Mouse Fix to replicate the 'Original Function' described in the 2nd column.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -175,7 +178,7 @@
       }
     },
     "11: restoring.row1.action" : {
-      "comment" : "This is a cell in the ‘Action in Mac Mouse Fix’ column of the table.\n\n‘Middle Click’ should match the text that is seen in MMF when you click one of the pop-up buttons on the ‘Buttons’ tab.\n\nThis way we help the reader understand which ‘Action in Mac Mouse Fix’ we’re talking about.",
+      "comment" : "This is a cell in the 3rd column of the table.\n\n‘Middle Click’ should match the text that is seen in MMF when you click one of the pop-up buttons on the ‘Buttons’ tab.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {

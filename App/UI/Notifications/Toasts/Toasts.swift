@@ -23,12 +23,12 @@ import Foundation
             /// - The default duration `kMFToastDurationAutomatic` felt too short in this case. I wonder why that is? I think this toast is one of, if not the shortest toasts - maybe it has to do with that? Maybe it feels like it should display longer, because there's a delay until it shows up so it's harder to get back to? Maybe our tastes for how long the toasts should be changed? Maybe we should adjust the formula for `kMFToastDurationAutomatic`?
             /// - Why are we dispatching `k-is-disabled-toast` to the main thread by not this? (They are called from almost the same place)
             
-            var rawMessage = NSLocalizedString("enable-timeout-toast", comment: "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which looks like a normal space, but it prevents linebreaks. We're using this to prevent the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\" if you wanna look it up.") /// [Oct 2025] Actually, we're using `NSLineBreakStrategyPushOut` now, so the manual &nbsp; may not be necessary anymore.
+            var rawMessage = NSLocalizedString("enable-timeout-toast", comment: "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which looks like a normal space, but it prevents linebreaks. We're using this to prevent the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\".") /// [Oct 2025] Actually, we're using `NSLineBreakStrategyPushOut` now, so the manual &nbsp; may not be necessary anymore.
             rawMessage = String(format: rawMessage, Links.link(kMFLinkID_VenturaEnablingGuide) ?? "")
             ToastController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage, fillOutBase: false)!, forDuration: 10.0)
         },
         "k-is-disabled-toast": {
-            var messageRaw = NSLocalizedString("is-disabled-toast", comment: "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings here.")
+            var messageRaw = NSLocalizedString("is-disabled-toast", comment: "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings.")
             messageRaw = String(format: messageRaw, Links.link(kMFLinkID_MacOSSettingsLoginItems) ?? "")
             
             let message = NSMutableAttributedString(coolMarkdown: messageRaw, fillOutBase: false)

@@ -24,7 +24,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "## Fragen\n\nKurze Antworten auf häufige Fragen [hier](<{url}>)."
+            "value" : "## Fragen\n\nSchnelle Antworten auf häufige Fragen [hier](<{url}>)."
           }
         },
         "en" : {
@@ -41,7 +41,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "## Anleitungen\n\nWo es möglich ist, erklärt sich Mac Mouse Fix selbst.\nAber manchmal hilft eine Anleitung!\n\n- [{docname_captured_scroll_wheels}](<{url_1}>)\n- [{docname_captured_buttons_mmf3}](<{url_2}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_3}>) (Mac Mouse Fix 2) {only_in_english}"
+            "value" : "## Anleitungen\n\nWo möglich, versucht Mac Mouse Fix selbsterklärend zu sein. Aber für manche Dinge ist eine detailliertere Erklärung hilfreich:\n\n- [{docname_captured_scroll_wheels}](<{url_1}>)\n- [{docname_captured_buttons_mmf3}](<{url_2}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_3}>) (Mac Mouse Fix 2) {only_in_english}"
           }
         },
         "en" : {
