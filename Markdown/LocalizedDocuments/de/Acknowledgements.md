@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Oktober 2025**
 
+- 🇸🇬&nbsp;ケビン - "Definitely worth 10$ to get a Sanwa 400-MAWBTTB190 trackball working properly on MacOS. Thank you for taking the time to develop and maintain this."
 - 🇺🇸&nbsp;Root&nbsp;32 - "mos is sketchy"
 - 🇺🇸&nbsp;Anish&nbsp;Parikh&nbsp;/&nbsp;Tec - "Great product!"
 - 🇺🇸&nbsp;Jbatez
