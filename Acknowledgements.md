@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **October 2025**
 
+- 🇺🇸&nbsp;Junyu&nbsp;Li - "Finally I can get rid of mx master"
 - 🇺🇸&nbsp;Fred&nbsp;A - "Can't imaging my Mac without this."
 - 🇸🇬&nbsp;ケビン - "Definitely worth 10$ to get a Sanwa 400-MAWBTTB190 trackball working properly on MacOS. Thank you for taking the time to develop and maintain this."
 - 🇺🇸&nbsp;Root&nbsp;32 - "mos is sketchy"
