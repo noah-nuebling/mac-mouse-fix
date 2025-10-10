@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **October 2025**
 
+- 🇩🇪&nbsp;Derhorst - "This is one of the best pieces of software a Mac can have. Thanks for developing and maintaining it."
 - 🇩🇪&nbsp;Local&nbsp;Dynamics&nbsp;Gbr - "Rubensstraße 8, 90453 Nürnberg"
 - 🇬🇧&nbsp;Dr&nbsp;Nick - "Great little tool for giving the smooth trackpad feel to my Logi MX Vertical"
 - 🇺🇸&nbsp;Junyu&nbsp;Li - "Finally I can get rid of mx master"
