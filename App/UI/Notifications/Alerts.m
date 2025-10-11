@@ -122,7 +122,7 @@
     
     /// Override body alignment
     
-    NSAttributedString *body = [NSAttributedString attributedStringWithCoolMarkdown:bodyRaw];
+    NSAttributedString *body = [MarkdownParser attributedStringWithCoolMarkdown:bodyRaw];
     if (@available(macOS 11.0, *)) {
         body = [body attributedStringByAddingAlignment: NSTextAlignmentCenter forRange: NULL];
     } else { /// The ways this looks pre-Big Sur is untested at the time of writing

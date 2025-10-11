@@ -12268,13 +12268,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ klicken und ziehen"
+            "value" : "%@ klicken und *ziehen*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Click and Drag %@"
+            "value" : "Click and *Drag* %@"
           }
         },
         "fr" : {
@@ -12285,7 +12285,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "클릭 및 %@ 드래그"
           }
         },
@@ -12309,19 +12309,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "点按并拖移%@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按一下並拖移%@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按一下並拖移%@"
           }
         }
@@ -12333,13 +12333,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ doppelklicken und ziehen"
+            "value" : "%@ doppelklicken und *ziehen*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Double Click and Drag %@"
+            "value" : "Double Click and *Drag* %@"
           }
         },
         "fr" : {
@@ -12350,7 +12350,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "이중 클릭 및 %@ 드래그"
           }
         },
@@ -12374,19 +12374,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "连按并拖移%@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按兩下並拖移%@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按兩下並拖移%@"
           }
         }
@@ -12398,13 +12398,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ dreifach klicken und ziehen"
+            "value" : "%@ dreifach klicken und *ziehen*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Triple Click and Drag %@"
+            "value" : "Triple Click and *Drag* %@"
           }
         },
         "fr" : {
@@ -12415,7 +12415,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "삼중 클릭 및 %@ 드래그"
           }
         },
@@ -12439,19 +12439,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "连按三次并拖移%@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按三下並拖移%@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按三下並拖移%@"
           }
         }
@@ -12463,13 +12463,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "und ziehen"
+            "value" : "und *ziehen*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "and Drag"
+            "value" : "and *Drag*"
           }
         },
         "fr" : {
@@ -12480,7 +12480,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "및 드래그"
           }
         },
@@ -12504,19 +12504,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "并拖移"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "並拖移"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "並拖移"
           }
         }
@@ -12723,13 +12723,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ klicken und scrollen"
+            "value" : "%@ klicken und *scrollen*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Click and Scroll %@"
+            "value" : "Click and *Scroll* %@"
           }
         },
         "fr" : {
@@ -12740,7 +12740,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "클릭 및 %@ 스크롤"
           }
         },
@@ -12764,19 +12764,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "点按并滚动%@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按下並捲動%@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按下並捲動%@"
           }
         }
@@ -12788,13 +12788,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ doppelklicken und scrollen"
+            "value" : "%@ doppelklicken und *scrollen*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Double Click and Scroll %@"
+            "value" : "Double Click and *Scroll* %@"
           }
         },
         "fr" : {
@@ -12805,7 +12805,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "이중 클릭 및 %@ 스크롤"
           }
         },
@@ -12829,19 +12829,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "连按并滚动%@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按兩下並捲動%@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按兩下並捲動%@"
           }
         }
@@ -12853,13 +12853,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ dreifach klicken und scrollen"
+            "value" : "%@ dreifach klicken und *scrollen*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Triple Click and Scroll %@"
+            "value" : "Triple Click and *Scroll* %@"
           }
         },
         "fr" : {
@@ -12870,7 +12870,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "삼중 클릭 및 %@ 스크롤"
           }
         },
@@ -12894,19 +12894,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "连按三次并滚动%@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按三下並捲動%@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按三下並捲動%@"
           }
         }
@@ -12918,13 +12918,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "und scrollen"
+            "value" : "und *scrollen*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "and Scroll"
+            "value" : "and *Scroll*"
           }
         },
         "fr" : {
@@ -12935,7 +12935,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "및 스크롤"
           }
         },
@@ -12959,19 +12959,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "并滚动"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "並捲動"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "並捲動"
           }
         }
@@ -13233,124 +13233,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "輔助按鈕"
-          }
-        }
-      }
-    },
-    "trigger.z.drag-particle" : {
-      "comment" : "Note: This word will be emphasized in strings such as \"Double Click and Drag %@\".\nFor the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with\n\"trigger.substring.drag.[...]\".\n\nIf that's not possible in your language, let me know and I will improve the implementation. Thank you!",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ziehen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Drag"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "glissement"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "드래그"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "arraste"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "kéo"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "拖移"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "拖移"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "拖移"
-          }
-        }
-      }
-    },
-    "trigger.z.scroll-particle" : {
-      "comment" : "Note: This word will be emphasized in strings such as \"Click and Scroll %@\".\nFor the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in the strings whose keys begin with\n\"trigger.substring.scroll.[...]\"\n\n\nAlso see the comment next to \"trigger.z.drag-particle\".",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "scrollen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scroll"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "défilement"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "스크롤"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "role"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "cuộn"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "滚动"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "捲動"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "捲動"
           }
         }
       }

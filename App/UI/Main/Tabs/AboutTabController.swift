@@ -316,7 +316,7 @@ class AboutTabController: NSViewController {
             }
             
             /// Parse markdown in message
-            let messageAttributed = NSAttributedString(coolMarkdown: message, fillOutBase: false)!
+            let messageAttributed = MarkdownParser.attributedString(withCoolMarkdown: message, fillOutBase: false)!
             
             /// Replace text
             assignAttributedStringKeepingBase(&trialSectionManager!.currentSection.textField!.attributedStringValue, messageAttributed)

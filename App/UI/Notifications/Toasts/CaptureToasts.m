@@ -103,18 +103,18 @@ static NSAttributedString *createSimpleNotificationBody(BOOL didGetCaptured, MFC
     
     /// Get learn more string
     NSString *learnMoreStringRaw = getLocalizedString(inputType, @"link");
-    NSAttributedString *learnMoreString = learnMoreStringRaw ? [NSAttributedString attributedStringWithCoolMarkdown: learnMoreStringRaw fillOutBase: NO] : nil;
+    NSAttributedString *learnMoreString = learnMoreStringRaw ? [MarkdownParser attributedStringWithCoolMarkdown: learnMoreStringRaw fillOutBase: NO] : nil;
     
     /// TEST: Override learn more string size to be system default size despite being part of the 'subtitle' of the Toast
     if ((1)) learnMoreString = [learnMoreString attributedStringBySettingFontSize: NSFont.systemFontSize];
     
     /// Apply markdown to rawBody
-    NSAttributedString *body = [NSAttributedString attributedStringWithCoolMarkdown: rawBody fillOutBase: NO];
+    NSAttributedString *body = [MarkdownParser attributedStringWithCoolMarkdown: rawBody fillOutBase: NO];
     
     if (rawHint.length > 0) {
         
         /// Apply markdown to hint
-        NSAttributedString *hint = [NSAttributedString attributedStringWithCoolMarkdown: rawHint fillOutBase: NO];
+        NSAttributedString *hint = [MarkdownParser attributedStringWithCoolMarkdown: rawHint fillOutBase: NO];
         
         /// Attach hint
         body = astringf(@"%@\n%@", body, hint);
@@ -171,10 +171,10 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
     }
     
     /// Apply Markdown
-    NSAttributedString *capturedBody   = [NSAttributedString attributedStringWithCoolMarkdown: capturedBodyRaw    fillOutBase: NO];
-    NSAttributedString *uncapturedBody = [NSAttributedString attributedStringWithCoolMarkdown: uncapturedBodyRaw  fillOutBase: NO];
-    NSAttributedString *capturedHint   = [NSAttributedString attributedStringWithCoolMarkdown: capturedHintRaw    fillOutBase: NO];
-    NSAttributedString *uncapturedHint = [NSAttributedString attributedStringWithCoolMarkdown: uncapturedHintRaw  fillOutBase: NO];
+    NSAttributedString *capturedBody   = [MarkdownParser attributedStringWithCoolMarkdown: capturedBodyRaw    fillOutBase: NO];
+    NSAttributedString *uncapturedBody = [MarkdownParser attributedStringWithCoolMarkdown: uncapturedBodyRaw  fillOutBase: NO];
+    NSAttributedString *capturedHint   = [MarkdownParser attributedStringWithCoolMarkdown: capturedHintRaw    fillOutBase: NO];
+    NSAttributedString *uncapturedHint = [MarkdownParser attributedStringWithCoolMarkdown: uncapturedHintRaw  fillOutBase: NO];
     
     
     /// Capitalize the two bodys
@@ -203,7 +203,7 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
     }
         
     /// Get learn more string
-    NSAttributedString *learnMoreString = [NSAttributedString attributedStringWithCoolMarkdown: getLocalizedString(kMFCapturedInputTypeButtons, @"link") fillOutBase: false];
+    NSAttributedString *learnMoreString = [MarkdownParser attributedStringWithCoolMarkdown: getLocalizedString(kMFCapturedInputTypeButtons, @"link") fillOutBase: false];
     
     /// TEST: Override learn more string size to be system default size despite being part of the 'subtitle' of the Toast
     if ((1)) learnMoreString = [learnMoreString attributedStringBySettingFontSize: NSFont.systemFontSize];

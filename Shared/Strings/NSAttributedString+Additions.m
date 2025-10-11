@@ -9,7 +9,6 @@
 
 #import "NSAttributedString+Additions.h"
 #import <Cocoa/Cocoa.h>
-#import "MarkdownParser/MarkdownParser.h"
 #import "MFLoop.h"
 #import "NSString+Steganography.h"
 #import "NSDictionary+Additions.h"
@@ -241,8 +240,7 @@
 #pragma mark Append
 
 - (NSAttributedString *) attributedStringByAppending: (NSAttributedString *)string { /// [Sep 2025] This probably shouldn't exist using astringf macro directly is more readable and both map to `attributedStringWithAttributedFormat:`
-    
-    return [NSAttributedString attributedStringWithAttributedFormat: [@"%@%@" attributed] args: (id[]){ self, string } argcount: 2];
+    return astringf([@"%@%@" attributed], self, string);
 }
 
 #pragma mark Formatting
@@ -250,7 +248,7 @@
 + (NSAttributedString *) attributedStringWithAttributedFormat: (NSAttributedString *)format args: (NSAttributedString *__strong _Nullable [_Nonnull])args argcount: (int)argcount {
     
     /// Replaces occurences of %@ in the attributedString with the args
-    ///     Usage tip:                  Use the astringf() macro which wraps this.
+    ///     Usage tip:                  Use the `astringf()` macro which wraps this.
     ///     Also see:                     lib function `initWithFormat:options:locale:` (Only available on macOS 12.0)
     ///     Optimization idea:      We could also make an attributed variant of -[NSArray componentsJoinedByString:] if this is too slow
     ///     Implementation note: We're using a C array instead of NSArray to not crash when an arg is nil.
@@ -403,62 +401,16 @@
 
 #pragma mark Markdown
 
-+ (NSAttributedString *)labelWithMarkdown:(NSString *)md {
-    return [self attributedStringWithCoolMarkdown:md];
++ (NSAttributedString *) labelWithMarkdown: (NSString *)md {
+    return [MarkdownParser attributedStringWithCoolMarkdown: md];
 }
-+ (NSAttributedString *)secondaryLabelWithMarkdown:(NSString *)md {
++ (NSAttributedString *) secondaryLabelWithMarkdown: (NSString *)md {
     
-    NSAttributedString *s = [self attributedStringWithCoolMarkdown:md];
-    s = [s attributedStringBySettingFontSize:11];
-    s = [s attributedStringByAddingColor:NSColor.secondaryLabelColor forRange:NULL];
+    NSAttributedString *s = [MarkdownParser attributedStringWithCoolMarkdown: md];
+    s = [s attributedStringBySettingFontSize: 11];
+    s = [s attributedStringByAddingColor: NSColor.secondaryLabelColor forRange: NULL];
     
     return s;
-}
-
-+ (NSAttributedString *_Nullable)attributedStringWithAttributedMarkdown:(NSAttributedString *)md {
-    return [MarkdownParser attributedStringWithAttributedMarkdown:md];
-}
-
-+ (NSAttributedString *_Nullable)attributedStringWithCoolMarkdown:(NSString *)md {
-    
-    return [self attributedStringWithCoolMarkdown:md fillOutBase:YES];
-}
-
-+ (NSAttributedString *_Nullable)attributedStringWithCoolMarkdown:(NSString *)md fillOutBase:(BOOL)fillOutBase {
-    
-    NSAttributedString *result = nil;
-    
-    if ((NO)) {
-        
-        /// Never use Apple API, always use custom method - so things are consistent across versions and we can catch issues witht custom version during development
-        //
-        //        /// Use library function
-        //
-        //        /// Create options object
-        //        NSAttributedStringMarkdownParsingOptions *options = [[NSAttributedStringMarkdownParsingOptions alloc] init];
-        //
-        //        /// No idea what these do
-        //        options.allowsExtendedAttributes = NO;
-        //        options.appliesSourcePositionAttributes = NO;
-        //
-        //        /// Make it respect linebreaks
-        //        options.interpretedSyntax = NSAttributedStringMarkdownInterpretedSyntaxInlineOnlyPreservingWhitespace;
-        //
-        //        /// Create string
-        //        result = [[NSAttributedString alloc] initWithMarkdownString:md options:options baseURL:[NSURL URLWithString:@""] error:nil];
-        
-    } else {
-        
-        /// Fallback to custom function
-        
-        result = [MarkdownParser attributedStringWithMarkdown:md];
-    }
-    
-    if (fillOutBase) {
-        result = [result attributedStringByFillingOutBase];
-    }
-    
-    return result;
 }
 
 #pragma mark Determine size
@@ -1226,34 +1178,6 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     
     return ret;
 }
-
-- (NSAttributedString *) attributedStringByAddingSemiBoldForSubstring: (NSString *)subStr {
-    
-    /// Notes:
-    ///     - Old impl used `NSFontManager` with weight 7 (weight 8 was commented out)
-    ///         This seems to match `NSFontWeightMedium`, not `NSFontWeightSemibold`, so we're using `NSFontWeightMedium` [Sep 2025]
-    ///     - We're implementing bold and italic with `NSFontDescriptorSymbolicTraits`, but that doesn't seem to support semibold [Sep 2025]
-    ///         (Maybe we should just not use symbolicTraits at all, and instead use fontTraits and fontAttributes directly? symbolicTraits don't seem super useful.)
-    
-    return [self attributedStringByAddingWeight: NSFontWeightMedium forSubstring: subStr];
-}
-
-- (NSAttributedString *) attributedStringBySettingSemiBoldColorForSubstring: (NSString *)subStr {
-    
-    /// I can't really get a semibold. It's too thick or too thin. So I'm trying to make it appear thicker by darkening the color.
-    ///     Update: [Sep 2025] We're no longer using `NSFontManager` so this may no longer be true.
-    
-    NSColor *color;
-    if ((0)) color = [NSColor.textColor colorWithAlphaComponent: 1.0];   /// Custom colors disable the automatic color inversion when selecting a tableViewCell. See https://stackoverflow.com/a/29860102/10601702
-    else     color = NSColor.controlTextColor;                           /// This is almost black and automatically inverts. See: http://sethwillits.com/temp/nscolor/
-    
-    auto result = [self attributedStringByAddingAttributes: @{
-        NSForegroundColorAttributeName: color
-    } forSubstring: subStr];
-    
-    return result;
-}
-
 
 #if 0
     #pragma mark Weight (legacy)

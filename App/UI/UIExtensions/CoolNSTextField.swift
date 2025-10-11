@@ -49,7 +49,7 @@ class MarkdownTextField: CoolNSTextField {
         /// -  Edit: Seems we were using `addingStringAttributes(asBase:)` but I still don't get how that worked. I tried the old code again and it definitely doesn't work anymore. Whatttt
         ///        It still worked in commit 2463689a86ef44f9631fda01b089e1f51f52e350
         
-        guard let md = NSAttributedString(attributedMarkdown: self.attributedStringValue) else { return }
+        guard let md = MarkdownParser.attributedString(withCoolAttributedMarkdown: self.attributedStringValue) else { return }
         self.attributedStringValue = md
     }
     

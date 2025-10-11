@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
-
+#import "MarkdownParser/MarkdownParser.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -28,10 +28,6 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 - (NSAttributedString *) attributedStringByAppending: (NSAttributedString *)string;
 + (NSAttributedString *) attributedStringWithAttributedFormat: (NSAttributedString *)format args: (NSAttributedString *__strong _Nullable [_Nonnull])args argcount: (int)argcount;
 - (NSArray<NSAttributedString *> *) split: (NSString *)separator maxSplit: (int)maxSplit;
-
-+ (NSAttributedString * _Nullable)attributedStringWithCoolMarkdown:(NSString *)md;
-+ (NSAttributedString * _Nullable)attributedStringWithCoolMarkdown:(NSString *)md fillOutBase:(BOOL)fillOutBase;
-+ (NSAttributedString * _Nullable)attributedStringWithAttributedMarkdown:(NSAttributedString *)md;
 
 - (NSAttributedString *)attributedStringByAddingBaseLineOffset:(CGFloat)offset forRange:(const NSRangePointer _Nullable)range;
 
@@ -55,7 +51,6 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 - (NSAttributedString *)attributedStringByAddingBoldForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingBoldForRange:(const NSRangePointer _Nullable)range;
 - (NSAttributedString *)attributedStringByAddingItalicForRange:(const NSRangePointer _Nullable)range;
-- (NSAttributedString *)attributedStringByAddingSemiBoldForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingItalicForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingAlignment:(NSTextAlignment)alignment forRange:(const NSRangePointer _Nullable)rangeIn;
 - (NSAttributedString *)attributedStringByAddingParagraphSpacingBefore:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range;
@@ -73,7 +68,6 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
 - (NSAttributedString *) attributedStringByAddingBlankLineHeight: (CGFloat)height forRange:(const NSRangePointer _Nullable)range;
 - (NSAttributedString *)attributedStringByAddingHintStyle;
-- (NSAttributedString *)attributedStringBySettingSemiBoldColorForSubstring:(NSString *)subStr;
 
 - (NSSize)sizeAtMaxWidth:(CGFloat)maxWidth;
 - (CGFloat)heightAtWidth:(CGFloat)width;

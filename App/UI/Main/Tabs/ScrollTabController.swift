@@ -125,7 +125,7 @@ class ScrollTabController: NSViewController {
         precise.bindingTarget <~ preciseToggle.reactive.boolValues
         preciseToggle.reactive.boolValue <~ precise.producer
         let preciseHintRaw = NSLocalizedString("precise-scrolling-hint", comment: ".")
-        preciseHint.attributedStringValue = NSAttributedString(attributedMarkdown: preciseHintRaw.attributed().fillingOutBaseAsHint())!
+        preciseHint.attributedStringValue = MarkdownParser.attributedString(withCoolAttributedMarkdown: preciseHintRaw.attributed().fillingOutBaseAsHint())!
         
         /// Hardcode tab width
         ///     Do this before installing the macOS hint so it can accurately calculate the size of stuff [Sep 2025]
@@ -156,7 +156,7 @@ class ScrollTabController: NSViewController {
             ///     This is a really hacky solution. Move this logic into CollapsableStackView (maybe rename to AnimatingStackView or sth).
             ///         Make a method `register(switchableViews:forArrangedSubview:)` which calculates a size that fits all those views, and then you switch between them with `switchTo(view:)`..
             
-            let macOSHint = CoolNSTextField(hintWithAttributedString: NSAttributedString(coolMarkdown: macOSHintRaw, fillOutBase: false)!)
+            let macOSHint = CoolNSTextField(hintWithAttributedString: MarkdownParser.attributedString(withCoolMarkdown: macOSHintRaw, fillOutBase: false)!)
             
             do {
                 macOSHint.translatesAutoresizingMaskIntoConstraints = false

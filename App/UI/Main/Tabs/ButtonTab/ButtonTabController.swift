@@ -79,8 +79,8 @@ import Foundation
             
             let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "Note: '%1$@' will be the name of the mouse, such as 'Logitech M720 Triathlon'"), name!, nOfButtons)
             
-//            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
-            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.adding(.secondaryLabelColor, for: nil).settingFontSize(NSFont.smallSystemFontSize).adding(.center, for: nil).trimmingWhitespace()
+//            let hintString = MarkdownParser.attributedString(withCoolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
+            let hintString = MarkdownParser.attributedString(withCoolMarkdown: hintStringRaw)?.adding(.secondaryLabelColor, for: nil).settingFontSize(NSFont.smallSystemFontSize).adding(.center, for: nil).trimmingWhitespace()
             
             if let hintString = hintString {
                 hint = CoolNSTextField(labelWithAttributedString: hintString)
@@ -492,7 +492,7 @@ import Foundation
             let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "Note: There's a linebreak in English so the popover doesn't become too wide and to aid with readability."), deviceName)
             
             if let attributes = restoreDefaultPopover_stringAttributesFromIB,
-               let newString = NSAttributedString(coolMarkdown: message, fillOutBase: false)?.addingAttributes(asBase: attributes)
+               let newString = MarkdownParser.attributedString(withCoolMarkdown: message, fillOutBase: false)?.addingAttributes(asBase: attributes)
            {
                 self.restoreDefaultPopoverLabel.attributedStringValue = newString
             }

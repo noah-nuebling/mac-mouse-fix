@@ -25,13 +25,13 @@ import Foundation
             
             var rawMessage = NSLocalizedString("enable-timeout-toast", comment: "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which looks like a normal space, but it prevents linebreaks. We're using this to prevent the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\".") /// [Oct 2025] Actually, we're using `NSLineBreakStrategyPushOut` now, so the manual &nbsp; may not be necessary anymore.
             rawMessage = String(format: rawMessage, Links.link(kMFLinkID_VenturaEnablingGuide) ?? "")
-            ToastController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage, fillOutBase: false)!, forDuration: 10.0)
+            ToastController.attachNotification(withMessage: MarkdownParser.attributedString(withCoolMarkdown: rawMessage, fillOutBase: false)!, forDuration: 10.0)
         },
         "k-is-disabled-toast": {
             var messageRaw = NSLocalizedString("is-disabled-toast", comment: "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings.")
             messageRaw = String(format: messageRaw, Links.link(kMFLinkID_MacOSSettingsLoginItems) ?? "")
             
-            let message = NSMutableAttributedString(coolMarkdown: messageRaw, fillOutBase: false)
+            let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)
             DispatchQueue.main.async { /// UI stuff needs to be called from the main thread
                 if let window = NSApp.mainWindow, let message = message {
                     ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
@@ -42,24 +42,24 @@ import Foundation
     static let simpleToastMap_Buttons = [
         "k-forbidden-capture-toast.1": {
             let messageRaw = NSLocalizedString("forbidden-capture-toast.1", comment: "Note: This message shows when the user tries to assign an action to the primary mouse button (aka left click) inside Mac Mouse Fix.")
-            let message = NSAttributedString(coolMarkdown: messageRaw, fillOutBase: false)!;
+            let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!;
             ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
         },
         "k-forbidden-capture-toast.2": {
             let messageRaw = NSLocalizedString("forbidden-capture-toast.2", comment: "")
-            let message = NSAttributedString(coolMarkdown: messageRaw, fillOutBase: false)!;
+            let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!;
             ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
         },
         "k-already-using-defaults-toast.3": {
             let messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "") /// Old note: (Removed because doesn't help localizers I think. We dont' wanna train localizers to ignore comments, so we don't want useless ones.) "Note: This text is displayed in a notification after the user tries to load the default settings for mice with 3 buttons on the Buttons Tab.")
-            let message = NSAttributedString(coolMarkdown: messageRaw, fillOutBase: false)!
+            let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!
             DispatchQueue.main.async {
                 ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
             }
         },
         "k-already-using-defaults-toast.5": {
             let messageRaw = NSLocalizedString("already-using-defaults-toast.5", comment: "")
-            let message = NSAttributedString(coolMarkdown: messageRaw, fillOutBase: false)!
+            let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!
             DispatchQueue.main.async {
                 ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
             }
@@ -124,7 +124,7 @@ import Foundation
                 """
             ),
             revivedFeatures, "%@") /// Note on `&nbsp;`: [Sep 2025] We're already using `NSLineBreakStrategyPushOut` to prevent orphaned words, but it doesn't seem to work for the CoolMenuBarIcon.
-        var message = NSAttributedString(coolMarkdown: messageRaw, fillOutBase: false)!
+        var message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!
         let symbolString = SFSymbolStrings.string(withSymbolName: "CoolMenuBarIcon", stringFallback: "<Mac Mouse Fix Menu Bar Item>", font: ToastController.defaultFont()) ///NSAttributedString(symbol: "CoolMenuBarIcon", hPadding: 0.0, vOffset: -6, fallback: "<Mac Mouse Fix Menu Bar Item>")
         var args: [NSAttributedString?] = [symbolString]
         message = NSAttributedString(attributedFormat: message, args: &args, argcount: Int32(args.count))

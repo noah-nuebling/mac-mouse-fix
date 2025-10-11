@@ -812,36 +812,42 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             tr_ = onlyFlagsMap[triggerType];
         }
         
-        /// Make attributed
-        
-        tr = tr_.attributed;
-        
-        /// Slighly emphasize `Drag` and `Scroll` for better legibility
-        ///     Notes:
-        ///     - 26.08.2024: I saw the French and Brazillian loclizers not capitalize and spell the drag-particles exactly as they are in the trigger.substring.[...] strings.
+        /// Parse markdown
+        ///     Purpose: Emphasize "Drag" and "Scroll" in `trigger.substring.drag.[x]` and `trigger.substring.scroll.[x]` for better scannability [Oct 2025]
+        ///     Inconsistency: Using styleOverrides: here instead of default *emphasis* styling of the MarkdownParser (which produces a similar semi-bold look) to keep style we were using historically. I haven't tried to unify the styles. [Oct 2025]
+        ///     History:
+        ///         - The code here used to be in `attributedStringByAddingSemiBoldForSubstring:` and  `attributedStringBySettingSemiBoldColorForSubstring:` [Oct 2025]
+        ///         - The emphasis was done by matching localizable substrings `trigger.z.scroll-particle` and `trigger.z.drag-particle`
+        ///     Old notes:  (from when we used to specify the substring to emphasize through localizable strings – which was error prone and annoying for localizers.)
+        ///             - 26.08.2024: I saw the French and Brazillian loclizers not capitalize and spell the drag-particles exactly as they are in the trigger.substring.[...] strings.
         ///                 So we added more extensive comments and added `.z.` in the key so that translators see the drag-particles *after* the trigger.substring.[...] strings - hopefully making it more understandable how the particles affect the substrings.
         
-        NSString *dragParticle =    NSLocalizedString(
-            @"trigger.z.drag-particle",
-            @"Note: This word will be emphasized in strings such as \"Double Click and Drag %@\".\n"
-            "For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with\n"
-            "\"trigger.substring.drag.[...]\"."
-            "\n"
-            "\nIf that's not possible in your language, let me know and I will improve the implementation. Thank you!"
-        );
-        NSString *scrollParticle =  NSLocalizedString(
-            @"trigger.z.scroll-particle",
-            @"Note: This word will be emphasized in strings such as \"Click and Scroll %@\".\n"
-            "For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in the strings whose keys begin with\n"
-            "\"trigger.substring.scroll.[...]\"\n"
-            "\n"
-            "\nAlso see the comment next to \"trigger.z.drag-particle\"."
-        );
-        
-        tr = [tr attributedStringByAddingSemiBoldForSubstring: dragParticle];
-        tr = [tr attributedStringByAddingSemiBoldForSubstring: scrollParticle];
-        tr = [tr attributedStringBySettingSemiBoldColorForSubstring: dragParticle];
-        tr = [tr attributedStringBySettingSemiBoldColorForSubstring: scrollParticle];
+        tr = [MarkdownParser attributedStringWithCoolAttributedMarkdown: [tr_ attributed] fillOutBase: NO styleOverrides: @{ /// Should we `fillOutBase:`? [Oct 2025]
+            @(CMARK_NODE_EMPH): ^NSAttributedString *(NSAttributedString *dst, NSRangePointer nodeRange) {
+                
+                /// Set 'semibold' weight
+                /// Notes:
+                ///     - Old impl used `NSFontManager` with weight 7 (weight 8 was commented out)
+                ///         This seems to match `NSFontWeightMedium`, not `NSFontWeightSemibold`, so we're using `NSFontWeightMedium` [Sep 2025]
+                ///     - We're implementing bold and italic with `NSFontDescriptorSymbolicTraits`, but that doesn't seem to support semibold [Sep 2025]
+                ///         (Maybe we should just not use symbolicTraits at all, and instead use fontTraits and fontAttributes directly? symbolicTraits don't seem super useful.)
+                dst = [dst attributedStringByAddingWeight: NSFontWeightMedium forRange: nodeRange];
+                
+                /// Set 'semibold' color
+                /// I can't really get a semibold. It's too thick or too thin. So I'm trying to make it appear thicker by darkening the color.
+                ///     Update: We're no longer using `NSFontManager` so we may have more control over thickness now and no longer need the color adjustment. [Oct 2025]
+                {
+                    
+                    NSColor *color;
+                    if ((0)) color = [NSColor.textColor colorWithAlphaComponent: 1.0];   /// Custom colors disable the automatic color inversion when selecting a tableViewCell. See https://stackoverflow.com/a/29860102/10601702
+                    else     color = NSColor.controlTextColor;                           /// This is almost black and automatically inverts. See: http://sethwillits.com/temp/nscolor/
+                    
+                    dst = [dst attributedStringByAddingColor: color forRange: nodeRange];
+                }
+                
+                return dst;
+            }
+        }];
     }
     
     /// Validate

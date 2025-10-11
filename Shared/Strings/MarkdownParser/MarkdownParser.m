@@ -14,6 +14,7 @@
 #import "SharedUtility.h"
 #import "NSString+Additions.h"
 #import "NSAttributedString+Additions.h"
+#import "ListOperations.h"
 
 /**
  
@@ -22,7 +23,7 @@
             - The zero-width unicode characters we're using in `NSString+Steganography.m` trigger a bug where the parsing of **emphasis** doesn't work when the content of the emphasis begins with a single quote (`'`)
                 - Minimal repro:
                     ```
-                    [NSAttributedString attributedStringWithCoolMarkdown: @""
+                    [MarkdownParser attributedStringWithCoolMarkdown: @""
                         "Titletitletitle title title title\n"
                         ""          "**'asdfsaf'** noononono\n"   /// Works
                         " "         "**'asdfsaf'** noononono\n"   /// Works
@@ -42,14 +43,55 @@
 
 @implementation MarkdownParser
 
-+ (NSAttributedString *)attributedStringWithMarkdown:(NSString *)src {
-    return attributedStringWithMarkdown(src.attributed, false);
-}
-+ (NSAttributedString *)attributedStringWithAttributedMarkdown:(NSAttributedString *)src {
-    return attributedStringWithMarkdown(src, true);
++ (NSAttributedString *_Nullable) attributedStringWithCoolAttributedMarkdown: (NSAttributedString *)md fillOutBase: (BOOL)fillOutBase styleOverrides: (MDStyleOverrides *_Nullable)styleOverrides {
+    
+    NSAttributedString *result = nil;
+    
+    if ((NO)) {
+        
+        /// Never use Apple API, always use custom method - so things are consistent across versions and we can catch issues witht custom version during development
+        //
+        //        /// Use library function
+        //
+        //        /// Create options object
+        //        NSAttributedStringMarkdownParsingOptions *options = [[NSAttributedStringMarkdownParsingOptions alloc] init];
+        //
+        //        /// No idea what these do
+        //        options.allowsExtendedAttributes = NO;
+        //        options.appliesSourcePositionAttributes = NO;
+        //
+        //        /// Make it respect linebreaks
+        //        options.interpretedSyntax = NSAttributedStringMarkdownInterpretedSyntaxInlineOnlyPreservingWhitespace;
+        //
+        //        /// Create string
+        //        result = [[NSAttributedString alloc] initWithMarkdownString:md options:options baseURL:[NSURL URLWithString:@""] error:nil];
+        
+    } else {
+        
+        /// Fallback to custom function
+        result = attributedStringWithMarkdown(md, true, styleOverrides);
+    }
+    
+    if (fillOutBase) {
+        result = [result attributedStringByFillingOutBase];
+    }
+    
+    return result;
 }
 
-static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src, Boolean keepExistingAttributes) {
++ (NSAttributedString *_Nullable) attributedStringWithCoolAttributedMarkdown: (NSAttributedString *)md {
+    return [self attributedStringWithCoolAttributedMarkdown: md fillOutBase: NO styleOverrides: nil];
+}
+
++ (NSAttributedString *_Nullable) attributedStringWithCoolMarkdown: (NSString *)md fillOutBase: (BOOL)fillOutBase {
+    return [self attributedStringWithCoolAttributedMarkdown: [md attributed] fillOutBase: fillOutBase styleOverrides: nil];
+}
+
++ (NSAttributedString *_Nullable) attributedStringWithCoolMarkdown: (NSString *)md {
+    return [self attributedStringWithCoolMarkdown: md fillOutBase: YES];
+}
+
+static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src, Boolean keepExistingAttributes, MDStyleOverrides *_Nullable styleOverrides) {
     
     /// Irrelevant sidenote:
     /// - I started writing this using c-style variable names with lots of 'mnemonic' abbreviations and underscores - since that's what the cmark libary uses and I thought it was interesting to try.
@@ -69,7 +111,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
     ///     -> But on second thought, I think the responsibility to sanitize untrusted content should not be with the markdown parser, especially since untrusted content doesn't necessarily pass through the markdown parser before ending up in an unsafe context.
     
     int md_options = CMARK_OPT_HARDBREAKS |     /// Turn softbreaks into hardbreaks. Not sure this works?
-                        CMARK_OPT_UNSAFE;       /// Turn on support for inline html.
+                     CMARK_OPT_UNSAFE;       /// Turn on support for inline html.
     
     /// Get markdown node iterator
     const char *md = [src.string cStringUsingEncoding:NSUTF8StringEncoding];
@@ -78,7 +120,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
     
     ///  Create stack
     ///     Array of dicts that stores state of the nodes we're currently inside of as we're walking the tree.
-    NSMutableArray<NSDictionary *> *stack = [NSMutableArray array];
+    NSMutableArray<NSNumber *> *stack = [NSMutableArray array];
     
     /// Create/init search range for src string
     NSRange src_search_range = NSMakeRange(0, src.length);
@@ -91,7 +133,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
     NSAttributedString *dst = [[NSMutableAttributedString alloc] init];
     
     /// Walk the md tree
-    while (true) {
+    while (1) {
         
         /// Increment iter
         cmark_iter_next(iter);
@@ -115,7 +157,6 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
         cmark_node_type node_type = cmark_node_get_type(node);
         const char *node_type_name = cmark_node_get_type_string(node);
         const char *node_literal = cmark_node_get_literal(node);
-        Boolean is_leaf = cmark_node_first_child(node) == NULL;
         
         /// Handle weird tags on node type
         /// Explanation:
@@ -129,7 +170,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
         /// Update:
         ///     I was accidentally still using swift-cmark, or cmark-gfm which was bundled with the swift-markdown package. After removing those and using cmark directly, this whole issue went away.
         
-        if ((NO)) {
+        if ((0)) {
             long weird_node_type_tags = 0;
             cmark_node_type first_node_type = MAX(CMARK_NODE_FIRST_INLINE, CMARK_NODE_FIRST_BLOCK);
             cmark_node_type last_node_type = MAX(CMARK_NODE_LAST_INLINE, CMARK_NODE_LAST_BLOCK);
@@ -144,10 +185,10 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
         /// Define `leaf_node_types`
         ///     Notes:
         ///     - These are the leaf node types as documented in the cmark headers.
-        ///     - Other node types can also be leafs in the sense that they have no children, but leaf-node-type nodes can never have children, and we will only receive enter events for them, no exit events.
+        ///     - Other node types can also be leafs in the sense that they have no children (See `is_leaf` var [Oct 2025]), but leaf-node-type nodes can never have children, and we will only receive enter events for them, no exit events.
         ///             non-leaf-node-type nodes will receive an enter and an exit event, even if they have no children. The only non-leaf-node-type node that I've seen have 0 children is the document node when you pass in an emptry string for parsing.
-        ///
-        int leaf_types[] = {
+
+        cmark_node_type leaf_types[] = {
             CMARK_NODE_HTML_BLOCK,
             CMARK_NODE_THEMATIC_BREAK,
             CMARK_NODE_CODE_BLOCK,
@@ -157,109 +198,109 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
             CMARK_NODE_CODE,
             CMARK_NODE_HTML_INLINE
         };
+        bool is_leaf_type = anysatisfy(leaf_types, arrcount(leaf_types), x, x == node_type);
         
         /// Valdiate info from node
         
-#if DEBUG
-        if (node_literal != NULL) {
-            assert(is_leaf); /// I think only leaf nodes can directly contain text. That would simplify our control flow
-        }
-        Boolean node_has_leaf_type = false;
-        for (int i = 0; i < sizeof(leaf_types)/sizeof(leaf_types[0]); i++) {
-            if (leaf_types[i] == node_type) {
-                node_has_leaf_type = true;
-                break;
-            }
-        }
-        if (node_has_leaf_type) {
-            assert(is_leaf); /// leaf-node-type nodes can never have children. But other nodes types may also have 0 children.
-        }
-#endif
+        #if DEBUG
+            Boolean is_leaf = cmark_node_first_child(node) == NULL; /// This is different from `is_leaf_type` var (See above) [Oct 2025]
+            if (node_literal) assert(is_leaf); /// I think only leaf nodes can directly contain text. That would simplify our control flow
+            if (is_leaf_type) assert(is_leaf); /// leaf-node-type nodes can never have children. But other nodes types may also have 0 children.
+        #endif
         
         /// Use stack to track node enter and exit
         
         NSRange rangeOfExitedNodeInDst = NSMakeRange(NSNotFound, 0);
-        
-        if (!is_leaf && did_enter) {
-            /// Stack push
-            [stack addObject:@{ @"startIndexOfNodeInDst": @(dst.length) }];
-        } else if (did_exit) {
-            /// Stack pop
-            NSInteger node_start_idx = [[stack lastObject][@"startIndexOfNodeInDst"] integerValue];
-            [stack removeLastObject];
-            /// Locate the exited node in the dst string.
-            NSInteger node_end_idx = dst.length - 1;
-            rangeOfExitedNodeInDst = NSMakeRange(node_start_idx, node_end_idx - node_start_idx + 1);
+        if (!is_leaf_type) {
+            if (did_enter) {
+                /// Stack push
+                [stack addObject: @(dst.length)];
+            } else if (did_exit) {
+                /// Stack pop
+                NSUInteger old_dst_len = [[stack lastObject] unsignedIntegerValue];
+                [stack removeLastObject];
+                /// Locate the exited node in the dst string.
+                rangeOfExitedNodeInDst = NSMakeRange(old_dst_len, dst.length - old_dst_len);
+            }
         }
         
-        /// Define macros
-        ///     To help with repetitve code for adding double linebreaks between block-elements.
-        
-        #define nodeIsBlockElement(__cmark_node) \
-        ({ \
-            cmark_node_type type = cmark_node_get_type(__cmark_node); \
-            Boolean is_block = CMARK_NODE_FIRST_BLOCK <= type && type <= CMARK_NODE_LAST_BLOCK; \
-            is_block; \
-        })
-        #define nodeIsInlineElement(__cmark_node) \
-        ({ \
-            cmark_node_type type = cmark_node_get_type(__cmark_node); \
-            Boolean is_inline = CMARK_NODE_FIRST_INLINE <= type && type <= CMARK_NODE_LAST_INLINE; \
-            is_inline; \
-        })
-        #define addDoubleLinebreaksForBlockElementToDst() \
-            if (did_enter) { \
+        /// Modify dst style based on the markdown nodes that are parsed
+        { /// dstmods
+            
+            /// Skip if this is not the right `event_type` to modify dst
+            if (is_leaf_type) { if (!did_enter) goto endof_dstmods; } /// Leaf types only have an enter event, so we need to modify there.
+            else              { if (!did_exit)  goto endof_dstmods; }
+            
+            /// Apply styleOverrides
+            MDStyleOverride styleOverride = styleOverrides[@(node_type)];
+            if (styleOverride) {
+                assert(!is_leaf_type); /// Not sure how to handle `!is_leaf_type` – rangeOfExitedNodeInDst won't be valid.
+                dst = styleOverride(dst, &rangeOfExitedNodeInDst);
+                goto endof_dstmods;
+            }
+
+            /// Apply default styling
+            ///     Notes:
+            ///     - Nodes with a leaf-node-type are marked with 🍁. They only have enter events, no exit events.
+            ///     - Performance testing: [Apr 2025]
+            ///         Switch vs NSDictionary:
+            ///             Instead of a C-switch, we used to use an NSDictionary containing objc-blocks. That seems slow, but from my benchmarking, the difference to the C-switch looks much smaller than the random fluctuations from run to run.
+            ///             But we still stuck to switch since the code is a bit cleaner (at least with our bcase macros)
+            ///         All the invocations of MarkdownParser take 10ths or 100ths of a millisecond, (and it's only called once per UI string, when the app first loads – I think)
+            ///             -> Therefore, there is absolutely *zero* reason to try to optimize this any further.
+            ///     - `man 3 cmark-gfm` says: "Nodes must only be modified after an EXIT event, or an ENTER event for leaf nodes"
+            ///         - However we're not concerned about that since we're only analyzing, not modifying the nodes (I think) [Jul 2025]
+            
+            
+            /// Define macros
+            ///     To help with repetitve code for adding double linebreaks between block-elements.
+            
+            #define nodeIsBlockElement(__cmark_node) \
+            ({ \
+                cmark_node_type type = cmark_node_get_type(__cmark_node); \
+                Boolean is_block = CMARK_NODE_FIRST_BLOCK <= type && type <= CMARK_NODE_LAST_BLOCK; \
+                is_block; \
+            })
+            #define nodeIsInlineElement(__cmark_node) \
+            ({ \
+                cmark_node_type type = cmark_node_get_type(__cmark_node); \
+                Boolean is_inline = CMARK_NODE_FIRST_INLINE <= type && type <= CMARK_NODE_LAST_INLINE; \
+                is_inline; \
+            })
+            #define addDoubleLinebreaksForBlockElementToDst() \
                 Boolean is_block = nodeIsBlockElement(node); \
                 Boolean previous_sibling_is_also_block = nodeIsBlockElement(cmark_node_previous(node)); \
                 if (is_block && previous_sibling_is_also_block) { \
                 dst = [dst attributedStringByAppending:@"\n\n".attributed]; \
-            } \
-        }
-        
-        /// Handle all types of nodes
-        ///     Notes:
-        ///     - Nodes with a leaf-node-type are marked with 🍁. They only have enter events, no exit events.
-        ///     - Performance testing: [Apr 2025]
-        ///         Switch vs NSDictionary:
-        ///             Instead of a C-switch, we used to use an NSDictionary containing objc-blocks. That seems slow, but from my benchmarking, the difference to the C-switch looks much smaller than the random fluctuations from run to run.
-        ///             But we still stuck to switch since the code is a bit cleaner (at least with our bcase macros)
-        ///         All the invocations of MarkdownParser take 10ths or 100ths of a millisecond, (and it's only called once per UI string, when the app first loads – I think)
-        ///             -> Therefore, there is absolutely *zero* reason to try to optimize this any further.
-        ///     - `man 3 cmark-gfm` says: "Nodes must only be modified after an EXIT event, or an ENTER event for leaf nodes"
-        ///         - However we're not concerned about that since we're only analyzing, not modifying the nodes (I think) [Jul 2025]
-        
-        switch (node_type) {
-            bcase(CMARK_NODE_NONE): {
-                
-                assert(false); /// Something went wrong
-                
             }
-            bcase(CMARK_NODE_DOCUMENT): {          /// == `CMARK_NODE_FIRST_BLOCK`
-                
-                /// Root node
-                
-            }
-            bcase(CMARK_NODE_BLOCK_QUOTE): {
-                
-                assert(false); /// Don't know how to handle
-                
-            }
-            bcase(CMARK_NODE_LIST): {
-                
-                addDoubleLinebreaksForBlockElementToDst();
-                
-                if (did_enter) {
+            
+            switch (node_type) {
+                bcase(CMARK_NODE_NONE): {
                     
+                    assert(false); /// Something went wrong
+                    
+                }
+                bcase(CMARK_NODE_DOCUMENT): {          /// == `CMARK_NODE_FIRST_BLOCK`
+                    
+                    /// Root node
+                    
+                }
+                bcase(CMARK_NODE_BLOCK_QUOTE): {
+                    
+                    assert(false); /// Don't know how to handle
+                    
+                }
+                bcase(CMARK_NODE_LIST): {
+                    
+                    addDoubleLinebreaksForBlockElementToDst();
+                                                
                     /// Initialize list item counter
                     md_list_index = cmark_node_get_list_start(node);
+                    
                 }
-                
-            }
-            bcase(CMARK_NODE_ITEM): {
-                
-                /// Note: Even though list items are blockElements, they don't have double linebreaks between them, so we don't use addDoubleLinebreaksForBlockElementToDst()
-                                
-                if (did_exit) {
+                bcase(CMARK_NODE_ITEM): {
+                    
+                    /// Note: Even though list items are blockElements, they don't have double linebreaks between them, so we don't use addDoubleLinebreaksForBlockElementToDst()
                     
                     /// Get parent node of item (the list node)
                     cmark_node *list_node = cmark_node_parent(node);
@@ -317,142 +358,129 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
                     /// Advance list counter
                     md_list_index += 1;
                 }
-                
-            }
-            bcase(CMARK_NODE_CODE_BLOCK): {        /// 🍁
-                
-                assert(did_enter); /// Leaf node
-                assert(false); /// Don't know how to handle
-                
-            }
-            bcase(CMARK_NODE_HTML_BLOCK): {        /// 🍁
-                
-                assert(did_enter); /// Leaf node
-                /// Explanation:
-                ///     We wrap unused placeholder strings in IB with `<angle brackets>`. This is parsed as a `CMARK_NODE_HTML_BLOCK`. (Or `CMARK_NODE_HTML_INLINE`)
-                ///     We attach these to dst to give users at least some context in case these placeholders make it through to the UI.
-                ///
-                dst = [dst attributedStringByAppending:@(cmark_node_get_literal(node) ?: "").attributed];
-            }
-            bcase(CMARK_NODE_CUSTOM_BLOCK): {
-                
-                assert(false); /// Don't know how to handle
-                
-            }
-            bcase(CMARK_NODE_PARAGRAPH): {
-                
-                addDoubleLinebreaksForBlockElementToDst();
-                
-                /// Note: Why the isTopLevel restriction?
-                ///     Update: every list item seems to contain its own paragraph, they are all last paragraphs through, so the `is_top_level` check doesn't seem necessary.
-            }
-            bcase(CMARK_NODE_HEADING): {
-                
-                assert(false); /// Don't know how to handle
-                
-            }
-            bcase(CMARK_NODE_THEMATIC_BREAK): {    /// == `CMARK_NODE_LAST_BLOCK` || 🍁 || "thematic break" is the horizontal line aka hrule
-                
-                assert(did_enter); /// Leaf node
-                assert(false); /// Don't know how to handle
-                
-            }
-            bcase(CMARK_NODE_TEXT): {              /// == `CMARK_NODE_FIRST_INLINE` || 🍁
-                
-                NSString *node_text = @(cmark_node_get_literal(node) ?: "");
-                assert(did_enter); /// Leaf node
-                
-                
-                if (!keepExistingAttributes) {
-                    dst = [dst attributedStringByAppending:node_text.attributed]; /// Sooo much unnecessary copying of dst
-                } else {
-                    /// Get attributed substring of src which contains the same text as `node_text`
-                    ///     By appending the attributed substring of src to dst instead of appending `node_text` directly, we effectively carry over the string attributes from src into dst
-                    ///
-                    ///     Note: To find the correct substring it might be more efficient faster to use the private NSBigMutableString which seemingly uses unicode characters along with
-                    ///     `cmark_node_get_[...]_column()` and `cmark_node_get_[...]_line()` APIs which also uses unicode characters afaik.
-                    ///                 Update: [Apr 2025] IIRC, there's also a way to index normal NSString by unicode characters.
+                bcase(CMARK_NODE_CODE_BLOCK): {        /// 🍁
                     
-                    NSRange src_range = [src.string rangeOfString:node_text options:0 range:src_search_range];
-                    NSAttributedString *src_substr = [src attributedSubstringFromRange:src_range];
-                    dst = [dst attributedStringByAppending:src_substr];
-                    /// Remove the processed range from the search range
-                    ///     End of the search range should always be the end of the src string
-                    NSInteger new_search_range_start = src_range.location + src_range.length;
-                    src_search_range = NSMakeRange(new_search_range_start, src.length - new_search_range_start);
+                    assert(false); /// Don't know how to handle
+                    
                 }
-                
-            }
-            bcase(CMARK_NODE_SOFTBREAK): {         /// 🍁
-                
-                assert(did_enter); /// Leaf node
-                dst = [dst attributedStringByAppending:@"\n".attributed];
-                
-            }
-            bcase(CMARK_NODE_LINEBREAK): {         /// 🍁
-                
-                /// Notes:
-                /// - I've never seen this be called. `\n\n` will start a new paragraph, not insert a 'linebreak'.
-                /// - That's because even a siingle newline char starts a new paragraph (at least for NSParagraphStyle). We should be using the "Unicode Line Separator" for simple linebreaks in UI text.
-                ///   - See: https://stackoverflow.com/questions/4404286/how-is-a-paragraph-defined-in-an-nsattributedstring
-                
-                assert(did_enter); /// Leaf node
-                dst = [dst attributedStringByAppending:@"\n".attributed];
-                
-            }
-            bcase(CMARK_NODE_CODE): {              /// 🍁
-                
-                assert(did_enter); /// Leaf node
-                assert(false); /// Don't know how to handle
-                
-            }
-            bcase(CMARK_NODE_HTML_INLINE): {       /// 🍁
-                
-                assert(did_enter); /// Leaf node
-                
-                /// Append literal
-                ///     Explanation: See `CMARK_NODE_HTML_BLOCK`
-                NSString *literal = @(cmark_node_get_literal(node) ?: "");
-                if (literal != nil && literal.length > 0) {
-                    dst = [dst attributedStringByAppending:literal.attributed];
+                bcase(CMARK_NODE_HTML_BLOCK): {        /// 🍁
+                    
+                    /// Explanation:
+                    ///     We wrap unused placeholder strings in IB with `<angle brackets>`. This is parsed as a `CMARK_NODE_HTML_BLOCK`. (Or `CMARK_NODE_HTML_INLINE`)
+                    ///     We attach these to dst to give users at least some context in case these placeholders make it through to the UI.
+                    ///
+                    dst = [dst attributedStringByAppending:@(cmark_node_get_literal(node) ?: "").attributed];
                 }
-                
-            }
-            bcase(CMARK_NODE_CUSTOM_INLINE): {
-                
-                assert(false); /// Don't know how to handle
-                
-            }
-            bcase(CMARK_NODE_EMPH): {
-                /// Notes:
-                /// - We're misusing emphasis (which is usually italic) as a semibold. We're using the semibold, because for the small hint texts in the UI, bold looks way to strong. This is a very unsemantic and hacky solution. It works for now, but just keep this in mind.
-                /// - I tried using Italics in different places in the UI, and it always looked really bad. Also Chinese, Korean, and Japanese don't have italics. Edit: Actually on GitHub they do seem to have italics: https://github.com/dokuwiki/dokuwiki/issues/4080
-                if (did_exit) {
+                bcase(CMARK_NODE_CUSTOM_BLOCK): {
+                    
+                    assert(false); /// Don't know how to handle
+                    
+                }
+                bcase(CMARK_NODE_PARAGRAPH): {
+                    
+                    addDoubleLinebreaksForBlockElementToDst();
+                    
+                    /// Note: Why the isTopLevel restriction?
+                    ///     Update: every list item seems to contain its own paragraph, they are all last paragraphs through, so the `is_top_level` check doesn't seem necessary.
+                }
+                bcase(CMARK_NODE_HEADING): {
+                    
+                    assert(false); /// Don't know how to handle
+                    
+                }
+                bcase(CMARK_NODE_THEMATIC_BREAK): {    /// == `CMARK_NODE_LAST_BLOCK` || 🍁 || "thematic break" is the horizontal line aka hrule
+                    
+                    assert(false); /// Don't know how to handle
+                    
+                }
+                bcase(CMARK_NODE_TEXT): {              /// == `CMARK_NODE_FIRST_INLINE` || 🍁
+                    
+                    NSString *node_text = @(cmark_node_get_literal(node) ?: "");
+                    
+                    
+                    if (!keepExistingAttributes) {
+                        dst = [dst attributedStringByAppending: node_text.attributed]; /// Sooo much unnecessary copying of dst
+                    } else {
+                        /// Get attributed substring of src which contains the same text as `node_text`
+                        ///     By appending the attributed substring of src to dst instead of appending `node_text` directly, we effectively carry over the string attributes from src into dst
+                        ///
+                        ///     Note: To find the correct substring it might be more efficient faster to use the private NSBigMutableString which seemingly uses unicode characters along with
+                        ///     `cmark_node_get_[...]_column()` and `cmark_node_get_[...]_line()` APIs which also uses unicode characters afaik.
+                        ///                 Update: [Apr 2025] IIRC, there's also a way to index normal NSString by unicode characters.
+                        
+                        NSRange src_range = [src.string rangeOfString: node_text options: 0 range: src_search_range];
+                        NSAttributedString *src_substr = [src attributedSubstringFromRange: src_range];
+                        dst = [dst attributedStringByAppending: src_substr];
+                        
+                        /// Remove the processed range from the search range
+                        ///     End of the search range should always be the end of the src string
+                        NSUInteger new_search_range_start = src_range.location + src_range.length;
+                        src_search_range = NSMakeRange(new_search_range_start, src.length - new_search_range_start);
+                    }
+                    
+                }
+                bcase(CMARK_NODE_SOFTBREAK): {         /// 🍁
+                    
+                    dst = [dst attributedStringByAppending:@"\n".attributed];
+                    
+                }
+                bcase(CMARK_NODE_LINEBREAK): {         /// 🍁
+                    
+                    /// Notes:
+                    /// - I've never seen this be called. `\n\n` will start a new paragraph, not insert a 'linebreak'.
+                    /// - That's because even a siingle newline char starts a new paragraph (at least for NSParagraphStyle). We should be using the "Unicode Line Separator" for simple linebreaks in UI text.
+                    ///   - See: https://stackoverflow.com/questions/4404286/how-is-a-paragraph-defined-in-an-nsattributedstring
+                    
+                    dst = [dst attributedStringByAppending:@"\n".attributed];
+                    
+                }
+                bcase(CMARK_NODE_CODE): {              /// 🍁
+                    
+                    assert(false); /// Don't know how to handle
+                    
+                }
+                bcase(CMARK_NODE_HTML_INLINE): {       /// 🍁
+                    
+                    /// Append literal
+                    ///     Explanation: See `CMARK_NODE_HTML_BLOCK`
+                    NSString *literal = @(cmark_node_get_literal(node) ?: "");
+                    if (literal != nil && literal.length > 0) {
+                        dst = [dst attributedStringByAppending:literal.attributed];
+                    }
+                    
+                }
+                bcase(CMARK_NODE_CUSTOM_INLINE): {
+                    
+                    assert(false); /// Don't know how to handle
+                    
+                }
+                bcase(CMARK_NODE_EMPH): {
+                    /// Notes:
+                    /// - We're misusing emphasis (which is usually italic) as a semibold. We're using the semibold, because for the small hint texts in the UI, bold looks way to strong. This is a very unsemantic and hacky solution. It works for now, but just keep this in mind.
+                    /// - I tried using Italics in different places in the UI, and it always looked really bad. Also Chinese, Korean, and Japanese don't have italics. Edit: Actually on GitHub they do seem to have italics: https://github.com/dokuwiki/dokuwiki/issues/4080
                     dst = [dst attributedStringByAddingWeight:NSFontWeightSemibold forRange:&rangeOfExitedNodeInDst];
                 }
-            }
-            bcase(CMARK_NODE_STRONG): {
-                if (did_exit) {
+                bcase(CMARK_NODE_STRONG): {
                     dst = [dst attributedStringByAddingWeight:NSFontWeightBold forRange:&rangeOfExitedNodeInDst];
                 }
-            }
-            bcase(CMARK_NODE_LINK): {
-                if (did_exit) {
+                bcase(CMARK_NODE_LINK): {
                     NSString *urlStr = @(cmark_node_get_url(node) ?: "");
                     if (urlStr != nil && urlStr.length > 0) {
                         dst = [dst attributedStringByAddingHyperlink:[NSURL URLWithString:urlStr] forRange:&rangeOfExitedNodeInDst];
                     }
                 }
-            }
-            bcase(CMARK_NODE_IMAGE): {             /// == `CMARK_NODE_LAST_INLINE`
-                assert(false); /// Don't know how to handle
-                
-            }
-            bcase(): {
-                NSLog(@"Error: Unknown node_type: %s", node_type_name); /// [Apr 2025] Why are we using NSLog?
-                assert(false);
-            }
-        };
+                bcase(CMARK_NODE_IMAGE): {             /// == `CMARK_NODE_LAST_INLINE`
+                    assert(false); /// Don't know how to handle
+                    
+                }
+                bcase(): {
+                    NSLog(@"Error: Unknown node_type: %s", node_type_name); /// [Apr 2025] Why are we using NSLog?
+                    assert(false);
+                }
+            }; /// endof switch (node_type)
+        }
+        endof_dstmods: {};
+        
         
     } /// End iterating nodes
     
@@ -460,7 +488,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
     cmark_iter_free(iter);
     cmark_node_free(root);
     
-    /// Return generate string
+    /// Return generated string
     return dst;
 }
 
