@@ -48,8 +48,8 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
 - (NSAttributedString *)attributedStringByAddingAttributesAsBase:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes;
 + (NSAttributedString *)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)url;
-- (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *)url forSubstring:(NSString *)substring;
-- (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *_Nonnull)aURL forRange:(const NSRangePointer _Nullable)range;
+- (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *_Nullable)url forSubstring:(NSString *)substring;
+    - (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *_Nullable)aURL forRange:(const NSRangePointer _Nullable)range;
 - (NSAttributedString *)attributedStringByAddingFont:(NSFont *)font forRange:(const NSRangePointer _Nullable)range;
 
 - (NSAttributedString *)attributedStringByAddingBoldForSubstring:(NSString *)subStr;

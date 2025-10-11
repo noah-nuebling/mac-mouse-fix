@@ -882,23 +882,25 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
         return string;
     }
 
-    - (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *)url forSubstring:(NSString *)substring {
+    - (NSAttributedString *) attributedStringByAddingHyperlink: (NSURL *_Nullable)url forSubstring: (NSString *)substring {
         
-        NSRange subRange = [self.string rangeOfString:substring];
-        return [self attributedStringByAddingHyperlink:url forRange:&subRange];
+        NSRange subRange = [self.string rangeOfString: substring];
+        return [self attributedStringByAddingHyperlink: url forRange: &subRange];
     }
 
-    - (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *_Nonnull)aURL forRange:(const NSRangePointer _Nullable)range {
+    - (NSAttributedString *) attributedStringByAddingHyperlink: (NSURL *_Nullable) aURL forRange: (const NSRangePointer _Nullable)range {
         
         /// Notes:
         /// - Making the text blue explicitly doesn't seem to be necessary. The links will still be blue if we don't do this.
         /// - Adding an underline explicitlyis unnecessary in NSTextView but necessary in NSTextField
         
+        if (!aURL) return [self copy];
+        
         return [self attributedStringByAddingAttributes: @{
             NSLinkAttributeName: aURL.absoluteString ?: @"",
             NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),
             //        NSForegroundColorAttributeName: NSColor.blueColor,
-        } forRange:range];
+        } forRange: range];
     }
 
 
