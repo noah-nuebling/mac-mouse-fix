@@ -213,8 +213,8 @@ Schau dir die [Danksagungen]({language_root}Acknowledgements.md) an, um mehr dar
   
   Mac Mouse Fix ist auf Englisch und Deutsch verfügbar, sowie den Sprachen, die in den [Danksagungen]({language_root}Acknowledgements.md) aufgelistet sind.
   
-  Wenn du **beim Übersetzen des Projekts helfen** möchtest, sieh dir das [Localization Guide](https://redirect.macmousefix.com/?target=mmf-localization-contribution) an.\
-  Wenn du **fehlende oder suboptimale Übersetzungen** melden möchtest, ist das auch sehr hilfreich! Die beste Art um Probleme zu melden, ist einen Kommentar unter dem [Localization Guide](https://redirect.macmousefix.com/?target=mmf-localization-contribution) zu hinterlassen.
+  Wenn du **beim Übersetzen des Projekts helfen** möchtest, sieh dir das [Translation Guide](https://redirect.macmousefix.com/?target=mmf-localization-contribution) an.\
+  Wenn du **fehlende oder suboptimale Übersetzungen** melden möchtest, ist das auch sehr hilfreich! Die beste Art um Probleme zu melden, ist einen Kommentar unter dem [Translation Guide](https://redirect.macmousefix.com/?target=mmf-localization-contribution) zu hinterlassen.
 
 - **Code beitragen**
 

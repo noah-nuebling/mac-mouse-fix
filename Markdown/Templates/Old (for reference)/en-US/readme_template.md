@@ -309,8 +309,8 @@ Check out the [Acknowledgements]({language_root}Acknowledgements.md) for more in
   
   Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements]({language_root}Acknowledgements.md).
 
-  If you would like to **help translate the project**, see the [Localization Guide](https://redirect.macmousefix.com/?target=mmf-localization-contribution).\
-  If you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Localization Guide](https://redirect.macmousefix.com/?target=mmf-localization-contribution).
+  If you would like to **help translate the project**, see the [Translation Guide](https://redirect.macmousefix.com/?target=mmf-localization-contribution).\
+  If you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Translation Guide](https://redirect.macmousefix.com/?target=mmf-localization-contribution).
 
 - **Contributing code**
 

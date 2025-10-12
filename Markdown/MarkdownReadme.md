@@ -78,7 +78,7 @@ https://rhysd.github.io/actionlint/
 
 #### Localization
 
-See the MMF Localization Guide: https://redirect.macmousefix.com/?target=mmf-localization-contribution
+See the MMF Translation Guide: https://redirect.macmousefix.com/?target=mmf-localization-contribution
 
 #### Gumroad API
 
