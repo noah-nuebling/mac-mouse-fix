@@ -111,6 +111,20 @@
     CFRelease(runLoopSource);
 }
 
+NSString *CFMessagePortSendRequest_ErrorCode_ToString(SInt32 errorCode) {
+    
+    auto map = @{
+        @(kCFMessagePortSuccess)             : @"Success",
+        @(kCFMessagePortSendTimeout)         : @"SendTimeout",
+        @(kCFMessagePortReceiveTimeout)      : @"ReceiveTimeout",
+        @(kCFMessagePortIsInvalid)           : @"IsInvalid",
+        @(kCFMessagePortTransportError)      : @"TransportError",
+        @(kCFMessagePortBecameInvalidError)  : @"BecameInvalidError",
+    };
+    
+    return map[@(errorCode)] ?: stringf(@"(%d)", errorCode);
+}
+
 static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDataRef data, void *info) {
     
     #pragma mark Receive messages
@@ -322,8 +336,9 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     CFRelease(remotePort);
     
     /// Handle errors
+    ///     Should we retry on timeout? [Oct 2025]
     if (status != 0) {
-        DDLogError(@"Non-zero CFMessagePortSendRequest status: %d", status);
+        DDLogError(@"Non-zero CFMessagePortSendRequest return: %@", CFMessagePortSendRequest_ErrorCode_ToString(status));
         return nil;
     }
     
