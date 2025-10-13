@@ -822,7 +822,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         ///             - 26.08.2024: I saw the French and Brazillian loclizers not capitalize and spell the drag-particles exactly as they are in the trigger.substring.[...] strings.
         ///                 So we added more extensive comments and added `.z.` in the key so that translators see the drag-particles *after* the trigger.substring.[...] strings - hopefully making it more understandable how the particles affect the substrings.
         
-        tr = [MarkdownParser attributedStringWithCoolAttributedMarkdown: [tr_ attributed] fillOutBase: NO styleOverrides: @{ /// Should we `fillOutBase:`? [Oct 2025]
+        tr = [MarkdownParser attributedStringWithCoolMarkdown: tr_ fillOutBase: NO styleOverrides: @{ /// Should we `fillOutBase:`? [Oct 2025]
             @(CMARK_NODE_EMPH): ^NSAttributedString *(NSAttributedString *dst, NSRangePointer nodeRange) {
                 
                 /// Set 'semibold' weight

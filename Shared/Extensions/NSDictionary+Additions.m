@@ -100,6 +100,8 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
     /// Overview:  Similar to Foundation method `-[NSMutableDictionary addEntriesFromDictionary:]`, but 'deeply' merges nested dicts instead of just overriding them. [Sep 2025]
     /// Also see: `+[SharedUtility dictionaryWithOverridesAppliedFrom:to:]` (which should probably be replaced with this) [Sep 2025]
     
+    if (self == other) { return; } /// Avoid 'mutated while enumerating' exception.
+    
     for (id otherKey in other) {
         
         id otherObject = other[otherKey];

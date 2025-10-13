@@ -402,11 +402,11 @@
 #pragma mark Markdown
 
 + (NSAttributedString *) labelWithMarkdown: (NSString *)md {
-    return [MarkdownParser attributedStringWithCoolMarkdown: md];
+    return [MarkdownParser attributedStringWithCoolMarkdown: md fillOutBase: YES];
 }
 + (NSAttributedString *) secondaryLabelWithMarkdown: (NSString *)md {
     
-    NSAttributedString *s = [MarkdownParser attributedStringWithCoolMarkdown: md];
+    NSAttributedString *s = [MarkdownParser attributedStringWithCoolMarkdown: md fillOutBase: YES];
     s = [s attributedStringBySettingFontSize: 11];
     s = [s attributedStringByAddingColor: NSColor.secondaryLabelColor forRange: NULL];
     
@@ -696,11 +696,11 @@ NSMutableDictionary<NSFontDescriptorAttributeName, id> *getIntentionalFontAttrib
     
     /// Add baseAttributes
     ///     baseAttributes will override current attributes
-    [result addAttributes: baseAttributes range: NSMakeRange(0, result.length)];
+    [result addAttributes: baseAttributes range: NSMakeRange(0, result.length)]; /// I observed this *not* override the `NSFont`. Perhaps because the `NSFonts` were `isEqual:`. However this could lead to issues with our `IntentionalFontAttributes` mechanism in edge cases. [Oct 2025]
     
     /// Add original string attributes
     ///     to undo overrides by the baseAttributes
-    [self enumerateAttributesInRange: NSMakeRange(0, result.length) options: 0 usingBlock: ^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
+    [self enumerateAttributesInRange: NSMakeRange(0, self.length) options: 0 usingBlock: ^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
             
         { /// Skip font (Cause we handle that separately below)
             NSMutableDictionary *attrs2 = [attrs mutableCopy];
@@ -711,14 +711,12 @@ NSMutableDictionary<NSFontDescriptorAttributeName, id> *getIntentionalFontAttrib
         [result addAttributes: attrs range: range];
     }];
     
-    /// Add original font attributes
+    /// Add original font attributes back
     ///     (But only the intentional ones)
     __block NSAttributedString *result2 = result;
-    [self enumerateAttribute: NSFontAttributeName inRange: NSMakeRange(0, result.length) options: 0 usingBlock: ^(NSFont *_Nullable originalFont, NSRange range, BOOL * _Nonnull stop) {
-        result2 = [result2 attributedStringByModifyingFontAttributesForRange: &range modifier: ^MFNSFontAttributes(MFNSFontAttributes fontAttributes) {
-             MFNSFontAttributes intentionalFontAttributes = getIntentionalFontAttributes(originalFont, .fallBackToCurrentFontAttributes = true);
-             return intentionalFontAttributes;
-        }];
+    [self enumerateAttribute: NSFontAttributeName inRange: NSMakeRange(0, result.length) options: 0 usingBlock: ^(NSFont *_Nullable ogFont, NSRange range, BOOL * _Nonnull stop) {
+        auto ogFontAttributes = getIntentionalFontAttributes(ogFont, .fallBackToCurrentFontAttributes = true);
+        result2 = [result2 attributedStringByModifyingFontAttributesForRange: &range withOverrides: ogFontAttributes];
     }];
     
     return result2;
@@ -732,8 +730,11 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     
     /// There are some places where we still do this manually which we could replace with this. Search for "attributesAtIndex:" to find them.
     
+    /// Get assigneeAttributes
+    auto assigneeAttributes = [*assignee attributesAtIndex: 0 effectiveRange: NULL];
+    
     /// Add assignee's attributes as base for the newValue
-    newValue = [newValue attributedStringByAddingAttributesAsBase: [*assignee attributesAtIndex: 0 effectiveRange: NULL]];
+    newValue = [newValue attributedStringByAddingAttributesAsBase: assigneeAttributes];
     
     /// Fill out base with default attributes just to be sure everything is filled out
     newValue = [newValue attributedStringByFillingOutBase];
@@ -977,7 +978,7 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
         
         typedef NSDictionary<NSFontDescriptorAttributeName, id> * MFNSFontAttributes;
 
-        - (NSAttributedString *) attributedStringByModifyingFontAttributesForRange: (const NSRangePointer _Nullable)inRange modifier: (MFNSFontAttributes (^)(MFNSFontAttributes fontAttributes))modifier {
+        - (NSAttributedString *) attributedStringByModifyingFontAttributesForRange: (const NSRangePointer _Nullable)inRange withOverrides: fontAttributeOverrides {
         
             auto result = [self attributedStringByModifyingAttribute: NSFontAttributeName forRange: inRange modifier: ^NSFont *_Nullable(NSFont *_Nullable font) {
                     
@@ -986,10 +987,9 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
                 if (!font) fontAttributes = [NSMutableDictionary new]; /// Create *empty* dict, which signals that none of the attributes of the font we *will* create below are 'intentional'. [Sep 2025]
                 else       fontAttributes = getIntentionalFontAttributes(font, .fallBackToCurrentFontAttributes = true); /// If there is no intentionalFontAttributes dict on the font, yet, that means it's a font that has been created and attached to the string outside of NSAttributedString+Additions.m, and we consider *all* its attributes 'intentional'. [Sep 2025]
                 
-                /// Get new attributes from modifier closure.
+                /// Add the new fontAttributes
                 ///     Old note: Could maybe use `fontDescriptorByAddingAttributes:` instead [Sep 2025]
-                auto newFontAttributes = modifier(fontAttributes);
-                [fontAttributes applyOverridesFromDictionary: newFontAttributes];
+                [fontAttributes applyOverridesFromDictionary: fontAttributeOverrides];
             
                 
                 NSFont *newFont;
@@ -1048,9 +1048,7 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
                 /// - You can pass in NSFont.systemFontSize, which is 13.0 I believe
                 /// - You can pass in other arbitrary floating point numbers
                 
-                auto result = [self attributedStringByModifyingFontAttributesForRange: range modifier: ^MFNSFontAttributes (MFNSFontAttributes fontAttributes) {
-                    return @{ NSFontSizeAttribute: @(newFontSize) };
-                }];
+                auto result = [self attributedStringByModifyingFontAttributesForRange: range withOverrides: @{ NSFontSizeAttribute: @(newFontSize) }];
                 
                 return result;
             }
@@ -1060,9 +1058,7 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
             - (NSAttributedString *) attributedStringByAddingFontTraits: (NSDictionary<NSFontDescriptorTraitKey, id> *)fontTraitsToAdd forRange: (const NSRangePointer _Nullable)inRange {
                 
-                auto result = [self attributedStringByModifyingFontAttributesForRange: inRange modifier: ^MFNSFontAttributes (MFNSFontAttributes fontAttributes) {
-                    return @{ NSFontTraitsAttribute: fontTraitsToAdd }; /// Only need to return the things we want to add, because the caller will use `applyOverridesFromDictionary:` and fontTraits are also a dict so it will recurse into that. [Sep 2025]
-                }];
+                auto result = [self attributedStringByModifyingFontAttributesForRange: inRange withOverrides: @{ NSFontTraitsAttribute: fontTraitsToAdd }]; /// Only need to return the things we want to add, because the caller will use `applyOverridesFromDictionary:` and fontTraits are also a dict so it will recurse into that. [Sep 2025]
 
                 return result;
             }
@@ -1097,10 +1093,7 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
         
         - (NSAttributedString *) attributedStringByAddingSymbolicFontTraits: (NSFontDescriptorSymbolicTraits)traits forRange: (const NSRangePointer _Nullable)inRange {
             
-            auto result = [self attributedStringByModifyingFontAttributesForRange: inRange modifier: ^MFNSFontAttributes(MFNSFontAttributes fontAttributes) {
-                auto newFontAttributes = [[[NSFontDescriptor new] fontDescriptorWithSymbolicTraits: traits] fontAttributes];
-                return newFontAttributes;
-            }];
+            auto result = [self attributedStringByModifyingFontAttributesForRange: inRange withOverrides: [[[NSFontDescriptor new] fontDescriptorWithSymbolicTraits: traits] fontAttributes]];
             
             return result;
         }

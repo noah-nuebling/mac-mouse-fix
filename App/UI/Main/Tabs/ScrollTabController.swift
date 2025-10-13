@@ -125,7 +125,7 @@ class ScrollTabController: NSViewController {
         precise.bindingTarget <~ preciseToggle.reactive.boolValues
         preciseToggle.reactive.boolValue <~ precise.producer
         let preciseHintRaw = NSLocalizedString("precise-scrolling-hint", comment: ".")
-        preciseHint.attributedStringValue = MarkdownParser.attributedString(withCoolAttributedMarkdown: preciseHintRaw.attributed().fillingOutBaseAsHint())!
+        preciseHint.attributedStringValue = MarkdownParser.attributedString(withCoolMarkdown: preciseHintRaw, fillOutBase: false)!.fillingOutBaseAsHint()
         
         /// Hardcode tab width
         ///     Do this before installing the macOS hint so it can accurately calculate the size of stuff [Sep 2025]

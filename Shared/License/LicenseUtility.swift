@@ -123,7 +123,7 @@ func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
         }
         
         /// Apply markdown
-        let result = MarkdownParser.attributedString(withCoolMarkdown: base)!
+        let result = MarkdownParser.attributedString(withCoolMarkdown: base, fillOutBase: true)!
         
         /// Return
         return result

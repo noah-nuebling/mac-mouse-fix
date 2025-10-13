@@ -23,10 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NSAttributedString *_Nonnull (^MDStyleOverride)(NSAttributedString *_Nonnull str, NSRangePointer nodeRange); /// The callback should modify `nodeRange` inside `str`
 typedef NSDictionary <NSNumber *, MDStyleOverride> MDStyleOverrides;  /// Map from `@(cmark_node_type)` -> `MDStyleOverride` [Oct 2025]
 
-+ (NSAttributedString *_Nullable) attributedStringWithCoolAttributedMarkdown: (NSAttributedString *)md fillOutBase: (BOOL)fillOutBase styleOverrides: (MDStyleOverrides *_Nullable)styleOverrides;
-+ (NSAttributedString *_Nullable) attributedStringWithCoolAttributedMarkdown: (NSAttributedString *)md;
-+ (NSAttributedString *_Nullable) attributedStringWithCoolMarkdown: (NSString *)md fillOutBase: (BOOL)fillOutBase;
-+ (NSAttributedString *_Nullable) attributedStringWithCoolMarkdown: (NSString *)md;
++ (NSAttributedString *_Nullable) attributedStringWithCoolMarkdown: (NSString *)md fillOutBase: (BOOL)fillOutBase styleOverrides: (MDStyleOverrides *_Nullable)styleOverrides;
++ (NSAttributedString *_Nullable) attributedStringWithCoolMarkdown: (NSString *)md fillOutBase: (BOOL)fillOutBase; /// Forcing `fillOutBase:` to be specified cause forgetting to set it to false caused bugs. Should maybe be removed entirely? [Oct 2025]
 
 @end
 

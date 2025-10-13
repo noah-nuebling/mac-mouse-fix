@@ -48,9 +48,10 @@ class MarkdownTextField: CoolNSTextField {
         /// - I remember this working before some other way but I don't understand how it could've worked before without this method.
         /// -  Edit: Seems we were using `addingStringAttributes(asBase:)` but I still don't get how that worked. I tried the old code again and it definitely doesn't work anymore. Whatttt
         ///        It still worked in commit 2463689a86ef44f9631fda01b089e1f51f52e350
+        ///        Update: Works now (after some refactors) We might have forgotten `fillOutBase: false` (Maybe MarkdownParser shouldn't have that feature to begin with.) [Oct 2025]
         
-        guard let md = MarkdownParser.attributedString(withCoolAttributedMarkdown: self.attributedStringValue) else { return }
-        self.attributedStringValue = md
+        guard let md = MarkdownParser.attributedString(withCoolMarkdown: self.stringValue, fillOutBase: false) else { return }
+        assignAttributedStringKeepingBase(&self.attributedStringValue, md)
     }
     
 }
