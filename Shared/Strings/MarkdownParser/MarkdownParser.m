@@ -114,16 +114,13 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
                      CMARK_OPT_UNSAFE;       /// Turn on support for inline html.
     
     /// Get markdown node iterator
-    const char *md = [src.string cStringUsingEncoding:NSUTF8StringEncoding];
+    const char *md = [src.string cStringUsingEncoding: NSUTF8StringEncoding];
     cmark_node *root = cmark_parse_document(md, strlen(md), md_options);
     cmark_iter *iter = cmark_iter_new(root);
     
     ///  Create stack
     ///     Array of dicts that stores state of the nodes we're currently inside of as we're walking the tree.
     NSMutableArray<NSNumber *> *stack = [NSMutableArray array];
-    
-    /// Create/init search range for src string
-    NSRange src_search_range = NSMakeRange(0, src.length);
     
     /// Create counter for md lists
     int md_list_index = -1;
@@ -395,29 +392,35 @@ static NSAttributedString *attributedStringWithMarkdown(NSAttributedString *src,
                 }
                 bcase(CMARK_NODE_TEXT): {              /// == `CMARK_NODE_FIRST_INLINE` || 🍁
                     
-                    NSString *node_text = @(cmark_node_get_literal(node) ?: "");
                     
+                    auto node_text = (NSString *_Nonnull)@(cmark_node_get_literal(node) ?: "");
                     
-                    if (!keepExistingAttributes) {
-                        dst = [dst attributedStringByAppending: node_text.attributed]; /// Sooo much unnecessary copying of dst
-                    } else {
-                        /// Get attributed substring of src which contains the same text as `node_text`
-                        ///     By appending the attributed substring of src to dst instead of appending `node_text` directly, we effectively carry over the string attributes from src into dst
-                        ///
-                        ///     Note: To find the correct substring it might be more efficient faster to use the private NSBigMutableString which seemingly uses unicode characters along with
-                        ///     `cmark_node_get_[...]_column()` and `cmark_node_get_[...]_line()` APIs which also uses unicode characters afaik.
-                        ///                 Update: [Apr 2025] IIRC, there's also a way to index normal NSString by unicode characters.
+                    if (!keepExistingAttributes)
+                        dst = [dst attributedStringByAppending: [node_text attributed]]; /// Sooo much unnecessary copying of dst
+                    else {
+                        /// Get the substring of src which contains the same text as `node_text`
                         
-                        NSRange src_range = [src.string rangeOfString: node_text options: 0 range: src_search_range];
-                        NSAttributedString *src_substr = [src attributedSubstringFromRange: src_range];
-                        dst = [dst attributedStringByAppending: src_substr];
+                        NSRange src_range = mfcmark_range_to_nsstring_range(md, mfcmark_range_of_node_in_source(node));
+                        NSAttributedString *src_sub = (src_range.location == NSNotFound) ? nil : [src attributedSubstringFromRange: src_range];
                         
-                        /// Remove the processed range from the search range
-                        ///     End of the search range should always be the end of the src string
-                        NSUInteger new_search_range_start = src_range.location + src_range.length;
-                        src_search_range = NSMakeRange(new_search_range_start, src.length - new_search_range_start);
+                        if ([node_text isEqual: src_sub.string])
+                            dst = [dst attributedStringByAppending: src_sub]; /// By appending the attributed substring of src to dst instead of appending `node_text` directly, we effectively carry over the string attributes from src into dst
+                        else {
+                            
+                            /// Fallback if the markdown parser has modified the literal text in the node compared to the `src` attributed string
+                            ///     - This happens when ther parser resolves HTML character entities (`&nbsp;`), strips whitespace, parses backslash escapes, smart punctuation, and perhaps other things. In practice this is rare in MMF.
+                            ///     - This fallback should be good enough for us. Ideas for improvements:
+                            ///         - Reimplement/reuse cmark's resolution of `&nbsp;` etc. (See `houdini_unescape_html()` in cmark source code.)
+                            ///         - Diff the attributed source string with the `node_text` and apply modifications to the attributedString based on that (See Swift CollectionDifference)
+                            /// 
+                            ///     Reflection: This is complicated (Especially the `mfcmark_range_to_nsstring_range()` stuff): Do we even need `keepExistingAttributes` in MMF? If not – consider removing and simplifying. [Oct 2025]
+
+
+                            auto attributes = [src attributesAtIndex: (src_range.location + src_range.length/2) effectiveRange: NULL]; /// [Oct 2025] We sample attributes in the middle. Not sure if that's any better than sampling from the start. [Oct 2025]
+                            auto node_text_attr = [[NSMutableAttributedString alloc] initWithString: node_text attributes: attributes];
+                            dst = [dst attributedStringByAppending: node_text_attr];
+                        }
                     }
-                    
                 }
                 bcase(CMARK_NODE_SOFTBREAK): {         /// 🍁
                     
@@ -507,6 +510,96 @@ int bit_count(int x) {
     }
     
     return bit_count;
+}
+
+typedef struct {
+    int line, col;
+} MDLocation;
+
+typedef struct {
+    MDLocation start, end;
+} MDRange;
+
+MDRange mfcmark_range_of_node_in_source(cmark_node *node) {
+    return (MDRange){
+        .start = { .line = cmark_node_get_start_line(node), .col = cmark_node_get_start_column(node) },
+        .end   = { .line = cmark_node_get_end_line(node),   .col = cmark_node_get_end_column(node) },
+    };
+}
+
+NSRange mfcmark_range_to_nsstring_range(const char *md, MDRange range) {
+    
+    /// Returns `result.location == NSNotFound` if something goes wrong.
+    
+    /// Helper functions
+    auto findi = ^int (const char *md, MDLocation loc) {
+        
+        /// Convert source-text-location returned by cmark into index.
+        
+        int i = 0;
+        
+        int line = 1;
+        for (;; i++) {
+            if (!md[i]) { assert(false && "Invalid line (out of range)"); return -1; };
+            if (line >= loc.line) break;
+            if (md[i] == '\n') line++;
+        }
+        i += (loc.col - 1); // `- 1` to compensate 1-based cmark location
+        if (i >= (int)strlen(md)) { assert(false && "Invalid column (out of range"); return -1; }
+        
+        return i;
+    };
+    auto ito16 = ^int (const char *str, int idx) {
+    
+        /// Map an index `idx` in the UTF-8 string `str` to the equivalent index in the UTF-16 encoding of `str`
+        ///     Returns -1 on failure.
+
+        int i8 = 0;  /// index in UTF-8 (char) string
+        int i16 = 0; /// index in equivalent UTF-16 (unichar) string
+        
+        for (; i8 < idx;) {
+            if ((0)) ;
+            else if ((str[i8] & 0b10000000) == 0b00000000) { /// byte starts with 0 -> 1 byte character (U+00 - U+007F)
+                i8  += 1;
+                i16 += 1;
+            }
+            else if ((str[i8] & 0b11100000) == 0b11000000) { /// byte starts with 110 -> 2 byte character (U+0080 - U+07FF)
+                i8  += 2;
+                i16 += 1;
+            }
+            else if ((str[i8] & 0b11110000) == 0b11100000) { /// byte starts with 1110 -> 3 byte character (U+0800 - U+FFFF)
+                i8  += 3;
+                i16 += 1;
+            }
+            else if ((str[i8] & 0b11111000) == 0b11110000) { /// byte starts with 11110 -> 4 byte character (U+10000 - ...)
+                i8  += 4;
+                i16 += 2;
+            }
+            else if ((str[i8] & 0b11000000) == 0b10000000) { /// byte starts with 10 (continuation byte)
+                assert(false && "Invalid UTF-8 encoding. (Our algorithm should skip over continuation bytes.)");
+                return -1;
+            }
+            else {
+                assert(false && "Invalid UTF-8 encoding. (Byte not expected in UTF-8)");
+                return -1;
+            }
+        }
+        
+        return i16;
+    };
+        
+    /// Find indexes in md
+    int starti = findi(md, range.start);
+    int endi   = findi(md, range.end) + 1; /// `+ 1` cause we want the end index to be the first character *after* the range. [Oct 2025]
+    if (starti == -1 || endi == -1) return NSMakeRange(NSNotFound, 0); /// Not sure this `NSNotFound` error handling makes sense. Pretty sure this neverrr happens. And incorrect validation could make things less robust. [Oct 2025]
+    
+    /// Convert utf-8 indexes to utf-16
+    int starti16 = ito16(md, starti);
+    int endi16   = ito16(md, endi);
+    if (starti16 == -1 || endi16 == -1) return NSMakeRange(NSNotFound, 0);
+    
+    /// Return as NSRange
+    return NSMakeRange((NSUInteger)starti16, (NSUInteger)(endi16 - starti16));
 }
 
 @end
