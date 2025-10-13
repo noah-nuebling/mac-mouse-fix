@@ -594,8 +594,10 @@ NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullab
 #define safeindex(list, count, i, fallback) /*(typeof((list)[0]))*/ ({          \
     __auto_type __i = (i);                                                      \
     __auto_type __cnt = (count);                                                \
-    nowarn_push(-Wnullable-to-nonnull-conversion)                              /** -Wnullable-to-nonnull-conversion triggers here when the fallback is NULL (nonsensically, I think). Guess these quirks are why it's not enabled by default. See `Xcode Nullability Settings.md` */ \
+    nowarn_push(-Wsign-compare)                                                 /** Addressing issues by checking that both i and count are > 0 before comparing them [Oct 2025] */\
+    nowarn_push(-Wnullable-to-nonnull-conversion)                               /** -Wnullable-to-nonnull-conversion triggers here when the fallback is NULL (nonsensically, I think). Guess these quirks are why it's not enabled by default. See `Xcode Nullability Settings.md` */    \
     ((0 <= __i) && (0 < __cnt) && (__i < __cnt)) ? (list)[__i] : (fallback);    /** We're making sure `count` and `i` are both positive before comparing them. Otherwise we might have subtle issues because `(int)-1 < (unsigned int)1` is false in C.*/\
+    nowarn_pop()                                                                \
     nowarn_pop()                                                                \
 })
 
