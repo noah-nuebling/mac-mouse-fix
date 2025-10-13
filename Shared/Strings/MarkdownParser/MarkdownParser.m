@@ -19,6 +19,8 @@
 /**
  
     Notes:
+        - Motivation:
+            - IIRC we replaced `MarkdownParser_old.swift` with this cmark wrapper because **bold** didn't work on some Chinese strings and cmark development branch had a fix. And I guess I had fun doing C stuff during 2024. See `Frameworks/cmark/Noah's Readme.m` and Commit message: d7f80eab98908537812d8fe618831b99fd31fb79 for more on that.
         - Markdown parsing bug when using `NSString+Steganography.m` [Oct 2025]
             - The zero-width unicode characters we're using in `NSString+Steganography.m` trigger a bug where the parsing of **emphasis** doesn't work when the content of the emphasis begins with a single quote (`'`)
                 - Minimal repro:
@@ -53,7 +55,7 @@
     if ((NO)) {
         
         /// Never use Apple API, always use custom method - so things are consistent across versions and we can catch issues witht custom version during development
-        //
+        // 
         //        /// Use library function
         //
         //        /// Create options object
@@ -132,23 +134,23 @@ static NSAttributedString *attributedStringWithMarkdown(NSString *src, MDStyleOv
         
         /// Get info from iter
         cmark_event_type ev_type = cmark_iter_get_event_type(iter);
-        cmark_node *node = cmark_iter_get_node(iter);
+        cmark_node *node         = cmark_iter_get_node(iter);
         
-        /// Process the none event (assert false)
+        /// Process none event
         if (ev_type == CMARK_EVENT_NONE) assert(false);
         
-        /// Process the done event (break loop)
+        /// Process done event
         if (ev_type == CMARK_EVENT_DONE) break;
         
-        /// Process the enter / exit events
+        /// Process enter / exit events
         Boolean did_enter = ev_type == CMARK_EVENT_ENTER; /// Entered node
-        Boolean did_exit = ev_type == CMARK_EVENT_EXIT;
+        Boolean did_exit  = ev_type == CMARK_EVENT_EXIT;
         assert(did_enter || did_exit);
         
         /// Get info from node
-        cmark_node_type node_type = cmark_node_get_type(node);
+        cmark_node_type node_type  = cmark_node_get_type(node);
         const char *node_type_name = cmark_node_get_type_string(node);
-        const char *node_literal = cmark_node_get_literal(node);
+        const char *node_literal   = cmark_node_get_literal(node);
         
         /// Handle weird tags on node type
         /// Explanation:
@@ -262,9 +264,8 @@ static NSAttributedString *attributedStringWithMarkdown(NSString *src, MDStyleOv
             #define addDoubleLinebreaksForBlockElementToDst() \
                 Boolean is_block = nodeIsBlockElement(node); \
                 Boolean previous_sibling_is_also_block = nodeIsBlockElement(cmark_node_previous(node)); \
-                if (is_block && previous_sibling_is_also_block) { \
-                dst = [dst attributedStringByAppending:@"\n\n".attributed]; \
-            }
+                if (is_block && previous_sibling_is_also_block) \
+                    dst = [dst attributedStringByAppending: [@"\n\n" attributed]]; \
             
             switch (node_type) {
                 bcase(CMARK_NODE_NONE): {
@@ -320,31 +321,31 @@ static NSAttributedString *attributedStringWithMarkdown(NSString *src, MDStyleOv
                     cmark_list_type list_type = cmark_node_get_list_type(list_node);
                     if      (list_type == CMARK_BULLET_LIST) [prefix appendString:@"• "];
                     else if (list_type == CMARK_ORDERED_LIST)  {
-                        if      (cmark_node_get_list_delim(list_node) == CMARK_PAREN_DELIM)     [prefix appendFormat:@"%d) ", md_list_index];
-                        else if (cmark_node_get_list_delim(list_node) == CMARK_PERIOD_DELIM)    [prefix appendFormat:@"%d. ", md_list_index];
+                        if      (cmark_node_get_list_delim(list_node) == CMARK_PAREN_DELIM)     [prefix appendFormat: @"%d) ", md_list_index];
+                        else if (cmark_node_get_list_delim(list_node) == CMARK_PERIOD_DELIM)    [prefix appendFormat: @"%d. ", md_list_index];
                         else                                                                    assert(false);
                     }
                     else assert(false);
                                             
                     /// Extract list item content
                     ///     that was already added to dst by our child nodes.
-                    NSAttributedString *itemContent = [dst attributedSubstringFromRange:rangeOfExitedNodeInDst];
-                    NSDictionary<NSAttributedStringKey, id> *itemFontAttributes = [dst fontAttributesInRange:rangeOfExitedNodeInDst];
-                    NSDictionary<NSAttributedStringKey, id> *itemRulerAttributes = [dst rulerAttributesInRange:rangeOfExitedNodeInDst];
+                    NSAttributedString *itemContent = [dst attributedSubstringFromRange: rangeOfExitedNodeInDst];
+                    NSDictionary<NSAttributedStringKey, id> *itemFontAttributes = [dst fontAttributesInRange: rangeOfExitedNodeInDst];
+                    NSDictionary<NSAttributedStringKey, id> *itemRulerAttributes = [dst rulerAttributesInRange: rangeOfExitedNodeInDst];
                     
                     /// Copy over font- and paragraph-style from listItemContent to the prefix
                     ///     I don't think there are any other attributes which make sense to copy over?
                     NSMutableAttributedString *prefixAttributed = [[NSMutableAttributedString alloc] initWithString: prefix];
-                    [prefixAttributed addAttributes:itemFontAttributes range:NSMakeRange(0, prefixAttributed.length)];
-                    [prefixAttributed addAttributes:itemRulerAttributes range:NSMakeRange(0, prefixAttributed.length)];
+                    [prefixAttributed addAttributes: itemFontAttributes  range: NSMakeRange(0, prefixAttributed.length)];
+                    [prefixAttributed addAttributes: itemRulerAttributes range: NSMakeRange(0, prefixAttributed.length)];
                     
                     /// Combine prefix + item-content
                     NSMutableAttributedString *prefixedItemString = prefixAttributed;
-                    [prefixedItemString appendAttributedString:itemContent];
+                    [prefixedItemString appendAttributedString: itemContent];
                     
                     /// Replace itemString in dst
                     NSMutableAttributedString *newDst = dst.mutableCopy; /// Man we do so much unnecessary copying and stuff
-                    [newDst replaceCharactersInRange:rangeOfExitedNodeInDst withAttributedString:prefixedItemString];
+                    [newDst replaceCharactersInRange: rangeOfExitedNodeInDst withAttributedString: prefixedItemString];
                     dst = newDst;
                     
                     /// Advance list counter
@@ -361,7 +362,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSString *src, MDStyleOv
                     ///     We wrap unused placeholder strings in IB with `<angle brackets>`. This is parsed as a `CMARK_NODE_HTML_BLOCK`. (Or `CMARK_NODE_HTML_INLINE`)
                     ///     We attach these to dst to give users at least some context in case these placeholders make it through to the UI.
                     ///
-                    dst = [dst attributedStringByAppending:@(cmark_node_get_literal(node) ?: "").attributed];
+                    dst = [dst attributedStringByAppending: (id)[@(cmark_node_get_literal(node) ?: "") attributed]];
                 }
                 bcase(CMARK_NODE_CUSTOM_BLOCK): {
                     
@@ -386,12 +387,12 @@ static NSAttributedString *attributedStringWithMarkdown(NSString *src, MDStyleOv
                     
                 }
                 bcase(CMARK_NODE_TEXT): {              /// == `CMARK_NODE_FIRST_INLINE` || 🍁
-                    auto node_text = (NSString *_Nonnull)@(cmark_node_get_literal(node) ?: "");
-                    dst = [dst attributedStringByAppending: [node_text attributed]]; /// Sooo much unnecessary copying of dst
+                    
+                    dst = [dst attributedStringByAppending: (id)[@(cmark_node_get_literal(node) ?: "") attributed]]; /// Sooo much unnecessary copying of dst
                 }
                 bcase(CMARK_NODE_SOFTBREAK): {         /// 🍁
                     
-                    dst = [dst attributedStringByAppending:@"\n".attributed];
+                    dst = [dst attributedStringByAppending: [@"\n" attributed]];
                     
                 }
                 bcase(CMARK_NODE_LINEBREAK): {         /// 🍁
@@ -401,7 +402,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSString *src, MDStyleOv
                     /// - That's because even a siingle newline char starts a new paragraph (at least for NSParagraphStyle). We should be using the "Unicode Line Separator" for simple linebreaks in UI text.
                     ///   - See: https://stackoverflow.com/questions/4404286/how-is-a-paragraph-defined-in-an-nsattributedstring
                     
-                    dst = [dst attributedStringByAppending:@"\n".attributed];
+                    dst = [dst attributedStringByAppending: [@"\n" attributed]];
                     
                 }
                 bcase(CMARK_NODE_CODE): {              /// 🍁
@@ -413,10 +414,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSString *src, MDStyleOv
                     
                     /// Append literal
                     ///     Explanation: See `CMARK_NODE_HTML_BLOCK`
-                    NSString *literal = @(cmark_node_get_literal(node) ?: "");
-                    if (literal != nil && literal.length > 0) {
-                        dst = [dst attributedStringByAppending:literal.attributed];
-                    }
+                    dst = [dst attributedStringByAppending: (id)[@(cmark_node_get_literal(node) ?: "") attributed]];
                     
                 }
                 bcase(CMARK_NODE_CUSTOM_INLINE): {
@@ -428,15 +426,15 @@ static NSAttributedString *attributedStringWithMarkdown(NSString *src, MDStyleOv
                     /// Notes:
                     /// - We're misusing emphasis (which is usually italic) as a semibold. We're using the semibold, because for the small hint texts in the UI, bold looks way to strong. This is a very unsemantic and hacky solution. It works for now, but just keep this in mind.
                     /// - I tried using Italics in different places in the UI, and it always looked really bad. Also Chinese, Korean, and Japanese don't have italics. Edit: Actually on GitHub they do seem to have italics: https://github.com/dokuwiki/dokuwiki/issues/4080
-                    dst = [dst attributedStringByAddingWeight:NSFontWeightSemibold forRange:&rangeOfExitedNodeInDst];
+                    dst = [dst attributedStringByAddingWeight: NSFontWeightSemibold forRange: &rangeOfExitedNodeInDst];
                 }
                 bcase(CMARK_NODE_STRONG): {
-                    dst = [dst attributedStringByAddingWeight:NSFontWeightBold forRange:&rangeOfExitedNodeInDst];
+                    dst = [dst attributedStringByAddingWeight: NSFontWeightBold forRange: &rangeOfExitedNodeInDst];
                 }
                 bcase(CMARK_NODE_LINK): {
                     NSString *urlStr = @(cmark_node_get_url(node) ?: "");
-                    if (urlStr != nil && urlStr.length > 0) {
-                        dst = [dst attributedStringByAddingHyperlink:[NSURL URLWithString:urlStr] forRange:&rangeOfExitedNodeInDst];
+                    if (urlStr.length) {
+                        dst = [dst attributedStringByAddingHyperlink: [NSURL URLWithString: urlStr] forRange: &rangeOfExitedNodeInDst];
                     }
                 }
                 bcase(CMARK_NODE_IMAGE): {             /// == `CMARK_NODE_LAST_INLINE`
