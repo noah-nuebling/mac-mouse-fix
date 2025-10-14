@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Oktober 2025**
 
+- 🇺🇸&nbsp;Michael&nbsp;I&nbsp;Z - "You saved me a ton by negating the need for another magic trackpad! Thank you!!"
 - 🇺🇸&nbsp;Simon&nbsp;Wong - "关注谐门东西喵～关注谐门东西谢谢喵～"
 - 🇩🇪&nbsp;Derhorst - "This is one of the best pieces of software a Mac can have. Thanks for developing and maintaining it."
 - 🇩🇪&nbsp;Local&nbsp;Dynamics&nbsp;Gbr - "Rubensstraße 8, 90453 Nürnberg"
