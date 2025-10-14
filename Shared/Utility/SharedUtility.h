@@ -20,6 +20,9 @@
 #import "objc/runtime.h"
 #import "SharedMacros.h"
 
+/// Import other stuff so we don't have to import it in so many places
+#import "MFDefer.h"
+
 /// 'Basic' NSErrors
 ///     Use this to create an NSError (which is the most universally compatible type of error across Swift and objc afaik), and you only need to specify a "reason" string – no "error domain" or "error code" or additional info.
 NS_INLINE NSError *_Nonnull MFNSErrorBasicMake(NSString *_Nonnull reason) {

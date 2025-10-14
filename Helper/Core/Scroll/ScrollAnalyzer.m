@@ -7,6 +7,20 @@
 // --------------------------------------------------------------------------
 //
 
+/// [Aug 2025] Terminology: Instead of **scrollSwipe** we could use:
+///     - In code:                        scrollBurst                                                                               (But I guess scrollSwipe is also fine for code,  since I know what it means.)
+///     - In user-facing text:      'turns/rolls/flicks/strokes/movements of the scroll wheel'       (Or we can avoid referring to the concept directly and say something like 'keep scrolling in the same direction quickly for a while and scrolling will become very fast.')
+///
+/// - [Aug 2025] Improvement ideas:
+///     - Don't trigger fastScroll for slow-and-long scrolls.
+///         - I think that's the scenario where V-Coba describes triggering it accidentally here: https://github.com/noah-nuebling/mac-mouse-fix/issues/1512
+///         - `consecutiveScrollSwipeMinTickSpeed` already tries to address this.
+///             - Improvment ideas:
+///                 - Tune it up
+///                 - Measure the scrollwheel speed *during* swipes instead of overall? I'd say slow movement during a long swipe indicates the user wants deliberate slow-and-steady movement.
+///     - Disable fastScroll entirely
+///         - I think it's useful but I haven't tested how scrolling feels without it since it was introduced in one of the first MMF versions I think.
+
 #import "ScrollAnalyzer.h"
 #import <Cocoa/Cocoa.h>
 #import "Scroll.h"
@@ -26,7 +40,7 @@
         
         /// Setup smoothing algorithm for `timeBetweenTicks`
         
-        _tickTimeSmoother = [[RollingAverage alloc] initWithCapacity:3]; /// Capacity 1 turns off smoothing
+        _tickTimeSmoother = [[RollingAverage alloc] initWithCapacity: 3]; /// Capacity 1 turns off smoothing
         /// ^ No smoothing feels the best.
         ///     - Without smoothing, there will somemtimes randomly be extremely small `timeSinceLastTick` values. I was worried that these would overdrive the acceleration curve, producing extremely high `pxToScrollForThisTick` values at random. But since we've capped the acceleration curve to a maximum `pxToScrollForThisTick` this isn't a noticable issue anymore.
         ///     - No smoothing is way more responsive than RollingAverage
@@ -182,8 +196,14 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
     
     /// Update `_consecutiveScrollSwipeCounter_ForFreeScrollWheel`
     ///     It's a little awkward to update this down here after the other swipe-updating code , but we need to do it this way because we need the `consecutiveTickCounter` to be updated after the stuff above but before this
-    if (_consecutiveScrollTickCounter >= scrollConfig.scrollSwipeMax_inTicks) {
-        _consecutiveScrollSwipeCounter_ForFreeScrollWheel += 1.0/scrollConfig.scrollSwipeMax_inTicks;
+    if ((0)) {  /// [Aug 2025] HOTFIX: Turning this whole mechanism off!
+                ///     The free-spinning mode on the MX Master doesn't need additional speedup! ('fastScroll') IIRC a few people have complained about this, too.
+                ///     Maybe you could think about a compromise where you only speed things up a little bit or something. But for a hotfix I think this delivers good value to the people.
+                ///     The decision to disable this may also affect decisions we made elsewhere in the codebase. IIRC we built in a cap for the animation-time to avoid the sped-up free-spinning from making it crazy long.
+                ///     TODO: If we decide to keep this turned off - simplify the code
+        if (_consecutiveScrollTickCounter >= scrollConfig.scrollSwipeMax_inTicks) {
+            _consecutiveScrollSwipeCounter_ForFreeScrollWheel += 1.0/scrollConfig.scrollSwipeMax_inTicks;
+        }
     }
     
     /// Smoothing

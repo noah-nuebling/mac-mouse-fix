@@ -96,7 +96,6 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
         TODO: (This is a dependency of searchVKCForStr) Delete this when copying over KeyboardSimulator.h from EventLoggerForBrad.
 
  */
-
     #define kMFKeyEquivalentNull            ((unichar)65535)
     #define kMFModifierFlagsNull            (0)                          /// We're using this with the types `CGSModifierFlags` and `CGEventFlags`
     #define kMFVK_Null                      ((CGKeyCode)65535)
@@ -105,14 +104,6 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
 
 /// Define 'outOfReach' vkc
     #define kMFVK_OutOfReach                ((CGKeyCode)400)             /// I don't think I've seen a vkc above 200 produced by my keyboard, but we use 400 just to be safely out of reach of a real kb
-
-
-/// Define MFKeyboardType stuff
-///     TODO: (This is a dependency of searchVKCForStr) Delete this when copying over MFKeyboardSimulationData.h from EventLoggerForBrad
-typedef CGEventSourceKeyboardType MFKeyboardType;
-extern MFKeyboardType SLSGetLastUsedKeyboardID(void); /// Not sure about sizeof(returnType). `LMGetKbdType()` is `UInt8`, but `CGEventSourceKeyboardType` is `uint32_t` - both seem to contain the same constants though.
-#define MFKeyboardTypeCurrent() ((MFKeyboardType)SLSGetLastUsedKeyboardID())
-const MFKeyboardType kMFKeyboardTypeNull = 0;
 
 + (void)post:(CGSSymbolicHotKey)shk {
 
@@ -480,6 +471,18 @@ const UCKeyboardLayout *getKeyboardLayoutForKbShortcutsWithID(NSString *keyboard
     return result;
 }
 
+bool MFTISInputSourceIsABC(TISInputSourceRef _Nonnull inputSource) {
+    assert(false); /// [Aug 2025] Unused
+    NSString *inputSourceID = (__bridge NSString *)TISGetInputSourceProperty(inputSource, kTISPropertyInputSourceID);
+    if ([inputSourceID isEqual: @"com.apple.keylayout.ABC"]) return true;
+    if ([inputSourceID isEqual: @"com.apple.keylayout.US"])  return true; /// [Aug 2025] US is equivalent to ABC. Not sure there are others. Disassembly of `UpdateKeyboardAwareShortcutsForCurrentInputSource()` also treats US and ABC layouts as the same thing (I think). Not sure there are other layouts that are the same.
+    return false;
+}
+
+bool MFTISInputSourceUsesABCFallback(TISInputSourceRef _Nonnull inputSource) { /// [Aug 2025] Only used by `MFTISCopyKeyboardShortcutInputSourceForKeyboardLayoutInputSource()` – could inline it. (Only outlined it because we thought we were going to use it in `MFEmulateNSMenuItemRemapping()`, but we didn't.
+    bool isASCIICapable = MFTISInputSourcePropertyIsTrue(inputSource, kTISPropertyInputSourceIsASCIICapable);
+    return !isASCIICapable;
+}
 
 TISInputSourceRef MFTISCopyKeyboardShortcutInputSourceForKeyboardLayoutInputSource(TISInputSourceRef _Nonnull inputSource) {
     
@@ -491,6 +494,7 @@ TISInputSourceRef MFTISCopyKeyboardShortcutInputSourceForKeyboardLayoutInputSour
     /// Check ASCII capability
     /// TODO: Keep these notes when merging EventLoggerForBrad into this.
     /// `Crash`:
+    ///         (History: Observed inside MMF, while we had _partially_ ported EventLoggerForBrad code into MMF repo. Then copied back into real EventLoggerForBrad code. Originally added in commit 4a0b26a)
     ///     I've seen this crash due to a `dispatch_assert_queue` inside TSMGetInputSourceProperty().
     ///     Message: `BUG IN CLIENT OF LIBDISPATCH: Assertion failed: Block was expected to execute on queue [com.apple.main-thread (0x20870fdc0)]`
     ///     However, I only saw this happen, if:
@@ -503,11 +507,11 @@ TISInputSourceRef MFTISCopyKeyboardShortcutInputSourceForKeyboardLayoutInputSour
     ///         threads concurrently.
     ///             > Noah's comment: ... But shouldn't reading an immutable property, such as 'ASCIICapable' be fine, even if the API is not technically thread safe?
     
-    bool isASCIICapable = MFTISInputSourcePropertyIsTrue(inputSource, kTISPropertyInputSourceIsASCIICapable);
+    bool useABCFallback = MFTISInputSourceUsesABCFallback(inputSource);
     
     /// Get result
     TISInputSourceRef result = NULL;
-    if (isASCIICapable) {
+    if (!useABCFallback) {
         /// Use the passed-in inputSource
         result = (void *)CFRetain(inputSource); /// Retain so that `result` has the expected +1 reference count
     } else {
@@ -556,3 +560,208 @@ TISInputSourceRef MFTISCopyInputSourceWithID(NSString *inputSourceID) {
 }
 
 @end
+
+
+#pragma mark - Definitions for MFEmulateNSMenuItemRemapping()
+
+#import <AppKit/AppKit.h>
+
+API_AVAILABLE(macos(12.0))
+@interface TIKeyboardShortcut : NSObject
+
+    /// Factory
+    + (TIKeyboardShortcut *) shortcutWithKeyEquivalent: (NSString *)arg1 modifierFlags: (NSEventModifierFlags)arg2;
+
+    /// Localize
+    + (TIKeyboardShortcut *) localizedKeyboardShortcut: (TIKeyboardShortcut *)arg1 forKeyboardLayout: (NSString *)arg2 withAttributes:(NSDictionary *)arg3;
+
+    /// State-accessors
+    - (NSString *)              keyEquivalent;
+    - (NSString *)              displayStringOverride;
+    - (NSEventModifierFlags)    modifierFlags;
+@end
+
+@interface NSKeyboardShortcut : NSObject /// [Aug 2025] Unused. Just for reference. Check if this works on older macOS before using it.
+    + (NSKeyboardShortcut *) localizedShortcutWithKeyEquivalent: (NSString *)arg1 modifierMask: (NSEventModifierFlags)arg2 withAttributes: (NSDictionary *)arg3; /// Calls `[TIKeyboardShortcut localizedKeyboardShortcut:forKeyboardLayout:withAttributes:]`
+@end
+
+@interface NSTextInputContext (MMFKEQStuff)
+    + (uint32_t) _currentKeyboardType API_AVAILABLE(macos(12.0));
+@end
+@interface NSLocale (MMFKEQStuff)
+    + (id) preferredLocale;
+@end
+
+extern CFStringRef kTISPropertyKeyLayoutName; /// Observed `@"TISPropertyKeyLayoutName"` in the debugger
+
+MFDataClassImplement2(MFDataClassBase, MFVKCAndFlags,
+    readwrite, assign, , CGKeyCode, vkc,
+    readwrite, assign, , CGEventFlags, modifierMask
+)
+
+#pragma mark - MFEmulateNSMenuItemRemapping()
+
+MFVKCAndFlags *_Nonnull MFEmulateNSMenuItemRemapping(CGKeyCode vkc, CGEventFlags modifierMask) {
+
+    ///
+    /// Overview: [Aug 2025]
+    ///     Apple applies automatic remapping to NSMenuItems' keyboardShortcuts.
+    ///     This function emulates this auto-remapping so that CGEvents can easily trigger those remapped NSMenuItems.  (System-wide shortcuts are parsed/remapped differently I believe)
+    ///     This auto-remapping is generally a bad idea. See:
+    ///         - Our Apple Feedback report FB19033937
+    ///         - The notes we wrote while implementing the advanced keyboard simulation in EventLoggerForBrad.
+    ///                - (It was very advanced, and had solutions for many other complications of Apple's keyboard system, but it didn't have the MFEmulateNSMenuItemRemapping() feature – we built that on mac-mouse-fix > master for the 'Universal Back and Forward' feature.)
+    ///
+    /// What it does exactly: [Aug 2025]
+    ///     - Takes a vkc+flags key combination
+    ///     - Converts vkc+flags -> keq+flags (Assuming ANSI keyboard with US/ABC layout.)
+    ///     - 'Localizes' the keq+flags key combination using the `NSMenuItem.allowsAutomaticKeyEquivalentLocalization` machinery.      (Uses the current system locale, keyboard layout, keyboard type as input)       (Implemented with private APIs)     (Only on macOS 12.0+)
+    ///     - Converts the localized keq+flags -> vkc+flags     (Using the current keyboardLayout and keyboardType)
+    ///     - Caches results for speed.
+    ///
+    /// What we built this for specifically: [Aug 2025]
+    ///     - We want to trigger system functions using keyboard shortcuts
+    ///         ... specifically, we're currently trying to simulate `Command-[ / Command-]` for our 'Universal Back and Forward' feature [Aug 2025]
+    ///     - However, the shortcuts break for other keyboardLayouts / keyboardTypes / etc. due to Apple's auto-remapping of NSMenuItems.
+    ///     - By adapting our sent CGEvents to match the`NSMenuItem.allowsAutomaticKeyEquivalentLocalization` auto-remapping (and the other auto-remappings), we should restore functionality!
+    ///         ... well, in most cases – Menu items that have `allowsAutomaticKeyEquivalentLocalization` turned off won't work. When running an app in RTL while the system is LTR it won't work. Maybe other stuff. But I think that's rare.
+    ///         Note: This is also why the input/output is vkc+flags, not keq+flags – cause vkc+flags is what you use to generate virtual CGEvents. [Aug 2025]
+    ///
+    /// Meta:
+    ///     - We wrote this on master branch inside SymbolicHotKeys.m, while half of the file is stuff copy-pasted over from EventLoggerForBrad.
+    ///         We wrote it inside SymbolicHotKeys.m so we have easy access to the keyboard-related utility functions like `searchVKCForStr()`
+    ///             TODO: Move this into a more appropriate place once we merge EventLoggerForBrad stuff.
+    ///     - Used `command-bracket-test` project for the reverse-engineering.
+    ///
+    /// Alternative implementation ideas:
+    ///     - We could perhaps create a real NSMenuItem with the shortcut we're interested in, have it handle the shortcut localization, and then read the localized shortcut.
+    ///         - I'm not sure under which conditions NSMenuItems are updated.
+    ///             - After a bit of digging, my impression is that the app's mainMenu gets updated (and the changes then cascade down) when the `@"NSTextInputContextKeyboardSelectionDidChangeNotification"` notification arrives in the defaultCenter. (I think that means it wouldn't update when the keyboard type changes? That's rare I suppose.)
+    ///     - We could make the caching a bit more efficient by creating object instances for each shortcut we use, which update their localizations when `@"NSTextInputContextKeyboardSelectionDidChangeNotification"` arrives.
+        
+    /// Validate thread
+    assert(NSThread.isMainThread && "The TIS APIs want to run on the main thread IIRC [Aug 2025]."); /// [Aug 2025] Currently running on mainThread since ButtonInputReceiver (and all the button handling that comes after it) runs on mainThread. (I think)
+      
+    /// Null-check
+    if (vkc == kMFVK_Null) assert(false && "vkc arg is null.");
+      
+    /// Prelude
+    MFVKCAndFlags *_Nonnull in_vkcShortcut = [[MFVKCAndFlags alloc] initWith_vkc: vkc modifierMask: modifierMask];
+    #define fail(reason_formatAndArgs...) ({                                                                \
+        DDLogError(@"MFEmulateNSMenuItemRemapping: failure: " reason_formatAndArgs);                        \
+        assert(false);                                                                                      \
+        return in_vkcShortcut;                                                                              \
+    })
+    
+    /// Get current keyboardLayout inputSource
+    __block TISInputSourceRef currentKBLayout_InputSource_Raw = TISCopyCurrentKeyboardLayoutInputSource();
+    MFDefer ^{ MFCFRelease(currentKBLayout_InputSource_Raw); };
+    if (!currentKBLayout_InputSource_Raw) fail("currentKBLayout_InputSource_Raw is nil");
+    
+    /// Get current keyboardShortcut inputSource
+    ///     [Aug 2025] Optimization idea:
+    ///         We could use `currentKBLayout_InputSource_Raw` directly, but:
+    ///             While, the `AutomaticKeyEquivalentLocalization` mechanism should work the same with both `currentKBLayout_InputSource_Raw` and `currentKBLayout_InputSource` (Since layouts that use the ABCFallback should never have `AutomaticKeyEquivalentLocalization` remappings.)
+    ///             ... However, the `searchVKCForStr()` method at the end needs the `currentKBLayout_InputSource` to do proper keq->vkc lookup, so might as well get it up here to simplify things.
+    ///             ... Actually, for the cache-hit-codepath (which is the most common one), we could avoid getting `currentKBLayout_InputSource` and just use `currentKBLayout_InputSource_Raw` ... but eh I think this is already fast enough.
+    __block TISInputSourceRef currentKBLayout_InputSource = MFTISCopyKeyboardShortcutInputSourceForKeyboardLayoutInputSource(currentKBLayout_InputSource_Raw);
+    MFDefer ^{ MFCFRelease(currentKBLayout_InputSource); };
+    if (!currentKBLayout_InputSource) fail("currentKBLayout_InputSource is nil");
+    
+    /// Gather state used in cacheKey:
+    ///     Optimization Idea: [Aug 2025] If the `currentKBLayout_InputSource` is standard US (ABC) *and* the `currentKBType_MF` is ANSI *and* the `currentLanguageCode` is a LTR language, then we could just return the input immediately as an optimization. (I think.) But the caching is probably fine as well.
+    NSString *currentKBLayout_Name = (__bridge id)TISGetInputSourceProperty(currentKBLayout_InputSource, kTISPropertyKeyLayoutName);
+    NSString *currentLanguageCode = [[NSLocale preferredLocale] languageCode];  /// [Aug 2025] Using private `NSLocale.preferredLocale`. `NSLocale.currentLocale` only returns locales that the current app supports. (I think)
+    MFKeyboardType currentKBType_MF = MFKeyboardTypeCurrent();
+    uint32_t currentKBType_TIC;
+    if (@available(macOS 12.0, *))  currentKBType_TIC = [NSTextInputContext _currentKeyboardType];     /// [Aug 2025] Disassembly: Asserts mainThread, calls `KBGetLayoutType(LMGetKbdLast())` and then maps the resulting ANSI, JIS, ISO constants to 0,1,2 (and -1 on unknown). Sidenote: `LMGetKbdLast()` returns `MFKeyboardType`
+    else                            currentKBType_TIC = UINT32_MAX;
+    {
+        if (!currentKBLayout_Name)   fail("currentKBLayout_Name is nil");       /// May not be null for usage in cacheKey array
+        if (!currentLanguageCode)    fail("currentLanguageCode is nil");
+    }
+    
+    /// Get cache
+    static NSCache *cache;
+    static dispatch_once_t onceToken; dispatch_once(&onceToken, ^{
+        cache = [[NSCache alloc] init]; /// Optimization thoughts: NSCache uses a lock which we may not need (but that shouldn't matter at all.) Stored data should be very minimal, so we don't worry about memory-usage and cache-eviction.
+    });
+    NSArray *cacheKey = @[in_vkcShortcut, currentKBLayout_Name, currentLanguageCode, @(currentKBType_TIC), @(currentKBType_MF)]; /// Should we use an NSString or NSArray? Format string we could use: `"%@|%@|%u|%@|%u"`
+    
+    /// Retrieve cache
+    ///     Cache performance test:      (macOS 15.5, 2018 Mac Mini, [Aug 2025], MMF Helper Release Build with LLDB attached)        (What I did: Set side buttons to Back / Forward and then clicked them repeatedly at an even pace. Also had other actions set up. Not sure that matters.)
+    ///         No cache                                                 -> 0.8% CPU
+    ///         Cache                                                      -> 0.4% CPU
+    ///         No MFEmulateNSMenuItemRemapping -> 0.4% CPU     (Simulating keyboardShortcuts in the 'Universal Back and Forward' system without first invoking `MFEmulateNSMenuItemRemapping()`)
+    MFVKCAndFlags *fromCache = [cache objectForKey: cacheKey];
+    if (fromCache) return fromCache;
+    
+    /// Convert vkc -> keq
+    ///     [Aug 2025] This is a simple, stateless mapping using ANSI keyboardType and ABC keyboardLayout.
+    NSString *in_keq;
+    {
+        __block TISInputSourceRef abcInputSource = MFTISCopyInputSourceWithID(@"com.apple.keylayout.ABC");
+        MFDefer ^{ MFCFRelease(abcInputSource); };
+        const UCKeyboardLayout *abcLayout = MFTISGetLayoutPointerFromInputSource(abcInputSource);
+        in_keq = getStrForVKC(kMFKeyboardTypeGenericANSI, abcLayout, in_vkcShortcut.vkc, kMFModifierFlagsNull);
+        if (![in_keq length]) fail("in_keq is empty"); /// [Aug 2025] This would be empty for the arrowKeys I believe, but those don't get auto-remapped I think (So we don't need to use MFEmulateNSMenuItemRemapping()
+    }
+    
+    /// Localize the keq
+    ///
+    /// Emulate keyboardShortcut localization logic from `+[NSMenuItem updateKeyboardAwareShortcutsForMenu:ofCurrentSource:withLanguageID:]`
+    ///     Call tree:      (Entries at the same indentation level all call the more indented entries)      (Observed on macOS 15.5, 2018 Mac Mini, [Aug 2025])         (Disassembled with Claude and GPT 5)
+    ///         `+[NSMenuItem updateKeyboardAwareShortcutsForMenu:ofCurrentSource:withLanguageID:]`
+    ///         `+[NSKeyboardShortcut localizedShortcutWithKeyEquivalent:modifierMask:withAttributes:]`
+    ///             `+[TIKeyboardShortcut localizedKeyboardShortcut:forKeyboardLayout:withAttributes:]`
+    ///                 `+[TIKeyboardShortcut localizedKeyboardShortcut:forKeyboardLayout:usingKeyboardType:]`
+    ///                     `TIGetKeyboardShortcutOverridesForKeyboardLayout()`
+    ///     Notes:
+    ///         - What does the `withLanguageID:` arg do? It's not passed into the lower-level `TIKeyboardShortcut` methods.
+    ///         - [Aug 2025] Optimization idea: Skipping localization if `currentKBLayout` is ABC/US. But we're already caching.
+    
+    NSString *out_keq;
+    NSEventModifierFlags out_modifierFlags;
+    if (@available(macOS 12.0, *) ) {
+        NSDictionary *attrs = @{ /// Based on disassembly of `+[NSMenuItem updateKeyboardAwareShortcutsForMenu:ofCurrentSource:withLanguageID:]`    (Observed on macOS 15.5, 2018 Mac Mini, [Aug 2025])
+            /// RTL
+            ///     Originally: `@([NSApp userInterfaceLayoutDirection] == NSUserInterfaceLayoutDirectionRightToLeft && [item allowsAutomaticKeyEquivalentMirroring])`
+            ///     We're using NSLocale instead of `[NSApp userInterfaceLayoutDirection]` because we don't care whether MMF is RTL, but whether _other_ apps are RTL.
+            ///     Alternative implementations. IIRC, I saw `kTISPropertyInputSourceLanguages` somewhere in the disassembly. But the RTL remapping of NSMenuItems seems to depend on the app's language not the keyboardLayout's language.
+            @"isRTL":         @([NSLocale characterDirectionForLanguage: currentLanguageCode] == NSLocaleLanguageDirectionRightToLeft),
+            @"keyboardType":  @(currentKBType_TIC), /// Originally: `[NSTextInputContext _currentKeyboardType]`
+            @"sel":           @"",                  /// Originally: `NSStringFromSelector(item.action)`
+        };
+        TIKeyboardShortcut *in_keqShortcut  = [TIKeyboardShortcut shortcutWithKeyEquivalent: in_keq modifierFlags: (NSEventModifierFlags)in_vkcShortcut.modifierMask];
+        TIKeyboardShortcut *out_keqShortcut = [TIKeyboardShortcut localizedKeyboardShortcut: in_keqShortcut forKeyboardLayout: currentKBLayout_Name withAttributes: attrs];
+        if (!out_keqShortcut)                       fail(@"out_keqShortcut is nil");
+        if (!out_keqShortcut.keyEquivalent.length)  fail(@"out_keqShortcut.keyEquivalent is empty");
+        out_keq           = out_keqShortcut.keyEquivalent;
+        out_modifierFlags = out_keqShortcut.modifierFlags;
+        
+        DDLogDebug(@"MFEmulateNSMenuItemRemapping: localization state: %@", vardesc(currentKBLayout_Name, in_keqShortcut, out_keqShortcut, attrs));
+    }
+    else {
+        /// Turn the shortcut localization off pre-macOS 12.0 (Monterey)
+        ///     Doing this to prevent 3.0.6 linker crashes due to missing `TIKeyboardShortcut` symbol, but also, `.allowsAutomaticKeyEquivalentLocalization` was introduced in macOS 12.0, so the localization is probably not necessary.
+        out_keq           = in_keq;
+        out_modifierFlags = (NSEventModifierFlags)in_vkcShortcut.modifierMask;
+    }
+    
+    /// Convert keq -> vkc
+    ///     Looks up which vkc produces the localized keq under the current keyboardLayout+keyboardType
+    MFVKCAndFlags *out_vkcShortcut;
+    {
+        const UCKeyboardLayout *currentKBLayout_Data = MFTISGetLayoutPointerFromInputSource(currentKBLayout_InputSource);
+        CGKeyCode out_vkc = searchVKCForStr(currentKBType_MF, currentKBLayout_Data, in_vkcShortcut.vkc, out_keq, kMFModifierFlagsNull); /// Should we search for shiftKeyEquivalents here? Currently, we only use this for localizing `[`and `]` for the 'Universal Back and Forward' feature – and `kMFModifierFlagsNull` works fine [Aug 2025]
+         if (out_vkc == kMFVK_Null) fail(@"No vkc found for localized keq");
+         out_vkcShortcut = [[MFVKCAndFlags alloc] initWith_vkc: out_vkc modifierMask: (CGEventFlags)out_modifierFlags];
+    }
+    
+    /// Store cache
+    [cache setObject: out_vkcShortcut forKey: cacheKey];
+    
+    /// Return
+    return out_vkcShortcut;
+    #undef fail
+}

@@ -192,6 +192,14 @@ import Cocoa
         
         /// Update UI
         updateUIToLicenseField()
+        
+        /// Hacky fix
+        ///     Problem: (On macOS 15.5 Sequoia, MMF 3.0.5, 2018 Mac Mini) When you insert text that's long enough to make the textField horizontally scrollable, and then you delete it all at once, the placeholder text becomes off-center. Once you enter text again, everything centers itself again.
+        if licenseField.stringValue == "" {
+            licenseField.stringValue = "xxx"
+            licenseField.layoutSubtreeIfNeeded()
+            licenseField.stringValue = ""
+        }
     }
     
     

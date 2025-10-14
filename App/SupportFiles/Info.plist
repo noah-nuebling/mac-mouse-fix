@@ -51,5 +51,7 @@
 	<string>https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>ZC69ciDfGYN4t3kwRiPc2SC7J4hchv9w+FfVv59r4+U=</string>
+	<key>UIDesignRequiresCompatibility</key>
+	<true/>
 </dict>
 </plist>

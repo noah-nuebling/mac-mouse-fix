@@ -7,6 +7,11 @@
 // --------------------------------------------------------------------------
 //
 
+/// Bug:
+///     [Aug 2025] Paul Romas reports that the 'Open Privacy & Security Settings' link doesn't work under macOS 10.15 Catalina. (message:<AC7FA1E0-0E52-4B41-869F-B85F1AE0A8E8@gmail.com>)
+///         TODO: Investigate – Probably also check if it works on macOS 11 Big Sur and other older macOS versions.
+///         Note: The link uses the url: `x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility`
+
 #import "AppDelegate.h"
 #import "AuthorizeAccessibilityView.h"
 #import "Utility_App.h"

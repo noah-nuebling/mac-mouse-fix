@@ -18,6 +18,29 @@
 
 #pragma mark - Macros from mac-mouse-fix > SharedUtility.h
 
+/// `mferror` macro
+///     Shorthand for creating an NSError with a debug description (Uses `NSDebugDescriptionErrorKey`)
+///     Usage example:
+///         `mferror(NSCocoaErrorDomain, NSPropertyListReadCorruptError, @"Deserialized plist object from %@ is not a mutable dictionary. Is %@", url, [result class]);`
+
+#define mferror(domain_, code_, formatAndArgs_...) \
+    [NSError errorWithDomain: (domain_) code: (code_) userInfo: @{ NSDebugDescriptionErrorKey: stringf(@"" formatAndArgs_) }]
+
+/// `mfabort` macro
+///     Like abort() but with the goal of writing a specific message into the crash report
+///     (Writing the message into the crash-report doesn't work yet as of [Aug 2025])
+///     Note on old investigation: [Aug 2025]
+///         IIRC we did a longer investigation into writing custom messages into crash reports. I don't remember where. Maybe some side-repo? I remember finding some global c variable but it was ignored unless it was written to from the crash reporter module or something. I also remember discovering some elaborate private API (CFType-based I think), but not pursuing it further.
+///     TODO: Move this into Logging.h when merging this code from master into feature-strings-catalog
+
+#define mfabort(format, args...) ({ \
+    DDLogError(@"mfabort failure: " format, ## args); \
+    [DDLog flushLog];               /** [Aug 2025] Without this, nothing would be logged, due to async logging of CocoaLumberjack and and the abort right after. But this should make it work (I think – haven't tested any of this.) Claude 4.0 also tells me to sleep for 10ms after flushing, but I don't trust it.*/\
+    abort();                        \
+})
+
+
+
 /// Helper macros
 ///     To implement other macros
 #define UNPACK(args...) args                /// This allows us to include `,` inside an argument to a macro (but the argument then needs to be wrapped inside `()` by the caller of the macro )

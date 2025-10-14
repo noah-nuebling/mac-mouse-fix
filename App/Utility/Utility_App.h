@@ -15,6 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Utility_App : NSObject
 
+bool runningCompatMode(void);
+
+CGRect MFCGRectInset(CGRect rect, NSEdgeInsets insets);
+
+CGFloat             MFNSBoxCornerRadius(void);
+CALayerCornerCurve  MFNSBoxCornerCurve(void);
+NSEdgeInsets        MFNSBoxInsets(void);
+
 + (void)centerWindow:(NSWindow *)win atPoint:(NSPoint)pt;
 + (void)openWindowWithFadeAnimation:(NSWindow *)window fadeIn:(BOOL)fadeIn fadeTime:(NSTimeInterval)time;
 + (NSPoint)getCenterOfRect:(NSRect)rect;

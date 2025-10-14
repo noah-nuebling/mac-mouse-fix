@@ -159,24 +159,20 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     }
     xxx(@"keyCaptureModeFeedbackWithSystemEvent") {
         [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:YES];
+
     }
     xxx(@"helperEnabledWithNoAccessibility") {
-        
-        BOOL isStrange = NO;
-        if (isavailable(13.0, 15.0)) { if (@available(macOS 13.0, *)) {
-            isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload:payload];
-        }}
+        /// Notes:
+        ///     - [Sep 2025] What is the logic for when we call checkHelperStrangenessReactWithPayload:?
+        ///         When the mainApp is started while the helper is already running, it checks if the helper is enabled by sending it "getBundleVersion" -> Maybe we should call `checkHelperStrangenessReactWithPayload:` there as well?
+        BOOL isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload: payload];
         if (!isStrange) {
             [AuthorizeAccessibilityView add];
         }
     }
     xxx(@"helperEnabled") {
-        
-        BOOL isStrange = NO;
-        if (isavailable(13.0, 15.0)) { if (@available(macOS 13.0, *)) {
-            isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload:payload];
-        }}
-        
+
+        BOOL isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload: payload];
         if (!isStrange) { /// Helper matches mainApp instance.
             
             /// Bring mainApp for foreground

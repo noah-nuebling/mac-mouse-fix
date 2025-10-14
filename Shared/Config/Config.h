@@ -20,13 +20,13 @@ NS_ASSUME_NONNULL_BEGIN
 + (Config *)shared;
 
 /// Main storage
-@property (strong, nonatomic) NSMutableDictionary *config;
+@property (strong, nonatomic) NSMutableDictionary *config; /// [Aug 2025] This could just be an ivar instead of a property  (Except if we wanna support KVO)
 
 /// Load
 + (void)load_Manual;
 
 /// Load from file
-- (void)loadConfigFromFileAndRepair;
+- (void)loadConfigFromFile;
 
 /// Read and write
 NSObject * _Nullable config(NSString *keyPath);
@@ -35,19 +35,15 @@ void removeFromConfig(NSString *keyPath);
 void commitConfig(void);
 
 /// Repair
-typedef enum {
-    kMFConfigRepairReasonLoad = 0,
-    kMFConfigRepairReasonIncompleteAppOverride = 1
-} MFConfigRepairReason;
-
-- (void)repairConfigWithReason:(MFConfigRepairReason)reason info:(id _Nullable)info;
-- (void)cleanConfig;
+- (void) repairIncompleteAppOverrideForBundleID: (NSString *)bundleID                           
+                               relevantKeyPaths: (NSArray <NSString *> *)keyPathsToDefaultValues;
+- (void) cleanConfig;
 
 #pragma mark - For Helper
 
 /// Overrides
 - (BOOL)loadOverridesForAppUnderMousePointerWithEvent:(CGEventRef)event;
-@property (strong, nonatomic, readonly) NSMutableDictionary *configWithAppOverridesApplied;
+@property (strong, nonatomic, readonly) NSMutableDictionary *configWithAppOverridesApplied; /// [Aug 2025] This could just be an ivar
 
 /// React
 + (void)loadFileAndUpdateStates;
