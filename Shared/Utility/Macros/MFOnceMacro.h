@@ -11,6 +11,17 @@
 ///     -> Don't use this.
 ///
 ///     (Usage examples in MFOnceMacro.m)
+///
+///     Update: [Oct 2025] Idea: Simpler solution that still reduces boilerplate:
+///     ```
+///         #define mfonce dispatch_once
+///         #define mfoncet ({ static dispatch_once_t onceToken; &onceToken; })
+///
+///         mfonce(mfoncet, ^{
+///             /// Stuff that should be done once
+///         });
+///     ```
+
 
 #if 0 /// Use `dispatch_once() instead`
 
