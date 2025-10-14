@@ -78,9 +78,9 @@ class TrialNotificationController: NSWindowController {
         /// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
         
         /// Make views compact on Tahoe
-        if #available(macOS 26.0, *) {
-            self.window?.contentView?.prefersCompactControlSizeMetrics = true;
-        }
+        // if #available(macOS 26.0, *) {
+        //     self.window?.contentView?.prefersCompactControlSizeMetrics = true;
+        // }
     }
     
     deinit {

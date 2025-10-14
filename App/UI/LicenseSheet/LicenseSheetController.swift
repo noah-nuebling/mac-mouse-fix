@@ -349,9 +349,9 @@ import CocoaLumberjackSwift
         ///         TODO: Check if this is always called after activating a new key.
         
         /// Adjust look for macOS Tahoe
-        if #available(macOS 26.0, *) {
-            self.view.prefersCompactControlSizeMetrics = true;
-        }
+//        if #available(macOS 26.0, *) {
+//            self.view.prefersCompactControlSizeMetrics = true;
+//        }
         
         /// Load existing key into licenseField
         var key: String = ""

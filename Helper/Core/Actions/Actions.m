@@ -26,7 +26,16 @@
     DDLogDebug(@"Executing action array: %@, phase: %@", actionArray, @(phase));
     
     if (phase == kMFActionPhaseEnd) {
-        return; /// TODO: Actually implement actions with different phases
+        // Only process keyboard shortcuts for kMFActionPhaseEnd phase
+        for (NSDictionary *actionDict in actionArray) {
+            MFStringConstant actionType = actionDict[kMFActionDictKeyType];
+            if ([actionType isEqualToString:kMFActionDictTypeKeyboardShortcut]) {
+                NSNumber *keycode = actionDict[kMFActionDictKeyKeyboardShortcutVariantKeycode];
+                NSNumber *flags = actionDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags];
+                postKeyboardKeyUp(keycode.intValue, flags.intValue);
+            }
+        }
+        return;
     }
                
     for (NSDictionary *actionDict in actionArray) {
@@ -150,7 +159,17 @@
             
             NSNumber *keycode = actionDict[kMFActionDictKeyKeyboardShortcutVariantKeycode];
             NSNumber *flags = actionDict[kMFActionDictKeyKeyboardShortcutVariantModifierFlags];
-            postKeyboardShortcut(keycode.intValue, flags.intValue);
+            
+            if (phase == kMFActionPhaseCombined) {
+                // Original behavior: send both key down and key up
+                postKeyboardShortcut(keycode.intValue, flags.intValue);
+            } else if (phase == kMFActionPhaseStart) {
+                // Send only key down event for continuous press
+                postKeyboardKeyDown(keycode.intValue, flags.intValue);
+            } else if (phase == kMFActionPhaseEnd) {
+                // Send only key up event when releasing
+                postKeyboardKeyUp(keycode.intValue, flags.intValue);
+            }
             
         } else if ([actionType isEqualToString:kMFActionDictTypeSystemDefinedEvent]) {
             
@@ -252,6 +271,57 @@ static void postKeyboardShortcut(CGKeyCode keyCode, CGSModifierFlags modifierFla
     CFRelease(keyDown);
     CFRelease(keyUp);
     CFRelease(modEvent);
+}
+
+static void postKeyboardKeyDown(CGKeyCode keyCode, CGSModifierFlags modifierFlags) {
+    
+    DDLogDebug(@"postKeyboardKeyDown: Posting key down with %@", vardesc(@(keyCode), @(modifierFlags)));
+    
+    CGEventTapLocation tapLoc = kCGSessionEventTap;
+
+    /// Create key down event
+    CGEventRef keyDown = CGEventCreateKeyboardEvent(NULL, keyCode, true);
+    CGEventSetFlags(keyDown, (CGEventFlags)modifierFlags);
+    
+    /// Fix up keyboard type
+    CGEventSetIntegerValueField(keyDown, kCGKeyboardEventKeyboardType, MFKeyboardTypeCurrent());
+    
+    /// Send key down event
+    CGEventPost(tapLoc, keyDown);
+    
+    CFRelease(keyDown);
+}
+
+static void postKeyboardKeyUp(CGKeyCode keyCode, CGSModifierFlags modifierFlags) {
+    
+    DDLogDebug(@"postKeyboardKeyUp: Posting key up with %@", vardesc(@(keyCode), @(modifierFlags)));
+    
+    CGEventTapLocation tapLoc = kCGSessionEventTap;
+
+    /// Create key up event
+    CGEventRef keyUp = CGEventCreateKeyboardEvent(NULL, keyCode, false);
+    CGEventSetFlags(keyUp, (CGEventFlags)modifierFlags);
+    
+    /// Fix up keyboard type
+    CGEventSetIntegerValueField(keyUp, kCGKeyboardEventKeyboardType, MFKeyboardTypeCurrent());
+    
+    /// Send key up event
+    CGEventPost(tapLoc, keyUp);
+    
+    /// Create modifier restore event
+    CGEventRef modEvent = CGEventCreate(NULL);
+    CGEventPost(tapLoc, modEvent);
+    
+    CFRelease(keyUp);
+    CFRelease(modEvent);
+}
+
++ (void)postKeyboardKeyDown:(CGKeyCode)keyCode modifierFlags:(CGSModifierFlags)modifierFlags {
+    postKeyboardKeyDown(keyCode, modifierFlags);
+}
+
++ (void)postKeyboardKeyUp:(CGKeyCode)keyCode modifierFlags:(CGSModifierFlags)modifierFlags {
+    postKeyboardKeyUp(keyCode, modifierFlags);
 }
 
 @end

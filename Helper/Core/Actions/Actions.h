@@ -8,8 +8,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 #import "Constants.h"
 #import "WannabePrefixHeader.h"
+#import "CGSHotKeys.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -23,6 +25,8 @@ typedef enum {
 
 + (void)executeActionArray:(NSArray *)actionArray phase:(MFActionPhase)phase MF_SWIFT_HIDDEN;
 + (void)__SWIFT_UNBRIDGED_executeActionArray:(id)actionArray phase:(MFActionPhase)phase;
++ (void)postKeyboardKeyDown:(CGKeyCode)keyCode modifierFlags:(CGSModifierFlags)modifierFlags;
++ (void)postKeyboardKeyUp:(CGKeyCode)keyCode modifierFlags:(CGSModifierFlags)modifierFlags;
 
 @end
 

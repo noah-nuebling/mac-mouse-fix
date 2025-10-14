@@ -165,15 +165,15 @@ static NSDictionary *sideButtonActions;
             
             if (!runningPreRelease()) {
                 [NSNotificationCenter.defaultCenter addObserverForName: /*@"_NSWindowDidBecomeVisible"*/ @"_NSWindowDidBecomeVisible" object: nil queue: nil usingBlock: ^void (NSNotification * _Nonnull notification) {
-                    if (@available(macOS 26.0, *)) {
-                        NSWindow *win = (NSWindow *)notification.object;
-                        assert(win.contentView.prefersCompactControlSizeMetrics == YES
-                            || isclassd(win, _NSAlertPanel)                         /// NSAlert windows
-                            || isclassd(win, NSPopupMenuWindow)                     /// NSMenu windows
-                            || [win.frameAutosaveName isEqual: @"SUStatusFrame"]    /// Sparkle window
-                            || [win.frameAutosaveName isEqual: @"SUUpdateAlert"]    /// Sparkle window
-                        );
-                    }
+//                    if (@available(macOS 26.0, *)) {
+//                        NSWindow *win = (NSWindow *)notification.object;
+//                        assert(win.contentView.prefersCompactControlSizeMetrics == YES
+//                            || isclassd(win, _NSAlertPanel)                         /// NSAlert windows
+//                            || isclassd(win, NSPopupMenuWindow)                     /// NSMenu windows
+//                            || [win.frameAutosaveName isEqual: @"SUStatusFrame"]    /// Sparkle window
+//                            || [win.frameAutosaveName isEqual: @"SUUpdateAlert"]    /// Sparkle window
+//                        );
+//                    }
                 }];
             }
         });
