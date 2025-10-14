@@ -7,6 +7,54 @@
 
 #import "SharedMacros.h"
 
+#pragma mark - mfbox macro
+
+id _mfbox(const void *thing, const char *objc_type) {
+
+    /// Objects (id, Class)
+    if (objc_type[0] == '@' || objc_type[0] == '#') {
+        return *(id __strong *)thing; /// Is `__strong` correct here? [Oct 2025]
+    }
+    
+    /// Primitives
+    #define istype(type) (0 == strcmp(@encode(type), objc_type))
+    {
+        /// Numbers
+        #define boxnum(type, method) \
+            if (istype(type)) return [NSNumber method *(type *)thing];
+        {
+            boxnum(char,                numberWithChar:)
+            boxnum(unsigned char,       numberWithUnsignedChar:)
+            boxnum(short,               numberWithShort:)
+            boxnum(unsigned short,      numberWithUnsignedShort:)
+            boxnum(int,                 numberWithInt:)
+            boxnum(unsigned int,        numberWithUnsignedInt:)
+            boxnum(long,                numberWithLong:)
+            boxnum(unsigned long,       numberWithUnsignedLong:)
+            boxnum(long long,           numberWithLongLong:)
+            boxnum(unsigned long long,  numberWithUnsignedLongLong:)
+            boxnum(float,               numberWithFloat:)
+            boxnum(double,              numberWithDouble:)
+            boxnum(BOOL,                numberWithBool:)
+            boxnum(NSInteger,           numberWithInteger:)
+            boxnum(NSUInteger,          numberWithUnsignedInteger:)
+        }
+        #undef boxnum
+            
+        /// C strings
+        if (istype(char *)) return @(*(char **)thing ?: ""); /// nil strings crash when you try to box them IIRC [Oct 2025]
+
+        /// SEL
+        if (istype(SEL)) return NSStringFromSelector(*(SEL *)thing);
+
+        /// Fallback - NSValue
+        ///     This should also cover all the `objc_boxable`/ `CA_BOXABLE` / `CG_BOXABLE` /  `CF_BOXABLE` types.
+        return [NSValue valueWithBytes: thing objCType: objc_type];
+    }
+    #undef istype
+}
+
+
 #pragma mark - vardesc macro
 
 NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullable __strong *_Nonnull values, size_t count, bool linebreaks) {

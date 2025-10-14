@@ -155,7 +155,7 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
             }
         }
         
-        DDLogDebug(@"[SymbolicHotKeys +post:] CurrentBinding: %@", vardesc(@(shk), @(keq_fromSHKAPI), @(vkc_fromSHKAPI), binarystring(mods_fromSHKAPI), @(vkc_reachable)));
+        DDLogDebug(@"[SymbolicHotKeys +post:] CurrentBinding: %@", vardesc(shk, keq_fromSHKAPI, vkc_fromSHKAPI, binarystring(mods_fromSHKAPI), vkc_reachable));
         
         BOOL oldBindingIsUsable = vkc_reachable != kMFVK_Null;
         

@@ -56,31 +56,31 @@
 #define IFEMPTY(condition, body...)                    _IFEMPTY((body), (),     condition)
 #define IFEMPTY_NOT(condition, body...)                _IFEMPTY((),     (body), condition)
 
-#define FOR_EACH(macro, macroargs...) \
-    _FOR_EACH_SELECTOR(macroargs, _FOR_EACH_20, _FOR_EACH_19, _FOR_EACH_18, _FOR_EACH_17, _FOR_EACH_16, _FOR_EACH_15, _FOR_EACH_14, _FOR_EACH_13, _FOR_EACH_12, _FOR_EACH_11, _FOR_EACH_10, _FOR_EACH_9, _FOR_EACH_8, _FOR_EACH_7, _FOR_EACH_6, _FOR_EACH_5, _FOR_EACH_4, _FOR_EACH_3, _FOR_EACH_2, _FOR_EACH_1)(macro, macroargs)
+#define FOR_EACH(function, separator, functionargs...) \
+    _FOR_EACH_SELECTOR(functionargs, _FOR_EACH_20, _FOR_EACH_19, _FOR_EACH_18, _FOR_EACH_17, _FOR_EACH_16, _FOR_EACH_15, _FOR_EACH_14, _FOR_EACH_13, _FOR_EACH_12, _FOR_EACH_11, _FOR_EACH_10, _FOR_EACH_9, _FOR_EACH_8, _FOR_EACH_7, _FOR_EACH_6, _FOR_EACH_5, _FOR_EACH_4, _FOR_EACH_3, _FOR_EACH_2, _FOR_EACH_1)(function, separator, functionargs)
     
 #define _FOR_EACH_SELECTOR(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, macroname, ...) macroname
 
-#define _FOR_EACH_1(macro, macroarg)          macro(macroarg)
-#define _FOR_EACH_2(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_1(macro, rest)
-#define _FOR_EACH_3(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_2(macro, rest)
-#define _FOR_EACH_4(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_3(macro, rest)
-#define _FOR_EACH_5(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_4(macro, rest)
-#define _FOR_EACH_6(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_5(macro, rest)
-#define _FOR_EACH_7(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_6(macro, rest)
-#define _FOR_EACH_8(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_7(macro, rest)
-#define _FOR_EACH_9(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_8(macro, rest)
-#define _FOR_EACH_10(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_9(macro, rest)
-#define _FOR_EACH_11(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_10(macro, rest)
-#define _FOR_EACH_12(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_11(macro, rest)
-#define _FOR_EACH_13(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_12(macro, rest)
-#define _FOR_EACH_14(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_13(macro, rest)
-#define _FOR_EACH_15(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_14(macro, rest)
-#define _FOR_EACH_16(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_15(macro, rest)
-#define _FOR_EACH_17(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_16(macro, rest)
-#define _FOR_EACH_18(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_17(macro, rest)
-#define _FOR_EACH_19(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_18(macro, rest)
-#define _FOR_EACH_20(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_19(macro, rest)
+#define _FOR_EACH_1(function, separator, functionarg)           function(functionarg)
+#define _FOR_EACH_2(function, separator, functionarg, rest...)  function(functionarg) UNPACK separator _FOR_EACH_1(function, separator, rest)
+#define _FOR_EACH_3(function, separator, functionarg, rest...)  function(functionarg) UNPACK separator _FOR_EACH_2(function, separator, rest)
+#define _FOR_EACH_4(function, separator, functionarg, rest...)  function(functionarg) UNPACK separator _FOR_EACH_3(function, separator, rest)
+#define _FOR_EACH_5(function, separator, functionarg, rest...)  function(functionarg) UNPACK separator _FOR_EACH_4(function, separator, rest)
+#define _FOR_EACH_6(function, separator, functionarg, rest...)  function(functionarg) UNPACK separator _FOR_EACH_5(function, separator, rest)
+#define _FOR_EACH_7(function, separator, functionarg, rest...)  function(functionarg) UNPACK separator _FOR_EACH_6(function, separator, rest)
+#define _FOR_EACH_8(function, separator, functionarg, rest...)  function(functionarg) UNPACK separator _FOR_EACH_7(function, separator, rest)
+#define _FOR_EACH_9(function, separator, functionarg, rest...)  function(functionarg) UNPACK separator _FOR_EACH_8(function, separator, rest)
+#define _FOR_EACH_10(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_9(function, separator, rest)
+#define _FOR_EACH_11(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_10(function, separator, rest)
+#define _FOR_EACH_12(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_11(function, separator, rest)
+#define _FOR_EACH_13(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_12(function, separator, rest)
+#define _FOR_EACH_14(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_13(function, separator, rest)
+#define _FOR_EACH_15(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_14(function, separator, rest)
+#define _FOR_EACH_16(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_15(function, separator, rest)
+#define _FOR_EACH_17(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_16(function, separator, rest)
+#define _FOR_EACH_18(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_17(function, separator, rest)
+#define _FOR_EACH_19(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_18(function, separator, rest)
+#define _FOR_EACH_20(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_19(function, separator, rest)
 
 /// weakify/strongify macros
 ///     These are used to prevent retain cycles when using objc blocks.
@@ -89,8 +89,8 @@
 ///         - I thought we had that in the MMF project? But I can't find it. Might as well do our own simplified implementation.
 ///         - ... I didn't actually end up using this [Sep 2025]
 
-#define weakify(varnames...)   FOR_EACH(_weakify, varnames)
-#define strongify(varnames...) FOR_EACH(_strongify, varnames)
+#define weakify(varnames...)   FOR_EACH(_weakify,   (), varnames)
+#define strongify(varnames...) FOR_EACH(_strongify, (), varnames)
 
 #define _weakify(varname) \
     __weak __auto_type _weakified_##varname = varname;
@@ -104,18 +104,34 @@
 ///      vardescl -> (var)iable (desc)ription with (l)inebreaks
 ///  For a given set of expressions, captures their source text and corresponding value and inserts them into the output string in a key-value style. All values have to be objects.
 ///  This is similar to NSDictionaryOfVariableBindings() – But this is better-suited for debug-printing because: Dictionaries don't preserve order. Dictionaries can't contain nil. Using NSDictionaryOfVariableBindings requires importing NSLayoutConstraint.h
+///  Handling of primitives: This uses `mfbox` with `FOR_EACH` to be able to accept primitive values as well as objects. Otherwise user could still easily @(box) primitives. (And remove the `@()` before printing if it bothers us) Not sure this is worth the complexity [Oct 2025]
+///  Performance: I expect to only ever use `vardesc` in log statements meaning it won't be evaluated if logging is disabled.
 ///  Example usage:
 ///      ```
-///      NSLog(@"Local variables %@", vardesc(@(some_int), some_object)); // Prints: `Local variables: { @(some_int) = 79 | some_object = Turns out I'm a string! }`
+///      NSLog(@"Local variables %@", vardesc(some_int, some_object)); // Prints: `Local variables: { some_int = 79 | some_object = Turns out I'm a string! }`
 ///      ```
 #define vardesc(vars...)  _vardesc(false, @#vars, vars)         /** Need to stringify `vars` here not inside `_vardesc`, otherwise sourcetext of passed-in macros will be expanded. Not sure why [Jul 2025] */
 #define vardescl(vars...) _vardesc(true,  @#vars, vars)
 
 #define _vardesc(linebreaks, keys, vars...) ({                  \
-    id _values[] = { vars };                                    /** Using a C array instead of NSArray to be able to capture nil. NSDictionaryOfVariableBindings uses a variadic function. */\
+    id _values[] = { FOR_EACH(mfbox, (,), vars) };                                    /** Using a C array instead of NSArray to be able to capture nil. NSDictionaryOfVariableBindings uses a variadic function. */\
     __vardesc(keys, _values, arrcount(_values), (linebreaks));  \
 })
 NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullable __strong *_Nonnull values, size_t count, bool linebreaks);
+
+/// `mfbox` macro
+/// Alternative to objc @(boxed) expressions.
+///     Advantage: You can pass in a pointer to anything – including an object – and it 'normalizes' everything to an object – this is useful for our `vardesc` macro.
+///     Disadvantage: @(boxed) expressions are more convenient.
+///     Note: I think I implemented this before in some side-repo [Oct 2025]
+
+#define mfbox(thing) ({                                     \
+    nowarn_push(-Wauto-var-id)                              \
+    __auto_type thing_ = (thing);                           \
+    nowarn_pop()                                            \
+    _mfbox((void *)&thing_, @encode(typeof(thing_)));       \
+})
+id __nullable _mfbox(const void *__nonnull thing, const char *__nonnull objc_type); /// Not sure this can actually return nil [Oct 2025]
 
 /// `nowarn_push()` and `nowarn_pop()` macros:
 ///     Temporarily disable clang warnings

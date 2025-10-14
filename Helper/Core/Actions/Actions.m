@@ -218,7 +218,7 @@ static void postSystemDefinedEvent(MFSystemDefinedEventType type, NSEventModifie
 
 static void postKeyboardShortcut(CGKeyCode keyCode, CGSModifierFlags modifierFlags) {
     
-    DDLogDebug(@"postKeyboardShortcut: Posting shortcut with %@", vardesc(@(keyCode), @(modifierFlags)));
+    DDLogDebug(@"postKeyboardShortcut: Posting shortcut with %@", vardesc(keyCode, modifierFlags));
     
     CGEventTapLocation tapLoc = kCGSessionEventTap;
 
