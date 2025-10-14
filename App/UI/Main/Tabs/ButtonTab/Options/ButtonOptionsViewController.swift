@@ -37,9 +37,9 @@ class ButtonOptionsViewController: NSViewController {
         lockPointer <~ lockPointerButton.reactive.boolValues
         
         /// Adjust views for Tahoe
-//        if #available(macOS 26.0, *) {
-//            self.view.prefersCompactControlSizeMetrics = true;
-//        }
+        if #available(macOS 26.0, *) {
+            self.view.prefersCompactControlSizeMetrics = true;
+        }
     }
     
     /// Interface
