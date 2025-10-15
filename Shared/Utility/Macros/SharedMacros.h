@@ -237,12 +237,14 @@ id __nullable _mfbox(const void *__nonnull thing, const char *__nonnull objc_typ
 #define _fcase_4(x, rest...)    case x: _fcase_3(rest)
 #define _fcase_5(x, rest...)    case x: _fcase_4(rest)
 #define _fcase_6(x, rest...)    case x: _fcase_5(rest)
-#define _fcase_7(x, rest...)    case x: _fcase_6(rest) /** 7 should be more than enough */
+#define _fcase_7(x, rest...)    case x: _fcase_6(rest)
+#define _fcase_8(x, rest...)    case x: _fcase_7(rest)
+#define _fcase_9(x, rest...)    case x: _fcase_8(rest)
 
-#define _fcase_selector(_dummy_, arg1, arg2, arg3, arg4, arg5, arg6, arg7, macroname, ...) macroname
+#define _fcase_selector(_dummy_, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, macroname, ...) macroname
 
 #define fcase(values...) \
-    _fcase_selector(_dummy_, ## values, _fcase_7, _fcase_6, _fcase_5, _fcase_4, _fcase_3, _fcase_2, _fcase_1, _fcase_0)(values) /** Trick: `_dummy_` arg is necessary because ## only deletes commas (,) to its left (I think). */
+    _fcase_selector(_dummy_, ## values, _fcase_9, _fcase_8, _fcase_7, _fcase_6, _fcase_5, _fcase_4, _fcase_3, _fcase_2, _fcase_1, _fcase_0)(values) /** Trick: `_dummy_` arg is necessary because ## only deletes commas (,) to its left (I think). */
 
 /// bcase – (b)reaking variant
 
