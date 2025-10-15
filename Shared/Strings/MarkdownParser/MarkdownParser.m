@@ -245,28 +245,21 @@ static NSAttributedString *attributedStringWithMarkdown(NSString *src, MDStyleOv
             ///     - `man 3 cmark-gfm` says: "Nodes must only be modified after an EXIT event, or an ENTER event for leaf nodes"
             ///         - However we're not concerned about that since we're only analyzing, not modifying the nodes (I think) [Jul 2025]
             
+            /// Add blank-line between block elements
+            ///     Old comment from `CMARK_NODE_PARAGRAPH`: Why the isTopLevel restriction?
+            ///         Update: every list item seems to contain its own paragraph, they are all last paragraphs though, so the `is_top_level` check doesn't seem necessary.
             
-            /// Define macros
-            ///     To help with repetitve code for adding double linebreaks between block-elements.
+            cmark_node_type next_node_type = cmark_node_get_type(cmark_node_next(node));
+            #define nodeIsBlockElement(node_type) (CMARK_NODE_FIRST_BLOCK <= (node_type) && (node_type) <= CMARK_NODE_LAST_BLOCK)
+            if (nodeIsBlockElement(node_type) && nodeIsBlockElement(next_node_type))
+                if (
+                    next_node_type != CMARK_NODE_ITEM /// Note: Even though list items are blockElements, they don't have double linebreaks between them, so we don't add blankLine before them.
+                ) {
+                    dst = [dst attributedStringByAppending: [@"\n\n" attributed]];
+                    assert(next_node_type == CMARK_NODE_PARAGRAPH || next_node_type == CMARK_NODE_LIST); /// We haven't encountered other block type nodes, yet, and aren't sure if adding double-linebreak is appropriate there [Oct 2025]
+                }
             
-            #define nodeIsBlockElement(__cmark_node) \
-            ({ \
-                cmark_node_type type = cmark_node_get_type(__cmark_node); \
-                Boolean is_block = CMARK_NODE_FIRST_BLOCK <= type && type <= CMARK_NODE_LAST_BLOCK; \
-                is_block; \
-            })
-            #define nodeIsInlineElement(__cmark_node) \
-            ({ \
-                cmark_node_type type = cmark_node_get_type(__cmark_node); \
-                Boolean is_inline = CMARK_NODE_FIRST_INLINE <= type && type <= CMARK_NODE_LAST_INLINE; \
-                is_inline; \
-            })
-            #define addDoubleLinebreaksForBlockElementToDst() \
-                Boolean is_block = nodeIsBlockElement(node); \
-                Boolean previous_sibling_is_also_block = nodeIsBlockElement(cmark_node_previous(node)); \
-                if (is_block && previous_sibling_is_also_block) \
-                    dst = [dst attributedStringByAppending: [@"\n\n" attributed]]; \
-            
+            /// Switch over all node-types
             switch (node_type) {
                 bcase(CMARK_NODE_NONE): {
                     
@@ -284,48 +277,47 @@ static NSAttributedString *attributedStringWithMarkdown(NSString *src, MDStyleOv
                     
                 }
                 bcase(CMARK_NODE_LIST): {
-                    
-                    addDoubleLinebreaksForBlockElementToDst();
-                                                
-                    /// Initialize list item counter
-                    md_list_index = cmark_node_get_list_start(node);
+                    /// Reset list item counter, after exiting the list.
+                    md_list_index = -1;
                     
                 }
                 bcase(CMARK_NODE_ITEM): {
                     
-                    /// Note: Even though list items are blockElements, they don't have double linebreaks between them, so we don't use addDoubleLinebreaksForBlockElementToDst()
-                    
                     /// Get parent node of item (the list node)
                     cmark_node *list_node = cmark_node_parent(node);
-                    
-                    /// Validate
                     assert(cmark_node_get_type(list_node) == CMARK_NODE_LIST);
+                    
+                    /// Init list item counter
+                    ///     Probably doesn't work on nested lists, but we don't need that [Oct 2025]
+                    Boolean is_first_item = false;
+                    if (md_list_index == -1) {
+                        md_list_index = cmark_node_get_list_start(list_node);
+                        is_first_item = true;
+                    }
                     
                     /// Get list tightness
                     ///     A markdown list can become non-tight when there are empty lines between the item lines.
                     Boolean is_tight = cmark_node_get_list_tight(list_node);
                     
-                    /// Check if this is the first `list_item`
-                    Boolean is_first_item = md_list_index == cmark_node_get_list_start(list_node);
-                    
                     /// Get list prefix string
                     NSMutableString *prefix = [NSMutableString string];
-                    
-                    /// Append newline(s) to prefix
-                    if (!is_first_item) {
-                        if (is_tight || !is_tight) { /// Turning off non-tight lists (which have a whole free line between items) bc I don't like them and accidentally produce them sometimes.
-                            [prefix appendString:@"\n"];
+                    {
+                        /// Append newline(s) to prefix
+                        if (!is_first_item) {
+                            if (is_tight || !is_tight) { /// Turning off non-tight lists (which have a whole free line between items) bc I don't like them and accidentally produce them sometimes.
+                                [prefix appendString:@"\n"];
+                            }
                         }
+                        /// Append list marker (`-`, `1.`, or `1)`) to prefix
+                        cmark_list_type list_type = cmark_node_get_list_type(list_node);
+                        if      (list_type == CMARK_BULLET_LIST) [prefix appendString:@"• "];
+                        else if (list_type == CMARK_ORDERED_LIST)  {
+                            if      (cmark_node_get_list_delim(list_node) == CMARK_PAREN_DELIM)     [prefix appendFormat: @"%d) ", md_list_index];
+                            else if (cmark_node_get_list_delim(list_node) == CMARK_PERIOD_DELIM)    [prefix appendFormat: @"%d. ", md_list_index];
+                            else                                                                    assert(false);
+                        }
+                        else assert(false);
                     }
-                    /// Append list marker (`-, 1., or 1)`) to prefix
-                    cmark_list_type list_type = cmark_node_get_list_type(list_node);
-                    if      (list_type == CMARK_BULLET_LIST) [prefix appendString:@"• "];
-                    else if (list_type == CMARK_ORDERED_LIST)  {
-                        if      (cmark_node_get_list_delim(list_node) == CMARK_PAREN_DELIM)     [prefix appendFormat: @"%d) ", md_list_index];
-                        else if (cmark_node_get_list_delim(list_node) == CMARK_PERIOD_DELIM)    [prefix appendFormat: @"%d. ", md_list_index];
-                        else                                                                    assert(false);
-                    }
-                    else assert(false);
                                             
                     /// Extract list item content
                     ///     that was already added to dst by our child nodes.
@@ -371,10 +363,6 @@ static NSAttributedString *attributedStringWithMarkdown(NSString *src, MDStyleOv
                 }
                 bcase(CMARK_NODE_PARAGRAPH): {
                     
-                    addDoubleLinebreaksForBlockElementToDst();
-                    
-                    /// Note: Why the isTopLevel restriction?
-                    ///     Update: every list item seems to contain its own paragraph, they are all last paragraphs through, so the `is_top_level` check doesn't seem necessary.
                 }
                 bcase(CMARK_NODE_HEADING): {
                     

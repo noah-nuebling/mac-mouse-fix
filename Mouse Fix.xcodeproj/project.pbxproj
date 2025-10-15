@@ -83,6 +83,7 @@
 		4F47C11F2C58B321009F6CE7 /* MFMessagePort.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F44FF032606D73D00926A5E /* MFMessagePort.m */; };
 		4F4B5FFA2C67D1BF004051D3 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4F4B5FF92C67D1BF004051D3 /* InfoPlist.xcstrings */; };
 		4F4B5FFC2C67D1BF004051D3 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4F4B5FFB2C67D1BF004051D3 /* InfoPlist.xcstrings */; };
+		4F4C66172E636584005C2612 /* NSBox+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C66162E636584005C2612 /* NSBox+Additions.m */; };
 		4F4C737D2C4FB06E001D97C3 /* NSString+Steganography.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */; };
 		4F4C737E2C4FB06E001D97C3 /* NSString+Steganography.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */; };
 		4F4C73D72C4FB3FA001D97C3 /* LocalizedStringAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73D62C4FB3FA001D97C3 /* LocalizedStringAnnotation.m */; };
@@ -91,6 +92,7 @@
 		4F4C73FF2C4FB5D2001D97C3 /* AnnotationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */; };
 		4F5170152CBFD75C0018D388 /* MFDataClassImpls.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */; };
 		4F5170162CBFD75C0018D388 /* MFDataClassImpls.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */; };
+		4F56919D2E473DA2004C6CC3 /* Universal Back and Forward.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F56919C2E473DA2004C6CC3 /* Universal Back and Forward.md */; };
 		4F58FE002C56DE9B00926A00 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FDFF2C56DE9B00926A00 /* Logging.swift */; };
 		4F58FE022C56DE9B00926A00 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FDFF2C56DE9B00926A00 /* Logging.swift */; };
 		4F58FE032C56E65900926A00 /* AnnotationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */; };
@@ -98,10 +100,6 @@
 		4F58FE122C571DE200926A00 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4F58FE112C571DE200926A00 /* CocoaLumberjackSwift */; };
 		4F58FE132C57297400926A00 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FDFF2C56DE9B00926A00 /* Logging.swift */; };
 		4F58FE142C57BAFA00926A00 /* NSTextField+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */; };
-		4F4C66172E636584005C2612 /* NSBox+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C66162E636584005C2612 /* NSBox+Additions.m */; };
-		4F5170182CBFD7660018D388 /* MFDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170172CBFD7660018D388 /* MFDataClass.m */; };
-		4F5170192CBFD7660018D388 /* MFDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5170172CBFD7660018D388 /* MFDataClass.m */; };
-		4F56919D2E473DA2004C6CC3 /* Universal Back and Forward.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F56919C2E473DA2004C6CC3 /* Universal Back and Forward.md */; };
 		4F5971E52901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5971E62901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
 		4F5C2F802885C5D0001B9B8A /* HelperState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */; };
@@ -2100,6 +2098,8 @@
 		4F47C11D2C58AD2E009F6CE7 /* ToastAndSheetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastAndSheetTests.swift; sourceTree = "<group>"; };
 		4F4B5FF92C67D1BF004051D3 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		4F4B5FFB2C67D1BF004051D3 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		4F4C66132E6361CC005C2612 /* NSBox+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSBox+Additions.h"; sourceTree = "<group>"; };
+		4F4C66162E636584005C2612 /* NSBox+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBox+Additions.m"; sourceTree = "<group>"; };
 		4F4C737B2C4FB06E001D97C3 /* NSString+Steganography.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Steganography.h"; sourceTree = "<group>"; };
 		4F4C737C2C4FB06E001D97C3 /* NSString+Steganography.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Steganography.m"; sourceTree = "<group>"; };
 		4F4C73A92C4FB28C001D97C3 /* .gitmodules */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitmodules; sourceTree = "<group>"; };
@@ -2118,16 +2118,11 @@
 		4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AnnotationUtility.m; sourceTree = "<group>"; };
 		4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClassImpls.m; sourceTree = "<group>"; };
 		4F52FAA42C775A57003C2821 /* Last State of Localization.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Last State of Localization.md"; sourceTree = "<group>"; };
+		4F56919C2E473DA2004C6CC3 /* Universal Back and Forward.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Universal Back and Forward.md"; sourceTree = "<group>"; };
 		4F58FDFF2C56DE9B00926A00 /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		4F58FE042C56EA1300926A00 /* TestLogging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestLogging.h; sourceTree = "<group>"; };
 		4F58FE052C56EA1300926A00 /* TestLogging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestLogging.m; sourceTree = "<group>"; };
 		4F58FE092C56EA2F00926A00 /* TestLogging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLogging.swift; sourceTree = "<group>"; };
-		4F4C66132E6361CC005C2612 /* NSBox+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSBox+Additions.h"; sourceTree = "<group>"; };
-		4F4C66162E636584005C2612 /* NSBox+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSBox+Additions.m"; sourceTree = "<group>"; };
-		4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClassImpls.m; sourceTree = "<group>"; };
-		4F5170172CBFD7660018D388 /* MFDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFDataClass.m; sourceTree = "<group>"; };
-		4F51701A2CBFD7730018D388 /* MFDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFDataClass.h; sourceTree = "<group>"; };
-		4F56919C2E473DA2004C6CC3 /* Universal Back and Forward.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Universal Back and Forward.md"; sourceTree = "<group>"; };
 		4F5971E42901763D00A32656 /* MathObjc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MathObjc.m; sourceTree = "<group>"; };
 		4F5C2F7F2885C5D0001B9B8A /* HelperState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperState.swift; sourceTree = "<group>"; };
 		4F5F3EED2756DB0A00C350C0 /* RemapsOverrider_old_.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapsOverrider_old_.swift; sourceTree = "<group>"; };
@@ -2288,6 +2283,7 @@
 		4FAA3DAB2C55E94600CBA413 /* IBUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IBUtility.m; sourceTree = "<group>"; };
 		4FAA3DBB2C56802E00CBA413 /* XCUIElement+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "XCUIElement+Additions.m"; sourceTree = "<group>"; };
 		4FAA5600293A41AF00BA782C /* BezierCappedAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BezierCappedAccelerationCurve.swift; sourceTree = "<group>"; };
+		4FAF8FA12E9FC1CC00D90CD7 /* vardesc_benchmarks.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = vardesc_benchmarks.m; sourceTree = "<group>"; };
 		4FB4F9FC260FDBC800806DDD /* RemapTableUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableUtility.h; sourceTree = "<group>"; };
 		4FB4F9FD260FDBC800806DDD /* RemapTableUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableUtility.m; sourceTree = "<group>"; };
 		4FB4FA1E2611DD6000806DDD /* KeyCaptureScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCaptureScrollView.h; sourceTree = "<group>"; };
@@ -7103,6 +7099,7 @@
 				4F428CFF2CD6690F006322AB /* MFDefer.h */,
 				4F2E8FE12D53EB8D00689058 /* MFOnceMacro.h */,
 				4F2E8FE22D53EB8D00689058 /* MFOnceMacro.m */,
+				4FAF8FA12E9FC1CC00D90CD7 /* vardesc_benchmarks.m */,
 			);
 			path = Macros;
 			sourceTree = "<group>";
@@ -8258,7 +8255,6 @@
 				4F1B41A52D4BACBA00026C94 /* NSData+Additions.m in Sources */,
 				4FF6655225F2C7B000689B77 /* NSDictionary+Additions.m in Sources */,
 				4FAA3DAC2C55E94600CBA413 /* IBUtility.m in Sources */,
-				4F4150662927B6A40040BA7D /* AddField.swift in Sources */,
 				4FDE75A728B25FB300662314 /* NSAttributedString+Extensions.swift in Sources */,
 				4FB8B29C2CCEBAEB00A5A580 /* GetLicenseConfig.swift in Sources */,
 				4FA40D0F28A0D8EF00499E53 /* SubPixelator.m in Sources */,
