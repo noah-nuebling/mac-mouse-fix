@@ -103,14 +103,12 @@
 ///  Naming:
 ///      vardesc -> (var)iable (desc)ription
 ///      vardescl -> (var)iable (desc)ription with (l)inebreaks
-///  For a given set of expressions, captures their source text and corresponding value and inserts them into the output string in a key-value style. All values have to be objects.
+///  For a given set of expressions, captures their source text and corresponding value and inserts them into the output string in a key-value style.
 ///  This is similar to NSDictionaryOfVariableBindings() – But this is better-suited for debug-printing because: Dictionaries don't preserve order. Dictionaries can't contain nil. Using NSDictionaryOfVariableBindings requires importing NSLayoutConstraint.h
-///  Handling of primitives: This uses `mfbox` with `FOR_EACH` to be able to accept primitive values as well as objects. Otherwise user could still easily @(box) primitives. (And remove the `@()` before printing if it bothers us) Not sure this is worth the complexity [Oct 2025]
-///  Performance: I expect to only ever use `vardesc` in log statements meaning it won't be evaluated if logging is disabled.
+///  Handling of primitives: This uses `mfbox` with `FOR_EACH` to be able to accept primitive values as well as objects. Otherwise caller could still easily @(box) primitives. (And we could remove the `@()` before printing if it bothers us) Not sure this is worth the complexity. I'm kinda just doing this for fun (LIke most of the macro stuff). [Oct 2025]
+///  Performance: It's fine. See `vardesc_benchmarks.m`
 ///  Example usage:
-///      ```
-///      NSLog(@"Local variables %@", vardesc(some_int, some_object)); // Prints: `Local variables: { some_int = 79 | some_object = Turns out I'm a string! }`
-///      ```
+///      `NSLog(@"Local variables %@", vardesc(some_int, some_object)); // Prints: "Local variables: { some_int = 79 | some_object = Turns out I'm a string! }"`
 #define vardesc(vars...)  _vardesc(false, @#vars, vars)         /** Need to stringify `vars` here not inside `_vardesc`, otherwise sourcetext of passed-in macros will be expanded. Not sure why [Jul 2025] */
 #define vardescl(vars...) _vardesc(true,  @#vars, vars)
 

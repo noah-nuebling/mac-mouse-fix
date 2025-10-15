@@ -13,7 +13,7 @@ id _mfbox(const void *thing, const char *objc_type) {
 
     /// Objects (id, Class)
     if (objc_type[0] == '@' || objc_type[0] == '#') {
-        return *(id __strong *)thing; /// Is `__strong` correct here? [Oct 2025]
+        return *(id __unsafe_unretained *)thing;
     }
     
     /// Primitives
