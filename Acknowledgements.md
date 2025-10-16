@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **October 2025**
 
+- 🇸🇪&nbsp;Macmousfixapp&nbsp;Ecom&nbsp;Hwuaw
 - 🇧🇬&nbsp;Nikolay - "Amazing app. Very fairly priced and doesn't need an yearly renew."
 - 🇺🇸&nbsp;Nick&nbsp;Crawford
 - 🇺🇸&nbsp;Michael&nbsp;I&nbsp;Z - "You saved me a ton by negating the need for another magic trackpad! Thank you!!"
