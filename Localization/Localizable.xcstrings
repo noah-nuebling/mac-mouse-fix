@@ -7326,14 +7326,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ich kann nur selten antworten, aber ich lese alle Nachrichten und das Feedback hilft mir dabei, Mac Mouse Fix zu verbessern. Danke für dein Feedback und deine Geduld."
+            "state" : "translated",
+            "value" : "Ich kann nur selten antworten, aber ich lese alle Nachrichten und das Feedback hilft mir dabei, Mac Mouse Fix zu verbessern. Danke für dein Feedback!"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "I can only rarely respond, but I read all messages and the feedback helps me improve Mac Mouse Fix. Thank you for your feedback and patience."
+            "value" : "I can only rarely respond, but I read all messages and the feedback helps me improve Mac Mouse Fix. Thank you for your feedback!"
           }
         },
         "fr" : {
