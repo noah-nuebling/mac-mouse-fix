@@ -50,12 +50,12 @@ pip freeze > MarkdownStuff/python_requirements.txt
 
 To generate the **acknowledgements** document in different languages based on templates
 ```
-python3 Markdown/Code/markdown_generator.py --document acknowledgements --api_key ***
+python3 Markdown/Code/markdown_generator.py --document acknowledgements --api-key ***
 ```
 
 If you don't have the api key:
 ```
-python3 Markdown/Code/markdown_generator.py --document acknowledgements --no_api
+python3 Markdown/Code/markdown_generator.py --document acknowledgements --no-api
 ```
 
 #### Readme
