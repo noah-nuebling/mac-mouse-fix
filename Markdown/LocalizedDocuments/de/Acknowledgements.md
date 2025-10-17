@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Oktober 2025**
 
+- 🇫🇮&nbsp;Janne&nbsp;Kallunki
 - 🇺🇸&nbsp;Angel&nbsp;Zuniga
 - 🇸🇪&nbsp;Macmousfixapp&nbsp;Ecom&nbsp;Hwuaw
 - 🇧🇬&nbsp;Nikolay - "Amazing app. Very fairly priced and doesn't need an yearly renew."
