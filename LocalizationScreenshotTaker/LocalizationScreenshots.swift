@@ -26,8 +26,9 @@ final class LocalizationScreenshotClass: XCTestCase {
     let localized_string_annotation_prefix_regex = "<mfkey:(.+):(.*)>" /// The first capture group is the localizationKey, the second capture group is the stringTableName
     let localized_string_annotation_suffix       = "</mfkey>"
     
-    /// Keep-in-sync with python script
+    /// ENV variable names  (This is how we pass data from the Python script that invokes this – uploadstrings.py [Oct 2025])
     let xcode_screenshot_taker_output_dir_variable = "MF_LOCALIZATION_SCREENSHOT_OUTPUT_DIR"
+    let xcode_screenshot_taker_locale_variable     = "MF_LOCALIZATION_SCREENSHOT_LOCALE"
     
     /// Keep in sync with .xcloc format
     let xcode_screenshot_taker_outputted_metadata_filename = "localizedStringData.plist"
@@ -314,21 +315,33 @@ final class LocalizationScreenshotClass: XCTestCase {
         var isPopover = false
         var isSheet = false
         
-        var transientUIElement = self.app!.dialogs["axToastWindow"].firstMatch /// Check for toast
-        if transientUIElement.exists && transientUIElement.isHittable {
-            isToast = true
-        } else {
-            transientUIElement = self.app!.popovers.firstMatch /// Check for popover
-            if transientUIElement.exists && transientUIElement.isHittable {
-                isPopover = true
+        var retryCount = 0;
+        let maxRetries = 5;
+        var transientUIElement: XCUIElement? = nil
+        while (true) {
+            transientUIElement = self.app!.dialogs["axToastWindow"].firstMatch /// Check for toast
+            if transientUIElement!.exists && transientUIElement!.isHittable {
+                isToast = true
             } else {
-                transientUIElement = self.app!.sheets.firstMatch /// Check for sheet
-                if transientUIElement.exists && transientUIElement.isHittable {
-                    isSheet = true
+                transientUIElement = self.app!.popovers.firstMatch /// Check for popover
+                if transientUIElement!.exists && transientUIElement!.isHittable {
+                    isPopover = true
                 } else {
-                    assert(false, "_sharedf_take_toast_screenshot: No transient UI element found.")
+                    transientUIElement = self.app!.sheets.firstMatch /// Check for sheet
+                    if transientUIElement!.exists && transientUIElement!.isHittable {
+                        isSheet = true
+                    } else {
+                        if retryCount < maxRetries {
+                            retryCount += 1
+                            print("_sharedf_take_toast_screenshot found no toast. Retrying (since it sometimes times out) (\(retryCount))")
+                            continue
+                        } else {
+                            assert(false, "_sharedf_take_toast_screenshot: No transient UI element found.")
+                        }
+                    }
                 }
             }
+            break
         }
         
         let result: ScreenshotAndMetadata?
@@ -336,7 +349,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         if isToast {
             
             /// Take toast screenshot
-            result = self.takeLocalizationScreenshot(of: transientUIElement, name: screenshotName)
+            result = self.takeLocalizationScreenshot(of: transientUIElement!, name: screenshotName)
             
             /// Dismiss toast
             /// Note:
@@ -349,7 +362,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         } else if isPopover || isSheet {
             
             /// Take sheet screenshot
-            result = self.takeLocalizationScreenshot(of: transientUIElement, name: screenshotName)
+            result = self.takeLocalizationScreenshot(of: transientUIElement!, name: screenshotName)
             
             /// Dismiss sheet
             self.hitEscape()
@@ -691,6 +704,11 @@ final class LocalizationScreenshotClass: XCTestCase {
             outputDir:            ProcessInfo.processInfo.environment[xcode_screenshot_taker_output_dir_variable],
             fallbackTempDirName:  "MFLocalizationScreenshotsFallbackOutputFolder"
         )
+        var locale = ProcessInfo.processInfo.environment[xcode_screenshot_taker_locale_variable] ?? "" // Not sure bout this fallback.
+        
+        
+        /// TESTING
+        //locale = "tr"
         
         /// Declare result
         var screenshotsAndMetaData: [ScreenshotAndMetadata?] = []
@@ -698,11 +716,18 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Log
         DDLogInfo("Localization Screenshot Test Runner launched with output directory: \(xcode_screenshot_taker_output_dir_variable): \(outputDir)")
         
+        /// Debug
+        DDLogInfo("Runner envvars: \(ProcessInfo.processInfo.environment)")
+        DDLogInfo("Runner argvars: \(ProcessInfo.processInfo.arguments)")
+        
         /// Launch helper
         ///     We should launch the helper first, and not let the app enable it, so we can control its launchArguments.
         let helperApp = sharedf_launch_app(
             url: sharedf_helper_url(),
-            args: [localized_string_annotation_activation_argument_for_screenshotted_app],
+            args: [
+                localized_string_annotation_activation_argument_for_screenshotted_app,
+                "-AppleLanguages", "(\(locale))"
+            ],
             env: [:],
             kill_app: true
        )
@@ -710,7 +735,10 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Launch mainApp
         let mainApp = sharedf_launch_app(
             url: sharedf_mainapp_url(),
-            args: [localized_string_annotation_activation_argument_for_screenshotted_app],
+            args: [
+                localized_string_annotation_activation_argument_for_screenshotted_app,
+                "-AppleLanguages", "(\(locale))"
+            ],
             env: [:],
             kill_app: true
        )
@@ -802,254 +830,258 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Validate that the app is enabled
         sharedf_validate_that_main_app_is_enabled(window, toolbarButtons)
         
-        ///
+        
         /// Screenshot ButtonsTab
-        ///
         
-        toolbarButtons["buttons"].click()
-        coolWait()
-        
-        /// Dismiss restoreDefaultsPopover, in case it pops up.
-        hitEscape()
-        coolWait()
-        
-        /// Screenshot states
-        let restoreDefaultsButton = window.buttons["axButtonsRestoreDefaultsButton"].firstMatch
-        assert(restoreDefaultsButton.exists)
-        restoreDefaultsButton.click()
-        let restoreDefaultsSheet = window.sheets.firstMatch
-        let restoreDefaultsRadioButtons = restoreDefaultsSheet.radioButtons.allElementsBoundByIndex
-        for (i, radioButton) in restoreDefaultsSheet.radioButtons.allElementsBoundByIndex.reversed().enumerated() { /// Reversed for debugging
-            radioButton.click()
-            hitReturn()
-            hitEscape() /// Close any toasts
-            result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab State \(i)"))
-            restoreDefaultsButton.click() /// Open the sheet back up
-        }
-        
-        /// Go to default state
-        ///     (Default settings for 5+ buttons)
-        let defaultRadioButton = restoreDefaultsSheet.radioButtons["axRestoreButtons5"]
-        assert(defaultRadioButton.exists)
-        defaultRadioButton.click()
-        hitReturn()
-        hitEscape()
-        
-        /// Screenshot menus
-        ///     (Which let you pick the action in the remaps table)
-        for (i, popupButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
+        do {
+            toolbarButtons["buttons"].click()
+            coolWait()
             
-            /// Click
-            popupButton.click()
-            let menu = popupButton.menus.firstMatch
+            /// Dismiss restoreDefaultsPopover, in case it pops up.
+            hitEscape()
+            coolWait()
             
-            /// Screenshot
-            result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i)"))
+            /// Screenshots ButtonsTab toasts
+            result.append(contentsOf: sharedf_take_toast_screenshots("buttons", "ButtonsTab Toast %d"))
             
-            /// Option screenshot
-            XCUIElement.perform(withKeyModifiers: .option) {
-                result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i) (Option)"))
+            /// Screenshot buttonsTab sheets
+            ///     (The ones invoked by the two buttons in the bottom left and bottom right)
+            for (i, button) in window.buttons.matching(NSPredicate(format: "identifier IN %@", ["axButtonsOptionsButton", "axButtonsRestoreDefaultsButton"])).allElementsBoundByIndex.enumerated() {
+                
+                /// Click
+                button.click()
+                coolWait() /// Not necessary. Sheets have a native animation where XCUITest automatically correctly
+                
+                /// Get sheet
+                let sheet = window.sheets.firstMatch
+                
+                /// Screenshot
+                result.append(takeLocalizationScreenshot(of: sheet, name: "ButtonsTab Sheet \(i)"))
+                
+                /// Cleanup
+                hitEscape()
             }
             
-            /// Clean up
+            /// Screenshot Main UI
+            do {
+                /// Screenshot states
+                let restoreDefaultsButton = window.buttons["axButtonsRestoreDefaultsButton"].firstMatch
+                assert(restoreDefaultsButton.exists)
+                restoreDefaultsButton.click()
+                let restoreDefaultsSheet = window.sheets.firstMatch
+                let restoreDefaultsRadioButtons = restoreDefaultsSheet.radioButtons.allElementsBoundByIndex
+                for (i, radioButton) in restoreDefaultsSheet.radioButtons.allElementsBoundByIndex.reversed().enumerated() { /// Reversed for debugging
+                    radioButton.click()
+                    hitReturn()
+                    hitEscape() /// Close any toasts
+                    result.append(takeLocalizationScreenshot(of: window, name: "ButtonsTab State \(i)"))
+                    restoreDefaultsButton.click() /// Open the sheet back up
+                }
+                
+                /// Go to default state
+                ///     (Default settings for 5+ buttons)
+                let defaultRadioButton = restoreDefaultsSheet.radioButtons["axRestoreButtons5"]
+                assert(defaultRadioButton.exists)
+                defaultRadioButton.click()
+                hitReturn()
+                hitEscape()
+                
+                /// Screenshot menus
+                ///     (Which let you pick the action in the remaps table)
+                for (i, popupButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
+                    
+                    /// Click
+                    popupButton.click()
+                    let menu = popupButton.menus.firstMatch
+                    
+                    /// Screenshot
+                    result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i)"))
+                    
+                    /// Option screenshot
+                    XCUIElement.perform(withKeyModifiers: .option) {
+                        result.append(takeLocalizationScreenshot(of: menu, name: "ButtonsTab Menu \(i) (Option)"))
+                    }
+                    
+                    /// Clean up
+                    hitEscape()
+                }
+            }
+        }
+        
+        /// Screenshot GeneralTab
+        
+        do {
+            /// Switch to general tab
+            toolbarButtons["general"].click()
+            coolWait() /// Need to wait so that the test runner properly waits for the animation to finish
+            
+            /// Enable updates
+            ///     (So that the beta section is expanded)
+            let updatesToggle = window.checkBoxes["axCheckForUpdatesToggle"].firstMatch
+            if (updatesToggle.value as! Int) != 1 {
+                updatesToggle.click()
+                coolWait()
+            }
+            
+            /// Take screenshot of fully expanded general tab
+            result.append(takeLocalizationScreenshot(of: window, name: "GeneralTab"))
+
+            /// Screenshot toasts
+            result.append(contentsOf: sharedf_take_toast_screenshots("general", "GeneralTab Toast %d"))
+        }
+        
+        /// Screenshot menubar
+        
+        do {
+            /// Screenshot menuBar itself
+            result.append(takeLocalizationScreenshot(of: menuBar, name: "MenuBar"))
+            
+            /// Screenshot each menuBarItem
+            var didClickMenuBar = false
+            for (i, menuBarItem) in menuBar.menuBarItems.allElementsBoundByIndex.enumerated() {
+                
+                /// Skip Apple menu
+                if i == 0 { continue }
+                
+                /// Reveal menu
+                if !didClickMenuBar {
+                    menuBarItem.click()
+                    didClickMenuBar = true
+                } else {
+                    menuBarItem.hover()
+                }
+                let menu = menuBarItem.menus.firstMatch
+                
+                /// Take screenshot of menu
+                result.append(takeLocalizationScreenshot(of: menu, name: "MenuBar Menu \(i)"))
+                
+                /// Take screenshot with option held (reveal secret/alternative menuItems)
+                XCUIElement.perform(withKeyModifiers: .option) {
+                    result.append(takeLocalizationScreenshot(of: menu, name: "MenuBar Menu \(i) (Option)"))
+                }
+            }
+            
+            /// Dismiss menu
+            if didClickMenuBar {
+                hitEscape()
+            }
+        }
+        
+        /// Screenshot special views only accessible through the menuBar
+        
+        do {
+            /// Find "activate" license menu item
+            let macMouseFixMenuItem = menuBar.menuBarItems.allElementsBoundByIndex[1]
+            macMouseFixMenuItem.click()
+            let macMouseFixMenu = macMouseFixMenuItem.menus.firstMatch
+            let activateLicenseItem = macMouseFixMenu.menuItems["axMenuItemActivateLicense"].firstMatch
+            
+            /// Click
+            activateLicenseItem.click()
+            
+            /// Delete license key
+            /// Delete license key from the textfield, so it's hidden in the screenshot, and the placeholder appears instead
+            app?.typeKey(.delete, modifierFlags: [])
+            
+            /// Find sheet
+            var sheet = window.sheets.firstMatch
+            
+            /// Sheenshot
+            result.append(takeLocalizationScreenshot(of: sheet, name: "ActivateLicenseSheet"))
+            
+            /// Screenshot toasts
+            result.append(contentsOf: sharedf_take_toast_screenshots("licensesheet", "ActivateLicenseSheet Toast %d"))
+            
+            /// Cleanup licenseSheet
             hitEscape()
         }
         
-        /// Screenshot buttonsTab sheets
-        ///     (The ones invoked by the two buttons in the bottom left and bottom right)
-        for (i, button) in window.buttons.matching(NSPredicate(format: "identifier IN %@", ["axButtonsOptionsButton", "axButtonsRestoreDefaultsButton"])).allElementsBoundByIndex.enumerated() {
+        /// Screenshot AboutTab
+        
+        do {
+            toolbarButtons["about"].click()
+            coolWait()
+            result.append(takeLocalizationScreenshot(of: window, name: "AboutTab"))
+            
+            /// Screenshot alert
             
             /// Click
-            button.click()
-            coolWait() /// Not necessary. Sheets have a native animation where XCUITest automatically correctly
+            window.staticTexts["axAboutSendEmailButton"].firstMatch.click()
             
             /// Get sheet
-            let sheet = window.sheets.firstMatch
+            var sheet = window.sheets.firstMatch
             
             /// Screenshot
-            result.append(takeLocalizationScreenshot(of: sheet, name: "ButtonsTab Sheet \(i)"))
+            result.append(takeLocalizationScreenshot(of: sheet, name: "AboutTab Email Alert"))
             
             /// Cleanup
             hitEscape()
         }
         
-        /// Screenshots ButtonsTab toasts
-        result.append(contentsOf: sharedf_take_toast_screenshots("buttons", "ButtonsTab Toast %d"))
         
-        ///
-        /// Screenshot GeneralTab
-        ///
-        
-        /// Switch to general tab
-        toolbarButtons["general"].click()
-        coolWait() /// Need to wait so that the test runner properly waits for the animation to finish
-        
-        /// Enable updates
-        ///     (So that the beta section is expanded)
-        let updatesToggle = window.checkBoxes["axCheckForUpdatesToggle"].firstMatch
-        if (updatesToggle.value as! Int) != 1 {
-            updatesToggle.click()
-            coolWait()
-        }
-        
-        /// Take screenshot of fully expanded general tab
-        result.append(takeLocalizationScreenshot(of: window, name: "GeneralTab"))
-
-        /// Screenshot toasts
-        result.append(contentsOf: sharedf_take_toast_screenshots("general", "GeneralTab Toast %d"))
-        
-        ///
-        /// Screenshot menubar
-        ///
-        
-        /// Screenshot menuBar itself
-        result.append(takeLocalizationScreenshot(of: menuBar, name: "MenuBar"))
-        
-        /// Screenshot each menuBarItem
-        var didClickMenuBar = false
-        for (i, menuBarItem) in menuBar.menuBarItems.allElementsBoundByIndex.enumerated() {
-            
-            /// Skip Apple menu
-            if i == 0 { continue }
-            
-            /// Reveal menu
-            if !didClickMenuBar {
-                menuBarItem.click()
-                didClickMenuBar = true
-            } else {
-                menuBarItem.hover()
-            }
-            let menu = menuBarItem.menus.firstMatch
-            
-            /// Take screenshot of menu
-            result.append(takeLocalizationScreenshot(of: menu, name: "MenuBar Menu \(i)"))
-            
-            /// Take screenshot with option held (reveal secret/alternative menuItems)
-            XCUIElement.perform(withKeyModifiers: .option) {
-                result.append(takeLocalizationScreenshot(of: menu, name: "MenuBar Menu \(i) (Option)"))
-            }
-        }
-        
-        /// Dismiss menu
-        if didClickMenuBar {
-            hitEscape()
-        }
-        
-        ///
-        /// Screenshot special views only accessible through the menuBar
-        ///
-        
-        /// Find "activate" license menu item
-        let macMouseFixMenuItem = menuBar.menuBarItems.allElementsBoundByIndex[1]
-        macMouseFixMenuItem.click()
-        let macMouseFixMenu = macMouseFixMenuItem.menus.firstMatch
-        let activateLicenseItem = macMouseFixMenu.menuItems["axMenuItemActivateLicense"].firstMatch
-        
-        /// Click
-        activateLicenseItem.click()
-        
-        /// Delete license key
-        /// Delete license key from the textfield, so it's hidden in the screenshot, and the placeholder appears instead
-        app?.typeKey(.delete, modifierFlags: [])
-        
-        /// Find sheet
-        var sheet = window.sheets.firstMatch
-        
-        /// Sheenshot
-        result.append(takeLocalizationScreenshot(of: sheet, name: "ActivateLicenseSheet"))
-        
-        /// Screenshot toasts
-        result.append(contentsOf: sharedf_take_toast_screenshots("licensesheet", "ActivateLicenseSheet Toast %d"))
-        
-        /// Cleanup licenseSheet
-        hitEscape()
-        
-        ///
-        /// Screenshot AboutTab
-        ///
-        
-        toolbarButtons["about"].click()
-        coolWait()
-        result.append(takeLocalizationScreenshot(of: window, name: "AboutTab"))
-        
-        /// Screenshot alert
-        
-        /// Click
-        window.staticTexts["axAboutSendEmailButton"].firstMatch.click()
-        
-        /// Get sheet
-        sheet = window.sheets.firstMatch
-        
-        /// Screenshot
-        result.append(takeLocalizationScreenshot(of: sheet, name: "AboutTab Email Alert"))
-        
-        /// Cleanup
-        hitEscape()
-        
-        ///
         /// Screenshot ScrollingTab
-        ///
         
-        toolbarButtons["scrolling"].click()
-        coolWait()
-        
-        /// Initialize state of tab
-        let restoreDefaultModsButton = window.buttons["axScrollingRestoreDefaultModifiersButton"].firstMatch
-        if restoreDefaultModsButton.exists {
-            restoreDefaultModsButton.click()
-        }
-        
-        /// Screenshot states
-        for (i, popUpButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
+        do {
+            toolbarButtons["scrolling"].click()
+            coolWait()
             
-            /// Gather menu items
-            popUpButton.click()
-            let menuItems = popUpButton.menuItems.allElementsBoundByIndex.enumerated()
-            hitEscape()
+            /// Initialize state of tab
+            let restoreDefaultModsButton = window.buttons["axScrollingRestoreDefaultModifiersButton"].firstMatch
+            if restoreDefaultModsButton.exists {
+                restoreDefaultModsButton.click()
+            }
             
-            for (j, menuItem) in menuItems {
+            /// Screenshot states
+            for (i, popUpButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
                 
-                /// Click popUpButton
+                /// Gather menu items
                 popUpButton.click()
-                if (!menuItem.isHittable || !menuItem.isEnabled) {
-                    hitEscape()
-                    continue
-                }
+                let menuItems = popUpButton.menuItems.allElementsBoundByIndex.enumerated()
+                hitEscape()
                 
-                /// Click menu item
-                menuItem.click()
-                coolWait()
-                
-                /// Screenshot state of scrolling tab
-                result.append(takeLocalizationScreenshot(of: window, name: "ScrollingTab State \(i)-\(j)"))
-            }
-        }
-        
-        /// Screenshot scrollingTab menus
-        for (i, popUpButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
-            
-            /// Click popup button
-            popUpButton.click()
-            let menu = popUpButton.menus.firstMatch
-            
-            /// Take screenshot
-            result.append(takeLocalizationScreenshot(of: menu, name: "ScrollingTab Menu \(i)"))
-            XCUIElement.perform(withKeyModifiers: .option) {
-                if ((false)) { /// The menus on the scrolling tab don't have secret options, at least at the time of writing. NOTE: Update this if you add secret options.
-                    result.append(takeLocalizationScreenshot(of: menu, name: "ScrollingTab Menu \(i) (Option)"))
+                for (j, menuItem) in menuItems {
+                    
+                    /// Click popUpButton
+                    popUpButton.click()
+                    if (!menuItem.isHittable || !menuItem.isEnabled) {
+                        hitEscape()
+                        continue
+                    }
+                    
+                    /// Click menu item
+                    menuItem.click()
+                    coolWait()
+                    
+                    /// Screenshot state of scrolling tab
+                    result.append(takeLocalizationScreenshot(of: window, name: "ScrollingTab State \(i)-\(j)"))
                 }
             }
             
-            /// Cleanup
-            hitEscape()
+            /// Screenshot scrollingTab menus
+            for (i, popUpButton) in window.popUpButtons.allElementsBoundByIndex.enumerated() {
+                
+                /// Click popup button
+                popUpButton.click()
+                let menu = popUpButton.menus.firstMatch
+                
+                /// Take screenshot
+                result.append(takeLocalizationScreenshot(of: menu, name: "ScrollingTab Menu \(i)"))
+                XCUIElement.perform(withKeyModifiers: .option) {
+                    if ((false)) { /// The menus on the scrolling tab don't have secret options, at least at the time of writing. NOTE: Update this if you add secret options.
+                        result.append(takeLocalizationScreenshot(of: menu, name: "ScrollingTab Menu \(i) (Option)"))
+                    }
+                }
+                
+                /// Cleanup
+                hitEscape()
+            }
+            
+            /// Screenshots ScrollingTab toasts
+            result.append(contentsOf: sharedf_take_toast_screenshots("scrolling", "ScrollingTab Toast %d"))
         }
         
-        /// Screenshots ScrollingTab toasts
-        result.append(contentsOf: sharedf_take_toast_screenshots("scrolling", "ScrollingTab Toast %d"))
         
-        ///
         /// Return
-        ///
         
         return result
     }

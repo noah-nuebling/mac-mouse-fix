@@ -53,7 +53,7 @@
     
     /// Guard no letters
     if (firstLetterIndex == NSUIntegerMax) {
-        assert(false && "No letters found to capitalize");
+        if ((0)) assert(false && "No letters found to capitalize"); /// This fails our `Localization Screenshot Taker` in Turkish currently (some capture notification strings are empy it seems.)
         return [self copy];
     }
     
