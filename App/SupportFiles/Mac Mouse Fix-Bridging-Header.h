@@ -60,5 +60,6 @@
 #import "NSLayoutConstraint+Additions.h"
 #import "CAAnimationCurveUtility.h"
 #import "NSBox+Additions.h"
+#import "Localization.h"
 
 #endif /* Mac_Mouse_Fix_Bridging_Header_h */

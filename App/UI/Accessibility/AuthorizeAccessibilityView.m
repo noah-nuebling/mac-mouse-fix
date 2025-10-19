@@ -19,6 +19,7 @@
 #import "MFMessagePort.h"
 //#import "CaptureToasts.h" 
 #import "Mac_Mouse_Fix-Swift.h"
+#import "Localization.h"
 
 @interface AuthorizeAccessibilityView ()
 
@@ -63,7 +64,7 @@ AuthorizeAccessibilityView *_accViewController;
     [super viewDidLoad];
     
     if (@available(macOS 13.0, *)) { } else {
-        self.openSettingsLink.stringValue = NSLocalizedString(
+        self.openSettingsLink.stringValue = MFLocalizedString(
             @"accessibility.settings-link.pre-ventura",
             @"Example: \n"
             "   1. Open 'Security & Privacy' Preferences\n"

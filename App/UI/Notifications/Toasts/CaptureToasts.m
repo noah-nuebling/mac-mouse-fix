@@ -16,6 +16,7 @@
 #import "SharedUtility.h"
 #import "Links.h"
 #import "Mac_Mouse_Fix-Swift.h"
+#import "Localization.h"
 
 @implementation CaptureToasts
 
@@ -256,32 +257,32 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
     if (inputType == kMFCapturedInputTypeButtons) {
         map = @{
             
-            @"captured.body": NSLocalizedString(@"capture-toast.buttons.captured.body", @"Note: This is a \"pluralizable\" string, which means it has different versions depending on how many buttons the string is talking about. Click the disclosure triangles (>) to edit the different versions of the string. Do not localize \"@pluralizable\" - it's just a placeholder. \n"
+            @"captured.body": MFLocalizedString(@"capture-toast.buttons.captured.body", @"Note: This is a \"pluralizable\" string, which means it has different versions depending on how many buttons the string is talking about. Click the disclosure triangles (>) to edit the different versions of the string. Do not localize \"@pluralizable\" - it's just a placeholder. \n"
                 "\n"
                 "Note 2: \"%2$@\" will be replaced with the names of the captured buttons.\n"
                 "Example where those buttons are \"Middle Button\" and \"Button 4\":\n"
                 "\"Middle Button and Button 4 are now captured by Mac Mouse Fix.\""),
-            @"captured.hint": NSLocalizedString(
+            @"captured.hint": MFLocalizedString(
                 @"capture-toast.buttons.captured.hint",
                 @"Note: The core idea that we want to convey with these ui strings is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since I think it sounds nicer in English. In your language, you might want to use something closer to 'intercept'.\n"
                 "\n"
                 "Also see: The CapturedButtonsMMF3 document which explains the concept in more detail."
             ),
-            @"uncaptured.body": NSLocalizedString(@"capture-toast.buttons.uncaptured.body", @"."), /// Note to self: Added a period here, since setting to emptyString makes Xcode just keep the previous value in the .xcstrings file.
-            @"uncaptured.hint": (1) ? @"" : NSLocalizedString(@"capture-toast.buttons.uncaptured.hint", @"."),
+            @"uncaptured.body": MFLocalizedString(@"capture-toast.buttons.uncaptured.body", @"."), /// Note to self: Added a period here, since setting to emptyString makes Xcode just keep the previous value in the .xcstrings file.
+            @"uncaptured.hint": (1) ? @"" : MFLocalizedString(@"capture-toast.buttons.uncaptured.hint", @"."),
             
-            @"link": NSLocalizedString(@"capture-toast.buttons.link", @"Note: This links to the CapturedButtonsMMF3 document."),
+            @"link": MFLocalizedString(@"capture-toast.buttons.link", @"Note: This links to the CapturedButtonsMMF3 document."),
         };
     } else if (inputType == kMFCapturedInputTypeScroll) {
         map = @{
             
-            @"captured.body": NSLocalizedString(@"capture-toast.scroll.captured.body", @""),
-            @"captured.hint": (1) ? @"" : NSLocalizedString(@"capture-toast.scroll.captured.hint", @""),
+            @"captured.body": MFLocalizedString(@"capture-toast.scroll.captured.body", @""),
+            @"captured.hint": (1) ? @"" : MFLocalizedString(@"capture-toast.scroll.captured.hint", @""),
             
-            @"uncaptured.body": NSLocalizedString(@"capture-toast.scroll.uncaptured.body", @""),
-            @"uncaptured.hint": (1) ? @"" : NSLocalizedString(@"capture-toast.scroll.uncaptured.hint", @""),
+            @"uncaptured.body": MFLocalizedString(@"capture-toast.scroll.uncaptured.body", @""),
+            @"uncaptured.hint": (1) ? @"" : MFLocalizedString(@"capture-toast.scroll.uncaptured.hint", @""),
             
-            @"link": NSLocalizedString(@"capture-toast.scroll.link", @"Note: This links to the CapturedScrollWheels document"),
+            @"link": MFLocalizedString(@"capture-toast.scroll.link", @"Note: This links to the CapturedScrollWheels document"),
         };
     } else {
         assert(false); /// We haven't implemented the other inputTypes, yet.

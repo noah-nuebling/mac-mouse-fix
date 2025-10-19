@@ -6,9 +6,9 @@ However, we want to use them for .md files and for .vue files as well!
 
 # 1. Approach: Lying to Xcode about file types
 
- It seems we can get Xcode to export NSLocalizedString() macros used in our .md files into .xcstrings files. To do that, it seems we have to set the "Type" of the .md file in the Xcode inspector to something that is processed by the C or Swift compilation toolchain (?).
+ It seems we can get Xcode to export MFLocalizedString() macros used in our .md files into .xcstrings files. To do that, it seems we have to set the "Type" of the .md file in the Xcode inspector to something that is processed by the C or Swift compilation toolchain (?).
  
- Here are file "Types" I tested which make Xcode recognize NSLocalizedString() macros. 
+ Here are file "Types" I tested which make Xcode recognize MFLocalizedString() macros. 
  
  - "C Header"
  - "C Preprocessed Source"
@@ -16,7 +16,7 @@ However, we want to use them for .md files and for .vue files as well!
  - "makefile"
  - "Exported Symbols"
 
-Here are the file "Types" I tested which didn't make Xcode recognize NSLocalizedString() macros.
+Here are the file "Types" I tested which didn't make Xcode recognize MFLocalizedString() macros.
 
 - Markdown Text
 - Plain Text
@@ -111,7 +111,7 @@ BEFORE I FORGET:
 
 1. 
 
-This Doesn't belong here. But there are 3 command line tools I know of to extract NSLocalizedStrings:
+This Doesn't belong here. But there are 3 command line tools I know of to extract MFLocalizedStrings:
 
 - genstrings (for creating strings files)
 - extractLocStrings (for creating strings files)

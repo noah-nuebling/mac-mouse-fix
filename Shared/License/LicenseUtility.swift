@@ -115,11 +115,11 @@ func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
         if !trialState.trialIsActive {
             /// Trial expired
             
-            base = NSLocalizedString("trial-counter.expired", comment: "")
+            base = MFLocalizedString("trial-counter.expired", comment: "")
             
         } else {
             /// Trial still active
-            let b = NSLocalizedString("trial-counter.active", comment: "Note: If you think \"x/y\" looks unnatural in your language you could also use something like \"x of y\"")
+            let b = MFLocalizedString("trial-counter.active", comment: "Note: If you think \"x/y\" looks unnatural in your language you could also use something like \"x of y\"")
             base = String(format: b, daysOfUseUI, trialDays)
         }
         

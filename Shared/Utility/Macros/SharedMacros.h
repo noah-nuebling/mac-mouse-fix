@@ -427,11 +427,11 @@ id __nullable _mfbox(const void *__nonnull thing, const char *__nonnull objc_typ
 })
 
 ///
-/// Define xxxNSLocalizedString macro,
+/// Define xxxMFLocalizedString macro,
 ///     which is replaced with nothing by the preprocessor.
-///     The purpose of this is to 'turn off' NSLocalizedString() statements that we don't need at the moment.
+///     The purpose of this is to 'turn off' MFLocalizedString() statements that we don't need at the moment.
 
-#define xxxNSLocalizedString(...)
+#define xxxMFLocalizedString(...)
 
 ///
 /// Check if ptr is objc object

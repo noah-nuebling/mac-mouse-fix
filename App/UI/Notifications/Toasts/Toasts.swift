@@ -23,12 +23,12 @@ import Foundation
             /// - The default duration `kMFToastDurationAutomatic` felt too short in this case. I wonder why that is? I think this toast is one of, if not the shortest toasts - maybe it has to do with that? Maybe it feels like it should display longer, because there's a delay until it shows up so it's harder to get back to? Maybe our tastes for how long the toasts should be changed? Maybe we should adjust the formula for `kMFToastDurationAutomatic`?
             /// - Why are we dispatching `k-is-disabled-toast` to the main thread by not this? (They are called from almost the same place)
             
-            var rawMessage = NSLocalizedString("enable-timeout-toast", comment: "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which looks like a normal space, but it prevents linebreaks. We're using this to prevent the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\".") /// [Oct 2025] Actually, we're using `NSLineBreakStrategyPushOut` now, so the manual &nbsp; may not be necessary anymore.
+            var rawMessage = MFLocalizedString("enable-timeout-toast", comment: "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which looks like a normal space, but it prevents linebreaks. We're using this to prevent the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\".") /// [Oct 2025] Actually, we're using `NSLineBreakStrategyPushOut` now, so the manual &nbsp; may not be necessary anymore.
             rawMessage = String(format: rawMessage, Links.link(kMFLinkID_VenturaEnablingGuide) ?? "")
             ToastController.attachNotification(withMessage: MarkdownParser.attributedString(withCoolMarkdown: rawMessage, fillOutBase: false)!, forDuration: 10.0)
         },
         "k-is-disabled-toast": {
-            var messageRaw = NSLocalizedString("is-disabled-toast", comment: "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings.")
+            var messageRaw = MFLocalizedString("is-disabled-toast", comment: "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings.")
             messageRaw = String(format: messageRaw, Links.link(kMFLinkID_MacOSSettingsLoginItems) ?? "")
             
             let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)
@@ -41,24 +41,24 @@ import Foundation
     ]
     static let simpleToastMap_Buttons = [
         "k-forbidden-capture-toast.1": {
-            let messageRaw = NSLocalizedString("forbidden-capture-toast.1", comment: "Note: This message shows when the user tries to assign an action to the primary mouse button (aka left click) inside Mac Mouse Fix.")
+            let messageRaw = MFLocalizedString("forbidden-capture-toast.1", comment: "Note: This message shows when the user tries to assign an action to the primary mouse button (aka left click) inside Mac Mouse Fix.")
             let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!;
             ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
         },
         "k-forbidden-capture-toast.2": {
-            let messageRaw = NSLocalizedString("forbidden-capture-toast.2", comment: "")
+            let messageRaw = MFLocalizedString("forbidden-capture-toast.2", comment: "")
             let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!;
             ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
         },
         "k-already-using-defaults-toast.3": {
-            let messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "") /// Old note: (Removed because doesn't help localizers I think. We dont' wanna train localizers to ignore comments, so we don't want useless ones.) "Note: This text is displayed in a notification after the user tries to load the default settings for mice with 3 buttons on the Buttons Tab.")
+            let messageRaw = MFLocalizedString("already-using-defaults-toast.3", comment: "") /// Old note: (Removed because doesn't help localizers I think. We dont' wanna train localizers to ignore comments, so we don't want useless ones.) "Note: This text is displayed in a notification after the user tries to load the default settings for mice with 3 buttons on the Buttons Tab.")
             let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!
             DispatchQueue.main.async {
                 ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
             }
         },
         "k-already-using-defaults-toast.5": {
-            let messageRaw = NSLocalizedString("already-using-defaults-toast.5", comment: "")
+            let messageRaw = MFLocalizedString("already-using-defaults-toast.5", comment: "")
             let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!
             DispatchQueue.main.async {
                 ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
@@ -98,7 +98,7 @@ import Foundation
         /// Get revived-features string
         var revivedFeaturesList: [String] = []
         if showButtons {
-            revivedFeaturesList.append(NSLocalizedString(
+            revivedFeaturesList.append(MFLocalizedString(
                 "revive-toast.feature-buttons",
                 comment: """
                 Note: This string will be inserted into the \"revive-toast\" message
@@ -107,13 +107,13 @@ import Foundation
             ))
         }
         if showScroll {
-            revivedFeaturesList.append(NSLocalizedString("revive-toast.feature-scrolling", comment: ""))
+            revivedFeaturesList.append(MFLocalizedString("revive-toast.feature-scrolling", comment: ""))
         }
         let revivedFeatures = UIStrings.naturalLanguageList(fromStringArray: revivedFeaturesList)
         
         /// Build message string
         let messageRaw = String(
-            format: NSLocalizedString(
+            format: MFLocalizedString(
                 "revive-toast",
                 comment: """
                 Note: "%1$@" will be a list of mouse features like "Scrolling" or "Buttons" for which Mac Mouse Fix was enabled. "%2$@" will be the menu bar icon.

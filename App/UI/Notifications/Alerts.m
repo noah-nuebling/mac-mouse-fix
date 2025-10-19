@@ -10,6 +10,7 @@
 #import "Alerts.h"
 #import "NSAttributedString+Additions.h"
 #import "Mac_Mouse_Fix-Swift.h"
+#import "Localization.h"
 
 #pragma mark - NSAlert subclass
 
@@ -95,8 +96,8 @@
     /// - Setting asSheet to NO because the sheet will block restarting (which is one of the steps)
     /// - Setting stayOnTop to YES so the user doesn't loose the instructions when deleting the strange helper (which is one of the steps)
     
-    NSString *title = NSLocalizedString(@"is-strange-helper-alert.title", @"");
-    NSString *body = [NSString stringWithFormat:NSLocalizedString(@"is-strange-helper-alert.body", @""), strangeURL];
+    NSString *title = MFLocalizedString(@"is-strange-helper-alert.title", @"");
+    NSString *body = [NSString stringWithFormat:MFLocalizedString(@"is-strange-helper-alert.body", @""), strangeURL];
     
     [self showPersistenNotificationWithTitle:title markdownBody:body maxWidth:300 stayOnTop:YES asSheet:NO];
 }
