@@ -2037,7 +2037,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "mittlere Taste"
           }
         },
@@ -2167,7 +2167,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "primäre Taste"
           }
         },
@@ -2232,7 +2232,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "sekundäre Taste"
           }
         },
@@ -2297,7 +2297,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -2542,7 +2542,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -2852,7 +2852,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -3343,7 +3343,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**Scrollen** wird jetzt von Mac Mouse Fix abgefangen"
           }
         },
@@ -6688,7 +6688,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Diese Lizenz **konnte nicht aktiviert werden**, aber Mac Mouse Fix ist momentan **in deinem Land kostenlos**."
           }
         },
@@ -6754,7 +6754,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ein **Fehler mit dem Lizenzserver** ist aufgetreten\n\nEs heißt:\n\n%@"
+            "value" : "Ein **Fehler mit dem Lizenzserver** ist aufgetreten\n\nEr lautet:\n\n%@"
           }
         },
         "en" : {
@@ -7029,8 +7029,8 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Die Aktivierung deiner Lizenz ist aus **unbekannten Gründen** gescheitert\n\nBitte schreibe [hier](%@) einen Fehlerbericht"
+            "state" : "translated",
+            "value" : "Die Aktivierung deiner Lizenz ist aus **unbekannten Gründen** gescheitert\n\nBitte schreibe [hier](%@) einen **Fehlerbericht**"
           }
         },
         "en" : {
@@ -8265,7 +8265,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mac Mouse Fix **aktiviert** für %1$@\nEs war in der Menüleiste&nbsp;%2$@ deaktiviert worden"
           }
         },
@@ -11710,7 +11710,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "mittlere Taste"
           }
         },
@@ -11840,7 +11840,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "primäre Taste"
           }
         },
@@ -11905,7 +11905,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "sekundäre Taste"
           }
         },
@@ -12880,7 +12880,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "mittlere Taste"
           }
         },
@@ -13010,7 +13010,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "primäre Taste"
           }
         },
@@ -13075,7 +13075,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "sekundäre Taste"
           }
         },
