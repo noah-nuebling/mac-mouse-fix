@@ -46,8 +46,9 @@ void swizzleMethod(Class cls, SEL originalSelector, InterceptorFactory intercept
 void swizzleMethodOnClassAndSubclasses(Class baseClass, NSDictionary<MFClassSearchCriterion, id> *subclassSearchCriteria, SEL originalSelector, InterceptorFactory interceptorFactory);
 
 /// Main macro
-/// Note:
-///     We had an older alternate factory-maker that used inline typedef to be more neat and totally properly typed, but it seemed to break autocomplete
+/// Notes:
+///     - We had an older alternate factory-maker that used inline typedef to be more neat and totally properly typed, but it seemed to break autocomplete
+///     - Using separate `_Begin` and `_End` macros may seems cumbersome but it allows us to keep the interceptor logic outside of a macro, which prevents you from setting breakpoints in Xcode. [Oct 2025]
 
 #define InterceptorFactory_Begin(methodReturnType, methodArguments) \
     (id)                                                                            /** Cast the entire factory block to id to silence type-checker */ \
@@ -58,7 +59,6 @@ void swizzleMethodOnClassAndSubclasses(Class baseClass, NSDictionary<MFClassSear
 
 #define InterceptorFactory_End() \
     };}
-
 
 /// Convenience macros
 ///     To be used inside the codeblock after the `InterceptorFactory_Begin()` macro
