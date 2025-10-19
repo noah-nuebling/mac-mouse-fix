@@ -211,12 +211,6 @@
             "value" : "Version %@"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "app-version"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -233,24 +227,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Phiên bản %@"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "app-version"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "app-version"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "app-version"
           }
         }
       }
@@ -4342,12 +4318,6 @@
             "value" : "Clic principal"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "effect.primary-click"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4364,24 +4334,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kích nút chính"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "effect.primary-click"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "effect.primary-click"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "effect.primary-click"
           }
         }
       }
@@ -4472,12 +4424,6 @@
             "value" : "Clic secondaire"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "effect.secondary-click"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4494,24 +4440,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kích nút phụ"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "effect.secondary-click"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "effect.secondary-click"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "effect.secondary-click"
           }
         }
       }
@@ -5837,40 +5765,10 @@
             "value" : "Si vous rencontrez des **problèmes pour activer** l'app, cliquez&nbsp;[ici](%@)."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "enable-timeout-toast"
-          }
-        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Uygulamayı **etkinleştirme konusunda sorun yaşıyorsanız**, [buraya](%@) tıklayın."
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "enable-timeout-toast"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "enable-timeout-toast"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "enable-timeout-toast"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "enable-timeout-toast"
           }
         }
       }
