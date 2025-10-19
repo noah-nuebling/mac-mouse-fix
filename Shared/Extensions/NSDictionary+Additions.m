@@ -17,8 +17,31 @@
 #import "NSDictionary+Additions.h"
 #import "NSArray+Additions.h"
 #import "SharedMacros.h"
+#import "MFLoop.h"
 
 #pragma mark - Utiliy
+
+static NSString *coolKeyArrayToKeyPath(NSArray *keyArray) {
+    
+    /// Supposed to be inverse of `coolKeyPathToKeyArray()` [Oct 2025]
+    
+    auto result = [NSMutableString new];
+    
+    int i = 0;
+    for (id key in keyArray) {
+        
+        if (i) [result appendString: @"."];
+        
+        assert(isclass(key, NSString));
+        NSString *keyString = [key description];
+        keyString = [keyString stringByReplacingOccurrencesOfString: @"." withString: @"\\."];
+        [result appendString: keyString];
+        
+        i++;
+    }
+    
+    return result;
+}
 
 static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
     
@@ -26,6 +49,7 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
     /// - Regex tester: https://regex101.com/
     /// - The regex Matches all "." not preceded by "\" The actual, unescaped patterns is `(?<!\\)\.`
     /// - `\0` is the NULL character. Previously we used `@"<;jas;jfds;lfjasdf THIS IS A TEMPORARY REPLACEMENT STRING>"`
+    /// - Update: [Oct 2025] IIRC, this was only needed because we used bundle identifiers as keys in our config.plist for the `OverridePanel.m` feature. However, this feature is currently disabled in MMF 3. Also couldn't we avoid using period in our config.plist keys somehow?
     
     /// Replace unescaped "." chars in the keyPath with temporary separator
     
@@ -94,7 +118,6 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
     }
 }
 
-
 - (void) applyOverridesFromDictionary: (NSDictionary *_Nullable)other {
     
     /// Overview:  Similar to Foundation method `-[NSMutableDictionary addEntriesFromDictionary:]`, but 'deeply' merges nested dicts instead of just overriding them. [Sep 2025]
@@ -147,6 +170,29 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
     }
     return thisNode;
 }
+
+- (void) iterateCoolKeyPaths: (void (^)(NSString *keyPath, id object))callback {
+    auto key_stack = [NSMutableArray new];
+    _iterate_cool_key_paths(self, key_stack, callback);
+}
+
+void _iterate_cool_key_paths(NSDictionary *dict, NSMutableArray *key_stack, void (^callback)(id key_path, id object)) {
+    
+    for (id key in dict) {
+        
+        [key_stack addObject: key];
+        id object = dict[key];
+        
+        if (isclass(object, NSDictionary)) _iterate_cool_key_paths(object, key_stack, callback); /// Recurse
+        else {
+            NSString *key_path = coolKeyArrayToKeyPath(key_stack);
+            callback(key_path, object);
+        }
+        
+        [key_stack removeLastObject];
+    }
+}
+
 
 + (NSMutableDictionary *)doDeepMutateDictionary:(NSDictionary *)dict {
     
