@@ -154,7 +154,7 @@ static NSDictionary *sideButtonActions;
     /// Annotate localized strings
     ///     Reason for doing this in `load`: Swizzling needs to happen before any nib files are loaded so the strings from the nib files get annotated. I assume that in `applicationDidFinishLaunching:` the nib files are already loaded.
     if ([NSProcessInfo.processInfo.arguments containsObject:@"-MF_ANNOTATE_LOCALIZED_STRINGS"]) {
-        [LocalizedStringAnnotation swizzleNSBundle];
+        [LocalizedStringAnnotation enableAutomaticAnnotation];
     }
 
 }
