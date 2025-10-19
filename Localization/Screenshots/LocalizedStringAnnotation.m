@@ -26,11 +26,19 @@
     ///         - Markdown __underscore emphasis__ is not parsed anymore - (we had the same issue with chinese - the `__` syntax  requires spaces to work while `**` does not. ZeroWidthSpace is not enough. We should just switch over to using `**`)
     ///         - Markdown parsing normally removes anything over a double linebreak. But not when the secretMessage is in the blank space.
     ///         - Pluralized localizedStrings break from our annotations it seems. Update: Fixed.
-    ///     - Update: [Oct 2025] The table arg is not used and could be removed.
     
     NSString *prefix = [stringf(@"<mfkey:%@:%@>", key, (table ?: @"")) encodedAsSecretMessage];
     NSString *suffix = [stringf(@"</mfkey>") encodedAsSecretMessage];
     return stringf(@"%@%@%@", prefix, string, suffix);
+}
+
++ (NSAttributedString *) annotateAttributedString: (NSAttributedString *)string withKey: (NSString *)key table: (NSString *_Nullable)table {
+    
+    /// Keep in-sync with `annotateString:withKey:table:`
+    
+    NSString *prefix = [stringf(@"<mfkey:%@:%@>", key, (table ?: @"")) encodedAsSecretMessage];
+    NSString *suffix = [stringf(@"</mfkey>") encodedAsSecretMessage];
+    return astringf(@"%@%@%@", [prefix attributed], string, [suffix attributed]);
 }
 
 id nsLocalizedStringBySwappingOutUnderlyingString(id nsLocalizedString, NSString *underlyingString) {
@@ -50,42 +58,67 @@ id nsLocalizedStringBySwappingOutUnderlyingString(id nsLocalizedString, NSString
     return nsLocalizedString;
 }
 
-@end
-
-/// Old code
-#if 0
-
-    + (void)swizzleNSBundle { /// swizzling is no longer needed since we have MFLocalizedString now – this logic has been moved into MFLocalizedString. Keeping this code as an example of the `InterceptorFactory_Begin()` and `InterceptorFactory_End()` macro usage. [Oct 2025]
++ (void)swizzleNSBundle {
+        
+    /// Swizzle
+    swizzleMethodOnClassAndSubclasses([NSBundle class], @{ @"framework": @"AppKit" }, @selector(localizedStringForKey:value:table:), InterceptorFactory_Begin(NSString *, (NSString *key, NSString *value, NSString *table))
+        
+        /// Call og
+        NSString *result = OGImpl(key, value, table);
+        
+        BOOL isOurBundle = [m_self isEqual:NSBundle.mainBundle]; /// The system loads tons of strings from other bundles such as `AppKit`
+        if (isOurBundle) {
             
-        /// Swizzle
-        swizzleMethodOnClassAndSubclasses([NSBundle class], @{ @"framework": @"AppKit" }, @selector(localizedStringForKey:value:table:), InterceptorFactory_Begin(NSString *, (NSString *key, NSString *value, NSString *table))
+            /// Add secret message
+            NSString *annotatedString = [self annotateString: result withKey: key table: table];
             
-            /// Call og
-            NSString *result = OGImpl(key, value, table);
-            
-            BOOL isOurBundle = [m_self isEqual:NSBundle.mainBundle]; /// The system loads tons of strings from other bundles such as `AppKit`
-            if (isOurBundle) {
-                
-                /// Add secret message
-                NSString *annotatedString = [self annotateString: result withKey: key table: table];
-                
-                /// Handle pluralized strings
-                if ([result isKindOfClass:NSClassFromString(@"__NSLocalizedString")]) {
-                    result = nsLocalizedStringBySwappingOutUnderlyingString(result, annotatedString);
-                } else {
-                    result = annotatedString;
-                }
+            /// Handle pluralized strings
+            if ([result isKindOfClass:NSClassFromString(@"__NSLocalizedString")]) {
+                result = nsLocalizedStringBySwappingOutUnderlyingString(result, annotatedString);
+            } else {
+                result = annotatedString;
+            }
 
-                
-                /// Log
-                DDLogDebug(@"LocalizedStringAnnotation: Annotated: \"%@\": \"%@\" (table: %@)", key, result, table);
+            
+            /// Log
+            DDLogDebug(@"LocalizedStringAnnotation: Annotated: \"%@\": \"%@\" (table: %@)", key, result, table);
+        }
+        
+        /// Return
+        return result;
+    InterceptorFactory_End());
+    
+    swizzleMethodOnClassAndSubclasses([NSBundle class], @{ @"framework": @"AppKit" }, @selector(localizedAttributedStringForKey:value:table:), InterceptorFactory_Begin(NSAttributedString *, (NSString *key, NSString *value, NSString *table))
+        
+        /// [Sep 2025] Don't think we need this.
+        ///     Our code never uses `localizedAttributedStringForKey:value:table:` – only available in macOS 12.0+
+        
+        /// Call og
+        NSAttributedString *result = OGImpl(key, value, table);
+        
+        BOOL isOurBundle = [m_self isEqual:NSBundle.mainBundle];
+        if (isOurBundle) {
+            
+            /// Add secret message
+            result = [self annotateAttributedString: result withKey: key table: table];
+            
+            /// Handle pluralized strings
+            if ([result isKindOfClass:NSClassFromString(@"__NSLocalizedString")]) {
+                assert(false); /// Don't know how to handle this.
             }
             
-            /// Return
-            return result;
-        InterceptorFactory_End());
+            /// Log
+            DDLogDebug(@"LocalizedStringAnnotation: Annotated: \"%@\": \"%@\" (table: %@)", key, result, table);
+        }
+        
+        /// Return
+        return result;
+    InterceptorFactory_End());
+    
+    
 
-    }
+}
+
+@end
 
 
-#endif

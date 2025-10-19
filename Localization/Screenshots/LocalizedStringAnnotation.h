@@ -7,13 +7,14 @@
 // --------------------------------------------------------------------------
 //
 
-/// [Oct 2025] Some of the functionality of this has moved into MFLoclizedString. Should probably move it all there and remove this.
-
 #import <Foundation/Foundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface LocalizedStringAnnotation : NSObject
 
-+ (NSString *) annotateString: (NSString *)string withKey: (NSString *)key table: (NSString *_Nullable)table;
-id nsLocalizedStringBySwappingOutUnderlyingString(id nsLocalizedString, NSString *underlyingString);
++ (void)swizzleNSBundle;
 
 @end
+
+NS_ASSUME_NONNULL_END

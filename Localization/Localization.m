@@ -12,10 +12,6 @@
 #import "SharedMacros.h"
 #import "UndeprecateSimpleUnboxing.h"
 #import "NSDictionary+Additions.h"
-#import "LocalizedStringAnnotation.h"
-
-static bool _annotationEnabled = false;
-void MFLocalizedString_EnableStringAnnotation(void) { _annotationEnabled = true; } /// Previously we used to call` [LocalizedStringAnnotation swizzleNSBundle]` instead of this. [Oct 2025]
 
 NSString *_MFLocalizedString(NSString *key) {
 
@@ -62,19 +58,6 @@ NSString *_MFLocalizedString(NSString *key) {
             }
         }
     }
-    
-    /// Add secret message
-    if (_annotationEnabled)
-    {
-        NSString *annotatedString = [LocalizedStringAnnotation annotateString: result withKey: key table: nil];
-        
-        if ([result isKindOfClass:NSClassFromString(@"__NSLocalizedString")])   result = nsLocalizedStringBySwappingOutUnderlyingString(result, annotatedString); /// Handle pluralized strings
-        else                                                                    result = annotatedString;
-        
-        DDLogDebug(@"LocalizedStringAnnotation: Annotated: \"%@\": \"%@\"", key, result);
-            
-     }
-
     
     return result;
 }

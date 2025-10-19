@@ -15,4 +15,3 @@
 
 #define MFLocalizedString(key, comment) _MFLocalizedString((key))
 NSString *_MFLocalizedString(NSString *key);
-void MFLocalizedString_EnableStringAnnotation(void);

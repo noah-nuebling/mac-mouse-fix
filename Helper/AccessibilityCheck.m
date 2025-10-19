@@ -22,8 +22,7 @@
 #import "HelperServices.h"
 #import "PointerFreeze.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
-#import "Localization.h"
-
+#import "LocalizedStringAnnotation.h"
 
 #import "SharedUtility.h"
 
@@ -183,7 +182,7 @@
         /// Annotate localized strings
         ///     The swizzle should happen before the system loads any of our localized nib files, or localizedStrings are loaded from the NSBundle in another way. Otherwise we miss some strings in the localizationScreenshots.
         if ([NSProcessInfo.processInfo.arguments containsObject:@"-MF_ANNOTATE_LOCALIZED_STRINGS"]) {
-            MFLocalizedString_EnableStringAnnotation();
+            [LocalizedStringAnnotation swizzleNSBundle];
         }
         
         /// Using `load_Manual` instead of normal load, because creating an eventTap crashes the program, if we don't have accessibilty access (I think - I don't really remember)
