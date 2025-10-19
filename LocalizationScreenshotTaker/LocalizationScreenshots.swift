@@ -841,27 +841,6 @@ final class LocalizationScreenshotClass: XCTestCase {
             hitEscape()
             coolWait()
             
-            /// Screenshots ButtonsTab toasts
-            result.append(contentsOf: sharedf_take_toast_screenshots("buttons", "ButtonsTab Toast %d"))
-            
-            /// Screenshot buttonsTab sheets
-            ///     (The ones invoked by the two buttons in the bottom left and bottom right)
-            for (i, button) in window.buttons.matching(NSPredicate(format: "identifier IN %@", ["axButtonsOptionsButton", "axButtonsRestoreDefaultsButton"])).allElementsBoundByIndex.enumerated() {
-                
-                /// Click
-                button.click()
-                coolWait() /// Not necessary. Sheets have a native animation where XCUITest automatically correctly
-                
-                /// Get sheet
-                let sheet = window.sheets.firstMatch
-                
-                /// Screenshot
-                result.append(takeLocalizationScreenshot(of: sheet, name: "ButtonsTab Sheet \(i)"))
-                
-                /// Cleanup
-                hitEscape()
-            }
-            
             /// Screenshot Main UI
             do {
                 /// Screenshot states
@@ -905,6 +884,27 @@ final class LocalizationScreenshotClass: XCTestCase {
                     /// Clean up
                     hitEscape()
                 }
+            }
+            
+            /// Screenshots ButtonsTab toasts
+            result.append(contentsOf: sharedf_take_toast_screenshots("buttons", "ButtonsTab Toast %d"))
+            
+            /// Screenshot buttonsTab sheets
+            ///     (The ones invoked by the two buttons in the bottom left and bottom right)
+            for (i, button) in window.buttons.matching(NSPredicate(format: "identifier IN %@", ["axButtonsOptionsButton", "axButtonsRestoreDefaultsButton"])).allElementsBoundByIndex.enumerated() {
+                
+                /// Click
+                button.click()
+                coolWait() /// Not necessary. Sheets have a native animation where XCUITest automatically correctly
+                
+                /// Get sheet
+                let sheet = window.sheets.firstMatch
+                
+                /// Screenshot
+                result.append(takeLocalizationScreenshot(of: sheet, name: "ButtonsTab Sheet \(i)"))
+                
+                /// Cleanup
+                hitEscape()
             }
         }
         
