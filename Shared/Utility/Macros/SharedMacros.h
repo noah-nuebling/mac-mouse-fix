@@ -169,7 +169,7 @@ id __nullable _mfbox(const void *__nonnull thing, const char *__nonnull objc_typ
 })
 
 /// array count convenience
-#define arrcount(x) (sizeof(x) / sizeof((x)[0]))
+#define arrcount(x) ({ static_assert(!_isobject(x), "Use a method like -[count] for objects."); (sizeof(x) / sizeof((x)[0])); })
 
 /// `MFNSSetMake()`
 ///     Substitute for missing NSSet literal
