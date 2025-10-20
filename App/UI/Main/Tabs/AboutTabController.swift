@@ -280,28 +280,16 @@ class AboutTabController: NSViewController {
                     /// Rare
                     (MFLocalizedString("thanks.05", comment: ""), weight: 0.1),
                     (MFLocalizedString("thanks.06", comment: ""), weight: 0.1),
-                    (MFLocalizedString("thanks.07", comment: ""), weight: 0.1),
-                    (MFLocalizedString("thanks.08", comment: ""), weight: 0.1),
                     
                     /// Very rare
                     (MFLocalizedString("thanks.09", comment: ""), weight: 0.05),
                     
                     /// Extremely rare
                     (MFLocalizedString("thanks.10", comment: "."), weight: 0.01),
-                    (MFLocalizedString("thanks.11", comment: ""), weight: 0.01),
-                    (MFLocalizedString("thanks.12", comment: ""), weight: 0.01),
+                    
                     (MFLocalizedString("thanks.13", comment: ""), weight: 0.01),
-                    (MFLocalizedString("thanks.14", comment: ""), weight: 0.01),
-                    (MFLocalizedString("thanks.15", comment: ""), weight: 0.01),
-                    (MFLocalizedString("thanks.16", comment: ""), weight: 0.01),
-                    (MFLocalizedString("thanks.17", comment: ""), weight: 0.01),
-                    (MFLocalizedString("thanks.18", comment: ""), weight: 0.01),
-                    (MFLocalizedString("thanks.19", comment: ""), weight: 0.01),
-                    (MFLocalizedString("thanks.20", comment: ""), weight: 0.01),
                     (MFLocalizedString("thanks.21", comment: ""), weight: 0.01),
                     (MFLocalizedString("thanks.22", comment: ""), weight: 0.01),
-                    (MFLocalizedString("thanks.23", comment: ""), weight: 0.01),
-                    (MFLocalizedString("thanks.24", comment: ""), weight: 0.01),
                     (MFLocalizedString("thanks.25", comment: ""), weight: 0.01),
                 ]
                 thankYouMessages = thankYouMessages.filter { /// Allow localizers to leave the strings empty, just filter out the empty strings.

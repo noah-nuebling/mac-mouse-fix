@@ -8261,7 +8261,7 @@
       }
     },
     "revive-toast" : {
-      "comment" : "Note: \"%1$@\" will be a list of mouse features like \"Scrolling\" or \"Buttons\" for which Mac Mouse Fix was enabled. \"%2$@\" will be the menu bar icon.\n\nNote 2: \"&nbsp;\" Creates a \"non-breaking space\" character which prevents the menu bar icon from ending up on a separate line from the text \"Menu Bar\". \n\nNote 3: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.",
+      "comment" : "Note: \"%1$@\" will be a list of mouse features like \"Scrolling\" or \"Buttons\" for which Mac Mouse Fix was enabled. \"%2$@\" will be the menu bar icon.\n\nNote 2: \"&nbsp;\" Creates a \"non-breaking space\" character which prevents the menu bar icon from ending up \"orphaned\" on a separate line from the \"Menu Bar\" text. \n\nNote 3: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10017,6 +10017,7 @@
     },
     "thanks.07" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10082,6 +10083,7 @@
     },
     "thanks.08" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10216,24 +10218,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🏂 Entengang fürs Leben!!"
+            "value" : "🦆 Entengang für immer"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🏂 Duckgang for life!!"
+            "value" : "🦆 Entengang für immer"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🧼 Se laver les mains en sortant des toilettes n'est pas facultatif :D"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🏂 Duckgang 영원해줘!!"
           }
         },
@@ -10251,25 +10253,25 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🏂 Phê chữ ê kéo dàiiiii!!"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🏂一生不悔低头族！！"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🏂一生不悔低頭族！！"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🏂一世不悔低頭族！！"
           }
         }
@@ -10277,6 +10279,7 @@
     },
     "thanks.11" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10342,6 +10345,7 @@
     },
     "thanks.12" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10472,6 +10476,7 @@
     },
     "thanks.14" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10537,6 +10542,7 @@
     },
     "thanks.15" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10602,6 +10608,7 @@
     },
     "thanks.16" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10667,6 +10674,7 @@
     },
     "thanks.17" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10732,6 +10740,7 @@
     },
     "thanks.18" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10797,6 +10806,7 @@
     },
     "thanks.19" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10862,6 +10872,7 @@
     },
     "thanks.20" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10931,24 +10942,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🐠 Was... bist... du?"
+            "value" : "🐠 Was... Bist... Du?"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🐠 What... are... you?"
+            "value" : "🐠 What... Are... You?"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🐠 Qu'êtes... vous?"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🐠 What... are... you?"
           }
         },
@@ -10966,25 +10977,25 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🐠 Bạn... là... ai?"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🐠比死神利维坦可爱。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🐠比死神利維坦可愛。"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🐠比死神利維坦仲得意。"
           }
         }
@@ -10996,24 +11007,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🖤"
+            "value" : "🐁 Die persönliche Gehilfin des Händlers!"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🖤"
+            "value" : "🐁 The merchant's personal pet!"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🖤"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🖤"
           }
         },
@@ -11025,31 +11036,31 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🖤"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🖤"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🖤"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🖤"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🖤"
           }
         }
@@ -11057,6 +11068,7 @@
     },
     "thanks.23" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11122,6 +11134,7 @@
     },
     "thanks.24" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
