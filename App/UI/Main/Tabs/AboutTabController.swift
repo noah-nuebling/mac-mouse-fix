@@ -273,23 +273,24 @@ class AboutTabController: NSViewController {
                 
                 
                     Interesting thankyou messages (not direct translations of English) left by localizers that we removed when deleting stale strings [Oct 20 2025]
+                        (Perhaps we could replace some of the other strings that are direct translations of the English version with these.)
                 
-                    Vietnamese
-                    - 15 --- 🥛 Sữa tươi nguyên "trất" trăm phần trăm.
-                    - 16 --- 🎸 Thưởng bạn một bản rockkkk nhé
-                    - 17 --- 💃 ILU3000
+                        Vietnamese
+                        - 15 --- 🥛 Sữa tươi nguyên "trất" trăm phần trăm.
+                        - 16 --- 🎸 Thưởng bạn một bản rockkkk nhé
+                        - 17 --- 💃 ILU3000
 
-                    Brazilian ones that would get removed
-                    - 08 --- :) <- Minha expressão quando vi que você comprou o Mac Mouse Fix
-                    - 11 --- 🚜 Deus ajuda quem cedo madruga :P
-                    - 12 --- 🫕 Toda panela tem sua tampa!
-                    - 14 --- 🕊️ Mais vale um pássaro na mão do que dois voando!
-                    - 15 --- 🥛 Não adianta chorar pelo leite derramado.
-                    - 16 --- 🎤 Quem canta seus males espanta.
-                    - 17 --- 🏝️ O descanso é tão importante quanto o trabalho...
-                    - 18 --- 🦄 Você pode não querer salvar o mundo, mas já está salvando o meu :)
-                    - 19 --- 🏆 É dando que se recebe...
-                    - 20 --- 🌍 A pressa é inimiga da perfeição... :)
+                        Brazilian ones that would get removed
+                        - 08 --- :) <- Minha expressão quando vi que você comprou o Mac Mouse Fix
+                        - 11 --- 🚜 Deus ajuda quem cedo madruga :P
+                        - 12 --- 🫕 Toda panela tem sua tampa!
+                        - 14 --- 🕊️ Mais vale um pássaro na mão do que dois voando!
+                        - 15 --- 🥛 Não adianta chorar pelo leite derramado.
+                        - 16 --- 🎤 Quem canta seus males espanta.
+                        - 17 --- 🏝️ O descanso é tão importante quanto o trabalho...
+                        - 18 --- 🦄 Você pode não querer salvar o mundo, mas já está salvando o meu :)
+                        - 19 --- 🏆 É dando que se recebe...
+                        - 20 --- 🌍 A pressa é inimiga da perfeição... :)
                 
                 */
                 
