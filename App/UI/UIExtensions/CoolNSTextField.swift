@@ -43,6 +43,11 @@ class MarkdownTextField: CoolNSTextField {
             }
         }
         
+        /// Disable orphaned words [Oct 2025]
+        if (false) { /// Disable cause I'm not sure this has unintended consequences. See `getIntentionalFontAttributes` mechanism [Oct 2025] || Also note that this won't apply for all textfields in the app. E.g. NSAlerts.
+            self.attributedStringValue = self.attributedStringValue.disablingOrphanedWords(for: nil)
+        }
+        
         /// Parse md
         /// - We need to pass in the original markdown string so the original attributes can be kept as base. Otherwise the font will be set to system default font at default size on markup elements where e.g. bold is applied and that will make the bodl text much too large.
         /// - I remember this working before some other way but I don't understand how it could've worked before without this method.
