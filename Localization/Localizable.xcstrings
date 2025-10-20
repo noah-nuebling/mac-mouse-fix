@@ -9626,7 +9626,7 @@
       }
     },
     "thanks.01" : {
-      "comment" : "Note: The weird thank-you messages are rare. Feel free to change them if you'd like to leave an easter egg. You can also leave them blank, just make sure to fill out thanks.01 - thanks.03",
+      "comment" : "Note: The weird thank-you messages are rare. Feel free to change them if you'd like to leave an easter egg. You can also leave them blank (insert a space character), just make sure to fill out thanks.01 - thanks.03",
       "localizations" : {
         "de" : {
           "stringUnit" : {

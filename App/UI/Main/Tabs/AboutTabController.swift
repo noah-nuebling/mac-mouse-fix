@@ -297,7 +297,7 @@ class AboutTabController: NSViewController {
                 var thankYouMessages = [
                     
                     /// Common
-                    (MFLocalizedString("thanks.01", comment: "Note: The weird thank-you messages are rare. Feel free to change them if you'd like to leave an easter egg. You can also leave them blank, just make sure to fill out thanks.01 - thanks.03"), weight: 1),
+                    (MFLocalizedString("thanks.01", comment: "Note: The weird thank-you messages are rare. Feel free to change them if you'd like to leave an easter egg. You can also leave them blank (insert a space character), just make sure to fill out thanks.01 - thanks.03"), weight: 1),
                     (MFLocalizedString("thanks.02", comment: ""), weight: 1),
                     (MFLocalizedString("thanks.03", comment: ""), weight: 1),
                     (MFLocalizedString("thanks.04", comment: ""), weight: 1),
@@ -318,8 +318,8 @@ class AboutTabController: NSViewController {
                     (MFLocalizedString("thanks.25", comment: ""), weight: 0.01),
                 ]
                 thankYouMessages = thankYouMessages.filter { /// Allow localizers to leave the strings empty, just filter out the empty strings.
-                    $0.0.range(of: "thanks\\.[0-9][0-9]", options: .regularExpression) == nil && /// Strings left empy by localizers fall lback to their key. E.g. `thanks.17` || Can't use .hasPrefix due to invisible characters (See `NSString+Steganography.m`) [Oct 2025]
-                    $0.0.trimmingCharacters(in: .whitespacesAndNewlines) != ""
+                    $0.0.range(of: kMFThanksPattern, options: .regularExpression) == nil && /// Strings left empy by localizers fall lback to their key. E.g. `thanks.17` || Can't use .hasPrefix due to invisible characters (See `NSString+Steganography.m`) [Oct 2025]
+                    $0.0.withoutSecretMessages().trimmingCharacters(in: .whitespacesAndNewlines) != "" ///  Subtle: Have to call `.withoutSecretMessages()` *before* trimming whitespace since the zero-width annotations surround the content they're annotating now. [Oct 2025] Could instead use `removingAllWhitespace`.
                 }
                 if (thankYouMessages.count > 0) {
                     message = Randomizer.select(from: thankYouMessages)

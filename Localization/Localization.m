@@ -13,6 +13,7 @@
 #import "UndeprecateSimpleUnboxing.h"
 #import "NSDictionary+Additions.h"
 #import "LocalizedStringAnnotation.h"
+#import "Constants.h"
 
 NSString *_MFLocalizedString(NSString *key) {
     
@@ -47,6 +48,9 @@ NSString *_MFLocalizedString(NSString *key) {
             return result;
         };
         
+        if ([result rangeOfString: kMFThanksPattern options: NSRegularExpressionSearch].location != NSNotFound)
+            goto endof_fallbacks; /// Don't fall back for `thanks.[...]` strings cause when localizers leave those blank, we simply wanna omit those from the randomizer (See AboutTabController.swift) [Oct 2025]
+        
         if ([result isEqual: key]) {
             result = english_string();
         }
@@ -69,6 +73,7 @@ NSString *_MFLocalizedString(NSString *key) {
             }
         }
     }
+    endof_fallbacks: {}
     
     /// Manually annotate the string – see `annotation-discussion` above
     if ([NSProcessInfo.processInfo.arguments containsObject: @"-MF_ANNOTATE_LOCALIZED_STRINGS"]) {
