@@ -960,6 +960,15 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
             }];
         }
 
+        #pragma mark Text Wrapping
+        
+        - (NSAttributedString *)attributedStringByDisablingOrphanedWordsForRange:(const NSRangePointer _Nullable)rangeIn {
+            return [self attributedStringByModifyingParagraphStyleForRange: rangeIn modifier:^NSParagraphStyle * _Nullable(NSMutableParagraphStyle * _Nullable style) {
+                style.lineBreakStrategy = NSLineBreakStrategyPushOut;
+                return style;
+            }];
+        }
+
     //- (NSAttributedString *)attributedStringByAddingAlignment:(NSTextAlignment)alignment forSubstring:(NSString * _Nullable)subStr {
     //
     //    return [self attributedStringByModifyingAttribute:NSParagraphStyleAttributeName forSubstring:subStr modifier:^NSParagraphStyle *(NSParagraphStyle *value) {
