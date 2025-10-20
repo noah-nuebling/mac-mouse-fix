@@ -1,7 +1,7 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "01: intro" : {
+    "1: intro" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -18,7 +18,7 @@
         }
       }
     },
-    "02: translations" : {
+    "2: translations" : {
       "comment" : "Note: {url} will be replaced by a link. Make sure to type \"{url}\" exactly like in the original for the text-replacement to work.",
       "extractionState" : "manual",
       "localizations" : {
@@ -36,7 +36,7 @@
         }
       }
     },
-    "03: money" : {
+    "3: money" : {
       "comment" : "Note: {sales_count} will be replaced by the number of times Mac Mouse Fix has been sold. Make sure to type \"{sales_count}\" exactly like in the original for the text-replacement to work.",
       "extractionState" : "manual",
       "localizations" : {
@@ -54,7 +54,7 @@
         }
       }
     },
-    "04: money.generous" : {
+    "4: money.generous" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -71,7 +71,7 @@
         }
       }
     },
-    "05: money.very-generous" : {
+    "5: money.very-generous" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -88,7 +88,7 @@
         }
       }
     },
-    "06: money.github-sponsors" : {
+    "6: money.github-sponsors" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -105,7 +105,7 @@
         }
       }
     },
-    "07: money.paypal-donations" : {
+    "7: money.paypal-donations" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -122,7 +122,7 @@
         }
       }
     },
-    "08: software" : {
+    "8: software" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -139,7 +139,7 @@
         }
       }
     },
-    "09: software.inspiration" : {
+    "9: software.inspiration" : {
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -152,24 +152,6 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
-          }
-        }
-      }
-    },
-    "10: software.libraries" : {
-      "comment" : "Note: Don't forget the `<br>`, it inserts a line<br>eak.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mac Mouse Fix wurde mithilfe dieser **hervorragenden Softwarebibliotheken** erstellt:\n\n- [ReactiveSwift]({url_1}) - Ströme von Werten im Laufe der Zeit. Maßgeschneidert für Swift.\n- [CocoaLumberjack]({url_2}) - Schnelles und einfaches, aber leistungsstarkes und flexibles Logging-System.\n- [Swift Markdown]({url_3}) - Analysiere, erstelle, bearbeite und analysiere Markdown-Dokumente.\n- [Sparkle]({url_4}) - Ein Software-Update-Framework für macOS.\n- [MASShortcut]({url_5}) - API und Benutzeroberfläche zum Aufzeichnen, Speichern und Verwenden systemweiter Tastenkürzel\n- [CGSInternal]({url_6}) - Eine Sammlung privater CoreGraphics-Routinen\n- Abhängigkeiten der Skripte von Mac Mouse Fix:<br>\n  [Update- und Statistikskripte]({url_7}) | [Markdown-Generierungsskript]({url_8}) | [.strings-Datei Synchronisierungsskript]({url_9}) | [\"State of Localization\"-Skript]({url_10})\n- Abhängigkeiten der [Mac Mouse Fix Feedback Assistant]({url_11}) Web-App [hier]({url_12})\n- Abhängigkeiten der [Mac Mouse Fix Website]({url_13}) findest du [hier]({url_14})"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Mac Mouse Fix was built with the help of these **great libraries**:\n\n- [ReactiveSwift]({url_1}) - Streams of values over time tailored for Swift\n- [CocoaLumberjack]({url_2}) - Fast & simple, yet powerful & flexible logging\n- [Swift Markdown]({url_3}) - Parse, build, edit, and analyze Markdown documents\n- [Sparkle]({url_4}) - A software update framework for macOS\n- [MASShortcut]({url_5}) - API and user interface for recording, storing & using system-wide keyboard shortcuts\n- [CGSInternal]({url_6}) - A collection of private CoreGraphics routines\n- Dependencies of Mac Mouse Fix's scripts:<br>\n  [Update and statistics scripts]({url_7}) | [Markdown generator script]({url_8}) | [.strings file sync script]({url_9}) | [\"State of Localization\" script]({url_10})\n- Dependencies of the [Mac Mouse Fix Feedback Assistant]({url_11}) web app [here]({url_12})\n- Dependencies of the [Mac Mouse Fix Website]({url_13}) are available [here]({url_14})"
           }
         }
       }
