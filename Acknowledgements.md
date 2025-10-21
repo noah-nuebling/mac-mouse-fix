@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **October 2025**
 
+- 🇺🇸&nbsp;Tapps - "free Palestine! 🇵🇸 from sea to shining river, true peace and liberation happens when ALL are free, forever."
 - 🇺🇸&nbsp;Misha - "Thank you!"
 - 🇫🇮&nbsp;Janne&nbsp;Kallunki
 - 🇺🇸&nbsp;Angel&nbsp;Zuniga
