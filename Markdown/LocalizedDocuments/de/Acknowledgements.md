@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Oktober 2025**
 
+- 🇺🇸&nbsp;Mike&nbsp;Starbuck&nbsp;Huembes - "Amazin App, no need to have the Magic Mouse anymore for simple gestures."
 - 🇺🇸&nbsp;Tapps - "free Palestine! 🇵🇸 from sea to shining river, true peace and liberation happens when ALL are free, forever."
 - 🇺🇸&nbsp;Misha - "Thank you!"
 - 🇫🇮&nbsp;Janne&nbsp;Kallunki
