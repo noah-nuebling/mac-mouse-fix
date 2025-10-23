@@ -460,6 +460,27 @@
 
 #pragma mark Determine size
 
+static NSRect MFUnionRect(NSRect r, NSRect s) {
+    
+    /// Replacement for `NSUnionRect`
+    ///     `NSUnionRect` seems to ignore rects with zero-width,
+    ///     which makes it not work for `NSTextLayoutFragment`s representing blank-lines. [Oct 2025]
+    
+    CGFloat minX = MIN(r.origin.x, s.origin.x);
+    CGFloat maxX = MAX(
+        (r.origin.x + r.size.width),
+        (s.origin.x + s.size.width)
+    );
+    CGFloat minY = MIN(r.origin.y, s.origin.y);
+    CGFloat maxY = MAX(
+        (r.origin.y + r.size.height),
+        (s.origin.y + s.size.height)
+    );
+    
+    return (NSRect){ { .x = minX, .y = minY }, { .width = maxX-minX, .height = maxY-minY } };
+
+}
+
 - (NSSize)sizeAtMaxWidth:(CGFloat)maxWidth {
     
     /// Notes:
@@ -508,9 +529,12 @@
             ///     - `NSTextLayoutFragmentEnumerationOptionsEnsuresExtraLineFragment` is for ensuring layout consistency with editable text, which we don't need here.
             ///     - `NSTextLayoutFragmentEnumerationOptionsEstimatesSize` is a faster, but less accurate alternative to `NSTextLayoutFragmentEnumerationOptionsEnsuresLayout`
             resultRect = NSZeroRect;
-            NSTextLayoutFragmentEnumerationOptions enumerationOptions = NSTextLayoutFragmentEnumerationOptionsEnsuresLayout;
-            [textLayoutManager enumerateTextLayoutFragmentsFromLocation:nil options:enumerationOptions usingBlock:^BOOL(NSTextLayoutFragment * _Nonnull layoutFragment) {
-                resultRect = NSUnionRect(resultRect, layoutFragment.layoutFragmentFrame);
+            NSTextLayoutFragmentEnumerationOptions enumerationOptions = (
+                NSTextLayoutFragmentEnumerationOptionsEnsuresLayout |
+                NSTextLayoutFragmentEnumerationOptionsEnsuresExtraLineFragment /// Doesn't seem to make a difference [Oct 2025]
+            );
+            [textLayoutManager enumerateTextLayoutFragmentsFromLocation: nil options: enumerationOptions usingBlock: ^BOOL(NSTextLayoutFragment * _Nonnull layoutFragment) {
+                resultRect = MFUnionRect(resultRect, layoutFragment.layoutFragmentFrame);
                 return YES;
             }];
         }
