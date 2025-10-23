@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24118.1" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24118.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24128"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -1004,12 +1004,12 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                             </textField>
                                             <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="saP-aP-bnv">
                                                 <rect key="frame" x="84" y="-4" width="86" height="25"/>
-                                                <popUpButtonCell key="cell" type="push" title="Off" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="4gx-d0-WNb" id="LBG-Mq-hAQ">
+                                                <popUpButtonCell key="cell" type="push" title="High" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="97W-3h-SSc" id="LBG-Mq-hAQ">
                                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="message"/>
                                                     <menu key="menu" id="Mvm-5t-dK8">
                                                         <items>
-                                                            <menuItem title="Off" state="on" identifier="off" id="4gx-d0-WNb">
+                                                            <menuItem title="Off" identifier="off" id="4gx-d0-WNb">
                                                                 <attributedString key="userComments">
                                                                     <fragment content="Scrolling &gt; Smoothness &gt; Off Option"/>
                                                                 </attributedString>
@@ -1024,7 +1024,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                                     <fragment content="Scrolling &gt; Smoothness &gt; Regular Option"/>
                                                                 </attributedString>
                                                             </menuItem>
-                                                            <menuItem title="High" identifier="high" id="97W-3h-SSc">
+                                                            <menuItem title="High" state="on" identifier="high" id="97W-3h-SSc">
                                                                 <attributedString key="userComments">
                                                                     <fragment content="Scrolling &gt; Smoothness &gt; High Option"/>
                                                                 </attributedString>

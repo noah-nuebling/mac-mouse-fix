@@ -15,12 +15,12 @@ Help with problems and questions about Mac Mouse Fix.
 
 ## Questions
 
-Short answers to common questions [here](<../Readme.md#questions>).
+Quick answers to common questions [here](<../Readme.md#questions>).
 
 ## Guides
 
-Where possible, Mac Mouse Fix explains itself.
-But sometimes a guide helps!
+Where possible, Mac Mouse Fix tries to be self-explanatory. 
+But for some things a guide is helpful:
 
 - [Captured Scroll Wheels](<../Support/Guides/CapturedScrollWheels.md>)
 - [Captured Mouse Buttons](<../Support/Guides/CapturedButtonsMMF3.md>) (Mac Mouse Fix 3)

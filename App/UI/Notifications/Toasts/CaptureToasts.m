@@ -32,10 +32,6 @@ typedef enum {
     kMFCapturedInputTypeHorizontalAndVerticalScroll,
 } MFCapturedInputType;
 
-#define hintSeparatorSize 4.0
-#define useSmallHintStyling false /// Turning off the small hint styling, since that's not used anywhere else in MMF. We should probably build the small hints into ToastController.m and transition the entire app. However, the hints currently feel a bit too long without the small style. (I think hints being wider than the main body feels wrong) [Sep 19 2025] || Update: [Sep 20 2025] Implemented small hints across the app in ToastController.m!
-
-
 + (void)showScrollWheelCaptureToast:(BOOL)hasBeenCaptured {
     
     /// Create toast body
@@ -107,30 +103,21 @@ static NSAttributedString *createSimpleNotificationBody(BOOL didGetCaptured, MFC
     
     /// Get learn more string
     NSString *learnMoreStringRaw = getLocalizedString(inputType, @"link");
-    NSAttributedString *learnMoreString = learnMoreStringRaw ? [NSAttributedString attributedStringWithCoolMarkdown: learnMoreStringRaw fillOutBase: NO] : nil;
+    NSAttributedString *learnMoreString = learnMoreStringRaw ? [MarkdownParser attributedStringWithCoolMarkdown: learnMoreStringRaw fillOutBase: NO] : nil;
     
     /// TEST: Override learn more string size to be system default size despite being part of the 'subtitle' of the Toast
     if ((1)) learnMoreString = [learnMoreString attributedStringBySettingFontSize: NSFont.systemFontSize];
     
     /// Apply markdown to rawBody
-    NSAttributedString *body = [NSAttributedString attributedStringWithCoolMarkdown: rawBody fillOutBase: NO];
+    NSAttributedString *body = [MarkdownParser attributedStringWithCoolMarkdown: rawBody fillOutBase: NO];
     
     if (rawHint.length > 0) {
         
         /// Apply markdown to hint
-        NSAttributedString *hint = [NSAttributedString attributedStringWithCoolMarkdown: rawHint fillOutBase: NO];
+        NSAttributedString *hint = [MarkdownParser attributedStringWithCoolMarkdown: rawHint fillOutBase: NO];
         
-        if ((useSmallHintStyling)) {
-            /// Style hint
-            hint = [hint attributedStringByAddingHintStyle];
-            
-            /// Attach hint
-            NSAttributedString *separator = [@"\n\n".attributed attributedStringBySettingFontSize: hintSeparatorSize];
-            body = astringf(@"%@%@%@", body, separator, hint);
-        }
-        else /// Attach hint
-            body = astringf(@"%@\n%@", body, hint);
-
+        /// Attach hint
+        body = astringf(@"%@\n%@", body, hint);
     }
     
     /// Attach learnMore string
@@ -184,10 +171,10 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
     }
     
     /// Apply Markdown
-    NSAttributedString *capturedBody   = [NSAttributedString attributedStringWithCoolMarkdown: capturedBodyRaw    fillOutBase: NO];
-    NSAttributedString *uncapturedBody = [NSAttributedString attributedStringWithCoolMarkdown: uncapturedBodyRaw  fillOutBase: NO];
-    NSAttributedString *capturedHint   = [NSAttributedString attributedStringWithCoolMarkdown: capturedHintRaw    fillOutBase: NO];
-    NSAttributedString *uncapturedHint = [NSAttributedString attributedStringWithCoolMarkdown: uncapturedHintRaw  fillOutBase: NO];
+    NSAttributedString *capturedBody   = [MarkdownParser attributedStringWithCoolMarkdown: capturedBodyRaw    fillOutBase: NO];
+    NSAttributedString *uncapturedBody = [MarkdownParser attributedStringWithCoolMarkdown: uncapturedBodyRaw  fillOutBase: NO];
+    NSAttributedString *capturedHint   = [MarkdownParser attributedStringWithCoolMarkdown: capturedHintRaw    fillOutBase: NO];
+    NSAttributedString *uncapturedHint = [MarkdownParser attributedStringWithCoolMarkdown: uncapturedHintRaw  fillOutBase: NO];
     
     
     /// Capitalize the two bodys
@@ -203,34 +190,20 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
     if (capturedCount > 0) {
         body = astringf(@"%@%@", body, capturedBody);
         if (capturedHint.length > 0) {
-            if ((useSmallHintStyling)) {
-                capturedHint = [capturedHint attributedStringByAddingHintStyle];
-                NSAttributedString *hintSeparator = [@"\n\n".attributed attributedStringBySettingFontSize: hintSeparatorSize];
-                body = astringf(@"%@%@%@", body, hintSeparator, capturedHint);
-            } else {
-                body = astringf(@"%@\n%@", body, capturedHint);
-            }
+            body = astringf(@"%@\n%@", body, capturedHint);
         }
-        NSAttributedString *mainSeparator = @"\n\n".attributed;
-        body = astringf(@"%@%@", body, mainSeparator);
+        body = astringf(@"%@%@", body, [@"\n\n" attributed]);
     }
     if (uncapturedCount > 0) {
         body = astringf(@"%@%@", body, uncapturedBody);
         if (uncapturedHint.length > 0) {
-            if ((useSmallHintStyling)) {
-                uncapturedHint = [uncapturedHint attributedStringByAddingHintStyle];
-                NSAttributedString *hintSeparator = [@"\n\n".attributed attributedStringBySettingFontSize: hintSeparatorSize];
-                body = astringf(@"%@%@%@", body, hintSeparator, uncapturedHint);
-            } else {
-                body = astringf(@"%@\n%@", body, uncapturedHint);
-            }
+            body = astringf(@"%@\n%@", body, uncapturedHint);
         }
-        NSAttributedString *mainSeparator = @"\n\n".attributed;
-        body = astringf(@"%@%@", body, mainSeparator);
+        body = astringf(@"%@%@", body, [@"\n\n" attributed]);
     }
         
     /// Get learn more string
-    NSAttributedString *learnMoreString = [NSAttributedString attributedStringWithCoolMarkdown: getLocalizedString(kMFCapturedInputTypeButtons, @"link") fillOutBase: false];
+    NSAttributedString *learnMoreString = [MarkdownParser attributedStringWithCoolMarkdown: getLocalizedString(kMFCapturedInputTypeButtons, @"link") fillOutBase: false];
     
     /// TEST: Override learn more string size to be system default size despite being part of the 'subtitle' of the Toast
     if ((1)) learnMoreString = [learnMoreString attributedStringBySettingFontSize: NSFont.systemFontSize];
@@ -270,6 +243,13 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
     ///         German:
     ///         - Andere Apps können jetzt die Scroll-Eingabe handhaben.
     ///         - Scrollen funktioniert jetzt, als wäre Mac Mouse Fix ausgeschaltet.
+    /// - On other`hint` strings: [Oct 2025]
+    ///     `capture-toast.buttons.uncaptured.hint`
+    ///         We had the  string be `The button now works as if Mac Mouse Fix was disabled`, but imo having different hints for captured and uncaptured makes things more confusing. Why explain these two different aspects and why explain the one when capturing and the other when uncapturing? It should be clear that uncapturing is just the opposite of capturing and the extra hint is unnecessary.
+    ///     `capture-toast.scroll.captured.hint`
+    ///         Using "other apps can't see anymore" like we do for `capture-toast.buttons.captured.hint` doesn't make sense here. Not worth the effort figuring out something else. This will be rarely seen by people anyways -> Removing this hint. [Oct 2025]
+    ///     `capture-toast.scroll.uncaptured.hint`
+    ///         This hint was `Scrolling now works as if Mac Mouse Fix was disabled` (Just like `capture-toast.buttons.uncaptured.hint`). This makes more sense for the scroll capturing than button capturing, since the main reason people would want to use that is to 'disable' MMF for the scroll wheel so another app like MOS can take control and stuff (See `CapturedScrollWheels.md`) But to keep things symmetrical with the buttons toasts, we'll remove this hint for scrolling, too. (Also barely anyone will ever see the `capture-toast.scroll.[...]` strings, as mentioned above.)
     
     /// Define simple key -> localizedString map
     NSDictionary *map;
@@ -288,7 +268,7 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
                 "Also see: The CapturedButtonsMMF3 document which explains the concept in more detail."
             ),
             @"uncaptured.body": NSLocalizedString(@"capture-toast.buttons.uncaptured.body", @"."), /// Note to self: Added a period here, since setting to emptyString makes Xcode just keep the previous value in the .xcstrings file.
-            @"uncaptured.hint": NSLocalizedString(@"capture-toast.buttons.uncaptured.hint", @"."),
+            @"uncaptured.hint": (1) ? @"" : NSLocalizedString(@"capture-toast.buttons.uncaptured.hint", @"."),
             
             @"link": NSLocalizedString(@"capture-toast.buttons.link", @"Note: This links to the CapturedButtonsMMF3 document."),
         };
@@ -296,10 +276,10 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
         map = @{
             
             @"captured.body": NSLocalizedString(@"capture-toast.scroll.captured.body", @""),
-            @"captured.hint": NSLocalizedString(@"capture-toast.scroll.captured.hint", @""),
+            @"captured.hint": (1) ? @"" : NSLocalizedString(@"capture-toast.scroll.captured.hint", @""),
             
             @"uncaptured.body": NSLocalizedString(@"capture-toast.scroll.uncaptured.body", @""),
-            @"uncaptured.hint": NSLocalizedString(@"capture-toast.scroll.uncaptured.hint", @""),
+            @"uncaptured.hint": (1) ? @"" : NSLocalizedString(@"capture-toast.scroll.uncaptured.hint", @""),
             
             @"link": NSLocalizedString(@"capture-toast.scroll.link", @"Note: This links to the CapturedScrollWheels document"),
         };

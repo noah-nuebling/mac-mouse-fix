@@ -16,10 +16,11 @@
 
 #import <Foundation/Foundation.h>
 
-#pragma mark - Macros from mac-mouse-fix > SharedUtility.h
+#pragma mark - Helper macros
 
 /// Helper macros
 ///     To implement other macros
+
 #define UNPACK(args...) args                /// This allows us to include `,` inside an argument to a macro (but the argument then needs to be wrapped inside `()` by the caller of the macro )
 #define APPEND_ARGS(args...) , ## args      /// This is like UNPACK but it also automatically inserts a comma before the args. The ## deletes the comma, if `args` is empty. I have no idea why. But this lets us nicely append args to an existing list of arguments in a function call or function header.
 
@@ -33,31 +34,54 @@
 #define IFEMPTY(condition, body...)                    _IFEMPTY((body), (),     condition)
 #define IFEMPTY_NOT(condition, body...)                _IFEMPTY((),     (body), condition)
 
-#define FOR_EACH(macro, macroargs...) \
-    _FOR_EACH_SELECTOR(macroargs, _FOR_EACH_20, _FOR_EACH_19, _FOR_EACH_18, _FOR_EACH_17, _FOR_EACH_16, _FOR_EACH_15, _FOR_EACH_14, _FOR_EACH_13, _FOR_EACH_12, _FOR_EACH_11, _FOR_EACH_10, _FOR_EACH_9, _FOR_EACH_8, _FOR_EACH_7, _FOR_EACH_6, _FOR_EACH_5, _FOR_EACH_4, _FOR_EACH_3, _FOR_EACH_2, _FOR_EACH_1)(macro, macroargs)
+#define FOR_EACH(function, separator, functionargs...) \
+    _FOR_EACH_SELECTOR(functionargs, _FOR_EACH_20, _FOR_EACH_19, _FOR_EACH_18, _FOR_EACH_17, _FOR_EACH_16, _FOR_EACH_15, _FOR_EACH_14, _FOR_EACH_13, _FOR_EACH_12, _FOR_EACH_11, _FOR_EACH_10, _FOR_EACH_9, _FOR_EACH_8, _FOR_EACH_7, _FOR_EACH_6, _FOR_EACH_5, _FOR_EACH_4, _FOR_EACH_3, _FOR_EACH_2, _FOR_EACH_1)(function, separator, functionargs)
     
 #define _FOR_EACH_SELECTOR(arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14, arg15, arg16, arg17, arg18, arg19, arg20, macroname, ...) macroname
 
-#define _FOR_EACH_1(macro, macroarg)          macro(macroarg)
-#define _FOR_EACH_2(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_1(macro, rest)
-#define _FOR_EACH_3(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_2(macro, rest)
-#define _FOR_EACH_4(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_3(macro, rest)
-#define _FOR_EACH_5(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_4(macro, rest)
-#define _FOR_EACH_6(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_5(macro, rest)
-#define _FOR_EACH_7(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_6(macro, rest)
-#define _FOR_EACH_8(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_7(macro, rest)
-#define _FOR_EACH_9(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_8(macro, rest)
-#define _FOR_EACH_10(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_9(macro, rest)
-#define _FOR_EACH_11(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_10(macro, rest)
-#define _FOR_EACH_12(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_11(macro, rest)
-#define _FOR_EACH_13(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_12(macro, rest)
-#define _FOR_EACH_14(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_13(macro, rest)
-#define _FOR_EACH_15(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_14(macro, rest)
-#define _FOR_EACH_16(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_15(macro, rest)
-#define _FOR_EACH_17(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_16(macro, rest)
-#define _FOR_EACH_18(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_17(macro, rest)
-#define _FOR_EACH_19(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_18(macro, rest)
-#define _FOR_EACH_20(macro, macroarg, rest...) macro(macroarg) _FOR_EACH_19(macro, rest)
+#define _FOR_EACH_1(function, separator, functionarg)           function(functionarg)
+#define _FOR_EACH_2(function, separator, functionarg, rest...)  function(functionarg) UNPACK separator _FOR_EACH_1(function, separator, rest)
+#define _FOR_EACH_3(function, separator, functionarg, rest...)  function(functionarg) UNPACK separator _FOR_EACH_2(function, separator, rest)
+#define _FOR_EACH_4(function, separator, functionarg, rest...)  function(functionarg) UNPACK separator _FOR_EACH_3(function, separator, rest)
+#define _FOR_EACH_5(function, separator, functionarg, rest...)  function(functionarg) UNPACK separator _FOR_EACH_4(function, separator, rest)
+#define _FOR_EACH_6(function, separator, functionarg, rest...)  function(functionarg) UNPACK separator _FOR_EACH_5(function, separator, rest)
+#define _FOR_EACH_7(function, separator, functionarg, rest...)  function(functionarg) UNPACK separator _FOR_EACH_6(function, separator, rest)
+#define _FOR_EACH_8(function, separator, functionarg, rest...)  function(functionarg) UNPACK separator _FOR_EACH_7(function, separator, rest)
+#define _FOR_EACH_9(function, separator, functionarg, rest...)  function(functionarg) UNPACK separator _FOR_EACH_8(function, separator, rest)
+#define _FOR_EACH_10(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_9(function, separator, rest)
+#define _FOR_EACH_11(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_10(function, separator, rest)
+#define _FOR_EACH_12(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_11(function, separator, rest)
+#define _FOR_EACH_13(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_12(function, separator, rest)
+#define _FOR_EACH_14(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_13(function, separator, rest)
+#define _FOR_EACH_15(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_14(function, separator, rest)
+#define _FOR_EACH_16(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_15(function, separator, rest)
+#define _FOR_EACH_17(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_16(function, separator, rest)
+#define _FOR_EACH_18(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_17(function, separator, rest)
+#define _FOR_EACH_19(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_18(function, separator, rest)
+#define _FOR_EACH_20(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_19(function, separator, rest)
+
+#pragma mark - Macros from mac-mouse-fix > SharedUtility.h
+
+/// `mferror` macro
+///     Shorthand for creating an NSError with a debug description (Uses `NSDebugDescriptionErrorKey`)
+///     Usage example:
+///         `mferror(NSCocoaErrorDomain, NSPropertyListReadCorruptError, @"Deserialized plist object from %@ is not a mutable dictionary. Is %@", url, [result class]);`
+
+#define mferror(domain_, code_, formatAndArgs_...) \
+    [NSError errorWithDomain: (domain_) code: (code_) userInfo: @{ NSDebugDescriptionErrorKey: stringf(@"" formatAndArgs_) }]
+
+/// `mfabort` macro
+///     Like abort() but with the goal of writing a specific message into the crash report
+///     (Writing the message into the crash-report doesn't work yet as of [Aug 2025])
+///     Note on old investigation: [Aug 2025]
+///         IIRC we did a longer investigation into writing custom messages into crash reports. I don't remember where. Maybe some side-repo? I remember finding some global c variable but it was ignored unless it was written to from the crash reporter module or something. I also remember discovering some elaborate private API (CFType-based I think), but not pursuing it further.
+///     TODO: Move this into Logging.h when merging this code from master into feature-strings-catalog
+
+#define mfabort(format, args...) ({ \
+    DDLogError(@"mfabort failure: " format, ## args); \
+    [DDLog flushLog];               /** [Aug 2025] Without this, nothing would be logged, due to async logging of CocoaLumberjack and and the abort right after. But this should make it work (I think – haven't tested any of this.) Claude 4.0 also tells me to sleep for 10ms after flushing, but I don't trust it.*/\
+    abort();                        \
+})
 
 /// weakify/strongify macros
 ///     These are used to prevent retain cycles when using objc blocks.
@@ -66,8 +90,8 @@
 ///         - I thought we had that in the MMF project? But I can't find it. Might as well do our own simplified implementation.
 ///         - ... I didn't actually end up using this [Sep 2025]
 
-#define weakify(varnames...)   FOR_EACH(_weakify, varnames)
-#define strongify(varnames...) FOR_EACH(_strongify, varnames)
+#define weakify(varnames...)   FOR_EACH(_weakify,   (), varnames)
+#define strongify(varnames...) FOR_EACH(_strongify, (), varnames)
 
 #define _weakify(varname) \
     __weak __auto_type _weakified_##varname = varname;
@@ -79,20 +103,34 @@
 ///  Naming:
 ///      vardesc -> (var)iable (desc)ription
 ///      vardescl -> (var)iable (desc)ription with (l)inebreaks
-///  For a given set of expressions, captures their source text and corresponding value and inserts them into the output string in a key-value style. All values have to be objects.
+///  For a given set of expressions, captures their source text and corresponding value and inserts them into the output string in a key-value style.
 ///  This is similar to NSDictionaryOfVariableBindings() – But this is better-suited for debug-printing because: Dictionaries don't preserve order. Dictionaries can't contain nil. Using NSDictionaryOfVariableBindings requires importing NSLayoutConstraint.h
+///  Handling of primitives: This uses `mfbox` with `FOR_EACH` to be able to accept primitive values as well as objects. Otherwise caller could still easily @(box) primitives. (And we could remove the `@()` before printing if it bothers us) Not sure this is worth the complexity. I'm kinda just doing this for fun (LIke most of the macro stuff). [Oct 2025]
+///  Performance: It's fine. See `vardesc_benchmarks.m`
 ///  Example usage:
-///      ```
-///      NSLog(@"Local variables %@", vardesc(@(some_int), some_object)); // Prints: `Local variables: { @(some_int) = 79 | some_object = Turns out I'm a string! }`
-///      ```
+///      `NSLog(@"Local variables %@", vardesc(some_int, some_object)); // Prints: "Local variables: { some_int = 79 | some_object = Turns out I'm a string! }"`
 #define vardesc(vars...)  _vardesc(false, @#vars, vars)         /** Need to stringify `vars` here not inside `_vardesc`, otherwise sourcetext of passed-in macros will be expanded. Not sure why [Jul 2025] */
 #define vardescl(vars...) _vardesc(true,  @#vars, vars)
 
 #define _vardesc(linebreaks, keys, vars...) ({                  \
-    id _values[] = { vars };                                    /** Using a C array instead of NSArray to be able to capture nil. NSDictionaryOfVariableBindings uses a variadic function. */\
+    id _values[] = { FOR_EACH(mfbox, (,), vars) };                                    /** Using a C array instead of NSArray to be able to capture nil. NSDictionaryOfVariableBindings uses a variadic function. */\
     __vardesc(keys, _values, arrcount(_values), (linebreaks));  \
 })
 NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullable __strong *_Nonnull values, size_t count, bool linebreaks);
+
+/// `mfbox` macro
+/// Alternative to objc @(boxed) expressions.
+///     Advantage: You can pass in a pointer to anything – including an object – and it 'normalizes' everything to an object – this is useful for our `vardesc` macro.
+///     Disadvantage: @(boxed) expressions are more convenient.
+///     Note: I think I implemented this before in some side-repo [Oct 2025]
+
+#define mfbox(thing) ({                                     \
+    nowarn_push(-Wauto-var-id)                              \
+    __auto_type thing_ = (thing);                           \
+    nowarn_pop()                                            \
+    _mfbox((void *)&thing_, @encode(typeof(thing_)));       \
+})
+id __nullable _mfbox(const void *__nonnull thing, const char *__nonnull objc_type); /// Not sure this can actually return nil [Oct 2025]
 
 /// `nowarn_push()` and `nowarn_pop()` macros:
 ///     Temporarily disable clang warnings
@@ -199,12 +237,14 @@ NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullab
 #define _fcase_4(x, rest...)    case x: _fcase_3(rest)
 #define _fcase_5(x, rest...)    case x: _fcase_4(rest)
 #define _fcase_6(x, rest...)    case x: _fcase_5(rest)
-#define _fcase_7(x, rest...)    case x: _fcase_6(rest) /** 7 should be more than enough */
+#define _fcase_7(x, rest...)    case x: _fcase_6(rest)
+#define _fcase_8(x, rest...)    case x: _fcase_7(rest)
+#define _fcase_9(x, rest...)    case x: _fcase_8(rest)
 
-#define _fcase_selector(_dummy_, arg1, arg2, arg3, arg4, arg5, arg6, arg7, macroname, ...) macroname
+#define _fcase_selector(_dummy_, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, macroname, ...) macroname
 
 #define fcase(values...) \
-    _fcase_selector(_dummy_, ## values, _fcase_7, _fcase_6, _fcase_5, _fcase_4, _fcase_3, _fcase_2, _fcase_1, _fcase_0)(values) /** Trick: `_dummy_` arg is necessary because ## only deletes commas (,) to its left (I think). */
+    _fcase_selector(_dummy_, ## values, _fcase_9, _fcase_8, _fcase_7, _fcase_6, _fcase_5, _fcase_4, _fcase_3, _fcase_2, _fcase_1, _fcase_0)(values) /** Trick: `_dummy_` arg is necessary because ## only deletes commas (,) to its left (I think). */
 
 /// bcase – (b)reaking variant
 
@@ -594,8 +634,10 @@ NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullab
 #define safeindex(list, count, i, fallback) /*(typeof((list)[0]))*/ ({          \
     __auto_type __i = (i);                                                      \
     __auto_type __cnt = (count);                                                \
-    nowarn_push(-Wnullable-to-nonnull-conversion)                              /** -Wnullable-to-nonnull-conversion triggers here when the fallback is NULL (nonsensically, I think). Guess these quirks are why it's not enabled by default. See `Xcode Nullability Settings.md` */ \
+    nowarn_push(-Wsign-compare)                                                 /** Addressing issues by checking that both i and count are > 0 before comparing them [Oct 2025] */\
+    nowarn_push(-Wnullable-to-nonnull-conversion)                               /** -Wnullable-to-nonnull-conversion triggers here when the fallback is NULL (nonsensically, I think). Guess these quirks are why it's not enabled by default. See `Xcode Nullability Settings.md` */    \
     ((0 <= __i) && (0 < __cnt) && (__i < __cnt)) ? (list)[__i] : (fallback);    /** We're making sure `count` and `i` are both positive before comparing them. Otherwise we might have subtle issues because `(int)-1 < (unsigned int)1` is false in C.*/\
+    nowarn_pop()                                                                \
     nowarn_pop()                                                                \
 })
 

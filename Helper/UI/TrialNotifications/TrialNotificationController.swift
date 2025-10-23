@@ -145,7 +145,7 @@ class TrialNotificationController: NSWindowController {
             /// Set the bodyString
             let bodyBase = NSLocalizedString("trial-notif.body", comment: "")
             let bodyFormatted = String(format: bodyBase, trialState.daysOfUseUI, licenseConfig.quickPayLink)
-            let bodyMarkdown = NSAttributedString(coolMarkdown: bodyFormatted)!
+            let bodyMarkdown = MarkdownParser.attributedString(withCoolMarkdown: bodyFormatted, fillOutBase: true)!
             body.textStorage?.setAttributedString(bodyMarkdown)
             
             /// Layout contentView
@@ -304,7 +304,10 @@ class TrialNotificationController: NSWindowController {
         let newFrame = NSRect(x: notifOrigin.x, y: notifOrigin.y, width: window.frame.width, height: window.frame.height)
         
         /// Get animStartFrame
-        let animStartFrame = NSRect(x: visibleFrame.maxX, y: newFrame.origin.y, width: newFrame.width, height: newFrame.height)
+        let animStartFrame = NSRect(x: visibleFrame.maxX, /// [Sep 2025, Tahoe RC] The window will always appear *on screen* (little bit farther left than what we specify) But I think setFrameWithCoolAnimation() then moves it to the correct starting position. Either way it's not usually noticable. Except if setFrameWithCoolAnimation() fails. 
+                                    y: newFrame.origin.y,
+                                    width: newFrame.width,
+                                    height: newFrame.height)
         
         /// Place window at animStart
         window.setFrame(animStartFrame, display: false, animate: false)
@@ -351,15 +354,15 @@ class TrialNotificationController: NSWindowController {
     }
     
     /// Helper stuff
-    
+    var animator: DynamicSystemAnimator? = nil
     fileprivate func setFrameWithCoolAnimation(_ animStartFrame: NSRect, _ newFrame: NSRect, _ window: NSWindow, onComplete: (() -> ())? = nil) {
         
         /// Animate window in
         ///     Note: We're doing the same thing in ResizingTabWindow. -> Think about abstracting this away
         
         let animation = CASpringAnimation(speed: 3.5, damping: 1.0)
-        let animator = DynamicSystemAnimator(fromAnimation: animation, stopTolerance: 0.1, optimizedWorkType: kMFDisplayLinkWorkTypeGraphicsRendering)
-        animator.start(distance: 1.0, callback: { value in
+        animator = DynamicSystemAnimator(fromAnimation: animation, stopTolerance: 0.1, optimizedWorkType: kMFDisplayLinkWorkTypeGraphicsRendering)
+        animator!.start(distance: 1.0, callback: { value in
             var f = SharedUtilitySwift.interpolateRects(value, animStartFrame, newFrame)
             f = NSIntegralRectWithOptions(f, .alignAllEdgesNearest)
             DispatchQueue.main.sync {

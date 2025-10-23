@@ -2122,7 +2122,7 @@
       }
     },
     "capture-toast.button-name.numbered" : {
-      "comment" : "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back here. See trigger.substring.button-modifier.2 for tips on how to capitalize these strings.",
+      "comment" : "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back here. See trigger.substring.button-modifier.2 for tips on how to capitalize those strings.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2577,13 +2577,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "Andere Apps können sie nicht mehr sehen"
+                      "value" : "Andere Apps können die Taste nicht mehr sehen"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "Andere Apps können sie nicht mehr sehen"
+                      "value" : "Andere Apps können diese Tasten nicht mehr sehen"
                     }
                   }
                 }
@@ -3131,14 +3131,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "Die Taste funktioniert jetzt, als wäre Mac Mouse Fix ausgeschaltet"
+                      "state" : "new",
+                      "value" : ""
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "Die Tasten funktionieren jetzt, als wäre Mac Mouse Fix ausgeschaltet"
+                      "state" : "new",
+                      "value" : ""
                     }
                   }
                 }
@@ -3158,14 +3158,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "The button now works as if Mac Mouse Fix was disabled"
+                      "state" : "new",
+                      "value" : ""
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "translated",
-                      "value" : "These buttons now work as if Mac Mouse Fix was disabled"
+                      "state" : "new",
+                      "value" : ""
                     }
                   }
                 }
@@ -3186,13 +3186,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "new",
-                      "value" : "The button now works as if Mac Mouse Fix was disabled."
+                      "value" : ""
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "new",
-                      "value" : "These buttons now work as if Mac Mouse Fix was disabled."
+                      "value" : ""
                     }
                   }
                 }
@@ -3359,51 +3359,22 @@
             }
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "capture-toast.scroll.captured.body" : {
       "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Scrollen** wird jetzt von Mac Mouse Fix abgefangen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Scrolling** is now captured by Mac Mouse Fix."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.body"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.body"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.body"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.body"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.body"
+            "value" : "**Scrolling** is now captured by Mac Mouse Fix"
           }
         }
       }
@@ -3413,44 +3384,8 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : ""
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ""
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.hint"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.hint"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.hint"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.hint"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.captured.hint"
           }
         }
       },
@@ -3535,85 +3470,11 @@
             "state" : "translated",
             "value" : "**Scrolling** is no longer captured by Mac Mouse Fix"
           }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.body"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.body"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.body"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.body"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.body"
-          }
         }
       }
     },
     "capture-toast.scroll.uncaptured.hint" : {
-      "comment" : "",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scrollen funktioniert jetzt, als wäre Mac Mouse Fix ausgeschaltet"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scrolling now works as if Mac Mouse Fix was disabled"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.hint"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.hint"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.hint"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.hint"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "capture-toast.scroll.uncaptured.hint"
-          }
-        }
-      }
+      "shouldTranslate" : false
     },
     "drag-effect.dock-swipe" : {
       "comment" : "",
@@ -5956,18 +5817,18 @@
       }
     },
     "enable-timeout-toast" : {
-      "comment" : "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which prevents the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\".",
+      "comment" : "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which looks like a normal space, but it prevents linebreaks. We're using this to prevent the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\".",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wenn du **Probleme** hast, die App **einzuschalten**, klicke&nbsp;[hier](%@)."
+            "value" : "Wenn du **Probleme** hast, die App **einzuschalten**, klicke&nbsp;[hier](%@)"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "If you have **problems enabling** the app, click&nbsp;[here](%@)."
+            "value" : "If you have **problems enabling** the app, click&nbsp;[here](%@)"
           }
         },
         "fr" : {
@@ -6210,7 +6071,7 @@
       }
     },
     "is-disabled-toast" : {
-      "comment" : "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings here.",
+      "comment" : "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6730,7 +6591,7 @@
       }
     },
     "license-toast.activation-overload" : {
-      "comment" : "Note: \"%2$d\", \"%3$d\", and \"%1$@\" are so-called \"C Format Specifers\". They will be replaced by numbers or text when the program runs. Make sure to type the format specifiers exactly like in English so that the text-replacement-code works correctly.",
+      "comment" : "Note: \"%2$d\", \"%3$d\", and \"%1$@\" are so-called \"C Format Specifers\". They will be replaced by numbers or text when the program runs. Make sure to type the format specifiers exactly like in the English version so that the text-replacement-code works correctly.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6800,24 +6661,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diese Lizenz ist **bereits aktiviert**!"
+            "value" : "Deine App **ist bereits** mit diesem Schlüssel **lizenziert**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This license is **already activated**!"
+            "value" : "Your app is **already licensed** with this key"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Cette licence est **déjà activée** !"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "이 라이센스는 **이미 활성화**되어있습니다!"
           }
         },
@@ -6829,31 +6690,31 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Bu lisans **zaten etkin**!"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Bản quyền này đã được **kích hoạt từ trước**!"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "此许可证**已激活**!"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "此許可證**已啟用**!"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "此許可證**已啟用**!"
           }
         }
@@ -6929,14 +6790,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Diese Lizenz **konnte nicht aktiviert werden**, aber Mac Mouse Fix ist momentan **in deinem Land kostenlos**!"
+            "state" : "needs_review",
+            "value" : "Diese Lizenz **konnte nicht aktiviert werden**, aber Mac Mouse Fix ist momentan **in deinem Land kostenlos**."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This license could not be activated** but Mac Mouse Fix is currently **free in your country**!"
+            "value" : "This license **could not be activated** but Mac Mouse Fix is currently **free in your country**."
           }
         },
         "fr" : {
@@ -6995,24 +6856,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Beim Lizenzserver ist ein Fehler aufgetreten**\n\nEr sagt:\n\n%@"
+            "value" : "Ein **Fehler mit dem Lizenzserver** ist aufgetreten\n\nEs heißt:\n\n%@"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**An error with the licensing server occured**\n\nIt says:\n\n%@"
+            "value" : "An **error with the licensing server** occurred\n\nIt says:\n\n%@"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Une erreur avec le serveur de licences s'est produite**\n\nElle dit :\n\n%@"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**라이센스 서버 에러가 발생하였습니다.**\n\n에러 정보:\n\n%@"
           }
         },
@@ -7024,31 +6885,31 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Lisans sunucusunda bir hata oluştu**\n\nŞöyle diyor:\n\n%@"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Có lỗi xảy ra với máy chủ quản lý bản quyền**\n\nNó phản hồi rằng:\n\n%@"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**许可证服务器发生错误**\n\n服务器回应：\n\n%@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**許可證伺服器發生錯誤**\n\n伺服器回應：\n\n%@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**許可證伺服器發生錯誤**\n\n伺服器回應：\n\n%@"
           }
         }
@@ -7060,24 +6921,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Es besteht keine Verbindung zum Internet**\n\nProbiere nochmal, deine Lizenz zu aktivieren, wenn dein Computer online ist."
+            "value" : "Es gibt ein **Problem mit der Internetverbindung**\n\nStelle sicher, dass dein Computer online ist und keine Firewalls Mac Mouse Fix daran hindern, sich mit dem Internet zu verbinden.\n\nWenn das das Problem nicht löst, kontaktiere mich [hier](%@)."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**There is no connection to the internet**\n\nTry activating your license again when your computer is online."
+            "value" : "There is a **problem with the internet connection**\n\nMake sure your computer is online and no firewalls are blocking Mac Mouse Fix from connecting to the internet.\n\nIf this doesn't solve the problem, contact me [here](%@)."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Il n'y a pas de connexion à Internet**\n\nRéessayer d'activer votre licence quand votre ordinateur sera à nouveau en ligne."
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**인터넷 연결이 없습니다.**\n\n컴퓨터를 인터넷에 연결한 후에 다시 시도하십시오."
           }
         },
@@ -7089,31 +6950,31 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**İnternet bağlantısı yok**\n\nBilgisayarınız çevrimiçi olduğunda lisansınızı tekrar etkinleştirmeyi deneyin."
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Hiện không có kết nối internet**\n\nThử kích hoạt bản quyền của bạn khi kết nối khả dụng."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**没有接入互联网**\n\n当您的电脑接入互联网时再次尝试激活许可证。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**沒有Internet連線**\n\n當您的電腦連線時再次嘗試啟用許可證。"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**沒有互聯網連線**\n\n當你的電腦連線時再次嘗試啟用許可證。"
           }
         }
@@ -7124,13 +6985,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Es gab ein Problem beim Lizenzserver**\n\nBitte versuche es später noch einmal.\n\nWenn das Problem weiterhin besteht, kontaktiere mich bitte [hier](%@)."
+            "value" : "Es gibt ein **Problem beim Lizenzserver**\n\nBitte versuche es später noch einmal.\n\nWenn das Problem weiterhin besteht, kontaktiere mich [hier](%@)."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**There was an issue with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, please reach out to me [here](%@)."
+            "value" : "There is a **problem with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, contact me [here](%@)."
           }
         }
       }
@@ -7141,24 +7002,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Ein unbekannter Fehler ist aufgetreten:**\n\n%@"
+            "value" : "Ein **unbekannter Fehler** ist aufgetreten:\n\n%@"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**An unknown error occurred:**\n\n%@"
+            "value" : "An **unknown error** occurred:\n\n%@"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Une erreur inconnue s'est produite :**\n\n%@"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**알 수 없는 에러가 발생하였습니다:**\n\n%@"
           }
         },
@@ -7170,31 +7031,31 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Bilinmeyen bir hata oluştu:**\n\n%@"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Một lỗi không rõ đã xảy ra:**\n\n%@"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**发生了未知错误：**\n\n%@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**發生了未知錯誤：**\n\n%@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**發生了未知錯誤：**\n\n%@"
           }
         }
@@ -7206,61 +7067,61 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**'%@'** ist kein gültiger Lizenzschlüssel\n\nStelle sicher, dass du deinen Schlüssel genau so eingibst, wie du ihn erhalten hast, ohne führende oder nachfolgende Leerzeichen, Zeilenumbrüche oder andere extra Zeichen."
+            "value" : "'**%@**' ist kein gültiger Lizenzschlüssel\n\nStelle sicher, dass du deinen Mac Mouse Fix Schlüssel genau so eingibst, wie du ihn erhalten hast."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**'%@'** is not a valid license key\n\nMake sure you enter your key exactly as you received it, without leading or trailing spaces, line breaks, or other extra characters."
+            "value" : "'**%@**' is not a valid license key\n\nMake sure you enter your Mac Mouse Fix key exactly as you received it."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**« %@ »** n'est pas une clé de licence connue\n\nVeuillez essayer une clé différente"
+            "value" : "« **%@** » n'est pas une clé de licence connue\n\nVeuillez essayer une clé différente"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**'%@'** 키는 올바르지 않은 라이센스 키입니다.\n\n다시 입력하십시오."
+            "value" : "'**%@**' 키는 올바르지 않은 라이센스 키입니다.\n\n다시 입력하십시오."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**'%@'** não é uma chave de licença válida\n\nTente uma chave diferente"
+            "value" : "'**%@**' não é uma chave de licença válida\n\nTente uma chave diferente"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**'%@'** bilinen bir lisans anahtarı değil\n\nLütfen farklı bir anahtar deneyin"
+            "value" : "'**%@**' bilinen bir lisans anahtarı değil\n\nLütfen farklı bir anahtar deneyin"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Không thể xác định **'%@'** là một khóa kích hoạt\n\nVui lòng thử một khóa khác"
+            "value" : "Không thể xác định '**%@**' là một khóa kích hoạt\n\nVui lòng thử một khóa khác"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**“%@”**并不是已知的许可证。\n请换一个许可证再试。"
+            "value" : "“**%@**”并不是已知的许可证。\n请换一个许可证再试。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**「%@」**並不是已知的許可證。\n請換一個許可證再試。"
+            "value" : "「**%@**」並不是已知的許可證。\n請換一個許可證再試。"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**「%@」**並不是已知的許可證。\n請換一個許可證再試。"
+            "value" : "「**%@**」並不是已知的許可證。\n請換一個許可證再試。"
           }
         }
       }
@@ -7466,24 +7327,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ich lese und schätze alle E-Mails, auch wenn ich nicht auf alle antworten kann"
+            "value" : "Ich kann nur selten antworten, aber ich lese alle Nachrichten und das Feedback hilft mir dabei, Mac Mouse Fix zu verbessern. Danke für dein Feedback!"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "I read and appreciate all emails, even though I can't respond to all"
+            "value" : "I can only rarely respond, but I read all messages and the feedback helps me improve Mac Mouse Fix. Thank you for your feedback!"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Je lis et j'apprécie tous vos e-mails, même si je ne peux pas répondre à tout le monde"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "전부 답장할 수는 없지만, 항상 모든 이메일을 읽어보고 있습니다."
           }
         },
@@ -7495,31 +7356,31 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Hepsine cevap verebilmesem de tüm e-postaları okuyorum ve değer veriyorum"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Tôi sẽ đọc và trân trọng tất cả các email gửi về, mặc dù có thể tôi sẽ không phản hồi tất cả"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "我无法回复所有的邮件，但我会阅读并感谢所有的反馈"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "我無法回覆所有的郵件，但我會閱讀並感謝所有的使用者意見"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "我無法回覆所有的郵件，但我會閱讀並感謝所有的用戶意見"
           }
         }
@@ -8437,7 +8298,7 @@
       }
     },
     "restore-default-buttons-popover.body" : {
-      "comment" : "Note: The linebreak is so the popover doesn't become too wide.",
+      "comment" : "Note: There's a linebreak in English so the popover doesn't become too wide and to aid with readability.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8502,18 +8363,18 @@
       }
     },
     "revive-toast" : {
-      "comment" : "Note: \"%1$@\" will be a list of mouse features like \"Scrolling\" or \"Buttons\" for which Mac Mouse Fix was enabled. \"%2$@\" will be the menubar icon\n\nNote 2: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.",
+      "comment" : "Note: \"%1$@\" will be a list of mouse features like \"Scrolling\" or \"Buttons\" for which Mac Mouse Fix was enabled. \"%2$@\" will be the menu bar icon.\n\nNote 2: \"&nbsp;\" Creates a \"non-breaking space\" character which prevents the menu bar icon from ending up on a separate line from the text \"Menu Bar\". \n\nNote 3: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mac Mouse Fix **aktiviert** für %1$@\nEs war in der Menüleiste %2$@ deaktiviert worden"
+            "state" : "needs_review",
+            "value" : "Mac Mouse Fix **aktiviert** für %1$@\nEs war in der Menüleiste&nbsp;%2$@ deaktiviert worden"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Enabled** Mac Mouse Fix for %1$@\nIt had been disabled from the Menu Bar %2$@"
+            "value" : "**Enabled** Mac Mouse Fix for %1$@\nIt had been disabled from the Menu&nbsp;Bar&nbsp;%2$@"
           }
         },
         "fr" : {
@@ -9867,7 +9728,7 @@
       }
     },
     "thanks.01" : {
-      "comment" : "",
+      "comment" : "Note: The weird thank-you messages are rare. Feel free to change them if you'd like to leave an easter egg. You can also leave them blank, just make sure to fill out thanks.01 - thanks.03",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -9937,24 +9798,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🌟 Dankeschön, dass du Mac Mouse Fix gekauft hast!"
+            "value" : "🙌 Danke, dass du Mac Mouse Fix gekauft hast!"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🌟 Thanks for purchasing Mac Mouse Fix!"
+            "value" : "🙌 Thank you for buying Mac Mouse Fix!"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🌟 Merci d'avoir acheté Mac Mouse Fix !"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🌟 Mac Mouse Fix를 결제해주셔서 감사합니다!"
           }
         },
@@ -9972,25 +9833,25 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🌟 Cảm ơn bạn đã mua Mac Mouse Fix!"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🌟感谢购买Mac Mouse Fix！"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🌟感謝購買Mac Mouse Fix！"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🌟感謝購買Mac Mouse Fix！"
           }
         }
@@ -10067,24 +9928,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🙌 Danke, dass du Mac Mouse Fix gekauft hast!"
+            "value" : "🌟 Dankeschön, dass du Mac Mouse Fix gekauft hast!"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🙌 Thank you for buying Mac Mouse Fix!"
+            "value" : "🌟 Thanks for purchasing Mac Mouse Fix!"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🙌 Merci d'avoir acheté Mac Mouse Fix !"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🙌 Mac Mouse Fix를 구입해주셔서 감사합니다!"
           }
         },
@@ -10102,25 +9963,25 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🙌 Cảm ơn bạn đã mua Mac Mouse Fix!"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🙌感谢您购买Mac Mouse Fix！"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🙌感謝您購買Mac Mouse Fix！"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🙌感謝你購買Mac Mouse Fix！"
           }
         }
@@ -10452,7 +10313,7 @@
       }
     },
     "thanks.10" : {
-      "comment" : "Note: The weird ones are rare. Feel free to change them if you'd like to leave a little easter egg.",
+      "comment" : ".",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11817,7 +11678,7 @@
       }
     },
     "trigger.substring.button-modifier.2" : {
-      "comment" : "Note: All the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using \"Title Case\", but this isn't common in other languages. For example, in German, the substring \"Double Click %@ +\" should be localized as \"doppelklicke %@ +\" and \"Click and Drag %@\" as \"klicke %@ und ziehe\". Notice that not even the first word is capitalized in German. That's because these substrings are joined programmatically to create a combined string. The substrings start with a lowercase letter, to avoid random capitalization in the middle of the combined string. The first word of the combined string will be capitalized programmatically. Therefore, unless your language has special capitalization rules (such as \"Title Case\" in English, or capitalization of nouns in German), these substrings should probably be all-lowercase, just like the German examples above. (Or, if you use a non-standard way to capitalize I think that's also ok, as long as it's reasonably consistent) I know this is a bit complicated, but I hope it's still understandable! If anything's unclear, please let me know and I'll try to explain it and make things easier in the future. Thank you.",
+      "comment" : "Note: All the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using \"Title Case\", but this isn't common in other languages. For example, in German, the substring \"Click and Drag %@\" is localized as \"klicke %@ und ziehe\". Notice that not even the first word is capitalized. That's because these substrings are joined programmatically to create a combined string. So only capitalize words if there's a specific reason (such as \"Title Case\" in English, or capitalization of nouns in German). If you wanna deviate from this that's also fine, just try to stay consistent.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -12407,13 +12268,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ klicken und ziehen"
+            "value" : "%@ klicken und *ziehen*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Click and Drag %@"
+            "value" : "Click and *Drag* %@"
           }
         },
         "fr" : {
@@ -12424,7 +12285,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "클릭 및 %@ 드래그"
           }
         },
@@ -12448,19 +12309,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "点按并拖移%@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按一下並拖移%@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按一下並拖移%@"
           }
         }
@@ -12472,13 +12333,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ doppelklicken und ziehen"
+            "value" : "%@ doppelklicken und *ziehen*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Double Click and Drag %@"
+            "value" : "Double Click and *Drag* %@"
           }
         },
         "fr" : {
@@ -12489,7 +12350,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "이중 클릭 및 %@ 드래그"
           }
         },
@@ -12513,19 +12374,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "连按并拖移%@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按兩下並拖移%@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按兩下並拖移%@"
           }
         }
@@ -12537,13 +12398,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ dreifach klicken und ziehen"
+            "value" : "%@ dreifach klicken und *ziehen*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Triple Click and Drag %@"
+            "value" : "Triple Click and *Drag* %@"
           }
         },
         "fr" : {
@@ -12554,7 +12415,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "삼중 클릭 및 %@ 드래그"
           }
         },
@@ -12578,19 +12439,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "连按三次并拖移%@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按三下並拖移%@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按三下並拖移%@"
           }
         }
@@ -12602,13 +12463,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "und ziehen"
+            "value" : "und *ziehen*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "and Drag"
+            "value" : "and *Drag*"
           }
         },
         "fr" : {
@@ -12619,7 +12480,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "및 드래그"
           }
         },
@@ -12643,19 +12504,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "并拖移"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "並拖移"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "並拖移"
           }
         }
@@ -12862,13 +12723,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ klicken und scrollen"
+            "value" : "%@ klicken und *scrollen*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Click and Scroll %@"
+            "value" : "Click and *Scroll* %@"
           }
         },
         "fr" : {
@@ -12879,7 +12740,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "클릭 및 %@ 스크롤"
           }
         },
@@ -12903,19 +12764,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "点按并滚动%@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按下並捲動%@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按下並捲動%@"
           }
         }
@@ -12927,13 +12788,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ doppelklicken und scrollen"
+            "value" : "%@ doppelklicken und *scrollen*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Double Click and Scroll %@"
+            "value" : "Double Click and *Scroll* %@"
           }
         },
         "fr" : {
@@ -12944,7 +12805,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "이중 클릭 및 %@ 스크롤"
           }
         },
@@ -12968,19 +12829,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "连按并滚动%@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按兩下並捲動%@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按兩下並捲動%@"
           }
         }
@@ -12992,13 +12853,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ dreifach klicken und scrollen"
+            "value" : "%@ dreifach klicken und *scrollen*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Triple Click and Scroll %@"
+            "value" : "Triple Click and *Scroll* %@"
           }
         },
         "fr" : {
@@ -13009,7 +12870,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "삼중 클릭 및 %@ 스크롤"
           }
         },
@@ -13033,19 +12894,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "连按三次并滚动%@"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按三下並捲動%@"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按三下並捲動%@"
           }
         }
@@ -13057,13 +12918,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "und scrollen"
+            "value" : "und *scrollen*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "and Scroll"
+            "value" : "and *Scroll*"
           }
         },
         "fr" : {
@@ -13074,7 +12935,7 @@
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "및 스크롤"
           }
         },
@@ -13098,19 +12959,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "并滚动"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "並捲動"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "並捲動"
           }
         }
@@ -13372,124 +13233,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "輔助按鈕"
-          }
-        }
-      }
-    },
-    "trigger.z.drag-particle" : {
-      "comment" : "Note: This word will be emphasized in strings such as \"Double Click and Drag %@\".\nFor the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with\n\"trigger.substring.drag.[...]\".\n\nIf that's not possible in your language, let me know and I will improve the implementation. Thank you!",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ziehen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Drag"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "glissement"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "드래그"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "arraste"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "kéo"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "拖移"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "拖移"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "拖移"
-          }
-        }
-      }
-    },
-    "trigger.z.scroll-particle" : {
-      "comment" : "Note: This word will be emphasized in strings such as \"Click and Scroll %@\".\nFor the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in the strings whose keys begin with\n\"trigger.substring.scroll.[...]\"\n\n\nAlso see the comment next to \"trigger.z.drag-particle\".",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "scrollen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scroll"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "défilement"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "스크롤"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "role"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "cuộn"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "滚动"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "捲動"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "捲動"
           }
         }
       }

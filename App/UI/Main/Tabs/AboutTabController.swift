@@ -269,10 +269,10 @@ class AboutTabController: NSViewController {
                     assert(false)
                 }
                 
-                message = Randomizer.select(from: [
+                var thankYouMessages = [
                     
                     /// Common
-                    (NSLocalizedString("thanks.01", comment: ""), weight: 1),
+                    (NSLocalizedString("thanks.01", comment: "Note: The weird thank-you messages are rare. Feel free to change them if you'd like to leave an easter egg. You can also leave them blank, just make sure to fill out thanks.01 - thanks.03"), weight: 1),
                     (NSLocalizedString("thanks.02", comment: ""), weight: 1),
                     (NSLocalizedString("thanks.03", comment: ""), weight: 1),
                     (NSLocalizedString("thanks.04", comment: ""), weight: 1),
@@ -287,7 +287,7 @@ class AboutTabController: NSViewController {
                     (NSLocalizedString("thanks.09", comment: ""), weight: 0.05),
                     
                     /// Extremely rare
-                    (NSLocalizedString("thanks.10", comment: "Note: The weird ones are rare. Feel free to change them if you'd like to leave a little easter egg."), weight: 0.01),
+                    (NSLocalizedString("thanks.10", comment: "."), weight: 0.01),
                     (NSLocalizedString("thanks.11", comment: ""), weight: 0.01),
                     (NSLocalizedString("thanks.12", comment: ""), weight: 0.01),
                     (NSLocalizedString("thanks.13", comment: ""), weight: 0.01),
@@ -303,14 +303,20 @@ class AboutTabController: NSViewController {
                     (NSLocalizedString("thanks.23", comment: ""), weight: 0.01),
                     (NSLocalizedString("thanks.24", comment: ""), weight: 0.01),
                     (NSLocalizedString("thanks.25", comment: ""), weight: 0.01),
-                    
-                    /// Mom
-                    ("💖❤️❤️❤️ Für Beate :)", weight: 0.005),
-                ])
+                ]
+                thankYouMessages = thankYouMessages.filter { /// Allow localizers to leave the strings empty, just filter out the empty strings.
+                    $0.0.range(of: "thanks\\.[0-9][0-9]", options: .regularExpression) == nil && /// Strings left empy by localizers fall lback to their key. E.g. `thanks.17` || Can't use .hasPrefix due to invisible characters (See `NSString+Steganography.m`) [Oct 2025]
+                    $0.0.trimmingCharacters(in: .whitespacesAndNewlines) != ""
+                }
+                if (thankYouMessages.count > 0) {
+                    message = Randomizer.select(from: thankYouMessages)
+                } else {
+                    assert(false) /// If none of the thanks messages are available, it falls back to the "You shouldn't be seeing this" message [Oct 2025]
+                }
             }
             
             /// Parse markdown in message
-            let messageAttributed = NSAttributedString(coolMarkdown: message, fillOutBase: false)!
+            let messageAttributed = MarkdownParser.attributedString(withCoolMarkdown: message, fillOutBase: false)!
             
             /// Replace text
             assignAttributedStringKeepingBase(&trialSectionManager!.currentSection.textField!.attributedStringValue, messageAttributed)

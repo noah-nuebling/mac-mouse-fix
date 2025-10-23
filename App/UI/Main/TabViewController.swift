@@ -8,6 +8,27 @@
 /// Configuring transition animations and resizing when tabs change
 ///     Inspiration:  https://gist.github.com/mminer/caec00d2165362ff65e9f1f728cecae2
 
+/// [Aug 2025]
+///     We were trying to achieve the __NSWindowToolbarStylePreference__ layout
+///         - This layout is seen in settings all across macOS, e.g. Safari, Finder, etc.)
+///         - Method 1: In macOS 10.10, Apple introduced a way to achieve this using is using Storyboards, NSTabViewController, and 'child NSViewControllers' for each of the tabs.
+///             - This is what we're implementing here as of MMF 3.0.7
+///             - See this SO post for more: https://stackoverflow.com/a/41155700/10601702
+///         - Method 2: Simply use vanilla NSWindow, NSToolbar, NSToolbarItem, and NSTabView directly (without any controllers or storyboards managing them) and just configure them in a specific way to achieve the same result.
+///             - You have to write a tiny bit of glue code to keep the selected tab in-sync with the selected NSToolbarItem – But it's just just a tiny bit!
+///             - Pro: This seems wayy simpler than the NSTabViewController stuff! Especially since a large part of the implementation here seems to be hacking into that NSTabViewController abstraction since it doesn't do what we want (See `coolHideTab()`, `coolSelectTab()`)
+///             - Pro: This would also allow us to move away from the Storyboard – which feels unwieldly and which prevents us from incrementally replacing some of the views with pure objc code (instead of IB) – which would be easier to maintain and adapt to different macOS versions (See swiftui-test-tahoe-beta project)
+///                 - Update: [Sep 2025] You can actually easily define the views in code while still using a Storyboard for Navigation. See `swiftui-test-tahoe-beta`
+///             - Reference: You can see an example of `Method 2`this in the project `repro-tahoe-toolbar-button-hover-inconsistency` which I've uploaded to GitHub.
+///             - Strategy Discussion:
+///                 - When we update the MMF 3 UI:
+///                     - Maybe we should move to using a sidebar instead of a tab-bar (as is seen in System Settings and Xcode settings under macOS Tahoe). That seems more popular now. (Although I find tab bar nicer I think, especially since we only have a few tabs and like to resize the window with our nice animations. – but being close to the stock apps is also worth a lot imo)
+///                     - Maybe we should move to using Catalyst to make an iPad port easier later
+///                         - I heard Catalyst apps feel very similar to AppKit now under Tahoe – not 'out of place' anymore – I think I can feel that, too?
+///                             - Also with iPad getting a more 'desktop-like' experience, I feel like UIKit might get even better on macOS in the future, and there may not be a reason to use AppKit anymore.
+///                         - I don't wanna use SwiftUI since I feel like SwiftUI apps feel very slow and janky on macOS, plus I don't like Swift, plus  I heard SwiftUI is fiddly if you want customized behavior (which we often want). Also AppKit/UIKit is barely less expressive when you define a few little macros for the boilerplate (See swiftui-test-tahoe-beta project)
+///                         - Update: [Sep 2025] Changed my opinions on this. See `swiftui-test-tahoe-beta`.
+
 import Cocoa
 import CocoaLumberjackSwift
 
@@ -334,6 +355,18 @@ class TabViewController: NSTabViewController {
         /// Debug
         DDLogDebug("TBS tabview willAppear")
         
+        /// Initialize things
+        ///     [Sep 2025] Moved from viewDidAppear() to viewWillAppear() in MMF 3.0.8 to prevent occasional flashing of the window at the wrong size.
+        do {
+            /// Hide tabBar icons pre-Big Sur
+            ///  Because the scaling and resolution of the fallback images is terrible and I don't know how to fix. (Haven't spent too much time but I don't see an obvious way)
+            if #available(macOS 11.0, *) { } else {
+                self.window?.toolbar?.displayMode = .labelOnly
+            }
+            
+            /// Configure tabs
+            configureTabs()
+        }
     }
     
     override func viewDidAppear() {
@@ -341,21 +374,6 @@ class TabViewController: NSTabViewController {
         
         /// Debug
         DDLogDebug("TBS tabview didAppear")
-        
-        /// Hide tabBar icons pre-Big Sur
-        ///  Because the scaling and resolution of the fallback images is terrible and I don't know how to fix. (Haven't spent too much time but I don't see an obvious way)
-        
-        if #available(macOS 11.0, *) { } else {
-            self.window?.toolbar?.displayMode = .labelOnly
-        }
-        
-        /// Configure tabs
-        ///     This sometimes doesn't work
-        
-//        if let tabID = tabViewItem?.identifier as! NSString?, tabID == "initial" {
-            configureTabs()
-//        }
-        
     }
     
     override func viewWillDisappear() {

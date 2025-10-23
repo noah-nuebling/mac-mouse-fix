@@ -4,7 +4,7 @@
 	<summary>󠁧󠁿{current_language}</summary>
 	  
 {language_list}
-	[Help translate Mac Mouse Fix to different languages!](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731)
+	[Help translate Mac Mouse Fix to different languages!](https://redirect.macmousefix.com/?target=mmf-localization-contribution)
 </details>
 
   
@@ -134,7 +134,7 @@ Auf der [Website](http://noah-nuebling.github.io/mac-mouse-fix-website/) kannst 
   
   Um das zu lösen, gibt es 2 Optionen, von denen ich weiß:
   1. Weise für eine der Tasten deiner Maus das klicken und ziehen der "Scrollen & Navigieren" Funktion zu. Diese Funktion simuliert das Wischen mit 2 Fingern auf einem Apple Trackpad. Das erlaubt dir, unter anderem, in 3D-Apps zu kreisen!
-  2. *Gebe* die mittlere Maustaste *frei*, indem du alle ihr in Mac Mouse Fix zugewiesenen Aktionen löschst. Siehe [diese Anleitung](https://github.com/noah-nuebling/mac-mouse-fix/discussions/112) für weitere Informationen.
+  2. *Gebe* die mittlere Maustaste *frei*, indem du alle ihr in Mac Mouse Fix zugewiesenen Aktionen löschst. Siehe [diese Anleitung](https://redirect.macmousefix.com/?target=mmf-captured-buttons-guide) für weitere Informationen.
 
 - **Kann ich App Exposé durch eine Klick-und-Zieh-Geste öffnen?** <!-- Hinweis: Wir verwenden hier App Exposé und in MMF Programmfenster. Nicht sicher, ob das gut ist. Ich fand das allerdings klarer. -->
 
@@ -213,8 +213,8 @@ Schau dir die [Danksagungen]({language_root}Acknowledgements.md) an, um mehr dar
   
   Mac Mouse Fix ist auf Englisch und Deutsch verfügbar, sowie den Sprachen, die in den [Danksagungen]({language_root}Acknowledgements.md) aufgelistet sind.
   
-  Wenn du **beim Übersetzen des Projekts helfen** möchtest, sieh dir das [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731) an.\
-  Wenn du **fehlende oder suboptimale Übersetzungen** melden möchtest, ist das auch sehr hilfreich! Die beste Art um Probleme zu melden, ist einen Kommentar unter dem [Localization Guide](https://github.com/noah-nuebling/mac-mouse-fix/discussions/731) zu hinterlassen.
+  Wenn du **beim Übersetzen des Projekts helfen** möchtest, sieh dir das [Translation Guide](https://redirect.macmousefix.com/?target=mmf-localization-contribution) an.\
+  Wenn du **fehlende oder suboptimale Übersetzungen** melden möchtest, ist das auch sehr hilfreich! Die beste Art um Probleme zu melden, ist einen Kommentar unter dem [Translation Guide](https://redirect.macmousefix.com/?target=mmf-localization-contribution) zu hinterlassen.
 
 - **Code beitragen**
 

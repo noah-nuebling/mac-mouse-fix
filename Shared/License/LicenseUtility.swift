@@ -61,6 +61,7 @@ func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
         /// Originally implemented this in ObjC but lead to weird linker errors
         
         /// Check if altPayLink country
+        ///     [Aug 2025] Keep in sync with `currentRegionCode()`!
         let countryCode: String?
         if #available(macOS 13, *) {
             countryCode = locale.region?.identifier
@@ -123,7 +124,7 @@ func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
         }
         
         /// Apply markdown
-        let result = NSAttributedString(coolMarkdown: base)!
+        let result = MarkdownParser.attributedString(withCoolMarkdown: base, fillOutBase: true)!
         
         /// Return
         return result
@@ -147,6 +148,12 @@ func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
         ///             -> .region is HK and .variant is CN
         ///     Conclusion:
         ///         Based on this, I'm not 100% sure if the current approach of `Locale.current.region?.identifier` always returns the system's region as set in system settings – which is the intended behavior. We could use the .variant to solve this specific test-case, but I'm not sure if that could introduce other issues. [Jul 2025]
+        
+        /// [Aug 2025]
+        ///     - Keep in-sync with buyMMF()!
+        ///     - I just found the private `NSLocale.preferredLocale`. I think it that's what actually returns the locale set in System settings, while `NSLocale.currentLocale` (Aka `Locale.current`) only returns locales supported by the currently running app (I think)
+        ///         (Idea: Maybe `NSLocale.currentLocale` contains some 'frankenstein' locale that the current app can support?
+        ///         > TODO: Consider updating uses of `NSLocale.preferredLocale`. (But I think `Locale.current.region?.identifier` has been working fine here?)
         
         let result: String?
         if #available(macOS 13, *) {

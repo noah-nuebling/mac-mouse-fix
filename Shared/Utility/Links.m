@@ -76,12 +76,12 @@
             result = redirectionServiceLink(@"mmf-feedback-bug-report", nil, nil, @{ @"locale": currentLocale }); ///  https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report
         }
         xxx(kMFLinkID_FeedbackFeatureRequest) {
-            result = redirectionServiceLink(@"mmf-feedback-feature-request", nil, nil, @{ @"locale": currentLocale });
+            result = redirectionServiceLink(@"mmf-feedback-feature-request", nil, nil, @{ @"locale": currentLocale }); ///  https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=feature-request
         }
         
         /// Help
         xxx(kMFLinkID_AuthorizeAccessibilityHelp) { /// This link is opened when clicking `Help` on the Accessibility Sheet. Update: [Oct 2025] Removed that link now. Reasoning: I haven't ever seen the bug since we installed the automatic fix in 2.2.2, and there haven't been any (on-topic) comments on the Guide since then. If there are problems, people can access help from elsewhere. See note `MMF - Discontinuing GitHub Discussions.md`.
-            result = redirectionServiceLink(@"mmf-authorize-accessibility-help", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/101
+            result = redirectionServiceLink(@"mmf-authorize-accessibility-help", nil, nil, @{ @"locale": currentLocale }); 
         }
         
         /// Guides
@@ -89,7 +89,7 @@
             result = redirectionServiceLink(@"mmf-guides-and-community", nil, nil, @{ @"locale": currentLocale });
         }
         xxx(kMFLinkID_Guides) {
-            result = redirectionServiceLink(@"mmf-guides", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/categories/guides
+            result = redirectionServiceLink(@"mmf-guides", nil, nil, @{ @"locale": currentLocale });
         }
         xxx(kMFLinkID_CapturedButtonsGuide) {
             result = redirectionServiceLink(@"mmf-captured-buttons-guide", nil, nil, @{ @"locale": currentLocale });
@@ -98,7 +98,7 @@
             result = redirectionServiceLink(@"mmf-captured-scroll-wheels-guide", nil, nil, @{ @"locale": currentLocale });
         }
         xxx(kMFLinkID_VenturaEnablingGuide) {
-            result = redirectionServiceLink(@"mmf-ventura-enabling-guide", nil, nil, @{ @"locale": currentLocale }); /// https://github.com/noah-nuebling/mac-mouse-fix/discussions/861
+            result = redirectionServiceLink(@"mmf-ventura-enabling-guide", nil, nil, @{ @"locale": currentLocale });
         }
         
         else {

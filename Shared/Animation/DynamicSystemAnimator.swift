@@ -63,7 +63,8 @@ import Foundation
     ///     -> makes the animator run `sampleRate` updates per second. This makes the simulation more accurate.
     ///     - Simulation accuracy caps out at a sampleRate of around 3000 on my M1 Air running 60 fps so I set it to 6000 to be sure.
     ///     - Interesting: At a superSample of around `6000 * 100`, that takes a lotta CPU, it looks like the anmation stops stuttering / dropping frames!? Some bugs in the renderer maybe?
-    let sampleRate: Int = 6000 * 100
+    ///         Update: [Aug 2025] Based on my experience with the MFDisplayLinkWorkType stuff (Shipped in MMF 3.0.2) my intuition is that the 'super sampling' shifted the point in the frame-cycle where we scheduled changes in a way that accidentally made the framerate better at that particular time/situation due to weird bugs in the macOS rendering system. But I assume this won't increase performance 'on average' in all situations. So I'm turning off the `* 100` 'super sampling' now.
+    let sampleRate: Int = 6000
     
     /// State
     var anchor: Double
@@ -159,8 +160,9 @@ import Foundation
 //            self.displayLink.linkToMainScreen_Unsafe()
             
             /// Start displayLink
-            self.displayLink.start_Unsafe { timeInfo in
-                self.update(timeInfo, callback)
+            self.displayLink.start_Unsafe { [weak self] timeInfo in
+                assert(self != nil)
+                self?.update(timeInfo, callback)
             }
         }
     }

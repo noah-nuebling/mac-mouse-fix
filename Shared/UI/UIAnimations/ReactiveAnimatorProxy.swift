@@ -79,6 +79,7 @@ extension NSAnimatablePropertyContainer where Self: NSObject {
             /// Get animation from context
             var animation1 = CATransaction.value(forKey: "reactiveAnimatorPayload") as? CABasicAnimation /// Get animation from context (set in `Animate.with()`)
             if animation1 == nil { /// Fallback
+                assert(false)
                 animation1 = CABasicAnimation(name: .default, duration: 0.25)
             }
             

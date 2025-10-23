@@ -65,8 +65,8 @@
     __result;                                                               \
 })
 
-#define     firstmatchi(list, count, varname, condition...)             (int64_t)                   __firstmatch((list),  1, 0, (count)-1, varname, condition)
-#define      lastmatchi(list, count, varname, condition...)             (int64_t)                   __firstmatch((list), -1, 0, (count)-1, varname, condition)
+#define     firstmatchi(list, count, varname, condition...)             (int64_t)                   __firstmatch((list),  1, 0, (count), varname, condition)
+#define      lastmatchi(list, count, varname, condition...)             (int64_t)                   __firstmatch((list), -1, 0, (count), varname, condition)
 #define      firstmatch(list, count, fallback, varname, condition...)                               ({ __auto_type ___list = (list); __auto_type ___i = firstmatchi(___list, (count), varname, condition); (___i == -1) ? (fallback) : ___list[___i]; }) /// Using triple underscore `___list` to avoid conflicts with vars in inner `__firstmatch()`macro.
 #define       lastmatch(list, count, fallback, varname, condition...)                               ({ __auto_type ___list = (list); __auto_type ___i =  lastmatchi(___list, (count), varname, condition); (___i == -1) ? (fallback) : ___list[___i]; }) /** Not casting since casting result to `(typeof(list[0]))` didn't always work. (for a list of structs it said it 'expected an arithmetic or pointer type') */
 

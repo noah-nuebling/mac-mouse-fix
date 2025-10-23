@@ -1031,13 +1031,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mac Mouse Fix ist auf Englisch und Deutsch verfügbar, sowie den Sprachen, die in den [Danksagungen]({url_1}) aufgelistet sind.\n  \nWenn du **beim Übersetzen des Projekts helfen** möchtest, sieh dir das [Localization Guide]({url_2}) an.<br>\nWenn du **fehlende oder suboptimale Übersetzungen** melden möchtest, ist das auch sehr hilfreich! Die beste Art um Probleme zu melden, ist einen Kommentar unter dem [Localization Guide]({url_3}) zu hinterlassen."
+            "value" : "Mac Mouse Fix ist auf Englisch und Deutsch verfügbar, sowie den Sprachen, die in den [Danksagungen]({url_1}) aufgelistet sind.\n  \nWenn du **beim Übersetzen des Projekts helfen** möchtest, sieh dir das [Translation Guide]({url_2}) an.<br>\nWenn du **fehlende oder suboptimale Übersetzungen** melden möchtest, ist das auch sehr hilfreich! Die beste Art um Probleme zu melden, ist einen Kommentar unter dem [Translation Guide]({url_3}) zu hinterlassen."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements]({url_1}).\n\nIf you would like to **help translate the project**, see the [Localization Guide]({url_2}).<br>\nIf you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Localization Guide]({url_3})."
+            "value" : "Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements]({url_1}).\n\nIf you would like to **help translate the project**, see the [Translation Guide]({url_2}).<br>\nIf you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Translation Guide]({url_3})."
           }
         }
       }

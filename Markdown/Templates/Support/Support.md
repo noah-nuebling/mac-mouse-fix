@@ -15,7 +15,7 @@ key: questions
 ```
 ## Questions
 
-Short answers to common questions [here](<{language_root}Readme.md#questions>).
+Quick answers to common questions [here](<{language_root}Readme.md#questions>).
 ```
 comment:
 ```
@@ -25,8 +25,7 @@ key: guides
 ```
 ## Guides
 
-Where possible, Mac Mouse Fix explains itself.
-But sometimes a guide helps!
+Where possible, Mac Mouse Fix tries to be self-explanatory. But for some things a more detailed explanation is helpful:
 
 - [{docname_captured_scroll_wheels}](<{language_root}Support/Guides/CapturedScrollWheels.md>)
 - [{docname_captured_buttons_mmf3}](<{language_root}Support/Guides/CapturedButtonsMMF3.md>) (Mac Mouse Fix 3)

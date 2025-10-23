@@ -13,7 +13,7 @@ import Foundation
     
     @objc static func showDeactivationToast() {
         let messageRaw = NSLocalizedString("license-toast.deactivate", comment: "")
-        let message = NSAttributedString(coolMarkdown: messageRaw, fillOutBase: false)!
+        let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!
         ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
     }
     
@@ -26,7 +26,7 @@ import Foundation
             message = NSLocalizedString("license-toast.already-active", comment: "")
         }
         
-        ToastController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message, fillOutBase: false)!, /// Is it safe to force-unwrap this?
+        ToastController.attachNotification(withMessage: MarkdownParser.attributedString(withCoolMarkdown: message, fillOutBase: false)!, /// Is it safe to force-unwrap this?
                                            forDuration: kMFToastDurationAutomatic)
     }
     
@@ -54,6 +54,8 @@ import Foundation
             if let error = error {
                 
                 if error.domain == NSURLErrorDomain {
+                    /// Discussion of `license-toast.no-internet` UI string [Oct 2025]
+                    ///     - This isn't about having 'no internet' (as the UI text previously implied)  it's about MMF not reaching the Gumroad server. IIRC this shows up for Chinese users where Gumroad is blocked, and I remember a bunch of support requests from users confused about this. I don't know how to test the Great Firewall, so we adjusted the UI text and mentioned 'firewalls' to work better for Chinese users.
                     message = NSLocalizedString("license-toast.no-internet", comment: "")
                 } else if error.domain == MFLicenseErrorDomain {
                     
@@ -63,7 +65,7 @@ import Foundation
                         
                         let nOfActivations = (error.userInfo["nOfActivations"] as? Int) ?? -1
                         let maxActivations = (error.userInfo["maxActivations"] as? Int) ?? -1
-                        let messageFormat = NSLocalizedString("license-toast.activation-overload", comment: "Note: \"%2$d\", \"%3$d\", and \"%1$@\" are so-called \"C Format Specifers\". They will be replaced by numbers or text when the program runs. Make sure to type the format specifiers exactly like in English so that the text-replacement-code works correctly.") /// We do the localizer hint with the c-format-specifier-explanation on this string since it's the most complicated one atm. I feel like if we do the explanation on a simpler string, localizers might miss details on this one. E.g. usage of `d` instead `@` in some specifiers.
+                        let messageFormat = NSLocalizedString("license-toast.activation-overload", comment: "Note: \"%2$d\", \"%3$d\", and \"%1$@\" are so-called \"C Format Specifers\". They will be replaced by numbers or text when the program runs. Make sure to type the format specifiers exactly like in the English version so that the text-replacement-code works correctly.") /// We do the localizer hint with the c-format-specifier-explanation on this string since it's the most complicated one atm. I feel like if we do the explanation on a simpler string, localizers might miss details on this one. E.g. usage of `d` instead `@` in some specifiers.
                         message = String(format: messageFormat, (Links.link(kMFLinkID_MailToNoah) ?? ""), nOfActivations, maxActivations)
                         
                     case kMFLicenseErrorCodeServerResponseInvalid:
@@ -96,11 +98,14 @@ import Foundation
                         if let gumroadMessage = error.userInfo["message"] as? String {
                             
                             switch gumroadMessage {
-                                /// Discussion on `license-toast.unknown-key` text:
-                                ///     The `license-toast.unknown-key` error message used to just say `**'%@'** is not a known license key\n\nPlease try a different key` which felt a little rude or unhelpful for people who misspelled the key, or accidentally pasted/entered a newline (which I sometimes received support requests about)
-                                ///     So we added the tip to remove whitespace in the error message. But then, we also made it impossible to enter any whitespace into the licenseKey textfield to begin with, so giving the tip to remove whitespace is a little unnecessary now. But I already wrote this and it sounds friendlier than just saying 'check if you misspelled' - I think? Might change this later.
-                                ///     Update: [Apr 2025] 'Sounding friendly' but actually just wasting ppl's time is not a good idea.
-                                ///         TODO: Change this string
+                                /// Considerations that went into the `license-toast.unknown-key` UI  text: [Oct 2025]
+                                ///     Design:
+                                ///         - Only scenarios where this shows up: 1. User makes mistake while hand-copiing / copy-pasting wrong from the license key website/email. 2. User copied the key for another software, not MMF. 3. User just tries random entries.
+                                ///         - Whitespace and linebreaks are being removed programmatically now, so we don't need to hint about that. (That used to be a common issue.)
+                                ///         - Also see this Claude conversation: https://claude.ai/share/f47aced0-6330-461d-9c60-8b29f5315fd7
+                                ///     Technical:
+                                ///         - Putting quotes inside emphasis (which we used to do for `license-toast.unknown-key`) breaks markdown parsing of emphasis when `NSString+Steganography.m` is active. -> Therefore we're putting the quotes '**outside**' the emphasis.
+                                ///             See `MarkdownParser.m` for minimal repro. [Oct 2025]
                                 /// Architecture: [Apr 2025]
                                 ///     `"message": "That license does not exist for the provided product."` is part of the error-response json from the Gumroad API.
                                 ///     Maybe it would be better to create an MFDataClass for the Gumroad response, so all 'knowledge' about the Gumroad API response format is centralized in one place in our code.
@@ -133,9 +138,13 @@ import Foundation
         
         /// Display Toast
         ///     Notes:
-        ///     - Why are we using `self.view.window` here, and `MainAppState.shared.window` in other places? IIRC `MainAppState` is safer and works in more cases whereas self.view.window might be nil in more edge cases IIRC (e.g. when the LicenseSheet is just being loaded or sth? I don't know anymore.)
-        ///     - Update: [Apr 2025] While merging master into feature-strings-catalog: Changed `.shared.window!` to `shared.frontMostWindowOrSheet!` across this file. Not sure if correct.
-        ToastController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message, fillOutBase: false)!,
+        ///     - Why are we using `self.view.window!` here, and `MainAppState.shared.window` in other places?
+        ///         IIRC `MainAppState` is safer and works in more cases whereas self.view.window might be nil in more edge cases IIRC (e.g. when the LicenseSheet is just being loaded or sth? I don't know anymore.)
+        ///         Update [Aug 2025] `self.view.window!` seems to have caused this crash report on Tahoe Beta 5: https://github.com/noah-nuebling/mac-mouse-fix/issues/1432#issuecomment-3157295471
+        ///             > Swapped for `MainAppState.shared.window`. Now *all* uses of `[ToastNotificationController attachNotificationWithMessage:]` use `MainAppState.shared.window`. We could just build it into `[ToastNotificationController attachNotificationWithMessage:]`.
+        ///        >>> Update: [Oct 2025] Moved this all into `ToastController` (Formerly ToastNotificationController) –– Can delete this discussion
+
+        ToastController.attachNotification(withMessage: MarkdownParser.attributedString(withCoolMarkdown: message, fillOutBase: false)!,
                                            forDuration: kMFToastDurationAutomatic)
     }
     

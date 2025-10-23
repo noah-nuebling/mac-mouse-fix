@@ -12,6 +12,13 @@ Enabled `-Wsign-compare` and `-Wsign-conversion` warnings on [Jul 2025].
         ```
         
     [Jul 2025] There are several mentions of the `a<b` footgun in SharedMacros.h and perhaps elsewhere. Maybe update/remove those, now that we found solution.
+    [Oct 2025] Interesting: The `+` operator doesn't seem to have this footgun. The following works fine. Not sure what's going on.
+        ```
+        unsigned long x = 10;
+        int offset = -3;
+        x = (x + offset);
+
+        ```
 
 ### Backwards for-loop footgun
 

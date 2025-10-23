@@ -20,6 +20,7 @@ import Cocoa
     
     // MARK: Ivars
     
+    private var windowFrameAnimator: DynamicSystemAnimator? = nil
     private var _tabSwitchIsInProgress: Bool = false
     @objc public var tabSwitchIsInProgress: Bool { /// This is set by TabViewController
         get {
@@ -42,14 +43,15 @@ import Cocoa
     func setFrame(_ newFrame: NSRect, withSpringAnimation animation: CASpringAnimation?) {
         
         /// Guard animation
-        
         guard let animation = animation else {
             setFrame(newFrame, display: false)
             return
         }
         
         /// Create animator
-        let animator = DynamicSystemAnimator(fromAnimation: animation, stopTolerance: 0.003, optimizedWorkType: kMFDisplayLinkWorkTypeGraphicsRendering);
+        if (self.windowFrameAnimator == nil) {
+            windowFrameAnimator = DynamicSystemAnimator(fromAnimation: animation, stopTolerance: 0.003, optimizedWorkType: kMFDisplayLinkWorkTypeGraphicsRendering);
+        }
         
         /// Debug
         let ogTime = CACurrentMediaTime()
@@ -61,7 +63,7 @@ import Cocoa
         /// Start animator
         ///     Note: Why aren't we using Animate.with()?
         let ogFrame = self.frame
-        animator.start(distance: 1.0, callback: { value in
+        windowFrameAnimator!.start(distance: 1.0, callback: { [weak self] value in
 
             /// Debug
 //            DDLogDebug("springAnimationValue: \(value)")
@@ -71,7 +73,8 @@ import Cocoa
             
             /// Set frame (on main thread)
             DispatchQueue.main.async {
-                self.setValue(result, forKey: "frame") /// This seems faster than `self.setFrame(display:animate:)`
+                assert(self != nil)
+                self?.setValue(result, forKey: "frame") /// This seems faster than `self.setFrame(display:animate:)`
             }
         }, onComplete: {
             stopCallback()

@@ -17,7 +17,8 @@
             "value" : "Mac Mouse Fix"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "NSHumanReadableCopyright" : {
       "comment" : "Copyright (human-readable)",

@@ -9,7 +9,6 @@
 
 #import "NSAttributedString+Additions.h"
 #import <Cocoa/Cocoa.h>
-#import "MarkdownParser/MarkdownParser.h"
 #import "MFLoop.h"
 #import "NSString+Steganography.h"
 #import "NSDictionary+Additions.h"
@@ -241,16 +240,15 @@
 #pragma mark Append
 
 - (NSAttributedString *) attributedStringByAppending: (NSAttributedString *)string { /// [Sep 2025] This probably shouldn't exist using astringf macro directly is more readable and both map to `attributedStringWithAttributedFormat:`
-    
-    return [NSAttributedString attributedStringWithAttributedFormat: [@"%@%@" attributed] args: (id[]){ self, string } argcount: 2];
+    return astringf([@"%@%@" attributed], self, string);
 }
 
 #pragma mark Formatting
 
-+ (NSAttributedString *) attributedStringWithAttributedFormat: (NSAttributedString *)format args: (NSAttributedString *__strong _Nullable [_Nonnull])args argcount: (int)argcount; {
++ (NSAttributedString *) attributedStringWithAttributedFormat: (NSAttributedString *)format args: (NSAttributedString *__strong _Nullable [_Nonnull])args argcount: (int)argcount {
     
     /// Replaces occurences of %@ in the attributedString with the args
-    ///     Usage tip:                  Use the astringf() macro which wraps this.
+    ///     Usage tip:                  Use the `astringf()` macro which wraps this.
     ///     Also see:                     lib function `initWithFormat:options:locale:` (Only available on macOS 12.0)
     ///     Optimization idea:      We could also make an attributed variant of -[NSArray componentsJoinedByString:] if this is too slow
     ///     Implementation note: We're using a C array instead of NSArray to not crash when an arg is nil.
@@ -261,32 +259,35 @@
     if (argcount == 0) return format;
     if ([format.string isEqual: @""]) return format;
     
-    /// Get mutable copy
+    /// Find all format specifiers
+    auto searchRange = NSMakeRange(0, format.length);
+    auto *formatSpecifierRanges = [NSMutableData new]; /// Using NSMutableData to store NSRanges instead of NSMutableArray cause it's faster maybe? [Sep 2025]
+    int i;
+    for (i = 0; ; i++) {
+        NSRange formatSpecifierRange = [format.string rangeOfString: @"%@" options: 0 range: searchRange]; /// Find the next format specifier to replace
+        if (formatSpecifierRange.location == NSNotFound) break;
+        [formatSpecifierRanges appendBytes: &formatSpecifierRange length: sizeof(NSRange)]; /// Store found range
+        searchRange = NSMakeRange(NSMaxRange(formatSpecifierRange), format.length - NSMaxRange(formatSpecifierRange)); /// Update searchRange
+    }
+    
+    if (i != argcount) {
+        assert(false && "attributedStringWithAttributedFormat: Number of format specifiers doesn't match number of args");
+        i = MIN(i, argcount);
+    }
+    
+    /// Get mutable copy of format
     ///     On Ventura Beta, `[format mutableCopy]` returns creates unreadable data, if format is an empty string.
     NSMutableAttributedString *mutableFormat = [format mutableCopy];
     
-    int i;
-    for (i = 0; ; i++) {
-        
-        /// Find the next format specifier to replace
-        NSRange replaceRange = [mutableFormat.string rangeOfString: @"%@"];
-        
-        /// Break
-        if (replaceRange.location == NSNotFound) break;
-        
-        /// Validate
-        if (argcount <= i) {
-            assert(false && "attributedStringWithAttributedFormat: More format specifiers than args");
-            break;
-        }
-        
-        /// Replace
-        [mutableFormat replaceCharactersInRange: replaceRange withAttributedString: args[i] ?: [@"" attributed]];
+    /// Replace
+    ///     Note: [Sep 2025] We replace in a second pass after finding the formatSpecifiers, so we don't replace formatSpecifiers *contained inside* the replacement strings.
+    int offset = 0;
+    loopc(j, i) {
+        auto replaceRange = ((NSRange *)[formatSpecifierRanges bytes])[j];
+        replaceRange.location += offset; /// This converts signed to unsigned, which I'd expect to underflow, but somehow works correctly in my godbolt testing. (Also see `Clang Diagnostic Flags - Sign.md`)
+        [mutableFormat replaceCharactersInRange: replaceRange withAttributedString: args[j] ?: [@"" attributed]];
+        offset += args[j].length - replaceRange.length;
     }
-    
-    /// Validate
-    if (i < argcount)
-        assert(false && "attributedStringWithAttributedFormat: Fewer format specifiers than args");
     
     /// Return
     return mutableFormat;
@@ -400,62 +401,16 @@
 
 #pragma mark Markdown
 
-+ (NSAttributedString *)labelWithMarkdown:(NSString *)md {
-    return [self attributedStringWithCoolMarkdown:md];
++ (NSAttributedString *) labelWithMarkdown: (NSString *)md {
+    return [MarkdownParser attributedStringWithCoolMarkdown: md fillOutBase: YES];
 }
-+ (NSAttributedString *)secondaryLabelWithMarkdown:(NSString *)md {
++ (NSAttributedString *) secondaryLabelWithMarkdown: (NSString *)md {
     
-    NSAttributedString *s = [self attributedStringWithCoolMarkdown:md];
-    s = [s attributedStringBySettingFontSize:11];
-    s = [s attributedStringByAddingColor:NSColor.secondaryLabelColor forRange:NULL];
+    NSAttributedString *s = [MarkdownParser attributedStringWithCoolMarkdown: md fillOutBase: YES];
+    s = [s attributedStringBySettingFontSize: 11];
+    s = [s attributedStringByAddingColor: NSColor.secondaryLabelColor forRange: NULL];
     
     return s;
-}
-
-+ (NSAttributedString *_Nullable)attributedStringWithAttributedMarkdown:(NSAttributedString *)md {
-    return [MarkdownParser attributedStringWithAttributedMarkdown:md];
-}
-
-+ (NSAttributedString *_Nullable)attributedStringWithCoolMarkdown:(NSString *)md {
-    
-    return [self attributedStringWithCoolMarkdown:md fillOutBase:YES];
-}
-
-+ (NSAttributedString *_Nullable)attributedStringWithCoolMarkdown:(NSString *)md fillOutBase:(BOOL)fillOutBase {
-    
-    NSAttributedString *result = nil;
-    
-    if ((NO)) {
-        
-        /// Never use Apple API, always use custom method - so things are consistent across versions and we can catch issues witht custom version during development
-        //
-        //        /// Use library function
-        //
-        //        /// Create options object
-        //        NSAttributedStringMarkdownParsingOptions *options = [[NSAttributedStringMarkdownParsingOptions alloc] init];
-        //
-        //        /// No idea what these do
-        //        options.allowsExtendedAttributes = NO;
-        //        options.appliesSourcePositionAttributes = NO;
-        //
-        //        /// Make it respect linebreaks
-        //        options.interpretedSyntax = NSAttributedStringMarkdownInterpretedSyntaxInlineOnlyPreservingWhitespace;
-        //
-        //        /// Create string
-        //        result = [[NSAttributedString alloc] initWithMarkdownString:md options:options baseURL:[NSURL URLWithString:@""] error:nil];
-        
-    } else {
-        
-        /// Fallback to custom function
-        
-        result = [MarkdownParser attributedStringWithMarkdown:md];
-    }
-    
-    if (fillOutBase) {
-        result = [result attributedStringByFillingOutBase];
-    }
-    
-    return result;
 }
 
 #pragma mark Determine size
@@ -663,7 +618,7 @@ NSMutableDictionary<NSFontDescriptorAttributeName, id> *getIntentionalFontAttrib
     #define getIntentionalFontAttributes(args...) getIntentionalFontAttributes((getIntentionalFontAttributes_args){ args })
     
     /**
-        Explanation: What are we doing here? What are 'intentionalFontAttributes'? [Sep 2025]
+        Explanation: What are we doing here? What are 'intentionalFontAttributes' (Aka 'intentionalAttributes')? [Sep 2025]
         Problem:
             When we manipulate a NSFont on an NSAttributedString, we can only do that (in a sane way?) by converting the NSFont into a fontAttributes dict, then manipulating that, and then converting that back to an NSFont.
             There are some problems with this:
@@ -765,11 +720,11 @@ NSMutableDictionary<NSFontDescriptorAttributeName, id> *getIntentionalFontAttrib
     
     /// Add baseAttributes
     ///     baseAttributes will override current attributes
-    [result addAttributes: baseAttributes range: NSMakeRange(0, result.length)];
+    [result addAttributes: baseAttributes range: NSMakeRange(0, result.length)]; /// I observed this *not* override the `NSFont`. Perhaps because the `NSFonts` were `isEqual:`. However this could lead to issues with our `IntentionalFontAttributes` mechanism in edge cases. [Oct 2025]
     
     /// Add original string attributes
     ///     to undo overrides by the baseAttributes
-    [self enumerateAttributesInRange: NSMakeRange(0, result.length) options: 0 usingBlock: ^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
+    [self enumerateAttributesInRange: NSMakeRange(0, self.length) options: 0 usingBlock: ^(NSDictionary<NSAttributedStringKey,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
             
         { /// Skip font (Cause we handle that separately below)
             NSMutableDictionary *attrs2 = [attrs mutableCopy];
@@ -780,14 +735,12 @@ NSMutableDictionary<NSFontDescriptorAttributeName, id> *getIntentionalFontAttrib
         [result addAttributes: attrs range: range];
     }];
     
-    /// Add original font attributes
+    /// Add original font attributes back
     ///     (But only the intentional ones)
     __block NSAttributedString *result2 = result;
-    [self enumerateAttribute: NSFontAttributeName inRange: NSMakeRange(0, result.length) options: 0 usingBlock: ^(NSFont *_Nullable originalFont, NSRange range, BOOL * _Nonnull stop) {
-        result2 = [result2 attributedStringByModifyingFontAttributesForRange: &range modifier: ^MFNSFontAttributes(MFNSFontAttributes fontAttributes) {
-             MFNSFontAttributes intentionalFontAttributes = getIntentionalFontAttributes(originalFont, .fallBackToCurrentFontAttributes = true);
-             return intentionalFontAttributes;
-        }];
+    [self enumerateAttribute: NSFontAttributeName inRange: NSMakeRange(0, result.length) options: 0 usingBlock: ^(NSFont *_Nullable ogFont, NSRange range, BOOL * _Nonnull stop) {
+        auto ogFontAttributes = getIntentionalFontAttributes(ogFont, .fallBackToCurrentFontAttributes = true);
+        result2 = [result2 attributedStringByModifyingFontAttributesForRange: &range withOverrides: ogFontAttributes];
     }];
     
     return result2;
@@ -801,8 +754,11 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     
     /// There are some places where we still do this manually which we could replace with this. Search for "attributesAtIndex:" to find them.
     
+    /// Get assigneeAttributes
+    auto assigneeAttributes = [*assignee attributesAtIndex: 0 effectiveRange: NULL];
+    
     /// Add assignee's attributes as base for the newValue
-    newValue = [newValue attributedStringByAddingAttributesAsBase: [*assignee attributesAtIndex: 0 effectiveRange: NULL]];
+    newValue = [newValue attributedStringByAddingAttributesAsBase: assigneeAttributes];
     
     /// Fill out base with default attributes just to be sure everything is filled out
     newValue = [newValue attributedStringByFillingOutBase];
@@ -903,23 +859,25 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
         return string;
     }
 
-    - (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *)url forSubstring:(NSString *)substring {
+    - (NSAttributedString *) attributedStringByAddingHyperlink: (NSURL *_Nullable)url forSubstring: (NSString *)substring {
         
-        NSRange subRange = [self.string rangeOfString:substring];
-        return [self attributedStringByAddingHyperlink:url forRange:&subRange];
+        NSRange subRange = [self.string rangeOfString: substring];
+        return [self attributedStringByAddingHyperlink: url forRange: &subRange];
     }
 
-    - (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *_Nonnull)aURL forRange:(const NSRangePointer _Nullable)range {
+    - (NSAttributedString *) attributedStringByAddingHyperlink: (NSURL *_Nullable) aURL forRange: (const NSRangePointer _Nullable)range {
         
         /// Notes:
         /// - Making the text blue explicitly doesn't seem to be necessary. The links will still be blue if we don't do this.
         /// - Adding an underline explicitlyis unnecessary in NSTextView but necessary in NSTextField
         
+        if (!aURL) return [self copy];
+        
         return [self attributedStringByAddingAttributes: @{
             NSLinkAttributeName: aURL.absoluteString ?: @"",
             NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),
             //        NSForegroundColorAttributeName: NSColor.blueColor,
-        } forRange:range];
+        } forRange: range];
     }
 
 
@@ -989,10 +947,19 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
         #pragma mark Paragraph spacing
 
-        - (NSAttributedString *)attributedStringByAddingParagraphSpacing:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range {
+        - (NSAttributedString *)attributedStringByAddingParagraphSpacing:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range { /// Note: [Oct 2025] A 'paragraph' seems to be delineated by any `\n`, not just `\n\n` (blank line). Use `attributedStringByAddingBlankLineHeight:` instead.
             
             return [self attributedStringByModifyingParagraphStyleForRange:range modifier:^NSParagraphStyle * _Nullable(NSMutableParagraphStyle * _Nullable style) {
                 style.paragraphSpacing = spacing;
+                return style;
+            }];
+        }
+        #pragma mark Paragraph spacing before
+
+        - (NSAttributedString *)attributedStringByAddingParagraphSpacingBefore:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range {
+            
+            return [self attributedStringByModifyingParagraphStyleForRange:range modifier:^NSParagraphStyle * _Nullable(NSMutableParagraphStyle * _Nullable style) {
+                style.paragraphSpacingBefore = spacing;
                 return style;
             }];
         }
@@ -1035,7 +1002,7 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
         
         typedef NSDictionary<NSFontDescriptorAttributeName, id> * MFNSFontAttributes;
 
-        - (NSAttributedString *) attributedStringByModifyingFontAttributesForRange: (const NSRangePointer _Nullable)inRange modifier: (MFNSFontAttributes (^)(MFNSFontAttributes fontAttributes))modifier {
+        - (NSAttributedString *) attributedStringByModifyingFontAttributesForRange: (const NSRangePointer _Nullable)inRange withOverrides: fontAttributeOverrides {
         
             auto result = [self attributedStringByModifyingAttribute: NSFontAttributeName forRange: inRange modifier: ^NSFont *_Nullable(NSFont *_Nullable font) {
                     
@@ -1044,10 +1011,9 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
                 if (!font) fontAttributes = [NSMutableDictionary new]; /// Create *empty* dict, which signals that none of the attributes of the font we *will* create below are 'intentional'. [Sep 2025]
                 else       fontAttributes = getIntentionalFontAttributes(font, .fallBackToCurrentFontAttributes = true); /// If there is no intentionalFontAttributes dict on the font, yet, that means it's a font that has been created and attached to the string outside of NSAttributedString+Additions.m, and we consider *all* its attributes 'intentional'. [Sep 2025]
                 
-                /// Get new attributes from modifier closure.
+                /// Add the new fontAttributes
                 ///     Old note: Could maybe use `fontDescriptorByAddingAttributes:` instead [Sep 2025]
-                auto newFontAttributes = modifier(fontAttributes);
-                [fontAttributes applyOverridesFromDictionary: newFontAttributes];
+                [fontAttributes applyOverridesFromDictionary: fontAttributeOverrides];
             
                 
                 NSFont *newFont;
@@ -1096,15 +1062,17 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
             #pragma mark Font size
 
             - (NSAttributedString *) attributedStringBySettingFontSize: (CGFloat)newFontSize {
+                return [self attributedStringBySettingFontSize: newFontSize forRange: NULL];
+            }
+
+            - (NSAttributedString *) attributedStringBySettingFontSize: (CGFloat)newFontSize forRange: (const NSRangePointer _Nullable)range {
                 
                 /// How to use:
                 /// - You can pass in NSFont.smallSystemFontSize, which is 11.0
                 /// - You can pass in NSFont.systemFontSize, which is 13.0 I believe
                 /// - You can pass in other arbitrary floating point numbers
                 
-                auto result = [self attributedStringByModifyingFontAttributesForRange: NULL modifier: ^MFNSFontAttributes (MFNSFontAttributes fontAttributes) {
-                    return @{ NSFontSizeAttribute: @(newFontSize) };
-                }];
+                auto result = [self attributedStringByModifyingFontAttributesForRange: range withOverrides: @{ NSFontSizeAttribute: @(newFontSize) }];
                 
                 return result;
             }
@@ -1114,9 +1082,7 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
             - (NSAttributedString *) attributedStringByAddingFontTraits: (NSDictionary<NSFontDescriptorTraitKey, id> *)fontTraitsToAdd forRange: (const NSRangePointer _Nullable)inRange {
                 
-                auto result = [self attributedStringByModifyingFontAttributesForRange: inRange modifier: ^MFNSFontAttributes (MFNSFontAttributes fontAttributes) {
-                    return @{ NSFontTraitsAttribute: fontTraitsToAdd }; /// Only need to return the things we want to add, because the caller will use `applyOverridesFromDictionary:` and fontTraits are also a dict so it will recurse into that. [Sep 2025]
-                }];
+                auto result = [self attributedStringByModifyingFontAttributesForRange: inRange withOverrides: @{ NSFontTraitsAttribute: fontTraitsToAdd }]; /// Only need to return the things we want to add, because the caller will use `applyOverridesFromDictionary:` and fontTraits are also a dict so it will recurse into that. [Sep 2025]
 
                 return result;
             }
@@ -1151,10 +1117,7 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
         
         - (NSAttributedString *) attributedStringByAddingSymbolicFontTraits: (NSFontDescriptorSymbolicTraits)traits forRange: (const NSRangePointer _Nullable)inRange {
             
-            auto result = [self attributedStringByModifyingFontAttributesForRange: inRange modifier: ^MFNSFontAttributes(MFNSFontAttributes fontAttributes) {
-                auto newFontAttributes = [[[NSFontDescriptor new] fontDescriptorWithSymbolicTraits: traits] fontAttributes];
-                return newFontAttributes;
-            }];
+            auto result = [self attributedStringByModifyingFontAttributesForRange: inRange withOverrides: [[[NSFontDescriptor new] fontDescriptorWithSymbolicTraits: traits] fontAttributes]];
             
             return result;
         }
@@ -1186,6 +1149,37 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
 #pragma mark - Special usecases
 
+- (NSAttributedString *) attributedStringByAddingBlankLineHeight: (CGFloat)height forRange:(const NSRangePointer _Nullable)range {
+
+    assert(false); /// Unused and untested [Oct 2025]
+
+    NSAttributedString * result = [self copy]; /// Not sure if copy is necessary here [Oct 2025]
+
+    auto searchRange = NSMakeRange(0, self.length);
+
+    while (1) {
+        auto blankLinesRange = [result.string rangeOfString: @"(\n){2,}" options: NSRegularExpressionSearch range: searchRange];
+        if (blankLinesRange.location == NSNotFound) break;
+        
+        /// Modify blankLine height
+        {
+            if ((0)) {
+                /// Notes: [Oct 2025]
+                ///     - The ParagraphSpacing controls the height of *any* linebreaks not just double linebreaks, so we can't just use that to specifically control blankLine height.
+                ///     - The ParagraphSpacing *also influences* the overall height of blank lines but we'll ignore that for now.
+                result = [result attributedStringByAddingParagraphSpacing: height forRange: &blankLinesRange];
+            }
+            else {
+                result = [result attributedStringBySettingFontSize: height forRange: &blankLinesRange];
+            }
+        }
+        
+        searchRange = NSMakeRange(NSMaxRange(blankLinesRange), self.length - NSMaxRange(blankLinesRange));
+    }
+    
+    return result;
+};
+
 - (NSAttributedString *) attributedStringByAddingHintStyle {
     
     /// Notes:
@@ -1201,34 +1195,6 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
     
     return ret;
 }
-
-- (NSAttributedString *) attributedStringByAddingSemiBoldForSubstring: (NSString *)subStr {
-    
-    /// Notes:
-    ///     - Old impl used `NSFontManager` with weight 7 (weight 8 was commented out)
-    ///         This seems to match `NSFontWeightMedium`, not `NSFontWeightSemibold`, so we're using `NSFontWeightMedium` [Sep 2025]
-    ///     - We're implementing bold and italic with `NSFontDescriptorSymbolicTraits`, but that doesn't seem to support semibold [Sep 2025]
-    ///         (Maybe we should just not use symbolicTraits at all, and instead use fontTraits and fontAttributes directly? symbolicTraits don't seem super useful.)
-    
-    return [self attributedStringByAddingWeight: NSFontWeightMedium forSubstring: subStr];
-}
-
-- (NSAttributedString *) attributedStringBySettingSemiBoldColorForSubstring: (NSString *)subStr {
-    
-    /// I can't really get a semibold. It's too thick or too thin. So I'm trying to make it appear thicker by darkening the color.
-    ///     Update: [Sep 2025] We're no longer using `NSFontManager` so this may no longer be true.
-    
-    NSColor *color;
-    if ((0)) color = [NSColor.textColor colorWithAlphaComponent: 1.0];   /// Custom colors disable the automatic color inversion when selecting a tableViewCell. See https://stackoverflow.com/a/29860102/10601702
-    else     color = NSColor.controlTextColor;                           /// This is almost black and automatically inverts. See: http://sethwillits.com/temp/nscolor/
-    
-    auto result = [self attributedStringByAddingAttributes: @{
-        NSForegroundColorAttributeName: color
-    } forSubstring: subStr];
-    
-    return result;
-}
-
 
 #if 0
     #pragma mark Weight (legacy)

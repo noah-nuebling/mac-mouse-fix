@@ -120,6 +120,7 @@ typedef enum {
     ///
     /// Future ideas:
     ///     - For the Tahoe overhaul, maybe change the look to be capsule shaped like native iOS Toasts? (https://x.com/jsngr/status/1340317069359919104) [Sep 2025]
+    ///         - Under Sequoia, the Toasts look almost identical to popovers – maybe we should keep that similarity for Tahoe.
     ///     - Maybe make the text selectable / copy-paste able [Sep 2025]
     ///
     /// Protocol:
@@ -155,31 +156,43 @@ typedef enum {
         ///             Problem: The problem was that for our new capture Toast messages (`%2$@ is no longer captured by Mac Mouse Fix\nThe button now works as if Mac Mouse Fix was disabled`),
         ///                 the second line was longer than the first, which made it not feel like its 'secondary' to the first line anymore.
         ///                 Only solutions I could think of is a) shorten the second line, or b) make it feel 'secondary' by changing the font.
-        ///                     We first implemented the different font in CapturedToasts.m (See `useSmallHintStyling`), but having this style *only* for the CaptureToasts also felt weird.
+        ///                     We first implemented the different font in CapturedToasts.m (See `useSmallHintStyling`{Update: Removed in commit fb78175}), but having this style *only* for the CaptureToasts also felt weird.
         ///                     So we're activating this style for all the Toasts here!
         ///         Questionable:
         ///             - This is a little 'magical'. We could instead have separate args for the title and subtitle, but then we'd kinda have to split up all the localizable strings into title and subtitle and I'm too lazy for that now. This approach also may be more flexible, since the caller could theoretically override the hint styling, which I might use for the 'Learn More' links at the end of the CaptureToasts.
         ///             - `attributedStringByTrimmingWhitespace` is a bit of a hack. Before, we had some toasts with a single and others with a double linebreak after the first 'title' line. But that looks weird now. The 'semantic' difference is still in the localizable strings but not displayed anymore.
         {
             auto splitMessage    = [message split: @"\n" maxSplit: 1];
-            auto messageTitle    = splitMessage.firstObject;
-            auto messageSubtitle = splitMessage.lastObject;
-            
-            messageTitle    = [messageTitle    attributedStringByTrimmingWhitespace];
-            messageSubtitle = [messageSubtitle attributedStringByTrimmingWhitespace];
-            
-            messageTitle    = [messageTitle    attributedStringByFillingOutBase];
-            messageSubtitle = [messageSubtitle attributedStringByFillingOutBaseAsHint]; /// Style everything after the first line as greyed out, small, hint text
-            
-            #define hintSeparatorSize 4.0
-            NSAttributedString *separator = [@"\n\n".attributed attributedStringBySettingFontSize: hintSeparatorSize];
-            
-            message = astringf(@"%@%@%@", (id)messageTitle, separator, (messageSubtitle ?: [@"" attributed]));
+            if (splitMessage.count > 1) {
+                auto messageTitle    = splitMessage.firstObject;
+                auto messageSubtitle = splitMessage.lastObject;
+                
+                messageTitle    = [messageTitle    attributedStringByTrimmingWhitespace];
+                messageSubtitle = [messageSubtitle attributedStringByTrimmingWhitespace]; /// Remove double linebreaks. See discussion above.
+                { /// Prepend separator to messageSubtitle
+                    NSAttributedString *separator = [@"\n\n" attributed];
+                    if ((1)) {
+                        /// Set separator size
+                        ///     Discussion: [Oct 2025]
+                        ///         - By setting the separator size to 4.0, the margin above and below the title looks equal.
+                        ///         - But that makes paragraph gaps inside the subtitle larger than the gap between the title and subtitle. Which seems awkward, but it looks fine to me. We can leave the separator size equal to the subtitle size to make those gaps equal.
+                        separator = [separator attributedStringBySettingFontSize: 4.0];
+                    }
+                    messageSubtitle = astringf(@"%@%@", separator, messageSubtitle);
+                }
+                
+                messageTitle    = [messageTitle    attributedStringByFillingOutBase];
+                messageSubtitle = [messageSubtitle attributedStringByFillingOutBaseAsHint]; /// Style everything after the first line as greyed out, small, hint text
+                
+                message = astringf(@"%@%@", messageTitle, messageSubtitle);
+            }
+            else {
+                message = [message attributedStringByFillingOutBase];
+            }
         }
         
-        message = [message attributedStringByAddingAttributesAsBase: _labelAttributesFromIB]; /// This makes the text centered. Not sure if anything else [Sep 2025]
+        message = [message attributedStringByAddingAttributesAsBase: _labelAttributesFromIB]; /// This makes the text centered, prevents orphaned words (`NSLineBreakStrategyPushOut`). Not sure if anything else [Sep 2025]
     }
-    
     
     /// Set message
     [_instance.label.textStorage setAttributedString: message];
@@ -327,6 +340,14 @@ typedef enum {
         preAnimFrame.origin.y += _toastAnimationOffset;
         [toastWindow setFrame: preAnimFrame display: NO];
         
+        /// Fix layout bug [Sep 2025]
+        ///     Observed on: Tahoe RC, with UIDesignRequiresCompatibility – Never observed this before. May be a Tahoe bug.
+        ///     Description of what I observed: After triggering the forbidden capture notifications for the primary and secondary button a few times, all of a sudden the text starts wrapping incorrectly and the bottom of the text becomes cut off. This seems to be due to `_instance.label.frame`s right edge being inset by 4 pixels from its superview for some reason.
+        ///     Update: Merged this from master into feature-strings-catalog (where we have made lots of changes to ToastNotificationController.m and renamed it ToastController.m) – Not sure this is necessary on feature-strings-catalog [Oct 2025]
+        {
+            _instance.label.frame = _instance.label.superview.bounds;
+        }
+
         /// Animate
         [NSAnimationContext beginGrouping];
         {

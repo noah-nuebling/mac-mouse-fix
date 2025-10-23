@@ -61,7 +61,7 @@
 #pragma mark Interact with config
 
 - (void)loadDataModelFromConfig {
-    [Config.shared loadConfigFromFileAndRepair]; /// Not sure if necessary. Other than this, the only caller of `loadConfigFromFileAndRepair` is `handleConfigFileChange`. Edit: Think this is unnecessary. Remove.
+    [Config.shared loadConfigFromFile]; /// Not sure if necessary. Other than this, the only caller of `loadConfigFromFile` is `handleConfigFileChange`. Edit: Think this is unnecessary. Remove.
     self.dataModel = Config.shared.config[kMFConfigKeyRemaps];
 }
 - (void)writeDataModelToConfig {
@@ -262,28 +262,29 @@
     
     NSScrollView * scrollView = self.scrollView;
     
-    /// Get corner radius
-    ///     The cornerRadius of the Action Table should be equal to cornerRadius of surrounding NSBox
-    ///     Ideally we would access the cornerradius of the NSBox directly, but I don't know how
-    
-    CGFloat cr = 5.0;
-    
-    if (@available(macOS 11.0, *)) { } else {
-        cr = 4.0;
-    }
-    
     /// Shrink Action Table pre-Mojave
     ///     Otherwise it spills out of the surrounding NSBox. Not sure why
-    
-    if (@available(macOS 10.14, *)) { } else {
-        scrollView.frame = NSInsetRect(scrollView.frame, 2, 2);
-    }
+    ///         Update: [Aug 2025] This comment is from MMF 2. Under MMF 3 there's no more box surrounding the table, but we're still following the sizes from MMF 2 for consistency. (See MMF 2 commit 59f2647.)
+    ///             ... But I did some testing and the inset doesn't seem to have any effect on MMF 3? Maybe autolayout constraints in IB? If so we should delete this.
+    if      (@available(macOS 26.0, *))  scrollView.frame = NSInsetRect(scrollView.frame, 1, 1);
+    else if (@available(macOS 10.14, *)) {}
+    else                                 scrollView.frame = NSInsetRect(scrollView.frame, 2, 2);
     
     scrollView.borderType = NSNoBorder;
     scrollView.wantsLayer = YES;
     scrollView.layer.masksToBounds = YES;
     scrollView.layer.borderWidth = 1.0;
-    scrollView.layer.cornerRadius = cr;
+    
+    /// Set cornerRadius
+    if (@available(macOS 26.0, *)) {
+        /// On [Aug 2025, Tahoe Beta 8, MMF 3], we try to make the table corners match the corners of the buttons below the table. (The buttons have .prefersCompactControlSizeMetrics applied). I think before, we were trying to match the AddField.
+        ///     Once we remove .prefersCompactControlSizeMetrics, we should adjust this.
+        scrollView.layer.cornerRadius = 7.0; /// [Aug 2025] Not sure if 6 or 7
+        scrollView.layer.cornerCurve = kCACornerCurveContinuous;
+        if (runningPreRelease()) dispatch_async(dispatch_get_main_queue(), ^{ if (!MainAppState.shared.window.contentView.prefersCompactControlSizeMetrics) assert(false); });
+    }
+    else
+        scrollView.layer.cornerRadius = MFNSBoxCornerRadius();
     
     scrollView.automaticallyAdjustsContentInsets = NO;
     scrollView.contentInsets = NSEdgeInsetsMake(1, 1, 1, 1); /// Insets so the content doesn't overlap with the border
@@ -324,8 +325,6 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     /// Note: NSColor.separatorColor doesn't update properly when tolggling darkmode even though it's a system color. So that's another plus
     /// Update: These hardcoded solid colors don't work properly with desktop tinting. We'll use .separatorColor instead and make the table 1 px shorter to prevent the border from overlapping with the grid and looking weird. The overlap will still happen when you scroll but that's okay
     
-
-        
         /// Check darkmode
     BOOL isDarkMode = NO;
     if (@available(macOS 10.14, *)) {
@@ -366,7 +365,14 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
         
     }
     
-
+    /// TEST - Make the table look like ones in Tahoe System Settings
+    ///     e.g. `System Settings > Keyboard > Text Replacements...`
+    if ((0)) {
+        object.scrollView.layer.cornerRadius = MFNSBoxCornerRadius();
+        object.scrollView.layer.borderColor = NSColor.clearColor.CGColor;
+        object.tableView.backgroundColor = [NSColor colorWithSRGBRed: 247/255.0 green: 247/255.0 blue: 247/255.0 alpha: 1.0]; /// None of the NSColors match. See NSColor-Tester project and FB18757582
+        
+    }
     
     ///
 //    object.scrollView.layer.borderColor = NSColor.separatorColor.CGColor;

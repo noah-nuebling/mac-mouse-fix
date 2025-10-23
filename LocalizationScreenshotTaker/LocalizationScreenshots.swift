@@ -183,6 +183,16 @@ final class LocalizationScreenshotClass: XCTestCase {
         """)
     }
     
+    func sharedf_clt(_ command_and_args: String) {
+        
+        do {
+            let process = try Process.run(URL(fileURLWithPath: "/bin/sh") , arguments: ["-c", command_and_args], terminationHandler: nil)
+            process.waitUntilExit()
+        }
+        catch { fatalError() }
+        
+    }
+    
     func sharedf_do_apple_script(scriptText: String) {
         let appleScript = NSAppleScript(source: scriptText)
         var error: NSDictionary? = nil
@@ -316,7 +326,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                 if transientUIElement.exists && transientUIElement.isHittable {
                     isSheet = true
                 } else {
-                    assert(false)
+                    assert(false, "_sharedf_take_toast_screenshot: No transient UI element found.")
                 }
             }
         }
@@ -477,7 +487,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                     "-AppleLanguages", "(\(languageCode))"
                 ],
                 env: [:],
-                leave_app_running: (localizations.count <= 1 ? true : false) /// Restart the app so its using the right language we specified ––– or leave it running for faster iterations if there's only one language
+                kill_app: (localizations.count > 1) /// Restart the app so its using the right language we specified ––– or leave it running for faster iterations if there's only one language
             )
             
             self.app = app
@@ -490,7 +500,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                     "-AppleLanguages", "(\(languageCode))"
                 ],
                 env: [:],
-                leave_app_running: (localizations.count <= 1 ? true : false)
+                kill_app: (localizations.count > 1)
             )
             
             /// Find elements
@@ -621,9 +631,15 @@ final class LocalizationScreenshotClass: XCTestCase {
         }
     }
     
-    func sharedf_launch_app(url: URL, args: [String], env: [String: String], leave_app_running: Bool) -> XCUIApplication {
+    func sharedf_launch_app(url: URL, args: [String], env: [String: String], kill_app: Bool) -> XCUIApplication {
         
-        if (leave_app_running) { /// This will not kill the app after the testrunner quits. And when the app is already running, it will attach the testrunner to the running app – the goal of this is to help speed-up iteration during development.
+        /// `kill_app` does 2 things:
+        ///     1. kills the app after the testrunner quits.
+        ///     2. kills already-running app instance before attaching the testrunner
+        ///  –> This is the default `XCUIApplication` behavior
+        ///  The goal of `!kill_app` is to help speed-up iteration during development.
+        
+        if (!kill_app) {
             
             let alreadyRunning = XCUIApplication(url: url).state == .notRunning
             if alreadyRunning || true { /// Open even if already running, to bring it to the foreground. Otherwise I see weird errors on .click() later [Sep 4 2025]
@@ -643,6 +659,11 @@ final class LocalizationScreenshotClass: XCTestCase {
             return xcapp
         }
         else {
+        
+            if (url == sharedf_helper_url()) {
+                sharedf_clt("launchctl remove com.nuebling.mac-mouse-fix.helper") /// Prevent launchd from restarting the helper
+            }
+        
             let xcapp = XCUIApplication(url: url)
             xcapp.launchArguments = args
             xcapp.launchEnvironment = env
@@ -677,18 +698,22 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Log
         DDLogInfo("Localization Screenshot Test Runner launched with output directory: \(xcode_screenshot_taker_output_dir_variable): \(outputDir)")
         
-        var mainApp = XCUIApplication()
-        NSWorkspace.shared.openApplication(at: sharedf_mainapp_url(), configuration: NSWorkspace.OpenConfiguration())
-        
-        /// Prepare helper app
+        /// Launch helper
         ///     We should launch the helper first, and not let the app enable it, so we can control its launchArguments.
-        let helperApp = XCUIApplication(url: sharedf_helper_url())
-        helperApp.launchArguments.append(localized_string_annotation_activation_argument_for_screenshotted_app)
-        helperApp.launch()
-        
-        /// Prepare mainApp
-        mainApp.launchArguments.append(localized_string_annotation_activation_argument_for_screenshotted_app) /// `["-AppleLanguages", "(de)"]`
-        mainApp.launch()
+        let helperApp = sharedf_launch_app(
+            url: sharedf_helper_url(),
+            args: [localized_string_annotation_activation_argument_for_screenshotted_app],
+            env: [:],
+            kill_app: true
+       )
+       
+        /// Launch mainApp
+        let mainApp = sharedf_launch_app(
+            url: sharedf_mainapp_url(),
+            args: [localized_string_annotation_activation_argument_for_screenshotted_app],
+            env: [:],
+            kill_app: true
+       )
         
         ///
         /// Helper
@@ -749,7 +774,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         let menu = statusItem.menus.firstMatch
         assert(menu.exists)
         let screenshot = takeLocalizationScreenshot(of: menu, name: "Status Item Menu")
-        XCTAssert(screenshot != nil, "Could not take screenshots with any localization data for Status Bar Item. Perhaps, the Helper App was started without the localizedString annotation argument? (If so, close the helper and let this test-runner start it)")
+        XCTAssert(screenshot != nil, "Could not take screenshots with any localization data for Status Bar Item. Perhaps, the Helper App was started without the localizedString annotation argument? (If so, close the helper and let this test-runner start it)") /// This comment is outdated now since the test-runner will always kill the helper and start its own instance – see `sharedf_launch_app`[Oct 2025]
         result.append(screenshot)
         
         /// Cleanup

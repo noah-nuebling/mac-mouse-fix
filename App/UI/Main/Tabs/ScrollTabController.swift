@@ -125,7 +125,7 @@ class ScrollTabController: NSViewController {
         precise.bindingTarget <~ preciseToggle.reactive.boolValues
         preciseToggle.reactive.boolValue <~ precise.producer
         let preciseHintRaw = NSLocalizedString("precise-scrolling-hint", comment: ".")
-        preciseHint.attributedStringValue = NSAttributedString(attributedMarkdown: preciseHintRaw.attributed().fillingOutBaseAsHint())!
+        preciseHint.attributedStringValue = MarkdownParser.attributedString(withCoolMarkdown: preciseHintRaw, fillOutBase: false)!.fillingOutBaseAsHint()
         
         /// Hardcode tab width
         ///     Do this before installing the macOS hint so it can accurately calculate the size of stuff [Sep 2025]
@@ -156,7 +156,7 @@ class ScrollTabController: NSViewController {
             ///     This is a really hacky solution. Move this logic into CollapsableStackView (maybe rename to AnimatingStackView or sth).
             ///         Make a method `register(switchableViews:forArrangedSubview:)` which calculates a size that fits all those views, and then you switch between them with `switchTo(view:)`..
             
-            let macOSHint = CoolNSTextField(hintWithAttributedString: NSAttributedString(coolMarkdown: macOSHintRaw, fillOutBase: false)!)
+            let macOSHint = CoolNSTextField(hintWithAttributedString: MarkdownParser.attributedString(withCoolMarkdown: macOSHintRaw, fillOutBase: false)!)
             
             do {
                 macOSHint.translatesAutoresizingMaskIntoConstraints = false
@@ -225,7 +225,7 @@ class ScrollTabController: NSViewController {
         /// - You can find discussion of the design-thoughts behind this inside `getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:`
         /// - How to ship this:
         ///     - We're introducing new localizable strings, so we should ship this in a major update with a Beta version
-        ///     - Once we shipped it, we should probably update the Captured Buttons Guide: https://github.com/noah-nuebling/mac-mouse-fix/discussions/112 - or create a new guide.
+        ///     - Once we shipped it, we should probably update the Captured Buttons Guide: https://redirect.macmousefix.com/?target=mmf-captured-buttons-guide - or create a new guide.
         
         let modProducer = SignalProducer.combineLatest(horizontalMod.producer, zoomMod.producer, swiftMod.producer, preciseMod.producer) /// We could reuse this down in the Keyboard modifier section, but currently, we're not
         let captureProducer = SignalProducer.combineLatest(smooth.producer, reverseDirection.producer, scrollSpeed.producer, modProducer).combinePrevious()

@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
-
+#import "MarkdownParser/MarkdownParser.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,10 +29,6 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 + (NSAttributedString *) attributedStringWithAttributedFormat: (NSAttributedString *)format args: (NSAttributedString *__strong _Nullable [_Nonnull])args argcount: (int)argcount;
 - (NSArray<NSAttributedString *> *) split: (NSString *)separator maxSplit: (int)maxSplit;
 
-+ (NSAttributedString * _Nullable)attributedStringWithCoolMarkdown:(NSString *)md;
-+ (NSAttributedString * _Nullable)attributedStringWithCoolMarkdown:(NSString *)md fillOutBase:(BOOL)fillOutBase;
-+ (NSAttributedString * _Nullable)attributedStringWithAttributedMarkdown:(NSAttributedString *)md;
-
 - (NSAttributedString *)attributedStringByAddingBaseLineOffset:(CGFloat)offset forRange:(const NSRangePointer _Nullable)range;
 
 - (NSString *)stringWithAttachmentDescriptions;
@@ -48,16 +44,16 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
 - (NSAttributedString *)attributedStringByAddingAttributesAsBase:(NSDictionary<NSAttributedStringKey, id> *)baseAttributes;
 + (NSAttributedString *)hyperlinkFromString:(NSString *)inString withURL:(NSURL *)url;
-- (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *)url forSubstring:(NSString *)substring;
-- (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *_Nonnull)aURL forRange:(const NSRangePointer _Nullable)range;
+- (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *_Nullable)url forSubstring:(NSString *)substring;
+    - (NSAttributedString *)attributedStringByAddingHyperlink:(NSURL *_Nullable)aURL forRange:(const NSRangePointer _Nullable)range;
 - (NSAttributedString *)attributedStringByAddingFont:(NSFont *)font forRange:(const NSRangePointer _Nullable)range;
 
 - (NSAttributedString *)attributedStringByAddingBoldForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingBoldForRange:(const NSRangePointer _Nullable)range;
 - (NSAttributedString *)attributedStringByAddingItalicForRange:(const NSRangePointer _Nullable)range;
-- (NSAttributedString *)attributedStringByAddingSemiBoldForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingItalicForSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingAlignment:(NSTextAlignment)alignment forRange:(const NSRangePointer _Nullable)rangeIn;
+- (NSAttributedString *)attributedStringByAddingParagraphSpacingBefore:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range;
 - (NSAttributedString *)attributedStringByAddingParagraphSpacing:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range;
 - (NSAttributedString *)attributedStringByAddingLineSpacing:(CGFloat)spacing forRange:(const NSRangePointer _Nullable)range;
 
@@ -70,7 +66,7 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 - (NSAttributedString *)attributedStringByAddingColor:(NSColor *)color forSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingColor:(NSColor *)color forRange:(const NSRangePointer _Nullable)range;
 
-- (NSAttributedString *)attributedStringBySettingSemiBoldColorForSubstring:(NSString *)subStr;
+- (NSAttributedString *) attributedStringByAddingBlankLineHeight: (CGFloat)height forRange:(const NSRangePointer _Nullable)range;
 - (NSAttributedString *)attributedStringByAddingHintStyle;
 
 - (NSSize)sizeAtMaxWidth:(CGFloat)maxWidth;

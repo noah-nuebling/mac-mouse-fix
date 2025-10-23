@@ -812,36 +812,42 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             tr_ = onlyFlagsMap[triggerType];
         }
         
-        /// Make attributed
-        
-        tr = tr_.attributed;
-        
-        /// Slighly emphasize `Drag` and `Scroll` for better legibility
-        ///     Notes:
-        ///     - 26.08.2024: I saw the French and Brazillian loclizers not capitalize and spell the drag-particles exactly as they are in the trigger.substring.[...] strings.
+        /// Parse markdown
+        ///     Purpose: Emphasize "Drag" and "Scroll" in `trigger.substring.drag.[x]` and `trigger.substring.scroll.[x]` for better scannability [Oct 2025]
+        ///     Inconsistency: Using styleOverrides: here instead of default *emphasis* styling of the MarkdownParser (which produces a similar semi-bold look) to keep style we were using historically. I haven't tried to unify the styles. [Oct 2025]
+        ///     History:
+        ///         - The code here used to be in `attributedStringByAddingSemiBoldForSubstring:` and  `attributedStringBySettingSemiBoldColorForSubstring:` [Oct 2025]
+        ///         - The emphasis was done by matching localizable substrings `trigger.z.scroll-particle` and `trigger.z.drag-particle`
+        ///     Old notes:  (from when we used to specify the substring to emphasize through localizable strings – which was error prone and annoying for localizers.)
+        ///             - 26.08.2024: I saw the French and Brazillian loclizers not capitalize and spell the drag-particles exactly as they are in the trigger.substring.[...] strings.
         ///                 So we added more extensive comments and added `.z.` in the key so that translators see the drag-particles *after* the trigger.substring.[...] strings - hopefully making it more understandable how the particles affect the substrings.
         
-        NSString *dragParticle =    NSLocalizedString(
-            @"trigger.z.drag-particle",
-            @"Note: This word will be emphasized in strings such as \"Double Click and Drag %@\".\n"
-            "For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in strings whose keys begin with\n"
-            "\"trigger.substring.drag.[...]\"."
-            "\n"
-            "\nIf that's not possible in your language, let me know and I will improve the implementation. Thank you!"
-        );
-        NSString *scrollParticle =  NSLocalizedString(
-            @"trigger.z.scroll-particle",
-            @"Note: This word will be emphasized in strings such as \"Click and Scroll %@\".\n"
-            "For the emphasis to work, make sure that spelling and capitalization matches *exactly* with how this word is used in the strings whose keys begin with\n"
-            "\"trigger.substring.scroll.[...]\"\n"
-            "\n"
-            "\nAlso see the comment next to \"trigger.z.drag-particle\"."
-        );
-        
-        tr = [tr attributedStringByAddingSemiBoldForSubstring: dragParticle];
-        tr = [tr attributedStringByAddingSemiBoldForSubstring: scrollParticle];
-        tr = [tr attributedStringBySettingSemiBoldColorForSubstring: dragParticle];
-        tr = [tr attributedStringBySettingSemiBoldColorForSubstring: scrollParticle];
+        tr = [MarkdownParser attributedStringWithCoolMarkdown: tr_ fillOutBase: NO styleOverrides: @{ /// Should we `fillOutBase:`? [Oct 2025]
+            @(CMARK_NODE_EMPH): ^NSAttributedString *(NSAttributedString *dst, NSRangePointer nodeRange) {
+                
+                /// Set 'semibold' weight
+                /// Notes:
+                ///     - Old impl used `NSFontManager` with weight 7 (weight 8 was commented out)
+                ///         This seems to match `NSFontWeightMedium`, not `NSFontWeightSemibold`, so we're using `NSFontWeightMedium` [Sep 2025]
+                ///     - We're implementing bold and italic with `NSFontDescriptorSymbolicTraits`, but that doesn't seem to support semibold [Sep 2025]
+                ///         (Maybe we should just not use symbolicTraits at all, and instead use fontTraits and fontAttributes directly? symbolicTraits don't seem super useful.)
+                dst = [dst attributedStringByAddingWeight: NSFontWeightMedium forRange: nodeRange];
+                
+                /// Set 'semibold' color
+                /// I can't really get a semibold. It's too thick or too thin. So I'm trying to make it appear thicker by darkening the color.
+                ///     Update: We're no longer using `NSFontManager` so we may have more control over thickness now and no longer need the color adjustment. [Oct 2025]
+                {
+                    
+                    NSColor *color;
+                    if ((0)) color = [NSColor.textColor colorWithAlphaComponent: 1.0];   /// Custom colors disable the automatic color inversion when selecting a tableViewCell. See https://stackoverflow.com/a/29860102/10601702
+                    else     color = NSColor.controlTextColor;                           /// This is almost black and automatically inverts. See: http://sethwillits.com/temp/nscolor/
+                    
+                    dst = [dst attributedStringByAddingColor: color forRange: nodeRange];
+                }
+                
+                return dst;
+            }
+        }];
     }
     
     /// Validate
@@ -874,7 +880,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             ///     - Our examples of the German strings are slightly wrong - we altered them to better be able to drive home the point that not even the first word of the string should be capitalized.
             buttonModString = stringf(NSLocalizedString(
                 @"trigger.substring.button-modifier.2",
-                @"Note: All the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using \"Title Case\", but this isn't common in other languages. For example, in German, the substring \"Double Click %@ +\" should be localized as \"doppelklicke %@ +\" and \"Click and Drag %@\" as \"klicke %@ und ziehe\". Notice that not even the first word is capitalized in German. That's because these substrings are joined programmatically to create a combined string. The substrings start with a lowercase letter, to avoid random capitalization in the middle of the combined string. The first word of the combined string will be capitalized programmatically. Therefore, unless your language has special capitalization rules (such as \"Title Case\" in English, or capitalization of nouns in German), these substrings should probably be all-lowercase, just like the German examples above. (Or, if you use a non-standard way to capitalize I think that's also ok, as long as it's reasonably consistent) I know this is a bit complicated, but I hope it's still understandable! If anything's unclear, please let me know and I'll try to explain it and make things easier in the future. Thank you."
+                @"Note: All the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using \"Title Case\", but this isn't common in other languages. For example, in German, the substring \"Click and Drag %@\" is localized as \"klicke %@ und ziehe\". Notice that not even the first word is capitalized. That's because these substrings are joined programmatically to create a combined string. So only capitalize words if there's a specific reason (such as \"Title Case\" in English, or capitalization of nouns in German). If you wanna deviate from this that's also fine, just try to stay consistent."
             ), buttonStr);
         } else if (lvl.intValue == 3) {
             buttonModString = stringf(NSLocalizedString(@"trigger.substring.button-modifier.3", @""), buttonStr);
@@ -954,6 +960,20 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     deleteButton.action = @selector(inRowRemoveButtonAction:);
     deleteButton.target = self.controller;
     
+    /**
+        [Aug 2025] Under macOS Tahoe, the deleteButton appears visually wider than it is specified. It's click-target doesn't match the oversized visuals
+            - (All this goes away if you use `UIDesignRequiresCompatibility`, which we plan to ship MMF 3 with for now.)
+            - This can be fixed by replacing the NSButton with an NSSegmentedControl with 1 segment.
+    
+            Symbol weight on the NSSegmentedControl can't be changed in IB, we could do it here like this in code: (Copied from `Repro-Buttons-Too-Wide` project)
+            ```
+                NSImageSymbolConfiguration *symbolConfig = [NSImageSymbolConfiguration configurationWithPointSize: 11 weight: NSFontWeightBold scale: NSImageSymbolScaleMedium];
+                NSImage *newImage = [[_segmentedControl imageForSegment: 0] imageWithSymbolConfiguration: symbolConfig];
+                [_segmentedControl setImage: newImage forSegment: 0];
+            ```
+            Also see:
+                - `notes repo > macOS 26 Tahoe - MMF Issues.md`
+    */
     /// Override image on older macOS
     ///  Explanation: Try to fix weird margins / dimensions under older macOS versions. So far nothing works.
     ///  Note: Also see where we override plusIconView.image in ButtonTabController

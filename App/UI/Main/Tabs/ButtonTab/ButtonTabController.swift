@@ -61,7 +61,7 @@ import Foundation
         /// Process info
         ///     Note: Use non-breaking-space for nicer layout for long mouse names. (E.g. my VXE mouse connected over BT has the name "RivieraWaves SAS VXE R1SE+")
         ///         Update: Actually like the layout less with nbsp.
-//        name = name?.replacingOccurrences(of: " ", with: "\u{00a0}") as NSString?
+//        name = name?.replacingOccurrences(of: " ", with: "&nbsp;") as NSString?
         
         ///
         /// Add accessoryView
@@ -79,8 +79,8 @@ import Foundation
             
             let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "Note: '%1$@' will be the name of the mouse, such as 'Logitech M720 Triathlon'"), name!, nOfButtons)
             
-//            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
-            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.adding(.secondaryLabelColor, for: nil).settingFontSize(NSFont.smallSystemFontSize).adding(.center, for: nil).trimmingWhitespace()
+//            let hintString = MarkdownParser.attributedString(withCoolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
+            let hintString = MarkdownParser.attributedString(withCoolMarkdown: hintStringRaw, fillOutBase: true)?.adding(.secondaryLabelColor, for: nil).settingFontSize(NSFont.smallSystemFontSize).adding(.center, for: nil).trimmingWhitespace()
             
             if let hintString = hintString {
                 hint = CoolNSTextField(labelWithAttributedString: hintString)
@@ -489,10 +489,10 @@ import Foundation
             ///         - Chinese and Korean didn't put linebreaks at all and are pretty wide, making them wrap seems awkward.
             ///         - There's no big layout that depends on this, just the little popover which contains this text and a little checkbox below. So localizers don't control stuff they don't see (which was the case before `applyHardcodedTabWidth()`)
             
-            let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "Note: The linebreak is so the popover doesn't become too wide."), deviceName)
+            let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "Note: There's a linebreak in English so the popover doesn't become too wide and to aid with readability."), deviceName)
             
             if let attributes = restoreDefaultPopover_stringAttributesFromIB,
-               let newString = NSAttributedString(coolMarkdown: message, fillOutBase: false)?.addingAttributes(asBase: attributes)
+               let newString = MarkdownParser.attributedString(withCoolMarkdown: message, fillOutBase: false)?.addingAttributes(asBase: attributes)
            {
                 self.restoreDefaultPopoverLabel.attributedStringValue = newString
             }

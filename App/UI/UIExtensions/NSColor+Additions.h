@@ -9,20 +9,16 @@
 
 #import <Cocoa/Cocoa.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
 @interface NSView (ColorAdditions)
-
-- (NSColor *)solidColorAtX:(NSInteger)x y:(NSInteger)y;
-
+    - (NSColor *)solidColorAtX:(NSInteger)x y:(NSInteger)y;
 @end
 
 @interface NSColor (Additions)
-
-- (NSColor *)flippedColor;
-- (NSColor *)solidColorWithBackground:(NSColor *)background;
-- (NSColor *)solidColor;
-
+    - (NSColor *)flippedColor;
+    - (NSColor *)solidColorWithBackground:(NSColor *)background;
+    - (NSColor *)solidColor;
 @end
 
-NS_ASSUME_NONNULL_END
+@interface NSColor (PrivateStuff)
+    - (BOOL) _getSemanticallyEquivalentVisualEffectMaterial: (NSVisualEffectMaterial *) arg1; /// [Aug 2025] Private method on `NSDynamicSystemColor` available in macOS Tahoe Beta 8 || Used in disassembly of `-[_NSBoxMaterialCapableCustomView _updateSubviews]`, which we're trying to emulate in AddField.swift, but we didn't end up using it.
+@end
