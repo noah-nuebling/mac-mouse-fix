@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **October 2025**
 
+- 🇵🇱&nbsp;Ciejson1
 - 🇺🇸&nbsp;Bluehao
 - 🇺🇸&nbsp;Alfonso
 - 🇲🇰&nbsp;Drassko

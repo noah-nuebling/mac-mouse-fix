@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Oktober 2025**
 
+- 🇵🇱&nbsp;Ciejson1
 - 🇺🇸&nbsp;Bluehao
 - 🇺🇸&nbsp;Alfonso
 - 🇲🇰&nbsp;Drassko
