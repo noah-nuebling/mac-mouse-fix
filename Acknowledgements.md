@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **October 2025**
 
+- 🇲🇾&nbsp;Casper&nbsp;Ho - "The world needs more people like you!"
 - 🇺🇸&nbsp;Sonja&nbsp;Beals
 - 🇵🇱&nbsp;Ciejson1
 - 🇺🇸&nbsp;Bluehao
