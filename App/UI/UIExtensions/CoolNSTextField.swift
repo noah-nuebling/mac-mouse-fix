@@ -198,7 +198,7 @@ class CoolNSTextField: NSTextField {
     override func textDidEndEditing(_ notification: Notification) {
         super.textDidEndEditing(notification)
         
-        print("textEndEditing")
+        print("textEndEditing (responder")
         
         /// Call cool function
         if self.isCoolFirstResponder {
