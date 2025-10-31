@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **October 2025**
 
+- 🇺🇸&nbsp;Kevin&nbsp;Hale
 - 🇸🇪&nbsp;Eric&nbsp;Hansander
 - 🇺🇸&nbsp;Nick&nbsp;Kuzmik - "Best app on the market for mouse customization."
 - 🇲🇾&nbsp;Casper&nbsp;Ho - "The world needs more people like you!"
