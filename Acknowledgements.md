@@ -40,6 +40,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the _sugar rush_!
 
+**November 2025**
+
+- 🇺🇸&nbsp;Noel&nbsp;Reinhold - "All apps should be this simple and work this well. Thank you!! :)"
+
 **October 2025**
 
 - 🇺🇸&nbsp;Ayush&nbsp;Sinha

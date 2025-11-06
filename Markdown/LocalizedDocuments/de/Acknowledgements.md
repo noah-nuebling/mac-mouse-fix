@@ -38,6 +38,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den _Zucker-Kick_!
 
+**November 2025**
+
+- 🇺🇸&nbsp;Noel&nbsp;Reinhold - "All apps should be this simple and work this well. Thank you!! :)"
+
 **Oktober 2025**
 
 - 🇺🇸&nbsp;Ayush&nbsp;Sinha
