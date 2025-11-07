@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **November 2025**
 
+- 🇩🇪&nbsp;Thomas&nbsp;Alexnat - "brings back smooth scrolling"
 - 🇫🇷&nbsp;Lucas&nbsp;Selva - "Thank you very much"
 - 🇬🇧&nbsp;A&nbsp;Very&nbsp;Happy&nbsp;User - "One word - Lifesaver!"
 - 🇺🇸&nbsp;Noel&nbsp;Reinhold - "All apps should be this simple and work this well. Thank you!! :)"
