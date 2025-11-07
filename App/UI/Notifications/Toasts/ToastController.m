@@ -116,6 +116,7 @@ typedef enum {
     ///                     use private APIs and make the layout engine give us 2 passes and stuff (since the desired height depends on the width that the layoutEngine grants us.)
     ///                     > See our `NSTextViewSizeExperiments` test project
     ///                     ... The only reason to implement this might be if we need auto-resizing NSTextViews in multiple places in the app, but I don't think we do [Sep 2025]
+    ///                 Update: [Oct 2025] We managed to make something like this work in `mf-xcloc-editor` (`MFTextField`) – maybe it's not so hard after all?  (But it's being dsplayed in an NSTableView with fixed-width columns which makes things less complicated – maybe that's why it works)
     ///
     /// Future ideas:
     ///     - For the Tahoe overhaul, maybe change the look to be capsule shaped like native iOS Toasts? (https://x.com/jsngr/status/1340317069359919104) [Sep 2025]

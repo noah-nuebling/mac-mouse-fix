@@ -106,6 +106,7 @@
 ///                 .theobj=@[@1, @"2", @3],
 ///             );
 ///         ```
+///     - Update: [Nov 2025] Implemented simplified version again just for fun in `playground-oct-2025`
 ///
 /// Meta:
 /// - Out of NSArray and MFDataClass we should be able to build any interesting arrangement of data. They would serve as an object-based alterative to array (> NSArray) and struct (> MFDataClass) from C.
