@@ -49,6 +49,9 @@ Unfortunately there's only `NS_ASSUME_NONNULL` and no `NS_ASSUME_NULLABLE`, whic
     }
     ```
 
+Update: [Nov 2025]
+    This is pretty dumb. You could just use a switch.
+
 Benefits:
 - Consistently prefix enum cases with the enum name, for nice autocomplete
 - Use underscore to separate the enum name from the case names
