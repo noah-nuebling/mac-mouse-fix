@@ -1117,18 +1117,35 @@ final class LocalizationScreenshotClass: XCTestCase {
                         ///     Otherwise the Xcode screenshot viewer breaks.
                         if stringTable == "" { stringTable = "Localizable" }
                         
-                        /// Duplicate screenshot
-                        ///     Each stringKey needs its own, unique screenshot file, otherwise the Xcode viewer breaks and shows the same frame for every string key. (Tested under Xcode 15 stable & Xcode 16 Beta)
-                        screenshotUsageCount += 1
-                        let screenshotName = "\(screenshotUsageCount). Copy - \(screenshotName).jpeg"
+                        #if false /// No longer necessary to duplicate the screenshots when using our `Xcloc Editor.app` instead of Xcode. [Nov 2025]
+                            /// Duplicate screenshot
+                            ///     Each stringKey needs its own, unique screenshot file, otherwise the Xcode viewer breaks and shows the same frame for every string key. (Tested under Xcode 15 stable & Xcode 16 Beta)
+                            screenshotUsageCount += 1
+                            let screenshotName = "\(screenshotUsageCount). Copy - \(screenshotName).jpeg"
                         
-                        /// Convert image
-                        ///     In the WWDC demos they used jpeg, but .png is a bit higher res I think.
-                        guard let bitmap = screenshot.image.representations.first as? NSBitmapImageRep else { fatalError() }
-                        let imageData = bitmap.representation(using: .jpeg, properties: [:])
                         
-                        /// Store name -> screenshot mapping
-                        screenshotNameToScreenshotDataMap[screenshotName] = imageData
+                            /// Convert image
+                            ///     In the WWDC demos they used jpeg, but .png is a bit higher res I think.
+                            guard let bitmap = screenshot.image.representations.first as? NSBitmapImageRep else { fatalError() }
+                            let imageData = bitmap.representation(using: .jpeg, properties: [:])
+                            
+                            /// Store name -> screenshot mapping
+                            screenshotNameToScreenshotDataMap[screenshotName] = imageData
+                        #else
+                            
+                            let screenshotName = screenshotName + ".jpeg"
+                            
+                            if screenshotNameToScreenshotDataMap[screenshotName] == nil {
+                                /// Convert image
+                                ///     In the WWDC demos they used jpeg, but .png is a bit higher res I think.
+                                guard let bitmap = screenshot.image.representations.first as? NSBitmapImageRep else { fatalError() }
+                                let imageData = bitmap.representation(using: .jpeg, properties: [:])
+                                
+                                /// Store name -> screenshot mapping
+                                screenshotNameToScreenshotDataMap[screenshotName] = imageData
+                            }
+                        
+                        #endif
                         
                         /// Store the encodable data (everything except the screenshot itself) to the localizedStringData datastructure
                         var didAttachToExistingDatum = false
