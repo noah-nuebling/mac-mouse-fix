@@ -8958,6 +8958,7 @@
 				OTHER_CFLAGS = (
 					"\"-Dnil=((id\\ _Nullable)__DARWIN_NULL)\"",
 					"\"-DNULL=((void *\\ _Nullable)0)\"",
+					"-Werror=unguarded-availability-new",
 				);
 				SDKROOT = macosx;
 				STRIP_SWIFT_SYMBOLS = NO;
@@ -9048,6 +9049,7 @@
 				OTHER_CFLAGS = (
 					"\"-Dnil=((id\\ _Nullable)__DARWIN_NULL)\"",
 					"\"-DNULL=((void *\\ _Nullable)0)\"",
+					"-Werror=unguarded-availability-new",
 				);
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = NDEBUG;
