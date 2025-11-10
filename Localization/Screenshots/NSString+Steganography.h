@@ -40,12 +40,12 @@ NS_ASSUME_NONNULL_BEGIN /// [Sep 2025] I haven't checked if these are actually  
 
     - (NSString *)decodedAsSecretMessage;
 
-    + (NSString *)stringWithBinaryArray:(NSArray<NSArray<NSNumber *> *> *)characters;
-    - (NSArray<NSArray<NSNumber *> *> *)binaryArray;
+    //+ (NSString *)stringWithBinaryArray:(NSArray<NSArray<NSNumber *> *> *)characters;
+    //- (NSArray<NSArray<NSNumber *> *> *)binaryArray;
 
-    + (NSString *)stringWithUTF32Characters:(NSArray<NSNumber *> *)characters;
-    - (NSArray<NSNumber *> *)UTF32Characters;
-    - (NSString *)UTF32CharacterDescription;
+    //+ (NSString *)stringWithUTF32Characters:(NSArray<NSNumber *> *)characters;
+    //- (NSArray<NSNumber *> *)UTF32Characters;
+    //- (NSString *)UTF32CharacterDescription;
 
 @end
 

@@ -20,6 +20,10 @@ Enabled `-Wsign-compare` and `-Wsign-conversion` warnings on [Jul 2025].
 
         ```
 
+    Update: [Nov 2025]
+        Disabled `-Wsign-compare`. It's too annoying and not often helpful. 
+            (Because C stdlib / Cocoa APIs constantly return unsigned ints and when you wanna iterate over them with `int i` it warns you, even though that's fine 99% of the time. Only problem is when you wanna iterate backwards IIRC.)
+
 ### Backwards for-loop footgun
 
     [Sep 2025] These `Wsign-compare` and `-Wsign-conversion` warnings often encourage us to use unsigned ints for for-loops, but this will result in an infinite loop for backwards loops like this one:

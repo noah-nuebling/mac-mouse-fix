@@ -14,8 +14,6 @@
 		4F09284228B8C71C00BDC2FF /* Hyperlink.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E725F2C92700689B77 /* Hyperlink.m */; };
 		4F09284528B8E82B00BDC2FF /* LicenseSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09284328B8E82B00BDC2FF /* LicenseSheetController.swift */; };
 		4F09284828B8EE7200BDC2FF /* LicenseSheetController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F09284A28B8EE7200BDC2FF /* LicenseSheetController.xib */; };
-		4F0C00422C53273200C5D843 /* BidirectionalMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0C00412C53273200C5D843 /* BidirectionalMap.m */; };
-		4F0C00432C53273200C5D843 /* BidirectionalMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0C00412C53273200C5D843 /* BidirectionalMap.m */; };
 		4F0D906C2E89731D005859A0 /* TabControllerUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0D906B2E89731C005859A0 /* TabControllerUtility.swift */; };
 		4F0D90722E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0D90712E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m */; };
 		4F0D90732E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0D90712E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m */; };
@@ -31,7 +29,6 @@
 		4F1708BE2E51D60400945CF3 /* MFSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFSemaphore.m */; };
 		4F1713532E6201FE00FFE14A /* storyboard-notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F1713522E6201FE00FFE14A /* storyboard-notes.md */; };
 		4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17D2E0292A635200EB07CA /* SwitchMaster.swift */; };
-		4F18464D2C533B5900D5E835 /* BidirectionalMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0C00412C53273200C5D843 /* BidirectionalMap.m */; };
 		4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AFE962670EBA900ECA424 /* DragCurve.swift */; };
 		4F1B418F2D49960E00026C94 /* MFSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFSemaphore.m */; };
 		4F1B41902D49960E00026C94 /* MFSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFSemaphore.m */; };
@@ -8234,7 +8231,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4F18464D2C533B5900D5E835 /* BidirectionalMap.m in Sources */,
 				4F3A10E92C5ED9E50054B89E /* SharedUtility.m in Sources */,
 				4FE1A1BB2C56A50100CE3347 /* Logging.m in Sources */,
 				4F1708BE2E51D60400945CF3 /* MFSemaphore.m in Sources */,
@@ -8269,7 +8265,6 @@
 				4FB8B29C2CCEBAEB00A5A580 /* GetLicenseConfig.swift in Sources */,
 				4FA40D0F28A0D8EF00499E53 /* SubPixelator.m in Sources */,
 				4F97E001298732E500012BAC /* LocalizationUtility.m in Sources */,
-				4F0C00432C53273200C5D843 /* BidirectionalMap.m in Sources */,
 				4FA625572DA97CCE004F46DA /* MFDataClass.m in Sources */,
 				4F4C73FE2C4FB5D2001D97C3 /* AnnotationUtility.m in Sources */,
 				4F58FE002C56DE9B00926A00 /* Logging.swift in Sources */,
@@ -8585,7 +8580,6 @@
 				4FCEDC93292D765600E7DA2A /* Constants.swift in Sources */,
 				4FF6654325F2C7B000689B77 /* HelperServices.m in Sources */,
 				4FA994BE26678AC90007F003 /* ScrollAnalyzer.m in Sources */,
-				4F0C00422C53273200C5D843 /* BidirectionalMap.m in Sources */,
 				4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */,
 				4FDE759F28B174E700662314 /* TrialCounter.swift in Sources */,
 				4FE479E12933C87A00B75E9B /* ButtonModifiers.m in Sources */,
@@ -8988,7 +8982,6 @@
 				WARNING_CFLAGS = (
 					"-Wnullable-to-nonnull-conversion",
 					"-Wnonnull",
-					"-Wsign-compare",
 					"-Wsign-conversion",
 				);
 			};
@@ -9083,7 +9076,6 @@
 				WARNING_CFLAGS = (
 					"-Wnullable-to-nonnull-conversion",
 					"-Wnonnull",
-					"-Wsign-compare",
 					"-Wsign-conversion",
 				);
 			};
