@@ -14,9 +14,69 @@
 #import "NSAttributedString+Additions.h"
 #import "NSString+Additions.h"
 #import "Logging.h"
+#import "MFLoop.h"
+
+mfdata_cls_m(StringAnnotation)
+
+@implementation StringAnnotation (SwiftCompat)
+    - (NSString *)  key { return self->key; }
+    - (NSString *)  table { return self->table; }
+    - (NSRange)     rangeInString { return self->rangeInString; }
+@end
 
 @implementation LocalizedStringAnnotation
 
+
++ (NSArray<StringAnnotation *> *) extractAnnotationsFromString: (NSString *)string {
+    
+    auto secretMessages = string.secretMessages; /// Extract this for optimization, so we don't call it over and over [Nov 2025]
+    
+    auto result = [NSMutableArray new];
+    
+    auto stack = [NSMutableArray new];
+    
+    loopc(i, secretMessages.count) {
+        
+        NSError *err = nil;
+        auto regex = [NSRegularExpression regularExpressionWithPattern: @"<mfkey:(.+):(.*)>" options: 0 error: &err];
+        if (err) assert(false);
+        
+        auto startSequenceMatches = [regex matchesInString: secretMessages[i].secretMessage options: 0 range: NSMakeRange(0, secretMessages[i].secretMessage.length)];
+        assert(startSequenceMatches.count <= 1);
+        
+        if (startSequenceMatches.count) { /// startSequence
+            assert(startSequenceMatches[0].numberOfRanges == 3);
+            
+            [stack addObject: @{
+                @"key":               [secretMessages[i].secretMessage substringWithRange: [startSequenceMatches[0] rangeAtIndex: 1]],
+                @"table":             [secretMessages[i].secretMessage substringWithRange: [startSequenceMatches[0] rangeAtIndex: 2]],
+                @"startSequenceEnd":  @(NSMaxRange(secretMessages[i].rangeInString))
+            }];
+            
+        }
+        else { /// endSequence
+            assert([secretMessages[i].secretMessage isEqual: @"</mfkey>"]);
+            assert(stack.count);
+            
+            NSDictionary *head = [stack lastObject];
+            [stack removeLastObject];
+            
+            auto r0 = [head[@"startSequenceEnd"] unsignedLongValue];
+            auto r1 = secretMessages[i].rangeInString.location;
+            
+            auto x = mfdata_new(StringAnnotation,
+                .key = head[@"key"],
+                .table = head[@"table"],
+                .rangeInString = NSMakeRange(r0,  r1 - r0)
+            );
+            DDLogDebug(@"rangeInString: %@", NSStringFromRange(x->rangeInString));
+            
+            [result addObject: x];
+        }
+    }
+    
+    return result;
+}
 
 + (NSString *) stringByAnnotatingString: (NSString *)string withKey: (NSString *)key table: (NSString *)table { /// To be used by `MFLocalizedString` [Oct 2025]
     

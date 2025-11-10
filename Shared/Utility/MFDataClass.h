@@ -93,7 +93,7 @@
 ///     - Like half of the code in `MFDataClass.m` is to implement `NSSecureCoding`
 ///         - After thinking about it I think it isn't really that useful for us... but now we already wrote the code.
 ///         - Read more about our thoughts on NSSecureCoding in `MFCoding.m`
-///     - Update: [Jul 2025] Tried to reimplement this inside `objc-test-july-13-2024` without the NSSecureCoding validations and ended up with 110 lines and a more concise syntax, which looked like this:
+///     - Update: [Jul 2025] Tried to reimplement this inside `objc-playground-2024` (formerly`objc-test-july-13-2024`) without the NSSecureCoding validations and ended up with 110 lines and a more concise syntax, which looked like this:
 ///         ```
 ///             MFDataClass(MyDataClass, MFDataClassBase_Simplified,
 ///                 int theint;
@@ -107,6 +107,7 @@
 ///             );
 ///         ```
 ///     - Update: [Nov 2025] Implemented simplified version again just for fun in `playground-oct-2025`
+///         
 ///
 /// Meta:
 /// - Out of NSArray and MFDataClass we should be able to build any interesting arrangement of data. They would serve as an object-based alterative to array (> NSArray) and struct (> MFDataClass) from C.

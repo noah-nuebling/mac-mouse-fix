@@ -23,8 +23,6 @@ final class LocalizationScreenshotClass: XCTestCase {
     
     /// Keep-in-sync with .app
     let localized_string_annotation_activation_argument_for_screenshotted_app = "-MF_ANNOTATE_LOCALIZED_STRINGS"
-    let localized_string_annotation_prefix_regex = "<mfkey:(.+):(.*)>" /// The first capture group is the localizationKey, the second capture group is the stringTableName
-    let localized_string_annotation_suffix       = "</mfkey>"
     
     /// ENV variable names  (This is how we pass data from the Python script that invokes this – uploadstrings.py [Oct 2025])
     let xcode_screenshot_taker_output_dir_variable = "MF_LOCALIZATION_SCREENSHOT_OUTPUT_DIR"
@@ -1305,38 +1303,17 @@ final class LocalizationScreenshotClass: XCTestCase {
             
             /// Extract localization key+table from each secret message
             var localizedStrings = [ScreenshotAndMetadata.Metadata.Frame.String_]()
+            
             for (string, secretMessages) in stringsAndSecretMessages {
-                
+            
                 var localizationKeys = [ScreenshotAndMetadata.Metadata.Frame.String_.XCStringsData]()
-                var prefixStack: [(found: FoundSecretMessage, key: String, table: String)]  = []
-                for secretMessage in secretMessages {
-                    if localized_string_annotation_suffix == secretMessage.secretMessage { /// Parse suffix
-                        let lastPrefix = prefixStack.popLast()!
-                        let prefixEnd = lastPrefix.found.rangeInString.upperBound
-                        let suffixStart = secretMessage.rangeInString.lowerBound
-                        let uiStringAfterLastPrefix = (string as NSString).substring(with: NSMakeRange(
-                            prefixEnd,
-                            suffixStart - prefixEnd
-                        ))
-                        localizationKeys.append(ScreenshotAndMetadata.Metadata.Frame.String_.XCStringsData(key: lastPrefix.key, table: lastPrefix.table, uiString: uiStringAfterLastPrefix))
-                    }
-                    else { /// Parse Prefix
-                    
-                        let prefix_regex = try NSRegularExpression(pattern: localized_string_annotation_prefix_regex, options: [])
-                        let prefix_matches = prefix_regex.matches(in: secretMessage.secretMessage, options: [.anchored], range: .init(location: 0, length: secretMessage.secretMessage.utf16.count)) /// NSString and related objc classes are based on UTF16 so we should do .utf16 afaik
-                        assert(prefix_matches.count <= 1)
-                        
-                        
-                        if let match = prefix_matches.first {
-                            assert(match.numberOfRanges == 3) /// Full match + 3 capture groups
-                            if let keyRange   = Range(match.range(at: 1), in: secretMessage.secretMessage),
-                               let tableRange = Range(match.range(at: 2), in: secretMessage.secretMessage)
-                            {
-                                prefixStack.append((secretMessage, key: String(secretMessage.secretMessage[keyRange]), table: String(secretMessage.secretMessage[tableRange])))
-                            }
-                        }
+            
+                if let annotations: [StringAnnotation] = LocalizedStringAnnotation.extractAnnotations(from: string) {
+                    for annotation in annotations {
+                        localizationKeys.append(.init(key: annotation.key, table: annotation.table, uiString: (string as NSString).substring(with: annotation.rangeInString)))
                     }
                 }
+                
                 /// Append to result
                 if localizationKeys.count > 0 {
                     localizedStrings.append(ScreenshotAndMetadata.Metadata.Frame.String_(uiString: string, stringAnnotations: localizationKeys))

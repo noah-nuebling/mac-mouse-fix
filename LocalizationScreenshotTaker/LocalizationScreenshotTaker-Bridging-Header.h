@@ -19,6 +19,7 @@
 #import "Logging.h"
 #import "TreeNode.h"
 #import "NSString+Steganography.h"
+#import "LocalizedStringAnnotation.h"
 #import "NSString+Additions.h"
 #import "DisableSwiftBridging.h"
 #import "MFDataClass.h"

@@ -416,6 +416,10 @@
 		4FFA4E4828B7D2E40062A1FE /* NSShadow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */; };
 		4FFA4E4928B7D3750062A1FE /* NSView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F92A72C260F6C7800529D1F /* NSView+Additions.m */; };
 		4FFA4E4A28B7D3750062A1FE /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */; };
+		4FFA973A2EC2261600A52849 /* MFSimpleDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FFA97392EC2261600A52849 /* MFSimpleDataClass.m */; };
+		4FFA973B2EC2261600A52849 /* MFSimpleDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FFA97392EC2261600A52849 /* MFSimpleDataClass.m */; };
+		4FFA973C2EC2576200A52849 /* LocalizedStringAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73D62C4FB3FA001D97C3 /* LocalizedStringAnnotation.m */; };
+		4FFA973D2EC2579200A52849 /* MFSimpleDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FFA97392EC2261600A52849 /* MFSimpleDataClass.m */; };
 		4FFAEBEA2E74367300832CE2 /* AddField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFAEBE92E74367300832CE2 /* AddField.swift */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
 		4FFE2895291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
@@ -2561,6 +2565,8 @@
 		4FF9306128806E4F0007CCA7 /* PolyFitObjC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PolyFitObjC.m; sourceTree = "<group>"; };
 		4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseUtility.swift; sourceTree = "<group>"; };
 		4FFA4E3F28B7D0120062A1FE /* SharedSFSymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SharedSFSymbols.xcassets; sourceTree = "<group>"; };
+		4FFA97382EC2261600A52849 /* MFSimpleDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFSimpleDataClass.h; sourceTree = "<group>"; };
+		4FFA97392EC2261600A52849 /* MFSimpleDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFSimpleDataClass.m; sourceTree = "<group>"; };
 		4FFAD8EF28677F94005DD496 /* PointerConfigObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerConfigObjC.h; sourceTree = "<group>"; };
 		4FFAEBE92E74367300832CE2 /* AddField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddField.swift; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -7454,6 +7460,8 @@
 				4F0CFFE62C51878500C5D843 /* MFDataClass.h */,
 				4F0CFFE72C51878500C5D843 /* MFDataClass.m */,
 				4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */,
+				4FFA97382EC2261600A52849 /* MFSimpleDataClass.h */,
+				4FFA97392EC2261600A52849 /* MFSimpleDataClass.m */,
 				4F0C00402C53273200C5D843 /* BidirectionalMap.h */,
 				4F0C00412C53273200C5D843 /* BidirectionalMap.m */,
 				4F5FC0612D6206E3009DCF10 /* UndeprecateSimpleUnboxing.h */,
@@ -8234,6 +8242,7 @@
 				4F3A10E92C5ED9E50054B89E /* SharedUtility.m in Sources */,
 				4FE1A1BB2C56A50100CE3347 /* Logging.m in Sources */,
 				4F1708BE2E51D60400945CF3 /* MFSemaphore.m in Sources */,
+				4FFA973D2EC2579200A52849 /* MFSimpleDataClass.m in Sources */,
 				4FA773DB2E66FF3A0056E9B4 /* MFPlistDecoder.m in Sources */,
 				4FA773DA2E66FF1B0056E9B4 /* MFPlistEncoder.m in Sources */,
 				4FAA3DBC2C56802E00CBA413 /* XCUIElement+Additions.m in Sources */,
@@ -8243,6 +8252,7 @@
 				4F58FE032C56E65900926A00 /* AnnotationUtility.m in Sources */,
 				4FA773DC2E66FF510056E9B4 /* NSCoderErrors.m in Sources */,
 				4F8B01AC2C348A3A00F3AF8D /* LocalizationScreenshots.swift in Sources */,
+				4FFA973C2EC2576200A52849 /* LocalizedStringAnnotation.m in Sources */,
 				4FE78C342C4FFA2F00C54103 /* TreeNode.h in Sources */,
 				4FE78C352C4FFA2F00C54103 /* TreeNode.m in Sources */,
 				4FA773D92E66FEF50056E9B4 /* MFCoding.m in Sources */,
@@ -8320,6 +8330,7 @@
 				4FCC354D2C6296FF009E1908 /* CoolSFSymbolsFont.m in Sources */,
 				4F7F47CB28A5A03100290BBD /* ReactiveConfig.swift in Sources */,
 				4FE78C452C502A5F00C54103 /* NSString+Additions.m in Sources */,
+				4FFA973B2EC2261600A52849 /* MFSimpleDataClass.m in Sources */,
 				4F909D3C28A0C3D2009349A2 /* ModCaptureFieldEditor.swift in Sources */,
 				4FC4A24E2EA457EC003566D8 /* Localization.m in Sources */,
 				4FFA4E3528B795F30062A1FE /* LicenseUtility.swift in Sources */,
@@ -8495,6 +8506,7 @@
 				4FF6669825F2C93A00689B77 /* SubPixelator.m in Sources */,
 				4FA3ACC62DED91E100A460FD /* CurveVisualizer.swift in Sources */,
 				4F44794328B55F6300AD1979 /* CAAnimation+Extensions.swift in Sources */,
+				4FFA973A2EC2261600A52849 /* MFSimpleDataClass.m in Sources */,
 				4FE40B97283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */,
 				4F8A8DC2287F967000786BCC /* TestAccelerationCurve.swift in Sources */,
 				4FC4A24F2EA457EC003566D8 /* Localization.m in Sources */,
