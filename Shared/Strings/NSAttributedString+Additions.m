@@ -415,22 +415,29 @@
 
 #pragma mark Determine size
 
+#define NSNotFoundRect NSMakeRect(NSNotFound, NSNotFound, 0, 0)
 static NSRect MFUnionRect(NSRect r, NSRect s) {
     
-    /// Replacement for `NSUnionRect`
-    ///     `NSUnionRect` seems to ignore rects with zero-width,
-    ///     which makes it not work for `NSTextLayoutFragment`s representing blank-lines. [Oct 2025]
+    /// Like `NSUnionRect` with one difference:
+    ///     Does not have the feature of,`NSUnionRect`, where it completely ignores a rect if it has a x, or y-axis-size of 0.
+    ///
+    ///     Why? [Nov 2025]
+    ///         This change to NSUnionRect behavior is necessary for this to work for `NSTextLayoutFragment`s representing blank-lines in `sizeAtMaxWidth:` – they have a height we need to consider, but width zero. (Which we could also consider but don't need to) [Oct 2025]
+    ///         ... Actually, this is only needed in mf-xcloc-editor, when you enter trailing blank-lines in the editor. I don't think this is needed for mac-mouse-fix [Nov 2025]
+    ///     Caution:
+    ///         Do not use `NSZeroRect` as the initial value when looping over a series of rects and unioning them. This will cause the final rect to always be expanded to go through (0,0).
+    ///         Instead, you can use `NSNotFoundRect` as a sentinel value to have the initial rect be ignored when unioning
     
-    CGFloat minX = MIN(r.origin.x, s.origin.x);
-    CGFloat maxX = MAX(
-        (r.origin.x + r.size.width),
-        (s.origin.x + s.size.width)
-    );
-    CGFloat minY = MIN(r.origin.y, s.origin.y);
-    CGFloat maxY = MAX(
-        (r.origin.y + r.size.height),
-        (s.origin.y + s.size.height)
-    );
+    if (r.origin.x == NSNotFound || r.origin.y == NSNotFound) return s;
+    if (s.origin.x == NSNotFound || s.origin.y == NSNotFound) return r;
+    
+    CGFloat minX, maxX;
+    CGFloat minY, maxY;
+    
+    minX = MIN(r.origin.x, s.origin.x);
+    maxX = MAX(NSMaxX(r), NSMaxX(s));
+    minY = MIN(r.origin.y, s.origin.y);
+    maxY = MAX(NSMaxY(r), NSMaxY(s));
     
     return (NSRect){ { .x = minX, .y = minY }, { .width = maxX-minX, .height = maxY-minY } };
 
@@ -483,10 +490,10 @@ static NSRect MFUnionRect(NSRect r, NSRect s) {
             /// On options:
             ///     - `NSTextLayoutFragmentEnumerationOptionsEnsuresExtraLineFragment` is for ensuring layout consistency with editable text, which we don't need here.
             ///     - `NSTextLayoutFragmentEnumerationOptionsEstimatesSize` is a faster, but less accurate alternative to `NSTextLayoutFragmentEnumerationOptionsEnsuresLayout`
-            resultRect = NSZeroRect;
-            NSTextLayoutFragmentEnumerationOptions enumerationOptions = (
-                NSTextLayoutFragmentEnumerationOptionsEnsuresLayout |
-                NSTextLayoutFragmentEnumerationOptionsEnsuresExtraLineFragment /// Doesn't seem to make a difference [Oct 2025]
+            resultRect = NSNotFoundRect;
+            NSTextLayoutFragmentEnumerationOptions enumerationOptions = (0
+                | NSTextLayoutFragmentEnumerationOptionsEnsuresLayout
+                //| NSTextLayoutFragmentEnumerationOptionsEnsuresExtraLineFragment /// Doesn't seem to make a difference [Oct 2025]
             );
             [textLayoutManager enumerateTextLayoutFragmentsFromLocation: nil options: enumerationOptions usingBlock: ^BOOL(NSTextLayoutFragment * _Nonnull layoutFragment) {
                 resultRect = MFUnionRect(resultRect, layoutFragment.layoutFragmentFrame);
