@@ -58,8 +58,6 @@ IB_DESIGNABLE
 @end
 
 @implementation InvisibleKeyResponder {
-    UTF32Char _keyEquivalentChar;
-    NSEventModifierFlags _keyEquivalentModifierMask;
 }
 
 ///
@@ -67,17 +65,6 @@ IB_DESIGNABLE
 ///
 
 - (void)awakeFromNib {
-    
-    /// Preprocess keyEquivalent string
-    NSString *m = [IBUtility keyCharForLiteral:_keyEquivalent];
-    if (m != nil) {
-        _keyEquivalent = m;
-    }
-    assert(_keyEquivalent.length == 1);
-    _keyEquivalentChar = [[[_keyEquivalent UTF32Characters] firstObject] intValue];
-    
-    /// Preprocess modifiers
-    _keyEquivalentModifierMask = [IBUtility modifierMaskForLiteral:_modifiers];
     
     /// Check action stuff
     assert(self.action != NULL && self.target != nil);
@@ -88,20 +75,16 @@ IB_DESIGNABLE
 ///
 
 - (BOOL)performKeyEquivalent:(NSEvent *)event {
-    
-    if (_keyEquivalentChar == 0) {
-        return NO;
-    }
-    
-    UTF32Char eventChar = event.charactersIgnoringModifiers.UTF32Characters.firstObject.intValue; /// Getting all UTF32 chars here is pretty unnecessary and little inefficient I think. Why not use `[NSString -characterAtIndex:]`?
-    NSEventModifierFlags eventMods = event.modifierFlags;
 
-    BOOL charMatches = eventChar == _keyEquivalentChar;
-    BOOL flagsMatch = (eventMods & _keyEquivalentModifierMask) == _keyEquivalentModifierMask;
+    BOOL charMatches = [[event charactersIgnoringModifiers] isEqual: [IBUtility keyCharForLiteral: _keyEquivalent]];
+    
+    auto flagsMatch1 = (event.modifierFlags & [IBUtility modifierMaskForLiteral: _modifiers]);
+    auto flagsMatch2 = [IBUtility modifierMaskForLiteral: _modifiers];
+    BOOL flagsMatch = flagsMatch1 == flagsMatch2;
     
     if (charMatches && flagsMatch) {
         
-        [self sendAction:self.action to:self.target];
+        [self sendAction: self.action to: self.target];
         
         return YES;
         
