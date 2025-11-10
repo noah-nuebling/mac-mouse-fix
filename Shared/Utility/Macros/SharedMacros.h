@@ -62,6 +62,15 @@
 
 #pragma mark - Macros from mac-mouse-fix > SharedUtility.h
 
+/// `mfonce` – abbreviation for `dispatch_once`
+///     Less complicated/custom than `MFOnceMacro.h` [Nov 2025]
+///     Originally from `mf-xcloc-editor`
+///     Usage example:
+///         `mfonce(mfoncet, ^{ <Stuff you wanna do once> });`
+
+#define mfonce dispatch_once
+#define mfoncet ({ static dispatch_once_t onceToken; &onceToken; })
+
 /// `mferror` macro
 ///     Shorthand for creating an NSError with a debug description (Uses `NSDebugDescriptionErrorKey`)
 ///     Usage example:
