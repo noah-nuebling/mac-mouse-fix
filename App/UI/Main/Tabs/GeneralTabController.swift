@@ -252,10 +252,10 @@ class GeneralTabController: NSViewController {
 //
 //                let alert = NSAlert()
 //                alert.alertStyle = .informational
-//                alert.messageText = NSLocalizedString("beta-alert.title", comment: "")
-//                alert.informativeText = NSLocalizedString("beta-alert.body", comment: "")
-//                alert.addButton(withTitle: NSLocalizedString("beta-alert.confirm", comment: ""))
-//                alert.addButton(withTitle: NSLocalizedString("beta-alert.back", comment: ""))
+//                alert.messageText = MFLocalizedString("beta-alert.title", comment: "")
+//                alert.informativeText = MFLocalizedString("beta-alert.body", comment: "")
+//                alert.addButton(withTitle: MFLocalizedString("beta-alert.confirm", comment: ""))
+//                alert.addButton(withTitle: MFLocalizedString("beta-alert.back", comment: ""))
 //
 //                /// Display alert
 //                guard let window = MainAppState.shared.window else { return }

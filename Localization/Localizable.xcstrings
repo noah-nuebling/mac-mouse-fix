@@ -211,12 +211,6 @@
             "value" : "Version %@"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "app-version"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -233,24 +227,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Phiên bản %@"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "app-version"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "app-version"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "app-version"
           }
         }
       }
@@ -2061,7 +2037,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "mittlere Taste"
           }
         },
@@ -2191,7 +2167,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "primäre Taste"
           }
         },
@@ -2256,7 +2232,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "sekundäre Taste"
           }
         },
@@ -2321,7 +2297,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -2566,7 +2542,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -2876,7 +2852,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -3367,7 +3343,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**Scrollen** wird jetzt von Mac Mouse Fix abgefangen"
           }
         },
@@ -4342,12 +4318,6 @@
             "value" : "Clic principal"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "effect.primary-click"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4364,24 +4334,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kích nút chính"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "effect.primary-click"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "effect.primary-click"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "effect.primary-click"
           }
         }
       }
@@ -4472,12 +4424,6 @@
             "value" : "Clic secondaire"
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "effect.secondary-click"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4494,24 +4440,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kích nút phụ"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "effect.secondary-click"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "effect.secondary-click"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "effect.secondary-click"
           }
         }
       }
@@ -5837,40 +5765,10 @@
             "value" : "Si vous rencontrez des **problèmes pour activer** l'app, cliquez&nbsp;[ici](%@)."
           }
         },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "enable-timeout-toast"
-          }
-        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Uygulamayı **etkinleştirme konusunda sorun yaşıyorsanız**, [buraya](%@) tıklayın."
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "enable-timeout-toast"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "enable-timeout-toast"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "enable-timeout-toast"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "enable-timeout-toast"
           }
         }
       }
@@ -6790,7 +6688,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Diese Lizenz **konnte nicht aktiviert werden**, aber Mac Mouse Fix ist momentan **in deinem Land kostenlos**."
           }
         },
@@ -6856,7 +6754,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ein **Fehler mit dem Lizenzserver** ist aufgetreten\n\nEs heißt:\n\n%@"
+            "value" : "Ein **Fehler mit dem Lizenzserver** ist aufgetreten\n\nEr lautet:\n\n%@"
           }
         },
         "en" : {
@@ -7131,8 +7029,8 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Die Aktivierung deiner Lizenz ist aus **unbekannten Gründen** gescheitert\n\nBitte schreibe [hier](%@) einen Fehlerbericht"
+            "state" : "translated",
+            "value" : "Die Aktivierung deiner Lizenz ist aus **unbekannten Gründen** gescheitert\n\nBitte schreibe [hier](%@) einen **Fehlerbericht**"
           }
         },
         "en" : {
@@ -8363,11 +8261,11 @@
       }
     },
     "revive-toast" : {
-      "comment" : "Note: \"%1$@\" will be a list of mouse features like \"Scrolling\" or \"Buttons\" for which Mac Mouse Fix was enabled. \"%2$@\" will be the menu bar icon.\n\nNote 2: \"&nbsp;\" Creates a \"non-breaking space\" character which prevents the menu bar icon from ending up on a separate line from the text \"Menu Bar\". \n\nNote 3: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.",
+      "comment" : "Note: \"%1$@\" will be a list of mouse features like \"Scrolling\" or \"Buttons\" for which Mac Mouse Fix was enabled. \"%2$@\" will be the menu bar icon.\n\nNote 2: \"&nbsp;\" Creates a \"non-breaking space\" character which prevents the menu bar icon from ending up \"orphaned\" on a separate line from the \"Menu Bar\" text. \n\nNote 3: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mac Mouse Fix **aktiviert** für %1$@\nEs war in der Menüleiste&nbsp;%2$@ deaktiviert worden"
           }
         },
@@ -9728,7 +9626,7 @@
       }
     },
     "thanks.01" : {
-      "comment" : "Note: The weird thank-you messages are rare. Feel free to change them if you'd like to leave an easter egg. You can also leave them blank, just make sure to fill out thanks.01 - thanks.03",
+      "comment" : "Note: The weird thank-you messages are rare. Feel free to change them if you'd like to leave an easter egg. You can also leave them blank (insert a space character), just make sure to fill out thanks.01 - thanks.03",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10117,136 +10015,6 @@
         }
       }
     },
-    "thanks.07" : {
-      "comment" : "",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💙"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💙"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💙"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💙"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "💙"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💙"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💙"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💙"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💙"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💙"
-          }
-        }
-      }
-    },
-    "thanks.08" : {
-      "comment" : "",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ":) <- Mein Gesicht, als ich gesehen habe, dass du Mac Mouse Fix gekauft hast"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ":) <- My face when I saw you bought Mac Mouse Fix"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ":) <- Mon visgage lorsque je vois que vous avez acheté Mac Mouse Fix"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ":) <- Mac Mouse Fix를 구입해주신걸 본 제 표정이에요."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : ":) <- Minha expressão quando vi que você comprou o Mac Mouse Fix"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : ":) <- My face when I saw you bought Mac Mouse Fix"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ":) <- Đây là mặt tôi khi bạn mua Mac Mouse Fix"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ":) <-看见你购买Mac Mouse Fix时我的表情"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ":) <-看見你購買Mac Mouse Fix時我的表情"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : ":) <-看見你購買Mac Mouse Fix時我的表情"
-          }
-        }
-      }
-    },
     "thanks.09" : {
       "comment" : "",
       "localizations" : {
@@ -10318,24 +10086,24 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🏂 Entengang fürs Leben!!"
+            "value" : "🦆 Entengang für immer"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🏂 Duckgang for life!!"
+            "value" : "🦆 Entengang für immer"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🧼 Se laver les mains en sortant des toilettes n'est pas facultatif :D"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🏂 Duckgang 영원해줘!!"
           }
         },
@@ -10353,156 +10121,26 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🏂 Phê chữ ê kéo dàiiiii!!"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🏂一生不悔低头族！！"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🏂一生不悔低頭族！！"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🏂一世不悔低頭族！！"
-          }
-        }
-      }
-    },
-    "thanks.11" : {
-      "comment" : "",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🚜 Pass auf wo du hinfährst :P"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🚜 Watch where you're going :P"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🚜 Regardez où vous allez :P"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🚜 조심히 가세요 :P"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🚜 Deus ajuda quem cedo madruga :P"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🚜 Watch where you're going :P"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🚜 Để xem giờ đi đâu tiếp nào :P"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🚜你看着点方向:P"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🚜你看著點方向:P"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🚜你看着點方向:P"
-          }
-        }
-      }
-    },
-    "thanks.12" : {
-      "comment" : "",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🐁 Nicht diese Art von Mäusen, Mama!"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🐁 Not these mice, mom!"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🐁 Non, pas cette souris, maman !"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🐁 아 엄마 이 마우스 말고!"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🫕 Toda panela tem sua tampa!"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🐁 Not these mice, mom!"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🐁 Không phải chuột này nhé ;)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🐁妈，不是这种老鼠啦！"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🐁媽，不是這種老鼠啦！"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🐁媽，不是這種老鼠啦！"
           }
         }
       }
@@ -10572,485 +10210,30 @@
         }
       }
     },
-    "thanks.14" : {
-      "comment" : "",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🇹🇷 Ey Kanka, tebrikler tebrikler!"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🇹🇷 Ey Kanka, tebrikler tebrikler!"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🇹🇷 Ey Kanka, tebrikler tebrikler!"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🇹🇷 Ey Kanka, tebrikler tebrikler!"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🕊️ Mais vale um pássaro na mão do que dois voando!"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🇹🇷 Ey Kanka, tebrikler tebrikler!"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🇻🇳 Người anh em, chúc mừng, chúc mừng nhé!"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🇹🇷 Ey Kanka, tebrikler tebrikler!"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🇹🇷 Ey Kanka, tebrikler tebrikler!"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🇹🇷 Ey Kanka, tebrikler tebrikler!"
-          }
-        }
-      }
-    },
-    "thanks.15" : {
-      "comment" : "",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🥛 Vollmilch natürlich! Es ist schließlich dein Geburtstag."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🥛 Whole milk of course! It's your birthday after all."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🥛 Du lait entier, bien sûr ! C'est ton anniversaire après tout."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🥛 생일에 마시는 생우유예요!"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🥛 Não adianta chorar pelo leite derramado."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🥛 Whole milk of course! It's your birthday after all."
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🥛 Sữa tươi nguyên \"trất\" trăm phần trăm."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🥛当然是全脂牛奶啊！毕竟是你的生日喔。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🥛當然是全脂牛奶啊！畢竟是你的生日耶。"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🥛當然是全脂牛奶啊！畢竟是你的生日喔。"
-          }
-        }
-      }
-    },
-    "thanks.16" : {
-      "comment" : "",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🎸 (Noch) nicht John Mayer. Trotzdem Bürgermeister der Herzen."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🎸 Not John Mayer (yet). Nevertheless mayor of hearts."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🎸 Pas (encore) John Mayer. Néanmoins, le maire des cœurs."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🎸 존 메이어까지는 (아직)아니지만, 마음은 mayer입니다."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🎤 Quem canta seus males espanta."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🎸 Not John Mayer (yet). Nevertheless mayor of hearts."
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🎸 Thưởng bạn một bản rockkkk nhé"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🎸虽（还）不是约翰・梅尔，却是心之美尔。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🎸雖（還）不是約翰・梅爾，卻是心之美爾。"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🎸雖（仍）不是約翰・梅爾，卻是心之美爾。"
-          }
-        }
-      }
-    },
-    "thanks.17" : {
-      "comment" : "",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💃 1NEIN8NEIN"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💃 1NEIN8NEIN"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💃 1NEIN8NEIN"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💃 1NEIN8NEIN"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🏝️ O descanso é tão importante quanto o trabalho..."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "💃 1NEIN8NEIN"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💃 ILU3000"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💃 1NEIN8NEIN"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💃 1NEIN8NEIN"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "💃 1NEIN8NEIN"
-          }
-        }
-      }
-    },
-    "thanks.18" : {
-      "comment" : "",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🦄 Du willst vielleicht nicht die Welt retten, aber du rettest schon meine :)"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🦄 You may not want to save the world, but you're already saving mine :)"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🦄 Vous ne voulez peut-être pas sauver le monde, mais vous sauvez au moins le mien :)"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🦄 당신이 세상을 구하고 싶으시지는 않을지 모르지만, 적어도 저는 구해주고 계세요 :)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🦄 Você pode não querer salvar o mundo, mas já está salvando o meu :)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🦄 You may not want to save the world, but you're already saving mine :)"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🦄 Chắc bạn không định cứu cả thế giới đâu, nhưng mà bạn đã cứu thế giới của tôi rồi :)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🦄你或许不想拯救世界，但你的确在拯救我:)"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🦄你或許不想拯救世界，但你的確在拯救我:)"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🦄你或許不想拯救世界，但你的確在拯救我:)"
-          }
-        }
-      }
-    },
-    "thanks.19" : {
-      "comment" : "",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🏜️ Dankeschön, meine Frau..."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🏜️ Dankeschön, meine Frau..."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🏜️ Dankeschön, meine Frau..."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🏜️ Dankeschön, meine Frau..."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🏆 É dando que se recebe..."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🏜️ Dankeschön, meine Frau..."
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🏜️ Cảm ơn em, vợ iu của anh..."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🏜️ Dankeschön, meine Frau..."
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🏜️ Dankeschön, meine Frau..."
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🏜️ Dankeschön, meine Frau..."
-          }
-        }
-      }
-    },
-    "thanks.20" : {
-      "comment" : "",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🌍 Universal Studios ist wahrscheinlich sowieso nicht so toll... :)"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🌍 Universal Studios is probably not that great anyways... :)"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🌍 Universal Studios n'est probablement plus aussi bon de toute façon... :)"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🌍 유니버설 스튜디오도 이만큼 대단하지는 않을 것 같아요... :)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🌍 A pressa é inimiga da perfeição... :)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🌍 Universal Studios is probably not that great anyways... :)"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🌍 Đi đến Universal Studios cũng không tuyệt vời như lúc này... :)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🌍环球影城很可能也没有那么好⋯⋯ :)"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🌍環球影城很可能也沒有那麼好⋯⋯ :)"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🌍環球影城很可能也沒有那麼好⋯⋯ :)"
-          }
-        }
-      }
-    },
     "thanks.21" : {
       "comment" : "",
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🐠 Was... bist... du?"
+            "value" : "🐠 Was... Bist... Du?"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🐠 What... are... you?"
+            "value" : "🐠 What... Are... You?"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🐠 Qu'êtes... vous?"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🐠 What... are... you?"
           }
         },
@@ -11068,25 +10251,25 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🐠 Bạn... là... ai?"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🐠比死神利维坦可爱。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🐠比死神利維坦可愛。"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "🐠比死神利維坦仲得意。"
           }
         }
@@ -11098,191 +10281,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🖤"
+            "value" : "🐁 Die persönliche Gehilfin des Händlers!"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🖤"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🖤"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🖤"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🖤"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🖤"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🖤"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🖤"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🖤"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🖤"
-          }
-        }
-      }
-    },
-    "thanks.23" : {
-      "comment" : "",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🤍"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🤍"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🤍"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🤍"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🤍"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🤍"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🤍"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🤍"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🤍"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "🤍"
-          }
-        }
-      }
-    },
-    "thanks.24" : {
-      "comment" : "",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "😎 Oh du benutzt Mac Mouse Fix? Du musst ziemlich cool sein."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "😎 Oh you're using Mac Mouse Fix? You must be pretty cool."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "😎 Oh tu utilises Mac Mouse Fix? Tu dois être sacrément cool."
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "😎 오, Mac Mouse Fix 쓰시네요? 뭘 좀 아시는 분!"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "😎 Eitaaaa, você está usando o Mac Mouse Fix!? Com certeza você é uma pessoa incrível."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "😎 Oh you're using Mac Mouse Fix? You must be pretty cool."
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "😎 Ủa, bạn đang dùng Mac Mouse Fix hả? Vậy là tôi biết bạn đẹp trai lắm :D"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "😎哦，你在用Mac Mouse Fix？那你一定很酷。"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "😎噢，你在用Mac Mouse Fix？那你一定很酷。"
-          }
-        },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "😎Oh，你在用Mac Mouse Fix？那你一定型到爆。"
+            "value" : "🐁 The merchant's personal pet!"
           }
         }
       }
@@ -11812,7 +10817,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "mittlere Taste"
           }
         },
@@ -11942,7 +10947,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "primäre Taste"
           }
         },
@@ -12007,7 +11012,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "sekundäre Taste"
           }
         },
@@ -12982,7 +11987,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "mittlere Taste"
           }
         },
@@ -13112,7 +12117,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "primäre Taste"
           }
         },
@@ -13177,7 +12182,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "sekundäre Taste"
           }
         },

@@ -178,7 +178,7 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "[🌎 Beim Übersetzen helfen!]({url})"
           }
         },

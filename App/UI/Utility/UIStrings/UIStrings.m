@@ -16,6 +16,8 @@
 #import "SFSymbolStrings.h"
 #import "Mac_Mouse_Fix-Swift.h"
 #import "CoolSFSymbolsFont.h"
+#import "Localization.h"
+
 /*
 #import "SymbolicHotKeys.h"
 */
@@ -79,9 +81,9 @@
 
 + (NSString *)systemSettingsName {
     if (@available(macOS 13.0, *)) {
-        return NSLocalizedString(@"system-settings-name", @"Note: The name of the system settings app in macOS 13 Ventura and later.");
+        return MFLocalizedString(@"system-settings-name", @"Note: The name of the system settings app in macOS 13 Ventura and later.");
     } else {
-        return NSLocalizedString(@"system-settings-name.pre-ventura", @"Note: The name of the system settings app in macOS 12 Monterey and below.");
+        return MFLocalizedString(@"system-settings-name.pre-ventura", @"Note: The name of the system settings app in macOS 12 Monterey and below.");
     }
 }
 
@@ -102,34 +104,34 @@
     if (context == kMFButtonStringUsageContextActionTableTriggerSubstring) {
         
         map = @{
-            @1: NSLocalizedString(@"trigger.substring.button-name.primary",     @""),
-            @2: NSLocalizedString(@"trigger.substring.button-name.secondary",   @""),
-            @3: NSLocalizedString(@"trigger.substring.button-name.middle",      @"."),
-            @-1: NSLocalizedString(@"trigger.substring.button-name.numbered",   @""), /// Note to self: Removed the old notes (see later in this line) after giving the trigger.substring. prefix to these string keys, since we're already explaining the capitalization on other `trigger.substring.[...]` comments. || Old notes: All the \"button-name.[...]\" strings should be lowercase unless there's a specific reason to capitalize some words. For example, in Vietnamese, \"Middle Button\" should be localized as \"nút giữa\". Note that not even the first letter is capitalized. That's because the button names will appear in the middle of other pieces of text, and we don't want a randomly capitalized button name in the middle of that text. In English, we capitalize because we're using \"Title Case\", but this isn't common in other languages. So for most languages, these strings should probably be all-lowercase, just like Vietnamese. Exceptions: Some languages have special capitalization rules similar to English \"Title Case\". For example, German always capitalizes all nouns, so therefore \"Middle Button\" should be localized as \"mittlere Taste\" in German. Please see the comment on \"trigger.substring.button-modifier.2\" for more info."), /// Note to self: We put the long comment on the 'numbered'-button-string since that shows up second in the .xcstrings file under alphabetic sorting. We think putting it second has the highest changes of the localizers noticing the comment. Since, if it's first, they might be busy processing "oh here's a new set of strings" /// Old note: || Note: This is capitalized in English since we use 'title case' there. In your language, 'title case' might not be a thing, and you might *not* want to capitalize this. If this string appears at the start of a line, it will be capitalized programmatically.
+            @1: MFLocalizedString(@"trigger.substring.button-name.primary",     @""),
+            @2: MFLocalizedString(@"trigger.substring.button-name.secondary",   @""),
+            @3: MFLocalizedString(@"trigger.substring.button-name.middle",      @"."),
+            @-1: MFLocalizedString(@"trigger.substring.button-name.numbered",   @""), /// Note to self: Removed the old notes (see later in this line) after giving the trigger.substring. prefix to these string keys, since we're already explaining the capitalization on other `trigger.substring.[...]` comments. || Old notes: All the \"button-name.[...]\" strings should be lowercase unless there's a specific reason to capitalize some words. For example, in Vietnamese, \"Middle Button\" should be localized as \"nút giữa\". Note that not even the first letter is capitalized. That's because the button names will appear in the middle of other pieces of text, and we don't want a randomly capitalized button name in the middle of that text. In English, we capitalize because we're using \"Title Case\", but this isn't common in other languages. So for most languages, these strings should probably be all-lowercase, just like Vietnamese. Exceptions: Some languages have special capitalization rules similar to English \"Title Case\". For example, German always capitalizes all nouns, so therefore \"Middle Button\" should be localized as \"mittlere Taste\" in German. Please see the comment on \"trigger.substring.button-modifier.2\" for more info."), /// Note to self: We put the long comment on the 'numbered'-button-string since that shows up second in the .xcstrings file under alphabetic sorting. We think putting it second has the highest changes of the localizers noticing the comment. Since, if it's first, they might be busy processing "oh here's a new set of strings" /// Old note: || Note: This is capitalized in English since we use 'title case' there. In your language, 'title case' might not be a thing, and you might *not* want to capitalize this. If this string appears at the start of a line, it will be capitalized programmatically.
         };
         
     } else if (context == kMFButtonStringUsageContextActionTableGroupRow) {
         
         map = @{
-            @1: NSLocalizedString(@"trigger.y.group-row.button-name.primary",     @""), /// The '.y.' is just used to group things in the .xcstrings file. Not sure if smart.
-            @2: NSLocalizedString(@"trigger.y.group-row.button-name.secondary",   @""),
-            @3: NSLocalizedString(@"trigger.y.group-row.button-name.middle",      @"Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions which are triggered by the same button."),
-            @-1: NSLocalizedString(@"trigger.y.group-row.button-name.numbered",   @"Note: The comment next to capture-toast.button-name.numbered also applies here."),
+            @1: MFLocalizedString(@"trigger.y.group-row.button-name.primary",     @""), /// The '.y.' is just used to group things in the .xcstrings file. Not sure if smart.
+            @2: MFLocalizedString(@"trigger.y.group-row.button-name.secondary",   @""),
+            @3: MFLocalizedString(@"trigger.y.group-row.button-name.middle",      @"Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions which are triggered by the same button."),
+            @-1: MFLocalizedString(@"trigger.y.group-row.button-name.numbered",   @"Note: The comment next to capture-toast.button-name.numbered also applies here."),
         };
         
     } else if (context == kMFButtonStringUsageContextCaptureNotification) {
         
         map = @{
-            @1: NSLocalizedString(@"capture-toast.button-name.primary",     @""),
-            @2: NSLocalizedString(@"capture-toast.button-name.secondary",   @""),
-            @3: NSLocalizedString(
+            @1: MFLocalizedString(@"capture-toast.button-name.primary",     @""),
+            @2: MFLocalizedString(@"capture-toast.button-name.secondary",   @""),
+            @3: MFLocalizedString(
                 @"capture-toast.button-name.middle",
                 @"Note: These button names will be inserted into other \"capture-toast.buttons.[...]\" strings.\n"
                 "\n"
                 "Example: \n"
                 "Middle Button and Button 4 are now captured by Mac Mouse Fix."
             ),
-            @-1: NSLocalizedString(@"capture-toast.button-name.numbered",   @"Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back here. See trigger.substring.button-modifier.2 for tips on how to capitalize those strings."),
+            @-1: MFLocalizedString(@"capture-toast.button-name.numbered",   @"Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back here. See trigger.substring.button-modifier.2 for tips on how to capitalize those strings."),
         };
         
     } else {
@@ -165,13 +167,13 @@
     #if 0
     
     NSDictionary *buttonNumberToUIString = @{
-        @1: xxxNSLocalizedString(@"button-name.tool.primary",   @""),
-        @2: xxxNSLocalizedString(@"button-name.tool.secondary", @""),
-        @3: xxxNSLocalizedString(@"button-name.tool.middle",    @"Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse."),
+        @1: xxxMFLocalizedString(@"button-name.tool.primary",   @""),
+        @2: xxxMFLocalizedString(@"button-name.tool.secondary", @""),
+        @3: xxxMFLocalizedString(@"button-name.tool.middle",    @"Example usage: Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the Middle Mouse Button (also called the Scroll Wheel Button or Mouse Button 3) on a standard mouse."),
     };
     NSString *buttonStr = buttonNumberToUIString[@(buttonNumber)];
     if (!buttonStr) {
-        buttonStr = stringf(xxxNSLocalizedString(@"button-name.tool.numbered", @""), @(buttonNumber));
+        buttonStr = stringf(xxxMFLocalizedString(@"button-name.tool.numbered", @""), @(buttonNumber));
     }
     return buttonStr;
     
@@ -205,10 +207,10 @@
     NSString *kb = @"";
     CGEventFlags f = flags;
     kb = [NSString stringWithFormat:@"%@%@%@%@",
-          (f & kCGEventFlagMaskControl ?    [NSLocalizedString(@"modifer-key.tool.control",  @"")   stringByAppendingString:@"-"] : @""),
-          (f & kCGEventFlagMaskAlternate ?  [NSLocalizedString(@"modifer-key.tool.option",   @"")    stringByAppendingString:@"-"]  : @""),
-          (f & kCGEventFlagMaskShift ?      [NSLocalizedString(@"modifer-key.tool.shift",    @"")     stringByAppendingString:@"-"]   : @""),
-          (f & kCGEventFlagMaskCommand ?    [NSLocalizedString(@"modifer-key.tool.command",  @"")   stringByAppendingString:@"-"] : @"")];
+          (f & kCGEventFlagMaskControl ?    [MFLocalizedString(@"modifer-key.tool.control",  @"")   stringByAppendingString:@"-"] : @""),
+          (f & kCGEventFlagMaskAlternate ?  [MFLocalizedString(@"modifer-key.tool.option",   @"")    stringByAppendingString:@"-"]  : @""),
+          (f & kCGEventFlagMaskShift ?      [MFLocalizedString(@"modifer-key.tool.shift",    @"")     stringByAppendingString:@"-"]   : @""),
+          (f & kCGEventFlagMaskCommand ?    [MFLocalizedString(@"modifer-key.tool.command",  @"")   stringByAppendingString:@"-"] : @"")];
     if (kb.length > 0) {
         kb = [kb substringToIndex:kb.length-1]; /// Delete trailing dash
         NSArray *stringArray = [kb componentsSeparatedByString:@"-"];
@@ -540,8 +542,8 @@ static NSMutableAttributedString *symbolStringWithModifierPrefix(NSString *modif
         
         NSArray *firstStrings = sa;
         
-        NSString *join = NSLocalizedString(@"join-list", @"Note: This string joins elements in a list except the second-to-last and last one. || Note: The English string contains a space after the comma.");
-        NSString *joinLast = NSLocalizedString(@"join-list.last", @"Note: This format string joins the second-to-last element and the last element in a list of items || Note: \"%1$@\" will be replaced by the second-to-last element, and \"%2$@\" will be replaced by the last element.");
+        NSString *join = MFLocalizedString(@"join-list", @"Note: This string joins elements in a list except the second-to-last and last one. || Note: The English string contains a space after the comma.");
+        NSString *joinLast = MFLocalizedString(@"join-list.last", @"Note: This format string joins the second-to-last element and the last element in a list of items || Note: \"%1$@\" will be replaced by the second-to-last element, and \"%2$@\" will be replaced by the last element.");
         
         outString = stringf(joinLast, [firstStrings componentsJoinedByString:join], lastString);
     } else {

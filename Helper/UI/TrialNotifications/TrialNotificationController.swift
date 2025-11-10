@@ -143,7 +143,7 @@ class TrialNotificationController: NSWindowController {
             trialSectionManager.startManaging(licenseConfig: licenseConfig, trialState: trialState)
             
             /// Set the bodyString
-            let bodyBase = NSLocalizedString("trial-notif.body", comment: "")
+            let bodyBase = MFLocalizedString("trial-notif.body", comment: "")
             let bodyFormatted = String(format: bodyBase, trialState.daysOfUseUI, licenseConfig.quickPayLink)
             let bodyMarkdown = MarkdownParser.attributedString(withCoolMarkdown: bodyFormatted, fillOutBase: true)!
             body.textStorage?.setAttributedString(bodyMarkdown)

@@ -13,7 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LocalizedStringAnnotation : NSObject
 
-+ (void)swizzleNSBundle;
++ (NSString *) stringByAnnotatingString: (NSString *)string withKey: (NSString *)key table: (NSString *_Nullable)table;
++ (void) temporarilyDisableAutomaticAnnotation: (bool)disable;
++ (void) enableAutomaticAnnotation;
 
 @end
 

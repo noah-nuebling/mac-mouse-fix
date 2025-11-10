@@ -12,7 +12,7 @@ import Foundation
 @objc class LicenseToasts: NSObject {
     
     @objc static func showDeactivationToast() {
-        let messageRaw = NSLocalizedString("license-toast.deactivate", comment: "")
+        let messageRaw = MFLocalizedString("license-toast.deactivate", comment: "")
         let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!
         ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
     }
@@ -21,9 +21,9 @@ import Foundation
     
         let message: String
         if isActivation {
-            message = NSLocalizedString("license-toast.activate", comment: "")
+            message = MFLocalizedString("license-toast.activate", comment: "")
         } else {
-            message = NSLocalizedString("license-toast.already-active", comment: "")
+            message = MFLocalizedString("license-toast.already-active", comment: "")
         }
         
         ToastController.attachNotification(withMessage: MarkdownParser.attributedString(withCoolMarkdown: message, fillOutBase: false)!, /// Is it safe to force-unwrap this?
@@ -38,7 +38,7 @@ import Foundation
             
             switch override {
             case is MFLicenseTypeInfoFreeCountry:
-                message = NSLocalizedString("license-toast.free-country", comment: "")
+                message = MFLocalizedString("license-toast.free-country", comment: "")
             case is MFLicenseTypeInfoForce:
                 message = "FORCE_LICENSED flag is active"
             default: /// Default case: I think this can only happen if we forget to update this switch-statement after adding a new override.
@@ -56,7 +56,7 @@ import Foundation
                 if error.domain == NSURLErrorDomain {
                     /// Discussion of `license-toast.no-internet` UI string [Oct 2025]
                     ///     - This isn't about having 'no internet' (as the UI text previously implied)  it's about MMF not reaching the Gumroad server. IIRC this shows up for Chinese users where Gumroad is blocked, and I remember a bunch of support requests from users confused about this. I don't know how to test the Great Firewall, so we adjusted the UI text and mentioned 'firewalls' to work better for Chinese users.
-                    message = NSLocalizedString("license-toast.no-internet", comment: "")
+                    message = MFLocalizedString("license-toast.no-internet", comment: "")
                 } else if error.domain == MFLicenseErrorDomain {
                     
                     switch error.code as MFLicenseErrorCode {
@@ -65,7 +65,7 @@ import Foundation
                         
                         let nOfActivations = (error.userInfo["nOfActivations"] as? Int) ?? -1
                         let maxActivations = (error.userInfo["maxActivations"] as? Int) ?? -1
-                        let messageFormat = NSLocalizedString("license-toast.activation-overload", comment: "Note: \"%2$d\", \"%3$d\", and \"%1$@\" are so-called \"C Format Specifers\". They will be replaced by numbers or text when the program runs. Make sure to type the format specifiers exactly like in the English version so that the text-replacement-code works correctly.") /// We do the localizer hint with the c-format-specifier-explanation on this string since it's the most complicated one atm. I feel like if we do the explanation on a simpler string, localizers might miss details on this one. E.g. usage of `d` instead `@` in some specifiers.
+                        let messageFormat = MFLocalizedString("license-toast.activation-overload", comment: "Note: \"%2$d\", \"%3$d\", and \"%1$@\" are so-called \"C Format Specifers\". They will be replaced by numbers or text when the program runs. Make sure to type the format specifiers exactly like in the English version so that the text-replacement-code works correctly.") /// We do the localizer hint with the c-format-specifier-explanation on this string since it's the most complicated one atm. I feel like if we do the explanation on a simpler string, localizers might miss details on this one. E.g. usage of `d` instead `@` in some specifiers.
                         message = String(format: messageFormat, (Links.link(kMFLinkID_MailToNoah) ?? ""), nOfActivations, maxActivations)
                         
                     case kMFLicenseErrorCodeServerResponseInvalid:
@@ -73,7 +73,7 @@ import Foundation
                         /// Sidenote:
                         ///     We added this localizedStringKey on the master branch inside .strings files, while we already replaced all the .strings files with .xcstrings files on the feature-strings-catalog branch. -- Don't forget to port this string over, when you merge the master changes into feature-strings-catalog! (Last updated: Oct 2024)
                         ///         Update: [Apr 2025] Just merged master into feature-strings-catalog and ported this string over.
-                        let messageFormat = NSLocalizedString("license-toast.server-response-invalid", comment: "")
+                        let messageFormat = MFLocalizedString("license-toast.server-response-invalid", comment: "")
                         message = String(format: messageFormat, Links.link(kMFLinkID_MailToNoah) ?? "")
                         
                         do {
@@ -110,10 +110,10 @@ import Foundation
                                 ///     `"message": "That license does not exist for the provided product."` is part of the error-response json from the Gumroad API.
                                 ///     Maybe it would be better to create an MFDataClass for the Gumroad response, so all 'knowledge' about the Gumroad API response format is centralized in one place in our code.
                             case "That license does not exist for the provided product.":
-                                let messageFormat = NSLocalizedString("license-toast.unknown-key", comment: "")
+                                let messageFormat = MFLocalizedString("license-toast.unknown-key", comment: "")
                                 message = String(format: messageFormat, licenseKey)
                             default:
-                                let messageFormat = NSLocalizedString("license-toast.gumroad-error", comment: "")
+                                let messageFormat = MFLocalizedString("license-toast.gumroad-error", comment: "")
                                 message = String(format: messageFormat, gumroadMessage)
                             }   
                         }
@@ -124,12 +124,12 @@ import Foundation
                     }
                     
                 } else {
-                    let messageFormat = NSLocalizedString("license-toast.unknown-error", comment: "")
+                    let messageFormat = MFLocalizedString("license-toast.unknown-error", comment: "")
                     message = String(format: messageFormat, error.description) /// Should we use `error.localizedDescription` `.localizedRecoveryOptions` or similar here?
                 }
                 
             } else {
-                message = NSLocalizedString("license-toast.unknown-reason", comment: "")
+                message = MFLocalizedString("license-toast.unknown-reason", comment: "")
                 message = String(format: message, (Links.link(kMFLinkID_FeedbackBugReport) ?? ""))
             }
         }

@@ -191,7 +191,7 @@ typedef enum {
             }
         }
         
-        message = [message attributedStringByAddingAttributesAsBase: _labelAttributesFromIB]; /// This makes the text centered, prevents orphaned words (`NSLineBreakStrategyPushOut`). Not sure if anything else [Sep 2025]
+        message = [message attributedStringByAddingAttributesAsBase: _labelAttributesFromIB]; /// This makes the text centered, prevents orphaned words (`NSLineBreakStrategyPushOut`). Not sure if anything else [Sep 2025] || Orphan-prevention doesn't seem to work (at least in German) Not sure why. `NSLineBreakStrategyPushOut` is present. [Oct 2025]
     }
     
     /// Set message

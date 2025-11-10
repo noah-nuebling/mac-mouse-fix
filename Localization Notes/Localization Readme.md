@@ -42,7 +42,7 @@ To summarize the idea for the custom solution:
     
 - Other ideas:
     - Try to make it streamlined, rewarding or fun for translators as possible! This is very important!
-    - To keep .md and .vue files in sync with the .xcstrings files which they use, we'd have to come up with someting else. Perhaps we could somehow use `genstrings` and define a custom routine (The default 'routine' is 'NSLocalizedString)  
+    - To keep .md and .vue files in sync with the .xcstrings files which they use, we'd have to come up with someting else. Perhaps we could somehow use `genstrings` and define a custom routine (The default 'routine' is 'MFLocalizedString)  
         -> Update: When extracting .xcloc files using `xcodebuild` the `routines` are specified in the `LOCALIZED_STRING_MACRO_NAMES` build setting. But I'm not sure there's a way to use `xcodebuild` or `genstrings` to extract strings from .md and .vue files. 
         -> Even if that works, I think we could only extract .strings files - not .xcstrings files - using those tools. We'd have to manually update the .xcstrings files given those generates .strings files. This would be annoying but should be doable. 
         - Either ways, this is not high priority though, this solution would basically just automatically add new keys to the .xcstrings files or mark unused keys as stale. We coulddd also put the English values into the source files (like it is the case with IB files) and then have our script sync that to the .xcstrings file and mark all the translations as "NEEDS REVIEW" if the base translation changes... but I really think this is not important/necessary.  
@@ -101,17 +101,17 @@ Detailed Reflection:
 
 ## Memory helpers
 
-- Don't change the keys for NSLocalizedString()! Otherwise all the existing translations for the key don't work anymore.
+- Don't change the keys for MFLocalizedString()! Otherwise all the existing translations for the key don't work anymore.
 - Building the App or the Helper executes the Localization/Code/UpdateStrings script. It orders the key-value-pairs and brings the comments up-to-date.
 - To test layout
     - In build scheme, set argument `-NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints YES`
     - In build scheme set pseudo language (e.g. double length)
-- NSLocalizedString() convention: Example: `NSLocalizedString("enabled-toggle.hint", comment: "First draft: Mac Mouse Fix will stay enabled after you close it || Note: Some useful note")`
+- MFLocalizedString() convention: Example: `MFLocalizedString("enabled-toggle.hint", comment: "First draft: Mac Mouse Fix will stay enabled after you close it || Note: Some useful note")`
     - Update 29.08.2024: 
         New convention:
-            `NSLocalizedString("enabled-toggle.hint", comment: "Note: Some useful note")`
+            `MFLocalizedString("enabled-toggle.hint", comment: "Note: Some useful note")`
         Explanation:
-            We removed all the 'First draft:' stuff from the NSLocalizedString comment fields on 29.08.2024 in commit 0238020f56ddc0778605de23341876b631abebd8. 
+            We removed all the 'First draft:' stuff from the MFLocalizedString comment fields on 29.08.2024 in commit 0238020f56ddc0778605de23341876b631abebd8. 
             We originally added the 'First draft:' stuff so that localizers could see the English strings right in line as they are editing a .strings file. 
             However, with the new .xcstrings and .xcloc files, this is not needed anymore, since those show the English strings right in line by themselves.
         Sidenote: 

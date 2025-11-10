@@ -122,27 +122,6 @@ key: software.inspiration
 comment:
 ```
 
-```
-key: software.libraries
-```
-Mac Mouse Fix was built with the help of these **great libraries**:
-
-- [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) - Streams of values over time tailored for Swift
-- [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack) - Fast & simple, yet powerful & flexible logging
-- [Swift Markdown](https://github.com/apple/swift-markdown) - Parse, build, edit, and analyze Markdown documents
-- [Sparkle](https://github.com/sparkle-project/Sparkle) - A software update framework for macOS
-- [MASShortcut](https://github.com/shpakovski/MASShortcut) - API and user interface for recording, storing & using system-wide keyboard shortcuts
-- [CGSInternal](https://github.com/NUIKit/CGSInternal) - A collection of private CoreGraphics routines
-- Dependencies of Mac Mouse Fix's scripts:<br>
-  [Update and statistics scripts](https://github.com/noah-nuebling/mac-mouse-fix/blob/update-feed/requirements.txt) | [Markdown generator script]({repo_root}Markdown/Code/python_requirements.txt) | [.strings file sync script]({repo_root}Localization/Code/UpdateStrings/requirements.txt) | ["State of Localization" script]({repo_root}Localization/Code/StateOfLocalization/requirements.txt)
-- Dependencies of the [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) web app [here](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)
-- Dependencies of the [Mac Mouse Fix Website](https://macmousefix.com/) are available [here](https://github.com/noah-nuebling/mac-mouse-fix-website/blob/main/package.json)
-```
-comment:
-```
-
-<!-- ^^^ Note: The double space after <br> is not necessary for the formatting to work here, so we don't have to tell localizers.
-          (If you use actual linebreaks instead of <br> I think it is sometimes necessary.) -->
 
 <!--
 
@@ -156,19 +135,44 @@ comment:
         If ppl make pull requests with significant contributions, then we should mention them somewhere.
 
 
-[BartyCrouch](https://github.com/FlineDev/BartyCrouch) - Keep translation files in sync with source code and Interface Builder files 
+    [BartyCrouch](https://github.com/FlineDev/BartyCrouch) - Keep translation files in sync with source code and Interface Builder files 
 
 
-  ## ☺️ Outstandingly Helpful Feedback
+      ## ☺️ Outstandingly Helpful Feedback
+      
+      __People__ that inspired Mac Mouse Fix:
+      
+      - @DrJume for teaching me about debouncing and inspiring the UI for entering and displaying keyboard modifiers on the scroll tab
+      - German guy for inspiring the tab-based layout in MMF 3
+      - Guy who made an alternative app icon
+      - Guy who helped tune the fast scrolling in that pull request
+      - [SmoothMouse](https://smoothmouse.com/) - It's creator [Dae](https://dae.me/) answered some important questions for me about Pointer Speed in macOS.
+      
+      - So many others I can't think of right now. Thanks to everybody else who shared their thoughts!
   
-  __People__ that inspired Mac Mouse Fix:
   
-  - @DrJume for teaching me about debouncing and inspiring the UI for entering and displaying keyboard modifiers on the scroll tab
-  - German guy for inspiring the tab-based layout in MMF 3
-  - Guy who made an alternative app icon
-  - Guy who helped tune the fast scrolling in that pull request
-  - [SmoothMouse](https://smoothmouse.com/) - It's creator [Dae](https://dae.me/) answered some important questions for me about Pointer Speed in macOS.
+      
+    Random old note: 
+        ^^^ Note: The double space after <br> is not necessary for the formatting to work here, so we don't have to tell localizers.
+              (If you use actual linebreaks instead of <br> I think it is sometimes necessary.) 
   
-  - So many others I can't think of right now. Thanks to everybody else who shared their thoughts!
+    Old paragraph with key `software.libraries` and comment ```Note: Don't forget the `<br>`, it inserts a line<br>eak.``` 
+    Removed [Oct 2025] because I wanna remove some of these dependencies and don't wanna promote them, also it's too hard to keep up-to-date and people who really care can scan the source files for the dependencies.
+    
+        Mac Mouse Fix was built with the help of these **great libraries**:
+
+        - [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) - Streams of values over time tailored for Swift
+        - [CocoaLumberjack](https://github.com/CocoaLumberjack/CocoaLumberjack) - Fast & simple, yet powerful & flexible logging
+        - [Swift Markdown](https://github.com/apple/swift-markdown) - Parse, build, edit, and analyze Markdown documents
+        - [Sparkle](https://github.com/sparkle-project/Sparkle) - A software update framework for macOS
+        - [MASShortcut](https://github.com/shpakovski/MASShortcut) - API and user interface for recording, storing & using system-wide keyboard shortcuts
+        - [CGSInternal](https://github.com/NUIKit/CGSInternal) - A collection of private CoreGraphics routines
+        - Dependencies of Mac Mouse Fix's scripts:<br>
+          [Update and statistics scripts](https://github.com/noah-nuebling/mac-mouse-fix/blob/update-feed/requirements.txt) | [Markdown generator script]({repo_root}Markdown/Code/python_requirements.txt) | [.strings file sync script]({repo_root}Localization/Code/UpdateStrings/requirements.txt) | ["State of Localization" script]({repo_root}Localization/Code/StateOfLocalization/requirements.txt)
+        - Dependencies of the [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/) web app [here](https://github.com/noah-nuebling/mac-mouse-fix-feedback-assistant/blob/master/package.json)
+        - Dependencies of the [Mac Mouse Fix Website](https://macmousefix.com/) are available [here](https://github.com/noah-nuebling/mac-mouse-fix-website/blob/main/package.json)
+        ```
+        comment:
+        ```
   
   -->

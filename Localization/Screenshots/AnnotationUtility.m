@@ -28,26 +28,36 @@
 
 #pragma mark - Swizzling
 
-///
-/// Swizzling Discussion:
-///
-/// Why use the `InterceptorFactory` pattern?
-///     When swizzling, after your swizzled method (we call it the `interceptor`) is called, you normally always want to call the original implementation of the method which was intercepted.
-///     The usual pattern for intercepting a method with name `-[methodName]`, is to define a method `-[swizzled_methodName]`, and then swap the implementations of the two.
-///     However, this pattern won't let you reliably call the original implementation of the interceptor in more complicated cases.
-///
-///     For example, in the implementation of `swizzleMethodOnClassAndSubclasses()` this lead to infinite loops when swizzling a method whose original implementation calls the superclass implementation when we're also replacing that superclass implementation with the same interceptor.  (We deleted the detailed notes on that, I think in commit fc3064033f974c454aebb479f20bb0cc3d0eebb6 of the xcode-localization-screenshot-fix repo)
-///
-///     The only solution I could think of is to store a reference to the original implementation inside the function definition. That's what the interceptor factory does.
-///     Use the `InterceptorFactory_Begin()` macro to easily create an interceptor factory.
-///
-/// We're sort of re-implementing https://github.com/rabovik/RSSwizzle here, but without thread-saftey and some other features. (But with slightly simpler syntax and powerful subclass-swizzling)
-///
+/**
+    Swizzling Discussion:
+    
+       Why use the `InterceptorFactory` pattern?
+           When swizzling, after your swizzled method (we call it the `interceptor`) is called, you normally always want to call the original implementation of the method which was intercepted.
+           The usual pattern for intercepting a method with name `-[methodName]`, is to define a method `-[swizzled_methodName]`, and then swap the implementations of the two.
+           However, this pattern won't let you reliably call the original implementation of the interceptor in more complicated cases.
+    
+           For example, in the implementation of `swizzleMethodOnClassAndSubclasses()` this lead to infinite loops when swizzling a method whose original implementation calls the superclass implementation when we're also replacing that superclass implementation with the same interceptor.  (We deleted the detailed notes on that, I think in comm   it fc3064033f974c454aebb479f20bb0cc3d0eebb6 of the xcode-localization-screenshot-fix repo)
+    
+           The only solution I could think of is to store a reference to the original implementation inside the function definition. That's what the interceptor factory does.
+           Use the `InterceptorFactory_Begin()` macro to easily create an interceptor factory.
+    
+       We're sort of re-implementing https://github.com/rabovik/RSSwizzle here, but without thread-saftey and some other features. (But with slightly simpler syntax and powerful subclass-swizzling)
+    
+    Swizzling example: [Oct 2025]
+        ```
+        /// Swizzle `-[NSBundle localizedStringForKey:value:table:]` plus all subclass-overrides of that method from subclasses in AppKit.
+        swizzleMethodOnClassAndSubclasses([NSBundle class], @{ @"framework": @"AppKit" }, @selector(localizedStringForKey:value:table:), InterceptorFactory_Begin(NSString *, (NSString *key, NSString *value, NSString *table))
+            NSString *result = OGImpl(key, value, table); /// Call the original (un-swizzled) implementation of the method – to do this reliably for all subclasses we need the `InterceptorFactory_Begin` pattern (See discussion above) [Oct 2025]
+            result = [result stringByAppendingString: @"... but swizzled!!!"];
+            return result;
+        InterceptorFactory_End());
+        ```
+*/
 
 void swizzleMethod(Class class, SEL selector, InterceptorFactory interceptorFactory) {
     
     /// Replaces the method for `selector` on `class` with the interceptor retrieved from the `interceptorFactory`.
-    /// - Use the `MakeInterceptorFactor()` macro to conveniently create an interceptor factory.
+    /// - Use the `InterceptorFactory_Begin` macro to conveniently create an interceptor factory.
     /// - Note on arg `class`:
     ///     Pass in a metaclass to swap out class methods instead of instance methods.
     ///     You can get the metaclass of a class `baseClass` by calling `object_getClass(baseClass)`.
@@ -59,7 +69,7 @@ void swizzleMethod(Class class, SEL selector, InterceptorFactory interceptorFact
     /// Validate
     ///     Make sure `selector` is defined on class or one of its superclasses.
     ///     Otherwise swizzling doesn't make sense.
-    assert([class instancesRespondToSelector:selector]); /// Note: This seems to work as expected on meta classes
+    assert([class instancesRespondToSelector: selector]); /// Note: This seems to work as expected on meta classes
     
     /// Get original
     ///     Note: Based on my testing, we don't need to use `class_getClassMethod` to make swizzling class methods work, if we just pass in a meta class as `class`, then `class_getInstanceMethod` will get the class methods, and everything works as expected.
@@ -88,6 +98,9 @@ void swizzleMethod(Class class, SEL selector, InterceptorFactory interceptorFact
 
 void swizzleMethodOnClassAndSubclasses(Class baseClass, NSDictionary<MFClassSearchCriterion, id> *subclassSearchCriteria, SEL selector, InterceptorFactory interceptorFactory) {
 
+    /// Discussion:
+    ///     Probably use `swizzleMethod()` instead (or avoid swizzling entirely). `swizzleMethodOnClassAndSubclasses` is useful for exploring and reverse engineering. I can't see another usecase for it in production code.
+
     /// Log
     NSLog(@"Info: Swizzling [%s %s] including subclasses. subclassSearchCriteria: %@ (Class is in %s)", class_getName(baseClass), sel_getName(selector), subclassSearchCriteria, class_getImageName(baseClass));
     
@@ -112,8 +125,10 @@ void swizzleMethodOnClassAndSubclasses(Class baseClass, NSDictionary<MFClassSear
         
         /// Skip
         ///     We only need to swizzle one method, and then all its subclasses will also be swizzled - as long as they inherit the method and don't override it.
-        if (![subclass instancesRespondToSelector:selector]
-            || classInheritsMethod(subclass, selector)) continue;
+        if (
+            ![subclass instancesRespondToSelector: selector] ||
+            classInheritsMethod(subclass, selector)
+        ) continue;
         
         /// Swizzle
         swizzleMethod(subclass, selector, interceptorFactory);
@@ -125,7 +140,7 @@ void swizzleMethodOnClassAndSubclasses(Class baseClass, NSDictionary<MFClassSear
     ///     That way all the subclasses inherit the swizzled method from the baseClass.
     ///     Except, if `baseClass` doesn't respond to the `selector` at all, then the 'most super implementation' of the method is in one of the subclasses, and we can skip swizzling `baseClass`.
     
-    if ([baseClass instancesRespondToSelector:selector]) {
+    if ([baseClass instancesRespondToSelector: selector]) {
         swizzleMethod(baseClass, selector, interceptorFactory);
         someClassHasBeenSwizzled = YES;
     }

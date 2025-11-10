@@ -43,11 +43,11 @@ class AboutTabController: NSViewController {
         
         let alert = NSAlert()
         alert.alertStyle = .informational
-        alert.messageText = NSLocalizedString("mail-alert.title", comment: "")
-        alert.informativeText = NSLocalizedString("mail-alert.body", comment: "")
+        alert.messageText = MFLocalizedString("mail-alert.title", comment: "")
+        alert.informativeText = MFLocalizedString("mail-alert.body", comment: "")
 //        alert.showsSuppressionButton = true
-        let sendButton = alert.addButton(withTitle: NSLocalizedString("mail-alert.send", comment: ""))
-        let backButton = alert.addButton(withTitle: NSLocalizedString("mail-alert.back", comment: ""))
+        let sendButton = alert.addButton(withTitle: MFLocalizedString("mail-alert.send", comment: ""))
+        let backButton = alert.addButton(withTitle: MFLocalizedString("mail-alert.back", comment: ""))
         sendButton.keyEquivalent = IBUtility.keyChar(forLiteral: "return")!
         backButton.keyEquivalent = IBUtility.keyChar(forLiteral: "escape")!
         
@@ -88,11 +88,11 @@ class AboutTabController: NSViewController {
         
         /// Set up versionField
         /// Notes:
-        ///  - Explanation for `let versionFormatExists =` logic: If the key doesn't exist in Localizable.strings, then `NSLocalizedStringgg()` returns the key. But bartycrouch (I think) automatically creates the key and initializes it to emptyString.
-        ///     (Note: Don't use NSLocalizedStringggg real name in comments or BartyCrouch gets confused.)
+        ///  - Explanation for `let versionFormatExists =` logic: If the key doesn't exist in Localizable.strings, then `MFLocalizedStringgg()` returns the key. But bartycrouch (I think) automatically creates the key and initializes it to emptyString.
+        ///     (Note: Don't use MFLocalizedStringggg real name in comments or BartyCrouch gets confused.)
         ///  - We're handling the case that the `app-version` key doesn't exist here, because we're adding the version-format stuff right before the 3.0.0 release, and the Korean and Chinese translations don't contain the 'app-version' key, yet.
         
-        let versionFormat = NSLocalizedString("app-version", comment: "Note: %@ will be the app version, e.g. '3.0.0 (22027)'")
+        let versionFormat = MFLocalizedString("app-version", comment: "Note: %@ will be the app version, e.g. '3.0.0 (22027)'")
         let versionFormatExists = versionFormat.count != 0 && versionFormat != "app-version"
         let versionNumbers = "\(Locator.bundleVersionShort()) (\(Locator.bundleVersion()))"
         versionField.stringValue = versionFormatExists ? String(format: versionFormat, versionNumbers) : versionNumbers
@@ -250,7 +250,7 @@ class AboutTabController: NSViewController {
 
                 /// Assemble message
                 let countryString = String(format: "%@ %@", countryName_, flag_)
-                message = String(format: NSLocalizedString("free-country", comment: ""), countryString)
+                message = String(format: MFLocalizedString("free-country", comment: ""), countryString)
                 
             case is MFLicenseTypeInfoForce:
             
@@ -269,44 +269,57 @@ class AboutTabController: NSViewController {
                     assert(false)
                 }
                 
+                /**
+                
+                
+                    Interesting thankyou messages (not direct translations of English) left by localizers that we removed when deleting stale strings [Oct 20 2025]
+                        (Perhaps we could replace some of the other strings that are direct translations of the English version with these.)
+                
+                        Vietnamese
+                        - 15 --- 🥛 Sữa tươi nguyên "trất" trăm phần trăm.
+                        - 16 --- 🎸 Thưởng bạn một bản rockkkk nhé
+                        - 17 --- 💃 ILU3000
+
+                        Brazilian ones that would get removed
+                        - 08 --- :) <- Minha expressão quando vi que você comprou o Mac Mouse Fix
+                        - 11 --- 🚜 Deus ajuda quem cedo madruga :P
+                        - 12 --- 🫕 Toda panela tem sua tampa!
+                        - 14 --- 🕊️ Mais vale um pássaro na mão do que dois voando!
+                        - 15 --- 🥛 Não adianta chorar pelo leite derramado.
+                        - 16 --- 🎤 Quem canta seus males espanta.
+                        - 17 --- 🏝️ O descanso é tão importante quanto o trabalho...
+                        - 18 --- 🦄 Você pode não querer salvar o mundo, mas já está salvando o meu :)
+                        - 19 --- 🏆 É dando que se recebe...
+                        - 20 --- 🌍 A pressa é inimiga da perfeição... :)
+                
+                */
+                
                 var thankYouMessages = [
                     
                     /// Common
-                    (NSLocalizedString("thanks.01", comment: "Note: The weird thank-you messages are rare. Feel free to change them if you'd like to leave an easter egg. You can also leave them blank, just make sure to fill out thanks.01 - thanks.03"), weight: 1),
-                    (NSLocalizedString("thanks.02", comment: ""), weight: 1),
-                    (NSLocalizedString("thanks.03", comment: ""), weight: 1),
-                    (NSLocalizedString("thanks.04", comment: ""), weight: 1),
+                    (MFLocalizedString("thanks.01", comment: "Note: The weird thank-you messages are rare. Feel free to change them if you'd like to leave an easter egg. You can also leave them blank (insert a space character), just make sure to fill out thanks.01 - thanks.03"), weight: 1),
+                    (MFLocalizedString("thanks.02", comment: ""), weight: 1),
+                    (MFLocalizedString("thanks.03", comment: ""), weight: 1),
+                    (MFLocalizedString("thanks.04", comment: ""), weight: 1),
                     
                     /// Rare
-                    (NSLocalizedString("thanks.05", comment: ""), weight: 0.1),
-                    (NSLocalizedString("thanks.06", comment: ""), weight: 0.1),
-                    (NSLocalizedString("thanks.07", comment: ""), weight: 0.1),
-                    (NSLocalizedString("thanks.08", comment: ""), weight: 0.1),
+                    (MFLocalizedString("thanks.05", comment: ""), weight: 0.1),
+                    (MFLocalizedString("thanks.06", comment: ""), weight: 0.1),
                     
                     /// Very rare
-                    (NSLocalizedString("thanks.09", comment: ""), weight: 0.05),
+                    (MFLocalizedString("thanks.09", comment: ""), weight: 0.05),
                     
                     /// Extremely rare
-                    (NSLocalizedString("thanks.10", comment: "."), weight: 0.01),
-                    (NSLocalizedString("thanks.11", comment: ""), weight: 0.01),
-                    (NSLocalizedString("thanks.12", comment: ""), weight: 0.01),
-                    (NSLocalizedString("thanks.13", comment: ""), weight: 0.01),
-                    (NSLocalizedString("thanks.14", comment: ""), weight: 0.01),
-                    (NSLocalizedString("thanks.15", comment: ""), weight: 0.01),
-                    (NSLocalizedString("thanks.16", comment: ""), weight: 0.01),
-                    (NSLocalizedString("thanks.17", comment: ""), weight: 0.01),
-                    (NSLocalizedString("thanks.18", comment: ""), weight: 0.01),
-                    (NSLocalizedString("thanks.19", comment: ""), weight: 0.01),
-                    (NSLocalizedString("thanks.20", comment: ""), weight: 0.01),
-                    (NSLocalizedString("thanks.21", comment: ""), weight: 0.01),
-                    (NSLocalizedString("thanks.22", comment: ""), weight: 0.01),
-                    (NSLocalizedString("thanks.23", comment: ""), weight: 0.01),
-                    (NSLocalizedString("thanks.24", comment: ""), weight: 0.01),
-                    (NSLocalizedString("thanks.25", comment: ""), weight: 0.01),
+                    (MFLocalizedString("thanks.10", comment: "."), weight: 0.01),
+                    
+                    (MFLocalizedString("thanks.13", comment: ""), weight: 0.01),
+                    (MFLocalizedString("thanks.21", comment: ""), weight: 0.01),
+                    (MFLocalizedString("thanks.22", comment: ""), weight: 0.01),
+                    (MFLocalizedString("thanks.25", comment: ""), weight: 0.01),
                 ]
                 thankYouMessages = thankYouMessages.filter { /// Allow localizers to leave the strings empty, just filter out the empty strings.
-                    $0.0.range(of: "thanks\\.[0-9][0-9]", options: .regularExpression) == nil && /// Strings left empy by localizers fall lback to their key. E.g. `thanks.17` || Can't use .hasPrefix due to invisible characters (See `NSString+Steganography.m`) [Oct 2025]
-                    $0.0.trimmingCharacters(in: .whitespacesAndNewlines) != ""
+                    $0.0.range(of: kMFThanksPattern, options: .regularExpression) == nil && /// Strings left empy by localizers fall lback to their key. E.g. `thanks.17` || Can't use .hasPrefix due to invisible characters (See `NSString+Steganography.m`) [Oct 2025]
+                    $0.0.withoutSecretMessages().trimmingCharacters(in: .whitespacesAndNewlines) != "" ///  Subtle: Have to call `.withoutSecretMessages()` *before* trimming whitespace since the zero-width annotations surround the content they're annotating now. [Oct 2025] Could instead use `removingAllWhitespace`.
                 }
                 if (thankYouMessages.count > 0) {
                     message = Randomizer.select(from: thankYouMessages)

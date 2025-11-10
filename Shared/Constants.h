@@ -13,6 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Constants : NSObject
 
+/// UI Strings
+
+#define kMFThanksPattern @"thanks\\.[0-9][0-9]"
+
 /// Input processing
 
 typedef enum {

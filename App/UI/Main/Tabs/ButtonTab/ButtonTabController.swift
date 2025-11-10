@@ -44,11 +44,11 @@ import Foundation
         
         let alert = NSAlert()
         alert.alertStyle = .informational
-        alert.messageText = NSLocalizedString("restore-buttons-alert.title", comment: "")
+        alert.messageText = MFLocalizedString("restore-buttons-alert.title", comment: "")
         alert.informativeText = ""
         
-        let restoreButton = alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.commit", comment: ""))
-        let cancelButton = alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.back", comment: ""))
+        let restoreButton = alert.addButton(withTitle: MFLocalizedString("restore-buttons-alert.commit", comment: ""))
+        let cancelButton = alert.addButton(withTitle: MFLocalizedString("restore-buttons-alert.back", comment: ""))
         restoreButton.keyEquivalent = IBUtility.keyChar(forLiteral: "return")!
         cancelButton.keyEquivalent = IBUtility.keyChar(forLiteral: "escape")!
         
@@ -67,8 +67,8 @@ import Foundation
         /// Add accessoryView
         ///
         
-        let radio1 = NSButton(radioButtonWithTitle: NSLocalizedString("restore-buttons-alert.radio1", comment: ""), target: self, action: #selector(nullAction(sender:)))
-        let radio2 = NSButton(radioButtonWithTitle: NSLocalizedString("restore-buttons-alert.radio2", comment: ""), target: self, action: #selector(nullAction(sender:)))
+        let radio1 = NSButton(radioButtonWithTitle: MFLocalizedString("restore-buttons-alert.radio1", comment: ""), target: self, action: #selector(nullAction(sender:)))
+        let radio2 = NSButton(radioButtonWithTitle: MFLocalizedString("restore-buttons-alert.radio2", comment: ""), target: self, action: #selector(nullAction(sender:)))
         radio1.setAccessibilityIdentifier("axRestoreButtons3")
         radio2.setAccessibilityIdentifier("axRestoreButtons5")
         
@@ -77,7 +77,7 @@ import Foundation
         var hint: CoolNSTextField? = nil
         if let nOfButtons = nOfButtons {
             
-            let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "Note: '%1$@' will be the name of the mouse, such as 'Logitech M720 Triathlon'"), name!, nOfButtons)
+            let hintStringRaw = String(format: MFLocalizedString("restore-buttons-alert.hint", comment: "Note: '%1$@' will be the name of the mouse, such as 'Logitech M720 Triathlon'"), name!, nOfButtons)
             
 //            let hintString = MarkdownParser.attributedString(withCoolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
             let hintString = MarkdownParser.attributedString(withCoolMarkdown: hintStringRaw, fillOutBase: true)?.adding(.secondaryLabelColor, for: nil).settingFontSize(NSFont.smallSystemFontSize).adding(.center, for: nil).trimmingWhitespace()
@@ -291,10 +291,10 @@ import Foundation
                 
                 let alert = NSAlert()
                 alert.alertStyle = .informational
-                alert.messageText = NSLocalizedString("buy-mouse-alert.title", comment: "")
-                alert.informativeText = NSLocalizedString("buy-mouse-alert.body", comment: "")
+                alert.messageText = MFLocalizedString("buy-mouse-alert.title", comment: "")
+                alert.informativeText = MFLocalizedString("buy-mouse-alert.body", comment: "")
 //                alert.showsSuppressionButton = true
-                alert.addButton(withTitle: NSLocalizedString("buy-mouse-alert.ok", comment: ""))
+                alert.addButton(withTitle: MFLocalizedString("buy-mouse-alert.ok", comment: ""))
                 
                 /// Display alert
                 guard let window = MainAppState.shared.window else { return }
@@ -489,7 +489,7 @@ import Foundation
             ///         - Chinese and Korean didn't put linebreaks at all and are pretty wide, making them wrap seems awkward.
             ///         - There's no big layout that depends on this, just the little popover which contains this text and a little checkbox below. So localizers don't control stuff they don't see (which was the case before `applyHardcodedTabWidth()`)
             
-            let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "Note: There's a linebreak in English so the popover doesn't become too wide and to aid with readability."), deviceName)
+            let message = String(format: MFLocalizedString("restore-default-buttons-popover.body", comment: "Note: There's a linebreak in English so the popover doesn't become too wide and to aid with readability."), deviceName)
             
             if let attributes = restoreDefaultPopover_stringAttributesFromIB,
                let newString = MarkdownParser.attributedString(withCoolMarkdown: message, fillOutBase: false)?.addingAttributes(asBase: attributes)
