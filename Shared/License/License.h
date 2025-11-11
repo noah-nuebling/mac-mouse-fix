@@ -9,6 +9,11 @@
 
 /// Most Licensing code is in Swift. 
 ///     Use this file only for stuff that's not possible in Swift, like creating MFDataClasses, enums or structs that are usable from both objc and swift
+///
+///     Update: [Nov 2025] IIRC I chose to write the 2024 licensing code in Swift to get async-await to make the server interaction code read sequentially  (avoid 'callback hell') without blocking mainThread to wait for server-downloads.
+///         ('MFAsync' pattern idea) BUT I could've just created an NSThread 'CoordinatorThread' with with thin mfwait() wrapper around semaphores to achieve the same benefits in objc. That would've been nicer, and more flexible, plus I wouldn't have shipped bugs due to forgetting / misunderstanding the @MainActor annotations. Swift Actor stuff is really terrible.
+///             See first mention of `mfwait_main` in this Claude conversation: https://claude.ai/share/f107f1e3-0115-450d-b348-6442790e4c90
+///
 
 #ifndef License_h
 #define License_h
