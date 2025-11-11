@@ -23,6 +23,9 @@
 ///     - then we switched to base-4 to save space due to character limit of 512 in the UIStrings we can retrieve inside an XCUITest.
 ///     - But that still wasn't enough for some strings, so we we got the raw AXUIElement from the XCUIElement through private methods and get the string from there.
 ///     - After that, we kept the base-4 encoding for a while, but turns out \u2062, and \u2063 break NSLineBreakStrategyPushOut, so we simplified things back to base-2 encoding. [Nov 2025] While doing that we also simplified the implementation a lot.
+///         - Actually, NSLineBreakStrategyPushOut is broken by any linebreaks characters, if there are too many of them. u2062, and \u2063 don't seem special. See `extractAnnotationsFromString:` for our solution [Nov 2025]
+///             - Also see `playground-oct-2025 > orphaned-word-tests`
+///
 
 typedef NS_ENUM(unichar, MFZeroWidthCharacter) {
     
@@ -44,8 +47,8 @@ typedef NS_ENUM(unichar, MFZeroWidthCharacter) {
     MFZeroWidthCharacterLeftToRightEmbedding        = u'\u202A',
     MFZeroWidthCharacterPopDirectionalFormatting    = u'\u202C',
     MFZeroWidthCharacterLeftToRightOverride         = u'\u202D',
-    MFZeroWidthCharacterInvisibleTimes              = u'\u2062',       /// This one breaks NSLineBreakStrategyPushOut
-    MFZeroWidthCharacterInvisibleSeparator          = u'\u2063',       /// This one breaks NSLineBreakStrategyPushOut
+    MFZeroWidthCharacterInvisibleTimes              = u'\u2062',    /// Usable. Used as `kannotationSuffix`in `LocalizedStringAnnotation.m` [Nov 2025]
+    MFZeroWidthCharacterInvisibleSeparator          = u'\u2063',    /// Usable
     MFZeroWidthCharacterNoBreakSpace                = u'\uFEFF',
     
 };
