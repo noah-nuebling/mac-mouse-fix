@@ -48,16 +48,28 @@ static NSString *indentedString(int n, NSString *s) {
 @implementation MFSimpleDataClassBase
 
     + (NSArray<NSString *> *) ivarNames { /// This is called a lot and should perhaps be cached [Nov 2025]
-
+        
+        /// Subclassing support || This is the only code needed to support subclassing (Aside from the `mfdata_subcls_h` macro). Not too bad. [Nov 2025]
+            
+        NSMutableArray *superclasses = [NSMutableArray new];
+        Class cls = [self class];
+        while (1) {
+            if (cls == [MFSimpleDataClassBase class]) break; /// NSObject has `isa` ivar which we wanna ignore [Nov 2025]
+            [superclasses insertObject: cls atIndex: 0];     /// Invert order for nicer `-description`
+            cls = class_getSuperclass(cls);
+        }
+            
         NSMutableArray *result = [NSMutableArray new];
         
-        unsigned int count;
-        Ivar *ivars = class_copyIvarList([self class], &count);
-        
-        for (int i = 0; i < count; i++)
-            [result addObject: @(ivar_getName(ivars[i]))];
-        
-        free(ivars);
+        for (NSUInteger i = 0; i < superclasses.count; i++) {
+            
+            Ivar *ivars = class_copyIvarList(superclasses[i], NULL);
+            Ivar *ivar = ivars;
+            
+            while (*ivar) [result addObject: @(ivar_getName(*ivar++))];
+            
+            free(ivars);
+        }
         
         return result;
     }
