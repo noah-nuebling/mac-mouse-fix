@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **November 2025**
 
+- 🇧🇬&nbsp;Aleksandar&nbsp;Aleksandrov
 - 🇲🇽&nbsp;Juan&nbsp;Jose&nbsp;Aja&nbsp;Fernandez
 - 🇨🇦&nbsp;Jacob&nbsp;Liu - "Great tool!"
 - 🇵🇱&nbsp;Pawel&nbsp;Swiecicki
