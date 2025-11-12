@@ -62,7 +62,7 @@
       }
     },
     "DQ6-Rq-6nC.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Recommended for Trackball Mice\"; ObjectID = \"DQ6-Rq-6nC\"; Note = \"Locking the Mouse Pointer during 'Click and Drag' Gestures is \\\"Recommended for Trackball Mice\\\"\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Recommended for Trackball Mice\"; ObjectID = \"DQ6-Rq-6nC\"; Note = \"Context: Locking the Mouse Pointer during 'Click and Drag' Gestures is \\\"Recommended for Trackball Mice\\\"\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {

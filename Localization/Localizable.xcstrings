@@ -2098,7 +2098,7 @@
       }
     },
     "capture-toast.button-name.numbered" : {
-      "comment" : "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back here. See trigger.substring.button-modifier.2 for tips on how to capitalize those strings.",
+      "comment" : "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings.\nSee trigger.substring.button-modifier.2",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2293,7 +2293,7 @@
       }
     },
     "capture-toast.buttons.captured.body" : {
-      "comment" : "Note: This is a \"pluralizable\" string, which means it has different versions depending on how many buttons the string is talking about. Click the disclosure triangles (>) to edit the different versions of the string. Do not localize \"@pluralizable\" - it's just a placeholder. \n\nNote 2: \"%2$@\" will be replaced with the names of the captured buttons.\nExample where those buttons are \"Middle Button\" and \"Button 4\":\n\"Middle Button and Button 4 are now captured by Mac Mouse Fix.\"",
+      "comment" : "Note: This is a \"pluralizable\" string, which means it has different versions depending on how many buttons the string is talking about.\n\nNote: \"%2$@\" will be replaced with the names of the captured buttons.\nExample where those buttons are \"Middle Button\" and \"Button 4\":\n\"Middle Button and Button 4 are now captured by Mac Mouse Fix.\"\nIf you're editing this in Xcode: Click the disclosure triangles (>) to edit the different versions of the string. Do not localize or modify \"@pluralizable\" - it's just a placeholder. \n",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -3713,7 +3713,7 @@
       }
     },
     "effect.app-expose" : {
-      "comment" : "Note: Apple refers to this feature by different names like 'Application Windows' or 'App Exposé'. In English I chose the same name that is used in Keyboard Shortcut settings.\n\nBackground: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'App Exposé' felt a bit outdated. (Exposé was the precursor to Mission Control I think)",
+      "comment" : "Note: Apple refers to this feature by different names like 'Application Windows' or 'App Exposé'. In English I chose the same name that is used in Keyboard Shortcut settings.\n\nFurther details: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'App Exposé' felt a bit outdated. (Exposé was the predecessor to Mission Control, and the term mostly doesn't occur anymore in macOS now.)",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6164,7 +6164,7 @@
       }
     },
     "join-list" : {
-      "comment" : "Note: This string joins elements in a list except the second-to-last and last one. || Note: The English string contains a space after the comma.",
+      "comment" : "Note: This string joins elements in a list except the second-to-last and last one.\nNote: The English string contains a space after the comma.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -6229,7 +6229,7 @@
       }
     },
     "join-list.last" : {
-      "comment" : "Note: This format string joins the second-to-last element and the last element in a list of items || Note: \"%1$@\" will be replaced by the second-to-last element, and \"%2$@\" will be replaced by the last element.",
+      "comment" : "Note: This format string joins the second-to-last element and the last element in a list of items\nNote: \"%1$@\" will be replaced by the second-to-last element, and \"%2$@\" will be replaced by the last element.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8261,7 +8261,7 @@
       }
     },
     "revive-toast" : {
-      "comment" : "Note: \"%1$@\" will be a list of mouse features like \"Scrolling\" or \"Buttons\" for which Mac Mouse Fix was enabled. \"%2$@\" will be the menu bar icon.\n\nNote 2: \"&nbsp;\" Creates a \"non-breaking space\" character which prevents the menu bar icon from ending up \"orphaned\" on a separate line from the \"Menu Bar\" text. \n\nNote 3: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.",
+      "comment" : "Note: \"%1$@\" will be a list of mouse features like \"Scrolling\" or \"Buttons\" for which Mac Mouse Fix was enabled. \"%2$@\" will be the menu bar icon.\n\nNote 2: \"&nbsp;\" Creates a \"non-breaking space\" character which prevents the menu bar icon from ending up \"orphaned\" on a separate line from the \"Menu Bar\" text.\n\nNote 3: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. The feature is aimed at temporarily disabling specific features while working with an incompatible app. To permanently disable the features, users should change the settings in the main app instead of the menu bar. Perhaps you can phrase this so it's a bit more obvious than in English? But really, the design should change.\n\nNote 4: The word 'enable' in this context doesn't necessarily have to match the 'Enable Mac Mouse Fix' switch I think.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -8326,7 +8326,7 @@
       }
     },
     "revive-toast.feature-buttons" : {
-      "comment" : "Note: This string will be inserted into the \"revive-toast\" message\nNote 2: These 'feature names' should match the tabs seen in the MMF UI. To find the strings used for the tabs, search for localized strings with a comment containing \"Tab Title\" e.g. \"Buttons Tab Title\".",
+      "comment" : "Note: This string will be inserted into the \"revive-toast\" message\nNote 2: These 'feature names' should match the tab names seen in the MMF UI. To find the tab names, search for strings with a \"Comment\" containing \"Toolbar >\"\".",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10358,7 +10358,7 @@
       }
     },
     "trial-counter.active" : {
-      "comment" : "Note: If you think \"x/y\" looks unnatural in your language you could also use something like \"x of y\"",
+      "comment" : "Note: You can use whatever formatting looks natural in your language, such as \"x of y\" instead of \"x/y\".",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10618,7 +10618,7 @@
       }
     },
     "trigger.substring.button-modifier.1" : {
-      "comment" : "Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5",
+      "comment" : "Note: %@ will be a button name\nExample where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11073,7 +11073,7 @@
       }
     },
     "trigger.substring.click.1" : {
-      "comment" : "Note: \"%@\" will be a button name (or nothing, if the button name can be inferred from context) || Example where %@ is \"Button 5\": ⌥⌘ Double Click Button 4 + Click Button 5",
+      "comment" : "Note: \"%@\" will be a button name (or nothing, if the button name can be inferred from context)\nExample where %@ is \"Button 5\": ⌥⌘ Double Click Button 4 + Click Button 5",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11463,7 +11463,7 @@
       }
     },
     "trigger.substring.drag.flags" : {
-      "comment" : "Note: This will be used for Drag Actions that only need keyboard modifiers to be activated - not mouse buttons || Example: ⌥⌘ and Drag",
+      "comment" : "Example: ⌥⌘ and Drag\nNote: This will be used for Drag Actions that only need keyboard modifiers to be activated (And no mouse buttons)\nNote: The modifier flags such as '⌥⌘' will always appear at the _start_ of this string, not at the end.\nNote: Also see trigger.substring.scroll.flags",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11528,7 +11528,7 @@
       }
     },
     "trigger.substring.hold.1" : {
-      "comment" : "Remember: All these strings that start with \"trigger.substring.[...]\" should be all-lowercase in most languages. For an explanation, see the comment for the key \"trigger.substring.button-modifier.2\"",
+      "comment" : "Remember: The strings starting with \"trigger.substring.[...]\" should be lowercase in most languages. See trigger.substring.button-modifier.2 for the explanation.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11918,7 +11918,7 @@
       }
     },
     "trigger.substring.scroll.flags" : {
-      "comment" : "Example: ⌥⌘ and Scroll\nNote: The modifier flags such as '⌥⌘' will always be *prefixed* to this string.",
+      "comment" : "Example: ⌥⌘ and Scroll\nNote: Also see trigger.substring.drag.flags",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -11983,7 +11983,7 @@
       }
     },
     "trigger.y.group-row.button-name.middle" : {
-      "comment" : "Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions which are triggered by the same button.",
+      "comment" : "Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions which are triggered by the same button.\nNote: The \".y\" is there to influence the sorting when you sort by \"Key\" so you hopefully don't have to jump around as much while translating.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
