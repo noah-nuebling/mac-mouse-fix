@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **November 2025**
 
+- 🇨🇦&nbsp;Jacob&nbsp;Liu - "Great tool!"
 - 🇵🇱&nbsp;Pawel&nbsp;Swiecicki
 - 🇲🇽&nbsp;Siomara&nbsp;Jimenez - "Thanks a lot for the app!!"
 - 🇩🇪&nbsp;Thomas&nbsp;Alexnat - "brings back smooth scrolling"
