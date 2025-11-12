@@ -7283,6 +7283,8 @@
 		4FD860C2266EEA94004F76C8 /* Unused */ = {
 			isa = PBXGroup;
 			children = (
+				4F0C00402C53273200C5D843 /* BidirectionalMap.h */,
+				4F0C00412C53273200C5D843 /* BidirectionalMap.m */,
 				4FD86088266E819A004F76C8 /* Pointers.swift */,
 				4FD860A9266EC24E004F76C8 /* DerivedProperty.swift */,
 				4FD8607B266E65E9004F76C8 /* DerivedValueGenerator.swift old */,
@@ -7462,8 +7464,6 @@
 				4F5170142CBFD75C0018D388 /* MFDataClassImpls.m */,
 				4FFA97382EC2261600A52849 /* MFSimpleDataClass.h */,
 				4FFA97392EC2261600A52849 /* MFSimpleDataClass.m */,
-				4F0C00402C53273200C5D843 /* BidirectionalMap.h */,
-				4F0C00412C53273200C5D843 /* BidirectionalMap.m */,
 				4F5FC0612D6206E3009DCF10 /* UndeprecateSimpleUnboxing.h */,
 				4F4C73F62C4FB4C2001D97C3 /* TreeNode.h */,
 				4F4C73F72C4FB4C2001D97C3 /* TreeNode.m */,
