@@ -446,7 +446,6 @@
       }
     },
     "29: questions.app-specific-settings" : {
-      "comment" : "Don't translate \"More... > App-specific settings\" – Mac Mouse Fix 2 doesn't support localization.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -464,7 +463,7 @@
       }
     },
     "30: questions.app-specific-settings.body" : {
-      "comment" : "1) Don't translate \"More... > App-specific settings\" - that's because Mac Mouse Fix 2 doesn't support localization. 2) In English, the words \"Mac Mouse Fix\" are exactly aligned in the first two lines that start with \"In Mac Mouse Fix 2...\" and \"In Mac Mouse Fix 3...\". I think the alignment makes the text easier to scan. Maybe it's worth doing something similar in your translation.",
+      "comment" : "1) Don't translate \"More... > App-specific settings\" - that's because Mac Mouse Fix 2 doesn't support localization. \n\n2) In English, the words \"Mac Mouse Fix\" are purposefully aligned in the first two lines:\n\"In Mac Mouse Fix 2, ...\"  and \n\"In Mac Mouse Fix 3, ...\"\nto make the text easier to scan.",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {

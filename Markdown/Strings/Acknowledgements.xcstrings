@@ -19,7 +19,7 @@
       }
     },
     "2: translations" : {
-      "comment" : "Note: {url} will be replaced by a link. Make sure to type \"{url}\" exactly like in the original for the text-replacement to work.",
+      "comment" : "Note: {url} will be replaced by a link. \n\nMake sure to type \"{url}\" exactly like in the original for the text-replacement to work.\n\nFurther details: \n\nYou may have encountered ”format specifiers” like ”%1$@” before. ”%1$@” is a format specifier in the C programming language, while “{url}” is a format specifier in the Python programming language. The idea is the same – when the program runs, this special character sequence gets replaced with dynamic content. You as the translator can decide where this dynamic content ends up in your translated text by including the format specifier in a specific place.\n\nAlso see: license-toast.activation-overload",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -37,7 +37,7 @@
       }
     },
     "3: money" : {
-      "comment" : "Note: {sales_count} will be replaced by the number of times Mac Mouse Fix has been sold. Make sure to type \"{sales_count}\" exactly like in the original for the text-replacement to work.",
+      "comment" : "Note: {sales_count} will be replaced by the number of times Mac Mouse Fix has been sold. \n\nMake sure to type \"{sales_count}\" exactly like in the original for the text-replacement to work.\n\n",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {

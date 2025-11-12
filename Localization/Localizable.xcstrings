@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "accessibility.settings-link.pre-ventura" : {
-      "comment" : "Example: \n   1. Open 'Security & Privacy' Preferences\n   2. Switch on 'Mac Mouse Fix Helper'\n\nBackground: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The string for Ventura and later is defined in another file, this is the string for earlier versions",
+      "comment" : "Will be used in a context like this: \n   1. Open 'Security & Privacy' Preferences\n   2. Switch on 'Mac Mouse Fix Helper'\n\nBackground info: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The translation for Ventura and later is defined by 46z-Nd-nh4.title and other entries in AuthorizeAccessibilityView. This here is the string for earlier versions.",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5749,14 +5749,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Wenn du **Probleme** hast, die App **einzuschalten**, klicke&nbsp;[hier](%@)"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "If you have **problems enabling** the app, click&nbsp;[here](%@)"
+            "value" : "If you have **problems enabling** the app, click [here](%@)"
           }
         },
         "fr" : {
@@ -11918,7 +11918,7 @@
       }
     },
     "trigger.substring.scroll.flags" : {
-      "comment" : "Example: ⌥⌘ and Scroll",
+      "comment" : "Example: ⌥⌘ and Scroll\nNote: The modifier flags such as '⌥⌘' will always be *prefixed* to this string.",
       "localizations" : {
         "de" : {
           "stringUnit" : {

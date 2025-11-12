@@ -173,7 +173,7 @@
       }
     },
     "localization.translate-prompt" : {
-      "comment" : "Note: 'Help translate!' should sound like an invitation, not a command. In German I rephrased it a bit to avoid the imperative form (I landed on 'Beim Übersetzen helfen!')",
+      "comment" : "Note: 'Help translate!' should sound like an invitation, not a command. In German I rephrased it a bit to avoid the imperative form ('Beim Übersetzen helfen!')",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {

@@ -188,7 +188,7 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                 @"effect.app-expose",
                 @"Note: Apple refers to this feature by different names like 'Application Windows' or 'App Exposé'. In English I chose the same name that is used in Keyboard Shortcut settings.\n"
                 "\n"
-                "Background: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'App Exposé' felt a bit outdated. (Exposé was the precursor to Mission Control I think)"),
+                "Further details: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'App Exposé' felt a bit outdated. (Exposé was the predecessor to Mission Control, and the term mostly doesn't occur anymore in macOS now.)"),
             @"tool": MFLocalizedString(@"effect.app-expose.hint", @""),
             @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
@@ -750,11 +750,14 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Declare map
         
         NSDictionary *map = @{
-            @[@(1), @"click"]:  MFLocalizedString(@"trigger.substring.click.1",   @"Note: \"%@\" will be a button name (or nothing, if the button name can be inferred from context) || Example where %@ is \"Button 5\": ⌥⌘ Double Click Button 4 + Click Button 5"), /// || NOTE: This 'substring' will be combined with other substrings to form the 'Action Table Trigger Strings' which show up on the left side of the Action Table || NOTE 2: '%@' will be replaced by a mouse button name (or by nothing, if the button name can be inferred from context.) || EXAMPLE of an Action Table Trigger String, which is composed of this and other substrings, where '%@' in this substring was replaced by 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || NOTE 3: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'Title Case' there. In your language, 'Title Case' might not be a thing, and so you might not want to capitalize these substrings. The first letter of the Action Table Trigger String will be programmatically capitalized in any language."),
+            @[@(1), @"click"]:  MFLocalizedString(@"trigger.substring.click.1",   @""
+                "Note: \"%@\" will be a button name (or nothing, if the button name can be inferred from context)\n"
+                "Example where %@ is \"Button 5\": ⌥⌘ Double Click Button 4 + Click Button 5"
+                ), /// || NOTE: This 'substring' will be combined with other substrings to form the 'Action Table Trigger Strings' which show up on the left side of the Action Table || NOTE 2: '%@' will be replaced by a mouse button name (or by nothing, if the button name can be inferred from context.) || EXAMPLE of an Action Table Trigger String, which is composed of this and other substrings, where '%@' in this substring was replaced by 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || NOTE 3: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'Title Case' there. In your language, 'Title Case' might not be a thing, and so you might not want to capitalize these substrings. The first letter of the Action Table Trigger String will be programmatically capitalized in any language."),
             
             @[@(2), @"click"]:  MFLocalizedString(@"trigger.substring.click.2",   @""), ///|| NOTE: You might not want to capitalize this and other strings whose key starts with 'trigger.substring.' We only capitalize these strings in English because we use 'Title Case' there, which is not common in most languages aside from English. For more info, see the comments on 'trigger.substring.click.1'"),
             @[@(3), @"click"]:  MFLocalizedString(@"trigger.substring.click.3",   @""),
-            @[@(1), @"hold"]:   MFLocalizedString(@"trigger.substring.hold.1",    @"Remember: All these strings that start with \"trigger.substring.[...]\" should be all-lowercase in most languages. For an explanation, see the comment for the key \"trigger.substring.button-modifier.2\""),
+            @[@(1), @"hold"]:   MFLocalizedString(@"trigger.substring.hold.1",    @"Remember: The strings starting with \"trigger.substring.[...]\" should be lowercase in most languages. See trigger.substring.button-modifier.2 for the explanation."),
             @[@(2), @"hold"]:   MFLocalizedString(@"trigger.substring.hold.2",    @""),
             @[@(3), @"hold"]:   MFLocalizedString(@"trigger.substring.hold.3",    @""),
         };
@@ -798,8 +801,16 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         };
         
         NSDictionary *onlyFlagsMap = @{
-            @"_drag":   MFLocalizedString(@"trigger.substring.drag.flags", @"Note: This will be used for Drag Actions that only need keyboard modifiers to be activated - not mouse buttons || Example: ⌥⌘ and Drag"),
-            @"_scroll": MFLocalizedString(@"trigger.substring.scroll.flags", @"Example: ⌥⌘ and Scroll"),
+            @"_drag":   MFLocalizedString(@"trigger.substring.drag.flags", @""
+                "Example: ⌥⌘ and Drag\n"
+                "Note: This will be used for Drag Actions that only need keyboard modifiers to be activated (And no mouse buttons)\n"
+                "Note: The modifier flags such as '⌥⌘' will always appear at the _start_ of this string, not at the end.\n"
+                "Note: Also see trigger.substring.scroll.flags"
+            ),
+            @"_scroll": MFLocalizedString(@"trigger.substring.scroll.flags", @""
+                "Example: ⌥⌘ and Scroll\n"
+                "Note: Also see trigger.substring.drag.flags"
+            ),
         };
         
         /// Use maps
@@ -872,7 +883,10 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         
         NSString *buttonModString;
         if (lvl.intValue == 1) {
-            buttonModString = stringf(MFLocalizedString(@"trigger.substring.button-modifier.1", @"Note: %@ will be a button name || Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5"), buttonStr);
+            buttonModString = stringf(MFLocalizedString(@"trigger.substring.button-modifier.1", @""
+                "Note: %@ will be a button name\n"
+                "Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5"
+            ), buttonStr);
         } else if (lvl.intValue == 2) {
             /// Notes:
             ///     - We put the detailed localizer hints for the "trigger.substring.[...]" strings here because:

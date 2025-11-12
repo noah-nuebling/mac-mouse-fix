@@ -66,11 +66,11 @@ AuthorizeAccessibilityView *_accViewController;
     if (@available(macOS 13.0, *)) { } else {
         self.openSettingsLink.stringValue = MFLocalizedString(
             @"accessibility.settings-link.pre-ventura",
-            @"Example: \n"
+            @"Will be used in a context like this: \n"
             "   1. Open 'Security & Privacy' Preferences\n"
             "   2. Switch on 'Mac Mouse Fix Helper'\n"
             "\n"
-            "Background: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The string for Ventura and later is defined in another file, this is the string for earlier versions"
+            "Background info: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The translation for Ventura and later is defined by 46z-Nd-nh4.title and other entries in AuthorizeAccessibilityView. This here is the string for earlier versions."
         );
     }
 }
