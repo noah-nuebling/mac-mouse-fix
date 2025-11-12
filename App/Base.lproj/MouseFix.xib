@@ -501,7 +501,7 @@ Tips:
                             <menuItem title="View Guides or Ask the Community..." id="GcC-Bk-h8l" userLabel="View Guides or Ask the Community..." customClass="URLMenuItem">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="URLString" value="https://github.com/noah-nuebling/mac-mouse-fix/discussions"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="URLString" value="https://redirect.macmousefix.com/?target=mmf-guides-and-community"/>
                                 </userDefinedRuntimeAttributes>
                             </menuItem>
                         </items>
