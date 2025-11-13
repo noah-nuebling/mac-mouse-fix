@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **November 2025**
 
+- 🇺🇸&nbsp;John&nbsp;Chase - "Well worth the money!"
 - 🇧🇬&nbsp;Aleksandar&nbsp;Aleksandrov
 - 🇲🇽&nbsp;Juan&nbsp;Jose&nbsp;Aja&nbsp;Fernandez
 - 🇨🇦&nbsp;Jacob&nbsp;Liu - "Great tool!"
