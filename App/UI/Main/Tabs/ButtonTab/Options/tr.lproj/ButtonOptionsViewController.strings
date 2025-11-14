@@ -1,0 +1,19 @@
+
+/* Class = "NSButtonCell"; title = "Done"; ObjectID = "COH-CF-CQd"; */
+<<<<<<< Updated upstream
+"COH-CF-CQd.title" = "Bitti";
+
+/* Class = "NSTextFieldCell"; title = "Recommended for Trackball Mice"; ObjectID = "DQ6-Rq-6nC"; Note = "Locking the Mouse Pointer during 'Click and Drag' Gestures is \"Recommended for Trackball Mice\""; */
+"DQ6-Rq-6nC.title" = "Trackball tip fareler için Önerilir";
+
+/* Class = "NSButtonCell"; title = "Lock Mouse Pointer During 'Click and Drag' Gestures"; ObjectID = "Mmp-uv-DmY"; */
+"Mmp-uv-DmY.title" = "'Tıklama ve Sürükleme' Hareketleri Sırasında Fare İmlecini Kilitle";
+=======
+"COH-CF-CQd.title" = "Tamam";
+
+/* Class = "NSTextFieldCell"; title = "Recommended for Trackball Mice"; ObjectID = "DQ6-Rq-6nC"; Note = "Locking the Mouse Pointer during 'Click and Drag' Gestures is \"Recommended for Trackball Mice\""; */
+"DQ6-Rq-6nC.title" = "Trackball Fareler için Önerilir";
+
+/* Class = "NSButtonCell"; title = "Lock Mouse Pointer During 'Click and Drag' Gestures"; ObjectID = "Mmp-uv-DmY"; */
+"Mmp-uv-DmY.title" = "'Tık ve Kaydır' hareketlerinde fare imlecini kilitle";
+>>>>>>> Stashed changes

@@ -27,6 +27,7 @@
         @"en": @1.0, /// English
         @"ko": @1.75, /// Korean
         @"zh": @3.5, /// Chinese
+        @"tr": @1.0 /// Turkish
     };
     
     NSNumber *resultNS = map[languageCode];
