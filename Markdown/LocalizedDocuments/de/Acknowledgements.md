@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **November 2025**
 
+- 🇫🇮&nbsp;Michal&nbsp;Jeremias - "such a relieve to find this app"
 - 🇺🇸&nbsp;Ktmn110
 - 🇦🇹&nbsp;Patrick&nbsp;Schwab - "So so good vor VPN, Fix my Problem with Logitec for forward and backward on Win. Server thx"
 - 🇺🇸&nbsp;John&nbsp;Chase - "Well worth the money!"
