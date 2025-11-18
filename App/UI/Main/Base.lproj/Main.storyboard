@@ -352,7 +352,8 @@
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <attributedString key="userComments">
                                                                 <fragment>
-                                                                    <string key="content">General &gt; Enable Mac Mouse Fix Toggle &gt; Hint || NOTE: Primarily meant to teach the right mental model to users who have the common misconception that they need to make MMF a 'Login Item' to keep it working. The terminology is meant to match the 'Enable Mac Mouse Fix' toggle and the 'Quit Mac Mouse Fix' menubar item.</string>
+                                                                    <string key="content">General &gt; Enable Mac Mouse Fix Toggle &gt; Hint 
+NOTE: Primarily meant to teach the right mental model to users who have the common misconception that they need to make MMF a 'Login Item' to keep it working. The terminology is meant to match the 'Enable Mac Mouse Fix' toggle and the 'Quit Mac Mouse Fix' menubar item.</string>
                                                                 </fragment>
                                                             </attributedString>
                                                         </textFieldCell>
@@ -942,7 +943,11 @@ You can also *Double Click*, *Click and Drag* and [more]().</string>
                                 <font key="font" metaFont="system"/>
                                 <attributedString key="userComments">
                                     <fragment>
-                                        <string key="content">Restore Defaults Popover &gt; Don't Remind Toggle &gt; Label || NOTE: This is the label for a checkbox letting the user tell the app not to be reminded again to load the recommended button settings for their mouse. || NOTE 2: This text is displayed below the text with the key `restore-default-buttons-popover.body`, which is defined in Localizable.xcstrings</string>
+                                        <string key="content">Restore Defaults Popover &gt; Don't Remind Toggle &gt; Label 
+
+NOTE: This is the label for a checkbox letting the user tell the app not to be reminded again to load the recommended button settings for their mouse. 
+
+NOTE: This text is displayed below the text with the key `restore-default-buttons-popover.body`, which is defined in the 'Localizable' file.</string>
                                     </fragment>
                                 </attributedString>
                             </buttonCell>
@@ -1054,7 +1059,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                 </constraints>
                                             </customView>
                                             <button horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="BaB-SW-lek" userLabel="Trackpad Toggle">
-                                                <rect key="frame" x="-2" y="35" width="150" height="18"/>
+                                                <rect key="frame" x="-2" y="35.536249999997381" width="150" height="17.439583333332848"/>
                                                 <buttonCell key="cell" type="check" title="Trackpad Simulation" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="N65-aN-Hxp">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1073,9 +1078,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                             <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             <attributedString key="userComments">
-                                                                <fragment>
-                                                                    <string key="content">Scrolling &gt; Trackpad Simulation Toggle &gt; Hint || NOTE 2: There are multiple screenshots for this text. If you're using Xcode, click the arrows in the QuickLook window to see them.</string>
-                                                                </fragment>
+                                                                <fragment content="Scrolling &gt; Trackpad Simulation Toggle &gt; Hint"/>
                                                             </attributedString>
                                                         </textFieldCell>
                                                     </textField>
@@ -1106,7 +1109,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                         </constraints>
                                     </customView>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dtR-AX-YsY" userLabel="Reverse Direction Toggle">
-                                        <rect key="frame" x="-2" y="318" width="352" height="18"/>
+                                        <rect key="frame" x="-2" y="318.02416666666613" width="352" height="17.439583333332848"/>
                                         <buttonCell key="cell" type="check" title="Reverse Direction" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gK0-1z-Pjv">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -1196,7 +1199,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                 </constraints>
                                             </customView>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5rO-m9-I0Q">
-                                                <rect key="frame" x="-2" y="21" width="82" height="18"/>
+                                                <rect key="frame" x="-2" y="21.024166666666133" width="82" height="17.951666666667734"/>
                                                 <buttonCell key="cell" type="check" title="Precision" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="4hf-tQ-y76">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1813,7 +1816,9 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <attributedString key="userComments">
                                                         <fragment>
-                                                            <string key="content">NOTE: About &gt; Mac Mouse Fix Label || NOTE TO SELF: We don't mark 'Mac Mouse Fix' and 'macOS' strings as 'Do Not Translate' since in some languages they might be adjusted. E.g. in Arabic, 'macOS' is usually referred to as 'نظام macOS' (= 'macOS system') inside the UI.</string>
+                                                            <mutableString key="content">NOTE: About &gt; Mac Mouse Fix Label 
+
+NOTE TO SELF: We don't mark 'Mac Mouse Fix' and 'macOS' strings as 'Do Not Translate' since in some languages they might be adjusted. E.g. in Arabic, 'macOS' is usually referred to as 'نظام macOS' (= 'macOS system') inside the UI.</mutableString>
                                                         </fragment>
                                                     </attributedString>
                                                 </textFieldCell>

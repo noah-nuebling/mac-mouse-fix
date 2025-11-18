@@ -23,7 +23,7 @@ import Foundation
             /// - The default duration `kMFToastDurationAutomatic` felt too short in this case. I wonder why that is? I think this toast is one of, if not the shortest toasts - maybe it has to do with that? Maybe it feels like it should display longer, because there's a delay until it shows up so it's harder to get back to? Maybe our tastes for how long the toasts should be changed? Maybe we should adjust the formula for `kMFToastDurationAutomatic`?
             /// - Why are we dispatching `k-is-disabled-toast` to the main thread by not this? (They are called from almost the same place)
             
-            var rawMessage = MFLocalizedString("enable-timeout-toast", comment: "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which looks like a normal space, but it prevents linebreaks. We're using this to prevent the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\".") /// [Oct 2025] Actually, we're using `NSLineBreakStrategyPushOut` now, so the manual &nbsp; may not be necessary anymore.
+            var rawMessage = MFLocalizedString("enable-timeout-toast", comment: "") /// Used to have a &nbsp; here but we assume that's unnecessary with NSLineBreakStrategyPushOut (haven't tested) [Nov 2025]
             rawMessage = String(format: rawMessage, Links.link(kMFLinkID_VenturaEnablingGuide) ?? "")
             ToastController.attachNotification(withMessage: MarkdownParser.attributedString(withCoolMarkdown: rawMessage, fillOutBase: false)!, forDuration: 10.0)
         },
@@ -102,7 +102,7 @@ import Foundation
                 "revive-toast.feature-buttons",
                 comment: """
                 Note: This string will be inserted into the \"revive-toast\" message
-                Note 2: These 'feature names' should match the tabs seen in the MMF UI. To find the strings used for the tabs, search for localized strings with a comment containing "Tab Title" e.g. "Buttons Tab Title".
+                Note 2: These 'feature names' should match the tab names seen in the MMF UI. To find the tab names, search for strings with a \"Comment\" containing \"Toolbar >\"".
                 """
             ))
         }
@@ -118,9 +118,11 @@ import Foundation
                 comment: """
                 Note: "%1$@" will be a list of mouse features like "Scrolling" or "Buttons" for which Mac Mouse Fix was enabled. "%2$@" will be the menu bar icon.
                 
-                Note 2: "&nbsp;" Creates a "non-breaking space" character which prevents the menu bar icon from ending up "orphaned" on a separate line from the "Menu Bar" text. 
+                Note 2: "&nbsp;" Creates a "non-breaking space" character which prevents the menu bar icon from ending up "orphaned" on a separate line from the "Menu Bar" text.
                 
-                Note 3: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. This is to help people use apps that are incompatible with Mac Mouse Fix. In your language, it may make sense to use a different translation for 'enable' in this context than in the context of the 'Enable Mac Mouse Fix' switch.
+                Note 3: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. The feature is aimed at temporarily disabling specific features while working with an incompatible app. To permanently disable the features, users should change the settings in the main app instead of the menu bar. Perhaps you can phrase this so it's a bit more obvious than in English? But really, the design should change.
+                
+                Note 4: The word 'enable' in this context doesn't necessarily have to match the 'Enable Mac Mouse Fix' switch I think.
                 """
             ),
             revivedFeatures, "%@") /// Note on `&nbsp;`: [Sep 2025] We're already using `NSLineBreakStrategyPushOut` to prevent orphaned words, but it doesn't seem to work for the CoolMenuBarIcon.

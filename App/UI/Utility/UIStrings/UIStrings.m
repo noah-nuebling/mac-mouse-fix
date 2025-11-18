@@ -115,7 +115,9 @@
         map = @{
             @1: MFLocalizedString(@"trigger.y.group-row.button-name.primary",     @""), /// The '.y.' is just used to group things in the .xcstrings file. Not sure if smart.
             @2: MFLocalizedString(@"trigger.y.group-row.button-name.secondary",   @""),
-            @3: MFLocalizedString(@"trigger.y.group-row.button-name.middle",      @"Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions which are triggered by the same button."),
+            @3: MFLocalizedString(@"trigger.y.group-row.button-name.middle",      @""
+                "Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions which are triggered by the same button.\n"
+                "Note: The \".y\" is there to influence the sorting when you sort by \"Key\" so you hopefully don't have to jump around as much while translating."),
             @-1: MFLocalizedString(@"trigger.y.group-row.button-name.numbered",   @"Note: The comment next to capture-toast.button-name.numbered also applies here."),
         };
         
@@ -131,7 +133,9 @@
                 "Example: \n"
                 "Middle Button and Button 4 are now captured by Mac Mouse Fix."
             ),
-            @-1: MFLocalizedString(@"capture-toast.button-name.numbered",   @"Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings. - You might want to fill those out first to figure out the capitalization, and then come back here. See trigger.substring.button-modifier.2 for tips on how to capitalize those strings."),
+            @-1: MFLocalizedString(@"capture-toast.button-name.numbered",   @""
+                "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings.\n"
+                "See trigger.substring.button-modifier.2"),
         };
         
     } else {
@@ -542,8 +546,14 @@ static NSMutableAttributedString *symbolStringWithModifierPrefix(NSString *modif
         
         NSArray *firstStrings = sa;
         
-        NSString *join = MFLocalizedString(@"join-list", @"Note: This string joins elements in a list except the second-to-last and last one. || Note: The English string contains a space after the comma.");
-        NSString *joinLast = MFLocalizedString(@"join-list.last", @"Note: This format string joins the second-to-last element and the last element in a list of items || Note: \"%1$@\" will be replaced by the second-to-last element, and \"%2$@\" will be replaced by the last element.");
+        NSString *join = MFLocalizedString(@"join-list", @""
+            "Note: This string joins elements in a list except the second-to-last and last one.\n"
+            "Note: The English string contains a space after the comma."
+        );
+        NSString *joinLast = MFLocalizedString(@"join-list.last", @""
+            "Note: This format string joins the second-to-last element and the last element in a list of items\n"
+            "Note: \"%1$@\" will be replaced by the second-to-last element, and \"%2$@\" will be replaced by the last element."
+        );
         
         outString = stringf(joinLast, [firstStrings componentsJoinedByString:join], lastString);
     } else {

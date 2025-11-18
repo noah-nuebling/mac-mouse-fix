@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "IsJ-q8-i95.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Buttons\"; ObjectID = \"IsJ-q8-i95\"; Note = \"This should match the title of the Buttons Tab\";",
+      "comment" : "Class = \"NSMenuItem\"; title = \"Buttons\"; ObjectID = \"IsJ-q8-i95\"; Note = \"This should match the title of the Buttons Tab \\n(Search for \\\"Toolbar > Buttons Tab Button\\\")\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -123,7 +123,7 @@
       "shouldTranslate" : false
     },
     "KQ8-8Q-u6c.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Scrolling\"; ObjectID = \"KQ8-8Q-u6c\"; Note = \"This should match the title of the Scrolling Tab\";",
+      "comment" : "Class = \"NSMenuItem\"; title = \"Scrolling\"; ObjectID = \"KQ8-8Q-u6c\"; Note = \"This should match the title of the Scrolling Tab\\n(Search for \\\"Toolbar > Scrolling Tab Button\\\")\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {

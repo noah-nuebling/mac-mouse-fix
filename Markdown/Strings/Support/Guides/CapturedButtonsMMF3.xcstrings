@@ -55,7 +55,7 @@
       }
     },
     "04: uncapturing" : {
-      "comment" : "{img} will be replaced by a screenshot of the 'Buttons' tab where ‘Button 4’ and two ‘-‘ buttons are highlighted.\n\nMatch the terminology seen on the ‘Buttons’ tab.",
+      "comment" : "{img} will be replaced by a screenshot of the 'Buttons' tab where ‘Button 4’ and two ‘-‘ buttons are highlighted.\n\nMatch the terminology seen on the ‘Buttons’ tab.\n\n(Search for “Toolbar > Scrolling Tab Button” and “trigger.y.group-row.button-name.numbered”)",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -178,7 +178,7 @@
       }
     },
     "11: restoring.row1.action" : {
-      "comment" : "This is a cell in the 3rd column of the table.\n\n‘Middle Click’ should match the text that is seen in MMF when you click one of the pop-up buttons on the ‘Buttons’ tab.",
+      "comment" : "This is a cell in the 3rd column of the table.\n\n‘Middle Click’ should match the text that is seen in MMF when you click one of the pop-up buttons on the ‘Buttons’ tab.\n\n(See effect.click.middle)",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -230,7 +230,7 @@
       }
     },
     "14: restoring.row2.action" : {
-      "comment" : "‘Middle Click’ should match the text seen in the pop-up buttons on the  ‘Buttons’ Tab in MMF.",
+      "comment" : "‘Middle Click’ should match the text seen in the pop-up buttons on the  ‘Buttons’ Tab in MMF. \n\n(See effect.click.middle)",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -283,7 +283,7 @@
       }
     },
     "17: restoring.row3.action" : {
-      "comment" : "‘Back’ and ‘Forward’ should match the text seen in the pop-up buttons on the  ‘Buttons’ Tab in MMF.",
+      "comment" : "‘Back’ and ‘Forward’ should match the text seen in the pop-up buttons on the  ‘Buttons’ Tab in MMF.\n\n(See effect.back)",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {
@@ -335,7 +335,7 @@
       }
     },
     "20: restoring.row4.action" : {
-      "comment" : "‘Scroll & Navigate’ should match the text seen in the pop-up buttons on the  ‘Buttons’ Tab in MMF.",
+      "comment" : "‘Scroll & Navigate’ should match the text seen in the pop-up buttons on the  ‘Buttons’ Tab in MMF.\n\n(See drag-effect.scroll-swipe)",
       "extractionState" : "manual",
       "localizations" : {
         "de" : {

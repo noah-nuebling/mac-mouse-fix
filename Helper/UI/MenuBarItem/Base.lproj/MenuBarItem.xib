@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24093.9" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24128" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24093.9"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24128"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,7 +30,10 @@
                     <imageReference key="image" image="rectangle" catalog="system" symbolScale="default" variableValue="1"/>
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <attributedString key="userComments">
-                        <fragment content="This should match the title of the Buttons Tab"/>
+                        <fragment>
+                            <string key="content">This should match the title of the Buttons Tab 
+(Search for "Toolbar &gt; Buttons Tab Button")</string>
+                        </fragment>
                     </attributedString>
                     <connections>
                         <action selector="disableButtons:" target="-2" id="wHN-dY-Bub"/>
@@ -40,7 +43,10 @@
                     <imageReference key="image" image="arrow.up.and.down" catalog="system" symbolScale="default"/>
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <attributedString key="userComments">
-                        <fragment content="This should match the title of the Scrolling Tab"/>
+                        <fragment>
+                            <string key="content">This should match the title of the Scrolling Tab
+(Search for "Toolbar &gt; Scrolling Tab Button")</string>
+                        </fragment>
                     </attributedString>
                     <connections>
                         <action selector="disableScroll:" target="-2" id="RgH-C3-jva"/>

@@ -257,11 +257,15 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
     if (inputType == kMFCapturedInputTypeButtons) {
         map = @{
             
-            @"captured.body": MFLocalizedString(@"capture-toast.buttons.captured.body", @"Note: This is a \"pluralizable\" string, which means it has different versions depending on how many buttons the string is talking about. Click the disclosure triangles (>) to edit the different versions of the string. Do not localize \"@pluralizable\" - it's just a placeholder. \n"
+            @"captured.body": MFLocalizedString(@"capture-toast.buttons.captured.body", @""
+                "Note: This is a \"pluralizable\" string, which means it has different versions depending on how many buttons the string is talking about.\n"
                 "\n"
-                "Note 2: \"%2$@\" will be replaced with the names of the captured buttons.\n"
+                "Note: \"%2$@\" will be replaced with the names of the captured buttons.\n"
                 "Example where those buttons are \"Middle Button\" and \"Button 4\":\n"
-                "\"Middle Button and Button 4 are now captured by Mac Mouse Fix.\""),
+                "\"Middle Button and Button 4 are now captured by Mac Mouse Fix.\""
+                "\n"
+                "If you're editing this in Xcode: Click the disclosure triangles (>) to edit the different versions of the string. Do not localize or modify \"@pluralizable\" - it's just a placeholder. \n"
+            ),
             @"captured.hint": MFLocalizedString(
                 @"capture-toast.buttons.captured.hint",
                 @"Note: The core idea that we want to convey with these ui strings is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since I think it sounds nicer in English. In your language, you might want to use something closer to 'intercept'.\n"
