@@ -276,7 +276,7 @@ typedef enum {
                         auto firstLinebreak = [s.string rangeOfString: @"\n"].location;
                         auto firstLine = [s attributedSubstringFromRange: NSMakeRange(0,
                             (firstLinebreak != NSNotFound) ?
-                            firstLinebreak+1 : /// +1 to include the `\n` This is necessary to measure the `。` character in Chinese correctly (it seems to change size if followed by a linebreak) (Not sure if bug) (Observed [Nov 2025], macOS Tahoe and Sequoia)
+                            firstLinebreak+1 : /// +1 to include the `\n` This is necessary to measure the `。` character in Chinese correctly (it seems to change size if followed by a linebreak) (Not sure if bug) (Observed [Nov 2025], macOS Tahoe and Sequoia) (See FB21078671)
                             s.string.length
                         )];
                         [firstLine sizeAtMaxWidth: maxTextWidth].width;
@@ -368,7 +368,7 @@ typedef enum {
         [NSAnimationContext endGrouping];
         
         /// Debug
-        DDLogDebug(@"Toast frames: before=%@, after=%@", @(preAnimFrame), @(targetFrame));
+        DDLogDebug(@"Toast frames: preAnim=%@, target=%@", @(preAnimFrame), @(targetFrame));
     }
     
     /// Close if user clicks elsewhere

@@ -448,6 +448,16 @@ static NSRect MFUnionRect(NSRect r, NSRect s) {
     /// Notes:
     /// - Why didn't we use the native `boundingRectWithSize:`? Was there really no way to make it work? Well this works so no need to change it.
     
+    { /// HACK (?) [Nov 2025] The `FB21078671` workaround in `ToastController.m` only works by using `boundingRectWithSize:` instead of the `TextKit 2 implementation`
+        auto size = [self
+            boundingRectWithSize: NSMakeSize(maxWidth, CGFLOAT_MAX)
+            options: NSStringDrawingUsesLineFragmentOrigin
+            context: nil
+        ].size;
+        
+        return (NSSize) { ceil(size.width), ceil(size.height) }; /// Docs say to apply ceil before applying this to a view.
+    }
+    
     if (@available(macOS 12.0, *)) {
         
         /// TextKit 2 Implementation
