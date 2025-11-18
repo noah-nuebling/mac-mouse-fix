@@ -269,8 +269,18 @@ typedef enum {
                 );
                 
                 /// Make the `messageTitle` (first line) determine the width (So the `messageSubtitle` can't be wider than the `messageTitle`)
-                maxTextWidth = MIN(maxTextWidth,
-                    [[[_instance.label.attributedString split: @"\n" maxSplit: 1] firstObject] sizeAtMaxWidth: maxTextWidth].width
+                maxTextWidth = MIN(
+                    maxTextWidth,
+                    ({
+                        auto s = _instance.label.attributedString;
+                        auto firstLinebreak = [s.string rangeOfString: @"\n"].location;
+                        auto firstLine = [s attributedSubstringFromRange: NSMakeRange(0,
+                            (firstLinebreak != NSNotFound) ?
+                            firstLinebreak+1 : /// +1 to include the `\n` This is necessary to measure the `。` character in Chinese correctly (it seems to change size if followed by a linebreak) (Not sure if bug) (Observed [Nov 2025], macOS Tahoe and Sequoia)
+                            s.string.length
+                        )];
+                        [firstLine sizeAtMaxWidth: maxTextWidth].width;
+                    })
                 );
                 
                 /// Make sure lines don't get too long
