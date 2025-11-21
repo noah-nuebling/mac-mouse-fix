@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **November 2025**
 
+- 🇦🇹&nbsp;Josef&nbsp;Glatz - "I never thought I would ever experience a conventional mouse under macOS so smoothly."
 - 🇨🇭&nbsp;Boomend&nbsp;Flops&nbsp;4X
 - 🇫🇮&nbsp;Michal&nbsp;Jeremias - "such a relieve to find this app"
 - 🇺🇸&nbsp;Ktmn110
