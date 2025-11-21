@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **November 2025**
 
+- 🇫🇮&nbsp;Mikko&nbsp;Käär - "🔥"
 - 🇦🇹&nbsp;Jansi - "Give the guy some money, programming is not always fun!"
 - 🇦🇹&nbsp;Josef&nbsp;Glatz - "I never thought I would ever experience a conventional mouse under macOS so smoothly."
 - 🇨🇭&nbsp;Boomend&nbsp;Flops&nbsp;4X
