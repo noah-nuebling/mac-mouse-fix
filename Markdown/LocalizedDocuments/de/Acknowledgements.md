@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **November 2025**
 
+- 🇬🇧&nbsp;Richard&nbsp;Barber
 - 🇬🇧&nbsp;Zoe
 - 🇫🇮&nbsp;Mikko&nbsp;Käär - "🔥"
 - 🇦🇹&nbsp;Jansi - "Give the guy some money, programming is not always fun!"
