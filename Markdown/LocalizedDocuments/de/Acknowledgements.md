@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **November 2025**
 
+- 🇺🇸&nbsp;Alan&nbsp;Ni - "Thank you for the mouse medicine!"
 - 🇪🇪&nbsp;Tonis&nbsp;O
 - 🇩🇪&nbsp;Me
 - 🇬🇧&nbsp;Richard&nbsp;Barber
