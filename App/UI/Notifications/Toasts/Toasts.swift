@@ -12,68 +12,94 @@ import Foundation
 @objc class Toasts: NSObject {
     
     /// Define map
-    ///     Maps are split up by tab for localization screenshot automation
-    ///     Having 2 string constants to take care of per toast (e.g. "k-enable-timeout-toast" and "enable-timeout-toast") is a bit annoying. At least we have an error message we try to pass in an unknown `k-...` string.
+    ///     - Maps are split up by tab for localization screenshot automation
+    ///     - Order per tab needs to be deterministic otherwise uploadstrings.py can't correctly merge English and translated screenshots into one .xcloc file. [Nov 2025]
+    ///     - Having 2 string constants to take care of per toast (e.g. "k-enable-timeout-toast" and "enable-timeout-toast") is a bit annoying. At least we have an error message we try to pass in an unknown `k-...` string.
     
     static let simpleToastMap_General = [
-        "k-enable-timeout-toast": {
-            
-            /// Notes:
-            /// - We put a period at the end of this UI string. Usually we don't put periods for short UI strings, but it just feels wrong in this case?
-            /// - The default duration `kMFToastDurationAutomatic` felt too short in this case. I wonder why that is? I think this toast is one of, if not the shortest toasts - maybe it has to do with that? Maybe it feels like it should display longer, because there's a delay until it shows up so it's harder to get back to? Maybe our tastes for how long the toasts should be changed? Maybe we should adjust the formula for `kMFToastDurationAutomatic`?
-            /// - Why are we dispatching `k-is-disabled-toast` to the main thread by not this? (They are called from almost the same place)
-            
-            var rawMessage = MFLocalizedString("enable-timeout-toast", comment: "") /// Used to have a &nbsp; here but we assume that's unnecessary with NSLineBreakStrategyPushOut (haven't tested) [Nov 2025]
-            rawMessage = String(format: rawMessage, Links.link(kMFLinkID_VenturaEnablingGuide) ?? "")
-            ToastController.attachNotification(withMessage: MarkdownParser.attributedString(withCoolMarkdown: rawMessage, fillOutBase: false)!, forDuration: 10.0)
-        },
-        "k-is-disabled-toast": {
-            var messageRaw = MFLocalizedString("is-disabled-toast", comment: "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings.")
-            messageRaw = String(format: messageRaw, Links.link(kMFLinkID_MacOSSettingsLoginItems) ?? "")
-            
-            let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)
-            DispatchQueue.main.async { /// UI stuff needs to be called from the main thread
-                if let window = NSApp.mainWindow, let message = message {
-                    ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
-                }
+        [
+            "key": "k-enable-timeout-toast",
+            "block": {
+                /// Notes:
+                /// - We put a period at the end of this UI string. Usually we don't put periods for short UI strings, but it just feels wrong in this case?
+                /// - The default duration `kMFToastDurationAutomatic` felt too short in this case. I wonder why that is? I think this toast is one of, if not the shortest toasts - maybe it has to do with that? Maybe it feels like it should display longer, because there's a delay until it shows up so it's harder to get back to? Maybe our tastes for how long the toasts should be changed? Maybe we should adjust the formula for `kMFToastDurationAutomatic`?
+                /// - Why are we dispatching `k-is-disabled-toast` to the main thread by not this? (They are called from almost the same place)
+                
+                var rawMessage = MFLocalizedString("enable-timeout-toast", comment: "") /// Used to have a &nbsp; here but we assume that's unnecessary with NSLineBreakStrategyPushOut (haven't tested) [Nov 2025]
+                rawMessage = String(format: rawMessage, Links.link(kMFLinkID_VenturaEnablingGuide) ?? "")
+                ToastController.attachNotification(withMessage: MarkdownParser.attributedString(withCoolMarkdown: rawMessage, fillOutBase: false)!, forDuration: 10.0)
             }
-        },
+        ],
+        [
+            "key": "k-is-disabled-toast",
+            "block": {
+                var messageRaw = MFLocalizedString("is-disabled-toast", comment: "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings.")
+                messageRaw = String(format: messageRaw, Links.link(kMFLinkID_MacOSSettingsLoginItems) ?? "")
+                
+                let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)
+                DispatchQueue.main.async { /// UI stuff needs to be called from the main thread
+                    if let window = NSApp.mainWindow, let message = message {
+                        ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
+                    }
+                }
+            },
+        ]
     ]
     static let simpleToastMap_Buttons = [
-        "k-forbidden-capture-toast.1": {
-            let messageRaw = MFLocalizedString("forbidden-capture-toast.1", comment: "Note: This message shows when the user tries to assign an action to the primary mouse button (aka left click) inside Mac Mouse Fix.")
-            let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!;
-            ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
-        },
-        "k-forbidden-capture-toast.2": {
-            let messageRaw = MFLocalizedString("forbidden-capture-toast.2", comment: "")
-            let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!;
-            ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
-        },
-        "k-already-using-defaults-toast.3": {
-            let messageRaw = MFLocalizedString("already-using-defaults-toast.3", comment: "") /// Old note: (Removed because doesn't help localizers I think. We dont' wanna train localizers to ignore comments, so we don't want useless ones.) "Note: This text is displayed in a notification after the user tries to load the default settings for mice with 3 buttons on the Buttons Tab.")
-            let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!
-            DispatchQueue.main.async {
+        [
+            "key": "k-forbidden-capture-toast.1",
+            "block":
+            {
+                let messageRaw = MFLocalizedString("forbidden-capture-toast.1", comment: "Note: This message shows when the user tries to assign an action to the primary mouse button (aka left click) inside Mac Mouse Fix.")
+                let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!;
                 ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
-            }
-        },
-        "k-already-using-defaults-toast.5": {
-            let messageRaw = MFLocalizedString("already-using-defaults-toast.5", comment: "")
-            let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!
-            DispatchQueue.main.async {
+            },
+        ],
+        [
+            "key": "k-forbidden-capture-toast.2",
+            "block":
+            {
+                let messageRaw = MFLocalizedString("forbidden-capture-toast.2", comment: "")
+                let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!;
                 ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
-            }
-        },
+            },
+        ],
+        [
+            "key": "k-already-using-defaults-toast.3",
+            "block":
+            {
+                let messageRaw = MFLocalizedString("already-using-defaults-toast.3", comment: "") /// Old note: (Removed because doesn't help localizers I think. We dont' wanna train localizers to ignore comments, so we don't want useless ones.) "Note: This text is displayed in a notification after the user tries to load the default settings for mice with 3 buttons on the Buttons Tab.")
+                let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!
+                DispatchQueue.main.async {
+                    ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
+                }
+            },
+        ],
+        [
+            "key": "k-already-using-defaults-toast.5",
+            "block":
+            {
+                let messageRaw = MFLocalizedString("already-using-defaults-toast.5", comment: "")
+                let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!
+                DispatchQueue.main.async {
+                    ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
+                }
+            },
+        ]
     ]
-    static let simpleToastMap_Scrolling: [String: () -> ()] = [:]
-    static let simpleToastMap_About: [String: () -> ()] = [:]
-    static let simpleToastMap_LicenseSheet: [String: () -> ()] = [:]
+    static let simpleToastMap_Scrolling: [[String: Any]] = []
+    static let simpleToastMap_About: [[String: Any]] = []
+    static let simpleToastMap_LicenseSheet: [[String: Any]] = []
     
-    static let simpleToastMap = [simpleToastMap_General, simpleToastMap_Buttons, simpleToastMap_Scrolling, simpleToastMap_About, simpleToastMap_LicenseSheet]
-        .reduce([:], { (partialResult: [String: () -> ()], nextElement: [String: () -> ()]) in
-            
-            return partialResult.merging(nextElement, uniquingKeysWith: { (first, _) in first })
-    })
+    static let simpleToastMap: [String: () -> ()] = {
+        var result = [:]
+        for map in [simpleToastMap_General, simpleToastMap_Buttons, simpleToastMap_Scrolling, simpleToastMap_About, simpleToastMap_LicenseSheet] {
+            for entry in map {
+                result[entry["key"] as! AnyHashable] = entry["block"]
+            }
+        }
+        return result as! [String: () -> ()];
+    }()
     
     @objc static func showSimpleToast(name: String) {
         

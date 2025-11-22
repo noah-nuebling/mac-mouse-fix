@@ -24,10 +24,10 @@ import Foundation
     
     static let testLists: [String: Array<() -> ()>] = [
      
-        "general": Toasts.simpleToastMap_General.values + [
+        "general": Toasts.simpleToastMap_General.map { $0["block"] as! () -> () } + [
             { AuthorizeAccessibilityView.add() }
         ],
-        "buttons": Toasts.simpleToastMap_Buttons.values + [
+        "buttons": Toasts.simpleToastMap_Buttons.map { $0["block"] as! () -> () } + [
             
             { Toasts.showReviveToast(showButtons: true, showScroll: false) },
             { CaptureToasts.showButtonCaptureToastWith(before: [], after: [3]) },
@@ -35,16 +35,16 @@ import Foundation
             { () -> () in MainAppState.shared.buttonTabController?.showRestoreDefaultPopover(deviceName: "Tecknet 2.4G Wireless", nOfButtons: 3, usedButtons: Set([4, 5])); return },
             { () -> () in MainAppState.shared.buttonTabController?.showRestoreDefaultPopover(deviceName: "Dierya Falcon M1SE Honeycomb", nOfButtons: 5, usedButtons: Set([3])); return },
         ],
-        "scrolling": Toasts.simpleToastMap_Scrolling.values + [
+        "scrolling": Toasts.simpleToastMap_Scrolling.map { $0["block"] as! () -> () } + [
             
             { Toasts.showReviveToast(showButtons: false, showScroll: true) },
             { CaptureToasts.showScrollWheelCaptureToast(false) },
             { CaptureToasts.showScrollWheelCaptureToast(true) },
         ],
-        "about": Toasts.simpleToastMap_About.values + [
+        "about": Toasts.simpleToastMap_About.map { $0["block"] as! () -> () } + [
             
         ],
-        "licensesheet": Toasts.simpleToastMap_LicenseSheet.values + [
+        "licensesheet": Toasts.simpleToastMap_LicenseSheet.map { $0["block"] as! () -> () } + [
             /// Deactivation
             { LicenseToasts.showDeactivationToast() },
             /// Success
