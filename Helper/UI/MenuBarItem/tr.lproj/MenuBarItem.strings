@@ -1,0 +1,36 @@
+
+/* Class = "NSMenuItem"; title = "Buttons"; ObjectID = "IsJ-q8-i95"; */
+"IsJ-q8-i95.title" = "Düğmeler";
+
+/* Class = "NSMenuItem"; title = "<App Compat hint>"; ObjectID = "JFP-3w-VSr"; */
+<<<<<<< Updated upstream
+"JFP-3w-VSr.title" = "<Uygulama Uyumluluğu hakkında ipucu>";
+=======
+"JFP-3w-VSr.title" = "<App Compat ipucu>";
+>>>>>>> Stashed changes
+
+/* Class = "NSMenuItem"; title = "Scrolling"; ObjectID = "KQ8-8Q-u6c"; */
+"KQ8-8Q-u6c.title" = "Kaydırma";
+
+/* Class = "NSMenuItem"; title = "<App Compat title>"; ObjectID = "MGH-3e-48B"; */
+<<<<<<< Updated upstream
+"MGH-3e-48B.title" = "<Uygulama Uyumluluğu başlığı>";
+
+/* Class = "NSTextFieldCell"; title = "Enable for..."; ObjectID = "UrY-I2-S82"; */
+"UrY-I2-S82.title" = "...için Aktifleştirin";
+=======
+"MGH-3e-48B.title" = "<App Compat başlığı>";
+
+/* Class = "NSTextFieldCell"; title = "Enable for..."; ObjectID = "UrY-I2-S82"; */
+"UrY-I2-S82.title" = "...için Aktifleştir";
+>>>>>>> Stashed changes
+
+/* Class = "NSMenuItem"; title = "Open Mac Mouse Fix..."; ObjectID = "lb0-HS-5Kv"; */
+"lb0-HS-5Kv.title" = "Mac Mouse Fix'i Aç...";
+
+/* Class = "NSTextFieldCell"; title = "Quickly disable Mac Mouse Fix features so you can work with apps that aren't compatible yet"; ObjectID = "qF8-UG-CW7"; */
+<<<<<<< Updated upstream
+"qF8-UG-CW7.title" = "Henüz uyumlu olmayan uygulamaları kullanabilmeniz için Mac Mouse Fix özelliklerini hızlıca devre dışı bırakın";
+=======
+"qF8-UG-CW7.title" = "Desteklemeyen uygulamalarla çalışabilmek için Mac Mouse Fix özelliklerini hızlıca devre dışı bırakın";
+>>>>>>> Stashed changes
