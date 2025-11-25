@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **November 2025**
 
+- 🇮🇸&nbsp;Olioskar - "Exactly what I needed"
 - 🇺🇸&nbsp;Customer&nbsp;From&nbsp;Boston - "Great product"
 - 🇺🇸&nbsp;Pgranix - "I have been using this app for years. Upgrading to the Version 3. Noah is the people's developer."
 - 🇺🇸&nbsp;Alan&nbsp;Ni - "Thank you for the mouse medicine!"
