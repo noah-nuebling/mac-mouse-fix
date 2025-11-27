@@ -42,6 +42,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **November 2025**
 
+- 🇩🇪&nbsp;Erdal&nbsp;A&nbsp; - "In my opinion, it's the best mouse utility."
 - 🇩🇪&nbsp;Oliver&nbsp;Harms
 - 🇮🇹&nbsp;Visoom - "not for the fame, here to sustain another fellow dev"
 - 🇮🇸&nbsp;Olioskar - "Exactly what I needed"
