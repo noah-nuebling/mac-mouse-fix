@@ -40,6 +40,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **November 2025**
 
+- 🇩🇪&nbsp;Oliver&nbsp;Harms
 - 🇮🇹&nbsp;Visoom - "not for the fame, here to sustain another fellow dev"
 - 🇮🇸&nbsp;Olioskar - "Exactly what I needed"
 - 🇺🇸&nbsp;Customer&nbsp;From&nbsp;Boston - "Great product"
