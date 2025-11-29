@@ -25,7 +25,7 @@ import Foundation
                 /// - The default duration `kMFToastDurationAutomatic` felt too short in this case. I wonder why that is? I think this toast is one of, if not the shortest toasts - maybe it has to do with that? Maybe it feels like it should display longer, because there's a delay until it shows up so it's harder to get back to? Maybe our tastes for how long the toasts should be changed? Maybe we should adjust the formula for `kMFToastDurationAutomatic`?
                 /// - Why are we dispatching `k-is-disabled-toast` to the main thread by not this? (They are called from almost the same place)
                 
-                var rawMessage = MFLocalizedString("enable-timeout-toast", comment: "") /// Used to have a &nbsp; here but we assume that's unnecessary with NSLineBreakStrategyPushOut (haven't tested) [Nov 2025]
+                var rawMessage = MFLocalizedString("enable-timeout-toast", comment: ".") /// Used to have a &nbsp; here but we assume that's unnecessary with NSLineBreakStrategyPushOut (haven't tested) [Nov 2025]
                 rawMessage = String(format: rawMessage, Links.link(kMFLinkID_VenturaEnablingGuide) ?? "")
                 ToastController.attachNotification(withMessage: MarkdownParser.attributedString(withCoolMarkdown: rawMessage, fillOutBase: false)!, forDuration: 10.0)
             }
@@ -59,7 +59,7 @@ import Foundation
             "key": "k-forbidden-capture-toast.2",
             "block":
             {
-                let messageRaw = MFLocalizedString("forbidden-capture-toast.2", comment: "")
+                let messageRaw = MFLocalizedString("forbidden-capture-toast.2", comment: ".")
                 let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!;
                 ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
             },
@@ -68,7 +68,7 @@ import Foundation
             "key": "k-already-using-defaults-toast.3",
             "block":
             {
-                let messageRaw = MFLocalizedString("already-using-defaults-toast.3", comment: "") /// Old note: (Removed because doesn't help localizers I think. We dont' wanna train localizers to ignore comments, so we don't want useless ones.) "Note: This text is displayed in a notification after the user tries to load the default settings for mice with 3 buttons on the Buttons Tab.")
+                let messageRaw = MFLocalizedString("already-using-defaults-toast.3", comment: ".") /// Old note: (Removed because doesn't help localizers I think. We dont' wanna train localizers to ignore comments, so we don't want useless ones.) "Note: This text is displayed in a notification after the user tries to load the default settings for mice with 3 buttons on the Buttons Tab.")
                 let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!
                 DispatchQueue.main.async {
                     ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
@@ -79,7 +79,7 @@ import Foundation
             "key": "k-already-using-defaults-toast.5",
             "block":
             {
-                let messageRaw = MFLocalizedString("already-using-defaults-toast.5", comment: "")
+                let messageRaw = MFLocalizedString("already-using-defaults-toast.5", comment: ".")
                 let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!
                 DispatchQueue.main.async {
                     ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
@@ -133,7 +133,7 @@ import Foundation
             ))
         }
         if showScroll {
-            revivedFeaturesList.append(MFLocalizedString("revive-toast.feature-scrolling", comment: ""))
+            revivedFeaturesList.append(MFLocalizedString("revive-toast.feature-scrolling", comment: "."))
         }
         let revivedFeatures = UIStrings.naturalLanguageList(fromStringArray: revivedFeaturesList)
         

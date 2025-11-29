@@ -5,6 +5,12 @@
       "comment" : "Class = \"NSButtonCell\"; title = \"Back\"; ObjectID = \"7yY-kF-Q7q\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zpět"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -126,6 +132,12 @@
       "comment" : "Class = \"NSTextFieldCell\"; placeholderString = \"Enter Your License Key\"; ObjectID = \"JJv-GH-7io\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zadejte licenční kód"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",

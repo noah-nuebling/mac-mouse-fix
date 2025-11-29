@@ -4,6 +4,12 @@
     "docname.acknowledgements" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poděkování"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21,6 +27,12 @@
     "docname.captured-buttons" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zachycená tlačítka myši"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -38,6 +50,12 @@
     "docname.captured-scroll-wheels" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zachycená rolovací kolečka"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -55,6 +73,12 @@
     "docname.readme" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soubor Readme"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -72,6 +96,12 @@
     "docname.support" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podpora"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -89,6 +119,12 @@
     "guide.footer.hope-it-helped.1" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doufám, že byl tento návod užitečný!"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -106,6 +142,12 @@
     "guide.footer.hope-it-helped.2" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doufám, že vám tyto informace pomohly!"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -123,6 +165,12 @@
     "guide.footer.hope-it-helped.3" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doufám, že tento návod vše objasnil!"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -140,6 +188,12 @@
     "guide.footer.still-have-questions" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stále máte otázky? Klikněte [sem]({url})."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -158,6 +212,12 @@
       "comment" : ".",
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tento dokument je přeložen do jazyka `{localization_progress}`\n[Pomoc s překladem]({url})"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -176,6 +236,12 @@
       "comment" : "Note: 'Help translate!' should sound like an invitation, not a command. In German I rephrased it a bit to avoid the imperative form ('Beim Übersetzen helfen!')",
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[🌎 Pomozte s překladem!]({url})"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",

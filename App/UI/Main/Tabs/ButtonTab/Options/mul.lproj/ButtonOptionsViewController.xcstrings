@@ -5,6 +5,12 @@
       "comment" : "Class = \"NSButtonCell\"; title = \"Done\"; ObjectID = \"COH-CF-CQd\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hotovo"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -65,6 +71,12 @@
       "comment" : "Class = \"NSTextFieldCell\"; title = \"Recommended for Trackball Mice\"; ObjectID = \"DQ6-Rq-6nC\"; Note = \"Context: Locking the Mouse Pointer during 'Click and Drag' Gestures is \\\"Recommended for Trackball Mice\\\"\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doporučeno pro trackball"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -125,6 +137,12 @@
       "comment" : "Class = \"NSButtonCell\"; title = \"Lock Mouse Pointer During 'Click and Drag' Gestures\"; ObjectID = \"Mmp-uv-DmY\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zamknout ukazatel myši během „kliknutí a tažení“"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",

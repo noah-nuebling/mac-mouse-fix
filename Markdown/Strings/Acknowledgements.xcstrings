@@ -4,6 +4,12 @@
     "1: intro" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# 🙌 Poděkování\n\nVelké díky všem, kteří používají Mac Mouse Fix a poskytují zpětnou vazbu. Je úžasné a velmi motivující vidět, jak se tolik lidí baví a zapojuje se do něčeho, co jsem vytvořil.\n\nChci obzvláště poděkovat lidem a projektům uvedeným v tomto dokumentu."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22,6 +28,12 @@
       "comment" : "Note: {url} will be replaced by a link. \n\nMake sure to type \"{url}\" exactly like in the original for the text-replacement to work.\n\nFurther details: \n\nYou may have encountered ”format specifiers” like ”%1$@” before. ”%1$@” is a format specifier in the C programming language, while “{url}” is a format specifier in the Python programming language. The idea is the same – when the program runs, this special character sequence gets replaced with dynamic content. You as the translator can decide where this dynamic content ends up in your translated text by including the format specifier in a specific place.\n\nAlso see: license-toast.activation-overload",
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "## 🌏 Překlady\n\nDěkujeme, že přinášíte Mac Mouse Fix lidem po celém světě!\n\n- 🇨🇳 čínské překlady od [@groverlynn]({url_1})\n- 🇰🇷 korejské překlady od [@jeongtae]({url_2})\n- 🇻🇳 vietnamské překlady od [@nghlt]({url_3})"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -40,6 +52,12 @@
       "comment" : "Note: {sales_count} will be replaced by the number of times Mac Mouse Fix has been sold. \n\nMake sure to type \"{sales_count}\" exactly like in the original for the text-replacement to work.\n\n",
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 💰 Peníze\n\nMoc děkuji všem, kteří mi poslali milkšejk, a všem **{sales_count}** lidem, kteří si koupili Mac Mouse Fix.\nDíky vám můžu trávit spoustu času děláním něčeho, co miluji.\n\nZvláštní uznání si zaslouží lidé, kteří mě podpořili tím, že za Mac Mouse Fix utratili více, než je standardní cena:"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -57,6 +75,12 @@
     "4: money.generous" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ⭐️ Štědří přispěvatelé\n\nDěkujeme za vaši podporu! :)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -74,6 +98,12 @@
     "5: money.very-generous" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### 🚀 Velmi štědří přispěvatelé\n\nTito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neuvěřitelným milkšejkem**. (A někteří mi dokonce zanechali zprávu) Díky za *cukrovou nálož*!"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -91,6 +121,12 @@
     "6: money.github-sponsors" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ❤️ Sponzoři GitHubu\n\n**Velké díky** všem, kteří mě sponzorují na GitHubu [komukoli]({url})! Doufám, že se mi jednou díky vám podaří tu továrnu na milkšejky získat. :)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -108,6 +144,12 @@
     "7: money.paypal-donations" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ✨ Dary přes PayPal\n\nSpousta štědrých lidí mi koupila milkšejky přes PayPal, když byl Mac Mouse Fix ještě zcela zdarma.\n\nPokud mezi nimi patříte, klikněte [sem]({url}) a získejte **bezplatnou licenci**!"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -125,6 +167,12 @@
     "8: software" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 👾 Další software"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -142,6 +190,12 @@
     "9: software.inspiration" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Software**, který inspiroval Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Průkopnický software pro myš pro Mac, inspirující mnoho funkcí. Byly chvíle, kdy jsem si myslel, že „to asi není možné“, ale pak jsem viděl, že „aha, SteerMouse to dělá“, a o tři roky později jsem také přišel na to, jak to implementovat.\n- [Calftrail Touch]({url_2}) - Základ pro „reverzní inženýrství“, které pohání nejlepší a první simulaci trackpadu v Mac Mouse Fix!\n- [MOS]({url_3}) - Možnost „Vysoká plynulost rolování“ v Mac Mouse Fix, implementace „Nastavení specifická pro aplikaci“ a další byly inspirovány MOS.\n- [SensibleSideButtons]({url_4}) - Zkopíroval jsem jeho kód pro ranou implementaci funkce „Přejít zpět/vpřed o jednu stránku v Safari a dalších aplikacích“ a také mě to vedlo k objevení projektu Calftrail Touch.\n- [Gifski]({url_5}) - Významně inspiroval design a obsah souboru [Readme.md]({url_6}) pro opravu myši na Macu.\n- [Pomocník pro řešení problémů s Vue]({url_7}) - Základ pro návrh a technickou implementaci nástroje [Asistent pro zpětnou vazbu k opravě myši na Macu]({url_8})."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",

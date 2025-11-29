@@ -5,6 +5,12 @@
       "comment" : "{img} will be replaced with a screenshot of the notification that pops up when a button is captured by Mac Mouse Fix. \n\nConsider mirroring the terminology used by that notification. \n\nSearch for ‘capture-toast’ to find the strings used in that notification.",
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_buttons_mmf3}\n\nPři používání nástroje Mac Mouse Fix jste se mohli setkat se zprávou, že tlačítko na vaší myši je nyní „zachycováno“ nástrojem Mac Mouse Fix.\n\n{img}\n\nV tomto článku se dozvíte, co to znamená, jaké problémy to může způsobit a jak je obejít."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22,6 +28,12 @@
     "02: terminology" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Co znamená „zachycení“ tlačítka myši?\n\nTlačítko myši, které je zachyceno aplikací Mac Mouse Fix, již nevidí ostatní aplikace ani systém macOS.\nFunkce, které by toto tlačítko normálně plnilo, nebudou během jeho zachycování fungovat.\n\n**Příklad**: V Chromu se obvykle můžete pohybovat vpřed a vzad kliknutím na boční tlačítka (tlačítka 4 a 5) myši.\nKdyž ale Mac Mouse Fix boční tlačítka zachytí, tato funkce již nefunguje. Místo toho budou boční tlačítka spouštět pouze akce, které jste jim v Mac Mouse Fix přiřadili.\n\n**Proč to Mac Mouse Fix dělá?** Mac Mouse Fix skrývá tlačítka před ostatními aplikacemi, aby se zabránilo náhodnému spuštění jiných funkcí při používání gest Mac Mouse Fix.\nPokud například kliknete a přetáhnete tlačítko 4 pro přepínání mezi plochami, vždy se **současně** vrátíte o stránku zpět v Chromu."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -40,6 +52,12 @@
       "comment" : "{img} will be replaced by a screenshot of the ‘Buttons’ tab where you can see 3 buttons being captured: ‘Middle Button’, ‘Button 5’ and ‘Button 4’ (In that order)\n\nTo help the reader make the connection between the text and the screenshot, keep the order of the buttons and match the terminology that is seen on the ‘Buttons’ tab. \n\nSearch for 'trigger.substring.button-name' inside 'Localizable' to find the button names used on the 'Buttons' tab.",
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Jak zjistím, která tlačítka jsou zachycena programem Mac Mouse Fix?\n\nMac Mouse Fix zachycuje všechna tlačítka, která se zobrazují na levé straně záložky „Tlačítka“.\n\nNa následujícím obrázku jsou zachycena **„Prostřední tlačítko“**, **„Tlačítko 5“** a **„Tlačítko 4“**: <br>\n\n{img}"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -58,6 +76,12 @@
       "comment" : "{img} will be replaced by a screenshot of the 'Buttons' tab where ‘Button 4’ and two ‘-‘ buttons are highlighted.\n\nMatch the terminology seen on the ‘Buttons’ tab.\n\n(Search for “Toolbar > Scrolling Tab Button” and “trigger.y.group-row.button-name.numbered”)",
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Jak zabráním nástroji Mac Mouse Fix v zachycení tlačítka myši?\n\nChcete-li zabránit nástroji Mac Mouse Fix v zachycení tlačítka myši, smažte všechny položky pro dané tlačítko myši na kartě „Tlačítka“. Položku na kartě „Tlačítka“ můžete smazat kliknutím na tlačítko „-“ vlevo.\n\nNapříklad na následujícím obrázku můžete zabránit zachycení tlačítka **'Tlačítko 4'** kliknutím na dvě zvýrazněná tlačítka **'-'**:\n\n{img}"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -75,6 +99,12 @@
     "05: restoring" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Jak mohu obnovit původní funkčnost tlačítka?\n\nChcete-li, aby se tlačítko chovalo stejně jako před instalací Mac Mouse Fix, můžete provést následující:\n\n1. Můžete **zabránit zachycení tlačítka** – jak je popsáno výše.\n\n2. Můžete jednoduše **vypnout Mac Mouse Fix** – pak se žádná tlačítka nebudou zachycovat.\n\n3. Můžete **tlačítku v Mac Mouse Fix** přiřadit konkrétní akce – tímto způsobem můžete obnovit určité funkce, *i během zachycování tlačítka*:"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -93,6 +123,12 @@
       "comment" : "Header of the 1st column of the table\n\nThe 1st column describes which mouse button triggers the 'Original Function' by default (when Mac Mouse Fix is not enabled)",
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tlačítko"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -111,6 +147,12 @@
       "comment" : "Header of the 2nd column of the table\n\nThe 2nd column describes the 'Original Function' triggered by the mouse button described in the 1st column.",
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Původní funkce"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -129,6 +171,12 @@
       "comment" : "Header of the 3rd column of the table\n\nThe 3rd column describes the option that can be assigned inside Mac Mouse Fix to replicate the 'Original Function' described in the 2nd column.",
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akce v Mac Mouse Fix"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -146,6 +194,12 @@
     "09: restoring.row1.default" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prostřední tlačítko myši"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -163,6 +217,12 @@
     "10: restoring.row1.function" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otevírat odkazy v prohlížeči na nové kartě"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -181,6 +241,12 @@
       "comment" : "This is a cell in the 3rd column of the table.\n\n‘Middle Click’ should match the text that is seen in MMF when you click one of the pop-up buttons on the ‘Buttons’ tab.\n\n(See effect.click.middle)",
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "„Kliknutí prostředním tlačítkem“<br>(Lze přiřadit **kliknutí** na tlačítko)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -198,6 +264,12 @@
     "12: restoring.row2.default" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prostřední tlačítko myši"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -215,6 +287,12 @@
     "13: restoring.row2.function" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vložení textu do terminálu"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -233,6 +311,12 @@
       "comment" : "‘Middle Click’ should match the text seen in the pop-up buttons on the  ‘Buttons’ Tab in MMF. \n\n(See effect.click.middle)",
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "„Kliknutí prostředním tlačítkem“<br>(Lze přiřadit **kliknutí** na tlačítko)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -250,6 +334,12 @@
     "15: restoring.row3.default" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tlačítko myši 4 / Tlačítko myši 5"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -268,6 +358,12 @@
       "comment" : "Consider putting ‘back’ *before* ‘forward’ here even if it sounds a bit unnatural in your language – That way it better matches ‘Button 4’ and ‘Button 5’ in the previous column (restoring.row3.default). \n\n(*Button 4 goes back* and *Button 5 goes forward*)",
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přechod zpět / vpřed v Chromu a dalších aplikacích"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -286,6 +382,12 @@
       "comment" : "‘Back’ and ‘Forward’ should match the text seen in the pop-up buttons on the  ‘Buttons’ Tab in MMF.\n\n(See effect.back)",
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "„Zpět“ / „Vpřed“<br>(Lze přiřadit **kliknutí** tlačítka)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -303,6 +405,12 @@
     "18: restoring.row4.default" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prostřední tlačítko myši"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -320,6 +428,12 @@
     "19: restoring.row4.function" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obíhání objektů v Blenderu (a dalších 3D aplikacích)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -338,6 +452,12 @@
       "comment" : "‘Scroll & Navigate’ should match the text seen in the pop-up buttons on the  ‘Buttons’ Tab in MMF.\n\n(See drag-effect.scroll-swipe)",
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "„Scrolování a navigace“<br>(Lze přiřadit **kliknutí a přetažení** tlačítka)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -355,6 +475,12 @@
     "21: restoring.footer" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tímto způsobem můžete i nadále používat obvyklé funkce tlačítka a zároveň mu v nástroji Mac Mouse Fix přiřadit *další* funkce."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -372,6 +498,12 @@
     "22: also-see" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Viz také\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",

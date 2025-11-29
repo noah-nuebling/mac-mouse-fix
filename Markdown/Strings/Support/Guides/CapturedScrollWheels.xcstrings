@@ -4,6 +4,12 @@
     "1: intro" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **ve výchozím nastavení zachycuje kolečko myši**, podobně jako [zachycuje tlačítka myši](<{url}>)."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22,6 +28,12 @@
       "comment" : "For the step-by-step instructions, make sure to mirror the strings that are seen on the ‘Scrolling’ Tab in Mac Mouse Fix.\n\nHow to find the strings seen on the ‘Scrolling’ Tab:\n\nMost strings on the ‘Scrolling’ Tab have a comment containing ‘Scrolling >’ as of September 2025.\n\nHow to find the strings used in the message 'indicating that the scroll wheel is no longer being captured':\n\nSearch for ‘capture-toast.scroll.uncaptured’",
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Jak zabránit zachycení rolovacího kolečka:**\n\n1. V Mac Mouse Fix přejděte na kartu „Rolování“\n2. Vypněte **všechny** možnosti\n- V případě možnosti „Rychlost“ ji nastavte na „macOS“\n- Odstraňte všechny položky v části „Modifikátory klávesnice“ kliknutím na tlačítko „x“ vedle každého modifikátoru\n\nPoté by se měla zobrazit zpráva, že rolovací kolečko již není zachycováno."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -39,6 +51,12 @@
     "3: uncapturing-purpose" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Co se stane, když se rolovací kolečko *přestane* zaznamenávat?**\n\nAplikace Mac Mouse Fix pak rolovací kolečko zcela ignoruje – během rolování nebude spotřebovávat energii procesoru ani nabíjet baterii, ani jinak nerušit. To vám dává naprostou svobodu používat k ovládání rolovacího kolečka jiné aplikace, jako je [MOS]({url})."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -56,6 +74,12 @@
     "4: also-see" : {
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Viz také\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Upraveno s vynikající pomocí Claude 3.5 Sonnet)*"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",

@@ -4,6 +4,12 @@
     "accessibility.settings-link.pre-ventura" : {
       "comment" : "Will be used in a context like this: \n   1. Open 'Security & Privacy' Preferences\n   2. Switch on 'Mac Mouse Fix Helper'\n\nBackground info: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The translation for Ventura and later is defined by 46z-Nd-nh4.title and other entries in AuthorizeAccessibilityView. This here is the string for earlier versions.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otevřít nastavení „Zabezpečení a soukromí“"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -67,8 +73,14 @@
       }
     },
     "already-using-defaults-toast.3" : {
-      "comment" : "Note: This text is displayed in a notification after the user tries to load the default settings for mice with 3 buttons on the Buttons Tab.",
+      "comment" : ".",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Již používáte výchozí nastavení pro myši se 3 tlačítky."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -132,8 +144,14 @@
       }
     },
     "already-using-defaults-toast.5" : {
-      "comment" : "",
+      "comment" : ".",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Již používáte výchozí nastavení pro myši s 5+ tlačítky."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -193,6 +211,12 @@
     "app-version" : {
       "comment" : "Note: %@ will be the app version, e.g. '3.0.0 (22027)'",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verze %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1772,6 +1796,12 @@
       "comment" : "",
       "extractionState" : "stale",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tlačítko myši %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2035,6 +2065,12 @@
     "capture-toast.button-name.middle" : {
       "comment" : "Note: These button names will be inserted into other \"capture-toast.buttons.[...]\" strings.\n\nExample: \nMiddle Button and Button 4 are now captured by Mac Mouse Fix.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prostřední tlačítko"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2100,6 +2136,12 @@
     "capture-toast.button-name.numbered" : {
       "comment" : "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings.\nSee trigger.substring.button-modifier.2",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tlačítko %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2165,6 +2207,12 @@
     "capture-toast.button-name.primary" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Primární tlačítko"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2230,6 +2278,12 @@
     "capture-toast.button-name.secondary" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sekundární tlačítko"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2295,6 +2349,45 @@
     "capture-toast.buttons.captured.body" : {
       "comment" : "Note: This is a \"pluralizable\" string, which means it has different versions depending on how many buttons the string is talking about.\n\nNote: \"%2$@\" will be replaced with the names of the captured buttons.\nExample where those buttons are \"Middle Button\" and \"Button 4\":\n\"Middle Button and Button 4 are now captured by Mac Mouse Fix.\"\nIf you're editing this in Xcode: Click the disclosure triangles (>) to edit the different versions of the string. Do not localize or modify \"@pluralizable\" - it's just a placeholder. \n",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ jsou nyní zachyceny pomocí Mac Mouse Fix"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ jsou nyní zachyceny pomocí Mac Mouse Fix"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ je nyní zachyceno pomocí Mac Mouse Fix"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ jsou nyní zachyceny pomocí Mac Mouse Fix"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2540,6 +2633,45 @@
     "capture-toast.buttons.captured.hint" : {
       "comment" : "Note: The core idea that we want to convey with these ui strings is that, from now on, the button is being 'intercepted' by Mac Mouse Fix. We used the word 'capture' instead of 'intercept' since I think it sounds nicer in English. In your language, you might want to use something closer to 'intercept'.\n\nAlso see: The CapturedButtonsMMF3 document which explains the concept in more detail.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Ostatní aplikace tato tlačítka již nevidí."
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Ostatní aplikace tato tlačítka již nevidí."
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Ostatní aplikace toto tlačítko již nevidí."
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Ostatní aplikace tato tlačítka již nevidí."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2785,6 +2917,12 @@
     "capture-toast.buttons.link" : {
       "comment" : "Note: This links to the CapturedButtonsMMF3 document.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Zjistěte více](%@)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2850,6 +2988,45 @@
     "capture-toast.buttons.uncaptured.body" : {
       "comment" : ".",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ již nejsou zachyceny Mac Mouse Fix"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ již nejsou zachyceny Mac Mouse Fix"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ již není zachyceno Mac Mouse Fix"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ již nejsou zachyceny Mac Mouse Fix"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3095,6 +3272,45 @@
     "capture-toast.buttons.uncaptured.hint" : {
       "comment" : ".",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : ""
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : ""
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : ""
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3341,6 +3557,12 @@
     "capture-toast.scroll.captured.body" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Scrolování** je nyní ovládáno Mac Mouse Fix"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3370,6 +3592,12 @@
     "capture-toast.scroll.link" : {
       "comment" : "Note: This links to the CapturedScrollWheels document",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Zjistěte více](%@)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3435,6 +3663,12 @@
     "capture-toast.scroll.uncaptured.body" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix již nezachycuje **scrolování**"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3455,6 +3689,12 @@
     "drag-effect.dock-swipe" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plochy & Mission Control"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3520,6 +3760,12 @@
     "drag-effect.dock-swipe.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pohybujte myší:\n- Nahoru pro zobrazení Mission Control\n- Dolů pro zobrazení oken aplikací\n- Doleva nebo doprava pro pohyb mezi Plochami\n\nFunguje jako přejetí třemi prsty na Apple Trackpadu"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3585,6 +3831,12 @@
     "drag-effect.scroll-swipe" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posouvání a navigace"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3650,6 +3902,12 @@
     "drag-effect.scroll-swipe.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volné posouvání pohybem myši v libovolném směru\n\nTaké můžete procházet stránky v Safari, mazat zprávy v Mailu a provádět další operace pohybem myši doleva a doprava\n\nFunguje jako přejetí dvěma prsty na Apple Trackpadu"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3715,6 +3973,12 @@
     "effect.app-expose" : {
       "comment" : "Note: Apple refers to this feature by different names like 'Application Windows' or 'App Exposé'. In English I chose the same name that is used in Keyboard Shortcut settings.\n\nFurther details: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'App Exposé' felt a bit outdated. (Exposé was the predecessor to Mission Control, and the term mostly doesn't occur anymore in macOS now.)",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Okno aplikace"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3780,6 +4044,12 @@
     "effect.app-expose.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zobrazit všechna okna aktivní aplikace"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3845,6 +4115,12 @@
     "effect.apple-keys-submenu" : {
       "comment" : "Note: This is the title for a hidden submenu that lets you remap your buttons to keyboard keys that only appear on Apple Keyboards such as the 'Brightness Up' or 'Do Not Disturb' keys. (You can hold option (⎇) to reveal the submenu)",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Klávesy"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3910,6 +4186,12 @@
     "effect.apple-keys-submenu.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vyberte klávesy, které jsou dostupné pouze na klávesnicích Apple"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3975,6 +4257,12 @@
     "effect.apple-shortcut.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funguje jako stisk '%@' na Apple klávesnici"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4040,6 +4328,12 @@
     "effect.back" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zpět"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4105,6 +4399,12 @@
     "effect.back.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Návrat o jednu stránku zpět v Safari a dalších aplikacích"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4170,6 +4470,12 @@
     "effect.click.middle" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prostřední kliknutí"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4235,6 +4541,12 @@
     "effect.click.middle.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otevírání odkazů na nové kartě, vkládání textu v Terminálu a další.\n\nFunguje to jako kliknutí prostředním tlačítkem myši (také nazývaným kolečko nebo tlačítko myši 3) na standardní myši."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4300,6 +4612,12 @@
     "effect.click.primary" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Primární kliknutí"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4341,6 +4659,12 @@
     "effect.click.primary.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funguje to jako kliknutí primárním tlačítkem myši (nazývané také levé tlačítko nebo tlačítko myši 1) na standardní myši."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4406,6 +4730,12 @@
     "effect.click.secondary" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sekundární kliknutí"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4447,6 +4777,12 @@
     "effect.click.secondary.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funguje to jako kliknutí  sekundárním tlačítkem myši (nazývané také pravé tlačítko myši nebo tlačítko myši 2) na standardní myši."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4512,6 +4848,12 @@
     "effect.desktop" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zobrazit Plochu"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4577,6 +4919,12 @@
     "effect.desktop.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zobrazit Plochu"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4642,6 +4990,12 @@
     "effect.forward" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vpřed"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4707,6 +5061,12 @@
     "effect.forward.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přejít o jednu stránku vpřed v Safari a dalších aplikacích"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4772,6 +5132,12 @@
     "effect.launchpad" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launchpad"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4837,6 +5203,12 @@
     "effect.launchpad.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otevřít Launchpad"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4902,6 +5274,12 @@
     "effect.left-space" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posunout se v Ploše vlevo"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4967,6 +5345,12 @@
     "effect.left-space.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posunout se v Ploše vravo"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5032,6 +5416,12 @@
     "effect.look-up" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vyhledat a Rychlý náhled"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5097,6 +5487,12 @@
     "effect.look-up.hint" : {
       "comment" : "Note: 'Force click' looks a bit weirdly capitalized but it's exactly how Apple spells it on their support website.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vyhledávání slov ve slovníku, rychlé vyhledávání souborů ve Finderu a další.\n\nFunguje jako silné kliknutí (Force Click) na Apple Trackpadu."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5162,6 +5558,12 @@
     "effect.mission-control" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mission Control"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5227,6 +5629,12 @@
     "effect.mission-control.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zobrazit Mission Control"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5292,6 +5700,12 @@
     "effect.record-shortcut" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klávesová zkratka..."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5357,6 +5771,12 @@
     "effect.record-shortcut.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zadejte klávesovou zkratku a poté ji používejte pomocí myši"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5422,6 +5842,12 @@
     "effect.right-space" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posunout se v Ploše vpravo"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5487,6 +5913,12 @@
     "effect.right-space.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posunout se v Ploše vpravo"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5552,6 +5984,12 @@
     "effect.shortcut.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funguje to jako stisknutí klávesy '%@' na klávesnici"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5617,6 +6055,12 @@
     "effect.smart-zoom" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Smart Zoom"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5682,6 +6126,12 @@
     "effect.smart-zoom.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přiblížení nebo oddálení v Safari a dalších aplikacích.\n\nFunguje jako dvojité klepnutí dvěma prsty na Apple Trackpad."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5745,8 +6195,14 @@
       }
     },
     "enable-timeout-toast" : {
-      "comment" : "Note: The \"&nbsp;\" part inserts a non-breaking-space character, which looks like a normal space, but it prevents linebreaks. We're using this to prevent the last word from being orphaned on the last line. \"&nbsp;\" is also called a \"HTML Character Entity\".",
+      "comment" : ".",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Pokud máte **problémy s aktivací** aplikace, click [sem](%@)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5776,6 +6232,12 @@
     "forbidden-capture-toast.1" : {
       "comment" : "Note: This message shows when the user tries to assign an action to the primary mouse button (aka left click) inside Mac Mouse Fix.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Primární tlačítko myši** nemůže být použito. Prosím zvolte jiné tlačítko."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5839,8 +6301,14 @@
       }
     },
     "forbidden-capture-toast.2" : {
-      "comment" : "",
+      "comment" : ".",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Sekundární tlačítko myši** nemůže být použito. Prosím zvolte jiné tlačítko."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5906,6 +6374,12 @@
     "free-country" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix je vaší zemi momentálně zdarma (%@)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5971,6 +6445,12 @@
     "is-disabled-toast" : {
       "comment" : "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aplikace Mac Mouse Fix byla **zakázána** v Nastavení systému\n\nChcete-li Mac Mouse Fix povolit:\n\n1. Přejděte do [Nastavení položek přihlášení](%@)\n2. Zapněte aplikaci „Mac Mouse Fix.app“"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6036,6 +6516,12 @@
     "is-strange-helper-alert.body" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nástroj Mac Mouse Fix nelze povolit, protože v počítači je **jiná verze** nástroje Mac Mouse Fix.\n\nPovolení nástroje Mac Mouse Fix:\n\n1. Odstraňte [jinou verzi](%@)\n2. Vysypte koš\n3. Restartujte Mac\n4. Zkuste to znovu!"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6101,6 +6587,12 @@
     "is-strange-helper-alert.title" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Povolení se nezdařilo"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6166,6 +6658,12 @@
     "join-list" : {
       "comment" : "Note: This string joins elements in a list except the second-to-last and last one.\nNote: The English string contains a space after the comma.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ", "
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6231,6 +6729,12 @@
     "join-list.last" : {
       "comment" : "Note: This format string joins the second-to-last element and the last element in a list of items\nNote: \"%1$@\" will be replaced by the second-to-last element, and \"%2$@\" will be replaced by the last element.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ and %2$@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6296,6 +6800,12 @@
     "license-button.activate" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivovat licenci"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6361,6 +6871,12 @@
     "license-button.deactivate" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deaktivovat licenci"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6426,6 +6942,12 @@
     "license-toast.activate" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vaše licence byla **aktivována**!"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6491,6 +7013,12 @@
     "license-toast.activation-overload" : {
       "comment" : "Note: \"%2$d\", \"%3$d\", and \"%1$@\" are so-called \"C Format Specifers\". They will be replaced by numbers or text when the program runs. Make sure to type the format specifiers exactly like in the English version so that the text-replacement-code works correctly.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tato licence byla aktivována **%2$d**krát. Maximální počet aktivací je **%3$d**.\n\nZ tohoto důvodu byla licence zneplatněna. Důvodem je zabránění pirátství. Pokud máte důvody pro tolik aktivací licence, omluvte prosím nepříjemnosti.\n\nStačí mne [kontaktovat](%1$@) a já vám poskytnu novou licenci! Děkujeme za pochopení."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6556,6 +7084,12 @@
     "license-toast.already-active" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vaše aplikace je **již licencována** tímto klíčem"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6621,6 +7155,12 @@
     "license-toast.deactivate" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vaše licence byla **deaktivována**"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6686,6 +7226,12 @@
     "license-toast.free-country" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tato licence **nemůže být aktivována**, ale Mac Mouse Fix je **ve vaší zemi momentálně zdarma**"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6751,6 +7297,12 @@
     "license-toast.gumroad-error" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chyba **licenčního serveru**\n\n%@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6816,6 +7368,12 @@
     "license-toast.no-internet" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nastala **chyba intarnetového připojení**.\nUjistěte se, že váš počítač je online a žádný firewall neblokuje připojení Mac Mouse Fix k serveru.\n\nPokud ani to nepomůže, kontaktujte mě [zde] (%@)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6880,6 +7438,12 @@
     },
     "license-toast.server-response-invalid" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nastal **problém s licenčním serverem**.\nProsím, zkuste to znovu.\n\nPokud problém přetrvává, kontaktujte mě [zde] (%@)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6897,6 +7461,12 @@
     "license-toast.unknown-error" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nastala **neznámá chyba**\n\n%@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6962,6 +7532,12 @@
     "license-toast.unknown-key" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'**%@**' je neplatný licenční klíč.\n\nUjistěte se, že zadáváte klíč k Mac Mouse Fix přesně takový, jaký jste obdrželi."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7027,6 +7603,12 @@
     "license-toast.unknown-reason" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivování vaší licence selhalo z **neznámého důvodu**.\n\nProsím **ohlaste chybu** [zde] (%@)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7092,6 +7674,12 @@
     "macos-scrolling-hint" : {
       "comment" : "%1$@ will be the name of the System Settings app.\n\nConsider putting the destination in the System Settings on its own line just like English to make the text easier to scan.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nastavte rychlost zde\n[%1$@ > Myš > Rychlost posouvání](%2$@)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7157,6 +7745,12 @@
     "mail-alert.back" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zpět"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7222,6 +7816,12 @@
     "mail-alert.body" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jen zřídka můžu odpovídat, ale čtu si všechny zprávy a zpětná vazba mi pomáhá vylepšit Mac Mouse Fix. Děkuji za vaši zpětnou vazbu!"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7287,6 +7887,12 @@
     "mail-alert.send" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Napiště Email"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7352,6 +7958,12 @@
     "mail-alert.title" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Napsat Email?"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7417,6 +8029,12 @@
     "modifer-key.tool.command" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Command (⌘)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7482,6 +8100,12 @@
     "modifer-key.tool.control" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Control (^)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7547,6 +8171,12 @@
     "modifer-key.tool.option" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Option (⌥)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7612,6 +8242,12 @@
     "modifer-key.tool.shift" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shift (⇧)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7678,6 +8314,12 @@
       "comment" : "",
       "extractionState" : "manual",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obsah sleduje pohyb prstů"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7743,6 +8385,12 @@
     "precise-scrolling-hint" : {
       "comment" : ".",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přesné posouvání i bez použití modifikační klávesy, *pomalým* pohybem rolovacího kolečka"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7808,6 +8456,12 @@
     "restore-buttons-alert.back" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zrušit"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7873,6 +8527,12 @@
     "restore-buttons-alert.commit" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obnovit"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7938,6 +8598,12 @@
     "restore-buttons-alert.hint" : {
       "comment" : "Note: '%1$@' will be the name of the mouse, such as 'Logitech M720 Triathlon'",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vaše myš (**%1$@**) má **%2$d** tlačítka"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8003,6 +8669,12 @@
     "restore-buttons-alert.radio1" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Myš se 3 tlačítky"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8068,6 +8740,12 @@
     "restore-buttons-alert.radio2" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Myš s 5+ tlačítky"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8133,6 +8811,12 @@
     "restore-buttons-alert.title" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obnovit výchozí pro..."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8198,6 +8882,12 @@
     "restore-default-buttons-popover.body" : {
       "comment" : "Note: There's a linebreak in English so the popover doesn't become too wide and to aid with readability.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Klikněte sem** pro načtení doporučeného nastavení pro vaši myš (**%@**)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8263,6 +8953,12 @@
     "revive-toast" : {
       "comment" : "Note: \"%1$@\" will be a list of mouse features like \"Scrolling\" or \"Buttons\" for which Mac Mouse Fix was enabled. \"%2$@\" will be the menu bar icon.\n\nNote 2: \"&nbsp;\" Creates a \"non-breaking space\" character which prevents the menu bar icon from ending up \"orphaned\" on a separate line from the \"Menu Bar\" text.\n\nNote 3: The mentioned feature in the menu bar lets you disable Mac Mouse Fix's effect on your mouse-buttons/scroll-wheel directly from the menubar. The feature is aimed at temporarily disabling specific features while working with an incompatible app. To permanently disable the features, users should change the settings in the main app instead of the menu bar. Perhaps you can phrase this so it's a bit more obvious than in English? But really, the design should change.\n\nNote 4: The word 'enable' in this context doesn't necessarily have to match the 'Enable Mac Mouse Fix' switch I think.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aplikace Mac Mouse Fix **Povolena** pro %1$@\nByla zakázána v Menu&nbsp;Bar&nbsp;%2$@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8328,6 +9024,12 @@
     "revive-toast.feature-buttons" : {
       "comment" : "Note: This string will be inserted into the \"revive-toast\" message\nNote 2: These 'feature names' should match the tab names seen in the MMF UI. To find the tab names, search for strings with a \"Comment\" containing \"Toolbar >\"\".",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Tlačítka**"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8391,8 +9093,14 @@
       }
     },
     "revive-toast.feature-scrolling" : {
-      "comment" : "",
+      "comment" : ".",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Scrolování**"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8458,6 +9166,12 @@
     "scroll-effect.4-pinch" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desktop a Launchpad"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8523,6 +9237,12 @@
     "scroll-effect.4-pinch.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrolujte nahoru pro Launchpad a dolů pro zobrazení Desktopu.\n\nFunguje jako sevření 4 prsty na Apple trackpadu."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8588,6 +9308,12 @@
     "scroll-effect.app-switcher" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přepínač aplikací"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8653,6 +9379,12 @@
     "scroll-effect.app-switcher.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rychle přepíná mezi otevřenými aplikacemi\n\nFunguje jako přidržení klávesy Command (⌘) a současném stisku klávesy Tab (⇥) na vaší klávesnici."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8718,6 +9450,12 @@
     "scroll-effect.horizontal" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Horizontální scrolování."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8783,6 +9521,12 @@
     "scroll-effect.horizontal.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posouvání doleva a doprava, procházení stránek v Safari, mazání zpráv v Mailu a další\n\nFunguje jako horizontální přejetí dvěma prsty na Apple Trackpadu"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8848,6 +9592,12 @@
     "scroll-effect.precise" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přesné scrolování"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8913,6 +9663,12 @@
     "scroll-effect.precise.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posouvejte na malé vzdálenosti a používejte citlivé prvky uživatelského rozhraní s přesností"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8978,6 +9734,12 @@
     "scroll-effect.rotate" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otočit"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9043,6 +9805,12 @@
     "scroll-effect.rotate.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otáčejte zobrazení v Apple mapách a dalších aplikacích.\n\nFunguje jako otáčení 2 prsty an Apple trackpadu."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9108,6 +9876,12 @@
     "scroll-effect.spaces" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pohyb mezi Plochami"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9173,6 +9947,12 @@
     "scroll-effect.spaces.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posunutím nahoru se posunete o jednu mezeru doleva a dolů se posunete o jednu mezeru doprava.\n\nFunguje jako vodorovné přejetí třemi prsty na Apple Trackpadu"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9238,6 +10018,12 @@
     "scroll-effect.swift" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rychlé scrolování"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9303,6 +10089,12 @@
     "scroll-effect.swift.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posouvání na velké vzdálenosti s minimálním úsilím."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9368,6 +10160,12 @@
     "scroll-effect.zoom" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přiblížit nebo Oddálit"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9433,6 +10231,12 @@
     "scroll-effect.zoom.hint" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přiblížení nebo oddálení v Safari, Mapách a dalších aplikacích\n\nFunguje jako přiblížení na trackpadu Apple sevřením prstů."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9498,6 +10302,12 @@
     "system-settings-name" : {
       "comment" : "Note: The name of the system settings app in macOS 13 Ventura and later.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nastavení Systému"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9563,6 +10373,12 @@
     "system-settings-name.pre-ventura" : {
       "comment" : "Note: The name of the system settings app in macOS 12 Monterey and below.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nastavení Systému"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9628,6 +10444,12 @@
     "thanks.01" : {
       "comment" : "Note: The weird thank-you messages are rare. Feel free to change them if you'd like to leave an easter egg. You can also leave them blank (insert a space character), just make sure to fill out thanks.01 - thanks.03",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⭐️ Děkujeme za zakoupení Mac Mouse Fix!"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9693,6 +10515,12 @@
     "thanks.02" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🙌  Děkujeme za zakoupení Mac Mouse Fix!"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9758,6 +10586,12 @@
     "thanks.03" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚀  Děkujeme za podporu Mac Mouse Fix!"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9823,6 +10657,12 @@
     "thanks.04" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌟 Děkujeme za zakoupení Mac Mouse Fix!"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9888,6 +10728,12 @@
     "thanks.05" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧠 Skvělé rozhodnutí!"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9953,6 +10799,12 @@
     "thanks.06" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔥 Skvělý vkus pro software pro opravu myši! ;)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10018,6 +10870,12 @@
     "thanks.09" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👽 Sdílejte to se svými přáteli ze Spacebooku!"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10083,6 +10941,12 @@
     "thanks.10" : {
       "comment" : ".",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🦆 Entengang für immer"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10148,6 +11012,12 @@
     "thanks.13" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐹 Měli bychom mu koupit motýlka."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10213,6 +11083,12 @@
     "thanks.21" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐠 Co... Jsi... Ty?"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10278,6 +11154,12 @@
     "thanks.22" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐁 Obchodníkův osobní mazlíček!"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10295,6 +11177,12 @@
     "thanks.25" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌏 Nejdřív myši, pak svět!! >:)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10360,6 +11248,12 @@
     "trial-counter.active" : {
       "comment" : "Note: You can use whatever formatting looks natural in your language, such as \"x of y\" instead of \"x/y\".",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zbývá **%1$d/%2$d** dnů zdarma."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10425,6 +11319,12 @@
     "trial-counter.expired" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Testovací období skončilo."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10490,6 +11390,12 @@
     "trial-notif.activate-license-button" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivujte licenci"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10555,6 +11461,12 @@
     "trial-notif.body" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ahoj! Mac Mouse Fix používáš už **%1$d dní**. Doufám, že se ti líbí!\n\nPokud chceš Mac Mouse Fix používat i nadále, můžeš si ho [koupit hned](%2$@)."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10620,6 +11532,12 @@
     "trigger.substring.button-modifier.1" : {
       "comment" : "Note: %@ will be a button name\nExample where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klik %@ +"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10685,6 +11603,12 @@
     "trigger.substring.button-modifier.2" : {
       "comment" : "Note: All the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them. In English, that reason is that we're using \"Title Case\", but this isn't common in other languages. For example, in German, the substring \"Click and Drag %@\" is localized as \"klicke %@ und ziehe\". Notice that not even the first word is capitalized. That's because these substrings are joined programmatically to create a combined string. So only capitalize words if there's a specific reason (such as \"Title Case\" in English, or capitalization of nouns in German). If you wanna deviate from this that's also fine, just try to stay consistent.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dvojklik %@ +"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10750,6 +11674,12 @@
     "trigger.substring.button-modifier.3" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trojklik %@ +"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10815,6 +11745,12 @@
     "trigger.substring.button-name.middle" : {
       "comment" : ".",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prostřední tlačítko"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10880,6 +11816,12 @@
     "trigger.substring.button-name.numbered" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tlačítko %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10945,6 +11887,12 @@
     "trigger.substring.button-name.primary" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Primární tlačítko"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11010,6 +11958,12 @@
     "trigger.substring.button-name.secondary" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sekundární tlačítko"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11075,6 +12029,12 @@
     "trigger.substring.click.1" : {
       "comment" : "Note: \"%@\" will be a button name (or nothing, if the button name can be inferred from context)\nExample where %@ is \"Button 5\": ⌥⌘ Double Click Button 4 + Click Button 5",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klik %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11140,6 +12100,12 @@
     "trigger.substring.click.2" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dvojklik %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11205,6 +12171,12 @@
     "trigger.substring.click.3" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trojklik %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11270,6 +12242,12 @@
     "trigger.substring.drag.1" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klik a *táhnutí* %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11335,6 +12313,12 @@
     "trigger.substring.drag.2" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dvojklik a *táhnutí* %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11400,6 +12384,12 @@
     "trigger.substring.drag.3" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trojklik a *táhnutí* %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11465,6 +12455,12 @@
     "trigger.substring.drag.flags" : {
       "comment" : "Example: ⌥⌘ and Drag\nNote: This will be used for Drag Actions that only need keyboard modifiers to be activated (And no mouse buttons)\nNote: The modifier flags such as '⌥⌘' will always appear at the _start_ of this string, not at the end.\nNote: Also see trigger.substring.scroll.flags",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "a *táhnutí*"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11530,6 +12526,12 @@
     "trigger.substring.hold.1" : {
       "comment" : "Remember: The strings starting with \"trigger.substring.[...]\" should be lowercase in most languages. See trigger.substring.button-modifier.2 for the explanation.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přidržte %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11595,6 +12597,12 @@
     "trigger.substring.hold.2" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dvojklik a přidržení %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11660,6 +12668,12 @@
     "trigger.substring.hold.3" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trojklik a přidržení %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11725,6 +12739,12 @@
     "trigger.substring.scroll.1" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klik a *scrolování* %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11790,6 +12810,12 @@
     "trigger.substring.scroll.2" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dvojklik a *scrolování* %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11855,6 +12881,12 @@
     "trigger.substring.scroll.3" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trojklik a *scrolování* %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11920,6 +12952,12 @@
     "trigger.substring.scroll.flags" : {
       "comment" : "Example: ⌥⌘ and Scroll\nNote: Also see trigger.substring.drag.flags",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "a *scrolování*"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11985,6 +13023,12 @@
     "trigger.y.group-row.button-name.middle" : {
       "comment" : "Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions which are triggered by the same button.\nNote: The \".y\" is there to influence the sorting when you sort by \"Key\" so you hopefully don't have to jump around as much while translating.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prostřední tlačítko"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12050,6 +13094,12 @@
     "trigger.y.group-row.button-name.numbered" : {
       "comment" : "Note: The comment next to capture-toast.button-name.numbered also applies here.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tlačítko %@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12115,6 +13165,12 @@
     "trigger.y.group-row.button-name.primary" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Primární tlačítko"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12180,6 +13236,12 @@
     "trigger.y.group-row.button-name.secondary" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sekundaární tlačítko"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12245,6 +13307,12 @@
     "type-shortcut-prompt" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zadejte klávesovou zkratku"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",

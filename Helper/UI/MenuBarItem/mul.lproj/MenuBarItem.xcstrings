@@ -5,6 +5,12 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Buttons\"; ObjectID = \"IsJ-q8-i95\"; Note = \"This should match the title of the Buttons Tab \\n(Search for \\\"Toolbar > Buttons Tab Button\\\")\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tlačítka"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -126,6 +132,12 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Scrolling\"; ObjectID = \"KQ8-8Q-u6c\"; Note = \"This should match the title of the Scrolling Tab\\n(Search for \\\"Toolbar > Scrolling Tab Button\\\")\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrollování"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -186,6 +198,12 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Open Mac Mouse Fix...\"; ObjectID = \"lb0-HS-5Kv\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otevřít Mac Mouse Fix..."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
