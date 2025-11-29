@@ -51,7 +51,7 @@ jobs:
     
     - name: Run script
       run: |
-        python ./mac-mouse-fix-scripts/scripts/_buildmd/_buildmd.py --document acknowledgements --api-key ${{ secrets.GUMROAD_API_KEY }}
+        ./run --nopip -- _buildmd --document Acknowledgements.md --api-key ${{ secrets.GUMROAD_API_KEY }}
     
     - name: Commit and push changes
       run: |
