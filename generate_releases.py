@@ -286,13 +286,6 @@ download_folder_absolute = os.path.join(current_directory, folder_downloads)
 source_locale = 'en'
 
 locales = [
-    
-    'en',
-    'de', 'zh-Hant', 'zh-HK', 'zh-Hans', 'ko', 'vi'
-]
-
-""" (HACK: Commented out so we can generate MMF updates before the new localization system ships in the main mac-mouse-fix repo. ––- [Jun 7 2025])
-locales = [
     'en',
     'de',
     "zh-Hant",
@@ -323,7 +316,6 @@ locales = [
     'id',
     'hi',
 ]
-"""
 
 # Validate locales
 #   Discussion: [Mar 2025] 
