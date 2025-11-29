@@ -1102,7 +1102,9 @@ def _let_claude_translate(locale: str, english_textttt: str|mflocales.mf_localiz
     
     # Create request for anthropic API
     anthropic_args = {
-        'model': "claude-3-5-sonnet-20241022",
+        'model': 
+            "claude-sonnet-4-5-20250929", # [Nov 2025] Blindly replacing 3-5 with 4-5 since it's no longer available. Did no quality testing.
+            #"claude-3-5-sonnet-20241022",
         'system': mfdedent(r"""
             You are an accurate, elegant translator. Requests that you handle follow the pattern:
             `<language_code>[some ISO language code]</language_code><localizer_hint>[some hint for you]</localizer_hint><english_text>[some english text]</english_text>`
