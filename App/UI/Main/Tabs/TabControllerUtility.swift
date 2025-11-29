@@ -48,6 +48,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                     "ko": 320,   /// 350 -> 320 minimize gap after short enabledHint "Mac Mouse Fix는 창을 닫아도 동작합니다." [Sep 2025]
                     "pt": 350,   /// 350 looks great. 370 is closest to the 'vision' of the original translator I think – the 2nd and 3rd hint have the last two words on the 2nd line. But 350 looks better visually I think. [Sep 2025]
                     "vi": 350,   /// 350 looks great and is almost exactly what the original translator did [Sep 2025]
+                    "cs": 320,   /// 350 -> 320 minimize gap after short first line of enabledHint "Mac Mouse Fix zůstane zapnutá i po" [Nov 2025]
                 ]
             case "scrolling":
                 map = [
@@ -58,6 +59,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                     "ko": 330,  /// 340 -> 330 looks better. Not sure why. [Sep 2025]
                     "pt": 370,  /// 340 -> 370 is narrowest that doesn't truncate modfield title "Aumentar ou diminuir zoom" [Sep 2025]
                     "vi": 340,  /// 340 looks great. [Sep 2025]
+                    "cs": 340,  /// 340 looks great [Nov 2025]
                 ]
             default:
                 fatalError("Calling this from unexpected tab: \(tabController)")
@@ -65,7 +67,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
         
         var windowWidth = map[LocalizationUtility.currentLanguageCode() ?? ""]
         if (windowWidth == nil) {
-            //assert(false)
+            assert(false)
             windowWidth = map["en"]! /// Fallback in case I forget to update the map for a new language [Sep 2025]
         }
         
