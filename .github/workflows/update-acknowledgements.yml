@@ -45,9 +45,15 @@ jobs:
         cache: 'pip' # caching pip dependencies. This is from the official example. Not totally sure what we're doing here.
         cache-dependency-path: './mac-mouse-fix-scripts/scripts/_buildmd/python_requirements.txt'
     
+    - name: Install python dependencies
+      run: |
+        python -m pip install -r ./mac-mouse-fix-scripts/scripts/_buildmd/python_requirements.txt
+    
     - name: Run script
-      run: | # ./run auto-installs the pip-dependencies. 
-        ./run _buildmd --document Acknowledgements.md --api-key ${{ secrets.GUMROAD_API_KEY }} 
+      run: |
+        python ./mac-mouse-fix-scripts/scripts/_buildmd/_buildmd.py --document Acknowledgements.md --api-key ${{ secrets.GUMROAD_API_KEY }}
+      env: |
+        PYTHONPATH: mac-mouse-fix-scripts/shared/
     
     - name: Commit and push changes
       run: |
