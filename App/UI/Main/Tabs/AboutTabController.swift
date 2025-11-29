@@ -8,7 +8,6 @@
 //
 
 import Cocoa
-import CocoaLumberjackSwift
 
 class AboutTabController: NSViewController {
 
@@ -44,11 +43,13 @@ class AboutTabController: NSViewController {
         
         let alert = NSAlert()
         alert.alertStyle = .informational
-        alert.messageText = NSLocalizedString("mail-alert.title", comment: "First draft: Write an Email?")
-        alert.informativeText = NSLocalizedString("mail-alert.body", comment: "First draft: I read and appreciate all emails, even though I can't respond to all")
+        alert.messageText = MFLocalizedString("mail-alert.title", comment: "")
+        alert.informativeText = MFLocalizedString("mail-alert.body", comment: "")
 //        alert.showsSuppressionButton = true
-        alert.addButton(withTitle: NSLocalizedString("mail-alert.send", comment: "First draft: Write Email"))
-        alert.addButton(withTitle: NSLocalizedString("mail-alert.back", comment: "First draft: Back"))
+        let sendButton = alert.addButton(withTitle: MFLocalizedString("mail-alert.send", comment: ""))
+        let backButton = alert.addButton(withTitle: MFLocalizedString("mail-alert.back", comment: ""))
+        sendButton.keyEquivalent = IBUtility.keyChar(forLiteral: "return")!
+        backButton.keyEquivalent = IBUtility.keyChar(forLiteral: "escape")!
         
         /// Set mail icon
         
@@ -87,11 +88,11 @@ class AboutTabController: NSViewController {
         
         /// Set up versionField
         /// Notes:
-        ///  - Explanation for `let versionFormatExists =` logic: If the key doesn't exist in Localizable.strings, then `NSLocalizedStringgg()` returns the key. But bartycrouch (I think) automatically creates the key and initializes it to emptyString.
-        ///     (Note: Don't use NSLocalizedStringggg real name in comments or BartyCrouch gets confused.)
+        ///  - Explanation for `let versionFormatExists =` logic: If the key doesn't exist in Localizable.strings, then `MFLocalizedStringgg()` returns the key. But bartycrouch (I think) automatically creates the key and initializes it to emptyString.
+        ///     (Note: Don't use MFLocalizedStringggg real name in comments or BartyCrouch gets confused.)
         ///  - We're handling the case that the `app-version` key doesn't exist here, because we're adding the version-format stuff right before the 3.0.0 release, and the Korean and Chinese translations don't contain the 'app-version' key, yet.
         
-        let versionFormat = NSLocalizedString("app-version", comment: "First draft: Version %@ || Note: %@ will be replaced by the app version, e.g. '3.0.0 (22027)'")
+        let versionFormat = MFLocalizedString("app-version", comment: "Note: %@ will be the app version, e.g. '3.0.0 (22027)'")
         let versionFormatExists = versionFormat.count != 0 && versionFormat != "app-version"
         let versionNumbers = "\(Locator.bundleVersionShort()) (\(Locator.bundleVersion()))"
         versionField.stringValue = versionFormatExists ? String(format: versionFormat, versionNumbers) : versionNumbers
@@ -249,7 +250,7 @@ class AboutTabController: NSViewController {
 
                 /// Assemble message
                 let countryString = String(format: "%@ %@", countryName_, flag_)
-                message = String(format: NSLocalizedString("free-country", comment: "First draft: Mac Mouse Fix is currently free in your country (%@)"), countryString)
+                message = String(format: MFLocalizedString("free-country", comment: ""), countryString)
                 
             case is MFLicenseTypeInfoForce:
             
@@ -268,48 +269,67 @@ class AboutTabController: NSViewController {
                     assert(false)
                 }
                 
-                message = Randomizer.select(from: [
+                /**
+                
+                
+                    Interesting thankyou messages (not direct translations of English) left by localizers that we removed when deleting stale strings [Oct 20 2025]
+                        (Perhaps we could replace some of the other strings that are direct translations of the English version with these.)
+                
+                        Vietnamese
+                        - 15 --- 🥛 Sữa tươi nguyên "trất" trăm phần trăm.
+                        - 16 --- 🎸 Thưởng bạn một bản rockkkk nhé
+                        - 17 --- 💃 ILU3000
+
+                        Brazilian ones that would get removed
+                        - 08 --- :) <- Minha expressão quando vi que você comprou o Mac Mouse Fix
+                        - 11 --- 🚜 Deus ajuda quem cedo madruga :P
+                        - 12 --- 🫕 Toda panela tem sua tampa!
+                        - 14 --- 🕊️ Mais vale um pássaro na mão do que dois voando!
+                        - 15 --- 🥛 Não adianta chorar pelo leite derramado.
+                        - 16 --- 🎤 Quem canta seus males espanta.
+                        - 17 --- 🏝️ O descanso é tão importante quanto o trabalho...
+                        - 18 --- 🦄 Você pode não querer salvar o mundo, mas já está salvando o meu :)
+                        - 19 --- 🏆 É dando que se recebe...
+                        - 20 --- 🌍 A pressa é inimiga da perfeição... :)
+                
+                */
+                
+                var thankYouMessages = [
                     
                     /// Common
-                    (NSLocalizedString("thanks.01", comment: "First draft: ⭐️ Thank you for buying Mac Mouse Fix!"), weight: 1),
-                    (NSLocalizedString("thanks.02", comment: "First draft: 🌟 Thanks for purchasing Mac Mouse Fix!"), weight: 1),
-                    (NSLocalizedString("thanks.03", comment: "First draft: 🚀 Thanks for supporting Mac Mouse Fix!"), weight: 1),
-                    (NSLocalizedString("thanks.04", comment: "First draft: 🙌 Thanks for buying Mac Mouse Fix!"), weight: 1),
+                    (MFLocalizedString("thanks.01", comment: "Note: The weird thank-you messages are rare. Feel free to change them if you'd like to leave an easter egg. You can also leave them blank (insert a space character), just make sure to fill out thanks.01 - thanks.03"), weight: 1),
+                    (MFLocalizedString("thanks.02", comment: ""), weight: 1),
+                    (MFLocalizedString("thanks.03", comment: ""), weight: 1),
+                    (MFLocalizedString("thanks.04", comment: ""), weight: 1),
                     
                     /// Rare
-                    (NSLocalizedString("thanks.05", comment: "First draft: 🧠 Great purchasing decision! ;)"), weight: 0.1),
-                    (NSLocalizedString("thanks.06", comment: "First draft: 🔥 Awesome taste in mouse fixing software! ;)"), weight: 0.1),
-                    (NSLocalizedString("thanks.07", comment: "First draft: 💙"), weight: 0.1),
-                    (NSLocalizedString("thanks.08", comment: "First draft: :) <- My face when I saw you bought Mac Mouse Fix"), weight: 0.1),
+                    (MFLocalizedString("thanks.05", comment: ""), weight: 0.1),
+                    (MFLocalizedString("thanks.06", comment: ""), weight: 0.1),
                     
                     /// Very rare
-                    (NSLocalizedString("thanks.09", comment: "First draft: 👽 Share it with your Spacebook friends!"), weight: 0.05),
+                    (MFLocalizedString("thanks.09", comment: ""), weight: 0.05),
                     
                     /// Extremely rare
-                    (NSLocalizedString("thanks.10", comment: "First draft: 🏂 Duckgang for life!! || Note: A lot of these are very personal. And weird. They are also super rare. Feel free to change them to anything you feel like to leave a little easter egg!"), weight: 0.01),
-                    (NSLocalizedString("thanks.11", comment: "First draft: 🚜 Watch where you're going :P"), weight: 0.01),
-                    (NSLocalizedString("thanks.12", comment: "First draft: 🐁 Not these mice, mom!"), weight: 0.01),
-                    (NSLocalizedString("thanks.13", comment: "First draft: 🐹 We should get him a bow tie."), weight: 0.01),
-                    (NSLocalizedString("thanks.14", comment: "First draft: 🇹🇷 Ey Kanka, tebrikler tebrikler!"), weight: 0.01),
-                    (NSLocalizedString("thanks.15", comment: "First draft: 🥛 Whole milk of course! It's your birthday after all."), weight: 0.01),
-                    (NSLocalizedString("thanks.16", comment: "First draft: 🎸 Not John Mayer (yet). Nevertheless mayor of hearts."), weight: 0.01),
-                    (NSLocalizedString("thanks.17", comment: "First draft: 💃 1NEIN8NEIN"), weight: 0.01),
-                    (NSLocalizedString("thanks.18", comment: "First draft: 🦄 You may not want to save the world, but you're already saving mine :)"), weight: 0.01),
-                    (NSLocalizedString("thanks.19", comment: "First draft: 🏜️ Dankeschön, meine Frau..."), weight: 0.01),
-                    (NSLocalizedString("thanks.20", comment: "First draft: 🌍 Universal Studios is probably not that great anyways... :)"), weight: 0.01),
-                    (NSLocalizedString("thanks.21", comment: "First draft: 🐠 What... are... you?"), weight: 0.01),
-                    (NSLocalizedString("thanks.22", comment: "First draft: 🖤"), weight: 0.01),
-                    (NSLocalizedString("thanks.23", comment: "First draft: 🤍"), weight: 0.01),
-                    (NSLocalizedString("thanks.24", comment: "First draft: 😎 Oh you're using Mac Mouse Fix? You must be pretty cool."), weight: 0.01),
-                    (NSLocalizedString("thanks.25", comment: "First draft: 🌏 First the mice, then the world!! >:)"), weight: 0.01),
+                    (MFLocalizedString("thanks.10", comment: "."), weight: 0.01),
                     
-                    /// Mom
-                    ("💖❤️❤️❤️ Für Beate :)", weight: 0.005),
-                ])
+                    (MFLocalizedString("thanks.13", comment: ""), weight: 0.01),
+                    (MFLocalizedString("thanks.21", comment: ""), weight: 0.01),
+                    (MFLocalizedString("thanks.22", comment: ""), weight: 0.01),
+                    (MFLocalizedString("thanks.25", comment: ""), weight: 0.01),
+                ]
+                thankYouMessages = thankYouMessages.filter { /// Allow localizers to leave the strings empty, just filter out the empty strings.
+                    $0.0.range(of: kMFThanksPattern, options: .regularExpression) == nil && /// Strings left empy by localizers fall lback to their key. E.g. `thanks.17` || Can't use .hasPrefix due to invisible characters (See `NSString+Steganography.m`) [Oct 2025]
+                    $0.0.withoutSecretMessages().trimmingCharacters(in: .whitespacesAndNewlines) != "" ///  Subtle: Have to call `.withoutSecretMessages()` *before* trimming whitespace since the zero-width annotations surround the content they're annotating now. [Oct 2025] Could instead use `removingAllWhitespace`.
+                }
+                if (thankYouMessages.count > 0) {
+                    message = Randomizer.select(from: thankYouMessages)
+                } else {
+                    assert(false) /// If none of the thanks messages are available, it falls back to the "You shouldn't be seeing this" message [Oct 2025]
+                }
             }
             
             /// Parse markdown in message
-            let messageAttributed = NSAttributedString(coolMarkdown: message, fillOutBase: false)!
+            let messageAttributed = MarkdownParser.attributedString(withCoolMarkdown: message, fillOutBase: false)!
             
             /// Replace text
             assignAttributedStringKeepingBase(&trialSectionManager!.currentSection.textField!.attributedStringValue, messageAttributed)
@@ -395,7 +415,7 @@ class AboutTabController: NSViewController {
             if #available(macOS 11.0, *) {
                 self.moneyCellImage.symbolConfiguration = .init(pointSize: 13, weight: .medium, scale: .large)
             }
-            self.moneyCellImage.image = Symbols.image(withSymbolName: "bag")
+            self.moneyCellImage.image = SFSymbolStrings.image(withSymbolName: "bag")
             
             /// Swap out link -> payButton
             

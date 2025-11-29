@@ -10,19 +10,13 @@
 
 import Foundation
 import Cocoa
-import CocoaLumberjackSwift
 
 extension NSView {
     
     /// Interface
     
-    func animatedReplace(with view: NSView) {
-        
-        ReplaceAnimations.animate(ogView: self, replaceView: view, hAnchor: .leading, vAnchor: .center, doAnimate: true)
-    }
-    
-    func unanimatedReplace(with view: NSView) {
-        ReplaceAnimations.animate(ogView: self, replaceView: view, hAnchor: .leading, vAnchor: .center, doAnimate: false)
+    func animatedReplace(with view: NSView, doAnimate: Bool = true) {
+        ReplaceAnimations.animate(ogView: self, replaceView: view, hAnchor: .leading, vAnchor: .center, doAnimate: doAnimate)
     }
 }
 
@@ -30,7 +24,7 @@ extension NSView {
 class ReplaceAnimations {
     
     /// Storage
-    
+    ///     28.08.2024: This seems to be unused.
     private static var _fadeInDelayDispatchQueues: [NSView: DispatchQueue] = [:]
     private static func fadeInDelayDispatchQueue(forView view: NSView) -> DispatchQueue {
         if let cachedQueue = _fadeInDelayDispatchQueues[view] {

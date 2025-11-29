@@ -40,6 +40,9 @@
                         <string key="keyEquivalent" base64-UTF8="YES">
 DQ
 </string>
+                        <attributedString key="userComments">
+                            <fragment content="NOTE: This is a placeholder string, the real string is found in the strings file called &quot;Localizable&quot;"/>
+                        </attributedString>
                     </buttonCell>
                     <connections>
                         <action selector="activateLicense:" target="-2" id="rJK-MN-eWE"/>
@@ -50,6 +53,9 @@ DQ
                     <buttonCell key="cell" type="push" title="Back" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7yY-kF-Q7q">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
                     </buttonCell>
                     <connections>
                         <action selector="back:" target="-2" id="i6F-nO-Fs9"/>

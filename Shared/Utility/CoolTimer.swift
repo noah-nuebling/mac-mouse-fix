@@ -23,6 +23,7 @@ import Cocoa
 
     @objc static func scheduledTimer(timeInterval: TimeInterval, repeats: Bool, block: @escaping (Timer) -> ()) -> Timer {
         /// Note: Remember to schedule timers from the main thread! Otherwise they won't work.
+        ///     Correction: [Apr 2025] not from the mainThread - from any thread with a runLoop
         
         let blockKeeper = BlockKeeper()
         blockKeeper.block = block

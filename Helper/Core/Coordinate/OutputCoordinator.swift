@@ -17,7 +17,6 @@
 ///         Do it in the TouchSimulators. Have a thin layer over the touchsimulators that knows which types of TouchSimulation are compatible. Have it keep track of which Driver is driving which TouchSimulator. Make it ignore input from Drivers that don't have access to a simulator. You seize access to a Simulator (and all Simulators that are incompatible with it) by simply sending an event with phase start. This should give us much more granular control over which TouchSimulations we allow simultaneously.
 
 import Foundation
-import CocoaLumberjackSwift
 
 @objc class OutputCoordinator: NSObject {
 

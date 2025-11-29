@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ButtonInputReceiver.h"
-#import "WannabePrefixHeader.h"
+#import "DisableSwiftBridging.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,18 +17,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (class, readonly) BOOL addModeIsEnabled;
 
-+ (NSDictionary * _Nullable)modificationsWithModifiers:(NSDictionary *)modifiers MF_SWIFT_HIDDEN;
-+ (id _Nullable)__SWIFT_UNBRIDGED_modificationsWithModifiers:(id)modifiers;
++ (MF_SWIFT_UNBRIDGED(NSDictionary *) _Nullable)modificationsWithModifiers:(MF_SWIFT_UNBRIDGED(NSDictionary *))modifiers NS_REFINED_FOR_SWIFT;
 
 + (void)reload;
 
-+ (NSDictionary *)remaps MF_SWIFT_HIDDEN;
-+ (id)__SWIFT_UNBRIDGED_remaps;
++ (MF_SWIFT_UNBRIDGED(NSDictionary *))remaps NS_REFINED_FOR_SWIFT;
 
 + (BOOL)enableAddMode;
 + (BOOL)disableAddMode;
-+ (void)sendAddModeFeedback:(NSDictionary *)payload MF_SWIFT_HIDDEN;
-+ (void)__SWIFT_UNBRIDGED_sendAddModeFeedback:(id)payload;
++ (void)sendAddModeFeedback:(MF_SWIFT_UNBRIDGED(NSDictionary *))payload NS_REFINED_FOR_SWIFT;
 
 @end
 

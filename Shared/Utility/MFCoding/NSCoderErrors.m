@@ -8,7 +8,6 @@
 //
 
 #import "NSCoderErrors.h"
-#import "EventLoggerForBradMacros.h"
 #import "SharedUtility.h"
 
 #pragma mark - NSCoder error & exception creation

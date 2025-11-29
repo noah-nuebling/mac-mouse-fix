@@ -10,65 +10,14 @@
 #import "SharedUtility.h"
 #import "Locator.h"
 #import "Config.h"
-#import "Config.h"
 #import "SharedUtility.h"
 @import AppKit.NSScreen;
 #import <objc/runtime.h>
+#import "Logging.h"
 #import "MFSemaphore.h"
+#import "SharedMacros.h"
 
 @implementation SharedUtility
-
-#pragma mark - vardesc macro
-
-NSString *_Nullable __vardesc(NSString *_Nonnull keys_commaSeparated, id _Nullable __strong *_Nonnull values, size_t count, bool linebreaks) {
-    
-    /// Helper for the `vardesc` and `vardescl` macros
-    /// Optimization Idea: [Aug 2025] We could optimize by caching the processing of the `keys_commaSeparated` string.
-    ///     (This might already be extremely fast – string stuff is usually super fast – This is probably a waste of time! Measure first!)
-    ///     To obtain a globally unique cache key per vardesc invocation, we could perhaps use the address of a static var inside the macro as cache key (similar to `dispatch_once`) (Haven't thought this through too much, not sure there are better solutions)
-    
-    NSMutableArray <NSString *> *keys = [NSMutableArray arrayWithCapacity: count];
-    {
-        unichar str[keys_commaSeparated.length];
-        [keys_commaSeparated getCharacters: str];
-        NSUInteger i = 0;
-        NSUInteger j = 0;
-        int depth = 0;
-        
-        for (; i < arrcount(str); i++) { /// Split the string by commas, but ignore commas inside brackets.
-            
-            if (str[i] == '(' || str[i] == '[' || str[i] == '{') { depth++; continue; }
-            if (str[i] == ')' || str[i] == ']' || str[i] == '}') { depth--; continue; }
-            if (depth < 0) assert(false && "vardesc: Found unbalanced closing bracket"); /// This doesn't catch all cases, but it doesn't matter.
-            if (depth > 0) continue;
-            
-            if (str[i] == ',') {
-                NSString *key = [NSString stringWithCharacters: str+j length: i-j];
-                [keys addObject: key];
-                j = i+1;
-            }
-        }
-        NSString *key = [NSString stringWithCharacters: str+j length: arrcount(str)-j];
-        [keys addObject: key];
-    }
-    
-    
-    if (count != keys.count) {
-        assert(false && "vardesc: Number of keys and values is not equal - This is likely due to one of the passed-in expressions containing a comma.");
-        return nil;
-    }
-    
-    NSMutableString *result = [NSMutableString string];
-    
-    [result appendString: linebreaks ? @"{\n    " : @"{ "];
-    for (NSUInteger i = 0; i < count; i++) {
-        if (i) [result appendString: linebreaks ? @"\n    " : @" | "];
-        [result appendFormat: @"%@ = %@", [keys[i] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]], values[i]];
-    }
-    [result appendString: linebreaks ? @"\n}" : @" }"];
-    
-    return result;
-}
 
 #pragma mark - runLoops
 
@@ -214,7 +163,7 @@ NSException * _Nullable tryCatch(void (^tryBlock)(void)) {
     
     iterateIvarsOn(obj, ^(Ivar ivar, BOOL *stop) {
         
-        NSString *ivarName = @(ivar_getName(ivar));
+        NSString *ivarName = @(ivar_getName(ivar) ?: "");
         
         if ([name isEqual:ivarName]) {
             
@@ -256,22 +205,22 @@ NSException * _Nullable tryCatch(void (^tryBlock)(void)) {
     
     iterateIvarsOn(obj, ^(Ivar ivar, BOOL *stop) {
         
-        NSString *name = [@(ivar_getName(ivar)) copy];
+        NSString *name = [@(ivar_getName(ivar) ?: "") copy];
         [ivars addObject:name];
     });
 
     /// Methods
     NSMutableArray *methods = [NSMutableArray array];
-    iterateMethodsOn(obj, ^(Method method, struct objc_method_description *description, BOOL *stop) {
+    iterateMethodsOn(obj, ^(Method _Nonnull method, struct objc_method_description *_Nonnull description, BOOL *stop) {
         
-        [methods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name)), @(description->types)]];
+        [methods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name ?: NSSelectorFromString(@""))), @(description->types ?: "")]];
     });
 
     /// Class Methods
     NSMutableArray *classMethods = [NSMutableArray array];
     iterateMethodsOn([obj class], ^(Method method, struct objc_method_description *description, BOOL *stop) {
         
-        [classMethods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name)), @(description->types)]];
+        [classMethods addObject:[NSString stringWithFormat: @"%@ | type: \'%@\'", @(sel_getName(description->name ?: NSSelectorFromString(@""))), @(description->types ?: "")]];
     });
     
 
@@ -317,19 +266,19 @@ static void iterateIvarsOn(id obj, void(^callback)(Ivar ivar, BOOL *stop)) {
 //    });
 //}
 
-static void iterateMethodsOn(id obj, void(^callback)(Method method, struct objc_method_description *description, BOOL *stop)) {
+static void iterateMethodsOn(id _Nullable obj, void(^_Nonnull callback)(Method _Nonnull method, struct objc_method_description *_Nonnull description, BOOL *_Nonnull stop)) {
     
     /// To iterate class methods, pass in [obj class]
     
-    Class class = [obj class];
+    Class _Nullable class = [obj class];
     
     unsigned int nMethods;
-    Method *methodList = class_copyMethodList(class, &nMethods);
+    Method _Nonnull *_Nullable methodList = class_copyMethodList(class, &nMethods);
     
     for (int i = 0; i < nMethods; i++) {
         
-        Method m = methodList[i];
-        struct objc_method_description *d = method_getDescription(m);
+        Method _Nonnull m = methodList[i];
+        struct objc_method_description *_Nonnull d = method_getDescription(m);
         
         BOOL shouldStop = NO;
         callback(m, d, &shouldStop);
@@ -339,20 +288,20 @@ static void iterateMethodsOn(id obj, void(^callback)(Method method, struct objc_
     free(methodList);
 }
 
-static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property, NSString *name, NSString *attributes, BOOL *stop)) {
+static void iteratePropertiesOn(id _Nullable obj, void(^_Nonnull callback)(objc_property_t _Nonnull property, NSString *_Nullable name, NSString *_Nullable attributes, BOOL *_Nonnull stop)) {
     
-    Class class = [obj class];
+    Class _Nullable class = [obj class];
     
     /// Properties
     unsigned int nProperties;
-    objc_property_t *propertyList = class_copyPropertyList(class, &nProperties);
+    objc_property_t _Nonnull *_Nullable propertyList = class_copyPropertyList(class, &nProperties);
     
     for (int i = 0; i < nProperties; i++) {
-        objc_property_t m = propertyList[i];
-        const char *name = property_getName(m);
-        const char *attrs = property_getAttributes(m);
+        objc_property_t _Nonnull m = propertyList[i];
+        const char *_Nonnull name = property_getName(m);
+        const char *_Nullable attrs = property_getAttributes(m);
         BOOL shouldStop = NO;
-        callback(m, @(name), @(attrs), &shouldStop);
+        callback(m, @(name), @(attrs ?: ""), &shouldStop);
         if (shouldStop) break;
     }
     
@@ -365,7 +314,14 @@ static void iteratePropertiesOn(id obj, void(^callback)(objc_property_t property
 #pragma mark - Check if this is a prerelease version
 
 bool runningPreRelease(void) {
+    
+    /// TODO: [Apr 16 2025] Move this into Logging.h
 
+#if IS_XC_TEST
+    assert(false);
+    return true;
+#else
+    
     /// Caching this seems excessive but it's called a lot and actually has a huge performance impact. We also moved to from ObjC to being a pure C function because that improves performance of the app by a few percentage points.
     
     static BOOL _isCached = NO;
@@ -404,13 +360,14 @@ bool runningPreRelease(void) {
         /// Return
         return _runningPrerelease;
     }
+#endif
 }
 
 #pragma mark - Check which executable is running
 /// TODO: Maybe move this to `Locator.m`
 /// TODO: Make these NS_INLINE
 
-bool runningMainApp(void) {
+inline bool runningMainApp(void) {
     
 #if IS_MAIN_APP
     return true;
@@ -419,7 +376,7 @@ bool runningMainApp(void) {
 
 //    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDApp];
 }
-bool runningHelper(void) {
+inline bool runningHelper(void) {
     
 #if IS_HELPER
     return true;
@@ -445,7 +402,7 @@ bool runningHelper(void) {
     /// Declare error if none is passed in
     ///     So we can still retrieve errors for internal logic and debug messages. Not sure about the __autoreleasing stuff.
     NSError *__autoreleasing localError;
-    if (errorPtr == nil) {
+    if (errorPtr == NULL) {
         errorPtr = &localError;
     }
     
@@ -499,7 +456,7 @@ bool runningHelper(void) {
     /// Debug
     if (runningPreRelease()) {
         NSString *errorDesc = @"";
-        if (errorPtr != nil && *errorPtr != nil) {
+        if (errorPtr != NULL && *errorPtr != nil) {
             errorDesc = (*errorPtr).debugDescription;
         }
         DDLogDebug(@"Called command line tool at %@ with args: %@ - result: %@, error: %@", executableURL, arguments, result, errorDesc);
@@ -516,7 +473,7 @@ bool runningHelper(void) {
     
     DDLogDebug(@"Calling command line tool at %@ with args: %@ using async API", commandLineTool, args);
     
-    [NSTask launchedTaskWithExecutableURL:commandLineTool arguments:args error:nil terminationHandler:nil];
+    [NSTask launchedTaskWithExecutableURL:commandLineTool arguments:args error:NULL terminationHandler:nil];
 }
 
 #pragma mark - Monitor file system
@@ -527,14 +484,105 @@ bool runningHelper(void) {
     FSEventStreamStart(stream);
     return stream;
 }
-+ (void)destroyFSEventStream:(FSEventStreamRef)stream {
++ (void)destroyFSEventStream:(FSEventStreamRef _Nullable)stream {
     if (stream != NULL) {
-        FSEventStreamInvalidate(stream);
-        FSEventStreamRelease(stream);
+        FSEventStreamInvalidate((void *_Nonnull)stream);
+        FSEventStreamRelease((void *_Nonnull)stream);
     }
 }
 
 #pragma mark - Debug
+
+NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitposToNameMap[_Nullable], int bitposToNameMapCount) {
+    
+    /**
+    Debug-printing for enums. [Apr 2025]
+        
+    Also see: `CodeStyle.md`
+    Usage example:
+        ```
+        NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags flags) {
+        
+            static NSString *map[] = {
+                [bitpos(kCGDisplayBeginConfigurationFlag)]      = @"BeginConfiguration",
+                [bitpos(kCGDisplayMovedFlag)]                   = @"Moved",
+                [bitpos(kCGDisplaySetMainFlag)]                 = @"SetMain",
+                [bitpos(kCGDisplaySetModeFlag)]                 = @"SetMode",
+                [bitpos(kCGDisplayAddFlag)]                     = @"Add",
+                [bitpos(kCGDisplayRemoveFlag)]                  = @"Remove",
+                [bitpos(kCGDisplayEnabledFlag)]                 = @"Enabled",
+                [bitpos(kCGDisplayDisabledFlag)]                = @"Disabled",
+                [bitpos(kCGDisplayMirrorFlag)]                  = @"Mirror",
+                [bitpos(kCGDisplayUnMirrorFlag)]                = @"UnMirror",
+                [bitpos(kCGDisplayDesktopShapeChangedFlag)]     = @"DesktopShapeChanged",
+            };
+            
+            NSString *result = bitflagstring(flags, map, arrcount(map));
+            return result;
+        };
+        ```
+    */
+    
+    /// Build result
+    NSMutableString *result = [NSMutableString string];
+    
+    int i = 0;
+    while (1) {
+        
+        /// Break
+        if (flags == 0) break;
+        
+        if ((flags & 1) != 0) { /// If `flags` contains bit `i`
+            
+            /// Insert separator
+            if (result.length > 0)
+                [result appendString:@" | "];
+            
+            /// Get string describing bit `i`
+            NSString *bitName = safeindex(bitposToNameMap, bitposToNameMapCount, i, nil);
+            NSString *str = (bitName && bitName.length > 0) ? bitName : stringf(@"(1 << %d)", i);
+            
+            /// Append
+            [result appendString:str];
+        }
+        
+        /// Increment
+        flags >>= 1;
+        i++;
+    }
+    
+    /// Wrap result in ()
+    result = [NSMutableString stringWithFormat:@"(%@)", result];
+    
+    /// Return
+    return result;
+}
+
+/*
++ (NSString *)binaryRepresentation:(int64_t)value {
+        
+    /// Note: [Apr 2025]: (While cleaning up merge of branch master into feature-strings-catalog)
+    /// Moved this from HelperUtility.m to SharedUtility.m. Other parts of the program need this in SharedUtility to compile. Not sure what happened here. I guess the merge got messed up. The arg type changed from `unsigned int` to `int64_t` I think.
+    ///     Update: Oh but all usages of this are commented out.
+    ///         Also, I think we had a macro for this that was more powerful in EventLoggerForBrad or somewhere. So we're commenting this out. Use the macro instead probably.
+    ///             Update: The macro was binarystring() I think
+        
+    uint64_t one = 1; /// A literal 1 is apparently 32 bits, so we need to declare it here to make it 64 bits. Declaring as unsigned only to silence an error when shiftting this left by 63 places.
+    
+    int64_t nibbleCount = sizeof(value) * 2;
+    NSMutableString *bitString = [NSMutableString stringWithCapacity:nibbleCount * 5];
+    
+    for (int64_t index = 4 * nibbleCount - 1; index >= 0; index--)
+    {
+        [bitString appendFormat:@"%i", value & (one << index) ? 1 : 0];
+        if (index % 4 == 0)
+        {
+            [bitString appendString:@" "];
+        }
+    }
+    return bitString;
+}
+*/
 
 + (NSString *)callerInfo {
     return [NSString stringWithFormat:@" - %@", [[NSThread callStackSymbols] objectAtIndex:2]];
@@ -712,7 +760,7 @@ bool runningHelper(void) {
     }
 }
 
-+ (id)deepCopyOf:(id)object {
++ (id _Nullable)deepCopyOf:(id _Nullable)object {
 
     /// TODO: Replace this with the error-returning implementation (below)
     
@@ -726,7 +774,7 @@ bool runningHelper(void) {
     return [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:object]];
 }
 
-+ (id<NSCoding>)deepCopyOf:(id<NSCoding>)original error:(NSError *_Nullable *_Nullable)error {
++ (id<NSCoding>_Nullable)deepCopyOf:(id<NSCoding> _Nonnull)original error:(NSError *_Nullable *_Nullable)error {
     
     /// Copied this from the Swift implementation in SharedUtilitySwift, since the Swift implementation wasn't compatible with ObjC. We still like to keep both around since the Swift version is nicer with it's generic types. Maybe generics are also possible in this form in ObjC but I don't know how.
     /// The simpler default methods only work with `NSSecureCoding` objects. This implementation also works with `NSCoding` objects.
@@ -736,7 +784,7 @@ bool runningHelper(void) {
     ///     Edit: [Feb 2025] Also, is manual recursion (Which we use in `deepMutableCopyOf:`) perhaps faster than an archiver? MFDeepCopyCoder was doing recursion like that afaik, so maybe not.
     /// TODO: Use MFEncode() and MFDecode() instead of this.
     
-    assert(original != nil);
+    assert((id)original != nil);
     
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:original requiringSecureCoding:false error:error];
     if (data == nil) {
@@ -752,13 +800,15 @@ bool runningHelper(void) {
     return copy;
 }
 
-#pragma mark - Other
-
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst {
     
-    // TODO: Consider returning a mutable dict to avoid constantly using `- mutableCopy`. Maybe even alter `dst` in place and return nothing (And rename to `applyOverridesFrom:to:`).
-    /// Copy all leaves (elements which aren't dictionaries) from `src` to `dst`. Return the result. (`dst` itself isn't altered)
-    /// Recursively search for leaves in `src`. For each srcLeaf found, create / replace a leaf in `dst` at a keyPath identical to the keyPath of srcLeaf and with the value of srcLeaf.
+    /// Optimization idea:
+    ///     TODO: Consider returning a mutable dict to avoid constantly using `- mutableCopy`. Maybe even alter `dst` in place and return nothing (And rename to `applyOverridesFrom:to:`).
+    ///     Copy all leaves (elements which aren't dictionaries) from `src` to `dst`. Return the result. (`dst` itself isn't altered)
+    ///     Recursively search for leaves in `src`. For each srcLeaf found, create / replace a leaf in `dst` at a keyPath identical to the keyPath of srcLeaf and with the value of srcLeaf.
+    ///
+    /// Organization idea: [Sep 2025]
+    ///     Probably replace this with new `-[NSMutableDictionary applyOverridesFromDictionary:]`
     
     NSMutableDictionary *dstMutable = [dst mutableCopy];
     if (dstMutable == nil) {
@@ -777,51 +827,6 @@ bool runningHelper(void) {
         }
     }
     return dstMutable;
-}
-
-+ (int8_t) signOf: (double)x { /// TODO: Remove this in favor of sign(double x)
-    return sign(x);
-}
-int8_t sign(double x) {
-    return (0 < x) - (x < 0);
-}
-
-+ (void)setupBasicCocoaLumberjackLogging {
-    
-    /// Start logging to console and to Xcode output
-    /// Call this at the entry point of an app, so that DDLog statements work.
-    
-    /// Need to enable Console.app > Action > Include Info Messages & Include Debug Messages to see these messages in Console. See https://stackoverflow.com/questions/65205310/ddoslogger-sharedinstance-logging-only-seems-to-log-error-level-logging-in-conso
-    /// Will have to update instructions on Mac Mouse Fix Feedback Assistant when this releases.
-    
-    /// Use `os_log` backend for CocoaLumberjack.
-    ///     Notes:
-    ///     - This should log to console and terminal and be faster than the old methods.
-    ///     - Specifying a subsystem and category allows us to configure logging using `Info.plist > OSLogPreferences`
-    ///         > Also See: https://github.com/noah-nuebling/mac-mouse-fix-error-logging-improvement-ideas-october-2024?tab=readme-ov-file
-    
-    #define kMFOSLogSubsystem   @"com.nuebling.mac-mouse-fix"
-    #define kMFOSLogCategory    @"main-category"
-    DDOSLogger *logger = [[DDOSLogger alloc] initWithSubsystem: kMFOSLogSubsystem category: kMFOSLogCategory logLevelMapper: [[DDOSLogLevelMapperDefault alloc] init]];
-    [DDLog addLogger: logger];
-    
-    /// Set logging format
-    //    DDOSLogger.sharedInstance.logFormatter = DDLogFormatter.
-    
-    if ((NO) /*runningPreRelease()*/) {
-        
-        /// Setup logging  file
-        /// Copied this from https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/GettingStarted.md
-        /// Haven't thought about whether the exact settings make sense.
-        
-        DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
-        fileLogger.rollingFrequency = 60 * 60 * 24; /// 24 hour rolling
-        fileLogger.logFileManager.maximumNumberOfLogFiles = 2;
-        
-        [DDLog addLogger:fileLogger];
-        
-        DDLogInfo(@"Logging to directory: \'%@\'", fileLogger.logFileManager.logsDirectory);
-    }
 }
 
 + (void)resetDispatchGroupCount:(dispatch_group_t)group {

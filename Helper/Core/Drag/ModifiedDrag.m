@@ -36,7 +36,13 @@
 
 @implementation ModifiedDrag
 
-/// TODO: Rename this to just `Drag`
+/// Notes:
+///     [Jun 2025]
+///         We've planned to add a feature for custom drag gestures at some point,
+///             I thought it should have some custom visual feedback for OneShot actions
+///             - IIRC I made some mockups in the big MMF Sketch project
+///             - "Gaussian Blur + Contrast" trick to simulate surface tension could be interesting. See: https://www.reddit.com/r/iOSProgramming/comments/1l2xxx5/bringing_emoji_reactions_to_life_a_creative_take/
+///     TODO: Rename this to just `Drag`
 
 /// Vars
 
@@ -132,7 +138,7 @@ static ModifiedDragState _drag;
 //    }
 //}
 
-+ (void)initializeDragWithDict:(NSDictionary *)effectDict MF_SWIFT_HIDDEN {
++ (void)initializeDragWithDict:(NSDictionary *)effectDict {
     
     dispatch_async(_drag.queue, ^{
         
@@ -182,11 +188,6 @@ static ModifiedDragState _drag;
         initDragState_Unsafe();
     });
 }
-
-+ (void)__SWIFT_UNBRIDGED_initializeDragWithDict:(id)effectDict {
-    [self initializeDragWithDict:effectDict];
-}
-
 void initDragState_Unsafe(void) {
     
     _drag.origin = getRoundedPointerLocation();

@@ -16,13 +16,15 @@
 #import "CFRuntime.h"
 #import "SharedUtility.h"
 #import <Cocoa/Cocoa.h>
+#import "Logging.h"
 
-/// TODO: Consider refactoring
-///  - There is device specific state scattered around the program (I can think of the the ButtonStates in ButtonTriggerGenerator, as well as the ModifedDragStates in ModiferManager). This state should probably be owned by MFDevice instances instead.
-///  - This class is cluttered up with code using the IOHID framework, intended to capture mouse moved input while preventing the mouse pointer from moving. This is used for ModifiedDrags which stop the mouse pointer from moving. We should probably move this code to some other class, which MFDevice's can own instances of, to make stuff less cluttered.
-///  - I've since found another way to stop the mouse pointer (See PointerFreeze class). So most of the stuff in this class is obsolete. Trying to seize the device using IOKit is super buggy and leads to weird crashes and broken mouse down state and many other issues.
-
-/// We've moved this to shared to be able to access the device name and button number from the mainApp for the Buttons tabs. But to access the buttonNumber you have to open the device which requires accessibility access. So instead we'll have the mainApp ask the helper for that info instead. The registryEntryID based init's are not used after this removal.
+/// Old notes: (basically all outdated as of 28.08.2024)
+///     Consider refactoring:
+///     - There is device specific state scattered around the program (I can think of the the ButtonStates in ButtonTriggerGenerator, as well as the ModifedDragStates in ModiferManager). This state should probably be owned by MFDevice instances instead.
+///     - This class is cluttered up with code using the IOHID framework, intended to capture mouse moved input while preventing the mouse pointer from moving. This is used for ModifiedDrags which stop the mouse pointer from moving. We should probably move this code to some other class, which MFDevice's can own instances of, to make stuff less cluttered.
+///     - I've since found another way to stop the mouse pointer (See PointerFreeze class). So most of the stuff in this class is obsolete. Trying to seize the device using IOKit is super buggy and leads to weird crashes and broken mouse down state and many other issues.
+///
+///     We've moved this to Shared/ to be able to access the device name and button number from the mainApp for the Buttons tabs. But to access the buttonNumber you have to open the device which requires accessibility access. So instead we'll have the mainApp ask the helper for that info instead. The registryEntryID based init's are not used after this removal.
 
 @interface StrangeDevice : Device
 
@@ -38,7 +40,7 @@
 
 - (Device *)init { /// This is just so that StrangeDevice works.
     self->_nOfButtons = 0;
-    self->_iohidDevice = nil;
+    self->_iohidDevice = NULL;
     return [super init];
 }
 + (Device *)strangeDevice {
@@ -101,6 +103,7 @@
         ///     Not sure if this is also necessary in the mainApp
         IOReturn ret = IOHIDDeviceOpen(self.iohidDevice, kIOHIDOptionsTypeNone);
         if (ret) {
+            assert(false); /// Should we add some error handling or just try to keep proceeding as normal?
             DDLogError(@"Error opening device. Code: %x", ret);
         }
         
@@ -109,8 +112,8 @@
         ///
         
         ///
-        /// Calculate nOfButtons
-        /// 
+        /// Get nOfButtons
+        ///
         
         /// Get button elements
         IOHIDDeviceRef device = self.iohidDevice;
@@ -120,7 +123,7 @@
         NSArray *elements = (__bridge_transfer NSArray *)IOHIDDeviceCopyMatchingElements(device, (__bridge CFDictionaryRef)match, 0);
         
         /// Get max button number
-        ///     Could proabably also just count the number elements instead of this. But this might be more robust.
+        ///     Could probably also just count the number elements instead of this. But this might be more robust.
         int maxButtonNumber = 0;
         for (id e in elements) { /// e is of the private type `HIDElement *` which is bridged with `IOHIDElementRef`
             IOHIDElementRef element = (__bridge IOHIDElementRef)e;
@@ -201,6 +204,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 
     /// EDIT: This is unused now. Instead we're using our new `CGEventGetSendingDevice()` method
     
+    /// Original comments:
     /// The CGEvent function which we use to intercept and manipulate incoming button events (`ButtonInputReceiver_CG::handleInput()`)  cannot gain any information about which devices is causing input, and it can therefore also not filter out input form certain devices. We use functions from the IOHID Framework (`MFDevice::handleInput()`) to solve this problem.
     ///
     /// For each MFDevice instance which is created, we register an input callback for the IOHIDDevice which it owns. The callback is handled by `MFDevice::handleInput()`.
@@ -252,31 +256,54 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 }
 
 - (BOOL)wrapsIOHIDDevice:(IOHIDDeviceRef)iohidDevice {
+    
+    if (iohidDevice == NULL) {
+        assert(false);
+        return NO;
+    }
+        
     NSNumber *otherID = (__bridge NSNumber *)IOHIDDeviceGetProperty(iohidDevice, CFSTR(kIOHIDUniqueIDKey));
     return [self.uniqueID isEqual:otherID];
 }
-- (BOOL)isEqualToDevice:(Device *)device {
-    
-    /// What does this function do? Why do we have 2 equality check functions?
-    return CFEqual(self.iohidDevice, device.iohidDevice); /// [Jul 2025] I just saw this crash when detaching/attaching a mouse while the app was starting. || Looks like the second .iohidDevice arg for CFEqual was NULL, which is expected for StrangeDevice. I actually wonder why we haven't seen this crash more often. We should replace all the CF functions with NULL-safe alternatives! || Context: The crashing code was invoked by the code `state!.device != device` inside ClickCycle.swift
-}
+
 - (BOOL)isEqual:(Device *)other {
     
-    if (other == self) { /// Check for pointer equality
+    /// Notes:
+    ///     - In the template where we copied this from, they also used ![super isEqual:other] but that didn't work for us.
+    
+    if (other == nil) { /// Check nil
+        assert(false);
+        return NO;
+    } else if (other == self) { /// Check for pointer equality
         return YES;
-//    } else if (![super isEqual:other]) { /// This is from the template idk what it does but it doesn't work
-//        return NO;
-//    }
     } else if (![other isKindOfClass:self.class]) { ///  Check for class equality
         return NO;
-    } else {
-        return [self isEqualToDevice:other];
+    } else { /// Custom equality logic
+        
+        /// Guard NULL
+        ///     (28.08.2024 on macOS Sequoia Beta) I've just seen a crash where IIRC the .iohidDevice was NULL. I saw that happen where this was called from the Button-input handling code. It happened around the time of connecting/disconnecting a device IIRC.
+        ///         I don't know why this could happen, since a `device` instance retains its `.iohidDevice` instance, so it should never become NULL. Maybe there was a race condition?
+        
+        if (other.iohidDevice == NULL) {
+            assert(false); /// Should never happen since Device instances retain their .iohidDevice's || Update: [Jul 2025] I think this is expected for StrangeDevice (at least on master branch, writing this on feature-strings-catalog). I actually wonder why we haven't seen this crash more often. We should replace all the CF functions with NULL-safe alternatives such as MFCFEqual!
+            return NO;
+        }
+        if (self.iohidDevice == NULL) {
+            assert(false);
+            return NO;
+        }
+        
+        /// Use CFEqual
+        BOOL result = CFEqual(self.iohidDevice, other.iohidDevice);
+        
+        /// Return
+        return result;
     }
 }
 
 - (NSUInteger)hash {
 //    return CFHash(_IOHIDDevice) << 1;
-    return (NSUInteger)self; /// TODO: Are we sure just using the self pointer as hash is a good idea? Maybe use uniqueID instead?
+    return (NSUInteger)self; /// TODO: Are we sure just using the self pointer as hash is a good idea? Maybe use uniqueID instead? Why don't we use CFHash() anymore?
 }
 
 - (NSString *)name {

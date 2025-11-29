@@ -23,6 +23,7 @@
 ///
 /// Why even 'unbox' stuff to the stack?
 ///     Should be very fast, and I often find it more ergonomic and clear to deal with C arrays than with objects.
+///     Update: [Apr 2025] Not sure I'll actually use this.
 
 #import <Foundation/Foundation.h>
 

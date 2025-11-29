@@ -13,6 +13,7 @@
 #import "Constants.h"
 #import "VectorUtility.h"
 #import "IOHIDEventTypes.h"
+#import "DisableSwiftBridging.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -81,8 +82,7 @@ typedef struct {
 
 //+ (NSDictionary *)initialModifiers;
 //+ (CGEventTapProxy)tapProxy;
-+ (void)initializeDragWithDict:(NSDictionary *)effectDict;
-+ (void)__SWIFT_UNBRIDGED_initializeDragWithDict:(id)effectDict;
++ (void)initializeDragWithDict:(MF_SWIFT_UNBRIDGED(NSDictionary *))effectDict NS_REFINED_FOR_SWIFT;
 
 //+ (void)modifiedScrollHasBeenUsed;
 

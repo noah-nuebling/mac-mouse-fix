@@ -21,8 +21,6 @@ import ReactiveSwift
         
         parentTextField!.content.flagss.startWithValues { flags in
             
-            print("Woof go oof: \(flags)")
-            
             NSAnimationContext.runAnimationGroup { context in
                 context.duration = 0.1
                 context.timingFunction = .init(name: .default)

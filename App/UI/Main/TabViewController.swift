@@ -59,20 +59,78 @@ class TabViewController: NSTabViewController {
     
     // MARK: Hacky tabView manipulation
     
+    func _getToolbar(_ w: NSWindow?) -> NSToolbar? {
+        
+        let window = w ?? MainAppState.shared.window
+        
+        if let window = window {
+            return window.toolbar
+        } else {
+            return nil
+        }
+    }
+    func _getIndexOfToolBarItem(_ identifier: NSToolbarItem.Identifier, _ toolbar: NSToolbar) -> Int? {
+        
+        var result: Int? = nil
+        for (i, item) in toolbar.items.enumerated() {
+            if item.itemIdentifier == identifier {
+                result = i
+                break;
+            }
+        }
+        return result
+    }
+    func _getToolbarItem(_ identifier: NSToolbarItem.Identifier, _ toolbar: NSToolbar) -> NSToolbarItem? {
+        var result: NSToolbarItem? = nil
+        for item in toolbar.items {
+            if item.itemIdentifier == identifier {
+                result = item
+                break;
+            }
+        }
+        return result
+    }
+    func _getToolbarItemViewer(_ item: NSToolbarItem) -> NSView? {
+        let result = SharedUtility.getPrivateValue(of: item, forName: "_itemViewer") as? NSView
+        return result
+    }
+    
     @objc public func coolSelectTab(identifier: String, window w: NSWindow? = nil) {
+        
+        ///
+        /// Summer 2024: macOS 15.0 Beta: Attempt at simpler implementation
+        /// (I hope this new method is backwards compatible, but I think so since we're using no more private ivars or methods.)
+        
+        /// Sometimes you need to pass in window, when you call this right after the window is created.
+        
+        /// Log
+        DDLogDebug("TBS switching to tab \(identifier), windowIsNil: \(w == nil)")
+        
+        /// Find toolbar item
+        guard let toolbar = self._getToolbar(w),
+              let item = _getToolbarItem(NSToolbarItem.Identifier(identifier), toolbar) else {
+            
+            assert(false)
+            return
+        }
+        
+        /// Update state on tabView and toolbar
+        toolbar.selectedItemIdentifier = NSToolbarItem.Identifier(identifier)
+        self.tabView.selectTabViewItem(withIdentifier: identifier)
+        
+        /// Return
+        return;
+        
+        ///
+        /// Old implementation
+        ///
         
         /// There's a library method `self.tabView.selectTabViewItem(withIdentifier:)`
         ///     but it doesn't change the selected toolbar button properly, so we have to use horrible hacks.
         /// Sometimes you need to pass in window, when you call this right after the window is created.
         
-        DDLogDebug("TBS switching to tab \(identifier), windowIsNil: \(w == nil)")
+        let window = w ?? MainAppState.shared.window
         
-        let window: NSWindow?
-        if w == nil {
-            window = MainAppState.shared.window
-        } else {
-            window = w
-        }
         guard let window = window, let tb = window.toolbar else { assert(false); return }
         let tbv = SharedUtility.getPrivateValue(of: tb, forName: "_toolbarView")
         
@@ -89,38 +147,61 @@ class TabViewController: NSTabViewController {
         assert(lvs.count > 0)
         
         var success = false
-    outerLoop: for v in lvs {
-        guard let item = SharedUtility.getPrivateValue(of: v, forName: "_item") as? NSToolbarItem else { assert(false); return }
-        if item.itemIdentifier.rawValue == identifier {
-            for sub in v.subviews {
-                if let sub = sub as? NSButton {
-                    
-                    sub.performClick(nil)
-                    
-                    success = true
-                    break outerLoop
+        outerLoop: for v in lvs {
+            guard let item = SharedUtility.getPrivateValue(of: v, forName: "_item") as? NSToolbarItem else { assert(false); return }
+            if item.itemIdentifier.rawValue == identifier {
+                for sub in v.subviews {
+                    if let sub = sub as? NSButton {
+                        
+                        sub.performClick(nil)
+                        
+                        success = true
+                        break outerLoop
+                    }
                 }
             }
         }
-    }
         assert(success)
     }
     
     @objc public func coolHideTab(identifier: String, window w: NSWindow? = nil) {
+        
+        ///
+        /// Summer 2024: macOS 15.0 Beta: Attempt at simpler implementation
+        ///
+        
+        /// This hides the button for selecting the tab in the UI
+        
+        /// Log
+        DDLogDebug("TBS hiding tab \(identifier), windowIsNil: \(w == nil)")
+        
+        /// Get toolbar & item
+        guard let toolbar = _getToolbar(w),
+              let itemIndex = _getIndexOfToolBarItem(NSToolbarItem.Identifier(identifier), toolbar) else {
+            
+            assert(false)
+            return
+        }
+        
+        /// Remove item
+        toolbar.removeItem(at: itemIndex)
+        
+        /// Return
+        return
+        
+        ///
+        /// Old implementation
+        ///
         
         /// This is copy pasted from `coolSelectTab()`
         /// Hides the tab button from the user, but the tab will still be displayed and we can switch from/to it programmatically
         
         DDLogDebug("TBS hiding tab \(identifier), windowIsNil: \(w == nil)")
         
-        let window: NSWindow?
-        if w == nil {
-            window = MainAppState.shared.window
-        } else {
-            window = w
-        }
+        let window = w ?? MainAppState.shared.window
         
-        guard let window = window, let tb = window.toolbar else { assert(false); return }
+        guard let window = window,
+              let tb = window.toolbar else { assert(false); return }
         let tbv = SharedUtility.getPrivateValue(of: tb, forName: "_toolbarView")
         
         let lvs: NSMutableArray?
@@ -128,7 +209,7 @@ class TabViewController: NSTabViewController {
         if #available(macOS 11.0, *) {
             lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_layoutViews") as? NSMutableArray
         } else {
-            /// Note: Removing from `_layoutOrderedItemViewers` doesn't seem to do anything. But I feel like we might still want to remove from both `_toolbarOrderedItemViewers` and `_toolbarOrderedItemViewers` so the overall state is for sure valid, cause I don't get what the role of each of the two is.
+            /// Note: Removing from `_layoutOrderedItemViewers` doesn't seem to do anything. But I feel like we might still want to remove from both `_toolbarOrderedItemViewers` and `_toolbarOrderedItemViewers` (Edit: what?) so the overall state is for sure valid, cause I don't get what the role of each of the two is.
             lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_toolbarOrderedItemViewers") as? NSMutableArray
         }
         
@@ -179,8 +260,29 @@ class TabViewController: NSTabViewController {
         tabsAreConfigured = true
         
         ///
+        /// Give tabButtons axIdentifiers
+        ///
+        
+        /// Note: Writing this so we can click the button inside the screenshot-taking XCUITest
+        
+        if let toolbar = _getToolbar(self.window) {
+            
+            for item in toolbar.items {
+
+                if let itemViewer = _getToolbarItemViewer(item) {
+                    itemViewer.setAccessibilityIdentifier(item.itemIdentifier.rawValue)
+                } else {
+                    assert(false) /// We only need this for screenshot-taking, so we actually don't care if this fails in some edge cases. (Could even turn this whole thing off unless the app is started with the `-MF_ANNOTATE_LOCALIZED_STRINGS` arg)
+                }
+            }
+        } else {
+            assert(false)
+        }
+        
+        ///
         /// Hide Pointer tab (because it's unfinished and unused)
         ///
+        
         /// Notes:
         /// - (Under Ventura Beta) For some reason, `removeTabViewItem(pointerTab)` (and `tabView.removeTabViewItem()`) crashes here saying the item is not in the tabView. This doesn't make sense since it is found in the array `self.tabViewItems`. So instead we use the hacky coolHideTab() instead.
         /// - Maybe it's better to do this in viewWillAppear?
@@ -362,7 +464,7 @@ class TabViewController: NSTabViewController {
         
         if let originTabViewItem = tabView.selectedTabViewItem {
             self.tabViewSizes[originTabViewItem] = originTabViewItem.view?.frame.size
-            DDLogDebug("Storing size \(String(describing: originTabViewItem.view?.frame.size)) for tab \(originTabViewItem.identifier!)")
+            DDLogDebug("TBS Storing size \(String(describing: originTabViewItem.view?.frame.size)) for tab \(originTabViewItem.identifier!)")
         }
         
         /// Set alpha on fading in view. Necessary for fadeIn animations to work?
@@ -447,11 +549,22 @@ class TabViewController: NSTabViewController {
         if size == nil || (tabViewItem.identifier as? String) == "general" {
             
             /// Manually calculate the size of the tab
-            
-            let view = tabViewItem.view
-            view?.needsLayout = true
-            view?.layoutSubtreeIfNeeded() /// Seems like it's not needed sure if needed
-            size = view?.frame.size
+            ///     Why set window size to 99999? [Sep 2025]
+            ///         Reason: We're enlarging window to make the layout favor large size in case of ambiguity. Otherwise calculated tab size will differ depending on size of tab we're switching *from*.
+            ///         Observation details: Observed these ambiguities after setting horizontalCompressionResistance `< 1000`(enabling wrapping) on the hint texts on the general tab to allow the hint texts to wrap naturally when we hardcode a tab-width. (See `applyHardcodedTabWidth()`). Observed this on on macOS 15.
+            ///             These ambiguities do not show up as purple warnings in the view hierarchy debugger. They seem to be a bug in the autolayout system for wrapping NSTextFields. (which we know uses a special complicated two-pass layout algo – see our `NSTextViewSizeExperiments` test project.) [Sep 2025]
+            ///         Update: [Sep 2025] This should no longer be necessary, since we're now preventing the ambiguity by either turning off wrapping or hardcoding an exact width for the window in `applyHardcodedTabWidth()` (Cause the ambiguities still caused text to wrap unexpectedly, even though we could get the tab width to be consistent with the code below.)
+            if let oldWindowSize = self.window?.contentView?.frame.size {
+                self.window?.setContentSize(NSSize(width: 99999, height: 99999))
+                do {
+                    if (true) { /// Somehow this is not necessary in all my tests [Sep 2025]
+                        tabViewItem.view?.needsLayout = true
+                        tabViewItem.view?.layoutSubtreeIfNeeded()
+                    }
+                    size = tabViewItem.view?.frame.size
+                }
+                self.window?.setContentSize(oldWindowSize)
+            }
         }
         
         /// Setup constraints for resizing
@@ -585,6 +698,7 @@ class TabViewController: NSTabViewController {
         /// Insert new constraints
         ///
         
+        
         injectedConstraints = []
         
         /// Add in size constraints
@@ -658,7 +772,9 @@ class TabViewController: NSTabViewController {
         }
         
         switch attributeOnTarget {
-        case .leading, .trailing, .bottom, .top: /// Aren't there other constraints we should remove?
+        case .leading, .trailing, .bottom, .top /// Aren't there other constraints we should remove?
+                , .width                        /// Added .width to support `applyHardcodedTabWidth` [Sep 2025]
+        :
             return true
         default:
             return false

@@ -15,7 +15,7 @@
 #import "AuthorizeAccessibilityView.h"
 #import "HelperServices.h"
 #import "SharedUtility.h"
-#import "ToastNotificationController.h"
+#import "ToastController.h"
 #import "NSView+Additions.h"
 #import "AppTranslocationManager.h"
 #import <Sparkle/Sparkle.h>
@@ -23,6 +23,10 @@
 #import "NSAttributedString+Additions.h"
 #import "Mac_Mouse_Fix-Swift.h"
 #import "Locator.h"
+#import "Logging.h"
+#import "LocalizedStringAnnotation.h"
+#import "CoolSFSymbolsFont.h"
+
 
 @interface AppDelegate ()
 
@@ -134,8 +138,26 @@
 #pragma mark - Init and Lifecycle
 
 /// Define Globals
+#if 0 /// Old MMF 1 stuff IIRC
 static NSDictionary *_scrollConfigurations;
 static NSDictionary *sideButtonActions;
+#endif
+
++ (void)load {
+    
+    /// Stuff that needs to happen happen early. Only use this with good reason. Use `applicationDidFinishLaunching:`. instead.
+    
+    /// Install font
+    ///     Reason for doing this in `load`: We can install/uninstall the font while running the app and it works just fine, but we want this available early for validation: While the nib loads it uses the characters in this font, and it wants to validate that the characters are actually available.
+    [CoolSFSymbolsFont installFont];
+    
+    /// Annotate localized strings
+    ///     Reason for doing this in `load`: Swizzling needs to happen before any nib files are loaded so the strings from the nib files get annotated. I assume that in `applicationDidFinishLaunching:` the nib files are already loaded.
+    if ([NSProcessInfo.processInfo.arguments containsObject:@"-MF_ANNOTATE_LOCALIZED_STRINGS"]) {
+        [LocalizedStringAnnotation enableAutomaticAnnotation];
+    }
+
+}
 
 + (void)initialize {
     
@@ -144,7 +166,7 @@ static NSDictionary *sideButtonActions;
         /// Why don't we do all these things in applicationDidFinishLaunching?
         ///     TODO: Try moving this to applicationDidFinishLaunching, so we have a unified entryPoint.
         
-        ({
+        {
             /// Tahoe Compacting [Jun 2025] || (Tahoe Beta 2)
             ///     We make the layout compact on macOS 26 Tahoe by setting  `prefersCompactControlSizeMetrics` on all the windows.
             ///     Buttons are larger under macOS Tahoe, this makes quite a few of our pixel-perfect layouts look ugly. (E.g. the hints which are supposed to be lined up with the checkbox labels – actually can't think of anything else right now.)
@@ -176,11 +198,11 @@ static NSDictionary *sideButtonActions;
                     }
                 }];
             }
-        });
+        }
         
-        /// Setup CocoaLumberjack
-        [SharedUtility setupBasicCocoaLumberjackLogging];
-        DDLogInfo(@"Main App starting up...");     
+        /// Setup CocoaLumberjack logging
+        [Logging setUpDDLog];
+        DDLogInfo(@"Main App starting up...");
         
         /// Remove restart the app untranslocated if it's currently translocated
         /// Need to call this before `MessagePort_App` is initialized, otherwise stuff breaks if app is translocated
@@ -334,7 +356,11 @@ static NSDictionary *sideButtonActions;
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
     DDLogInfo(@"Mac Mouse Fix should terminate");
 
-
+    /// Uninstall fonts
+    ///     Perhaps consider using sigaction() to install a SIGTERM handler instead of this. That would also work if the process is killed.
+    [CoolSFSymbolsFont uninstallFont];
+    
+    /// Terminate
     return NSTerminateNow;
 }
 

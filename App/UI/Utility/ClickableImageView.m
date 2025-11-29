@@ -11,6 +11,7 @@
 #import "Config.h"
 #import "NSArray+Additions.h"
 #import "Locator.h"
+#import "IBUtility.h"
 
 IB_DESIGNABLE
 @interface ClickableImageView ()
@@ -20,45 +21,19 @@ IB_DESIGNABLE
 
 @end
 
-@implementation ClickableImageView
-
-
-//static NSArray *modifiersStringToFlagArray(NSString *modifiers) {
-//    NSArray *stringArray = [[modifiers stringByReplacingOccurrencesOfString:@" " withString:@""] componentsSeparatedByString:@","];
-//    NSArray *modArray = [stringArray map:^id _Nonnull(id  _Nonnull obj) {
-//        return modifierStringToFlag[obj];
-//    }];
-//    return modArray;
-//}
-
-NSArray *_requiredModifierFlags;
+@implementation ClickableImageView {
+    NSEventModifierFlags _modifierMask;
+}
 
 - (void)awakeFromNib {
-    NSDictionary *modifierStringToFlag = @{
-        @"shift": [NSNumber numberWithUnsignedInteger:NSEventModifierFlagShift],
-        @"command": [NSNumber numberWithUnsignedInteger:NSEventModifierFlagCommand],
-        @"option": [NSNumber numberWithUnsignedInteger:NSEventModifierFlagOption],
-        @"control": [NSNumber numberWithUnsignedInteger:NSEventModifierFlagControl],
-    };
-    
-    NSArray *modStringArray = [[_modifiers stringByReplacingOccurrencesOfString:@" " withString:@""] componentsSeparatedByString:@","];
-    NSArray *modFlagArray = [modStringArray map:^id _Nonnull(id  _Nonnull obj) {
-        return modifierStringToFlag[obj];
-    }];
-    _requiredModifierFlags = modFlagArray;
+    _modifierMask = [IBUtility modifierMaskForLiteral:_modifiers];
 }
     
 - (void)mouseDown:(NSEvent *)event {
     
-    BOOL matchesAllRequired = YES;
+    BOOL eventFlagsAreSuperSetOfMask = (event.modifierFlags & _modifierMask) == _modifierMask;
     
-    for (NSNumber *rf in _requiredModifierFlags) {
-        if ((rf.unsignedIntegerValue & event.modifierFlags) == 0) {
-            matchesAllRequired = NO;
-        }
-    }
-    
-    if (matchesAllRequired) {
+    if (eventFlagsAreSuperSetOfMask) {
         if ([_actionString isEqualToString:@"reveal-config"]) {
             [NSWorkspace.sharedWorkspace activateFileViewerSelectingURLs:@[Locator.configURL]];
         } else if ([_actionString isEqualToString:@"reveal-helper"]) {

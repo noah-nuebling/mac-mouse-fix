@@ -9,7 +9,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Constants.h"
-#import "WannabePrefixHeader.h"
+#import "DisableSwiftBridging.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,8 +21,7 @@ typedef enum {
 
 @interface Actions : NSObject
 
-+ (void)executeActionArray:(NSArray *)actionArray phase:(MFActionPhase)phase MF_SWIFT_HIDDEN;
-+ (void)__SWIFT_UNBRIDGED_executeActionArray:(id)actionArray phase:(MFActionPhase)phase;
++ (void)executeActionArray:(MF_SWIFT_UNBRIDGED(NSArray *))actionArray phase:(MFActionPhase)phase NS_REFINED_FOR_SWIFT;
 
 @end
 

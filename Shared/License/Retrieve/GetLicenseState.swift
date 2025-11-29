@@ -7,7 +7,6 @@
 // --------------------------------------------------------------------------
 //
 
-import CocoaLumberjackSwift
 import CryptoKit
 
 @MainActor

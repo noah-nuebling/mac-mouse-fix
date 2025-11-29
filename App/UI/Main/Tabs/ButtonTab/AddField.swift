@@ -15,7 +15,6 @@
 ///
 
 import Cocoa
-import CocoaLumberjackSwift
 
 @objc class AddField: NSBox {
 

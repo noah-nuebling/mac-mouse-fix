@@ -7,7 +7,6 @@
 // --------------------------------------------------------------------------
 //
 
-import CocoaLumberjackSwift
 
 /**
  Models the the effects of drag forces. Drag forces are like friction forces, but magnitude depends on the current speed
@@ -158,6 +157,7 @@ import Foundation
     }
 
     @objc init(coefficient: Double, exponent: Double, distance d: Double, stopSpeed vs: Double) {
+        ///
         /// Distance-based init
         ///
         /// This is quite similar to the `Initial-speed-based init`. Make sure to keep both in sync when you make changes.
@@ -182,7 +182,7 @@ import Foundation
         
         assert(exponent >= 0)
         assert(coefficient > 0)
-        assert(SharedUtility.sign(of: d) == SharedUtility.sign(of: vs))
+        assert(mfsign(d) == mfsign(vs))
         assert(vs > 0)
         
         /// Store curve shape
@@ -227,6 +227,7 @@ import Foundation
     }
     
     @objc init(coefficient: Double, exponent: Double, initialSpeed v0_arg: Double, stopSpeed vs_arg: Double) {
+        
         /// Initial-speed-based init
         
         /// Speed will never reach 0 exactly so we need to specify `stopSpeed`, the speed at which we consider it stopped
@@ -259,7 +260,7 @@ import Foundation
         /// Validate velocities
         ///     This asserts that everything is positive, which makes self.isNegative unused.
         
-        assert(SharedUtility.sign(of: v0) == SharedUtility.sign(of: vs)) /// Same sign - Otherwise vs can't be reached at all
+        assert(mfsign(v0) == mfsign(vs)) /// Same sign - Otherwise vs can't be reached at all
         assert(vs != 0) /// A speed of zero is unreachable
         assert(abs(v0) > abs(vs)) /// v0 > vs - Otherwise vs can only be reached in the past. So not at all. Also ensures v0 is not 0 which is important, as well
         assert(v0 > 0) /// This code could probably deal with negative v0, but the calling code should never input a negative v0, so we're asserting that here, too
@@ -269,7 +270,7 @@ import Foundation
         ///     So if they are negative, we make everything positive and note that fact here, so we can do the main calculations as if v0 and vs were positive, and then flip the sign before we return the end result.
         ///     Actually I think we'll never use this, and this is untested, but we'll leave it in for now
         
-        self.isNegative = SharedUtility.sign(of: v0) == -1
+        self.isNegative = mfsign(v0) == -1
         
         /// Make positive if isNegative
         
@@ -299,7 +300,7 @@ import Foundation
 //        DDLogDebug("DragDurve initialized with v0: \(v0), distance int: \(self._distanceInterval), timeToStop: \(timeToStop)");
     }
     
-    /// v(t)
+    /// v(t) (velocity over time)
     ///     There are 3 important variables in the v(t) equation: v, t, and c
     ///         (Also a and b but they just define the shape of the curve, and we never need to solve for them)
     ///
@@ -351,7 +352,7 @@ import Foundation
     }
     
     
-    /// d(t)
+    /// d(t) (distance over time)
     ///     There are 4 important variables in the d(t) equation: d, t, c, and k
     ///         (Also a and b but we don't have functions for them)
     ///

@@ -14,7 +14,6 @@
 #import "PointerSpeedExperiments2.h"
 #import <IOKit/hidsystem/IOHIDEventSystemClient.h>
 #import <IOKit/hidsystem/IOHIDServiceClient.h>
-#import "WannabePrefixHeader.h"
 #import "IOUtility.h"
 @import IOKit; /// In hopes this will import the IOHIDEventSystemClientCreate(void) function that CursorSense seems to be using
 

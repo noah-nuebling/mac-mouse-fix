@@ -11,7 +11,6 @@
 ///     I'm not sure the DispatchQueue is neccesary, because all the interaction with this class are naturally spaced out in time, so there's a very low chance of race conditions)
 
 import Cocoa
-import CocoaLumberjackSwift
 
 @objc class Buttons: NSObject {
     

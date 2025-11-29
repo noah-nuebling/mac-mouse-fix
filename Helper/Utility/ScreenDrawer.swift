@@ -14,7 +14,6 @@
 ///         ... I'm not totally sure what this means, but maybe we could optimize by cutting out the NSView/NSWindow and go lower level?
 
 import Cocoa
-import CocoaLumberjackSwift
 
 @objc class ScreenDrawer: NSObject {
     /// This class can display graphics anywhere on the screen

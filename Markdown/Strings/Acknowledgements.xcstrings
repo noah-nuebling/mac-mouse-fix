@@ -1,0 +1,215 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "1: intro" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# 🙌 Poděkování\n\nVelké díky všem, kteří používají Mac Mouse Fix a poskytují zpětnou vazbu. Je úžasné a velmi motivující vidět, jak se tolik lidí baví a zapojuje se do něčeho, co jsem vytvořil.\n\nChci obzvláště poděkovat lidem a projektům uvedeným v tomto dokumentu."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# 🙌 Danksagungen\n\nVielen Dank an alle, die Mac Mouse Fix benutzen und Feedback geben. Es ist großartig und eine riesige Motivation zu sehen, wie so viele Leute sich mit etwas befassen und sich darüber freuen, was ich gemacht habe.\n\nIch möchte mich besonders bei den Menschen und Projekten bedanken, die in diesem Dokument aufgeführt sind."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
+          }
+        }
+      }
+    },
+    "2: translations" : {
+      "comment" : "Note: {url} will be replaced by a link. \n\nMake sure to type \"{url}\" exactly like in the original for the text-replacement to work.\n\nFurther details: \n\nYou may have encountered ”format specifiers” like ”%1$@” before. ”%1$@” is a format specifier in the C programming language, while “{url}” is a format specifier in the Python programming language. The idea is the same – when the program runs, this special character sequence gets replaced with dynamic content. You as the translator can decide where this dynamic content ends up in your translated text by including the format specifier in a specific place.\n\nAlso see: license-toast.activation-overload",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "## 🌏 Překlady\n\nDěkujeme, že přinášíte Mac Mouse Fix lidem po celém světě!\n\n- 🇨🇳 čínské překlady od [@groverlynn]({url_1})\n- 🇰🇷 korejské překlady od [@jeongtae]({url_2})\n- 🇻🇳 vietnamské překlady od [@nghlt]({url_3})"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "## 🌏 Übersetzungen\n\nDanke, dass ihr Mac Mouse Fix zu Menschen auf der ganzen Welt gebracht habt.\n\n- 🇨🇳 Chinesische Übersetzungen von [@groverlynn]({url_1})\n- 🇰🇷 Koreanische Übersetzungen von [@jeongtae]({url_2})\n- 🇻🇳 Vietnamesische Übersetzungen von [@nghlt]({url_3})"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})\n- 🇧🇷 Brazilian Portuguese translations by **Eduardo Rodrigues**\n- 🇫🇷 French translations by [@DimitriDR]({url_4})\n- 🇹🇷 Turkish translations by [@hasanbeder]({url_5})\n- 🇨🇿 Czech translations by [Petr Pavlík]({url_6})"
+          }
+        }
+      }
+    },
+    "3: money" : {
+      "comment" : "Note: {sales_count} will be replaced by the number of times Mac Mouse Fix has been sold. \n\nMake sure to type \"{sales_count}\" exactly like in the original for the text-replacement to work.\n\n",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 💰 Peníze\n\nMoc děkuji všem, kteří mi poslali milkšejk, a všem **{sales_count}** lidem, kteří si koupili Mac Mouse Fix.\nDíky vám můžu trávit spoustu času děláním něčeho, co miluji.\n\nZvláštní uznání si zaslouží lidé, kteří mě podpořili tím, že za Mac Mouse Fix utratili více, než je standardní cena:"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 💰 Geld\n\nVielen Dank an alle, die mir einen Milchshake spendiert haben, und an alle **{sales_count}** Personen, die Mac Mouse Fix gekauft haben.\nDank euch kann ich viel Zeit mit etwas verbringen, das ich sehr gerne mache.\n\nMenschen, die mich durch den Kauf von Mac Mouse Fix zu einem höheren Preis als dem Standardpreis unterstützt haben, erhalten hier eine besondere Erwähnung:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
+          }
+        }
+      }
+    },
+    "4: money.generous" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ⭐️ Štědří přispěvatelé\n\nDěkujeme za vaši podporu! :)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ⭐️ Großzügige Unterstützer\n\nDanke für euren Beitrag! :)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        }
+      }
+    },
+    "5: money.very-generous" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### 🚀 Velmi štědří přispěvatelé\n\nTito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neuvěřitelným milkšejkem**. (A někteří mi dokonce zanechali zprávu) Díky za *cukrovou nálož*!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### 🚀 Sehr Großzügige Unterstützer\n\nDiese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den *Zucker-Kick*!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
+          }
+        }
+      }
+    },
+    "6: money.github-sponsors" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ❤️ Sponzoři GitHubu\n\n**Velké díky** všem, kteří mě sponzorují na GitHubu [komukoli]({url})! Doufám, že se mi jednou díky vám podaří tu továrnu na milkšejky získat. :)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ❤️ GitHub Sponsoren\n\nRiesiges Dankeschön an [jeden]({url}) der mich auf GitHub sponsert! Hoffentlich kann ich mir eines Tages dank euch die Milchshakefabrik kaufen. :)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        }
+      }
+    },
+    "7: money.paypal-donations" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ✨ Dary přes PayPal\n\nSpousta štědrých lidí mi koupila milkšejky přes PayPal, když byl Mac Mouse Fix ještě zcela zdarma.\n\nPokud mezi nimi patříte, klikněte [sem]({url}) a získejte **bezplatnou licenci**!"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ✨ PayPal Spenden\n\nViele großzügige Leute haben mir auf PayPal Milchshakes spendiert, als Mac Mouse Fix noch komplett kostenlos war. \n\nWenn du dazugehört hast, klicke [hier]({url}) um eine **kostenlose Lizenz** zu erhalten!"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free.\n\nIf you're among them, click [here]({url}) to receive a **free license**!"
+          }
+        }
+      }
+    },
+    "8: software" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 👾 Další software"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 👾 Andere Software"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## 👾 Other Software"
+          }
+        }
+      }
+    },
+    "9: software.inspiration" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Software**, který inspiroval Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Průkopnický software pro myš pro Mac, inspirující mnoho funkcí. Byly chvíle, kdy jsem si myslel, že „to asi není možné“, ale pak jsem viděl, že „aha, SteerMouse to dělá“, a o tři roky později jsem také přišel na to, jak to implementovat.\n- [Calftrail Touch]({url_2}) - Základ pro „reverzní inženýrství“, které pohání nejlepší a první simulaci trackpadu v Mac Mouse Fix!\n- [MOS]({url_3}) - Možnost „Vysoká plynulost rolování“ v Mac Mouse Fix, implementace „Nastavení specifická pro aplikaci“ a další byly inspirovány MOS.\n- [SensibleSideButtons]({url_4}) - Zkopíroval jsem jeho kód pro ranou implementaci funkce „Přejít zpět/vpřed o jednu stránku v Safari a dalších aplikacích“ a také mě to vedlo k objevení projektu Calftrail Touch.\n- [Gifski]({url_5}) - Významně inspiroval design a obsah souboru [Readme.md]({url_6}) pro opravu myši na Macu.\n- [Pomocník pro řešení problémů s Vue]({url_7}) - Základ pro návrh a technickou implementaci nástroje [Asistent pro zpětnou vazbu k opravě myši na Macu]({url_8})."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Software**, die Mac Mouse Fix inspiriert hat:\n\n- [SteerMouse]({url_1}) - Wegweisende Maus-Software für Mac, die viele Funktionen inspiriert hat. Es gab Momente, in denen ich dachte: \"Das ist wahrscheinlich unmöglich\", aber dann hab ich gesehen \"oh, SteerMouse macht es\", und drei Jahre später habe ich herausgefunden, wie ich es auch umsetzen kann.\n- [Calftrail Touch]({url_2}) - Die Grundlage für die \"Reverse Engineering\"-Arbeit, die Mac Mouse Fix's erstklassige und einzigartige Trackpad-Simulation ermöglicht!\n- [MOS]({url_3}) - Viele Funktionen von Mac Mouse Fix, wie die Option \"Hohe Scroll-Flüssigkeit\" und die Implementierung des \"App-spezifische Einstellungen\" features, wurden von MOS inspiriert.\n- [SensibleSideButtons]({url_4}) - Ich habe den Code für eine frühe Implementierung der Funktion \"Gehe eine Seite vor/zurück in Safari und anderen Apps\" von SensibleSideButtons kopiert und bin dadurch auch auf das Calftrail Touch-Projekt gestoßen.\n- [Gifski]({url_5}) - Hat das Design und den Inhalt des [Readme.md]({url_6}) von Mac Mouse Fix stark inspiriert.\n- [Vue Issue Helper]({url_7}) - Grundlage für das Design und die technische Umsetzung von [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

@@ -22,6 +22,7 @@
 #import "HelperServices.h"
 #import "PointerFreeze.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "LocalizedStringAnnotation.h"
 
 #import "SharedUtility.h"
 
@@ -104,7 +105,7 @@
     [UNIXSignals load_Manual];
     
     /// Set up CocoaLumberjack
-    [SharedUtility setupBasicCocoaLumberjackLogging];
+    [Logging setUpDDLog];
     DDLogInfo(@"Accessibility Check - Mac Mosue Fix begins logging excessively");
     
     
@@ -127,7 +128,6 @@
     /// __Pre-check init__
     ///
     
-    [PrefixSwift initGlobalStuff];
     [MFMessagePort load_Manual];
     
     ///
@@ -178,6 +178,12 @@
         ///
         /// **Post-check init**
         ///
+
+        /// Annotate localized strings
+        ///     The swizzle should happen before the system loads any of our localized nib files, or localizedStrings are loaded from the NSBundle in another way. Otherwise we miss some strings in the localizationScreenshots.
+        if ([NSProcessInfo.processInfo.arguments containsObject:@"-MF_ANNOTATE_LOCALIZED_STRINGS"]) {
+            [LocalizedStringAnnotation enableAutomaticAnnotation];
+        }
         
         /// Using `load_Manual` instead of normal load, because creating an eventTap crashes the program, if we don't have accessibilty access (I think - I don't really remember)
         /// TODO: Look into using `+ initialize` instead of `+ load`. The way we have things set up there are like a bajillion entry points to the program (one for every `+ load` function) which is kinda sucky. Might be better to have just one entry point to the program and then start everything that needs to be started with `+ start` functions and let `+ initialize` do the rest

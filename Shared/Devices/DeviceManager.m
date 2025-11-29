@@ -46,9 +46,6 @@ static NSMutableArray<Device *> *_attachedDevices;
 + (NSArray<Device *> *)attachedDevices {
     return _attachedDevices;
 }
-+ (id)__SWIFT_UNBRIDGED_attachedDevices {
-    return _attachedDevices;
-}
 
 static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 + (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice {
@@ -318,6 +315,7 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
 
 static BOOL devicePassesFiltering(IOHIDDeviceRef device) {
     /// Helper function for handleDeviceMatching()
+    ///     [May 2025] Perhaps we could specify this Product/VendorID-based filtering directly in the matching dict with the kIOPropertyMatchKey?  ... But there doesn't seem to be 'negative' matching.
     
     NSString *deviceName = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR("Product"));
     NSNumber *deviceVendorID = (__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR("VendorID"));
@@ -325,7 +323,7 @@ static BOOL devicePassesFiltering(IOHIDDeviceRef device) {
     if ([deviceName isEqualToString:@"Apple Internal Keyboard / Trackpad"]) { // TODO: Does it make sense? Does this work on other machines that are not mine? Shouldn't ignoring all Apple devices be enough?
         return NO;
     }
-    if (deviceVendorID.integerValue == 1452) { /// Apple's Vendor ID is 1452 (sometimes written as 0x5ac or 05ac)
+    if (deviceVendorID.integerValue == 1452) { /// Apple's Vendor ID is 1452 (sometimes written as 0x5ac or 05ac) || Update: [May 2025] My Magic Mouse has a VendorID of 76.
         return NO;
     }
     return YES;

@@ -17,6 +17,7 @@
 #import "SubPixelator.h"
 #import "SharedUtility.h"
 #import "MathObjc.h"
+#import "Logging.h"
 
 @interface SubPixelator ()
 @property (readwrite, assign, atomic) double accumulatedRoundingError;
@@ -72,9 +73,9 @@
 }
 
 static RoundingFunction getBiasedRoundingFunction(double inpDelta) {
-    if (sign(inpDelta) == 1) {
+    if (mfsign(inpDelta) == 1) {
         return ceil;
-    } else if (sign(inpDelta) == -1) {
+    } else if (mfsign(inpDelta) == -1) {
         return floor;
     } else { /* sign == 0 */
         return NULL;

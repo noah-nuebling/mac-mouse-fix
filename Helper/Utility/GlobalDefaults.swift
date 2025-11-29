@@ -20,7 +20,6 @@
 /// - Maybe the logic for determining doubleClicks is done by the windowServer in userSpace after it receives the IOHIDEvents from the kernel. This would be weird though.
 
 import Cocoa
-import CocoaLumberjackSwift
 
 @objc class GlobalDefaults: NSObject {
     

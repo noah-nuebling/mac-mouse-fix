@@ -12,14 +12,21 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSDictionary (Additions)
-- (NSObject * _Nullable)objectForCoolKeyPath:(NSString *)keyPath;
-+ (NSMutableDictionary *)doDeepMutateDictionary:(NSDictionary *)dict;
+    
+    - (NSObject * _Nullable) objectForCoolKeyPath: (NSString *)keyPath;
+    - (void) iterateCoolKeyPaths: (void (^)(NSString *keyPath, id object))callback;
+    
+    + (NSMutableDictionary *) doDeepMutateDictionary: (NSDictionary *)dict;
 @end
 
 @interface NSMutableDictionary (Additions)
-- (void)removeObjectForCoolKeyPath:(NSString *)keyPath;
-- (void)setObject:(NSObject * _Nullable)object forCoolKeyPath:(NSString *)keyPath;
-- (void)setObject:(NSObject * _Nullable)object forCoolKeyArray:(NSArray *)keys;
+
+    - (void) removeObjectForCoolKeyPath: (NSString *)keyPath;
+    - (void) setObject: (NSObject * _Nullable)object forCoolKeyPath: (NSString *)keyPath;
+    - (void) setObject: (NSObject * _Nullable)object forCoolKeyArray: (NSArray *)keys;
+
+    - (void) applyOverridesFromDictionary: (NSDictionary *_Nullable)other;
+
 @end
 
 NS_ASSUME_NONNULL_END

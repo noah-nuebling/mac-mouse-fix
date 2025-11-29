@@ -5,39 +5,7 @@
 //  Created by Noah Nübling on 12.07.24.
 //
 
-#import "Foundation/Foundation.h"
-#import "SharedUtility.h"
-
-@implementation NSString (NSTreeNodeDependencies)
-
-///
-/// Necessary stuff for TreeNode to compile
-///     (Need to reimplement this here since we copied TreeNode over from feature-strings-catalog branch to master)
-///
-///     Changes we made after copying this to master:
-///         - Made -[description] return @"<nil>" when representedObject is nil.
-
-- (NSString *) stringByAddingIndent: (NSInteger)indent withCharacter: (NSString *)ch {
-    
-    NSString *padding = [@"" stringByPaddingToLength: indent*ch.length withString: ch startingAtIndex: 0];
-    
-    NSString *result = [self stringByReplacingOccurrencesOfString: @"(\n|^)(.)"
-                                                       withString: stringf(@"$1%@$2", padding)
-                                                          options: NSRegularExpressionSearch
-                                                            range: NSMakeRange(0, self.length)];
-    return result;
-}
-
-- (NSString *) stringByPrependingCharacter: (NSString *)ch count: (NSInteger)count {
-    
-    NSString *result = [self stringByPaddingToLength: (self.length + ch.length*count)
-                                          withString: ch
-                                     startingAtIndex: 0];
-    return result;
-}
-
-@end
-
+#import "NSString+Additions.h"
 #import "TreeNode.h"
 
 ///
@@ -120,9 +88,7 @@
     NSInteger indentDepth = 2;
     NSString *indentChar = self.indexPath.length >= 2 ? @"· " : @"  "; /// Indenting with 'interpunct' character on deeper nodes to make child-depth more apparent
     
-    ({ /// Added this after copying from feature-strings-catalog to master branch
-        if (self.representedObject == nil) return @"<nil>";
-    });
+    if (self.representedObject == nil) return @"<nil>";
     
     NSString *result = [self.representedObject description];
     assert(result != nil);
@@ -131,7 +97,7 @@
     
     for (TreeNode *child in self.childNodes) {
         NSString *childDescription = [child description];
-        childDescription = [childDescription stringByAddingIndent: indentDepth withCharacter: indentChar];
+        childDescription = [childDescription stringByAddingIndent:indentDepth withCharacter:indentChar];
         childDescription = [[@"- " stringByAppendingString: [childDescription substringFromIndex: indentDepth]] stringByPrependingCharacter: indentChar count: indentDepth-2]; /// Add a bullet at the start of each child.
         [childStringArray addObject:childDescription];
     }
@@ -247,7 +213,7 @@
     if (unvisitedChildExists) {
         
         /// Go to first leaf inside unvisited child
-        _currentNode = [self firstLeafInside: _currentNode.childNodes[indexOfFirstUnvisitedChild]];
+        _currentNode = [self firstLeafInside:_currentNode.childNodes[indexOfFirstUnvisitedChild]];
         _lastVisitedChildIndex = -1; /// This signals that we haven't visited any children of the new `_currentNode`, but I don't think we have to do this, since its a leaf and doesn't have children anyways.
         
     } else {
@@ -270,7 +236,7 @@
         indexOfFirstUnvisitedChild = _lastVisitedChildIndex + 1;
         unvisitedChildExists = indexOfFirstUnvisitedChild < _currentNode.childNodes.count;
         if (unvisitedChildExists) {
-            _currentNode = [self firstLeafInside: _currentNode.childNodes[indexOfFirstUnvisitedChild]];
+            _currentNode = [self firstLeafInside:_currentNode.childNodes[indexOfFirstUnvisitedChild]];
             _lastVisitedChildIndex = -1;
         } else {
             /// In this case we actually go to the parent, and don't override `_currentNode` with some leaf
@@ -279,13 +245,13 @@
     
 }
 
-- (TreeNode *)firstLeafInside: (TreeNode *)node {
+- (TreeNode *)firstLeafInside:(TreeNode *)node {
     
     if (node.childNodes.count == 0) {
         return node;
     }
     TreeNode *firstChild = node.childNodes.firstObject;
-    TreeNode *firstLeaf = [self firstLeafInside: firstChild];
+    TreeNode *firstLeaf = [self firstLeafInside:firstChild];
     return firstLeaf;
 }
 

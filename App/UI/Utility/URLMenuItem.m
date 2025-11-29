@@ -8,12 +8,14 @@
 //
 
 #import "URLMenuItem.h"
+#import "Links.h"
 
 /// A menu item which opens a URL when it's clicked. The URL is configurable in Interface Builder
 
 @interface URLMenuItem ()
 
-@property (nonatomic) IBInspectable NSString *URLString;
+@property (nonatomic) IBInspectable NSString *MFLinkID; /// This is actually of type MFLinkID, which is an alias for `NSString *`, but IBInspectable requires to literally type `NSString *`.
+@property (nonatomic) NSString *URLString;
 /// ^ Don't know why this is nonatomic. Copied it from https://stackoverflow.com/questions/24465679/xcode6-ibdesignable-and-ibinspectable-with-objective-c
 
 @end
@@ -27,9 +29,12 @@
     
     [super awakeFromNib];
     
+    /// Validate
+    assert(_URLString == nil || _URLString.length == 0); /// We're using MFLinkID now.
+    
     /// Set action to opening the URL
     
-    BOOL enable = self.URLString.length > 0;
+    BOOL enable = self.MFLinkID.length > 0;
     
     [self setEnabled:enable];
     
@@ -41,9 +46,12 @@
 
 
 - (IBAction)openURLL:(URLMenuItem *)sender {
-    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:self.URLString]];
     
+    NSString *link = [Links link:_MFLinkID];
     
+    assert(link != nil && link.length > 0);
+    
+    [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:link]];
 }
 
 @end

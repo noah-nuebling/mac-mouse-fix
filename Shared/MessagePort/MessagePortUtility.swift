@@ -8,7 +8,6 @@
 //
 
 import Foundation
-import CocoaLumberjackSwift
 import ReactiveSwift
 
 @objc class MessagePortUtility: NSObject {
@@ -42,7 +41,15 @@ import ReactiveSwift
         /// - Checking for strange helper also makes sense pre-Ventura. But strange helper stuff shouldn't  ever be a problem preVentura. The reaction doesn't make any sense pre-Ventura. (Because we show step-by-step instructions that only apply to Ventura)
         /// - Unregistering the helper doesn't work immediately. Takes like 5 seconds. Not sure why. When debugging it doesn't happen. Might be some timeout in the API.
         /// - Not sure if just using `enableHelperAsUserAgent:` is enough. Does this call `launchctl remove`? Does it kill strange helpers that weren't started by launchd? That might be necessary in some situations. Edit: pretty sure it's good enough. It will simply unregister the strange helper that was just registered and sent this message. We don't need to do anything else.
-        /// - Logically, the `is-disabled-toast` and the `is-strange-helper-toast` belong together since they both give UI feedback about a failure to enable the helper. It would be nice if they were in the same place in code as well
+        /// - Logically, the `k-is-disabled-toast` and the `is-strange-helper-alert` belong together since they both give UI feedback about a failure to enable the helper. It would be nice if they were in the same place in code as well
+        ///
+        /// Update:
+        ///     Under the macOS 15 Sequoia Beta, I've seen strange helper popup, but then after restarting the app, it did enable properly! So Apple must have change the way this works.
+        ///     TODO: Update the instructions that we show to users under macOS Sequoia.
+        ///
+        ///     TODO: The link doesn't work properly under Sequioa. (Only the first time you click it) Fix that.
+        ///
+        
         
         /// Update: [Jul 13 2025] Disable if not running macOS 13 Ventura or 14 Sonoma
         ///     On other versions, macOS should automatically switch to launching the right helper version, and no uninstall-and-restart should be required. (Giving users instructions to uninstall-and-restart was the main purpose of this.)
@@ -117,7 +124,7 @@ import ReactiveSwift
             
             /// Notify user
             if #available(macOS 13.0, *) { if #unavailable(macOS 15.0) { /// See notes above [Sep 2025]
-                AlertCreator.showStrangeHelperMessage(withStrangeURL: strangeURL)
+                Alerts.showStrangeHelperMessage(withStrangeURL: strangeURL)
             }}
         }
         

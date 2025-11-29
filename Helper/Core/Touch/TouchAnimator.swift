@@ -30,7 +30,6 @@
 /// Also has this cool momentumHint feature which lets us switch between gesture scrolls and momentum scrolls appropriately to allow for scroll bouncing and generally better behaviour.
 
 import Cocoa
-import CocoaLumberjackSwift
 
 class TouchAnimator: TouchAnimatorBase {
 

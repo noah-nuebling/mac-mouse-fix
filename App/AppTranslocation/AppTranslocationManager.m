@@ -18,6 +18,7 @@
 #import "SharedUtility.h"
 #import "Constants.h"
 #import <Cocoa/Cocoa.h>
+#import "Logging.h"
 
 @implementation AppTranslocationManager
 
@@ -31,7 +32,7 @@ void *getFunctionFromSecurityFramework(const char *functionName) {
     
     /// TODO:
     ///     Remove this. Just use `extern` for linking undocumented symbols.
-    ///     - Based on what we learned when implementing `EventLoggerForBrad > PrivateFunctions.m`, dlsym() should almost never be necessary.
+    ///     - Based on what we learned when implementing `PrivateFunctions.m`, dlsym() should almost never be necessary.
     
     /// Open security framework
     void *handle = NULL;

@@ -8,7 +8,6 @@
 //
 
 import Foundation
-import CocoaLumberjackSwift
 
 @objc class ButtonTabController: NSViewController, NSPopoverDelegate {
     
@@ -45,34 +44,43 @@ import CocoaLumberjackSwift
         
         let alert = NSAlert()
         alert.alertStyle = .informational
-        alert.messageText = NSLocalizedString("restore-buttons-alert.title", comment: "First draft: Restore Default for ...")
+        alert.messageText = MFLocalizedString("restore-buttons-alert.title", comment: "")
         alert.informativeText = ""
         
-        alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.commit", comment: "First draft: Restore"))
-        alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.back", comment: "First draft: Cancel"))
+        let restoreButton = alert.addButton(withTitle: MFLocalizedString("restore-buttons-alert.commit", comment: ""))
+        let cancelButton = alert.addButton(withTitle: MFLocalizedString("restore-buttons-alert.back", comment: ""))
+        restoreButton.keyEquivalent = IBUtility.keyChar(forLiteral: "return")!
+        cancelButton.keyEquivalent = IBUtility.keyChar(forLiteral: "escape")!
         
         ///
         /// Get device info
         ///
         
+        /// Get info
         let (name, nOfButtons, bestPresetMatch) =  MessagePortUtility.shared.getActiveDeviceInfo() ?? (nil, nil, nil)
+        /// Process info
+        ///     Note: Use non-breaking-space for nicer layout for long mouse names. (E.g. my VXE mouse connected over BT has the name "RivieraWaves SAS VXE R1SE+")
+        ///         Update: Actually like the layout less with nbsp.
+//        name = name?.replacingOccurrences(of: " ", with: "&nbsp;") as NSString?
         
         ///
         /// Add accessoryView
         ///
         
-        let radio1 = NSButton(radioButtonWithTitle: NSLocalizedString("restore-buttons-alert.radio1", comment: "First draft: Mouse with 3 buttons"), target: self, action: #selector(nullAction(sender:)))
-        let radio2 = NSButton(radioButtonWithTitle: NSLocalizedString("restore-buttons-alert.radio2", comment: "First draft: Mouse with 5+ buttons"), target: self, action: #selector(nullAction(sender:)))
+        let radio1 = NSButton(radioButtonWithTitle: MFLocalizedString("restore-buttons-alert.radio1", comment: ""), target: self, action: #selector(nullAction(sender:)))
+        let radio2 = NSButton(radioButtonWithTitle: MFLocalizedString("restore-buttons-alert.radio2", comment: ""), target: self, action: #selector(nullAction(sender:)))
+        radio1.setAccessibilityIdentifier("axRestoreButtons3")
+        radio2.setAccessibilityIdentifier("axRestoreButtons5")
         
         let radioStack = NSStackView(views: [radio1, radio2])
         
         var hint: CoolNSTextField? = nil
         if let nOfButtons = nOfButtons {
             
-            let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "First draft: Your __%@__ mouse says it has __%d__ buttons"), name!, nOfButtons)
+            let hintStringRaw = String(format: MFLocalizedString("restore-buttons-alert.hint", comment: "Note: '%1$@' will be the name of the mouse, such as 'Logitech M720 Triathlon'"), name!, nOfButtons)
             
-//            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
-            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.adding(.secondaryLabelColor, for: nil).settingFontSize(NSFont.smallSystemFontSize).adding(.center, for: nil).trimmingWhitespace()
+//            let hintString = MarkdownParser.attributedString(withCoolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
+            let hintString = MarkdownParser.attributedString(withCoolMarkdown: hintStringRaw, fillOutBase: true)?.adding(.secondaryLabelColor, for: nil).settingFontSize(NSFont.smallSystemFontSize).adding(.center, for: nil).trimmingWhitespace()
             
             if let hintString = hintString {
                 hint = CoolNSTextField(labelWithAttributedString: hintString)
@@ -140,15 +148,11 @@ import CocoaLumberjackSwift
                     
                     /// Display already using notifications
                     
-                    let messageRaw: String
-                    if selectedPreset == 3 {
-                        messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "First draft: You're __already using__ the default setting for mice with __3 buttons__")
+                    if selectedPreset == 3 {    
+                        Toasts.showSimpleToast(name: "k-already-using-defaults-toast.3")
                     } else {
-                        messageRaw = NSLocalizedString("already-using-defaults-toast.5", comment: "First draft: You're __already using__ the default setting for mice with __5 buttons__")
-                    }
-                    let message = NSAttributedString(coolMarkdown: messageRaw)!
-                    DispatchQueue.main.async {
-                        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
+                        
+                        Toasts.showSimpleToast(name: "k-already-using-defaults-toast.5")
                     }
                     return
                 }
@@ -258,7 +262,7 @@ import CocoaLumberjackSwift
             guard let (deviceName, nOfButtons, _) = MessagePortUtility.shared.getActiveDeviceInfo() else { return }
             
             /// Get actionTable info
-            let usedButtons = RemapTableUtility.getCapturedButtons()
+            let usedButtons = RemapTableUtility.getCapturedButtonsAndExcludeButtonsThatAreOnlyCaptured(byModifier: false)
 
             ///
             /// Show buyMouseAlert
@@ -274,6 +278,10 @@ import CocoaLumberjackSwift
             ///     - 1. Make it prettier / more readable by using custom layout and markdown formatting
             ///     - 2. Include links to top 3 recommended mice (and maybe a link to a longer list of recommended mice). Maybe get a brand deal with some good mouse manufacturer for promoting their products.
             ///     - 3. Maybe show a small/unbtrustive toast instead of an alert and have it link to the more complex content / recommendations
+            ///
+            /// Update Summer 2024:
+            /// -  If you implement this don't forget to consider making this escape-dismissable, like most other sheets and alerts in the app.
+            /// - Also probably move this into ToastAndSheetTests if you implement this.
             
             let showBuyMouseAlert = false
             
@@ -283,10 +291,10 @@ import CocoaLumberjackSwift
                 
                 let alert = NSAlert()
                 alert.alertStyle = .informational
-                alert.messageText = NSLocalizedString("buy-mouse-alert.title", comment: "First draft: Your mouse only has 3 buttons")
-                alert.informativeText = NSLocalizedString("buy-mouse-alert.body", comment: "First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix!")
+                alert.messageText = MFLocalizedString("buy-mouse-alert.title", comment: "")
+                alert.informativeText = MFLocalizedString("buy-mouse-alert.body", comment: "")
 //                alert.showsSuppressionButton = true
-                alert.addButton(withTitle: NSLocalizedString("buy-mouse-alert.ok", comment: "First draft: OK"))
+                alert.addButton(withTitle: MFLocalizedString("buy-mouse-alert.ok", comment: ""))
                 
                 /// Display alert
                 guard let window = MainAppState.shared.window else { return }
@@ -325,7 +333,7 @@ import CocoaLumberjackSwift
             commitConfig()
             
             /// Show user feedback
-            ToastCreator.showReviveToast(showButtons: buttonsAreKilled, showScroll: scrollIsKilled)
+            Toasts.showReviveToast(showButtons: buttonsAreKilled, showScroll: scrollIsKilled)
         }
     }
     
@@ -405,7 +413,7 @@ import CocoaLumberjackSwift
     
     private var restoreDefaultPopover_stringAttributesFromIB: [NSAttributedString.Key : Any]? = nil
     
-    fileprivate func showRestoreDefaultPopover(deviceName: String, nOfButtons: Int, usedButtons: Set<NSNumber>) {
+    func showRestoreDefaultPopover(deviceName: String, nOfButtons: Int, usedButtons: Set<NSNumber>) {
         
         /// This is a helper for `viewDidAppear()`
         
@@ -440,12 +448,14 @@ import CocoaLumberjackSwift
             
             show5Button = true
         }
+        
         if config("Other.dontRemindToRestoreDefault3") as? Bool ?? false {
             show3Button = false
         }
         if config("Other.dontRemindToRestoreDefault5") as? Bool ?? false {
             show5Button = false
         }
+        
         assert(!(show3Button && show5Button))
         
         ///
@@ -469,11 +479,21 @@ import CocoaLumberjackSwift
             
             /// Setup body text
             ///     There used to be different text based on whether your were using a 3 button or a 5 button mouse, but we've simplified that now
+            /// I wrote this note: "In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug"
+            ///     -> I think this problem will be resolved by us using `**` instead of `__` for emphasis.
+            /// TODO: The 'Don't remind me again' checkbox at the bottom of the popover is loaded directly from the nib file. So it's localizable string is in a totally different place. This might be confusing for localizers.
+            /// On hardcoding popover width: We considered hardcoding the popover width instead of giving localizers control via the linebreak, just like we did for tabs (See `applyHardcodedTabWidth()`,
+            ///     but decided against because:
+            ///         - The popover looks fine even if the text is super wide – perhaps the main purpose of the linebreak is semantic not for controlling width. [Sep 2025]
+            ///         - All the localizers except Turkish did put a nice-looking linebreak – and even Turkish looks fine.
+            ///         - Chinese and Korean didn't put linebreaks at all and are pretty wide, making them wrap seems awkward.
+            ///         - There's no big layout that depends on this, just the little popover which contains this text and a little checkbox below. So localizers don't control stuff they don't see (which was the case before `applyHardcodedTabWidth()`)
             
-            let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug"), deviceName)
+            let message = String(format: MFLocalizedString("restore-default-buttons-popover.body", comment: "Note: There's a linebreak in English so the popover doesn't become too wide and to aid with readability."), deviceName)
             
-            if let attributes = restoreDefaultPopover_stringAttributesFromIB, let newString = NSAttributedString(coolMarkdown: message, fillOutBase: false)?.addingStringAttributes(asBase: attributes) {
-                
+            if let attributes = restoreDefaultPopover_stringAttributesFromIB,
+               let newString = MarkdownParser.attributedString(withCoolMarkdown: message, fillOutBase: false)?.addingAttributes(asBase: attributes)
+           {
                 self.restoreDefaultPopoverLabel.attributedStringValue = newString
             }
             
@@ -485,22 +505,34 @@ import CocoaLumberjackSwift
             
             /// Close on click
             ///     By intercepting events
-            self.popoverMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { event in
-                
-                /// Check click on window
-                let clickedOnWindow = self.view.hitTest(event.locationInWindow) != nil
-                
-                /// Check click on popover
-                let popupView = self.restoreDefaultPopover.contentViewController?.view
-                let locInScreen = NSEvent.mouseLocation
-                let locInPopupWindow = popupView?.window?.convertPoint(fromScreen: locInScreen)
-                var clickedOnPopover = false
-                if let loc = locInPopupWindow {
-                    clickedOnPopover = popupView?.hitTest(loc) != nil
+            self.popoverMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .keyDown]) { event in
+                    
+                var shouldClose: Bool
+                var shouldPassThroughEvent: Bool = true
+                if event.type == .keyDown {
+                    /// Handle keydown
+                    shouldClose = (event.keyCode == kVK_Escape)
+                    shouldPassThroughEvent = false /// Otherwise there's an NSBeep
+                } else {
+                    /// Handle clicks
+                    /// Check click on window
+                    let clickedOnWindow = self.view.hitTest(event.locationInWindow) != nil
+                    
+                    /// Check click on popover
+                    let popupView = self.restoreDefaultPopover.contentViewController?.view
+                    let locInScreen = NSEvent.mouseLocation
+                    let locInPopupWindow = popupView?.window?.convertPoint(fromScreen: locInScreen)
+                    var clickedOnPopover = false
+                    if let loc = locInPopupWindow {
+                        clickedOnPopover = popupView?.hitTest(loc) != nil
+                    }
+                    
+                    /// Set shouldClose
+                    shouldClose = clickedOnWindow && !clickedOnPopover
                 }
-                
+
                 /// Close popover
-                if clickedOnWindow && !clickedOnPopover {
+                if shouldClose {
                     
                     /// Store user choice about not being reminded again
                     //  TODO: Now that the UI message doesn't contain info about how many buttons the users mouse has and how that doesn't fit the current settings, it's kind of weird to make the don't remind based on button number. Intuitively it should maybe be based on mouse model? Not sure.
@@ -529,7 +561,7 @@ import CocoaLumberjackSwift
                 }
                 
                 /// Return intercepted event
-                return event
+                return shouldPassThroughEvent ? event : nil
             }
         }
     }
@@ -606,19 +638,15 @@ import CocoaLumberjackSwift
     ///     TODO: Use format strings and shared functions from UIStrings.m to obtain button names
 
     override func mouseUp(with event: NSEvent) {
+        
         if !pointerIsInsideAddField { return }
         
-        let messageRaw = NSLocalizedString("forbidden-capture-toast.1", comment: "First draft: **Primary Mouse Button** can't be used\nPlease try another button")
-        let message = NSAttributedString(coolMarkdown: messageRaw)!;
-        
-        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
+        Toasts.showSimpleToast(name: "k-forbidden-capture-toast.1")
     }
     override func rightMouseUp(with event: NSEvent) {
+        
         if !pointerIsInsideAddField { return }
         
-        let messageRaw = NSLocalizedString("forbidden-capture-toast.2", comment: "First draft: **Secondary Mouse Button** can't be used\nPlease try another button")
-        let message = NSAttributedString(coolMarkdown: messageRaw)!;
-        
-        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
+        Toasts.showSimpleToast(name: "k-forbidden-capture-toast.2")
     }
 }

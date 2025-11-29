@@ -9,16 +9,15 @@
 
 #import <Foundation/Foundation.h>
 #import "Device.h"
-#import "WannabePrefixHeader.h"
 #import "Constants.h"
+#import "DisableSwiftBridging.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DeviceManager : NSObject
 
 
-+ (NSArray<Device *> *)attachedDevices MF_SWIFT_HIDDEN;
-+ (id)__SWIFT_UNBRIDGED_attachedDevices;
++ (MF_SWIFT_UNBRIDGED(NSArray<Device *> *))attachedDevices NS_REFINED_FOR_SWIFT;
 
 + (void)load_Manual;
 + (void)deconfigureDevices;

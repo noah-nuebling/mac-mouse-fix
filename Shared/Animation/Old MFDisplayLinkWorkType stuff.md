@@ -137,7 +137,8 @@
             ///         -> I think for now, **it's best to go back to the original scheduling**, since I'm confident that it's good on Firefox, and I'm not confident in the benefits of the 2 other schedulings we tried.
             ///             - See this comment for further discussion of this decisin: https://github.com/noah-nuebling/mac-mouse-fix/issues/875#issuecomment-2016869451
             ///         -> Maybe later, we can explore trying to analyze the CVDisplayLinkThread of the scrolled app in order to improve scheduling. That's the best idea I have right now. See https://github.com/noah-nuebling/mac-mouse-fix/issues/875#issuecomment-1986811798 for more info and potential libraries we could use to achieve this.
-
+            /// 
+            /// Update: [May 2025] The difference between scrolling smoothness between MMF and Trackpad momentum scrolling is mostly likely down to HIDEvents and so it should be possible to fix it inside GestureScrollSimulator.m! See that for more info.
             
             /// Get timestamp for start of callback
             CFTimeInterval startTs = CACurrentMediaTime();

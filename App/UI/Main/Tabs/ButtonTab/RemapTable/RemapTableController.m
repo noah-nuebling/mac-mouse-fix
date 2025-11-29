@@ -20,7 +20,7 @@
 #import "NSTextField+Additions.h"
 #import "UIStrings.h"
 #import "MFMessagePort.h"
-#import "CaptureNotificationCreator.h"
+#import "CaptureToasts.h"
 #import "RemapTableTranslator.h"
 #import "NSView+Additions.h"
 #import "KeyCaptureView.h"
@@ -411,7 +411,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     /// Capture notifs
     ///     These are too long and obnoxious and not really helpful in this situation.
 //    NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtons];
-//    [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
+//    [CaptureToasts showButtonCaptureToastWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
 }
 
 #pragma mark - Delegate & Controller
@@ -526,7 +526,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     /// `rowToRemove` is relative to actual table / groupedDataModel. Not baseDataModel
     
     /// Capture notifs
-    NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
+    NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:NO];
     
     /// Get base data model index corresponding to selected table index
     NSUInteger dataModelRowToRemove = [RemapTableUtility baseDataModelIndexFromGroupedDataModelIndex:rowToRemove withGroupedDataModel:self.groupedDataModel];
@@ -562,8 +562,8 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     [self.tableView removeRowsAtIndexes:rowsToRemoveWithAnimation withAnimation:/*NSTableViewAnimationEffectNone*/NSTableViewAnimationSlideUp];
     
     /// Capture notifs
-    NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtons];
-    [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
+    NSSet *capturedButtonsAfter = [RemapTableUtility getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:NO];
+    [CaptureToasts showButtonCaptureToastWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
 }
 
 - (void)addButtonAction {
@@ -575,7 +575,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
 - (void)addRowWithHelperPayload:(NSDictionary *)payload {
     
     /// Capture notifs
-    NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtons];
+    NSSet<NSNumber *> *capturedButtonsBefore = [RemapTableUtility getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:NO];
     
     /// Make tableView key, so it's not greyed out
     [self.tableView.window makeFirstResponder:self.tableView];
@@ -657,11 +657,12 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
     [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:delay];
     
     /// Capture notifs
-    NSSet<NSNumber *> *capturedButtonsAfter =  [RemapTableUtility getCapturedButtons];
-    [CaptureNotificationCreator showButtonCaptureNotificationWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
+    /// 
+    NSSet<NSNumber *> *capturedButtonsAfter = [RemapTableUtility getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:NO];
+    [CaptureToasts showButtonCaptureToastWithBeforeSet:capturedButtonsBefore afterSet:capturedButtonsAfter];
     
 //    if ([capturedButtonsBefore isEqual:capturedButtonsAfter]) {
-        // If they aren't equal then `showButtonCaptureNotificationWithBeforeSet:` will show a notification
+        // If they aren't equal then `showButtonCaptureToastWithBeforeSet:` will show a notification
         //      This notification will not be interactable if we also open the popup button menu.
 //        [popUpButton performSelector:@selector(performClick:) withObject:nil afterDelay:0.2];
 //    }
@@ -692,7 +693,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
         MFMouseButtonNumber groupButtonNumber = [RemapTableUtility triggerButtonForRow:self.groupedDataModel[row+1]];
         NSTableCellView *buttonGroupCell = [self.tableView makeViewWithIdentifier:@"buttonGroupCell" owner:self];
         NSTextField *groupTextField = (NSTextField *)buttonGroupCell.nextKeyView;
-        groupTextField.stringValue = stringf(@"  %@", [UIStrings getButtonString:groupButtonNumber].firstCapitalized);
+        groupTextField.stringValue = stringf(@"  %@", [UIStrings getButtonString:groupButtonNumber context:kMFButtonStringUsageContextActionTableGroupRow].firstCapitalized);
         
         if (@available(macOS 11.0, *)) { } else {
             

@@ -1,0 +1,99 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "1: intro" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **ve výchozím nastavení zachycuje kolečko myši**, podobně jako [zachycuje tlačítka myši](<{url}>)."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **fängt standardmäßig das Scrollrad deiner Maus ab**, ähnlich wie es [Maustasten abfängt](<{url}>).\n"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **captures your mouse's scroll wheel by default**, similar to how it [captures mouse buttons](<{url}>)."
+          }
+        }
+      }
+    },
+    "2: uncapturing" : {
+      "comment" : "For the step-by-step instructions, make sure to mirror the strings that are seen on the ‘Scrolling’ Tab in Mac Mouse Fix.\n\nHow to find the strings seen on the ‘Scrolling’ Tab:\n\nMost strings on the ‘Scrolling’ Tab have a comment containing ‘Scrolling >’ as of September 2025.\n\nHow to find the strings used in the message 'indicating that the scroll wheel is no longer being captured':\n\nSearch for ‘capture-toast.scroll.uncaptured’",
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Jak zabránit zachycení rolovacího kolečka:**\n\n1. V Mac Mouse Fix přejděte na kartu „Rolování“\n2. Vypněte **všechny** možnosti\n- V případě možnosti „Rychlost“ ji nastavte na „macOS“\n- Odstraňte všechny položky v části „Modifikátory klávesnice“ kliknutím na tlačítko „x“ vedle každého modifikátoru\n\nPoté by se měla zobrazit zpráva, že rolovací kolečko již není zachycováno."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Um das Abfangen des Scrollrads zu verhindern:** \n\n1. Gehe in Mac Mouse Fix zum ‘Scrollen’ Tab\n2. Schalte alle Optionen aus\n    - Im Falle der ‘Tempo’ Option, setze sie auf ‘macOS’\n    - Lösche alle Sondertasten, indem du auf den ‘x’ Knopf neben jeder Sondertaste klickst\n\nDanach solltest du eine Nachricht sehen, die besagt, dass das Scrollrad nun nicht länger abgefangen wird.\n"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**To prevent scroll wheel capture:**\n\n1. Go to the 'Scrolling' tab in Mac Mouse Fix\n2. Turn off **all** options\n    - In case of the 'Speed' option, set it to 'macOS'\n    - Remove all entries under 'Keyboard Modifiers' by clicking the 'x' button next to each modifier\n\nAfter this, you should see a message indicating that the scroll wheel is no longer being captured."
+          }
+        }
+      }
+    },
+    "3: uncapturing-purpose" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Co se stane, když se rolovací kolečko *přestane* zaznamenávat?**\n\nAplikace Mac Mouse Fix pak rolovací kolečko zcela ignoruje – během rolování nebude spotřebovávat energii procesoru ani nabíjet baterii, ani jinak nerušit. To vám dává naprostou svobodu používat k ovládání rolovacího kolečka jiné aplikace, jako je [MOS]({url})."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Was passiert wenn das Scrollrad *nicht länger* abgefangen wird?** \n\nMac Mouse Fix ignoriert dann dein Scrollrad komplett – Es wird beim Scrollen keine Prozessorleistung oder Batterieladung mehr verwenden oder sich in irgendeiner Weise einmischen. So hast du die volle Freiheit, andere Apps wie [MOS]({url}) zu verwenden um dein Scrollrad zu handhaben.\n"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**What happens when the scroll wheel is *no longer* being captured?**\n\nMac Mouse Fix will then completely ignore your scroll wheel – it won't use any processor power or battery charge during scrolling, or interfere in any way. This gives you complete freedom to use other apps like [MOS]({url}) to handle your scroll wheel."
+          }
+        }
+      }
+    },
+    "4: also-see" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Viz také\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Upraveno s vynikající pomocí Claude 3.5 Sonnet)*"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Siehe auch\n\n- [{docname_captured_buttons_mmf3}](<{url}>)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "## Also see\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Edited with excellent assistance by Claude 3.5 Sonnet)*"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

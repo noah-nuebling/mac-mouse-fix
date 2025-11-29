@@ -15,6 +15,12 @@
 #import "PointerFreeze.h"
 #import "ScrollUtility.h"
 
+///
+/// - [May 2025] UX Problem: IDA Pro's Graph view is super unresponsive when scrolling it via "Scroll & Navigate".
+///     Observation: When scrolling on the Trackpad *while* moving the mouse a similar effect can be observed.
+///     Hypothesis: Even though MMF is locking the mouse pointer in place, it might still be generating mouse events, which slow down IDA.
+///
+
 @implementation ModifiedDragOutputTwoFingerSwipe
 
 #pragma mark - Vars

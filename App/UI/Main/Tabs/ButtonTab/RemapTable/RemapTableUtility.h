@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSPopUpButton *)getPopUpButtonAtRow:(NSUInteger)popUpRow fromTableView:(NSTableView *)tv;
 + (NSDictionary *)buttonGroupRowDict;
 + (NSInteger)baseDataModelIndexFromGroupedDataModelIndex:(NSInteger)groupedModelIndex withGroupedDataModel:(NSArray *)groupedDataModel;
-+ (NSSet<NSNumber *> *)getCapturedButtons;
++ (NSSet<NSNumber *> *)getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:(BOOL)excludeButtonsThatAreOnlyCapturedByModifier;
 @end
 
 NS_ASSUME_NONNULL_END

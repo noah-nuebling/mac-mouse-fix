@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-/// This class dynamically turns on or off interception of certain events from the device based on the current state.
+/// This class dynamically turns on or off interception of certain events sent by the device, based on the current state.
 ///
 /// The relevant state consists of:
 /// - attachedDevices
@@ -53,9 +53,12 @@
 /// - [x] Implement killSwitch signals
 /// - [x] Implement trial expired lockdown
 /// - [x] Deactivate killSwitches when the intercept they control is disabled anyways -> Didn't like this
+///
+/// Discussion (Added Summer 2024)
+///     The logic of the SwitchMaster would naturally lend itself really well to using a Reactive framework like ReactiveSwift. In fact, I believe we initially tried to implement the logic
+///     with ReactiveSwift but it ended up being too slow, and so we re-implemented the Reactive control flow using simple function calls. Now that we dropped support for older macOS versions, perhaps we could try using Combine for this. I heard it's fast.
 
 import Cocoa
-import CocoaLumberjackSwift
 import ReactiveSwift
 
 @objc class SwitchMaster: NSObject {

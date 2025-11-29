@@ -35,7 +35,6 @@
 
 
 import Cocoa
-import CocoaLumberjackSwift
 
 
 class PointerConfig: NSObject {

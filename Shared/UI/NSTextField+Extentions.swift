@@ -15,7 +15,7 @@ import Foundation
         
         /// `fittingSize` is sometimes *larger* than the explicit height and width constraints. This doesn't make any sense to me and breaks some of my layout code. This function fixes this weird behaviour.
         
-        /// Note: Moved this into shared to use with TrialSectionManager but ended up not needing it. Consider moving back to App
+        /// Note: Moved this into shared to use with TrialSectionManager but ended up not needing it. Consider moving back to App.
         
         let f = super.fittingSize
         var fittingWidth = f.width

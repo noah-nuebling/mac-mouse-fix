@@ -8,7 +8,6 @@
 //
 
 import Cocoa
-import CocoaLumberjackSwift
 
 @MainActor /// [Jun 2025] Don't think this needs to be @MainActor but it's easier to just make all the Licensing stuff MainActor. (See discussion in `License/README.md`)
 @objc class LicenseSheetController: NSViewController, NSTextFieldDelegate {
@@ -69,9 +68,7 @@ import CocoaLumberjackSwift
             LicenseSheetController.remove()
             
             /// Show message
-            let messageRaw = NSLocalizedString("license-toast.deactivate", comment: "First draft: Your license has been **deactivated**")
-            let message = NSAttributedString(coolMarkdown: messageRaw)!
-            ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
+            LicenseToasts.showDeactivationToast()
             
             /// Wrap up
             onComplete()
@@ -119,7 +116,6 @@ import CocoaLumberjackSwift
             
             /// Store new licenseKey
             if isActivation && isValidLicense {
-                
                 /// Validate
                 if !MFLicenseTypeRequiresValidLicenseKey(state?.licenseTypeInfo) {
                     DDLogError("Error: Will store licenseKey but license has type that doesn't appear to require valid license key. (Doesn't make sense) License state: \(state ?? "<nil>")")
@@ -159,7 +155,7 @@ import CocoaLumberjackSwift
     /// Helper for activateLicense
     
     fileprivate func displayUserFeedback(isValidLicense: Bool, licenseTypeInfo: MFLicenseTypeInfo?, licenseTypeInfoOverride: MFLicenseTypeInfo?, error: NSError?, key: String, isActivation: Bool) {
-        
+
         /// Validate
         if (isValidLicense) {
             assert(licenseTypeInfo != nil)
@@ -177,118 +173,11 @@ import CocoaLumberjackSwift
                 assert(false)
             }
             
-            let message: String
-            if isActivation {
-                message = NSLocalizedString("license-toast.activate", comment: "First draft: Your license has been **activated**! 🎉")
-            } else {
-                message = NSLocalizedString("license-toast.already-active", comment: "First draft: This license is **already activated**!")
-            }
-
-            ToastNotificationController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!,
-                                                           to: MainAppState.shared.window!, /// Is it safe to force-unwrap this?
-                                                           forDuration: kMFToastDurationAutomatic)
+            LicenseToasts.showSuccessToast(isActivation)
             
         } else /** server failed to validate license */ {
             
-            /// Show message
-            var message: String = ""
-            
-            if let override = licenseTypeInfoOverride {
-                
-                switch override {
-                case is MFLicenseTypeInfoFreeCountry:
-                    message = NSLocalizedString("license-toast.free-country", comment: "First draft: This license __could not be activated__ but Mac Mouse Fix is currently __free in your country__!")
-                case is MFLicenseTypeInfoForce:
-                    message = "FORCE_LICENSED flag is active"
-                default: /// Default case: I think this can only happen if we forget to update this switch-statement after adding a new override.
-                    assert(false)
-                    DDLogError("Mac Mouse Fix appears to be licensed due to an override, but the specific override is not known:\n\(override)")
-                    message = "This license could not be activated but Mac Mouse Fix appears to be licensed due to some special condition that I forgot to write a message for. (Please [report this](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report) as a bug. Thank you!)"
-                }
-                
-            } else {
-            
-            /// Show server error
-        
-            if let error = error {
-                
-                if error.domain == NSURLErrorDomain {
-                    message = NSLocalizedString("license-toast.no-internet", comment: "First draft: **There is no connection to the internet**\n\nTry activating your license again when your computer is online.")
-                } else if error.domain == MFLicenseErrorDomain {
-                    
-                    switch error.code as MFLicenseErrorCode {
-                        
-                    case kMFLicenseErrorCodeInvalidNumberOfActivations:
-                        
-                        let nOfActivations = (error.userInfo["nOfActivations"] as? Int) ?? -1
-                        let maxActivations = (error.userInfo["maxActivations"] as? Int) ?? -1
-                        let messageFormat = NSLocalizedString("license-toast.activation-overload", comment: "First draft: This license has been activated **%d** times. The maximum is **%d**.\n\nBecause of this, the license has been invalidated. This is to prevent piracy. If you have other reasons for activating the license this many times, please excuse the inconvenience.\n\nJust [reach out](mailto:noah.n.public@gmail.com) and I will provide you with a new license! Thanks for understanding.")
-                        message = String(format: messageFormat, nOfActivations, maxActivations)
-                    
-                    case kMFLicenseErrorCodeServerResponseInvalid:
-                        
-                        /// Sidenote:
-                        ///     We added this localizedStringKey on the master branch inside .strings files, while we already replaced all the .strings files with .xcstrings files on the feature-strings-catalog branch. -- Don't forget to port this string over, when you merge the master changes into feature-strings-catalog! (Last updated: Oct 2024)
-                        let messageFormat = NSLocalizedString("license-toast.server-response-invalid", comment: "First draft: **There was an issue with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, please reach out to me [here](mailto:noah.n.public@gmail.com).")
-                        message = String(messageFormat)
-                        
-                        do {
-                            /// Log extended debug info to the console.
-                            ///     We're not showing this to the user, since it's verbose and confusing and the error is on Gumroad's end and should be resolved in time.
-                            
-                            /// Clean up debug info
-                            ///     The HTTPHeaders in the urlResponse contain some perhaps-**sensitive information** which we wanna remove, before logging.
-                            ///     (Specifically, there seems to be some 'session cookie' field that might be sensitive - although we're not consciously using any session-stuff in the code - we're just making one-off POST requests to the Gumroad API without authentication, so it's weird. But better to be safe about this stuff if I don't understand it I guess.)
-                            var debugInfoDict = error.userInfo
-                            if let urlResponse = debugInfoDict["urlResponse"] as? HTTPURLResponse {
-                                debugInfoDict["urlResponse"] = (["url": (urlResponse.url ?? ""), "status": (urlResponse.statusCode)] as [String: Any])
-                            }
-                            /// Log debug info
-                            var debugInfo: String = ""
-                            dump(debugInfoDict, to:&debugInfo)
-                            DDLogError("Received invalid Gumroad server response. Debug info:\n\n\(debugInfo)")
-                        }
-                        
-                    case kMFLicenseErrorCodeGumroadServerResponseError:
-                        
-                        if let gumroadMessage = error.userInfo["message"] as? String {
-                            
-                            switch gumroadMessage {
-                            case "That license does not exist for the provided product.":
-                                let messageFormat = NSLocalizedString("license-toast.unknown-key", comment: "First draft: **'%@'** is not a known license key\n\nPlease try a different key")
-                                message = String(format: messageFormat, key)
-                            default:
-                                let messageFormat = NSLocalizedString("license-toast.gumroad-error", comment: "First draft: **An error with the licensing server occured**\n\nIt says:\n\n%@")
-                                message = String(format: messageFormat, gumroadMessage)
-                            }
-                        }
-                        
-                    default:
-                        assert(false)
-                        message = "" /// Note: Don't need error handling for this i guess because it will only happen if we forget to implement handling for one of our own MFLicenseError codes.
-                    }
-                    
-                } else {
-                    let messageFormat = NSLocalizedString("license-toast.unknown-error", comment: "First draft: **An unknown error occurred:**\n\n%@")
-                    message = String(format: messageFormat, error.description) /// Should we use `error.localizedDescription` `.localizedRecoveryOptions` or similar here?
-                }
-                
-            } else {
-                message = NSLocalizedString("license-toast.unknown-reason", comment: "First draft: Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report)")
-            }
-            }
-            
-            assert(message != "")
-            
-            /// Display Toast
-            ///     Notes:
-            ///     - Why are we using `self.view.window!` here, and `MainAppState.shared.window` in other places?
-            ///         IIRC `MainAppState` is safer and works in more cases whereas self.view.window might be nil in more edge cases IIRC (e.g. when the LicenseSheet is just being loaded or sth? I don't know anymore.)
-            ///         Update [Aug 2025] `self.view.window!` seems to have caused this crash report on Tahoe Beta 5: https://github.com/noah-nuebling/mac-mouse-fix/issues/1432#issuecomment-3157295471
-            ///             > Swapped for `MainAppState.shared.window`. Now *all* uses of `[ToastNotificationController attachNotificationWithMessage:]` use `MainAppState.shared.window`. We could just build it into `[ToastNotificationController attachNotificationWithMessage:]`.
-            ToastNotificationController.attachNotification(withMessage: NSAttributedString(coolMarkdown: message)!,
-                                                           to: MainAppState.shared.window!,
-                                                           forDuration: kMFToastDurationAutomatic)
+            LicenseToasts.showErrorToast(error,licenseTypeInfoOverride, key)
             
         }
     }
@@ -298,9 +187,7 @@ import CocoaLumberjackSwift
     func controlTextDidChange(_ obj: Notification) {
         
         /// Trim whitespace
-        ///     [Jun 7 2025] Backported usage of `stringByRemovingAllWhiteSpace()` (instead of `stringByTrimmingWhiteSpace()`) to master from feature-strings-catalog branch.
-        ///         I backported this since it'll probably take a while until we can ship feature-strings-catalog, and we receive relatively frequent support requests about this, such as this recent one: https://github.com/noah-nuebling/mac-mouse-fix/issues/1396
-        ///         Context: (Which we mighttt want to keep when merging this into feature-strings-catalog): I could very easily reproduce this issue, by opening one of Gumroad's license-key emails, such as [this one](message:<0100019746619cff-10c3aa60-a576-48c2-ac20-4f9d846abdbd-000000@email.amazonses.com>), and simply dragging slightly too far when selecting the license key for copy-pasting.
+        /// [Jul 2025] This fixes common issues, which you can reproduce like this: Open one of Gumroad's license-key emails, and simply drag slightly too far when selecting the license key for copy-pasting, then you'd select an extra linebreak.
         licenseField.stringValue = (licenseField.stringValue as NSString).stringByRemovingAllWhiteSpace() as String
         
         /// Update UI
@@ -323,7 +210,7 @@ import CocoaLumberjackSwift
         let isEmpty = key.isEmpty
         let isDifferent = key != initialKey
         
-        activateLicenseButton.title = NSLocalizedString("license-button.activate", comment: "First draft: Activate License")
+        activateLicenseButton.title = MFLocalizedString("license-button.activate", comment: "")
         activateLicenseButton.isEnabled = true
         activateLicenseButton.bezelColor = nil
         activateLicenseButton.keyEquivalent = "\r"
@@ -332,7 +219,7 @@ import CocoaLumberjackSwift
             if !isDifferent {
                 activateLicenseButton.isEnabled = false
             } else {
-                activateLicenseButton.title = NSLocalizedString("license-button.deactivate", comment: "First draft: Deactivate License")
+                activateLicenseButton.title = MFLocalizedString("license-button.deactivate", comment: "")
                 activateLicenseButton.bezelColor = .systemRed
                 activateLicenseButton.keyEquivalent = ""
             }

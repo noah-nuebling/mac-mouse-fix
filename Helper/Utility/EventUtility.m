@@ -7,7 +7,6 @@
 // --------------------------------------------------------------------------
 //
 
-#import "WannabePrefixHeader.h"
 
 #import "EventUtility.h"
 #import "MFHIDEventImports.h"
@@ -15,6 +14,7 @@
 #import "SharedUtility.h"
 #import "CGEventHIDEventBridge.h"
 #import "VectorUtility.h"
+#import "Logging.h"
 
 #import "libproc.h"
 
@@ -50,6 +50,8 @@ bool CGEvent_IsWacomEvent(CGEventRef event) {
     ///     - How do other apps do this?
     ///         I looked at LinearMouse and MOS source code to see if they're filtering drawing tablets, but I couldn't see anything specific.
     ///         Update: [Jul 2025] Tested the Wacom with MOS and scrolling got super fast – so no filtering in place.
+    ///         Update: [Aug 2025] MMF 2.2.1 actually implemented a fix for this that I forgot about ?? (See 2.2.1 update notes: https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.1)
+    ///             But from what I can tell, the 'fix' was checking `kCGTabletEventDeviceID` and that code is still active in MMF 3, so perhaps it just didn't fix things. .. Or Wacom changed their events and broke the fix or something?
     ///     Also see:
     ///         - `EventLoggerForBrad > Investigate_Wacom.m`
     ///             -> Here we found that looking at the sender fields is probably the only reliable way to differentiate the Wacom's scroll events. Field 102 was also interesting – it always contained 63
@@ -139,6 +141,9 @@ IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID) {
     /// Pass in the senderID obtained from a CGEvent from field 87
     ///     This uses a cache to avoid calling IOHIDDeviceCreate() (which is super slow) over and over.
     ///     \note Do we need to reset the cache at certain points? What do if a device is disconnected?
+    ///         Update: [May 2025] Just saw a crash which might be related to not resetting the cache. See Scroll.m:279 for more.
+    ///             But theoretically this should be fine I think? I think IOHIDDeviceRef should still be safe to use after disconnect, just if you try to read/write from it that should fail (I haven't tested this, and it would still be cleaner to return nil here after disconnect)
+    ///                 We could either use a weak reference or check if the IOHIDDeviceRef is still physically connected  before returning it. For a weak ref, we could create something like an MFWeakWrapper object or use NSMapTable with weak values. Using NSCache / staticobject() / threadobject() instead of raw static NSDictionary would probably be good. (static NSDictionary is also not thread-safe – as long as we're not using a single 'IOThread', that could be problematic.)
     
     static NSMutableDictionary *_hidDeviceCache = nil;
     if (_hidDeviceCache == nil) {
@@ -152,9 +157,8 @@ IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID) {
     }
     
     IOHIDDeviceRef iohidDevice = copySendingDevice_Reliable(senderID);
-    assert(iohidDevice != NULL);
     
-    _hidDeviceCache[@(senderID)] = (__bridge_transfer id _Nullable)(iohidDevice);
+    _hidDeviceCache[@(senderID)] = (__bridge_transfer id _Nullable)(iohidDevice); /// Should we do this when the iohidDevice is NULL? || [May 2025] Setting nil to an NSDictionary like this should simply remove the key. Casting to `_Nullable` here makes no sense.
     
     return iohidDevice;
 }
@@ -171,7 +175,7 @@ IOHIDDeviceRef copySendingDevice_Faster(uint64_t senderID) {
     
     io_service_t parent1;
     io_service_t parent2;
-    IORegistryEntryGetParentEntry(service, kIOServicePlane, &parent1);
+    IORegistryEntryGetParentEntry(service, kIOServicePlane, &parent1); /// Why are we return the return values here?
     IORegistryEntryGetParentEntry(parent1, kIOServicePlane, &parent2);
     
     IOHIDDeviceRef iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, parent2);
@@ -182,7 +186,7 @@ IOHIDDeviceRef copySendingDevice_Faster(uint64_t senderID) {
     return iohidDevice;
 }
 
-IOHIDDeviceRef copySendingDevice_Reliable(uint64_t senderID) {
+IOHIDDeviceRef _Nullable copySendingDevice_Reliable(uint64_t senderID) {
     /// This iterates all parents of the service which send the hidEvent until it finds one that it can convert to and IOHIDDevice.
     /// Calling IOHIDDeviceCreate() on all these non-hid device is super slow unfortunately.
     
@@ -197,8 +201,15 @@ IOHIDDeviceRef copySendingDevice_Reliable(uint64_t senderID) {
         return (iohidDevice == NULL); /// Keep going while device not found
     }];
     
-    assert(iohidDevice != NULL);
+    /// Validate
+    if (runningPreRelease()) {
+        BOOL isTakingLocalizationScreenshots = [NSProcessInfo.processInfo.arguments containsObject:@"-MF_ANNOTATE_LOCALIZED_STRINGS"];
+        if (!isTakingLocalizationScreenshots) {
+            assert(iohidDevice != NULL); /// NULL for events sent by localizedScreenshot XCUITest runner, otherwise shouldn't be NULL.
+        }
+    }
     
+    /// Return
     return iohidDevice;
 }
 

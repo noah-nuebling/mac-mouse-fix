@@ -8,7 +8,6 @@
 import Cocoa
 import ReactiveSwift
 import ReactiveCocoa
-import CocoaLumberjackSwift
 import Sparkle
 import ServiceManagement
 
@@ -48,6 +47,9 @@ class GeneralTabController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        /// Determine width for this tab
+        applyHardcodedTabWidth("general", self, widthControllingTextFields: [enabledHint, updatesHint, menuBarHint]);
+        
         /// Replace enable checkBox with NSSwitch on newer macOS versions
         var usingSwitch = false
         if #available(macOS 10.15, *) {
@@ -67,6 +69,10 @@ class GeneralTabController: NSViewController {
 
             self.enableToggle.setValue(state, forKey: "state")
         }
+        
+        /// Add accessibility identifier for NSSwitch
+        ///     Note: We use this from the XCUI tests to take localization screenshots.
+        self.enableToggle.setAccessibilityIdentifier("axEnableToggle")
         
         /// 
         /// Sync enabledToggle with Helper enabledState
@@ -91,7 +97,7 @@ class GeneralTabController: NSViewController {
                         
                         if #available(macOS 15.0, *) {
                             
-                            /// [Jul 2025] The strange issues with enabling have been fixed by Apple since macOS 15.0 Sequoia. (Source: Enabling Guide: https://github.com/noah-nuebling/mac-mouse-fix/discussions/861)
+                            /// [Jul 2025] The strange issues with enabling have been fixed by Apple since macOS 15.0 Sequoia. (Source: Enabling Guide: https://redirect.macmousefix.com/?target=mmf-ventura-enabling-guide)
                             ///     Due to this, the instructions on the `enable-timeout-toast` and the `is-strange-helper-alert` are outdated.
                             ///     We didn't get around to disabling those alerts during macOS 15's lifecycle, but now we're finally doing it during the macOS 26 Tahoe Beta.
                             ///
@@ -103,7 +109,7 @@ class GeneralTabController: NSViewController {
                             ///         - There are still rare situations where the app won't enable
                             ///             - But simply restarting the app always fixes this in my experience.
                             ///             - (I assume this is some quirk of LaunchServices, not a bug in MMF which we can fix.)
-                            ///         - The guide that `enable-timeout-toast` linked to had a comment section (https://github.com/noah-nuebling/mac-mouse-fix/discussions/861)
+                            ///         - The guide that `enable-timeout-toast` linked to had a comment section (https://redirect.macmousefix.com/?target=mmf-ventura-enabling-guide)
                             ///             - But this had no comments In 2025 so far [Jul 2025]
                             ///         - If we ever wanna re-install `enable-timeout-toast` we need to fix the jank first! I added an `if window.attachedSheet == nil` check below to help but it's still kinda janky [Jul 2025]
                         }
@@ -178,14 +184,9 @@ class GeneralTabController: NSViewController {
                                 enableTimeoutDisposable?.dispose()
                                 
                                 /// Show user feedback
-                                /// Notes:
-                                /// - We put a period at the end of this UI string. Usually we don't put periods for short UI strings, but it just feels wrong in this case?
-                                /// - The default duration `kMFToastDurationAutomatic` felt too short in this case. I wonder why that is? I think this toast is one of, if not the shortest toasts - maybe it has to do with that? Maybe it feels like it should display longer, because there's a delay until it shows up so it's harder to get back to? Maybe our tastes for how long the toasts should be changed? Maybe we should adjust the formula for `kMFToastDurationAutomatic`?
-                                
                                 if let window = MainAppState.shared.window {
                                     if window.attachedSheet == nil { /// [Jul 2025] Prevent the toast from showing up behind the accessibility sheet. This is still kinda jank but since this code only runs on macOS 13 and 14 (as of [Jul 2025]), it's not worth fixing. A better way would be to have the `mergedSignal` listen to anything that indicates the user no longer waiting for the helper being enabled: window resigning key, sheet being attached, tab being switched, helper sending mainApp any message, perhaps more I can't think of rn. Probably using NSNotificationCenter for this would be good.
-                                        let rawMessage = NSLocalizedString("enable-timeout-toast", comment: "First draft: If you have **problems enabling** the app, click&nbsp;[here](https://github.com/noah-nuebling/mac-mouse-fix/discussions/861).")
-                                        ToastNotificationController.attachNotification(withMessage: NSMutableAttributedString(coolMarkdown: rawMessage)!, to: window, forDuration: 10.0)
+                                        Toasts.showSimpleToast(name: "k-enable-timeout-toast")
                                     }
                                 }
                             })
@@ -196,18 +197,10 @@ class GeneralTabController: NSViewController {
                         
                         guard let error = error else { assert(false); return }
                         
-                        var messageRaw = ""
-                        if #available(macOS 13.0, *), error.domain == "SMAppServiceErrorDomain", error.code == 1 {
-                            messageRaw = NSLocalizedString("is-disabled-toast", comment: "First draft: Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](x-apple.systempreferences:com.apple.LoginItems-Settings.extension)\n2. Switch on \'Mac Mouse Fix.app\'")
-                        }
                         
-                        if messageRaw != "" {
-                            let message = NSMutableAttributedString(coolMarkdown: messageRaw)
-                            DispatchQueue.main.async { /// UI stuff needs to be called from the main thread
-                                if let window = MainAppState.shared.window, let message = message {
-                                    ToastNotificationController.attachNotification(withMessage: message, to: window, forDuration: kMFToastDurationAutomatic)
-                                }
-                            }
+                        if #available(macOS 13.0, *), error.domain == "SMAppServiceErrorDomain", error.code == 1 {
+                            
+                            Toasts.showSimpleToast(name: "k-is-disabled-toast")
                         }
                         else { assert(false) }
                     }
@@ -259,10 +252,10 @@ class GeneralTabController: NSViewController {
 //
 //                let alert = NSAlert()
 //                alert.alertStyle = .informational
-//                alert.messageText = NSLocalizedString("beta-alert.title", comment: "First draft: Get Beta Versions?")
-//                alert.informativeText = NSLocalizedString("beta-alert.body", comment: "First draft: Beta versions can have many issues.\nDon't forget to give feedback when you run into one.\nThanks!")
-//                alert.addButton(withTitle: NSLocalizedString("beta-alert.confirm", comment: "First draft: Get Beta Versions"))
-//                alert.addButton(withTitle: NSLocalizedString("beta-alert.back", comment: "First draft: Cancel"))
+//                alert.messageText = MFLocalizedString("beta-alert.title", comment: "")
+//                alert.informativeText = MFLocalizedString("beta-alert.body", comment: "")
+//                alert.addButton(withTitle: MFLocalizedString("beta-alert.confirm", comment: ""))
+//                alert.addButton(withTitle: MFLocalizedString("beta-alert.back", comment: ""))
 //
 //                /// Display alert
 //                guard let window = MainAppState.shared.window else { return }

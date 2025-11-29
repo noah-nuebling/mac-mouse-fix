@@ -1,0 +1,26 @@
+{
+  "configurations" : [
+    {
+      "id" : "EE48A121-54FC-479F-A49D-7FA78691C597",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "uiTestingScreenshotsLifetime" : "keepNever",
+    "userAttachmentLifetime" : "keepNever"
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Mouse Fix.xcodeproj",
+        "identifier" : "4F8B01A82C348A3A00F3AF8D",
+        "name" : "Localization Screenshot Taker"
+      }
+    }
+  ],
+  "version" : 1
+}

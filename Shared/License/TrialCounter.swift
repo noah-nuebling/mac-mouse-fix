@@ -26,7 +26,6 @@
 /// - `[x]` Doesn't increment daysOfUse when using Trackpad
 
 import Cocoa
-import CocoaLumberjackSwift
 
 
 @objc class TrialCounter: NSObject { /// Not annotated with @MainActor since we want `handleUse` to be callable from different threads without overhead, and this doesn't have any `async` functions. (See discussion in `License/README.md`)

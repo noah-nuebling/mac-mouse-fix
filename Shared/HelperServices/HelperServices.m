@@ -66,6 +66,8 @@
 #import <sys/types.h>
 #import "MFMessagePort.h"
 
+#import "NSString+Additions.h"
+
 #if IS_MAIN_APP
 #import "Mac_Mouse_Fix-Swift.h"
 #endif
@@ -170,7 +172,7 @@
                 if (enable) {
                     /// Unregister if enabling
                     /// - This is necessary for enabling to work after updating to new version in the same place while the old helper is still running
-                    /// - removeServiceWithIdentifier() also works for this, but it leads to the helper weirdly enabling twice which causes the `is-strange-helper-toast` message to be shown twice
+                    /// - removeServiceWithIdentifier() also works for this, but it leads to the helper weirdly enabling twice which causes the `is-strange-helper-alert` message to be shown twice
                     ///     Update: [Sep 2025] This sounds like a bug on Apple's side that may have been fixed along with the other bugs on newer macOS versions.
                     [self enableHelper_SM: NO];
                 

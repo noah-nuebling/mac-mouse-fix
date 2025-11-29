@@ -61,10 +61,6 @@ static NSMutableDictionary *_minButtonInModificationsCache;
     return NO;
 }
 
-+ (BOOL)__SWIFT_UNBRIDGED_modificationsModifyButtons:(id)modifications maxButton:(int)maxButton {
-    return [self modificationsModifyButtons:modifications maxButton:maxButton];
-}
-
 static NSInteger minButtonInModifications(NSDictionary *modifications) {
     
     assert(false);
@@ -133,13 +129,6 @@ static NSInteger minButtonInModifications(NSDictionary *modifications) {
     return CFDictionaryContainsKey((__bridge CFDictionaryRef)modifications, (__bridge CFStringRef)kMFTriggerDrag);
 }
 
-+ (BOOL)__SWIFT_UNBRIDGED_modificationsModifyScroll:(id)modifications {
-    return [self modificationsModifyScroll:modifications];
-}
-+ (BOOL)__SWIFT_UNBRIDGED_modificationsModifyPointing:(id)modifications {
-    return [self modificationsModifyPointing:modifications];
-}
-
 //fileprivate func modificationModifiesScroll(_ modification: NSDictionary?) -> Bool {
 //    return modification?.object(forKey: kMFTriggerScroll) != nil
 //}
@@ -169,17 +158,6 @@ static NSInteger minButtonInModifications(NSDictionary *modifications) {
     *clickActionOfThisLevelExists = modificationsActingOnThisButton[button][level][kMFButtonTriggerDurationClick] != nil;
     *effectForMouseDownStateOfThisLevelExists = effectExistsForMouseDownState(button, level, remaps, modificationsActingOnThisButton);
     *effectOfGreaterLevelExists = effectOfGreaterLevelExistsFor(button, level, remaps, modificationsActingOnThisButton);
-}
-
-+ (void)__SWIFT_UNBRIDGED_assessMappingLandscapeWithButton:(id)button
-                                                     level:(id)level
-                           modificationsActingOnThisButton:(id)remapsActingOnThisButton
-                                                    remaps:(id)remaps
-                                             thisClickDoBe:(BOOL *)clickActionOfThisLevelExists
-                                              thisDownDoBe:(BOOL *)effectForMouseDownStateOfThisLevelExists
-                                               greaterDoBe:(BOOL *)effectOfGreaterLevelExists {
-    
-    [self assessMappingLandscapeWithButton:button level:level modificationsActingOnThisButton:remapsActingOnThisButton remaps:remaps thisClickDoBe:clickActionOfThisLevelExists thisDownDoBe:effectForMouseDownStateOfThisLevelExists greaterDoBe:effectOfGreaterLevelExists];
 }
 
 #pragma mark Helper for assess
@@ -318,11 +296,6 @@ static NSInteger maxLevelForButtonInModificationPreconditions(NSNumber *button, 
     return maxLevelForButton(button, remaps, modificationsActingOnThisButton);
 }
 
-+ (NSInteger)__SWIFT_UNBRIDGED_maxLevelForButton:(id)button remaps:(id)remaps modificationsActingOnThisButton:(id)modificationsActingOnThisButton {
-    
-    return [self maxLevelForButton:button remaps:remaps modificationsActingOnThisButton:modificationsActingOnThisButton];
-}
-
 /// Used by `ButtonTriggerHandler` to determine `MFEventPassThroughEvaluation`
 ///     Noah from future: Why aren't we reusing `assessMappingLandscapeWithButton:` here?
 ///         -> I guess it's because we don't care about most of the arguments which have to be provided to `assessMappingLandscapeWithButton:`
@@ -346,11 +319,6 @@ static NSInteger maxLevelForButtonInModificationPreconditions(NSNumber *button, 
     }
     
     return NO;
-}
-
-+ (BOOL)__SWIFT_UNBRIDGED_effectExistsForButton:(id)button remaps:(id)remaps modificationsActingOnButton:(id)effectiveRemaps {
-    
-    return [self effectExistsForButton:button remaps:remaps modificationsActingOnButton:effectiveRemaps];
 }
 
 @end

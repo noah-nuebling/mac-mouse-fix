@@ -25,6 +25,7 @@
 #import "SharedUtility.h"
 #import <Foundation/Foundation.h>
 #import "HelperUtility.h"
+#import "Logging.h"
 
 @implementation TouchSimulator
 
@@ -162,7 +163,7 @@ static NSMutableDictionary *_swipeInfo;
     /// Override end phase with canceled phase
     ///     Note: Would it make more sense for this to happen in the 'driver' of the event simulation? (As of [Feb 2025] the 'drivers' are Scroll.m and ModifiedDragOutputThreeFingerSwipe.m)
     if (phase == kIOHIDEventPhaseEnded) {
-        if ([SharedUtility signOf:_dockSwipeLastDelta] == [SharedUtility signOf:_dockSwipeOriginOffset]) {
+        if (mfsign(_dockSwipeLastDelta) == mfsign(_dockSwipeOriginOffset)) {
             phase = kIOHIDEventPhaseEnded;
         } else {
             phase = kIOHIDEventPhaseCancelled;
@@ -287,6 +288,7 @@ static NSMutableDictionary *_swipeInfo;
         /// Notes:
         ///     - 27.08.2024 (macOS Sequoia Beta) - The double/triple send didn't work. I fixed it by adding  `dispatch_async(dispatch_get_main_queue()`. Not sure how long this had been broken. (Fixed in e8f90d2f32829e3e5f1621fa8e4b58634c9ea07b)
         ///     - Might worsen responsivity to do this on the main thread? I feel like we should simplify the threading of the entire app so there are 4 threads: input events, output events, ui (main thread) and background (stuff like checking for updates)
+        ///         - Update: [ Apr 2025] We plan to simplify threading now. grep for IOThread
         
         dispatch_async(dispatch_get_main_queue(), ^{
             

@@ -9,7 +9,7 @@
 
 #import "CAAnimationCurveUtility.h"
 #import <objc/message.h>
-#import "SharedUtility.h"
+#import "Logging.h"
 
 @implementation CAAnimationCurveUtility
 

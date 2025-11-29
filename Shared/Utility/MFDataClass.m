@@ -9,11 +9,14 @@
 
 #import "MFDataClass.h"
 @import ObjectiveC.runtime;
+
 #import "MFPlistDecoder.h"
-#import "EventLoggerForBradMacros.h"
 #import "NSCoderErrors.h"
 #import "MFCoding.h"
 #import "TreeNode.h"
+#import "MFDefer.h"
+
+#import "Logging.h"
 
 #import "NSCharacterSet+Additions.h"
 
@@ -594,7 +597,7 @@
     
         /// Check for circular refs
         ///     This prevents infinite loops if there are circular references in the datastructure. But [NSDictionary -description] seems to just infinite-loop in this case... Maybe this was overkill.
-        NSMutableArray *visitedObjects = threadobject([[NSMutableArray alloc] init]);
+        NSMutableArray *const visitedObjects = threadobject([[NSMutableArray alloc] init]);
         NSNumber *s = @((uintptr_t)self); /// We cast self to an NSNumber so that we effectively do pointer-based equality checking instead of using the full `-isEqual` implementation.
         BOOL didFindCircularRef = [visitedObjects containsObject: s];
         [visitedObjects addObject: s];
@@ -652,6 +655,7 @@
     ///     This is used by almost all other methods - We could maybe do some caching here to speed things up
     ///     But don't forget: If we do a naive cache and just return the same NSArray every time, then this will break if properties are added at runtime.
     ///     (Update: [Feb 2025] I'm pretty sure we never ever wanna add properties at runtime to an MFDataClass. Perhaps we would use `objc_setAssociatedObject()` to do something similar.)
+    ///     (Update: [Apr 2025] If we wanted to really overengineer this, we could see how the objc runtime handles method lookup caching. It must have some mechanism to reset the cache when the instance changes at runtime, which we could possibly tap into (**Dont do this, this is overkill**))
     
     /// Create cache
     NSCache *cache = staticobject([[NSCache alloc] init]);
@@ -1084,11 +1088,11 @@ TreeNode<Class> *_Nonnull extractClassesFromRawTypeString(NSString *_Nonnull raw
                 else if (chars[j] == '>')  bracketBalance--;
                 
                 else if (chars[j] == ',' && bracketBalance == 1) {
-                    [specializations addObject: [rawTypeString substringWithRange: rangefromto(i+1, j-1)]];
+                    [specializations addObject: [rawTypeString substringWithRange: makerange_fromto(i+1, j-1)]];
                     i = j;
                 }
                 if (bracketBalance <= 0) {
-                    [specializations addObject: [rawTypeString substringWithRange: rangefromto(i+1, j-1)]];
+                    [specializations addObject: [rawTypeString substringWithRange: makerange_fromto(i+1, j-1)]];
                     break;
                 }
             }

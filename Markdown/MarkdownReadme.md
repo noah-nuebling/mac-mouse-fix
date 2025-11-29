@@ -1,5 +1,23 @@
 # Markdown readme
 
+### VSCode Markdown Preview
+
+- [Jul 2025] Tip: Enable `markdown.preview.breaks` to match rendering on GitHub
+
+### Notes
+- The strings in Markdown.xcstrings are set to 'manual' to prevent Xcode from deleting them. However they are actually managed by our mac-mouse-fix-scripts scripts and updated based on the markdown templates. Any manual edits will be overridden!
+
+### Ideas for Readme.md
+
+- [ ] Maybe add `Command-Scroll doesn't work?` to `Readme.md > Questions`. [Oct 2025]
+    (People ask about this pretty often. I think it's due to Logitech Options interference?)
+
+- [ ] Perhaps add link from `revive-toast` to some help resource. E.g. `questions.app-specific-settings` / `CapturedButtonsGuideMMF3.md` / `CapturedScrollWheels.md` [Oct 2025]  
+    (People ask about this relatively often) (... It'll probably be a while before we can introduce proper app-specific settings.)
+    (Or just add a subtitle: "To permanently disable Mac Mouse Fix for Scrolling, *uncaptured the scroll wheel* – learn more" || Is it bad that we use different terms here? "Enable" vs "Capture"?)
+
+# vvv This is all old and probably outdated vvv
+
 This folder contains stuff for generating user-facing markdown documents. At the time of writing, that's `Acknowledgements.md` and `Readme.md`.
 
 The idea of the stuff in this folder is to generate/update markdown files based on a python script + templates. We use github actions (See `.github/workflows/...`) to automatically run the python scripts. We're currently using this to automatically update the acknowledgements as people buy the app. The readme isn't automatically rendered through GitHub Actions at the moment.
@@ -32,12 +50,12 @@ pip freeze > MarkdownStuff/python_requirements.txt
 
 To generate the **acknowledgements** document in different languages based on templates
 ```
-python3 Markdown/Code/markdown_generator.py --document acknowledgements --api_key ***
+python3 Markdown/Code/markdown_generator.py --document acknowledgements --api-key ***
 ```
 
 If you don't have the api key:
 ```
-python3 Markdown/Code/markdown_generator.py --document acknowledgements --no_api
+python3 Markdown/Code/markdown_generator.py --document acknowledgements --no-api
 ```
 
 #### Readme
@@ -60,7 +78,7 @@ https://rhysd.github.io/actionlint/
 
 #### Localization
 
-See the MMF Localization Guide: https://github.com/noah-nuebling/mac-mouse-fix/discussions/731
+See the MMF Translation Guide: https://redirect.macmousefix.com/?target=mmf-localization-contribution
 
 #### Gumroad API
 

@@ -11,7 +11,6 @@
 #import "Scroll.h"
 #import "TouchSimulator.h"
 #import "ScrollConfigObjC.h"
-#import "WannabePrefixHeader.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
 // TODO: Rename to ScrollModifierInputReceiver. Maybe merge this into ScrollControl or put the modifier properties from ScrollControl into this.

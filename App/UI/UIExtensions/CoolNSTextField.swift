@@ -19,12 +19,6 @@ class MarkdownTextField: CoolNSTextField {
         
         /// Init super
         super.init(coder: coder)
-
-        /// Debug
-        
-//        if stringValue.localizedCaseInsensitiveContains("double click") {
-//
-//        }
         
         /// Configure
         configureForAttributedString()
@@ -32,27 +26,37 @@ class MarkdownTextField: CoolNSTextField {
         /// Increase paragraph spacing
         /// - (Should parametrize this probably and put it into CoolNSTextField but whatever)
         /// - Turing this off, because 1. Any linebreak with a `\n` character is considered a new paragraph, so this messes up existing UI strings 2. If we're using several paragraphs in any of the UI text we need to STOP. cause that's too much text.
-//        self.attributedStringValue = self.attributedStringValue.addingParagraphSpacing(5.0, for: nil)
+        if (false) {
+            self.attributedStringValue = self.attributedStringValue.addingParagraphSpacing(5.0, for: nil)
+        }
         
         /// Fill out attributedString
         ///     With textField properties
-//        var str = self.attributedStringValue.copy() as! NSAttributedString /// attributedStringValue is empty from what I've seen
-//        if let font = self.font {
-//            str = str.adding(font, for: nil)
-//        }
-//        str = str.adding(self.alignment, forSubstring: nil)
-//        if let color = self.textColor {
-//            str = str.adding(color, for: nil)
-//        }
+        if (false) {
+            var str = self.attributedStringValue.copy() as! NSAttributedString /// attributedStringValue is empty from what I've seen
+            if let font = self.font {
+                str = str.adding(font, for: nil)
+            }
+            str = str.adding(self.alignment, for: nil)
+            if let color = self.textColor {
+                str = str.adding(color, for: nil)
+            }
+        }
+        
+        /// Disable orphaned words [Oct 2025]
+        if (false) { /// Disable cause I'm not sure this has unintended consequences. See `getIntentionalFontAttributes` mechanism [Oct 2025] || Also note that this won't apply for all textfields in the app. E.g. NSAlerts.
+            self.attributedStringValue = self.attributedStringValue.disablingOrphanedWords(for: nil)
+        }
         
         /// Parse md
         /// - We need to pass in the original markdown string so the original attributes can be kept as base. Otherwise the font will be set to system default font at default size on markup elements where e.g. bold is applied and that will make the bodl text much too large.
         /// - I remember this working before some other way but I don't understand how it could've worked before without this method.
         /// -  Edit: Seems we were using `addingStringAttributes(asBase:)` but I still don't get how that worked. I tried the old code again and it definitely doesn't work anymore. Whatttt
         ///        It still worked in commit 2463689a86ef44f9631fda01b089e1f51f52e350
+        ///        Update: Works now (after some refactors) We might have forgotten `fillOutBase: false` (Maybe MarkdownParser shouldn't have that feature to begin with.) [Oct 2025]
         
-        guard let md = NSAttributedString(attributedMarkdown: self.attributedStringValue) else { return }
-        self.attributedStringValue = md
+        guard let md = MarkdownParser.attributedString(withCoolMarkdown: self.stringValue, fillOutBase: false) else { return }
+        assignAttributedStringKeepingBase(&self.attributedStringValue, md)
     }
     
 }

@@ -10,7 +10,6 @@
 /// Don't use this directly. Use the subclass `TouchAnimator` For discussion see `TouchAnimator`.
 
 import Foundation
-import CocoaLumberjackSwift
 import CoreVideo
 import QuartzCore
 

@@ -9,9 +9,9 @@
 
 #import "KeyCaptureMode.h"
 #import <Cocoa/Cocoa.h>
-#import "WannabePrefixHeader.h"
 #import "ModificationUtility.h"
 #import "MFMessagePort.h"
+#import "Logging.h"
 
 @implementation KeyCaptureMode
 

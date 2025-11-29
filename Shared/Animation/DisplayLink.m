@@ -22,11 +22,11 @@
 
 #import "DisplayLink.h"
 #import <Cocoa/Cocoa.h>
-#import "WannabePrefixHeader.h"
 #import "NSScreen+Additions.h"
 #import "SharedUtility.h"
 #import "IOUtility.h"
-#import "EventLoggerForBradMacros.h"
+
+#import "Logging.h"
 
 #if IS_HELPER
 #import "HelperUtility.h"
@@ -155,8 +155,10 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 
 - (void)setUpNewDisplayLinkWithActiveDisplays {
     
-    /// Discussion [Apr 2025] Name should be `setupNew*CV*DisplayLink...`
-    
+    /// Discussion
+    ///     - Should be called `setupNew*CV*DisplayLink...` [Apr 2025] 
+    ///     - MOS doesn't recreate the displaylink every time a new display is connected, so it's probably unnecessary. Why did we do all this elaborate stuff without testing? Should've at least left a comment that we haven't confirmed it to be necessary. [Oct 2025]
+
     /// Validate thread
     {
         /// [Aug 2025] We're calling CVDisplayLinkStart() and CVDisplayLinkStop() from the mainThread, and apparently that fixed some issues, we also had some external doc that suggested mainThread should be used for some things. (See notes where we call CVDisplayLinkStart()/CVDisplayLinkStop()). I also just saw that CVDisplayLink is non-sendable.
@@ -173,6 +175,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
         DDLogDebug(@"DisplayLink.m: (%@) Running -[setUpNewDisplayLinkWithActiveDisplays] on thread %@", [self identifier], NSThread.currentThread);
     }
     
+
     /// Delete existing displayLink
     if (_displayLink != NULL) {
         CVReturn ret = CVDisplayLinkStop(_displayLink);

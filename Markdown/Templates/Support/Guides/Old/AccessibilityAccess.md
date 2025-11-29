@@ -1,0 +1,113 @@
+# {docname_ax_access}
+
+<!-- ## The guide below will help you grant Accessibility Access to Mac Mouse Fix Helper -->
+
+<!--[Why does Mac Mouse Fix need Accessibility Access?](https://noah-nuebling.github.io/mac-mouse-fix-website/about/)-->
+
+To use Mac Mouse Fix you'll have to grant it 'Accessibility Access'.
+In this Guide you'll learn about common issues with granting Accessibility Access and how to solve them.
+
+> [!NOTE]
+> **If you're on macOS 10.14 Mojave or older** 
+> Please refer to this guide for solutions.
+>
+>  **If you're on macOS 10.15 Catalina or newer** 
+> Mac Mouse Fix 2.2.2 and later should automatically resolve the issues described here. \
+> If you experience problems despite this, please leave a comment below, so I can help you out and update this guide. Thank you!
+
+<!-- 
+
+**References** for writing the [!NOTE] info box:
+
+- 2.2.2 release (Where we implemented an automatic fix for these issues.): https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.2
+- 2.2.2 changelog: https://github.com/noah-nuebling/mac-mouse-fix/compare/2.2.1...2.2.2
+- Code comment about the fix only working on 10.15 or later: https://github.com/noah-nuebling/mac-mouse-fix/blob/ad9dde2771c49b5734d6696840c551ba90e88d6f/Helper/Accessibility/AccessibilityCheck.m#L77
+- Enabling MMF Guide where there is a similar infobox: https://redirect.macmousefix.com/?target=mmf-ventura-enabling-guide
+
+
+**Notes** for writing the [!NOTE] info box:
+
+- We assume that the automatic workaround we introduced in 2.2.2 really fixed things. A good indicator of this is that is that there is 0 comment activity on this guide after 2022
+
+-->
+
+---
+
+### 1. Issue where Accessibility Access is enabled but Mac Mouse Fix doesn't recognize that
+
+Sometimes 'Mac Mouse Fix Helper' will show up as enabled in the list at 'System Settings > Privacy & Security > Accessibility' but Mac Mouse Fix will keep asking you to grant Accessibility Access.
+
+<img width="600" align="center" src="https://user-images.githubusercontent.com/40808343/198885178-a321eabd-308a-4b23-865d-1bd475c79cd5.png">
+
+#### Why does this issue occur?
+
+I'm not sure but it seems that sometimes the macOS Accessibility Access database doesn't update properly after you update Mac Mouse Fix. 
+See [this GitHub Issue](https://github.com/noah-nuebling/mac-mouse-fix/issues/412) for more information.
+
+#### Solution
+
+If you encounter this issue, you can still grant Accessibility Access like so:
+
+https://user-images.githubusercontent.com/40808343/198886682-cfbe7832-7e4f-4434-8b51-e4ff89c720f5.mp4
+
+1. Go to 'System Settings > Privacy & Security > Accessibility'
+   - You can get there quickly by clicking on "Open 'Privacy & Security' Settings" in Mac Mouse Fix
+   - In the video, I then click on the 'Mac Mouse Fix Helper' toggle repeatedly. This is to demonstrate that the toggle doesn't work, it is not a neccessary step of the solution.
+2. If you're using macOS 12 Monterey or older, click the lock in the lower left and then enter your password to unlock System Preferences
+3. Delete the entry for 'Mac Mouse Fix Helper' from the Accessibility list by selecting it and then clicking the minus (-) button at the bottom of the list
+4. Go back to the Mac Mouse Fix window, then click the Mac Mouse Fix Icon while holding the Shift (⇧) key to reveal 'Mac Mouse Fix Helper' in the Finder
+5. Drag and drop 'Mac Mouse Fix Helper' from the Finder to the Accessibility List in System Preferences
+6. You should now be able to use Mac Mouse Fix!
+
+---
+
+### 2. Issue where 'Mac Mouse Fix Helper' won't show up in System Preferences
+
+Sometimes, 'Mac Mouse Fix Helper' doesn't show up in the list at 'System Settings > Privacy & Security > Accessibility' preventing you from granting Accessibility Access to it.
+
+<img width="400" align="center" src="https://user-images.githubusercontent.com/40808343/198889194-195abb41-3341-4563-b72c-97e29c2da4f5.png">
+
+<!-- align="center" doesn't work for some reason -→
+
+<!-- 
+Old pre-Ventura
+
+<img width="400" align="center" src="https://user-images.githubusercontent.com/40808343/117193227-e4eec700-ade2-11eb-9237-19634e581588.png">
+-->
+
+#### Why does this issue occur?
+
+I'm not sure why this issue occurs. I assume that it's a bug in macOS. If you have any ideas what else might cause it let me know!
+
+#### Solution
+If you encounter this issue, you can still grant Accessibility Access like this:
+
+https://user-images.githubusercontent.com/40808343/198889288-88058924-c190-4bf3-955b-1e9e988bf21c.mp4
+
+<!--
+Old pre-Ventura
+https://user-images.githubusercontent.com/40808343/117195548-aeff1200-ade5-11eb-84c5-d3723c853e65.mp4
+-->
+<!--
+What dis?
+https://user-images.githubusercontent.com/40808343/117207289-191eb380-adf4-11eb-8255-0ed054fd6499.mp4
+-->
+
+
+1. Go to 'System Settings > Privacy & Security > Accessibility'
+   - You can get there quickly by clicking on "Open 'Privacy & Security' Settings" in Mac Mouse Fix
+2. If you're using macOS 12 Monterey or older, click the lock in the lower left and then enter your password to unlock System Preferences
+3. Go back to the Mac Mouse Fix window, then click the Mac Mouse Fix Icon while holding the Shift (⇧) key to reveal 'Mac Mouse Fix Helper' in the Finder
+4. Drag and drop 'Mac Mouse Fix Helper' from the Finder to the Accessibility List in System Preferences
+5. You should now be able to use Mac Mouse Fix!
+
+---
+
+### Notes on changes to System Settings under macOS 13 Ventura
+
+Apple rewrote the 'System Preferences' app for macOS 13 Ventura and renamed it to 'System Settings'. This leads to a few caveats for this guide:
+
+- In several places the guide refers to a the list at 'System Settings > Privacy & Security > Accessibility'. On macOS 12 Monterey and below you can find this list under 'System Preferences > Security & Privacy > Privacy > Accessibility' instead.
+- The video footage and images for this Guide stem from the new System Settings introduced in macOS 13 Ventura. Things will look a little different under macOS 12 Monterey and below but the same issues can occur and the same solutions apply.
+
+{guide_footer}

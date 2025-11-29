@@ -34,7 +34,6 @@
 /// TODO: Implement cleanup function. See Notes in NSDictionary+Additions.m for details.
 
 import Foundation
-import CocoaLumberjackSwift
 
 @objc class SecureStorage: NSObject {
     

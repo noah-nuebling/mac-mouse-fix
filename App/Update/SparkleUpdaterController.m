@@ -13,6 +13,7 @@
 #import "Locator.h"
 #import "HelperServices.h"
 #import "CoolSUComparator.h"
+#import "Logging.h"
 
 // See https://sparkle-project.org/documentation/customization/
 

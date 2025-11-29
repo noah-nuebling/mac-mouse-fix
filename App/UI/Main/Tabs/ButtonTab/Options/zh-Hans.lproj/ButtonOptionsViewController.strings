@@ -1,9 +1,0 @@
-
-/* Class = "NSButtonCell"; title = "Done"; ObjectID = "COH-CF-CQd"; */
-"COH-CF-CQd.title" = "完成";
-
-/* Class = "NSTextFieldCell"; title = "Recommended for Trackball Mice"; ObjectID = "DQ6-Rq-6nC"; Note = "Locking the Mouse Pointer during 'Click and Drag' Gestures is \"Recommended for Trackball Mice\""; */
-"DQ6-Rq-6nC.title" = "建议轨迹球鼠标采用";
-
-/* Class = "NSButtonCell"; title = "Lock Mouse Pointer During 'Click and Drag' Gestures"; ObjectID = "Mmp-uv-DmY"; */
-"Mmp-uv-DmY.title" = "“点按并拖移”手势过程中锁定鼠标指针";

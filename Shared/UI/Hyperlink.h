@@ -8,10 +8,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import "Links.h"
 
 @interface Hyperlink : NSTextField
 
-+ (instancetype)hyperlinkWithTitle:(NSString *)title url:(NSString *)href alwaysTracking:(BOOL)alwaysTracking leftPadding:(int)leftPadding;
++ (instancetype)hyperlinkWithTitle:(NSString *)title linkID:(MFLinkID)linkID alwaysTracking:(BOOL)alwaysTracking leftPadding:(int)leftPadding;
 
 @end

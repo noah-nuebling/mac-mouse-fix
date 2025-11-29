@@ -1,6 +1,3 @@
-/// TODO: Replace this with proper implementation
-///     This is copied back to master from the feature-strings-catalog branch. Merge the two implementations.
-
 //
 //  CoolTreeNode.h
 //  CustomImplForLocalizationScreenshotTest

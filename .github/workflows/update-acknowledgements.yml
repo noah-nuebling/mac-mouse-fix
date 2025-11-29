@@ -49,7 +49,7 @@ jobs:
     
     - name: Run script
       run: |
-        python ./Markdown/Code/markdown_generator.py --document acknowledgements --api_key ${{ secrets.GUMROAD_API_KEY }}
+        python ./Markdown/Code/markdown_generator.py --document acknowledgements --api-key ${{ secrets.GUMROAD_API_KEY }}
     
     - name: Commit and push changes
       run: |

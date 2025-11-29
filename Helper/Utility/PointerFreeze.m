@@ -7,6 +7,11 @@
 // --------------------------------------------------------------------------
 //
 
+///
+/// TODO: Build a failsafe so users never get stuck with a frozen pointer.
+///     - July 2024 - I think I just got stuck with a 'frozen' pointer (it still moved, but clicking anything didn't work and sometimes the pointer teleported to the middle of the screen) I couldn't trace back how this issue happened, and it seems to be really rare, but I think it would be good to give some reliable way to the user for ending pointer freeze in case it gets stuck. For example we could end the freeze on left-click, or perhaps we could build some vaildation e.g. assert that the pointer is not frozen (aka `_coolEventTapIsEnabled == YES`) before freeze() is called.
+///
+
 #import "PointerFreeze.h"
 @import Cocoa;
 #import "HelperUtility.h"

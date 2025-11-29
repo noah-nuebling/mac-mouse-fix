@@ -19,15 +19,18 @@ NS_ASSUME_NONNULL_BEGIN
 /// How we came up with this:
 ///     We know there are many useful functions for interacting with the 'Window Server' in the private 'SkyLight' framework. (Formerly Core Graphics Services afaik). Some of these private functions have been discovered and documented in the CGSInternal repo (https://github.com/NUIKit/CGSInternal/). We've been using some of these for a long time for example to trigger 'SymbolicHotKeys' which lets us trigger many system functions like 'Look Up' and 'Mission Control'.
 ///     It is difficult to discover new functions since BigSur made it almost impossible to reverse engineer System Frameworks like SkyLight. But there is still a '.tbd' file for the Skylight framework which lists its function names. More on this here: https://github.com/NUIKit/CGSInternal/issues/2
+///         Update: [Apr 2025] Not impossible! (I think I was just being a doofus)
 ///
 ///     However in this .tbd file we found the functions `_SLEventSetIOHIDEvent` and `_SLEventCopyIOHIDEvent`. `SL` types are usually just a different name for `CG` types, so we thought that we might be able to bridge between CGEvent and 'IOHIDEvent' using these functions. This is really promising, because CGEvent is opaque. It's not documented what the 'valueFields' mean. Whereas many 'IOHID' types are documented in the open source IOKit source code, so we would know what the data they contain means!
 ///
 ///     So we tried to link the symbol SLEventCopyIOHIDEvent. It didn't work for some reason. But CGEventCopyIOHIDEvent did! Then we called the function and stepped into the assembly code (hold control and click the step button in Xcode) to see what it does.
 ///     After we read up on some ARM assembly we could figure out what it does and infer what the arguments and return must be.
 ///
-///     We saw that he function returns an NSObject of type 'HIDEvent'. Then we used VSCode to search Apples open source projects IOHIDFamily-1633.100.36, IOKitUser-1845.100.19, and xnu-7195.101.1 for the headers declaring 'HIDEvent' and their dependencies and added the to the project until everything compiled.
+///     We saw that the function returns an NSObject of type 'HIDEvent'. Then we used VSCode to search Apples open source projects IOHIDFamily-1633.100.36, IOKitUser-1845.100.19, and xnu-7195.101.1 for the headers declaring 'HIDEvent' and their dependencies and added the to the project until everything compiled.
 ///
 ///     We then tried to find `_SLEventSetIOHIDEvent`, but we couldn't manage to. However, we could build our own equivalent function based on reversing the process seen in the assembly of CGEventCopyIOHIDEvent and shifting around pointers between memory addresses.
+///
+///         Update: [Apr 2025] Based on what I learned in `PrivateFunctions.m`, we could probably get the linker to find `_SLEventSetIOHIDEvent` by simply adding SkyLight.framework to the target in Xcode – That would make our hacky custom implementation obsolete.
 ///
 /// Old Notes from TouchSimulator.m: (These observations led us to this)
 ///     I just saw in Instruments that when CFRelease is called on the scrollEvents we capture in Scroll.m, then the following function are called:

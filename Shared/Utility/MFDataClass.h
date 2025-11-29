@@ -10,7 +10,6 @@
 #import <Foundation/Foundation.h>
 #import "SharedUtility.h"
 
-///
 /// Let's you easily create objc dataclasses like this:
 ///     ```
 ///     MFDataClass3(MFDataClassBase, MFAddress, readwrite,  strong, nonnull,  NSString *,   city,
@@ -94,7 +93,7 @@
 ///     - Like half of the code in `MFDataClass.m` is to implement `NSSecureCoding`
 ///         - After thinking about it I think it isn't really that useful for us... but now we already wrote the code.
 ///         - Read more about our thoughts on NSSecureCoding in `MFCoding.m`
-///     - Update: [Jul 2025] Tried to reimplement this inside `objc-test-july-13-2024` without the NSSecureCoding validations and ended up with 110 lines and a more concise syntax, which looked like this:
+///     - Update: [Jul 2025] Tried to reimplement this inside `objc-playground-2024` (formerly`objc-test-july-13-2024`) without the NSSecureCoding validations and ended up with 110 lines and a more concise syntax, which looked like this:
 ///         ```
 ///             MFDataClass(MyDataClass, MFDataClassBase_Simplified,
 ///                 int theint;
@@ -107,11 +106,14 @@
 ///                 .theobj=@[@1, @"2", @3],
 ///             );
 ///         ```
+///     - Update: [Nov 2025] Implemented simplified version again just for fun in `playground-oct-2025`
+///         
 ///
 /// Meta:
 /// - Out of NSArray and MFDataClass we should be able to build any interesting arrangement of data. They would serve as an object-based alterative to array (> NSArray) and struct (> MFDataClass) from C.
 /// - We should consider replacing the remapsDict (Which is a big nested `NSDictionary`that represents the mouse-button-to-action mappings inside the Mac Mouse Fix Helper process) with a nested set of `MFDataClass` instances. That would make it less scary to work with. (Although honestly it's been surprisingly fine, even though the compiler doesn't know the structure of this big nested dict at all.)
 ///     (Or maybe a nested struct definition in swift would be even nicer, but not sure if fast and objc compatible. Nested class definition in Swift might also be nice but afaik you can't autogenerate initializers and NSCoding/NSCopying/-isEqual: support like you can with Swift structs and with MFDataClass)
+/// - Discussion on complexity of this: [Apr 2025] The complexity of this is kindof a swift-ism. (I don't like Swift, and I think we're making similar mistakes to the Swift language designers.) I'd say we could reduce the lines-of-code by 90%, if we simply decided to live without some small 'safety' and convenience affordances. e.g. instead of a macro-generated initializers we could just init the dataclass-instances from NSDictionaries via KVC. Missing args would be a runtime- instead of a compiletime-error, and autocomplete would be worse. But if needed, we could still extend an MFDataClass subclass with a custom initializer, to get all those benefits back. It would still be perfectly manageable and much better than using NSDictionary directly, and it would mean much less code to maintain here. If we're lucky this will just work and we won't have to touch it again... Maybe for such a fundamental datastructure, spending this much effort on small affordances could be worth it? I'm not sure.
 
 #pragma mark - Base superclass
 
@@ -175,7 +177,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
     + (NSString *_Nullable)rawNullabilityAndTypeOfProperty:(NSString *_Nullable)propertyName { \
         return @{ \
             @(#n1):     @[@(#u1), @(#t1)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
     { \
@@ -214,7 +216,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
         return @{ \
             @(#n1):     @[@(#u1), @(#t1)], \
             @(#n2):     @[@(#u2), @(#t2)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -263,7 +265,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n1):     @[@(#u1), @(#t1)], \
             @(#n2):     @[@(#u2), @(#t2)], \
             @(#n3):     @[@(#u3), @(#t3)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -322,7 +324,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n2):     @[@(#u2), @(#t2)], \
             @(#n3):     @[@(#u3), @(#t3)], \
             @(#n4):     @[@(#u4), @(#t4)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -391,7 +393,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n3):     @[@(#u3), @(#t3)], \
             @(#n4):     @[@(#u4), @(#t4)], \
             @(#n5):     @[@(#u5), @(#t5)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -470,7 +472,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n4):     @[@(#u4), @(#t4)], \
             @(#n5):     @[@(#u5), @(#t5)], \
             @(#n6):     @[@(#u6), @(#t6)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -559,7 +561,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n5):     @[@(#u5), @(#t5)], \
             @(#n6):     @[@(#u6), @(#t6)], \
             @(#n7):     @[@(#u7), @(#t7)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -658,7 +660,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n6):     @[@(#u6), @(#t6)], \
             @(#n7):     @[@(#u7), @(#t7)], \
             @(#n8):     @[@(#u8), @(#t8)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -767,7 +769,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n7):     @[@(#u7), @(#t7)], \
             @(#n8):     @[@(#u8), @(#t8)], \
             @(#n9):     @[@(#u9), @(#t9)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -886,7 +888,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n8):     @[@(#u8), @(#t8)], \
             @(#n9):     @[@(#u9), @(#t9)], \
             @(#n10):    @[@(#u10), @(#t10)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -1015,7 +1017,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n9):     @[@(#u9), @(#t9)], \
             @(#n10):    @[@(#u10), @(#t10)], \
             @(#n11):    @[@(#u11), @(#t11)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -1154,7 +1156,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n10):    @[@(#u10), @(#t10)], \
             @(#n11):    @[@(#u11), @(#t11)], \
             @(#n12):    @[@(#u12), @(#t12)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -1303,7 +1305,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n11):    @[@(#u11), @(#t11)], \
             @(#n12):    @[@(#u12), @(#t12)], \
             @(#n13):    @[@(#u13), @(#t13)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -1462,7 +1464,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n12):    @[@(#u12), @(#t12)], \
             @(#n13):    @[@(#u13), @(#t13)], \
             @(#n14):    @[@(#u14), @(#t14)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \
@@ -1631,7 +1633,7 @@ static const NSExceptionName _Nonnull MFDataClassInvalidDefinitionException = @"
             @(#n13):    @[@(#u13), @(#t13)], \
             @(#n14):    @[@(#u14), @(#t14)], \
             @(#n15):    @[@(#u15), @(#t15)], \
-        }[propertyName]; \
+        }[propertyName ?: NSNull.null]; \
     } \
     - (instancetype _Nonnull)initWith_ ## n1:(u1 t1)n1 \
                                           n2:(u2 t2)n2 \

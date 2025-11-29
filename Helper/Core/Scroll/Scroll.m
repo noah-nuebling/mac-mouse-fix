@@ -15,7 +15,6 @@
 #import "ScrollUtility.h"
 #import "VectorUtility.h"
 #import "HelperUtility.h"
-#import "WannabePrefixHeader.h"
 #import "ScrollAnalyzer.h"
 #import "ScrollConfigObjC.h"
 #import <Cocoa/Cocoa.h>
@@ -75,12 +74,12 @@ static CFTimeInterval _lastScrollAnalysisResultTimeStamp;
     /// Create AXUIElement for getting app under mouse pointer
     _systemWideAXUIElement = AXUIElementCreateSystemWide();
     /// Create Event source
-    if (_eventSource == nil) {
+    if (_eventSource == NULL) {
         _eventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
     }
     
     /// Create/enable scrollwheel input callback
-    if (_eventTap == nil) {
+    if (_eventTap == NULL) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
         _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
         DDLogDebug(@"Scroll.m: _eventTap: %@", _eventTap);
@@ -247,7 +246,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         heavyProcessing(eventCopy, scrollDeltaAxis1, scrollDeltaAxis2, tickTime);
     });
     
-    return nil;
+    return NULL;
 }
 
 #pragma mark - Main event processing
@@ -255,7 +254,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t scrollDeltaAxis2, CFTimeInterval tickTS) {
     
     /// Declare stuff for later
-    static DriverUnsuspender unsuspendDrivers = ^{};
+    static DriverUnsuspender unsuspendDrivers = ^{}; /// This is old stuff that should be removed I think [Jun 2 2025]
     
     /// Debug
     if (runningPreRelease()) { /// if-statement because hidEvent.description is very slow
@@ -276,6 +275,15 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
             CFStringRef name = IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDProductKey));
             CFStringRef manufacturer = IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDManufacturerKey));
+            /// ^ [May 2025] Just saw a crash here See `Crash Reports > Mac Mouse Fix Helper-2025-05-29-112149.ips`
+            ///     Location: `Scroll.m:279 [[[CFStringRef manufacturer = IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDManufacturerKey))]]] > IOHIDDeviceGetProperty+120 > _os_unfair_lock_unlock_slow + 92 > ...`:
+            ///     Thread: Thread 3 (Dispatch queue: com.nuebling.mac-mouse-fix.helper.scroll)
+            ///     Message: BUG IN CLIENT OF LIBPLATFORM: Unlock of an `os_unfair_lock` not owned by current thread
+            ///     Possibly related: Thread 1 (Dispatch queue: com.apple.main-thread) was currently at `ButtonInputReceiver.m:142 > DeviceManager.m:71 > Device.m:258 (-[Device wrapsIOHIDDevice:]+0`)
+            ///     Interpretations:
+            ///         - Maybe Thread 1 and 3 tried to access the device at the same time causing issues. However thread 1 wasn't actually inside IOHIDDeviceGetProperty() according to the crash report. It was just at `-[Device wrapsIOHIDDevice:]+0`, which is right *before* accessing the device, but not accessing it, yet I think. Also, the presence of the `os_unfair_lock` suggests that IOHIDDevice *is* supposed to be thread-safe, but just had a bug right there.
+            ///             - After thinking a bit more, this makes no sense, looking at IOHIDDeviceRef.c > IOHIDDeviceGetProperty(), it just locks at the start and unlocks at the end and I have no clue how the unlocking thread can end up being different from the locking one.
+            ///         - Claude suggests that the IOHIDDevice must be memory-corrupted or used-after-free/used-after-close. Seems sorta plausible since CGEventGetSendingDevice() never cleans up its cache and could theoretically return pointer to a IOHIDDeviceRef that has disconnected. ... But it seems sort of unlikely that the device would get disconnected between sending the scroll events and the processing of the scroll events (which we're doing here). Also just because the device is disconnected it shouldn't mean that the whole IOHIDDeviceRef instance becomes memory-corrupted. I think it should still be safe to use, just fail read/write operations and so on (but I haven't tested this). Perhaps it's a thread-safety bug inside IOHIDDevice. When we put all this stuff on one 'IOThread' that should help with this bug. Also see this conversation with Claude: https://claude.ai/share/77e528bf-2908-4fa0-a14c-4a924b0198de
             
             DDLogDebug(@"Scroll.m: Device sending scroll: %@ %@", manufacturer, name);
         }
@@ -771,8 +779,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             ScrollConfig *config = configCopyForBlock;
             
             /// Unsuspend
-            if (animationPhase != kMFAnimationCallbackPhaseStart && animationPhase != kMFAnimationCallbackPhaseContinue) {
-                unsuspendDrivers();
+            if ((0)) { /// This is old stuff that should be removed I think [Jun 2 2025]
+                if (animationPhase != kMFAnimationCallbackPhaseStart && animationPhase != kMFAnimationCallbackPhaseContinue) {
+                    unsuspendDrivers();
+                }
             }
             
             /// Validate
@@ -1106,8 +1116,8 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         ///     Int deltas are generally truncated but also rounded up to be at least 1 (or -1). This also happens in real events.
         int64_t dyLineInt = (int64_t)dyLine;
         int64_t dxLineInt = (int64_t)dxLine;
-        if (fabs(dyLine) != 0 && llabs(dyLineInt) == 0) dyLineInt = sign(dyLine);
-        if (fabs(dxLine) != 0 && llabs(dxLineInt) == 0) dxLineInt = sign(dxLine);
+        if (fabs(dyLine) != 0 && llabs(dyLineInt) == 0) dyLineInt = mfsign(dyLine);
+        if (fabs(dxLine) != 0 && llabs(dxLineInt) == 0) dxLineInt = mfsign(dxLine);
         
         /// Get line deltas as fixed point number
         int64_t dyLineFixed = fixedScrollDelta(dyLine);
@@ -1165,7 +1175,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                     eventPhase = kIOHIDEventPhaseChanged;
                     
                     assert(eventDelta != 0);
-                    if (sign(eventDelta) > 0) {
+                    if (mfsign(eventDelta) > 0) {
                         eventDelta += 380/800.0;
                     } else {
                         eventDelta -= 250/800.0;

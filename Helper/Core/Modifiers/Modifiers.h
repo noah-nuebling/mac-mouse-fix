@@ -10,7 +10,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <Foundation/Foundation.h>
 #import "Device.h"
-#import "WannabePrefixHeader.h"
+#import "DisableSwiftBridging.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -47,11 +47,9 @@ typedef enum {
 + (void)setKeyboardModifierPriority:(MFModifierPriority)priority;
 + (void)setButtonModifierPriority:(MFModifierPriority)priority;
 
-+ (NSDictionary *)modifiersWithEvent:(CGEventRef _Nullable)event MF_SWIFT_HIDDEN;
-+ (id)__SWIFT_UNBRIDGED_modifiersWithEvent:(CGEventRef _Nullable)event;
++ (MF_SWIFT_UNBRIDGED(NSDictionary *))modifiersWithEvent:(CGEventRef _Nullable)event NS_REFINED_FOR_SWIFT;
 
-+ (void)buttonModsChangedTo:(ButtonModifierState)newModifiers;
-+ (void)__SWIFT_UNBRIDGED_buttonModsChangedTo:(id)newModifiers;
++ (void)buttonModsChangedTo:(MF_SWIFT_UNBRIDGED(ButtonModifierState))newModifiers NS_REFINED_FOR_SWIFT;
 
 + (void)handleModificationHasBeenUsed;
 
