@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="th" xml:lang="th">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.6</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ แปลโดย AI</strong></p>
+
+<p>บันทึกการเปิดตัวนี้ได้รับการแปลโดย Claude AI อาจมีข้อผิดพลาดบางประการ<br />
+
+สำหรับเวอร์ชันภาษาอังกฤษต้นฉบับ <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.6">คลิกที่นี่</a></p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.6</strong> ทำให้ฟีเจอร์ ‘ย้อนกลับ’ และ
+
+‘ไปข้างหน้า’ รองรับแอปได้มากขึ้น นอกจากนี้ยังแก้ไขบั๊กและปัญหาต่างๆ อีกหลายอย่าง</p>
+
+<h3 id="ปรบปรงฟเจอร-ยอนกลบ-และ-ไปขางหนา">ปรับปรุงฟีเจอร์ ‘ย้อนกลับ’ และ
+
+‘ไปข้างหน้า’</h3>
+
+<p>การกำหนดปุ่มเมาส์ ‘ย้อนกลับ’ และ ‘ไปข้างหน้า’
+
+ตอนนี้<strong>ใช้งานได้ในแอปมากขึ้น</strong> รวมถึง:</p>
+
+<ul>
+
+<li>Visual Studio Code, Cursor, VSCodium, Windsurf, Zed
+
+และโปรแกรมแก้ไขโค้ดอื่นๆ</li>
+
+<li>แอปในตัวของ Apple หลายตัว เช่น Preview, Notes, System Settings, App
+
+Store และ Music</li>
+
+<li>Adobe Acrobat</li>
+
+<li>Zotero</li>
+
+<li>และอื่นๆ อีกมากมาย!</li>
+
+</ul>
+
+<p>การพัฒนาได้รับแรงบันดาลใจจากฟีเจอร์ ‘Universal Back and Forward’ ที่ยอดเยี่ยมใน
+
+<a href="https://github.com/linearmouse/linearmouse">LinearMouse</a>
+
+ซึ่งควรรองรับแอปทั้งหมดที่ LinearMouse รองรับ<br />
+
+นอกจากนี้ยังรองรับบางแอปที่ปกติต้องใช้แป้นพิมพ์ลัดเพื่อย้อนกลับและไปข้างหน้า เช่น System
+
+Settings, App Store, Apple Notes และ Adobe Acrobat โดย Mac Mouse Fix
+
+จะตรวจจับแอปเหล่านั้นและจำลองแป้นพิมพ์ลัดที่เหมาะสม</p>
+
+<p>ทุกแอปที่เคย<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22">ถูกขอใน
+
+GitHub Issue</a> ควรได้รับการรองรับแล้ว! (ขอบคุณสำหรับความคิดเห็น!)<br />
+
+หากคุณพบแอปใดที่ยังใช้งานไม่ได้ โปรดแจ้งให้ฉันทราบใน <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-feature-request&amp;locale=th">feature
+
+request</a></p>
+
+<h3 id="แกไขบก-การเลอนหยดทำงานเปนครงคราว">แก้ไขบั๊ก
+
+‘การเลื่อนหยุดทำงานเป็นครั้งคราว’</h3>
+
+<p>ผู้ใช้บางคนประสบ<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20state%3Aclosed%20stops%20working%20label%3A%22Scroll%20Stops%20Working%20Intermittently%22">ปัญหา</a>ที่<strong>การเลื่อนแบบนุ่มนวลหยุดทำงาน</strong>แบบสุ่ม</p>
+
+<p>แม้ว่าฉันจะไม่เคยสามารถทำให้เกิดปัญหานี้ซ้ำได้ แต่ฉันได้พัฒนาวิธีแก้ไขที่เป็นไปได้:</p>
+
+<p>แอปจะลองใหม่หลายครั้งเมื่อการตั้งค่าการซิงโครไนซ์กับจอแสดงผลล้มเหลว<br />
+
+หากยังใช้งานไม่ได้หลังจากลองใหม่ แอปจะ:</p>
+
+<ul>
+
+<li>รีสตาร์ทกระบวนการพื้นหลัง ‘Mac Mouse Fix Helper’ ซึ่งอาจแก้ไขปัญหาได้</li>
+
+<li>สร้างรายงานข้อขัดข้อง ซึ่งอาจช่วยวินิจฉัยบั๊กได้</li>
+
+</ul>
+
+<p>ฉันหวังว่าปัญหาจะได้รับการแก้ไขแล้ว! หากยังไม่ได้รับการแก้ไข โปรดแจ้งให้ฉันทราบใน <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-bug-report&amp;locale=th">bug
+
+report</a> หรือทาง <a
+
+href="http://redirect.macmousefix.com/?target=mailto-noah&amp;locale=th">email</a></p>
+
+<h3
+
+id="ปรบปรงพฤตกรรมของลอเลอนแบบหมนอสระ">ปรับปรุงพฤติกรรมของล้อเลื่อนแบบหมุนอิสระ</h3>
+
+<p>Mac Mouse Fix จะ<strong>ไม่เพิ่มความเร็วในการเลื่อน</strong>ให้คุณอีกต่อไป
+
+เมื่อคุณปล่อยให้ล้อเลื่อนหมุนอิสระบนเมาส์ MX Master (หรือเมาส์อื่นๆ
+
+ที่มีล้อเลื่อนแบบหมุนอิสระ)</p>
+
+<p>แม้ว่าฟีเจอร์ ‘เพิ่มความเร็วการเลื่อน’ นี้จะมีประโยชน์บนล้อเลื่อนทั่วไป
+
+แต่บนล้อเลื่อนแบบหมุนอิสระอาจทำให้ควบคุมได้ยากขึ้น</p>
+
+<p><strong>หมายเหตุ:</strong> Mac Mouse Fix ปัจจุบันยังไม่รองรับเมาส์ Logitech
+
+ส่วนใหญ่อย่างเต็มที่ รวมถึง MX Master ฉันวางแผนที่จะเพิ่มการรองรับอย่างเต็มรูปแบบ
+
+แต่อาจใช้เวลาสักพัก ในระหว่างนี้ ไดรเวอร์บุคคลที่สามที่ดีที่สุดที่ฉันรู้จักซึ่งรองรับ Logitech คือ
+
+<a href="https://plentycom.jp/en/steermouse/">SteerMouse</a></p>
+
+<h3 id="การแกไขบก">การแก้ไขบั๊ก</h3>
+
+<ul>
+
+<li>แก้ไขปัญหาที่ Mac Mouse Fix บางครั้งจะเปิดใช้งานแป้นพิมพ์ลัดที่เคยถูกปิดใช้งานใน
+
+System Settings อีกครั้ง</li>
+
+<li>แก้ไขข้อขัดข้องเมื่อคลิก ‘Activate License’</li>
+
+<li>แก้ไขข้อขัดข้องเมื่อคลิก ‘Cancel’ ทันทีหลังจากคลิก ‘Activate License’
+
+(ขอบคุณสำหรับรายงาน Ali!)</li>
+
+<li>แก้ไขข้อขัดข้องเมื่อพยายามใช้ Mac Mouse Fix ขณะที่ไม่มีจอแสดงผลเชื่อมต่อกับ Mac
+
+ของคุณ</li>
+
+<li>แก้ไข memory leak และปัญหาภายในอื่นๆ เมื่อสลับระหว่างแท็บในแอป</li>
+
+</ul>
+
+<h3 id="การปรบปรงดานภาพ">การปรับปรุงด้านภาพ</h3>
+
+<ul>
+
+<li>แก้ไขปัญหาที่แท็บ About บางครั้งสูงเกินไป ซึ่งเกิดขึ้นใน <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=th">3.0.5</a></li>
+
+<li>ข้อความบนการแจ้งเตือน ‘Free days are over’ ไม่ถูกตัดออกอีกต่อไปในภาษาจีน</li>
+
+<li>แก้ไขปัญหาภาพที่เงาของฟิลด์ ‘+’ หลังจากบันทึกอินพุต</li>
+
+<li>แก้ไขปัญหาที่หายากที่ข้อความตัวอย่างบนหน้าจอ ‘Enter Your License Key’
+
+จะปรากฏไม่อยู่ตรงกลาง</li>
+
+<li>แก้ไขปัญหาที่สัญลักษณ์บางตัวที่แสดงในแอปมีสีผิดหลังจากสลับระหว่างโหมดมืด/สว่าง</li>
+
+</ul>
+
+<h3 id="การปรบปรงอนๆ">การปรับปรุงอื่นๆ</h3>
+
+<ul>
+
+<li>ทำให้แอนิเมชันบางอย่าง เช่น แอนิเมชันการสลับแท็บ มีประสิทธิภาพมากขึ้นเล็กน้อย</li>
+
+<li>ปิดการใช้งานการเติมข้อความอัตโนมัติของ Touch Bar บนหน้าจอ ‘Enter Your
+
+License Key’</li>
+
+<li>การปรับปรุงภายในเล็กๆ น้อยๆ อื่นๆ อีกหลายอย่าง</li>
+
+</ul>
+
+<p><em>แก้ไขด้วยความช่วยเหลืออันยอดเยี่ยมจาก Claude</em></p>
+
+<hr />
+
+<p>ดูเวอร์ชันก่อนหน้า <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=th">3.0.5</a>
+
+ได้ด้วย</p>
+
+</body>
+
+</html>

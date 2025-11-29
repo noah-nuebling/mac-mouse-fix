@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nl" xml:lang="nl">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.7</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Vertaald door AI</strong></p>
+
+<p>Deze release note is vertaald door de Claude AI. Het kan fouten
+
+bevatten.<br />
+
+Voor de originele Engelse versie, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.7">klik
+
+hier</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.7</strong> lost verschillende belangrijke
+
+bugs op.</p>
+
+<h3 id="bugfixes">Bugfixes</h3>
+
+<ul>
+
+<li>App werkt weer op <strong>oudere macOS-versies</strong> (macOS 10.15
+
+Catalina en macOS 11 Big Sur)
+
+<ul>
+
+<li>Mac Mouse Fix 3.0.6 kon niet worden ingeschakeld onder die
+
+macOS-versies omdat de verbeterde ‘Terug’- en ‘Vooruit’-functie die in
+
+Mac Mouse Fix 3.0.6 werd geïntroduceerd, probeerde macOS-systeem-API’s
+
+te gebruiken die niet beschikbaar waren.</li>
+
+</ul></li>
+
+<li>Problemen met <strong>‘Terug’- en ‘Vooruit’-functie</strong>
+
+opgelost
+
+<ul>
+
+<li>De verbeterde ‘Terug’- en ‘Vooruit’-functie die in Mac Mouse Fix
+
+3.0.6 werd geïntroduceerd, zal nu altijd de ‘main thread’ gebruiken om
+
+macOS te vragen welke toetsaanslagen moeten worden gesimuleerd om terug
+
+en vooruit te gaan in de app die je gebruikt.<br />
+
+Dit kan crashes en onbetrouwbaar gedrag in sommige situaties
+
+voorkomen.</li>
+
+</ul></li>
+
+<li>Geprobeerd bug op te lossen waarbij <strong>instellingen willekeurig
+
+werden gereset</strong> (Zie deze <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20label%3A%22Config%20Reset%20Intermittently%22">GitHub
+
+Issues</a>)
+
+<ul>
+
+<li>Ik heb de code die het configuratiebestand voor Mac Mouse Fix laadt
+
+herschreven om robuuster te zijn. Wanneer zeldzame
+
+macOS-bestandssysteemfouten optraden, kon de oude code soms ten onrechte
+
+denken dat het configuratiebestand corrupt was en het terugzetten naar
+
+de standaardinstellingen.</li>
+
+</ul></li>
+
+<li>Kans op bug waarbij <strong>scrollen stopt met werken</strong>
+
+verkleind
+
+<ul>
+
+<li>Deze bug kan niet volledig worden opgelost zonder diepere
+
+wijzigingen, die waarschijnlijk andere problemen zouden
+
+veroorzaken.<br />
+
+Voor nu heb ik echter het tijdsvenster verkleind waarin een ‘deadlock’
+
+kan optreden in het scrollsysteem, wat in ieder geval de kans op deze
+
+bug zou moeten verlagen. Dit maakt het scrollen ook iets
+
+efficiënter.</li>
+
+<li>Deze bug heeft vergelijkbare symptomen – maar volgens mij een andere
+
+onderliggende oorzaak – als de ‘Scroll Stops Working Intermittently’-bug
+
+die in de vorige release 3.0.6 werd aangepakt.</li>
+
+<li>(Bedankt aan Joonas voor de diagnostiek!)</li>
+
+</ul></li>
+
+</ul>
+
+<p>Bedankt iedereen voor het melden van de bugs!</p>
+
+<hr />
+
+<p>Bekijk ook de vorige release <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.6&amp;locale=nl">3.0.6</a>.</p>
+
+</body>
+
+</html>

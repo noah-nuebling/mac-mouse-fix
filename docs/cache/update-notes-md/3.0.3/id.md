@@ -1,78 +1,51 @@
-**ℹ️ Catatan untuk Pengguna Mac Mouse Fix 2**
-
-Dengan diperkenalkannya Mac Mouse Fix 3, model harga aplikasi telah berubah:
-
-- **Mac Mouse Fix 2**\
-Tetap 100% gratis, dan saya berencana untuk terus mendukungnya.\
-**Lewati pembaruan ini** untuk tetap menggunakan Mac Mouse Fix 2. Unduh versi terbaru Mac Mouse Fix 2 [di sini](https://redirect.macmousefix.com/?target=mmf2-latest).
-- **Mac Mouse Fix 3**\
-Gratis selama 30 hari, biaya beberapa dolar untuk memilikinya.\
-**Perbarui sekarang** untuk mendapatkan Mac Mouse Fix 3!
-
-Anda dapat mempelajari lebih lanjut tentang harga dan fitur Mac Mouse Fix 3 di [situs web baru](https://macmousefix.com/).
-
-Terima kasih telah menggunakan Mac Mouse Fix! :)
-
----
-
-**ℹ️ Catatan untuk Pembeli Mac Mouse Fix 3**
-
-Jika Anda tidak sengaja memperbarui ke Mac Mouse Fix 3 tanpa mengetahui bahwa aplikasi ini tidak lagi gratis, saya ingin menawarkan [pengembalian dana](https://redirect.macmousefix.com/?target=mmf-apply-for-refund).
-
-Versi terbaru Mac Mouse Fix 2 tetap **sepenuhnya gratis**, dan Anda dapat mengunduhnya [di sini](https://redirect.macmousefix.com/?target=mmf2-latest).
-
-Saya mohon maaf atas ketidaknyamanannya, dan saya harap semua orang setuju dengan solusi ini!
-
----
-
-Mac Mouse Fix **3.0.3** siap untuk macOS 15 Sequoia. Ini juga memperbaiki beberapa masalah stabilitas dan memberikan beberapa peningkatan kecil.
+Mac Mouse Fix **3.0.3** siap untuk macOS 15 Sequoia. Versi ini juga memperbaiki beberapa masalah stabilitas dan memberikan beberapa peningkatan kecil.
 
 ### Dukungan macOS 15 Sequoia
 
-Aplikasi ini sekarang berfungsi dengan baik di macOS 15 Sequoia!
+Aplikasi sekarang berfungsi dengan baik di macOS 15 Sequoia!
 
 - Sebagian besar animasi UI rusak di macOS 15 Sequoia. Sekarang semuanya berfungsi dengan baik lagi!
 - Kode sumber sekarang dapat di-build di macOS 15 Sequoia. Sebelumnya, ada masalah dengan kompiler Swift yang mencegah aplikasi di-build.
 
-### Mengatasi crash saat menggulir
+### Mengatasi crash saat scroll
 
-Sejak Mac Mouse Fix 3.0.2 ada [beberapa laporan](https://github.com/noah-nuebling/mac-mouse-fix/issues/988) tentang Mac Mouse Fix yang secara berkala menonaktifkan dan mengaktifkan kembali dirinya sendiri saat menggulir. Ini disebabkan oleh crash pada aplikasi latar belakang 'Mac Mouse Fix Helper'. Pembaruan ini mencoba memperbaiki crash tersebut, dengan perubahan berikut:
+Sejak Mac Mouse Fix 3.0.2 ada [beberapa laporan](https://github.com/noah-nuebling/mac-mouse-fix/issues/988) tentang Mac Mouse Fix yang secara berkala menonaktifkan dan mengaktifkan dirinya sendiri saat scrolling. Ini disebabkan oleh crash pada aplikasi latar belakang 'Mac Mouse Fix Helper'. Pembaruan ini mencoba memperbaiki crash tersebut, dengan perubahan berikut:
 
-- Mekanisme pengguliran akan mencoba untuk pulih dan tetap berjalan alih-alih crash, ketika menemui kasus khusus yang tampaknya telah menyebabkan crash ini.
-- Saya mengubah cara penanganan keadaan yang tidak terduga dalam aplikasi secara lebih umum: Alih-alih selalu crash segera, aplikasi sekarang akan mencoba pulih dari keadaan yang tidak terduga dalam banyak kasus.
+- Mekanisme scrolling akan mencoba pulih dan terus berjalan alih-alih crash, ketika menemui kasus khusus yang tampaknya menyebabkan crash ini.
+- Saya mengubah cara penanganan kondisi tak terduga dalam aplikasi secara lebih umum: Alih-alih selalu langsung crash, aplikasi sekarang akan mencoba pulih dari kondisi tak terduga dalam banyak kasus.
+    
+    - Perubahan ini berkontribusi pada perbaikan crash scroll yang dijelaskan di atas. Ini mungkin juga mencegah crash lainnya.
+  
+Catatan: Saya tidak pernah bisa mereproduksi crash ini di mesin saya, dan saya masih tidak yakin apa penyebabnya, tetapi berdasarkan laporan yang saya terima, pembaruan ini seharusnya mencegah crash apa pun. Jika kamu masih mengalami crash saat scrolling atau jika kamu *pernah* mengalami crash di 3.0.2, akan sangat berharga jika kamu membagikan pengalaman dan data diagnostik di GitHub Issue [#988](https://github.com/noah-nuebling/mac-mouse-fix/issues/988). Ini akan membantu saya memahami masalahnya dan meningkatkan Mac Mouse Fix. Terima kasih!
 
-    - Perubahan ini berkontribusi pada perbaikan crash saat menggulir yang dijelaskan di atas. Ini mungkin juga mencegah crash lainnya.
+### Mengatasi scroll yang tersendat
 
-Catatan: Saya tidak pernah bisa mereproduksi crash ini di mesin saya, dan saya masih tidak yakin apa penyebabnya, tetapi berdasarkan laporan yang saya terima, pembaruan ini seharusnya mencegah crash apa pun. Jika Anda masih mengalami crash saat menggulir atau jika Anda *pernah* mengalami crash di versi 3.0.2, akan sangat berharga jika Anda berbagi pengalaman dan data diagnostik Anda di GitHub Issue [#988](https://github.com/noah-nuebling/mac-mouse-fix/issues/988). Ini akan membantu saya memahami masalah dan meningkatkan Mac Mouse Fix. Terima kasih!
+Di 3.0.2 saya membuat perubahan pada cara Mac Mouse Fix mengirim event scroll ke sistem dalam upaya mengurangi scroll yang tersendat yang kemungkinan disebabkan oleh masalah dengan API VSync Apple.
 
-### Mengatasi tersendat saat menggulir
+Namun, setelah pengujian dan umpan balik yang lebih ekstensif, tampaknya mekanisme baru di 3.0.2 membuat scrolling lebih halus dalam beberapa skenario tetapi lebih tersendat di skenario lainnya. Terutama di Firefox tampaknya jauh lebih buruk. \
+Secara keseluruhan, tidak jelas bahwa mekanisme baru benar-benar meningkatkan scroll yang tersendat secara menyeluruh. Selain itu, ini mungkin berkontribusi pada crash scroll yang dijelaskan di atas.
 
-Di versi 3.0.2 saya membuat perubahan pada cara Mac Mouse Fix mengirim event pengguliran ke sistem dalam upaya mengurangi tersendat yang kemungkinan disebabkan oleh masalah dengan API VSync Apple.
+Itulah mengapa saya menonaktifkan mekanisme baru dan mengembalikan mekanisme VSync untuk event scroll kembali seperti di Mac Mouse Fix 3.0.0 dan 3.0.1.
 
-Namun, setelah pengujian dan umpan balik yang lebih ekstensif, tampaknya mekanisme baru di 3.0.2 membuat pengguliran lebih halus dalam beberapa skenario tetapi lebih tersendat dalam skenario lain. Terutama di Firefox, tampaknya jauh lebih buruk.\
-Secara keseluruhan, tidak jelas bahwa mekanisme baru benar-benar meningkatkan kelancaran pengguliran secara menyeluruh. Selain itu, mungkin berkontribusi pada crash saat menggulir yang dijelaskan di atas.
+Lihat GitHub Issue [#875](https://github.com/noah-nuebling/mac-mouse-fix/issues/875) untuk info lebih lanjut.
 
-Itulah mengapa saya menonaktifkan mekanisme baru dan mengembalikan mekanisme VSync untuk event pengguliran kembali seperti di Mac Mouse Fix 3.0.0 dan 3.0.1.
+### Pengembalian dana
 
-Lihat GitHub Issue [#875](https://github.com/noah-nuebling/mac-mouse-fix/issues/875) untuk informasi lebih lanjut.
+Saya minta maaf atas masalah terkait perubahan scrolling di 3.0.1 dan 3.0.2. Saya sangat meremehkan masalah yang akan muncul dengan itu, dan saya lambat dalam mengatasi masalah ini. Saya akan melakukan yang terbaik untuk belajar dari pengalaman ini dan lebih berhati-hati dengan perubahan seperti itu di masa depan. Saya juga ingin menawarkan pengembalian dana kepada siapa pun yang terdampak. Cukup klik [di sini](https://redirect.macmousefix.com/?target=mmf-apply-for-refund) jika kamu tertarik.
 
-### Pengembalian Dana
-
-Saya mohon maaf atas masalah terkait perubahan pengguliran di 3.0.1 dan 3.0.2. Saya sangat meremehkan masalah yang akan muncul dengan itu, dan saya lambat dalam mengatasi masalah ini. Saya akan berusaha sebaik mungkin untuk belajar dari pengalaman ini dan lebih berhati-hati dengan perubahan seperti itu di masa depan. Saya juga ingin menawarkan pengembalian dana kepada siapa pun yang terkena dampak. Cukup klik [di sini](https://redirect.macmousefix.com/?target=mmf-apply-for-refund) jika Anda tertarik.
-
-### Mekanisme pembaruan yang lebih cerdas
+### Mekanisme pembaruan yang lebih pintar
 
 Perubahan ini dibawa dari Mac Mouse Fix [2.2.4](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.4) dan [2.2.5](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.5). Lihat catatan rilis mereka untuk mempelajari lebih lanjut tentang detailnya. Berikut ringkasannya:
 
-- Ada mekanisme baru yang lebih cerdas yang menentukan pembaruan mana yang akan ditampilkan kepada pengguna.
-- Beralih dari menggunakan kerangka kerja pembaruan Sparkle 1.26.0 ke Sparkle terbaru [1.27.3](https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3).
-- Jendela yang ditampilkan aplikasi untuk memberi tahu Anda bahwa versi baru Mac Mouse Fix tersedia sekarang mendukung JavaScript, yang memungkinkan pemformatan catatan pembaruan yang lebih baik.
+- Ada mekanisme baru yang lebih pintar yang memutuskan pembaruan mana yang akan ditampilkan kepada pengguna.
+- Beralih dari menggunakan framework pembaruan Sparkle 1.26.0 ke Sparkle [1.27.3](https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3) terbaru.
+- Jendela yang ditampilkan aplikasi untuk memberi tahu kamu bahwa versi baru Mac Mouse Fix tersedia sekarang mendukung JavaScript, yang memungkinkan format catatan pembaruan yang lebih bagus.
 
 ### Peningkatan & Perbaikan Bug Lainnya
 
-- Memperbaiki masalah di mana harga aplikasi dan informasi terkait ditampilkan secara tidak benar di tab 'About' dalam beberapa kasus.
-- Memperbaiki masalah di mana mekanisme untuk menyinkronkan pengguliran halus dengan refresh rate tampilan tidak berfungsi dengan baik saat menggunakan beberapa tampilan.
-- Banyak perbaikan dan peningkatan kecil di balik layar.
+- Memperbaiki masalah di mana harga aplikasi dan info terkait akan ditampilkan dengan tidak benar di tab 'About' dalam beberapa kasus.
+- Memperbaiki masalah di mana mekanisme untuk menyinkronkan smooth scrolling dengan refresh rate layar tidak berfungsi dengan baik saat menggunakan beberapa layar.
+- Banyak pembersihan dan peningkatan kecil di balik layar.
 
 ---
 

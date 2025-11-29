@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.7</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Traducido por IA</strong></p>
+
+<p>Esta nota de la versión ha sido traducida por la IA Claude. Puede
+
+contener errores.<br />
+
+Para ver la versión original en inglés, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.7">haz
+
+clic aquí</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.7</strong> soluciona varios errores
+
+importantes.</p>
+
+<h3 id="corrección-de-errores">Corrección de errores</h3>
+
+<ul>
+
+<li>La app vuelve a funcionar en <strong>versiones antiguas de
+
+macOS</strong> (macOS 10.15 Catalina y macOS 11 Big Sur)
+
+<ul>
+
+<li>Mac Mouse Fix 3.0.6 no podía habilitarse en esas versiones de macOS
+
+porque la función mejorada de ‘Atrás’ y ‘Adelante’ introducida en Mac
+
+Mouse Fix 3.0.6 intentaba usar APIs del sistema de macOS que no estaban
+
+disponibles.</li>
+
+</ul></li>
+
+<li>Se corrigieron problemas con la función de <strong>‘Atrás’ y
+
+‘Adelante’</strong>
+
+<ul>
+
+<li>La función mejorada de ‘Atrás’ y ‘Adelante’ introducida en Mac Mouse
+
+Fix 3.0.6 ahora siempre usará el ‘hilo principal’ para preguntarle a
+
+macOS qué teclas simular para ir atrás y adelante en la app que estés
+
+usando.<br />
+
+Esto puede prevenir fallos y comportamiento poco fiable en algunas
+
+situaciones.</li>
+
+</ul></li>
+
+<li>Se intentó corregir el error donde <strong>la configuración se
+
+reiniciaba aleatoriamente</strong> (Ver estos <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20label%3A%22Config%20Reset%20Intermittently%22">GitHub
+
+Issues</a>)
+
+<ul>
+
+<li>Reescribí el código que carga el archivo de configuración de Mac
+
+Mouse Fix para que sea más robusto. Cuando ocurrían errores raros del
+
+sistema de archivos de macOS, el código antiguo a veces podía pensar
+
+erróneamente que el archivo de configuración estaba corrupto y lo
+
+reiniciaba a los valores predeterminados.</li>
+
+</ul></li>
+
+<li>Se redujeron las probabilidades de un error donde <strong>el
+
+desplazamiento deja de funcionar</strong>
+
+<ul>
+
+<li>Este error no puede solucionarse completamente sin cambios más
+
+profundos, que probablemente causarían otros problemas.<br />
+
+Sin embargo, por el momento, reduje la ventana de tiempo donde puede
+
+ocurrir un ‘bloqueo mutuo’ en el sistema de desplazamiento, lo que al
+
+menos debería reducir las probabilidades de encontrar este error. Esto
+
+también hace que el desplazamiento sea ligeramente más eficiente.</li>
+
+<li>Este error tiene síntomas similares – pero creo que una razón
+
+subyacente diferente – al error ‘El desplazamiento deja de funcionar
+
+intermitentemente’ que se abordó en la última versión 3.0.6.</li>
+
+<li>(¡Gracias a Joonas por el diagnóstico!)</li>
+
+</ul></li>
+
+</ul>
+
+<p>¡Gracias a todos por reportar los errores!</p>
+
+<hr />
+
+<p>También echa un vistazo a la versión anterior <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.6&amp;locale=es">3.0.6</a>.</p>
+
+</body>
+
+</html>

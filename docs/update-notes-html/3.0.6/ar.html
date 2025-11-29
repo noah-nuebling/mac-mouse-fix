@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ar" xml:lang="ar">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.6</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ تمت الترجمة بواسطة الذكاء الاصطناعي</strong></p>
+
+<p>تمت ترجمة ملاحظة الإصدار هذه بواسطة كلود للذكاء الاصطناعي. قد تحتوي
+
+على أخطاء.<br />
+
+للنسخة الإنجليزية الأصلية، <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.6">انقر
+
+هنا</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.6</strong> يجعل ميزة ‘الرجوع’ و’التقدم’
+
+متوافقة مع المزيد من التطبيقات. كما يعالج العديد من الأخطاء
+
+والمشاكل.</p>
+
+<h3 id="تحسين-ميزة-الرجوع-والتقدم">تحسين ميزة ‘الرجوع’ و’التقدم’</h3>
+
+<p>تعمل الآن تعيينات أزرار الماوس ‘الرجوع’ و’التقدم’ <strong>في المزيد
+
+من التطبيقات</strong>، بما في ذلك:</p>
+
+<ul>
+
+<li>Visual Studio Code وCursor وVSCodium وWindsurf وZed ومحررات الأكواد
+
+الأخرى</li>
+
+<li>العديد من تطبيقات Apple المدمجة مثل المعاينة والملاحظات وإعدادات
+
+النظام ومتجر التطبيقات والموسيقى</li>
+
+<li>Adobe Acrobat</li>
+
+<li>Zotero</li>
+
+<li>والمزيد!</li>
+
+</ul>
+
+<p>التنفيذ مستوحى من ميزة ‘Universal Back and Forward’ الرائعة في <a
+
+href="https://github.com/linearmouse/linearmouse">LinearMouse</a>. يجب
+
+أن يدعم جميع التطبيقات التي يدعمها LinearMouse.<br />
+
+علاوة على ذلك، يدعم بعض التطبيقات التي تتطلب عادةً اختصارات لوحة المفاتيح
+
+للرجوع والتقدم، مثل إعدادات النظام ومتجر التطبيقات وملاحظات Apple وAdobe
+
+Acrobat. سيكتشف Mac Mouse Fix الآن هذه التطبيقات ويحاكي اختصارات لوحة
+
+المفاتيح المناسبة.</p>
+
+<p>يجب أن يتم دعم كل تطبيق تم <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22">طلبه
+
+في GitHub Issue</a> الآن! (شكراً على الملاحظات!)<br />
+
+إذا وجدت أي تطبيقات لا تعمل بعد، أخبرني في <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-feature-request&amp;locale=ar">طلب
+
+ميزة</a>.</p>
+
+<h3 id="معالجة-خطأ-توقف-التمرير-بشكل-متقطع">معالجة خطأ ‘توقف التمرير
+
+بشكل متقطع’</h3>
+
+<p>واجه بعض المستخدمين <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20state%3Aclosed%20stops%20working%20label%3A%22Scroll%20Stops%20Working%20Intermittently%22">مشكلة</a>
+
+حيث <strong>يتوقف التمرير السلس عن العمل</strong> بشكل عشوائي.</p>
+
+<p>على الرغم من أنني لم أتمكن أبداً من إعادة إنتاج المشكلة، فقد نفذت
+
+إصلاحاً محتملاً:</p>
+
+<p>سيحاول التطبيق الآن عدة مرات، عند فشل إعداد المزامنة مع الشاشة.<br />
+
+إذا لم ينجح الأمر بعد إعادة المحاولة، سيقوم التطبيق بـ:</p>
+
+<ul>
+
+<li>إعادة تشغيل عملية الخلفية ‘Mac Mouse Fix Helper’، والتي قد تحل
+
+المشكلة</li>
+
+<li>إنتاج تقرير عطل، والذي قد يساعد في تشخيص الخطأ</li>
+
+</ul>
+
+<p>آمل أن تكون المشكلة قد حُلت الآن! إذا لم يكن الأمر كذلك، أخبرني في <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-bug-report&amp;locale=ar">تقرير
+
+خطأ</a> أو عبر <a
+
+href="http://redirect.macmousefix.com/?target=mailto-noah&amp;locale=ar">البريد
+
+الإلكتروني</a>.</p>
+
+<h3 id="تحسين-سلوك-عجلة-التمرير-الحرة-الدوران">تحسين سلوك عجلة التمرير
+
+الحرة الدوران</h3>
+
+<p>لن يقوم Mac Mouse Fix بعد الآن <strong>بتسريع التمرير</strong> لك،
+
+عندما تترك عجلة التمرير تدور بحرية على ماوس MX Master. (أو أي ماوس آخر
+
+بعجلة تمرير حرة الدوران.)</p>
+
+<p>بينما تكون ميزة ‘تسريع التمرير’ هذه مفيدة على عجلات التمرير العادية،
+
+على عجلة التمرير الحرة الدوران يمكن أن تجعل الأمور أصعب في التحكم.</p>
+
+<p><strong>ملاحظة:</strong> Mac Mouse Fix حالياً غير متوافق بشكل كامل مع
+
+معظم فئران Logitech، بما في ذلك MX Master. أخطط لإضافة الدعم الكامل، لكن
+
+من المحتمل أن يستغرق ذلك بعض الوقت. في غضون ذلك، أفضل برنامج تشغيل تابع
+
+لجهة خارجية مع دعم Logitech الذي أعرفه هو <a
+
+href="https://plentycom.jp/en/steermouse/">SteerMouse</a>.</p>
+
+<h3 id="إصلاحات-الأخطاء">إصلاحات الأخطاء</h3>
+
+<ul>
+
+<li>إصلاح مشكلة حيث كان Mac Mouse Fix يعيد تمكين اختصارات لوحة المفاتيح
+
+التي تم تعطيلها مسبقاً في إعدادات النظام في بعض الأحيان</li>
+
+<li>إصلاح عطل عند النقر على ‘تفعيل الترخيص’</li>
+
+<li>إصلاح عطل عند النقر على ‘إلغاء’ مباشرة بعد النقر على ‘تفعيل الترخيص’
+
+(شكراً على التقرير، علي!)</li>
+
+<li>إصلاح أعطال عند محاولة استخدام Mac Mouse Fix بينما لا توجد شاشة
+
+متصلة بجهاز Mac الخاص بك</li>
+
+<li>إصلاح تسرب في الذاكرة وبعض المشاكل الأخرى تحت الغطاء عند التبديل بين
+
+علامات التبويب في التطبيق</li>
+
+</ul>
+
+<h3 id="تحسينات-بصرية">تحسينات بصرية</h3>
+
+<ul>
+
+<li>إصلاح مشكلة حيث كانت علامة تبويب ‘حول’ طويلة جداً في بعض الأحيان،
+
+والتي تم تقديمها في <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=ar">3.0.5</a></li>
+
+<li>لم يعد النص على إشعار ‘انتهت الأيام المجانية’ مقطوعاً باللغة
+
+الصينية</li>
+
+<li>إصلاح خلل بصري في ظل حقل ‘+’ بعد تسجيل إدخال</li>
+
+<li>إصلاح خلل نادر حيث كان النص النائب على شاشة ‘أدخل مفتاح الترخيص
+
+الخاص بك’ يظهر خارج المركز</li>
+
+<li>إصلاح مشكلة حيث كانت بعض الرموز المعروضة في التطبيق لها لون خاطئ بعد
+
+التبديل بين الوضع الداكن/الفاتح</li>
+
+</ul>
+
+<h3 id="تحسينات-أخرى">تحسينات أخرى</h3>
+
+<ul>
+
+<li>جعل بعض الرسوم المتحركة، مثل رسوم التبديل بين علامات التبويب، أكثر
+
+كفاءة قليلاً</li>
+
+<li>تعطيل إكمال نص Touch Bar على شاشة ‘أدخل مفتاح الترخيص الخاص بك’</li>
+
+<li>تحسينات أصغر متنوعة تحت الغطاء</li>
+
+</ul>
+
+<p><em>تم التحرير بمساعدة ممتازة من Claude.</em></p>
+
+<hr />
+
+<p>تحقق أيضاً من الإصدار السابق <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=ar">3.0.5</a>.</p>
+
+</body>
+
+</html>

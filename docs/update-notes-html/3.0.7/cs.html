@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cs" xml:lang="cs">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.7</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Přeloženo umělou inteligencí</strong></p>
+
+<p>Tato poznámka k vydání byla přeložena umělou inteligencí Claude. Může
+
+obsahovat chyby.<br />
+
+Pro původní anglickou verzi <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.7">klikněte
+
+zde</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.7</strong> řeší několik důležitých
+
+chyb.</p>
+
+<h3 id="opravy-chyb">Opravy chyb</h3>
+
+<ul>
+
+<li>Aplikace opět funguje na <strong>starších verzích macOS</strong>
+
+(macOS 10.15 Catalina a macOS 11 Big Sur)
+
+<ul>
+
+<li>Mac Mouse Fix 3.0.6 nebylo možné povolit na těchto verzích macOS,
+
+protože vylepšená funkce ‘Zpět’ a ‘Vpřed’ zavedená v Mac Mouse Fix 3.0.6
+
+se pokoušela použít systémová API macOS, která nebyla dostupná.</li>
+
+</ul></li>
+
+<li>Opraveny problémy s funkcí <strong>‘Zpět’ a ‘Vpřed’</strong>
+
+<ul>
+
+<li>Vylepšená funkce ‘Zpět’ a ‘Vpřed’ zavedená v Mac Mouse Fix 3.0.6
+
+nyní bude vždy používat ‘hlavní vlákno’ k dotazování macOS, jaké stisky
+
+kláves simulovat pro přechod zpět a vpřed v aplikaci, kterou
+
+používáš.<br />
+
+To může zabránit pádům a nespolehlivému chování v některých
+
+situacích.</li>
+
+</ul></li>
+
+<li>Pokus o opravu chyby, kdy se <strong>nastavení náhodně
+
+resetovala</strong> (Viz tyto <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20label%3A%22Config%20Reset%20Intermittently%22">GitHub
+
+Issues</a>)
+
+<ul>
+
+<li>Přepsal jsem kód, který načítá konfigurační soubor pro Mac Mouse
+
+Fix, aby byl robustnější. Když došlo ke vzácným chybám souborového
+
+systému macOS, starý kód mohl někdy mylně usoudit, že je konfigurační
+
+soubor poškozený, a resetovat ho na výchozí hodnoty.</li>
+
+</ul></li>
+
+<li>Snížena pravděpodobnost chyby, kdy <strong>přestane fungovat
+
+scrollování</strong>
+
+<ul>
+
+<li>Tuto chybu nelze plně vyřešit bez hlubších změn, které by
+
+pravděpodobně způsobily jiné problémy.<br />
+
+Nicméně prozatím jsem snížil časové okno, kdy může v systému scrollování
+
+dojít k ‘deadlocku’, což by mělo alespoň snížit pravděpodobnost výskytu
+
+této chyby. To také činí scrollování o něco efektivnější.</li>
+
+<li>Tato chyba má podobné příznaky – ale myslím, že jinou základní
+
+příčinu – jako chyba ‘Scroll Stops Working Intermittently’, která byla
+
+řešena v minulém vydání 3.0.6.</li>
+
+<li>(Díky Joonasovi za diagnostiku!)</li>
+
+</ul></li>
+
+</ul>
+
+<p>Děkuji všem za hlášení chyb!</p>
+
+<hr />
+
+<p>Podívej se také na předchozí vydání <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.6&amp;locale=cs">3.0.6</a>.</p>
+
+</body>
+
+</html>

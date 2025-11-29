@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ar" xml:lang="ar">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.8</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ تمت الترجمة بواسطة الذكاء الاصطناعي</strong></p>
+
+<p>تمت ترجمة ملاحظة الإصدار هذه بواسطة كلود للذكاء الاصطناعي. قد تحتوي
+
+على أخطاء.<br />
+
+للنسخة الإنجليزية الأصلية، <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8">انقر
+
+هنا</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.8</strong> يحل مشاكل واجهة المستخدم
+
+والمزيد.</p>
+
+<h3 id="مشاكل-واجهة-المستخدم"><strong>مشاكل واجهة المستخدم</strong></h3>
+
+<ul>
+
+<li>تم تعطيل التصميم الجديد على macOS 26 Tahoe. الآن سيبدو التطبيق ويعمل
+
+كما كان على macOS 15 Sequoia.
+
+<ul>
+
+<li>قمت بذلك لأن بعض عناصر واجهة المستخدم المعاد تصميمها من Apple لا
+
+تزال تحتوي على مشاكل. على سبيل المثال، أزرار ‘-’ في تبويب ‘الأزرار’ لم
+
+تكن قابلة للنقر دائمًا.</li>
+
+<li>قد تبدو واجهة المستخدم قديمة بعض الشيء على macOS 26 Tahoe الآن.
+
+لكنها يجب أن تكون عملية ومصقولة تمامًا كما كانت من قبل.</li>
+
+</ul></li>
+
+<li>تم إصلاح خطأ حيث كان إشعار ‘انتهت الأيام المجانية’ يعلق في الزاوية
+
+العلوية اليمنى من الشاشة.
+
+<ul>
+
+<li>شكرًا لـ <a href="https://github.com/Sashpuri">Sashpuri</a> وآخرين
+
+على الإبلاغ عنه!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="تحسينات-واجهة-المستخدم"><strong>تحسينات واجهة
+
+المستخدم</strong></h3>
+
+<ul>
+
+<li>تم تعطيل زر إشارة المرور الأخضر في نافذة Mac Mouse Fix الرئيسية.
+
+<ul>
+
+<li>الزر لم يكن يفعل شيئًا، حيث لا يمكن تغيير حجم النافذة يدويًا.</li>
+
+</ul></li>
+
+<li>تم إصلاح مشكلة حيث كانت بعض الخطوط الأفقية في الجدول في تبويب
+
+‘الأزرار’ داكنة جدًا تحت macOS 26 Tahoe.</li>
+
+<li>تم إصلاح خطأ حيث كانت رسالة “لا يمكن استخدام زر الماوس الأساسي” في
+
+تبويب ‘الأزرار’ تُقتطع أحيانًا تحت macOS 26 Tahoe.</li>
+
+<li>تم إصلاح خطأ إملائي في الواجهة الألمانية. بفضل مستخدم GitHub <a
+
+href="https://github.com/i-am-the-slime">i-am-the-slime</a>. شكرًا!</li>
+
+<li>تم حل مشكلة حيث كانت نافذة MMF تومض أحيانًا لفترة وجيزة بحجم خاطئ عند
+
+فتح النافذة على macOS 26 Tahoe.</li>
+
+</ul>
+
+<h3 id="تغييرات-أخرى"><strong>تغييرات أخرى</strong></h3>
+
+<ul>
+
+<li>تحسين السلوك عند محاولة تفعيل Mac Mouse Fix بينما تعمل عدة نسخ من
+
+Mac Mouse Fix على الكمبيوتر.
+
+<ul>
+
+<li>سيحاول Mac Mouse Fix الآن تعطيل النسخة الأخرى من Mac Mouse Fix بشكل
+
+أكثر اجتهادًا.</li>
+
+<li>قد يحسن هذا الحالات الاستثنائية حيث لم يكن من الممكن تفعيل Mac Mouse
+
+Fix.</li>
+
+</ul></li>
+
+<li>تغييرات وتنظيف داخلي.</li>
+
+</ul>
+
+<hr />
+
+<p>تحقق أيضًا من الجديد في الإصدار السابق <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.7&amp;locale=ar">3.0.7</a>.</p>
+
+</body>
+
+</html>

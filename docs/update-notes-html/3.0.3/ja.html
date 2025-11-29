@@ -66,159 +66,131 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3">こち�
 
 <hr />
 
-<p><strong>ℹ️ Mac Mouse Fix 2ユーザーへの注意事項</strong></p>
+<p>Mac Mouse Fix <strong>3.0.3</strong> は macOS 15 Sequoia
 
-<p>Mac Mouse Fix 3の導入に伴い、アプリの価格モデルが変更されました：</p>
+に対応しました。また、いくつかの安定性の問題を修正し、複数の小さな改善を提供します。</p>
 
-<ul>
+<h3 id="macos-15-sequoia-サポート">macOS 15 Sequoia サポート</h3>
 
-<li><strong>Mac Mouse Fix 2</strong><br />
-
-完全無料のままで、今後もサポートを継続する予定です。<br />
-
-Mac Mouse Fix
-
-2を継続して使用するには、<strong>このアップデートをスキップ</strong>してください。Mac
-
-Mouse Fix 2の最新バージョンは<a
-
-href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=ja">こちら</a>からダウンロードできます。</li>
-
-<li><strong>Mac Mouse Fix 3</strong><br />
-
-30日間無料、その後は数ドルで購入できます。<br />
-
-Mac Mouse Fix
-
-3を入手するには<strong>今すぐアップデート</strong>してください！</li>
-
-</ul>
-
-<p>Mac Mouse Fix 3の価格と機能について詳しくは<a
-
-href="https://macmousefix.com/">新しいウェブサイト</a>をご覧ください。</p>
-
-<p>Mac Mouse Fixをご利用いただき、ありがとうございます！:)</p>
-
-<hr />
-
-<p><strong>ℹ️ Mac Mouse Fix 3購入者への注意事項</strong></p>
-
-<p>有料化を知らずにMac Mouse Fix 3にアップデートしてしまった場合は、<a
-
-href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=ja">返金</a>をご案内させていただきます。</p>
-
-<p>Mac Mouse Fix
-
-2の最新バージョンは引き続き<strong>完全無料</strong>で、<a
-
-href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=ja">こちら</a>からダウンロードできます。</p>
-
-<p>ご不便をおかけし申し訳ありません。この対応でご理解いただければ幸いです！</p>
-
-<hr />
-
-<p>Mac Mouse Fix <strong>3.0.3</strong>がmacOS 15
-
-Sequoia対応となりました。また、安定性の問題を修正し、いくつかの小さな改善を行いました。</p>
-
-<h3 id="macos-15-sequoiaサポート">macOS 15 Sequoiaサポート</h3>
-
-<p>アプリがmacOS 15 Sequoiaで正常に動作するようになりました！</p>
+<p>このアプリは macOS 15 Sequoia で正常に動作するようになりました!</p>
 
 <ul>
 
-<li>macOS 15 Sequoiaで多くのUI
+<li>macOS 15 Sequoia では、ほとんどの UI
 
-アニメーションが動作していませんでしたが、すべて正常に動作するようになりました！</li>
+アニメーションが壊れていました。今ではすべてが再び正常に動作しています!</li>
 
-<li>ソースコードがmacOS 15
+<li>ソースコードが macOS 15 Sequoia
 
-Sequoiaでビルドできるようになりました。以前は、Swiftコンパイラの問題でアプリのビルドができませんでした。</li>
+でビルド可能になりました。以前は、Swift
+
+コンパイラの問題によりアプリのビルドができませんでした。</li>
 
 </ul>
 
-<h3 id="スクロールクラッシュへの対応">スクロールクラッシュへの対応</h3>
+<h3 id="スクロールクラッシュへの対処">スクロールクラッシュへの対処</h3>
 
-<p>Mac Mouse Fix 3.0.2以降、スクロール中にMac Mouse
+<p>Mac Mouse Fix 3.0.2 以降、スクロール中に Mac Mouse Fix
 
-Fixが定期的に無効化され、再有効化される<a
+が定期的に無効化され、再び有効化されるという<a
 
-href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">複数の報告</a>がありました。これは’Mac
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">複数の報告</a>がありました。これは「Mac
 
 Mouse Fix
 
-Helper’バックグラウンドアプリのクラッシュが原因でした。このアップデートでは以下の変更によりこれらのクラッシュの修正を試みています：</p>
+Helper」バックグラウンドアプリのクラッシュが原因でした。このアップデートでは、以下の変更によりこれらのクラッシュの修正を試みています:</p>
 
 <ul>
 
-<li><p>スクロールメカニズムは、これらのクラッシュの原因となったエッジケースに遭遇した際に、クラッシュせずに復旧して動作を継続するようになりました。</p></li>
+<li><p>スクロール機構は、これらのクラッシュを引き起こしたと思われるエッジケースに遭遇した場合、クラッシュする代わりに回復して動作を継続しようとします。</p></li>
 
-<li><p>アプリ全般で予期せぬ状態への対応方法を変更しました：多くの場合、即座にクラッシュするのではなく、予期せぬ状態からの復旧を試みるようになりました。</p>
+<li><p>アプリ全体で予期しない状態の処理方法を変更しました:常に即座にクラッシュする代わりに、多くの場合、アプリは予期しない状態から回復しようとするようになりました。</p>
 
 <ul>
 
-<li>この変更は上記のスクロールクラッシュの修正に貢献します。また、他のクラッシュも防止する可能性があります。</li>
+<li>この変更は、上記のスクロールクラッシュの修正に貢献しています。他のクラッシュも防ぐ可能性があります。</li>
 
 </ul></li>
 
 </ul>
 
-<p>補足：私の環境ではこれらのクラッシュを再現できず、正確な原因はまだ不明ですが、受け取った報告に基づくと、このアップデートでクラッシュは防止できるはずです。スクロール中のクラッシュが続く場合や、3.0.2でクラッシュを経験された場合は、GitHub
+<p>補足:私は自分のマシンでこれらのクラッシュを再現することができず、何が原因だったのかまだ確信が持てませんが、受け取った報告に基づくと、このアップデートでクラッシュを防げるはずです。もしスクロール中にまだクラッシュが発生する場合、または
 
-Issue <a
+3.0.2 でクラッシュを<em>経験した</em>場合は、GitHub Issue <a
 
-href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">#988</a>で経験と診断データを共有していただけると助かります。これにより問題の理解とMac
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">#988</a>
 
-Mouse Fixの改善に役立ちます。ご協力ありがとうございます！</p>
+であなたの経験と診断データを共有していただけると貴重です。これにより、問題を理解し、Mac
 
-<h3 id="スクロールの途切れへの対応">スクロールの途切れへの対応</h3>
+Mouse Fix を改善することができます。ありがとうございます!</p>
 
-<p>3.0.2では、AppleのVSync
+<h3 id="スクロールのカクつきへの対処">スクロールのカクつきへの対処</h3>
 
-APIの問題が原因と思われるスクロールの途切れを減らすため、Mac Mouse
+<p>3.0.2 では、Apple の VSync API
 
-Fixがシステムにスクロールイベントを送信する方法を変更しました。</p>
+の問題によって引き起こされる可能性のあるスクロールのカクつきを減らすために、Mac
 
-<p>しかし、より広範なテストとフィードバックの結果、3.0.2の新しいメカニズムは一部のシナリオではスクロールがスムーズになりましたが、他のシナリオでは逆に途切れやすくなることが分かりました。特にFirefoxでは顕著に悪化したようです。<br />
+Mouse Fix
 
-全体として、新しいメカニズムが本当にスクロールの途切れを改善したかは不明確でした。また、上記のスクロールクラッシュの一因となった可能性もあります。</p>
+がシステムにスクロールイベントを送信する方法を変更しました。</p>
 
-<p>そのため、新しいメカニズムを無効化し、スクロールイベントのVSyncメカニズムをMac
+<p>しかし、より広範なテストとフィードバックの後、3.0.2
 
-Mouse Fix 3.0.0と3.0.1の状態に戻しました。</p>
+の新しい機構は一部のシナリオではスクロールをよりスムーズにしますが、他のシナリオではよりカクつくことがわかりました。特に
 
-<p>詳しくはGitHub Issue <a
+Firefox では明らかに悪化しているようでした。<br />
 
-href="https://github.com/noah-nuebling/mac-mouse-fix/issues/875">#875</a>をご覧ください。</p>
+全体的に、新しい機構が実際にスクロールのカクつきを全面的に改善したかどうかは明確ではありませんでした。また、上記のスクロールクラッシュに寄与した可能性もあります。</p>
+
+<p>そのため、新しい機構を無効にし、スクロールイベントの VSync 機構を Mac
+
+Mouse Fix 3.0.0 および 3.0.1 の状態に戻しました。</p>
+
+<p>詳細については、GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/875">#875</a>
+
+を参照してください。</p>
 
 <h3 id="返金">返金</h3>
 
-<p>3.0.1と3.0.2でのスクロールに関する変更で問題が発生し、申し訳ありません。これらの問題を大きく過小評価し、対応が遅れてしまいました。この経験から学び、今後はこのような変更により慎重に対応するよう努めます。影響を受けた方には返金を提供させていただきます。ご希望の方は<a
+<p>3.0.1 および 3.0.2
+
+のスクロール変更に関連するトラブルについてお詫び申し上げます。私はそれに伴う問題を大幅に過小評価しており、これらの問題への対処が遅れました。この経験から学び、今後はこのような変更により慎重になるよう最善を尽くします。また、影響を受けた方には返金を提供したいと思います。ご希望の方は<a
 
 href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=ja">こちら</a>をクリックしてください。</p>
 
 <h3
 
-id="スマートなアップデートメカニズム">スマートなアップデートメカニズム</h3>
+id="よりスマートなアップデート機構">よりスマートなアップデート機構</h3>
 
-<p>これらの変更はMac Mouse Fix <a
+<p>これらの変更は Mac Mouse Fix <a
 
-href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.4&amp;locale=ja">2.2.4</a>と<a
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.4&amp;locale=ja">2.2.4</a>
 
-href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.5&amp;locale=ja">2.2.5</a>から移植されました。詳細はそれらのリリースノートをご確認ください。概要は以下の通りです：</p>
+および <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.5&amp;locale=ja">2.2.5</a>
+
+から引き継がれました。詳細については、それらのリリースノートをご覧ください。概要は以下の通りです:</p>
 
 <ul>
 
-<li>ユーザーに表示するアップデートを決定する、より賢いメカニズムが導入されました。</li>
+<li>ユーザーに表示するアップデートを決定する、新しくよりスマートな機構が追加されました。</li>
 
-<li>アップデートフレームワークをSparkle 1.26.0から最新の<a
+<li>Sparkle 1.26.0 アップデートフレームワークから最新の Sparkle <a
 
-href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>に切り替えました。</li>
+href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>
 
-<li>Mac Mouse
+に切り替えました。</li>
 
-Fixの新バージョンが利用可能であることを通知するウィンドウがJavaScriptをサポートするようになり、アップデートノートのより良い形式での表示が可能になりました。</li>
+<li>Mac Mouse Fix
+
+の新しいバージョンが利用可能であることを通知するためにアプリが表示するウィンドウが
+
+JavaScript
+
+をサポートするようになり、アップデートノートのより良いフォーマットが可能になりました。</li>
 
 </ul>
 
@@ -226,19 +198,21 @@ Fixの新バージョンが利用可能であることを通知するウィン�
 
 <ul>
 
-<li>「About」タブでアプリの価格と関連情報が正しく表示されない問題を修正しました。</li>
+<li>「About」タブでアプリの価格と関連情報が場合によって正しく表示されない問題を修正しました。</li>
 
-<li>複数のディスプレイを使用中にスムーズスクロールとディスプレイのリフレッシュレートを同期するメカニズムが正しく機能しない問題を修正しました。</li>
+<li>複数のディスプレイを使用している間、スムーズスクロールをディスプレイのリフレッシュレートと同期する機構が正常に動作しない問題を修正しました。</li>
 
-<li>多くの軽微な内部的なクリーンアップと改善を行いました。</li>
+<li>多数の細かい内部的なクリーンアップと改善。</li>
 
 </ul>
 
 <hr />
 
-<p>前回のリリース<a
+<p>前回のリリース <a
 
-href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.2&amp;locale=ja"><strong>3.0.2</strong></a>もご確認ください。</p>
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.2&amp;locale=ja"><strong>3.0.2</strong></a>
+
+もご覧ください。</p>
 
 </body>
 

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.6</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Traduzido por IA</strong></p>
+
+<p>Esta nota de versão foi traduzida pela IA Claude. Pode conter
+
+erros.<br />
+
+Para a versão original em inglês, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.6">clique
+
+aqui</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.6</strong> torna o recurso ‘Voltar’ e
+
+‘Avançar’ compatível com mais aplicativos. Também corrige vários bugs e
+
+problemas.</p>
+
+<h3 id="recurso-voltar-e-avançar-aprimorado">Recurso ‘Voltar’ e
+
+‘Avançar’ Aprimorado</h3>
+
+<p>Os mapeamentos dos botões do mouse ‘Voltar’ e ‘Avançar’ agora
+
+<strong>funcionam em mais aplicativos</strong>, incluindo:</p>
+
+<ul>
+
+<li>Visual Studio Code, Cursor, VSCodium, Windsurf, Zed e outros
+
+editores de código</li>
+
+<li>Muitos aplicativos nativos da Apple como Visualização, Notas,
+
+Ajustes do Sistema, App Store e Música</li>
+
+<li>Adobe Acrobat</li>
+
+<li>Zotero</li>
+
+<li>E mais!</li>
+
+</ul>
+
+<p>A implementação é inspirada no excelente recurso ‘Universal Back and
+
+Forward’ do <a
+
+href="https://github.com/linearmouse/linearmouse">LinearMouse</a>. Deve
+
+suportar todos os aplicativos que o LinearMouse suporta.<br />
+
+Além disso, suporta alguns aplicativos que normalmente requerem atalhos
+
+de teclado para voltar e avançar, como Ajustes do Sistema, App Store,
+
+Notas da Apple e Adobe Acrobat. O Mac Mouse Fix agora detectará esses
+
+aplicativos e simulará os atalhos de teclado apropriados.</p>
+
+<p>Todos os aplicativos que já foram <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22">solicitados
+
+em uma Issue do GitHub</a> devem estar suportados agora! (Obrigado pelo
+
+feedback!)<br />
+
+Se você encontrar algum aplicativo que ainda não funciona, me avise em
+
+uma <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-feature-request&amp;locale=pt-BR">solicitação
+
+de recurso</a>.</p>
+
+<h3
+
+id="corrigindo-o-bug-rolagem-para-de-funcionar-intermitentemente">Corrigindo
+
+o Bug ‘Rolagem Para de Funcionar Intermitentemente’</h3>
+
+<p>Alguns usuários experimentaram um <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20state%3Aclosed%20stops%20working%20label%3A%22Scroll%20Stops%20Working%20Intermittently%22">problema</a>
+
+onde a <strong>rolagem suave para de funcionar</strong>
+
+aleatoriamente.</p>
+
+<p>Embora eu nunca tenha conseguido reproduzir o problema, implementei
+
+uma possível correção:</p>
+
+<p>O aplicativo agora tentará várias vezes quando a configuração da
+
+sincronização com o display falhar.<br />
+
+Se ainda não funcionar após as tentativas, o aplicativo irá:</p>
+
+<ul>
+
+<li>Reiniciar o processo em segundo plano ‘Mac Mouse Fix Helper’, o que
+
+pode resolver o problema</li>
+
+<li>Produzir um relatório de falha, que pode ajudar a diagnosticar o
+
+bug</li>
+
+</ul>
+
+<p>Espero que o problema esteja resolvido agora! Caso contrário, me
+
+avise em um <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-bug-report&amp;locale=pt-BR">relatório
+
+de bug</a> ou por <a
+
+href="http://redirect.macmousefix.com/?target=mailto-noah&amp;locale=pt-BR">email</a>.</p>
+
+<h3
+
+id="comportamento-aprimorado-da-roda-de-rolagem-de-giro-livre">Comportamento
+
+Aprimorado da Roda de Rolagem de Giro Livre</h3>
+
+<p>O Mac Mouse Fix <strong>não irá mais acelerar a rolagem</strong> para
+
+você quando você deixar a roda de rolagem girar livremente no mouse MX
+
+Master. (Ou qualquer outro mouse com roda de rolagem de giro livre.)</p>
+
+<p>Embora esse recurso de ‘aceleração de rolagem’ seja útil em rodas de
+
+rolagem normais, em uma roda de rolagem de giro livre pode tornar as
+
+coisas mais difíceis de controlar.</p>
+
+<p><strong>Nota:</strong> O Mac Mouse Fix atualmente não é totalmente
+
+compatível com a maioria dos mouses Logitech, incluindo o MX Master.
+
+Planejo adicionar suporte completo, mas provavelmente levará um tempo.
+
+Enquanto isso, o melhor driver de terceiros com suporte Logitech que
+
+conheço é o <a
+
+href="https://plentycom.jp/en/steermouse/">SteerMouse</a>.</p>
+
+<h3 id="correções-de-bugs">Correções de Bugs</h3>
+
+<ul>
+
+<li>Corrigido um problema onde o Mac Mouse Fix às vezes reativava
+
+atalhos de teclado que foram previamente desabilitados nos Ajustes do
+
+Sistema<br />
+
+</li>
+
+<li>Corrigida uma falha ao clicar em ‘Ativar Licença’</li>
+
+<li>Corrigida uma falha ao clicar em ‘Cancelar’ logo após clicar em
+
+‘Ativar Licença’ (Obrigado pelo relato, Ali!)</li>
+
+<li>Corrigidas falhas ao tentar usar o Mac Mouse Fix enquanto nenhum
+
+display está conectado ao seu Mac</li>
+
+<li>Corrigido um vazamento de memória e alguns outros problemas internos
+
+ao alternar entre abas no aplicativo</li>
+
+</ul>
+
+<h3 id="melhorias-visuais">Melhorias Visuais</h3>
+
+<ul>
+
+<li>Corrigido um problema onde a aba Sobre às vezes ficava muito alta,
+
+que foi introduzido na versão <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=pt-BR">3.0.5</a></li>
+
+<li>O texto na notificação ‘Dias gratuitos acabaram’ não é mais cortado
+
+em chinês</li>
+
+<li>Corrigida uma falha visual na sombra do campo ‘+’ após gravar uma
+
+entrada</li>
+
+<li>Corrigida uma falha rara onde o texto de espaço reservado na tela
+
+‘Digite Sua Chave de Licença’ aparecia descentralizado</li>
+
+<li>Corrigido um problema onde alguns símbolos exibidos no aplicativo
+
+tinham a cor errada após alternar entre modo escuro/claro</li>
+
+</ul>
+
+<h3 id="outras-melhorias">Outras Melhorias</h3>
+
+<ul>
+
+<li>Tornei algumas animações, como a animação de troca de abas, um pouco
+
+mais eficientes<br />
+
+</li>
+
+<li>Desabilitado o preenchimento automático de texto da Touch Bar na
+
+tela ‘Digite Sua Chave de Licença’</li>
+
+<li>Várias melhorias internas menores</li>
+
+</ul>
+
+<p><em>Editado com excelente assistência do Claude.</em></p>
+
+<hr />
+
+<p>Confira também a versão anterior <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=pt-BR">3.0.5</a>.</p>
+
+</body>
+
+</html>

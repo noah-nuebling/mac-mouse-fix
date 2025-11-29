@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.7</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Traduzido por IA</strong></p>
+
+<p>Esta nota de versão foi traduzida pela IA Claude. Pode conter
+
+erros.<br />
+
+Para a versão original em inglês, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.7">clique
+
+aqui</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.7</strong> corrige vários bugs
+
+importantes.</p>
+
+<h3 id="correções-de-bugs">Correções de Bugs</h3>
+
+<ul>
+
+<li>O app funciona novamente em <strong>versões mais antigas do
+
+macOS</strong> (macOS 10.15 Catalina e macOS 11 Big Sur)
+
+<ul>
+
+<li>O Mac Mouse Fix 3.0.6 não podia ser habilitado nessas versões do
+
+macOS porque o recurso aprimorado de ‘Voltar’ e ‘Avançar’ introduzido no
+
+Mac Mouse Fix 3.0.6 tentava usar APIs do sistema macOS que não estavam
+
+disponíveis.</li>
+
+</ul></li>
+
+<li>Corrigidos problemas com o recurso de <strong>‘Voltar’ e
+
+‘Avançar’</strong>
+
+<ul>
+
+<li>O recurso aprimorado de ‘Voltar’ e ‘Avançar’ introduzido no Mac
+
+Mouse Fix 3.0.6 agora sempre usará a ‘thread principal’ para perguntar
+
+ao macOS quais teclas simular para voltar e avançar no app que você está
+
+usando.<br />
+
+Isso pode prevenir crashes e comportamento não confiável em algumas
+
+situações.</li>
+
+</ul></li>
+
+<li>Tentativa de corrigir o bug onde as <strong>configurações eram
+
+redefinidas aleatoriamente</strong> (Veja essas <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20label%3A%22Config%20Reset%20Intermittently%22">Issues
+
+no GitHub</a>)
+
+<ul>
+
+<li>Reescrevi o código que carrega o arquivo de configuração do Mac
+
+Mouse Fix para ser mais robusto. Quando erros raros do sistema de
+
+arquivos do macOS ocorriam, o código antigo às vezes podia pensar
+
+erroneamente que o arquivo de configuração estava corrompido e
+
+redefini-lo para o padrão.</li>
+
+</ul></li>
+
+<li>Reduzidas as chances de um bug onde a <strong>rolagem para de
+
+funcionar</strong>
+
+<ul>
+
+<li>Este bug não pode ser totalmente resolvido sem mudanças mais
+
+profundas, que provavelmente causariam outros problemas.<br />
+
+No entanto, por enquanto, reduzi a janela de tempo onde um ‘deadlock’
+
+pode acontecer no sistema de rolagem, o que deve pelo menos diminuir as
+
+chances de encontrar este bug. Isso também torna a rolagem um pouco mais
+
+eficiente.</li>
+
+<li>Este bug tem sintomas similares – mas acredito que uma razão
+
+subjacente diferente – do bug ‘Rolagem Para de Funcionar
+
+Intermitentemente’ que foi abordado no último lançamento 3.0.6.</li>
+
+<li>(Obrigado ao Joonas pelos diagnósticos!)</li>
+
+</ul></li>
+
+</ul>
+
+<p>Obrigado a todos por reportarem os bugs!</p>
+
+<hr />
+
+<p>Confira também o lançamento anterior <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.6&amp;locale=pt-BR">3.0.6</a>.</p>
+
+</body>
+
+</html>

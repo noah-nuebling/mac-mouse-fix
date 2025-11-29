@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="id" xml:lang="id">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.4</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Diterjemahkan oleh AI</strong></p>
+
+<p>Catatan rilis ini telah diterjemahkan oleh AI Claude. Mungkin
+
+terdapat kesalahan.<br />
+
+Untuk versi asli dalam bahasa Inggris, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.4">klik
+
+di sini</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.4</strong> meningkatkan privasi, efisiensi,
+
+dan keandalan.<br />
+
+Versi ini memperkenalkan sistem lisensi offline baru, dan memperbaiki
+
+beberapa bug penting.</p>
+
+<h3 id="peningkatan-privasi-efisiensi">Peningkatan Privasi &amp;
+
+Efisiensi</h3>
+
+<p>3.0.4 memperkenalkan sistem validasi lisensi offline baru yang
+
+meminimalkan koneksi internet sebanyak mungkin.<br />
+
+Ini meningkatkan privasi dan menghemat sumber daya sistem komputer
+
+kamu.<br />
+
+Saat berlisensi, aplikasi sekarang beroperasi 100% offline!</p>
+
+<details>
+
+<summary>
+
+<b>Klik di sini untuk detail lebih lanjut</b>
+
+</summary>
+
+<p>Versi sebelumnya memvalidasi lisensi secara online di setiap
+
+peluncuran, yang berpotensi memungkinkan log koneksi disimpan oleh
+
+server pihak ketiga (GitHub dan Gumroad). Sistem baru menghilangkan
+
+koneksi yang tidak perlu – setelah aktivasi lisensi awal, sistem hanya
+
+terhubung ke internet jika data lisensi lokal rusak. <br><br> Meskipun
+
+tidak ada perilaku pengguna yang pernah dicatat oleh saya secara
+
+pribadi, sistem sebelumnya secara teoritis memungkinkan server pihak
+
+ketiga untuk mencatat alamat IP dan waktu koneksi. Gumroad juga dapat
+
+mencatat kunci lisensi kamu dan berpotensi menghubungkannya dengan info
+
+pribadi apa pun yang mereka catat tentang kamu saat kamu membeli Mac
+
+Mouse Fix. <br><br> Saya tidak mempertimbangkan masalah privasi yang
+
+halus ini ketika saya membangun sistem lisensi asli, tetapi sekarang,
+
+Mac Mouse Fix seprivat dan sebebas internet mungkin! <br><br> Lihat juga
+
+<a href=https://gumroad.com/privacy>kebijakan privasi Gumroad</a> dan
+
+<a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>komentar
+
+GitHub</a> saya ini.</p>
+
+</details>
+
+<h3 id="perbaikan-bug">Perbaikan Bug</h3>
+
+<ul>
+
+<li>Memperbaiki bug di mana macOS terkadang macet saat menggunakan
+
+‘Click and Drag’ untuk ‘Spaces &amp; Mission Control’.</li>
+
+<li>Memperbaiki bug di mana pintasan keyboard di System Settings
+
+terkadang terhapus saat menggunakan aksi ‘Click’ Mac Mouse Fix seperti
+
+‘Mission Control’.</li>
+
+<li>Memperbaiki <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aopen%20label%3A%22%27Free%20days%20are%20over%27%20bug%22">bug</a>
+
+di mana aplikasi terkadang berhenti bekerja dan menampilkan notifikasi
+
+bahwa ‘Free days are over’ kepada pengguna yang sudah membeli aplikasi.
+
+<ul>
+
+<li>Jika kamu mengalami bug ini, saya dengan tulus meminta maaf atas
+
+ketidaknyamanannya. Kamu dapat mengajukan <a
+
+href="https://redirect.macmousefix.com/?message=&amp;target=mmf-apply-for-refund&amp;locale=id">pengembalian
+
+dana di sini</a>.</li>
+
+</ul></li>
+
+<li>Meningkatkan cara aplikasi mengambil jendela utamanya, yang mungkin
+
+telah memperbaiki bug di mana layar ‘Activate License’ terkadang gagal
+
+muncul.</li>
+
+</ul>
+
+<h3 id="peningkatan-kegunaan">Peningkatan Kegunaan</h3>
+
+<ul>
+
+<li>Membuat tidak mungkin untuk memasukkan spasi dan baris baru di kolom
+
+teks pada layar ‘Activate License’.
+
+<ul>
+
+<li>Ini adalah titik kebingungan yang umum, karena sangat mudah untuk
+
+secara tidak sengaja memilih baris baru yang tersembunyi saat menyalin
+
+kunci lisensi kamu dari email Gumroad.</li>
+
+</ul></li>
+
+<li>Catatan pembaruan ini diterjemahkan secara otomatis untuk pengguna
+
+non-Inggris (Didukung oleh Claude). Saya harap ini membantu! Jika kamu
+
+menemukan masalah apa pun, beri tahu saya. Ini adalah gambaran pertama
+
+dari sistem terjemahan baru yang telah saya kembangkan selama setahun
+
+terakhir.</li>
+
+</ul>
+
+<h3
+
+id="penghentian-dukungan-tidak-resmi-untuk-macos-10.14-mojave">Penghentian
+
+Dukungan (Tidak Resmi) untuk macOS 10.14 Mojave</h3>
+
+<p>Mac Mouse Fix 3 secara resmi mendukung macOS 11 Big Sur dan yang
+
+lebih baru. Namun, untuk pengguna yang bersedia menerima beberapa
+
+gangguan dan masalah grafis, Mac Mouse Fix 3.0.3 dan versi sebelumnya
+
+masih dapat digunakan di macOS 10.14.4 Mojave.</p>
+
+<p>Mac Mouse Fix 3.0.4 menghentikan dukungan tersebut dan
+
+<strong>sekarang memerlukan macOS 10.15 Catalina</strong>.<br />
+
+Saya meminta maaf atas ketidaknyamanan yang ditimbulkan oleh hal ini.
+
+Perubahan ini memungkinkan saya untuk mengimplementasikan sistem lisensi
+
+yang ditingkatkan menggunakan fitur Swift modern. Pengguna Mojave dapat
+
+terus menggunakan Mac Mouse Fix <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.3&amp;locale=id">3.0.3</a>
+
+atau <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=id">versi
+
+terbaru Mac Mouse Fix 2</a>. Saya harap itu solusi yang baik untuk semua
+
+orang.</p>
+
+<h3 id="peningkatan-internal">Peningkatan Internal</h3>
+
+<ul>
+
+<li>Mengimplementasikan sistem ‘MFDataClass’ baru yang memungkinkan
+
+pemodelan data yang lebih kuat sambil menjaga file konfigurasi Mac Mouse
+
+Fix tetap dapat dibaca dan diedit oleh manusia.</li>
+
+<li>Membangun dukungan untuk menambahkan platform pembayaran selain
+
+Gumroad. Jadi di masa depan, mungkin ada checkout yang dilokalkan, dan
+
+aplikasi dapat dijual ke berbagai negara.</li>
+
+<li>Meningkatkan logging yang memungkinkan saya membuat “Debug Builds”
+
+yang lebih efektif untuk pengguna yang mengalami bug yang sulit
+
+direproduksi.</li>
+
+<li>Banyak peningkatan kecil dan pekerjaan pembersihan lainnya.</li>
+
+</ul>
+
+<p><em>Diedit dengan bantuan luar biasa dari Claude.</em></p>
+
+<hr />
+
+<p>Lihat juga rilis sebelumnya <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.3&amp;locale=id"><strong>3.0.3</strong></a>.</p>
+
+</body>
+
+</html>

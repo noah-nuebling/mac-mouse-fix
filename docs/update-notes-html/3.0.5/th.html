@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="th" xml:lang="th">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ แปลโดย AI</strong></p>
+
+<p>บันทึกการเปิดตัวนี้ได้รับการแปลโดย Claude AI อาจมีข้อผิดพลาดบางประการ<br />
+
+สำหรับเวอร์ชันภาษาอังกฤษต้นฉบับ <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.5">คลิกที่นี่</a></p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.5</strong> แก้ไขบั๊กหลายจุด ปรับปรุงประสิทธิภาพ
+
+และเพิ่มความสวยงามให้กับแอปอีกเล็กน้อย<br />
+
+นอกจากนี้ยังรองรับ macOS 26 Tahoe อีกด้วย</p>
+
+<h3
+
+id="ปรบปรงการจำลองการเลอนดวยแทรคแพด">ปรับปรุงการจำลองการเลื่อนด้วยแทร็คแพด</h3>
+
+<ul>
+
+<li>ระบบการเลื่อนสามารถจำลองการแตะสองนิ้วบนแทร็คแพดเพื่อให้แอปพลิเคชันหยุดการเลื่อนได้แล้ว
+
+<ul>
+
+<li>แก้ไขปัญหาเมื่อใช้งานแอป iPhone หรือ iPad
+
+ที่การเลื่อนมักจะดำเนินต่อไปแม้ผู้ใช้จะเลือกหยุดแล้ว</li>
+
+</ul></li>
+
+<li>แก้ไขการจำลองการยกนิ้วออกจากแทร็คแพดที่ไม่สม่ำเสมอ
+
+<ul>
+
+<li>อาจทำให้เกิดพฤติกรรมที่ไม่เหมาะสมในบางสถานการณ์</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="รองรบ-macos-26-tahoe">รองรับ macOS 26 Tahoe</h3>
+
+<p>เมื่อใช้งาน macOS 26 Tahoe Beta แอปสามารถใช้งานได้แล้ว และ UI
+
+ส่วนใหญ่ทำงานได้อย่างถูกต้อง</p>
+
+<h3 id="เพมประสทธภาพ">เพิ่มประสิทธิภาพ</h3>
+
+<p>ปรับปรุงประสิทธิภาพของท่าทางคลิกและลากเพื่อ “เลื่อนและนำทาง”<br />
+
+จากการทดสอบของผม การใช้ CPU ลดลงประมาณ 50%!</p>
+
+<p><strong>ข้อมูลเบื้องหลัง</strong></p>
+
+<p>ระหว่างท่าทาง “เลื่อนและนำทาง” Mac Mouse Fix
+
+จะวาดเคอร์เซอร์เมาส์ปลอมในหน้าต่างโปร่งใส พร้อมกับล็อกเคอร์เซอร์เมาส์จริงไว้ที่เดิม
+
+วิธีนี้ช่วยให้คุณสามารถเลื่อนองค์ประกอบ UI ที่คุณเริ่มเลื่อนต่อไปได้
+
+ไม่ว่าคุณจะเลื่อนเมาส์ไปไกลแค่ไหน</p>
+
+<p>การปรับปรุงประสิทธิภาพทำได้โดยการปิดการจัดการอีเวนต์เริ่มต้นของ macOS
+
+บนหน้าต่างโปร่งใสนี้ ซึ่งไม่ได้ใช้งานอยู่แล้ว</p>
+
+<h3 id="แกไขบก">แก้ไขบั๊ก</h3>
+
+<ul>
+
+<li>ตอนนี้จะเพิกเฉยต่ออีเวนต์การเลื่อนจากแท็บเล็ตวาด Wacom
+
+<ul>
+
+<li>ก่อนหน้านี้ Mac Mouse Fix ทำให้เกิดการเลื่อนที่ผิดปกติบนแท็บเล็ต Wacom ตามที่ <span
+
+class="citation" data-cites="frenchie1980">@frenchie1980</span> รายงานใน
+
+GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>
+
+(ขอบคุณ!)</li>
+
+</ul></li>
+
+<li>แก้ไขบั๊กที่โค้ด Swift Concurrency ซึ่งถูกเพิ่มเข้ามาเป็นส่วนหนึ่งของระบบไลเซนส์ใหม่ใน
+
+Mac Mouse Fix 3.0.4 ไม่ทำงานบนเธรดที่ถูกต้อง
+
+<ul>
+
+<li>ทำให้เกิดการแครชบน macOS Tahoe
+
+และน่าจะเป็นสาเหตุของบั๊กเกี่ยวกับไลเซนส์ที่เกิดขึ้นเป็นครั้งคราวด้วย</li>
+
+</ul></li>
+
+<li>ปรับปรุงความแข็งแกร่งของโค้ดที่ถอดรหัสไลเซนส์ออฟไลน์
+
+<ul>
+
+<li>แก้ไขปัญหาใน API ของ Apple ที่ทำให้การตรวจสอบไลเซนส์ออฟไลน์ล้มเหลวเสมอบน
+
+Intel Mac Mini ของผม ผมคิดว่าปัญหานี้เกิดขึ้นบน Intel Mac ทุกเครื่อง
+
+และน่าจะเป็นเหตุผลที่บั๊ก “Free days are over” (ที่แก้ไขไปแล้วใน 3.0.4)
+
+ยังคงเกิดขึ้นกับบางคน ตามที่ <span class="citation"
+
+data-cites="toni20k5267">@toni20k5267</span> รายงานใน GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>
+
+(ขอบคุณ!)
+
+<ul>
+
+<li>หากคุณประสบปัญหาบั๊ก “Free days are over” ผมขอโทษด้วย!
+
+คุณสามารถขอคืนเงินได้<a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=th">ที่นี่</a></li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="ปรบปรง-ux">ปรับปรุง UX</h3>
+
+<ul>
+
+<li>ปิดการใช้งานไดอะล็อกที่ให้วิธีแก้ปัญหาทีละขั้นตอนสำหรับบั๊กของ macOS
+
+ที่ทำให้ผู้ใช้ไม่สามารถเปิดใช้งาน Mac Mouse Fix ได้
+
+<ul>
+
+<li>ปัญหาเหล่านี้เกิดขึ้นเฉพาะบน macOS 13 Ventura และ 14 Sonoma
+
+ตอนนี้ไดอะล็อกเหล่านี้จะปรากฏเฉพาะบน macOS เวอร์ชันที่เกี่ยวข้องเท่านั้น</li>
+
+<li>ไดอะล็อกยังถูกทริกเกอร์ได้ยากขึ้นเล็กน้อย –
+
+ก่อนหน้านี้บางครั้งจะแสดงขึ้นในสถานการณ์ที่ไม่ค่อยมีประโยชน์</li>
+
+</ul></li>
+
+<li>เพิ่มลิงก์ “เปิดใช้งานไลเซนส์” โดยตรงบนการแจ้งเตือน “Free days are over”
+
+<ul>
+
+<li>ทำให้การเปิดใช้งานไลเซนส์ Mac Mouse Fix ง่ายและสะดวกยิ่งขึ้น!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="ปรบปรงภาพลกษณ">ปรับปรุงภาพลักษณ์</h3>
+
+<ul>
+
+<li>ปรับปรุงรูปลักษณ์ของหน้าต่าง “Software Update” เล็กน้อย ตอนนี้เข้ากับ macOS 26
+
+Tahoe ได้ดีขึ้น
+
+<ul>
+
+<li>ทำได้โดยการปรับแต่งรูปลักษณ์เริ่มต้นของเฟรมเวิร์ก “Sparkle 1.27.3” ที่ Mac Mouse
+
+Fix ใช้จัดการอัปเดต</li>
+
+</ul></li>
+
+<li>แก้ไขปัญหาที่ข้อความด้านล่างของแท็บ About ถูกตัดบางครั้งในภาษาจีน
+
+โดยทำให้หน้าต่างกว้างขึ้นเล็กน้อย</li>
+
+<li>แก้ไขข้อความด้านล่างของแท็บ About ที่เยื้องไม่ตรงกลางเล็กน้อย</li>
+
+<li>แก้ไขบั๊กที่ทำให้พื้นที่ใต้ตัวเลือก “Keyboard Shortcut…” บนแท็บ Buttons
+
+เล็กเกินไป</li>
+
+</ul>
+
+<h3 id="การเปลยนแปลงภายใน">การเปลี่ยนแปลงภายใน</h3>
+
+<ul>
+
+<li>ลบการพึ่งพาเฟรมเวิร์ก “SnapKit”
+
+<ul>
+
+<li>ทำให้ขนาดของแอปลดลงเล็กน้อยจาก 19.8 เป็น 19.5 MB</li>
+
+</ul></li>
+
+<li>ปรับปรุงเล็กน้อยอื่นๆ ในโค้ดเบส</li>
+
+</ul>
+
+<p><em>แก้ไขด้วยความช่วยเหลืออันยอดเยี่ยมจาก Claude</em></p>
+
+<hr />
+
+<p>ดูรีลีสก่อนหน้า <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.4&amp;locale=th"><strong>3.0.4</strong></a>
+
+ได้ด้วย</p>
+
+</body>
+
+</html>

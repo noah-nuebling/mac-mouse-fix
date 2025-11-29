@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ro" xml:lang="ro">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Tradus de AI</strong></p>
+
+<p>Această notă de lansare a fost tradusă de AI-ul Claude. Poate conține
+
+erori.<br />
+
+Pentru versiunea originală în engleză, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.5">click
+
+aici</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.5</strong> remediază mai multe erori,
+
+îmbunătățește performanța și adaugă un pic de finisare aplicației.<br />
+
+Este, de asemenea, compatibilă cu macOS 26 Tahoe.</p>
+
+<h3 id="simulare-îmbunătățită-a-derulării-cu-trackpad-ul">Simulare
+
+îmbunătățită a derulării cu trackpad-ul</h3>
+
+<ul>
+
+<li>Sistemul de derulare poate acum simula o atingere cu două degete pe
+
+trackpad pentru a face aplicațiile să oprească derularea.
+
+<ul>
+
+<li>Aceasta remediază o problemă la rularea aplicațiilor pentru iPhone
+
+sau iPad, unde derularea continua adesea după ce utilizatorul alege să
+
+oprească.</li>
+
+</ul></li>
+
+<li>Remediată simularea inconsecventă a ridicării degetelor de pe
+
+trackpad.
+
+<ul>
+
+<li>Aceasta ar fi putut cauza comportament suboptimal în unele
+
+situații.</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="compatibilitate-cu-macos-26-tahoe">Compatibilitate cu macOS 26
+
+Tahoe</h3>
+
+<p>Când rulezi versiunea Beta macOS 26 Tahoe, aplicația este acum
+
+utilizabilă, iar cea mai mare parte a interfeței funcționează
+
+corect.</p>
+
+<h3 id="îmbunătățire-a-performanței">Îmbunătățire a performanței</h3>
+
+<p>Performanță îmbunătățită pentru gestul Click și Drag pentru “Scroll
+
+&amp; Navigate”.<br />
+
+În testele mele, utilizarea CPU-ului a fost redusă cu ~50%!</p>
+
+<p><strong>Context</strong></p>
+
+<p>În timpul gestului “Scroll &amp; Navigate”, Mac Mouse Fix desenează
+
+un cursor fals de mouse într-o fereastră transparentă, în timp ce
+
+blochează cursorul real de mouse în poziție. Aceasta asigură că poți
+
+continua să derulezi elementul de interfață pe care ai început să-l
+
+derulezi, indiferent cât de mult îți miști mouse-ul.</p>
+
+<p>Performanța îmbunătățită a fost obținută prin dezactivarea
+
+gestionării implicite a evenimentelor macOS pe această fereastră
+
+transparentă, care oricum nu era utilizată.</p>
+
+<h3 id="remedieri-de-erori">Remedieri de erori</h3>
+
+<ul>
+
+<li>Acum se ignoră evenimentele de derulare de la tabletele grafice
+
+Wacom.
+
+<ul>
+
+<li>Înainte, Mac Mouse Fix cauza derulare eratică pe tabletele Wacom,
+
+așa cum a raportat <span class="citation"
+
+data-cites="frenchie1980">@frenchie1980</span> în GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>.
+
+(Mulțumim!)</li>
+
+</ul></li>
+
+<li>Remediată o eroare în care codul Swift Concurrency, care a fost
+
+introdus ca parte a noului sistem de licențiere în Mac Mouse Fix 3.0.4,
+
+nu rula pe thread-ul corect.
+
+<ul>
+
+<li>Aceasta cauza crash-uri pe macOS Tahoe și probabil a cauzat și alte
+
+erori sporadice legate de licențiere.</li>
+
+</ul></li>
+
+<li>Îmbunătățită robustețea codului care decodifică licențele offline.
+
+<ul>
+
+<li>Aceasta ocolește o problemă în API-urile Apple care făcea ca
+
+validarea licenței offline să eșueze întotdeauna pe Mac Mini-ul meu
+
+Intel. Presupun că aceasta se întâmpla pe toate Mac-urile Intel și că a
+
+fost motivul pentru care eroarea “Free days are over” (care a fost deja
+
+abordată în 3.0.4) încă apărea pentru unii oameni, așa cum a raportat
+
+<span class="citation" data-cites="toni20k5267">@toni20k5267</span> în
+
+GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>.
+
+(Mulțumesc!)
+
+<ul>
+
+<li>Dacă ai experimentat eroarea “Free days are over”, îmi pare rău!
+
+Poți obține o rambursare <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=ro">aici</a>.</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="îmbunătățiri-ux">Îmbunătățiri UX</h3>
+
+<ul>
+
+<li>Dezactivate dialogurile care ofereau soluții pas cu pas pentru
+
+erorile macOS care împiedicau utilizatorii să activeze Mac Mouse Fix.
+
+<ul>
+
+<li>Aceste probleme apăreau doar pe macOS 13 Ventura și 14 Sonoma. Acum,
+
+aceste dialoguri apar doar pe acele versiuni de macOS unde sunt
+
+relevante.</li>
+
+<li>Dialogurile sunt, de asemenea, puțin mai greu de declanșat –
+
+înainte, apăreau uneori în situații în care nu erau foarte utile.</li>
+
+</ul></li>
+
+<li>Adăugat un link “Activate License” direct pe notificarea “Free days
+
+are over”.
+
+<ul>
+
+<li>Aceasta face activarea unei licențe Mac Mouse Fix și mai
+
+simplă!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="îmbunătățiri-vizuale">Îmbunătățiri vizuale</h3>
+
+<ul>
+
+<li>Îmbunătățit ușor aspectul ferestrei “Software Update”. Acum se
+
+potrivește mai bine cu macOS 26 Tahoe.
+
+<ul>
+
+<li>Aceasta a fost realizată prin personalizarea aspectului implicit al
+
+framework-ului “Sparkle 1.27.3” pe care Mac Mouse Fix îl folosește
+
+pentru a gestiona actualizările.</li>
+
+</ul></li>
+
+<li>Remediată problema în care textul din partea de jos a tab-ului About
+
+era uneori tăiat în chineză, prin lărgirea ușoară a ferestrei.</li>
+
+<li>Remediat textul din partea de jos a tab-ului About care era ușor
+
+decentrat.</li>
+
+<li>Remediată o eroare care făcea ca spațiul de sub opțiunea “Keyboard
+
+Shortcut…” din tab-ul Buttons să fie prea mic.</li>
+
+</ul>
+
+<h3 id="modificări-în-fundal">Modificări în fundal</h3>
+
+<ul>
+
+<li>Eliminată dependența de framework-ul “SnapKit”.
+
+<ul>
+
+<li>Aceasta reduce ușor dimensiunea aplicației de la 19.8 la 19.5
+
+MB.</li>
+
+</ul></li>
+
+<li>Diverse alte îmbunătățiri minore în codul sursă.</li>
+
+</ul>
+
+<p><em>Editat cu asistență excelentă de la Claude.</em></p>
+
+<hr />
+
+<p>Verifică și versiunea anterioară <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.4&amp;locale=ro"><strong>3.0.4</strong></a>.</p>
+
+</body>
+
+</html>

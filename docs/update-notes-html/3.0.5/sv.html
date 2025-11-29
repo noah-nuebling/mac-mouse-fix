@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="sv" xml:lang="sv">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Översatt av AI</strong></p>
+
+<p>Detta releasemeddelande har översatts av Claude AI. Det kan innehålla
+
+fel.<br />
+
+För den engelska originalversionen, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.5">klicka
+
+här</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.5</strong> fixar flera buggar, förbättrar
+
+prestandan och ger appen lite extra polish.<br />
+
+Den är också kompatibel med macOS 26 Tahoe.</p>
+
+<h3 id="förbättrad-simulering-av-trackpad-scrollning">Förbättrad
+
+simulering av trackpad-scrollning</h3>
+
+<ul>
+
+<li>Scrollsystemet kan nu simulera en tvåfingertryckning på trackpaden
+
+för att få applikationer att sluta scrolla.
+
+<ul>
+
+<li>Detta fixar ett problem när man kör iPhone- eller iPad-appar, där
+
+scrollningen ofta fortsatte efter att användaren valt att stoppa.</li>
+
+</ul></li>
+
+<li>Fixade inkonsekvent simulering av att lyfta fingrarna från
+
+trackpaden.
+
+<ul>
+
+<li>Detta kan ha orsakat suboptimalt beteende i vissa situationer.</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="macos-26-tahoe-kompatibilitet">macOS 26
+
+Tahoe-kompatibilitet</h3>
+
+<p>När man kör macOS 26 Tahoe Beta är appen nu användbar, och det mesta
+
+av användargränssnittet fungerar korrekt.</p>
+
+<h3 id="prestandaförbättring">Prestandaförbättring</h3>
+
+<p>Förbättrad prestanda för Klicka och dra till “Scrolla &amp;
+
+navigera”-gesten.<br />
+
+I mina tester har CPU-användningen minskat med ~50%!</p>
+
+<p><strong>Bakgrund</strong></p>
+
+<p>Under “Scrolla &amp; navigera”-gesten ritar Mac Mouse Fix en falsk
+
+muspekare i ett transparent fönster, samtidigt som den riktiga
+
+muspekaren låses på plats. Detta säkerställer att du kan fortsätta
+
+scrolla det UI-element som du började scrolla på, oavsett hur långt du
+
+flyttar musen.</p>
+
+<p>Den förbättrade prestandan uppnåddes genom att stänga av
+
+standardhanteringen av macOS-händelser på detta transparenta fönster,
+
+som ändå inte användes.</p>
+
+<h3 id="buggfixar">Buggfixar</h3>
+
+<ul>
+
+<li>Ignorerar nu scrollhändelser från Wacom-ritplattor.
+
+<ul>
+
+<li>Tidigare orsakade Mac Mouse Fix hackig scrollning på Wacom-plattor,
+
+som rapporterades av <span class="citation"
+
+data-cites="frenchie1980">@frenchie1980</span> i GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>.
+
+(Tack!)</li>
+
+</ul></li>
+
+<li>Fixade en bugg där Swift Concurrency-koden, som introducerades som
+
+en del av det nya licenssystemet i Mac Mouse Fix 3.0.4, inte kördes på
+
+rätt tråd.
+
+<ul>
+
+<li>Detta orsakade krascher på macOS Tahoe, och det orsakade troligen
+
+även andra sporadiska buggar kring licensiering.</li>
+
+</ul></li>
+
+<li>Förbättrade robustheten i koden som avkodar offlinelicenser.
+
+<ul>
+
+<li>Detta kringgår ett problem i Apples API:er som orsakade att
+
+offlinelicensvalidering alltid misslyckades på min Intel Mac Mini. Jag
+
+antar att detta hände på alla Intel-Macar, och att det var anledningen
+
+till att “Gratisdagarna är över”-buggen (som redan åtgärdades i 3.0.4)
+
+fortfarande förekom för vissa personer, som rapporterades av <span
+
+class="citation" data-cites="toni20k5267">@toni20k5267</span> i GitHub
+
+Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>.
+
+(Tack!)
+
+<ul>
+
+<li>Om du upplevde “Gratisdagarna är över”-buggen, ber jag om ursäkt för
+
+det! Du kan få en återbetalning <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=sv">här</a>.</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="ux-förbättringar">UX-förbättringar</h3>
+
+<ul>
+
+<li>Inaktiverade dialogrutor som gav steg-för-steg-lösningar för
+
+macOS-buggar som hindrade användare från att aktivera Mac Mouse Fix.
+
+<ul>
+
+<li>Dessa problem förekom endast på macOS 13 Ventura och 14 Sonoma. Nu
+
+visas dessa dialogrutor endast på de macOS-versioner där de är
+
+relevanta.</li>
+
+<li>Dialogrutorna är också lite svårare att utlösa – tidigare dök de
+
+ibland upp i situationer där de inte var särskilt hjälpsamma.</li>
+
+</ul></li>
+
+<li>Lade till en “Aktivera licens”-länk direkt på “Gratisdagarna är
+
+över”-notifikationen.
+
+<ul>
+
+<li>Detta gör aktiveringen av en Mac Mouse Fix-licens ännu mer
+
+problemfri!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="visuella-förbättringar">Visuella förbättringar</h3>
+
+<ul>
+
+<li>Förbättrade utseendet på “Programuppdatering”-fönstret något. Nu
+
+passar det bättre med macOS 26 Tahoe.
+
+<ul>
+
+<li>Detta gjordes genom att anpassa standardutseendet för “Sparkle
+
+1.27.3”-ramverket som Mac Mouse Fix använder för att hantera
+
+uppdateringar.</li>
+
+</ul></li>
+
+<li>Fixade problem där texten längst ner på Om-fliken ibland klipptes av
+
+på kinesiska, genom att göra fönstret något bredare.</li>
+
+<li>Fixade att texten längst ner på Om-fliken var något off-center.</li>
+
+<li>Fixade en bugg som orsakade att utrymmet under
+
+“Tangentbordsgenväg…”-alternativet på Knappar-fliken var för litet.</li>
+
+</ul>
+
+<h3 id="under-huven-ändringar">Under-huven-ändringar</h3>
+
+<ul>
+
+<li>Tog bort beroendet av “SnapKit”-ramverket.
+
+<ul>
+
+<li>Detta minskar appens storlek något från 19,8 till 19,5 MB.</li>
+
+</ul></li>
+
+<li>Diverse andra små förbättringar i kodbasen.</li>
+
+</ul>
+
+<p><em>Redigerad med utmärkt hjälp från Claude.</em></p>
+
+<hr />
+
+<p>Kolla även in den tidigare versionen <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.4&amp;locale=sv"><strong>3.0.4</strong></a>.</p>
+
+</body>
+
+</html>

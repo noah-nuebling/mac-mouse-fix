@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="tr" xml:lang="tr">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.6</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI tarafından çevrildi</strong></p>
+
+<p>Bu sürüm notu Claude AI tarafından çevrilmiştir. Hatalar
+
+içerebilir.<br />
+
+İngilizce orijinal versiyonu için <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.6">buraya
+
+tıklayın</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.6</strong>, ‘Geri’ ve ‘İleri’ özelliğini
+
+daha fazla uygulamayla uyumlu hale getiriyor. Ayrıca çeşitli hataları ve
+
+sorunları gideriyor.</p>
+
+<h3 id="geliştirilmiş-geri-ve-ileri-özelliği">Geliştirilmiş ‘Geri’ ve
+
+‘İleri’ Özelliği</h3>
+
+<p>‘Geri’ ve ‘İleri’ fare düğmesi atamaları artık <strong>daha fazla
+
+uygulamada çalışıyor</strong>:</p>
+
+<ul>
+
+<li>Visual Studio Code, Cursor, VSCodium, Windsurf, Zed ve diğer kod
+
+editörleri</li>
+
+<li>Ön İzleme, Notlar, Sistem Ayarları, App Store ve Müzik gibi birçok
+
+yerleşik Apple uygulaması</li>
+
+<li>Adobe Acrobat</li>
+
+<li>Zotero</li>
+
+<li>Ve daha fazlası!</li>
+
+</ul>
+
+<p>Uygulama, <a
+
+href="https://github.com/linearmouse/linearmouse">LinearMouse</a>‘daki
+
+harika ’Evrensel Geri ve İleri’ özelliğinden ilham alıyor.
+
+LinearMouse’un desteklediği tüm uygulamaları desteklemeli.<br />
+
+Ayrıca Sistem Ayarları, App Store, Apple Notlar ve Adobe Acrobat gibi
+
+normalde geri ve ileri gitmek için klavye kısayolları gerektiren bazı
+
+uygulamaları da destekliyor. Mac Mouse Fix artık bu uygulamaları
+
+algılayacak ve uygun klavye kısayollarını simüle edecek.</p>
+
+<p><a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22">GitHub
+
+Issue’da talep edilen</a> her uygulama artık desteklenmeli! (Geri
+
+bildirimleriniz için teşekkürler!)<br />
+
+Henüz çalışmayan bir uygulama bulursan, <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-feature-request&amp;locale=tr">özellik
+
+talebi</a> ile bana bildir.</p>
+
+<h3 id="kaydırma-aralıklı-olarak-durma-hatasının-giderilmesi">‘Kaydırma
+
+Aralıklı Olarak Durma’ Hatasının Giderilmesi</h3>
+
+<p>Bazı kullanıcılar, <strong>yumuşak kaydırmanın</strong> rastgele
+
+durabileceği bir <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20state%3Aclosed%20stops%20working%20label%3A%22Scroll%20Stops%20Working%20Intermittently%22">sorun</a>
+
+yaşadı.</p>
+
+<p>Sorunu hiçbir zaman yeniden oluşturamadım, ancak olası bir düzeltme
+
+uyguladım:</p>
+
+<p>Uygulama artık ekran senkronizasyonunu kurarken başarısız olursa
+
+birden fazla kez yeniden deneyecek.<br />
+
+Yeniden denemeden sonra hala çalışmazsa, uygulama:</p>
+
+<ul>
+
+<li>Sorunu çözebilecek ‘Mac Mouse Fix Helper’ arka plan işlemini yeniden
+
+başlatacak</li>
+
+<li>Hatanın teşhisine yardımcı olabilecek bir çökme raporu
+
+oluşturacak</li>
+
+</ul>
+
+<p>Umarım sorun artık çözülmüştür! Değilse, <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-bug-report&amp;locale=tr">hata
+
+raporu</a> veya <a
+
+href="http://redirect.macmousefix.com/?target=mailto-noah&amp;locale=tr">e-posta</a>
+
+ile bana bildir.</p>
+
+<h3
+
+id="geliştirilmiş-serbest-dönen-kaydırma-tekerleği-davranışı">Geliştirilmiş
+
+Serbest Dönen Kaydırma Tekerleği Davranışı</h3>
+
+<p>Mac Mouse Fix artık MX Master faresi (veya serbest dönen kaydırma
+
+tekerleğine sahip başka bir fare) üzerinde kaydırma tekerleğini serbest
+
+döndürdüğünde <strong>kaydırmayı hızlandırmayacak</strong>.</p>
+
+<p>Bu ‘kaydırma hızlandırma’ özelliği normal kaydırma tekerleklerinde
+
+kullanışlı olsa da, serbest dönen bir kaydırma tekerleğinde kontrol
+
+etmeyi zorlaştırabilir.</p>
+
+<p><strong>Not:</strong> Mac Mouse Fix şu anda MX Master dahil çoğu
+
+Logitech faresiyle tam uyumlu değil. Tam destek eklemeyi planlıyorum,
+
+ancak muhtemelen biraz zaman alacak. Bu arada, bildiğim Logitech
+
+desteğine sahip en iyi üçüncü taraf sürücü <a
+
+href="https://plentycom.jp/en/steermouse/">SteerMouse</a>.</p>
+
+<h3 id="hata-düzeltmeleri">Hata Düzeltmeleri</h3>
+
+<ul>
+
+<li>Mac Mouse Fix’in bazen Sistem Ayarları’nda daha önce devre dışı
+
+bırakılan klavye kısayollarını yeniden etkinleştirdiği bir sorun
+
+düzeltildi<br />
+
+</li>
+
+<li>’Lisansı Etkinleştir’e tıklandığında oluşan çökme düzeltildi</li>
+
+<li>’Lisansı Etkinleştir’e tıkladıktan hemen sonra ’İptal’e
+
+tıklandığında oluşan çökme düzeltildi (Rapor için teşekkürler,
+
+Ali!)</li>
+
+<li>Mac’ine hiçbir ekran bağlı değilken Mac Mouse Fix’i kullanmaya
+
+çalışırken oluşan çökmeler düzeltildi</li>
+
+<li>Uygulamada sekmeler arasında geçiş yaparken oluşan bellek sızıntısı
+
+ve diğer bazı arka plan sorunları düzeltildi</li>
+
+</ul>
+
+<h3 id="görsel-iyileştirmeler">Görsel İyileştirmeler</h3>
+
+<ul>
+
+<li><a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=tr">3.0.5</a>’te
+
+ortaya çıkan, Hakkında sekmesinin bazen çok uzun olduğu bir sorun
+
+düzeltildi</li>
+
+<li>‘Ücretsiz günler bitti’ bildirimindeki metin artık Çince’de
+
+kesilmiyor</li>
+
+<li>Bir girdi kaydettikten sonra ‘+’ alanının gölgesindeki görsel hata
+
+düzeltildi</li>
+
+<li>‘Lisans Anahtarınızı Girin’ ekranında yer tutucu metnin merkezden
+
+kaymış görünebileceği nadir bir hata düzeltildi</li>
+
+<li>Koyu/açık mod arasında geçiş yaptıktan sonra uygulamada görüntülenen
+
+bazı sembollerin yanlış renge sahip olduğu bir sorun düzeltildi</li>
+
+</ul>
+
+<h3 id="diğer-iyileştirmeler">Diğer İyileştirmeler</h3>
+
+<ul>
+
+<li>Sekme geçiş animasyonu gibi bazı animasyonlar biraz daha verimli
+
+hale getirildi<br />
+
+</li>
+
+<li>‘Lisans Anahtarınızı Girin’ ekranında Touch Bar metin tamamlama
+
+devre dışı bırakıldı</li>
+
+<li>Çeşitli küçük arka plan iyileştirmeleri</li>
+
+</ul>
+
+<p><em>Claude’un mükemmel yardımıyla düzenlendi.</em></p>
+
+<hr />
+
+<p>Ayrıca önceki sürüm <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=tr">3.0.5</a>’e
+
+göz at.</p>
+
+</body>
+
+</html>

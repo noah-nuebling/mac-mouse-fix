@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="id" xml:lang="id">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Diterjemahkan oleh AI</strong></p>
+
+<p>Catatan rilis ini telah diterjemahkan oleh AI Claude. Mungkin
+
+terdapat kesalahan.<br />
+
+Untuk versi asli dalam bahasa Inggris, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.5">klik
+
+di sini</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.5</strong> memperbaiki beberapa bug,
+
+meningkatkan performa, dan menambahkan sedikit polesan pada
+
+aplikasi.<br />
+
+Aplikasi ini juga kompatibel dengan macOS 26 Tahoe.</p>
+
+<h3 id="peningkatan-simulasi-scrolling-trackpad">Peningkatan Simulasi
+
+Scrolling Trackpad</h3>
+
+<ul>
+
+<li>Sistem scrolling kini dapat mensimulasikan ketukan dua jari pada
+
+trackpad untuk membuat aplikasi berhenti scrolling.
+
+<ul>
+
+<li>Ini memperbaiki masalah saat menjalankan aplikasi iPhone atau iPad,
+
+di mana scrolling sering terus berjalan setelah pengguna memilih untuk
+
+berhenti.</li>
+
+</ul></li>
+
+<li>Memperbaiki simulasi yang tidak konsisten saat mengangkat jari dari
+
+trackpad.
+
+<ul>
+
+<li>Ini mungkin telah menyebabkan perilaku yang kurang optimal dalam
+
+beberapa situasi.</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="kompatibilitas-macos-26-tahoe">Kompatibilitas macOS 26
+
+Tahoe</h3>
+
+<p>Saat menjalankan macOS 26 Tahoe Beta, aplikasi kini dapat digunakan,
+
+dan sebagian besar UI berfungsi dengan benar.</p>
+
+<h3 id="peningkatan-performa">Peningkatan Performa</h3>
+
+<p>Meningkatkan performa gesture Klik dan Seret untuk “Scroll &amp;
+
+Navigate”.<br />
+
+Dalam pengujian saya, penggunaan CPU telah berkurang sekitar ~50%!</p>
+
+<p><strong>Latar Belakang</strong></p>
+
+<p>Selama gesture “Scroll &amp; Navigate”, Mac Mouse Fix menggambar
+
+kursor mouse palsu di jendela transparan, sambil mengunci kursor mouse
+
+asli di tempatnya. Ini memastikan bahwa kamu dapat terus scrolling
+
+elemen UI yang kamu mulai scrolling, tidak peduli seberapa jauh kamu
+
+menggerakkan mouse.</p>
+
+<p>Peningkatan performa dicapai dengan mematikan penanganan event macOS
+
+default pada jendela transparan ini, yang memang tidak digunakan.</p>
+
+<h3 id="perbaikan-bug">Perbaikan Bug</h3>
+
+<ul>
+
+<li>Kini mengabaikan event scroll dari tablet gambar Wacom.
+
+<ul>
+
+<li>Sebelumnya, Mac Mouse Fix menyebabkan scrolling yang tidak menentu
+
+pada tablet Wacom, seperti yang dilaporkan oleh <span class="citation"
+
+data-cites="frenchie1980">@frenchie1980</span> di GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>.
+
+(Terima kasih!)</li>
+
+</ul></li>
+
+<li>Memperbaiki bug di mana kode Swift Concurrency, yang diperkenalkan
+
+sebagai bagian dari sistem lisensi baru di Mac Mouse Fix 3.0.4, tidak
+
+berjalan pada thread yang benar.
+
+<ul>
+
+<li>Ini menyebabkan crash pada macOS Tahoe, dan kemungkinan juga
+
+menyebabkan bug sporadis lainnya terkait lisensi.</li>
+
+</ul></li>
+
+<li>Meningkatkan ketahanan kode yang mendekode lisensi offline.
+
+<ul>
+
+<li>Ini mengatasi masalah di API Apple yang menyebabkan validasi lisensi
+
+offline selalu gagal di Mac Mini Intel saya. Saya berasumsi bahwa ini
+
+terjadi pada semua Mac Intel, dan bahwa ini adalah alasan mengapa bug
+
+“Free days are over” (yang sudah ditangani di 3.0.4) masih terjadi untuk
+
+beberapa orang, seperti yang dilaporkan oleh <span class="citation"
+
+data-cites="toni20k5267">@toni20k5267</span> di GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>.
+
+(Terima kasih!)
+
+<ul>
+
+<li>Jika kamu mengalami bug “Free days are over”, saya minta maaf! Kamu
+
+bisa mendapatkan refund <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=id">di
+
+sini</a>.</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="peningkatan-ux">Peningkatan UX</h3>
+
+<ul>
+
+<li>Menonaktifkan dialog yang memberikan solusi langkah demi langkah
+
+untuk bug macOS yang mencegah pengguna mengaktifkan Mac Mouse Fix.
+
+<ul>
+
+<li>Masalah ini hanya terjadi pada macOS 13 Ventura dan 14 Sonoma.
+
+Sekarang, dialog ini hanya muncul pada versi macOS yang relevan.</li>
+
+<li>Dialog juga sedikit lebih sulit dipicu – sebelumnya, dialog kadang
+
+muncul dalam situasi di mana mereka tidak terlalu membantu.</li>
+
+</ul></li>
+
+<li>Menambahkan link “Activate License” langsung pada notifikasi “Free
+
+days are over”.
+
+<ul>
+
+<li>Ini membuat aktivasi lisensi Mac Mouse Fix menjadi lebih mudah!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="peningkatan-visual">Peningkatan Visual</h3>
+
+<ul>
+
+<li>Sedikit meningkatkan tampilan jendela “Software Update”. Sekarang
+
+lebih cocok dengan macOS 26 Tahoe.
+
+<ul>
+
+<li>Ini dilakukan dengan menyesuaikan tampilan default framework
+
+“Sparkle 1.27.3” yang digunakan Mac Mouse Fix untuk menangani
+
+update.</li>
+
+</ul></li>
+
+<li>Memperbaiki masalah di mana teks di bagian bawah tab About kadang
+
+terpotong dalam bahasa Mandarin, dengan membuat jendela sedikit lebih
+
+lebar.</li>
+
+<li>Memperbaiki teks di bagian bawah tab About yang sedikit tidak berada
+
+di tengah.</li>
+
+<li>Memperbaiki bug yang menyebabkan ruang di bawah opsi “Keyboard
+
+Shortcut…” pada tab Buttons terlalu kecil.</li>
+
+</ul>
+
+<h3 id="perubahan-internal">Perubahan Internal</h3>
+
+<ul>
+
+<li>Menghapus ketergantungan pada framework “SnapKit”.
+
+<ul>
+
+<li>Ini sedikit mengurangi ukuran aplikasi dari 19,8 menjadi 19,5
+
+MB.</li>
+
+</ul></li>
+
+<li>Berbagai peningkatan kecil lainnya dalam codebase.</li>
+
+</ul>
+
+<p><em>Diedit dengan bantuan luar biasa dari Claude.</em></p>
+
+<hr />
+
+<p>Lihat juga rilis sebelumnya <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.4&amp;locale=id"><strong>3.0.4</strong></a>.</p>
+
+</body>
+
+</html>

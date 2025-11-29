@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="tr" xml:lang="tr">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.7</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI tarafından çevrildi</strong></p>
+
+<p>Bu sürüm notu Claude AI tarafından çevrilmiştir. Hatalar
+
+içerebilir.<br />
+
+İngilizce orijinal versiyonu için <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.7">buraya
+
+tıklayın</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.7</strong> birkaç önemli hatayı
+
+gideriyor.</p>
+
+<h3 id="hata-düzeltmeleri">Hata Düzeltmeleri</h3>
+
+<ul>
+
+<li>Uygulama <strong>eski macOS sürümlerinde</strong> tekrar çalışıyor
+
+(macOS 10.15 Catalina ve macOS 11 Big Sur)
+
+<ul>
+
+<li>Mac Mouse Fix 3.0.6, bu macOS sürümlerinde etkinleştirilemiyordu
+
+çünkü Mac Mouse Fix 3.0.6’da tanıtılan geliştirilmiş ‘Geri’ ve ‘İleri’
+
+özelliği, mevcut olmayan macOS sistem API’lerini kullanmaya
+
+çalışıyordu.</li>
+
+</ul></li>
+
+<li><strong>‘Geri’ ve ‘İleri’</strong> özelliğiyle ilgili sorunlar
+
+düzeltildi
+
+<ul>
+
+<li>Mac Mouse Fix 3.0.6’da tanıtılan geliştirilmiş ‘Geri’ ve ‘İleri’
+
+özelliği artık kullandığın uygulamada geri ve ileri gitmek için hangi
+
+tuş basışlarını simüle edeceğini macOS’a sormak için her zaman ‘ana iş
+
+parçacığını’ kullanacak.<br />
+
+Bu, bazı durumlarda çökmeleri ve güvenilmez davranışları
+
+önleyebilir.</li>
+
+</ul></li>
+
+<li><strong>Ayarların rastgele sıfırlanması</strong> hatasının
+
+düzeltilmesi denendi (Şu <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20label%3A%22Config%20Reset%20Intermittently%22">GitHub
+
+Sorunlarına</a> bakın)
+
+<ul>
+
+<li>Mac Mouse Fix için yapılandırma dosyasını yükleyen kodu daha sağlam
+
+olacak şekilde yeniden yazdım. Nadir macOS dosya sistemi hataları
+
+oluştuğunda, eski kod bazen yapılandırma dosyasının bozuk olduğunu
+
+yanlışlıkla düşünüp varsayılana sıfırlayabiliyordu.</li>
+
+</ul></li>
+
+<li><strong>Kaydırmanın durması</strong> hatasının olasılığı azaltıldı
+
+<ul>
+
+<li>Bu hata, muhtemelen başka sorunlara yol açacak daha derin
+
+değişiklikler olmadan tam olarak çözülemiyor.<br />
+
+Ancak şimdilik, kaydırma sisteminde ’kilitlenme’nin gerçekleşebileceği
+
+zaman aralığını azalttım, bu da en azından bu hatayla karşılaşma
+
+olasılığını düşürmeli. Bu aynı zamanda kaydırmayı biraz daha verimli
+
+hale getiriyor.</li>
+
+<li>Bu hatanın benzer belirtileri var – ancak bence farklı bir temel
+
+nedeni var – geçen sürüm 3.0.6’da ele alınan ‘Kaydırma Aralıklı Olarak
+
+Duruyor’ hatasından.</li>
+
+<li>(Teşhisler için Joonas’a teşekkürler!)</li>
+
+</ul></li>
+
+</ul>
+
+<p>Hataları bildirdiğiniz için hepinize teşekkürler!</p>
+
+<hr />
+
+<p>Ayrıca önceki sürüm <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.6&amp;locale=tr">3.0.6</a>’ya
+
+da göz atın.</p>
+
+</body>
+
+</html>

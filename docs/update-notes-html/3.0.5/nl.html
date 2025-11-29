@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nl" xml:lang="nl">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Vertaald door AI</strong></p>
+
+<p>Deze release note is vertaald door de Claude AI. Het kan fouten
+
+bevatten.<br />
+
+Voor de originele Engelse versie, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.5">klik
+
+hier</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.5</strong> verhelpt verschillende bugs,
+
+verbetert de prestaties en voegt wat polish toe aan de app.<br />
+
+Het is ook compatibel met macOS 26 Tahoe.</p>
+
+<h3 id="verbeterde-simulatie-van-trackpad-scrollen">Verbeterde Simulatie
+
+van Trackpad Scrollen</h3>
+
+<ul>
+
+<li>Het scrollsysteem kan nu een twee-vinger tik op het trackpad
+
+simuleren om applicaties te laten stoppen met scrollen.
+
+<ul>
+
+<li>Dit verhelpt een probleem bij het draaien van iPhone- of iPad-apps,
+
+waarbij het scrollen vaak doorging nadat de gebruiker ervoor koos om te
+
+stoppen.</li>
+
+</ul></li>
+
+<li>Inconsistente simulatie van het optillen van vingers van het
+
+trackpad verholpen.
+
+<ul>
+
+<li>Dit kan in sommige situaties suboptimaal gedrag hebben
+
+veroorzaakt.</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="macos-26-tahoe-compatibiliteit">macOS 26 Tahoe
+
+Compatibiliteit</h3>
+
+<p>Bij het draaien van de macOS 26 Tahoe Beta is de app nu bruikbaar en
+
+werkt het grootste deel van de UI correct.</p>
+
+<h3 id="prestatieverbetering">Prestatieverbetering</h3>
+
+<p>Verbeterde prestaties van het Klik en Sleep naar “Scroll &amp;
+
+Navigeer” gebaar.<br />
+
+In mijn tests is het CPU-gebruik met ~50% verminderd!</p>
+
+<p><strong>Achtergrond</strong></p>
+
+<p>Tijdens het “Scroll &amp; Navigeer” gebaar tekent Mac Mouse Fix een
+
+nep-muiscursor in een transparant venster, terwijl de echte muiscursor
+
+op zijn plaats wordt vergrendeld. Dit zorgt ervoor dat je kunt blijven
+
+scrollen op het UI-element waar je mee begon te scrollen, ongeacht hoe
+
+ver je je muis beweegt.</p>
+
+<p>De verbeterde prestaties werden bereikt door de standaard macOS event
+
+handling op dit transparante venster uit te schakelen, die toch niet
+
+werd gebruikt.</p>
+
+<h3 id="bugfixes">Bugfixes</h3>
+
+<ul>
+
+<li>Scrollgebeurtenissen van Wacom tekentabletten worden nu genegeerd.
+
+<ul>
+
+<li>Voorheen veroorzaakte Mac Mouse Fix grillig scrollen op
+
+Wacom-tablets, zoals gerapporteerd door <span class="citation"
+
+data-cites="frenchie1980">@frenchie1980</span> in GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>.
+
+(Bedankt!)</li>
+
+</ul></li>
+
+<li>Een bug verholpen waarbij de Swift Concurrency code, die werd
+
+geïntroduceerd als onderdeel van het nieuwe licentiesysteem in Mac Mouse
+
+Fix 3.0.4, niet op de juiste thread draaide.
+
+<ul>
+
+<li>Dit veroorzaakte crashes op macOS Tahoe, en het veroorzaakte
+
+waarschijnlijk ook andere sporadische bugs rondom licenties.</li>
+
+</ul></li>
+
+<li>Robuustheid van de code die offline licenties decodeert verbeterd.
+
+<ul>
+
+<li>Dit werkt een probleem in Apple’s API’s om waardoor offline
+
+licentievalidatie altijd faalde op mijn Intel Mac Mini. Ik neem aan dat
+
+dit op alle Intel Macs gebeurde, en dat dit de reden was waarom de
+
+“Gratis dagen zijn voorbij” bug (die al was aangepakt in 3.0.4) nog
+
+steeds voorkwam bij sommige mensen, zoals gerapporteerd door <span
+
+class="citation" data-cites="toni20k5267">@toni20k5267</span> in GitHub
+
+Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>.
+
+(Dank je!)
+
+<ul>
+
+<li>Als je de “Gratis dagen zijn voorbij” bug hebt ervaren, mijn excuses
+
+daarvoor! Je kunt een terugbetaling krijgen <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=nl">hier</a>.</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="ux-verbeteringen">UX Verbeteringen</h3>
+
+<ul>
+
+<li>Dialogen uitgeschakeld die stap-voor-stap oplossingen boden voor
+
+macOS bugs die gebruikers ervan weerhielden Mac Mouse Fix in te
+
+schakelen.
+
+<ul>
+
+<li>Deze problemen kwamen alleen voor op macOS 13 Ventura en 14 Sonoma.
+
+Nu verschijnen deze dialogen alleen op die macOS-versies waar ze
+
+relevant zijn.</li>
+
+<li>De dialogen zijn ook iets moeilijker te activeren – voorheen
+
+verschenen ze soms in situaties waar ze niet erg behulpzaam waren.</li>
+
+</ul></li>
+
+<li>Een “Activeer Licentie” link direct toegevoegd aan de “Gratis dagen
+
+zijn voorbij” melding.
+
+<ul>
+
+<li>Dit maakt het activeren van een Mac Mouse Fix licentie nog
+
+probleemloozer!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="visuele-verbeteringen">Visuele Verbeteringen</h3>
+
+<ul>
+
+<li>Het uiterlijk van het “Software Update” venster licht verbeterd. Nu
+
+past het beter bij macOS 26 Tahoe.
+
+<ul>
+
+<li>Dit werd gedaan door het standaard uiterlijk van het “Sparkle
+
+1.27.3” framework aan te passen, dat Mac Mouse Fix gebruikt om updates
+
+af te handelen.</li>
+
+</ul></li>
+
+<li>Probleem verholpen waarbij de tekst onderaan het Over-tabblad soms
+
+werd afgesneden in het Chinees, door het venster iets breder te
+
+maken.</li>
+
+<li>De tekst onderaan het Over-tabblad die licht uit het midden stond
+
+verholpen.</li>
+
+<li>Een bug verholpen die ervoor zorgde dat de ruimte onder de
+
+“Toetsenbordsneltoets…” optie op het Knoppen-tabblad te klein was.</li>
+
+</ul>
+
+<h3 id="onder-de-motorkap-wijzigingen">Onder-De-Motorkap
+
+Wijzigingen</h3>
+
+<ul>
+
+<li>Afhankelijkheid van het “SnapKit” framework verwijderd.
+
+<ul>
+
+<li>Dit verlaagt de grootte van de app licht van 19,8 naar 19,5 MB.</li>
+
+</ul></li>
+
+<li>Diverse andere kleine verbeteringen in de codebase.</li>
+
+</ul>
+
+<p><em>Bewerkt met uitstekende hulp van Claude.</em></p>
+
+<hr />
+
+<p>Bekijk ook de vorige release <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.4&amp;locale=nl"><strong>3.0.4</strong></a>.</p>
+
+</body>
+
+</html>

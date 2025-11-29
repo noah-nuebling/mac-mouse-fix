@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.8</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Tradotto dall’IA</strong></p>
+
+<p>Questa nota di rilascio è stata tradotta dall’IA Claude. Potrebbe
+
+contenere errori.<br />
+
+Per la versione originale in inglese, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8">clicca
+
+qui</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.8</strong> risolve problemi
+
+dell’interfaccia e altro.</p>
+
+<h3 id="problemi-dellinterfaccia"><strong>Problemi
+
+dell’interfaccia</strong></h3>
+
+<ul>
+
+<li>Disabilitato il nuovo design su macOS 26 Tahoe. Ora l’app avrà
+
+l’aspetto e funzionerà come su macOS 15 Sequoia.
+
+<ul>
+
+<li>L’ho fatto perché alcuni elementi dell’interfaccia ridisegnati da
+
+Apple hanno ancora problemi. Ad esempio, i pulsanti ‘-’ nella scheda
+
+‘Pulsanti’ non erano sempre cliccabili.</li>
+
+<li>L’interfaccia potrebbe sembrare un po’ datata su macOS 26 Tahoe ora.
+
+Ma dovrebbe essere completamente funzionale e rifinita come prima.</li>
+
+</ul></li>
+
+<li>Risolto un bug per cui la notifica ‘I giorni gratuiti sono finiti’
+
+rimaneva bloccata nell’angolo in alto a destra dello schermo.
+
+<ul>
+
+<li>Grazie a <a href="https://github.com/Sashpuri">Sashpuri</a> e altri
+
+per averlo segnalato!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="rifinitura-dellinterfaccia"><strong>Rifinitura
+
+dell’interfaccia</strong></h3>
+
+<ul>
+
+<li>Disabilitato il pulsante del semaforo verde nella finestra
+
+principale di Mac Mouse Fix.
+
+<ul>
+
+<li>Il pulsante non faceva nulla, dato che la finestra non può essere
+
+ridimensionata manualmente.</li>
+
+</ul></li>
+
+<li>Risolto un problema per cui alcune delle linee orizzontali nella
+
+tabella della scheda ‘Pulsanti’ erano troppo scure su macOS 26
+
+Tahoe.</li>
+
+<li>Risolto un bug per cui il messaggio “Il pulsante principale del
+
+mouse non può essere usato” nella scheda ‘Pulsanti’ veniva talvolta
+
+tagliato su macOS 26 Tahoe.</li>
+
+<li>Corretto un errore di battitura nell’interfaccia tedesca. Per
+
+gentile concessione dell’utente GitHub <a
+
+href="https://github.com/i-am-the-slime">i-am-the-slime</a>.
+
+Grazie!</li>
+
+<li>Risolto un problema per cui la finestra di MMF lampeggiava
+
+brevemente con dimensioni errate all’apertura su macOS 26 Tahoe.</li>
+
+</ul>
+
+<h3 id="altre-modifiche"><strong>Altre modifiche</strong></h3>
+
+<ul>
+
+<li>Migliorato il comportamento quando si tenta di abilitare Mac Mouse
+
+Fix mentre sono in esecuzione più istanze di Mac Mouse Fix sul computer.
+
+<ul>
+
+<li>Mac Mouse Fix ora cercherà di disabilitare l’altra istanza di Mac
+
+Mouse Fix in modo più diligente.</li>
+
+<li>Questo potrebbe migliorare casi limite in cui Mac Mouse Fix non
+
+poteva essere abilitato.</li>
+
+</ul></li>
+
+<li>Modifiche e pulizia interne.</li>
+
+</ul>
+
+<hr />
+
+<p>Dai un’occhiata anche alle novità della versione precedente <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.7&amp;locale=it">3.0.7</a>.</p>
+
+</body>
+
+</html>

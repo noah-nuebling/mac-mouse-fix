@@ -1,51 +1,111 @@
 # Mac Mouse Fix 3 je tady! ⭐️
 
-3.0.0 je **největší aktualizace** Mac Mouse Fix v historii.\
-Spojuje mnoho funkcí, na kterých jsem dlouho pracoval, aby konečně přinesla tuto skvělou nabídku:
+3.0.0 je **největší aktualizace** v historii Mac Mouse Fix. \
+Spojuje mnoho funkcí, na kterých jsem dlouho pracoval, abych konečně dodal tuto skvělou nabídku:
 
-**Udělejte ze své myši za $10 lepší zařízení než je Apple Trackpad!**
+**Udělej ze své myši za 250 Kč lepší nástroj než Apple Trackpad!**
 
-## Nové funkce
+## Mac Mouse Fix 3 už není 100% zdarma
 
-Podívejte se na **všechny nové funkce** na [nových webových stránkách](http://macmousefix.com/)!
+Mac Mouse Fix 2 zůstává **100% zdarma** a plánuji ho i nadále podporovat.
 
-...Nebo si prohlédněte stručnější seznam **nejdůležitějších změn** oproti Mac Mouse Fix 2 v [této diskuzi](https://github.com/noah-nuebling/mac-mouse-fix/discussions/743#discussioncomment-7938922).\
-Pro více podrobností můžete také zkontrolovat poznámky k vydání [3.0.0 Beta 7](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-7) a předchozích bet.
+Mac Mouse Fix 3 je **zdarma na 30 dní** a poté stojí **2,99 $**. \
+(To je cena v srpnu 2025. Cenu mohu v budoucnu upravit.)
 
-## Monetizace
-
-Než přejdete z Mac Mouse Fix 2 na Mac Mouse Fix 3, je tu jedna věc, kterou byste měli vědět:
-
-Mac Mouse Fix 3 bude **zdarma po dobu 30 dnů** a poté bude stát **$1.99**.\
-(Spustí se za tuto cenu. Časem možná cenu upravím.)
-
-Vím, že monetizace se na první pohled nemusí zdát pro uživatele dobrá, ale doufám, že jsem ji implementoval způsobem, se kterým budou všichni spokojeni.
+Vím, že zpoplatnění se na první pohled nemusí zdát jako dobrá zpráva pro uživatele, ale doufám, že jsem to implementoval způsobem, se kterým budou všichni spokojeni.
 
 - **Bez tlaku**
-   Vaše dny zdarma se odečítají pouze když Mac Mouse Fix skutečně používáte. Není tedy žádný tlak na to používat aplikaci před vypršením času a můžete se v klidu rozhodnout, zda si aplikaci chcete koupit.
+   Tvé bezplatné dny se spotřebovávají pouze tehdy, když Mac Mouse Fix skutečně používáš. Není tedy žádný tlak aplikaci používat, než čas vyprší, a můžeš v klidu rozhodnout, jestli si aplikaci chceš koupit nebo ne.
 - **Synchronizace přes iCloud**
-  Vaše licence se synchronizuje přes iCloud, takže bude automaticky dostupná na všech vašich počítačích!
+  Tvá licence se synchronizuje přes iCloud, takže bude automaticky dostupná na všech tvých počítačích!
 - **Je to pohodlné**\
-   Platba za aplikaci a aktivace licence je super rychlá a intuitivní. A můžete dokonce platit přes **Apple Pay**!
+   Platba za aplikaci a aktivace licence je super rychlá a intuitivní. A můžeš dokonce platit přes **Apple Pay**!
 - **Je to roztomilé**\
-   Po aktivaci licence se na kartě "O aplikaci" zobrazí roztomilá náhodná **děkovná zpráva** :)
-- **Podporujete projekt**\
-   Finanční podporou projektu mi umožňujete pokračovat v práci na mém snu udělat z Mac Mouse Fix nejlepší ovladač myši *všech dob*! 🚀
+   Po aktivaci licence se na záložce „O aplikaci" zobrazí roztomilá náhodná **zpráva s poděkováním** :)
+- **Podporuješ projekt**\
+   Finanční podporou projektu mi umožňuješ pokračovat v práci na mém snu udělat z Mac Mouse Fix nejlepší ovladač myši *všech dob*! 🚀
 
-Pokud jste mi už koupili milkshake - mockrát děkuji! Na oplátku vám poskytnu bezplatnou licenci. Více informací najdete v [Poděkování](https://github.com/noah-nuebling/mac-mouse-fix/blob/master/Acknowledgements.md#-paypal-donations).
+Pokud jsi mi už koupil milkshake přes PayPal – děkuji! Klikni [sem](https://redirect.macmousefix.com/?locale=en&target=mmf-apply-for-milkshake-license) a získej **licenci zdarma**.
 
-Pokud chcete nadále používat Mac Mouse Fix 2 - i to je v pořádku. Zůstane navždy zdarma a plánuji zajistit, aby fungoval i na budoucích verzích macOS.
+Pokud bys chtěl i nadále používat Mac Mouse Fix 2 – to je také v pořádku. Zůstane navždy zdarma a plánuji zajistit, aby fungoval i na budoucích verzích macOS.
 
-Více informací o monetizaci v Mac Mouse Fix 3 najdete na [webových stránkách](https://macmousefix.com/#price).
+Více o zpoplatnění v Mac Mouse Fix 3 se dozvíš na [webu](https://macmousefix.com/#price).
 
-Doufám, že všichni budou s monetizací v Mac Mouse Fix 3 spokojeni a **mockrát děkuji** za veškerou dosavadní podporu! :)
+Doufám, že se všichni se zpoplatněním v Mac Mouse Fix 3 smiřují a **děkuji** za tvou dosavadní podporu! :)
 
-## Změny od poslední bety
+## Návrat k Mac Mouse Fix 2 po vyzkoušení Mac Mouse Fix 3
 
-Finální vydání Mac Mouse Fix 3.0.0 přináší několik drobných vylepšení oproti 3.0.0 Beta 7:
 
-- Mírně snížené využití CPU funkce "Scroll & Navigate"
-- Přidáno "Verze" před číslo verze na kartě "O aplikaci" pro lepší srozumitelnost
-- Aktualizován licenční text aplikace "Mac Mouse Fix Helper"
-- Vylepšen záložní mechanismus pro hodnoty související s licencí při absenci internetového připojení
-- Vylepšení a úklid pod kapotou
+
+Můžeš vyzkoušet MMF 3 a kdykoli se vrátit k MMF 2. \
+Nicméně **instalace MMF 3 smaže tvá nastavení MMF 2**. \
+Tady je návod, jak se **vyhnout ztrátě nastavení MMF 2** při zkoušení MMF 3:
+
+**Před aktualizací na MMF 3:**
+
+1. Otevři obrazovku „Více..." v MMF 2, pak klikni na logo MMF v levém horním rohu, zatímco držíš Command (⌘) a Shift (⇧) na klávesnici. Tím se ve Finderu zobrazí soubor s názvem „config.plist". Tento soubor obsahuje všechna tvá nastavení.
+2. Ulož si kopii „config.plist" pro pozdější obnovení.
+3. Aktualizuj na MMF 3 a zjisti, jestli se ti líbí!
+
+**Když se budeš chtít vrátit k MMF 2:**
+
+1. [Stáhni si MMF 2](https://redirect.macmousefix.com/?locale=en&target=mmf2-latest) znovu.
+2. Zobraz „config.plist" ve Finderu a nahraď ho kopií, kterou jsi vytvořil dříve.
+
+*Pokud se MMF 2 po návratu neaktivuje, možná budeš muset smazat MMF 3, vyprázdnit koš a restartovat počítač.* 
+
+Doufám, že ti to dodá klid při zkoušení MMF 3.
+
+## Nové funkce v Mac Mouse Fix 3!
+
+
+
+Mac Mouse Fix 3 nabízí úžasné **nové rolování jako na trackpadu**, krásné **nové uživatelské rozhraní** a umožňuje ti **dělat cokoliv, co můžeš dělat na trackpadu**, díky několika novým gestům.
+
+**Podívej se v akci:** 
+Navštiv [nový web](https://macmousefix.com) a shlédni video ukázky všech funkcí.
+
+**Podrobný seznam změn:** 
+Zobraz poznámky k vydání [3.0.0 Beta 7](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-7) a předchozích beta verzí, abys zjistil vše, co se změnilo.
+
+**Nejdůležitější nové funkce:**
+
+- **„Klikni a táhni" pro „Rolování a navigaci"**
+
+    Nyní můžeš kliknout a táhnout pro simulaci přejetí dvěma prsty na Apple trackpadu. To ti umožní plynule procházet systémem, protože můžeš velmi přesně a flexibilně rolovat o 360°, chodit zpět a vpřed v Safari, rychle mazat e-maily a mnoho dalšího.
+
+    Můžeš dokonce používat [Swish](https://highlyopinionated.co/swish/) přímo z myši. Je to opravdu pěkná aplikace navržená tak, aby ti umožnila spravovat okna přejetím po trackpadu. Ale teď ji můžeš používat i s myší! - Ve skutečnosti cokoliv, co můžeš dělat přejetím po trackpadu, funguje stejně dobře s Mac Mouse Fix!
+
+- **Gesta „Klikni a roluj"**
+
+    Nyní můžeš podržet tlačítko myši a pak rolovat pro spuštění mnoha různých akcí, jako je zobrazení plochy, přiblížení nebo oddálení a mnoho dalšího. Působí to super responzivně a plynule, stejně jako trackpad.
+
+- **Kompletně přepracované rolování**
+
+    Rolování nyní vyžaduje méně úsilí a působí mnohem plynuleji a zábavněji. Může také simulovat přejetí po trackpadu. To přináší některé drobné vylepšení, jako je lehké odskočení, když dosáhneš konce stránky, možnost chodit zpět a vpřed v Safari horizontálním rolováním, lepší kompatibilitu s Preview.app a další.
+
+    Navštiv [sekci o rolování](https://macmousefix.com/#scroll) na novém webu a podívej se na nové rolování v akci. I když si myslím, že je nejlepší to prostě vyzkoušet!
+
+- **Skvělé nové uživatelské rozhraní** 
+
+    Uživatelské rozhraní aplikace bylo také kompletně přepracováno, aby bylo krásnější, výkonnější a intuitivnější. Nyní může být také přeloženo do jiných jazyků a je již dostupné v čínštině, korejštině a němčině.
+
+- **Položka v menu baru**
+
+    Nyní je k dispozici položka v menu baru, kterou můžeš povolit, pokud chceš, a která ti umožní vidět, kdy je Mac Mouse Fix aktivní, a vypadá elegantně.
+
+- **Dělej cokoliv, co můžeš dělat na trackpadu**
+
+    Pokud používáš myš se 3 tlačítky, myslím, že největší rozdíl mezi MMF 2 a MMF 3 v každodenním používání bude rolování. Ale pokud používáš myš s 5 tlačítky, myslím, že MMF 3 je docela transformativní, protože ti skutečně umožňuje dělat cokoliv, co můžeš dělat na trackpadu, pomocí jednoduchých a intuitivních gest na myši. Například Klikni a roluj pro *Přiblížení nebo oddálení*, Klikni a táhni pro *Zpět a vpřed* v Safari a mnoho dalšího.
+
+    Navštiv [sekci o trackpadu](https://macmousefix.com/#trackpad) na novém webu a podívej se na tato nová gesta podobná trackpadu v akci.
+
+## Změny od poslední Beta verze
+
+Finální vydání Mac Mouse Fix 3.0.0 obsahuje několik drobných vylepšení oproti 3.0.0 Beta 7:
+
+- Mírně snížené využití CPU u funkce „Rolování a navigace"
+- Přidáno „Verze" před číslo verze na záložce „O aplikaci" pro lepší srozumitelnost
+- Aktualizován licenční řetězec aplikace „Mac Mouse Fix Helper"
+- Vylepšený záložní mechanismus pro hodnoty související s licencí, když není k dispozici připojení k internetu
+- Vylepšení a úpravy pod kapotou

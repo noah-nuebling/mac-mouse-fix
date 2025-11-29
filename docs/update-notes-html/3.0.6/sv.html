@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="sv" xml:lang="sv">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.6</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Översatt av AI</strong></p>
+
+<p>Detta releasemeddelande har översatts av Claude AI. Det kan innehålla
+
+fel.<br />
+
+För den engelska originalversionen, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.6">klicka
+
+här</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.6</strong> gör funktionen ‘Bakåt’ och
+
+‘Framåt’ kompatibel med fler appar. Den åtgärdar även flera buggar och
+
+problem.</p>
+
+<h3 id="förbättrad-bakåt-och-framåt-funktion">Förbättrad ‘Bakåt’ och
+
+‘Framåt’-funktion</h3>
+
+<p>Musknappsmappningarna för ‘Bakåt’ och ‘Framåt’ <strong>fungerar nu i
+
+fler appar</strong>, inklusive:</p>
+
+<ul>
+
+<li>Visual Studio Code, Cursor, VSCodium, Windsurf, Zed och andra
+
+kodredigerare</li>
+
+<li>Många inbyggda Apple-appar som Förhandsvisning, Anteckningar,
+
+Systeminställningar, App Store och Musik</li>
+
+<li>Adobe Acrobat</li>
+
+<li>Zotero</li>
+
+<li>Och mer!</li>
+
+</ul>
+
+<p>Implementeringen är inspirerad av den utmärkta funktionen ‘Universal
+
+Back and Forward’ i <a
+
+href="https://github.com/linearmouse/linearmouse">LinearMouse</a>. Den
+
+bör stödja alla appar som LinearMouse gör.<br />
+
+Dessutom stöder den vissa appar som normalt kräver tangentbordsgenvägar
+
+för att gå bakåt och framåt, som Systeminställningar, App Store, Apple
+
+Anteckningar och Adobe Acrobat. Mac Mouse Fix kommer nu att upptäcka
+
+dessa appar och simulera lämpliga tangentbordsgenvägar.</p>
+
+<p>Varje app som någonsin har <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22">begärts
+
+i en GitHub Issue</a> bör stödjas nu! (Tack för feedbacken!)<br />
+
+Om du hittar några appar som inte fungerar än, låt mig veta i en <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-feature-request&amp;locale=sv">funktionsförfrågan</a>.</p>
+
+<h3 id="åtgärdar-buggen-rullning-slutar-fungera-periodvis">Åtgärdar
+
+buggen ‘Rullning slutar fungera periodvis’</h3>
+
+<p>Vissa användare upplevde ett <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20state%3Aclosed%20stops%20working%20label%3A%22Scroll%20Stops%20Working%20Intermittently%22">problem</a>
+
+där <strong>mjuk rullning slutar fungera</strong> slumpmässigt.</p>
+
+<p>Även om jag aldrig har kunnat återskapa problemet har jag
+
+implementerat en potentiell lösning:</p>
+
+<p>Appen kommer nu att försöka flera gånger när inställningen av
+
+skärmsynkroniseringen misslyckas.<br />
+
+Om det fortfarande inte fungerar efter flera försök kommer appen
+
+att:</p>
+
+<ul>
+
+<li>Starta om bakgrundsprocessen ‘Mac Mouse Fix Helper’, vilket kan lösa
+
+problemet</li>
+
+<li>Skapa en kraschrapport, som kan hjälpa till att diagnostisera
+
+buggen</li>
+
+</ul>
+
+<p>Jag hoppas att problemet är löst nu! Om inte, låt mig veta i en <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-bug-report&amp;locale=sv">buggrapport</a>
+
+eller via <a
+
+href="http://redirect.macmousefix.com/?target=mailto-noah&amp;locale=sv">e-post</a>.</p>
+
+<h3 id="förbättrat-beteende-för-frisnurrande-rullhjul">Förbättrat
+
+beteende för frisnurrande rullhjul</h3>
+
+<p>Mac Mouse Fix kommer <strong>inte längre att snabba upp
+
+rullningen</strong> åt dig när du låter rullhjulet snurra fritt på MX
+
+Master-musen. (Eller någon annan mus med ett frisnurrande rullhjul.)</p>
+
+<p>Även om denna ‘rullningsacceleration’ är användbar på vanliga
+
+rullhjul kan den göra saker svårare att kontrollera på ett frisnurrande
+
+rullhjul.</p>
+
+<p><strong>Obs:</strong> Mac Mouse Fix är för närvarande inte helt
+
+kompatibel med de flesta Logitech-möss, inklusive MX Master. Jag
+
+planerar att lägga till fullt stöd, men det kommer förmodligen att ta
+
+ett tag. Under tiden är den bästa tredjepartsdrivrutinen med
+
+Logitech-stöd som jag känner till <a
+
+href="https://plentycom.jp/en/steermouse/">SteerMouse</a>.</p>
+
+<h3 id="buggfixar">Buggfixar</h3>
+
+<ul>
+
+<li>Fixade ett problem där Mac Mouse Fix ibland återaktiverade
+
+tangentbordsgenvägar som tidigare inaktiverats i
+
+Systeminställningar<br />
+
+</li>
+
+<li>Fixade en krasch när man klickade på ‘Aktivera licens’</li>
+
+<li>Fixade en krasch när man klickade på ‘Avbryt’ direkt efter att ha
+
+klickat på ‘Aktivera licens’ (Tack för rapporten, Ali!)</li>
+
+<li>Fixade krascher när man försökte använda Mac Mouse Fix medan ingen
+
+skärm var ansluten till din Mac</li>
+
+<li>Fixade en minnesläcka och några andra under-huven-problem när man
+
+växlade mellan flikar i appen</li>
+
+</ul>
+
+<h3 id="visuella-förbättringar">Visuella förbättringar</h3>
+
+<ul>
+
+<li>Fixade ett problem där Om-fliken ibland var för hög, vilket
+
+introducerades i <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=sv">3.0.5</a></li>
+
+<li>Text på notifikationen ‘Gratisdagarna är över’ är inte längre
+
+avklippt på kinesiska</li>
+
+<li>Fixade en visuell bugg på ‘+’-fältets skugga efter inspelning av en
+
+inmatning</li>
+
+<li>Fixade en sällsynt bugg där platshållartexten på skärmen ‘Ange din
+
+licensnyckel’ kunde visas off-center</li>
+
+<li>Fixade ett problem där vissa symboler som visades i appen hade fel
+
+färg efter byte mellan mörkt/ljust läge</li>
+
+</ul>
+
+<h3 id="övriga-förbättringar">Övriga förbättringar</h3>
+
+<ul>
+
+<li>Gjorde vissa animationer, som flikbytesanimationen, något mer
+
+effektiva<br />
+
+</li>
+
+<li>Inaktiverade Touch Bar-textkomplettering på skärmen ‘Ange din
+
+licensnyckel’</li>
+
+<li>Diverse mindre under-huven-förbättringar</li>
+
+</ul>
+
+<p><em>Redigerad med utmärkt hjälp av Claude.</em></p>
+
+<hr />
+
+<p>Kolla även in den tidigare versionen <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=sv">3.0.5</a>.</p>
+
+</body>
+
+</html>

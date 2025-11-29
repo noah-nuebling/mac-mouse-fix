@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.7</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AIによる翻訳</strong></p>
+
+<p>このリリースノートはClaude
+
+AIによって翻訳されています。誤訳が含まれている可能性があります。<br />
+
+英語の原文は<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.7">こちら</a>をクリックしてください。</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.7</strong>
+
+では、いくつかの重要なバグに対処しました。</p>
+
+<h3 id="バグ修正">バグ修正</h3>
+
+<ul>
+
+<li><strong>古いmacOSバージョン</strong>(macOS 10.15 CatalinaおよびmacOS
+
+11 Big Sur)でアプリが再び動作するようになりました
+
+<ul>
+
+<li>Mac Mouse Fix
+
+3.0.6では、これらのmacOSバージョンで有効化できませんでした。これは、Mac
+
+Mouse Fix
+
+3.0.6で導入された改良版の「戻る」および「進む」機能が、利用できないmacOSシステムAPIを使用しようとしたためです。</li>
+
+</ul></li>
+
+<li><strong>「戻る」および「進む」</strong>機能の問題を修正しました
+
+<ul>
+
+<li>Mac Mouse Fix
+
+3.0.6で導入された改良版の「戻る」および「進む」機能は、使用中のアプリで戻る・進むために模擬するキー入力をmacOSに問い合わせる際、常に「メインスレッド」を使用するようになりました。<br />
+
+これにより、一部の状況でクラッシュや不安定な動作を防ぐことができます。</li>
+
+</ul></li>
+
+<li><strong>設定がランダムにリセットされる</strong>バグの修正を試みました(<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20label%3A%22Config%20Reset%20Intermittently%22">GitHub
+
+Issues</a>を参照)
+
+<ul>
+
+<li>Mac Mouse
+
+Fixの設定ファイルを読み込むコードをより堅牢になるように書き直しました。まれにmacOSファイルシステムエラーが発生した際、古いコードは設定ファイルが破損していると誤って判断し、デフォルトにリセットすることがありました。</li>
+
+</ul></li>
+
+<li><strong>スクロールが動作しなくなる</strong>バグの発生確率を低減しました
+
+<ul>
+
+<li>このバグは、より深い変更なしには完全に解決できず、そうした変更は他の問題を引き起こす可能性があります。<br />
+
+しかし、当面の間、スクロールシステムで「デッドロック」が発生する可能性のある時間枠を短縮し、少なくともこのバグに遭遇する確率を下げました。これにより、スクロールもわずかに効率的になりました。</li>
+
+<li>このバグは、前回のリリース3.0.6で対処された「スクロールが断続的に動作しなくなる」バグと似た症状ですが、根本的な原因は異なると考えています。</li>
+
+<li>(診断を提供してくれたJoonasに感謝します!)</li>
+
+</ul></li>
+
+</ul>
+
+<p>バグを報告してくださった皆様、ありがとうございます!</p>
+
+<hr />
+
+<p>前回のリリース<a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.6&amp;locale=ja">3.0.6</a>もぜひご確認ください。</p>
+
+</body>
+
+</html>

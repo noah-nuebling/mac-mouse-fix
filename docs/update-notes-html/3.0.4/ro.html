@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ro" xml:lang="ro">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.4</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Tradus de AI</strong></p>
+
+<p>Această notă de lansare a fost tradusă de AI-ul Claude. Poate conține
+
+erori.<br />
+
+Pentru versiunea originală în engleză, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.4">click
+
+aici</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.4</strong> îmbunătățește
+
+confidențialitatea, eficiența și fiabilitatea.<br />
+
+Introduce un nou sistem de licențiere offline și rezolvă mai multe
+
+bug-uri importante.</p>
+
+<h3 id="confidențialitate-și-eficiență-îmbunătățite">Confidențialitate
+
+și Eficiență Îmbunătățite</h3>
+
+<p>3.0.4 introduce un nou sistem de validare a licențelor offline care
+
+minimizează conexiunile la internet cât mai mult posibil.<br />
+
+Acest lucru îmbunătățește confidențialitatea și economisește resursele
+
+sistemului computerului tău.<br />
+
+Când este licențiată, aplicația funcționează acum 100% offline!</p>
+
+<details>
+
+<summary>
+
+<b>Click aici pentru mai multe detalii</b>
+
+</summary>
+
+<p>Versiunile anterioare validau licențele online la fiecare lansare,
+
+permițând potențial stocarea jurnalelor de conexiune de către servere
+
+terțe (GitHub și Gumroad). Noul sistem elimină conexiunile inutile –
+
+după activarea inițială a licenței, se conectează la internet doar dacă
+
+datele locale ale licenței sunt corupte. <br><br> Deși niciun
+
+comportament al utilizatorilor nu a fost înregistrat vreodată de mine
+
+personal, sistemul anterior permitea teoretic serverelor terțe să
+
+înregistreze adresele IP și orele de conexiune. Gumroad putea de
+
+asemenea să înregistreze cheia ta de licență și potențial să o coreleze
+
+cu orice informații personale pe care le-au înregistrat despre tine când
+
+ai cumpărat Mac Mouse Fix. <br><br> Nu am luat în considerare aceste
+
+probleme subtile de confidențialitate când am construit sistemul
+
+original de licențiere, dar acum, Mac Mouse Fix este cât mai privat și
+
+fără internet posibil! <br><br> Vezi și
+
+<a href=https://gumroad.com/privacy>politica de confidențialitate a
+
+Gumroad</a> și acest
+
+<a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>comentariu
+
+GitHub</a> al meu.</p>
+
+</details>
+
+<h3 id="remedieri-de-bug-uri">Remedieri de Bug-uri</h3>
+
+<ul>
+
+<li>Remediat un bug în care macOS se bloca uneori când se folosea ‘Click
+
+and Drag’ pentru ‘Spaces &amp; Mission Control’.</li>
+
+<li>Remediat un bug în care scurtăturile de tastatură din System
+
+Settings se ștergeau uneori când se foloseau acțiunile ‘Click’ din Mac
+
+Mouse Fix precum ‘Mission Control’.</li>
+
+<li>Remediat <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aopen%20label%3A%22%27Free%20days%20are%20over%27%20bug%22">un
+
+bug</a> în care aplicația se oprea uneori și afișa o notificare că
+
+‘Zilele gratuite s-au terminat’ utilizatorilor care cumpăraseră deja
+
+aplicația.
+
+<ul>
+
+<li>Dacă ai întâmpinat acest bug, îmi cer sincer scuze pentru neplăcere.
+
+Poți solicita o <a
+
+href="https://redirect.macmousefix.com/?message=&amp;target=mmf-apply-for-refund&amp;locale=ro">rambursare
+
+aici</a>.</li>
+
+</ul></li>
+
+<li>Îmbunătățit modul în care aplicația recuperează fereastra sa
+
+principală, ceea ce ar fi putut remedia un bug în care ecranul ‘Activate
+
+License’ nu apărea uneori.</li>
+
+</ul>
+
+<h3 id="îmbunătățiri-de-utilizabilitate">Îmbunătățiri de
+
+Utilizabilitate</h3>
+
+<ul>
+
+<li>Făcut imposibilă introducerea spațiilor și a liniilor noi în câmpul
+
+de text de pe ecranul ‘Activate License’.
+
+<ul>
+
+<li>Acesta era un punct comun de confuzie, deoarece este foarte ușor să
+
+selectezi accidental o linie nouă ascunsă când copiezi cheia ta de
+
+licență din emailurile Gumroad.</li>
+
+</ul></li>
+
+<li>Aceste note de actualizare sunt traduse automat pentru utilizatorii
+
+non-englezi (Powered by Claude). Sper că este util! Dacă întâmpini
+
+probleme cu aceasta, anunță-mă. Aceasta este o primă privire asupra unui
+
+nou sistem de traducere pe care l-am dezvoltat în ultimul an.</li>
+
+</ul>
+
+<h3 id="suport-neoficial-abandonat-pentru-macos-10.14-mojave">Suport
+
+(Neoficial) Abandonat pentru macOS 10.14 Mojave</h3>
+
+<p>Mac Mouse Fix 3 suportă oficial macOS 11 Big Sur și versiuni
+
+ulterioare. Totuși, pentru utilizatorii dispuși să accepte unele
+
+probleme și erori grafice, Mac Mouse Fix 3.0.3 și versiunile anterioare
+
+puteau fi încă folosite pe macOS 10.14.4 Mojave.</p>
+
+<p>Mac Mouse Fix 3.0.4 abandonează acest suport și <strong>acum necesită
+
+macOS 10.15 Catalina</strong>.<br />
+
+Îmi cer scuze pentru orice neplăcere cauzată de aceasta. Această
+
+schimbare mi-a permis să implementez sistemul îmbunătățit de licențiere
+
+folosind funcții moderne Swift. Utilizatorii Mojave pot continua să
+
+folosească Mac Mouse Fix <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.3&amp;locale=ro">3.0.3</a>
+
+sau <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=ro">ultima
+
+versiune a Mac Mouse Fix 2</a>. Sper că aceasta este o soluție bună
+
+pentru toată lumea.</p>
+
+<h3 id="îmbunătățiri-sub-capotă">Îmbunătățiri Sub Capotă</h3>
+
+<ul>
+
+<li>Implementat un nou sistem ‘MFDataClass’ care permite modelare de
+
+date mai puternică, menținând în același timp fișierul de configurare al
+
+Mac Mouse Fix lizibil și editabil de către oameni.</li>
+
+<li>Construit suport pentru adăugarea de platforme de plată altele decât
+
+Gumroad. Așa că în viitor, ar putea exista checkout-uri localizate, iar
+
+aplicația ar putea fi vândută în diferite țări.</li>
+
+<li>Îmbunătățit logging-ul care îmi permite să creez “Debug Builds” mai
+
+eficiente pentru utilizatorii care experimentează bug-uri greu de
+
+reprodus.</li>
+
+<li>Multe alte îmbunătățiri mici și lucrări de curățare.</li>
+
+</ul>
+
+<p><em>Editat cu asistență excelentă de la Claude.</em></p>
+
+<hr />
+
+<p>Verifică și versiunea anterioară <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.3&amp;locale=ro"><strong>3.0.3</strong></a>.</p>
+
+</body>
+
+</html>

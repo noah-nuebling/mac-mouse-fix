@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hi" xml:lang="hi">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ एआई द्वारा अनुवादित</strong></p>
+
+<p>यह रिलीज़ नोट क्लॉड एआई द्वारा अनुवादित किया गया है। इसमें त्रुटियाँ हो सकती
+
+हैं।<br />
+
+मूल अंग्रेजी संस्करण के लिए, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.5">यहाँ
+
+क्लिक करें</a>।</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.5</strong> कई बग्स को ठीक करता है, परफॉर्मेंस में
+
+सुधार करता है, और ऐप में थोड़ी चमक जोड़ता है।<br />
+
+यह macOS 26 Tahoe के साथ भी कम्पैटिबल है।</p>
+
+<h3 id="टरकपड-सकरलग-क-समलशन-म-सधर">ट्रैकपैड स्क्रॉलिंग के सिमुलेशन में सुधार</h3>
+
+<ul>
+
+<li>स्क्रॉलिंग सिस्टम अब ट्रैकपैड पर दो-उंगली टैप को सिमुलेट कर सकता है ताकि एप्लिकेशन
+
+स्क्रॉलिंग बंद कर दें।
+
+<ul>
+
+<li>यह iPhone या iPad ऐप्स चलाते समय एक समस्या को ठीक करता है, जहां यूज़र के रुकने
+
+के बाद भी स्क्रॉलिंग अक्सर जारी रहती थी।</li>
+
+</ul></li>
+
+<li>ट्रैकपैड से उंगलियां उठाने के सिमुलेशन में असंगति को ठीक किया गया।
+
+<ul>
+
+<li>इससे कुछ स्थितियों में अनुकूल व्यवहार हो सकता था।</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="macos-26-tahoe-कमपटबलट">macOS 26 Tahoe कम्पैटिबिलिटी</h3>
+
+<p>macOS 26 Tahoe Beta चलाते समय, ऐप अब उपयोग करने योग्य है, और अधिकांश UI
+
+सही तरीके से काम करता है।</p>
+
+<h3 id="परफरमस-म-सधर">परफॉर्मेंस में सुधार</h3>
+
+<p>“Scroll &amp; Navigate” जेस्चर के लिए Click और Drag की परफॉर्मेंस में सुधार
+
+किया गया।<br />
+
+मेरे टेस्टिंग में, CPU उपयोग लगभग 50% कम हो गया है!</p>
+
+<p><strong>बैकग्राउंड</strong></p>
+
+<p>“Scroll &amp; Navigate” जेस्चर के दौरान, Mac Mouse Fix एक पारदर्शी विंडो में
+
+नकली माउस कर्सर बनाता है, जबकि असली माउस कर्सर को एक जगह लॉक कर देता है। यह
+
+सुनिश्चित करता है कि आप उस UI एलिमेंट को स्क्रॉल करते रह सकते हैं जिस पर आपने स्क्रॉल
+
+करना शुरू किया था, चाहे आप अपने माउस को कितना भी दूर ले जाएं।</p>
+
+<p>बेहतर परफॉर्मेंस इस पारदर्शी विंडो पर डिफ़ॉल्ट macOS इवेंट हैंडलिंग को बंद करके
+
+हासिल की गई, जिसका वैसे भी उपयोग नहीं हो रहा था।</p>
+
+<h3 id="बग-फकसज">बग फिक्सेज़</h3>
+
+<ul>
+
+<li>अब Wacom ड्रॉइंग टैबलेट्स से स्क्रॉल इवेंट्स को इग्नोर किया जा रहा है।
+
+<ul>
+
+<li>पहले, Mac Mouse Fix Wacom टैबलेट्स पर अनियमित स्क्रॉलिंग का कारण बन रहा था,
+
+जैसा कि <span class="citation"
+
+data-cites="frenchie1980">@frenchie1980</span> ने GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>
+
+में रिपोर्ट किया। (धन्यवाद!)</li>
+
+</ul></li>
+
+<li>एक बग को ठीक किया गया जहां Swift Concurrency कोड, जो Mac Mouse Fix
+
+3.0.4 में नई लाइसेंसिंग सिस्टम के हिस्से के रूप में पेश किया गया था, सही थ्रेड पर नहीं चल
+
+रहा था।
+
+<ul>
+
+<li>इससे macOS Tahoe पर क्रैश हो रहे थे, और संभवतः लाइसेंसिंग से संबंधित अन्य छिटपुट
+
+बग्स भी हो रहे थे।</li>
+
+</ul></li>
+
+<li>ऑफ़लाइन लाइसेंस को डिकोड करने वाले कोड की मजबूती में सुधार किया गया।
+
+<ul>
+
+<li>यह Apple के APIs में एक समस्या का समाधान करता है जिसके कारण मेरे Intel Mac
+
+Mini पर ऑफ़लाइन लाइसेंस वैलिडेशन हमेशा फेल हो रहा था। मुझे लगता है कि यह सभी Intel
+
+Macs पर हो रहा था, और यही कारण था कि “Free days are over” बग (जिसे पहले ही
+
+3.0.4 में संबोधित किया गया था) कुछ लोगों के लिए अभी भी हो रहा था, जैसा कि <span
+
+class="citation" data-cites="toni20k5267">@toni20k5267</span> ने GitHub
+
+Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>
+
+में रिपोर्ट किया। (धन्यवाद!)
+
+<ul>
+
+<li>अगर आपने “Free days are over” बग का अनुभव किया, तो मुझे खेद है! आप <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=hi">यहां</a>
+
+रिफंड प्राप्त कर सकते हैं।</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="ux-म-सधर">UX में सुधार</h3>
+
+<ul>
+
+<li>उन डायलॉग्स को डिसेबल किया गया जो macOS बग्स के लिए स्टेप-बाय-स्टेप समाधान
+
+प्रदान करते थे जो यूज़र्स को Mac Mouse Fix को एनेबल करने से रोकते थे।
+
+<ul>
+
+<li>ये समस्याएं केवल macOS 13 Ventura और 14 Sonoma पर होती थीं। अब, ये डायलॉग
+
+केवल उन्हीं macOS वर्जन पर दिखाई देते हैं जहां वे प्रासंगिक हैं।</li>
+
+<li>डायलॉग्स को ट्रिगर करना भी थोड़ा मुश्किल है – पहले, वे कभी-कभी ऐसी स्थितियों में
+
+दिखाई देते थे जहां वे बहुत मददगार नहीं थे।</li>
+
+</ul></li>
+
+<li>“Free days are over” नोटिफिकेशन पर सीधे एक “Activate License” लिंक जोड़ा
+
+गया।
+
+<ul>
+
+<li>यह Mac Mouse Fix लाइसेंस को एक्टिवेट करना और भी आसान बनाता है!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="वजअल-सधर">विज़ुअल सुधार</h3>
+
+<ul>
+
+<li>“Software Update” विंडो के लुक में थोड़ा सुधार किया गया। अब यह macOS 26
+
+Tahoe के साथ बेहतर फिट होती है।
+
+<ul>
+
+<li>यह “Sparkle 1.27.3” फ्रेमवर्क के डिफ़ॉल्ट लुक को कस्टमाइज़ करके किया गया जिसे
+
+Mac Mouse Fix अपडेट्स को हैंडल करने के लिए उपयोग करता है।</li>
+
+</ul></li>
+
+<li>About टैब के नीचे के टेक्स्ट को कभी-कभी चीनी में कट जाने की समस्या को ठीक किया
+
+गया, विंडो को थोड़ा चौड़ा करके।</li>
+
+<li>About टैब के नीचे के टेक्स्ट के थोड़ा ऑफ-सेंटर होने को ठीक किया गया।</li>
+
+<li>एक बग को ठीक किया गया जिसके कारण Buttons टैब पर “Keyboard Shortcut…”
+
+ऑप्शन के नीचे की जगह बहुत छोटी थी।</li>
+
+</ul>
+
+<h3 id="अदरन-बदलव">अंदरूनी बदलाव</h3>
+
+<ul>
+
+<li>“SnapKit” फ्रेमवर्क पर निर्भरता हटा दी गई।
+
+<ul>
+
+<li>इससे ऐप का साइज़ 19.8 से 19.5 MB तक थोड़ा कम हो गया है।</li>
+
+</ul></li>
+
+<li>कोडबेस में विभिन्न अन्य छोटे सुधार।</li>
+
+</ul>
+
+<p><em>Claude की उत्कृष्ट सहायता से संपादित।</em></p>
+
+<hr />
+
+<p>पिछली रिलीज़ <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.4&amp;locale=hi"><strong>3.0.4</strong></a>
+
+भी देखें।</p>
+
+</body>
+
+</html>

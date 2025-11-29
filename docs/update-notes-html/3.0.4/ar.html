@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ar" xml:lang="ar">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.4</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ تمت الترجمة بواسطة الذكاء الاصطناعي</strong></p>
+
+<p>تمت ترجمة ملاحظة الإصدار هذه بواسطة كلود للذكاء الاصطناعي. قد تحتوي
+
+على أخطاء.<br />
+
+للنسخة الإنجليزية الأصلية، <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.4">انقر
+
+هنا</a>.</p>
+
+<hr />
+
+<p>يحسّن Mac Mouse Fix <strong>3.0.4</strong> الخصوصية والكفاءة
+
+والموثوقية.<br />
+
+يقدم نظام ترخيص جديد غير متصل بالإنترنت، ويصلح عدة أخطاء مهمة.</p>
+
+<h3 id="تحسين-الخصوصية-والكفاءة">تحسين الخصوصية والكفاءة</h3>
+
+<p>يقدم 3.0.4 نظام تحقق جديد من الترخيص غير متصل بالإنترنت يقلل من
+
+الاتصالات بالإنترنت قدر الإمكان.<br />
+
+هذا يحسّن الخصوصية ويوفر موارد نظام جهازك.<br />
+
+عند الترخيص، يعمل التطبيق الآن بنسبة 100% دون اتصال بالإنترنت!</p>
+
+<details>
+
+<summary>
+
+<b>انقر هنا لمزيد من التفاصيل</b>
+
+</summary>
+
+<p>كانت الإصدارات السابقة تتحقق من التراخيص عبر الإنترنت عند كل تشغيل،
+
+مما قد يسمح بتخزين سجلات الاتصال على خوادم طرف ثالث (GitHub و Gumroad).
+
+يلغي النظام الجديد الاتصالات غير الضرورية – بعد تفعيل الترخيص الأولي،
+
+يتصل بالإنترنت فقط إذا تلفت بيانات الترخيص المحلية. <br><br> بينما لم
+
+يتم تسجيل أي سلوك للمستخدم من قبلي شخصياً، كان النظام السابق يسمح نظرياً
+
+لخوادم الطرف الثالث بتسجيل عناوين IP وأوقات الاتصال. كان بإمكان Gumroad
+
+أيضاً تسجيل مفتاح الترخيص الخاص بك وربطه بأي معلومات شخصية سجلوها عنك عند
+
+شراء Mac Mouse Fix. <br><br> لم أكن أعتبر مشاكل الخصوصية الدقيقة هذه
+
+عندما بنيت نظام الترخيص الأصلي، لكن الآن، Mac Mouse Fix خاص وخالٍ من
+
+الإنترنت قدر الإمكان! <br><br> انظر أيضاً
+
+<a href=https://gumroad.com/privacy>سياسة خصوصية Gumroad</a> وهذا
+
+<a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>التعليق
+
+على GitHub</a> الخاص بي.</p>
+
+</details>
+
+<h3 id="إصلاح-الأخطاء">إصلاح الأخطاء</h3>
+
+<ul>
+
+<li>إصلاح خطأ حيث كان macOS يتجمد أحياناً عند استخدام ‘النقر والسحب’ لـ
+
+‘Spaces &amp; Mission Control’.</li>
+
+<li>إصلاح خطأ حيث كانت اختصارات لوحة المفاتيح في إعدادات النظام تُحذف
+
+أحياناً عند استخدام إجراءات ‘النقر’ في Mac Mouse Fix مثل ‘Mission
+
+Control’.</li>
+
+<li>إصلاح <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aopen%20label%3A%22%27Free%20days%20are%20over%27%20bug%22">خطأ</a>
+
+حيث كان التطبيق يتوقف أحياناً عن العمل ويظهر إشعاراً بأن ‘الأيام المجانية
+
+انتهت’ للمستخدمين الذين اشتروا التطبيق بالفعل.
+
+<ul>
+
+<li>إذا واجهت هذا الخطأ، أعتذر بصدق عن الإزعاج. يمكنك التقدم بطلب <a
+
+href="https://redirect.macmousefix.com/?message=&amp;target=mmf-apply-for-refund&amp;locale=ar">استرداد
+
+هنا</a>.</li>
+
+</ul></li>
+
+<li>تحسين طريقة استرجاع التطبيق لنافذته الرئيسية، مما قد يكون أصلح خطأ
+
+حيث تفشل شاشة ‘تفعيل الترخيص’ أحياناً في الظهور.</li>
+
+</ul>
+
+<h3 id="تحسينات-قابلية-الاستخدام">تحسينات قابلية الاستخدام</h3>
+
+<ul>
+
+<li>جعل إدخال المسافات وفواصل الأسطر مستحيلاً في حقل النص على شاشة ‘تفعيل
+
+الترخيص’.
+
+<ul>
+
+<li>كان هذا نقطة ارتباك شائعة، لأنه من السهل جداً اختيار فاصل سطر مخفي عن
+
+طريق الخطأ عند نسخ مفتاح الترخيص من رسائل Gumroad الإلكترونية.</li>
+
+</ul></li>
+
+<li>تُترجم ملاحظات التحديث هذه تلقائياً للمستخدمين غير الناطقين
+
+بالإنجليزية (مدعوم بـ Claude). آمل أن يكون هذا مفيداً! إذا واجهت أي مشاكل
+
+معه، أخبرني. هذه لمحة أولى عن نظام ترجمة جديد كنت أطوره خلال العام
+
+الماضي.</li>
+
+</ul>
+
+<h3 id="إيقاف-الدعم-غير-الرسمي-لـ-macos-10.14-mojave">إيقاف الدعم (غير
+
+الرسمي) لـ macOS 10.14 Mojave</h3>
+
+<p>يدعم Mac Mouse Fix 3 رسمياً macOS 11 Big Sur وما بعده. ومع ذلك،
+
+للمستخدمين المستعدين لقبول بعض الأخطاء والمشاكل الرسومية، كان بإمكانهم
+
+استخدام Mac Mouse Fix 3.0.3 والإصدارات الأقدم على macOS 10.14.4
+
+Mojave.</p>
+
+<p>يوقف Mac Mouse Fix 3.0.4 هذا الدعم و<strong>يتطلب الآن macOS 10.15
+
+Catalina</strong>.<br />
+
+أعتذر عن أي إزعاج يسببه هذا. سمح لي هذا التغيير بتطبيق نظام الترخيص
+
+المحسّن باستخدام ميزات Swift الحديثة. يمكن لمستخدمي Mojave الاستمرار في
+
+استخدام Mac Mouse Fix <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.3&amp;locale=ar">3.0.3</a>
+
+أو <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=ar">أحدث
+
+إصدار من Mac Mouse Fix 2</a>. آمل أن يكون هذا حلاً جيداً للجميع.</p>
+
+<h3 id="تحسينات-تحت-الغطاء">تحسينات تحت الغطاء</h3>
+
+<ul>
+
+<li>تطبيق نظام ‘MFDataClass’ جديد يسمح بنمذجة بيانات أكثر قوة مع الحفاظ
+
+على ملف تكوين Mac Mouse Fix قابلاً للقراءة والتحرير من قبل الإنسان.</li>
+
+<li>بناء دعم لإضافة منصات دفع أخرى غير Gumroad. لذا في المستقبل، قد تكون
+
+هناك عمليات دفع محلية، ويمكن بيع التطبيق لدول مختلفة.</li>
+
+<li>تحسين التسجيل مما يسمح لي بإنشاء “إصدارات تصحيح” أكثر فعالية
+
+للمستخدمين الذين يواجهون أخطاء يصعب إعادة إنتاجها.</li>
+
+<li>العديد من التحسينات الصغيرة الأخرى وأعمال التنظيف.</li>
+
+</ul>
+
+<p><em>تم التحرير بمساعدة ممتازة من Claude.</em></p>
+
+<hr />
+
+<p>تحقق أيضاً من الإصدار السابق <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.3&amp;locale=ar"><strong>3.0.3</strong></a>.</p>
+
+</body>
+
+</html>

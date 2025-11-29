@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.1.0 Beta 1</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI가 번역함</strong></p>
+
+<p>이 릴리스 노트는 Claude AI가 번역했습니다. 오류가 있을 수
+
+있습니다.<br />
+
+영어 원문을 보시려면 <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.1.0-Beta-1">여기를
+
+클릭하세요</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.1 베타 1</strong>은 오랫동안 작업해온
+
+훌륭한 새 번역 시스템을 제공합니다.<br />
+
+또한 몇 가지 UI 개선 사항도 포함되어 있습니다.</p>
+
+<h3 id="새로운-현지화-시스템">새로운 현지화 시스템!</h3>
+
+<ul>
+
+<li>이제 기술적 배경 지식이 전혀 없어도 Mac Mouse Fix에 고품질 번역을
+
+기여하는 것이 매우 쉬워졌습니다.</li>
+
+<li>주석이 달린 스크린샷과 설명, 그리고 훌륭한 검색 기능이 많이 있어서
+
+번역가들이 자신의 번역이 앱에서 어떻게 표시되는지 정확히 이해할 수
+
+있습니다.
+
+<ul>
+
+<li>스크린샷과 번역 UI(<code>Xcloc Editor</code> 앱)가 시장에서 최고
+
+품질이라고 생각하며, 여러분이 훌륭한 번역을 제공하는 데 도움이 되기를
+
+바랍니다!</li>
+
+</ul></li>
+
+<li>이제 ‘캡처된 버튼 가이드’, GitHub Readme, 웹사이트 등을 포함하여
+
+프로젝트의 거의 모든 부분을 번역할 수 있습니다.
+
+<ul>
+
+<li>프로젝트의 이러한 모든 부분을 <code>Xcloc Editor</code> 앱을
+
+사용하여 쉬운 상호 참조와 함께 하나의 중앙 집중식 장소에서 번역할 수
+
+있어, 번역가들이 모든 것을 일관되게 유지하기 쉽습니다.</li>
+
+</ul></li>
+
+<li>시스템이 유지 관리하기 매우 쉽게 설정되어 있어서, Mac Mouse Fix가
+
+발전하고 새로운 화면이나 텍스트가 추가되면 모든 것이 자동으로
+
+업데이트됩니다.</li>
+
+<li>참고: ’쉽다’는 단어를 많이 사용합니다. 작업 흐름은 쉽지만, 훌륭한
+
+번역을 생각해내는 것은 물론 여전히 많은 노력과 존중받을 만한 작업입니다!
+
+이제 방해 요소가 줄어들었을 뿐입니다.</li>
+
+</ul>
+
+<p>다음 분들이 이미 새로운 번역을 아낌없이 제공해 주셨습니다:</p>
+
+<ul>
+
+<li><strong>Eduardo Rodrigues</strong>: 🇧🇷 브라질 포르투갈어 번역</li>
+
+<li><a href="https://github.com/DimitriDR"><span class="citation"
+
+data-cites="DimitriDR">@DimitriDR</span></a>: 🇫🇷 프랑스어 번역</li>
+
+<li><a href="https://github.com/hasanbeder"><span class="citation"
+
+data-cites="hasanbeder">@hasanbeder</span></a>: 🇹🇷 터키어 번역</li>
+
+<li><a href="http://www.petrpavlik.com">Petr Pavlík</a>: 🇨🇿 체코어
+
+번역</li>
+
+</ul>
+
+<p>수고해 주셔서 감사합니다!</p>
+
+<p>하지만 많은 새로운 내용이 번역 가능하게 되었기 때문에 <strong>모든
+
+언어가 여전히 작업이 필요합니다</strong>.</p>
+
+<p>따라서:</p>
+
+<blockquote>
+
+<p>[!TIP] 전 세계 Mac Mouse Fix 사용자들에게 훌륭한 번역을 제공하는 데
+
+도움을 주고 싶다면 새로운 <a
+
+href="https://redirect.macmousefix.com/?target=mmf-localization-contribution&amp;locale=ko">번역
+
+가이드</a>를 확인해 보세요!</p>
+
+</blockquote>
+
+<h3 id="기타-변경-사항">기타 변경 사항</h3>
+
+<p>Mac Mouse Fix를 영어로 사용할 때는 크게 변경된 것이 없지만, UI에서 몇
+
+가지가 업데이트되었고, 번역을 더 잘 만들기 위해 내부적으로 많은 것이
+
+변경되었습니다:</p>
+
+<ul>
+
+<li>작은 팝업 알림의 세련된 모습.</li>
+
+<li>여러 곳에서 더 명확한 툴팁과 오류 메시지.</li>
+
+<li>이제 ESC 키를 사용하여 모든 곳에서 알림, 시트, 팝업을 닫을 수
+
+있습니다.</li>
+
+<li>정보 탭에 ‘번역 돕기’ 링크가 추가되었습니다.</li>
+
+<li>다양한 언어에서 멋지게 보이도록 뷰와 팝업의 너비가
+
+조정되었습니다.</li>
+
+<li>일부 작은 팝업 알림에서 텍스트 줄 바꿈 문제가 있던 중국어와 한국어의
+
+텍스트 레이아웃 개선.</li>
+
+<li>중국어와 한국어의 일부 서식 버그를 수정하기 위해 Markdown 파싱
+
+라이브러리 교체.</li>
+
+<li>그 외 많은 내부 변경 사항 및 개선 사항.</li>
+
+</ul>
+
+<hr />
+
+<p>Mac Mouse Fix의 이전 릴리스는 여기에서 찾을 수 있습니다: <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.8&amp;locale=ko">3.0.8</a></p>
+
+</body>
+
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nl" xml:lang="nl">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.6</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Vertaald door AI</strong></p>
+
+<p>Deze release note is vertaald door de Claude AI. Het kan fouten
+
+bevatten.<br />
+
+Voor de originele Engelse versie, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.6">klik
+
+hier</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.6</strong> maakt de ‘Terug’ en ‘Vooruit’
+
+functie compatibel met meer apps. Het lost ook verschillende bugs en
+
+problemen op.</p>
+
+<h3 id="verbeterde-terug-en-vooruit-functie">Verbeterde ‘Terug’ en
+
+‘Vooruit’ Functie</h3>
+
+<p>De ‘Terug’ en ‘Vooruit’ muisknoptoewijzingen <strong>werken nu in
+
+meer apps</strong>, waaronder:</p>
+
+<ul>
+
+<li>Visual Studio Code, Cursor, VSCodium, Windsurf, Zed, en andere
+
+code-editors</li>
+
+<li>Veel ingebouwde Apple-apps zoals Voorbeeld, Notities,
+
+Systeeminstellingen, App Store en Muziek</li>
+
+<li>Adobe Acrobat</li>
+
+<li>Zotero</li>
+
+<li>En meer!</li>
+
+</ul>
+
+<p>De implementatie is geïnspireerd door de geweldige ‘Universal Back
+
+and Forward’ functie in <a
+
+href="https://github.com/linearmouse/linearmouse">LinearMouse</a>. Het
+
+zou alle apps moeten ondersteunen die LinearMouse ondersteunt.<br />
+
+Bovendien ondersteunt het enkele apps die normaal gesproken sneltoetsen
+
+nodig hebben om terug en vooruit te gaan, zoals Systeeminstellingen, App
+
+Store, Apple Notities en Adobe Acrobat. Mac Mouse Fix detecteert nu deze
+
+apps en simuleert de juiste sneltoetsen.</p>
+
+<p>Elke app die ooit is <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22">aangevraagd
+
+in een GitHub Issue</a> zou nu ondersteund moeten worden! (Bedankt voor
+
+de feedback!)<br />
+
+Als je apps vindt die nog niet werken, laat het me weten in een <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-feature-request&amp;locale=nl">functieverzoek</a>.</p>
+
+<h3 id="oplossing-voor-de-scrollen-stopt-af-en-toe-bug">Oplossing voor
+
+de ‘Scrollen Stopt Af en Toe’ Bug</h3>
+
+<p>Sommige gebruikers ondervonden een <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20state%3Aclosed%20stops%20working%20label%3A%22Scroll%20Stops%20Working%20Intermittently%22">probleem</a>
+
+waarbij <strong>vloeiend scrollen willekeurig stopt met
+
+werken</strong>.</p>
+
+<p>Hoewel ik het probleem zelf nooit heb kunnen reproduceren, heb ik een
+
+mogelijke oplossing geïmplementeerd:</p>
+
+<p>De app zal nu meerdere keren opnieuw proberen wanneer het instellen
+
+van de beeldschermsynchronisatie mislukt.<br />
+
+Als het na meerdere pogingen nog steeds niet werkt, zal de app:</p>
+
+<ul>
+
+<li>Het ‘Mac Mouse Fix Helper’ achtergrondproces herstarten, wat het
+
+probleem mogelijk oplost</li>
+
+<li>Een crashrapport genereren, wat kan helpen bij het diagnosticeren
+
+van de bug</li>
+
+</ul>
+
+<p>Ik hoop dat het probleem nu is opgelost! Zo niet, laat het me weten
+
+in een <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-bug-report&amp;locale=nl">bugrapport</a>
+
+of via <a
+
+href="http://redirect.macmousefix.com/?target=mailto-noah&amp;locale=nl">e-mail</a>.</p>
+
+<h3 id="verbeterd-gedrag-van-vrij-draaiend-scrollwiel">Verbeterd Gedrag
+
+van Vrij Draaiend Scrollwiel</h3>
+
+<p>Mac Mouse Fix zal <strong>het scrollen niet langer
+
+versnellen</strong> wanneer je het scrollwiel vrij laat draaien op de MX
+
+Master muis. (Of een andere muis met een vrij draaiend scrollwiel.)</p>
+
+<p>Hoewel deze ‘scrollversnelling’ functie nuttig is bij gewone
+
+scrollwielen, kan het bij een vrij draaiend scrollwiel de controle
+
+bemoeilijken.</p>
+
+<p><strong>Let op:</strong> Mac Mouse Fix is momenteel niet volledig
+
+compatibel met de meeste Logitech-muizen, inclusief de MX Master. Ik ben
+
+van plan volledige ondersteuning toe te voegen, maar dat zal
+
+waarschijnlijk even duren. In de tussentijd is de beste third-party
+
+driver met Logitech-ondersteuning die ik ken <a
+
+href="https://plentycom.jp/en/steermouse/">SteerMouse</a>.</p>
+
+<h3 id="bugfixes">Bugfixes</h3>
+
+<ul>
+
+<li>Een probleem opgelost waarbij Mac Mouse Fix soms sneltoetsen opnieuw
+
+inschakelde die eerder waren uitgeschakeld in Systeeminstellingen<br />
+
+</li>
+
+<li>Een crash opgelost bij het klikken op ‘Activeer Licentie’</li>
+
+<li>Een crash opgelost bij het klikken op ‘Annuleer’ direct na het
+
+klikken op ‘Activeer Licentie’ (Bedankt voor de melding, Ali!)</li>
+
+<li>Crashes opgelost bij pogingen om Mac Mouse Fix te gebruiken terwijl
+
+er geen beeldscherm is aangesloten op je Mac</li>
+
+<li>Een geheugenlek en enkele andere onderliggende problemen opgelost
+
+bij het wisselen tussen tabbladen in de app</li>
+
+</ul>
+
+<h3 id="visuele-verbeteringen">Visuele Verbeteringen</h3>
+
+<ul>
+
+<li>Een probleem opgelost waarbij het Over-tabblad soms te hoog was, wat
+
+werd geïntroduceerd in <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=nl">3.0.5</a></li>
+
+<li>Tekst op de ‘Gratis dagen zijn voorbij’ melding wordt niet langer
+
+afgesneden in het Chinees</li>
+
+<li>Een visuele glitch opgelost op de schaduw van het ‘+’ veld na het
+
+opnemen van een invoer</li>
+
+<li>Een zeldzame glitch opgelost waarbij de plaatshouder tekst op het
+
+‘Voer Je Licentiesleutel In’ scherm niet gecentreerd verscheen</li>
+
+<li>Een probleem opgelost waarbij sommige symbolen in de app de
+
+verkeerde kleur hadden na het wisselen tussen donkere/lichte modus</li>
+
+</ul>
+
+<h3 id="overige-verbeteringen">Overige Verbeteringen</h3>
+
+<ul>
+
+<li>Enkele animaties, zoals de tabbladwisselanimatie, iets efficiënter
+
+gemaakt<br />
+
+</li>
+
+<li>Touch Bar tekstcompletering uitgeschakeld op het ‘Voer Je
+
+Licentiesleutel In’ scherm</li>
+
+<li>Diverse kleinere onderliggende verbeteringen</li>
+
+</ul>
+
+<p><em>Bewerkt met uitstekende hulp van Claude.</em></p>
+
+<hr />
+
+<p>Bekijk ook de vorige release <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=nl">3.0.5</a>.</p>
+
+</body>
+
+</html>

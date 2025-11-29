@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="he" xml:lang="he">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ תורגם על ידי בינה מלאכותית</strong></p>
+
+<p>הערת שחרור זו תורגמה על ידי הבינה המלאכותית Claude. היא עשויה להכיל
+
+שגיאות.<br />
+
+לגרסה המקורית באנגלית, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.5">לחץ
+
+כאן</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.5</strong> מתקן מספר באגים, משפר ביצועים
+
+ומוסיף קצת ליטוש לאפליקציה.<br />
+
+הוא גם תואם ל-macOS 26 Tahoe.</p>
+
+<h3 id="סימולציה-משופרת-של-גלילה-בטראקפד">סימולציה משופרת של גלילה
+
+בטראקפד</h3>
+
+<ul>
+
+<li>מערכת הגלילה יכולה כעת לדמות הקשה בשתי אצבעות על הטראקפד כדי לגרום
+
+לאפליקציות להפסיק לגלול.
+
+<ul>
+
+<li>זה מתקן בעיה בהרצת אפליקציות iPhone או iPad, שבהן הגלילה הייתה
+
+ממשיכה לעיתים קרובות אחרי שהמשתמש בחר להפסיק.</li>
+
+</ul></li>
+
+<li>תוקנה סימולציה לא עקבית של הרמת אצבעות מהטראקפד.
+
+<ul>
+
+<li>זה אולי גרם להתנהגות לא אופטימלית במצבים מסוימים.</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="תאימות-ל-macos-26-tahoe">תאימות ל-macOS 26 Tahoe</h3>
+
+<p>בהרצת הבטא של macOS 26 Tahoe, האפליקציה כעת שמישה, ורוב ממשק המשתמש
+
+עובד כראוי.</p>
+
+<h3 id="שיפור-ביצועים">שיפור ביצועים</h3>
+
+<p>שיפור ביצועים של תנועת הלחיצה והגרירה ל-“גלילה וניווט”.<br />
+
+בבדיקות שלי, השימוש במעבד הופחת בכ-50%!</p>
+
+<p><strong>רקע</strong></p>
+
+<p>במהלך תנועת “גלילה וניווט”, Mac Mouse Fix מציג סמן עכבר מזויף בחלון
+
+שקוף, תוך נעילת סמן העכבר האמיתי במקומו. זה מבטיח שתוכל להמשיך לגלול את
+
+רכיב ממשק המשתמש שהתחלת לגלול עליו, לא משנה כמה רחוק תזיז את העכבר.</p>
+
+<p>שיפור הביצועים הושג על ידי כיבוי טיפול ברירת המחדל של macOS באירועים
+
+בחלון השקוף הזה, שממילא לא היה בשימוש.</p>
+
+<h3 id="תיקוני-באגים">תיקוני באגים</h3>
+
+<ul>
+
+<li>כעת מתעלמים מאירועי גלילה מטאבלטים לציור של Wacom.
+
+<ul>
+
+<li>לפני כן, Mac Mouse Fix גרם לגלילה לא יציבה בטאבלטים של Wacom, כפי
+
+שדווח על ידי <span class="citation"
+
+data-cites="frenchie1980">@frenchie1980</span> ב-GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>.
+
+(תודה!)</li>
+
+</ul></li>
+
+<li>תוקן באג שבו קוד Swift Concurrency, שהוצג כחלק ממערכת הרישוי החדשה
+
+ב-Mac Mouse Fix 3.0.4, לא רץ על ה-thread הנכון.
+
+<ul>
+
+<li>זה גרם לקריסות ב-macOS Tahoe, וכנראה גם גרם לבאגים ספורדיים אחרים
+
+סביב רישוי.</li>
+
+</ul></li>
+
+<li>שיפור חוסן הקוד שמפענח רישיונות לא מקוונים.
+
+<ul>
+
+<li>זה עוקף בעיה ב-APIs של Apple שגרמה לאימות רישיון לא מקוון להיכשל
+
+תמיד ב-Intel Mac Mini שלי. אני מניח שזה קרה בכל מחשבי Intel Mac, ושזו
+
+הייתה הסיבה שבאג “ימי החינם נגמרו” (שכבר טופל ב-3.0.4) עדיין התרחש אצל
+
+חלק מהאנשים, כפי שדווח על ידי <span class="citation"
+
+data-cites="toni20k5267">@toni20k5267</span> ב-GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>.
+
+(תודה רבה!)
+
+<ul>
+
+<li>אם חווית את באג “ימי החינם נגמרו”, אני מצטער על כך! אתה יכול לקבל
+
+החזר כספי <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=he">כאן</a>.</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="שיפורי-חוויית-משתמש">שיפורי חוויית משתמש</h3>
+
+<ul>
+
+<li>הושבתו דיאלוגים שסיפקו פתרונות שלב אחר שלב לבאגים של macOS שמנעו
+
+ממשתמשים להפעיל את Mac Mouse Fix.
+
+<ul>
+
+<li>בעיות אלו התרחשו רק ב-macOS 13 Ventura ו-14 Sonoma. כעת, הדיאלוגים
+
+האלה מופיעים רק בגרסאות macOS שבהן הם רלוונטיים.</li>
+
+<li>הדיאלוגים גם קצת יותר קשים להפעלה – לפני כן, הם לפעמים הופיעו במצבים
+
+שבהם הם לא היו מועילים במיוחד.</li>
+
+</ul></li>
+
+<li>נוסף קישור “הפעל רישיון” ישירות על ההתראה “ימי החינם נגמרו”.
+
+<ul>
+
+<li>זה הופך את הפעלת רישיון Mac Mouse Fix לנוחה עוד יותר!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="שיפורים-ויזואליים">שיפורים ויזואליים</h3>
+
+<ul>
+
+<li>שיפור קל במראה של חלון “עדכון תוכנה”. כעת הוא משתלב טוב יותר עם
+
+macOS 26 Tahoe.
+
+<ul>
+
+<li>זה נעשה על ידי התאמה אישית של המראה המוגדר כברירת מחדל של פריימוורק
+
+“Sparkle 1.27.3” שבו Mac Mouse Fix משתמש לטיפול בעדכונים.</li>
+
+</ul></li>
+
+<li>תוקנה בעיה שבה הטקסט בתחתית הלשונית About נחתך לפעמים בסינית, על ידי
+
+הרחבה קלה של החלון.</li>
+
+<li>תוקן הטקסט בתחתית הלשונית About שהיה מעט לא ממורכז.</li>
+
+<li>תוקן באג שגרם לרווח מתחת לאפשרות “קיצור מקלדת…” בלשונית Buttons
+
+להיות קטן מדי.</li>
+
+</ul>
+
+<h3 id="שינויים-מתחת-למכסה-המנוע">שינויים מתחת למכסה המנוע</h3>
+
+<ul>
+
+<li>הוסרה תלות בפריימוורק “SnapKit”.
+
+<ul>
+
+<li>זה מקטין מעט את גודל האפליקציה מ-19.8 ל-19.5 MB.</li>
+
+</ul></li>
+
+<li>שיפורים קטנים נוספים שונים בקוד.</li>
+
+</ul>
+
+<p><em>נערך בסיוע מצוין של Claude.</em></p>
+
+<hr />
+
+<p>בדוק גם את הגרסה הקודמת <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.4&amp;locale=he"><strong>3.0.4</strong></a>.</p>
+
+</body>
+
+</html>

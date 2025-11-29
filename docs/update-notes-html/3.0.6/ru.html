@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.6</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Переведено ИИ</strong></p>
+
+<p>Это примечание к выпуску было переведено ИИ Claude. Оно может
+
+содержать ошибки.<br />
+
+Оригинальную английскую версию можно найти <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.6">здесь</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.6</strong> делает функции «Назад» и
+
+«Вперёд» совместимыми с большим количеством приложений. Также исправлены
+
+несколько ошибок и проблем.</p>
+
+<h3 id="улучшенные-функции-назад-и-вперёд">Улучшенные функции «Назад» и
+
+«Вперёд»</h3>
+
+<p>Назначения кнопок мыши «Назад» и «Вперёд» теперь <strong>работают в
+
+большем количестве приложений</strong>, включая:</p>
+
+<ul>
+
+<li>Visual Studio Code, Cursor, VSCodium, Windsurf, Zed и другие
+
+редакторы кода</li>
+
+<li>Многие встроенные приложения Apple, такие как Просмотр, Заметки,
+
+Системные настройки, App Store и Музыка</li>
+
+<li>Adobe Acrobat</li>
+
+<li>Zotero</li>
+
+<li>И многие другие!</li>
+
+</ul>
+
+<p>Реализация вдохновлена отличной функцией «Universal Back and Forward»
+
+в <a href="https://github.com/linearmouse/linearmouse">LinearMouse</a>.
+
+Она должна поддерживать все приложения, которые поддерживает
+
+LinearMouse.<br />
+
+Кроме того, она поддерживает некоторые приложения, которые обычно
+
+требуют сочетаний клавиш для навигации назад и вперёд, такие как
+
+Системные настройки, App Store, Заметки Apple и Adobe Acrobat. Mac Mouse
+
+Fix теперь распознаёт эти приложения и имитирует соответствующие
+
+сочетания клавиш.</p>
+
+<p>Теперь должны поддерживаться все приложения, которые когда-либо <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22">запрашивались
+
+в GitHub Issue</a>! (Спасибо за отзывы!)<br />
+
+Если ты найдёшь приложения, которые ещё не работают, дай мне знать через
+
+<a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-feature-request&amp;locale=ru">запрос
+
+функции</a>.</p>
+
+<h3
+
+id="устранение-ошибки-прокрутка-периодически-перестаёт-работать">Устранение
+
+ошибки «Прокрутка периодически перестаёт работать»</h3>
+
+<p>Некоторые пользователи сталкивались с <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20state%3Aclosed%20stops%20working%20label%3A%22Scroll%20Stops%20Working%20Intermittently%22">проблемой</a>,
+
+когда <strong>плавная прокрутка переставала работать</strong> случайным
+
+образом.</p>
+
+<p>Хотя мне так и не удалось воспроизвести эту проблему, я реализовал
+
+потенциальное исправление:</p>
+
+<p>Приложение теперь будет повторять попытки несколько раз при сбое
+
+настройки синхронизации с дисплеем.<br />
+
+Если после повторных попыток это всё ещё не работает, приложение:</p>
+
+<ul>
+
+<li>Перезапустит фоновый процесс «Mac Mouse Fix Helper», что может
+
+решить проблему</li>
+
+<li>Создаст отчёт о сбое, который может помочь диагностировать
+
+ошибку</li>
+
+</ul>
+
+<p>Надеюсь, проблема теперь решена! Если нет, дай мне знать через <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-bug-report&amp;locale=ru">отчёт
+
+об ошибке</a> или по <a
+
+href="http://redirect.macmousefix.com/?target=mailto-noah&amp;locale=ru">электронной
+
+почте</a>.</p>
+
+<h3
+
+id="улучшенное-поведение-колеса-прокрутки-со-свободным-вращением">Улучшенное
+
+поведение колеса прокрутки со свободным вращением</h3>
+
+<p>Mac Mouse Fix <strong>больше не будет ускорять прокрутку</strong> за
+
+тебя, когда ты позволяешь колесу прокрутки свободно вращаться на мыши MX
+
+Master. (Или любой другой мыши с колесом свободного вращения.)</p>
+
+<p>Хотя эта функция «ускорения прокрутки» полезна на обычных колёсах
+
+прокрутки, на колесе со свободным вращением она может усложнить
+
+управление.</p>
+
+<p><strong>Примечание:</strong> Mac Mouse Fix в настоящее время не
+
+полностью совместим с большинством мышей Logitech, включая MX Master. Я
+
+планирую добавить полную поддержку, но это, вероятно, займёт некоторое
+
+время. А пока лучший сторонний драйвер с поддержкой Logitech, который я
+
+знаю, — это <a
+
+href="https://plentycom.jp/en/steermouse/">SteerMouse</a>.</p>
+
+<h3 id="исправления-ошибок">Исправления ошибок</h3>
+
+<ul>
+
+<li>Исправлена проблема, когда Mac Mouse Fix иногда повторно включал
+
+сочетания клавиш, которые ранее были отключены в Системных
+
+настройках<br />
+
+</li>
+
+<li>Исправлен сбой при нажатии «Активировать лицензию»</li>
+
+<li>Исправлен сбой при нажатии «Отмена» сразу после нажатия
+
+«Активировать лицензию» (Спасибо за отчёт, Ali!)</li>
+
+<li>Исправлены сбои при попытке использовать Mac Mouse Fix, когда к Mac
+
+не подключён дисплей</li>
+
+<li>Исправлена утечка памяти и некоторые другие внутренние проблемы при
+
+переключении между вкладками в приложении</li>
+
+</ul>
+
+<h3 id="визуальные-улучшения">Визуальные улучшения</h3>
+
+<ul>
+
+<li>Исправлена проблема, когда вкладка «О программе» иногда была слишком
+
+высокой, которая появилась в <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=ru">3.0.5</a></li>
+
+<li>Текст в уведомлении «Бесплатные дни закончились» больше не
+
+обрезается на китайском языке</li>
+
+<li>Исправлен визуальный глюк с тенью поля «+» после записи ввода</li>
+
+<li>Исправлен редкий глюк, когда текст-заполнитель на экране «Введите
+
+лицензионный ключ» отображался не по центру</li>
+
+<li>Исправлена проблема, когда некоторые символы, отображаемые в
+
+приложении, имели неправильный цвет после переключения между
+
+тёмным/светлым режимом</li>
+
+</ul>
+
+<h3 id="другие-улучшения">Другие улучшения</h3>
+
+<ul>
+
+<li>Некоторые анимации, такие как анимация переключения вкладок, стали
+
+немного более эффективными<br />
+
+</li>
+
+<li>Отключено автодополнение текста Touch Bar на экране «Введите
+
+лицензионный ключ»</li>
+
+<li>Различные мелкие внутренние улучшения</li>
+
+</ul>
+
+<p><em>Отредактировано с отличной помощью Claude.</em></p>
+
+<hr />
+
+<p>Также ознакомься с предыдущим релизом <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=ru">3.0.5</a>.</p>
+
+</body>
+
+</html>

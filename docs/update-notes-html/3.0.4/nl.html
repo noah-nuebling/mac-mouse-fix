@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nl" xml:lang="nl">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.4</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Vertaald door AI</strong></p>
+
+<p>Deze release note is vertaald door de Claude AI. Het kan fouten
+
+bevatten.<br />
+
+Voor de originele Engelse versie, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.4">klik
+
+hier</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.4</strong> verbetert privacy, efficiëntie
+
+en betrouwbaarheid.<br />
+
+Het introduceert een nieuw offline licentiesysteem en lost verschillende
+
+belangrijke bugs op.</p>
+
+<h3 id="verbeterde-privacy-efficiëntie">Verbeterde Privacy &amp;
+
+Efficiëntie</h3>
+
+<p>3.0.4 introduceert een nieuw offline licentievalidatiesysteem dat
+
+internetverbindingen zoveel mogelijk minimaliseert.<br />
+
+Dit verbetert de privacy en bespaart systeembronnen van je
+
+computer.<br />
+
+Wanneer gelicentieerd, werkt de app nu 100% offline!</p>
+
+<details>
+
+<summary>
+
+<b>Klik hier voor meer details</b>
+
+</summary>
+
+<p>Eerdere versies valideerden licenties online bij elke start, waardoor
+
+verbindingslogs mogelijk opgeslagen konden worden door servers van
+
+derden (GitHub en Gumroad). Het nieuwe systeem elimineert onnodige
+
+verbindingen – na de initiële licentieactivatie maakt het alleen
+
+verbinding met internet als lokale licentiegegevens beschadigd zijn.
+
+<br><br> Hoewel gebruikersgedrag nooit door mij persoonlijk is
+
+geregistreerd, maakte het vorige systeem het theoretisch mogelijk voor
+
+servers van derden om IP-adressen en verbindingstijden te loggen.
+
+Gumroad kon ook je licentiesleutel loggen en deze mogelijk correleren
+
+aan persoonlijke informatie die ze over je hebben vastgelegd toen je Mac
+
+Mouse Fix kocht. <br><br> Ik had deze subtiele privacykwesties niet
+
+overwogen toen ik het oorspronkelijke licentiesysteem bouwde, maar nu is
+
+Mac Mouse Fix zo privé en internetvrij als mogelijk! <br><br> Zie ook
+
+<a href=https://gumroad.com/privacy>Gumroad’s privacybeleid</a> en deze
+
+<a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>GitHub-opmerking</a>
+
+van mij.</p>
+
+</details>
+
+<h3 id="bugfixes">Bugfixes</h3>
+
+<ul>
+
+<li>Een bug opgelost waarbij macOS soms vastliep bij het gebruik van
+
+‘Klik en Sleep’ voor ‘Spaces &amp; Mission Control’.</li>
+
+<li>Een bug opgelost waarbij sneltoetsen in Systeeminstellingen soms
+
+werden verwijderd bij het gebruik van Mac Mouse Fix ‘Klik’-acties zoals
+
+‘Mission Control’.</li>
+
+<li><a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aopen%20label%3A%22%27Free%20days%20are%20over%27%20bug%22">Een
+
+bug</a> opgelost waarbij de app soms stopte met werken en een melding
+
+toonde dat de ‘Gratis dagen voorbij zijn’ aan gebruikers die de app al
+
+hadden gekocht.
+
+<ul>
+
+<li>Als je deze bug hebt ervaren, bied ik mijn oprechte excuses aan voor
+
+het ongemak. Je kunt <a
+
+href="https://redirect.macmousefix.com/?message=&amp;target=mmf-apply-for-refund&amp;locale=nl">hier
+
+een terugbetaling aanvragen</a>.</li>
+
+</ul></li>
+
+<li>De manier verbeterd waarop de applicatie zijn hoofdvenster ophaalt,
+
+wat mogelijk een bug heeft opgelost waarbij het ‘Activeer
+
+Licentie’-scherm soms niet verscheen.</li>
+
+</ul>
+
+<h3
+
+id="gebruiksvriendelijkheidsverbeteringen">Gebruiksvriendelijkheidsverbeteringen</h3>
+
+<ul>
+
+<li>Het onmogelijk gemaakt om spaties en regeleinden in te voeren in het
+
+tekstveld op het ‘Activeer Licentie’-scherm.
+
+<ul>
+
+<li>Dit was een veelvoorkomend punt van verwarring, omdat het heel
+
+gemakkelijk is om per ongeluk een verborgen regeleinde te selecteren bij
+
+het kopiëren van je licentiesleutel uit Gumroad’s e-mails.</li>
+
+</ul></li>
+
+<li>Deze update-notities worden automatisch vertaald voor
+
+niet-Engelstalige gebruikers (Mogelijk gemaakt door Claude). Ik hoop dat
+
+dit nuttig is! Als je problemen tegenkomt, laat het me weten. Dit is een
+
+eerste glimp van een nieuw vertaalsysteem dat ik het afgelopen jaar heb
+
+ontwikkeld.</li>
+
+</ul>
+
+<h3
+
+id="onofficiële-ondersteuning-voor-macos-10.14-mojave-vervallen">(Onofficiële)
+
+Ondersteuning voor macOS 10.14 Mojave Vervallen</h3>
+
+<p>Mac Mouse Fix 3 ondersteunt officieel macOS 11 Big Sur en later. Voor
+
+gebruikers die bereid waren enkele glitches en grafische problemen te
+
+accepteren, kon Mac Mouse Fix 3.0.3 en eerder echter nog steeds worden
+
+gebruikt op macOS 10.14.4 Mojave.</p>
+
+<p>Mac Mouse Fix 3.0.4 laat die ondersteuning vallen en <strong>vereist
+
+nu macOS 10.15 Catalina</strong>.<br />
+
+Mijn excuses voor eventueel ongemak hierdoor. Deze wijziging stelde me
+
+in staat om het verbeterde licentiesysteem te implementeren met moderne
+
+Swift-functies. Mojave-gebruikers kunnen Mac Mouse Fix <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.3&amp;locale=nl">3.0.3</a>
+
+of de <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=nl">nieuwste
+
+versie van Mac Mouse Fix 2</a> blijven gebruiken. Ik hoop dat dit een
+
+goede oplossing is voor iedereen.</p>
+
+<h3 id="verbeteringen-onder-de-motorkap">Verbeteringen onder de
+
+motorkap</h3>
+
+<ul>
+
+<li>Een nieuw ‘MFDataClass’-systeem geïmplementeerd dat krachtigere
+
+datamodellering mogelijk maakt terwijl Mac Mouse Fix’s
+
+configuratiebestand leesbaar en bewerkbaar blijft voor mensen.</li>
+
+<li>Ondersteuning gebouwd voor het toevoegen van andere
+
+betalingsplatforms dan Gumroad. Dus in de toekomst kunnen er
+
+gelokaliseerde checkouts zijn, en kan de app aan verschillende landen
+
+worden verkocht.</li>
+
+<li>Verbeterde logging waardoor ik effectievere “Debug Builds” kan maken
+
+voor gebruikers die moeilijk te reproduceren bugs ervaren.</li>
+
+<li>Veel andere kleine verbeteringen en opruimwerk.</li>
+
+</ul>
+
+<p><em>Bewerkt met uitstekende hulp van Claude.</em></p>
+
+<hr />
+
+<p>Bekijk ook de vorige release <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.3&amp;locale=nl"><strong>3.0.3</strong></a>.</p>
+
+</body>
+
+</html>

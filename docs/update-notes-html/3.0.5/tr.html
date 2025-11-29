@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="tr" xml:lang="tr">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI tarafından çevrildi</strong></p>
+
+<p>Bu sürüm notu Claude AI tarafından çevrilmiştir. Hatalar
+
+içerebilir.<br />
+
+İngilizce orijinal versiyonu için <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.5">buraya
+
+tıklayın</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.5</strong>, birkaç hatayı düzeltiyor,
+
+performansı iyileştiriyor ve uygulamaya biraz daha parlaklık
+
+katıyor.<br />
+
+Ayrıca macOS 26 Tahoe ile uyumlu.</p>
+
+<h3 id="trackpad-kaydırma-simülasyonunda-iyileştirmeler">Trackpad
+
+Kaydırma Simülasyonunda İyileştirmeler</h3>
+
+<ul>
+
+<li>Kaydırma sistemi artık uygulamaların kaydırmayı durdurması için
+
+trackpad üzerinde iki parmakla dokunmayı simüle edebiliyor.
+
+<ul>
+
+<li>Bu, iPhone veya iPad uygulamalarını çalıştırırken kullanıcı durmayı
+
+seçtikten sonra kaydırmanın sıklıkla devam etmesi sorununu
+
+düzeltiyor.</li>
+
+</ul></li>
+
+<li>Parmakları trackpad’den kaldırma simülasyonundaki tutarsızlık
+
+düzeltildi.
+
+<ul>
+
+<li>Bu, bazı durumlarda optimal olmayan davranışlara neden
+
+olabiliyordu.</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="macos-26-tahoe-uyumluluğu">macOS 26 Tahoe Uyumluluğu</h3>
+
+<p>macOS 26 Tahoe Beta çalıştırılırken, uygulama artık kullanılabilir
+
+durumda ve arayüzün çoğu doğru şekilde çalışıyor.</p>
+
+<h3 id="performans-iyileştirmesi">Performans İyileştirmesi</h3>
+
+<p>“Kaydır ve Gezin” hareketinde Tıkla ve Sürükle performansı
+
+iyileştirildi.<br />
+
+Testlerimde, CPU kullanımı ~%50 oranında azaldı!</p>
+
+<p><strong>Arka Plan</strong></p>
+
+<p>“Kaydır ve Gezin” hareketi sırasında, Mac Mouse Fix gerçek fare
+
+imlecini sabit tutarken şeffaf bir pencerede sahte bir fare imleci
+
+çiziyor. Bu, farenizi ne kadar hareket ettirirseniz ettirin, kaydırmaya
+
+başladığınız arayüz öğesini kaydırmaya devam edebilmenizi sağlıyor.</p>
+
+<p>Performans iyileştirmesi, bu şeffaf pencerede zaten kullanılmayan
+
+varsayılan macOS olay işleme sistemini kapatarak elde edildi.</p>
+
+<h3 id="hata-düzeltmeleri">Hata Düzeltmeleri</h3>
+
+<ul>
+
+<li>Artık Wacom çizim tabletlerinden gelen kaydırma olayları göz ardı
+
+ediliyor.
+
+<ul>
+
+<li>Daha önce Mac Mouse Fix, <span class="citation"
+
+data-cites="frenchie1980">@frenchie1980</span> tarafından GitHub Issue
+
+<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>’te
+
+bildirilen şekilde Wacom tabletlerde düzensiz kaydırmaya neden oluyordu.
+
+(Teşekkürler!)</li>
+
+</ul></li>
+
+<li>Mac Mouse Fix 3.0.4’teki yeni lisanslama sisteminin bir parçası
+
+olarak eklenen Swift Concurrency kodunun doğru thread üzerinde
+
+çalışmaması hatasını düzelttik.
+
+<ul>
+
+<li>Bu, macOS Tahoe’da çökmelere neden oluyordu ve muhtemelen lisanslama
+
+etrafındaki diğer ara sıra oluşan hatalara da yol açıyordu.</li>
+
+</ul></li>
+
+<li>Çevrimdışı lisansların kodunu çözen kodun sağlamlığı iyileştirildi.
+
+<ul>
+
+<li>Bu, Apple’ın API’lerindeki, Intel Mac Mini’mde çevrimdışı lisans
+
+doğrulamasının her zaman başarısız olmasına neden olan bir sorunu
+
+aşıyor. Bunun tüm Intel Mac’lerde gerçekleştiğini ve <span
+
+class="citation" data-cites="toni20k5267">@toni20k5267</span> tarafından
+
+GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>’da
+
+bildirilen şekilde, bazı kişiler için (3.0.4’te zaten ele alınan)
+
+“Ücretsiz günler bitti” hatasının hala oluşmasının nedeni olduğunu
+
+varsayıyorum. (Teşekkür ederim!)
+
+<ul>
+
+<li>“Ücretsiz günler bitti” hatasını yaşadıysanız, bunun için özür
+
+dilerim! <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=tr">Buradan</a>
+
+para iadesi alabilirsiniz.</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="kullanıcı-deneyimi-iyileştirmeleri">Kullanıcı Deneyimi
+
+İyileştirmeleri</h3>
+
+<ul>
+
+<li>Kullanıcıların Mac Mouse Fix’i etkinleştirmesini engelleyen macOS
+
+hataları için adım adım çözümler sunan diyaloglar devre dışı bırakıldı.
+
+<ul>
+
+<li>Bu sorunlar yalnızca macOS 13 Ventura ve 14 Sonoma’da oluşuyordu.
+
+Artık bu diyaloglar yalnızca ilgili oldukları macOS sürümlerinde
+
+görünüyor.</li>
+
+<li>Diyalogların tetiklenmesi de biraz daha zorlaştırıldı – daha önce
+
+bazen çok yardımcı olmadıkları durumlarda görünüyorlardı.</li>
+
+</ul></li>
+
+<li>“Ücretsiz günler bitti” bildiriminin üzerine doğrudan bir “Lisansı
+
+Etkinleştir” bağlantısı eklendi.
+
+<ul>
+
+<li>Bu, Mac Mouse Fix lisansını etkinleştirmeyi daha da kolay hale
+
+getiriyor!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="görsel-iyileştirmeler">Görsel İyileştirmeler</h3>
+
+<ul>
+
+<li>“Yazılım Güncellemesi” penceresinin görünümü biraz iyileştirildi.
+
+Artık macOS 26 Tahoe ile daha iyi uyum sağlıyor.
+
+<ul>
+
+<li>Bu, Mac Mouse Fix’in güncellemeleri yönetmek için kullandığı
+
+“Sparkle 1.27.3” framework’ünün varsayılan görünümü özelleştirilerek
+
+yapıldı.</li>
+
+</ul></li>
+
+<li>Hakkında sekmesinin altındaki metnin Çince’de bazen kesilmesi
+
+sorunu, pencere biraz genişletilerek düzeltildi.</li>
+
+<li>Hakkında sekmesinin altındaki metnin hafif merkez dışı olması
+
+düzeltildi.</li>
+
+<li>Düğmeler sekmesindeki “Klavye Kısayolu…” seçeneğinin altındaki
+
+boşluğun çok küçük olmasına neden olan hata düzeltildi.</li>
+
+</ul>
+
+<h3 id="altyapı-değişiklikleri">Altyapı Değişiklikleri</h3>
+
+<ul>
+
+<li>“SnapKit” framework’üne olan bağımlılık kaldırıldı.
+
+<ul>
+
+<li>Bu, uygulamanın boyutunu 19,8 MB’den 19,5 MB’ye hafifçe
+
+düşürüyor.</li>
+
+</ul></li>
+
+<li>Kod tabanında çeşitli diğer küçük iyileştirmeler.</li>
+
+</ul>
+
+<p><em>Claude’un mükemmel yardımıyla düzenlendi.</em></p>
+
+<hr />
+
+<p>Ayrıca bir önceki sürüm <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.4&amp;locale=tr"><strong>3.0.4</strong></a>’e
+
+de göz atın.</p>
+
+</body>
+
+</html>

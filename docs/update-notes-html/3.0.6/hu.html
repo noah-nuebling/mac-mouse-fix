@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hu" xml:lang="hu">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.6</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI által fordítva</strong></p>
+
+<p>Ezt a kiadási megjegyzést a Claude AI fordította. Tartalmazhat
+
+hibákat.<br />
+
+Az eredeti angol verzióért <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.6">kattints
+
+ide</a>.</p>
+
+<hr />
+
+<p>A Mac Mouse Fix <strong>3.0.6</strong> kompatibilissé teszi a
+
+‘Vissza’ és ‘Előre’ funkciót több alkalmazással. Emellett számos hibát
+
+és problémát is kijavít.</p>
+
+<h3 id="továbbfejlesztett-vissza-és-előre-funkció">Továbbfejlesztett
+
+‘Vissza’ és ‘Előre’ funkció</h3>
+
+<p>A ‘Vissza’ és ‘Előre’ egérgomb-hozzárendelések mostantól <strong>több
+
+alkalmazásban működnek</strong>, beleértve:</p>
+
+<ul>
+
+<li>Visual Studio Code, Cursor, VSCodium, Windsurf, Zed és más
+
+kódszerkesztők</li>
+
+<li>Számos beépített Apple alkalmazás, mint a Előnézet, Jegyzetek,
+
+Rendszerbeállítások, App Store és Zene</li>
+
+<li>Adobe Acrobat</li>
+
+<li>Zotero</li>
+
+<li>És még sok más!</li>
+
+</ul>
+
+<p>A megvalósítást a <a
+
+href="https://github.com/linearmouse/linearmouse">LinearMouse</a> kiváló
+
+‘Universal Back and Forward’ funkciója ihlette. Minden olyan alkalmazást
+
+támogatnia kell, amelyet a LinearMouse is támogat.<br />
+
+Ráadásul olyan alkalmazásokat is támogat, amelyek általában
+
+billentyűparancsokat igényelnek a vissza és előre lépéshez, mint például
+
+a Rendszerbeállítások, App Store, Apple Jegyzetek és Adobe Acrobat. A
+
+Mac Mouse Fix mostantól felismeri ezeket az alkalmazásokat és szimulálja
+
+a megfelelő billentyűparancsokat.</p>
+
+<p>Minden alkalmazás, amelyet valaha <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22">GitHub
+
+Issue-ban kértek</a>, mostantól támogatott! (Köszönöm a
+
+visszajelzéseket!)<br />
+
+Ha találsz olyan alkalmazást, amely még nem működik, jelezd egy <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-feature-request&amp;locale=hu">funkciókérésben</a>.</p>
+
+<h3 id="a-görgetés-időnként-leáll-hiba-kezelése">A ‘Görgetés időnként
+
+leáll’ hiba kezelése</h3>
+
+<p>Néhány felhasználó olyan <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20state%3Aclosed%20stops%20working%20label%3A%22Scroll%20Stops%20Working%20Intermittently%22">problémát</a>
+
+tapasztalt, amikor a <strong>sima görgetés véletlenszerűen
+
+leáll</strong>.</p>
+
+<p>Bár soha nem tudtam reprodukálni a problémát, implementáltam egy
+
+lehetséges javítást:</p>
+
+<p>Az alkalmazás mostantól többször próbálkozik, amikor a
+
+kijelző-szinkronizáció beállítása sikertelen.<br />
+
+Ha az újrapróbálkozások után sem működik, az alkalmazás:</p>
+
+<ul>
+
+<li>Újraindítja a ‘Mac Mouse Fix Helper’ háttérfolyamatot, ami
+
+megoldhatja a problémát</li>
+
+<li>Létrehoz egy hibajelentést, amely segíthet a hiba
+
+diagnosztizálásában</li>
+
+</ul>
+
+<p>Remélem, a probléma mostantól megoldódott! Ha mégsem, jelezd egy <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-bug-report&amp;locale=hu">hibajelentésben</a>
+
+vagy <a
+
+href="http://redirect.macmousefix.com/?target=mailto-noah&amp;locale=hu">e-mailben</a>.</p>
+
+<h3
+
+id="továbbfejlesztett-szabadon-forgó-görgő-viselkedés">Továbbfejlesztett
+
+szabadon forgó görgő viselkedés</h3>
+
+<p>A Mac Mouse Fix <strong>többé nem gyorsítja fel a görgetést</strong>,
+
+amikor szabadon pörgeted a görgőt az MX Master egéren. (Vagy bármely más
+
+szabadon forgó görgővel rendelkező egéren.)</p>
+
+<p>Bár ez a ‘görgetésgyorsítás’ funkció hasznos a hagyományos görgőkön,
+
+egy szabadon forgó görgőn nehezebben irányíthatóvá teheti a
+
+dolgokat.</p>
+
+<p><strong>Megjegyzés:</strong> A Mac Mouse Fix jelenleg nem teljesen
+
+kompatibilis a legtöbb Logitech egérrel, beleértve az MX Mastert is.
+
+Tervezem a teljes támogatás hozzáadását, de valószínűleg eltart egy
+
+ideig. Addig is a legjobb harmadik féltől származó driver Logitech
+
+támogatással, amit ismerek, a <a
+
+href="https://plentycom.jp/en/steermouse/">SteerMouse</a>.</p>
+
+<h3 id="hibajavítások">Hibajavítások</h3>
+
+<ul>
+
+<li>Kijavítottam egy hibát, amikor a Mac Mouse Fix néha újra
+
+engedélyezte a Rendszerbeállításokban korábban letiltott
+
+billentyűparancsokat<br />
+
+</li>
+
+<li>Kijavítottam egy összeomlást a ‘Licenc aktiválása’ gombra
+
+kattintáskor</li>
+
+<li>Kijavítottam egy összeomlást, amikor a ‘Mégse’ gombra kattintottál
+
+közvetlenül a ‘Licenc aktiválása’ gomb megnyomása után (Köszönöm a
+
+jelentést, Ali!)</li>
+
+<li>Kijavítottam az összeomlásokat, amikor megpróbáltad használni a Mac
+
+Mouse Fixet, miközben nincs kijelző csatlakoztatva a Macedhez</li>
+
+<li>Kijavítottam egy memóriaszivárgást és néhány más háttérproblémát az
+
+alkalmazásban való lapok közötti váltáskor</li>
+
+</ul>
+
+<h3 id="vizuális-fejlesztések">Vizuális fejlesztések</h3>
+
+<ul>
+
+<li>Kijavítottam egy hibát, amikor a Névjegy lap néha túl magas volt,
+
+ami a <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=hu">3.0.5</a>-ben
+
+jelent meg</li>
+
+<li>A ‘Vége az ingyenes napoknak’ értesítés szövege többé nem vágódik le
+
+kínaiul</li>
+
+<li>Kijavítottam egy vizuális hibát a ‘+’ mező árnyékán bemenet
+
+rögzítése után</li>
+
+<li>Kijavítottam egy ritka hibát, amikor a helyőrző szöveg a
+
+‘Licenckulcs megadása’ képernyőn középen kívül jelent meg</li>
+
+<li>Kijavítottam egy hibát, amikor néhány, az alkalmazásban
+
+megjelenített szimbólum rossz színű volt a sötét/világos mód közötti
+
+váltás után</li>
+
+</ul>
+
+<h3 id="egyéb-fejlesztések">Egyéb fejlesztések</h3>
+
+<ul>
+
+<li>Néhány animációt, mint például a lapváltás animációt, kissé
+
+hatékonyabbá tettem<br />
+
+</li>
+
+<li>Letiltottam a Touch Bar szövegkiegészítést a ‘Licenckulcs megadása’
+
+képernyőn</li>
+
+<li>Különféle kisebb háttérfejlesztések</li>
+
+</ul>
+
+<p><em>Szerkesztve Claude kiváló segítségével.</em></p>
+
+<hr />
+
+<p>Nézd meg az előző kiadást is: <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=hu">3.0.5</a>.</p>
+
+</body>
+
+</html>

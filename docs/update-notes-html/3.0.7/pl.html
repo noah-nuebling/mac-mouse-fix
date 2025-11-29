@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl" xml:lang="pl">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.7</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Przetłumaczone przez AI</strong></p>
+
+<p>Ta informacja o wydaniu została przetłumaczona przez Claude AI. Może
+
+zawierać błędy.<br />
+
+Aby zobaczyć oryginalną wersję po angielsku, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.7">kliknij
+
+tutaj</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.7</strong> naprawia kilka ważnych
+
+błędów.</p>
+
+<h3 id="poprawki-błędów">Poprawki błędów</h3>
+
+<ul>
+
+<li>Aplikacja ponownie działa na <strong>starszych wersjach
+
+macOS</strong> (macOS 10.15 Catalina i macOS 11 Big Sur)
+
+<ul>
+
+<li>Mac Mouse Fix 3.0.6 nie mógł być włączony w tych wersjach macOS,
+
+ponieważ ulepszona funkcja „Wstecz” i „Dalej” wprowadzona w Mac Mouse
+
+Fix 3.0.6 próbowała użyć systemowych API macOS, które nie były
+
+dostępne.</li>
+
+</ul></li>
+
+<li>Naprawiono problemy z funkcją <strong>„Wstecz” i „Dalej”</strong>
+
+<ul>
+
+<li>Ulepszona funkcja „Wstecz” i „Dalej” wprowadzona w Mac Mouse Fix
+
+3.0.6 będzie teraz zawsze używać „głównego wątku” do zapytania macOS o
+
+to, które naciśnięcia klawiszy symulować, aby cofnąć się lub przejść
+
+dalej w aplikacji, której używasz.<br />
+
+To może zapobiec awariom i nieprzewidywalnemu zachowaniu w niektórych
+
+sytuacjach.</li>
+
+</ul></li>
+
+<li>Podjęto próbę naprawienia błędu, w którym <strong>ustawienia były
+
+losowo resetowane</strong> (Zobacz te <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20label%3A%22Config%20Reset%20Intermittently%22">problemy
+
+na GitHubie</a>)
+
+<ul>
+
+<li>Przepisałem kod ładujący plik konfiguracyjny Mac Mouse Fix, aby był
+
+bardziej odporny. Gdy występowały rzadkie błędy systemu plików macOS,
+
+stary kod mógł czasami błędnie uznać, że plik konfiguracyjny jest
+
+uszkodzony i zresetować go do ustawień domyślnych.</li>
+
+</ul></li>
+
+<li>Zmniejszono prawdopodobieństwo błędu, w którym <strong>przewijanie
+
+przestaje działać</strong>
+
+<ul>
+
+<li>Ten błąd nie może być w pełni rozwiązany bez głębszych zmian, które
+
+prawdopodobnie spowodowałyby inne problemy.<br />
+
+Jednak na razie zmniejszyłem okno czasowe, w którym może wystąpić
+
+„zakleszczenie” w systemie przewijania, co powinno przynajmniej obniżyć
+
+szanse na napotkanie tego błędu. To również sprawia, że przewijanie jest
+
+nieco bardziej wydajne.</li>
+
+<li>Ten błąd ma podobne objawy – ale myślę, że inną przyczynę – do błędu
+
+„Przewijanie przestaje działać sporadycznie”, który został rozwiązany w
+
+poprzednim wydaniu 3.0.6.</li>
+
+<li>(Dzięki Joonasowi za diagnostykę!)</li>
+
+</ul></li>
+
+</ul>
+
+<p>Dziękuję wszystkim za zgłaszanie błędów!</p>
+
+<hr />
+
+<p>Sprawdź również poprzednie wydanie <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.6&amp;locale=pl">3.0.6</a>.</p>
+
+</body>
+
+</html>

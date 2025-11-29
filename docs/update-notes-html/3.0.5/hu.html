@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hu" xml:lang="hu">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI által fordítva</strong></p>
+
+<p>Ezt a kiadási megjegyzést a Claude AI fordította. Tartalmazhat
+
+hibákat.<br />
+
+Az eredeti angol verzióért <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.5">kattints
+
+ide</a>.</p>
+
+<hr />
+
+<p>A Mac Mouse Fix <strong>3.0.5</strong> több hibát javít, javítja a
+
+teljesítményt, és egy kis csiszolást ad az alkalmazásnak.<br />
+
+Emellett kompatibilis a macOS 26 Tahoe-val is.</p>
+
+<h3
+
+id="továbbfejlesztett-trackpad-görgetés-szimuláció">Továbbfejlesztett
+
+trackpad görgetés szimuláció</h3>
+
+<ul>
+
+<li>A görgetési rendszer most már képes szimulálni a kétujjas érintést a
+
+trackpadon, hogy az alkalmazások leállítsák a görgetést.
+
+<ul>
+
+<li>Ez javít egy problémát iPhone vagy iPad alkalmazások futtatásakor,
+
+ahol a görgetés gyakran folytatódott azután is, hogy a felhasználó le
+
+akarta állítani.</li>
+
+</ul></li>
+
+<li>Javítva lett az ujjak trackpadról való felemelésének következetlen
+
+szimulációja.
+
+<ul>
+
+<li>Ez bizonyos helyzetekben nem optimális viselkedést okozhatott.</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="macos-26-tahoe-kompatibilitás">macOS 26 Tahoe
+
+kompatibilitás</h3>
+
+<p>A macOS 26 Tahoe Beta futtatásakor az alkalmazás most már
+
+használható, és a felhasználói felület nagy része megfelelően
+
+működik.</p>
+
+<h3 id="teljesítmény-javítás">Teljesítmény javítás</h3>
+
+<p>Javítva lett a kattintás és húzás “Görgetés és navigálás” gesztus
+
+teljesítménye.<br />
+
+A tesztjeim során a CPU használat körülbelül 50%-kal csökkent!</p>
+
+<p><strong>Háttér</strong></p>
+
+<p>A “Görgetés és navigálás” gesztus során a Mac Mouse Fix egy hamis
+
+egérkurzort rajzol egy átlátszó ablakba, miközben a valódi egérkurzort a
+
+helyén rögzíti. Ez biztosítja, hogy továbbra is görgetheted azt a
+
+felhasználói felület elemet, amelyen elkezdted a görgetést, függetlenül
+
+attól, hogy milyen messzire mozgatod az egeredet.</p>
+
+<p>A javított teljesítményt az érte el, hogy kikapcsoltuk az
+
+alapértelmezett macOS eseménykezelést ezen az átlátszó ablakon, amit
+
+amúgy sem használtunk.</p>
+
+<h3 id="hibajavítások">Hibajavítások</h3>
+
+<ul>
+
+<li>Most már figyelmen kívül hagyjuk a Wacom rajztáblák görgetési
+
+eseményeit.
+
+<ul>
+
+<li>Korábban a Mac Mouse Fix szabálytalan görgetést okozott a Wacom
+
+táblákon, ahogy azt <span class="citation"
+
+data-cites="frenchie1980">@frenchie1980</span> jelentette a GitHub Issue
+
+<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>-ban.
+
+(Köszönet!)</li>
+
+</ul></li>
+
+<li>Javítva lett egy hiba, ahol a Swift Concurrency kód, amely a Mac
+
+Mouse Fix 3.0.4 új licencelési rendszerének részeként került
+
+bevezetésre, nem a megfelelő szálon futott.
+
+<ul>
+
+<li>Ez összeomlásokat okozott macOS Tahoe-n, és valószínűleg más
+
+szórványos hibákat is okozott a licenceléssel kapcsolatban.</li>
+
+</ul></li>
+
+<li>Javítva lett az offline licencek dekódolását végző kód
+
+robusztussága.
+
+<ul>
+
+<li>Ez megkerül egy problémát az Apple API-jaiban, amely miatt az
+
+offline licenc validáció mindig sikertelen volt az Intel Mac Mini-men.
+
+Feltételezem, hogy ez minden Intel Mac-en előfordult, és ez volt az oka
+
+annak, hogy a “Free days are over” hiba (amelyet már a 3.0.4-ben
+
+kezeltek) még mindig előfordult néhány embernél, ahogy azt <span
+
+class="citation" data-cites="toni20k5267">@toni20k5267</span> jelentette
+
+a GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>-ban.
+
+(Köszönöm!)
+
+<ul>
+
+<li>Ha tapasztaltad a “Free days are over” hibát, sajnálom!
+
+Visszatérítést kérhetsz <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=hu">itt</a>.</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="felhasználói-élmény-javítások">Felhasználói élmény
+
+javítások</h3>
+
+<ul>
+
+<li>Letiltva lettek azok a párbeszédablakok, amelyek lépésről lépésre
+
+megoldásokat kínáltak olyan macOS hibákra, amelyek megakadályozták a
+
+felhasználókat a Mac Mouse Fix engedélyezésében.
+
+<ul>
+
+<li>Ezek a problémák csak macOS 13 Ventura és 14 Sonoma rendszereken
+
+fordultak elő. Most ezek a párbeszédablakok csak azokon a macOS
+
+verziókon jelennek meg, ahol relevánsak.</li>
+
+<li>A párbeszédablakok aktiválása is egy kicsit nehezebb lett – korábban
+
+néha olyan helyzetekben is megjelentek, ahol nem voltak túl
+
+hasznosak.</li>
+
+</ul></li>
+
+<li>Hozzáadtunk egy “Licenc aktiválása” linket közvetlenül a “Free days
+
+are over” értesítésre.
+
+<ul>
+
+<li>Ez még egyszerűbbé teszi a Mac Mouse Fix licenc aktiválását!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="vizuális-fejlesztések">Vizuális fejlesztések</h3>
+
+<ul>
+
+<li>Kissé javítva lett a “Szoftverfrissítés” ablak kinézete. Most jobban
+
+illeszkedik a macOS 26 Tahoe-hoz.
+
+<ul>
+
+<li>Ez a “Sparkle 1.27.3” keretrendszer alapértelmezett kinézetének
+
+testreszabásával történt, amelyet a Mac Mouse Fix a frissítések
+
+kezelésére használ.</li>
+
+</ul></li>
+
+<li>Javítva lett a probléma, ahol a Névjegy fül alján lévő szöveg néha
+
+levágódott kínaiul, az ablak kissé szélesebbé tételével.</li>
+
+<li>Javítva lett, hogy a Névjegy fül alján lévő szöveg kissé el volt
+
+tolva a középtől.</li>
+
+<li>Javítva lett egy hiba, amely miatt a “Billentyűparancs…” opció
+
+alatti hely a Gombok fülön túl kicsi volt.</li>
+
+</ul>
+
+<h3 id="motorháztető-alatti-változások">Motorháztető alatti
+
+változások</h3>
+
+<ul>
+
+<li>Eltávolítva lett a “SnapKit” keretrendszertől való függőség.
+
+<ul>
+
+<li>Ez kissé csökkenti az alkalmazás méretét 19,8 MB-ról 19,5
+
+MB-ra.</li>
+
+</ul></li>
+
+<li>Különféle egyéb apró fejlesztések a kódbázisban.</li>
+
+</ul>
+
+<p><em>Szerkesztve Claude kiváló segítségével.</em></p>
+
+<hr />
+
+<p>Nézd meg az előző kiadást is: <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.4&amp;locale=hu"><strong>3.0.4</strong></a>.</p>
+
+</body>
+
+</html>

@@ -68,66 +68,6 @@ hier</a>.</p>
 
 <hr />
 
-<p><strong>ℹ️ Opmerking voor Mac Mouse Fix 2 gebruikers</strong></p>
-
-<p>Met de introductie van Mac Mouse Fix 3 is het prijsmodel van de app
-
-veranderd:</p>
-
-<ul>
-
-<li><strong>Mac Mouse Fix 2</strong><br />
-
-Blijft 100% gratis, en ik ben van plan dit te blijven
-
-ondersteunen.<br />
-
-<strong>Sla deze update over</strong> om Mac Mouse Fix 2 te blijven
-
-gebruiken. Download de laatste versie van Mac Mouse Fix 2 <a
-
-href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=nl">hier</a>.</li>
-
-<li><strong>Mac Mouse Fix 3</strong><br />
-
-Gratis voor 30 dagen, kost een paar euro om te bezitten.<br />
-
-<strong>Update nu</strong> om Mac Mouse Fix 3 te krijgen!</li>
-
-</ul>
-
-<p>Je kunt meer lezen over de prijzen en functies van Mac Mouse Fix 3 op
-
-de <a href="https://macmousefix.com/">nieuwe website</a>.</p>
-
-<p>Bedankt voor het gebruiken van Mac Mouse Fix! :)</p>
-
-<hr />
-
-<p><strong>ℹ️ Opmerking voor Mac Mouse Fix 3 kopers</strong></p>
-
-<p>Als je per ongeluk naar Mac Mouse Fix 3 hebt geüpdatet zonder te
-
-weten dat het niet meer gratis is, wil ik je graag een <a
-
-href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=nl">terugbetaling</a>
-
-aanbieden.</p>
-
-<p>De laatste versie van Mac Mouse Fix 2 blijft <strong>volledig
-
-gratis</strong>, en je kunt deze <a
-
-href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=nl">hier</a>
-
-downloaden.</p>
-
-<p>Sorry voor het ongemak, en ik hoop dat iedereen hiermee akkoord gaat
-
-als oplossing!</p>
-
-<hr />
-
 <p>Mac Mouse Fix <strong>3.0.3</strong> is klaar voor macOS 15 Sequoia.
 
 Het lost ook enkele stabiliteitsproblemen op en biedt verschillende
@@ -138,23 +78,23 @@ kleine verbeteringen.</p>
 
 ondersteuning</h3>
 
-<p>De app werkt nu correct onder macOS 15 Sequoia!</p>
+<p>De app werkt nu goed onder macOS 15 Sequoia!</p>
 
 <ul>
 
 <li>De meeste UI-animaties werkten niet onder macOS 15 Sequoia. Nu werkt
 
-alles weer naar behoren!</li>
+alles weer goed!</li>
 
-<li>De broncode kan nu worden gecompileerd onder macOS 15 Sequoia.
+<li>De broncode is nu te bouwen onder macOS 15 Sequoia. Voorheen waren
 
-Voorheen waren er problemen met de Swift-compiler die het bouwen van de
+er problemen met de Swift-compiler die het bouwen van de app
 
-app verhinderden.</li>
+verhinderden.</li>
 
 </ul>
 
-<h3 id="aanpak-van-scroll-crashes">Aanpak van scroll-crashes</h3>
+<h3 id="scroll-crashes-aanpakken">Scroll-crashes aanpakken</h3>
 
 <p>Sinds Mac Mouse Fix 3.0.2 waren er <a
 
@@ -164,49 +104,47 @@ meldingen</a> van Mac Mouse Fix die zichzelf periodiek uitschakelde en
 
 opnieuw inschakelde tijdens het scrollen. Dit werd veroorzaakt door
 
-crashes van de ‘Mac Mouse Fix Helper’ achtergrondapp. Deze update
+crashes van de ‘Mac Mouse Fix Helper’ achtergrond-app. Deze update
 
-probeert deze crashes op te lossen met de volgende wijzigingen:</p>
+probeert deze crashes op te lossen, met de volgende wijzigingen:</p>
 
 <ul>
 
 <li><p>Het scrollmechanisme zal proberen te herstellen en blijven
 
-draaien in plaats van te crashen wanneer het de randgevallen tegenkomt
+draaien in plaats van te crashen, wanneer het de edge case tegenkomt die
 
-die tot deze crashes lijken te hebben geleid.</p></li>
+tot deze crashes lijkt te hebben geleid.</p></li>
 
-<li><p>Ik heb de manier veranderd waarop onverwachte toestanden in de
+<li><p>Ik heb de manier veranderd waarop onverwachte situaties in de app
 
-app worden afgehandeld: In plaats van altijd direct te crashen, zal de
+worden afgehandeld: In plaats van altijd direct te crashen, zal de app
 
-app nu in veel gevallen proberen te herstellen van onverwachte
+nu in veel gevallen proberen te herstellen van onverwachte
 
-toestanden.</p>
+situaties.</p>
 
 <ul>
 
-<li>Deze wijziging draagt bij aan de oplossingen voor de scroll-crashes
+<li>Deze wijziging draagt bij aan de fixes voor de scroll-crashes die
 
-die hierboven zijn beschreven. Het kan ook andere crashes
-
-voorkomen.</li>
+hierboven zijn beschreven. Het kan ook andere crashes voorkomen.</li>
 
 </ul></li>
 
 </ul>
 
-<p>Opmerking: Ik kon deze crashes nooit reproduceren op mijn machine en
+<p>Opmerking: Ik kon deze crashes nooit reproduceren op mijn machine, en
 
-ik weet nog steeds niet precies wat ze veroorzaakte, maar op basis van
+ik weet nog steeds niet zeker wat ze veroorzaakte, maar op basis van de
 
-de ontvangen meldingen zou deze update alle crashes moeten voorkomen.
+meldingen die ik ontving, zou deze update crashes moeten voorkomen. Als
 
-Als je nog steeds crashes ervaart tijdens het scrollen of als je crashes
+je nog steeds crashes ervaart tijdens het scrollen of als je
 
-hebt ervaren onder 3.0.2, zou het waardevol zijn als je je ervaring en
+<em>wel</em> crashes ervaarde onder 3.0.2, zou het waardevol zijn als je
 
-diagnostische gegevens zou delen in GitHub Issue <a
+je ervaring en diagnostische gegevens deelt in GitHub Issue <a
 
 href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">#988</a>.
 
@@ -214,37 +152,37 @@ Dit zou me helpen het probleem te begrijpen en Mac Mouse Fix te
 
 verbeteren. Bedankt!</p>
 
-<h3 id="aanpak-van-scroll-haperingen">Aanpak van scroll-haperingen</h3>
+<h3 id="scroll-hapering-aanpakken">Scroll-hapering aanpakken</h3>
 
 <p>In 3.0.2 heb ik wijzigingen aangebracht in hoe Mac Mouse Fix
 
-scroll-events naar het systeem stuurt in een poging scroll-haperingen te
+scroll-events naar het systeem stuurt in een poging om scroll-hapering
 
-verminderen die waarschijnlijk werden veroorzaakt door problemen met
+te verminderen die waarschijnlijk werd veroorzaakt door problemen met
 
 Apple’s VSync API’s.</p>
 
-<p>Na uitgebreider testen en feedback blijkt echter dat het nieuwe
+<p>Na uitgebreider testen en feedback lijkt het er echter op dat het
 
-mechanisme in 3.0.2 het scrollen in sommige scenario’s soepeler maakt
+nieuwe mechanisme in 3.0.2 het scrollen in sommige scenario’s vloeiender
 
-maar in andere juist meer haperingen veroorzaakt. Vooral in Firefox leek
+maakt, maar in andere juist haperender. Vooral in Firefox leek het
 
-het merkbaar slechter.<br />
+merkbaar slechter te zijn.<br />
 
-Over het algemeen was het niet duidelijk of het nieuwe mechanisme de
+Over het algemeen was het niet duidelijk dat het nieuwe mechanisme
 
-scroll-haperingen over de hele linie daadwerkelijk verbeterde. Ook heeft
+scroll-hapering daadwerkelijk over de hele linie verbeterde. Ook kan het
 
-het mogelijk bijgedragen aan de scroll-crashes die hierboven zijn
+hebben bijgedragen aan de scroll-crashes die hierboven zijn
 
 beschreven.</p>
 
 <p>Daarom heb ik het nieuwe mechanisme uitgeschakeld en het
 
-VSync-mechanisme voor scroll-events teruggezet naar hoe het was in Mac
+VSync-mechanisme voor scroll-events teruggedraaid naar hoe het was in
 
-Mouse Fix 3.0.0 en 3.0.1.</p>
+Mac Mouse Fix 3.0.0 en 3.0.1.</p>
 
 <p>Zie GitHub Issue <a
 
@@ -256,21 +194,21 @@ voor meer informatie.</p>
 
 <p>Het spijt me voor de problemen met betrekking tot de
 
-scroll-wijzigingen in 3.0.1 en 3.0.2. Ik heb de problemen die hieruit
+scrollwijzigingen in 3.0.1 en 3.0.2. Ik heb de problemen die daarmee
 
-voortkwamen enorm onderschat en was traag met het aanpakken van deze
+zouden komen enorm onderschat, en ik was traag met het aanpakken van
 
-problemen. Ik zal mijn best doen om van deze ervaring te leren en
+deze problemen. Ik zal mijn best doen om van deze ervaring te leren en
 
 voorzichtiger te zijn met dergelijke wijzigingen in de toekomst. Ik wil
 
-ook iedereen die hierdoor is getroffen een terugbetaling aanbieden. Klik
+ook iedereen die getroffen is een terugbetaling aanbieden. Klik gewoon
 
-gewoon <a
+<a
 
 href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=nl">hier</a>
 
-als je hierin geïnteresseerd bent.</p>
+als je geïnteresseerd bent.</p>
 
 <h3 id="slimmer-update-mechanisme">Slimmer update-mechanisme</h3>
 
@@ -292,7 +230,7 @@ samenvatting:</p>
 
 gebruiker wordt getoond.</li>
 
-<li>Overgestapt van het Sparkle 1.26.0 update framework naar de nieuwste
+<li>Overgestapt van het Sparkle 1.26.0 update-framework naar de nieuwste
 
 Sparkle <a
 
@@ -302,7 +240,7 @@ href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>
 
 versie van Mac Mouse Fix beschikbaar is, ondersteunt nu JavaScript, wat
 
-een mooiere opmaak van de update-notities mogelijk maakt.</li>
+zorgt voor een mooiere opmaak van de update-notities.</li>
 
 </ul>
 
@@ -314,7 +252,7 @@ bugfixes</h3>
 
 <li>Een probleem opgelost waarbij de app-prijs en gerelateerde
 
-informatie in sommige gevallen incorrect werden weergegeven op het
+informatie in sommige gevallen onjuist werden weergegeven op het
 
 ‘Over’-tabblad.</li>
 
@@ -322,9 +260,9 @@ informatie in sommige gevallen incorrect werden weergegeven op het
 
 van het vloeiend scrollen met de verversingssnelheid van het scherm niet
 
-goed werkte bij gebruik van meerdere beeldschermen.</li>
+goed werkte bij het gebruik van meerdere schermen.</li>
 
-<li>Veel kleine onderliggende opschoonacties en verbeteringen.</li>
+<li>Veel kleine opruimingen en verbeteringen onder de motorkap.</li>
 
 </ul>
 

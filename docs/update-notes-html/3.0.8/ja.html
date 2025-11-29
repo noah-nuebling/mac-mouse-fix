@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.8</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AIによる翻訳</strong></p>
+
+<p>このリリースノートはClaude
+
+AIによって翻訳されています。誤訳が含まれている可能性があります。<br />
+
+英語の原文は<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8">こちら</a>をクリックしてください。</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.8</strong>
+
+はUIの問題などを解決しました。</p>
+
+<h3 id="uiの問題"><strong>UIの問題</strong></h3>
+
+<ul>
+
+<li>macOS 26 Tahoeで新しいデザインを無効にしました。アプリはmacOS 15
+
+Sequoiaと同じ見た目と動作になります。
+
+<ul>
+
+<li>Appleが再設計したUI要素の一部にまだ問題があるため、この変更を行いました。例えば、「ボタン」タブの「-」ボタンが常にクリックできるわけではありませんでした。</li>
+
+<li>macOS 26
+
+Tahoeでは、UIが少し古く見えるかもしれません。しかし、以前と同じように完全に機能し、洗練されているはずです。</li>
+
+</ul></li>
+
+<li>「無料期間が終了しました」通知が画面右上の隅に固定されてしまうバグを修正しました。
+
+<ul>
+
+<li>報告してくれた<a
+
+href="https://github.com/Sashpuri">Sashpuri</a>さんや他の方々に感謝します!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="uiの改善"><strong>UIの改善</strong></h3>
+
+<ul>
+
+<li>Mac Mouse Fixのメインウィンドウの緑色の信号ボタンを無効にしました。
+
+<ul>
+
+<li>ウィンドウは手動でサイズ変更できないため、このボタンは何もしませんでした。</li>
+
+</ul></li>
+
+<li>macOS 26
+
+Tahoeで「ボタン」タブのテーブルの水平線の一部が暗すぎる問題を修正しました。</li>
+
+<li>macOS 26
+
+Tahoeで「ボタン」タブの「プライマリマウスボタンは使用できません」メッセージが切れてしまうことがあるバグを修正しました。</li>
+
+<li>ドイツ語インターフェースのタイプミスを修正しました。GitHubユーザー<a
+
+href="https://github.com/i-am-the-slime">i-am-the-slime</a>さんのご協力に感謝します!</li>
+
+<li>macOS 26
+
+TahoeでMMFウィンドウを開く際に、ウィンドウが間違ったサイズで一瞬点滅することがある問題を解決しました。</li>
+
+</ul>
+
+<h3 id="その他の変更"><strong>その他の変更</strong></h3>
+
+<ul>
+
+<li>コンピュータ上で複数のMac Mouse
+
+Fixインスタンスが実行されている状態でMac Mouse
+
+Fixを有効にしようとする際の動作を改善しました。
+
+<ul>
+
+<li>Mac Mouse Fixは、他のMac Mouse
+
+Fixインスタンスをより積極的に無効化しようとするようになりました。</li>
+
+<li>これにより、Mac Mouse
+
+Fixを有効にできなかったエッジケースが改善される可能性があります。</li>
+
+</ul></li>
+
+<li>内部的な変更とクリーンアップ。</li>
+
+</ul>
+
+<hr />
+
+<p>前バージョン<a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.7&amp;locale=ja">3.0.7</a>の新機能もチェックしてください。</p>
+
+</body>
+
+</html>

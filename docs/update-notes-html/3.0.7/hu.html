@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hu" xml:lang="hu">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.7</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI által fordítva</strong></p>
+
+<p>Ezt a kiadási megjegyzést a Claude AI fordította. Tartalmazhat
+
+hibákat.<br />
+
+Az eredeti angol verzióért <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.7">kattints
+
+ide</a>.</p>
+
+<hr />
+
+<p>A Mac Mouse Fix <strong>3.0.7</strong> több fontos hibát javít.</p>
+
+<h3 id="hibajavítások">Hibajavítások</h3>
+
+<ul>
+
+<li>Az alkalmazás ismét működik <strong>régebbi macOS verziókon</strong>
+
+(macOS 10.15 Catalina és macOS 11 Big Sur)
+
+<ul>
+
+<li>A Mac Mouse Fix 3.0.6 nem volt engedélyezhető ezeken a macOS
+
+verziókon, mert a Mac Mouse Fix 3.0.6-ban bevezetett továbbfejlesztett
+
+„Vissza” és „Előre” funkció olyan macOS rendszer API-kat próbált
+
+használni, amelyek nem voltak elérhetők.</li>
+
+</ul></li>
+
+<li>Javítva lettek a <strong>„Vissza” és „Előre”</strong> funkcióval
+
+kapcsolatos problémák
+
+<ul>
+
+<li>A Mac Mouse Fix 3.0.6-ban bevezetett továbbfejlesztett „Vissza” és
+
+„Előre” funkció mostantól mindig a „fő szálat” fogja használni, hogy
+
+megkérdezze a macOS-t arról, mely billentyűleütéseket szimulálja a
+
+vissza és előre lépéshez az éppen használt alkalmazásban.<br />
+
+Ez megakadályozhatja az összeomlásokat és a megbízhatatlan viselkedést
+
+bizonyos helyzetekben.</li>
+
+</ul></li>
+
+<li>Kísérlet a <strong>beállítások véletlenszerű visszaállítása</strong>
+
+hibájának javítására (Lásd ezeket a <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20label%3A%22Config%20Reset%20Intermittently%22">GitHub
+
+Issue-kat</a>)
+
+<ul>
+
+<li>Újraírtam a Mac Mouse Fix konfigurációs fájlját betöltő kódot, hogy
+
+robusztusabb legyen. Amikor ritka macOS fájlrendszer-hibák léptek fel, a
+
+régi kód néha tévesen azt gondolhatta, hogy a konfigurációs fájl sérült,
+
+és visszaállította az alapértelmezettre.</li>
+
+</ul></li>
+
+<li>Csökkentve a <strong>görgetés leállása</strong> hibájának esélye
+
+<ul>
+
+<li>Ez a hiba nem oldható meg teljesen mélyebb változtatások nélkül,
+
+amelyek valószínűleg más problémákat okoznának.<br />
+
+Azonban egyelőre csökkentettem azt az időablakot, amikor „holtpont”
+
+alakulhat ki a görgetési rendszerben, aminek legalább csökkentenie
+
+kellene a hiba előfordulásának esélyét. Ez a görgetést is valamivel
+
+hatékonyabbá teszi.</li>
+
+<li>Ennek a hibának hasonló tünetei vannak – de szerintem más az
+
+alapvető oka –, mint a „Görgetés időszakosan leáll” hibának, amelyet az
+
+előző 3.0.6-os kiadásban javítottunk.</li>
+
+<li>(Köszönet Joonasnak a diagnosztikáért!)</li>
+
+</ul></li>
+
+</ul>
+
+<p>Köszönet mindenkinek a hibajelentésekért!</p>
+
+<hr />
+
+<p>Nézd meg az előző kiadást is: <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.6&amp;locale=hu">3.0.6</a>.</p>
+
+</body>
+
+</html>

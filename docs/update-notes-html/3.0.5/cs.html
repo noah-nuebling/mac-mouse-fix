@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cs" xml:lang="cs">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Přeloženo umělou inteligencí</strong></p>
+
+<p>Tato poznámka k vydání byla přeložena umělou inteligencí Claude. Může
+
+obsahovat chyby.<br />
+
+Pro původní anglickou verzi <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.5">klikněte
+
+zde</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.5</strong> opravuje několik chyb, zlepšuje
+
+výkon a přidává aplikaci trochu lesku.<br />
+
+Je také kompatibilní s macOS 26 Tahoe.</p>
+
+<h3 id="vylepšená-simulace-rolování-trackpadu">Vylepšená simulace
+
+rolování trackpadu</h3>
+
+<ul>
+
+<li>Systém rolování nyní dokáže simulovat klepnutí dvěma prsty na
+
+trackpad, aby aplikace přestaly rolovat.
+
+<ul>
+
+<li>Toto opravuje problém při spouštění aplikací pro iPhone nebo iPad,
+
+kde rolování často pokračovalo i poté, co se uživatel rozhodl
+
+zastavit.</li>
+
+</ul></li>
+
+<li>Opravena nekonzistentní simulace zvednutí prstů z trackpadu.
+
+<ul>
+
+<li>To mohlo v některých situacích způsobovat neoptimální chování.</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="kompatibilita-s-macos-26-tahoe">Kompatibilita s macOS 26
+
+Tahoe</h3>
+
+<p>Při spuštění beta verze macOS 26 Tahoe je nyní aplikace použitelná a
+
+většina uživatelského rozhraní funguje správně.</p>
+
+<h3 id="vylepšení-výkonu">Vylepšení výkonu</h3>
+
+<p>Vylepšen výkon gesta Kliknutí a přetažení pro “Rolování a
+
+navigaci”.<br />
+
+Při mém testování se spotřeba CPU snížila přibližně o 50 %!</p>
+
+<p><strong>Pozadí</strong></p>
+
+<p>Během gesta “Rolování a navigace” Mac Mouse Fix vykresluje falešný
+
+kurzor myši v průhledném okně a zároveň zamyká skutečný kurzor myši na
+
+místě. To zajišťuje, že můžeš pokračovat v rolování prvku uživatelského
+
+rozhraní, na kterém jsi začal/a rolovat, bez ohledu na to, jak daleko
+
+pohneš myší.</p>
+
+<p>Vylepšeného výkonu bylo dosaženo vypnutím výchozího zpracování
+
+událostí macOS v tomto průhledném okně, které stejně nebylo
+
+využíváno.</p>
+
+<h3 id="opravy-chyb">Opravy chyb</h3>
+
+<ul>
+
+<li>Nyní se ignorují události rolování z kreslicích tabletů Wacom.
+
+<ul>
+
+<li>Dříve Mac Mouse Fix způsoboval chaotické rolování na tabletech
+
+Wacom, jak nahlásil <span class="citation"
+
+data-cites="frenchie1980">@frenchie1980</span> v GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>.
+
+(Díky!)</li>
+
+</ul></li>
+
+<li>Opravena chyba, kdy kód Swift Concurrency, který byl zaveden jako
+
+součást nového licenčního systému v Mac Mouse Fix 3.0.4, neběžel ve
+
+správném vlákně.
+
+<ul>
+
+<li>To způsobovalo pády na macOS Tahoe a pravděpodobně také způsobovalo
+
+další sporadické chyby kolem licencování.</li>
+
+</ul></li>
+
+<li>Vylepšena robustnost kódu, který dekóduje offline licence.
+
+<ul>
+
+<li>Toto obchází problém v API Apple, který způsoboval, že validace
+
+offline licencí vždy selhávala na mém Intel Mac Mini. Předpokládám, že
+
+se to dělo na všech Intel Macích a že to byl důvod, proč chyba
+
+“Bezplatné dny skončily” (která již byla řešena ve verzi 3.0.4) stále
+
+přetrvávala u některých lidí, jak nahlásil <span class="citation"
+
+data-cites="toni20k5267">@toni20k5267</span> v GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>.
+
+(Děkuji!)
+
+<ul>
+
+<li>Pokud jsi zažil/a chybu “Bezplatné dny skončily”, omlouvám se! Můžeš
+
+získat refundaci <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=cs">zde</a>.</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="vylepšení-uživatelské-zkušenosti">Vylepšení uživatelské
+
+zkušenosti</h3>
+
+<ul>
+
+<li>Zakázány dialogy, které poskytovaly krok za krokem řešení chyb
+
+macOS, které bránily uživatelům v povolení Mac Mouse Fix.
+
+<ul>
+
+<li>Tyto problémy se vyskytovaly pouze na macOS 13 Ventura a 14 Sonoma.
+
+Nyní se tyto dialogy zobrazují pouze na těch verzích macOS, kde jsou
+
+relevantní.</li>
+
+<li>Dialogy se také hůře spouštějí – dříve se někdy zobrazovaly v
+
+situacích, kdy nebyly příliš užitečné.</li>
+
+</ul></li>
+
+<li>Přidán odkaz “Aktivovat licenci” přímo na oznámení “Bezplatné dny
+
+skončily”.
+
+<ul>
+
+<li>To dělá aktivaci licence Mac Mouse Fix ještě bezproblémovější!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="vizuální-vylepšení">Vizuální vylepšení</h3>
+
+<ul>
+
+<li>Mírně vylepšen vzhled okna “Aktualizace softwaru”. Nyní lépe ladí s
+
+macOS 26 Tahoe.
+
+<ul>
+
+<li>Toho bylo dosaženo přizpůsobením výchozího vzhledu frameworku
+
+“Sparkle 1.27.3”, který Mac Mouse Fix používá ke správě
+
+aktualizací.</li>
+
+</ul></li>
+
+<li>Opraven problém, kdy byl text ve spodní části záložky O aplikaci
+
+někdy oříznutý v čínštině, rozšířením okna.</li>
+
+<li>Opraven text ve spodní části záložky O aplikaci, který byl mírně
+
+mimo střed.</li>
+
+<li>Opravena chyba, která způsobovala, že prostor pod možností
+
+“Klávesová zkratka…” na záložce Tlačítka byl příliš malý.</li>
+
+</ul>
+
+<h3 id="změny-pod-kapotou">Změny pod kapotou</h3>
+
+<ul>
+
+<li>Odstraněna závislost na frameworku “SnapKit”.
+
+<ul>
+
+<li>To mírně snižuje velikost aplikace z 19,8 na 19,5 MB.</li>
+
+</ul></li>
+
+<li>Různá další drobná vylepšení v kódové základně.</li>
+
+</ul>
+
+<p><em>Upraveno s vynikající asistencí Claude.</em></p>
+
+<hr />
+
+<p>Podívej se také na předchozí vydání <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.4&amp;locale=cs"><strong>3.0.4</strong></a>.</p>
+
+</body>
+
+</html>

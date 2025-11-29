@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="el" xml:lang="el">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.6</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Μετάφραση από AI</strong></p>
+
+<p>Αυτές οι σημειώσεις έκδοσης έχουν μεταφραστεί από το Claude AI.
+
+Ενδέχεται να περιέχουν λάθη.<br />
+
+Για την πρωτότυπη αγγλική έκδοση, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.6">πατήστε
+
+εδώ</a>.</p>
+
+<hr />
+
+<p>Το Mac Mouse Fix <strong>3.0.6</strong> κάνει τη λειτουργία ‘Πίσω’
+
+και ‘Μπροστά’ συμβατή με περισσότερες εφαρμογές. Επίσης διορθώνει
+
+διάφορα σφάλματα και προβλήματα.</p>
+
+<h3 id="βελτιωμένη-λειτουργία-πίσω-και-μπροστά">Βελτιωμένη Λειτουργία
+
+‘Πίσω’ και ‘Μπροστά’</h3>
+
+<p>Οι αντιστοιχίσεις των κουμπιών ποντικιού ‘Πίσω’ και ‘Μπροστά’ τώρα
+
+<strong>λειτουργούν σε περισσότερες εφαρμογές</strong>,
+
+συμπεριλαμβανομένων:</p>
+
+<ul>
+
+<li>Visual Studio Code, Cursor, VSCodium, Windsurf, Zed και άλλων
+
+επεξεργαστών κώδικα</li>
+
+<li>Πολλές ενσωματωμένες εφαρμογές της Apple όπως το Preview, Notes,
+
+System Settings, App Store και Music</li>
+
+<li>Adobe Acrobat</li>
+
+<li>Zotero</li>
+
+<li>Και άλλες!</li>
+
+</ul>
+
+<p>Η υλοποίηση είναι εμπνευσμένη από την εξαιρετική λειτουργία
+
+‘Universal Back and Forward’ στο <a
+
+href="https://github.com/linearmouse/linearmouse">LinearMouse</a>. Θα
+
+πρέπει να υποστηρίζει όλες τις εφαρμογές που υποστηρίζει το
+
+LinearMouse.<br />
+
+Επιπλέον υποστηρίζει κάποιες εφαρμογές που κανονικά απαιτούν
+
+συντομεύσεις πληκτρολογίου για να πας πίσω και μπροστά, όπως το System
+
+Settings, App Store, Apple Notes και Adobe Acrobat. Το Mac Mouse Fix
+
+τώρα θα ανιχνεύει αυτές τις εφαρμογές και θα προσομοιώνει τις κατάλληλες
+
+συντομεύσεις πληκτρολογίου.</p>
+
+<p>Κάθε εφαρμογή που έχει ποτέ <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22">ζητηθεί
+
+σε GitHub Issue</a> θα πρέπει να υποστηρίζεται τώρα! (Ευχαριστώ για τα
+
+σχόλια!)<br />
+
+Αν βρεις εφαρμογές που δεν λειτουργούν ακόμα, ενημέρωσέ με σε ένα <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-feature-request&amp;locale=el">αίτημα
+
+λειτουργίας</a>.</p>
+
+<h3
+
+id="αντιμετώπιση-του-σφάλματος-η-κύλιση-σταματά-να-λειτουργεί-περιστασιακά">Αντιμετώπιση
+
+του Σφάλματος ‘Η Κύλιση Σταματά να Λειτουργεί Περιστασιακά’</h3>
+
+<p>Κάποιοι χρήστες αντιμετώπισαν ένα <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20state%3Aclosed%20stops%20working%20label%3A%22Scroll%20Stops%20Working%20Intermittently%22">πρόβλημα</a>
+
+όπου <strong>η ομαλή κύλιση σταματά να λειτουργεί</strong> τυχαία.</p>
+
+<p>Ενώ δεν μπόρεσα ποτέ να αναπαράγω το πρόβλημα, έχω υλοποιήσει μια
+
+πιθανή διόρθωση:</p>
+
+<p>Η εφαρμογή τώρα θα επαναπροσπαθεί πολλές φορές, όταν αποτυγχάνει η
+
+ρύθμιση του συγχρονισμού οθόνης.<br />
+
+Αν εξακολουθεί να μην λειτουργεί μετά τις επαναπροσπάθειες, η εφαρμογή
+
+θα:</p>
+
+<ul>
+
+<li>Επανεκκινήσει τη διεργασία παρασκηνίου ‘Mac Mouse Fix Helper’, που
+
+μπορεί να λύσει το πρόβλημα</li>
+
+<li>Παράγει μια αναφορά σφάλματος, που μπορεί να βοηθήσει στη διάγνωση
+
+του σφάλματος</li>
+
+</ul>
+
+<p>Ελπίζω το πρόβλημα να έχει λυθεί τώρα! Αν όχι, ενημέρωσέ με σε μια <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-bug-report&amp;locale=el">αναφορά
+
+σφάλματος</a> ή μέσω <a
+
+href="http://redirect.macmousefix.com/?target=mailto-noah&amp;locale=el">email</a>.</p>
+
+<h3
+
+id="βελτιωμένη-συμπεριφορά-ροδέλας-κύλισης-με-ελεύθερη-περιστροφή">Βελτιωμένη
+
+Συμπεριφορά Ροδέλας Κύλισης με Ελεύθερη Περιστροφή</h3>
+
+<p>Το Mac Mouse Fix <strong>δεν θα επιταχύνει πλέον την κύλιση</strong>
+
+για σένα, όταν αφήνεις τη ροδέλα κύλισης να περιστρέφεται ελεύθερα στο
+
+ποντίκι MX Master. (Ή σε οποιοδήποτε άλλο ποντίκι με ροδέλα κύλισης
+
+ελεύθερης περιστροφής.)</p>
+
+<p>Ενώ αυτή η λειτουργία ‘επιτάχυνσης κύλισης’ είναι χρήσιμη σε
+
+κανονικές ροδέλες κύλισης, σε μια ροδέλα ελεύθερης περιστροφής μπορεί να
+
+κάνει τα πράγματα πιο δύσκολα στον έλεγχο.</p>
+
+<p><strong>Σημείωση:</strong> Το Mac Mouse Fix προς το παρόν δεν είναι
+
+πλήρως συμβατό με τα περισσότερα ποντίκια Logitech, συμπεριλαμβανομένου
+
+του MX Master. Σχεδιάζω να προσθέσω πλήρη υποστήριξη, αλλά πιθανόν να
+
+πάρει λίγο χρόνο. Στο μεταξύ, το καλύτερο πρόγραμμα οδήγησης τρίτου
+
+κατασκευαστή με υποστήριξη Logitech που γνωρίζω είναι το <a
+
+href="https://plentycom.jp/en/steermouse/">SteerMouse</a>.</p>
+
+<h3 id="διορθώσεις-σφαλμάτων">Διορθώσεις Σφαλμάτων</h3>
+
+<ul>
+
+<li>Διορθώθηκε ένα πρόβλημα όπου το Mac Mouse Fix μερικές φορές
+
+επανενεργοποιούσε συντομεύσεις πληκτρολογίου που είχαν απενεργοποιηθεί
+
+προηγουμένως στις Ρυθμίσεις Συστήματος<br />
+
+</li>
+
+<li>Διορθώθηκε ένα σφάλμα κατά το κλικ στο ‘Ενεργοποίηση Άδειας’</li>
+
+<li>Διορθώθηκε ένα σφάλμα κατά το κλικ στο ‘Ακύρωση’ αμέσως μετά το κλικ
+
+στο ‘Ενεργοποίηση Άδειας’ (Ευχαριστώ για την αναφορά, Ali!)</li>
+
+<li>Διορθώθηκαν σφάλματα κατά την προσπάθεια χρήσης του Mac Mouse Fix
+
+όταν δεν είναι συνδεδεμένη οθόνη στο Mac σου</li>
+
+<li>Διορθώθηκε μια διαρροή μνήμης και κάποια άλλα εσωτερικά προβλήματα
+
+κατά την εναλλαγή μεταξύ καρτελών στην εφαρμογή</li>
+
+</ul>
+
+<h3 id="οπτικές-βελτιώσεις">Οπτικές Βελτιώσεις</h3>
+
+<ul>
+
+<li>Διορθώθηκε ένα πρόβλημα όπου η καρτέλα About ήταν μερικές φορές πολύ
+
+ψηλή, που εισήχθη στην <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=el">3.0.5</a></li>
+
+<li>Το κείμενο στην ειδοποίηση ‘Free days are over’ δεν κόβεται πλέον
+
+στα Κινέζικα</li>
+
+<li>Διορθώθηκε ένα οπτικό πρόβλημα στη σκιά του πεδίου ‘+’ μετά την
+
+εγγραφή μιας εισόδου</li>
+
+<li>Διορθώθηκε ένα σπάνιο πρόβλημα όπου το κείμενο υπόδειξης στην οθόνη
+
+‘Enter Your License Key’ εμφανιζόταν εκτός κέντρου</li>
+
+<li>Διορθώθηκε ένα πρόβλημα όπου κάποια σύμβολα που εμφανίζονταν στην
+
+εφαρμογή είχαν λάθος χρώμα μετά την εναλλαγή μεταξύ σκοτεινής/φωτεινής
+
+λειτουργίας</li>
+
+</ul>
+
+<h3 id="άλλες-βελτιώσεις">Άλλες Βελτιώσεις</h3>
+
+<ul>
+
+<li>Έγιναν κάποια κινούμενα γραφικά, όπως το κινούμενο γραφικό εναλλαγής
+
+καρτελών, ελαφρώς πιο αποδοτικά<br />
+
+</li>
+
+<li>Απενεργοποιήθηκε η αυτόματη συμπλήρωση κειμένου Touch Bar στην οθόνη
+
+‘Enter Your License Key’</li>
+
+<li>Διάφορες μικρότερες εσωτερικές βελτιώσεις</li>
+
+</ul>
+
+<p><em>Επεξεργασία με εξαιρετική βοήθεια από το Claude.</em></p>
+
+<hr />
+
+<p>Δες επίσης την προηγούμενη έκδοση <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=el">3.0.5</a>.</p>
+
+</body>
+
+</html>

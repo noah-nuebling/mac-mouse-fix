@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="id" xml:lang="id">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.6</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Diterjemahkan oleh AI</strong></p>
+
+<p>Catatan rilis ini telah diterjemahkan oleh AI Claude. Mungkin
+
+terdapat kesalahan.<br />
+
+Untuk versi asli dalam bahasa Inggris, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.6">klik
+
+di sini</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.6</strong> membuat fitur ‘Kembali’ dan
+
+‘Maju’ kompatibel dengan lebih banyak aplikasi. Versi ini juga
+
+memperbaiki beberapa bug dan masalah.</p>
+
+<h3 id="peningkatan-fitur-kembali-dan-maju">Peningkatan Fitur ‘Kembali’
+
+dan ‘Maju’</h3>
+
+<p>Pemetaan tombol mouse ‘Kembali’ dan ‘Maju’ sekarang <strong>berfungsi
+
+di lebih banyak aplikasi</strong>, termasuk:</p>
+
+<ul>
+
+<li>Visual Studio Code, Cursor, VSCodium, Windsurf, Zed, dan editor kode
+
+lainnya</li>
+
+<li>Banyak aplikasi bawaan Apple seperti Preview, Notes, System
+
+Settings, App Store, dan Music</li>
+
+<li>Adobe Acrobat</li>
+
+<li>Zotero</li>
+
+<li>Dan masih banyak lagi!</li>
+
+</ul>
+
+<p>Implementasinya terinspirasi dari fitur ‘Universal Back and Forward’
+
+yang hebat di <a
+
+href="https://github.com/linearmouse/linearmouse">LinearMouse</a>.
+
+Seharusnya mendukung semua aplikasi yang didukung LinearMouse.<br />
+
+Selain itu, fitur ini mendukung beberapa aplikasi yang biasanya
+
+memerlukan pintasan keyboard untuk kembali dan maju, seperti System
+
+Settings, App Store, Apple Notes, dan Adobe Acrobat. Mac Mouse Fix
+
+sekarang akan mendeteksi aplikasi tersebut dan mensimulasikan pintasan
+
+keyboard yang sesuai.</p>
+
+<p>Setiap aplikasi yang pernah <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22">diminta
+
+dalam GitHub Issue</a> seharusnya sudah didukung sekarang! (Terima kasih
+
+atas masukannya!)<br />
+
+Jika kamu menemukan aplikasi yang belum berfungsi, beri tahu saya
+
+melalui <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-feature-request&amp;locale=id">permintaan
+
+fitur</a>.</p>
+
+<h3 id="mengatasi-bug-scroll-berhenti-bekerja-secara-berkala">Mengatasi
+
+Bug ‘Scroll Berhenti Bekerja Secara Berkala’</h3>
+
+<p>Beberapa pengguna mengalami <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20state%3Aclosed%20stops%20working%20label%3A%22Scroll%20Stops%20Working%20Intermittently%22">masalah</a>
+
+di mana <strong>smooth scrolling berhenti bekerja</strong> secara
+
+acak.</p>
+
+<p>Meskipun saya tidak pernah bisa mereproduksi masalah ini, saya telah
+
+menerapkan perbaikan potensial:</p>
+
+<p>Aplikasi sekarang akan mencoba beberapa kali, ketika pengaturan
+
+sinkronisasi layar gagal.<br />
+
+Jika masih tidak berhasil setelah mencoba ulang, aplikasi akan:</p>
+
+<ul>
+
+<li>Memulai ulang proses latar belakang ‘Mac Mouse Fix Helper’, yang
+
+mungkin menyelesaikan masalah</li>
+
+<li>Menghasilkan laporan crash, yang dapat membantu mendiagnosis
+
+bug</li>
+
+</ul>
+
+<p>Saya harap masalahnya sudah teratasi sekarang! Jika belum, beri tahu
+
+saya melalui <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-bug-report&amp;locale=id">laporan
+
+bug</a> atau via <a
+
+href="http://redirect.macmousefix.com/?target=mailto-noah&amp;locale=id">email</a>.</p>
+
+<h3
+
+id="peningkatan-perilaku-scroll-wheel-yang-berputar-bebas">Peningkatan
+
+Perilaku Scroll Wheel yang Berputar Bebas</h3>
+
+<p>Mac Mouse Fix <strong>tidak akan lagi mempercepat scrolling</strong>
+
+untuk kamu, ketika kamu membiarkan scroll wheel berputar bebas pada
+
+mouse MX Master. (Atau mouse lain dengan scroll wheel yang berputar
+
+bebas.)</p>
+
+<p>Meskipun fitur ‘percepatan scroll’ ini berguna pada scroll wheel
+
+biasa, pada scroll wheel yang berputar bebas fitur ini dapat membuat
+
+kontrol menjadi lebih sulit.</p>
+
+<p><strong>Catatan:</strong> Mac Mouse Fix saat ini belum sepenuhnya
+
+kompatibel dengan sebagian besar mouse Logitech, termasuk MX Master.
+
+Saya berencana menambahkan dukungan penuh, tetapi mungkin akan memakan
+
+waktu cukup lama. Sementara itu, driver pihak ketiga terbaik dengan
+
+dukungan Logitech yang saya tahu adalah <a
+
+href="https://plentycom.jp/en/steermouse/">SteerMouse</a>.</p>
+
+<h3 id="perbaikan-bug">Perbaikan Bug</h3>
+
+<ul>
+
+<li>Memperbaiki masalah di mana Mac Mouse Fix terkadang mengaktifkan
+
+kembali pintasan keyboard yang sebelumnya dinonaktifkan di System
+
+Settings<br />
+
+</li>
+
+<li>Memperbaiki crash saat mengklik ‘Activate License’</li>
+
+<li>Memperbaiki crash saat mengklik ‘Cancel’ tepat setelah mengklik
+
+‘Activate License’ (Terima kasih atas laporannya, Ali!)</li>
+
+<li>Memperbaiki crash saat mencoba menggunakan Mac Mouse Fix ketika
+
+tidak ada layar yang terhubung ke Mac kamu</li>
+
+<li>Memperbaiki kebocoran memori dan beberapa masalah internal lainnya
+
+saat berpindah antar tab di aplikasi</li>
+
+</ul>
+
+<h3 id="peningkatan-visual">Peningkatan Visual</h3>
+
+<ul>
+
+<li>Memperbaiki masalah di mana tab About terkadang terlalu tinggi, yang
+
+muncul di <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=id">3.0.5</a></li>
+
+<li>Teks pada notifikasi ‘Free days are over’ tidak lagi terpotong dalam
+
+bahasa Mandarin</li>
+
+<li>Memperbaiki glitch visual pada bayangan field ‘+’ setelah merekam
+
+input</li>
+
+<li>Memperbaiki glitch langka di mana teks placeholder pada layar ‘Enter
+
+Your License Key’ muncul tidak di tengah</li>
+
+<li>Memperbaiki masalah di mana beberapa simbol yang ditampilkan di
+
+aplikasi memiliki warna yang salah setelah berpindah antara mode
+
+gelap/terang</li>
+
+</ul>
+
+<h3 id="peningkatan-lainnya">Peningkatan Lainnya</h3>
+
+<ul>
+
+<li>Membuat beberapa animasi, seperti animasi perpindahan tab, sedikit
+
+lebih efisien<br />
+
+</li>
+
+<li>Menonaktifkan pelengkapan teks Touch Bar pada layar ‘Enter Your
+
+License Key’</li>
+
+<li>Berbagai peningkatan internal yang lebih kecil</li>
+
+</ul>
+
+<p><em>Diedit dengan bantuan luar biasa dari Claude.</em></p>
+
+<hr />
+
+<p>Lihat juga rilis sebelumnya <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=id">3.0.5</a>.</p>
+
+</body>
+
+</html>

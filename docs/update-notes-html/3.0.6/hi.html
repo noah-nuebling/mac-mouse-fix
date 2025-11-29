@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hi" xml:lang="hi">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.6</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ एआई द्वारा अनुवादित</strong></p>
+
+<p>यह रिलीज़ नोट क्लॉड एआई द्वारा अनुवादित किया गया है। इसमें त्रुटियाँ हो सकती
+
+हैं।<br />
+
+मूल अंग्रेजी संस्करण के लिए, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.6">यहाँ
+
+क्लिक करें</a>।</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.6</strong> ‘बैक’ और ‘फॉरवर्ड’ फीचर को अधिक
+
+ऐप्स के साथ संगत बनाता है। यह कई बग्स और समस्याओं को भी ठीक करता है।</p>
+
+<h3 id="बहतर-बक-और-फरवरड-फचर">बेहतर ‘बैक’ और ‘फॉरवर्ड’ फीचर</h3>
+
+<p>‘बैक’ और ‘फॉरवर्ड’ माउस बटन मैपिंग अब <strong>अधिक ऐप्स में काम करती
+
+हैं</strong>, जिनमें शामिल हैं:</p>
+
+<ul>
+
+<li>Visual Studio Code, Cursor, VSCodium, Windsurf, Zed, और अन्य कोड
+
+एडिटर</li>
+
+<li>कई बिल्ट-इन Apple ऐप्स जैसे Preview, Notes, System Settings, App Store,
+
+और Music</li>
+
+<li>Adobe Acrobat</li>
+
+<li>Zotero</li>
+
+<li>और भी बहुत कुछ!</li>
+
+</ul>
+
+<p>यह इम्प्लीमेंटेशन <a
+
+href="https://github.com/linearmouse/linearmouse">LinearMouse</a> के
+
+शानदार ‘Universal Back and Forward’ फीचर से प्रेरित है। यह उन सभी ऐप्स को
+
+सपोर्ट करना चाहिए जो LinearMouse करता है।<br />
+
+इसके अलावा यह कुछ ऐसे ऐप्स को भी सपोर्ट करता है जिन्हें आमतौर पर बैक और फॉरवर्ड जाने
+
+के लिए कीबोर्ड शॉर्टकट की आवश्यकता होती है, जैसे System Settings, App Store,
+
+Apple Notes, और Adobe Acrobat। Mac Mouse Fix अब उन ऐप्स को डिटेक्ट करेगा और
+
+उपयुक्त कीबोर्ड शॉर्टकट को सिम्युलेट करेगा।</p>
+
+<p>हर वह ऐप जो कभी <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22">GitHub
+
+Issue में रिक्वेस्ट</a> किया गया है, अब सपोर्ट होना चाहिए! (फीडबैक के लिए
+
+धन्यवाद!)<br />
+
+अगर तुम्हें कोई ऐसा ऐप मिलता है जो अभी तक काम नहीं करता, तो मुझे एक <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-feature-request&amp;locale=hi">feature
+
+request</a> में बताओ।</p>
+
+<h3 id="सकरल-रक-रक-कर-कम-करन-बद-ह-जत-ह-बग-क-ठक-करन">‘स्क्रॉल रुक-रुक कर काम
+
+करना बंद हो जाता है’ बग को ठीक करना</h3>
+
+<p>कुछ यूजर्स को एक <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20state%3Aclosed%20stops%20working%20label%3A%22Scroll%20Stops%20Working%20Intermittently%22">समस्या</a>
+
+का अनुभव हुआ जहां <strong>स्मूथ स्क्रॉलिंग अचानक काम करना बंद</strong> कर देती
+
+है।</p>
+
+<p>हालांकि मैं कभी भी इस समस्या को रीप्रोड्यूस नहीं कर पाया, मैंने एक संभावित फिक्स
+
+लागू किया है:</p>
+
+<p>ऐप अब कई बार रिट्राई करेगा, जब डिस्प्ले-सिंक्रोनाइजेशन सेटअप करने में विफल हो
+
+जाता है।<br />
+
+अगर रिट्राई करने के बाद भी यह काम नहीं करता, तो ऐप:</p>
+
+<ul>
+
+<li>‘Mac Mouse Fix Helper’ बैकग्राउंड प्रोसेस को रीस्टार्ट करेगा, जो समस्या को हल
+
+कर सकता है</li>
+
+<li>एक क्रैश रिपोर्ट तैयार करेगा, जो बग को डायग्नोज करने में मदद कर सकती है</li>
+
+</ul>
+
+<p>मुझे उम्मीद है कि समस्या अब हल हो गई है! अगर नहीं, तो मुझे एक <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-bug-report&amp;locale=hi">bug
+
+report</a> में या <a
+
+href="http://redirect.macmousefix.com/?target=mailto-noah&amp;locale=hi">email</a>
+
+के जरिए बताओ।</p>
+
+<h3 id="बहतर-फर-सपनग-सकरल-वहल-वयवहर">बेहतर फ्री-स्पिनिंग स्क्रॉल व्हील
+
+व्यवहार</h3>
+
+<p>Mac Mouse Fix अब <strong>स्क्रॉलिंग को तेज नहीं करेगा</strong>, जब तुम MX
+
+Master माउस पर स्क्रॉल व्हील को स्वतंत्र रूप से घूमने देते हो। (या किसी अन्य माउस पर
+
+जिसमें फ्री-स्पिनिंग स्क्रॉल व्हील है।)</p>
+
+<p>जबकि यह ‘स्क्रॉल स्पीडअप’ फीचर नियमित स्क्रॉल व्हील पर उपयोगी है, फ्री-स्पिनिंग
+
+स्क्रॉल व्हील पर यह चीजों को नियंत्रित करना कठिन बना सकता है।</p>
+
+<p><strong>नोट:</strong> Mac Mouse Fix वर्तमान में अधिकांश Logitech माउस के
+
+साथ पूरी तरह से संगत नहीं है, जिसमें MX Master भी शामिल है। मैं पूर्ण सपोर्ट जोड़ने की
+
+योजना बना रहा हूं, लेकिन इसमें शायद थोड़ा समय लगेगा। इस बीच, Logitech सपोर्ट के
+
+साथ सबसे अच्छा थर्ड-पार्टी ड्राइवर जो मुझे पता है वह है <a
+
+href="https://plentycom.jp/en/steermouse/">SteerMouse</a>।</p>
+
+<h3 id="बग-फकसस">बग फिक्सेस</h3>
+
+<ul>
+
+<li>एक समस्या को ठीक किया गया जहां Mac Mouse Fix कभी-कभी उन कीबोर्ड शॉर्टकट
+
+को फिर से सक्षम कर देता था जो पहले System Settings में अक्षम किए गए थे<br />
+
+</li>
+
+<li>‘Activate License’ पर क्लिक करते समय होने वाले क्रैश को ठीक किया गया</li>
+
+<li>‘Activate License’ पर क्लिक करने के तुरंत बाद ‘Cancel’ पर क्लिक करने पर होने
+
+वाले क्रैश को ठीक किया गया (रिपोर्ट के लिए धन्यवाद, Ali!)</li>
+
+<li>जब तुम्हारे Mac से कोई डिस्प्ले अटैच नहीं है तब Mac Mouse Fix का उपयोग करने का
+
+प्रयास करते समय होने वाले क्रैश को ठीक किया गया</li>
+
+<li>ऐप में टैब के बीच स्विच करते समय मेमोरी लीक और कुछ अन्य अंदरूनी समस्याओं को ठीक
+
+किया गया</li>
+
+</ul>
+
+<h3 id="वजअल-एनहसमटस">विजुअल एन्हांसमेंट्स</h3>
+
+<ul>
+
+<li>एक समस्या को ठीक किया गया जहां About टैब कभी-कभी बहुत लंबा होता था, जो <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=hi">3.0.5</a>
+
+में शुरू हुआ था</li>
+
+<li>‘Free days are over’ नोटिफिकेशन पर टेक्स्ट अब चीनी में कटता नहीं है</li>
+
+<li>इनपुट रिकॉर्ड करने के बाद ‘+’ फील्ड की शैडो पर विजुअल ग्लिच को ठीक किया
+
+गया</li>
+
+<li>एक दुर्लभ ग्लिच को ठीक किया गया जहां ‘Enter Your License Key’ स्क्रीन पर
+
+प्लेसहोल्डर टेक्स्ट ऑफ-सेंटर दिखाई देता था</li>
+
+<li>एक समस्या को ठीक किया गया जहां डार्क/लाइट मोड के बीच स्विच करने के बाद ऐप में
+
+प्रदर्शित कुछ सिंबल का रंग गलत होता था</li>
+
+</ul>
+
+<h3 id="अनय-सधर">अन्य सुधार</h3>
+
+<ul>
+
+<li>कुछ एनिमेशन, जैसे टैब-स्विच एनिमेशन, को थोड़ा अधिक कुशल बनाया गया<br />
+
+</li>
+
+<li>‘Enter Your License Key’ स्क्रीन पर Touch Bar टेक्स्ट कम्प्लीशन को अक्षम
+
+किया गया</li>
+
+<li>विभिन्न छोटे अंदरूनी सुधार</li>
+
+</ul>
+
+<p><em>Claude की उत्कृष्ट सहायता से संपादित।</em></p>
+
+<hr />
+
+<p>पिछली रिलीज <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=hi">3.0.5</a>
+
+भी देखें।</p>
+
+</body>
+
+</html>

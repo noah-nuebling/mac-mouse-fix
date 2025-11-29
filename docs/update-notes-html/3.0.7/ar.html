@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ar" xml:lang="ar">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.7</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ تمت الترجمة بواسطة الذكاء الاصطناعي</strong></p>
+
+<p>تمت ترجمة ملاحظة الإصدار هذه بواسطة كلود للذكاء الاصطناعي. قد تحتوي
+
+على أخطاء.<br />
+
+للنسخة الإنجليزية الأصلية، <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.7">انقر
+
+هنا</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.7</strong> يعالج العديد من الأخطاء
+
+المهمة.</p>
+
+<h3 id="إصلاحات-الأخطاء">إصلاحات الأخطاء</h3>
+
+<ul>
+
+<li>التطبيق يعمل مجدداً على <strong>إصدارات macOS الأقدم</strong> (macOS
+
+10.15 Catalina و macOS 11 Big Sur)
+
+<ul>
+
+<li>لم يكن من الممكن تفعيل Mac Mouse Fix 3.0.6 على تلك الإصدارات من
+
+macOS لأن ميزة ‘الرجوع’ و’التقدم’ المحسّنة التي تم تقديمها في Mac Mouse
+
+Fix 3.0.6 حاولت استخدام واجهات برمجة تطبيقات نظام macOS غير
+
+المتوفرة.</li>
+
+</ul></li>
+
+<li>إصلاح مشاكل في ميزة <strong>‘الرجوع’ و’التقدم’</strong>
+
+<ul>
+
+<li>ميزة ‘الرجوع’ و’التقدم’ المحسّنة التي تم تقديمها في Mac Mouse Fix
+
+3.0.6 ستستخدم الآن دائماً ‘الخيط الرئيسي’ لسؤال macOS عن ضغطات المفاتيح
+
+التي يجب محاكاتها للرجوع والتقدم في التطبيق الذي تستخدمه.<br />
+
+هذا يمكن أن يمنع الأعطال والسلوك غير الموثوق في بعض الحالات.</li>
+
+</ul></li>
+
+<li>محاولة إصلاح خطأ حيث <strong>تم إعادة تعيين الإعدادات بشكل
+
+عشوائي</strong> (راجع <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20label%3A%22Config%20Reset%20Intermittently%22">مشاكل
+
+GitHub</a> هذه)
+
+<ul>
+
+<li>أعدت كتابة الكود الذي يحمّل ملف الإعدادات لـ Mac Mouse Fix ليكون أكثر
+
+قوة. عندما حدثت أخطاء نادرة في نظام ملفات macOS، كان الكود القديم يعتقد
+
+أحياناً بالخطأ أن ملف الإعدادات تالف ويعيد تعيينه إلى الإعدادات
+
+الافتراضية.</li>
+
+</ul></li>
+
+<li>تقليل احتمالات حدوث خطأ حيث <strong>يتوقف التمرير عن العمل</strong>
+
+<ul>
+
+<li>لا يمكن حل هذا الخطأ بالكامل دون إجراء تغييرات أعمق، والتي من
+
+المحتمل أن تسبب مشاكل أخرى.<br />
+
+ومع ذلك، في الوقت الحالي، قللت من الفترة الزمنية التي يمكن أن يحدث فيها
+
+‘انسداد’ في نظام التمرير، مما يجب أن يقلل على الأقل من فرص مواجهة هذا
+
+الخطأ. هذا أيضاً يجعل التمرير أكثر كفاءة قليلاً.</li>
+
+<li>هذا الخطأ له أعراض مشابهة – لكن أعتقد أن السبب الأساسي مختلف – لخطأ
+
+‘توقف التمرير عن العمل بشكل متقطع’ الذي تم معالجته في الإصدار السابق
+
+3.0.6.</li>
+
+<li>(شكراً لـ Joonas على التشخيصات!)</li>
+
+</ul></li>
+
+</ul>
+
+<p>شكراً للجميع على الإبلاغ عن الأخطاء!</p>
+
+<hr />
+
+<p>تحقق أيضاً من الإصدار السابق <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.6&amp;locale=ar">3.0.6</a>.</p>
+
+</body>
+
+</html>

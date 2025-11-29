@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hu" xml:lang="hu">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.4</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AI által fordítva</strong></p>
+
+<p>Ezt a kiadási megjegyzést a Claude AI fordította. Tartalmazhat
+
+hibákat.<br />
+
+Az eredeti angol verzióért <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.4">kattints
+
+ide</a>.</p>
+
+<hr />
+
+<p>A Mac Mouse Fix <strong>3.0.4</strong> javítja az adatvédelmet, a
+
+hatékonyságot és a megbízhatóságot.<br />
+
+Új offline licencrendszert vezet be, és több fontos hibát javít.</p>
+
+<h3 id="továbbfejlesztett-adatvédelem-és-hatékonyság">Továbbfejlesztett
+
+adatvédelem és hatékonyság</h3>
+
+<p>A 3.0.4 új offline licencvalidációs rendszert vezet be, amely a
+
+lehető legkevesebb internetkapcsolatot használja.<br />
+
+Ez javítja az adatvédelmet és kíméli a számítógéped
+
+rendszererőforrásait.<br />
+
+Licencelt állapotban az alkalmazás most már 100%-ban offline
+
+működik!</p>
+
+<details>
+
+<summary>
+
+<b>Kattints ide a részletekért</b>
+
+</summary>
+
+<p>A korábbi verziók minden indításkor online validálták a licenceket,
+
+ami lehetővé tette, hogy harmadik féltől származó szerverek (GitHub és
+
+Gumroad) kapcsolódási naplókat tároljanak. Az új rendszer megszünteti a
+
+felesleges kapcsolatokat – a kezdeti licencaktiválás után csak akkor
+
+csatlakozik az internethez, ha a helyi licencadatok sérültek. <br><br>
+
+Bár személyesen soha nem rögzítettem felhasználói viselkedést, a korábbi
+
+rendszer elméletileg lehetővé tette harmadik féltől származó szerverek
+
+számára, hogy naplózzák az IP-címeket és a kapcsolódási időpontokat. A
+
+Gumroad szintén naplózhatta a licenckulcsodat, és potenciálisan
+
+összekapcsolhatta azt bármilyen személyes adattal, amit rólad
+
+rögzítettek a Mac Mouse Fix vásárlásakor. <br><br> Nem vettem figyelembe
+
+ezeket a finom adatvédelmi kérdéseket, amikor az eredeti licencrendszert
+
+építettem, de most a Mac Mouse Fix olyan privát és internetmentes,
+
+amennyire csak lehetséges! <br><br> Lásd még a
+
+<a href=https://gumroad.com/privacy>Gumroad adatvédelmi szabályzatát</a>
+
+és ezt a
+
+<a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>GitHub
+
+hozzászólásomat</a>.</p>
+
+</details>
+
+<h3 id="hibajavítások">Hibajavítások</h3>
+
+<ul>
+
+<li>Javítva lett egy hiba, amely miatt a macOS néha lefagyott, amikor a
+
+‘Kattintás és húzás’ funkciót használtad a ‘Spaces és Mission Control’
+
+esetében.</li>
+
+<li>Javítva lett egy hiba, amely miatt a Rendszerbeállításokban lévő
+
+billentyűparancsok néha törlődtek, amikor Mac Mouse Fix ‘Kattintás’
+
+műveleteket használtál, mint például a ‘Mission Control’.</li>
+
+<li>Javítva lett <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aopen%20label%3A%22%27Free%20days%20are%20over%27%20bug%22">egy
+
+hiba</a>, amely miatt az alkalmazás néha leállt és egy értesítést
+
+jelenített meg, hogy ‘Az ingyenes napok véget értek’ olyan
+
+felhasználóknak, akik már megvásárolták az alkalmazást.
+
+<ul>
+
+<li>Ha te is tapasztaltad ezt a hibát, őszintén elnézést kérek az
+
+okozott kellemetlenségért. <a
+
+href="https://redirect.macmousefix.com/?message=&amp;target=mmf-apply-for-refund&amp;locale=hu">Itt
+
+kérhetsz visszatérítést</a>.</li>
+
+</ul></li>
+
+<li>Javítottuk azt a módot, ahogyan az alkalmazás lekéri a főablakát,
+
+ami esetleg javított egy hibát, amikor a ‘Licenc aktiválása’ képernyő
+
+néha nem jelent meg.</li>
+
+</ul>
+
+<h3 id="használhatósági-fejlesztések">Használhatósági fejlesztések</h3>
+
+<ul>
+
+<li>Lehetetlenné tettük szóközök és sortörések beírását a ‘Licenc
+
+aktiválása’ képernyő szövegmezőjébe.
+
+<ul>
+
+<li>Ez gyakori zavart okozott, mert nagyon könnyű véletlenül kijelölni
+
+egy rejtett sortörést, amikor a licenckulcsodat másolod a Gumroad
+
+e-mailjeiből.</li>
+
+</ul></li>
+
+<li>Ezek a frissítési megjegyzések automatikusan le vannak fordítva a
+
+nem angol nyelvű felhasználók számára (Claude által működtetve).
+
+Remélem, hasznos! Ha bármilyen problémát tapasztalsz vele, jelezd nekem.
+
+Ez egy első pillantás egy új fordítási rendszerre, amelyen az elmúlt
+
+évben dolgoztam.</li>
+
+</ul>
+
+<h3
+
+id="a-macos-10.14-mojave-nem-hivatalos-támogatásának-megszüntetése">A
+
+macOS 10.14 Mojave (nem hivatalos) támogatásának megszüntetése</h3>
+
+<p>A Mac Mouse Fix 3 hivatalosan a macOS 11 Big Sur és újabb verziókat
+
+támogatja. Azonban azok számára, akik hajlandóak elfogadni néhány hibát
+
+és grafikai problémát, a Mac Mouse Fix 3.0.3 és korábbi verziók még
+
+használhatók voltak macOS 10.14.4 Mojave alatt.</p>
+
+<p>A Mac Mouse Fix 3.0.4 megszünteti ezt a támogatást, és <strong>most
+
+már macOS 10.15 Catalina szükséges hozzá</strong>.<br />
+
+Elnézést kérek minden ebből eredő kellemetlenségért. Ez a változtatás
+
+lehetővé tette számomra, hogy a továbbfejlesztett licencrendszert modern
+
+Swift funkciókkal implementáljam. A Mojave felhasználók továbbra is
+
+használhatják a Mac Mouse Fix <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.3&amp;locale=hu">3.0.3</a>
+
+verziót vagy a <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=hu">Mac
+
+Mouse Fix 2 legújabb verzióját</a>. Remélem, ez mindenkinek megfelelő
+
+megoldás.</p>
+
+<h3 id="háttérben-történt-fejlesztések">Háttérben történt
+
+fejlesztések</h3>
+
+<ul>
+
+<li>Új ‘MFDataClass’ rendszer implementálása, amely erőteljesebb
+
+adatmodellezést tesz lehetővé, miközben a Mac Mouse Fix konfigurációs
+
+fájlja ember által olvasható és szerkeszthető marad.</li>
+
+<li>Támogatás kiépítése a Gumroadon kívüli fizetési platformok
+
+hozzáadásához. Így a jövőben lehetnek lokalizált fizetési folyamatok, és
+
+az alkalmazás különböző országokban értékesíthető.</li>
+
+<li>Továbbfejlesztett naplózás, amely lehetővé teszi számomra
+
+hatékonyabb “Debug Build”-ek létrehozását olyan felhasználók számára,
+
+akik nehezen reprodukálható hibákat tapasztalnak.</li>
+
+<li>Sok más apró fejlesztés és tisztítási munka.</li>
+
+</ul>
+
+<p><em>Szerkesztve a Claude kiváló segítségével.</em></p>
+
+<hr />
+
+<p>Nézd meg az előző kiadást is: <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.3&amp;locale=hu"><strong>3.0.3</strong></a>.</p>
+
+</body>
+
+</html>

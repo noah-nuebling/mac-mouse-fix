@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ AIによる翻訳</strong></p>
+
+<p>このリリースノートはClaude
+
+AIによって翻訳されています。誤訳が含まれている可能性があります。<br />
+
+英語の原文は<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.5">こちら</a>をクリックしてください。</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.5</strong>
+
+では、いくつかのバグを修正し、パフォーマンスを改善し、アプリに少し磨きをかけました。<br />
+
+また、macOS 26 Tahoe にも対応しています。</p>
+
+<h3
+
+id="トラックパッドスクロールのシミュレーション改善">トラックパッドスクロールのシミュレーション改善</h3>
+
+<ul>
+
+<li>スクロールシステムが、トラックパッドでの2本指タップをシミュレートして、アプリケーションのスクロールを停止できるようになりました。
+
+<ul>
+
+<li>これにより、iPhoneやiPadアプリを実行している際に、ユーザーが停止を選択した後もスクロールが続いてしまう問題が修正されました。</li>
+
+</ul></li>
+
+<li>トラックパッドから指を離すシミュレーションの不整合を修正しました。
+
+<ul>
+
+<li>これにより、一部の状況で最適でない動作が発生していた可能性があります。</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="macos-26-tahoe-互換性">macOS 26 Tahoe 互換性</h3>
+
+<p>macOS 26 Tahoe
+
+ベータを実行している場合、アプリが使用可能になり、UIのほとんどが正しく動作するようになりました。</p>
+
+<h3 id="パフォーマンス向上">パフォーマンス向上</h3>
+
+<p>クリック&amp;ドラッグで「スクロール&amp;ナビゲート」ジェスチャーのパフォーマンスを改善しました。<br />
+
+私のテストでは、CPU使用率が約50%削減されました!</p>
+
+<p><strong>背景</strong></p>
+
+<p>「スクロール&amp;ナビゲート」ジェスチャー中、Mac Mouse Fix
+
+は透明なウィンドウに偽のマウスカーソルを描画し、実際のマウスカーソルを固定します。これにより、マウスをどれだけ動かしても、スクロールを開始したUI要素をスクロールし続けることができます。</p>
+
+<p>パフォーマンスの改善は、この透明なウィンドウでデフォルトのmacOSイベント処理をオフにすることで実現されました。これは使用されていませんでした。</p>
+
+<h3 id="バグ修正">バグ修正</h3>
+
+<ul>
+
+<li>Wacomペンタブレットからのスクロールイベントを無視するようになりました。
+
+<ul>
+
+<li>以前は、Mac Mouse Fix
+
+がWacomタブレットで不規則なスクロールを引き起こしていました。これはGitHub
+
+Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>で@frenchie1980さんから報告されました。(ありがとうございます!)</li>
+
+</ul></li>
+
+<li>Mac Mouse Fix
+
+3.0.4の新しいライセンスシステムの一部として導入されたSwift
+
+Concurrencyコードが、正しいスレッドで実行されていなかったバグを修正しました。
+
+<ul>
+
+<li>これにより、macOS
+
+Tahoeでクラッシュが発生し、ライセンス周りで他の散発的なバグも発生していた可能性があります。</li>
+
+</ul></li>
+
+<li>オフラインライセンスをデコードするコードの堅牢性を改善しました。
+
+<ul>
+
+<li>これにより、AppleのAPIの問題を回避できます。この問題により、私のIntel
+
+Mac
+
+Miniでオフラインライセンスの検証が常に失敗していました。これはすべてのIntel
+
+Macで発生していたと思われ、GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>で@toni20k5267さんから報告されたように、3.0.4で既に対処された「無料期間が終了しました」バグが一部の人に発生し続けた理由だと考えられます。(ありがとうございます!)
+
+<ul>
+
+<li>「無料期間が終了しました」バグが発生した方には、申し訳ございませんでした!返金は<a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=ja">こちら</a>から申請できます。</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="ux改善">UX改善</h3>
+
+<ul>
+
+<li>Mac Mouse
+
+Fixを有効にできないmacOSのバグに対する段階的な解決策を提供するダイアログを無効にしました。
+
+<ul>
+
+<li>これらの問題はmacOS 13 VenturaとmacOS 14
+
+Sonomaでのみ発生していました。現在、これらのダイアログは関連するmacOSバージョンでのみ表示されます。</li>
+
+<li>また、ダイアログのトリガーも少し厳しくなりました。以前は、あまり役に立たない状況で表示されることがありました。</li>
+
+</ul></li>
+
+<li>「無料期間が終了しました」通知に「ライセンスを有効化」リンクを直接追加しました。
+
+<ul>
+
+<li>これにより、Mac Mouse
+
+Fixライセンスの有効化がさらに手間いらずになります!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="ビジュアル改善">ビジュアル改善</h3>
+
+<ul>
+
+<li>「ソフトウェアアップデート」ウィンドウの外観を少し改善しました。macOS
+
+26 Tahoeにより適合するようになりました。
+
+<ul>
+
+<li>これは、Mac Mouse
+
+Fixがアップデートを処理するために使用している「Sparkle
+
+1.27.3」フレームワークのデフォルトの外観をカスタマイズすることで実現されました。</li>
+
+</ul></li>
+
+<li>中国語で「情報」タブの下部のテキストが切れることがある問題を、ウィンドウを少し広くすることで修正しました。</li>
+
+<li>「情報」タブの下部のテキストが少しずれていた問題を修正しました。</li>
+
+<li>「ボタン」タブの「キーボードショートカット…」オプションの下のスペースが小さすぎるバグを修正しました。</li>
+
+</ul>
+
+<h3 id="内部的な変更">内部的な変更</h3>
+
+<ul>
+
+<li>「SnapKit」フレームワークへの依存を削除しました。
+
+<ul>
+
+<li>これにより、アプリのサイズが19.8 MBから19.5
+
+MBにわずかに削減されました。</li>
+
+</ul></li>
+
+<li>コードベースのその他の小さな改善。</li>
+
+</ul>
+
+<p><em>Claudeの優れた支援により編集されました。</em></p>
+
+<hr />
+
+<p>前回のリリース <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.4&amp;locale=ja"><strong>3.0.4</strong></a>
+
+もご確認ください。</p>
+
+</body>
+
+</html>

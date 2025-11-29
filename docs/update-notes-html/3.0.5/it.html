@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Tradotto dall’IA</strong></p>
+
+<p>Questa nota di rilascio è stata tradotta dall’IA Claude. Potrebbe
+
+contenere errori.<br />
+
+Per la versione originale in inglese, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.5">clicca
+
+qui</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.5</strong> corregge diversi bug, migliora
+
+le prestazioni e aggiunge un po’ di rifinitura all’app.<br />
+
+È anche compatibile con macOS 26 Tahoe.</p>
+
+<h3
+
+id="simulazione-migliorata-dello-scorrimento-del-trackpad">Simulazione
+
+Migliorata dello Scorrimento del Trackpad</h3>
+
+<ul>
+
+<li>Il sistema di scorrimento ora può simulare un tocco con due dita sul
+
+trackpad per far smettere di scorrere le applicazioni.
+
+<ul>
+
+<li>Questo risolve un problema durante l’esecuzione di app per iPhone o
+
+iPad, dove lo scorrimento spesso continuava dopo che l’utente aveva
+
+scelto di fermarsi.</li>
+
+</ul></li>
+
+<li>Corretta la simulazione incoerente del sollevamento delle dita dal
+
+trackpad.
+
+<ul>
+
+<li>Questo potrebbe aver causato comportamenti non ottimali in alcune
+
+situazioni.</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="compatibilità-con-macos-26-tahoe">Compatibilità con macOS 26
+
+Tahoe</h3>
+
+<p>Quando si esegue la Beta di macOS 26 Tahoe, l’app è ora utilizzabile
+
+e la maggior parte dell’interfaccia funziona correttamente.</p>
+
+<h3 id="miglioramento-delle-prestazioni">Miglioramento delle
+
+Prestazioni</h3>
+
+<p>Migliorate le prestazioni del gesto Clic e Trascina per “Scorrere e
+
+Navigare”.<br />
+
+Nei miei test, l’utilizzo della CPU è stato ridotto di circa il 50%!</p>
+
+<p><strong>Contesto</strong></p>
+
+<p>Durante il gesto “Scorrere e Navigare”, Mac Mouse Fix disegna un
+
+cursore del mouse finto in una finestra trasparente, bloccando il
+
+cursore del mouse reale in posizione. Questo assicura che tu possa
+
+continuare a scorrere l’elemento dell’interfaccia su cui hai iniziato a
+
+scorrere, indipendentemente da quanto lontano muovi il mouse.</p>
+
+<p>Il miglioramento delle prestazioni è stato ottenuto disattivando la
+
+gestione predefinita degli eventi di macOS su questa finestra
+
+trasparente, che comunque non veniva utilizzata.</p>
+
+<h3 id="correzioni-di-bug">Correzioni di Bug</h3>
+
+<ul>
+
+<li>Ora vengono ignorati gli eventi di scorrimento dalle tavolette
+
+grafiche Wacom.
+
+<ul>
+
+<li>Prima, Mac Mouse Fix causava uno scorrimento irregolare sulle
+
+tavolette Wacom, come segnalato da <span class="citation"
+
+data-cites="frenchie1980">@frenchie1980</span> nella Issue GitHub <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>.
+
+(Grazie!)</li>
+
+</ul></li>
+
+<li>Corretto un bug in cui il codice Swift Concurrency, introdotto come
+
+parte del nuovo sistema di licenze in Mac Mouse Fix 3.0.4, non veniva
+
+eseguito sul thread corretto.
+
+<ul>
+
+<li>Questo causava crash su macOS Tahoe, e probabilmente causava anche
+
+altri bug sporadici relativi alle licenze.</li>
+
+</ul></li>
+
+<li>Migliorata la robustezza del codice che decodifica le licenze
+
+offline.
+
+<ul>
+
+<li>Questo aggira un problema nelle API di Apple che causava il
+
+fallimento costante della validazione delle licenze offline sul mio Mac
+
+Mini Intel. Presumo che questo accadesse su tutti i Mac Intel, e che
+
+fosse la ragione per cui il bug “Giorni gratuiti terminati” (già
+
+affrontato nella 3.0.4) si verificava ancora per alcune persone, come
+
+segnalato da <span class="citation"
+
+data-cites="toni20k5267">@toni20k5267</span> nella Issue GitHub <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>.
+
+(Grazie!)
+
+<ul>
+
+<li>Se hai riscontrato il bug “Giorni gratuiti terminati”, mi dispiace!
+
+Puoi ottenere un rimborso <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=it">qui</a>.</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="miglioramenti-dellesperienza-utente">Miglioramenti
+
+dell’Esperienza Utente</h3>
+
+<ul>
+
+<li>Disabilitati i dialoghi che fornivano soluzioni passo-passo per i
+
+bug di macOS che impedivano agli utenti di abilitare Mac Mouse Fix.
+
+<ul>
+
+<li>Questi problemi si verificavano solo su macOS 13 Ventura e 14
+
+Sonoma. Ora, questi dialoghi appaiono solo su quelle versioni di macOS
+
+in cui sono rilevanti.</li>
+
+<li>I dialoghi sono anche un po’ più difficili da attivare – prima, a
+
+volte apparivano in situazioni in cui non erano molto utili.</li>
+
+</ul></li>
+
+<li>Aggiunto un link “Attiva Licenza” direttamente sulla notifica
+
+“Giorni gratuiti terminati”.
+
+<ul>
+
+<li>Questo rende l’attivazione di una licenza Mac Mouse Fix ancora più
+
+semplice!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="miglioramenti-visivi">Miglioramenti Visivi</h3>
+
+<ul>
+
+<li>Leggermente migliorato l’aspetto della finestra “Aggiornamento
+
+Software”. Ora si adatta meglio a macOS 26 Tahoe.
+
+<ul>
+
+<li>Questo è stato fatto personalizzando l’aspetto predefinito del
+
+framework “Sparkle 1.27.3” che Mac Mouse Fix utilizza per gestire gli
+
+aggiornamenti.</li>
+
+</ul></li>
+
+<li>Risolto il problema in cui il testo in fondo alla scheda
+
+Informazioni veniva talvolta tagliato in cinese, rendendo la finestra
+
+leggermente più larga.</li>
+
+<li>Corretto il testo in fondo alla scheda Informazioni che era
+
+leggermente decentrato.</li>
+
+<li>Corretto un bug che causava uno spazio troppo piccolo sotto
+
+l’opzione “Scorciatoia da Tastiera…” nella scheda Pulsanti.</li>
+
+</ul>
+
+<h3 id="modifiche-interne">Modifiche Interne</h3>
+
+<ul>
+
+<li>Rimossa la dipendenza dal framework “SnapKit”.
+
+<ul>
+
+<li>Questo riduce leggermente la dimensione dell’app da 19,8 a 19,5
+
+MB.</li>
+
+</ul></li>
+
+<li>Vari altri piccoli miglioramenti nel codice.</li>
+
+</ul>
+
+<p><em>Modificato con l’eccellente assistenza di Claude.</em></p>
+
+<hr />
+
+<p>Dai un’occhiata anche alla versione precedente <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.4&amp;locale=it"><strong>3.0.4</strong></a>.</p>
+
+</body>
+
+</html>

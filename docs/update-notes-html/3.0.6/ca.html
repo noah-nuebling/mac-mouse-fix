@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ca" xml:lang="ca">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.6</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Traduït per IA</strong></p>
+
+<p>Aquesta nota de llançament ha estat traduïda per la IA Claude. Pot
+
+contenir errors.<br />
+
+Per veure la versió original en anglès, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.6">feu
+
+clic aquí</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.6</strong> fa que la funció ‘Enrere’ i
+
+‘Endavant’ sigui compatible amb més aplicacions. També soluciona
+
+diversos errors i problemes.</p>
+
+<h3 id="funció-enrere-i-endavant-millorada">Funció ‘Enrere’ i ‘Endavant’
+
+millorada</h3>
+
+<p>Les assignacions dels botons del ratolí ‘Enrere’ i ‘Endavant’ ara
+
+<strong>funcionen en més aplicacions</strong>, incloent:</p>
+
+<ul>
+
+<li>Visual Studio Code, Cursor, VSCodium, Windsurf, Zed i altres editors
+
+de codi</li>
+
+<li>Moltes aplicacions integrades d’Apple com ara Visualització Prèvia,
+
+Notes, Configuració del Sistema, App Store i Música</li>
+
+<li>Adobe Acrobat</li>
+
+<li>Zotero</li>
+
+<li>I més!</li>
+
+</ul>
+
+<p>La implementació està inspirada en l’excel·lent funció ‘Universal
+
+Back and Forward’ de <a
+
+href="https://github.com/linearmouse/linearmouse">LinearMouse</a>.
+
+Hauria de ser compatible amb totes les aplicacions que LinearMouse
+
+suporta.<br />
+
+A més, és compatible amb algunes aplicacions que normalment requereixen
+
+dreceres de teclat per anar enrere i endavant, com ara Configuració del
+
+Sistema, App Store, Apple Notes i Adobe Acrobat. Mac Mouse Fix ara
+
+detectarà aquestes aplicacions i simularà les dreceres de teclat
+
+apropiades.</p>
+
+<p>Totes les aplicacions que s’han <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22">sol·licitat
+
+en un GitHub Issue</a> haurien de ser compatibles ara! (Gràcies pels
+
+comentaris!)<br />
+
+Si trobes alguna aplicació que encara no funciona, fes-m’ho saber en una
+
+<a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-feature-request&amp;locale=ca">sol·licitud
+
+de funció</a>.</p>
+
+<h3
+
+id="solució-de-lerror-el-desplaçament-deixa-de-funcionar-intermitentment">Solució
+
+de l’error ‘El desplaçament deixa de funcionar intermitentment’</h3>
+
+<p>Alguns usuaris van experimentar un <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20state%3Aclosed%20stops%20working%20label%3A%22Scroll%20Stops%20Working%20Intermittently%22">problema</a>
+
+on <strong>el desplaçament suau deixa de funcionar</strong>
+
+aleatòriament.</p>
+
+<p>Tot i que mai he pogut reproduir el problema, he implementat una
+
+possible solució:</p>
+
+<p>L’aplicació ara reintentarà diverses vegades quan falli la
+
+configuració de la sincronització amb la pantalla.<br />
+
+Si encara no funciona després de reintentar-ho, l’aplicació:</p>
+
+<ul>
+
+<li>Reiniciarà el procés en segon pla ‘Mac Mouse Fix Helper’, que pot
+
+resoldre el problema</li>
+
+<li>Generarà un informe d’error, que pot ajudar a diagnosticar
+
+l’error</li>
+
+</ul>
+
+<p>Espero que el problema estigui resolt ara! Si no, fes-m’ho saber en
+
+un <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-bug-report&amp;locale=ca">informe
+
+d’error</a> o per <a
+
+href="http://redirect.macmousefix.com/?target=mailto-noah&amp;locale=ca">correu
+
+electrònic</a>.</p>
+
+<h3
+
+id="comportament-millorat-de-la-roda-de-desplaçament-de-gir-lliure">Comportament
+
+millorat de la roda de desplaçament de gir lliure</h3>
+
+<p>Mac Mouse Fix ja <strong>no accelerarà el desplaçament</strong> quan
+
+deixis que la roda de desplaçament giri lliurement al ratolí MX Master.
+
+(O qualsevol altre ratolí amb una roda de desplaçament de gir
+
+lliure.)</p>
+
+<p>Tot i que aquesta funció d’acceleració del desplaçament és útil en
+
+rodes de desplaçament normals, en una roda de desplaçament de gir lliure
+
+pot fer que les coses siguin més difícils de controlar.</p>
+
+<p><strong>Nota:</strong> Mac Mouse Fix actualment no és totalment
+
+compatible amb la majoria de ratolins Logitech, incloent l’MX Master.
+
+Tinc previst afegir compatibilitat completa, però probablement trigarà
+
+una estona. Mentrestant, el millor controlador de tercers amb suport per
+
+a Logitech que conec és <a
+
+href="https://plentycom.jp/en/steermouse/">SteerMouse</a>.</p>
+
+<h3 id="correccions-derrors">Correccions d’errors</h3>
+
+<ul>
+
+<li>S’ha solucionat un problema on Mac Mouse Fix de vegades reactivava
+
+dreceres de teclat que s’havien desactivat prèviament a Configuració del
+
+Sistema<br />
+
+</li>
+
+<li>S’ha solucionat un error en fer clic a ‘Activar llicència’</li>
+
+<li>S’ha solucionat un error en fer clic a ‘Cancel·lar’ just després de
+
+fer clic a ‘Activar llicència’ (Gràcies per l’informe, Ali!)</li>
+
+<li>S’han solucionat errors en intentar utilitzar Mac Mouse Fix quan no
+
+hi ha cap pantalla connectada al teu Mac</li>
+
+<li>S’ha solucionat una fuita de memòria i alguns altres problemes
+
+interns en canviar entre pestanyes a l’aplicació</li>
+
+</ul>
+
+<h3 id="millores-visuals">Millores visuals</h3>
+
+<ul>
+
+<li>S’ha solucionat un problema on la pestanya Quant a de vegades era
+
+massa alta, que es va introduir a la versió <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=ca">3.0.5</a></li>
+
+<li>El text de la notificació ‘S’han acabat els dies gratuïts’ ja no es
+
+talla en xinès</li>
+
+<li>S’ha solucionat un error visual a l’ombra del camp ‘+’ després de
+
+gravar una entrada</li>
+
+<li>S’ha solucionat un error poc freqüent on el text de marcador de
+
+posició a la pantalla ‘Introdueix la teva clau de llicència’ apareixia
+
+descentrat</li>
+
+<li>S’ha solucionat un problema on alguns símbols mostrats a l’aplicació
+
+tenien el color incorrecte després de canviar entre el mode
+
+fosc/clar</li>
+
+</ul>
+
+<h3 id="altres-millores">Altres millores</h3>
+
+<ul>
+
+<li>S’han fet algunes animacions, com ara l’animació de canvi de
+
+pestanya, lleugerament més eficients<br />
+
+</li>
+
+<li>S’ha desactivat la compleció de text de la Touch Bar a la pantalla
+
+‘Introdueix la teva clau de llicència’</li>
+
+<li>Diverses millores internes menors</li>
+
+</ul>
+
+<p><em>Editat amb l’excel·lent assistència de Claude.</em></p>
+
+<hr />
+
+<p>També pots consultar la versió anterior <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=ca">3.0.5</a>.</p>
+
+</body>
+
+</html>

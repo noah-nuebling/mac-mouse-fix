@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="el" xml:lang="el">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.8</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Μετάφραση από AI</strong></p>
+
+<p>Αυτές οι σημειώσεις έκδοσης έχουν μεταφραστεί από το Claude AI.
+
+Ενδέχεται να περιέχουν λάθη.<br />
+
+Για την πρωτότυπη αγγλική έκδοση, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8">πατήστε
+
+εδώ</a>.</p>
+
+<hr />
+
+<p>Το Mac Mouse Fix <strong>3.0.8</strong> επιλύει προβλήματα διεπαφής
+
+και άλλα.</p>
+
+<h3 id="προβλήματα-διεπαφής"><strong>Προβλήματα Διεπαφής</strong></h3>
+
+<ul>
+
+<li>Απενεργοποιήθηκε ο νέος σχεδιασμός στο macOS 26 Tahoe. Τώρα η
+
+εφαρμογή θα έχει την εμφάνιση και τη λειτουργικότητα που είχε στο macOS
+
+15 Sequoia.
+
+<ul>
+
+<li>Το έκανα αυτό επειδή μερικά από τα ανασχεδιασμένα στοιχεία διεπαφής
+
+της Apple εξακολουθούν να έχουν προβλήματα. Για παράδειγμα, τα κουμπιά
+
+‘-’ στην καρτέλα ‘Κουμπιά’ δεν ήταν πάντα κλικάρισμα.</li>
+
+<li>Η διεπαφή μπορεί να φαίνεται λίγο ξεπερασμένη στο macOS 26 Tahoe
+
+τώρα. Αλλά θα είναι πλήρως λειτουργική και γυαλισμένη όπως πριν.</li>
+
+</ul></li>
+
+<li>Διορθώθηκε ένα σφάλμα όπου η ειδοποίηση ‘Οι δωρεάν ημέρες τελείωσαν’
+
+κολλούσε στην πάνω δεξιά γωνία της οθόνης.
+
+<ul>
+
+<li>Ευχαριστώ τον <a href="https://github.com/Sashpuri">Sashpuri</a> και
+
+άλλους που το ανέφεραν!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="βελτιώσεις-διεπαφής"><strong>Βελτιώσεις Διεπαφής</strong></h3>
+
+<ul>
+
+<li>Απενεργοποιήθηκε το πράσινο κουμπί φωτεινού σηματοδότη στο κύριο
+
+παράθυρο του Mac Mouse Fix.
+
+<ul>
+
+<li>Το κουμπί δεν έκανε τίποτα, αφού το παράθυρο δεν μπορεί να αλλάξει
+
+μέγεθος χειροκίνητα.</li>
+
+</ul></li>
+
+<li>Διορθώθηκε ένα πρόβλημα όπου μερικές από τις οριζόντιες γραμμές στον
+
+πίνακα της καρτέλας ‘Κουμπιά’ ήταν πολύ σκούρες στο macOS 26 Tahoe.</li>
+
+<li>Διορθώθηκε ένα σφάλμα όπου το μήνυμα “Το κύριο κουμπί του ποντικιού
+
+δεν μπορεί να χρησιμοποιηθεί” στην καρτέλα ‘Κουμπιά’ μερικές φορές
+
+κοβόταν στο macOS 26 Tahoe.</li>
+
+<li>Διορθώθηκε ένα τυπογραφικό λάθος στη γερμανική διεπαφή. Ευγενική
+
+προσφορά του χρήστη GitHub <a
+
+href="https://github.com/i-am-the-slime">i-am-the-slime</a>.
+
+Ευχαριστώ!</li>
+
+<li>Επιλύθηκε ένα πρόβλημα όπου το παράθυρο του MMF μερικές φορές
+
+αναβόσβηνε σύντομα στο λάθος μέγεθος κατά το άνοιγμα του παραθύρου στο
+
+macOS 26 Tahoe.</li>
+
+</ul>
+
+<h3 id="άλλες-αλλαγές"><strong>Άλλες Αλλαγές</strong></h3>
+
+<ul>
+
+<li>Βελτιωμένη συμπεριφορά όταν προσπαθείς να ενεργοποιήσεις το Mac
+
+Mouse Fix ενώ τρέχουν πολλαπλές εκδόσεις του Mac Mouse Fix στον
+
+υπολογιστή.
+
+<ul>
+
+<li>Το Mac Mouse Fix θα προσπαθεί τώρα να απενεργοποιήσει την άλλη
+
+έκδοση του Mac Mouse Fix πιο επιμελώς.</li>
+
+<li>Αυτό μπορεί να βελτιώσει ακραίες περιπτώσεις όπου το Mac Mouse Fix
+
+δεν μπορούσε να ενεργοποιηθεί.</li>
+
+</ul></li>
+
+<li>Αλλαγές και καθαρισμός στο παρασκήνιο.</li>
+
+</ul>
+
+<hr />
+
+<p>Δες επίσης τι νέο υπάρχει στην προηγούμενη έκδοση <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.7&amp;locale=el">3.0.7</a>.</p>
+
+</body>
+
+</html>

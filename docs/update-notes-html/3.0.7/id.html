@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="id" xml:lang="id">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.7</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Diterjemahkan oleh AI</strong></p>
+
+<p>Catatan rilis ini telah diterjemahkan oleh AI Claude. Mungkin
+
+terdapat kesalahan.<br />
+
+Untuk versi asli dalam bahasa Inggris, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.7">klik
+
+di sini</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.7</strong> memperbaiki beberapa bug
+
+penting.</p>
+
+<h3 id="perbaikan-bug">Perbaikan Bug</h3>
+
+<ul>
+
+<li>Aplikasi berfungsi kembali di <strong>versi macOS lama</strong>
+
+(macOS 10.15 Catalina dan macOS 11 Big Sur)
+
+<ul>
+
+<li>Mac Mouse Fix 3.0.6 tidak dapat diaktifkan di versi macOS tersebut
+
+karena fitur ‘Back’ dan ‘Forward’ yang ditingkatkan yang diperkenalkan
+
+di Mac Mouse Fix 3.0.6 mencoba menggunakan API sistem macOS yang tidak
+
+tersedia.</li>
+
+</ul></li>
+
+<li>Memperbaiki masalah dengan fitur <strong>‘Back’ dan
+
+‘Forward’</strong>
+
+<ul>
+
+<li>Fitur ‘Back’ dan ‘Forward’ yang ditingkatkan yang diperkenalkan di
+
+Mac Mouse Fix 3.0.6 sekarang akan selalu menggunakan ‘main thread’ untuk
+
+menanyakan macOS tentang penekanan tombol mana yang harus disimulasikan
+
+untuk kembali dan maju di aplikasi yang kamu gunakan.<br />
+
+Ini dapat mencegah crash dan perilaku yang tidak dapat diandalkan dalam
+
+beberapa situasi.</li>
+
+</ul></li>
+
+<li>Mencoba memperbaiki bug di mana <strong>pengaturan direset secara
+
+acak</strong> (Lihat <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20label%3A%22Config%20Reset%20Intermittently%22">GitHub
+
+Issues</a> ini)
+
+<ul>
+
+<li>Saya menulis ulang kode yang memuat file konfigurasi untuk Mac Mouse
+
+Fix agar lebih kuat. Ketika terjadi error file-system macOS yang jarang
+
+terjadi, kode lama terkadang bisa salah mengira bahwa file konfigurasi
+
+rusak dan meresetnya ke default.</li>
+
+</ul></li>
+
+<li>Mengurangi kemungkinan bug di mana <strong>scrolling berhenti
+
+berfungsi</strong>
+
+<ul>
+
+<li>Bug ini tidak dapat diperbaiki sepenuhnya tanpa perubahan yang lebih
+
+mendalam, yang kemungkinan akan menyebabkan masalah lain.<br />
+
+Namun, untuk sementara waktu, saya mengurangi jendela waktu di mana
+
+‘deadlock’ dapat terjadi di sistem scrolling, yang setidaknya akan
+
+menurunkan kemungkinan menemui bug ini. Ini juga membuat scrolling
+
+sedikit lebih efisien.</li>
+
+<li>Bug ini memiliki gejala yang mirip – tetapi saya pikir alasan
+
+mendasar yang berbeda – dengan bug ‘Scroll Stops Working Intermittently’
+
+yang telah diperbaiki di rilis terakhir 3.0.6.</li>
+
+<li>(Terima kasih kepada Joonas untuk diagnostiknya!)</li>
+
+</ul></li>
+
+</ul>
+
+<p>Terima kasih semua yang telah melaporkan bug!</p>
+
+<hr />
+
+<p>Lihat juga rilis sebelumnya <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.6&amp;locale=id">3.0.6</a>.</p>
+
+</body>
+
+</html>

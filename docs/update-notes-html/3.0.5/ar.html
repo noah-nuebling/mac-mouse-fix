@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ar" xml:lang="ar">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ تمت الترجمة بواسطة الذكاء الاصطناعي</strong></p>
+
+<p>تمت ترجمة ملاحظة الإصدار هذه بواسطة كلود للذكاء الاصطناعي. قد تحتوي
+
+على أخطاء.<br />
+
+للنسخة الإنجليزية الأصلية، <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.5">انقر
+
+هنا</a>.</p>
+
+<hr />
+
+<p>يعمل Mac Mouse Fix <strong>3.0.5</strong> على إصلاح العديد من
+
+الأخطاء، وتحسين الأداء، وإضافة بعض اللمسات الجمالية للتطبيق.<br />
+
+كما أنه متوافق مع macOS 26 Tahoe.</p>
+
+<h3 id="تحسين-محاكاة-التمرير-بلوحة-التتبع">تحسين محاكاة التمرير بلوحة
+
+التتبع</h3>
+
+<ul>
+
+<li>يمكن لنظام التمرير الآن محاكاة النقر بإصبعين على لوحة التتبع لجعل
+
+التطبيقات تتوقف عن التمرير.
+
+<ul>
+
+<li>يعمل هذا على إصلاح مشكلة عند تشغيل تطبيقات iPhone أو iPad، حيث كان
+
+التمرير غالبًا يستمر بعد أن يختار المستخدم التوقف.</li>
+
+</ul></li>
+
+<li>تم إصلاح المحاكاة غير المتسقة لرفع الأصابع عن لوحة التتبع.
+
+<ul>
+
+<li>قد يكون هذا قد تسبب في سلوك غير مثالي في بعض الحالات.</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="التوافق-مع-macos-26-tahoe">التوافق مع macOS 26 Tahoe</h3>
+
+<p>عند تشغيل الإصدار التجريبي من macOS 26 Tahoe، أصبح التطبيق الآن قابلاً
+
+للاستخدام، وتعمل معظم واجهة المستخدم بشكل صحيح.</p>
+
+<h3 id="تحسين-الأداء">تحسين الأداء</h3>
+
+<p>تم تحسين أداء إيماءة النقر والسحب إلى “التمرير والتنقل”.<br />
+
+في اختباراتي، انخفض استخدام المعالج بنسبة ~50%!</p>
+
+<p><strong>الخلفية</strong></p>
+
+<p>أثناء إيماءة “التمرير والتنقل”، يرسم Mac Mouse Fix مؤشر ماوس وهمي في
+
+نافذة شفافة، بينما يقفل مؤشر الماوس الحقيقي في مكانه. يضمن هذا أنه يمكنك
+
+الاستمرار في تمرير عنصر واجهة المستخدم الذي بدأت التمرير عليه، بغض النظر
+
+عن مدى تحريك الماوس.</p>
+
+<p>تم تحقيق الأداء المحسّن من خلال إيقاف معالجة أحداث macOS الافتراضية
+
+على هذه النافذة الشفافة، والتي لم تكن مستخدمة على أي حال.</p>
+
+<h3 id="إصلاحات-الأخطاء">إصلاحات الأخطاء</h3>
+
+<ul>
+
+<li>يتم الآن تجاهل أحداث التمرير من أجهزة الرسم اللوحية Wacom.
+
+<ul>
+
+<li>في السابق، كان Mac Mouse Fix يتسبب في تمرير غير منتظم على أجهزة
+
+Wacom اللوحية، كما أبلغ <span class="citation"
+
+data-cites="frenchie1980">@frenchie1980</span> في مشكلة GitHub <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>.
+
+(شكرًا!)</li>
+
+</ul></li>
+
+<li>تم إصلاح خطأ حيث لم يتم تشغيل كود Swift Concurrency، الذي تم تقديمه
+
+كجزء من نظام الترخيص الجديد في Mac Mouse Fix 3.0.4، على الخيط الصحيح.
+
+<ul>
+
+<li>تسبب هذا في حدوث أعطال على macOS Tahoe، ومن المحتمل أيضًا أنه تسبب في
+
+أخطاء متفرقة أخرى حول الترخيص.</li>
+
+</ul></li>
+
+<li>تم تحسين قوة الكود الذي يفك تشفير التراخيص غير المتصلة بالإنترنت.
+
+<ul>
+
+<li>يعمل هذا على حل مشكلة في واجهات برمجة تطبيقات Apple تسببت في فشل
+
+التحقق من صحة الترخيص غير المتصل بالإنترنت دائمًا على جهاز Intel Mac Mini
+
+الخاص بي. أفترض أن هذا حدث على جميع أجهزة Intel Mac، وأنه كان السبب في
+
+استمرار ظهور خطأ “انتهت الأيام المجانية” (الذي تمت معالجته بالفعل في
+
+3.0.4) لبعض الأشخاص، كما أبلغ <span class="citation"
+
+data-cites="toni20k5267">@toni20k5267</span> في مشكلة GitHub <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>.
+
+(شكرًا لك!)
+
+<ul>
+
+<li>إذا واجهت خطأ “انتهت الأيام المجانية”، فأنا آسف على ذلك! يمكنك
+
+الحصول على استرداد <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=ar">هنا</a>.</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="تحسينات-تجربة-المستخدم">تحسينات تجربة المستخدم</h3>
+
+<ul>
+
+<li>تم تعطيل مربعات الحوار التي قدمت حلولاً خطوة بخطوة لأخطاء macOS التي
+
+منعت المستخدمين من تمكين Mac Mouse Fix.
+
+<ul>
+
+<li>حدثت هذه المشكلات فقط على macOS 13 Ventura و14 Sonoma. الآن، تظهر
+
+مربعات الحوار هذه فقط على إصدارات macOS تلك حيث تكون ذات صلة.</li>
+
+<li>كما أن مربعات الحوار أصبحت أصعب قليلاً في التشغيل - في السابق، كانت
+
+تظهر أحيانًا في مواقف لم تكن فيها مفيدة جدًا.</li>
+
+</ul></li>
+
+<li>تمت إضافة رابط “تفعيل الترخيص” مباشرة على إشعار “انتهت الأيام
+
+المجانية”.
+
+<ul>
+
+<li>يجعل هذا تفعيل ترخيص Mac Mouse Fix أكثر سهولة!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="التحسينات-البصرية">التحسينات البصرية</h3>
+
+<ul>
+
+<li>تم تحسين مظهر نافذة “تحديث البرنامج” قليلاً. الآن تتناسب بشكل أفضل مع
+
+macOS 26 Tahoe.
+
+<ul>
+
+<li>تم ذلك من خلال تخصيص المظهر الافتراضي لإطار عمل “Sparkle 1.27.3”
+
+الذي يستخدمه Mac Mouse Fix للتعامل مع التحديثات.</li>
+
+</ul></li>
+
+<li>تم إصلاح مشكلة حيث كان النص في أسفل علامة التبويب “حول” يُقطع أحيانًا
+
+باللغة الصينية، من خلال جعل النافذة أوسع قليلاً.</li>
+
+<li>تم إصلاح النص في أسفل علامة التبويب “حول” الذي كان خارج المركز
+
+قليلاً.</li>
+
+<li>تم إصلاح خطأ تسبب في أن تكون المساحة أسفل خيار “اختصار لوحة
+
+المفاتيح…” في علامة تبويب الأزرار صغيرة جدًا.</li>
+
+</ul>
+
+<h3 id="التغييرات-الداخلية">التغييرات الداخلية</h3>
+
+<ul>
+
+<li>تمت إزالة الاعتماد على إطار عمل “SnapKit”.
+
+<ul>
+
+<li>يقلل هذا قليلاً من حجم التطبيق من 19.8 إلى 19.5 ميجابايت.</li>
+
+</ul></li>
+
+<li>تحسينات صغيرة أخرى متنوعة في قاعدة الكود.</li>
+
+</ul>
+
+<p><em>تم التحرير بمساعدة ممتازة من Claude.</em></p>
+
+<hr />
+
+<p>تحقق أيضًا من الإصدار السابق <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.4&amp;locale=ar"><strong>3.0.4</strong></a>.</p>
+
+</body>
+
+</html>

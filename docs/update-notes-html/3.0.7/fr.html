@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.7</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Traduit par l’IA</strong></p>
+
+<p>Cette note de version a été traduite par l’IA Claude. Elle peut
+
+contenir des erreurs.<br />
+
+Pour la version originale en anglais, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.7">cliquez
+
+ici</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.7</strong> corrige plusieurs bugs
+
+importants.</p>
+
+<h3 id="corrections-de-bugs">Corrections de bugs</h3>
+
+<ul>
+
+<li>L’application fonctionne à nouveau sur les <strong>anciennes
+
+versions de macOS</strong> (macOS 10.15 Catalina et macOS 11 Big Sur)
+
+<ul>
+
+<li>Mac Mouse Fix 3.0.6 ne pouvait pas être activé sous ces versions de
+
+macOS car la fonctionnalité améliorée « Retour » et « Avancer »
+
+introduite dans Mac Mouse Fix 3.0.6 tentait d’utiliser des API système
+
+de macOS qui n’étaient pas disponibles.</li>
+
+</ul></li>
+
+<li>Correction de problèmes avec la fonctionnalité <strong>« Retour » et
+
+« Avancer »</strong>
+
+<ul>
+
+<li>La fonctionnalité améliorée « Retour » et « Avancer » introduite
+
+dans Mac Mouse Fix 3.0.6 utilisera désormais toujours le « thread
+
+principal » pour demander à macOS quelles touches simuler pour revenir
+
+en arrière et avancer dans l’application que tu utilises.<br />
+
+Cela peut prévenir les plantages et les comportements peu fiables dans
+
+certaines situations.</li>
+
+</ul></li>
+
+<li>Tentative de correction du bug où <strong>les paramètres étaient
+
+réinitialisés aléatoirement</strong> (Voir ces <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20label%3A%22Config%20Reset%20Intermittently%22">GitHub
+
+Issues</a>)
+
+<ul>
+
+<li>J’ai réécrit le code qui charge le fichier de configuration de Mac
+
+Mouse Fix pour le rendre plus robuste. Lorsque de rares erreurs du
+
+système de fichiers de macOS se produisaient, l’ancien code pouvait
+
+parfois penser à tort que le fichier de configuration était corrompu et
+
+le réinitialiser aux valeurs par défaut.</li>
+
+</ul></li>
+
+<li>Réduction des risques d’un bug où <strong>le défilement cesse de
+
+fonctionner</strong>
+
+<ul>
+
+<li>Ce bug ne peut pas être entièrement résolu sans modifications plus
+
+profondes, qui causeraient probablement d’autres problèmes.<br />
+
+Cependant, pour le moment, j’ai réduit la fenêtre temporelle où un «
+
+deadlock » peut se produire dans le système de défilement, ce qui
+
+devrait au moins diminuer les chances de rencontrer ce bug. Cela rend
+
+également le défilement légèrement plus efficace.</li>
+
+<li>Ce bug présente des symptômes similaires – mais je pense une cause
+
+sous-jacente différente – au bug « Le défilement cesse de fonctionner
+
+par intermittence » qui a été traité dans la dernière version
+
+3.0.6.</li>
+
+<li>(Merci à Joonas pour les diagnostics !)</li>
+
+</ul></li>
+
+</ul>
+
+<p>Merci à tous d’avoir signalé les bugs !</p>
+
+<hr />
+
+<p>Consulte également la version précédente <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.6&amp;locale=fr">3.0.6</a>.</p>
+
+</body>
+
+</html>

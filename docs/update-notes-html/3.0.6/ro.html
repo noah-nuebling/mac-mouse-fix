@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ro" xml:lang="ro">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.6</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Tradus de AI</strong></p>
+
+<p>Această notă de lansare a fost tradusă de AI-ul Claude. Poate conține
+
+erori.<br />
+
+Pentru versiunea originală în engleză, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.6">click
+
+aici</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.6</strong> face funcția ‘Înapoi’ și
+
+‘Înainte’ compatibilă cu mai multe aplicații. De asemenea, rezolvă mai
+
+multe bug-uri și probleme.</p>
+
+<h3 id="funcția-înapoi-și-înainte-îmbunătățită">Funcția ‘Înapoi’ și
+
+‘Înainte’ îmbunătățită</h3>
+
+<p>Mapările butoanelor mouse-ului pentru ‘Înapoi’ și ‘Înainte’
+
+<strong>funcționează acum în mai multe aplicații</strong>, inclusiv:</p>
+
+<ul>
+
+<li>Visual Studio Code, Cursor, VSCodium, Windsurf, Zed și alte editoare
+
+de cod</li>
+
+<li>Multe aplicații Apple integrate, precum Preview, Notes, System
+
+Settings, App Store și Music</li>
+
+<li>Adobe Acrobat</li>
+
+<li>Zotero</li>
+
+<li>Și multe altele!</li>
+
+</ul>
+
+<p>Implementarea este inspirată de excelenta funcție ‘Universal Back and
+
+Forward’ din <a
+
+href="https://github.com/linearmouse/linearmouse">LinearMouse</a>. Ar
+
+trebui să suporte toate aplicațiile pe care le suportă
+
+LinearMouse.<br />
+
+În plus, suportă unele aplicații care în mod normal necesită comenzi
+
+rapide de la tastatură pentru a merge înapoi și înainte, precum System
+
+Settings, App Store, Apple Notes și Adobe Acrobat. Mac Mouse Fix va
+
+detecta acum aceste aplicații și va simula comenzile rapide de la
+
+tastatură corespunzătoare.</p>
+
+<p>Fiecare aplicație care a fost vreodată <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aclosed%20label%3A%22Universal%20Back%20and%20Forward%22">solicitată
+
+într-un GitHub Issue</a> ar trebui să fie suportată acum! (Mulțumim
+
+pentru feedback!)<br />
+
+Dacă găsești aplicații care nu funcționează încă, anunță-mă printr-o <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-feature-request&amp;locale=ro">solicitare
+
+de funcționalitate</a>.</p>
+
+<h3 id="rezolvarea-bug-ului-scroll-ul-se-oprește-intermitent">Rezolvarea
+
+bug-ului ‘Scroll-ul se oprește intermitent’</h3>
+
+<p>Unii utilizatori au întâmpinat o <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=is%3Aissue%20state%3Aclosed%20stops%20working%20label%3A%22Scroll%20Stops%20Working%20Intermittently%22">problemă</a>
+
+în care <strong>scroll-ul lin se oprește</strong> aleatoriu.</p>
+
+<p>Deși nu am reușit niciodată să reproduc problema, am implementat o
+
+posibilă soluție:</p>
+
+<p>Aplicația va reîncerca acum de mai multe ori când configurarea
+
+sincronizării cu display-ul eșuează.<br />
+
+Dacă tot nu funcționează după reîncercări, aplicația va:</p>
+
+<ul>
+
+<li>Reporni procesul de fundal ‘Mac Mouse Fix Helper’, ceea ce ar putea
+
+rezolva problema</li>
+
+<li>Genera un raport de crash, care ar putea ajuta la diagnosticarea
+
+bug-ului</li>
+
+</ul>
+
+<p>Sper că problema este rezolvată acum! Dacă nu, anunță-mă printr-un <a
+
+href="http://redirect.macmousefix.com/?target=mmf-feedback-bug-report&amp;locale=ro">raport
+
+de bug</a> sau prin <a
+
+href="http://redirect.macmousefix.com/?target=mailto-noah&amp;locale=ro">email</a>.</p>
+
+<h3
+
+id="comportament-îmbunătățit-al-rotii-de-scroll-cu-rotire-liberă">Comportament
+
+îmbunătățit al rotii de scroll cu rotire liberă</h3>
+
+<p>Mac Mouse Fix <strong>nu va mai accelera scroll-ul</strong> pentru
+
+tine când lași roata de scroll să se rotească liber pe mouse-ul MX
+
+Master. (Sau orice alt mouse cu roată de scroll cu rotire liberă.)</p>
+
+<p>Deși această funcție de ‘accelerare a scroll-ului’ este utilă pe
+
+rotile de scroll obișnuite, pe o roată de scroll cu rotire liberă poate
+
+face lucrurile mai greu de controlat.</p>
+
+<p><strong>Notă:</strong> Mac Mouse Fix nu este în prezent pe deplin
+
+compatibil cu majoritatea mouse-urilor Logitech, inclusiv MX Master.
+
+Plănuiesc să adaug suport complet, dar probabil va dura ceva timp. Între
+
+timp, cel mai bun driver terță parte cu suport Logitech pe care îl
+
+cunosc este <a
+
+href="https://plentycom.jp/en/steermouse/">SteerMouse</a>.</p>
+
+<h3 id="remedieri-de-bug-uri">Remedieri de bug-uri</h3>
+
+<ul>
+
+<li>Rezolvată o problemă în care Mac Mouse Fix reactiva uneori comenzi
+
+rapide de la tastatură care fuseseră dezactivate anterior în System
+
+Settings<br />
+
+</li>
+
+<li>Rezolvat un crash la apăsarea pe ‘Activate License’</li>
+
+<li>Rezolvat un crash la apăsarea pe ‘Cancel’ imediat după apăsarea pe
+
+‘Activate License’ (Mulțumim pentru raport, Ali!)</li>
+
+<li>Rezolvate crash-uri la încercarea de a folosi Mac Mouse Fix când
+
+niciun display nu este conectat la Mac-ul tău</li>
+
+<li>Rezolvată o scurgere de memorie și alte probleme interne la
+
+comutarea între tab-uri în aplicație</li>
+
+</ul>
+
+<h3 id="îmbunătățiri-vizuale">Îmbunătățiri vizuale</h3>
+
+<ul>
+
+<li>Rezolvată o problemă în care tab-ul About era uneori prea înalt,
+
+problemă introdusă în <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=ro">3.0.5</a></li>
+
+<li>Textul de pe notificarea ‘Free days are over’ nu mai este tăiat în
+
+chineză</li>
+
+<li>Rezolvat un glitch vizual pe umbra câmpului ‘+’ după înregistrarea
+
+unui input</li>
+
+<li>Rezolvat un glitch rar în care textul placeholder de pe ecranul
+
+‘Enter Your License Key’ apărea decentrat</li>
+
+<li>Rezolvată o problemă în care unele simboluri afișate în aplicație
+
+aveau culoarea greșită după comutarea între modul întunecat/luminos</li>
+
+</ul>
+
+<h3 id="alte-îmbunătățiri">Alte îmbunătățiri</h3>
+
+<ul>
+
+<li>Făcute unele animații, precum animația de comutare între tab-uri,
+
+ușor mai eficiente<br />
+
+</li>
+
+<li>Dezactivată completarea automată a textului pe Touch Bar pe ecranul
+
+‘Enter Your License Key’</li>
+
+<li>Diverse îmbunătățiri interne minore</li>
+
+</ul>
+
+<p><em>Editat cu asistență excelentă de la Claude.</em></p>
+
+<hr />
+
+<p>Verifică și versiunea anterioară <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.5&amp;locale=ro">3.0.5</a>.</p>
+
+</body>
+
+</html>

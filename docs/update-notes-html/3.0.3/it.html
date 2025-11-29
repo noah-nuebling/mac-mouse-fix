@@ -68,62 +68,6 @@ qui</a>.</p>
 
 <hr />
 
-<p><strong>ℹ️ Nota per gli utenti di Mac Mouse Fix 2</strong></p>
-
-<p>Con l’introduzione di Mac Mouse Fix 3, il modello di prezzo dell’app
-
-è cambiato:</p>
-
-<ul>
-
-<li><strong>Mac Mouse Fix 2</strong><br />
-
-Rimane gratuito al 100% e ho intenzione di continuare a
-
-supportarlo.<br />
-
-<strong>Salta questo aggiornamento</strong> per continuare a usare Mac
-
-Mouse Fix 2. Scarica l’ultima versione di Mac Mouse Fix 2 <a
-
-href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=it">qui</a>.</li>
-
-<li><strong>Mac Mouse Fix 3</strong><br />
-
-Gratuito per 30 giorni, costa alcuni dollari per possederlo.<br />
-
-<strong>Aggiorna ora</strong> per ottenere Mac Mouse Fix 3!</li>
-
-</ul>
-
-<p>Puoi saperne di più sui prezzi e le funzionalità di Mac Mouse Fix 3
-
-sul <a href="https://macmousefix.com/">nuovo sito web</a>.</p>
-
-<p>Grazie per utilizzare Mac Mouse Fix! :)</p>
-
-<hr />
-
-<p><strong>ℹ️ Nota per gli acquirenti di Mac Mouse Fix 3</strong></p>
-
-<p>Se hai aggiornato accidentalmente a Mac Mouse Fix 3 senza sapere che
-
-non è più gratuito, vorrei offrirti un <a
-
-href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=it">rimborso</a>.</p>
-
-<p>L’ultima versione di Mac Mouse Fix 2 rimane <strong>completamente
-
-gratuita</strong> e puoi scaricarla <a
-
-href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=it">qui</a>.</p>
-
-<p>Mi dispiace per il disturbo e spero che questa soluzione vada bene
-
-per tutti!</p>
-
-<hr />
-
 <p>Mac Mouse Fix <strong>3.0.3</strong> è pronto per macOS 15 Sequoia.
 
 Risolve anche alcuni problemi di stabilità e fornisce diversi piccoli
@@ -138,17 +82,15 @@ Sequoia</h3>
 
 <ul>
 
-<li>La maggior parte delle animazioni dell’interfaccia utente erano
+<li>La maggior parte delle animazioni dell’interfaccia non funzionavano
 
-interrotte su macOS 15 Sequoia. Ora tutto funziona di nuovo
+su macOS 15 Sequoia. Ora tutto funziona di nuovo correttamente!</li>
 
-correttamente!</li>
+<li>Il codice sorgente è ora compilabile su macOS 15 Sequoia. Prima
 
-<li>Il codice sorgente ora può essere compilato su macOS 15 Sequoia.
+c’erano problemi con il compilatore Swift che impedivano la compilazione
 
-Prima c’erano problemi con il compilatore Swift che impedivano la
-
-compilazione dell’app.</li>
+dell’app.</li>
 
 </ul>
 
@@ -156,35 +98,37 @@ compilazione dell’app.</li>
 
 crash durante lo scorrimento</h3>
 
-<p>Da Mac Mouse Fix 3.0.2 ci sono stati <a
+<p>Da Mac Mouse Fix 3.0.2 ci sono state <a
 
-href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">diversi
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">diverse
 
-report</a> di Mac Mouse Fix che si disabilitava e riabilitava
+segnalazioni</a> di Mac Mouse Fix che si disabilitava e riabilitava
 
 periodicamente durante lo scorrimento. Questo era causato da crash
 
 dell’app in background ‘Mac Mouse Fix Helper’. Questo aggiornamento
 
-cerca di risolvere questi crash con le seguenti modifiche:</p>
+tenta di risolvere questi crash, con le seguenti modifiche:</p>
 
 <ul>
 
 <li><p>Il meccanismo di scorrimento cercherà di recuperare e continuare
 
-a funzionare invece di crashare quando incontra il caso limite che
+a funzionare invece di crashare, quando incontra il caso limite che
 
-sembra aver portato a questi crash.</p></li>
+sembra aver causato questi crash.</p></li>
 
-<li><p>Ho cambiato il modo in cui vengono gestiti gli stati imprevisti
+<li><p>Ho modificato il modo in cui vengono gestiti gli stati imprevisti
 
-nell’app più in generale: invece di crashare sempre immediatamente,
+nell’app in modo più generale: invece di crashare sempre immediatamente,
 
-l’app ora cercherà di recuperare da stati imprevisti in molti casi.</p>
+l’app ora cercherà di recuperare dagli stati imprevisti in molti
+
+casi.</p>
 
 <ul>
 
-<li>Questa modifica contribuisce alle correzioni per i crash di
+<li>Questa modifica contribuisce alle correzioni per i crash durante lo
 
 scorrimento descritti sopra. Potrebbe anche prevenire altri crash.</li>
 
@@ -192,17 +136,19 @@ scorrimento descritti sopra. Potrebbe anche prevenire altri crash.</li>
 
 </ul>
 
-<p>Nota a margine: Non sono mai riuscito a riprodurre questi crash sulla
+<p>Nota: non sono mai riuscito a riprodurre questi crash sulla mia
 
-mia macchina e non sono ancora sicuro di cosa li abbia causati, ma in
+macchina, e non sono ancora sicuro di cosa li abbia causati, ma in base
 
-base ai report ricevuti, questo aggiornamento dovrebbe prevenire
+alle segnalazioni che ho ricevuto, questo aggiornamento dovrebbe
 
-qualsiasi crash. Se riscontri ancora crash durante lo scorrimento o se
+prevenire qualsiasi crash. Se riscontri ancora crash durante lo
 
-hai riscontrato crash con la versione 3.0.2, sarebbe prezioso se
+scorrimento o se <em>hai</em> riscontrato crash con la versione 3.0.2,
 
-condividessi la tua esperienza e i dati diagnostici nell’Issue GitHub <a
+sarebbe utile se condividessi la tua esperienza e i dati diagnostici
+
+nella Issue GitHub <a
 
 href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">#988</a>.
 
@@ -210,37 +156,41 @@ Questo mi aiuterebbe a capire il problema e migliorare Mac Mouse Fix.
 
 Grazie!</p>
 
-<h3 id="risoluzione-dei-blocchi-durante-lo-scorrimento">Risoluzione dei
+<h3 id="risoluzione-degli-scatti-durante-lo-scorrimento">Risoluzione
 
-blocchi durante lo scorrimento</h3>
+degli scatti durante lo scorrimento</h3>
 
-<p>In 3.0.2 ho apportato modifiche al modo in cui Mac Mouse Fix invia
+<p>Nella versione 3.0.2 ho apportato modifiche al modo in cui Mac Mouse
 
-eventi di scorrimento al sistema nel tentativo di ridurre i blocchi
+Fix invia gli eventi di scorrimento al sistema nel tentativo di ridurre
 
-probabilmente causati da problemi con le API VSync di Apple.</p>
+gli scatti durante lo scorrimento probabilmente causati da problemi con
+
+le API VSync di Apple.</p>
 
 <p>Tuttavia, dopo test più approfonditi e feedback, sembra che il nuovo
 
-meccanismo in 3.0.2 renda lo scorrimento più fluido in alcuni scenari ma
+meccanismo nella 3.0.2 renda lo scorrimento più fluido in alcuni scenari
 
-più irregolare in altri. Soprattutto in Firefox sembrava essere
+ma più scattoso in altri. Specialmente in Firefox sembrava essere
 
 notevolmente peggiore.<br />
 
 Nel complesso, non era chiaro che il nuovo meccanismo migliorasse
 
-effettivamente i blocchi di scorrimento in generale. Inoltre, potrebbe
+effettivamente gli scatti durante lo scorrimento in tutti i casi.
 
-aver contribuito ai crash di scorrimento descritti sopra.</p>
+Inoltre, potrebbe aver contribuito ai crash durante lo scorrimento
 
-<p>Per questo motivo ho disabilitato il nuovo meccanismo e riportato il
+descritti sopra.</p>
 
-meccanismo VSync per gli eventi di scorrimento a come era in Mac Mouse
+<p>Per questo motivo ho disabilitato il nuovo meccanismo e ripristinato
 
-Fix 3.0.0 e 3.0.1.</p>
+il meccanismo VSync per gli eventi di scorrimento a come era in Mac
 
-<p>Vedi l’Issue GitHub <a
+Mouse Fix 3.0.0 e 3.0.1.</p>
+
+<p>Vedi la Issue GitHub <a
 
 href="https://github.com/noah-nuebling/mac-mouse-fix/issues/875">#875</a>
 
@@ -248,17 +198,17 @@ per maggiori informazioni.</p>
 
 <h3 id="rimborso">Rimborso</h3>
 
-<p>Mi scuso per i problemi relativi alle modifiche allo scorrimento in
+<p>Mi dispiace per i problemi relativi alle modifiche dello scorrimento
 
-3.0.1 e 3.0.2. Ho enormemente sottovalutato i problemi che sarebbero
+nelle versioni 3.0.1 e 3.0.2. Ho sottovalutato enormemente i problemi
 
-emersi e sono stato lento nell’affrontare questi problemi. Farò del mio
+che ne sarebbero derivati, e sono stato lento nell’affrontare questi
 
-meglio per imparare da questa esperienza ed essere più attento con tali
+problemi. Farò del mio meglio per imparare da questa esperienza ed
 
-modifiche in futuro. Vorrei anche offrire un rimborso a chiunque sia
+essere più attento con tali modifiche in futuro. Vorrei anche offrire un
 
-stato colpito. Basta cliccare <a
+rimborso a chiunque sia stato colpito. Clicca semplicemente <a
 
 href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=it">qui</a>
 
@@ -276,9 +226,9 @@ e <a
 
 href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.5&amp;locale=it">2.2.5</a>.
 
-Consulta le loro note di rilascio per saperne di più sui dettagli. Ecco
+Dai un’occhiata alle loro note di rilascio per saperne di più sui
 
-un riepilogo:</p>
+dettagli. Ecco un riepilogo:</p>
 
 <ul>
 
@@ -286,17 +236,17 @@ un riepilogo:</p>
 
 aggiornamento mostrare all’utente.</li>
 
-<li>Passaggio dal framework di aggiornamento Sparkle 1.26.0 all’ultimo
+<li>Passaggio dall’uso del framework di aggiornamento Sparkle 1.26.0
 
-Sparkle <a
+all’ultima versione Sparkle <a
 
 href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>.</li>
 
 <li>La finestra che l’app mostra per informarti che è disponibile una
 
-nuova versione di Mac Mouse Fix ora supporta JavaScript, che permette
+nuova versione di Mac Mouse Fix ora supporta JavaScript, che consente
 
-una formattazione più gradevole delle note di aggiornamento.</li>
+una formattazione migliore delle note di aggiornamento.</li>
 
 </ul>
 
@@ -308,7 +258,7 @@ correzioni di bug</h3>
 
 <li>Risolto un problema per cui il prezzo dell’app e le informazioni
 
-correlate venivano visualizzate in modo errato nella scheda
+correlate venivano visualizzati in modo errato nella scheda
 
 ‘Informazioni’ in alcuni casi.</li>
 
@@ -316,15 +266,15 @@ correlate venivano visualizzate in modo errato nella scheda
 
 scorrimento fluido con la frequenza di aggiornamento del display non
 
-funzionava correttamente durante l’utilizzo di più display.</li>
+funzionava correttamente quando si utilizzavano più display.</li>
 
-<li>Molte piccole pulizie e miglioramenti sotto il cofano.</li>
+<li>Molte piccole pulizie e miglioramenti interni.</li>
 
 </ul>
 
 <hr />
 
-<p>Dai anche un’occhiata al precedente rilascio <a
+<p>Dai un’occhiata anche alla versione precedente <a
 
 href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.2&amp;locale=it"><strong>3.0.2</strong></a>.</p>
 

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ca" xml:lang="ca">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.5</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Traduït per IA</strong></p>
+
+<p>Aquesta nota de llançament ha estat traduïda per la IA Claude. Pot
+
+contenir errors.<br />
+
+Per veure la versió original en anglès, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.5">feu
+
+clic aquí</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.5</strong> corregeix diversos errors,
+
+millora el rendiment i afegeix un toc de poliment a l’aplicació.<br />
+
+També és compatible amb macOS 26 Tahoe.</p>
+
+<h3 id="simulació-millorada-del-desplaçament-del-trackpad">Simulació
+
+millorada del desplaçament del trackpad</h3>
+
+<ul>
+
+<li>El sistema de desplaçament ara pot simular un toc amb dos dits al
+
+trackpad per fer que les aplicacions deixin de desplaçar-se.
+
+<ul>
+
+<li>Això soluciona un problema quan s’executaven aplicacions d’iPhone o
+
+iPad, on el desplaçament sovint continuava després que l’usuari decidís
+
+aturar-lo.</li>
+
+</ul></li>
+
+<li>S’ha corregit la simulació inconsistent d’aixecar els dits del
+
+trackpad.
+
+<ul>
+
+<li>Això pot haver causat un comportament subòptim en algunes
+
+situacions.</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="compatibilitat-amb-macos-26-tahoe">Compatibilitat amb macOS 26
+
+Tahoe</h3>
+
+<p>Quan s’executa la versió Beta de macOS 26 Tahoe, l’aplicació ara és
+
+utilitzable i la majoria de la interfície funciona correctament.</p>
+
+<h3 id="millora-del-rendiment">Millora del rendiment</h3>
+
+<p>S’ha millorat el rendiment del gest de clicar i arrossegar per
+
+“Desplaçar i navegar”.<br />
+
+En les meves proves, l’ús de CPU s’ha reduït aproximadament un 50%!</p>
+
+<p><strong>Context</strong></p>
+
+<p>Durant el gest “Desplaçar i navegar”, Mac Mouse Fix dibuixa un cursor
+
+de ratolí fals en una finestra transparent, mentre bloqueja el cursor de
+
+ratolí real al seu lloc. Això garanteix que puguis continuar desplaçant
+
+l’element de la interfície on vas començar a desplaçar-te,
+
+independentment de fins on moguis el ratolí.</p>
+
+<p>La millora del rendiment s’ha aconseguit desactivant la gestió
+
+d’esdeveniments predeterminada de macOS en aquesta finestra transparent,
+
+que de totes maneres no s’utilitzava.</p>
+
+<h3 id="correccions-derrors">Correccions d’errors</h3>
+
+<ul>
+
+<li>Ara s’ignoren els esdeveniments de desplaçament de les tauletes
+
+gràfiques Wacom.
+
+<ul>
+
+<li>Abans, Mac Mouse Fix causava un desplaçament erràtic a les tauletes
+
+Wacom, tal com va informar <span class="citation"
+
+data-cites="frenchie1980">@frenchie1980</span> a l’Issue de GitHub <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1233">#1233</a>.
+
+(Gràcies!)</li>
+
+</ul></li>
+
+<li>S’ha corregit un error on el codi de Swift Concurrency, que es va
+
+introduir com a part del nou sistema de llicències a Mac Mouse Fix
+
+3.0.4, no s’executava al fil correcte.
+
+<ul>
+
+<li>Això causava fallades a macOS Tahoe, i també probablement causava
+
+altres errors esporàdics relacionats amb les llicències.</li>
+
+</ul></li>
+
+<li>S’ha millorat la robustesa del codi que descodifica les llicències
+
+fora de línia.
+
+<ul>
+
+<li>Això soluciona un problema a les API d’Apple que feia que la
+
+validació de llicències fora de línia sempre fallés al meu Mac Mini
+
+Intel. Assumeixo que això passava a tots els Mac Intel, i que era la raó
+
+per la qual l’error “S’han acabat els dies gratuïts” (que ja es va
+
+abordar a la versió 3.0.4) encara es produïa per a algunes persones, tal
+
+com va informar <span class="citation"
+
+data-cites="toni20k5267">@toni20k5267</span> a l’Issue de GitHub <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/1356">#1356</a>.
+
+(Gràcies!)
+
+<ul>
+
+<li>Si has experimentat l’error “S’han acabat els dies gratuïts”, ho
+
+sento molt! Pots obtenir un reemborsament <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=ca">aquí</a>.</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="millores-dexperiència-dusuari">Millores d’experiència
+
+d’usuari</h3>
+
+<ul>
+
+<li>S’han desactivat els diàlegs que proporcionaven solucions pas a pas
+
+per a errors de macOS que impedien als usuaris activar Mac Mouse Fix.
+
+<ul>
+
+<li>Aquests problemes només es produïen a macOS 13 Ventura i 14 Sonoma.
+
+Ara, aquests diàlegs només apareixen a les versions de macOS on són
+
+rellevants.</li>
+
+<li>Els diàlegs també són una mica més difícils d’activar: abans, de
+
+vegades apareixien en situacions on no eren gaire útils.</li>
+
+</ul></li>
+
+<li>S’ha afegit un enllaç “Activar llicència” directament a la
+
+notificació “S’han acabat els dies gratuïts”.
+
+<ul>
+
+<li>Això fa que activar una llicència de Mac Mouse Fix sigui encara més
+
+fàcil!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="millores-visuals">Millores visuals</h3>
+
+<ul>
+
+<li>S’ha millorat lleugerament l’aspecte de la finestra “Actualització
+
+de programari”. Ara s’adapta millor a macOS 26 Tahoe.
+
+<ul>
+
+<li>Això s’ha fet personalitzant l’aspecte predeterminat del framework
+
+“Sparkle 1.27.3” que Mac Mouse Fix utilitza per gestionar les
+
+actualitzacions.</li>
+
+</ul></li>
+
+<li>S’ha corregit un problema on el text a la part inferior de la
+
+pestanya Quant a de vegades es tallava en xinès, fent la finestra una
+
+mica més ampla.</li>
+
+<li>S’ha corregit que el text a la part inferior de la pestanya Quant a
+
+estigués lleugerament descentrat.</li>
+
+<li>S’ha corregit un error que feia que l’espai sota l’opció “Drecera de
+
+teclat…” a la pestanya Botons fos massa petit.</li>
+
+</ul>
+
+<h3 id="canvis-interns">Canvis interns</h3>
+
+<ul>
+
+<li>S’ha eliminat la dependència del framework “SnapKit”.
+
+<ul>
+
+<li>Això redueix lleugerament la mida de l’aplicació de 19,8 a 19,5
+
+MB.</li>
+
+</ul></li>
+
+<li>Diverses altres petites millores al codi.</li>
+
+</ul>
+
+<p><em>Editat amb l’excel·lent assistència de Claude.</em></p>
+
+<hr />
+
+<p>També pots consultar la versió anterior <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.4&amp;locale=ca"><strong>3.0.4</strong></a>.</p>
+
+</body>
+
+</html>

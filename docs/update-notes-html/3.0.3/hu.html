@@ -68,69 +68,11 @@ ide</a>.</p>
 
 <hr />
 
-<p><strong>ℹ️ Megjegyzés a Mac Mouse Fix 2 felhasználóknak</strong></p>
-
-<p>A Mac Mouse Fix 3 bevezetésével az alkalmazás árazási modellje
-
-megváltozott:</p>
-
-<ul>
-
-<li><strong>Mac Mouse Fix 2</strong><br />
-
-Továbbra is 100%-ban ingyenes marad, és tervezem a támogatását.<br />
-
-<strong>Hagyd ki ezt a frissítést</strong>, ha továbbra is a Mac Mouse
-
-Fix 2-t szeretnéd használni. A Mac Mouse Fix 2 legújabb verzióját <a
-
-href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=hu">itt</a>
-
-töltheted le.</li>
-
-<li><strong>Mac Mouse Fix 3</strong><br />
-
-30 napig ingyenes, utána néhány dollárba kerül.<br />
-
-<strong>Frissíts most</strong> a Mac Mouse Fix 3-ra!</li>
-
-</ul>
-
-<p>A Mac Mouse Fix 3 árazásáról és funkcióiról többet megtudhatsz az <a
-
-href="https://macmousefix.com/">új weboldalon</a>.</p>
-
-<p>Köszönöm, hogy a Mac Mouse Fix-et használod! :)</p>
-
-<hr />
-
-<p><strong>ℹ️ Megjegyzés a Mac Mouse Fix 3 vásárlóknak</strong></p>
-
-<p>Ha véletlenül frissítettél a Mac Mouse Fix 3-ra anélkül, hogy tudtad
-
-volna, hogy már nem ingyenes, szeretnék felajánlani egy <a
-
-href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=hu">visszatérítést</a>.</p>
-
-<p>A Mac Mouse Fix 2 legújabb verziója <strong>teljesen
-
-ingyenes</strong> marad, és <a
-
-href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=hu">itt</a>
-
-töltheted le.</p>
-
-<p>Sajnálom a kellemetlenséget, és remélem, mindenki elfogadhatónak
-
-találja ezt a megoldást!</p>
-
-<hr />
-
 <p>A Mac Mouse Fix <strong>3.0.3</strong> készen áll a macOS 15
 
 Sequoia-ra. Emellett javít néhány stabilitási problémát és több kisebb
 
-fejlesztést tartalmaz.</p>
+fejlesztést is tartalmaz.</p>
 
 <h3 id="macos-15-sequoia-támogatás">macOS 15 Sequoia támogatás</h3>
 
@@ -140,13 +82,13 @@ alatt!</p>
 
 <ul>
 
-<li>A legtöbb UI animáció nem működött megfelelően macOS 15 Sequoia
+<li>A legtöbb felhasználói felület animáció hibás volt macOS 15 Sequoia
 
-alatt. Most már minden rendben működik!</li>
+alatt. Most már minden újra megfelelően működik!</li>
 
-<li>A forráskód most már fordítható macOS 15 Sequoia alatt. Korábban
+<li>A forráskód most már fordítható macOS 15 Sequoia alatt. Korábban a
 
-problémák voltak a Swift fordítóval, ami megakadályozta az alkalmazás
+Swift fordítóval kapcsolatos problémák akadályozták az alkalmazás
 
 fordítását.</li>
 
@@ -160,13 +102,13 @@ kezelése</h3>
 
 href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">több
 
-jelentés</a> érkezett arról, hogy a Mac Mouse Fix időszakosan
+bejelentés</a> érkezett arról, hogy a Mac Mouse Fix időszakosan
 
-kikapcsolja, majd újra engedélyezi magát görgetés közben. Ezt a ‘Mac
+kikapcsol és újra bekapcsol görgetés közben. Ezt a ‘Mac Mouse Fix
 
-Mouse Fix Helper’ háttéralkalmazás összeomlása okozta. Ez a frissítés
+Helper’ háttéralkalmazás összeomlásai okozták. Ez a frissítés
 
-megpróbálja kijavítani ezeket az összeomlásokat a következő
+megpróbálja javítani ezeket az összeomlásokat a következő
 
 változtatásokkal:</p>
 
@@ -174,95 +116,97 @@ változtatásokkal:</p>
 
 <li><p>A görgetési mechanizmus megpróbál helyreállni és tovább működni
 
-összeomlás helyett, amikor azzal a határesettel találkozik, ami
+összeomlás helyett, amikor találkozik azzal a szélsőséges esettel, amely
 
-vélhetően ezeket az összeomlásokat okozta.</p></li>
+úgy tűnik, ezekhez az összeomlásokhoz vezetett.</p></li>
 
-<li><p>Általánosságban megváltoztattam a váratlan állapotok kezelését az
+<li><p>Megváltoztattam azt a módot, ahogyan a váratlan állapotokat az
 
-alkalmazásban: Ahelyett, hogy azonnal összeomlana, az alkalmazás most
+alkalmazás általánosságban kezeli: Azonnali összeomlás helyett az
 
-sok esetben megpróbál helyreállni a váratlan állapotokból.</p>
+alkalmazás most sok esetben megpróbál helyreállni a váratlan
+
+állapotokból.</p>
 
 <ul>
 
 <li>Ez a változtatás hozzájárul a fent leírt görgetési összeomlások
 
-javításához. Más összeomlásokat is megelőzhet.</li>
+javításához. Más összeomlásokat is megakadályozhat.</li>
 
 </ul></li>
 
 </ul>
 
-<p>Megjegyzés: Sosem tudtam reprodukálni ezeket az összeomlásokat a
+<p>Megjegyzés: Soha nem tudtam reprodukálni ezeket az összeomlásokat a
 
-saját gépemen, és még mindig nem vagyok biztos benne, mi okozta őket, de
+saját gépemen, és még mindig nem vagyok biztos abban, hogy mi okozta
 
-a kapott jelentések alapján ennek a frissítésnek meg kellene
+őket, de a kapott bejelentések alapján ez a frissítés meg kell, hogy
 
-akadályoznia az összeomlásokat. Ha még mindig tapasztalsz összeomlásokat
+akadályozza az összeomlásokat. Ha továbbra is tapasztalsz összeomlásokat
 
-görgetés közben, vagy ha tapasztaltál összeomlásokat a 3.0.2 alatt,
+görgetés közben, vagy <em>tapasztaltál</em> összeomlásokat a 3.0.2
 
-értékes lenne, ha megosztanád tapasztalataidat és diagnosztikai
+alatt, értékes lenne, ha megosztanád a tapasztalataidat és diagnosztikai
 
-adataidat a GitHub <a
+adataidat a GitHub Issue <a
 
-href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">#988</a>
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">#988</a>-ban.
 
-problémában. Ez segítene megérteni a problémát és fejleszteni a Mac
+Ez segítene megérteni a problémát és javítani a Mac Mouse Fixet.
 
-Mouse Fix-et. Köszönöm!</p>
+Köszönöm!</p>
 
 <h3 id="görgetési-akadozások-kezelése">Görgetési akadozások
 
 kezelése</h3>
 
-<p>A 3.0.2-ben változtatásokat végeztem abban, ahogy a Mac Mouse Fix
+<p>A 3.0.2-ben változtattam azon, ahogyan a Mac Mouse Fix görgetési
 
-görgetési eseményeket küld a rendszernek, hogy csökkentsem az Apple
+eseményeket küld a rendszernek, hogy csökkentsem az Apple VSync
 
-VSync API-k problémái miatt valószínűleg fellépő görgetési
+API-jaival kapcsolatos problémák által valószínűleg okozott görgetési
 
 akadozásokat.</p>
 
-<p>Azonban alaposabb tesztelés és visszajelzések után úgy tűnik, hogy a
+<p>Azonban kiterjedtebb tesztelés és visszajelzések után úgy tűnik, hogy
 
-3.0.2-ben lévő új mechanizmus egyes esetekben simábbá teszi a görgetést,
+az új mechanizmus a 3.0.2-ben bizonyos helyzetekben simábbá teszi a
 
-más esetekben viszont akadozóbbá. Különösen Firefox-ban észrevehetően
+görgetést, másokban viszont akadozóbbá. Különösen a Firefoxban tűnt
 
-rosszabb volt.<br />
+észrevehetően rosszabbnak.<br />
 
 Összességében nem volt egyértelmű, hogy az új mechanizmus valóban
 
-javította-e a görgetési akadozásokat minden területen. Emellett lehet,
+javította-e a görgetési akadozásokat általánosan. Emellett
 
-hogy hozzájárult a fent leírt görgetési összeomlásokhoz is.</p>
+hozzájárulhatott a fent leírt görgetési összeomlásokhoz is.</p>
 
-<p>Ezért kikapcsoltam az új mechanizmust, és visszaállítottam a VSync
+<p>Ezért letiltottam az új mechanizmust és visszaállítottam a VSync
 
-mechanizmust a görgetési eseményeknél arra, ahogy a Mac Mouse Fix 3.0.0
+mechanizmust a görgetési eseményekhez arra, ahogy a Mac Mouse Fix
 
-és 3.0.1 verziókban volt.</p>
+3.0.0-ban és 3.0.1-ben volt.</p>
 
-<p>További információért lásd a GitHub <a
+<p>További információért lásd a GitHub Issue <a
 
-href="https://github.com/noah-nuebling/mac-mouse-fix/issues/875">#875</a>
-
-problémát.</p>
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/875">#875</a>-öt.</p>
 
 <h3 id="visszatérítés">Visszatérítés</h3>
 
 <p>Sajnálom a 3.0.1 és 3.0.2 görgetési változtatásaival kapcsolatos
 
-problémákat. Nagyon alábecsültem az ezzel járó problémákat, és lassan
+kellemetlenségeket. Nagymértékben alábecsültem az ezzel járó
 
-reagáltam ezekre a problémákra. Igyekszem tanulni ebből a tapasztalatból
+problémákat, és lassú voltam ezeknek a problémáknak a kezelésében.
 
-és óvatosabb lenni az ilyen változtatásokkal a jövőben. Szeretnék
+Mindent megteszek, hogy tanuljak ebből a tapasztalatból és óvatosabb
 
-visszatérítést felajánlani minden érintettnek. Csak kattints <a
+legyek az ilyen változtatásokkal a jövőben. Szeretnék visszatérítést is
+
+felajánlani mindenkinek, akit érintett. Csak kattints <a
 
 href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=hu">ide</a>,
 
@@ -280,27 +224,29 @@ href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.4&amp;loc
 
 href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.5&amp;locale=hu">2.2.5</a>
 
-verzióiból lettek áthozva. Nézd meg a kiadási jegyzeteiket, hogy többet
+verziókból kerültek át. Nézd meg a kiadási jegyzeteiket, hogy többet
 
-megtudj a részletekről. Íme egy összefoglaló:</p>
+megtudj a részletekről. Itt egy összefoglaló:</p>
 
 <ul>
 
-<li>Van egy új, okosabb mechanizmus, ami eldönti, melyik frissítést
+<li>Van egy új, okosabb mechanizmus, amely eldönti, melyik frissítést
 
 mutassa a felhasználónak.</li>
 
-<li>Áttértünk a Sparkle 1.26.0 frissítési keretrendszerről a legújabb
+<li>Átváltottam a Sparkle 1.26.0 frissítési keretrendszerről a legújabb
 
 Sparkle <a
 
 href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>-ra.</li>
 
-<li>Az ablak, ami tájékoztat az új Mac Mouse Fix verzió elérhetőségéről,
+<li>Az az ablak, amelyet az alkalmazás megjelenít, hogy tájékoztasson
 
-most már támogatja a JavaScriptet, ami lehetővé teszi a frissítési
+arról, hogy a Mac Mouse Fix új verziója elérhető, most támogatja a
 
-jegyzetek szebb formázását.</li>
+JavaScriptet, ami szebb formázást tesz lehetővé a frissítési
+
+jegyzetekhez.</li>
 
 </ul>
 
@@ -310,29 +256,27 @@ hibajavítások</h3>
 
 <ul>
 
-<li>Javítva egy probléma, ahol az alkalmazás ára és kapcsolódó
+<li>Javítottam egy problémát, ahol az alkalmazás ára és a kapcsolódó
 
 információk helytelenül jelentek meg a ‘Névjegy’ fülön bizonyos
 
 esetekben.</li>
 
-<li>Javítva egy probléma, ahol a sima görgetés képernyő-frissítési
+<li>Javítottam egy problémát, ahol a sima görgetés megjelenítési
 
-rátával való szinkronizálási mechanizmusa nem működött megfelelően több
+frissítési sebességgel való szinkronizálásának mechanizmusa nem működött
 
-kijelző használata esetén.</li>
+megfelelően több kijelző használata közben.</li>
 
-<li>Sok kisebb háttérbeli tisztogatás és fejlesztés.</li>
+<li>Rengeteg kisebb háttérbeli tisztítás és fejlesztés.</li>
 
 </ul>
 
 <hr />
 
-<p>Nézd meg az előző <a
+<p>Nézd meg az előző kiadást is: <a
 
-href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.2&amp;locale=hu"><strong>3.0.2</strong></a>
-
-kiadást is.</p>
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.2&amp;locale=hu"><strong>3.0.2</strong></a>.</p>
 
 </body>
 

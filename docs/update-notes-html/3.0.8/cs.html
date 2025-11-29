@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cs" xml:lang="cs">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.8</title>
+
+  <style>
+
+    code{white-space: pre-wrap;}
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+
+    div.column{flex: auto; overflow-x: auto;}
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Přeloženo umělou inteligencí</strong></p>
+
+<p>Tato poznámka k vydání byla přeložena umělou inteligencí Claude. Může
+
+obsahovat chyby.<br />
+
+Pro původní anglickou verzi <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8">klikněte
+
+zde</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.8</strong> řeší problémy s uživatelským
+
+rozhraním a další.</p>
+
+<h3 id="problémy-s-uživatelským-rozhraním"><strong>Problémy s
+
+uživatelským rozhraním</strong></h3>
+
+<ul>
+
+<li>Zakázán nový design v macOS 26 Tahoe. Aplikace nyní bude vypadat a
+
+fungovat jako v macOS 15 Sequoia.
+
+<ul>
+
+<li>Udělal jsem to, protože některé z Applem přepracovaných prvků
+
+uživatelského rozhraní stále mají problémy. Například tlačítka ‘-’ na
+
+kartě ‘Tlačítka’ nebyla vždy klikatelná.</li>
+
+<li>Uživatelské rozhraní může nyní v macOS 26 Tahoe vypadat trochu
+
+zastarale. Ale mělo by být plně funkční a vyladěné jako předtím.</li>
+
+</ul></li>
+
+<li>Opraven bug, kdy notifikace ‘Zkušební dny skončily’ zůstala
+
+zaseknutá v pravém horním rohu obrazovky.
+
+<ul>
+
+<li>Díky <a href="https://github.com/Sashpuri">Sashpuri</a> a dalším za
+
+nahlášení!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="vylepšení-uživatelského-rozhraní"><strong>Vylepšení
+
+uživatelského rozhraní</strong></h3>
+
+<ul>
+
+<li>Zakázáno zelené tlačítko semafor v hlavním okně Mac Mouse Fix.
+
+<ul>
+
+<li>Tlačítko nedělalo nic, protože okno nelze ručně měnit velikost.</li>
+
+</ul></li>
+
+<li>Opraven problém, kdy některé vodorovné čáry v tabulce na kartě
+
+‘Tlačítka’ byly příliš tmavé v macOS 26 Tahoe.</li>
+
+<li>Opraven bug, kdy zpráva “Primární tlačítko myši nelze použít” na
+
+kartě ‘Tlačítka’ byla někdy oříznutá v macOS 26 Tahoe.</li>
+
+<li>Opraven překlep v německém rozhraní. S přispěním uživatele GitHubu
+
+<a href="https://github.com/i-am-the-slime">i-am-the-slime</a>.
+
+Díky!</li>
+
+<li>Vyřešen problém, kdy okno MMF někdy krátce bliklo ve špatné
+
+velikosti při otevírání okna v macOS 26 Tahoe.</li>
+
+</ul>
+
+<h3 id="další-změny"><strong>Další změny</strong></h3>
+
+<ul>
+
+<li>Vylepšeno chování při pokusu o povolení Mac Mouse Fix, když na
+
+počítači běží více instancí Mac Mouse Fix.
+
+<ul>
+
+<li>Mac Mouse Fix se nyní bude pečlivěji snažit zakázat další instanci
+
+Mac Mouse Fix.</li>
+
+<li>To může zlepšit okrajové případy, kdy Mac Mouse Fix nemohl být
+
+povolen.</li>
+
+</ul></li>
+
+<li>Změny a úklid pod kapotou.</li>
+
+</ul>
+
+<hr />
+
+<p>Podívej se také, co je nového v předchozí verzi <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.7&amp;locale=cs">3.0.7</a>.</p>
+
+</body>
+
+</html>
