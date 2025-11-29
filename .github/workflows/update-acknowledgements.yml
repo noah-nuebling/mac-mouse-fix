@@ -52,7 +52,7 @@ jobs:
     - name: Run script
       run: |
         python ./mac-mouse-fix-scripts/scripts/_buildmd/_buildmd.py --document Acknowledgements.md --api-key ${{ secrets.GUMROAD_API_KEY }}
-      env: |
+      env:
         PYTHONPATH: mac-mouse-fix-scripts/shared/
     
     - name: Commit and push changes
