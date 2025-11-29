@@ -23,14 +23,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "## Fragen\n\nSchnelle Antworten auf häufige Fragen [hier](<{url}>)."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "## Questions\n\nShort answers to common questions [here](<{url}>)."
+            "value" : "## Questions\n\nQuick answers to common questions [here](<{url}>)."
           }
         }
       }
@@ -40,14 +40,14 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "## Anleitungen\n\nWo möglich, versucht Mac Mouse Fix selbsterklärend zu sein. Aber für manche Dinge ist eine detailliertere Erklärung hilfreich:\n\n- [{docname_captured_scroll_wheels}](<{url_1}>)\n- [{docname_captured_buttons_mmf3}](<{url_2}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_3}>) (Mac Mouse Fix 2) {only_in_english}"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "## Guides\n\nWhere possible, Mac Mouse Fix explains itself.\nBut sometimes a guide helps!\n\n- [{docname_captured_scroll_wheels}](<{url_1}>)\n- [{docname_captured_buttons_mmf3}](<{url_2}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_3}>) (Mac Mouse Fix 2) {only_in_english}"
+            "value" : "## Guides\n\nWhere possible, Mac Mouse Fix tries to be self-explanatory. But for some things a more detailed explanation is helpful:\n\n- [{docname_captured_scroll_wheels}](<{url_1}>)\n- [{docname_captured_buttons_mmf3}](<{url_2}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_3}>) (Mac Mouse Fix 2) {only_in_english}"
           }
         }
       }
