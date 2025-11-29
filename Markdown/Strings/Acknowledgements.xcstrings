@@ -31,13 +31,13 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "## 🌏 Překlady\n\nDěkujeme, že přinášíte Mac Mouse Fix lidem po celém světě!\n\n- 🇨🇳 čínské překlady od [@groverlynn]({url_1})\n- 🇰🇷 korejské překlady od [@jeongtae]({url_2})\n- 🇻🇳 vietnamské překlady od [@nghlt]({url_3})"
+            "value" : "## 🌏 Překlady\n\nDěkujeme, že přinášíte Mac Mouse Fix lidem po celém světě!\n\n- 🇨🇳 čínské překlady od [@groverlynn]({url_1})\n- 🇰🇷 korejské překlady od [@jeongtae]({url_2})\n- 🇻🇳 vietnamské překlady od [@nghlt]({url_3})\n- 🇧🇷 Brazilian Portuguese translations by **Eduardo Rodrigues**\n- 🇫🇷 French translations by [@DimitriDR]({url_4})\n- 🇹🇷 Turkish translations by [@hasanbeder]({url_5})\n- 🇨🇿 Czech translations by [Petr Pavlík]({url_6})"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "## 🌏 Übersetzungen\n\nDanke, dass ihr Mac Mouse Fix zu Menschen auf der ganzen Welt gebracht habt.\n\n- 🇨🇳 Chinesische Übersetzungen von [@groverlynn]({url_1})\n- 🇰🇷 Koreanische Übersetzungen von [@jeongtae]({url_2})\n- 🇻🇳 Vietnamesische Übersetzungen von [@nghlt]({url_3})"
+            "state" : "translated",
+            "value" : "## 🌏 Übersetzungen\n\nDanke, dass ihr Mac Mouse Fix zu Menschen auf der ganzen Welt gebracht habt.\n\n- 🇨🇳 Chinesische Übersetzungen von [@groverlynn]({url_1})\n- 🇰🇷 Koreanische Übersetzungen von [@jeongtae]({url_2})\n- 🇻🇳 Vietnamesische Übersetzungen von [@nghlt]({url_3})\n- 🇫🇷 Französische Übersetzungen von [@DimitriDR]({url_4})\n- 🇹🇷 Türkische Übersetzungen von [@hasanbeder]({url_5})\n- 🇨🇿 Tschechische Übersetzungen von [Petr Pavlík]({url_6})"
           }
         },
         "en" : {
