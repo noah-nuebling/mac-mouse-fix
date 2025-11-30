@@ -65,6 +65,9 @@ class CoolNSTextField: NSTextField {
     
     // MARK: Custom init
     
+    // TODO: I expected this to init with NSLineBreakStrategyPushOut as the default. Maybe add that. [Nov 2025]
+    //      Also expected us to use this over NSTextField everywhere – we don't
+    
     convenience init(hintWithString hintString: String) { /// Wny is this not in a NSTextField extension?
         ///
         self.init(labelWithString: hintString)
