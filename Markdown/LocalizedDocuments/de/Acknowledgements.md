@@ -847,7 +847,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 - 🇳🇱&nbsp;Peterjohannijland
 - 🇨🇭&nbsp;B347 - "Thank you, Noah! Well done :-)"
 - 🇻🇳&nbsp;Thành&nbsp;Nguyễn - "Blockchain Engineering"
-- 🇩🇪&nbsp;Noah&nbsp;Nuebling - "I MIGHT be biased but I think the app is pretty cool :)"
+- 🇩🇪&nbsp;Spaceowl - "I MIGHT be biased but I think the app is pretty cool :)"
 - 🇩🇪&nbsp;Gero
 
 **Juli 2023**

@@ -854,7 +854,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 - 🇳🇱&nbsp;Peterjohannijland
 - 🇨🇭&nbsp;B347 - "Thank you, Noah! Well done :-)"
 - 🇻🇳&nbsp;Thành&nbsp;Nguyễn - "Blockchain Engineering"
-- 🇩🇪&nbsp;Noah&nbsp;Nuebling - "I MIGHT be biased but I think the app is pretty cool :)"
+- 🇩🇪&nbsp;Spaceowl - "I MIGHT be biased but I think the app is pretty cool :)"
 - 🇩🇪&nbsp;Gero
 
 **יולי 2023**

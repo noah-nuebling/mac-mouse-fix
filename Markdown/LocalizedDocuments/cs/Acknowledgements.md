@@ -853,7 +853,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 - 🇳🇱&nbsp;Peterjohannijland
 - 🇨🇭&nbsp;B347 - "Thank you, Noah! Well done :-)"
 - 🇻🇳&nbsp;Thành&nbsp;Nguyễn - "Blockchain Engineering"
-- 🇩🇪&nbsp;Noah&nbsp;Nuebling - "I MIGHT be biased but I think the app is pretty cool :)"
+- 🇩🇪&nbsp;Spaceowl - "I MIGHT be biased but I think the app is pretty cool :)"
 - 🇩🇪&nbsp;Gero
 
 **červenec 2023**
