@@ -64,6 +64,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **Δεκέμβριος 2025**
 
+- 🇺🇸&nbsp;Gabriel&nbsp;Johnson
 - 🇺🇸&nbsp;Armaanaki - "Makes my mac actually usable. Thanks man"
 
 **Νοέμβριος 2025**

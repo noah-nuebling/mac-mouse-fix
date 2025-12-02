@@ -63,6 +63,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **prosinec 2025**
 
+- 🇺🇸&nbsp;Gabriel&nbsp;Johnson
 - 🇺🇸&nbsp;Armaanaki - "Makes my mac actually usable. Thanks man"
 
 **listopad 2025**
