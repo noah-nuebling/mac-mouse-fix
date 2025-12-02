@@ -62,6 +62,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!
 
+**12月 2025**
+
+- 🇺🇸&nbsp;Armaanaki - "Makes my mac actually usable. Thanks man"
+
 **11月 2025**
 
 - 🇺🇸&nbsp;1972Buickriviera

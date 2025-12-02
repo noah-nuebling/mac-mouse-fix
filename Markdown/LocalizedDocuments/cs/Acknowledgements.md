@@ -61,6 +61,10 @@ Děkujeme za vaši podporu! :)
 
 Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neuvěřitelným milkšejkem**. (A někteří mi dokonce zanechali zprávu) Díky za *cukrovou nálož*!
 
+**prosinec 2025**
+
+- 🇺🇸&nbsp;Armaanaki - "Makes my mac actually usable. Thanks man"
+
 **listopad 2025**
 
 - 🇺🇸&nbsp;1972Buickriviera
