@@ -58,6 +58,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **December 2025**
 
+- 🇺🇸&nbsp;James&nbsp;Cheng
 - 🇺🇸&nbsp;Gabriel&nbsp;Johnson
 - 🇺🇸&nbsp;Armaanaki - "Makes my mac actually usable. Thanks man"
 

@@ -57,6 +57,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2025**
 
+- 🇺🇸&nbsp;James&nbsp;Cheng
 - 🇺🇸&nbsp;Gabriel&nbsp;Johnson
 - 🇺🇸&nbsp;Armaanaki - "Makes my mac actually usable. Thanks man"
 
