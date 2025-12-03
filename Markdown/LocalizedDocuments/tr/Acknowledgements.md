@@ -27,7 +27,10 @@ I want to especially thank the people and projects named in this document.
 
 Thanks for bringing Mac Mouse Fix to people around the globe!
 
-- 🇨🇳 Chinese translations by [@groverlynn](https://github.com/groverlynn)
+- 🇨🇳 Chinese translations by 
+    - [@groverlynn](https://github.com/groverlynn)
+    - [@Dro9an](https://github.com/Dro9an) (Website translation)
+    - [@jihao](https://github.com/jihao) (Website translation)
 - 🇰🇷 Korean translations by [@jeongtae](https://github.com/jeongtae)
 - 🇻🇳 Vietnamese translations by [@nghlt](https://github.com/nghlt)
 - 🇧🇷 Brazilian Portuguese translations by **Eduardo Rodrigues**

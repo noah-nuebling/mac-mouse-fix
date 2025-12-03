@@ -26,7 +26,10 @@ Chci obzvláště poděkovat lidem a projektům uvedeným v tomto dokumentu.
 
 Děkujeme, že přinášíte Mac Mouse Fix lidem po celém světě!
 
-- 🇨🇳 čínské překlady od [@groverlynn](https://github.com/groverlynn)
+- 🇨🇳 čínské překlady od 
+    - [@groverlynn](https://github.com/groverlynn)
+    - [@Dro9an](https://github.com/Dro9an) (Website translation)
+    - [@jihao](https://github.com/jihao) (Website translation)
 - 🇰🇷 korejské překlady od [@jeongtae](https://github.com/jeongtae)
 - 🇻🇳 vietnamské překlady od [@nghlt](https://github.com/nghlt)
 - 🇧🇷 Brazilian Portuguese translations by **Eduardo Rodrigues**
