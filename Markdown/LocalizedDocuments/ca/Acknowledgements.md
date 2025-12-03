@@ -67,6 +67,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **desembre 2025**
 
+- 🇺🇸&nbsp;Josh - "Excellent features and helps with productivity. Worth the $10 any day."
 - 🇺🇸&nbsp;James&nbsp;Cheng
 - 🇺🇸&nbsp;Gabriel&nbsp;Johnson
 - 🇺🇸&nbsp;Armaanaki - "Makes my mac actually usable. Thanks man"
