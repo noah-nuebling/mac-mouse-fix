@@ -31,19 +31,19 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "## 🌏 Překlady\n\nDěkujeme, že přinášíte Mac Mouse Fix lidem po celém světě!\n\n- 🇨🇳 čínské překlady od [@groverlynn]({url_1})\n- 🇰🇷 korejské překlady od [@jeongtae]({url_2})\n- 🇻🇳 vietnamské překlady od [@nghlt]({url_3})\n- 🇧🇷 Brazilian Portuguese translations by **Eduardo Rodrigues**\n- 🇫🇷 French translations by [@DimitriDR]({url_4})\n- 🇹🇷 Turkish translations by [@hasanbeder]({url_5})\n- 🇨🇿 Czech translations by [Petr Pavlík]({url_6})"
+            "value" : "## 🌏 Překlady\n\nDěkujeme, že přinášíte Mac Mouse Fix lidem po celém světě!\n\n- 🇨🇳 čínské překlady od \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n- 🇰🇷 korejské překlady od [@jeongtae]({url_4})\n- 🇻🇳 vietnamské překlady od [@nghlt]({url_5})\n- 🇧🇷 Brazilian Portuguese translations by **Eduardo Rodrigues**\n- 🇫🇷 French translations by [@DimitriDR]({url_6})\n- 🇹🇷 Turkish translations by [@hasanbeder]({url_7})\n- 🇨🇿 Czech translations by [Petr Pavlík]({url_8})"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## 🌏 Übersetzungen\n\nDanke, dass ihr Mac Mouse Fix zu Menschen auf der ganzen Welt gebracht habt.\n\n- 🇨🇳 Chinesische Übersetzungen von [@groverlynn]({url_1})\n- 🇰🇷 Koreanische Übersetzungen von [@jeongtae]({url_2})\n- 🇻🇳 Vietnamesische Übersetzungen von [@nghlt]({url_3})\n- 🇫🇷 Französische Übersetzungen von [@DimitriDR]({url_4})\n- 🇹🇷 Türkische Übersetzungen von [@hasanbeder]({url_5})\n- 🇨🇿 Tschechische Übersetzungen von [Petr Pavlík]({url_6})"
+            "state" : "needs_review",
+            "value" : "## 🌏 Übersetzungen\n\nDanke, dass ihr Mac Mouse Fix zu Menschen auf der ganzen Welt gebracht habt.\n\n- 🇨🇳 Chinesische Übersetzungen von     \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website Übersetzung)\n    - [@jihao]({url_3}) (Website Übersetzung)\n- 🇰🇷 Koreanische Übersetzungen von [@jeongtae]({url_4})\n- 🇻🇳 Vietnamesische Übersetzungen von [@nghlt]({url_5})\n- 🇫🇷 Französische Übersetzungen von [@DimitriDR]({url_6})\n- 🇹🇷 Türkische Übersetzungen von [@hasanbeder]({url_7})\n- 🇨🇿 Tschechische Übersetzungen von [Petr Pavlík]({url_8})"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by [@groverlynn]({url_1})\n- 🇰🇷 Korean translations by [@jeongtae]({url_2})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_3})\n- 🇧🇷 Brazilian Portuguese translations by **Eduardo Rodrigues**\n- 🇫🇷 French translations by [@DimitriDR]({url_4})\n- 🇹🇷 Turkish translations by [@hasanbeder]({url_5})\n- 🇨🇿 Czech translations by [Petr Pavlík]({url_6})"
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n- 🇰🇷 Korean translations by [@jeongtae]({url_4})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_5})\n- 🇧🇷 Brazilian Portuguese translations by **Eduardo Rodrigues**\n- 🇫🇷 French translations by [@DimitriDR]({url_6})\n- 🇹🇷 Turkish translations by [@hasanbeder]({url_7})\n- 🇨🇿 Czech translations by [Petr Pavlík]({url_8})"
           }
         }
       }
