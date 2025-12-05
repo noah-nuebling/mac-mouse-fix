@@ -432,6 +432,22 @@ final class LocalizationScreenshotClass: XCTestCase {
         ///     Main technological difference to `testTakeScreenshots_Localization()`:
         ///         For both, we want screenshots with red rectangles highlighting specific sections. The difference is that here, we need to draw the highlight rectangles on the images ourselves before rendering them out. Whereas for .xcloc files (which  `testTakeScreenshots_Localization()` is for), we just create metadata that tells Xcode where to draw the highlight rectangles.
         
+        /// **ARGS**
+        ///     We don't have a clt, so just edit these manually [Dec 2025]
+        
+        /// -----------------------------------------------
+        
+        struct Args {
+            var onlyTestLanguages: [String]
+            var continueFromLanguage: String?
+        }
+        let args = Args(
+            onlyTestLanguages: ["ru"],      /// Only update screenshots for these languages. (leave empty to update all)
+            continueFromLanguage: nil,      /// Set in case of interruption, to avoid redoing already-completed localizations
+        );
+        
+        /// -----------------------------------------------
+        
         /// Define helpers
         let writeImageToFile = { (_ resultImage: NSImage, _ dstURL: URL, fileProperties: [NSBitmapImageRep.PropertyKey : Any]) in
             let cgImage = resultImage.cgImage(forProposedRect: nil, context: nil, hints: [:])!
@@ -478,13 +494,11 @@ final class LocalizationScreenshotClass: XCTestCase {
         let outputDir = sharedf_do_test_intro(outputDir: nil, fallbackTempDirName: "MF_DOC_SCREENSHOT_TEST")
         
         var localizations =
-            //["ko"]
+            args.onlyTestLanguages.count > 0 ?
+            args.onlyTestLanguages :
             Bundle(url: sharedf_mainapp_url())!.localizations.filter { $0 != "Base" }
         
-        let localization_ToContinueFrom: String? =
-            nil
-            //"tr"; /// Set this in case of interruption to avoid redoing all the already-completed localizations
-        if let localization_ToContinueFrom {
+        if let localization_ToContinueFrom = args.continueFromLanguage {
             localizations = Array(localizations.suffix(from: localizations.firstIndex(of: localization_ToContinueFrom)!))
         }
         
@@ -498,7 +512,9 @@ final class LocalizationScreenshotClass: XCTestCase {
                     "-AppleLanguages", "(\(languageCode))"
                 ],
                 env: [:],
-                kill_app: (localizations.count > 1) /// Restart the app so its using the right language we specified ––– or leave it running for faster iterations if there's only one language
+                kill_app:
+                    (localizations.count > 1) || /// Restart the app so its using the right language we specified ––– or leave it running for faster iterations if there's only one language
+                    true                         /// Disable because this is error-prone if we initially launched in the wrong language [Dec 2025].  ––– Solution idea: Check that the language / launch args match via MFMessagePort or another mechanism.
             )
             
             self.app = app
@@ -511,8 +527,11 @@ final class LocalizationScreenshotClass: XCTestCase {
                     "-AppleLanguages", "(\(languageCode))"
                 ],
                 env: [:],
-                kill_app: (localizations.count > 1)
+                kill_app:
+                    (localizations.count > 1)
+                    || true
             )
+            
             
             /// Find elements
             let (screen, window, toolbarButtons, menuBar) = sharedf_find_elements_for_navigating_main_app()
@@ -1252,6 +1271,9 @@ final class LocalizationScreenshotClass: XCTestCase {
 //        let treeDescription = tree.description()
 //        DDLogInfo("The tree: \(treeDescription)")
         
+        /// Debug helper
+        var logContinueReason = { (reason: String) in print("_takeLocalizationScreenshot: Continuing because: \(reason)") }
+        
         /// Find localizedStings
         ///     & their metadata
         var framesAndStringsAndKeys: [ScreenshotAndMetadata.Metadata.Frame] = []
@@ -1264,7 +1286,10 @@ final class LocalizationScreenshotClass: XCTestCase {
             /// Get the underlying AXUIElement
             ///     (since its strings dont have 512 character limit we see in the nodeSnapshot.dictionaryRepresentation())
             ///     (We made a bunch of other decisions based on the 512 character limit, such as using space-efficient quaternaryEncoding for the secretMessages, now the limit doesn't exist anymore.)
-            let axuiElement = getAXUIElementForXCElementSnapshot(nodeSnapshot)!.takeUnretainedValue()
+            let axuiElement: AXUIElement = getAXUIElementForXCElementSnapshot(nodeSnapshot)!.takeUnretainedValue()
+            
+            /// Debug log
+            DDLogDebug("_takeLocalizationScreenshot: Parsing AXUIElement: \(AXUIElement_Description(axuiElement))")
             
             /// Get all attr names
             var attrNames: CFArray?
@@ -1280,24 +1305,28 @@ final class LocalizationScreenshotClass: XCTestCase {
                 
                 /// Check: Is it a string?
                 guard let string = attrValue as? String else {
+                    if (false) { logContinueReason("(Attribute \"\(attrName)\") Not a string"); }
                     continue
                 }
                 
                 /// Extract any secret messages
-                let secretMessages = string.secretMessages() as! [FoundSecretMessage]
+                let secretMessages = string._secretMessages() as! [FoundSecretMessage] /// TODO: Why use this in addition to extractAnnotations: ?? [Dec 2025]
                 
                 /// Skip if no secret messages
                 if secretMessages.count == 0 {
+                    logContinueReason("(Attribute \"\(attrName)\") 0 secret messages");
                     continue
                 }
                 
                 /// Store secret mesages
+                print("_takeLocalizationScreenshot: Appending to result: (Attribute \"\(attrName)\")\n\(secretMessages)");
                 stringsAndSecretMessages[string] = secretMessages
             }
             
             /// Skip
             ///     If this node doesn't have secretMessages
             if stringsAndSecretMessages.count == 0 {
+                logContinueReason("0 secret messages on this AX Element.");
                 continue
             }
             
@@ -1316,12 +1345,15 @@ final class LocalizationScreenshotClass: XCTestCase {
                 
                 /// Append to result
                 if localizationKeys.count > 0 {
-                    localizedStrings.append(ScreenshotAndMetadata.Metadata.Frame.String_(uiString: string, stringAnnotations: localizationKeys))
+                    let new = ScreenshotAndMetadata.Metadata.Frame.String_(uiString: string, stringAnnotations: localizationKeys);
+                    print("_takeLocalizationScreenshot: Appending to result:\(new)");
+                    localizedStrings.append(new)
                 }
             }
             
             /// Guard: No localizedStrings for this node
             guard !localizedStrings.isEmpty else {
+                logContinueReason("No localized strings for this AX Element.");
                 continue
             }
             
@@ -1350,12 +1382,13 @@ final class LocalizationScreenshotClass: XCTestCase {
             assert(idk == nil)
             let rawHitPoint: NSPoint = hitPoint.hitPoint()
             AXUIElementCopyElementAtPosition(appAXUIElement!, Float(rawHitPoint.x), Float(rawHitPoint.y), &hittedAXUIElement) /// This is a little slow
-            if let hittedAXUIElement = hittedAXUIElement, hittedAXUIElement == axuiElement {
-            } else {
+            if let hittedAXUIElement = hittedAXUIElement, hittedAXUIElement == axuiElement { }
+            else {
                 if !alreadyLoggedHitTestFailers.contains(axuiElement) {
-                    print("HitTest Failed: Skipping annotation of element: \(nodeSnapshot) || Skipped keys: \(localizedStrings.flatMap { s in s.stringAnnotations.map { k in k.key } })") /// If hitTest fails, the element is probably invisible or covered by another element.
+                    print("_takeLocalizationScreenshot: HitTest Failed: Skipping annotation of element: \(nodeSnapshot) || Skipped keys: \(localizedStrings.flatMap { s in s.stringAnnotations.map { k in k.key } })") /// If hitTest fails, the element is probably invisible or covered by another element.
                     alreadyLoggedHitTestFailers.append(axuiElement) /// We want to log all the elements that are filtered out due to failed hitTests - to check if there are any false positives. (Check if we still end up with correct annotations for those hitTestFailers in the resulting .xcloc file)
                 }
+                logContinueReason("AX Element not hittable.");
                 continue
             }
             
@@ -1392,6 +1425,12 @@ final class LocalizationScreenshotClass: XCTestCase {
                                                                                             screenshotAnnotations: f))
             return thisResult
         } else {
+            DDLogDebug("""
+            _takeLocalizationScreenshot: 
+            Returning nil.
+            framesAndStringsAndKeys: \(framesAndStringsAndKeys);
+            groupedFrames: \(groupedFrames);
+            """);
             return nil
         }
     }

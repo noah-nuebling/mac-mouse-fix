@@ -15,6 +15,7 @@
 #define AppUITests_Bridging_Header_h
 
 #import "XCUIElement+Additions.h"
+#import "AXUIElement_Utils.h"
 
 #import "Logging.h"
 #import "TreeNode.h"

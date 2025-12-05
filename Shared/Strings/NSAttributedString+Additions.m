@@ -115,7 +115,7 @@
     NSInteger realStartIndex = 0;
     if ([NSProcessInfo.processInfo.arguments containsObject:@"-MF_ANNOTATE_LOCALIZED_STRINGS"]) {
         loopc(i, s.length) {
-            BOOL isSecretMessageChar = [[NSString secretMessageChars] characterIsMember: str(i)]; /// [Sep 2025] Maybe we should use `-[NSString secretMessages]` instead?
+            BOOL isSecretMessageChar = [[NSString secretMessageChars] characterIsMember: str(i)]; /// [Sep 2025] Maybe we should use `-[NSString _secretMessages]` instead?
             if (!isSecretMessageChar) {
                 realStartIndex = (NSInteger)i;
                 break;

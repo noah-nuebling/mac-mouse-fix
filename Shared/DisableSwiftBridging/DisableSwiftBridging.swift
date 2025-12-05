@@ -60,8 +60,8 @@ extension NSAttributedString {
     func attributedStringByAppendingString(asSecretMessage message: NSString) -> NSAttributedString {
         return __attributedStringByAppendingString(asSecretMessage: message) as! NSAttributedString
     }
-    func secretMessages() -> NSArray {
-        return __secretMessages() as! NSArray
+    func _secretMessages() -> NSArray {
+        return ___secretMessages() as! NSArray
     }
 }
 
@@ -75,8 +75,8 @@ extension NSString {
     func encodedAsSecretMessage() -> NSString {
         return __encodedAsSecretMessage() as! NSString
     }
-    func secretMessages() -> NSArray {
-        return __secretMessages() as! NSArray
+    func _secretMessages() -> NSArray {
+        return ___secretMessages() as! NSArray
     }
     func withoutSecretMessages() -> NSString {
         return __withoutSecretMessages() as! NSString

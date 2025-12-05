@@ -47,7 +47,7 @@ mfdata_cls_m(StringAnnotation)
     
     auto prefixes = [NSMutableArray new];
     {
-        auto secretMessages = string.secretMessages; /// Extract this for optimization, so we don't call it over and over [Nov 2025]
+        auto secretMessages = string._secretMessages; /// Extract this for optimization, so we don't call it over and over [Nov 2025]
         loopc(i, secretMessages.count) {
             
             NSError *err = nil;

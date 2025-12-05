@@ -127,6 +127,7 @@
 		4F85C05128BBDBDC00E96E9C /* NSImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C04F28BBDBDC00E96E9C /* NSImageView+Extensions.swift */; };
 		4F85C05428BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */; };
 		4F85C05528BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */; };
+		4F8686012EE33C42009262A3 /* AXUIElement_Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8686002EE33C33009262A3 /* AXUIElement_Utils.m */; };
 		4F8A44522925311B00361EFF /* SFSymbolStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A44512925311B00361EFF /* SFSymbolStrings.m */; };
 		4F8A8DAD287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */; };
 		4F8A8DBD287F203D00786BCC /* IOHIDAccelerationTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A8DBC287F203D00786BCC /* IOHIDAccelerationTable.cpp */; };
@@ -2167,6 +2168,8 @@
 		4F854D7D2789266A00B46E9D /* MainAppSFSymbols.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = MainAppSFSymbols.xcassets; sourceTree = "<group>"; };
 		4F85C04F28BBDBDC00E96E9C /* NSImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSImageView+Extensions.swift"; sourceTree = "<group>"; };
 		4F85C05328BBE6FA00E96E9C /* TrialSectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialSectionManager.swift; sourceTree = "<group>"; };
+		4F8686002EE33C33009262A3 /* AXUIElement_Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AXUIElement_Utils.m; sourceTree = "<group>"; };
+		4F8686022EE34498009262A3 /* AXUIElement_Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AXUIElement_Utils.h; sourceTree = "<group>"; };
 		4F8A44502925311B00361EFF /* SFSymbolStrings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SFSymbolStrings.h; sourceTree = "<group>"; };
 		4F8A44512925311B00361EFF /* SFSymbolStrings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SFSymbolStrings.m; sourceTree = "<group>"; };
 		4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = IOHIDAccelerationTableBridge.mm; sourceTree = "<group>"; };
@@ -6968,6 +6971,8 @@
 				4FD4A70D2E65D868004EFE66 /* CapturedButtonsGuideMMF3_ScreenshotRemaps.plist */,
 				4F0B8B172C58156F002715FF /* XCUIElement+Additions.h */,
 				4FAA3DBB2C56802E00CBA413 /* XCUIElement+Additions.m */,
+				4F8686022EE34498009262A3 /* AXUIElement_Utils.h */,
+				4F8686002EE33C33009262A3 /* AXUIElement_Utils.m */,
 				4F0028012C58303B00CDB9D0 /* LocalizationScreenshotTakerTestPlan.xctestplan */,
 				4F0C003D2C52BBA600C5D843 /* LocalizationScreenshotTaker.entitlements */,
 				4FE78C382C4FFB0E00C54103 /* LocalizationScreenshotTaker-Bridging-Header.h */,
@@ -8251,6 +8256,7 @@
 				4F58FE132C57297400926A00 /* Logging.swift in Sources */,
 				4F58FE032C56E65900926A00 /* AnnotationUtility.m in Sources */,
 				4FA773DC2E66FF510056E9B4 /* NSCoderErrors.m in Sources */,
+				4F8686012EE33C42009262A3 /* AXUIElement_Utils.m in Sources */,
 				4F8B01AC2C348A3A00F3AF8D /* LocalizationScreenshots.swift in Sources */,
 				4FFA973C2EC2576200A52849 /* LocalizedStringAnnotation.m in Sources */,
 				4FE78C342C4FFA2F00C54103 /* TreeNode.h in Sources */,

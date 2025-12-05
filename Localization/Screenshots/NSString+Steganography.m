@@ -66,8 +66,8 @@ MFDataClassImplement2(MFDataClassBase, FoundSecretMessage,
     return result;
 }
 
-- (NSArray<FoundSecretMessage *> *)secretMessages {
-    NSArray *result = [self.string secretMessages];
+- (NSArray<FoundSecretMessage *> *)_secretMessages {
+    NSArray *result = [self.string _secretMessages];
     return result;
 }
 
@@ -141,7 +141,7 @@ static NSRegularExpression *secretMessageRegex(void) {
     return result;
 }
 
-- (NSArray<FoundSecretMessage *> *)secretMessages {
+- (NSArray<FoundSecretMessage *> *)_secretMessages { /// Probably don't use this directly, and use `extractAnnotationsFromString:` instead [Dec 2025]
  
     /// Declare result
     NSMutableArray *result = [NSMutableArray array];
