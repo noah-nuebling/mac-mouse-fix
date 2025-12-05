@@ -48,14 +48,14 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n- 🇰🇷 Korean translations by [@jeongtae]({url_4})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_5})\n- 🇧🇷 Brazilian Portuguese translations by **Eduardo Rodrigues**\n- 🇫🇷 French translations by [@DimitriDR]({url_6})\n- 🇹🇷 Turkish translations by [@hasanbeder]({url_7})\n- 🇨🇿 Czech translations by [Petr Pavlík]({url_8})"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "## 🌏 Переводы\n\nСпасибо за то, что вы сделали Mac Mouse Fix доступным для людей по всему миру!\n\n- 🇨🇳 Chinese translations by \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n- 🇰🇷 Корейский перевод: [@jeongtae]({url_2})\n- 🇻🇳 Перевод на вьетнамский язык: [@nghlt]({url_3})\n- 🇧🇷 Перевод на бразильский португальский язык: **Эдуардо Родригес**\n- 🇫🇷 Перевод на французский язык: [@DimitriDR]({url_4})\n- 🇹🇷 Турецкий перевод: [@hasanbeder]({url_5})\n- 🇨🇿 Чешский перевод: [Petr Pavlík]({url_6})\n- 🇷🇺 Русский перевод: [@sos.soon.ok]({url_7})"
+            "value" : "## 🌏 Переводы\n\nСпасибо за то, что вы сделали Mac Mouse Fix доступным для людей по всему миру!\n\n- 🇨🇳 Chinese translations by \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n- 🇰🇷 Корейский перевод: [@jeongtae]({url_4})\n- 🇻🇳 Перевод на вьетнамский язык: [@nghlt]({url_5})\n- 🇧🇷 Перевод на бразильский португальский язык: **Эдуардо Родригес**\n- 🇫🇷 Перевод на французский язык: [@DimitriDR]({url_6})\n- 🇹🇷 Турецкий перевод: [@hasanbeder]({url_7})\n- 🇨🇿 Чешский перевод: [Petr Pavlík]({url_8})\n- 🇷🇺 Русский перевод: [@sos.soon.ok]({url_9})"
           }
         }
       }
