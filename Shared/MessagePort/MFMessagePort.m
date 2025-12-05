@@ -210,6 +210,12 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         NSSet<NSNumber *> *after  = ((NSDictionary *)payload)[@"after"];
         [ToastAndSheetTests showCaptureToastBefore: before after: after];
     }
+    xxx(@"getEnvAndArgs") {
+        response = @{
+            @"env":  NSProcessInfo.processInfo.environment,
+            @"args": NSProcessInfo.processInfo.arguments,
+        };
+    }
     else {
         DDLogInfo(@"Unknown message received: %@", message);
     }
@@ -261,6 +267,12 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     }
     xxx(@"getBundleVersion") {
         response = @(Locator.bundleVersion);
+    }
+    xxx(@"getEnvAndArgs") {
+        response = @{
+            @"env":  NSProcessInfo.processInfo.environment,
+            @"args": NSProcessInfo.processInfo.arguments,
+        };
     }
     else {
         DDLogInfo(@"Unknown message received: %@", message);

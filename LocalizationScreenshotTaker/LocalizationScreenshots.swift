@@ -434,17 +434,20 @@ final class LocalizationScreenshotClass: XCTestCase {
         
         /// **ARGS**
         ///     We don't have a clt, so just edit these manually [Dec 2025]
-        
+        ///     FOOTGUNS: Put any foot-gunny options here so we are reminded before running (Thinking of `killApp: false` which effectively acts like a cache that can go stale if we still have an older instance of MMF running.)
         /// -----------------------------------------------
         
         struct Args {
             var onlyTestLanguages: [String]
             var continueFromLanguage: String?
+            var killApp: Bool
         }
-        let args = Args(
+        var args = Args(
             onlyTestLanguages: ["ru"],      /// Only update screenshots for these languages. (leave empty to update all)
             continueFromLanguage: nil,      /// Set in case of interruption, to avoid redoing already-completed localizations
+            killApp: true,
         );
+        args.killApp = (args.onlyTestLanguages.count != 1)    /// Leave app running for faster iterations. (Need to restart app between language-switches if there are multiple languages)
         
         /// -----------------------------------------------
         
@@ -512,9 +515,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                     "-AppleLanguages", "(\(languageCode))"
                 ],
                 env: [:],
-                kill_app:
-                    (localizations.count > 1) || /// Restart the app so its using the right language we specified ––– or leave it running for faster iterations if there's only one language
-                    true                         /// Disable because this is error-prone if we initially launched in the wrong language [Dec 2025].  ––– Solution idea: Check that the language / launch args match via MFMessagePort or another mechanism.
+                kill_app: args.killApp
             )
             
             self.app = app
@@ -527,9 +528,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                     "-AppleLanguages", "(\(languageCode))"
                 ],
                 env: [:],
-                kill_app:
-                    (localizations.count > 1)
-                    || true
+                kill_app: args.killApp
             )
             
             
@@ -684,6 +683,43 @@ final class LocalizationScreenshotClass: XCTestCase {
             while (true) { /// Wait some more (not sure why this is necessary) [Sep 2025, Tahoe Beta 8]
                 xcapp = XCUIApplication(url: url)
                 if xcapp.state != .notRunning { break }
+            }
+            
+            /// FOOTGUN PROTECTION – Check that the already-running app has matching env and args to the params of this function (`-AppleLanguages`, `-MF_ANNOTATE_LOCALIZED_STRINGS`, etc.)
+            do {
+                
+                /// Get real env and args via MFMessagePort
+                let envAndArgsNS: NSDictionary
+                do {
+                    let remotePort: String
+                    if (url == sharedf_mainapp_url())       { remotePort = kMFBundleIDApp }
+                    else if (url == sharedf_helper_url())   { remotePort = kMFBundleIDHelper }
+                    else                                    { remotePort = ""; assert(false); }
+                    var envAndArgs: Any? = nil
+                    for i in 0..<5 { /// Think I observed this to be necessary. But shortly after it wasn't. Maybe observed wrong [Dec 2025]
+                        print("sharedf_launch_app: getEnvAndArgs – attempt \(i)")
+                        envAndArgs = MFMessagePort.sendMessage("getEnvAndArgs", withPayload: nil, toRemotePort: remotePort, waitForReply: true)
+                        if (envAndArgs != nil) { break; }
+                    }
+                    envAndArgsNS = envAndArgs as! NSDictionary
+                }
+                
+                /// Preprocess real env and args to match the function params.
+                let realArgs_WithoutPath = Array((envAndArgsNS["args"] as! Array<String>).suffix(from: 1))
+                let realEnv_OnlyOverlappingKeys = (envAndArgsNS["env"] as! NSDictionary).dictionaryWithValues(forKeys: Array(env.keys)) as! [String: String]
+                
+                /// Compare real env and args with the function params
+                let argsMatch  = args == realArgs_WithoutPath;
+                let envMatches = env == realEnv_OnlyOverlappingKeys
+                if (!argsMatch)  { print("sharedf_launch_app: The running instance of \(url.lastPathComponent) has unexpected args. Expected: \(args). Found: \(realArgs_WithoutPath)"); }
+                if (!envMatches) { print("sharedf_launch_app: The running instance of \(url.lastPathComponent) has unexpected env.  Expected: \(env).  Found: \(realEnv_OnlyOverlappingKeys)"); }
+                if (!argsMatch || !envMatches) {
+                    if !kill_app {
+                        print("sharedf_launch_app: env/arg mismatch – Killing the app despite `kill_app: false`")
+                        return sharedf_launch_app(url: url, args: args, env: env, kill_app: true)
+                    }
+                    else { fatalError("Don't think this can happen. [Dec 2025]") }
+                }
             }
 
             return xcapp
