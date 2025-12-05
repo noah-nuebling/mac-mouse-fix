@@ -50,6 +50,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                     "vi": 350,   /// 350 looks great and is almost exactly what the original translator did [Sep 2025]
                     "cs": 320,   /// 350 -> 320 minimize gap after short first line of enabledHint "Mac Mouse Fix zůstane zapnutá i po" [Nov 2025]
                     "tr": 350,   /// TODO: Fill this in when more Turkish strings arrive
+                    "ru": 370,
                 ]
             case "scrolling":
                 map = [
@@ -62,6 +63,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                     "vi": 340,  /// 340 looks great. [Sep 2025]
                     "cs": 340,  /// 340 looks great [Nov 2025]
                     "tr": 340,  /// TODO: Fill this in when more Turkish strings arrive
+                    "ru": 500,  /// 400 -> `Прокручивайте точно ...` hint is 2 lines instead of 3 || 500 -> `H4T-Rp-t33.title` is no longer cut off. [Dec 2025] TODO: Make narrow if/when translator provides narrower string.
                 ]
             default:
                 fatalError("Calling this from unexpected tab: \(tabController)")
