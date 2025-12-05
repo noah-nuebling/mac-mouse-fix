@@ -163,6 +163,12 @@
             "value" : "Desfazer"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отменить"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -227,6 +233,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Veja os Guias ou pergunte à Comunidade..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Спросить сообщество или просмотреть руководства..."
           }
         },
         "vi" : {
@@ -356,6 +368,12 @@
             "value" : "Verificar atualizações..."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверить наличие обновлений..."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -483,6 +501,12 @@
             "value" : "Desligar"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выкл."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -547,6 +571,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Precisão"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Точность"
           }
         },
         "vi" : {
@@ -615,6 +645,12 @@
             "value" : "Solicite um Recurso"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Помочь с переводом"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -679,6 +715,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Deletar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить"
           }
         },
         "vi" : {
@@ -747,6 +789,12 @@
             "value" : "Rolar horizontalmente"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прокрутка по горизонтали"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -811,6 +859,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Editar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Правка"
           }
         },
         "vi" : {
@@ -879,6 +933,12 @@
             "value" : "Reconhecimentos"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Благодарности"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -943,6 +1003,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Regular"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обычная"
           }
         },
         "vi" : {
@@ -1072,6 +1138,12 @@
             "value" : "Alto"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Высокая"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1136,6 +1208,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Role com Precisão"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Точная прокрутка"
           }
         },
         "vi" : {
@@ -1204,6 +1282,12 @@
             "value" : "Mova-se entre as páginas do Safari rolando horizontalmente e muito mais"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переключение страниц в Safari горизонтальной прокруткой и многое другое"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1268,6 +1352,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Permite ativar ou desativar rapidamente recursos como\nrolagem suave"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Позволяет быстро включать и выключать такие функции, как плавная прокрутка"
           }
         },
         "vi" : {
@@ -1336,6 +1426,12 @@
             "value" : "Menu Principal"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Главное меню"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1400,6 +1496,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Trazer tudo para frente"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переместить все на передний план"
           }
         },
         "vi" : {
@@ -1468,6 +1570,12 @@
             "value" : "O Mac Mouse Fix continuará ativo mesmo depois que você fechá-lo"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix останется включенным после того, как вы его закроете"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -1529,6 +1637,12 @@
           }
         },
         "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -1600,6 +1714,12 @@
             "value" : "Não me lembre mais disso"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Больше не напоминать"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1664,6 +1784,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alto"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Высокая"
           }
         },
         "vi" : {
@@ -1793,6 +1919,12 @@
             "value" : "Ocultar o Mac Mouse Fix"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скрыть Mac Mouse Fix"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1857,6 +1989,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Reportar um problema"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Составить отчет об ошибке"
           }
         },
         "vi" : {
@@ -1984,6 +2122,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sobre"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "О программе"
           }
         },
         "vi" : {
@@ -2174,6 +2318,12 @@
             "value" : "Adquirir o Mac Mouse Fix..."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Купить Mac Mouse Fix..."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2238,6 +2388,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Botões"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопки"
           }
         },
         "vi" : {
@@ -2422,6 +2578,12 @@
             "value" : "Ajuda"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Помощь"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2486,6 +2648,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Médio"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Средняя"
           }
         },
         "vi" : {
@@ -2554,6 +2722,12 @@
             "value" : "Geral"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Общее"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2618,6 +2792,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Role rapidamente"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Быстрая прокрутка"
           }
         },
         "vi" : {
@@ -2686,6 +2866,12 @@
             "value" : "Obter ajuda"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Получить помощь"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2750,6 +2936,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Exibir tudo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать все"
           }
         },
         "vi" : {
@@ -2818,6 +3010,12 @@
             "value" : "Janela"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Окно"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2882,6 +3080,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ajuda"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Помощь"
           }
         },
         "vi" : {
@@ -2950,6 +3154,12 @@
             "value" : "Baixo"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Низкая"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3011,6 +3221,12 @@
           }
         },
         "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS"
+          }
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "macOS"
@@ -3192,6 +3408,12 @@
             "value" : "Direção reversa"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обратное направление"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3319,6 +3541,12 @@
             "value" : "Serviços"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Службы"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3383,6 +3611,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aumentar ou diminuir zoom"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Увеличение или уменьшение масштаба"
           }
         },
         "vi" : {
@@ -3512,6 +3746,12 @@
             "value" : "Mac Mouse Fix"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3576,6 +3816,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opções..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройки..."
           }
         },
         "vi" : {
@@ -3644,6 +3890,12 @@
             "value" : "Copiar"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скопировать"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3708,6 +3960,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Refazer"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Повторить"
           }
         },
         "vi" : {
@@ -3776,6 +4034,12 @@
             "value" : "Mostrar na Barra de Menus"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показывать в строке меню"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3842,6 +4106,12 @@
             "value" : "Janela"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Окно"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3903,6 +4173,12 @@
           }
         },
         "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -3972,6 +4248,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rolagem"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прокрутка"
           }
         },
         "vi" : {
@@ -4101,6 +4383,12 @@
             "value" : "Velocidade:"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скорость:"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4228,6 +4516,12 @@
             "value" : "Restaurar padrões..."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Восстановить по умолчанию..."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4292,6 +4586,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Editar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Правка"
           }
         },
         "vi" : {
@@ -4360,6 +4660,12 @@
             "value" : "Testar versões Beta"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Получать бета-версии"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4426,6 +4732,12 @@
             "value" : "Botões"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопки"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4478,6 +4790,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Hold Command (⌘) and Shift (⇧), then click this icon to reveal the Mac Mouse Fix configuration file in Finder"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удерживайте Command (⌘) и Shift (⇧), затем нажмите на этот значок, чтобы открыть файл конфигурации Mac Mouse Fix в Finder"
           }
         },
         "vi" : {
@@ -4546,6 +4864,12 @@
             "value" : "Mova o ponteiro do mouse dentro do campo '+' e *Clique* em um botão do mouse para atribuir uma ação a ele.\nVocê também pode dar *Clique Duplo*, *Arrastar e Soltar* e [mais]()."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Наведите указатель мыши на поле '+', затем *нажмите* кнопку мыши, чтобы назначить ей действие.\nВы также можете *двойной клик*, *нажать и тянуть*, и [больше]()"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4612,6 +4936,12 @@
             "value" : "Simulação de Trackpad"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Симуляция трекпада"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4676,6 +5006,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Minimizar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Свернуть"
           }
         },
         "vi" : {
@@ -4805,6 +5141,12 @@
             "value" : "Selecionar tudo"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать все"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4869,6 +5211,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Visite o site"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Посетить веб-сайт"
           }
         },
         "vi" : {
@@ -4998,6 +5346,12 @@
             "value" : "Criado por Noah Nuebling"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создано Ноа Нюблингом"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5125,6 +5479,12 @@
             "value" : "Envie uma mensagem"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отправить мне Email"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5189,6 +5549,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rolagem"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прокрутка"
           }
         },
         "vi" : {
@@ -5318,6 +5684,12 @@
             "value" : "Cortar"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вырезать"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5382,6 +5754,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Geral"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Общее"
           }
         },
         "vi" : {
@@ -5450,6 +5828,12 @@
             "value" : "Ocultar outros"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скрыть остальные"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5514,6 +5898,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ativar o Mac Mouse Fix"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включить Mac Mouse Fix"
           }
         },
         "vi" : {
@@ -5582,6 +5972,12 @@
             "value" : "Fechar"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрыть"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5646,6 +6042,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Colar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вставить"
           }
         },
         "vi" : {
@@ -5775,6 +6177,12 @@
             "value" : "Você será notificado sobre atualizações ao abrir\nesta janela"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы будете уведомлены об обновлениях, когда откроете это окно"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5902,6 +6310,12 @@
             "value" : "Suavidade:"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Плавность:"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5966,6 +6380,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verificar atualizações"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверить наличие обновлений"
           }
         },
         "vi" : {
@@ -6034,6 +6454,12 @@
             "value" : "Me compre um Milkshake :)"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Угости меня молочным коктейлем :)"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6100,6 +6526,12 @@
             "value" : "Sobre o Mac Mouse Fix"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "О Mac Mouse Fix"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6164,6 +6596,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fechar o Mac Mouse Fix"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завершить Mac Mouse Fix"
           }
         },
         "vi" : {
@@ -6245,6 +6683,12 @@
             "value" : "Modificadores de teclado:"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Модификаторы клавиатуры:"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6309,6 +6753,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sobre"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "О программе"
           }
         },
         "vi" : {
@@ -6499,6 +6949,12 @@
             "value" : "Serviços"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Службы"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6624,6 +7080,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ativar Licença..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Активировать лицензию..."
           }
         },
         "vi" : {
@@ -6753,6 +7215,12 @@
             "value" : "Mac Mouse Fix"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6819,6 +7287,12 @@
             "value" : "Zoom"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Масштаб"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6883,6 +7357,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Confira no GitHub"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Посмотреть на GitHub"
           }
         },
         "vi" : {

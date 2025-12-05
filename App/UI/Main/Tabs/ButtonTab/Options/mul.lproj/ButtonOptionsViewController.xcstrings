@@ -41,6 +41,12 @@
             "value" : "Concluído"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Готово"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -107,6 +113,12 @@
             "value" : "Recomendado para Trackball Mice"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рекомендуется для мышей с трекболом"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -171,6 +183,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bloquear o ponteiro do mouse durante gestos de 'Cliquar e Arrastar'"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Блокировка указателя мыши во время жестов 'клик и перетаскивание'"
           }
         },
         "vi" : {

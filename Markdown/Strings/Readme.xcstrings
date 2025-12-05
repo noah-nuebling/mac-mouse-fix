@@ -1,52 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "questions.blender" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Jak mohu obíhat kolem objektů v 3D aplikacích, jako je Blender?**"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Wie kann ich in 3D-Apps wie Blender um Objekte kreisen?**"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "**How can I orbit around objects in 3D apps like Blender?**"
-          }
-        }
-      }
-    },
-    "questions.blender.body" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "V 3D aplikacích, jako je Blender, obvykle kliknete a táhnete prostřední tlačítko myši pro obíhání objektů.<br>\nPokud ale v Mac Mouse Fix přiřadíte akce prostřednímu tlačítku myši, pak to už nebude fungovat.\n\nPro řešení tohoto problému znám 2 možnosti:\n\n1. Přiřadit kliknutí a tažení jednoho z tlačítek myši funkci „Posouvání a navigace“. Tato funkce simuluje přejetí dvěma prsty po Apple Trackpadu. To vám mimo jiné umožní obíhat v 3D aplikacích!\n\n2. *Odeberte* prostřední tlačítko myši odstraněním všech akcí, které jsou mu přiřazeny v Mac Mouse Fix. Více informací naleznete v [tomto průvodci]({url})."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "In 3D-Apps wie Blender kreist man normalerweise um Objekte, indem man die mittlere Maustaste klickt und zieht.<br>\nAber wenn du in Mac Mouse Fix der mittleren Maustaste Aktionen zuweist, dann funktioniert das nicht mehr.\n  \nUm das zu lösen, gibt es 2 Optionen, von denen ich weiß:\n1. Weise für eine der Tasten deiner Maus das klicken und ziehen der \"Scrollen & Navigieren\" Funktion zu. Diese Funktion simuliert das Wischen mit 2 Fingern auf einem Apple Trackpad. Das erlaubt dir, unter anderem, in 3D-Apps zu kreisen!\n2. *Gebe* die mittlere Maustaste *frei*, indem du alle ihr in Mac Mouse Fix zugewiesenen Aktionen löschst. Siehe [diese Anleitung]({url}) für weitere Informationen."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "In 3D apps like Blender, you normally Click and Drag the Middle Mouse Button to orbit around objects.<br>\nBut if you assign actions to the Middle Mouse Button in Mac Mouse Fix, then this won't work anymore.\n\nTo solve this, I know of 2 options:\n1. Assign clicking and dragging one of the buttons of your mouse to the \"Scroll & Navigate\" feature. This feature simulates swiping with 2 fingers on an Apple Trackpad. This will, among other things, let you orbit in 3D apps! \n2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it in Mac Mouse Fix. See [this guide]({url}) for more info."
-          }
-        }
-      }
-    },
     "01: intro.title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -65,6 +19,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Mac Mouse Fix"
           }
         }
@@ -90,6 +50,12 @@
             "state" : "new",
             "value" : "Make Your $10 Mouse Better Than an Apple Trackpad!"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сделайте свою мышь за 10 долларов лучше, чем трекпад Apple!"
+          }
         }
       }
     },
@@ -112,6 +78,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Website&nbsp;↗"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Веб-сайт&nbsp;↗"
           }
         }
       }
@@ -137,6 +109,12 @@
             "state" : "new",
             "value" : "Help&nbsp;&amp;&nbsp;Feedback"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Помощь&nbsp;&amp;&nbsp;Обратная связь"
+          }
         }
       }
     },
@@ -160,6 +138,12 @@
             "state" : "new",
             "value" : "Releases"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Релизы"
+          }
         }
       }
     },
@@ -182,6 +166,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Acknowledgements"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Благодарности"
           }
         }
       }
@@ -207,6 +197,12 @@
             "state" : "new",
             "value" : "Downloads"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузки"
+          }
         }
       }
     },
@@ -229,6 +225,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Mac Mouse Fix is an app that makes your mouse better.\n\nI want to turn Mac Mouse Fix into the best mouse driver *of all time*! Some features are still missing at the moment, but I think it already **turns regular mice into the best input devices for Macs** in some ways. At the same level or even better than an Apple Trackpad or a Logitech MX Master mouse.\n\nFor more information on how exactly Mac Mouse Fix enhances your mouse, visit the [website]({url})."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix — это приложение, которое улучшает работу вашей мыши.\n\nЯ хочу сделать Mac Mouse Fix лучшим драйвером для мыши *всех времен*! Некоторые функции пока еще отсутствуют, но я считаю, что в некоторых отношениях оно уже **превращает обычные мыши в лучшие устройства ввода для Mac**. На том же уровне или даже лучше, чем Apple Trackpad или мышь Logitech MX Master.\n\nДля получения более подробной информации о том, как именно Mac Mouse Fix улучшает работу вашей мыши, посетите [веб-сайт]({url})."
           }
         }
       }
@@ -253,6 +255,12 @@
             "state" : "new",
             "value" : "## Features\n\nSee the [website]({url_1}) for an overview of the features of Mac Mouse Fix, including video demos!\n\nFor more details, see the [Releases]({url_2})."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Особенности\n\nОбзор функций Mac Mouse Fix, включая видео-демонстрации, см. на [веб-сайте]({url_1}).\n\nБолее подробную информацию см. в разделе [Релизы]({url_2})."
+          }
         }
       }
     },
@@ -275,6 +283,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "## Installation\n\nDownload the latest version of Mac Mouse Fix on the [website]({url_1}).\n\nYou can also install Mac Mouse Fix through [Homebrew]({url_2})! Just type the following command into the terminal:\n\n```bash\nbrew install mac-mouse-fix\n```\n\nYou can download older versions of Mac Mouse Fix under [Releases]({url_3})."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Установка\n\nЗагрузите последнюю версию Mac Mouse Fix на [веб-сайте]({url_1}).\n\nВы также можете установить Mac Mouse Fix через [Homebrew]({url_2})! Просто введите следующую команду в терминале:\n\n```bash\nbrew install mac-mouse-fix\n```\n\nВы можете загрузить более старые версии Mac Mouse Fix в разделе [Релизы]({url_3})."
           }
         }
       }
@@ -299,6 +313,12 @@
             "state" : "new",
             "value" : "## macOS compatibility\n\nThe latest version of Mac Mouse Fix is made for **macOS 11 Big Sur** or later.\n  \nIf you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 High Sierra**, you can use the [latest version of Mac Mouse Fix 2]({url_1}). Mac Mouse Fix 3.0.0 and later might still work on your machine, but they will have visual issues and some features might not work properly.\n    \nIf you're on macOS **10.12 Sierra**, or **10.11 El Capitan**, you can use Mac Mouse Fix [2.2.0]({url_2}) or below."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Совместимость с macOS\n\nПоследняя версия Mac Mouse Fix разработана для **macOS 11 Big Sur** или более поздних версий.\n  \nЕсли вы используете macOS **10.15 Catalina**, macOS **10.14 Mojave** или macOS **10.13 High Sierra**, вы можете использовать [последнюю версию Mac Mouse Fix 2]({url_1}). Mac Mouse Fix 3.0.0 и более поздние версии могут по-прежнему работать на вашем компьютере, но у них будут проблемы с отображением, и некоторые функции могут работать некорректно.\n    \nЕсли вы используете macOS **10.12 Sierra** или **10.11 El Capitan**, вы можете использовать Mac Mouse Fix [2.2.0]({url_2}) или более раннюю версию."
+          }
         }
       }
     },
@@ -321,6 +341,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "## Pricing\n\nSee the [website]({url}) for an overview of the pricing for Mac Mouse Fix 3.<br>\nMac Mouse Fix 2 and below will remain free forever."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Цены\n\nОбзор цен на Mac Mouse Fix 3 см. на [веб-сайте]({url}).<br>\nMac Mouse Fix 2 и более ранние версии останутся бесплатными навсегда."
           }
         }
       }
@@ -345,6 +371,12 @@
             "state" : "new",
             "value" : "## Uninstallation\n\nUninstall Mac Mouse Fix by simply moving it to the bin. \n\nHowever, there will be files left on your system. To get rid of these files I recommend the awesome [AppCleaner by FreeMacSoft]({url}).\n\nUnder macOS, it is not feasible for apps to delete these leftover files by themselves when you delete the app. That's why I highly recommend using an app like AppCleaner."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Удаление\n\nУдалите Mac Mouse Fix, просто переместив его в корзину. \n\nОднако в вашей системе останутся файлы. Чтобы избавиться от этих файлов, я рекомендую отличную программу [AppCleaner от FreeMacSoft]({url}).\n\nВ macOS приложения не могут самостоятельно удалять эти оставшиеся файлы при удалении приложения. Поэтому я настоятельно рекомендую использовать такое приложение, как AppCleaner."
+          }
         }
       }
     },
@@ -367,6 +399,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "## What people say\n\nThanks so much to everyone sharing their excitement about Mac Mouse Fix!<br>\nOn the [website]({url}) you can find a collection of nice things people have said about the app."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Что говорят люди\n\nБольшое спасибо всем, кто делится своим восторгом по поводу Mac Mouse Fix!<br>\nНа [веб-сайте]({url}) вы можете найти подборку приятных отзывов о приложении."
           }
         }
       }
@@ -391,6 +429,12 @@
             "state" : "new",
             "value" : "## Tips"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Подсказки"
+          }
         }
       }
     },
@@ -413,6 +457,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Manage windows with a simple Click and Drag**"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Управляйте окнами простым нажатием и перетаскиванием**"
           }
         }
       }
@@ -437,6 +487,12 @@
             "state" : "new",
             "value" : "[Swish]({url}) is my favorite way to manage windows on macOS. With a simple swipe on your trackpad, it lets you position any window so it takes up half, a quarter, or the whole screen.\n\nSwish is designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse! Just go to Mac Mouse Fix and set any buttons \"Click and Drag\" action to \"Scroll & Navigate\" and then you can snap windows with a simple Click and Drag.\n\nAnything you can do with a two-finger swipe on an Apple trackpad works just as well with the \"Scroll & Navigate\" feature in Mac Mouse Fix."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Swish]({url}) — мой любимый способ управления окнами в macOS. Простым движением по трекпаду вы можете расположить любое окно так, чтобы оно занимало половину, четверть или весь экран.\n\nSwish разработан для жестов трекпада, но с помощью Mac Mouse Fix вы можете использовать его с любой сторонней мышью! Просто перейдите в Mac Mouse Fix и установите для любой кнопки действие 'Щелкнуть и перетащить' на 'Прокрутка и навигация', после чего вы сможете привязывать окна простым щелчком и перетаскиванием.\n\nВсе, что можно сделать с помощью двухпальцевого жеста на трекпаде Apple, так же хорошо работает с функцией 'Прокрутка и навигация' в Mac Mouse Fix."
+          }
         }
       }
     },
@@ -459,6 +515,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Control Screen Brightness, Audio Volume, or Media Playback right from your mouse**"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Управляйте яркостью экрана, громкостью звука или воспроизведением мультимедиа прямо с помощью мыши**"
           }
         }
       }
@@ -483,6 +545,12 @@
             "state" : "new",
             "value" : "Mac Mouse Fix lets you use **any key on your keyboard** directly from your mouse -\neven special keys only found on Apple keyboards that let you control Screen Brightness, Audio Volume, Media Playback, and more.\n\nIf you don't have an Apple keyboard at hand, **hold Option (⌥)** to choose the special Apple keys."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix позволяет использовать **любую клавишу на клавиатуре** прямо с мыши -\nдаже специальные клавиши, которые есть только на клавиатурах Apple и позволяют регулировать яркость экрана, громкость звука, воспроизведение мультимедиа и многое другое.\n\nЕсли у вас нет клавиатуры Apple, **удерживайте клавишу Option (⌥)**, чтобы выбрать специальные клавиши Apple."
+          }
         }
       }
     },
@@ -505,6 +573,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "## Questions"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Вопросы"
           }
         }
       }
@@ -529,6 +603,12 @@
             "state" : "new",
             "value" : "**Is Mac Mouse Fix native on Apple Silicon?**"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Является ли Mac Mouse Fix нативным приложением для Apple Silicon?**"
+          }
         }
       }
     },
@@ -551,6 +631,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Yes, Mac Mouse Fix runs 100% native on Apple Silicon."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Да, Mac Mouse Fix работает на 100% на Apple Silicon."
           }
         }
       }
@@ -575,6 +661,12 @@
             "state" : "new",
             "value" : "**Why is there a delay when I click?**"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Почему при нажатии кнопки возникает задержка?**"
+          }
         }
       }
     },
@@ -597,6 +689,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "When you click, Mac Mouse Fix might wait to see if you're going to double click.<br>\nTo remove the delay for a button, delete any \"Double Click\" actions for that button."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Когда вы нажимаете кнопку, Mac Mouse Fix может подождать, чтобы увидеть, собираетесь ли вы сделать двойное нажатие.\nЧтобы устранить задержку для кнопки, удалите все действия 'Двойного нажатия' для этой кнопки."
           }
         }
       }
@@ -621,6 +719,12 @@
             "state" : "new",
             "value" : "**Can I open App Exposé through a Click and Drag Gesture?**"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Можно ли открыть App Exposé с помощью жеста 'нажатие и перетаскивание'?**"
+          }
         }
       }
     },
@@ -644,6 +748,12 @@
             "state" : "new",
             "value" : "Yes! Just choose the 'Spaces & Mission Control' Action and then Click and Drag *down*.\n\nIf this doesn't work, it's likely because the 'App Exposé' trackpad gesture is disabled on your Mac.<br>\nYou can enable the gesture under System Settings or by running the following command in the terminal:\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Да! Просто выберите действие 'Spaces и Mission Control', а затем щелкните и перетащите *вниз*.\n\nЕсли это не сработает, вероятно, это связано с тем, что жест трекпада 'App Exposé' отключен на вашем Mac.<br>\nВы можете включить этот жест в настройках системы или выполнив следующую команду в терминале:\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```"
+          }
         }
       }
     },
@@ -666,6 +776,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Are there 'App-Specific Settings' or 'Profiles'?**"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Есть ли 'Настройки для конкретных приложений' или 'Профили'?**"
           }
         }
       }
@@ -691,6 +807,12 @@
             "state" : "new",
             "value" : "In Mac Mouse Fix 2, you can **disable features like Smooth Scrolling** under `More... > App-specific settings`.\n\nIn Mac Mouse Fix 3, this feature doesn't exist yet. <br>\nBoth 'app-specific settings' and 'mouse-specific settings' are planned, but I don't have a timeline yet for when they'll be released.\n\n**Tip:** Until 'app-specific settings' arrive in Mac Mouse Fix 3, you can do this:\n- Open the `General` tab\n- Turn on `Show in Menu Bar`\n- Now you can **disable features like Smooth Scrolling** directly from the Menu Bar\n\nI'm also interested to hear what your *use case* is. Feel free to submit a [feature request]({url}). Your input will help make the feature as good as possible once it arrives."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В Mac Mouse Fix 2 вы можете **отключить такие функции, как плавная прокрутка**, в разделе 'Еще... > Настройки для конкретных приложений'.\n\nВ Mac Mouse Fix 3 эта функция пока отсутствует. <br>\nПланируется добавить как 'настройки для конкретных приложений', так и 'настройки для конкретных мышей', но пока нет информации о сроках их выпуска.\n\n**Совет:** пока 'настройки для конкретных приложений' не появятся в Mac Mouse Fix 3, вы можете сделать следующее:\n- Откройте вкладку 'Общие'\n- Включите 'Показать в строке меню'\n- Теперь вы можете **отключить такие функции, как плавная прокрутка**, прямо из строки меню\n\nМне также интересно узнать, как вы используете эту функцию. Не стесняйтесь отправлять [запросы на добавление функций]({url}). Ваши отзывы помогут сделать эту функцию максимально удобной после ее появления."
+          }
         }
       }
     },
@@ -713,6 +835,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Is my mouse supported?**"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Поддерживается ли моя мышь?**"
           }
         }
       }
@@ -737,6 +865,12 @@
             "state" : "new",
             "value" : "Probably. If you want to know for sure, it's best to download Mac Mouse Fix and try it out.\n\nMac Mouse Fix works very well with most mice. However, on certain mice designed to be used with proprietary driver software like Logitech Options, Mac Mouse Fix can't recognize all the buttons at the moment. \n\nThat's because these mice communicate with your computer using a special, proprietary protocol, instead of the standard USB protocol.<br>\nI would love to add full compatibility for these mice at some point, but it's a ton of work and it won't be coming soon."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вероятно. Если вы хотите узнать наверняка, лучше всего скачать Mac Mouse Fix и попробовать его.\n\nMac Mouse Fix отлично работает с большинством мышей. Однако на некоторых мышах, предназначенных для использования с проприетарным драйвером, таким как Logitech Options, Mac Mouse Fix в настоящее время не может распознать все кнопки. \n\nЭто связано с тем, что эти мыши обмениваются данными с компьютером по специальному проприетарному протоколу, а не по стандартному протоколу USB.\nЯ бы с удовольствием добавил полную совместимость с этими мышами, но это огромный объем работы, и в ближайшее время это не произойдет."
+          }
         }
       }
     },
@@ -759,6 +893,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Some buttons on my mouse are not recognized**"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Некоторые кнопки на моей мыши не распознаются**"
           }
         }
       }
@@ -783,6 +923,12 @@
             "state" : "new",
             "value" : "See the question **\"Is my mouse supported?\"** above."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "См. вопрос **'Поддерживается ли моя мышь?'** выше."
+          }
         }
       }
     },
@@ -805,6 +951,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Is the Magic Mouse supported?**"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Поддерживается ли Magic Mouse?**"
           }
         }
       }
@@ -829,6 +981,12 @@
             "state" : "new",
             "value" : "I might add features in the future which enhance the Apple Magic Mouse, but currently, Mac Mouse Fix has no effect on it."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В будущем я, возможно, добавлю функции, которые улучшат работу Apple Magic Mouse, но в настоящее время Mac Mouse Fix не оказывает на нее никакого влияния."
+          }
         }
       }
     },
@@ -851,6 +1009,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Are tiltable scroll wheels supported?**"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Поддерживаются ли наклоняемые колесики прокрутки?**"
           }
         }
       }
@@ -875,6 +1039,12 @@
             "state" : "new",
             "value" : "Some mice let you tilt the scroll wheel left or right to scroll horizontally. Mac Mouse Fix will make this feel more natural and easy to control. However, it's not currently possible to trigger other actions, such as switching between desktops, by tilting the scroll wheel. I'd love to implement this feature at some point, but it's a ton of work and it won't be coming soon."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Некоторые мыши позволяют наклонять колесико прокрутки влево или вправо для горизонтальной прокрутки. Mac Mouse Fix сделает это более естественным и простым в управлении. Однако в настоящее время невозможно запускать другие действия, такие как переключение между рабочими столами, наклоняя колесико прокрутки. Я бы с удовольствием реализовал эту функцию в будущем, но это требует огромного количества работы и не будет сделано в ближайшее время."
+          }
         }
       }
     },
@@ -897,6 +1067,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Turning off pointer acceleration**"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Отключение ускорения указателя**"
           }
         }
       }
@@ -921,6 +1097,12 @@
             "state" : "new",
             "value" : "Mac Mouse Fix doesn't let you turn off the pointer acceleration, but if you're on **macOS 14 Sonoma** or later, you can turn off the pointer acceleration under `System Settings > Mouse > Advanced... > Pointer acceleration`.\n\nI plan to add really nice ways to improve pointer acceleration in the future, but I'm not sure when that's coming."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix не позволяет отключить ускорение указателя, но если вы используете **macOS 14 Sonoma** или более позднюю версию, вы можете отключить ускорение указателя в разделе 'Настройки системы > Мышь > Дополнительно... > Ускорение указателя'.\n\nЯ планирую добавить в будущем действительно хорошие способы улучшения ускорения указателя, но не знаю, когда это произойдет."
+          }
         }
       }
     },
@@ -943,6 +1125,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**What's the difference between Mac Mouse Fix 2 and 3?**"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**В чем разница между Mac Mouse Fix 2 и 3?**"
           }
         }
       }
@@ -967,6 +1155,12 @@
             "state" : "new",
             "value" : "**Monetization:** <br>\nMac Mouse Fix 2 is 100% free, and I plan to keep supporting it. <br>\nMac Mouse Fix 3 is free for 30 days, then costs a few bucks to own. \n\n**Features:** <br>\nHere's a [feature comparison]({url_1}). I wrote it shortly after Mac Mouse Fix 3 released – so it may be slightly out of date. <br>\nYou can also download Mac Mouse Fix [2]({url_2}) and [3]({url_3}) for free to evaluate them yourself!"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Монетизация:** <br>\nMac Mouse Fix 2 является 100% бесплатным, и я планирую продолжать его поддерживать. <br>\nMac Mouse Fix 3 бесплатен в течение 30 дней, после чего его можно приобрести за несколько долларов.\n\n**Особенности:** <br>\nВот [сравнение функций]({url_1}). Я написал его вскоре после выпуска Mac Mouse Fix 3, поэтому оно может быть немного устаревшим. <br>\nВы также можете бесплатно скачать Mac Mouse Fix [2]({url_2}) и [3]({url_3}), чтобы оценить их самостоятельно!"
+          }
         }
       }
     },
@@ -989,6 +1183,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Does Mac Mouse Fix collect my data?**"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Mac Mouse Fix собирает мои данные?**"
           }
         }
       }
@@ -1013,6 +1213,12 @@
             "state" : "new",
             "value" : "Mac Mouse Fix does not have ads, and it does not collect any personal information about you.\n\nHowever, at the moment that you buy the app, the sales provider Gumroad.com collects some personal info, such as your email address, and this info is visible to me. This is necessary to be able to issue refunds, send a license key to your email, etc. I cannot turn this off. To learn more about the data collected when you buy Mac Mouse Fix, see the [Gumroad Privacy Policy]({url})."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix не содержит рекламы и не собирает никакой личной информации о вас.\n\nОднако в момент покупки приложения поставщик услуг Gumroad.com собирает некоторую личную информацию, такую как ваш адрес электронной почты, и эта информация доступна мне. Это необходимо для возврата денежных средств, отправки лицензионного ключа на ваш адрес электронной почты и т. д. Я не могу отключить эту функцию. Чтобы узнать больше о данных, собираемых при покупке Mac Mouse Fix, ознакомьтесь с [Политикой конфиденциальности Gumroad]({url})."
+          }
         }
       }
     },
@@ -1035,6 +1241,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**How many devices can I use my license on?**"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**На скольких устройствах я могу использовать свою лицензию?**"
           }
         }
       }
@@ -1059,6 +1271,12 @@
             "state" : "new",
             "value" : "Your license works on **all your Macs**. <br>\nThe goal is that you can just buy a license, activate it, and never have to worry about it again. <br>\nIf you log in with the same Apple Account, the license will even sync automatically to your other devices via iCloud!\n\nIf you encounter problems activating your license, you can [send me an email]({url}). <br>\nI sometimes take a while to answer. I'm sorry about this. But I will get back to you!\n\nThere is one restriction: <br>\nLicenses are not meant to be shared publicly. One license is meant for one person. Publicly shared licenses might be invalidated. (Your mom is not 'the public' and sharing with her is ok!)"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваша лицензия работает на **всех ваших Mac**. <br>\nЦель состоит в том, чтобы вы могли просто купить лицензию, активировать ее и больше не беспокоиться об этом. <br>\nЕсли вы войдете в систему с помощью той же учетной записи Apple, лицензия даже автоматически синхронизируется с вашими другими устройствами через iCloud!\n\nЕсли у вас возникнут проблемы с активацией лицензии, вы можете [отправить мне электронное письмо]({url}). <br>\nИногда я отвечаю с задержкой. Приношу свои извинения за это. Но я обязательно свяжусь с вами!\n\nЕсть одно ограничение: <br>\nЛицензии не предназначены для публичного использования. Одна лицензия предназначена для одного человека. Публично используемые лицензии могут быть аннулированы. (Ваша мама не является 'публикой', и делиться с ней лицензией можно!)"
+          }
         }
       }
     },
@@ -1081,6 +1299,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Will my license work with future versions?**"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Будет ли моя лицензия работать с будущими версиями?**"
           }
         }
       }
@@ -1105,6 +1329,12 @@
             "state" : "new",
             "value" : "Your license covers all Mac Mouse Fix 3.x versions.\n\nFuture versions, like 4.0, may require a new purchase, but I'll try to avoid this, unless it's necessary to support the continued development of the app."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваша лицензия распространяется на все версии Mac Mouse Fix 3.x.\n\nДля будущих версий, таких как 4.0, может потребоваться новая покупка, но я постараюсь этого избежать, если только это не будет необходимо для продолжения разработки приложения."
+          }
         }
       }
     },
@@ -1127,6 +1357,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Is there a refund policy?**"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Есть ли политика возврата средств?**"
           }
         }
       }
@@ -1151,6 +1387,12 @@
             "state" : "new",
             "value" : "There is no official refund policy, but the app is free for 30 days.\n\nIf you experience any problems after buying the app, just reach out to me, and I will do my best to help."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Официальной политики возврата средств нет, но приложение предоставляется бесплатно в течение 30 дней.\n\nЕсли у вас возникнут проблемы после покупки приложения, просто свяжитесь со мной, и я сделаю все возможное, чтобы помочь."
+          }
         }
       }
     },
@@ -1173,6 +1415,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Will Mac Mouse Fix still be Open Source now that it's monetized?**"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Будет ли Mac Mouse Fix по-прежнему открытым исходным кодом, теперь, когда он стал коммерческим продуктом?**"
           }
         }
       }
@@ -1197,6 +1445,12 @@
             "state" : "new",
             "value" : "Yes, Mac Mouse Fix will still be open source!\n\nI encourage anyone to use the source code of Mac Mouse Fix in their own projects, as long as they don't release a simple copy of Mac Mouse Fix.\n\nLearn about the details in the [MMF License]({url}) which Mac Mouse Fix 3 and later are licensed under."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Да, Mac Mouse Fix по-прежнему будет открытым исходным кодом!\n\nЯ призываю всех использовать исходный код Mac Mouse Fix в своих собственных проектах, при условии, что они не будут выпускать простую копию Mac Mouse Fix.\n\nПодробности можно узнать в [Лицензии MMF]({url}), по которой распространяются Mac Mouse Fix 3 и более поздние версии."
+          }
         }
       }
     },
@@ -1219,6 +1473,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Can I get Mac Mouse Fix for free if I already donated?**"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Могу ли я получить Mac Mouse Fix бесплатно, если я уже сделал пожертвование?**"
           }
         }
       }
@@ -1243,6 +1503,12 @@
             "state" : "new",
             "value" : "Yes! If you donated via PayPal, click [here]({url}) to receive a **free license**."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Да! Если вы сделали пожертвование через PayPal, нажмите [здесь]({url}), чтобы получить **бесплатную лицензию**."
+          }
         }
       }
     },
@@ -1265,6 +1531,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "## How you can contribute\n\nThere are several ways to help the project.<br>\nCheck out the [Acknowledgements]({url}) for more info on who has already contributed!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Как вы можете помочь\n\nЕсть несколько способов помочь проекту.<br>\nОзнакомьтесь с [Благодарностями]({url}) для получения дополнительной информации о тех, кто уже внес свой вклад!"
           }
         }
       }
@@ -1289,6 +1561,12 @@
             "state" : "new",
             "value" : "**Giving feedback**"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Оставить отзыв**"
+          }
         }
       }
     },
@@ -1311,6 +1589,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "You can help by sharing your **ideas**, **issues** and **feedback** via the [Feedback Assistant]({url})."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы можете помочь, поделившись своими **идеями**, **проблемами** и **отзывами** через [Feedback Assistant]({url})."
           }
         }
       }
@@ -1335,6 +1619,12 @@
             "state" : "new",
             "value" : "**Contributing money**"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Финансовая помощь**"
+          }
         }
       }
     },
@@ -1357,6 +1647,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "I hope to be able to sustain myself financially through Mac Mouse Fix. That way, I can keep improving and working on the app. If you would like to help, you can:\n1. Buy Mac Mouse Fix by clicking the button in the app, or clicking [here]({url_1}).\n2. [Tip me]({url_2}) on PayPal. I don't get a lot of money from this, but it's always cute and motivating to get a donation.\n3. [Sponsor me]({url_3}) on GitHub. A monthly sponsorship is a great way to support the project and help me have a more stable income."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Я надеюсь, что смогу обеспечивать себя финансово за счет Mac Mouse Fix. Таким образом, я смогу продолжать улучшать приложение и работать над ним. Если вы хотите помочь, вы можете:\n1. Купить Mac Mouse Fix, нажав кнопку в приложении или нажав [здесь]({url_1}).\n2. [Оставить мне чаевые]({url_2}) через PayPal. Я не получаю много денег от этого, но получить пожертвование всегда приятно и мотивирует.\n3. [Спонсировать меня]({url_3}) на GitHub. Ежемесячное спонсорство — отличный способ поддержать проект и помочь мне иметь более стабильный доход."
           }
         }
       }
@@ -1381,6 +1677,12 @@
             "state" : "new",
             "value" : "**Adding translations**"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Добавление переводов**"
+          }
         }
       }
     },
@@ -1403,6 +1705,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Mac Mouse Fix is available in English, German as well as the languages listed in the [Acknowledgements]({url_1}).\n\nIf you would like to **help translate the project**, see the [Translation Guide]({url_2}).<br>\nIf you want to **report missing or suboptimal translations**, that's also very helpful. The best way to report problems is by commenting under the [Translation Guide]({url_3})."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix доступен на английском, немецком, а также на языках, перечисленных в разделе [Благодарности]({url_1}).\n\nЕсли вы хотите **помочь перевести проект**, смотрите [Руководство по переводу]({url_2}).<br>\nЕсли вы хотите **сообщить об отсутствующих или неоптимальных переводах**, это также очень полезно. Лучший способ сообщить о проблемах — оставить комментарий под [Руководством по переводу]({url_3})."
           }
         }
       }
@@ -1427,6 +1735,12 @@
             "state" : "new",
             "value" : "**Contributing code**"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Внесение вклада в код**"
+          }
         }
       }
     },
@@ -1450,6 +1764,12 @@
             "state" : "new",
             "value" : "If you would like to contribute code, that's awesome! I'll be happy about any [pull requests]({url}).\n\nHowever, I might not accept all pull requests. If you want to make sure that your work is not wasted, you can submit an initial pull request that only *describes* the changes you want to make, but contains little or no code. Then I can give you feedback and tell you if I would adopt the changes you want to make in that way."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Если вы хотите внести свой вклад в код, это здорово! Я буду рад любым [pull requests]({url}).\n\nТем не менее, я могу принять не все pull requests. Если вы хотите убедиться, что ваша работа не будет потрачена впустую, вы можете отправить первоначальный pull request, который только *описывает* изменения, которые вы хотите внести, но содержит мало кода или не содержит его вовсе. Тогда я смогу дать вам обратную связь и сказать, приму ли я изменения, которые вы хотите внести таким образом."
+          }
         }
       }
     },
@@ -1472,6 +1792,70 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Thank you** to everyone who has already contributed and supported me in trying to make the best mouse driver *of all time*! :)🚀"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Спасибо** всем, кто уже внес свой вклад и поддержал меня в попытках создать лучший драйвер для мыши *всех времен*! :)🚀"
+          }
+        }
+      }
+    },
+    "questions.blender" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Jak mohu obíhat kolem objektů v 3D aplikacích, jako je Blender?**"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Wie kann ich in 3D-Apps wie Blender um Objekte kreisen?**"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "**How can I orbit around objects in 3D apps like Blender?**"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Как мне вращаться вокруг объектов в 3D-приложениях, таких как Blender?**"
+          }
+        }
+      }
+    },
+    "questions.blender.body" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "V 3D aplikacích, jako je Blender, obvykle kliknete a táhnete prostřední tlačítko myši pro obíhání objektů.<br>\nPokud ale v Mac Mouse Fix přiřadíte akce prostřednímu tlačítku myši, pak to už nebude fungovat.\n\nPro řešení tohoto problému znám 2 možnosti:\n\n1. Přiřadit kliknutí a tažení jednoho z tlačítek myši funkci „Posouvání a navigace“. Tato funkce simuluje přejetí dvěma prsty po Apple Trackpadu. To vám mimo jiné umožní obíhat v 3D aplikacích!\n\n2. *Odeberte* prostřední tlačítko myši odstraněním všech akcí, které jsou mu přiřazeny v Mac Mouse Fix. Více informací naleznete v [tomto průvodci]({url})."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In 3D-Apps wie Blender kreist man normalerweise um Objekte, indem man die mittlere Maustaste klickt und zieht.<br>\nAber wenn du in Mac Mouse Fix der mittleren Maustaste Aktionen zuweist, dann funktioniert das nicht mehr.\n  \nUm das zu lösen, gibt es 2 Optionen, von denen ich weiß:\n1. Weise für eine der Tasten deiner Maus das klicken und ziehen der \"Scrollen & Navigieren\" Funktion zu. Diese Funktion simuliert das Wischen mit 2 Fingern auf einem Apple Trackpad. Das erlaubt dir, unter anderem, in 3D-Apps zu kreisen!\n2. *Gebe* die mittlere Maustaste *frei*, indem du alle ihr in Mac Mouse Fix zugewiesenen Aktionen löschst. Siehe [diese Anleitung]({url}) für weitere Informationen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "In 3D apps like Blender, you normally Click and Drag the Middle Mouse Button to orbit around objects.<br>\nBut if you assign actions to the Middle Mouse Button in Mac Mouse Fix, then this won't work anymore.\n\nTo solve this, I know of 2 options:\n1. Assign clicking and dragging one of the buttons of your mouse to the \"Scroll & Navigate\" feature. This feature simulates swiping with 2 fingers on an Apple Trackpad. This will, among other things, let you orbit in 3D apps! \n2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it in Mac Mouse Fix. See [this guide]({url}) for more info."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В 3D-приложениях, таких как Blender, вы обычно нажимаете и перетаскиваете Среднюю кнопку мыши, чтобы вращаться вокруг объектов.<br>\nНо если вы назначите действия на Среднюю кнопку мыши в Mac Mouse Fix, то это перестанет работать.\n\nЧтобы решить эту проблему, я знаю 2 варианта:\n1. Назначьте нажатие и перетаскивание одной из кнопок вашей мыши на функцию 'Прокрутка и навигация'. Эта функция имитирует свайп двумя пальцами на трекпаде Apple. Это, среди прочего, позволит вам вращаться в 3D-приложениях!\n2. *Отмените перехват* Средней кнопки мыши, удалив все действия, назначенные ей в Mac Mouse Fix. Подробнее см. в [этом руководстве]({url})."
           }
         }
       }

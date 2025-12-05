@@ -41,6 +41,12 @@
             "value" : "Botões"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопки"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -168,6 +174,12 @@
             "value" : "Rolagem"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прокрутка"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -232,6 +244,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abrir Mac Mouse Fix..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть Mac Mouse Fix..."
           }
         },
         "vi" : {

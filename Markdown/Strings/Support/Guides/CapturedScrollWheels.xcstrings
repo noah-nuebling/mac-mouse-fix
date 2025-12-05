@@ -21,6 +21,12 @@
             "state" : "new",
             "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **captures your mouse's scroll wheel by default**, similar to how it [captures mouse buttons](<{url}>)."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **по умолчанию захватывает колесико прокрутки мыши**, аналогично тому, как он [захватывает кнопки мыши](<{url}>)."
+          }
         }
       }
     },
@@ -45,6 +51,12 @@
             "state" : "new",
             "value" : "**To prevent scroll wheel capture:**\n\n1. Go to the 'Scrolling' tab in Mac Mouse Fix\n2. Turn off **all** options\n    - In case of the 'Speed' option, set it to 'macOS'\n    - Remove all entries under 'Keyboard Modifiers' by clicking the 'x' button next to each modifier\n\nAfter this, you should see a message indicating that the scroll wheel is no longer being captured."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Чтобы предотвратить захват колесика прокрутки:**\n\n1. Перейдите на вкладку 'Прокрутка' в Mac Mouse Fix\n2. Отключите **все** опции\n- В случае опции 'Скорость' установите значение 'macOS'\n- Удалите все записи в разделе 'Модификаторы клавиатуры', нажав кнопку 'x' рядом с каждым модификатором\n\nПосле этого вы должны увидеть сообщение о том, что колесико прокрутки больше не захватывается."
+          }
         }
       }
     },
@@ -68,6 +80,12 @@
             "state" : "new",
             "value" : "**What happens when the scroll wheel is *no longer* being captured?**\n\nMac Mouse Fix will then completely ignore your scroll wheel – it won't use any processor power or battery charge during scrolling, or interfere in any way. This gives you complete freedom to use other apps like [MOS]({url}) to handle your scroll wheel."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Что происходит, когда колесико прокрутки *больше* не захватывается?**\n\nMac Mouse Fix полностью игнорирует ваше колесико прокрутки — оно не будет использовать ресурсы процессора или заряд батареи во время прокрутки и не будет мешать вам никоим образом. Это дает вам полную свободу использовать другие приложения, такие как [MOS]({url}), для управления колесиком прокрутки."
+          }
         }
       }
     },
@@ -90,6 +108,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "## Also see\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Edited with excellent assistance by Claude 3.5 Sonnet)*"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## См. также\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Отредактировано при отличной помощи Claude 3.5 Sonnet)*"
           }
         }
       }

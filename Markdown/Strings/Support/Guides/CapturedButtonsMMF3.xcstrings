@@ -22,6 +22,12 @@
             "state" : "new",
             "value" : "# {docname_captured_buttons_mmf3}\n\nWhile using Mac Mouse Fix, you may have encountered a message saying that a button on your mouse is now being 'captured' by Mac Mouse Fix.\n\n{img}\n\nIn this article, you'll learn what this means, what problems it can cause, and how to work around them."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_buttons_mmf3}\n\nПри использовании Mac Mouse Fix вы могли столкнуться с сообщением о том, что кнопка на вашей мыши в данный момент 'захвачена' Mac Mouse Fix.\n\n{img}\n\nВ этой статье вы узнаете, что это означает, какие проблемы это может вызвать и как их решить."
+          }
         }
       }
     },
@@ -44,6 +50,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "## What does 'capturing' a mouse button mean?\n\nA mouse button that is captured by Mac Mouse Fix can't be seen by other apps or by macOS anymore.\nThe functions which this button would normally perform won't work while it's being captured.\n\n**Example**: Normally you can go backward and forward in Chrome by clicking the side buttons (buttons 4 and 5) of the mouse.\nBut when the side buttons are captured by Mac Mouse Fix, this no longer works. Instead, the side buttons will only trigger the actions that you've assigned to them in Mac Mouse Fix.\n\n**Why does Mac Mouse Fix do this?** Mac Mouse Fix hides buttons from other apps to prevent you from accidentally triggering other functions while using Mac Mouse Fix gestures.\nFor example, if you click and drag button 4 to switch between desktops, you would always **simultaneously** go back a page in Chrome."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Что означает 'захват' кнопки мыши?\n\nКнопка мыши, захваченная Mac Mouse Fix, больше не видна другим приложениям или macOS.\nФункции, которые обычно выполняет эта кнопка, не будут работать, пока она захвачена.\n\n**Пример**: Обычно в Chrome можно переходить назад и вперед, нажимая боковые кнопки (кнопки 4 и 5) мыши.\nНо когда боковые кнопки захвачены Mac Mouse Fix, это больше не работает. Вместо этого боковые кнопки будут запускать только те действия, которые вы им назначили в Mac Mouse Fix.\n\n**Почему Mac Mouse Fix так поступает?** Mac Mouse Fix скрывает кнопки от других приложений, чтобы вы не могли случайно запустить другие функции при использовании жестов Mac Mouse Fix.\nНапример, если вы нажмете и перетащите кнопку 4 для переключения между рабочими столами, вы всегда будете **одновременно** возвращаться на предыдущую страницу в Chrome."
           }
         }
       }
@@ -69,6 +81,12 @@
             "state" : "new",
             "value" : "## How do I know which buttons are being captured by Mac Mouse Fix?\n\nAny button that shows up on the left side of the 'Buttons' tab is being captured by Mac Mouse Fix.\n\nIn the following image **'Middle Button'**, **'Button 5'**, and **'Button 4'** are being captured: <br>\n\n{img}"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Как узнать, какие кнопки захватываются Mac Mouse Fix?\n\nЛюбая кнопка, отображаемая в левой части вкладки 'Кнопки', захватывается Mac Mouse Fix.\n\nНа следующем изображении захватываются **'Средняя кнопка'**, **'Кнопка 5'** и **'Кнопка 4'**: <br>\n\n{img}"
+          }
         }
       }
     },
@@ -93,6 +111,12 @@
             "state" : "new",
             "value" : "## How do I prevent Mac Mouse Fix from capturing a mouse button?\n\nTo prevent Mac Mouse Fix from capturing a mouse button, delete all entries for that mouse button from the 'Buttons' tab.\nYou can delete an entry in the 'Buttons' tab by clicking the '-' button on the left.\n\nFor example, in the following image, you could prevent **'Button 4'** from being captured by clicking the two highlighted **'-'** buttons:\n\n{img}"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Как запретить Mac Mouse Fix захватывать кнопку мыши?\n\nЧтобы запретить Mac Mouse Fix захватывать кнопку мыши, удалите все записи для этой кнопки мыши на вкладке 'Кнопки'.\nВы можете удалить запись на вкладке 'Кнопки', нажав кнопку '-' слева.\n\nНапример, на следующем изображении вы можете запретить захват **'Кнопки 4'**, нажав две выделенные кнопки **'-'**:\n\n{img}"
+          }
         }
       }
     },
@@ -115,6 +139,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "## How can I restore the original functionality of a button?\n\nTo make a button behave like it did before you installed Mac Mouse Fix, you can do the following:\n\n1. You can **prevent the button from being captured** – as described above.\n\n2. You can simply **turn off Mac Mouse Fix** – then no buttons will be captured.\n\n3. You can **assign specific actions to the button in Mac Mouse Fix** – this way you can restore certain functions, *even while the button is being captured*:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Как восстановить исходную функциональность кнопки?\n\nЧтобы кнопка работала так же, как до установки Mac Mouse Fix, можно выполнить следующие действия:\n\n1. Можно **запретить захват кнопки**, как описано выше.\n\n2. Вы можете просто **отключить Mac Mouse Fix** – тогда никакие кнопки не будут захватываться.\n\n3. Вы можете **назначить кнопке определенные действия в Mac Mouse Fix** – таким образом вы сможете восстановить определенные функции, *даже когда кнопка захвачена*:"
           }
         }
       }
@@ -140,6 +170,12 @@
             "state" : "new",
             "value" : "Button"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопка"
+          }
         }
       }
     },
@@ -163,6 +199,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Original Function"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Исходная функция"
           }
         }
       }
@@ -188,6 +230,12 @@
             "state" : "new",
             "value" : "Action in Mac Mouse Fix"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Действие в Mac Mouse Fix"
+          }
         }
       }
     },
@@ -211,6 +259,12 @@
             "state" : "new",
             "value" : "Middle Mouse Button"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Средняя кнопка мыши"
+          }
         }
       }
     },
@@ -233,6 +287,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Open links in the browser in a new tab"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть ссылки в браузере в новой вкладке"
           }
         }
       }
@@ -258,6 +318,12 @@
             "state" : "new",
             "value" : "'Middle Click'<br>(Can be assigned to **clicking** a button)"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Средний щелчок'<br>(Может быть назначен для **щелчка** кнопкой)"
+          }
         }
       }
     },
@@ -281,6 +347,12 @@
             "state" : "new",
             "value" : "Middle Mouse Button"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Средняя кнопка мыши"
+          }
         }
       }
     },
@@ -303,6 +375,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Paste text in the terminal"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вставить текст в терминал"
           }
         }
       }
@@ -328,6 +406,12 @@
             "state" : "new",
             "value" : "'Middle Click'<br>(Can be assigned to **clicking** a button)"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Средний щелчок'<br>(Может быть назначен для **щелчка** кнопкой)"
+          }
         }
       }
     },
@@ -350,6 +434,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Mouse Button 4 / Mouse Button 5"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопка мыши 4 / Кнопка мыши 5"
           }
         }
       }
@@ -375,6 +465,12 @@
             "state" : "new",
             "value" : "Go back / forward in Chrome and other apps"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вернуться назад / перейти вперед в Chrome и других приложениях"
+          }
         }
       }
     },
@@ -399,6 +495,12 @@
             "state" : "new",
             "value" : "'Back' / 'Forward'<br>(Can be assigned to **clicking** a button)"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Назад' / 'Вперед'<br>(Может быть назначен для **щелчка** кнопкой)"
+          }
         }
       }
     },
@@ -422,6 +524,12 @@
             "state" : "new",
             "value" : "Middle Mouse Button"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Средняя кнопка мыши"
+          }
         }
       }
     },
@@ -444,6 +552,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Orbit around objects in Blender (and other 3D apps)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Орбита вокруг объектов в Blender (и других 3D-приложениях)"
           }
         }
       }
@@ -469,6 +583,12 @@
             "state" : "new",
             "value" : "'Scroll & Navigate'<br>(Can be assigned to **clicking and dragging** a button)"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Прокрутка и навигация'<br>(Может быть назначено **щелчку и перетаскиванию** кнопки)"
+          }
         }
       }
     },
@@ -492,6 +612,12 @@
             "state" : "new",
             "value" : "This way you can keep using the button's usual functionality, while also assigning *additional* functions to it in Mac Mouse Fix."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Таким образом, вы можете продолжать использовать обычную функциональность кнопки, а также назначать ей *дополнительные* функции в Mac Mouse Fix."
+          }
         }
       }
     },
@@ -514,6 +640,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "## Also see\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## См. также\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
           }
         }
       }

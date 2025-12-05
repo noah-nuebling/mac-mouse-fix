@@ -21,6 +21,12 @@
             "state" : "new",
             "value" : "# {docname_support}\n\nHelp with problems and questions about Mac Mouse Fix."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_support}\n\nПомощь по проблемам и вопросам, связанным с Mac Mouse Fix."
+          }
         }
       }
     },
@@ -43,6 +49,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "## Questions\n\nQuick answers to common questions [here](<{url}>)."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Вопросы\n\nКраткие ответы на часто задаваемые вопросы [здесь](<{url}>)."
           }
         }
       }
@@ -67,6 +79,12 @@
             "state" : "new",
             "value" : "## Guides\n\nWhere possible, Mac Mouse Fix tries to be self-explanatory. But for some things a more detailed explanation is helpful:\n\n- [{docname_captured_scroll_wheels}](<{url_1}>)\n- [{docname_captured_buttons_mmf3}](<{url_2}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_3}>) (Mac Mouse Fix 2) {only_in_english}"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Руководства\n\nПо возможности, Mac Mouse Fix старается быть понятным без дополнительных объяснений. Но для некоторых вещей полезно более подробное объяснение:\n\n- [{docname_captured_scroll_wheels}](<{url_1}>)\n- [{docname_captured_buttons_mmf3}](<{url_2}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_3}>) (Mac Mouse Fix 2) {only_in_english}"
+          }
         }
       }
     },
@@ -90,6 +108,12 @@
             "state" : "new",
             "value" : "### Older Guides\n\nGuides for older versions of Mac Mouse Fix or macOS.\n\n- [{docname_enabling}](<{url_1}>) {only_in_english}\n    - For **macOS 13 Ventura** and **macOS 14 Sonoma**.\n- [{docname_ax_access}](<{url_2}>) {only_in_english}\n    - For users of **Mac Mouse Fix 2.2.1** and older, or **macOS 10.14 Mojave** and older.\n- [{docname_opening}](<{url_3}>) {only_in_english}\n    - For **Mac Mouse Fix 2.2.3** and older."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### Старые руководства\n\nРуководства для старых версий Mac Mouse Fix или macOS.\n\n- [{docname_enabling}](<{url_1}>) {only_in_english}\n    - Для **macOS 13 Ventura** и **macOS 14 Sonoma**.\n- [{docname_ax_access}](<{url_2}>) {only_in_english}\n    - Для пользователей **Mac Mouse Fix 2.2.1** и более старых версий или **macOS 10.14 Mojave** и более старых версий.\n- [{docname_opening}](<{url_3}>) {only_in_english}\n- Для **Mac Mouse Fix 2.2.3** и более старых версий."
+          }
         }
       }
     },
@@ -112,6 +136,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "## Contact\n\nStill have questions? Click [here]({url})."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Контакты\n\nОстались вопросы? Нажмите [здесь]({url})."
           }
         }
       }

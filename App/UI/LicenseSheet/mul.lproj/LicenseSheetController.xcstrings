@@ -41,6 +41,12 @@
             "value" : "Voltar"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назад"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -166,6 +172,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Digite a sua Chave de Ativação"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите ваш лицензионный ключ"
           }
         },
         "vi" : {

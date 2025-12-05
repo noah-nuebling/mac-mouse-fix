@@ -21,6 +21,12 @@
             "state" : "new",
             "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# 🙌 Благодарности\n\nБольшое спасибо всем, кто использует Mac Mouse Fix и оставляет отзывы. Очень приятно и мотивирует видеть, что так много людей пользуются и ценят то, что я создал.\n\nОсобую благодарность я хочу выразить людям и проектам, упомянутым в этом документе."
+          }
         }
       }
     },
@@ -44,6 +50,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n- 🇰🇷 Korean translations by [@jeongtae]({url_4})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_5})\n- 🇧🇷 Brazilian Portuguese translations by **Eduardo Rodrigues**\n- 🇫🇷 French translations by [@DimitriDR]({url_6})\n- 🇹🇷 Turkish translations by [@hasanbeder]({url_7})\n- 🇨🇿 Czech translations by [Petr Pavlík]({url_8})"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "## 🌏 Переводы\n\nСпасибо за то, что вы сделали Mac Mouse Fix доступным для людей по всему миру!\n\n- 🇨🇳 Chinese translations by \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n- 🇰🇷 Корейский перевод: [@jeongtae]({url_2})\n- 🇻🇳 Перевод на вьетнамский язык: [@nghlt]({url_3})\n- 🇧🇷 Перевод на бразильский португальский язык: **Эдуардо Родригес**\n- 🇫🇷 Перевод на французский язык: [@DimitriDR]({url_4})\n- 🇹🇷 Турецкий перевод: [@hasanbeder]({url_5})\n- 🇨🇿 Чешский перевод: [Petr Pavlík]({url_6})\n- 🇷🇺 Русский перевод: [@sos.soon.ok]({url_7})"
           }
         }
       }
@@ -69,6 +81,12 @@
             "state" : "new",
             "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 💰 Деньги\n\nБольшое спасибо всем, кто угостил меня молочным коктейлем, и всем **{sales_count}** людям, которые купили Mac Mouse Fix.\nБлагодаря вам я могу много времени посвящать тому, что люблю. \n\nЛюди, которые поддержали меня, заплатив за Mac Mouse Fix больше стандартной цены, получают здесь особое упоминание:"
+          }
         }
       }
     },
@@ -91,6 +109,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ⭐️ Щедрые спонсоры\n\nСпасибо за вашу поддержку! :)"
           }
         }
       }
@@ -115,6 +139,12 @@
             "state" : "new",
             "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### 🚀 Очень щедрые спонсоры\n\nЭти люди потратили гораздо больше стандартной цены и угостили меня **невероятным молочным коктейлем**. (А некоторые даже оставили сообщение) Спасибо за *сахарный кайф*!"
+          }
         }
       }
     },
@@ -137,6 +167,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ❤️ Спонсоры GitHub\n\n**Огромное спасибо** [всем]({url}), кто спонсирует меня на GitHub! Надеюсь, благодаря вам я когда-нибудь смогу купить фабрику по производству молочных коктейлей. :)"
           }
         }
       }
@@ -161,6 +197,12 @@
             "state" : "new",
             "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free.\n\nIf you're among them, click [here]({url}) to receive a **free license**!"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ✨ Пожертвования через PayPal\n\nМногие щедрые люди покупали мне молочные коктейли через PayPal, когда Mac Mouse Fix еще был полностью бесплатным.\n\nЕсли вы один из них, нажмите [здесь]({url}), чтобы получить **бесплатную лицензию**!"
+          }
         }
       }
     },
@@ -184,6 +226,12 @@
             "state" : "new",
             "value" : "## 👾 Other Software"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 👾 Другое программное обеспечение"
+          }
         }
       }
     },
@@ -206,6 +254,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Программное обеспечение**, которое вдохновило Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - новаторское программное обеспечение для мыши Mac, вдохновившее многие функции. Были моменты, когда я думал: \"Это, наверное, невозможно\", но потом я увидел: \"О, SteerMouse это делает\", и через три года я тоже понял, как это реализовать.\n- [Calftrail Touch]({url_2}) — основа для \"обратного инжиниринга\", который обеспечивает лучшую в своем классе и первую в своем роде симуляцию трекпада в Mac Mouse Fix!\n- [MOS]({url_3}) - Опция \"Высокая плавность прокрутки\" Mac Mouse Fix, реализация \"Настроек для конкретных приложений\" и многое другое были вдохновлены MOS.\n- [SensibleSideButtons]({url_4}) - Я скопировал его код для ранней реализации функции \"Вернуться/перейти на одну страницу назад в Safari и других приложениях\", а также это привело меня к открытию проекта Calftrail Touch.\n- [Gifski]({url_5}) - Сильно вдохновил дизайн и содержание [Readme.md]({url_6}) для Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Основа для дизайна и технической реализации [Mac Mouse Fix Feedback Assistant]({url_8})."
           }
         }
       }

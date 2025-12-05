@@ -40,6 +40,12 @@
             "value" : "Abrir 'Privacidade e Segurança' em Ajustes do Sistema"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть настройки 'Конфиденциальность и безопасность'"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -111,6 +117,12 @@
             "value" : "Você **já está usando** a configuração padrão para mouses com **3 botões**"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы **уже используете** настройки по умолчанию для мышей с **3 кнопками**"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -176,6 +188,12 @@
             "value" : "Você **já está usando** a configuração padrão para mouses com **5 botões**"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы **уже используете** настройки по умолчанию для мышей с **5+ кнопками**"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -239,6 +257,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Versão %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Версия %@"
           }
         },
         "tr" : {
@@ -1832,6 +1856,12 @@
             "value" : "Botão do Mouse %@"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопка мыши %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2101,6 +2131,12 @@
             "value" : "Botão do Meio"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Средняя кнопка"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2170,6 +2206,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Botão %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопка %@"
           }
         },
         "tr" : {
@@ -2243,6 +2285,12 @@
             "value" : "Botão Primário"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Основная кнопка"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2312,6 +2360,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Botão Secundário"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дополнительная кнопка"
           }
         },
         "tr" : {
@@ -2510,6 +2564,45 @@
                     "stringUnit" : {
                       "state" : "needs_review",
                       "value" : "%2$@ foram capturados pelo Mac Mouse Fix."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ теперь захватываются Mac Mouse Fix"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ теперь захвачены Mac Mouse Fix"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ теперь захватывается Mac Mouse Fix"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ теперь захвачены Mac Mouse Fix"
                     }
                   }
                 }
@@ -2801,6 +2894,45 @@
             }
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Другие программы больше не смогут использовать эти кнопки"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Другие программы больше не смогут использовать эти кнопки"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Другие программы больше не смогут использовать эту кнопки"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Другие программы больше не смогут использовать эти кнопки"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "new",
@@ -2951,6 +3083,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "[Saber mais](%@)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Подробнее](%@)"
           }
         },
         "tr" : {
@@ -3149,6 +3287,45 @@
                     "stringUnit" : {
                       "state" : "needs_review",
                       "value" : "%2$@ não são mais capturados pelo Mac Mouse Fix."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ больше не перехватываются Mac Mouse Fix"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ больше не перехватываются Mac Mouse Fix"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ больше не перехватывается Mac Mouse Fix"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ больше не перехватываются Mac Mouse Fix"
                     }
                   }
                 }
@@ -3440,6 +3617,45 @@
             }
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : ""
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : ""
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : ""
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "new",
@@ -3574,6 +3790,12 @@
             "state" : "translated",
             "value" : "**Scrolling** is now captured by Mac Mouse Fix"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Прокрутка** теперь перехватывается Mac Mouse Fix"
+          }
         }
       }
     },
@@ -3628,6 +3850,12 @@
             "value" : "[Saber mais](%@)"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Подробнее](%@)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3680,6 +3908,12 @@
             "state" : "translated",
             "value" : "**Scrolling** is no longer captured by Mac Mouse Fix"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Прокрутка** больше не перехватывается Mac Mouse Fix"
+          }
         }
       }
     },
@@ -3723,6 +3957,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Spaces e Mission Control"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spaces и Mission Control"
           }
         },
         "tr" : {
@@ -3796,6 +4036,12 @@
             "value" : "Mova o Mouse:\n - Para cima para mostrar o Mission Control\n - Para baixo para mostrar as Janelas do Aplicativo Aberto\n - Esquerda ou Direita para mover entre os Espaços da Mesa\n \nFunciona como deslizar com três dedos em um Trackpad da Apple"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Двигайте мышь:\n - Вверх, чтобы показать Mission Control\n - Вниз, чтобы показать Окна программы\n - Влево или Вправо, чтобы перемещаться между Spaces\n\nРаботает как свайп тремя пальцами на трекпаде Apple"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3865,6 +4111,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Role e Navegue"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прокрутка и навигация"
           }
         },
         "tr" : {
@@ -3938,6 +4190,12 @@
             "value" : "Role livremente movendo o Mouse para qualquer direção\n \nNavegue também entre páginas do Safari, exclua mensagens no Mail e muito mais, movendo o Mouse para a esquerda e para a direita\n \nFunciona como deslizar com dois dedos em um Trackpad da Apple"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Свободно прокручивайте, двигая мышь в любом направлении\n\nТакже перемещайтесь между страницами в Safari, удаляйте сообщения в Почте и выполняйте другие действия, двигая мышь влево и вправо\n\nРаботает как свайп двумя пальцами на трекпаде Apple"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4007,6 +4265,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Janelas do Aplicativo"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Окна программы"
           }
         },
         "tr" : {
@@ -4080,6 +4344,12 @@
             "value" : "Exibir todas as Janelas do Aplicativo ativo"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать все окна активной программы"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4149,6 +4419,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : " Teclas Exclusivas"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эксклюзивные клавиши "
           }
         },
         "tr" : {
@@ -4222,6 +4498,12 @@
             "value" : "Escolha teclas que estão disponíveis apenas em teclados Apple"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите клавиши, доступные только на клавиатурах Apple"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4291,6 +4573,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Funciona como pressionar '%@' em um teclado Apple"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Работает как нажатие клавиши '%@' на клавиатуре Apple"
           }
         },
         "tr" : {
@@ -4364,6 +4652,12 @@
             "value" : "Voltar"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назад"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4433,6 +4727,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Volte uma página no Safari e em outros aplicativos"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перейти на одну страницу назад в Safari и других программах"
           }
         },
         "tr" : {
@@ -4506,6 +4806,12 @@
             "value" : "Botão do Meio"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Средний клик"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4577,6 +4883,12 @@
             "value" : "Abra links em uma nova aba, cole texto no Terminal e muito mais.\n \nFunciona como clicar Botão do Meio do Mouse (também chamado de Botão da de Rolagem ou 3º Botão do Mouse) em um Mouse padrão."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открывайте ссылки в новой вкладке, вставляйте текст в Терминале и многое другое.\n\nРаботает как нажатие средней кнопки мыши (также называемой кнопкой колеса прокрутки или кнопкой мыши 3) на стандартной мыши."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4642,6 +4954,12 @@
             "value" : "Clique Primário"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Основнаой клик"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4693,6 +5011,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Funciona como clicar em Botão Primário do Mouse (também chamado de Botão Esquerdo ou 1º Botão do Mouse) em um Mouse padrão."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Работает как нажатие основной кнопки мыши (также называемой левой кнопкой или кнопкой мыши 1) на стандартной мыши."
           }
         },
         "tr" : {
@@ -4760,6 +5084,12 @@
             "value" : "Clique Secundário"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дополнительный клик"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4811,6 +5141,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Funciona como clicar em Botão Secundário do Mouse (também chamado de Botão Direito ou 2º Botão do Mouse) em um Mouse padrão."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Работает как нажатие дополнительной кнопки мыши (также называемой правой кнопкой мыши или кнопкой мыши 2) на стандартной мыши."
           }
         },
         "tr" : {
@@ -4884,6 +5220,12 @@
             "value" : "Exibir Mesa"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать Рабочий стол"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4953,6 +5295,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Exibe a Mesa"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать Рабочий стол"
           }
         },
         "tr" : {
@@ -5026,6 +5374,12 @@
             "value" : "Avançar"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вперед"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5097,6 +5451,12 @@
             "value" : "Avance uma página no Safari e em outros aplicativos"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перейти на одну страницу вперед в Safari и других программах"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5165,6 +5525,12 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
+            "value" : "Launchpad"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Launchpad"
           }
         },
@@ -5239,6 +5605,12 @@
             "value" : "Abrir Launchpad"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть Launchpad"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5308,6 +5680,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Mova para a Mesa à esquerda"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переместить влево на один Spaces"
           }
         },
         "tr" : {
@@ -5381,6 +5759,12 @@
             "value" : "Mova para a Mesa à esquerda criada no Mission Control"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переместиться на один Spaces влево"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5450,6 +5834,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Pesquisa e Visualização Rápida"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поиск и Quick Look"
           }
         },
         "tr" : {
@@ -5523,6 +5913,12 @@
             "value" : "Procure palavras no Dicionário, visualize arquivos sem abrir no Finder e muito mais.\n \nFunciona como um Force Touch em um Trackpad da Apple."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ищите слова в словаре, просматривайте файлы в Finder с помощью Quick Look и многое другое.\n\nРаботает как сильное нажатие на трекпаде Apple."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5591,6 +5987,12 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
+            "value" : "Mission Control"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Mission Control"
           }
         },
@@ -5665,6 +6067,12 @@
             "value" : "Exibir o Mission Control"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать Mission Control"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5734,6 +6142,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Atalhos de Teclado..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сочетание клавиш..."
           }
         },
         "tr" : {
@@ -5807,6 +6221,12 @@
             "value" : "Digite um atalho de teclado e use-o com o Mouse"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите сочетание клавиш, затем используйте его с помощью мыши"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5876,6 +6296,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Mova para a Mesa à direita"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переместить вправо на один Spaces"
           }
         },
         "tr" : {
@@ -5949,6 +6375,12 @@
             "value" : "Mova para a Mesa à esquerda"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переместиться на один Spaces вправо"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6018,6 +6450,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Funciona como pressionar '%@' no teclado"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Работает как нажатие '%@' на клавиатуре"
           }
         },
         "tr" : {
@@ -6091,6 +6529,12 @@
             "value" : "Zoom Inteligente"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Смарт-масштабирование"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6162,6 +6606,12 @@
             "value" : "Amplie ou reduza o zoom no Safari e em outros apps.\n \nFunciona como um toque duplo com dois dedos em um Trackpad da Apple."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Увеличивайте или уменьшайте масштаб в Safari и других программах.\n\nРаботает как двойное касание двумя пальцами на трекпаде Apple."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6221,6 +6671,12 @@
             "value" : "Si vous rencontrez des **problèmes pour activer** l'app, cliquez&nbsp;[ici](%@)."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Если у вас **возникли проблемы с включением** приложения, нажмите [здесь](%@)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6266,6 +6722,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "**O Botão Primário do Mouse** não pode ser utilizado\nTente outro botão"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Основная кнопка мыши** не может быть использована\nПожалуйста, попробуйте другую кнопку"
           }
         },
         "tr" : {
@@ -6339,6 +6801,12 @@
             "value" : "**O Botão Secundário do Mouse** não pode ser utilizado\nTente outro botão"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Дополнительная кнопка мыши** не может быть использована\nПожалуйста, попробуйте другую кнопку"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6408,6 +6876,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Atualmente, o Mac Mouse Fix está gratuito em seu país (%@)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "В вашей стране (%@) Mac Mouse Fix в настоящее время бесплатный"
           }
         },
         "tr" : {
@@ -6481,6 +6955,12 @@
             "value" : "O Mac Mouse Fix foi **desativado** nos Ajustes do Sistema\n\nPara ativá-lo:\n\n1. Vá para [Itens de Início](%@)\n2. Ative 'Mac Mouse Fix.app'"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix был **отключён** в Системных настройках\n\nЧтобы включить Mac Mouse Fix:\n\n1. Перейдите в [Настройки объектов входа](%@)\n2. Включите 'Mac Mouse Fix.app'"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6550,6 +7030,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "O Mac Mouse Fix não pode ser Ativado porque há **outra versão** do Mac Mouse Fix presente em seu computador\n\nPara ativar o Mac Mouse Fix:\n\n1. Exclua a [outra versão](%@)\n2. Esvazie a Lixeira\n3. Reinicie o seu Mac\n4. Tente novamente!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Невозможно включить Mac Mouse Fix, потому что на вашем компьютере присутствует **другая версия** Mac Mouse Fix\n\nЧтобы включить Mac Mouse Fix:\n\n1. Удалите [другую версию](%@)\n2. Очистите Корзину\n3. Перезагрузите Mac\n4. Попробуйте снова!"
           }
         },
         "tr" : {
@@ -6623,6 +7109,12 @@
             "value" : "Falha na Ativação"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось включить"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6691,6 +7183,12 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
+            "value" : ","
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : ","
           }
         },
@@ -6765,6 +7263,12 @@
             "value" : "%1$@ e %2$@"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ и %2$@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6834,6 +7338,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ativar Licença"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Активировать лицензию"
           }
         },
         "tr" : {
@@ -6907,6 +7417,12 @@
             "value" : "Desativar Licença"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Деактивировать лицензию"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6976,6 +7492,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Sua Licença foi **Ativada**! 🎉"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваша лицензия **активирована**! 🎉"
           }
         },
         "tr" : {
@@ -7049,6 +7571,12 @@
             "value" : "Esta licença foi ativada **%2$d** vezes, sendo que o máximo permitido é **%3$d** vezes.\n\nPara evitarmos pirataria, tivemos que invalidar esta licença. Se você tiver outros motivos para ativar a licença várias vezes, pedimos nossas sinceras desculpas e recomendamos que você [entre em contato](%1$@) para receber uma nova licença! Obrigado pela compreensão."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эта лицензия была активирована **%2$d** раз. Максимальное количество активаций — **%3$d**.\n\nИз-за этого лицензия была аннулирована. Это сделано для предотвращения пиратства. Если у вас есть другие причины для такого количества активаций лицензии, приносим извинения за неудобство.\n\nПросто [свяжитесь со мной](%1$@), и я предоставлю вам новую лицензию! Спасибо за понимание."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7118,6 +7646,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Esta licença **já está ativada**!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваше приложение **уже лицензировано** этим ключом"
           }
         },
         "tr" : {
@@ -7191,6 +7725,12 @@
             "value" : "Sua licença foi **desativada**"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваша лицензия **деактивирована**"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7260,6 +7800,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Esta licença **não pôde ser ativada**, mas o Mac Mouse Fix está **gratuito em seu país**!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Эту лицензию **не удалось активировать**, но Mac Mouse Fix в настоящее время **бесплатный в вашей стране**."
           }
         },
         "tr" : {
@@ -7333,6 +7879,12 @@
             "value" : "**Ocorreu um erro com o Servidor de Ativação**\n\nDescrição:\n\n%@"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Произошла **ошибка с сервером лицензирования**\n\nСообщение:\n\n%@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7404,6 +7956,12 @@
             "value" : "**Não há conexão com a Internet**\n\nTente ativar sua licença novamente quando seu computador estiver online."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Возникла **проблема с интернет-соединением**\n\nУбедитесь, что ваш компьютер подключен к интернету и никакие брандмауэры не блокируют Mac Mouse Fix от подключения к интернету.\n\nЕсли это не решит проблему, свяжитесь со мной [здесь](%@)."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7455,6 +8013,12 @@
             "state" : "translated",
             "value" : "There is a **problem with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, contact me [here](%@)."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Возникла **проблема с сервером лицензирования**\n\nПожалуйста, попробуйте позже.\n\nЕсли проблема сохраняется, свяжитесь со мной [здесь](%@)."
+          }
         }
       }
     },
@@ -7495,6 +8059,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "**Ocorreu um erro desconhecido:**\n\n%@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Произошла **неизвестная ошибка**:\n\n%@"
           }
         },
         "tr" : {
@@ -7568,6 +8138,12 @@
             "value" : "'**%@**' não é uma chave de licença válida\n\nTente uma chave diferente"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'**%@**' не является действительным лицензионным ключом\n\nУбедитесь, что вы ввели ключ Mac Mouse Fix точно так, как его получили."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7637,6 +8213,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "A ativação da sua Licença falhou por **motivos desconhecidos**\n\nPor favor, envie um **Relatório de Bug** [aqui](%@)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Активация лицензии не удалась по **неизвестным причинам**.\n\nПожалуйста, напишите **отчет об ошибке** [здесь](%@)."
           }
         },
         "tr" : {
@@ -7710,6 +8292,12 @@
             "value" : "Defina a velocidade em\n[%1$@ > Mouse > Velocidade da Rolagem](%2$@)"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Установите скорость в разделе\n[%1$@ > Мышь > Скорость прокрутки](%2$@)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7779,6 +8367,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Voltar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назад"
           }
         },
         "tr" : {
@@ -7852,6 +8446,12 @@
             "value" : "Leio e aprecio todos os e-mails, faço o possível para responder todos"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Я могу отвечать только изредка, но я читаю все сообщения, и ваши отзывы помогают мне улучшать Mac Mouse Fix. Спасибо за ваши отзывы!"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7921,6 +8521,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Escreva um Email"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Написать Email"
           }
         },
         "tr" : {
@@ -7994,6 +8600,12 @@
             "value" : "Deseja escrever um Email?"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Написать Email?"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8062,6 +8674,12 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
+            "value" : "Command (⌘)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Command (⌘)"
           }
         },
@@ -8136,6 +8754,12 @@
             "value" : "Control (^)"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Control (^)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8207,6 +8831,12 @@
             "value" : "Option (⌥)"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Option (⌥)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8275,6 +8905,12 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
+            "value" : "Shift (⇧)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Shift (⇧)"
           }
         },
@@ -8350,6 +8986,12 @@
             "value" : "O conteúdo rastreia o movimento dos dedos"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Контент отслеживает движение пальца"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8419,6 +9061,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Role com precisão, mesmo sem um modificador de teclado,\nmovendo a roda de rolagem *lentamente*"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прокручивайте точно, даже без модификатора клавиатуры, *медленно* перемещая колесико прокрутки."
           }
         },
         "tr" : {
@@ -8492,6 +9140,12 @@
             "value" : "Cancelar"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрыть"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8561,6 +9215,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Restaurar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Восстановить"
           }
         },
         "tr" : {
@@ -8634,6 +9294,12 @@
             "value" : "Seu Mouse **%1$@** diz que tem **%2$d** botões"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваша мышь (**%1$@**) сообщает, что у нее **%2$d** кнопок"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8703,6 +9369,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Mouse com 3 botões"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мышь с 3 кнопками"
           }
         },
         "tr" : {
@@ -8776,6 +9448,12 @@
             "value" : "Mouse com mais de 5 botões"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мышь с 5+ кнопками"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8845,6 +9523,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Restaurar Padrão para ..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Восстановить по умолчанию для ..."
           }
         },
         "tr" : {
@@ -8918,6 +9602,12 @@
             "value" : "**Clique aqui** para carregar as configurações recomendadas\npara seu Mouse **%@**"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Нажмите здесь**, чтобы загрузить рекомендуемые настройки\nдля вашей мыши (**%@**)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8987,6 +9677,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "**Habilitado** Mac Mouse Fix para %1$@\nEle foi desabilitado na barra de menu %2$@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Включён** Mac Mouse Fix для %1$@\nОн был отключён из Строки&nbsp;меню&nbsp;%2$@"
           }
         },
         "tr" : {
@@ -9060,6 +9756,12 @@
             "value" : "**Botões**"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Кнопок**"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9129,6 +9831,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "**Rolagem**"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Прокрутка**"
           }
         },
         "tr" : {
@@ -9202,6 +9910,12 @@
             "value" : "Mesa e Launchpad"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рабочий стол и Launchpad"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9271,6 +9985,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Role para cima para acessar o Launchpad e para baixo para exibir a Mesa\n \nFunciona como pinçar com quatro dedos em um Trackpad da Apple"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прокрутите вверх, чтобы открыть Launchpad, и вниз, чтобы отобразить рабочий стол\n \nРаботает как сжатие 4 пальцами на трекпаде Apple"
           }
         },
         "tr" : {
@@ -9344,6 +10064,12 @@
             "value" : "Alternador de Aplicativos"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переключатель приложений"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9413,6 +10139,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Alterne rapidamente entre aplicativos abertosem Funciona como segurar Command (⌘) e pressionar Tab (⇥) no teclado"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Быстрое переключение между открытыми приложениями\n \nРаботает так же, как удержание клавиши Command (⌘) и нажатие клавиши Tab (⇥) на клавиатуре."
           }
         },
         "tr" : {
@@ -9486,6 +10218,12 @@
             "value" : "Rolagem horizontal"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Горизонтальная прокрутка"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9555,6 +10293,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Role para a esquerda e para a direita, navegue entre páginas no Safari, exclua mensagens no Mail e muito mais\n \nFunciona como deslizar horizontalmente com dois dedos em um Trackpad da Apple"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прокручивайте влево и вправо, перемещайтесь между страницами в Safari, удаляйте сообщения в Почте и многое другое\n\nРаботает как горизонтальный свайп двумя пальцами на трекпаде Apple"
           }
         },
         "tr" : {
@@ -9628,6 +10372,12 @@
             "value" : "Rolagem precisa"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Точное прокручивание"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9697,6 +10447,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Role pequenas distâncias e use elementos sensíveis da interface do usuário com precisão"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прокручивайте небольшие расстояния и точно используйте чувствительные элементы пользовательского интерфейса"
           }
         },
         "tr" : {
@@ -9770,6 +10526,12 @@
             "value" : "Girar"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поворот"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9839,6 +10601,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Girar conteúdo no Apple Maps e em outros apps\n \nFunciona como girar com dois dedos em um Trackpad da Apple"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поворот содержимого в картах Apple и других приложениях\n \nРаботает как поворот двумя пальцами на трекпаде Apple"
           }
         },
         "tr" : {
@@ -9912,6 +10680,12 @@
             "value" : "Mover entre Espaços"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перемещение между Spaces"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9981,6 +10755,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Role para cima para mover um espaço para a esquerda e para baixo para mover um espaço para a direitain Funciona como deslizar horizontalmente com 3 dedos em um Trackpad da Apple"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прокрутите вверх, чтобы переместиться влево на одно пространство, и вниз, чтобы переместиться вправо на одно пространство\n \nРаботает как горизонтальное перемещение тремя пальцами по трекпаду Apple"
           }
         },
         "tr" : {
@@ -10054,6 +10834,12 @@
             "value" : "Rolagem rápida"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Быстрая прокрутка"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10123,6 +10909,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Percorra longas distâncias com o mínimo esforço"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прокручивайте большие расстояния с минимальными усилиями"
           }
         },
         "tr" : {
@@ -10196,6 +10988,12 @@
             "value" : "Aumentar ou diminuir zoom"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Увеличить или уменьшить"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10265,6 +11063,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Aumentar ou diminuir o zoom no Safari, no Maps e em outros apps\n \nFunciona como pinçar para ampliar em um Trackpad da Apple"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Увеличивайте или уменьшайте масштаб в Safari, Картах и других программах\n\nРаботает как жест 'щипок для масштабирования' на трекпаде Apple"
           }
         },
         "tr" : {
@@ -10338,6 +11142,12 @@
             "value" : "Ajustes Sistema"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Системные настройки"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10407,6 +11217,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Preferências do Sistema"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Системные настройки"
           }
         },
         "tr" : {
@@ -10480,6 +11296,12 @@
             "value" : "⭐️ Obrigado por adquirir o Mac Mouse Fix!"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⭐️ Спасибо за покупку Mac Mouse Fix!"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -10549,6 +11371,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "🌟 Obrigado por adquirir o Mac Mouse Fix!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🙌 Спасибо за покупку Mac Mouse Fix!"
           }
         },
         "tr" : {
@@ -10622,6 +11450,12 @@
             "value" : "🚀 Obrigado por apoiar o Mac Mouse Fix!"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚀 Спасибо за поддержку Mac Mouse Fix!"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -10691,6 +11525,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "🙌 Obrigado por adquirir o Mac Mouse Fix!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌟 Спасибо за покупку Mac Mouse Fix!"
           }
         },
         "tr" : {
@@ -10764,6 +11604,12 @@
             "value" : "🧠 Ótima decisão de compra! ;)"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧠 Отличное решение о покупке! ;)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -10833,6 +11679,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "🔥 Gosto incrível em software de Mouse! ;)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔥 Отличный вкус в выборе программного обеспечения для починки мышей! ;)"
           }
         },
         "tr" : {
@@ -10906,6 +11758,12 @@
             "value" : "👽 Compartilhe com seus amigos do Spacebook!"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👽 Поделитесь этим со своими друзьями в Spacebook!"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -10975,6 +11833,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "🏂 Aproveite a vida!!"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🦆 Утиная походка навсегда"
           }
         },
         "tr" : {
@@ -11048,6 +11912,12 @@
             "value" : "📚 Não julgue um livro pela capa."
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐹 Нам нужно купить ему галстук-бабочку."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11119,6 +11989,12 @@
             "value" : "🐠 Que dia, hein!?"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐠 Что... ты... такое?"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11171,6 +12047,12 @@
             "state" : "translated",
             "value" : "🐁 The merchant's personal pet!"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐁 Личный питомец торговца!"
+          }
         }
       }
     },
@@ -11211,6 +12093,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "🌏 Cuide do nosso Planeta!! >:)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌏 Сначала мыши, потом весь мир!! >:)"
           }
         },
         "tr" : {
@@ -11284,6 +12172,12 @@
             "value" : "Dias restantes **%1$d/%2$d**"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Бесплатный день **%1$d из %2$d**"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11353,6 +12247,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "A versão de testes terminou"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Бесплатные дни закончились"
           }
         },
         "tr" : {
@@ -11426,6 +12326,12 @@
             "value" : "Ativar Licença"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Активировать лицензию"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11495,6 +12401,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Olá! Você está usando o Mac Mouse Fix há **%1$d dias**. Espero que você esteja gostando!\n\nSe quiser continuar usando o Mac Mouse Fix, você pode [comprá-lo agora](%2$@)."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Привет! Вы используете Mac Mouse Fix уже **%1$d дней**. Надеюсь, вам нравится!\n\nЕсли вы хотите продолжать использовать Mac Mouse Fix, вы можете [купить его сейчас](%2$@)."
           }
         },
         "tr" : {
@@ -11568,6 +12480,12 @@
             "value" : "Clique %@ +"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Клик %@ +"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11637,6 +12555,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Duplo Clique %@ +"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Двойной клик %@ +"
           }
         },
         "tr" : {
@@ -11710,6 +12634,12 @@
             "value" : "Triplo Clique %@ +"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тройной клик %@ +"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11779,6 +12709,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Botão do Meio"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Средняя кнопка"
           }
         },
         "tr" : {
@@ -11852,6 +12788,12 @@
             "value" : "Botão %@"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопка %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11921,6 +12863,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Botão Primário"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Основная кнопка"
           }
         },
         "tr" : {
@@ -11994,6 +12942,12 @@
             "value" : "Botão Secundário"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дополнительная кнопка"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12063,6 +13017,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "clique %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Клик %@"
           }
         },
         "tr" : {
@@ -12136,6 +13096,12 @@
             "value" : "duplo clique %@"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Двойной клик %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12205,6 +13171,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "triplo clique %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тройной клик %@"
           }
         },
         "tr" : {
@@ -12278,6 +13250,12 @@
             "value" : "clique e arraste %@"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нажмите и перетащите* %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12347,6 +13325,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "clique duas vezes e arraste %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Двойной клик и *перетаскивание* %@"
           }
         },
         "tr" : {
@@ -12420,6 +13404,12 @@
             "value" : "clique três vezes e arraste %@"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тройной клик и *перетаскивание* %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12489,6 +13479,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "e arraste"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "и *Перетаскивание*"
           }
         },
         "tr" : {
@@ -12562,6 +13558,12 @@
             "value" : "segure %@"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удерживать %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12631,6 +13633,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "clique duas vezes e segure %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Двойной клик и удержание %@"
           }
         },
         "tr" : {
@@ -12704,6 +13712,12 @@
             "value" : "clique três vezes e segure %@"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тройной клик и удержание %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12773,6 +13787,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "clique e role %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нажмите и *прокрутите* %@"
           }
         },
         "tr" : {
@@ -12846,6 +13866,12 @@
             "value" : "clique duas vezes e role %@"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Двойной клик и *прокрутка* %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12915,6 +13941,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "clique três vezes e role %@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тройной клик и *прокрутка* %@"
           }
         },
         "tr" : {
@@ -12988,6 +14020,12 @@
             "value" : "e role"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "и *Прокрутка*"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13057,6 +14095,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Botão do Meio"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Средняя кнопка"
           }
         },
         "tr" : {
@@ -13130,6 +14174,12 @@
             "value" : "Botão %@"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопка %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13199,6 +14249,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Botão Primário"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Основная кнопка"
           }
         },
         "tr" : {
@@ -13272,6 +14328,12 @@
             "value" : "Botão Secundário"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дополнительная кнопка"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13341,6 +14403,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Digite um atalho de teclado"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введите сочетание клавиш"
           }
         },
         "tr" : {
