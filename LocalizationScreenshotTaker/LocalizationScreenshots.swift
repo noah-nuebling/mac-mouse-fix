@@ -236,32 +236,79 @@ final class LocalizationScreenshotClass: XCTestCase {
             ///         We actually tried using `regionOfInterest`. I guess that would be more efficient. But it seems to make the boundingBoxes buggy (See: FB20053876)
             try requestHandler.perform([request])
             outerLoop: for i in result.indices {
-                for requestResult in request.results! {
-                    for candidate in requestResult.topCandidates(999) {
-                        if candidate.string.contains(result[i].uiString) {
-                            let foundBoundingBox        = try candidate.boundingBox(for: candidate.string.range(of: result[i].uiString)!)
-                            let foundBoundingBox_AsRect = VNImageRectForNormalizedRect(
-                                foundBoundingBox!.boundingBox,
-                                Int(screenshotAndMetadata.screenshot.image.size.width),
-                                Int(screenshotAndMetadata.screenshot.image.size.height)
-                            )
-                            if !result[i].roughBoundingBox!.insetBy(dx: -20, dy: -20) /// [Sep 2025] Observing 6 to be necessary on the x axis for `Taste 5 klicken + mittlere Taste klicken` in German. || Update: Now suddenly `dx:-16` is necessary for `5 Düğmesi` (Worked find before)
-                                .contains(foundBoundingBox_AsRect) { continue }
-                            /// Shrink the frame to the recognized region
+                for requestResult in request.results! as [VNRecognizedTextObservation] {
+                    
+                    /// Filter by text
+                    
+                    var foundBoundingBox: CGRect? = nil
+                    do {
+                        for candidate in requestResult.topCandidates(999) as [VNRecognizedText] {
+                            
+                            let rangeOfSearchedStringInCandidate: Range<String.Index>?
                             do {
-                                var foundBoundingBox_AsRect_YAdjusted = foundBoundingBox_AsRect
-                                foundBoundingBox_AsRect_YAdjusted.origin.y = result[i].roughBoundingBox!.origin.y       /// Actually, the OCR tends to make the frames a bit too small on the Y-axis so we use the `roughBoundingBox`'s values for that.
-                                foundBoundingBox_AsRect_YAdjusted.size.height = result[i].roughBoundingBox!.size.height
-                                var frameToHighlight = result[i]
-                                frameToHighlight.exactBoundingBox = foundBoundingBox_AsRect_YAdjusted
-                                result[i] = frameToHighlight
+                                /// Search without diacritics. Reason: OCR is stripping or misrecognizing the Czech diacritics (háčky and čárky) [Dec 2025]
+                                ///     Notes:
+                                ///         Have to manually strip diacritics using `.folding(options:locale:)`.
+                                ///         Using `.range(of:options:)` works for Czech but not Turkish for some reason.
+                                ///         Using `.range(of:)` after manually stripping diacritics gives correct ranges because of weird Swift grapheme-cluster-based string indexing. (First time this has ever been useful instead of annoying)
+                                let candidateStr = candidate.string.folding(options: .diacriticInsensitive, locale: nil)
+                                let searchedStr  = result[i].uiString.folding(options: .diacriticInsensitive, locale: nil)
+                                
+                                rangeOfSearchedStringInCandidate = candidateStr.range(of: searchedStr)
+                                
+                                if ((false)) { print("sharedf_find_exact_bounding_boxes_using_ocr: (\(result[i].uiString)) Searched in candidate using normalized strings: searchedStr: '\(searchedStr)', candidateStr: '\(candidateStr)', searchedStrRange: \(rangeOfSearchedStringInCandidate?.description ?? "(null)")") }
                             }
-
-                            continue outerLoop
+                            
+                            if let rangeOfSearchedStringInCandidate {
+                                foundBoundingBox = try candidate.boundingBox(for:  rangeOfSearchedStringInCandidate)!.boundingBox
+                                break;
+                            }
+                        }
+                        if (foundBoundingBox == nil) {
+                            print("sharedf_find_exact_bounding_boxes_using_ocr: (\(result[i].uiString)) No matching candidates found in requestResult with topCandidate: '\(requestResult.topCandidates(1).first!.string)'")
+                            continue;
                         }
                     }
+                    guard let foundBoundingBox else { fatalError() }
+                    
+                    /// Convert recognized text's bounding box
+                    ///     to image coords
+                    let foundBoundingBox_InImageSpace: CGRect
+                    do {
+                        
+                        foundBoundingBox_InImageSpace = VNImageRectForNormalizedRect(
+                            foundBoundingBox,
+                            Int(screenshotAndMetadata.screenshot.image.size.width),
+                            Int(screenshotAndMetadata.screenshot.image.size.height)
+                        )
+                    }
+                    
+                    /// Filter by bounding box
+                    if
+                        !result[i].roughBoundingBox!.insetBy(dx: -20, dy: -20)   /// [Sep 2025] Observing 6 to be necessary on the x axis for `Taste 5 klicken + mittlere Taste klicken` in German. || Update: Now suddenly `dx:-16` is necessary for `5 Düğmesi` (Worked find before)
+                        .contains(foundBoundingBox_InImageSpace)
+                    {
+                        if (true) { print("sharedf_find_exact_bounding_boxes_using_ocr: (\(result[i].uiString)) the rough bounding box \(result[i].roughBoundingBox!) does not contain the recognized bounding box \(foundBoundingBox_InImageSpace). (First candidate: \(requestResult.topCandidates(1).first!.string))") }
+                        continue
+                    }
+                    
+                    /// Log
+                    print("sharedf_find_exact_bounding_boxes_using_ocr: (\(result[i].uiString)) Recognized text. (First candidate: '\(requestResult.topCandidates(1).first!.string)') (Matching bounding box \(foundBoundingBox_InImageSpace)).")
+                        
+                    /// Shrink the frame to the recognized region
+                    do {
+                        var foundBoundingBox_AsRect_YAdjusted = foundBoundingBox_InImageSpace
+                        foundBoundingBox_AsRect_YAdjusted.origin.y = result[i].roughBoundingBox!.origin.y       /// Actually, the OCR tends to make the frames a bit too small on the Y-axis so we use the `roughBoundingBox`'s values for that.
+                        foundBoundingBox_AsRect_YAdjusted.size.height = result[i].roughBoundingBox!.size.height
+                        var frameToHighlight = result[i]
+                        frameToHighlight.exactBoundingBox = foundBoundingBox_AsRect_YAdjusted
+                        result[i] = frameToHighlight
+                    }
+                
+                    continue outerLoop;
+                    
                 }
-                assert(false, "No piece of recognized text found that matches \(result[i].uiString) in region of the image \(result[i].roughBoundingBox!)")
+                assert(false, "No piece of recognized text found that matches '\(result[i].uiString)' in region \(result[i].roughBoundingBox!) of image \(screenshotAndMetadata.screenshot)")
             }
         }
         
@@ -443,8 +490,8 @@ final class LocalizationScreenshotClass: XCTestCase {
             var killApp: Bool
         }
         var args = Args(
-            onlyTestLanguages: ["ru"],      /// Only update screenshots for these languages. (leave empty to update all)
-            continueFromLanguage: nil,      /// Set in case of interruption, to avoid redoing already-completed localizations
+            onlyTestLanguages: [],      /// Only update screenshots for these languages. (leave empty to update all)
+            continueFromLanguage: nil,      /// Set in case of interruption, to avoid redoing already-completed localizations. Restart from this language
             killApp: true,
         );
         args.killApp = (args.onlyTestLanguages.count != 1)    /// Leave app running for faster iterations. (Need to restart app between language-switches if there are multiple languages)
