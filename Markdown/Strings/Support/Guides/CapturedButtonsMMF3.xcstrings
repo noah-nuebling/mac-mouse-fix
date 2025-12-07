@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "01: intro" : {
-      "comment" : "{img} will be replaced with a screenshot of the notification that pops up when a button is captured by Mac Mouse Fix. \n\nConsider mirroring the terminology used by that notification. \n\nSearch for ‘capture-toast’ to find the strings used in that notification.",
+      "comment" : "{screenshot_0} will be replaced with a screenshot of the notification that pops up when a button is captured by Mac Mouse Fix. \n\nConsider mirroring the terminology used by that notification. \n\nSearch for ‘capture-toast’ to find the strings used in that notification.",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -61,7 +61,7 @@
       }
     },
     "03: which-buttons" : {
-      "comment" : "{img} will be replaced by a screenshot of the ‘Buttons’ tab where you can see 3 buttons being captured: ‘Middle Button’, ‘Button 5’ and ‘Button 4’ (In that order)\n\nTo help the reader make the connection between the text and the screenshot, keep the order of the buttons and match the terminology that is seen on the ‘Buttons’ tab. \n\nSearch for 'trigger.substring.button-name' inside 'Localizable' to find the button names used on the 'Buttons' tab.",
+      "comment" : "{screenshot_1} will be replaced by a screenshot of the ‘Buttons’ tab where you can see 3 buttons being captured: ‘Middle Button’, ‘Button 5’ and ‘Button 4’ (In that order)\n\nTo help the reader make the connection between the text and the screenshot, keep the order of the buttons and match the terminology that is seen on the ‘Buttons’ tab. \n\nSearch for 'trigger.substring.button-name' inside 'Localizable' to find the button names used on the 'Buttons' tab.",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -91,7 +91,7 @@
       }
     },
     "04: uncapturing" : {
-      "comment" : "{img} will be replaced by a screenshot of the 'Buttons' tab where ‘Button 4’ and two ‘-‘ buttons are highlighted.\n\nMatch the terminology seen on the ‘Buttons’ tab.\n\n(Search for “Toolbar > Scrolling Tab Button” and “trigger.y.group-row.button-name.numbered”)",
+      "comment" : "{screenshot_2} will be replaced by a screenshot of the 'Buttons' tab where ‘Button 4’ and two ‘-‘ buttons are highlighted.\n\nMatch the terminology seen on the ‘Buttons’ tab.\n\n(Search for “Toolbar > Scrolling Tab Button” and “trigger.y.group-row.button-name.numbered”)",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
