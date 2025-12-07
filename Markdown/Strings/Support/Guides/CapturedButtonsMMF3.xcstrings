@@ -8,25 +8,25 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "# {docname_captured_buttons_mmf3}\n\nPři používání nástroje Mac Mouse Fix jste se mohli setkat se zprávou, že tlačítko na vaší myši je nyní „zachycováno“ nástrojem Mac Mouse Fix.\n\n{img}\n\nV tomto článku se dozvíte, co to znamená, jaké problémy to může způsobit a jak je obejít."
+            "value" : "# {docname_captured_buttons_mmf3}\n\nPři používání nástroje Mac Mouse Fix jste se mohli setkat se zprávou, že tlačítko na vaší myši je nyní „zachycováno“ nástrojem Mac Mouse Fix.\n\n{screenshot_0}\n\nV tomto článku se dozvíte, co to znamená, jaké problémy to může způsobit a jak je obejít."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "# {docname_captured_buttons_mmf3}\n\nBeim Verwenden von Mac Mouse Fix, bist du vielleicht schonmal auf eine Nachricht gestoßen, die besagt, dass eine Taste deiner Maus jetzt von Mac Mouse Fix 'abgefangen' wird.\n\n{img}\n\nIn diesem Artikel erfährst du, was das bedeutet, welche Probleme es auslösen kann, und wie du mit ihnen umgehen kannst."
+            "value" : "# {docname_captured_buttons_mmf3}\n\nBeim Verwenden von Mac Mouse Fix, bist du vielleicht schonmal auf eine Nachricht gestoßen, die besagt, dass eine Taste deiner Maus jetzt von Mac Mouse Fix 'abgefangen' wird.\n\n{screenshot_0}\n\nIn diesem Artikel erfährst du, was das bedeutet, welche Probleme es auslösen kann, und wie du mit ihnen umgehen kannst."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "# {docname_captured_buttons_mmf3}\n\nWhile using Mac Mouse Fix, you may have encountered a message saying that a button on your mouse is now being 'captured' by Mac Mouse Fix.\n\n{img}\n\nIn this article, you'll learn what this means, what problems it can cause, and how to work around them."
+            "value" : "# {docname_captured_buttons_mmf3}\n\nWhile using Mac Mouse Fix, you may have encountered a message saying that a button on your mouse is now being 'captured' by Mac Mouse Fix.\n\n{screenshot_0}\n\nIn this article, you'll learn what this means, what problems it can cause, and how to work around them."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "# {docname_captured_buttons_mmf3}\n\nПри использовании Mac Mouse Fix вы могли столкнуться с сообщением о том, что кнопка на вашей мыши в данный момент 'захвачена' Mac Mouse Fix.\n\n{img}\n\nВ этой статье вы узнаете, что это означает, какие проблемы это может вызвать и как их решить."
+            "value" : "# {docname_captured_buttons_mmf3}\n\nПри использовании Mac Mouse Fix вы могли столкнуться с сообщением о том, что кнопка на вашей мыши в данный момент 'захвачена' Mac Mouse Fix.\n\n{screenshot_0}\n\nВ этой статье вы узнаете, что это означает, какие проблемы это может вызвать и как их решить."
           }
         }
       }
@@ -67,25 +67,25 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "## Jak zjistím, která tlačítka jsou zachycena programem Mac Mouse Fix?\n\nMac Mouse Fix zachycuje všechna tlačítka, která se zobrazují na levé straně záložky „Tlačítka“.\n\nNa následujícím obrázku jsou zachycena **„Prostřední tlačítko“**, **„Tlačítko 5“** a **„Tlačítko 4“**: <br>\n\n{img}"
+            "value" : "## Jak zjistím, která tlačítka jsou zachycena programem Mac Mouse Fix?\n\nMac Mouse Fix zachycuje všechna tlačítka, která se zobrazují na levé straně záložky „Tlačítka“.\n\nNa následujícím obrázku jsou zachycena **„Prostřední tlačítko“**, **„Tlačítko 5“** a **„Tlačítko 4“**: <br>\n\n{screenshot_1}"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "## Woher weiß ich, welche Tasten von Mac Mouse Fix abgefangen werden?\n\nJede Taste, die links im 'Tasten'-Tab angezeigt wird, wird von Mac Mouse Fix abgefangen.\n\nIm folgenden Bild werden die **'Mittlere Taste'**, **'Taste 5'** und **'Taste 4'** abgefangen: <br>\n\n{img}"
+            "value" : "## Woher weiß ich, welche Tasten von Mac Mouse Fix abgefangen werden?\n\nJede Taste, die links im 'Tasten'-Tab angezeigt wird, wird von Mac Mouse Fix abgefangen.\n\nIm folgenden Bild werden die **'Mittlere Taste'**, **'Taste 5'** und **'Taste 4'** abgefangen: <br>\n\n{screenshot_1}"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "## How do I know which buttons are being captured by Mac Mouse Fix?\n\nAny button that shows up on the left side of the 'Buttons' tab is being captured by Mac Mouse Fix.\n\nIn the following image **'Middle Button'**, **'Button 5'**, and **'Button 4'** are being captured: <br>\n\n{img}"
+            "value" : "## How do I know which buttons are being captured by Mac Mouse Fix?\n\nAny button that shows up on the left side of the 'Buttons' tab is being captured by Mac Mouse Fix.\n\nIn the following image **'Middle Button'**, **'Button 5'**, and **'Button 4'** are being captured: <br>\n\n{screenshot_1}"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "## Как узнать, какие кнопки захватываются Mac Mouse Fix?\n\nЛюбая кнопка, отображаемая в левой части вкладки 'Кнопки', захватывается Mac Mouse Fix.\n\nНа следующем изображении захватываются **'Средняя кнопка'**, **'Кнопка 5'** и **'Кнопка 4'**: <br>\n\n{img}"
+            "value" : "## Как узнать, какие кнопки захватываются Mac Mouse Fix?\n\nЛюбая кнопка, отображаемая в левой части вкладки 'Кнопки', захватывается Mac Mouse Fix.\n\nНа следующем изображении захватываются **'Средняя кнопка'**, **'Кнопка 5'** и **'Кнопка 4'**: <br>\n\n{screenshot_1}"
           }
         }
       }
@@ -97,25 +97,25 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "## Jak zabráním nástroji Mac Mouse Fix v zachycení tlačítka myši?\n\nChcete-li zabránit nástroji Mac Mouse Fix v zachycení tlačítka myši, smažte všechny položky pro dané tlačítko myši na kartě „Tlačítka“. Položku na kartě „Tlačítka“ můžete smazat kliknutím na tlačítko „-“ vlevo.\n\nNapříklad na následujícím obrázku můžete zabránit zachycení tlačítka **'Tlačítko 4'** kliknutím na dvě zvýrazněná tlačítka **'-'**:\n\n{img}"
+            "value" : "## Jak zabráním nástroji Mac Mouse Fix v zachycení tlačítka myši?\n\nChcete-li zabránit nástroji Mac Mouse Fix v zachycení tlačítka myši, smažte všechny položky pro dané tlačítko myši na kartě „Tlačítka“. Položku na kartě „Tlačítka“ můžete smazat kliknutím na tlačítko „-“ vlevo.\n\nNapříklad na následujícím obrázku můžete zabránit zachycení tlačítka **'Tlačítko 4'** kliknutím na dvě zvýrazněná tlačítka **'-'**:\n\n{screenshot_2}"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "## Wie verhindere ich, dass Mac Mouse Fix eine Maustaste abfängt?\n\nUm zu verhindern, dass Mac Mouse Fix eine Maustaste abfängt, lösche alle Einträge für diese Maustaste aus dem 'Tasten'-Tab.\nDu kannst einen Eintrag im 'Tasten'-Tab löschen, indem du die '-' Taste links anklickst.\n\nz.B. könnte man im folgenden Bild das Abfangen von **'Taste 4'** verhindern, indem man die beiden hervorgehobenen **'-'** Tasten anklickt:\n\n{img}"
+            "value" : "## Wie verhindere ich, dass Mac Mouse Fix eine Maustaste abfängt?\n\nUm zu verhindern, dass Mac Mouse Fix eine Maustaste abfängt, lösche alle Einträge für diese Maustaste aus dem 'Tasten'-Tab.\nDu kannst einen Eintrag im 'Tasten'-Tab löschen, indem du die '-' Taste links anklickst.\n\nz.B. könnte man im folgenden Bild das Abfangen von **'Taste 4'** verhindern, indem man die beiden hervorgehobenen **'-'** Tasten anklickt:\n\n{screenshot_2}"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "## How do I prevent Mac Mouse Fix from capturing a mouse button?\n\nTo prevent Mac Mouse Fix from capturing a mouse button, delete all entries for that mouse button from the 'Buttons' tab.\nYou can delete an entry in the 'Buttons' tab by clicking the '-' button on the left.\n\nFor example, in the following image, you could prevent **'Button 4'** from being captured by clicking the two highlighted **'-'** buttons:\n\n{img}"
+            "value" : "## How do I prevent Mac Mouse Fix from capturing a mouse button?\n\nTo prevent Mac Mouse Fix from capturing a mouse button, delete all entries for that mouse button from the 'Buttons' tab.\nYou can delete an entry in the 'Buttons' tab by clicking the '-' button on the left.\n\nFor example, in the following image, you could prevent **'Button 4'** from being captured by clicking the two highlighted **'-'** buttons:\n\n{screenshot_2}"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "## Как запретить Mac Mouse Fix захватывать кнопку мыши?\n\nЧтобы запретить Mac Mouse Fix захватывать кнопку мыши, удалите все записи для этой кнопки мыши на вкладке 'Кнопки'.\nВы можете удалить запись на вкладке 'Кнопки', нажав кнопку '-' слева.\n\nНапример, на следующем изображении вы можете запретить захват **'Кнопки 4'**, нажав две выделенные кнопки **'-'**:\n\n{img}"
+            "value" : "## Как запретить Mac Mouse Fix захватывать кнопку мыши?\n\nЧтобы запретить Mac Mouse Fix захватывать кнопку мыши, удалите все записи для этой кнопки мыши на вкладке 'Кнопки'.\nВы можете удалить запись на вкладке 'Кнопки', нажав кнопку '-' слева.\n\nНапример, на следующем изображении вы можете запретить захват **'Кнопки 4'**, нажав две выделенные кнопки **'-'**:\n\n{screenshot_2}"
           }
         }
       }
