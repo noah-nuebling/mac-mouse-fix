@@ -61,7 +61,7 @@ To have Blender work properly with Mac Mouse Fix, you'll have to uncapture the M
 <table align="center">
 <td>
 
-I hope this information was useful!</td>
+I hope this guide cleared things up!</td>
 <td>
 
 Still have questions? Click [here](https://redirect.macmousefix.com/?locale=en&target=mmf-support-still-have-questions).</td>

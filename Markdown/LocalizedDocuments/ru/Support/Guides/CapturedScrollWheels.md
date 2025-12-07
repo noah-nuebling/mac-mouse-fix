@@ -40,7 +40,7 @@ Mac Mouse Fix полностью игнорирует ваше колесико 
 <table align="center">
 <td>
 
-Надеюсь, это руководство было полезным!</td>
+Надеюсь, эта информация была полезна!</td>
 <td>
 
 Еще есть вопросы? Нажмите [здесь](https://redirect.macmousefix.com/?locale=ru&target=mmf-support-still-have-questions).</td>

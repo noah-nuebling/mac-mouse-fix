@@ -40,7 +40,7 @@ Aplikace Mac Mouse Fix pak rolovací kolečko zcela ignoruje – během rolován
 <table align="center">
 <td>
 
-Doufám, že vám tyto informace pomohly!</td>
+Doufám, že byl tento návod užitečný!</td>
 <td>
 
 Stále máte otázky? Klikněte [sem](https://redirect.macmousefix.com/?locale=cs&target=mmf-support-still-have-questions).</td>

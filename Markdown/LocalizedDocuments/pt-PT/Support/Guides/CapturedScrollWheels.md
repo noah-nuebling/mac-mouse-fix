@@ -46,7 +46,7 @@ Mac Mouse Fix will then completely ignore your scroll wheel – it won't use any
 <table align="center">
 <td>
 
-I hope this guide was helpful!</td>
+I hope this information was useful!</td>
 <td>
 
 Still have questions? Click [here](https://redirect.macmousefix.com/?locale=pt-PT&target=mmf-support-still-have-questions).</td>
