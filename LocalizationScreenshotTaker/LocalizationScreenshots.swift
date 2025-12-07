@@ -7,11 +7,6 @@
 // --------------------------------------------------------------------------
 //
 
-/// __Caution:__ Running these tests __does not build the MMF app__! [Sep 2025]
-///     - Achieved this by making `Build Phases > Target Dependencies` empty
-///     - You have to build the MMF target manually
-///     -> This greatly speeds up iteration time, since it doesn't have to build the whole project every time you make a change to the automation/'test' code.
-
 import XCTest
 import Vision
 
@@ -468,7 +463,7 @@ final class LocalizationScreenshotClass: XCTestCase {
     }
 
     
-    func testTakeScreenshots_Documentation() throws {
+    func testTakeScreenshots_Documentation() throws { // TODO: Rename to testTakeScreenshots_ForGuides
         
         // --------------------------
         // MARK: Main - Documentation Screenshots
@@ -793,7 +788,7 @@ final class LocalizationScreenshotClass: XCTestCase {
     /// Main localizationScreenshot routine
     ///
     
-    func testTakeScreenshots_Localization() throws {
+    func testTakeScreenshots_Localization() throws { // TODO: Rename to testTakeScreenshots_ForXclocFiles
         
         // --------------------------
         // MARK: Main - Localization Screenshots
@@ -930,8 +925,29 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Validate that the app is enabled
         sharedf_validate_that_main_app_is_enabled(window, toolbarButtons)
         
+        /// Screenshot GeneralTab
         
-        /// Screenshot ButtonsTab
+        do {
+            /// Switch to general tab
+            toolbarButtons["general"].click()
+            coolWait() /// Need to wait so that the test runner properly waits for the animation to finish
+            
+            /// Enable updates
+            ///     (So that the beta section is expanded)
+            let updatesToggle = window.checkBoxes["axCheckForUpdatesToggle"].firstMatch
+            if (updatesToggle.value as! Int) != 1 {
+                updatesToggle.click()
+                coolWait()
+            }
+            
+            /// Take screenshot of fully expanded general tab
+            result.append(takeLocalizationScreenshot(of: window, name: "GeneralTab"))
+
+            /// Screenshot toasts
+            result.append(contentsOf: sharedf_take_toast_screenshots("general", "GeneralTab Toast %d"))
+        }
+        
+       /// Screenshot ButtonsTab
         
         do {
             toolbarButtons["buttons"].click()
@@ -1006,28 +1022,6 @@ final class LocalizationScreenshotClass: XCTestCase {
                 /// Cleanup
                 hitEscape()
             }
-        }
-        
-        /// Screenshot GeneralTab
-        
-        do {
-            /// Switch to general tab
-            toolbarButtons["general"].click()
-            coolWait() /// Need to wait so that the test runner properly waits for the animation to finish
-            
-            /// Enable updates
-            ///     (So that the beta section is expanded)
-            let updatesToggle = window.checkBoxes["axCheckForUpdatesToggle"].firstMatch
-            if (updatesToggle.value as! Int) != 1 {
-                updatesToggle.click()
-                coolWait()
-            }
-            
-            /// Take screenshot of fully expanded general tab
-            result.append(takeLocalizationScreenshot(of: window, name: "GeneralTab"))
-
-            /// Screenshot toasts
-            result.append(contentsOf: sharedf_take_toast_screenshots("general", "GeneralTab Toast %d"))
         }
         
         /// Screenshot menubar

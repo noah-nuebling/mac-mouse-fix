@@ -2274,6 +2274,7 @@
 		4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		4FA2F13F2C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/ButtonOptionsViewController.xcstrings; sourceTree = "<group>"; };
 		4FA2F1402C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/AuthorizeAccessibilityView.xcstrings; sourceTree = "<group>"; };
+		4FA353D12EE5E53B00CAB015 /* Build Schemes and Iteration Times [Dec 2025].md */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Build Schemes and Iteration Times [Dec 2025].md"; sourceTree = "<group>"; };
 		4FA3ACC02DED4AE600A460FD /* CurveVisualizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveVisualizer.swift; sourceTree = "<group>"; };
 		4FA40CF528A0CBA600499E53 /* Mac Mouse Fix-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FA5F08C2CE4CEF800ED2354 /* SymbolicHotKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SymbolicHotKeys.h; sourceTree = "<group>"; };
@@ -6968,6 +6969,7 @@
 			isa = PBXGroup;
 			children = (
 				4F8B01AB2C348A3A00F3AF8D /* LocalizationScreenshots.swift */,
+				4FA353D12EE5E53B00CAB015 /* Build Schemes and Iteration Times [Dec 2025].md */,
 				4FD4A70D2E65D868004EFE66 /* CapturedButtonsGuideMMF3_ScreenshotRemaps.plist */,
 				4F0B8B172C58156F002715FF /* XCUIElement+Additions.h */,
 				4FAA3DBB2C56802E00CBA413 /* XCUIElement+Additions.m */,
