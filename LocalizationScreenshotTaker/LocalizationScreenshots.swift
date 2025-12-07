@@ -480,16 +480,16 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// -----------------------------------------------
         
         struct Args {
-            var onlyTestLanguages: [String]
-            var continueFromLanguage: String?
+            var onlyUpdateLocales: [String]
+            var continueFromLocale: String?
             var killApp: Bool
         }
         var args = Args(
-            onlyTestLanguages: [],      /// Only update screenshots for these languages. (leave empty to update all)
-            continueFromLanguage: nil,      /// Set in case of interruption, to avoid redoing already-completed localizations. Restart from this language
+            onlyUpdateLocales: [],      /// Only update screenshots for these locales. (leave empty to update all)
+            continueFromLocale: nil,    /// Set in case of interruption, to avoid redoing already-completed localizations. Restart from this locale
             killApp: true,
         );
-        args.killApp = (args.onlyTestLanguages.count != 1)    /// Leave app running for faster iterations. (Need to restart app between language-switches if there are multiple languages)
+        args.killApp = (args.onlyUpdateLocales.count != 1)    /// Leave app running for faster iterations. (Need to restart app between locale-switches if there are multiple locales)
         
         /// -----------------------------------------------
         
@@ -538,23 +538,23 @@ final class LocalizationScreenshotClass: XCTestCase {
         /// Do test intro
         let outputDir = sharedf_do_test_intro(outputDir: nil, fallbackTempDirName: "MF_DOC_SCREENSHOT_TEST")
         
-        var localizations =
-            args.onlyTestLanguages.count > 0 ?
-            args.onlyTestLanguages :
+        var locales =
+            args.onlyUpdateLocales.count > 0 ?
+            args.onlyUpdateLocales :
             Bundle(url: sharedf_mainapp_url())!.localizations.filter { $0 != "Base" }
         
-        if let localization_ToContinueFrom = args.continueFromLanguage {
-            localizations = Array(localizations.suffix(from: localizations.firstIndex(of: localization_ToContinueFrom)!))
+        if let localeToContinueFrom = args.continueFromLocale {
+            locales = Array(locales.suffix(from: locales.firstIndex(of: localeToContinueFrom)!))
         }
         
-        for languageCode in localizations {
+        for locale in locales {
             
             /// Launch main app.
             let app = sharedf_launch_app(
                 url: sharedf_mainapp_url(),
                 args: [
                     localized_string_annotation_activation_argument_for_screenshotted_app,
-                    "-AppleLanguages", "(\(languageCode))"
+                    "-AppleLanguages", "(\(locale))"
                 ],
                 env: [:],
                 kill_app: args.killApp
@@ -567,7 +567,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                 url: sharedf_helper_url(),
                 args: [
                     localized_string_annotation_activation_argument_for_screenshotted_app,
-                    "-AppleLanguages", "(\(languageCode))"
+                    "-AppleLanguages", "(\(locale))"
                 ],
                 env: [:],
                 kill_app: args.killApp
@@ -613,7 +613,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                 do {
                     let screenshotAndMetadata: ScreenshotAndMetadata? = sharedf_take_button_5_captured_toast_screenshot(screenshotName: "CaptureToast Screenshot for Documentation")
                     guard let screenshotAndMetadata else { fatalError() }
-                    writeImageToFile(screenshotAndMetadata.screenshot.image, absoluteURLFromRepoRelativePath(allFilePaths[0], languageCode), [.compressionFactor : 1.0]) /// [Sep 2025] Elsewhere we're using `.compressionFactor : 0.0` but that looks to artifact-y here (Color banding is crazy) ... Update: It's not much better with `[.compressionFactor : 1.0]`
+                    writeImageToFile(screenshotAndMetadata.screenshot.image, absoluteURLFromRepoRelativePath(allFilePaths[0], locale), [.compressionFactor : 1.0]) /// [Sep 2025] Elsewhere we're using `.compressionFactor : 0.0` but that looks to artifact-y here (Color banding is crazy) ... Update: It's not much better with `[.compressionFactor : 1.0]`
                 }
                 /// Take screenshots with bounding boxes
                 do {
@@ -694,9 +694,9 @@ final class LocalizationScreenshotClass: XCTestCase {
                             return true
                         }
                         /// Write the images to file
-                        writeImageToFile(resultImage, absoluteURLFromRepoRelativePath(allFilePaths[i], languageCode), [.compressionFactor : 0.0]) /// Lowest quality. TODO: Optimize. Idea: Downscale and compress less? || Also remember the .writeImageToFile call above
+                        writeImageToFile(resultImage, absoluteURLFromRepoRelativePath(allFilePaths[i], locale), [.compressionFactor : 0.0]) /// Lowest quality. TODO: Optimize. Idea: Downscale and compress less? || Also remember the .writeImageToFile call above
                     }
-                    NSWorkspace.shared.activateFileViewerSelecting(allFilePaths.map { absoluteURLFromRepoRelativePath($0, languageCode) })
+                    NSWorkspace.shared.activateFileViewerSelecting(allFilePaths.map { absoluteURLFromRepoRelativePath($0, locale) })
                 }
             }
         }
