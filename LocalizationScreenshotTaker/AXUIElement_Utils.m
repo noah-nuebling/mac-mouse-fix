@@ -54,7 +54,7 @@ NSString *AXUIElement_Description(AXUIElementRef el_arg) {
         for (NSString *name in names) {
             
             NSString *value;
-            err = AXUIElementCopyActionDescription(el, (__bridge void *)name, (void *)&value); /// Not sure this `void *` cast is safe with ARC.
+            err = AXUIElementCopyActionDescription(el, (__bridge void *)name, (void *)&value); /// Not sure this `void *` cast (And the ones below) is safe with ARC.
             if (err || !value) fail("CopyActionDescription failed. Err: %@", AXError_ToString(err));
             
             [actionDict setObject: value ?: [NSNull null] forKey: name];
