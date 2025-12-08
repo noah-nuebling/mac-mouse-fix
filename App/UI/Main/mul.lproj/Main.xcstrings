@@ -503,7 +503,7 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Выкл."
           }
         },
@@ -3615,7 +3615,7 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Увеличение или уменьшение масштаба"
           }
         },
