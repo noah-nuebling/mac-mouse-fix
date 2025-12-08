@@ -259,7 +259,7 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Включите 'Mac Mouse Fix Helper"
           }
         },
