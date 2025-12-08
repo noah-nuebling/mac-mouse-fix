@@ -550,7 +550,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         for locale in locales {
             
             /// Launch main app.
-            let app = sharedf_launch_app(
+            let mainApp = sharedf_launch_app(
                 url: sharedf_mainapp_url(),
                 args: [
                     localized_string_annotation_activation_argument_for_screenshotted_app,
@@ -560,7 +560,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                 kill_app: args.killApp
             )
             
-            self.app = app
+            self.app = mainApp
             
             /// Launch helper app
             let helperApp = sharedf_launch_app(
@@ -572,6 +572,10 @@ final class LocalizationScreenshotClass: XCTestCase {
                 env: [:],
                 kill_app: args.killApp
             )
+            
+            /// Validate
+            ///     NOTE: This has an exact copy inside `func testTakeScreenshots_Localization` [Dec 2025]
+            assert(helperApp.state != .notRunning && mainApp.state != .notRunning, "One of the apps is not running. It probably crashed. This can currently happen if the Helper doesn't have accessibility permissions [Dec 2025, macOS 26.2 Tahoe]. helperApp.state: \(XCUIApplicationState_ToString(helperApp.state)), mainApp.state: \(XCUIApplicationState_ToString(mainApp.state))")
             
             
             /// Find elements
@@ -776,10 +780,11 @@ final class LocalizationScreenshotClass: XCTestCase {
             xcapp.launchArguments = args
             xcapp.launchEnvironment = env
             xcapp.launch()
-            if (false) {
+            if (false) { /// (false) because .runningBackground is only every reached by Mac Mouse Fix Helper, not by Mac Mouse Fix. [Dec 2025]
                 let succ = xcapp.wait(for: .runningBackground, timeout: 100) /// Launch the app and wait until it has opened
                 assert(succ)
             }
+            
             return xcapp
         }
     }
@@ -794,16 +799,22 @@ final class LocalizationScreenshotClass: XCTestCase {
         // MARK: Main - Localization Screenshots
         // --------------------------
         
+        
+        /// Define args
+        struct Args {
+            var locale: String
+        }
+        var args = Args(
+            locale:
+                ProcessInfo.processInfo.environment[xcode_screenshot_taker_locale_variable] ??  /// This envvar is set by `./run uploadstrings` [Dec 2025]
+                "ru"                                                                            /// If you run this testRunner directly, without the envvar set, it will fall back to this hardcoded locale.
+        )
+        
         /// Do test intro
         let outputDir = sharedf_do_test_intro(
             outputDir:            ProcessInfo.processInfo.environment[xcode_screenshot_taker_output_dir_variable],
             fallbackTempDirName:  "MFLocalizationScreenshotsFallbackOutputFolder"
         )
-        var locale = ProcessInfo.processInfo.environment[xcode_screenshot_taker_locale_variable] ?? "" // Not sure bout this fallback.
-        
-        
-        /// TESTING
-        //locale = "tr"
         
         /// Declare result
         var screenshotsAndMetaData: [ScreenshotAndMetadata?] = []
@@ -821,22 +832,26 @@ final class LocalizationScreenshotClass: XCTestCase {
             url: sharedf_helper_url(),
             args: [
                 localized_string_annotation_activation_argument_for_screenshotted_app,
-                "-AppleLanguages", "(\(locale))"
+                "-AppleLanguages", "(\(args.locale))"
             ],
             env: [:],
             kill_app: true
-       )
+        )
        
         /// Launch mainApp
         let mainApp = sharedf_launch_app(
             url: sharedf_mainapp_url(),
             args: [
                 localized_string_annotation_activation_argument_for_screenshotted_app,
-                "-AppleLanguages", "(\(locale))"
+                "-AppleLanguages", "(\(args.locale))"
             ],
             env: [:],
             kill_app: true
-       )
+        )
+       
+        /// Validate
+        ///     NOTE: This has an exact copy inside `func testTakeScreenshots_Documentation` [Dec 2025]
+        assert(helperApp.state != .notRunning && mainApp.state != .notRunning, "One of the apps is not running. It probably crashed. This can currently happen if the Helper doesn't have accessibility permissions [Dec 2025, macOS 26.2 Tahoe]. helperApp.state: \(XCUIApplicationState_ToString(helperApp.state)), mainApp.state: \(XCUIApplicationState_ToString(mainApp.state))")
         
         ///
         /// Helper

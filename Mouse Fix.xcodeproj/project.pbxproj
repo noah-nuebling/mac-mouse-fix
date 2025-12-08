@@ -200,6 +200,7 @@
 		4FA2F1262C29A125000C5535 /* NotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* NotificationLabel.m */; };
 		4FA2F13D2C2B0932000C5535 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */; };
 		4FA2F13E2C2B0932000C5535 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */; };
+		4FA356BE2EE7839F00CAB015 /* XCUITest_Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA356BD2EE7839F00CAB015 /* XCUITest_Utils.m */; };
 		4FA3ACC62DED91E100A460FD /* CurveVisualizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA3ACC02DED4AE600A460FD /* CurveVisualizer.swift */; };
 		4FA40CEF28A0CA0A00499E53 /* ReactiveSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CEE28A0CA0A00499E53 /* ReactiveSwift */; };
 		4FA40CF228A0CA3900499E53 /* ReactiveCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 4FA40CF128A0CA3900499E53 /* ReactiveCocoa */; };
@@ -2275,6 +2276,8 @@
 		4FA2F13F2C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/ButtonOptionsViewController.xcstrings; sourceTree = "<group>"; };
 		4FA2F1402C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/AuthorizeAccessibilityView.xcstrings; sourceTree = "<group>"; };
 		4FA353D12EE5E53B00CAB015 /* LocalizationScreenshotNotes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LocalizationScreenshotNotes.md; sourceTree = "<group>"; };
+		4FA356BC2EE7839F00CAB015 /* XCUITest_Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCUITest_Utils.h; sourceTree = "<group>"; };
+		4FA356BD2EE7839F00CAB015 /* XCUITest_Utils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCUITest_Utils.m; sourceTree = "<group>"; };
 		4FA3ACC02DED4AE600A460FD /* CurveVisualizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurveVisualizer.swift; sourceTree = "<group>"; };
 		4FA40CF528A0CBA600499E53 /* Mac Mouse Fix-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FA5F08C2CE4CEF800ED2354 /* SymbolicHotKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SymbolicHotKeys.h; sourceTree = "<group>"; };
@@ -6975,6 +6978,8 @@
 				4FAA3DBB2C56802E00CBA413 /* XCUIElement+Additions.m */,
 				4F8686022EE34498009262A3 /* AXUIElement_Utils.h */,
 				4F8686002EE33C33009262A3 /* AXUIElement_Utils.m */,
+				4FA356BC2EE7839F00CAB015 /* XCUITest_Utils.h */,
+				4FA356BD2EE7839F00CAB015 /* XCUITest_Utils.m */,
 				4F0028012C58303B00CDB9D0 /* LocalizationScreenshotTakerTestPlan.xctestplan */,
 				4F0C003D2C52BBA600C5D843 /* LocalizationScreenshotTaker.entitlements */,
 				4FE78C382C4FFB0E00C54103 /* LocalizationScreenshotTaker-Bridging-Header.h */,
@@ -8266,6 +8271,7 @@
 				4FA773D92E66FEF50056E9B4 /* MFCoding.m in Sources */,
 				4FE78C462C50362800C54103 /* DisableSwiftBridging.swift in Sources */,
 				4FE78C362C4FFA7A00C54103 /* NSString+Steganography.m in Sources */,
+				4FA356BE2EE7839F00CAB015 /* XCUITest_Utils.m in Sources */,
 				4FE78C472C50371200C54103 /* NSString+Additions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

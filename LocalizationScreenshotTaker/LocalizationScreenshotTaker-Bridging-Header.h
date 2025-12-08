@@ -16,6 +16,7 @@
 
 #import "XCUIElement+Additions.h"
 #import "AXUIElement_Utils.h"
+#import "XCUITest_Utils.h"
 
 #import "Logging.h"
 #import "TreeNode.h"
