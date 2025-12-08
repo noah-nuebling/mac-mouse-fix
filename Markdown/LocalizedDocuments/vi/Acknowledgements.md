@@ -69,6 +69,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **Tháng 12 2025**
 
+- 🇵🇱&nbsp;Blase
 - 🇩🇪&nbsp;Philipp - "great software!"
 - 🇺🇸&nbsp;Slade121502
 - 🇺🇸&nbsp;Josh - "Excellent features and helps with productivity. Worth the $10 any day."
