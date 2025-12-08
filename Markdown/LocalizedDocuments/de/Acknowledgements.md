@@ -62,6 +62,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2025**
 
+- 🇩🇪&nbsp;Philipp - "great software!"
 - 🇺🇸&nbsp;Slade121502
 - 🇺🇸&nbsp;Josh - "Excellent features and helps with productivity. Worth the $10 any day."
 - 🇺🇸&nbsp;James&nbsp;Cheng
