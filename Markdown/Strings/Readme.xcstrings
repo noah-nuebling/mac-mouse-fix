@@ -671,7 +671,7 @@
       }
     },
     "24: questions.click-delay.body" : {
-      "comment" : "Some text like 'Double Click' is quoted, because it appears exactly\nin the Mac Mouse Fix UI.\n\nFor example, 'Double Click' appears on the 'Buttons' tab in Mac Mouse Fix (See: trigger.substring.click.2)\n\nIf you're using Xcloc Editor.app, you can find all the related strings like this:\n- Go to 'All Project Files' (Command-J)\n- Select the search-field (Command-F) \n- Enter the English string (such as 'Double Click') \n-> Now you can see all the translations of this English string!\n\nTry to keep the different translations consistent, especially, when the strings are 'quoted' (or \"double quoted\") or *emphasized*. This should help the Reader draw the connection to the Mac Mouse Fix UI.\n\nNote to self: [Dec 2025]\n- We put this hint here, since it's likely the first string that the translator will see where this hint is relevant, if they are using the default, alphabetic sorting.",
+      "comment" : "Some text like 'Double Click' is quoted, because it appears exactly\nin the Mac Mouse Fix UI.\n\nFor example, 'Double Click' appears on the 'Buttons' tab in Mac Mouse Fix (See: trigger.substring.click.2)\n\nIf you're using Xcloc Editor.app, you can find all the related strings like this:\n- Go to 'All Project Files' (Command-J)\n- Select the search-field (Command-F) \n- Enter the English string (such as 'Double Click') \n-> Now you can see all the occurrences and translations of this English string!\n\nTry to keep the different translations consistent, especially, when the strings are 'quoted' (or \"double quoted\") or *emphasized*. This should help the Reader draw the connection to the Mac Mouse Fix UI.\n\nNote to self: [Dec 2025]\n- We put this hint here, since it's likely the first relevant string that the translator will see. (If they are using the default, alphabetic sorting, and going from top to bottom.)",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -1269,7 +1269,7 @@
         },
         "en" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "new",
             "value" : "Your license works on **all your Macs**. <br>\nThe goal is that you can just buy a license, activate it, and never have to worry about it again. <br>\nIf you log in with the same Apple Account, the license will even sync automatically to your other devices via iCloud!\n\nIf you encounter problems activating your license, you can [send me an email]({url}). <br>\nI sometimes take a while to answer. I'm sorry about this. But I will get back to you!\n\nThere is one restriction: <br>\nLicenses are not meant to be shared publicly. One license is meant for one person. Publicly shared licenses might be invalidated. (Sharing with your mom is ok.)"
           }
         },

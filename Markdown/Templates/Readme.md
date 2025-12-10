@@ -448,7 +448,7 @@ comment:
   I sometimes take a while to answer. I'm sorry about this. But I will get back to you!
 
   There is one restriction: <br>
-  Licenses are not meant to be shared publicly. One license is meant for one person. Publicly shared licenses might be invalidated. (Your mom is not 'the public' and sharing with her is ok!)
+  Licenses are not meant to be shared publicly. One license is meant for one person. Publicly shared licenses might be invalidated. (Sharing with your mom is ok.)
 
   ```
   comment: 
