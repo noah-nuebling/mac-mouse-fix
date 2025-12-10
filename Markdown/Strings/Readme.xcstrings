@@ -94,7 +94,7 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Help&nbsp;&amp;&nbsp;Feedback"
           }
         },

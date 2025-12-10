@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24128" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24412" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24128"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24412"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,18 +16,29 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="396" height="110"/>
+            <rect key="frame" x="0.0" y="0.0" width="394" height="114"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button horizontalHuggingPriority="1000" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5ry-fl-BuF">
-                    <rect key="frame" x="18" y="73" width="348" height="18"/>
+                    <rect key="frame" x="20" y="78" width="344" height="16"/>
                     <buttonCell key="cell" type="check" title="Lock Mouse Pointer During 'Click and Drag' Gestures" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Mmp-uv-DmY">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
+                        <attributedString key="userComments">
+                            <fragment>
+                                <mutableString key="content">'Click and Drag'
+should ideally match the text seen in the Action Table (See trigger.substring.drag.1). The 'quotes' in English exist to help the user draw the connection to the Action Table.
+
+If matching trigger.substring.drag.1 exactly isn't grammatically possible in your language, consider removing the 'quotes'.
+
+Also note that the trigger.substring.drag.1 string supports rendering *Markdown emphasis*, but this textfield does not. (As of [Dec 2025]) 
+So consider removing the *Markdown emphasis* when copying over the text from trigger.substring.drag.1.</mutableString>
+                            </fragment>
+                        </attributedString>
                     </buttonCell>
                 </button>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lWy-37-C7U">
-                    <rect key="frame" x="38" y="49" width="207" height="16"/>
+                    <rect key="frame" x="38" y="53" width="207" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Recommended for Trackball Mice" id="DQ6-Rq-6nC">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -38,7 +49,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GPK-st-8lU">
-                    <rect key="frame" x="317" y="13" width="66" height="32"/>
+                    <rect key="frame" x="318" y="20" width="56" height="24"/>
                     <buttonCell key="cell" type="push" title="Done" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="COH-CF-CQd">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -51,7 +62,7 @@ DQ
                     </connections>
                 </button>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8lq-H5-oKf" customClass="InvisibleKeyResponder">
-                    <rect key="frame" x="20" y="10" width="162" height="30"/>
+                    <rect key="frame" x="20" y="14" width="162" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="string" keyPath="keyEquivalent" value="escape"/>

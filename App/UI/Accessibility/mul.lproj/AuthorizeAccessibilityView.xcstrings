@@ -7,7 +7,7 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mac Mouse Fix umožňuje zachycovat signály z myši a&nbsp;klávesnice"
           }
         },
@@ -439,7 +439,7 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Povolte přístup Mac Mouse Fix"
           }
         },

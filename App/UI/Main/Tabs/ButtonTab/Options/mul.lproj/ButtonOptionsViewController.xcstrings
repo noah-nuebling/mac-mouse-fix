@@ -151,7 +151,7 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Zamknout ukazatel myši během „kliknutí a tažení“"
           }
         },
