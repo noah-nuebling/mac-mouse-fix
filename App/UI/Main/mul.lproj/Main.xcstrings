@@ -3289,7 +3289,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "<Click \"__Restore Defaults...__\" to load the recommended settings for \nyour __Logitech M720 Triathlon__.>"
+            "value" : "<Click “__Restore Defaults...__” to load the recommended settings for \nyour __Logitech M720 Triathlon__.>"
           }
         },
         "zh-Hant" : {
@@ -4879,7 +4879,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "移动鼠标指针到\"+\"区域内，然后点按鼠标按钮来指定动作。  您也可以连按、点按并拖移、执行[更多]()操作。"
+            "value" : "移动鼠标指针到“+”区域内，然后点按鼠标按钮来指定动作。  您也可以连按、点按并拖移、执行[更多]()操作。"
           }
         },
         "zh-Hant" : {
