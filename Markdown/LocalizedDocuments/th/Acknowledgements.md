@@ -950,10 +950,10 @@ If you're among them, click [here](https://redirect.macmousefix.com/?locale=th&t
 
 **Software** that inspired Mac Mouse Fix:
 
-- [SteerMouse](https://plentycom.jp/en/steermouse/index.html) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought "this is probably not possible", but then I saw "oh, SteerMouse does it", and three years later, I figured out how to implement it, too.
-- [Calftrail Touch](https://github.com/calftrail/Touch) - The foundation for the "reverse engineering" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!
-- [MOS](https://mos.caldis.me/) - Mac Mouse Fix's "High Scroll-Smoothness" option, the "App-Specific Settings" implementation, and more were inspired by MOS.
-- [SensibleSideButtons](https://github.com/archagon/sensible-side-buttons) - I copied its code for an early implementation of the "Go back/forward one page in Safari and other apps" feature, and also led me to discover the Calftrail Touch project.
+- [SteerMouse](https://plentycom.jp/en/steermouse/index.html) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought 'this is probably not possible', but then I saw 'oh, SteerMouse does it', and three years later, I figured out how to implement it, too.
+- [Calftrail Touch](https://github.com/calftrail/Touch) - The foundation for the 'reverse engineering' work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!
+- [MOS](https://mos.caldis.me/) - Mac Mouse Fix's 'High Scroll-Smoothness' option, the 'App-Specific Settings' implementation, and more were inspired by MOS.
+- [SensibleSideButtons](https://github.com/archagon/sensible-side-buttons) - I copied its code for an early implementation of the 'Go back/forward one page in Safari and other apps' feature, and also led me to discover the Calftrail Touch project.
 - [Gifski](https://github.com/sindresorhus/Gifski) - Greatly inspired the design and content of the [Readme.md](Readme.md) for Mac Mouse Fix.
 - [Vue Issue Helper](https://new-issue.vuejs.org/) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/).
 
