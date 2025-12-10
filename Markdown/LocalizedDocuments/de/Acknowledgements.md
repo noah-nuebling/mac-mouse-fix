@@ -943,10 +943,10 @@ Wenn du dazugehört hast, klicke [hier](https://redirect.macmousefix.com/?locale
 
 **Software**, die Mac Mouse Fix inspiriert hat:
 
-- [SteerMouse](https://plentycom.jp/en/steermouse/index.html) - Wegweisende Maus-Software für Mac, die viele Funktionen inspiriert hat. Es gab Momente, in denen ich dachte: "Das ist wahrscheinlich unmöglich", aber dann hab ich gesehen "oh, SteerMouse macht es", und drei Jahre später habe ich herausgefunden, wie ich es auch umsetzen kann.
-- [Calftrail Touch](https://github.com/calftrail/Touch) - Die Grundlage für die "Reverse Engineering"-Arbeit, die Mac Mouse Fix's erstklassige und einzigartige Trackpad-Simulation ermöglicht!
-- [MOS](https://mos.caldis.me/) - Viele Funktionen von Mac Mouse Fix, wie die Option "Hohe Scroll-Flüssigkeit" und die Implementierung des "App-spezifische Einstellungen" features, wurden von MOS inspiriert.
-- [SensibleSideButtons](https://github.com/archagon/sensible-side-buttons) - Ich habe den Code für eine frühe Implementierung der Funktion "Gehe eine Seite vor/zurück in Safari und anderen Apps" von SensibleSideButtons kopiert und bin dadurch auch auf das Calftrail Touch-Projekt gestoßen.
+- [SteerMouse](https://plentycom.jp/en/steermouse/index.html) - Wegweisende Maus-Software für Mac, die viele Funktionen inspiriert hat. Es gab Momente, in denen ich dachte: 'Das ist wahrscheinlich unmöglich', aber dann hab ich gesehen 'oh, SteerMouse macht es', und drei Jahre später habe ich herausgefunden, wie ich es auch umsetzen kann.
+- [Calftrail Touch](https://github.com/calftrail/Touch) - Die Grundlage für die 'Reverse Engineering'-Arbeit, die Mac Mouse Fix's erstklassige und einzigartige Trackpad-Simulation ermöglicht!
+- [MOS](https://mos.caldis.me/) - Viele Funktionen von Mac Mouse Fix, wie die Option 'Hohe Scroll-Flüssigkeit' und die Implementierung des 'App-spezifische Einstellungen' features, wurden von MOS inspiriert.
+- [SensibleSideButtons](https://github.com/archagon/sensible-side-buttons) - Ich habe den Code für eine frühe Implementierung der Funktion 'Gehe eine Seite vor/zurück in Safari und anderen Apps' von SensibleSideButtons kopiert und bin dadurch auch auf das Calftrail Touch-Projekt gestoßen.
 - [Gifski](https://github.com/sindresorhus/Gifski) - Hat das Design und den Inhalt des [Readme.md](Readme.md) von Mac Mouse Fix stark inspiriert.
 - [Vue Issue Helper](https://new-issue.vuejs.org/) - Grundlage für das Design und die technische Umsetzung von [Mac Mouse Fix Feedback Assistant](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/).
 
