@@ -146,7 +146,7 @@
       }
     },
     "Mmp-uv-DmY.title" : {
-      "comment" : "Class = \"NSButtonCell\"; title = \"Lock Mouse Pointer During 'Click and Drag' Gestures\"; ObjectID = \"Mmp-uv-DmY\";",
+      "comment" : "Class = \"NSButtonCell\"; title = \"Lock Mouse Pointer During 'Click and Drag' Gestures\"; ObjectID = \"Mmp-uv-DmY\"; Note = \"'Click and Drag'\\nshould ideally match the text seen in the Action Table (See trigger.substring.drag.1). The 'quotes' in English exist to help the user draw the connection to the Action Table.\\n\\nIf matching trigger.substring.drag.1 exactly isn't grammatically possible in your language, consider removing the 'quotes'.\\n\\nAlso note that the trigger.substring.drag.1 string supports rendering *Markdown emphasis*, but this textfield does not. (As of [Dec 2025]) \\nSo consider removing the *Markdown emphasis* when copying over the text from trigger.substring.drag.1.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -169,31 +169,31 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Verrouiller le pointeur de la souris pendant les gestes « Cliquer et lâcher »"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "'클릭 및 드래그' 제스처 시 마우스 포인터 잠금"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Bloquear o ponteiro do mouse durante gestos de 'Cliquar e Arrastar'"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Блокировка указателя мыши во время жестов 'клик и перетаскивание'"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Khóa vị trí con trỏ chuột khi nhấp và kéo"
           }
         },
@@ -205,13 +205,13 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "「按下並拖移」手勢過程中鎖定滑鼠指標"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "「按下並拖移」手勢過程中鎖定滑鼠指標"
           }
         }
