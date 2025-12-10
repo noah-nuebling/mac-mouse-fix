@@ -37,7 +37,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Jak zabránit zachycení rolovacího kolečka:**\n\n1. V Mac Mouse Fix přejděte na kartu "Rolování"\n2. Vypněte **všechny** možnosti\n- V případě možnosti "Rychlost" ji nastavte na "macOS"\n- Odstraňte všechny položky v části "Modifikátory klávesnice" kliknutím na tlačítko "x" vedle každého modifikátoru\n\nPoté by se měla zobrazit zpráva, že rolovací kolečko již není zachycováno."
+            "value" : "**Jak zabránit zachycení rolovacího kolečka:**\n\n1. V Mac Mouse Fix přejděte na kartu \"Rolování\"\n2. Vypněte **všechny** možnosti\n- V případě možnosti \"Rychlost\" ji nastavte na \"macOS\"\n- Odstraňte všechny položky v části \"Modifikátory klávesnice\" kliknutím na tlačítko \"x\" vedle každého modifikátoru\n\nPoté by se měla zobrazit zpráva, že rolovací kolečko již není zachycováno."
           }
         },
         "de" : {

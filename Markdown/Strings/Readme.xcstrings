@@ -473,7 +473,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "[Swish]({url}) je můj nejoblíbenější způsob správy oken v systému macOS. Jednoduchým přejetím prstem po trackpadu můžete umístit libovolné okno tak, aby zabíralo polovinu, čtvrtinu nebo celou obrazovku.\n\nSwish je určen pro gesta na trackpadu, ale s Mac Mouse Fix ho můžete používat z jakékoli myši třetí strany! Stačí přejít do Mac Mouse Fix a nastavit akci "Kliknutí a tažení" libovolného tlačítka na "Posouvání a navigace" a poté můžete okna přitahovat jednoduchým kliknutím a tažením.\n\nVšechno, co můžete dělat přejetím dvěma prsty po trackpadu Apple, funguje stejně dobře s funkcí "Posouvání a navigace" v Mac Mouse Fix."
+            "value" : "[Swish]({url}) je můj nejoblíbenější způsob správy oken v systému macOS. Jednoduchým přejetím prstem po trackpadu můžete umístit libovolné okno tak, aby zabíralo polovinu, čtvrtinu nebo celou obrazovku.\n\nSwish je určen pro gesta na trackpadu, ale s Mac Mouse Fix ho můžete používat z jakékoli myši třetí strany! Stačí přejít do Mac Mouse Fix a nastavit akci \"Kliknutí a tažení\" libovolného tlačítka na \"Posouvání a navigace\" a poté můžete okna přitahovat jednoduchým kliknutím a tažením.\n\nVšechno, co můžete dělat přejetím dvěma prsty po trackpadu Apple, funguje stejně dobře s funkcí \"Posouvání a navigace\" v Mac Mouse Fix."
           }
         },
         "de" : {
@@ -671,13 +671,13 @@
       }
     },
     "24: questions.click-delay.body" : {
-      "comment" : "Some text like 'Double Click' is quoted, because it appears exactly\nin the Mac Mouse Fix UI.\n\nFor example, 'Double Click' appears on the 'Buttons' tab in Mac Mouse Fix (See: trigger.substring.click.2)\n\nIf you're using Xcloc Editor.app, you can find all the related strings like this:\n- Go to 'All Project Files' (Command-J)\n- Select the search-field (Command-F) \n- Enter the English string (such as 'Double Click') \n-> Now you can see all the translations of this English string!\n\nTry to keep the different translations consistent, especially, when the strings are 'quoted' (or "double quoted") or *emphasized*. This should help the Reader draw the connection to the Mac Mouse Fix UI.\n\nNote to self: [Dec 2025]\n- We put this hint here, since it's likely the first string that the translator will see where this hint is relevant, if they are using the default, alphabetic sorting.",
+      "comment" : "Some text like 'Double Click' is quoted, because it appears exactly\nin the Mac Mouse Fix UI.\n\nFor example, 'Double Click' appears on the 'Buttons' tab in Mac Mouse Fix (See: trigger.substring.click.2)\n\nIf you're using Xcloc Editor.app, you can find all the related strings like this:\n- Go to 'All Project Files' (Command-J)\n- Select the search-field (Command-F) \n- Enter the English string (such as 'Double Click') \n-> Now you can see all the translations of this English string!\n\nTry to keep the different translations consistent, especially, when the strings are 'quoted' (or \"double quoted\") or *emphasized*. This should help the Reader draw the connection to the Mac Mouse Fix UI.\n\nNote to self: [Dec 2025]\n- We put this hint here, since it's likely the first string that the translator will see where this hint is relevant, if they are using the default, alphabetic sorting.",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Po kliknutí může Mac Mouse Fix počkat, zda kliknete dvakrát.<br>\nChcete-li zpoždění tlačítka odstranit, smažte pro dané tlačítko všechny akce "Dvojité kliknutí"."
+            "value" : "Po kliknutí může Mac Mouse Fix počkat, zda kliknete dvakrát.<br>\nChcete-li zpoždění tlačítka odstranit, smažte pro dané tlačítko všechny akce \"Dvojité kliknutí\"."
           }
         },
         "de" : {
@@ -735,7 +735,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ano! Stačí vybrat akci "Plocha a Mission Control" a poté kliknout a přetáhnout *dolů*.\n\nPokud to nefunguje, je to pravděpodobně proto, že gesto trackpadu "App Exposé" je na vašem Macu zakázáno.<br>\nGesto můžete povolit v Nastavení systému nebo spuštěním následujícího příkazu v terminálu:\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```"
+            "value" : "Ano! Stačí vybrat akci \"Plocha a Mission Control\" a poté kliknout a přetáhnout *dolů*.\n\nPokud to nefunguje, je to pravděpodobně proto, že gesto trackpadu \"App Exposé\" je na vašem Macu zakázáno.<br>\nGesto můžete povolit v Nastavení systému nebo spuštěním následujícího příkazu v terminálu:\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```"
           }
         },
         "de" : {
@@ -764,13 +764,13 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Existují "Nastavení specifická pro aplikaci" nebo "Profily"?"
+            "value" : "Existují \"Nastavení specifická pro aplikaci\" nebo \"Profily\"?"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Gibt es "App-spezifische Einstellungen" oder "Profile"?**"
+            "value" : "**Gibt es \"App-spezifische Einstellungen\" oder \"Profile\"?**"
           }
         },
         "en" : {
@@ -794,7 +794,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "V Mac Mouse Fix 2 můžete **zakázat funkce jako plynulé posouvání** v sekci `Více... > Nastavení specifická pro aplikace`.\n\nV Mac Mouse Fix 3 tato funkce zatím neexistuje. <br>\nPlánuji jak "nastavení specifická pro aplikace", tak i "nastavení specifická pro myš", ale zatím nemám časový harmonogram, kdy budou vydány.\n\n**Tip:** Dokud v Mac Mouse Fix 3 nebudou "nastavení specifická pro aplikace", můžete provést toto:\n- Otevřete kartu `Obecné`\n- Zapněte `Zobrazit v panelu nabídek`\n- Nyní můžete **zakázat funkce jako plynulé posouvání** přímo z panelu nabídek\n\nTaké by mě zajímalo, jaký je váš *případ použití*. Neváhejte odeslat [požadavek na funkci]({url}). Váš názor pomůže funkci co nejlépe vylepšit, jakmile bude k dispozici."
+            "value" : "V Mac Mouse Fix 2 můžete **zakázat funkce jako plynulé posouvání** v sekci `Více... > Nastavení specifická pro aplikace`.\n\nV Mac Mouse Fix 3 tato funkce zatím neexistuje. <br>\nPlánuji jak \"nastavení specifická pro aplikace\", tak i \"nastavení specifická pro myš\", ale zatím nemám časový harmonogram, kdy budou vydány.\n\n**Tip:** Dokud v Mac Mouse Fix 3 nebudou \"nastavení specifická pro aplikace\", můžete provést toto:\n- Otevřete kartu `Obecné`\n- Zapněte `Zobrazit v panelu nabídek`\n- Nyní můžete **zakázat funkce jako plynulé posouvání** přímo z panelu nabídek\n\nTaké by mě zajímalo, jaký je váš *případ použití*. Neváhejte odeslat [požadavek na funkci]({url}). Váš názor pomůže funkci co nejlépe vylepšit, jakmile bude k dispozici."
           }
         },
         "de" : {
@@ -1258,13 +1258,13 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vaše licence funguje na **všech vašich Macech**. <br>\nCílem je, abyste si mohli licenci jednoduše koupit, aktivovat ji a už se o ni nikdy nemuseli starat. <br>\nPokud se přihlásíte se stejným účtem Apple, licence se dokonce automaticky synchronizuje s vašimi ostatními zařízeními přes iCloud!\n\n\nPokud narazíte na problémy s aktivací licence, můžete mi [poslat e-mail]({url}). <br>\n\nNěkdy mi odpověď trvá déle. Omlouvám se. Ale ozvu se vám!\n\n\nExistuje jedno omezení: <br>\n\nLicence nejsou určeny k veřejnému sdílení. Jedna licence je určena pro jednu osobu. Veřejně sdílené licence mohou být neplatné. (Vaše máma není "veřejná" a sdílení s ní je v pořádku!)"
+            "value" : "Vaše licence funguje na **všech vašich Macech**. <br>\nCílem je, abyste si mohli licenci jednoduše koupit, aktivovat ji a už se o ni nikdy nemuseli starat. <br>\nPokud se přihlásíte se stejným účtem Apple, licence se dokonce automaticky synchronizuje s vašimi ostatními zařízeními přes iCloud!\n\n\nPokud narazíte na problémy s aktivací licence, můžete mi [poslat e-mail]({url}). <br>\n\nNěkdy mi odpověď trvá déle. Omlouvám se. Ale ozvu se vám!\n\n\nExistuje jedno omezení: <br>\n\nLicence nejsou určeny k veřejnému sdílení. Jedna licence je určena pro jednu osobu. Veřejně sdílené licence mohou být neplatné. (Vaše máma není \"veřejná\" a sdílení s ní je v pořádku!)"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deine Lizenz funktioniert auf **all deinen Macs**. <br>\nDas Ziel ist es, dass du eine Lizenz kaufen kannst, sie aktivierst, und dir dann keine Gedanken mehr darüber machen musst. <br>\nWenn du dich mit demselben Apple Account anmeldest, wird die Lizenz sogar automatisch über iCloud mit deinen anderen Geräten synchronisiert!\n\nFalls du Probleme bei der Aktivierung deiner Lizenz hast, kannst du [eine E-Mail schreiben]({url}). <br>\nIch brauche manchmal eine Weile zum Antworten. Das tut mir leid. Aber ich melde mich zurück! \n\nEs gibt eine Einschränkung: <br>\nLizenzen sind nicht dafür gedacht, öffentlich verteilt zu werden. Eine Lizenz ist für eine Person gedacht. Öffentlich geteilte Lizenzen könnten ungültig gemacht werden. (Deine Mama ist nicht "die Öffentlichkeit" und das Teilen mit ihr ist ok!)"
+            "value" : "Deine Lizenz funktioniert auf **all deinen Macs**. <br>\nDas Ziel ist es, dass du eine Lizenz kaufen kannst, sie aktivierst, und dir dann keine Gedanken mehr darüber machen musst. <br>\nWenn du dich mit demselben Apple Account anmeldest, wird die Lizenz sogar automatisch über iCloud mit deinen anderen Geräten synchronisiert!\n\nFalls du Probleme bei der Aktivierung deiner Lizenz hast, kannst du [eine E-Mail schreiben]({url}). <br>\nIch brauche manchmal eine Weile zum Antworten. Das tut mir leid. Aber ich melde mich zurück! \n\nEs gibt eine Einschränkung: <br>\nLizenzen sind nicht dafür gedacht, öffentlich verteilt zu werden. Eine Lizenz ist für eine Person gedacht. Öffentlich geteilte Lizenzen könnten ungültig gemacht werden. (Deine Mama ist nicht \"die Öffentlichkeit\" und das Teilen mit ihr ist ok!)"
           }
         },
         "en" : {
@@ -1838,7 +1838,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "V 3D aplikacích, jako je Blender, obvykle kliknete a táhnete prostřední tlačítko myši pro obíhání objektů.<br>\nPokud ale v Mac Mouse Fix přiřadíte akce prostřednímu tlačítku myši, pak to už nebude fungovat.\n\nPro řešení tohoto problému znám 2 možnosti:\n\n1. Přiřadit kliknutí a tažení jednoho z tlačítek myši funkci "Posouvání a navigace". Tato funkce simuluje přejetí dvěma prsty po Apple Trackpadu. To vám mimo jiné umožní obíhat v 3D aplikacích!\n\n2. *Odeberte* prostřední tlačítko myši odstraněním všech akcí, které jsou mu přiřazeny v Mac Mouse Fix. Více informací naleznete v [tomto průvodci]({url})."
+            "value" : "V 3D aplikacích, jako je Blender, obvykle kliknete a táhnete prostřední tlačítko myši pro obíhání objektů.<br>\nPokud ale v Mac Mouse Fix přiřadíte akce prostřednímu tlačítku myši, pak to už nebude fungovat.\n\nPro řešení tohoto problému znám 2 možnosti:\n\n1. Přiřadit kliknutí a tažení jednoho z tlačítek myši funkci \"Posouvání a navigace\". Tato funkce simuluje přejetí dvěma prsty po Apple Trackpadu. To vám mimo jiné umožní obíhat v 3D aplikacích!\n\n2. *Odeberte* prostřední tlačítko myši odstraněním všech akcí, které jsou mu přiřazeny v Mac Mouse Fix. Více informací naleznete v [tomto průvodci]({url})."
           }
         },
         "de" : {
