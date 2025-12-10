@@ -152,7 +152,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Zamknout ukazatel myši během „kliknutí a tažení“"
+            "value" : "Zamknout ukazatel myši během "kliknutí a tažení""
           }
         },
         "de" : {
@@ -200,7 +200,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "“点按并拖移”手势过程中锁定鼠标指针"
+            "value" : ""点按并拖移"手势过程中锁定鼠标指针"
           }
         },
         "zh-Hant" : {

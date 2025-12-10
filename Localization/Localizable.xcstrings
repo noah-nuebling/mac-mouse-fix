@@ -7,7 +7,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Otevřít nastavení „Zabezpečení a soukromí“"
+            "value" : "Otevřít nastavení "Zabezpečení a soukromí""
           }
         },
         "de" : {
@@ -61,7 +61,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "打开“隐私与安全性”偏好设置"
+            "value" : "打开"隐私与安全性"偏好设置"
           }
         },
         "zh-Hant" : {
@@ -4211,7 +4211,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "向任意方向移动您的鼠标来自由滚动n \n也可以左右移动来导航Safari页面、删除“邮件”中的邮件等。\n \n作用相当于在Apple触控板上用双指轻扫"
+            "value" : "向任意方向移动您的鼠标来自由滚动n \n也可以左右移动来导航Safari页面、删除"邮件"中的邮件等。\n \n作用相当于在Apple触控板上用双指轻扫"
           }
         },
         "zh-Hant" : {
@@ -4596,7 +4596,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "作用相当于按下Apple键盘上的“%@”"
+            "value" : "作用相当于按下Apple键盘上的"%@""
           }
         },
         "zh-Hant" : {
@@ -4904,7 +4904,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "以新标签页打开链接、在“终端”中粘贴文字等。\n \n作用相当于在标准鼠标上点按鼠标中键（又称鼠标滚轮键或鼠标按钮３）。"
+            "value" : "以新标签页打开链接、在"终端"中粘贴文字等。\n \n作用相当于在标准鼠标上点按鼠标中键（又称鼠标滚轮键或鼠标按钮３）。"
           }
         },
         "zh-Hant" : {
@@ -5626,7 +5626,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "打开“启动台”"
+            "value" : "打开"启动台""
           }
         },
         "zh-Hant" : {
@@ -5934,7 +5934,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "查询词典、在Finder中“快速查看”等。\n \n作用相当于在Apple触控板上用单指用力点按。"
+            "value" : "查询词典、在Finder中"快速查看"等。\n \n作用相当于在Apple触控板上用单指用力点按。"
           }
         },
         "zh-Hant" : {
@@ -6088,7 +6088,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "显示“调度中心”"
+            "value" : "显示"调度中心""
           }
         },
         "zh-Hant" : {
@@ -6473,7 +6473,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "作用相当于在您的键盘上按下“%@”"
+            "value" : "作用相当于在您的键盘上按下"%@""
           }
         },
         "zh-Hant" : {
@@ -6922,7 +6922,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aplikace Mac Mouse Fix byla **zakázána** v Nastavení systému\n\nChcete-li Mac Mouse Fix povolit:\n\n1. Přejděte do [Nastavení položek přihlášení](%@)\n2. Zapněte aplikaci „Mac Mouse Fix.app“"
+            "value" : "Aplikace Mac Mouse Fix byla **zakázána** v Nastavení systému\n\nChcete-li Mac Mouse Fix povolit:\n\n1. Přejděte do [Nastavení položek přihlášení](%@)\n2. Zapněte aplikaci "Mac Mouse Fix.app""
           }
         },
         "de" : {
@@ -6976,7 +6976,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "系统偏好设置中已**禁用**Mac Mouse Fix\n\n若要启用Mac Mouse Fix：\n\n⒈前往[登录项](%@)\n⒉开启“Mac Mouse Fix.app”"
+            "value" : "系统偏好设置中已**禁用**Mac Mouse Fix\n\n若要启用Mac Mouse Fix：\n\n⒈前往[登录项](%@)\n⒉开启"Mac Mouse Fix.app""
           }
         },
         "zh-Hant" : {
@@ -8159,7 +8159,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "“**%@**”并不是已知的许可证。\n请换一个许可证再试。"
+            "value" : ""**%@**"并不是已知的许可证。\n请换一个许可证再试。"
           }
         },
         "zh-Hant" : {
@@ -10316,7 +10316,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "向左和向右滚动来导航Safari页面、删除“邮件”中的邮件等\n \n作用相当于在Apple触控板上用双指左右轻扫"
+            "value" : "向左和向右滚动来导航Safari页面、删除"邮件"中的邮件等\n \n作用相当于在Apple触控板上用双指左右轻扫"
           }
         },
         "zh-Hant" : {
