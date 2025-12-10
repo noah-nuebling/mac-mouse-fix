@@ -4831,7 +4831,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Přesuňte ukazatel myši do pole "+" a poté *klikněte* na tlačítko myši, chcete-li mu přiřadit akci.\nMůžete také použít *dvojité kliknutí*, *kliknutí a tažení* a další."
+            "value" : "Přesuňte ukazatel myši do pole \"+\" a poté *klikněte* na tlačítko myši, chcete-li mu přiřadit akci.\nMůžete také použít *dvojité kliknutí*, *kliknutí a tažení* a další."
           }
         },
         "de" : {
@@ -4879,7 +4879,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "移动鼠标指针到"+"区域内，然后点按鼠标按钮来指定动作。  您也可以连按、点按并拖移、执行[更多]()操作。"
+            "value" : "移动鼠标指针到\"+\"区域内，然后点按鼠标按钮来指定动作。  您也可以连按、点按并拖移、执行[更多]()操作。"
           }
         },
         "zh-Hant" : {
