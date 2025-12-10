@@ -220,9 +220,9 @@ comment:
   ```
   [Swish](https://highlyopinionated.co/swish/) is my favorite way to manage windows on macOS. With a simple swipe on your trackpad, it lets you position any window so it takes up half, a quarter, or the whole screen.
 
-  Swish is designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse! Just go to Mac Mouse Fix and set any buttons "Click and Drag" action to "Scroll & Navigate" and then you can snap windows with a simple Click and Drag.
+  Swish is designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse! Just go to Mac Mouse Fix and set any button's 'Click and Drag' action to 'Scroll & Navigate' and then you can snap windows with a simple Click and Drag.
 
-  Anything you can do with a two-finger swipe on an Apple trackpad works just as well with the "Scroll & Navigate" feature in Mac Mouse Fix.
+  Anything you can do with a two-finger swipe on an Apple trackpad works just as well with the 'Scroll & Navigate' feature in Mac Mouse Fix.
   ```
   comment:  
   ```
@@ -267,7 +267,7 @@ comment:
   key: questions.click-delay.body
   ```
   When you click, Mac Mouse Fix might wait to see if you're going to double click.<br>
-  To remove the delay for a button, delete any "Double Click" actions for that button.
+  To remove the delay for a button, delete any 'Double Click' actions for that button.
   ```
   comment: 
   ```
@@ -351,7 +351,7 @@ comment:
   ```
   key: questions.mouse-buttons-not-working.body
   ```
-  See the question **"Is my mouse supported?"** above.
+  See the question **'Is my mouse supported?'** above.
   ```
   comment:
   ```
