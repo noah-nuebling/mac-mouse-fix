@@ -4825,12 +4825,12 @@
       }
     },
     "N7H-9j-DIr.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.\\nYou can also *Double Click*, *Click and Drag* and [more]().\"; ObjectID = \"N7H-9j-DIr\"; Note = \"Buttons > Add Field Hint\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.\\nYou can also *Double Click*, *Click and Drag* and [more]().\"; ObjectID = \"N7H-9j-DIr\"; Note = \"Buttons > Add Field Hint\\n\\nNOTE:\\n\\nThe emphasized bits like *Double Click* or *Click and Drag* should ideally match the text seen in the Action Table (Such as trigger.substring.drag.1, trigger.substring.click.2, etc.). This should help the user draw the connection to the Action Table (which appears in the UI right below this hint as of [Dec 2025])\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Přesuňte ukazatel myši do pole „+“ a poté *klikněte* na tlačítko myši, chcete-li mu přiřadit akci.\nMůžete také použít *dvojité kliknutí*, *kliknutí a tažení* a další."
           }
         },
@@ -4848,7 +4848,7 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Déplacez le pointeur de la souris à l'intérieur du champ « + », puis *cliquez* sur un bouton de la souris pour lui affecter une action.\nVous pouvez aussi utiliser le *double-clic*, le *clic et déplacement* et [bien d'autres]()."
           }
         },
@@ -4860,13 +4860,13 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mova o ponteiro do mouse dentro do campo '+' e *Clique* em um botão do mouse para atribuir uma ação a ele.\nVocê também pode dar *Clique Duplo*, *Arrastar e Soltar* e [mais]()."
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Наведите указатель мыши на поле '+', затем *нажмите* кнопку мыши, чтобы назначить ей действие.\nВы также можете *двойной клик*, *нажать и тянуть*, и [больше]()"
           }
         },
