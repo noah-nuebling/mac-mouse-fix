@@ -472,25 +472,25 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "[Swish]({url}) je můj nejoblíbenější způsob správy oken v systému macOS. Jednoduchým přejetím prstem po trackpadu můžete umístit libovolné okno tak, aby zabíralo polovinu, čtvrtinu nebo celou obrazovku.\n\nSwish je určen pro gesta na trackpadu, ale s Mac Mouse Fix ho můžete používat z jakékoli myši třetí strany! Stačí přejít do Mac Mouse Fix a nastavit akci „Kliknutí a tažení“ libovolného tlačítka na „Posouvání a navigace“ a poté můžete okna přitahovat jednoduchým kliknutím a tažením.\n\nVšechno, co můžete dělat přejetím dvěma prsty po trackpadu Apple, funguje stejně dobře s funkcí „Posouvání a navigace“ v Mac Mouse Fix."
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "[Swish]({url}) ist meine bevorzugte Methode, um Fenster unter macOS zu verwalten. Es ermöglicht dir, mit einem einfachen Wischen auf dem Trackpad jedes Fenster so zu positionieren, dass es die Hälfte, ein Viertel oder den ganzen Bildschirm einnimmt.\n\nSwish ist für Trackpad-Gesten konzipiert, aber mit Mac Mouse Fix kannst du es von jeder Drittanbieter-Maus aus verwenden! Öffne dazu einfach Mac Mouse Fix und stelle für eine beliebige Taste die \"Klicken und Ziehen\" Aktion auf \"Scrollen & Navigieren\", dann kannst du Fenster mit einem einfachen Klicken und Ziehen positionieren.\n\nAlles was du mit durch Wischen mit 2 Fingern auf einem Apple Trackpad machen kannst funktioniert genau so gut mit der \"Scrollen & Navigieren\" Funktion in Mac Mouse Fix."
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "[Swish]({url}) is my favorite way to manage windows on macOS. With a simple swipe on your trackpad, it lets you position any window so it takes up half, a quarter, or the whole screen.\n\nSwish is designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse! Just go to Mac Mouse Fix and set any buttons \"Click and Drag\" action to \"Scroll & Navigate\" and then you can snap windows with a simple Click and Drag.\n\nAnything you can do with a two-finger swipe on an Apple trackpad works just as well with the \"Scroll & Navigate\" feature in Mac Mouse Fix."
+            "state" : "translated",
+            "value" : "[Swish]({url}) is my favorite way to manage windows on macOS. With a simple swipe on your trackpad, it lets you position any window so it takes up half, a quarter, or the whole screen.\n\nSwish is designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse! Just go to Mac Mouse Fix and set any buttons 'Click and Drag' action to 'Scroll & Navigate' and then you can snap windows with a simple Click and Drag.\n\nAnything you can do with a two-finger swipe on an Apple trackpad works just as well with the 'Scroll & Navigate' feature in Mac Mouse Fix."
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "[Swish]({url}) — мой любимый способ управления окнами в macOS. Простым движением по трекпаду вы можете расположить любое окно так, чтобы оно занимало половину, четверть или весь экран.\n\nSwish разработан для жестов трекпада, но с помощью Mac Mouse Fix вы можете использовать его с любой сторонней мышью! Просто перейдите в Mac Mouse Fix и установите для любой кнопки действие 'Щелкнуть и перетащить' на 'Прокрутка и навигация', после чего вы сможете привязывать окна простым щелчком и перетаскиванием.\n\nВсе, что можно сделать с помощью двухпальцевого жеста на трекпаде Apple, так же хорошо работает с функцией 'Прокрутка и навигация' в Mac Mouse Fix."
           }
         }
@@ -671,29 +671,30 @@
       }
     },
     "24: questions.click-delay.body" : {
+      "comment" : "Some text like ‘Double Click’ is quoted, because it appears exactly\nin the Mac Mouse Fix UI.\n\nFor example, ‘Double Click’ appears on the ‘Buttons’ tab in Mac Mouse Fix (See: trigger.substring.click.2)\n\nIf you’re using Xcloc Editor.app, you can find all the related strings like this:\n- Go to ‘All Project Files’ (Command-J)\n- Select the search-field (Command-F) \n- Enter the English string (such as ‘Double Click’) \n-> Now you can see all the translations of this English string!\n\nTry to keep the different translations consistent, especially, when the strings are ‘quoted’ (or “double quoted”) or *emphasized*. This should help the Reader draw the connection to the Mac Mouse Fix UI.\n\nNote to self: [Dec 2025]\n- We put this hint here, since it’s likely the first string that the translator will see where this hint is relevant, if they are using the default, alphabetic sorting.",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Po kliknutí může Mac Mouse Fix počkat, zda kliknete dvakrát.<br>\nChcete-li zpoždění tlačítka odstranit, smažte pro dané tlačítko všechny akce „Dvojité kliknutí“."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wenn du klickst, wartet Mac Mouse Fix möglicherweise ab, um zu sehen, ob du doppelklickst.<br>\nUm die Verzögerung für eine Taste zu entfernen, lösche alle \"Doppelklick\"-Aktionen für diese Taste."
+            "value" : "Wenn du klickst, wartet Mac Mouse Fix möglicherweise ab, um zu sehen, ob du doppelklickst.<br>\nUm die Verzögerung für eine Taste zu entfernen, lösche alle 'Doppelklicken'-Aktionen für diese Taste."
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "When you click, Mac Mouse Fix might wait to see if you're going to double click.<br>\nTo remove the delay for a button, delete any \"Double Click\" actions for that button."
+            "state" : "translated",
+            "value" : "When you click, Mac Mouse Fix might wait to see if you're going to double click.<br>\nTo remove the delay for a button, delete any 'Double Click' actions for that button."
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Когда вы нажимаете кнопку, Mac Mouse Fix может подождать, чтобы увидеть, собираетесь ли вы сделать двойное нажатие.\nЧтобы устранить задержку для кнопки, удалите все действия 'Двойного нажатия' для этой кнопки."
           }
         }
@@ -787,7 +788,7 @@
       }
     },
     "30: questions.app-specific-settings.body" : {
-      "comment" : "1) Don't translate \"More... > App-specific settings\" - that's because Mac Mouse Fix 2 doesn't support localization. \n\n2) In English, the words \"Mac Mouse Fix\" are purposefully aligned in the first two lines:\n\"In Mac Mouse Fix 2, ...\"  and \n\"In Mac Mouse Fix 3, ...\"\nto make the text easier to scan.",
+      "comment" : "1) Don't translate 'More... > App-specific settings' - that's because Mac Mouse Fix 2 doesn't support localization. \n\n2) In English, the words 'Mac Mouse Fix' are purposefully aligned in the first two lines:\n'In Mac Mouse Fix 2, ...'  and \n'In Mac Mouse Fix 3, ...'\nto make the text easier to scan.",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -908,25 +909,25 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Viz otázka **Je moje myš podporována?** výše."
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Siehe die Frage **\"Wird meine Maus unterstützt?\"** oben."
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "See the question **\"Is my mouse supported?\"** above."
+            "state" : "translated",
+            "value" : "See the question **'Is my mouse supported?'** above."
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "См. вопрос **'Поддерживается ли моя мышь?'** выше."
           }
         }
@@ -1836,25 +1837,25 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "V 3D aplikacích, jako je Blender, obvykle kliknete a táhnete prostřední tlačítko myši pro obíhání objektů.<br>\nPokud ale v Mac Mouse Fix přiřadíte akce prostřednímu tlačítku myši, pak to už nebude fungovat.\n\nPro řešení tohoto problému znám 2 možnosti:\n\n1. Přiřadit kliknutí a tažení jednoho z tlačítek myši funkci „Posouvání a navigace“. Tato funkce simuluje přejetí dvěma prsty po Apple Trackpadu. To vám mimo jiné umožní obíhat v 3D aplikacích!\n\n2. *Odeberte* prostřední tlačítko myši odstraněním všech akcí, které jsou mu přiřazeny v Mac Mouse Fix. Více informací naleznete v [tomto průvodci]({url})."
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "In 3D-Apps wie Blender kreist man normalerweise um Objekte, indem man die mittlere Maustaste klickt und zieht.<br>\nAber wenn du in Mac Mouse Fix der mittleren Maustaste Aktionen zuweist, dann funktioniert das nicht mehr.\n  \nUm das zu lösen, gibt es 2 Optionen, von denen ich weiß:\n1. Weise für eine der Tasten deiner Maus das klicken und ziehen der \"Scrollen & Navigieren\" Funktion zu. Diese Funktion simuliert das Wischen mit 2 Fingern auf einem Apple Trackpad. Das erlaubt dir, unter anderem, in 3D-Apps zu kreisen!\n2. *Gebe* die mittlere Maustaste *frei*, indem du alle ihr in Mac Mouse Fix zugewiesenen Aktionen löschst. Siehe [diese Anleitung]({url}) für weitere Informationen."
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "In 3D apps like Blender, you normally Click and Drag the Middle Mouse Button to orbit around objects.<br>\nBut if you assign actions to the Middle Mouse Button in Mac Mouse Fix, then this won't work anymore.\n\nTo solve this, I know of 2 options:\n1. Assign clicking and dragging one of the buttons of your mouse to the \"Scroll & Navigate\" feature. This feature simulates swiping with 2 fingers on an Apple Trackpad. This will, among other things, let you orbit in 3D apps! \n2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it in Mac Mouse Fix. See [this guide]({url}) for more info."
+            "state" : "translated",
+            "value" : "In 3D apps like Blender, you normally Click and Drag the Middle Mouse Button to orbit around objects.<br>\nBut if you assign actions to the Middle Mouse Button in Mac Mouse Fix, then this won't work anymore.\n\nTo solve this, I know of 2 options:\n1. Assign clicking and dragging one of the buttons of your mouse to the 'Scroll & Navigate' feature. This feature simulates swiping with 2 fingers on an Apple Trackpad. This will, among other things, let you orbit in 3D apps! \n2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it in Mac Mouse Fix. See [this guide]({url}) for more info."
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "В 3D-приложениях, таких как Blender, вы обычно нажимаете и перетаскиваете Среднюю кнопку мыши, чтобы вращаться вокруг объектов.<br>\nНо если вы назначите действия на Среднюю кнопку мыши в Mac Mouse Fix, то это перестанет работать.\n\nЧтобы решить эту проблему, я знаю 2 варианта:\n1. Назначьте нажатие и перетаскивание одной из кнопок вашей мыши на функцию 'Прокрутка и навигация'. Эта функция имитирует свайп двумя пальцами на трекпаде Apple. Это, среди прочего, позволит вам вращаться в 3D-приложениях!\n2. *Отмените перехват* Средней кнопки мыши, удалив все действия, назначенные ей в Mac Mouse Fix. Подробнее см. в [этом руководстве]({url})."
           }
         }
