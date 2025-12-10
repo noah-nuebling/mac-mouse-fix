@@ -91,7 +91,7 @@
       }
     },
     "04: uncapturing" : {
-      "comment" : "{screenshot_2} will be replaced by a screenshot of the 'Buttons' tab where 'Button 4' and two '-' buttons are highlighted.\n\nMatch the terminology seen on the 'Buttons' tab.\n\n(Search for \"Toolbar > Scrolling Tab Button\" and \"trigger.y.group-row.button-name.numbered\")",
+      "comment" : "{screenshot_2} will be replaced by a screenshot of the 'Buttons' tab where 'Button 4' and two '-' buttons are highlighted.\n\nMatch the terminology seen on the 'Buttons' tab.\n\n(Search for 'Toolbar > Scrolling Tab Button' and 'trigger.y.group-row.button-name.numbered')",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {

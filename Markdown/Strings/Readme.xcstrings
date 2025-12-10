@@ -770,7 +770,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Gibt es \"App-spezifische Einstellungen\" oder \"Profile\"?**"
+            "value" : "**Gibt es 'App-spezifische Einstellungen' oder 'Profile'?**"
           }
         },
         "en" : {
@@ -1257,25 +1257,25 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Vaše licence funguje na **všech vašich Macech**. <br>\nCílem je, abyste si mohli licenci jednoduše koupit, aktivovat ji a už se o ni nikdy nemuseli starat. <br>\nPokud se přihlásíte se stejným účtem Apple, licence se dokonce automaticky synchronizuje s vašimi ostatními zařízeními přes iCloud!\n\n\nPokud narazíte na problémy s aktivací licence, můžete mi [poslat e-mail]({url}). <br>\n\nNěkdy mi odpověď trvá déle. Omlouvám se. Ale ozvu se vám!\n\n\nExistuje jedno omezení: <br>\n\nLicence nejsou určeny k veřejnému sdílení. Jedna licence je určena pro jednu osobu. Veřejně sdílené licence mohou být neplatné. (Vaše máma není \"veřejná\" a sdílení s ní je v pořádku!)"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Deine Lizenz funktioniert auf **all deinen Macs**. <br>\nDas Ziel ist es, dass du eine Lizenz kaufen kannst, sie aktivierst, und dir dann keine Gedanken mehr darüber machen musst. <br>\nWenn du dich mit demselben Apple Account anmeldest, wird die Lizenz sogar automatisch über iCloud mit deinen anderen Geräten synchronisiert!\n\nFalls du Probleme bei der Aktivierung deiner Lizenz hast, kannst du [eine E-Mail schreiben]({url}). <br>\nIch brauche manchmal eine Weile zum Antworten. Das tut mir leid. Aber ich melde mich zurück! \n\nEs gibt eine Einschränkung: <br>\nLizenzen sind nicht dafür gedacht, öffentlich verteilt zu werden. Eine Lizenz ist für eine Person gedacht. Öffentlich geteilte Lizenzen könnten ungültig gemacht werden. (Deine Mama ist nicht \"die Öffentlichkeit\" und das Teilen mit ihr ist ok!)"
+            "value" : "Deine Lizenz funktioniert auf **all deinen Macs**. <br>\nDas Ziel ist es, dass du eine Lizenz kaufen kannst, sie aktivierst, und dir dann keine Gedanken mehr darüber machen musst. <br>\nWenn du dich mit demselben Apple Account anmeldest, wird die Lizenz sogar automatisch über iCloud mit deinen anderen Geräten synchronisiert!\n\nFalls du Probleme bei der Aktivierung deiner Lizenz hast, kannst du [eine E-Mail schreiben]({url}). <br>\nIch brauche manchmal eine Weile zum Antworten. Das tut mir leid. Aber ich melde mich zurück! \n\nEs gibt eine Einschränkung: <br>\nLizenzen sind nicht dafür gedacht, öffentlich verteilt zu werden. Eine Lizenz ist für eine Person gedacht. Öffentlich geteilte Lizenzen könnten ungültig gemacht werden. (Mit deiner Mama teilen ist ok.)"
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Your license works on **all your Macs**. <br>\nThe goal is that you can just buy a license, activate it, and never have to worry about it again. <br>\nIf you log in with the same Apple Account, the license will even sync automatically to your other devices via iCloud!\n\nIf you encounter problems activating your license, you can [send me an email]({url}). <br>\nI sometimes take a while to answer. I'm sorry about this. But I will get back to you!\n\nThere is one restriction: <br>\nLicenses are not meant to be shared publicly. One license is meant for one person. Publicly shared licenses might be invalidated. (Your mom is not 'the public' and sharing with her is ok!)"
+            "state" : "translated",
+            "value" : "Your license works on **all your Macs**. <br>\nThe goal is that you can just buy a license, activate it, and never have to worry about it again. <br>\nIf you log in with the same Apple Account, the license will even sync automatically to your other devices via iCloud!\n\nIf you encounter problems activating your license, you can [send me an email]({url}). <br>\nI sometimes take a while to answer. I'm sorry about this. But I will get back to you!\n\nThere is one restriction: <br>\nLicenses are not meant to be shared publicly. One license is meant for one person. Publicly shared licenses might be invalidated. (Sharing with your mom is ok.)"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Ваша лицензия работает на **всех ваших Mac**. <br>\nЦель состоит в том, чтобы вы могли просто купить лицензию, активировать ее и больше не беспокоиться об этом. <br>\nЕсли вы войдете в систему с помощью той же учетной записи Apple, лицензия даже автоматически синхронизируется с вашими другими устройствами через iCloud!\n\nЕсли у вас возникнут проблемы с активацией лицензии, вы можете [отправить мне электронное письмо]({url}). <br>\nИногда я отвечаю с задержкой. Приношу свои извинения за это. Но я обязательно свяжусь с вами!\n\nЕсть одно ограничение: <br>\nЛицензии не предназначены для публичного использования. Одна лицензия предназначена для одного человека. Публично используемые лицензии могут быть аннулированы. (Ваша мама не является 'публикой', и делиться с ней лицензией можно!)"
           }
         }

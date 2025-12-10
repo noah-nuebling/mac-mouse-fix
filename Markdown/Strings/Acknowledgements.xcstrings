@@ -31,7 +31,7 @@
       }
     },
     "2: translations" : {
-      "comment" : "Note: {url} will be replaced by a link. \n\nMake sure to type \"{url}\" exactly like in the original for the text-replacement to work.\n\nFurther details: \n\nYou may have encountered \"format specifiers\" like \"%1$@\" before. \"%1$@\" is a format specifier in the C programming language, while \"{url}\" is a format specifier in the Python programming language. The idea is the same – when the program runs, this special character sequence gets replaced with dynamic content. You as the translator can decide where this dynamic content ends up in your translated text by including the format specifier in a specific place.\n\nAlso see: license-toast.activation-overload",
+      "comment" : "Note: {url} will be replaced by a link. \n\nMake sure to type ‘{url}’ exactly like in the original for the text-replacement to work.\n\nFurther details: \n\nYou may have encountered 'format specifiers' like '%1$@' before. '%1$@' is a format specifier in the C programming language, while '{url}' is a format specifier in the Python programming language. The idea is the same – when the program runs, this special character sequence gets replaced with dynamic content. You as the translator can decide where this dynamic content ends up in your translated text by including the format specifier in a specific place.\n\nAlso see: license-toast.activation-overload",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -61,7 +61,7 @@
       }
     },
     "3: money" : {
-      "comment" : "Note: {sales_count} will be replaced by the number of times Mac Mouse Fix has been sold. \n\nMake sure to type \"{sales_count}\" exactly like in the original for the text-replacement to work.\n\n",
+      "comment" : "Note: {sales_count} will be replaced by the number of times Mac Mouse Fix has been sold. \n\nMake sure to type '{sales_count}' exactly like in the original for the text-replacement to work.\n\n",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -240,25 +240,25 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Software**, který inspiroval Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Průkopnický software pro myš pro Mac, inspirující mnoho funkcí. Byly chvíle, kdy jsem si myslel, že \"to asi není možné\", ale pak jsem viděl, že \"aha, SteerMouse to dělá\", a o tři roky později jsem také přišel na to, jak to implementovat.\n- [Calftrail Touch]({url_2}) - Základ pro \"reverzní inženýrství\", které pohání nejlepší a první simulaci trackpadu v Mac Mouse Fix!\n- [MOS]({url_3}) - Možnost \"Vysoká plynulost rolování\" v Mac Mouse Fix, implementace \"Nastavení specifická pro aplikaci\" a další byly inspirovány MOS.\n- [SensibleSideButtons]({url_4}) - Zkopíroval jsem jeho kód pro ranou implementaci funkce \"Přejít zpět/vpřed o jednu stránku v Safari a dalších aplikacích\" a také mě to vedlo k objevení projektu Calftrail Touch.\n- [Gifski]({url_5}) - Významně inspiroval design a obsah souboru [Readme.md]({url_6}) pro opravu myši na Macu.\n- [Pomocník pro řešení problémů s Vue]({url_7}) - Základ pro návrh a technickou implementaci nástroje [Asistent pro zpětnou vazbu k opravě myši na Macu]({url_8})."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Software**, die Mac Mouse Fix inspiriert hat:\n\n- [SteerMouse]({url_1}) - Wegweisende Maus-Software für Mac, die viele Funktionen inspiriert hat. Es gab Momente, in denen ich dachte: \"Das ist wahrscheinlich unmöglich\", aber dann hab ich gesehen \"oh, SteerMouse macht es\", und drei Jahre später habe ich herausgefunden, wie ich es auch umsetzen kann.\n- [Calftrail Touch]({url_2}) - Die Grundlage für die \"Reverse Engineering\"-Arbeit, die Mac Mouse Fix's erstklassige und einzigartige Trackpad-Simulation ermöglicht!\n- [MOS]({url_3}) - Viele Funktionen von Mac Mouse Fix, wie die Option \"Hohe Scroll-Flüssigkeit\" und die Implementierung des \"App-spezifische Einstellungen\" features, wurden von MOS inspiriert.\n- [SensibleSideButtons]({url_4}) - Ich habe den Code für eine frühe Implementierung der Funktion \"Gehe eine Seite vor/zurück in Safari und anderen Apps\" von SensibleSideButtons kopiert und bin dadurch auch auf das Calftrail Touch-Projekt gestoßen.\n- [Gifski]({url_5}) - Hat das Design und den Inhalt des [Readme.md]({url_6}) von Mac Mouse Fix stark inspiriert.\n- [Vue Issue Helper]({url_7}) - Grundlage für das Design und die technische Umsetzung von [Mac Mouse Fix Feedback Assistant]({url_8})."
+            "value" : "**Software**, die Mac Mouse Fix inspiriert hat:\n\n- [SteerMouse]({url_1}) - Wegweisende Maus-Software für Mac, die viele Funktionen inspiriert hat. Es gab Momente, in denen ich dachte: 'Das ist wahrscheinlich unmöglich', aber dann hab ich gesehen 'oh, SteerMouse macht es', und drei Jahre später habe ich herausgefunden, wie ich es auch umsetzen kann.\n- [Calftrail Touch]({url_2}) - Die Grundlage für die 'Reverse Engineering'-Arbeit, die Mac Mouse Fix's erstklassige und einzigartige Trackpad-Simulation ermöglicht!\n- [MOS]({url_3}) - Viele Funktionen von Mac Mouse Fix, wie die Option 'Hohe Scroll-Flüssigkeit' und die Implementierung des 'App-spezifische Einstellungen' features, wurden von MOS inspiriert.\n- [SensibleSideButtons]({url_4}) - Ich habe den Code für eine frühe Implementierung der Funktion 'Gehe eine Seite vor/zurück in Safari und anderen Apps' von SensibleSideButtons kopiert und bin dadurch auch auf das Calftrail Touch-Projekt gestoßen.\n- [Gifski]({url_5}) - Hat das Design und den Inhalt des [Readme.md]({url_6}) von Mac Mouse Fix stark inspiriert.\n- [Vue Issue Helper]({url_7}) - Grundlage für das Design und die technische Umsetzung von [Mac Mouse Fix Feedback Assistant]({url_8})."
           }
         },
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought \"this is probably not possible\", but then I saw \"oh, SteerMouse does it\", and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the \"reverse engineering\" work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's \"High Scroll-Smoothness\" option, the \"App-Specific Settings\" implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the \"Go back/forward one page in Safari and other apps\" feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+            "state" : "translated",
+            "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought 'this is probably not possible', but then I saw 'oh, SteerMouse does it', and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the 'reverse engineering' work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's 'High Scroll-Smoothness' option, the 'App-Specific Settings' implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the 'Go back/forward one page in Safari and other apps' feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**Программное обеспечение**, которое вдохновило Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - новаторское программное обеспечение для мыши Mac, вдохновившее многие функции. Были моменты, когда я думал: \"Это, наверное, невозможно\", но потом я увидел: \"О, SteerMouse это делает\", и через три года я тоже понял, как это реализовать.\n- [Calftrail Touch]({url_2}) — основа для \"обратного инжиниринга\", который обеспечивает лучшую в своем классе и первую в своем роде симуляцию трекпада в Mac Mouse Fix!\n- [MOS]({url_3}) - Опция \"Высокая плавность прокрутки\" Mac Mouse Fix, реализация \"Настроек для конкретных приложений\" и многое другое были вдохновлены MOS.\n- [SensibleSideButtons]({url_4}) - Я скопировал его код для ранней реализации функции \"Вернуться/перейти на одну страницу назад в Safari и других приложениях\", а также это привело меня к открытию проекта Calftrail Touch.\n- [Gifski]({url_5}) - Сильно вдохновил дизайн и содержание [Readme.md]({url_6}) для Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Основа для дизайна и технической реализации [Mac Mouse Fix Feedback Assistant]({url_8})."
           }
         }
