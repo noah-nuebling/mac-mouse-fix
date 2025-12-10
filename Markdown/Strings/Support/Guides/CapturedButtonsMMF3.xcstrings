@@ -310,7 +310,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "'Mittelklick'<br>(Kann dem *Klicken* einer Taste zugewiesen werden)"
+            "value" : "'Mittelklick'<br>(Kann dem *klicken* einer Taste zugewiesen werden)"
           }
         },
         "en" : {
@@ -398,7 +398,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "'Mittelklick'<br>(Kann dem *Klicken* einer Taste zugewiesen werden)"
+            "value" : "'Mittelklick'<br>(Kann dem *klicken* einer Taste zugewiesen werden)"
           }
         },
         "en" : {
@@ -487,7 +487,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "'Zurück' / 'Vorwärts'<br>(Kann dem *Klicken* einer Taste zugewiesen werden)"
+            "value" : "'Zurück' / 'Vorwärts'<br>(Kann dem *klicken* einer Taste zugewiesen werden)"
           }
         },
         "en" : {
@@ -575,7 +575,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "'Scrollen & Navigieren'<br>(Kann dem *Klicken und Ziehen* einer Taste zugewiesen werden)"
+            "value" : "'Scrollen & Navigieren'<br>(Kann dem *klicken und ziehen* einer Taste zugewiesen werden)"
           }
         },
         "en" : {

@@ -450,7 +450,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Fenster einfach per Klicken und Ziehen verwalten**"
+            "value" : "**Fenster einfach per klicken und ziehen verwalten**"
           }
         },
         "en" : {
@@ -479,7 +479,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[Swish]({url}) ist meine bevorzugte Methode, um Fenster unter macOS zu verwalten. Es ermöglicht dir, mit einem einfachen Wischen auf dem Trackpad jedes Fenster so zu positionieren, dass es die Hälfte, ein Viertel oder den ganzen Bildschirm einnimmt.\n\nSwish ist für Trackpad-Gesten konzipiert, aber mit Mac Mouse Fix kannst du es von jeder Drittanbieter-Maus aus verwenden! Öffne dazu einfach Mac Mouse Fix und stelle für eine beliebige Taste die 'Klicken und Ziehen' Aktion auf 'Scrollen & Navigieren', dann kannst du Fenster mit einem einfachen Klicken und Ziehen positionieren.\n\nAlles was du mit durch Wischen mit 2 Fingern auf einem Apple Trackpad machen kannst funktioniert genau so gut mit der 'Scrollen & Navigieren' Funktion in Mac Mouse Fix."
+            "value" : "[Swish]({url}) ist meine bevorzugte Methode, um Fenster unter macOS zu verwalten. Es ermöglicht dir, mit einem einfachen Wischen auf dem Trackpad jedes Fenster so zu positionieren, dass es die Hälfte, ein Viertel oder den ganzen Bildschirm einnimmt.\n\nSwish ist für Trackpad-Gesten konzipiert, aber mit Mac Mouse Fix kannst du es von jeder Drittanbieter-Maus aus verwenden! Öffne dazu einfach Mac Mouse Fix und stelle für eine beliebige Taste die 'klicken und ziehen' Aktion auf 'Scrollen & Navigieren', dann kannst du Fenster mit einem einfachen klicken und ziehen positionieren.\n\nAlles was du mit durch Wischen mit 2 Fingern auf einem Apple Trackpad machen kannst funktioniert genau so gut mit der 'Scrollen & Navigieren' Funktion in Mac Mouse Fix."
           }
         },
         "en" : {
