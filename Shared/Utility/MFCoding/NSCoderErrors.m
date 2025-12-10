@@ -34,7 +34,7 @@
 ///         MFPlistDecoder
 ///             (Under RaiseException failure policy, using [failWithError:] inherited from NSCoder) I saw MFPlistDecoder **exception** with:
 ///                 - name: NSInvalidUnarchiveOperationException
-///                 - reason: "The data couldn’t be read because it isn’t in the correct format."
+///                 - reason: "The data couldn't be read because it isn't in the correct format."
 ///                 - userInfo dict: Single key `@"__NSCoderError"` (kMFNSCoderExceptionKey_Error) with value: <The NSError we passed to [failWithError:]>
 ///
 ///             -> Might be wrong but it looks like the default NSCoder `[failWithError:]` impl converts NSError <-> NSException differently from NSKeyedUnarchiver.

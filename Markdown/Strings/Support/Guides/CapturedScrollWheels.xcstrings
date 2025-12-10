@@ -31,7 +31,7 @@
       }
     },
     "2: uncapturing" : {
-      "comment" : "For the step-by-step instructions, make sure to mirror the strings that are seen on the ‘Scrolling’ Tab in Mac Mouse Fix.\n\nHow to find the strings seen on the ‘Scrolling’ Tab:\n\nMost strings on the ‘Scrolling’ Tab have a comment containing ‘Scrolling >’ as of September 2025.\n\nHow to find the strings used in the message 'indicating that the scroll wheel is no longer being captured':\n\nSearch for ‘capture-toast.scroll.uncaptured’",
+      "comment" : "For the step-by-step instructions, make sure to mirror the strings that are seen on the 'Scrolling' Tab in Mac Mouse Fix.\n\nHow to find the strings seen on the 'Scrolling' Tab:\n\nMost strings on the 'Scrolling' Tab have a comment containing 'Scrolling >' as of September 2025.\n\nHow to find the strings used in the message 'indicating that the scroll wheel is no longer being captured':\n\nSearch for 'capture-toast.scroll.uncaptured'",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -43,7 +43,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Um das Abfangen des Scrollrads zu verhindern:** \n\n1. Gehe in Mac Mouse Fix zum ‘Scrollen’ Tab\n2. Schalte alle Optionen aus\n    - Im Falle der ‘Tempo’ Option, setze sie auf ‘macOS’\n    - Lösche alle Sondertasten, indem du auf den ‘x’ Knopf neben jeder Sondertaste klickst\n\nDanach solltest du eine Nachricht sehen, die besagt, dass das Scrollrad nun nicht länger abgefangen wird.\n"
+            "value" : "**Um das Abfangen des Scrollrads zu verhindern:** \n\n1. Gehe in Mac Mouse Fix zum 'Scrollen' Tab\n2. Schalte alle Optionen aus\n    - Im Falle der 'Tempo' Option, setze sie auf 'macOS'\n    - Lösche alle Sondertasten, indem du auf den 'x' Knopf neben jeder Sondertaste klickst\n\nDanach solltest du eine Nachricht sehen, die besagt, dass das Scrollrad nun nicht länger abgefangen wird.\n"
           }
         },
         "en" : {

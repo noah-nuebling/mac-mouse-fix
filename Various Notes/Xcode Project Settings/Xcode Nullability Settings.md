@@ -21,14 +21,14 @@ Goal of this investigation [Apr 2025]
     Warn about non-literal expressions that
     evaluate to zero being treated as a null
     pointer.
-- CLANG_ANALYZER_NONNULL                           (Title: Misuse of ‘nonnull’)
+- CLANG_ANALYZER_NONNULL                           (Title: Misuse of 'nonnull')
     Check for misuses of nonnull parameter and
     return types.
 - CLANG_ANALYZER_NULL_DEREFERENCE                  (Title: Dereference of Null Pointers)
     Check for dereferences of null pointers.
 - CLANG_WARN_NULLABLE_TO_NONNULL_CONVERSION        (Title: Incorrect Uses of Nullable Values)
     Warns when a nullable expression is used
-    somewhere it’s not allowed, such as when
+    somewhere it's not allowed, such as when
     passed as a _Nonnull parameter.
 
 - CLANG_ANALYZER_OBJC_ATSYNC                        (Title: @synchronized with nil mutex)

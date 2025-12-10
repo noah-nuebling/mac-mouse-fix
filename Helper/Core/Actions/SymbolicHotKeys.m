@@ -42,7 +42,7 @@
         Ways to go forward:
         * Try to really understand how other apps do it
         * Use CGSConnection.h to create custom symbolic hotkey, which we then trigger via CGEvent
-            * private API not fully documented, pretty sure that we’d have to overridde existing hotkey, and/or activate it globally
+            * private API not fully documented, pretty sure that we'd have to overridde existing hotkey, and/or activate it globally
         * Find way to make CGSSpace.h work properly
             * feel like I tried everything
         * Try to find, reverse engineer and emulate executable that parses symbolic hotkeys

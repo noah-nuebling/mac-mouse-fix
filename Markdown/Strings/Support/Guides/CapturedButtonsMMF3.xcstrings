@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "01: intro" : {
-      "comment" : "{screenshot_0} will be replaced with a screenshot of the notification that pops up when a button is captured by Mac Mouse Fix. \n\nConsider mirroring the terminology used by that notification. \n\nSearch for ‘capture-toast’ to find the strings used in that notification.",
+      "comment" : "{screenshot_0} will be replaced with a screenshot of the notification that pops up when a button is captured by Mac Mouse Fix. \n\nConsider mirroring the terminology used by that notification. \n\nSearch for 'capture-toast' to find the strings used in that notification.",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -61,7 +61,7 @@
       }
     },
     "03: which-buttons" : {
-      "comment" : "{screenshot_1} will be replaced by a screenshot of the ‘Buttons’ tab where you can see 3 buttons being captured: ‘Middle Button’, ‘Button 5’ and ‘Button 4’ (In that order)\n\nTo help the reader make the connection between the text and the screenshot, keep the order of the buttons and match the terminology that is seen on the ‘Buttons’ tab. \n\nSearch for 'trigger.substring.button-name' inside 'Localizable' to find the button names used on the 'Buttons' tab.",
+      "comment" : "{screenshot_1} will be replaced by a screenshot of the 'Buttons' tab where you can see 3 buttons being captured: 'Middle Button', 'Button 5' and 'Button 4' (In that order)\n\nTo help the reader make the connection between the text and the screenshot, keep the order of the buttons and match the terminology that is seen on the 'Buttons' tab. \n\nSearch for 'trigger.substring.button-name' inside 'Localizable' to find the button names used on the 'Buttons' tab.",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -91,7 +91,7 @@
       }
     },
     "04: uncapturing" : {
-      "comment" : "{screenshot_2} will be replaced by a screenshot of the 'Buttons' tab where ‘Button 4’ and two ‘-‘ buttons are highlighted.\n\nMatch the terminology seen on the ‘Buttons’ tab.\n\n(Search for “Toolbar > Scrolling Tab Button” and “trigger.y.group-row.button-name.numbered”)",
+      "comment" : "{screenshot_2} will be replaced by a screenshot of the 'Buttons' tab where 'Button 4' and two '-' buttons are highlighted.\n\nMatch the terminology seen on the 'Buttons' tab.\n\n(Search for “Toolbar > Scrolling Tab Button” and “trigger.y.group-row.button-name.numbered”)",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -298,7 +298,7 @@
       }
     },
     "11: restoring.row1.action" : {
-      "comment" : "This is a cell in the 3rd column of the table.\n\n‘Middle Click’ should match the text that is seen in MMF when you click one of the pop-up buttons on the ‘Buttons’ tab.\n\n(See effect.click.middle)",
+      "comment" : "This is a cell in the 3rd column of the table.\n\n'Middle Click' should match the text that is seen in MMF when you click one of the pop-up buttons on the 'Buttons' tab.\n\n(See effect.click.middle)",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -386,7 +386,7 @@
       }
     },
     "14: restoring.row2.action" : {
-      "comment" : "‘Middle Click’ should match the text seen in the pop-up buttons on the  ‘Buttons’ Tab in MMF. \n\n(See effect.click.middle)",
+      "comment" : "'Middle Click' should match the text seen in the pop-up buttons on the  'Buttons' Tab in MMF. \n\n(See effect.click.middle)",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -445,7 +445,7 @@
       }
     },
     "16: restoring.row3.function" : {
-      "comment" : "Consider putting ‘back’ *before* ‘forward’ here even if it sounds a bit unnatural in your language – That way it better matches ‘Button 4’ and ‘Button 5’ in the previous column (restoring.row3.default). \n\n(*Button 4 goes back* and *Button 5 goes forward*)",
+      "comment" : "Consider putting 'back' *before* 'forward' here even if it sounds a bit unnatural in your language – That way it better matches 'Button 4' and 'Button 5' in the previous column (restoring.row3.default). \n\n(*Button 4 goes back* and *Button 5 goes forward*)",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -475,7 +475,7 @@
       }
     },
     "17: restoring.row3.action" : {
-      "comment" : "‘Back’ and ‘Forward’ should match the text seen in the pop-up buttons on the  ‘Buttons’ Tab in MMF.\n\n(See effect.back)",
+      "comment" : "'Back' and 'Forward' should match the text seen in the pop-up buttons on the  'Buttons' Tab in MMF.\n\n(See effect.back)",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -563,7 +563,7 @@
       }
     },
     "20: restoring.row4.action" : {
-      "comment" : "‘Scroll & Navigate’ should match the text seen in the pop-up buttons on the  ‘Buttons’ Tab in MMF.\n\n(See drag-effect.scroll-swipe)",
+      "comment" : "'Scroll & Navigate' should match the text seen in the pop-up buttons on the  'Buttons' Tab in MMF.\n\n(See drag-effect.scroll-swipe)",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {

@@ -479,7 +479,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[Swish]({url}) ist meine bevorzugte Methode, um Fenster unter macOS zu verwalten. Es ermöglicht dir, mit einem einfachen Wischen auf dem Trackpad jedes Fenster so zu positionieren, dass es die Hälfte, ein Viertel oder den ganzen Bildschirm einnimmt.\n\nSwish ist für Trackpad-Gesten konzipiert, aber mit Mac Mouse Fix kannst du es von jeder Drittanbieter-Maus aus verwenden! Öffne dazu einfach Mac Mouse Fix und stelle für eine beliebige Taste die ‘Klicken und Ziehen’ Aktion auf ‘Scrollen & Navigieren’, dann kannst du Fenster mit einem einfachen Klicken und Ziehen positionieren.\n\nAlles was du mit durch Wischen mit 2 Fingern auf einem Apple Trackpad machen kannst funktioniert genau so gut mit der ‘Scrollen & Navigieren’ Funktion in Mac Mouse Fix."
+            "value" : "[Swish]({url}) ist meine bevorzugte Methode, um Fenster unter macOS zu verwalten. Es ermöglicht dir, mit einem einfachen Wischen auf dem Trackpad jedes Fenster so zu positionieren, dass es die Hälfte, ein Viertel oder den ganzen Bildschirm einnimmt.\n\nSwish ist für Trackpad-Gesten konzipiert, aber mit Mac Mouse Fix kannst du es von jeder Drittanbieter-Maus aus verwenden! Öffne dazu einfach Mac Mouse Fix und stelle für eine beliebige Taste die 'Klicken und Ziehen' Aktion auf 'Scrollen & Navigieren', dann kannst du Fenster mit einem einfachen Klicken und Ziehen positionieren.\n\nAlles was du mit durch Wischen mit 2 Fingern auf einem Apple Trackpad machen kannst funktioniert genau so gut mit der 'Scrollen & Navigieren' Funktion in Mac Mouse Fix."
           }
         },
         "en" : {
@@ -671,7 +671,7 @@
       }
     },
     "24: questions.click-delay.body" : {
-      "comment" : "Some text like ‘Double Click’ is quoted, because it appears exactly\nin the Mac Mouse Fix UI.\n\nFor example, ‘Double Click’ appears on the ‘Buttons’ tab in Mac Mouse Fix (See: trigger.substring.click.2)\n\nIf you’re using Xcloc Editor.app, you can find all the related strings like this:\n- Go to ‘All Project Files’ (Command-J)\n- Select the search-field (Command-F) \n- Enter the English string (such as ‘Double Click’) \n-> Now you can see all the translations of this English string!\n\nTry to keep the different translations consistent, especially, when the strings are ‘quoted’ (or “double quoted”) or *emphasized*. This should help the Reader draw the connection to the Mac Mouse Fix UI.\n\nNote to self: [Dec 2025]\n- We put this hint here, since it’s likely the first string that the translator will see where this hint is relevant, if they are using the default, alphabetic sorting.",
+      "comment" : "Some text like 'Double Click' is quoted, because it appears exactly\nin the Mac Mouse Fix UI.\n\nFor example, 'Double Click' appears on the 'Buttons' tab in Mac Mouse Fix (See: trigger.substring.click.2)\n\nIf you're using Xcloc Editor.app, you can find all the related strings like this:\n- Go to 'All Project Files' (Command-J)\n- Select the search-field (Command-F) \n- Enter the English string (such as 'Double Click') \n-> Now you can see all the translations of this English string!\n\nTry to keep the different translations consistent, especially, when the strings are 'quoted' (or “double quoted”) or *emphasized*. This should help the Reader draw the connection to the Mac Mouse Fix UI.\n\nNote to self: [Dec 2025]\n- We put this hint here, since it's likely the first string that the translator will see where this hint is relevant, if they are using the default, alphabetic sorting.",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -712,7 +712,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Kann ich App Exposé durch eine Klick-und-Zieh-Geste öffnen?** <!-- Hinweis: Wir verwenden hier App Exposé und in MMF ‘Programmfenster’. Nicht sicher, ob das gut ist. Ich fand das allerdings klarer. -->"
+            "value" : "**Kann ich App Exposé durch eine Klick-und-Zieh-Geste öffnen?** <!-- Hinweis: Wir verwenden hier App Exposé und in MMF 'Programmfenster'. Nicht sicher, ob das gut ist. Ich fand das allerdings klarer. -->"
           }
         },
         "en" : {

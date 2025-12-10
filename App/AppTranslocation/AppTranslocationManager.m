@@ -45,7 +45,7 @@ bool getIsTranslocated(void) {
     
     bool isTranslocated = false;
     
-    /// Declare function for ‘SecTranslocateIsTranslocatedURL’
+    /// Declare function for 'SecTranslocateIsTranslocatedURL'
     Boolean (*mySecTranslocateIsTranslocatedURL)(CFURLRef path, bool *isTranslocated, CFErrorRef * __nullable error); // Flag for API request
     
     /// Get function from security framework
@@ -68,7 +68,7 @@ NSURL *getUntranslocatedURL(void) {
     
     /// Get current application path
     
-    /// Declare function for ‘SecTranslocateCreateOriginalPathForURL’
+    /// Declare function for 'SecTranslocateCreateOriginalPathForURL'
     CFURLRef __nullable (*mySecTranslocateCreateOriginalPathForURL)(CFURLRef translocatedPath, CFErrorRef * __nullable error);
     
     /// Get function from security framework
@@ -103,7 +103,7 @@ void removeQuarantineFlagAndRestart(NSURL* untranslocatedURL) {
     }
     
     /// Relaunch app at original (untranslocated) location
-    ///  -> Use ‘open’ as it allows two instances of app (this instance is exiting)
+    ///  -> Use 'open' as it allows two instances of app (this instance is exiting)
     [SharedUtility launchCLT:openURL withArguments:@[@"-n", @"-a", untranslocatedURL.path] error:&error];
     /// ^ This successfully relaunches the app but AccessibilityOverlay doesn't work on the relaunched instance. I assume it's sth to do with message ports. Yes that turned out to be it. Using `initialize` instead of `load` to make the message port be created after this is executed fixed it.
     /// ^ We need to make sure not to use MessagePort_App from within any `load` methods, as that would lead to MessagePort_App being initialized before this is called, leading to the same issue. (This is currently being called from [AppDelegate + initialize])

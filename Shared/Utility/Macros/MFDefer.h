@@ -34,7 +34,7 @@
 ///     - https://social.belkadan.com/@jrose/statuses/01HGKXQQAM9H4DSZ4S9FCV6P4C
 ///         -> Belkadan post by @jrose
 ///     - https://nshipster.com/new-years-2016/#swifts-defer-in-objective-c
-///         ->  Nolan O’Brien's implementation
+///         ->  Nolan O'Brien's implementation
 ///     - https://openradar.appspot.com/21684961
 ///         - Nolan O'Brien's open radar request to add @defer to Objective-C
 ///
