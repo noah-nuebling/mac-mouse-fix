@@ -17,10 +17,10 @@ Mac Mouse Fix **ve výchozím nastavení zachycuje kolečko myši**, podobně ja
 
 **Jak zabránit zachycení rolovacího kolečka:**
 
-1. V Mac Mouse Fix přejděte na kartu „Rolování“
+1. V Mac Mouse Fix přejděte na kartu "Rolování"
 2. Vypněte **všechny** možnosti
-- V případě možnosti „Rychlost“ ji nastavte na „macOS“
-- Odstraňte všechny položky v části „Modifikátory klávesnice“ kliknutím na tlačítko „x“ vedle každého modifikátoru
+- V případě možnosti "Rychlost" ji nastavte na "macOS"
+- Odstraňte všechny položky v části "Modifikátory klávesnice" kliknutím na tlačítko "x" vedle každého modifikátoru
 
 Poté by se měla zobrazit zpráva, že rolovací kolečko již není zachycováno.
 
@@ -40,7 +40,7 @@ Aplikace Mac Mouse Fix pak rolovací kolečko zcela ignoruje – během rolován
 <table align="center">
 <td>
 
-Doufám, že byl tento návod užitečný!</td>
+Doufám, že vám tyto informace pomohly!</td>
 <td>
 
 Stále máte otázky? Klikněte [sem](https://redirect.macmousefix.com/?locale=cs&target=mmf-support-still-have-questions).</td>

@@ -188,9 +188,9 @@ On the [website](https://macmousefix.com/) you can find a collection of nice thi
 
   [Swish](https://highlyopinionated.co/swish/) is my favorite way to manage windows on macOS. With a simple swipe on your trackpad, it lets you position any window so it takes up half, a quarter, or the whole screen.
   
-  Swish is designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse! Just go to Mac Mouse Fix and set any buttons "Click and Drag" action to "Scroll & Navigate" and then you can snap windows with a simple Click and Drag.
+  Swish is designed for trackpad gestures, but with Mac Mouse Fix you can use it from any third-party mouse! Just go to Mac Mouse Fix and set any button's 'Click and Drag' action to 'Scroll & Navigate' and then you can snap windows with a simple Click and Drag.
   
-  Anything you can do with a two-finger swipe on an Apple trackpad works just as well with the "Scroll & Navigate" feature in Mac Mouse Fix.
+  Anything you can do with a two-finger swipe on an Apple trackpad works just as well with the 'Scroll & Navigate' feature in Mac Mouse Fix.
 
 - **Control Screen Brightness, Audio Volume, or Media Playback right from your mouse**
 
@@ -211,7 +211,7 @@ On the [website](https://macmousefix.com/) you can find a collection of nice thi
 - **Why is there a delay when I click?**
 
   When you click, Mac Mouse Fix might wait to see if you're going to double click.<br>
-  To remove the delay for a button, delete any "Double Click" actions for that button.
+  To remove the delay for a button, delete any 'Double Click' actions for that button.
 
 <!--
   <<< [Sep 2025] Commenting this out because we moved this info into CapturedButtonsMMF3.md - maybe we should link to it here? >>>
@@ -271,7 +271,7 @@ On the [website](https://macmousefix.com/) you can find a collection of nice thi
 
 - **Some buttons on my mouse are not recognized**
 
-  See the question **"Is my mouse supported?"** above.
+  See the question **'Is my mouse supported?'** above.
 
 - **Is the Magic Mouse supported?**
 
@@ -331,7 +331,7 @@ On the [website](https://macmousefix.com/) you can find a collection of nice thi
   I sometimes take a while to answer. I'm sorry about this. But I will get back to you!
   
   There is one restriction: <br>
-  Licenses are not meant to be shared publicly. One license is meant for one person. Publicly shared licenses might be invalidated. (Your mom is not 'the public' and sharing with her is ok!)
+  Licenses are not meant to be shared publicly. One license is meant for one person. Publicly shared licenses might be invalidated. (Sharing with your mom is ok.)
 
   <!-- ^^^ Note: ChatGPT tells me I should mention that ppl can still use the license after they *upgrade* to a new device. Don't think that's necessary -->
   <!-- ^^^ TODO: Consider linking / copying this on the (Gumroad) checkout page. Ppl may not find it here. -->

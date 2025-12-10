@@ -18,10 +18,10 @@ Mac Mouse Fix **fängt standardmäßig das Scrollrad deiner Maus ab**, ähnlich 
 
 **Um das Abfangen des Scrollrads zu verhindern:** 
 
-1. Gehe in Mac Mouse Fix zum ‘Scrollen’ Tab
+1. Gehe in Mac Mouse Fix zum 'Scrollen' Tab
 2. Schalte alle Optionen aus
-    - Im Falle der ‘Tempo’ Option, setze sie auf ‘macOS’
-    - Lösche alle Sondertasten, indem du auf den ‘x’ Knopf neben jeder Sondertaste klickst
+    - Im Falle der 'Tempo' Option, setze sie auf 'macOS'
+    - Lösche alle Sondertasten, indem du auf den 'x' Knopf neben jeder Sondertaste klickst
 
 Danach solltest du eine Nachricht sehen, die besagt, dass das Scrollrad nun nicht länger abgefangen wird.
 

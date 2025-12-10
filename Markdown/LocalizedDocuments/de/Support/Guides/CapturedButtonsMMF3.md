@@ -174,10 +174,10 @@ Damit sich eine Taste wieder so verhält, wie bevor du Mac Mouse Fix installiert
 
 | Taste | Ursprüngliche Funktion | Aktion in Mac Mouse Fix |
 |----------|-----------------------------------|-------------------------|
-| Mittlere Maustaste | Links im Browser in einem neuen Tab öffnen | 'Mittelklick'<br>(Kann dem *Klicken* einer Taste zugewiesen werden) |
-| Mittlere Maustaste | Text im Terminal einfügen | 'Mittelklick'<br>(Kann dem *Klicken* einer Taste zugewiesen werden) |
-| Maustaste 4 / Maustaste 5 | Zurück / Vorwärts gehen in Chrome und anderen Apps | 'Zurück' / 'Vorwärts'<br>(Kann dem *Klicken* einer Taste zugewiesen werden) |
-| Mittlere Maustaste | Um Objekte in Blender (und anderen 3D-Apps) kreisen | 'Scrollen & Navigieren'<br>(Kann dem *Klicken und Ziehen* einer Taste zugewiesen werden) |
+| Mittlere Maustaste | Links im Browser in einem neuen Tab öffnen | 'Mittelklick'<br>(Kann dem *klicken* einer Taste zugewiesen werden) |
+| Mittlere Maustaste | Text im Terminal einfügen | 'Mittelklick'<br>(Kann dem *klicken* einer Taste zugewiesen werden) |
+| Maustaste 4 / Maustaste 5 | Zurück / Vorwärts gehen in Chrome und anderen Apps | 'Zurück' / 'Vorwärts'<br>(Kann dem *klicken* einer Taste zugewiesen werden) |
+| Mittlere Maustaste | Um Objekte in Blender (und anderen 3D-Apps) kreisen | 'Scrollen & Navigieren'<br>(Kann dem *klicken und ziehen* einer Taste zugewiesen werden) |
 
 
 So kannst du weiter wie gewohnt die Taste verwenden, aber ihr gleichzeitig *zusätzliche* Funktionen in Mac Mouse Fix zuweisen!

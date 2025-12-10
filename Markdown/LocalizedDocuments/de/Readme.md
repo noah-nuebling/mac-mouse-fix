@@ -178,13 +178,13 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
 <a name="tips"></a> 
 ## Tipps
 
-- **Fenster einfach per Klicken und Ziehen verwalten**
+- **Fenster einfach per klicken und ziehen verwalten**
 
   [Swish](https://highlyopinionated.co/swish/) ist meine bevorzugte Methode, um Fenster unter macOS zu verwalten. Es ermöglicht dir, mit einem einfachen Wischen auf dem Trackpad jedes Fenster so zu positionieren, dass es die Hälfte, ein Viertel oder den ganzen Bildschirm einnimmt.
   
-  Swish ist für Trackpad-Gesten konzipiert, aber mit Mac Mouse Fix kannst du es von jeder Drittanbieter-Maus aus verwenden! Öffne dazu einfach Mac Mouse Fix und stelle für eine beliebige Taste die "Klicken und Ziehen" Aktion auf "Scrollen & Navigieren", dann kannst du Fenster mit einem einfachen Klicken und Ziehen positionieren.
+  Swish ist für Trackpad-Gesten konzipiert, aber mit Mac Mouse Fix kannst du es von jeder Drittanbieter-Maus aus verwenden! Öffne dazu einfach Mac Mouse Fix und stelle für eine beliebige Taste die 'klicken und ziehen' Aktion auf 'Scrollen & Navigieren', dann kannst du Fenster mit einem einfachen klicken und ziehen positionieren.
   
-  Alles was du mit durch Wischen mit 2 Fingern auf einem Apple Trackpad machen kannst funktioniert genau so gut mit der "Scrollen & Navigieren" Funktion in Mac Mouse Fix.
+  Alles was du mit durch Wischen mit 2 Fingern auf einem Apple Trackpad machen kannst funktioniert genau so gut mit der 'Scrollen & Navigieren' Funktion in Mac Mouse Fix.
 
 - **Bildschirmhelligkeit, Audio-Lautstärke oder Medienwiedergabe direkt von deiner Maus aus steuern**
 
@@ -205,7 +205,7 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
 - **Warum gibt es eine Verzögerung, wenn ich klicke?**
 
   Wenn du klickst, wartet Mac Mouse Fix möglicherweise ab, um zu sehen, ob du doppelklickst.<br>
-  Um die Verzögerung für eine Taste zu entfernen, lösche alle "Doppelklick"-Aktionen für diese Taste.
+  Um die Verzögerung für eine Taste zu entfernen, lösche alle 'Doppelklicken'-Aktionen für diese Taste.
 
 <!--
   <<< [Sep 2025] Commenting this out because we moved this info into CapturedButtonsMMF3.md - maybe we should link to it here? >>>
@@ -225,7 +225,7 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
   comment: 
   ```
 -->
-- **Kann ich App Exposé durch eine Klick-und-Zieh-Geste öffnen?** <!-- Hinweis: Wir verwenden hier App Exposé und in MMF ‘Programmfenster’. Nicht sicher, ob das gut ist. Ich fand das allerdings klarer. --> <!-- Note: We're using App Exposé here and Application Windows in MMF. Not sure that's great. I felt this was clearer though. -->
+- **Kann ich App Exposé durch eine Klick-und-Zieh-Geste öffnen?** <!-- Hinweis: Wir verwenden hier App Exposé und in MMF 'Programmfenster'. Nicht sicher, ob das gut ist. Ich fand das allerdings klarer. --> <!-- Note: We're using App Exposé here and Application Windows in MMF. Not sure that's great. I felt this was clearer though. -->
 
   Ja! Wähle einfach die Aktion 'Spaces & Mission Control', dann klicke und ziehe *nach unten*.
   
@@ -238,7 +238,7 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
   
     <!-- ^^^ NOTES: Maybe we should automate this. For context, see Issue https://github.com/noah-nuebling/mac-mouse-fix/issues/387 -->
 
-- **Gibt es “App-spezifische Einstellungen” oder “Profile”?**
+- **Gibt es 'App-spezifische Einstellungen' oder 'Profile'?**
   
   In Mac Mouse Fix 2 kannst du **Funktionen wie flüssiges Scrollen abstellen** unter `More… > App-specific settings`.
   
@@ -265,7 +265,7 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
 
 - **Manche Tasten meiner Maus werden nicht erkannt**
 
-  Siehe die Frage **"Wird meine Maus unterstützt?"** oben.
+  Siehe die Frage **'Wird meine Maus unterstützt?'** oben.
 
 - **Wird die Magic Mouse unterstützt?**
 
@@ -327,7 +327,7 @@ Auf der [Website](https://macmousefix.com/) kannst du eine Sammlung schöner Din
   Ich brauche manchmal eine Weile zum Antworten. Das tut mir leid. Aber ich melde mich zurück! 
   
   Es gibt eine Einschränkung: <br>
-  Lizenzen sind nicht dafür gedacht, öffentlich verteilt zu werden. Eine Lizenz ist für eine Person gedacht. Öffentlich geteilte Lizenzen könnten ungültig gemacht werden. (Deine Mama ist nicht “die Öffentlichkeit” und das Teilen mit ihr ist ok!)
+  Lizenzen sind nicht dafür gedacht, öffentlich verteilt zu werden. Eine Lizenz ist für eine Person gedacht. Öffentlich geteilte Lizenzen könnten ungültig gemacht werden. (Mit deiner Mama teilen ist ok.)
 
   <!-- ^^^ Note: ChatGPT tells me I should mention that ppl can still use the license after they *upgrade* to a new device. Don't think that's necessary -->
   <!-- ^^^ TODO: Consider linking / copying this on the (Gumroad) checkout page. Ppl may not find it here. -->
