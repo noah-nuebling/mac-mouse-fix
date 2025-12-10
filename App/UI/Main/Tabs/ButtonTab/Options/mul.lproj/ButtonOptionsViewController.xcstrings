@@ -146,7 +146,7 @@
       }
     },
     "Mmp-uv-DmY.title" : {
-      "comment" : "Class = \"NSButtonCell\"; title = \"Lock Mouse Pointer During 'Click and Drag' Gestures\"; ObjectID = \"Mmp-uv-DmY\"; Note = \"'Click and Drag'\\nshould ideally match the text seen in the Action Table (See trigger.substring.drag.1). The 'quotes' in English exist to help the user draw the connection to the Action Table.\\n\\nIf matching trigger.substring.drag.1 exactly isn't grammatically possible in your language, consider removing the 'quotes'.\\n\\nAlso note that the trigger.substring.drag.1 string supports rendering *Markdown emphasis*, but this textfield does not. (As of [Dec 2025]) \\nSo consider removing the *Markdown emphasis* when copying over the text from trigger.substring.drag.1.\";",
+      "comment" : "Class = \"NSButtonCell\"; title = \"Lock Mouse Pointer During 'Click and Drag' Gestures\"; ObjectID = \"Mmp-uv-DmY\"; Note = \"'Click and Drag'\\nshould ideally match the text seen in the Action Table (See trigger.substring.drag.1). The 'quotes' in English exist to help the user draw the connection to the Action Table.\\n\\nIf matching trigger.substring.drag.1 exactly isn't grammatically possible in your language, consider removing the 'quotes'.\\n\\nAlso note that the trigger.substring.drag.1 string supports rendering *Markdown emphasis*, but this textfield does not. (As of [Dec 2025]) \\nSo consider removing the *Markdown emphasis* when copying over the text from trigger.substring.drag.1\\n(Example: 'Click and *Drag*' -> 'Click and Drag')\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {

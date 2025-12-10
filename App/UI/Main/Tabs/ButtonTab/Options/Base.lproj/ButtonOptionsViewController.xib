@@ -32,7 +32,8 @@ should ideally match the text seen in the Action Table (See trigger.substring.dr
 If matching trigger.substring.drag.1 exactly isn't grammatically possible in your language, consider removing the 'quotes'.
 
 Also note that the trigger.substring.drag.1 string supports rendering *Markdown emphasis*, but this textfield does not. (As of [Dec 2025]) 
-So consider removing the *Markdown emphasis* when copying over the text from trigger.substring.drag.1.</mutableString>
+So consider removing the *Markdown emphasis* when copying over the text from trigger.substring.drag.1
+(Example: 'Click and *Drag*' -&gt; 'Click and Drag')</mutableString>
                             </fragment>
                         </attributedString>
                     </buttonCell>
