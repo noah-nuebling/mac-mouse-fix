@@ -9,26 +9,27 @@ Ngoài ra còn có một số cải tiến giao diện người dùng.
 - Hầu hết các phần của dự án giờ đây đều có thể dịch được, bao gồm 'Hướng dẫn Nút Đã Bắt', GitHub Readme, Website và nhiều hơn nữa.
     - Tất cả các phần này của dự án có thể được dịch từ một nơi tập trung với khả năng tham chiếu chéo dễ dàng bằng ứng dụng `Xcloc Editor`, giúp người dịch dễ dàng giữ mọi thứ nhất quán.
 - Hệ thống được thiết lập để rất dễ bảo trì, vì vậy khi Mac Mouse Fix phát triển và các màn hình hoặc văn bản mới được thêm vào, mọi thứ sẽ tự động cập nhật.
-- Lưu ý: Mình dùng từ 'dễ dàng' rất nhiều. Quy trình làm việc thì dễ dàng, nhưng tất nhiên việc nghĩ ra những bản dịch tuyệt vời vẫn là một công việc khó khăn và đáng trân trọng! Chỉ là giờ đây có ít rào cản hơn thôi.
+- Lưu ý: Mình dùng từ 'dễ dàng' rất nhiều. Quy trình làm việc thì dễ dàng, nhưng tất nhiên việc nghĩ ra những bản dịch tuyệt vời vẫn là công việc khó khăn và đáng trân trọng! Chỉ là giờ đây có ít rào cản hơn thôi.
 
 
 
 
 Các bản dịch mới đã được cung cấp một cách hào phóng bởi những người sau:
 
-- **Eduardo Rodrigues**: 🇧🇷 Bản dịch tiếng Bồ Đào Nha (Brazil)
-- [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 Bản dịch tiếng Pháp
-- [@hasanbeder](https://github.com/hasanbeder): 🇹🇷 Bản dịch tiếng Thổ Nhĩ Kỳ
-- [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Bản dịch tiếng Séc
+- **Eduardo Rodrigues**: Bản dịch tiếng Bồ Đào Nha (Brazil) 🇧🇷
+- [@DimitriDR](https://github.com/DimitriDR): Bản dịch tiếng Pháp 🇫🇷
+- [@hasanbeder](https://github.com/hasanbeder): Bản dịch tiếng Thổ Nhĩ Kỳ 🇹🇷
+- [Petr Pavlík](http://www.petrpavlik.com): Bản dịch tiếng Séc 🇨🇿
+- [@Dro9an](https://github.com/Dro9an) và [@jihao](https://github.com/jihao): Bản dịch tiếng Trung 🇨🇳 cho [website](macmousefix.com)
 
 Cảm ơn công sức của các bạn!
 
-Tuy nhiên, **tất cả các ngôn ngữ vẫn cần được hoàn thiện**, vì có nhiều nội dung mới đã được làm có thể dịch được.
+Tuy nhiên, **tất cả các ngôn ngữ vẫn cần hoàn thiện**, vì nhiều nội dung mới đã được làm có thể dịch được.
 
 Do đó:
 
 > [!TIP]
-> Hãy xem [Hướng dẫn Dịch thuật](https://redirect.macmousefix.com/?target=mmf-localization-contribution) mới nếu bạn muốn giúp mang đến những bản dịch tuyệt vời cho người dùng Mac Mouse Fix trên toàn thế giới!
+> Hãy xem [Hướng dẫn Dịch thuật](https://redirect.macmousefix.com/?target=mmf-localization-contribution) mới nếu bạn muốn giúp mang đến những bản dịch tuyệt vời cho người dùng Mac Mouse Fix trên toàn thế giới! 🌎
 
 ### Các thay đổi khác
 
@@ -38,13 +39,22 @@ Khi sử dụng Mac Mouse Fix bằng tiếng Anh, không có nhiều thay đổi
 - Chú giải công cụ và thông báo lỗi rõ ràng hơn ở nhiều nơi.
 - Phím escape giờ đây có thể được sử dụng ở mọi nơi để đóng thông báo, sheet và popup.
 - Liên kết 'Giúp Dịch' đã được thêm vào Tab Giới thiệu.
-- Độ rộng của các khung nhìn và popup đã được điều chỉnh để trông đẹp mắt trong nhiều ngôn ngữ khác nhau.
+- Độ rộng của các khung nhìn và popup đã được điều chỉnh để trông tuyệt vời trong nhiều ngôn ngữ khác nhau.
 - Bố cục văn bản tốt hơn cho tiếng Trung và tiếng Hàn, vốn gặp vấn đề ngắt dòng trong một số thông báo popup nhỏ.
 - Thay thế thư viện phân tích Markdown để sửa một số lỗi định dạng trong tiếng Trung và tiếng Hàn.
-- Nhiều thay đổi và cải tiến bên dưới nữa.
+- Nhiều thay đổi và cải tiến bên dưới khác.
 
 
 
 ---
 
 Bạn có thể tìm phiên bản trước của Mac Mouse Fix tại đây: [3.0.8](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8)
+
+---
+
+Cập nhật mới nhất:
+- Số build của tài nguyên MacMouseFixApp.zip: 24814
+- Ngày: [8 tháng 12 năm 2025]
+- Thay đổi: Đã thêm bản dịch tiếng Nga bởi Vyacheslav
+
+(Mình đang cập nhật các bản dịch mà không tạo GitHub Release mới mỗi lần.)

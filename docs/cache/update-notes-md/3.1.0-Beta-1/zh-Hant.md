@@ -1,4 +1,4 @@
-Mac Mouse Fix **3.1.0 Beta 1** 帶來了一個全新的翻譯系統,這已經籌備了一段時間。\
+Mac Mouse Fix **3.1.0 Beta 1** 帶來了一個全新的翻譯系統,這已經開發了一段時間。\
 同時也有一些使用者介面的改進。
 
 ### 全新的本地化系統!
@@ -6,7 +6,7 @@ Mac Mouse Fix **3.1.0 Beta 1** 帶來了一個全新的翻譯系統,這已經籌
 - 現在為 Mac Mouse Fix 貢獻高品質翻譯變得超級簡單,完全不需要任何技術背景。
 - 有大量附註的截圖和註解,以及強大的搜尋功能,讓譯者能輕鬆理解他們的翻譯在應用程式中的確切呈現方式。
     - 我認為這些截圖和翻譯介面(`Xcloc Editor` 應用程式)是市場上品質最高的,希望它們能幫助你提供優質的翻譯!
-- 現在專案的幾乎所有部分都可以翻譯了,包括「已捕捉按鈕指南」、GitHub 說明文件、網站等等。
+- 現在專案的幾乎所有部分都可以翻譯了,包括「已捕捉按鈕指南」、GitHub Readme、網站等等。
     - 專案的所有這些部分都可以在一個集中的地方進行翻譯,並使用 `Xcloc Editor` 應用程式輕鬆交叉參照,讓譯者能輕鬆保持一切的一致性。
 - 這個系統設計得非常容易維護,所以隨著 Mac Mouse Fix 的發展和新畫面或文字的加入,一切都會自動更新。
 - 免責聲明:我用了很多次「簡單」這個詞。工作流程是簡單的,但想出優質的翻譯當然仍然是大量艱辛且值得尊敬的工作!只是現在障礙變少了。
@@ -16,23 +16,24 @@ Mac Mouse Fix **3.1.0 Beta 1** 帶來了一個全新的翻譯系統,這已經籌
 
 以下人士已慷慨提供了新的翻譯:
 
-- **Eduardo Rodrigues**: 🇧🇷 巴西葡萄牙語翻譯
-- [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 法語翻譯
-- [@hasanbeder](https://github.com/hasanbeder): 🇹🇷 土耳其語翻譯
-- [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 捷克語翻譯
+- **Eduardo Rodrigues**:🇧🇷 巴西葡萄牙語翻譯
+- [@DimitriDR](https://github.com/DimitriDR):🇫🇷 法語翻譯
+- [@hasanbeder](https://github.com/hasanbeder):🇹🇷 土耳其語翻譯
+- [Petr Pavlík](http://www.petrpavlik.com):🇨🇿 捷克語翻譯
+- [@Dro9an](https://github.com/Dro9an) 和 [@jihao](https://github.com/jihao):🇨🇳 [網站](macmousefix.com)的中文翻譯
 
 感謝你們的付出!
 
-然而,**所有語言仍需要努力**,因為許多新內容已經可以翻譯了。
+然而,**所有語言仍需要改進**,因為有許多新內容已經可以翻譯了。
 
 因此:
 
 > [!TIP]
-> 如果你想幫助為全球的 Mac Mouse Fix 使用者帶來優質翻譯,請查看全新的[翻譯指南](https://redirect.macmousefix.com/?target=mmf-localization-contribution)!
+> 如果你想幫助為全世界的 Mac Mouse Fix 使用者帶來優質翻譯,請查看全新的[翻譯指南](https://redirect.macmousefix.com/?target=mmf-localization-contribution)!🌎
 
 ### 其他變更
 
-在英語環境下使用 Mac Mouse Fix 時,變化不大,但使用者介面有一些更新,底層也有很多調整,以幫助改善翻譯:
+使用英文版 Mac Mouse Fix 時,變化不大,但使用者介面有一些更新,底層也有很多改動,以幫助改善翻譯:
 
 - 改進了小型彈出通知的外觀。
 - 在各處提供了更清晰的工具提示和錯誤訊息。
@@ -48,3 +49,12 @@ Mac Mouse Fix **3.1.0 Beta 1** 帶來了一個全新的翻譯系統,這已經籌
 ---
 
 你可以在這裡找到 Mac Mouse Fix 的上一個版本:[3.0.8](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8)
+
+---
+
+最新更新:
+- MacMouseFixApp.zip 資源的建置編號:24814
+- 日期:[2025 年 12 月 8 日]
+- 變更:新增 Vyacheslav 提供的俄語翻譯
+
+(我會更新翻譯而不會每次都建立新的 GitHub Release。)

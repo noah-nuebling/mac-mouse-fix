@@ -20,6 +20,7 @@ New translations have already been generously provided by the following people:
 - [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 French translations
 - [@hasanbeder](https://github.com/hasanbeder): 🇹🇷 Turkish translations
 - [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Czech translations
+- [@Dro9an](https://github.com/Dro9an) and [@jihao](https://github.com/jihao): 🇨🇳 Chinese translation of [the website](macmousefix.com)
 
 Thanks for your work!
 
@@ -28,7 +29,7 @@ However, **all languages still need work**, since much new stuff has been made t
 Therefore:
 
 > [!TIP]
-> Check out the new [Translation Guide](https://redirect.macmousefix.com/?target=mmf-localization-contribution) if you'd like to help bring great translations to Mac Mouse Fix users across the world!
+> Check out the new [Translation Guide](https://redirect.macmousefix.com/?target=mmf-localization-contribution) if you'd like to help bring great translations to Mac Mouse Fix users across the world! 🌎
 
 ### Other changes 
 
@@ -48,4 +49,13 @@ When using Mac Mouse Fix in English, not much has changed, but a few things have
 ---
 
 You can find the previous release of Mac Mouse Fix here: [3.0.8](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8)
+
+---
+
+Latest update:
+- Build number of MacMouseFixApp.zip asset: 24814
+- Date: [Dec 8 2025]
+- Change: Added Russian translations by Vyacheslav
+
+(I'm updating the translations without creating a new GitHub Release every time.)
 
