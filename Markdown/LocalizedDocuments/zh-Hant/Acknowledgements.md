@@ -69,6 +69,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **12月 2025**
 
+- 🇱🇧&nbsp;Sergio&nbsp;Wehbe - "Shut up and take my money!"
 - 🇺🇸&nbsp;Kuldeepc
 - 🇵🇱&nbsp;Blase
 - 🇩🇪&nbsp;Philipp - "great software!"
