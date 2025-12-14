@@ -2214,8 +2214,7 @@
             "value" : "macOS"
           }
         }
-      },
-      "shouldTranslate" : false
+      }
     },
     "cul-5Z-iUo.title" : {
       "comment" : "Class = \"NSTextFieldCell\"; title = \"<Day 2/14 of your test period>\"; ObjectID = \"cul-5Z-iUo\";",

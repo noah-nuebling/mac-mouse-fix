@@ -17,8 +17,7 @@
             "value" : "Mac Mouse Fix Helper"
           }
         }
-      },
-      "shouldTranslate" : false
+      }
     },
     "NSHumanReadableCopyright" : {
       "comment" : "Copyright (human-readable)",
