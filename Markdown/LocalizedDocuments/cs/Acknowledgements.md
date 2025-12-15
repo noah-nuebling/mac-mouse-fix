@@ -68,6 +68,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **prosinec 2025**
 
+- 🇬🇧&nbsp;Reuben&nbsp;Taylor
 - 🇱🇧&nbsp;Sergio&nbsp;Wehbe - "Shut up and take my money!"
 - 🇺🇸&nbsp;Kuldeepc
 - 🇵🇱&nbsp;Blase
