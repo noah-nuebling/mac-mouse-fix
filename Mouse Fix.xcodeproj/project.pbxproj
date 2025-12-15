@@ -154,7 +154,6 @@
 		4F909D2C28A0C3D2009349A2 /* NSView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0428A0C3D2009349A2 /* NSView+Extensions.swift */; };
 		4F909D2D28A0C3D2009349A2 /* CoolNSTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0528A0C3D2009349A2 /* CoolNSTextField.swift */; };
 		4F909D2E28A0C3D2009349A2 /* NSControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0628A0C3D2009349A2 /* NSControl+Extensions.swift */; };
-		4F909D2F28A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F909D0828A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib */; };
 		4F909D3028A0C3D2009349A2 /* ReactiveAnimatorProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0A28A0C3D2009349A2 /* ReactiveAnimatorProxy.swift */; };
 		4F909D3128A0C3D2009349A2 /* CAAnimation+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0C28A0C3D2009349A2 /* CAAnimation+Extensions.swift */; };
 		4F909D3228A0C3D2009349A2 /* FadeAnimations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F909D0D28A0C3D2009349A2 /* FadeAnimations.swift */; };
@@ -8149,7 +8148,6 @@
 				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
 				4F90CF012C8B89CD00834A90 /* InformationDensity.md in Resources */,
 				4F1713532E6201FE00FFE14A /* storyboard-notes.md in Resources */,
-				4F909D2F28A0C3D2009349A2 /* MyTitlebarAccessoryViewController.xib in Resources */,
 				4FD148D128AA428000FE688C /* ButtonOptionsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
