@@ -36,7 +36,7 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "## 🌏 Překlady\n\nDěkujeme, že přinášíte Mac Mouse Fix lidem po celém světě!\n\n- 🇨🇳 čínské překlady od \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n- 🇰🇷 korejské překlady od [@jeongtae]({url_4})\n- 🇻🇳 vietnamské překlady od [@nghlt]({url_5})\n- 🇧🇷 Brazilian Portuguese translations by **Eduardo Rodrigues**\n- 🇫🇷 French translations by [@DimitriDR]({url_6})\n- 🇹🇷 Turkish translations by [@hasanbeder]({url_7})\n- 🇨🇿 Czech translations by [Petr Pavlík]({url_8})\n- 🇷🇺 Russian translations by [ETMH]({url_9})"
           }
         },
@@ -240,8 +240,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**Software**, který inspiroval Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Průkopnický software pro myš pro Mac, inspirující mnoho funkcí. Byly chvíle, kdy jsem si myslel, že \"to asi není možné\", ale pak jsem viděl, že \"aha, SteerMouse to dělá\", a o tři roky později jsem také přišel na to, jak to implementovat.\n- [Calftrail Touch]({url_2}) - Základ pro \"reverzní inženýrství\", které pohání nejlepší a první simulaci trackpadu v Mac Mouse Fix!\n- [MOS]({url_3}) - Možnost \"Vysoká plynulost rolování\" v Mac Mouse Fix, implementace \"Nastavení specifická pro aplikaci\" a další byly inspirovány MOS.\n- [SensibleSideButtons]({url_4}) - Zkopíroval jsem jeho kód pro ranou implementaci funkce \"Přejít zpět/vpřed o jednu stránku v Safari a dalších aplikacích\" a také mě to vedlo k objevení projektu Calftrail Touch.\n- [Gifski]({url_5}) - Významně inspiroval design a obsah souboru [Readme.md]({url_6}) pro opravu myši na Macu.\n- [Pomocník pro řešení problémů s Vue]({url_7}) - Základ pro návrh a technickou implementaci nástroje [Asistent pro zpětnou vazbu k opravě myši na Macu]({url_8})."
+            "state" : "translated",
+            "value" : "**Software**, který inspiroval Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Průkopnický software pro myš pro Mac, inspirující mnoho funkcí. Byly chvíle, kdy jsem si myslel, že 'to asi není možné', ale pak jsem viděl, že 'aha, SteerMouse to dělá', a o tři roky později jsem také přišel na to, jak to implementovat.\n- [Calftrail Touch]({url_2}) - Základ pro 'reverzní inženýrství', které pohání nejlepší a první simulaci trackpadu v Mac Mouse Fix!\n- [MOS]({url_3}) - Možnost 'Vysoká plynulost scrolování' v Mac Mouse Fix, implementace 'Nastavení specifická pro aplikaci' a další byly inspirovány MOS.\n- [SensibleSideButtons]({url_4}) - Zkopíroval jsem jeho kód pro ranou implementaci funkce 'Přejít zpět/vpřed o jednu stránku v Safari a dalších aplikacích' a také mě to vedlo k objevení projektu Calftrail Touch.\n- [Gifski]({url_5}) - Významně inspiroval design a obsah souboru [Readme.md]({url_6}) pro opravu myši na Macu.\n- [Pomocník pro řešení problémů s Vue]({url_7}) - Základ pro návrh a technickou implementaci nástroje [Asistent pro zpětnou vazbu k opravě myši na Macu]({url_8})."
           }
         },
         "de" : {

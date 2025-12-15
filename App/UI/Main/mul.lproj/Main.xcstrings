@@ -2160,6 +2160,12 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"macOS\"; ObjectID = \"cnA-CV-nF3\"; Note = \"Pointer > Acceleration > macOS Option\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4829,8 +4835,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Přesuňte ukazatel myši do pole \"+\" a poté *klikněte* na tlačítko myši, chcete-li mu přiřadit akci.\nMůžete také použít *dvojité kliknutí*, *kliknutí a tažení* a další."
+            "state" : "translated",
+            "value" : "Přesuňte ukazatel myši do pole '+' a poté *klikněte* na tlačítko myši, chcete-li mu přiřadit akci.\nMůžete také použít *dvojité kliknutí*, *kliknutí a tažení* a [další]()."
           }
         },
         "de" : {
@@ -7047,8 +7053,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Aktivovat licenci"
+            "state" : "translated",
+            "value" : "Aktivovat licenci..."
           }
         },
         "de" : {

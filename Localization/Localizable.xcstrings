@@ -7,7 +7,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Otevřít nastavení \"Zabezpečení a soukromí\""
+            "value" : "Otevřete nastavení 'Soukromí a zabezpečení'"
           }
         },
         "de" : {
@@ -83,8 +83,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Již používáte výchozí nastavení pro myši se 3 tlačítky."
+            "state" : "translated",
+            "value" : "**Již používáte** výchozí nastavení pro myš se **3 tlačítky**."
           }
         },
         "de" : {
@@ -160,8 +160,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Již používáte výchozí nastavení pro myši s 5+ tlačítky."
+            "state" : "translated",
+            "value" : "**Již používáte** výchozí nastavení pro myš s **5+ tlačítky**."
           }
         },
         "de" : {
@@ -6649,8 +6649,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pokud máte **problémy s aktivací** aplikace, click [sem](%@)"
+            "state" : "translated",
+            "value" : "Pokud máte **problémy s aktivací** aplikace, klikněte [sem](%@)"
           }
         },
         "de" : {
@@ -6690,8 +6690,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**Primární tlačítko myši** nemůže být použito. Prosím zvolte jiné tlačítko."
+            "state" : "translated",
+            "value" : "**Primární tlačítko myši** nemůže být použito\nProsím zvolte jiné tlačítko."
           }
         },
         "de" : {
@@ -6767,8 +6767,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**Sekundární tlačítko myši** nemůže být použito. Prosím zvolte jiné tlačítko."
+            "state" : "translated",
+            "value" : "**Sekundární tlačítko myši** nemůže být použito\nProsím zvolte jiné tlačítko."
           }
         },
         "de" : {
@@ -6922,7 +6922,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aplikace Mac Mouse Fix byla **zakázána** v Nastavení systému\n\nChcete-li Mac Mouse Fix povolit:\n\n1. Přejděte do [Nastavení položek přihlášení](%@)\n2. Zapněte aplikaci \"Mac Mouse Fix.app\""
+            "value" : "Aplikace Mac Mouse Fix byla **zakázána** v Nastavení systému\n\nChcete-li Mac Mouse Fix povolit:\n\n1. Přejděte do [Nastavení položek přihlášení](%@)\n2. Zapněte aplikaci 'Mac Mouse Fix.app'"
           }
         },
         "de" : {
@@ -7460,8 +7460,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Vaše licence byla **aktivována**!"
+            "state" : "translated",
+            "value" : "Vaše licence byla **aktivována**! 🎉"
           }
         },
         "de" : {
@@ -7537,8 +7537,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tato licence byla aktivována **%2$d**krát. Maximální počet aktivací je **%3$d**.\n\nZ tohoto důvodu byla licence zneplatněna. Důvodem je zabránění pirátství. Pokud máte důvody pro tolik aktivací licence, omluvte prosím nepříjemnosti.\n\nStačí mne [kontaktovat](%1$@) a já vám poskytnu novou licenci! Děkujeme za pochopení."
+            "state" : "translated",
+            "value" : "Tato licence byla aktivována **%2$d** krát. Maximální počet aktivací je **%3$d**.\n\nZ tohoto důvodu byla licence zneplatněna. Důvodem je zabránění pirátství. Pokud máte důvody pro tolik aktivací licence, omluvte prosím nepříjemnosti.\n\nStačí mne [kontaktovat](%1$@) a já vám poskytnu novou licenci! Děkuji za pochopení."
           }
         },
         "de" : {
@@ -7845,8 +7845,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Chyba **licenčního serveru**\n\n%@"
+            "state" : "translated",
+            "value" : "Chyba **licenčního serveru**\n\nOdpověď:\n\n%@"
           }
         },
         "de" : {
@@ -7922,8 +7922,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nastala **chyba intarnetového připojení**.\nUjistěte se, že váš počítač je online a žádný firewall neblokuje připojení Mac Mouse Fix k serveru.\n\nPokud ani to nepomůže, kontaktujte mě [zde] (%@)"
+            "state" : "translated",
+            "value" : "Nastala **chyba internetového připojení**\n\nUjistěte se, že váš počítač je online a žádný firewall neblokuje připojení Mac Mouse Fix k serveru.\n\nPokud ani to nepomůže, kontaktujte mě [zde](%@)."
           }
         },
         "de" : {
@@ -7998,8 +7998,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nastal **problém s licenčním serverem**.\nProsím, zkuste to znovu.\n\nPokud problém přetrvává, kontaktujte mě [zde] (%@)"
+            "state" : "translated",
+            "value" : "Nastal **problém s licenčním serverem**.\nProsím, zkuste to znovu.\n\nPokud problém přetrvává, kontaktujte mě [zde](%@)"
           }
         },
         "de" : {
@@ -8181,8 +8181,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Aktivování vaší licence selhalo z **neznámého důvodu**.\n\nProsím **ohlaste chybu** [zde] (%@)"
+            "state" : "translated",
+            "value" : "Aktivování vaší licence selhalo z **neznámého důvodu**.\n\nProsím **ohlaste chybu** [zde](%@)"
           }
         },
         "de" : {
@@ -9568,8 +9568,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**Klikněte sem** pro načtení doporučeného nastavení pro vaši myš (**%@**)"
+            "state" : "translated",
+            "value" : "**Klikněte sem** pro načtení doporučeného nastavení\npro vaši myš (**%@**)"
           }
         },
         "de" : {
@@ -10185,7 +10185,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Horizontální scrolování."
+            "value" : "Horizontální scrolování"
           }
         },
         "de" : {
@@ -13217,7 +13217,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Klik a *táhnutí* %@"
+            "value" : "Kliknutí a *tažení* %@"
           }
         },
         "de" : {
@@ -13294,7 +13294,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dvojklik a *táhnutí* %@"
+            "value" : "Dvojklik a *tažení* %@"
           }
         },
         "de" : {
@@ -13371,7 +13371,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Trojklik a *táhnutí* %@"
+            "value" : "Trojklik a *tažení* %@"
           }
         },
         "de" : {
@@ -13448,7 +13448,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "a *táhnutí*"
+            "value" : "a *tažení*"
           }
         },
         "de" : {

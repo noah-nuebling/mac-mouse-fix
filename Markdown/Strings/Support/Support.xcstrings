@@ -35,7 +35,7 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "## Otázky\n\nKrátké odpovědi na časté otázky [zde](<{url}>)."
           }
         },
@@ -64,8 +64,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "## Průvodci\n\nKde je to možné, Mac Mouse Fix napoví sám.\nAle někdy návod pomůže!\n\n- [{docname_captured_scroll_wheels}](<{url_1}>)\n- [{docname_captured_buttons_mmf3}](<{url_2}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_3}>) (Mac Mouse Fix 2) {only_in_english}"
+            "state" : "translated",
+            "value" : "## Průvodci\n\nKde je to možné, Mac Mouse Fix napoví sám.\nU některých věcí je užitečné podrobnější vysvětlení:\n\n- [{docname_captured_scroll_wheels}](<{url_1}>)\n- [{docname_captured_buttons_mmf3}](<{url_2}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_3}>) (Mac Mouse Fix 2) {only_in_english}"
           }
         },
         "de" : {

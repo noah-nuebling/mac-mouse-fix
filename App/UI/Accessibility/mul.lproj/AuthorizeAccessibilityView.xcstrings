@@ -7,8 +7,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Mac Mouse Fix umožňuje zachycovat signály z myši a&nbsp;klávesnice"
+            "state" : "translated",
+            "value" : "Povolení Zpřístupnění umožní Mac Mouse Fix přístup k zachycování signálu myši a klávesnice"
           }
         },
         "de" : {
@@ -152,7 +152,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Otevřete nastavení \"Soukromí a zabezpečení\""
+            "value" : "Otevřete nastavení 'Soukromí a zabezpečení'"
           }
         },
         "de" : {
@@ -368,7 +368,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Podržte klávesu Shift (⇧) a klikněte na tuto ikonu, čímž se ve Finderu zobrazí soubor \"Mac Mouse Fix Helper.app\"."
+            "value" : "Podržte klávesu Shift (⇧) a klikněte na tuto ikonu, čímž se ve Finderu zobrazí soubor 'Mac Mouse Fix Helper.app'."
           }
         },
         "de" : {
@@ -439,8 +439,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Povolte přístup Mac Mouse Fix"
+            "state" : "translated",
+            "value" : "Povolte Mac Mouse Fix přístup v nastavení systému Zpřístupnění"
           }
         },
         "de" : {

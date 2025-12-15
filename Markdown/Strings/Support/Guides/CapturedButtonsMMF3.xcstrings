@@ -8,7 +8,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "# {docname_captured_buttons_mmf3}\n\nPři používání nástroje Mac Mouse Fix jste se mohli setkat se zprávou, že tlačítko na vaší myši je nyní \"zachycováno\" nástrojem Mac Mouse Fix.\n\n{screenshot_0}\n\nV tomto článku se dozvíte, co to znamená, jaké problémy to může způsobit a jak je obejít."
+            "value" : "# {docname_captured_buttons_mmf3}\n\nPři používání nástroje Mac Mouse Fix jste se mohli setkat se zprávou, že tlačítko na vaší myši je nyní 'zachycováno' nástrojem Mac Mouse Fix.\n\n{screenshot_0}\n\nV tomto článku se dozvíte, co to znamená, jaké problémy to může způsobit a jak je obejít."
           }
         },
         "de" : {
@@ -37,7 +37,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "## Co znamená \"zachycení\" tlačítka myši?\n\nTlačítko myši, které je zachyceno aplikací Mac Mouse Fix, již nevidí ostatní aplikace ani systém macOS.\nFunkce, které by toto tlačítko normálně plnilo, nebudou během jeho zachycování fungovat.\n\n**Příklad**: V Chromu se obvykle můžete pohybovat vpřed a vzad kliknutím na boční tlačítka (tlačítka 4 a 5) myši.\nKdyž ale Mac Mouse Fix boční tlačítka zachytí, tato funkce již nefunguje. Místo toho budou boční tlačítka spouštět pouze akce, které jste jim v Mac Mouse Fix přiřadili.\n\n**Proč to Mac Mouse Fix dělá?** Mac Mouse Fix skrývá tlačítka před ostatními aplikacemi, aby se zabránilo náhodnému spuštění jiných funkcí při používání gest Mac Mouse Fix.\nPokud například kliknete a přetáhnete tlačítko 4 pro přepínání mezi plochami, vždy se **současně** vrátíte o stránku zpět v Chromu."
+            "value" : "## Co znamená 'zachycení' tlačítka myši?\n\nTlačítko myši, které je zachyceno aplikací Mac Mouse Fix, již nevidí ostatní aplikace ani systém macOS.\nFunkce, které by toto tlačítko normálně plnilo, nebudou během jeho zachycování fungovat.\n\n**Příklad**: V Chromu se obvykle můžete pohybovat vpřed a vzad kliknutím na boční tlačítka (tlačítka 4 a 5) myši.\nKdyž ale Mac Mouse Fix boční tlačítka zachytí, tato funkce již nefunguje. Místo toho budou boční tlačítka spouštět pouze akce, které jste jim v Mac Mouse Fix přiřadili.\n\n**Proč to Mac Mouse Fix dělá?** Mac Mouse Fix skrývá tlačítka před ostatními aplikacemi, aby se zabránilo náhodnému spuštění jiných funkcí při používání gest Mac Mouse Fix.\nPokud například kliknete a přetáhnete tlačítko 4 pro přepínání mezi plochami, vždy se **současně** vrátíte o stránku zpět v Chromu."
           }
         },
         "de" : {
@@ -67,7 +67,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "## Jak zjistím, která tlačítka jsou zachycena programem Mac Mouse Fix?\n\nMac Mouse Fix zachycuje všechna tlačítka, která se zobrazují na levé straně záložky \"Tlačítka\".\n\nNa následujícím obrázku jsou zachycena **\"Prostřední tlačítko\"**, **\"Tlačítko 5\"** a **\"Tlačítko 4\"**: <br>\n\n{screenshot_1}"
+            "value" : "## Jak zjistím, která tlačítka jsou zachycena programem Mac Mouse Fix?\n\nMac Mouse Fix zachycuje všechna tlačítka, která se zobrazují na levé straně záložky 'Tlačítka'.\n\nNa následujícím obrázku jsou zachycena **'Prostřední tlačítko'**, **'Tlačítko 5'** a **'Tlačítko 4'**: <br>\n\n{screenshot_1}"
           }
         },
         "de" : {
@@ -97,7 +97,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "## Jak zabráním nástroji Mac Mouse Fix v zachycení tlačítka myši?\n\nChcete-li zabránit nástroji Mac Mouse Fix v zachycení tlačítka myši, smažte všechny položky pro dané tlačítko myši na kartě \"Tlačítka\". Položku na kartě \"Tlačítka\" můžete smazat kliknutím na tlačítko \"-\" vlevo.\n\nNapříklad na následujícím obrázku můžete zabránit zachycení tlačítka **'Tlačítko 4'** kliknutím na dvě zvýrazněná tlačítka **'-'**:\n\n{screenshot_2}"
+            "value" : "## Jak zabráním nástroji Mac Mouse Fix v zachycení tlačítka myši?\n\nChcete-li zabránit nástroji Mac Mouse Fix v zachycení tlačítka myši, smažte všechny položky pro dané tlačítko myši na kartě 'Tlačítka'. Položku na kartě 'Tlačítka' můžete smazat kliknutím na tlačítko '-' vlevo.\n\nNapříklad na následujícím obrázku můžete zabránit zachycení tlačítka **'Tlačítko 4'** kliknutím na dvě zvýrazněná tlačítka **'-'**:\n\n{screenshot_2}"
           }
         },
         "de" : {
@@ -304,7 +304,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\"Kliknutí prostředním tlačítkem\"<br>(Lze přiřadit **kliknutí** na tlačítko)"
+            "value" : "'Kliknutí prostředním tlačítkem'<br>(Lze přiřadit **kliknutí** na tlačítko)"
           }
         },
         "de" : {
@@ -392,7 +392,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\"Kliknutí prostředním tlačítkem\"<br>(Lze přiřadit **kliknutí** na tlačítko)"
+            "value" : "'Kliknutí prostředním tlačítkem'<br>(Lze přiřadit **kliknutí** na tlačítko)"
           }
         },
         "de" : {
@@ -481,7 +481,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\"Zpět\" / \"Vpřed\"<br>(Lze přiřadit **kliknutí** tlačítka)"
+            "value" : "'Zpět'/ 'Vpřed'<br>(Lze přiřadit **kliknutí** tlačítka)"
           }
         },
         "de" : {
@@ -569,7 +569,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\"Scrolování a navigace\"<br>(Lze přiřadit **kliknutí a přetažení** tlačítka)"
+            "value" : "'Scrolování a navigace'<br>(Lze přiřadit **kliknutí a přetažení** tlačítka)"
           }
         },
         "de" : {
