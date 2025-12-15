@@ -2,73 +2,73 @@
   "sourceLanguage" : "en",
   "strings" : {
     "0lz-be-kpl.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Accessibility Access allows Mac Mouse Fix to intercept signals from your mouse and keyboard\"; ObjectID = \"0lz-be-kpl\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Accessibility Access allows Mac Mouse Fix to\\nintercept signals from your mouse and keyboard\"; ObjectID = \"0lz-be-kpl\"; Note = \"I recommend splitting this string into two lines of roughly the same length, for a nice visual layout.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Povolení Zpřístupnění umožní Mac Mouse Fix přístup k zachycování signálu myši a klávesnice"
+            "value" : "Povolení Zpřístupnění umožní Mac Mouse Fix \npřístup k zachycování signálu myši a klávesnice"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zugriff auf Bedienungshilfen erlaubt es Mac Mouse Fix, Eingaben von deiner Maus und deiner Tastatur abzufangen"
+            "value" : "Zugriff auf Bedienungshilfen erlaubt es Mac Mouse Fix, \nEingaben von deiner Maus und deiner Tastatur abzufangen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Accessibility Access allows Mac Mouse Fix to intercept signals from your mouse and keyboard"
+            "value" : "Accessibility Access allows Mac Mouse Fix to\nintercept signals from your mouse and keyboard"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "L'accès à l'accessibilité autorise Mac Mouse Fix à intercepter les signaux de votre souris et de votre clavier"
+            "state" : "needs_review",
+            "value" : "L'accès à l'accessibilité autorise Mac Mouse Fix à \nintercepter les signaux de votre souris et de votre clavier"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mac Mouse Fix가 마우스 및 키보드 신호에 접근하려면 손쉬운 사용 접근 권한이 필요합니다."
+            "state" : "needs_review",
+            "value" : "Mac Mouse Fix가 마우스 및 키보드 신호에 \n접근하려면 손쉬운 사용 접근 권한이 필요합니다."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "O Acesso à Acessibilidade permite que o Mac Mouse Fix intercepte sinais do mouse e do teclado"
+            "state" : "needs_review",
+            "value" : "O Acesso à Acessibilidade permite que o \nMac Mouse Fix intercepte sinais do mouse e do teclado"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Доступ к универсальному доступу позволяет Mac Mouse Fix перехватывать сигналы с вашей мыши и клавиатуры"
+            "state" : "needs_review",
+            "value" : "Доступ к универсальному доступу позволяет Mac Mouse Fix \nперехватывать сигналы с вашей мыши и клавиатуры"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nhận quyền truy cập Trợ năng cho phép Mac Mouse Fix can thiệp vào tín hiệu từ chuột và bàn phím"
+            "state" : "needs_review",
+            "value" : "Nhận quyền truy cập Trợ năng cho phép Mac Mouse Fix \ncan thiệp vào tín hiệu từ chuột và bàn phím"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "授权访问“辅助功能”允许Mac Mouse Fix拦截您的鼠标和键盘信号"
+            "state" : "needs_review",
+            "value" : "授权访问“辅助功能”允许Mac Mouse Fix\n拦截您的鼠标和键盘信号"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "取用「輔助使用」允許Mac Mouse Fix截取您的滑鼠和鍵盤訊號"
+            "state" : "needs_review",
+            "value" : "取用「輔助使用」允許Mac Mouse Fix\n截取您的滑鼠和鍵盤訊號"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "取用「輔助使用」允許Mac Mouse Fix截取你的滑鼠和鍵盤訊號"
+            "state" : "needs_review",
+            "value" : "取用「輔助使用」允許Mac Mouse Fix\n截取你的滑鼠和鍵盤訊號"
           }
         }
       }
@@ -253,7 +253,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Ativar o 'Ajudante do Controlador de guia inicial do Mac Mouse Fix'"
           }
         },
@@ -440,7 +440,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Povolte Mac Mouse Fix přístup v nastavení systému Zpřístupnění"
+            "value" : "Povolte přístup Mac Mouse Fix"
           }
         },
         "de" : {
