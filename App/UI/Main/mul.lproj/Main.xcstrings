@@ -1603,7 +1603,7 @@
       }
     },
     "bGk-tB-fcH.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Mac Mouse Fix\"; ObjectID = \"bGk-tB-fcH\"; Note = \"NOTE: About > Mac Mouse Fix Label \\n\\nNOTE TO SELF: We don't mark 'Mac Mouse Fix' and 'macOS' strings as 'Do Not Translate' since in some languages they might be adjusted. E.g. in Arabic, 'macOS' is usually referred to as 'نظام macOS' (= 'macOS system') inside the UI.\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Mac Mouse Fix\"; ObjectID = \"bGk-tB-fcH\"; Note = \"About > Mac Mouse Fix Label \\n\\nNOTE TO SELF: \\n\\nWe don't mark 'Mac Mouse Fix' and 'macOS' strings as 'Do Not Translate' since in some languages they might be adjusted. E.g. in Arabic, 'macOS' is usually referred to as 'نظام macOS' (= 'macOS system') inside the UI.\\n\\nAlso see CFBundleName in InfoPlist.xcstrings.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
