@@ -8,7 +8,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Povolení Zpřístupnění umožní Mac Mouse Fix \npřístup k zachycování signálu myši a klávesnice"
+            "value" : "Povolení ve Zpřístupnění umožní Mac Mouse Fix \nsledování vstupů myši a klávesnice"
           }
         },
         "de" : {
@@ -440,7 +440,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Povolte přístup Mac Mouse Fix"
+            "value" : "Udělení přístupu Mac Mouse Fix"
           }
         },
         "de" : {
