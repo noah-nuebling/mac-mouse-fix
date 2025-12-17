@@ -69,6 +69,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **desembre 2025**
 
+- 🇺🇸&nbsp;Mantej
 - 🇦🇪&nbsp;Roman&nbsp;Strakhov - "Shut up and take my money"
 - 🇨🇳&nbsp;Shay&nbsp;Zhang - "This is the single best software that I've purchased in a while. It provides such a deligate balance from the "magic" feature from the macOS and the pragmatic ability of a mouse. Definitely worth the price."
 - 🇬🇧&nbsp;Reuben&nbsp;Taylor
