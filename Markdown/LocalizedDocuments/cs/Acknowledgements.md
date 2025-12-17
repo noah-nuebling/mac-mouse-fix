@@ -63,6 +63,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **prosinec 2025**
 
+- 🇦🇪&nbsp;Roman&nbsp;Strakhov - "Shut up and take my money"
 - 🇨🇳&nbsp;Shay&nbsp;Zhang - "This is the single best software that I've purchased in a while. It provides such a deligate balance from the "magic" feature from the macOS and the pragmatic ability of a mouse. Definitely worth the price."
 - 🇬🇧&nbsp;Reuben&nbsp;Taylor
 - 🇱🇧&nbsp;Sergio&nbsp;Wehbe - "Shut up and take my money!"
