@@ -12447,7 +12447,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Klik %@ +"
+            "value" : "Kliknutí %@ +"
           }
         },
         "de" : {
@@ -12986,7 +12986,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Klik %@"
+            "value" : "Kliknutí %@"
           }
         },
         "de" : {
@@ -13216,7 +13216,7 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Kliknutí a *tažení* %@"
           }
         },
@@ -13756,7 +13756,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Klik a *scrolování* %@"
+            "value" : "Kliknutí a *scrolování* %@"
           }
         },
         "de" : {
