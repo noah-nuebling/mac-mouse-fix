@@ -69,6 +69,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **desembre 2025**
 
+- 🇺🇸&nbsp;Joe&nbsp;Bliss
 - 🇺🇸&nbsp;Casey
 - 🇺🇸&nbsp;Mantej
 - 🇦🇪&nbsp;Roman&nbsp;Strakhov - "Shut up and take my money"

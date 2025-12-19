@@ -62,6 +62,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2025**
 
+- 🇺🇸&nbsp;Joe&nbsp;Bliss
 - 🇺🇸&nbsp;Casey
 - 🇺🇸&nbsp;Mantej
 - 🇦🇪&nbsp;Roman&nbsp;Strakhov - "Shut up and take my money"
