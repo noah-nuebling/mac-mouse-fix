@@ -1,15 +1,15 @@
-Mac Mouse Fix **3.0.1 Beta 1** aduce un nou sistem excelent de traducere, la care s-a lucrat de ceva timp.\
+Mac Mouse Fix **3.1.0 Beta 1** aduce un nou sistem excelent de traducere, la care s-a lucrat de ceva timp.\
 Există și câteva îmbunătățiri ale interfeței.
 
-### Noul sistem de localizare! 
+### Sistem nou de localizare!
 
-- Acum este super ușor să contribui cu traduceri de calitate pentru Mac Mouse Fix, fără a fi necesare cunoștințe tehnice.
+- Acum este super ușor să contribui cu traduceri de înaltă calitate la Mac Mouse Fix, fără a fi necesare cunoștințe tehnice.
 - Există multe capturi de ecran adnotate și comentarii, precum și o funcție excelentă de căutare, astfel încât traducătorii pot înțelege cu ușurință exact cum apar traducerile lor în aplicație.
     - Cred că capturile de ecran și interfața de traducere (aplicația `Xcloc Editor`) sunt de cea mai înaltă calitate de pe piață și sper că te vor ajuta să oferi traduceri excelente!
 - Aproape toate părțile proiectului sunt acum traductibile, inclusiv 'Ghidul butoanelor capturate', fișierul Readme de pe GitHub, site-ul web și multe altele.
     - Toate aceste părți ale proiectului pot fi traduse dintr-un singur loc centralizat, cu referințe încrucișate ușoare folosind aplicația `Xcloc Editor`, astfel încât traducătorii pot menține totul consistent cu ușurință.
 - Sistemul este configurat pentru a fi foarte ușor de întreținut, astfel încât pe măsură ce Mac Mouse Fix evoluează și sunt adăugate ecrane sau texte noi, totul se va actualiza automat.
-- Precizare: Folosesc cuvântul 'ușor' des. Fluxurile de lucru sunt ușoare, dar gândirea unor traduceri excelente este, desigur, în continuare multă muncă grea și respectabilă! Pur și simplu există mai puține bariere acum.
+- Disclaimer: Folosesc mult cuvântul 'ușor'. Fluxurile de lucru sunt ușoare, dar gândirea unor traduceri excelente este, desigur, în continuare multă muncă grea și respectabilă! Doar că acum există mai puține bariere în cale.
 
 
 
@@ -18,20 +18,20 @@ Traduceri noi au fost deja oferite cu generozitate de următoarele persoane:
 
 - **Eduardo Rodrigues**: 🇧🇷 Traduceri în portugheză braziliană
 - [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 Traduceri în franceză
-- [@hasanbeder](https://github.com/hasanbeder): 🇹🇷 Traduceri în turcă
+- [@hasanbeder](https://github.com/hasanbeder) și [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 Traduceri în turcă
 - [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Traduceri în cehă
 - [@Dro9an](https://github.com/Dro9an) și [@jihao](https://github.com/jihao): 🇨🇳 Traducerea în chineză a [site-ului web](macmousefix.com)
 
 Mulțumim pentru munca voastră!
 
-Cu toate acestea, **toate limbile au încă nevoie de lucru**, deoarece multe lucruri noi au fost făcute traductibile. 
+Cu toate acestea, **toate limbile au încă nevoie de lucru**, deoarece multe lucruri noi au fost făcute traductibile.
 
 Prin urmare:
 
 > [!TIP]
-> Consultă noul [Ghid de traducere](https://redirect.macmousefix.com/?target=mmf-localization-contribution) dacă ai dori să ajuți la aducerea unor traduceri excelente pentru utilizatorii Mac Mouse Fix din întreaga lume! 🌎
+> Aruncă o privire la noul [Ghid de traducere](https://redirect.macmousefix.com/?target=mmf-localization-contribution) dacă ai dori să ajuți la aducerea unor traduceri excelente pentru utilizatorii Mac Mouse Fix din întreaga lume! 🌎
 
-### Alte modificări 
+### Alte modificări
 
 Când folosești Mac Mouse Fix în engleză, nu s-a schimbat prea mult, dar câteva lucruri au fost actualizate în interfață, iar multe s-au schimbat în fundal, pentru a ajuta la îmbunătățirea traducerilor:
 
@@ -52,9 +52,23 @@ Poți găsi versiunea anterioară a Mac Mouse Fix aici: [3.0.8](https://github.c
 
 ---
 
-Ultima actualizare:
-- Numărul de build al fișierului MacMouseFixApp.zip: 24814
-- Data: [8 decembrie 2025]
-- Modificare: Adăugate traduceri în rusă de Vyacheslav
-
+Actualizări:
 (Actualizez traducerile fără a crea o nouă versiune GitHub de fiecare dată.)
+
+1. Actualizare:
+    - Numărul de build al fișierului MacMouseFixApp.zip: 24814
+    - Data: [8 decembrie 2025]
+    - Modificare: Adăugate traduceri în rusă de Vyacheslav
+
+2. Actualizare:
+    - Numărul de build al fișierului MacMouseFixApp.zip: 24815
+    - Data: [15 decembrie 2025]
+    - Modificare: Actualizate traduceri în cehă de Petr
+
+3. Actualizare:
+    - Numărul de build al fișierului MacMouseFixApp.zip: 24822
+    - Data: [15 decembrie 2025]
+    - Modificări:
+        - Adăugate traduceri în turcă de Eren.
+        - Marginile orizontale de pe fila Derulare au fost făcute puțin mai înguste pentru a funcționa mai bine cu unele șiruri de text în turcă mai largi.
+        - Remediat problema de redare Markdown în care punctele de listă ar avea subliniere dacă primul lucru după listă era un link. Acest lucru a afectat turca în câteva locuri.

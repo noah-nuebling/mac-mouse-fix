@@ -1,4 +1,4 @@
-Mac Mouse Fix **3.1.0 Beta 1** přináší skvělý nový překladový systém, na kterém jsem pracoval už delší dobu.\
+Mac Mouse Fix **3.1.0 Beta 1** přináší skvělý nový překladový systém, na kterém jsem pracoval už nějakou dobu.\
 Jsou tu také některá vylepšení uživatelského rozhraní.
 
 ### Nový lokalizační systém!
@@ -9,7 +9,7 @@ Jsou tu také některá vylepšení uživatelského rozhraní.
 - Téměř všechny části projektu jsou nyní přeložitelné, včetně 'Průvodce zachycenými tlačítky', GitHub Readme, webových stránek a dalších.
     - Všechny tyto části projektu lze překládat z jednoho centrálního místa se snadným křížovým odkazováním pomocí aplikace `Xcloc Editor`, takže je pro překladatele snadné udržet vše konzistentní.
 - Systém je nastaven tak, aby byl velmi snadno udržovatelný, takže jak se Mac Mouse Fix vyvíjí a přidávají se nové obrazovky nebo texty, vše se bude aktualizovat automaticky.
-- Upozornění: Slovo 'snadné' používám často. Pracovní postupy jsou snadné, ale vymýšlení skvělých překladů je samozřejmě stále spousta tvrdé a obdivuhodné práce! Jen je teď v cestě méně překážek.
+- Upozornění: Slovo 'snadné' používám často. Pracovní postupy jsou snadné, ale vymýšlení skvělých překladů je samozřejmě stále spousta tvrdé a úctyhodné práce! Jen je teď v cestě méně překážek.
 
 
 
@@ -18,13 +18,13 @@ Nové překlady již velkorysě poskytli následující lidé:
 
 - **Eduardo Rodrigues**: 🇧🇷 brazilské portugalské překlady
 - [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 francouzské překlady
-- [@hasanbeder](https://github.com/hasanbeder): 🇹🇷 turecké překlady
+- [@hasanbeder](https://github.com/hasanbeder) a [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 turecké překlady
 - [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 české překlady
 - [@Dro9an](https://github.com/Dro9an) a [@jihao](https://github.com/jihao): 🇨🇳 čínský překlad [webových stránek](macmousefix.com)
 
 Díky za vaši práci!
 
-Nicméně **všechny jazyky stále potřebují práci**, protože bylo zpřístupněno k překladu mnoho nového obsahu.
+Nicméně **všechny jazyky stále potřebují práci**, protože spousta nových věcí byla zpřístupněna k překladu.
 
 Proto:
 
@@ -33,10 +33,10 @@ Proto:
 
 ### Další změny
 
-Při používání Mac Mouse Fix v angličtině se toho moc nezměnilo, ale několik věcí bylo aktualizováno v uživatelském rozhraní a hodně se změnilo pod kapotou, aby se zlepšily překlady:
+Při používání Mac Mouse Fix v angličtině se toho moc nezměnilo, ale několik věcí bylo aktualizováno v uživatelském rozhraní a spousta věcí se posunula pod kapotou, aby se zlepšily překlady:
 
 - Vylepšený vzhled malých vyskakovacích oznámení.
-- Jasnější nápovědy a chybové hlášky na různých místech.
+- Jasnější tooltipy a chybové hlášky na různých místech.
 - Klávesa escape nyní může být použita všude k zavření oznámení, dialogů a vyskakovacích oken.
 - Na záložku O aplikaci byl přidán odkaz 'Pomoc s překladem'.
 - Šířka zobrazení a vyskakovacích oken byla upravena, aby vypadala skvěle v různých jazycích.
@@ -52,9 +52,23 @@ Předchozí verzi Mac Mouse Fix najdeš zde: [3.0.8](https://github.com/noah-nue
 
 ---
 
-Poslední aktualizace:
-- Číslo buildu souboru MacMouseFixApp.zip: 24814
-- Datum: [8. prosince 2025]
-- Změna: Přidány ruské překlady od Vyacheslava
-
+Aktualizace:
 (Aktualizuji překlady bez vytváření nové GitHub Release pokaždé.)
+
+1. Aktualizace:
+    - Číslo buildu souboru MacMouseFixApp.zip: 24814
+    - Datum: [8. prosince 2025]
+    - Změna: Přidány ruské překlady od Vyacheslava
+
+2. Aktualizace:
+    - Číslo buildu souboru MacMouseFixApp.zip: 24815
+    - Datum: [15. prosince 2025]
+    - Změna: Aktualizovány české překlady od Petra
+
+3. Aktualizace:
+    - Číslo buildu souboru MacMouseFixApp.zip: 24822
+    - Datum: [15. prosince 2025]
+    - Změny:
+        - Přidány turecké překlady od Erena.
+        - Horizontální okraje na záložce Scrollování mírně zúženy, aby lépe fungovaly s některými širšími tureckými texty v UI.
+        - Opraven problém s vykreslováním Markdown, kdy odrážky seznamu měly podtržení, pokud první věc po seznamu byl odkaz. To ovlivňovalo turečtinu na několika místech.

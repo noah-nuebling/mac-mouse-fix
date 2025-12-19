@@ -18,7 +18,7 @@ New translations have already been generously provided by the following people:
 
 - **Eduardo Rodrigues**: 🇧🇷 Brazilian Portuguese translations
 - [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 French translations
-- [@hasanbeder](https://github.com/hasanbeder): 🇹🇷 Turkish translations
+- [@hasanbeder](https://github.com/hasanbeder) and [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 Turkish translations
 - [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Czech translations
 - [@Dro9an](https://github.com/Dro9an) and [@jihao](https://github.com/jihao): 🇨🇳 Chinese translation of [the website](macmousefix.com)
 
@@ -52,10 +52,24 @@ You can find the previous release of Mac Mouse Fix here: [3.0.8](https://github.
 
 ---
 
-Latest update:
-- Build number of MacMouseFixApp.zip asset: 24814
-- Date: [Dec 8 2025]
-- Change: Added Russian translations by Vyacheslav
-
+Updates:
 (I'm updating the translations without creating a new GitHub Release every time.)
+
+1. Update:
+    - Build number of MacMouseFixApp.zip asset: 24814
+    - Date: [Dec 8 2025]
+    - Change: Added Russian translations by Vyacheslav
+
+2. Update:
+    - Build number of MacMouseFixApp.zip asset: 24815
+    - Date: [Dec 15 2025]
+    - Change: Updated Czech translations by Petr
+
+3. Update:
+    - Build number of MacMouseFixApp.zip asset: 24822
+    - Date: [Dec 15 2025]
+    - Changes: 
+        - Added Turkish translations by Eren.
+        - Make horizontal margins on Scrolling tab slightly narrower to work better with some wider Turkish UI strings. 
+        - Fix Markdown rendering issue where list-bullets would have underline if the first thing after the list was a link. This affected Turkish in a few places.
 
