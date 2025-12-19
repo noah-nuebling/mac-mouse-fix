@@ -27,6 +27,12 @@
             "state" : "translated",
             "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **по умолчанию захватывает колесико прокрутки мыши**, аналогично тому, как он [захватывает кнопки мыши](<{url}>)."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix farenizin **kaydırma tekerleğini de varsayılan olarak** [fare düğmelerini yakaladığı gibi](<{url}>) yakalar."
+          }
         }
       }
     },
@@ -57,6 +63,12 @@
             "state" : "translated",
             "value" : "**Чтобы предотвратить захват колесика прокрутки:**\n\n1. Перейдите на вкладку 'Прокрутка' в Mac Mouse Fix\n2. Отключите **все** опции\n- В случае опции 'Скорость' установите значение 'macOS'\n- Удалите все записи в разделе 'Модификаторы клавиатуры', нажав кнопку 'x' рядом с каждым модификатором\n\nПосле этого вы должны увидеть сообщение о том, что колесико прокрутки больше не захватывается."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Kaydırma tekerleğinin yakalanmasını engellemek istiyorsanız**\n\n1. Mac Mouse Fix üzerinde 'Kaydırma' sekmesine gidin.\n2. **Bütün** ayarları devre dışı bırakın.\n\t- Hız ayarını 'macOS' olarak ayarlayın.\n\t- Klavye değiştiricileri maddelerini de yanlarındaki 'x' düğmesini kullanarak kaldırın.\n\nBundan sonra kaydırma tekerleğinin yakalandığına dair mesajları görmeyeceksiniz."
+          }
         }
       }
     },
@@ -86,6 +98,12 @@
             "state" : "translated",
             "value" : "**Что происходит, когда колесико прокрутки *больше* не захватывается?**\n\nMac Mouse Fix полностью игнорирует ваше колесико прокрутки — оно не будет использовать ресурсы процессора или заряд батареи во время прокрутки и не будет мешать вам никоим образом. Это дает вам полную свободу использовать другие приложения, такие как [MOS]({url}), для управления колесиком прокрутки."
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Kaydırma tekerleği yakalanmadığında ne olacak?**\n\nMac Mouse Fix kaydırma tekerleğini tamamen yok sayacaktır - bu esnada kaydırma yaparken herhangi bir işlem gücü veya enerji kullanımı olmayacaktır. Bu, [MOS]({url}) gibi kaydırma tekerleği modifikasyon uygulamalarını dilediğiniz gibi kullanmanızı sağlar."
+          }
         }
       }
     },
@@ -114,6 +132,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## См. также\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Отредактировано при отличной помощи Claude 3.5 Sonnet)*"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "##Ayrıca bakınız\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Claude 3.5 Sonnet'in muhteşem yardımı ile düzenlendi)*\n\nNot: Birebir çeviri olup çeviride yapay zekâ kullanılmamıştır.\n"
           }
         }
       }

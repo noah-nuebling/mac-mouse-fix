@@ -47,6 +47,12 @@
             "value" : "Кнопки"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düğmeler"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -180,6 +186,12 @@
             "value" : "Прокрутка"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaydırma"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -250,6 +262,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Открыть Mac Mouse Fix..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix'i Aç..."
           }
         },
         "vi" : {

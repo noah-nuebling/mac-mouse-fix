@@ -47,6 +47,12 @@
             "value" : "Назад"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -178,6 +184,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Введите ваш лицензионный ключ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisans Anahtarını Girin"
           }
         },
         "vi" : {

@@ -26,7 +26,9 @@ Thanks for bringing Mac Mouse Fix to people around the globe!
 - 🇻🇳 Vietnamese translations by [@nghlt](https://github.com/nghlt)
 - 🇧🇷 Brazilian Portuguese translations by **Eduardo Rodrigues**
 - 🇫🇷 French translations by [@DimitriDR](https://github.com/DimitriDR)
-- 🇹🇷 Turkish translations by [@hasanbeder](https://github.com/hasanbeder)
+- 🇹🇷 Turkish translations by 
+    - [@hasanbeder](https://github.com/hasanbeder)
+    - [@erentomurcuk](https://github.com/erentomurcuk)
 - 🇨🇿 Czech translations by [Petr Pavlík](http://www.petrpavlik.com)
 - 🇷🇺 Russian translations by [ETMH](https://t.me/sos_soon_ok)
 

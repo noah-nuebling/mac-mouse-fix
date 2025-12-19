@@ -27,6 +27,12 @@
             "state" : "translated",
             "value" : "Благодарности"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teşekkürler"
+          }
         }
       }
     },
@@ -55,6 +61,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Захваченные кнопки мыши"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yakalanan Fare Düğmeleri"
           }
         }
       }
@@ -85,6 +97,12 @@
             "state" : "translated",
             "value" : "Захваченные колеса прокрутки"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yakalanan Kaydırma Düğmeleri"
+          }
         }
       }
     },
@@ -113,6 +131,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Readme"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beni Oku"
           }
         }
       }
@@ -143,6 +167,12 @@
             "state" : "translated",
             "value" : "Поддержка"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Destek"
+          }
         }
       }
     },
@@ -171,6 +201,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Надеюсь, это руководство было полезным!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Umuyorum ki bu destek dokümanı yardımcı olmuştur!"
           }
         }
       }
@@ -201,6 +237,12 @@
             "state" : "translated",
             "value" : "Надеюсь, эта информация была полезна!"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Umarım bu bilgiler yararlı olmuştur."
+          }
         }
       }
     },
@@ -230,6 +272,12 @@
             "state" : "translated",
             "value" : "Надеюсь, это руководство прояснило ситуацию!"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Umarım bu doküman kafanızdaki soru işaretlerini kaldırmıştır."
+          }
         }
       }
     },
@@ -258,6 +306,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Еще есть вопросы? Нажмите [здесь]({url})."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hâlâ sorularınız mı mevcut? [Buraya tıklayın]({url})."
           }
         }
       }
@@ -289,6 +343,12 @@
             "state" : "translated",
             "value" : "Этот документ переведен на язык {current_language} с {localization_progress}.\n[Помогите с переводом]({url})"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`{localization_progress}` adındaki doküman `{current_language}` diline çevrilmiştir.\n[Çeviri için yardımcı olun]({url})"
+          }
         }
       }
     },
@@ -318,6 +378,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "[🌎 Помогите с переводом!]({url})"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[🌎 Çeviri için yardımcı olun!]({url})"
           }
         }
       }

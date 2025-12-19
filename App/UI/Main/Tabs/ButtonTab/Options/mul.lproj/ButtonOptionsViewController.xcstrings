@@ -47,6 +47,12 @@
             "value" : "Готово"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tamam"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -119,6 +125,12 @@
             "value" : "Рекомендуется для мышей с трекболом"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trackball Tip fareler için önerilir"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -189,6 +201,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Блокировка указателя мыши во время жестов 'клик и перетаскивание'"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "'Tıklama ve Sürükleme' Hareketleri Sırasında Fare İmlecini Kilitle"
           }
         },
         "vi" : {

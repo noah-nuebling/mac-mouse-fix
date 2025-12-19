@@ -47,6 +47,12 @@
             "value" : "Доступ к универсальному доступу позволяет Mac Mouse Fix \nперехватывать сигналы с вашей мыши и клавиатуры"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Erişilebilirlik Erişimi, Mac Mouse Fix'in \nfare ve klavyenizden gelen sinyalleri yakalamasını sağlar"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -117,6 +123,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Помощь"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yardım"
           }
         },
         "vi" : {
@@ -191,6 +203,12 @@
             "value" : "Открыть настройки 'Конфиденциальность и безопасность'"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Gizlilik ve Güvenlik' Ayarlarını açın"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -263,6 +281,12 @@
             "value" : "Включите 'Mac Mouse Fix Helper"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Mac Mouse Fix Helper' yardımcı uygulamasını çalıştırın"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -330,6 +354,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1."
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "1."
@@ -407,6 +437,12 @@
             "value" : "Удерживайте Shift (⇧) и нажмите на этот значок, чтобы показать 'Mac Mouse Fix Helper.app' в Finder"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finder'da 'Mac Mouse Fix Helper.app' uygulamasını görüntülemek için Shift (⇧) tuşuna basılı tutarken bu simgeye tıklayın"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -479,6 +515,12 @@
             "value" : "Предоставить Mac Mouse Fix доступ к универсальному доступу"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix'e Erişilebilirlik Erişimi Verin"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -546,6 +588,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2."
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "2."
@@ -621,6 +669,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Закрыть"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İptal"
           }
         },
         "vi" : {
