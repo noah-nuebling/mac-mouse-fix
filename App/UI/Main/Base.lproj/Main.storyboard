@@ -353,7 +353,10 @@
                                                             <attributedString key="userComments">
                                                                 <fragment>
                                                                     <string key="content">General &gt; Enable Mac Mouse Fix Toggle &gt; Hint 
-NOTE: Primarily meant to teach the right mental model to users who have the common misconception that they need to make MMF a 'Login Item' to keep it working. The terminology is meant to match the 'Enable Mac Mouse Fix' toggle and the 'Quit Mac Mouse Fix' menubar item.</string>
+
+NOTE: Primarily meant to teach the right mental model to users who have the common misconception that they need to make MMF a 'Login Item' to keep it working. The terminology is meant to match the 'Enable Mac Mouse Fix' toggle and the 'Quit Mac Mouse Fix' menubar item. 
+
+(The idea is that, if the user understands that they can *completely quit* the app and still have it affecting their mouse, they won't try to keep the app open via the 'Open at Login' option.)</string>
                                                                 </fragment>
                                                             </attributedString>
                                                         </textFieldCell>

@@ -1633,7 +1633,7 @@
       }
     },
     "bew-ni-FnZ.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Mac Mouse Fix stays enabled after you quit the app\"; ObjectID = \"bew-ni-FnZ\"; Note = \"General > Enable Mac Mouse Fix Toggle > Hint \\nNOTE: Primarily meant to teach the right mental model to users who have the common misconception that they need to make MMF a 'Login Item' to keep it working. The terminology is meant to match the 'Enable Mac Mouse Fix' toggle and the 'Quit Mac Mouse Fix' menubar item.\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Mac Mouse Fix stays enabled after you quit the app\"; ObjectID = \"bew-ni-FnZ\"; Note = \"General > Enable Mac Mouse Fix Toggle > Hint \\n\\nNOTE: Primarily meant to teach the right mental model to users who have the common misconception that they need to make MMF a 'Login Item' to keep it working. The terminology is meant to match the 'Enable Mac Mouse Fix' toggle and the 'Quit Mac Mouse Fix' menubar item. \\n\\n(The idea is that, if the user understands that they can *completely quit* the app and still have it affecting their mouse, they won't try to keep the app open via the 'Open at Login' option.)\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -1680,7 +1680,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mac Mouse Fix kapatıldığında aktif kalacaktır"
           }
         },

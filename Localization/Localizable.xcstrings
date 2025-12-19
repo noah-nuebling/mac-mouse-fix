@@ -2216,7 +2216,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@. Fare Düğmesi"
           }
         },
@@ -7668,7 +7668,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Bu lisans **zaten aktif**!"
           }
         },
@@ -7976,7 +7976,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "**İnternet bağlantısı yok**\n\nBilgisayarınız çevrimiçi olduğunda lisansınızı tekrar aktifleştirmeyi deneyin."
           }
         },
@@ -8164,7 +8164,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "*'%@'** geçerli bir lisans anahtarı değildir\n\nLütfen başka bir anahtarı deneyin veya elinize geçen anahtarı olduğu gibi yazın."
           }
         },
@@ -9628,7 +9628,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : " **%@** fareniz için önerilen ayarları yüklemek için **buraya tıklayın**"
           }
         },
@@ -12512,7 +12512,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ düğmesine tıkla +"
           }
         },
@@ -12589,7 +12589,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ düğmesine çift tıkla +"
           }
         },
@@ -12666,7 +12666,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ düğmesine üç kez tıkla +"
           }
         },
@@ -13051,7 +13051,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ düğmesine tıkla"
           }
         },
@@ -13128,7 +13128,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ düğmesine çift tıkla"
           }
         },
@@ -13205,7 +13205,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ düğmesine üç kez tıkla"
           }
         },
@@ -13282,7 +13282,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ düğmesine tıkla ve sürükle"
           }
         },
@@ -13359,7 +13359,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ düğmesine çift tıkla ve sürükle"
           }
         },
@@ -13436,7 +13436,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ düğmesine üç kez tıkla ve sürükle"
           }
         },
@@ -13513,7 +13513,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "ve sürükle"
           }
         },
@@ -13590,7 +13590,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ düğmesine tıkla ve basılı tut"
           }
         },
@@ -13667,7 +13667,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ düğmesine çift tıkla ve basılı tut"
           }
         },
@@ -13744,7 +13744,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ düğmesine üç kez tıkla ve basılı tut"
           }
         },
@@ -13821,7 +13821,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ düğmesine tıkla ve kaydır"
           }
         },
@@ -13898,7 +13898,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ düğmesine çift tıkla ve kaydır"
           }
         },
@@ -13975,7 +13975,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%@ düğmesine üç kez tıkla ve kaydır"
           }
         },
@@ -14052,7 +14052,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "ve kaydır"
           }
         },
