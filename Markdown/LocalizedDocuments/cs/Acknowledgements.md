@@ -63,6 +63,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **prosinec 2025**
 
+- 🇺🇸&nbsp;Daniel&nbsp;M - "Thank you for one of the best Mac apps ever"
 - 🇺🇸&nbsp;Joe&nbsp;Bliss
 - 🇺🇸&nbsp;Casey
 - 🇺🇸&nbsp;Mantej
