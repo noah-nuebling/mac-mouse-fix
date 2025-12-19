@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24412"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24128"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -1297,7 +1297,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                             <rect key="frame" x="0.0" y="40" width="113" height="30"/>
                                                             <subviews>
                                                                 <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="AeU-6d-NTc">
-                                                                    <rect key="frame" x="8" y="16" width="97" height="14"/>
+                                                                    <rect key="frame" x="7" y="16" width="100" height="14"/>
                                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Scroll Horizontally" id="6Nj-Ed-W5T">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1337,9 +1337,9 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                                 <constraint firstItem="GIU-sd-HRi" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Six-Ec-wMk" secondAttribute="leading" id="AQk-OX-k4Q"/>
                                                                 <constraint firstItem="PpE-2r-BrM" firstAttribute="centerX" secondItem="Six-Ec-wMk" secondAttribute="centerX" id="EIi-1S-JGX"/>
                                                                 <constraint firstItem="AeU-6d-NTc" firstAttribute="centerX" secondItem="Six-Ec-wMk" secondAttribute="centerX" id="GgT-Ue-MLf"/>
-                                                                <constraint firstItem="AeU-6d-NTc" firstAttribute="leading" secondItem="Six-Ec-wMk" secondAttribute="leading" priority="999" constant="10" id="Ke5-He-6eV"/>
+                                                                <constraint firstItem="AeU-6d-NTc" firstAttribute="leading" secondItem="Six-Ec-wMk" secondAttribute="leading" priority="999" constant="5" id="Ke5-He-6eV"/>
                                                                 <constraint firstItem="PpE-2r-BrM" firstAttribute="top" secondItem="AeU-6d-NTc" secondAttribute="bottom" constant="6" id="MBO-TV-kcg"/>
-                                                                <constraint firstItem="AeU-6d-NTc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Six-Ec-wMk" secondAttribute="leading" constant="10" id="WDV-OW-yQc"/>
+                                                                <constraint firstItem="AeU-6d-NTc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Six-Ec-wMk" secondAttribute="leading" constant="5" id="WDV-OW-yQc"/>
                                                                 <constraint firstAttribute="bottom" secondItem="PpE-2r-BrM" secondAttribute="bottom" constant="5" id="bSg-Ew-OD8"/>
                                                                 <constraint firstItem="AeU-6d-NTc" firstAttribute="top" secondItem="Six-Ec-wMk" secondAttribute="top" id="nRY-ez-2RA"/>
                                                                 <constraint firstItem="GIU-sd-HRi" firstAttribute="trailing" secondItem="PpE-2r-BrM" secondAttribute="leading" constant="-4" id="nZp-2g-rzn"/>
@@ -1390,7 +1390,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                             </subviews>
                                                             <constraints>
                                                                 <constraint firstAttribute="bottom" secondItem="HZF-jc-NcN" secondAttribute="bottom" constant="5" id="Frz-yG-Tmw"/>
-                                                                <constraint firstItem="xXa-Kc-t6I" firstAttribute="leading" secondItem="Oos-ni-ewS" secondAttribute="leading" priority="999" constant="10" id="Gik-wu-xZ9"/>
+                                                                <constraint firstItem="xXa-Kc-t6I" firstAttribute="leading" secondItem="Oos-ni-ewS" secondAttribute="leading" priority="999" constant="5" id="Gik-wu-xZ9"/>
                                                                 <constraint firstItem="HZF-jc-NcN" firstAttribute="centerX" secondItem="Oos-ni-ewS" secondAttribute="centerX" id="H1F-AM-sKr"/>
                                                                 <constraint firstItem="Qpy-8X-Aos" firstAttribute="trailing" secondItem="HZF-jc-NcN" secondAttribute="leading" constant="-4" id="N7S-lZ-BPN"/>
                                                                 <constraint firstItem="HZF-jc-NcN" firstAttribute="top" secondItem="xXa-Kc-t6I" secondAttribute="bottom" constant="6" id="PRV-D1-3FH"/>
@@ -1398,7 +1398,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                                 <constraint firstItem="xXa-Kc-t6I" firstAttribute="centerX" secondItem="Oos-ni-ewS" secondAttribute="centerX" id="eB8-5T-90C"/>
                                                                 <constraint firstItem="Qpy-8X-Aos" firstAttribute="centerY" secondItem="HZF-jc-NcN" secondAttribute="centerY" id="iC6-76-ogu"/>
                                                                 <constraint firstItem="xXa-Kc-t6I" firstAttribute="top" secondItem="Oos-ni-ewS" secondAttribute="top" id="u2C-BG-Koc"/>
-                                                                <constraint firstItem="xXa-Kc-t6I" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Oos-ni-ewS" secondAttribute="leading" constant="10" id="yfw-kl-g52"/>
+                                                                <constraint firstItem="xXa-Kc-t6I" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Oos-ni-ewS" secondAttribute="leading" constant="5" id="yfw-kl-g52"/>
                                                             </constraints>
                                                         </customView>
                                                     </gridCell>
@@ -1449,8 +1449,8 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                                 <constraint firstItem="Abk-fb-uRV" firstAttribute="centerX" secondItem="Jp2-3z-uFa" secondAttribute="centerX" id="RF5-z7-C8q"/>
                                                                 <constraint firstItem="PDK-GT-YZg" firstAttribute="top" secondItem="Jp2-3z-uFa" secondAttribute="top" id="S1C-Fi-C3v"/>
                                                                 <constraint firstAttribute="bottom" secondItem="Abk-fb-uRV" secondAttribute="bottom" constant="5" id="SXV-er-Y0q"/>
-                                                                <constraint firstItem="PDK-GT-YZg" firstAttribute="leading" secondItem="Jp2-3z-uFa" secondAttribute="leading" priority="999" constant="10" id="UqL-dN-Yno"/>
-                                                                <constraint firstItem="PDK-GT-YZg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Jp2-3z-uFa" secondAttribute="leading" constant="10" id="e0f-gq-KC7"/>
+                                                                <constraint firstItem="PDK-GT-YZg" firstAttribute="leading" secondItem="Jp2-3z-uFa" secondAttribute="leading" priority="999" constant="5" id="UqL-dN-Yno"/>
+                                                                <constraint firstItem="PDK-GT-YZg" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Jp2-3z-uFa" secondAttribute="leading" constant="5" id="e0f-gq-KC7"/>
                                                                 <constraint firstItem="Abk-fb-uRV" firstAttribute="top" secondItem="PDK-GT-YZg" secondAttribute="bottom" constant="6" id="euk-IU-0fM"/>
                                                                 <constraint firstItem="I3L-q5-tw4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Jp2-3z-uFa" secondAttribute="leading" id="pai-PB-IoL"/>
                                                                 <constraint firstItem="I3L-q5-tw4" firstAttribute="centerY" secondItem="Abk-fb-uRV" secondAttribute="centerY" id="sLw-pD-i3h"/>
@@ -1504,10 +1504,10 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                                 <constraint firstItem="gqo-T2-Nmz" firstAttribute="centerX" secondItem="0nj-L8-QVU" secondAttribute="centerX" id="Qva-PW-Gbu"/>
                                                                 <constraint firstItem="VJe-D7-Rvn" firstAttribute="centerY" secondItem="gqo-T2-Nmz" secondAttribute="centerY" id="TqV-KX-lT2"/>
                                                                 <constraint firstItem="VJe-D7-Rvn" firstAttribute="trailing" secondItem="gqo-T2-Nmz" secondAttribute="leading" constant="-4" id="dHp-fj-cCd"/>
-                                                                <constraint firstItem="ZTR-Oj-cl0" firstAttribute="leading" secondItem="0nj-L8-QVU" secondAttribute="leading" priority="999" constant="10" id="hGq-z9-uu0"/>
+                                                                <constraint firstItem="ZTR-Oj-cl0" firstAttribute="leading" secondItem="0nj-L8-QVU" secondAttribute="leading" priority="999" constant="5" id="hGq-z9-uu0"/>
                                                                 <constraint firstItem="ZTR-Oj-cl0" firstAttribute="centerX" secondItem="0nj-L8-QVU" secondAttribute="centerX" id="kJ1-Sl-gAQ"/>
                                                                 <constraint firstAttribute="bottom" secondItem="gqo-T2-Nmz" secondAttribute="bottom" constant="5" id="lMC-xd-fNq"/>
-                                                                <constraint firstItem="ZTR-Oj-cl0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0nj-L8-QVU" secondAttribute="leading" constant="10" id="rtk-LZ-TbL"/>
+                                                                <constraint firstItem="ZTR-Oj-cl0" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0nj-L8-QVU" secondAttribute="leading" constant="5" id="rtk-LZ-TbL"/>
                                                                 <constraint firstItem="VJe-D7-Rvn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="0nj-L8-QVU" secondAttribute="leading" id="seC-li-h1F"/>
                                                             </constraints>
                                                         </customView>
@@ -1822,13 +1822,13 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <attributedString key="userComments">
                                                         <fragment>
-                                                            <mutableString key="content">About &gt; Mac Mouse Fix Label 
+                                                            <string key="content">About &gt; Mac Mouse Fix Label 
 
 NOTE TO SELF: 
 
 We don't mark 'Mac Mouse Fix' and 'macOS' strings as 'Do Not Translate' since in some languages they might be adjusted. E.g. in Arabic, 'macOS' is usually referred to as 'نظام macOS' (= 'macOS system') inside the UI.
 
-Also see CFBundleName in InfoPlist.xcstrings.</mutableString>
+Also see CFBundleName in InfoPlist.xcstrings.</string>
                                                         </fragment>
                                                     </attributedString>
                                                 </textFieldCell>

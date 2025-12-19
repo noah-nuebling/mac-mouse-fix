@@ -33,6 +33,10 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
     ///         - Don't forget sections that are hidden by default (macOSHint)
     ///         - Text under 'Scrolling > Keyboard Modifiers:' can't wrap, so make sure it doesn't truncate. [Sep 2025]
     ///     - If there is awkward whitespace, make narrower (so far, we only did that for CJK languages, which makes sense since they have the highest informationDensity)
+    ///
+    ///     History:
+    ///         - [Dec 2025] Change horizontal margins around the labels under `Scrolling > Keyboard Modifiers` from 10 to 5.
+    ///             - [ ] TODO -> This should perhaps make us reconsider some widths like `"pt": 370`
     
     /// Set the window width for this tab
     do {
