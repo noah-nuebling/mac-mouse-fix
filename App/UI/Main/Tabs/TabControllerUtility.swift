@@ -53,7 +53,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                     "pt": 350,   /// 350 looks great. 370 is closest to the 'vision' of the original translator I think – the 2nd and 3rd hint have the last two words on the 2nd line. But 350 looks better visually I think. [Sep 2025]
                     "vi": 350,   /// 350 looks great and is almost exactly what the original translator did [Sep 2025]
                     "cs": 320,   /// 350 -> 320 minimize gap after short first line of enabledHint "Mac Mouse Fix zůstane zapnutá i po" [Nov 2025]
-                    "tr": 350,   /// TODO: Fill this in when more Turkish strings arrive
+                    "tr": 350,   /// 350 looks great. [Dec 2025]
                     "ru": 370,
                 ]
             case "scrolling":
@@ -66,7 +66,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                     "pt": 370,  /// 340 -> 370 is narrowest that doesn't truncate modfield title "Aumentar ou diminuir zoom" [Sep 2025]
                     "vi": 340,  /// 340 looks great. [Sep 2025]
                     "cs": 340,  /// 340 looks great [Nov 2025]
-                    "tr": 340,  /// TODO: Fill this in when more Turkish strings arrive
+                    "tr": 380,  /// 370 -> "Yakınlaştırma veya Uzaklaştırma" (H4T-Rp-t33.title) is no longer cut off [Dec 2025] || 380 -> "Kaydırma tekerleğini ..." (precise-scrolling-hint) is on 2 instead of 3 lines [Dec 2025]
                     "ru": 500,  /// 400 -> `Прокручивайте точно ...` hint is 2 lines instead of 3 || 500 -> `H4T-Rp-t33.title` is no longer cut off. [Dec 2025] TODO: Make narrow if/when translator provides narrower string.
                 ]
             default:
