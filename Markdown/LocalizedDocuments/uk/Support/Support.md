@@ -11,6 +11,7 @@ This document is `0%` translated into `🇺🇦 Українська`
 
   [🇬🇧 English](../../../../Support/Support.md)\
   [🇩🇪 Deutsch](../../../../Markdown/LocalizedDocuments/de/Support/Support.md)\
+  [🇹🇷 Türkçe](../../../../Markdown/LocalizedDocuments/tr/Support/Support.md)\
   [🇨🇿 Čeština](../../../../Markdown/LocalizedDocuments/cs/Support/Support.md)\
   [🇷🇺 Русский](../../../../Markdown/LocalizedDocuments/ru/Support/Support.md)\
   **🇺🇦 Українська**\

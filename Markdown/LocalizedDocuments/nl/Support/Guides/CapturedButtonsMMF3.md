@@ -12,6 +12,7 @@ This document is `0%` translated into `🇳🇱 Nederlands`
   [🇬🇧 English](../../../../../Support/Guides/CapturedButtonsMMF3.md)\
   [🇩🇪 Deutsch](../../../../../Markdown/LocalizedDocuments/de/Support/Guides/CapturedButtonsMMF3.md)\
   **🇳🇱 Nederlands**\
+  [🇹🇷 Türkçe](../../../../../Markdown/LocalizedDocuments/tr/Support/Guides/CapturedButtonsMMF3.md)\
   [🇨🇿 Čeština](../../../../../Markdown/LocalizedDocuments/cs/Support/Guides/CapturedButtonsMMF3.md)\
   [🇷🇺 Русский](../../../../../Markdown/LocalizedDocuments/ru/Support/Guides/CapturedButtonsMMF3.md)\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=nl&target=mmf-localization-contribution)

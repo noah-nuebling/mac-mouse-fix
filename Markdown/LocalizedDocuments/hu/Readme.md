@@ -12,6 +12,7 @@ This document is `0%` translated into `🇭🇺 Magyar`
   [🇬🇧 English](../../../Readme.md)\
   [🇩🇪 Deutsch](../../../Markdown/LocalizedDocuments/de/Readme.md)\
   **🇭🇺 Magyar**\
+  [🇹🇷 Türkçe](../../../Markdown/LocalizedDocuments/tr/Readme.md)\
   [🇨🇿 Čeština](../../../Markdown/LocalizedDocuments/cs/Readme.md)\
   [🇷🇺 Русский](../../../Markdown/LocalizedDocuments/ru/Readme.md)\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=hu&target=mmf-localization-contribution)

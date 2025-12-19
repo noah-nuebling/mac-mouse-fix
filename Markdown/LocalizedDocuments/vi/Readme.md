@@ -12,6 +12,7 @@ This document is `0%` translated into `🇻🇳 Tiếng Việt`
   [🇬🇧 English](../../../Readme.md)\
   [🇩🇪 Deutsch](../../../Markdown/LocalizedDocuments/de/Readme.md)\
   **🇻🇳 Tiếng Việt**\
+  [🇹🇷 Türkçe](../../../Markdown/LocalizedDocuments/tr/Readme.md)\
   [🇨🇿 Čeština](../../../Markdown/LocalizedDocuments/cs/Readme.md)\
   [🇷🇺 Русский](../../../Markdown/LocalizedDocuments/ru/Readme.md)\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=vi&target=mmf-localization-contribution)
