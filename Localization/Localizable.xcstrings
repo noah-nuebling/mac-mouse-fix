@@ -9043,7 +9043,7 @@
       }
     },
     "precise-scrolling-hint" : {
-      "comment" : ".",
+      "comment" : "The mention of keyboard modifiers is meant to draw attention to the keyboard modifers section of the UI which appears right below. (Search for: 'Scrolling > Keyboard Modifiers')",
       "localizations" : {
         "cs" : {
           "stringUnit" : {

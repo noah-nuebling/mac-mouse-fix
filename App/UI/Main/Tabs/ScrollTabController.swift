@@ -124,7 +124,7 @@ class ScrollTabController: NSViewController {
         ///     -> Do the same thing for all UI strings with non-semantic linebreaks. (non-semantic means they linebreak exists to make the layout look good not to separate text logically.)
         precise.bindingTarget <~ preciseToggle.reactive.boolValues
         preciseToggle.reactive.boolValue <~ precise.producer
-        let preciseHintRaw = MFLocalizedString("precise-scrolling-hint", comment: ".")
+        let preciseHintRaw = MFLocalizedString("precise-scrolling-hint", comment: "The mention of keyboard modifiers is meant to draw attention to the keyboard modifers section of the UI which appears right below. (Search for: 'Scrolling > Keyboard Modifiers')")
         preciseHint.attributedStringValue = MarkdownParser.attributedString(withCoolMarkdown: preciseHintRaw, fillOutBase: false)!.fillingOutBaseAsHint()
         
         /// Hardcode tab width
