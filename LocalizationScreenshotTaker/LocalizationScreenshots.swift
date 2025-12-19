@@ -288,8 +288,13 @@ final class LocalizationScreenshotClass: XCTestCase {
                     /// Shrink the frame to the recognized region
                     do {
                         var foundBoundingBox_AsRect_YAdjusted = foundBoundingBox_InImageSpace
-                        foundBoundingBox_AsRect_YAdjusted.origin.y = result[i].roughBoundingBox!.origin.y       /// Actually, the OCR tends to make the frames a bit too small on the Y-axis so we use the `roughBoundingBox`'s values for that.
-                        foundBoundingBox_AsRect_YAdjusted.size.height = result[i].roughBoundingBox!.size.height
+                        if (false) { /// This doesn't work if the roughBoundingBox contains more than one line (happens in Turkish) [Dec 2025]
+                            foundBoundingBox_AsRect_YAdjusted.origin.y    = result[i].roughBoundingBox!.origin.y       /// Actually, the OCR tends to make the frames a bit too small on the Y-axis so we use the `roughBoundingBox`'s values for that.
+                            foundBoundingBox_AsRect_YAdjusted.size.height = result[i].roughBoundingBox!.size.height
+                        } else {
+                            foundBoundingBox_AsRect_YAdjusted.origin.y    -= 5;
+                            foundBoundingBox_AsRect_YAdjusted.size.height += 5 * 2;
+                        }
                         var frameToHighlight = result[i]
                         frameToHighlight.exactBoundingBox = foundBoundingBox_AsRect_YAdjusted
                         result[i] = frameToHighlight
