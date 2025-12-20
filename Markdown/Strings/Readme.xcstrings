@@ -2609,6 +2609,12 @@
             "value" : "In 3D apps like Blender, you normally Click and Drag the Middle Mouse Button to orbit around objects.<br>\nBut if you assign actions to the Middle Mouse Button in Mac Mouse Fix, then this won't work anymore.\n\nTo solve this, I know of 2 options:\n1. Assign clicking and dragging one of the buttons of your mouse to the 'Scroll & Navigate' feature. This feature simulates swiping with 2 fingers on an Apple Trackpad. This will, among other things, let you orbit in 3D apps! \n2. *Uncapture* the Middle Mouse Button by deleting all actions assigned to it in Mac Mouse Fix. See [this guide]({url}) for more info."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En aplicaciones 3D como Blender, normalmente se hace Clic y arrastrar con el botón central del ratón para orbitar alrededor de los objetos.<br>\nPero si asignas acciones al botón central del ratón en Mac Mouse Fix, esto ya no funcionará.\n\nPara solucionarlo, conozco 2 opciones:\n\n1.  Asignar el clic y arrastrar de uno de los botones de tu ratón a la función \"Desplazamiento y navegación\". Esta función simula el deslizamiento con 2 dedos en un Apple Trackpad. ¡Esto te permitirá, entre otras cosas, orbitar en aplicaciones 3D!\n2.  *Descapturar* el botón central del ratón eliminando todas las acciones asignadas a él en Mac Mouse Fix. Consulta [esta guía]({url}) para obtener más información."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
