@@ -237,20 +237,20 @@ final class LocalizationScreenshotClass: XCTestCase {
                             let rangeOfSearchedStringInCandidate: Range<String.Index>?
                             do {
                                 /// Search without diacritics. Reason: OCR is stripping or misrecognizing the Czech diacritics (háčky and čárky) [Dec 2025]
-                                ///     Notes:
-                                ///         Have to manually strip diacritics using `.folding(options:locale:)`.
-                                ///         Using `.range(of:options:)` works for Czech but not Turkish for some reason.
-                                ///         Using `.range(of:)` after manually stripping diacritics gives correct ranges because of weird Swift grapheme-cluster-based string indexing. (First time this has ever been useful instead of annoying)
-                                let candidateStr = candidate.string.folding(options: .diacriticInsensitive, locale: nil)
-                                let searchedStr  = result[i].uiString.folding(options: .diacriticInsensitive, locale: nil)
+                                ///     Old notesNotes:
+                                ///         Using `String.range(of:options: .diacriticInsensitive)` works for Czech but not Turkish for some reason.
+                                ///             Have to manually strip diacritics using `String.folding()`.
+                                ///             Update:
+                                ///                 - Using `String.folding()` gives wrong ranges for Spanish
+                                ///                 - `String.range(of:options: .diacriticInsensitive)` works for Turkish now! (No clue what happened)
                                 
-                                rangeOfSearchedStringInCandidate = candidateStr.range(of: searchedStr)
+                                rangeOfSearchedStringInCandidate = candidate.string.range(of: result[i].uiString, options: .diacriticInsensitive)
                                 
-                                if ((false)) { print("sharedf_find_exact_bounding_boxes_using_ocr: (\(result[i].uiString)) Searched in candidate using normalized strings: searchedStr: '\(searchedStr)', candidateStr: '\(candidateStr)', searchedStrRange: \(rangeOfSearchedStringInCandidate?.description ?? "(null)")") }
+                                //if ((true)) { print("sharedf_find_exact_bounding_boxes_using_ocr: (\(result[i].uiString)) Searched in candidate using normalized strings: searchedStr: '\(searchedStr)', candidateStr: '\(candidateStr)', searchedStrRange: \(rangeOfSearchedStringInCandidate?.description ?? "(null)")") }
                             }
                             
                             if let rangeOfSearchedStringInCandidate {
-                                foundBoundingBox = try candidate.boundingBox(for:  rangeOfSearchedStringInCandidate)!.boundingBox
+                                foundBoundingBox = try candidate.boundingBox(for: rangeOfSearchedStringInCandidate)!.boundingBox
                                 break;
                             }
                         }
