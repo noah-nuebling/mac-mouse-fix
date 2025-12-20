@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "1dS-BH-DIv.title" : {
-      "comment" : "Class = \"NSViewController\"; title = \"Pointer\"; ObjectID = \"1dS-BH-DIv\"; Note = \"Pointer Tab Title\";",
+      "comment" : "Class = \"NSViewController\"; title = \"Pointer\"; ObjectID = \"1dS-BH-DIv\"; Note = \"Toolbar > Pointer Tab Title\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -1567,7 +1567,7 @@
       }
     },
     "AYu-sK-qS6.title" : {
-      "comment" : "Class = \"NSMenu\"; title = \"Main Menu\"; ObjectID = \"AYu-sK-qS6\";",
+      "comment" : "Class = \"NSMenu\"; title = \"Main Menu\"; ObjectID = \"AYu-sK-qS6\"; Note = \"Main Menu\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -2361,7 +2361,7 @@
       "shouldTranslate" : false
     },
     "buH-zX-xXu.title" : {
-      "comment" : "Class = \"NSViewController\"; title = \"About\"; ObjectID = \"buH-zX-xXu\"; Note = \"About Tab Title\";",
+      "comment" : "Class = \"NSViewController\"; title = \"About\"; ObjectID = \"buH-zX-xXu\"; Note = \"Toolbar > About Tab Title\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -2656,7 +2656,7 @@
       }
     },
     "d9S-X9-qM1.title" : {
-      "comment" : "Class = \"NSViewController\"; title = \"Buttons\"; ObjectID = \"d9S-X9-qM1\"; Note = \"Buttons Tab Title\";",
+      "comment" : "Class = \"NSViewController\"; title = \"Buttons\"; ObjectID = \"d9S-X9-qM1\"; Note = \"Toolbar > Buttons Tab Title\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -3024,7 +3024,7 @@
       }
     },
     "eLS-O0-A1x.title" : {
-      "comment" : "Class = \"NSViewController\"; title = \"General\"; ObjectID = \"eLS-O0-A1x\"; Note = \"General Tab Title\";",
+      "comment" : "Class = \"NSViewController\"; title = \"General\"; ObjectID = \"eLS-O0-A1x\"; Note = \"General > Tab Title\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -4684,7 +4684,7 @@
       }
     },
     "IQv-IB-iLA.title" : {
-      "comment" : "Class = \"NSWindow\"; title = \"Mac Mouse Fix\"; ObjectID = \"IQv-IB-iLA\"; Note = \"Mac Mouse Fix Window Title\";",
+      "comment" : "Class = \"NSWindow\"; title = \"Mac Mouse Fix\"; ObjectID = \"IQv-IB-iLA\"; Note = \"Window > Title\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -5394,7 +5394,7 @@
       }
     },
     "mWQ-i7-vza.ibShadowedToolTip" : {
-      "comment" : "Class = \"NSImageView\"; ibShadowedToolTip = \"Hold Command (⌘) and Shift (⇧), then click this icon to reveal Mac Mouse Fix's configuration file in Finder\"; ObjectID = \"mWQ-i7-vza\"; Note = \"About Tab > Mac Mouse Fix Icon > Tooltip\";",
+      "comment" : "Class = \"NSImageView\"; ibShadowedToolTip = \"Hold Command (⌘) and Shift (⇧), then click this icon to reveal Mac Mouse Fix's configuration file in Finder\"; ObjectID = \"mWQ-i7-vza\"; Note = \"About > Mac Mouse Fix Icon > Tooltip\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -5550,7 +5550,7 @@
       }
     },
     "N65-aN-Hxp.title" : {
-      "comment" : "Class = \"NSButtonCell\"; title = \"Trackpad Simulation\"; ObjectID = \"N65-aN-Hxp\"; Note = \"Scroll > Trackpad Simulation Toggle\";",
+      "comment" : "Class = \"NSButtonCell\"; title = \"Trackpad Simulation\"; ObjectID = \"N65-aN-Hxp\"; Note = \"Scrolling > Trackpad Simulation Toggle\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -6237,7 +6237,7 @@
       }
     },
     "qcW-e9-BqR.title" : {
-      "comment" : "Class = \"NSViewController\"; title = \"Scrolling\"; ObjectID = \"qcW-e9-BqR\"; Note = \"Scrolling Tab Title\";",
+      "comment" : "Class = \"NSViewController\"; title = \"Scrolling\"; ObjectID = \"qcW-e9-BqR\"; Note = \"Toolbar > Scrolling Tab Title\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
