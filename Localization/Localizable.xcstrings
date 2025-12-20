@@ -9660,7 +9660,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desplázate con precisión, incluso sin un modificador de teclado, moviendo la rueda de desplazamiento *lentamente*"
+            "value" : "Desplázate con precisión, incluso sin un modificador de teclado, moviendo la rueda de desplazamiento&nbsp;*lentamente*"
           }
         },
         "fr" : {
