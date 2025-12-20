@@ -23,6 +23,12 @@
             "value" : "Buttons"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botones"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -162,6 +168,12 @@
             "value" : "Scrolling"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desplazamiento"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -238,6 +250,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Open Mac Mouse Fix..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir Mac Mouse Fix..."
           }
         },
         "fr" : {

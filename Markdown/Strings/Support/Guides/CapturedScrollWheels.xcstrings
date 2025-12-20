@@ -22,6 +22,12 @@
             "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **captures your mouse's scroll wheel by default**, similar to how it [captures mouse buttons](<{url}>)."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **captura la rueda de desplazamiento de tu ratón por defecto**, de forma similar a cómo [captura los botones del ratón](<{url}>)."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -56,6 +62,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**To prevent scroll wheel capture:**\n\n1. Go to the 'Scrolling' tab in Mac Mouse Fix\n2. Turn off **all** options\n    - In case of the 'Speed' option, set it to 'macOS'\n    - Remove all entries under 'Keyboard Modifiers' by clicking the 'x' button next to each modifier\n\nAfter this, you should see a message indicating that the scroll wheel is no longer being captured."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Para evitar la captura de la rueda de desplazamiento:**\n\n1. Ve a la pestaña 'Desplazamiento' en Mac Mouse Fix\n2. Desactiva **todas** las opciones\n    - En el caso de la opción 'Velocidad', configúrala en 'macOS'\n    - Elimina todas las entradas en 'Modificadores de teclado' haciendo clic en el botón 'x' junto a cada modificador\n\nDespués de esto, deberías ver un mensaje que indica que la rueda de desplazamiento ya no se está capturando."
           }
         },
         "ru" : {
@@ -93,6 +105,12 @@
             "value" : "**What happens when the scroll wheel is *no longer* being captured?**\n\nMac Mouse Fix will then completely ignore your scroll wheel – it won't use any processor power or battery charge during scrolling, or interfere in any way. This gives you complete freedom to use other apps like [MOS]({url}) to handle your scroll wheel."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**¿Qué pasa cuando la rueda de desplazamiento *ya no* está siendo capturada?**\n\nMac Mouse Fix ignorará por completo la rueda de desplazamiento de tu ratón; no utilizará potencia del procesador ni carga de batería durante el desplazamiento, ni interferirá de ninguna manera. Esto te da total libertad para usar otras aplicaciones como [MOS]({url}) para manejar tu rueda de desplazamiento."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -126,6 +144,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "## Also see\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Edited with excellent assistance by Claude 3.5 Sonnet)*"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Ver también\n\n  - [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Editado con la excelente asistencia de Claude 3.5 Sonnet)*"
           }
         },
         "ru" : {

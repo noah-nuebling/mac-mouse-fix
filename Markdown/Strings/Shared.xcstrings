@@ -22,6 +22,12 @@
             "value" : "Acknowledgements"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agradecimientos"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -55,6 +61,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Captured Mouse Buttons"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botones del Ratón Capturados"
           }
         },
         "ru" : {
@@ -92,6 +104,12 @@
             "value" : "Captured Scroll Wheels"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ruedas de desplazamiento capturadas"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -125,6 +143,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Readme"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Léame"
           }
         },
         "ru" : {
@@ -162,6 +186,12 @@
             "value" : "Support"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soporte"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -195,6 +225,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "I hope this guide was helpful!"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Espero que esta guía haya sido útil!"
           }
         },
         "ru" : {
@@ -232,6 +268,12 @@
             "value" : "I hope this information was useful!"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Espero que esta información haya sido útil!"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -267,6 +309,12 @@
             "value" : "I hope this guide cleared things up!"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Espero que esta guía haya aclarado las cosas!"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -300,6 +348,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Still have questions? Click [here]({url})."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Aún tiene preguntas? Haga clic [aquí]({url})."
           }
         },
         "ru" : {
@@ -338,6 +392,12 @@
             "value" : "This document is `{localization_progress}` translated into `{current_language}`\n[Help translate]({url})"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este documento está traducido `{localization_progress}` al `{current_language}` [Ayudar a traducir]({url})"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -372,6 +432,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "[🌎 Help translate!]({url})"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[🌎 ¡Ayudar a traducir!]({url})"
           }
         },
         "ru" : {

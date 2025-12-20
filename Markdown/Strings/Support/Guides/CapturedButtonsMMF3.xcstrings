@@ -58,6 +58,12 @@
             "value" : "## What does 'capturing' a mouse button mean?\n\nA mouse button that is captured by Mac Mouse Fix can't be seen by other apps or by macOS anymore.\nThe functions which this button would normally perform won't work while it's being captured.\n\n**Example**: Normally you can go backward and forward in Chrome by clicking the side buttons (buttons 4 and 5) of the mouse.\nBut when the side buttons are captured by Mac Mouse Fix, this no longer works. Instead, the side buttons will only trigger the actions that you've assigned to them in Mac Mouse Fix.\n\n**Why does Mac Mouse Fix do this?** Mac Mouse Fix hides buttons from other apps to prevent you from accidentally triggering other functions while using Mac Mouse Fix gestures.\nFor example, if you click and drag button 4 to switch between desktops, you would always **simultaneously** go back a page in Chrome."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## ¿Qué significa 'capturar' un botón del ratón?\n\nUn botón del ratón capturado por Mac Mouse Fix ya no puede ser visto por otras aplicaciones ni por macOS.\nLas funciones que este botón realizaría normalmente no funcionarán mientras esté capturado.\n\n**Ejemplo**: Normalmente puedes ir hacia atrás y hacia adelante en Chrome haciendo clic en los botones laterales (botones 4 y 5) del ratón.\nPero cuando los botones laterales son capturados por Mac Mouse Fix, esto ya no funciona. En su lugar, los botones laterales solo activarán las acciones que les hayas asignado en Mac Mouse Fix.\n\n**¿Por qué Mac Mouse Fix hace esto?** Mac Mouse Fix oculta los botones de otras aplicaciones para evitar que actives accidentalmente otras funciones mientras utilizas los gestos de Mac Mouse Fix.\nPor ejemplo, si haces clic y arrastras el botón 4 para cambiar entre escritorios, siempre irías hacia atrás una página en Chrome **simultáneamente**."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -165,6 +171,12 @@
             "value" : "## How can I restore the original functionality of a button?\n\nTo make a button behave like it did before you installed Mac Mouse Fix, you can do the following:\n\n1. You can **prevent the button from being captured** – as described above.\n\n2. You can simply **turn off Mac Mouse Fix** – then no buttons will be captured.\n\n3. You can **assign specific actions to the button in Mac Mouse Fix** – this way you can restore certain functions, *even while the button is being captured*:"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## ¿Cómo puedo restaurar la funcionalidad original de un botón?\n\nPara hacer que un botón se comporte como lo hacía antes de instalar Mac Mouse Fix, puedes hacer lo siguiente:\n\n1. Puedes **evitar que el botón sea capturado**, como se describe arriba.\n\n2. Simplemente puedes **desactivar Mac Mouse Fix**, así no se capturará ningún botón.\n\n3. Puedes **asignar acciones específicas al botón en Mac Mouse Fix**, de esta manera puedes restaurar ciertas funciones, *incluso mientras el botón está siendo capturado*:"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -199,6 +211,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Button"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón"
           }
         },
         "ru" : {
@@ -237,6 +255,12 @@
             "value" : "Original Function"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Función Original"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -271,6 +295,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Action in Mac Mouse Fix"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acción en Mac Mouse Fix"
           }
         },
         "ru" : {
@@ -308,6 +338,12 @@
             "value" : "Middle Mouse Button"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón Central del Ratón"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -341,6 +377,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Open links in the browser in a new tab"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir enlaces en el navegador en una pestaña nueva"
           }
         },
         "ru" : {
@@ -379,6 +421,12 @@
             "value" : "'Middle Click'<br>(Can be assigned to **clicking** a button)"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Clic Central'<br>(Se puede asignar al **hacer clic** en un botón)"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -414,6 +462,12 @@
             "value" : "Middle Mouse Button"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón Central del Ratón"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -447,6 +501,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Paste text in the terminal"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pegar texto en la terminal"
           }
         },
         "ru" : {
@@ -485,6 +545,12 @@
             "value" : "'Middle Click'<br>(Can be assigned to **clicking** a button)"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Clic Central'<br>(Se puede asignar al **hacer clic** en un botón)"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -518,6 +584,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Mouse Button 4 / Mouse Button 5"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón 4 del Ratón / Botón 5 del Ratón"
           }
         },
         "ru" : {
@@ -556,6 +628,12 @@
             "value" : "Go back / forward in Chrome and other apps"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volver / avanzar en Chrome y otras aplicaciones"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -590,6 +668,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "'Back' / 'Forward'<br>(Can be assigned to **clicking** a button)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Atrás' / 'Adelante'<br>(Se puede asignar al **hacer clic** en un botón)"
           }
         },
         "ru" : {
@@ -627,6 +711,12 @@
             "value" : "Middle Mouse Button"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón Central del Ratón"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -660,6 +750,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Orbit around objects in Blender (and other 3D apps)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orbitar alrededor de objetos en Blender (y otras aplicaciones 3D)"
           }
         },
         "ru" : {
@@ -698,6 +794,12 @@
             "value" : "'Scroll & Navigate'<br>(Can be assigned to **clicking and dragging** a button)"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Desplazamiento y Navegación'<br>(Se puede asignar a **hacer clic y arrastrar** un botón)"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -733,6 +835,12 @@
             "value" : "This way you can keep using the button's usual functionality, while also assigning *additional* functions to it in Mac Mouse Fix."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De esta forma, puedes seguir utilizando la funcionalidad habitual del botón, a la vez que le asignas funciones *adicionales* en Mac Mouse Fix."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -766,6 +874,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "## Also see\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Ver también\n\n  - [{docname_captured_scroll_wheels}](<{url}>)"
           }
         },
         "ru" : {

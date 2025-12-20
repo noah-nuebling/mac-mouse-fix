@@ -23,6 +23,12 @@
             "value" : "Back"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atrás"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -160,6 +166,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Enter Your License Key"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Introduce Tu Lllave de Licencia"
           }
         },
         "fr" : {

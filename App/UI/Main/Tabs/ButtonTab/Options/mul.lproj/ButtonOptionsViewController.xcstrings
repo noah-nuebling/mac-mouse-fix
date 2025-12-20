@@ -23,6 +23,12 @@
             "value" : "Done"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hecho"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -101,6 +107,12 @@
             "value" : "Recommended for Trackball Mice"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recomendado para ratones Trackball"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -177,6 +189,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Lock Mouse Pointer During 'Click and Drag' Gestures"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bloquear el Puntero del Ratón Durante los gestos de 'Clic y Arrastrar'"
           }
         },
         "fr" : {

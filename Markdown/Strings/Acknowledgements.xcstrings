@@ -22,6 +22,12 @@
             "value" : "# 🙌 Acknowledgements\n\nBig thanks to everyone using Mac Mouse Fix and providing feedback. It's awesome and highly motivating to see so many people enjoy and engage with something I created.\n\nI want to especially thank the people and projects named in this document."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# 🙌 Agradecimientos\n\nMuchas gracias a todos los que utilizan Mac Mouse Fix y brindan comentarios. Es increíble y muy motivador ver a tanta gente disfrutar e interactuar con algo que he creado.\n\nQuiero agradecer especialmente a las personas y proyectos nombrados en este documento."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -94,6 +100,12 @@
             "value" : "## 💰 Money\n\nThanks so much to everyone who treated me to a milkshake and to all **{sales_count}** people who bought Mac Mouse Fix.\nThanks to you, I can spend lots of time doing something I love. \n\nPeople who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 💰 Dinero\n\nMuchas gracias a todos los que me invitaron a un batido y a las **{sales_count}** personas que compraron Mac Mouse Fix.\nGracias a ustedes, puedo dedicar mucho tiempo a hacer algo que amo.\n\nLas personas que me apoyaron gastando más del precio estándar en Mac Mouse Fix reciben una mención especial aquí:"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -127,6 +139,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "### ⭐️ Generous Contributors\n\nThanks for your support! :)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ⭐️ Contribuyentes generosos\n\n¡Gracias por tu apoyo! :)"
           }
         },
         "ru" : {
@@ -164,6 +182,12 @@
             "value" : "### 🚀 Very Generous Contributors\n\nThese people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### 🚀 Contribuyentes muy generosos\n\nEstas personas gastaron mucho más que el precio estándar y me invitaron un **Batido increíble**. (Y algunos incluso dejaron un mensaje) ¡Gracias por el *subidón de azúcar*!"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -197,6 +221,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "### ❤️ GitHub Sponsors\n\n**Huge thanks** to [anyone]({url}) sponsoring me on GitHub! Hopefully I can get that milkshake factory one day thanks to you. :)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ❤️ Patrocinadores de GitHub\n\n¡**Enormes gracias** a [todos]({url}) los que me patrocinan en GitHub! Con suerte, algún día podré abrir esa fábrica de batidos gracias a ustedes. :)"
           }
         },
         "ru" : {
@@ -234,6 +264,12 @@
             "value" : "### ✨ PayPal Donations\n\nLots of generous people bought me milkshakes on PayPal when Mac Mouse Fix was still entirely free.\n\nIf you're among them, click [here]({url}) to receive a **free license**!"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ✨ Donaciones por PayPal\n\nMucha gente generosa me compró batidos en PayPal cuando Mac Mouse Fix todavía era completamente gratuito.\n\nSi eres uno de ellos, haz clic [aquí]({url}) para recibir una **licencia gratuita**!"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -267,6 +303,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "## 👾 Other Software"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 👾 Otro software"
           }
         },
         "ru" : {

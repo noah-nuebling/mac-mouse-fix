@@ -101,6 +101,12 @@
             "value" : "Help"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ayuda"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -177,6 +183,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Open 'Privacy & Security' Settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir ajustes de 'Privacidad y seguridad'"
           }
         },
         "fr" : {
@@ -257,6 +269,12 @@
             "value" : "Switch on 'Mac Mouse Fix Helper'"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar 'Mac Mouse Fix Helper'"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -332,6 +350,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "1."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "1."
           }
         },
@@ -413,6 +437,12 @@
             "value" : "Hold Shift (⇧) and click this icon to reveal 'Mac Mouse Fix Helper.app' in Finder"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantén presionado Shift (⇧) y haz clic en este icono para mostrar 'Mac Mouse Fix Helper.app' en el Finder."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -489,6 +519,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Grant Accessibility Access to Mac Mouse Fix"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otorgar Acceso de Accesibilidad a Mac Mouse Fix"
           }
         },
         "fr" : {
@@ -569,6 +605,12 @@
             "value" : "2."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -645,6 +687,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Cancel"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
           }
         },
         "fr" : {
