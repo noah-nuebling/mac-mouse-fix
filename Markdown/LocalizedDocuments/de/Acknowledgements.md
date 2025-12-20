@@ -62,6 +62,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2025**
 
+- 🇺🇸&nbsp;Nothingbutlove
 - 🇩🇪&nbsp;Malte&nbsp;Zietsch
 - 🇺🇸&nbsp;Daniel&nbsp;M - "Thank you for one of the best Mac apps ever"
 - 🇺🇸&nbsp;Joe&nbsp;Bliss
