@@ -947,12 +947,12 @@
       }
     },
     "24: questions.click-delay.body" : {
-      "comment" : "Some text like 'Double Click' is quoted, because it appears exactly\nin the Mac Mouse Fix UI.\n\nFor example, 'Double Click' appears on the 'Buttons' tab in Mac Mouse Fix (See: trigger.substring.click.2)\n\nIf you're using Xcloc Editor.app, you can find all the related strings like this:\n- Go to 'All Project Files' (Command-J)\n- Select the search-field (Command-F) \n- Enter the English string (such as 'Double Click') \n-> Now you can see all the occurrences and translations of this English string!\n\nTry to keep the different translations consistent, especially, when the strings are 'quoted' (or \"double quoted\") or *emphasized*. This should help the Reader draw the connection to the Mac Mouse Fix UI.",
+      "comment" : "Some text like 'Double Click' is quoted, because it appears exactly\nin the Mac Mouse Fix UI.\n\nFor example, 'Double Click' appears on the 'Buttons' tab in Mac Mouse Fix (See: trigger.substring.click.2)\n\nIf you're using Xcloc Editor.app, you can find all the related strings like this:\n- Go to 'All Project Files' (Command-J)\n- Select the search-field (Command-F) \n- Enter the English string (such as 'Double Click') \n-> Now you can see all the occurrences and translations of this English string!\n\nTry to keep the different translations consistent, especially, when the strings are 'quoted' (or \"double quoted\") or *emphasized*. \nThe goal is to help the reader draw the connection to the Mac Mouse Fix UI.",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Po kliknutí může Mac Mouse Fix počkat, zda kliknete dvakrát.<br>\nChcete-li zpoždění tlačítka odstranit, smažte pro dané tlačítko všechny akce 'Dvojité kliknutí'."
           }
         },
