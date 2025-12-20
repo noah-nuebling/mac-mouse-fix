@@ -64,6 +64,12 @@
             "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n- 🇰🇷 Korean translations by [@jeongtae]({url_4})\n- 🇻🇳 Vietnamese translations by [@nghlt]({url_5})\n- 🇧🇷 Brazilian Portuguese translations by **Eduardo Rodrigues**\n- 🇫🇷 French translations by [@DimitriDR]({url_6})\n- 🇹🇷 Turkish translations by \n    - [@hasanbeder]({url_7})\n    - [@erentomurcuk]({url_8})\n- 🇨🇿 Czech translations by [Petr Pavlík]({url_9})\n- 🇷🇺 Russian translations by [ETMH]({url_10})"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 🌏 Traducciones\n\n¡Gracias por llevar Mac Mouse Fix a personas de todo el mundo!\n\n- 🇨🇳 Chinese translations by \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n  - 🇰🇷 Traducciones al coreano por [@jeongtae]({url_2})\n  - 🇻🇳 Traducciones al vietnamita por [@nghlt]({url_3})\n  - 🇧🇷 Traducciones al portugués brasileño por **Eduardo Rodrigues**\n  - 🇫🇷 Traducciones al francés por [@DimitriDR]({url_4})\n- 🇹🇷 Turkish translations by \n    - [@hasanbeder]({url_7})\n    - [@erentomurcuk]({url_8})\n- 🇨🇿 Traducciones al checo por [Petr Pavlík]({url_6})\n- 🇷🇺 Russian translations by [ETMH]({url_10})"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -344,6 +350,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "**Software** that inspired Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Pioneering mouse software for Mac, inspiring many features. There were moments when I thought 'this is probably not possible', but then I saw 'oh, SteerMouse does it', and three years later, I figured out how to implement it, too.\n- [Calftrail Touch]({url_2}) - The foundation for the 'reverse engineering' work which powers Mac Mouse Fix's best-in-class and first-of-a-kind trackpad simulation!\n- [MOS]({url_3}) - Mac Mouse Fix's 'High Scroll-Smoothness' option, the 'App-Specific Settings' implementation, and more were inspired by MOS.\n- [SensibleSideButtons]({url_4}) - I copied its code for an early implementation of the 'Go back/forward one page in Safari and other apps' feature, and also led me to discover the Calftrail Touch project.\n- [Gifski]({url_5}) - Greatly inspired the design and content of the [Readme.md]({url_6}) for Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Foundation for the design and technical implementation of [Mac Mouse Fix Feedback Assistant]({url_8})."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Software** que inspiró Mac Mouse Fix:\n\n  - [SteerMouse]({url_1}) - Software pionero para ratones en Mac, que inspiró muchas funciones. Hubo momentos en los que pensé \"esto probablemente no es posible\", pero luego vi \"oh, SteerMouse lo hace\", y tres años después, también descubrí cómo implementarlo.\n  - [Calftrail Touch]({url_2}) - La base para el trabajo de \"ingeniería inversa\" que impulsa la mejor simulación de trackpad y la primera en su tipo de Mac Mouse Fix.\n  - [MOS]({url_3}) - La opción de \"Alta fluidez de desplazamiento\" de Mac Mouse Fix, la implementación de \"Ajustes específicos de la aplicación\" y más, fueron inspiradas por MOS.\n  - [SensibleSideButtons]({url_4}) - Copié su código para una implementación temprana de la función \"Volver/Avanzar una página en Safari y otras aplicaciones\", y también me llevó a descubrir el proyecto Calftrail Touch.\n  - [Gifski]({url_5}) - Inspiró enormemente el diseño y el contenido del [Readme.md]({url_6}) para Mac Mouse Fix.\n  - [Vue Issue Helper]({url_7}) - Base para el diseño y la implementación técnica del [Asistente de comentarios de Mac Mouse Fix]({url_8})."
           }
         },
         "ru" : {

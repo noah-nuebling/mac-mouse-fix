@@ -23,6 +23,12 @@
             "value" : "# {docname_captured_buttons_mmf3}\n\nWhile using Mac Mouse Fix, you may have encountered a message saying that a button on your mouse is now being 'captured' by Mac Mouse Fix.\n\n{screenshot_0}\n\nIn this article, you'll learn what this means, what problems it can cause, and how to work around them."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_buttons_mmf3}\n\nMientras usabas Mac Mouse Fix, es posible que hayas encontrado un mensaje que indica que un botón de tu ratón está siendo 'capturado' por Mac Mouse Fix.\n\n{screenshot_0}\n\nEn este artículo, aprenderás lo que esto significa, qué problemas puede causar y cómo solucionarlos."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -100,6 +106,12 @@
             "value" : "## How do I know which buttons are being captured by Mac Mouse Fix?\n\nAny button that shows up on the left side of the 'Buttons' tab is being captured by Mac Mouse Fix.\n\nIn the following image **'Middle Button'**, **'Button 5'**, and **'Button 4'** are being captured: <br>\n\n{screenshot_1}"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## ¿Cómo sé qué botones están siendo capturados por Mac Mouse Fix?\n\nCualquier botón que aparezca en el lado izquierdo de la pestaña 'Botones' está siendo capturado por Mac Mouse Fix.\n\nEn la siguiente imagen, **'Botón central'**, **'Botón 5'** y **'Botón 4'** están siendo capturados:<br>\n\n{screenshot_1}"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -134,6 +146,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "## How do I prevent Mac Mouse Fix from capturing a mouse button?\n\nTo prevent Mac Mouse Fix from capturing a mouse button, delete all entries for that mouse button from the 'Buttons' tab.\nYou can delete an entry in the 'Buttons' tab by clicking the '-' button on the left.\n\nFor example, in the following image, you could prevent **'Button 4'** from being captured by clicking the two highlighted **'-'** buttons:\n\n{screenshot_2}"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## ¿Cómo evito que Mac Mouse Fix capture un botón del ratón?\n\nPara evitar que Mac Mouse Fix capture un botón del ratón, elimina todas las entradas para ese botón del ratón de la pestaña 'Botones'.\nPuedes eliminar una entrada en la pestaña 'Botones' haciendo clic en el botón '-' de la izquierda.\n\nPor ejemplo, en la siguiente imagen, podrías evitar que **'Botón 4'** sea capturado haciendo clic en los dos botones **'-'** resaltados:\n\n{screenshot_2}"
           }
         },
         "ru" : {

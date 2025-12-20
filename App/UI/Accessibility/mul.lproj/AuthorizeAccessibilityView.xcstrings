@@ -23,6 +23,12 @@
             "value" : "Accessibility Access allows Mac Mouse Fix to\nintercept signals from your mouse and keyboard"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tener Acceso a Accesibilidad permite a Mac Mouse Fix \ninterceptar señales de tu ratón y teclado."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
