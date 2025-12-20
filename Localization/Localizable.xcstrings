@@ -4451,7 +4451,7 @@
       }
     },
     "effect.app-expose" : {
-      "comment" : "Note: Apple refers to this feature by different names like 'Application Windows' or 'App Exposé'. In English I chose the same name that is used in Keyboard Shortcut settings.\n\nFurther details: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'App Exposé' felt a bit outdated. (Exposé was the predecessor to Mission Control, and the term mostly doesn't occur anymore in macOS now.)",
+      "comment" : "Note: Apple refers to this feature by different names like 'Application Windows' or 'App Exposé'. In English I chose the same name that is used at\nSystem Settings > Keyboard > Keyboard Shortcuts > Mission Control > Application Windows. (Under macOS 26 Tahoe)\n\nFurther details: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'App Exposé' felt a bit outdated. (Exposé was the predecessor to Mission Control, and the term mostly doesn't occur anymore in macOS now.)",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -4473,7 +4473,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Application Windows"
           }
         },
@@ -6146,7 +6146,7 @@
       }
     },
     "effect.look-up" : {
-      "comment" : "",
+      "comment" : "Note: 'Look Up' is a feature for looking up words in the dictionary and other places. It can be triggered by pressing Command-Control-D, or by a 'force click' on a Trackpad. \n\nApple uses the term 'Look Up' at\nSystem Settings > Trackpad > Point & Click > Look up & data detectors (in macOS Tahoe)\nThey also have support website about the feature.",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -6168,7 +6168,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mira hacia arriba y mira rápido"
           }
         },
@@ -6251,7 +6251,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Buscar palabras en el Diccionario, Vista Rápida de archivos en el Finder, y más.\n\nFunciona como un clic forzado en un Apple Trackpad."
           }
         },

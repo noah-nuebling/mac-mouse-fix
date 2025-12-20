@@ -136,10 +136,25 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     NSDictionary *selectedEffect = rowDict[kMFRemapsKeyEffect];
     
     NSMutableArray *oneShotEffectsTable = @[
-        @{@"ui": MFLocalizedString(@"effect.look-up", @""), @"tool": MFLocalizedString(@"effect.look-up.hint", @"Note: 'Force click' looks a bit weirdly capitalized but it's exactly how Apple spells it on their support website."), @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                  kMFActionDictKeyGenericVariant: @(kMFSHLookUp)
-        }},
+        @{
+            @"ui": MFLocalizedString(
+                @"effect.look-up",
+                @""
+                "Note: 'Look Up' is a feature for looking up words in the dictionary and other places. It can be triggered by pressing Command-Control-D, or by a 'force click' on a Trackpad. \n"
+                "\n"
+                "Apple uses the term 'Look Up' at\n"
+                "System Settings > Trackpad > Point & Click > Look up & data detectors (in macOS Tahoe)\n"
+                "They also have support website about the feature."
+            ),
+            @"tool": MFLocalizedString(
+                @"effect.look-up.hint",
+                @"Note: 'Force click' looks a bit weirdly capitalized but it's exactly how Apple spells it on their support website."
+            ),
+            @"dict": @{
+              kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+              kMFActionDictKeyGenericVariant: @(kMFSHLookUp)
+            }
+        },
         @{@"ui": MFLocalizedString(@"effect.smart-zoom", @""), @"tool": MFLocalizedString(@"effect.smart-zoom.hint", @""), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
         }},
@@ -186,7 +201,8 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         @{
             @"ui": MFLocalizedString(
                 @"effect.app-expose",
-                @"Note: Apple refers to this feature by different names like 'Application Windows' or 'App Exposé'. In English I chose the same name that is used in Keyboard Shortcut settings.\n"
+                @"Note: Apple refers to this feature by different names like 'Application Windows' or 'App Exposé'. In English I chose the same name that is used at\n"
+                "System Settings > Keyboard > Keyboard Shortcuts > Mission Control > Application Windows. (Under macOS 26 Tahoe)\n"
                 "\n"
                 "Further details: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'App Exposé' felt a bit outdated. (Exposé was the predecessor to Mission Control, and the term mostly doesn't occur anymore in macOS now.)"),
             @"tool": MFLocalizedString(@"effect.app-expose.hint", @""),
