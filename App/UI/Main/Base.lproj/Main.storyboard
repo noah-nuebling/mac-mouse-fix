@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24128"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24412"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,6 +20,9 @@
                                     <items>
                                         <menuItem title="About Mac Mouse Fix" id="u9F-yq-WC3">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Mac Mouse Fix &gt; About Mac Mouse Fix"/>
+                                            </attributedString>
                                             <accessibility identifier="axMenuItemAboutMacMouseFix"/>
                                             <connections>
                                                 <action selector="openAboutTab:" target="Voe-Tx-rLC" id="HWV-dp-GPx"/>
@@ -28,6 +31,9 @@
                                         <menuItem isSeparatorItem="YES" id="EZF-ln-4YN"/>
                                         <menuItem title="Activate License..." id="YBT-Ar-F4S">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Mac Mouse Fix &gt; Activate License..."/>
+                                            </attributedString>
                                             <accessibility identifier="axMenuItemActivateLicense"/>
                                             <connections>
                                                 <action selector="activateLicense:" target="Voe-Tx-rLC" id="zHH-gf-IUB"/>
@@ -35,6 +41,9 @@
                                         </menuItem>
                                         <menuItem title="Buy Mac Mouse Fix..." id="d0g-07-PaJ">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Mac Mouse Fix &gt; Buy Mac Mouse Fix..."/>
+                                            </attributedString>
                                             <accessibility identifier="axMenuItemBuyMacMouseFix"/>
                                             <connections>
                                                 <action selector="buyMMF:" target="Voe-Tx-rLC" id="LM6-60-RNE"/>
@@ -43,6 +52,9 @@
                                         <menuItem isSeparatorItem="YES" id="er1-Mw-t0o"/>
                                         <menuItem title="Check for Updates..." id="3pt-ka-lxV">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Mac Mouse Fix &gt; Check for Updates..."/>
+                                            </attributedString>
                                             <accessibility identifier="axMenuItemCheckForUpdates"/>
                                             <connections>
                                                 <action selector="checkForUpdates:" target="0Vp-JG-nY6" id="M6c-Iz-PQZ"/>
@@ -52,10 +64,16 @@
                                         <menuItem title="Services" id="Gr8-qh-oGd">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Services" systemMenu="services" id="X8q-Nk-Fwr"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Mac Mouse Fix &gt; Services"/>
+                                            </attributedString>
                                             <accessibility identifier="axMenuItemServices"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="3A5-gM-eM7"/>
                                         <menuItem title="Hide Mac Mouse Fix" keyEquivalent="h" id="Bnm-ze-Mca">
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Mac Mouse Fix &gt; Hide Mac Mouse Fix"/>
+                                            </attributedString>
                                             <accessibility identifier="axMenuItemHideMacMouseFix"/>
                                             <connections>
                                                 <action selector="hide:" target="Ady-hI-5gd" id="DvG-O9-en1"/>
@@ -63,6 +81,9 @@
                                         </menuItem>
                                         <menuItem title="Hide Others" keyEquivalent="h" id="Rlr-89-4fc">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Mac Mouse Fix &gt; Hide Others"/>
+                                            </attributedString>
                                             <accessibility identifier="axMenuItemHideOthers"/>
                                             <connections>
                                                 <action selector="hideOtherApplications:" target="Ady-hI-5gd" id="Y8Y-9m-Zpe"/>
@@ -70,6 +91,9 @@
                                         </menuItem>
                                         <menuItem title="Show All" id="fGs-UI-L0d">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Mac Mouse Fix &gt; Show All"/>
+                                            </attributedString>
                                             <accessibility identifier="axMenuItemShowAll"/>
                                             <connections>
                                                 <action selector="unhideAllApplications:" target="Ady-hI-5gd" id="pl9-uK-Xa1"/>
@@ -77,13 +101,22 @@
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="Zd5-PO-XF4"/>
                                         <menuItem title="Quit Mac Mouse Fix" keyEquivalent="q" id="UeD-ND-tYj">
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Mac Mouse Fix &gt; Quit Mac Mouse Fix"/>
+                                            </attributedString>
                                             <accessibility identifier="axMenuItemQuitMacMouseFix"/>
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="rFO-NZ-0iA"/>
                                             </connections>
                                         </menuItem>
                                     </items>
+                                    <attributedString key="userComments">
+                                        <fragment content="Main Menu &gt; Mac Mouse Fix"/>
+                                    </attributedString>
                                 </menu>
+                                <attributedString key="userComments">
+                                    <fragment content="Main Menu &gt; Mac Mouse Fix"/>
+                                </attributedString>
                                 <accessibility identifier="axMenuBarItemMacMouseFix"/>
                             </menuItem>
                             <menuItem title="Edit" id="6Yt-gG-Nf9">
@@ -91,61 +124,97 @@
                                 <menu key="submenu" title="Edit" id="LTC-zW-sTp">
                                     <items>
                                         <menuItem title="Undo" keyEquivalent="z" id="1TU-wL-skT">
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Edit &gt; Undo"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="undo:" target="Ady-hI-5gd" id="0tb-Pa-ztC"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Redo" keyEquivalent="Z" id="IJF-sN-Wfw">
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Edit &gt; Redo"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="redo:" target="Ady-hI-5gd" id="sxV-IV-ERJ"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="Sja-Ul-92M"/>
                                         <menuItem title="Cut" keyEquivalent="x" id="rFn-h3-0EN">
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Edit &gt; Cut"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="cut:" target="Ady-hI-5gd" id="mCR-Mj-WYX"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Copy" keyEquivalent="c" id="iFe-4y-9Xa">
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Edit &gt; Copy"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="copy:" target="Ady-hI-5gd" id="oKR-Qf-t8Z"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Paste" keyEquivalent="v" id="S6k-al-LbR">
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Edit &gt; Paste"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="paste:" target="Ady-hI-5gd" id="zFR-eQ-zeB"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Delete" id="6es-it-kDs">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Edit &gt; Delete"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="delete:" target="Ady-hI-5gd" id="Y6g-i9-3a7"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Select All" keyEquivalent="a" id="oEX-Tp-9Cv">
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Edit &gt; Select All"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="selectAll:" target="Ady-hI-5gd" id="RrQ-uo-ykj"/>
                                             </connections>
                                         </menuItem>
                                     </items>
+                                    <attributedString key="userComments">
+                                        <fragment content="Main Menu &gt; Edit"/>
+                                    </attributedString>
                                 </menu>
+                                <attributedString key="userComments">
+                                    <fragment content="Main Menu &gt; Edit"/>
+                                </attributedString>
                             </menuItem>
                             <menuItem title="Window" id="fNA-5s-U4d">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Window" systemMenu="window" id="InY-TB-ky6">
                                     <items>
                                         <menuItem title="Close" keyEquivalent="w" id="S3S-2l-eNQ">
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Window &gt; Close"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="performClose:" target="Ady-hI-5gd" id="zYy-ih-NCe"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Minimize" keyEquivalent="m" id="NdF-Gb-mOK">
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Window &gt; Minimize"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="performMiniaturize:" target="Ady-hI-5gd" id="Zyv-vp-Dxq"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Zoom" keyEquivalent="z" id="ZfY-xQ-tQl">
                                             <modifierMask key="keyEquivalentModifierMask" shift="YES" control="YES" option="YES" command="YES"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Window &gt; Zoom"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="performZoom:" target="Ady-hI-5gd" id="TMh-lF-HyL"/>
                                             </connections>
@@ -153,12 +222,21 @@
                                         <menuItem isSeparatorItem="YES" id="Esd-pE-2rN"/>
                                         <menuItem title="Bring All to Front" id="aZA-uL-uvx">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Window &gt; Bring All to Front"/>
+                                            </attributedString>
                                             <connections>
                                                 <action selector="arrangeInFront:" target="Ady-hI-5gd" id="TB2-w6-0V4"/>
                                             </connections>
                                         </menuItem>
                                     </items>
+                                    <attributedString key="userComments">
+                                        <fragment content="Main Menu &gt; Window"/>
+                                    </attributedString>
                                 </menu>
+                                <attributedString key="userComments">
+                                    <fragment content="Main Menu &gt; Window"/>
+                                </attributedString>
                             </menuItem>
                             <menuItem title="Help" id="Fp4-bf-cbR">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -166,12 +244,21 @@
                                     <items>
                                         <menuItem title="View Guides or Ask the Community..." id="2Uv-W7-hzJ" userLabel="View Guides or Ask the Community..." customClass="URLMenuItem">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Main Menu &gt; Help &gt; View Guides or Ask the Community..."/>
+                                            </attributedString>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="string" keyPath="MFLinkID" value="GuidesAndCommunity"/>
                                             </userDefinedRuntimeAttributes>
                                         </menuItem>
                                     </items>
+                                    <attributedString key="userComments">
+                                        <fragment content="Main Menu &gt; Help"/>
+                                    </attributedString>
                                 </menu>
+                                <attributedString key="userComments">
+                                    <fragment content="Main Menu &gt; Help"/>
+                                </attributedString>
                             </menuItem>
                         </items>
                     </menu>
@@ -1035,7 +1122,21 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                             </menuItem>
                                                             <menuItem title="Regular" identifier="regular" id="17P-PJ-tV1">
                                                                 <attributedString key="userComments">
-                                                                    <fragment content="Scrolling &gt; Smoothness &gt; Regular Option"/>
+                                                                    <fragment>
+                                                                        <mutableString key="content">Scrolling &gt; Smoothness &gt; Regular Option
+
+NOTE: 
+
+The 'Key' values in the 'Main' file are computer generated. 
+If you're using Xcloc Editor.app, consider sorting by the 'Comment' instead of the 'Key', 
+to group related strings together.
+
+NOTE TO SELF:
+
+We put this NOTE here, because:
+- it's the first string that a localizer will encounter when they open the 'Main' file in Xcloc Editor.app [Dec 2025]
+- The other Interface Builder files aside from 'Main' (which also have autogenerated 'Key' values) are so short that the sorting won't matter, I think. [Dec 2025]</mutableString>
+                                                                    </fragment>
                                                                 </attributedString>
                                                             </menuItem>
                                                             <menuItem title="High" state="on" identifier="high" id="97W-3h-SSc">
