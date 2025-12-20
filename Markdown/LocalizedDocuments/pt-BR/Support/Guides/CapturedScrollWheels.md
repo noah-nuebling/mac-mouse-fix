@@ -11,6 +11,7 @@ This document is `0%` translated into `🇧🇷 Português (Brasil)`
 
   [🇬🇧 English](../../../../../Support/Guides/CapturedScrollWheels.md)\
   [🇩🇪 Deutsch](../../../../../Markdown/LocalizedDocuments/de/Support/Guides/CapturedScrollWheels.md)\
+  [🇪🇸 Español](../../../../../Markdown/LocalizedDocuments/es/Support/Guides/CapturedScrollWheels.md)\
   **🇧🇷 Português (Brasil)**\
   [🇹🇷 Türkçe](../../../../../Markdown/LocalizedDocuments/tr/Support/Guides/CapturedScrollWheels.md)\
   [🇨🇿 Čeština](../../../../../Markdown/LocalizedDocuments/cs/Support/Guides/CapturedScrollWheels.md)\

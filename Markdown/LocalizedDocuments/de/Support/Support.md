@@ -11,6 +11,7 @@ Dieses Dokument ist zu `87%` übersetzt auf `🇩🇪 Deutsch`
 
   [🇬🇧 English](../../../../Support/Support.md)\
   **🇩🇪 Deutsch**\
+  [🇪🇸 Español](../../../../Markdown/LocalizedDocuments/es/Support/Support.md)\
   [🇹🇷 Türkçe](../../../../Markdown/LocalizedDocuments/tr/Support/Support.md)\
   [🇨🇿 Čeština](../../../../Markdown/LocalizedDocuments/cs/Support/Support.md)\
   [🇷🇺 Русский](../../../../Markdown/LocalizedDocuments/ru/Support/Support.md)\

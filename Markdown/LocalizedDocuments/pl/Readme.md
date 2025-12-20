@@ -11,6 +11,7 @@ This document is `0%` translated into `🇵🇱 Polski`
 
   [🇬🇧 English](../../../Readme.md)\
   [🇩🇪 Deutsch](../../../Markdown/LocalizedDocuments/de/Readme.md)\
+  [🇪🇸 Español](../../../Markdown/LocalizedDocuments/es/Readme.md)\
   **🇵🇱 Polski**\
   [🇹🇷 Türkçe](../../../Markdown/LocalizedDocuments/tr/Readme.md)\
   [🇨🇿 Čeština](../../../Markdown/LocalizedDocuments/cs/Readme.md)\

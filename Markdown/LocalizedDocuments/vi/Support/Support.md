@@ -11,6 +11,7 @@ This document is `0%` translated into `🇻🇳 Tiếng Việt`
 
   [🇬🇧 English](../../../../Support/Support.md)\
   [🇩🇪 Deutsch](../../../../Markdown/LocalizedDocuments/de/Support/Support.md)\
+  [🇪🇸 Español](../../../../Markdown/LocalizedDocuments/es/Support/Support.md)\
   **🇻🇳 Tiếng Việt**\
   [🇹🇷 Türkçe](../../../../Markdown/LocalizedDocuments/tr/Support/Support.md)\
   [🇨🇿 Čeština](../../../../Markdown/LocalizedDocuments/cs/Support/Support.md)\
