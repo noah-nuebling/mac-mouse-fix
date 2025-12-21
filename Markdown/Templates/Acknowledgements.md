@@ -31,6 +31,7 @@ Thanks for bringing Mac Mouse Fix to people around the globe!
     - [@erentomurcuk](https://github.com/erentomurcuk)
 - 🇨🇿 Czech translations by [Petr Pavlík](http://www.petrpavlik.com)
 - 🇷🇺 Russian translations by [ETMH](https://t.me/sos_soon_ok)
+- 🇪🇸 Spanish translations by [@manghidev](https://github.com/manghidev)
 
 ```
 comment:
