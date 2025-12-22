@@ -98,9 +98,9 @@
     </sparkle:releaseNotesLink>
     <enclosure
         url="https://github.com/noah-nuebling/mac-mouse-fix/releases/download/3.1.0-Beta-1/MacMouseFixApp.zip"
-        sparkle:version="24822"
+        sparkle:version="24827"
         sparkle:shortVersionString="3.1.0 Beta 1"
-        sparkle:edSignature="xT7yy6bCxOdZxqIbWu4GPdX6cgSCubrwQhQehiQMO5vvM3nGCVGMruNknMTkVUe8ey1toRjPC8FCl6wA48bnDg==" length="8625920"
+        sparkle:edSignature="pPW2zg6PPwWmrgiLiU9FCvg1L/9WicPzhw4Vh2xVP5Zp85+11gRw/2LDs5vjevbIF5eWB0t+BOdPkw4s6v2mDQ==" length="8645490"
         type="application/octet-stream"
     />
 </item>

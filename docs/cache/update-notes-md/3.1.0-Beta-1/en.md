@@ -21,6 +21,7 @@ New translations have already been generously provided by the following people:
 - [@hasanbeder](https://github.com/hasanbeder) and [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 Turkish translations
 - [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Czech translations
 - [@Dro9an](https://github.com/Dro9an) and [@jihao](https://github.com/jihao): 🇨🇳 Chinese translation of [the website](macmousefix.com)
+- [@manghidev](https://github.com/manghidev): 🇪🇸 Spanish translations
 
 Thanks for your work!
 
@@ -73,3 +74,7 @@ Updates:
         - Make horizontal margins on Scrolling tab slightly narrower to work better with some wider Turkish UI strings. 
         - Fix Markdown rendering issue where list-bullets would have underline if the first thing after the list was a link. This affected Turkish in a few places.
 
+4. Update
+    - Build number of MacMouseFixApp.zip asset: 24827
+    - Date [Dec 21 2025]
+    - Change: Added Spanish translations by @manghidev

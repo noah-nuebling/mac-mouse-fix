@@ -1,10 +1,10 @@
-Mac Mouse Fix **3.1.0 Beta 1** introduce un nuovo eccellente sistema di traduzione, su cui si è lavorato per un po'.\
+Mac Mouse Fix **3.1.0 Beta 1** introduce un nuovo fantastico sistema di traduzione, su cui si è lavorato per un po'.\
 Ci sono anche alcuni miglioramenti all'interfaccia utente.
 
-### Nuovo sistema di localizzazione! 
+### Nuovo sistema di localizzazione!
 
 - Ora è semplicissimo contribuire con traduzioni di alta qualità a Mac Mouse Fix, senza alcuna competenza tecnica richiesta.
-- Ci sono molti screenshot annotati e commenti, e un'ottima funzione di ricerca, così i traduttori possono capire facilmente come appaiono le loro traduzioni nell'app.
+- Ci sono tantissimi screenshot annotati e commenti, e un'ottima funzione di ricerca, così i traduttori possono capire facilmente come appaiono le loro traduzioni nell'app.
     - Penso che gli screenshot e l'interfaccia di traduzione (app `Xcloc Editor`) siano della massima qualità sul mercato, e spero che ti aiuteranno a fornire ottime traduzioni!
 - Quasi tutte le parti del progetto sono ora traducibili, inclusa la 'Guida ai pulsanti catturati', il Readme di GitHub, il sito web e altro ancora.
     - Tutte queste parti del progetto possono essere tradotte da un unico posto centralizzato con facili riferimenti incrociati usando l'app `Xcloc Editor`, così è facile per i traduttori mantenere tutto coerente.
@@ -21,19 +21,20 @@ Nuove traduzioni sono già state generosamente fornite dalle seguenti persone:
 - [@hasanbeder](https://github.com/hasanbeder) e [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 Traduzioni in turco
 - [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Traduzioni in ceco
 - [@Dro9an](https://github.com/Dro9an) e [@jihao](https://github.com/jihao): 🇨🇳 Traduzione in cinese del [sito web](macmousefix.com)
+- [@manghidev](https://github.com/manghidev): 🇪🇸 Traduzioni in spagnolo
 
 Grazie per il vostro lavoro!
 
-Tuttavia, **tutte le lingue necessitano ancora di lavoro**, dato che molto materiale nuovo è stato reso traducibile. 
+Tuttavia, **tutte le lingue hanno ancora bisogno di lavoro**, dato che molto materiale nuovo è stato reso traducibile.
 
 Pertanto:
 
 > [!TIP]
 > Dai un'occhiata alla nuova [Guida alla traduzione](https://redirect.macmousefix.com/?target=mmf-localization-contribution) se vuoi aiutare a portare ottime traduzioni agli utenti di Mac Mouse Fix in tutto il mondo! 🌎
 
-### Altri cambiamenti 
+### Altri cambiamenti
 
-Quando si usa Mac Mouse Fix in inglese, non è cambiato molto, ma alcune cose sono state aggiornate nell'interfaccia utente, e molto è cambiato sotto il cofano, per aiutare a migliorare le traduzioni:
+Quando usi Mac Mouse Fix in inglese, non è cambiato molto, ma alcune cose sono state aggiornate nell'interfaccia utente, e molto è cambiato sotto il cofano, per aiutare a migliorare le traduzioni:
 
 - Aspetto raffinato per le piccole notifiche popup.
 - Tooltip ed errori più chiari in vari punti.
@@ -53,7 +54,7 @@ Puoi trovare la versione precedente di Mac Mouse Fix qui: [3.0.8](https://github
 ---
 
 Aggiornamenti:
-(Sto aggiornando le traduzioni senza creare una nuova Release di GitHub ogni volta.)
+(Sto aggiornando le traduzioni senza creare una nuova Release GitHub ogni volta.)
 
 1. Aggiornamento:
     - Numero di build dell'asset MacMouseFixApp.zip: 24814
@@ -70,5 +71,10 @@ Aggiornamenti:
     - Data: [15 dicembre 2025]
     - Modifiche: 
         - Aggiunte traduzioni in turco di Eren.
-        - Resi i margini orizzontali nella scheda Scorrimento leggermente più stretti per funzionare meglio con alcune stringhe dell'interfaccia turca più lunghe. 
-        - Corretto problema di rendering Markdown in cui i punti elenco avrebbero la sottolineatura se la prima cosa dopo l'elenco fosse un link. Questo interessava il turco in alcuni punti.
+        - Resi i margini orizzontali nella scheda Scorrimento leggermente più stretti per funzionare meglio con alcune stringhe dell'interfaccia turca più lunghe.
+        - Corretto problema di rendering Markdown dove i punti elenco avrebbero la sottolineatura se la prima cosa dopo l'elenco fosse un link. Questo interessava il turco in alcuni punti.
+
+4. Aggiornamento
+    - Numero di build dell'asset MacMouseFixApp.zip: 24827
+    - Data [21 dicembre 2025]
+    - Modifica: Aggiunte traduzioni in spagnolo di @manghidev
