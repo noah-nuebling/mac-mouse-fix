@@ -67,7 +67,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "## 🌏 Traducciones\n\n¡Gracias por llevar Mac Mouse Fix a personas de todo el mundo!\n\n- 🇨🇳 Chinese translations by \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n  - 🇰🇷 Traducciones al coreano por [@jeongtae]({url_2})\n  - 🇻🇳 Traducciones al vietnamita por [@nghlt]({url_3})\n  - 🇧🇷 Traducciones al portugués brasileño por **Eduardo Rodrigues**\n  - 🇫🇷 Traducciones al francés por [@DimitriDR]({url_4})\n- 🇹🇷 Turkish translations by \n    - [@hasanbeder]({url_7})\n    - [@erentomurcuk]({url_8})\n- 🇨🇿 Traducciones al checo por [Petr Pavlík]({url_6})\n- 🇷🇺 Russian translations by [ETMH]({url_10})\n- 🇪🇸 Spanish translations by [@manghidev]({url_11})"
+            "value" : "## 🌏 Traducciones\n\n¡Gracias por llevar Mac Mouse Fix a personas de todo el mundo!\n\n- 🇨🇳 Chinese translations by \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n  - 🇰🇷 Traducciones al coreano por [@jeongtae]({url_4})\n  - 🇻🇳 Traducciones al vietnamita por [@nghlt]({url_5})\n  - 🇧🇷 Traducciones al portugués brasileño por **Eduardo Rodrigues**\n  - 🇫🇷 Traducciones al francés por [@DimitriDR]({url_6})\n- 🇹🇷 Turkish translations by \n    - [@hasanbeder]({url_7})\n    - [@erentomurcuk]({url_8})\n- 🇨🇿 Traducciones al checo por [Petr Pavlík]({url_9})\n- 🇷🇺 Russian translations by [ETMH]({url_10})\n- 🇪🇸 Spanish translations by [@manghidev]({url_11})"
           }
         },
         "ru" : {
