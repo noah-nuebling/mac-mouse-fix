@@ -37,6 +37,7 @@ Danke, dass ihr Mac Mouse Fix zu Menschen auf der ganzen Welt gebracht habt.
 - 🇨🇿 Tschechische Übersetzungen von [Petr Pavlík](http://www.petrpavlik.com)
 - 🇷🇺 Russische Übersetzungen von [ETMH](https://t.me/sos_soon_ok)
 - 🇪🇸 Spanische Übersetzungen von [@manghidev](https://github.com/manghidev)
+- 🇵🇱 Polische Übersetzungen von **Jakub** (Website Übersetzung)
 
 <!-- 
   Old stuff from Money section:

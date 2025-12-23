@@ -43,6 +43,7 @@ Mac Mouse Fix'i dünyadaki herkesin erişimine açtığınız için çok teşekk
 - 🇨🇿 Lehçe çeviri [Petr Pavlík](http://www.petrpavlik.com)
 - 🇷🇺 Russian translations by [ETMH](https://t.me/sos_soon_ok)
 - 🇪🇸 Spanish translations by [@manghidev](https://github.com/manghidev)
+- 🇵🇱 Polish translations by **Jakub** (Website translation)
 
 <!-- 
   Old stuff from Money section:
