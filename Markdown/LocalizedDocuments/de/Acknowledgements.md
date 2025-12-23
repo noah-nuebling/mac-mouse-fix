@@ -67,6 +67,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Dezember 2025**
 
+- 🇬🇧&nbsp;Ag1986
 - 🇬🇪&nbsp;Dmytro&nbsp;Inkruento - "Thank you"
 - 🇺🇸&nbsp;Nothingbutlove
 - 🇩🇪&nbsp;Malte&nbsp;Zietsch
