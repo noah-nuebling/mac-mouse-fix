@@ -74,6 +74,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **Tháng 12 2025**
 
+- 🇬🇪&nbsp;Dmytro&nbsp;Inkruento - "Thank you"
 - 🇺🇸&nbsp;Nothingbutlove
 - 🇩🇪&nbsp;Malte&nbsp;Zietsch
 - 🇺🇸&nbsp;Daniel&nbsp;M - "Thank you for one of the best Mac apps ever"
