@@ -217,7 +217,7 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Блокировка указателя мыши во время жестов «нажатие и перетаскивание»"
           }
         },

@@ -688,8 +688,8 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "[Swish]({url}) — мой любимый способ управления окнами в macOS. Простым движением по трекпаду вы можете расположить любое окно так, чтобы оно занимало половину, четверть или весь экран.\n\nSwish разработан для жестов трекпада, но с помощью Mac Mouse Fix вы можете использовать его с любой сторонней мышью! Просто перейдите в Mac Mouse Fix и установите для любой кнопки действие 'Щелкнуть и перетащить' на 'Прокрутка и навигация', после чего вы сможете привязывать окна простым щелчком и перетаскиванием.\n\nВсе, что можно сделать с помощью двухпальцевого жеста на трекпаде Apple, так же хорошо работает с функцией 'Прокрутка и навигация' в Mac Mouse Fix."
+            "state" : "translated",
+            "value" : "[Swish]({url}) — мой любимый способ управления окнами в macOS. Простым движением по трекпаду вы можете расположить любое окно так, чтобы оно занимало половину, четверть или весь экран.\n\nSwish разработан для жестов трекпада, но с помощью Mac Mouse Fix вы можете использовать его с любой сторонней мышью! Просто перейдите в Mac Mouse Fix и установите для любой кнопки действие «Щелкнуть и перетащить» на «Прокрутка и навигация», после чего вы сможете привязывать окна простым щелчком и перетаскиванием.\n\nВсе, что можно сделать с помощью двухпальцевого жеста на трекпаде Apple, так же хорошо работает с функцией 'Прокрутка и навигация' в Mac Mouse Fix."
           }
         },
         "tr" : {
@@ -947,7 +947,7 @@
       }
     },
     "24: questions.click-delay.body" : {
-      "comment" : "Some text like 'Double Click' is quoted, because it appears exactly\nin the Mac Mouse Fix UI.\n\nFor example, 'Double Click' appears on the 'Buttons' tab in Mac Mouse Fix (See: trigger.substring.click.2)\n\nIf you're using Xcloc Editor.app, you can find all the related strings like this:\n- Go to 'All Project Files' (Command-J)\n- Select the search-field (Command-F) \n- Enter the English string (such as 'Double Click') \n-> Now you can see all the occurrences and translations of this English string!\n\nTry to keep the different translations consistent, especially, when the strings are 'quoted' (or \"double quoted\") or *emphasized*. \nThe goal is to help the reader draw the connection to the Mac Mouse Fix UI.",
+      "comment" : "Some text like 'Double Click' is quoted, because it appears exactly\nin the Mac Mouse Fix UI.\n\nFor example, 'Double Click' appears on the 'Buttons' tab in Mac Mouse Fix (See: trigger.substring.click.2)\n\nIf you're using Xcloc Editor.app, you can find all the related strings like this:\n- Go to 'All Project Files' (Command-J)\n- Select the search-field (Command-F) \n- Enter the English string (such as 'Double Click') \n-> Now you can see all the occurrences and translations of this English string!\n\nTry to keep the different translations consistent, especially, when the strings are 'quoted' (or \"double quoted\") or *emphasized*. \nThe goal is to help the reader draw the connection to the Mac Mouse Fix UI.\n\nPro Tip: You can highlight all occurrences of the English string *as well as* its translation like this:\n- Turn on Regular Expressions (Command-Option-R) \n- Use a search-string like ‘double click|doppelklicken’ (English version and translation separated by a ‘|’ character.)\n-> Now you can more easily spot whether all the translations are consistent.",
       "extractionState" : "manual",
       "localizations" : {
         "cs" : {
@@ -977,7 +977,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Когда вы нажимаете кнопку, Mac Mouse Fix может подождать, чтобы увидеть, собираетесь ли вы сделать двойное нажатие.\nЧтобы устранить задержку для кнопки, удалите все действия 'Двойного нажатия' для этой кнопки."
+            "value" : "Когда вы нажимаете кнопку, Mac Mouse Fix может подождать, чтобы увидеть, собираетесь ли вы сделать двойное нажатие.\nЧтобы устранить задержку для кнопки, удалите все действия «Двойного нажатия» для этой кнопки."
           }
         },
         "tr" : {
@@ -1305,8 +1305,8 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "См. вопрос **'Поддерживается ли моя мышь?'** выше."
+            "state" : "translated",
+            "value" : "См. вопрос **«Поддерживается ли моя мышь?»** выше."
           }
         },
         "tr" : {
@@ -1798,7 +1798,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Ваша лицензия работает на **всех ваших Mac**. <br>\nЦель состоит в том, чтобы вы могли просто купить лицензию, активировать ее и больше не беспокоиться об этом. <br>\nЕсли вы войдете в систему с помощью той же учетной записи Apple, лицензия даже автоматически синхронизируется с вашими другими устройствами через iCloud!\n\nЕсли у вас возникнут проблемы с активацией лицензии, вы можете [отправить мне электронное письмо]({url}). <br>\nИногда я отвечаю с задержкой. Приношу свои извинения за это. Но я обязательно свяжусь с вами!\n\nЕсть одно ограничение: <br>\nЛицензии не предназначены для публичного использования. Одна лицензия предназначена для одного человека. Публично используемые лицензии могут быть аннулированы. (Ваша мама не является 'публикой', и делиться с ней лицензией можно!)"
+            "value" : "Ваша лицензия работает на **всех ваших Mac**. <br>\nЦель состоит в том, чтобы вы могли просто купить лицензию, активировать ее и больше не беспокоиться об этом. <br>\nЕсли вы войдете в систему с помощью той же учетной записи Apple, лицензия даже автоматически синхронизируется с вашими другими устройствами через iCloud!\n\nЕсли у вас возникнут проблемы с активацией лицензии, вы можете [отправить мне электронное письмо]({url}). <br>\nИногда я отвечаю с задержкой. Приношу свои извинения за это. Но я обязательно свяжусь с вами!\n\nЕсть одно ограничение: <br>\nЛицензии не предназначены для публичного использования. Одна лицензия предназначена для одного человека. Публично используемые лицензии могут быть аннулированы. (Ваша мама не является «публикой», и делиться с ней лицензией можно!)"
           }
         },
         "tr" : {
@@ -2617,8 +2617,8 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "В 3D-приложениях, таких как Blender, вы обычно нажимаете и перетаскиваете Среднюю кнопку мыши, чтобы вращаться вокруг объектов.<br>\nНо если вы назначите действия на Среднюю кнопку мыши в Mac Mouse Fix, то это перестанет работать.\n\nЧтобы решить эту проблему, я знаю 2 варианта:\n1. Назначьте нажатие и перетаскивание одной из кнопок вашей мыши на функцию 'Прокрутка и навигация'. Эта функция имитирует свайп двумя пальцами на трекпаде Apple. Это, среди прочего, позволит вам вращаться в 3D-приложениях!\n2. *Отмените перехват* Средней кнопки мыши, удалив все действия, назначенные ей в Mac Mouse Fix. Подробнее см. в [этом руководстве]({url})."
+            "state" : "translated",
+            "value" : "В 3D-приложениях, таких как Blender, вы обычно нажимаете и перетаскиваете Среднюю кнопку мыши, чтобы вращаться вокруг объектов.<br>\nНо если вы назначите действия на Среднюю кнопку мыши в Mac Mouse Fix, то это перестанет работать.\n\nЧтобы решить эту проблему, я знаю 2 варианта:\n1. Назначьте нажатие и перетаскивание одной из кнопок вашей мыши на функцию «Прокрутка и навигация». Эта функция имитирует свайп двумя пальцами на трекпаде Apple. Это, среди прочего, позволит вам вращаться в 3D-приложениях!\n2. *Отмените перехват* Средней кнопки мыши, удалив все действия, назначенные ей в Mac Mouse Fix. Подробнее см. в [этом руководстве]({url})."
           }
         },
         "tr" : {
