@@ -218,7 +218,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Открыть настройки 'Конфиденциальность и безопасность'"
+            "value" : "Открыть настройки «Универсальный доступ»"
           }
         },
         "tr" : {
@@ -301,8 +301,8 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Включите 'Mac Mouse Fix Helper"
+            "state" : "translated",
+            "value" : "Включите «Mac Mouse Fix Helper»"
           }
         },
         "tr" : {
@@ -470,7 +470,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Удерживайте Shift (⇧) и нажмите на этот значок, чтобы показать 'Mac Mouse Fix Helper.app' в Finder"
+            "value" : "Удерживайте Shift (⇧) и нажмите на этот значок, чтобы показать «Mac Mouse Fix Helper.app» в Finder"
           }
         },
         "tr" : {
@@ -554,7 +554,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Предоставить Mac Mouse Fix доступ к универсальному доступу"
+            "value" : "Предоставьте Mac Mouse Fix доступ к универсальному доступу"
           }
         },
         "tr" : {
