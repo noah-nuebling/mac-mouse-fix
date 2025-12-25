@@ -142,6 +142,19 @@ NSMutableArray *columnConstraints = nil;
 
 - (void)updateColumnWidths {
     
+    /// TESTING
+    ///     This lets you manually resize the columns to test layout stuff. [Dec 2025]
+    if ((0))
+    {
+        [self setAllowsColumnResizing: YES];
+        self.headerView = [NSTableHeaderView new];
+        for (NSUInteger c = 0; c < self.numberOfColumns; c++) {
+            self.tableColumns[c].resizingMask = NSTableColumnUserResizingMask;
+        }
+        
+        return;
+    }
+    
     /// Create columnConstraints array
     if (columnConstraints == nil) {
         columnConstraints = [NSMutableArray array];
