@@ -75,6 +75,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Aralık 2025**
 
+- 🇺🇸&nbsp;Usirin - "thanks for making one of the best software out there"
 - 🇳🇱&nbsp;Webaccounts
 - 🇬🇧&nbsp;Ag1986
 - 🇬🇪&nbsp;Dmytro&nbsp;Inkruento - "Thank you"

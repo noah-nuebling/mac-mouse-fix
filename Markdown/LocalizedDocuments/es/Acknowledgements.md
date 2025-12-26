@@ -73,6 +73,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **diciembre 2025**
 
+- 🇺🇸&nbsp;Usirin - "thanks for making one of the best software out there"
 - 🇳🇱&nbsp;Webaccounts
 - 🇬🇧&nbsp;Ag1986
 - 🇬🇪&nbsp;Dmytro&nbsp;Inkruento - "Thank you"

@@ -75,6 +75,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **grudzień 2025**
 
+- 🇺🇸&nbsp;Usirin - "thanks for making one of the best software out there"
 - 🇳🇱&nbsp;Webaccounts
 - 🇬🇧&nbsp;Ag1986
 - 🇬🇪&nbsp;Dmytro&nbsp;Inkruento - "Thank you"
