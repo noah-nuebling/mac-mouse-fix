@@ -241,6 +241,10 @@ import Foundation
     // MARK: Did appear
     
     var _isFirstAppearance = true
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+    }
     override func viewDidAppear() {
         super.viewDidAppear()
         
@@ -248,26 +252,33 @@ import Foundation
         
         /// This is called every time the tab is switched to
         /// This is called twice, awakeFromNib as well. Use init() or viewDidLoad() to do things once
+        ///     Update: [Dec 2025] Or use `self._isFirstAppearance`.
         
-        /// HACK
-        ///     This forces `-[RemapTableController tableView:heightOfRow:]` to be called with final  columns widths.
-        ///         (I put a log in `[RemapTableCellView setFrame:]` to observe the changes in the column widths)
-        ///         Testing env: `[Dec 2025, macOS 26 Tahoe, UIDesignRequiresCompatibility]`
-        ///         Alternative solution ideas: [Dec 2025]
-        ///             - Somehow update the `RemapTableView` column widths to their final value before the 'natural' invocation of `-[RemapTableController tableView:heightOfRow:]`
-        ///             - Use `tableView.usesAutomaticRowHeights` somehow.
-        ///                 - Old note from 2022 or so said 'That should fix all our worries'
-        ///                 - Reference:  https://developer.apple.com/forums/thread/126767
-        ///         Note: The first round of size calculations for the RemapTableView seem to be thrown away completely. (I think - haven't investigated much) [Dec 2025]
-        ///     Note: Important to call this BEFORE the `updateSize(withAnimation:tabContentView:)` call right below, so the table height matches the updated row heights.[Dec 2025]
-        ///     Problem:
-        ///         - I think I can see `RemapTableView` flash at the wrong size [Dec 2025] -> TODO: Try doing this in `viewWillAppear()` instead of `viewDidAppear()`
-        if (self._isFirstAppearance) {
-            self.tableView.noteHeightOfRows(withIndexesChanged: IndexSet(0 ..< self.tableView.numberOfRows))
+        /// Turn off animations
+        ///     This prevents visible jank in case the `self.tableView.noteHeightOfRows` HACK below actually ends up changing the height of a row. I don't know why animations are enabled by default. [Dec 2025]
+        NSAnimationContext.beginGrouping()
+        NSAnimationContext.current.duration = 0.0
+        do {
+            /// HACK
+            ///     Purpose: Force `-[RemapTableController tableView:heightOfRow:]` to be called with final column widths.
+            ///     Specific bug this prevents: Bug where rows sometimes make vertical space for two lines of text even though the text doesn't wrap – Specifically this currently happens when running `func testTakeScreenshots_Documentation()` in Russian [Dec 2025]
+            ///     All observations made in env: `[Dec 2025, macOS 26 Tahoe, UIDesignRequiresCompatibility]`
+            ///     Performance Note: The first round of size calculations for the RemapTableView seem to be thrown away completely – inefficient (I think - haven't investigated much) [Dec 2025]
+            ///     Order-Of-Operations Note: Important to call this BEFORE the `updateSize(withAnimation:tabContentView:)` call right below, so the table height updates to match the updated row heights.[Dec 2025]
+            ///     Debugging tip: I put a log in `[RemapTableCellView setFrame:]` to observe the changes in the column widths
+            ///     Alternative solution ideas: [Dec 2025]
+            ///         - Somehow update the `RemapTableView` column widths to their final value before the 'natural' invocation of `-[RemapTableController tableView:heightOfRow:]`
+            ///         - Use `tableView.usesAutomaticRowHeights` somehow.
+            ///             - We're using that inside mf-xcloc-editor
+            ///             - Old reference:  https://developer.apple.com/forums/thread/126767
+            if (self._isFirstAppearance) { /// Not sure why we're only using `self._isFirstAppearance` here [Dec 2025] – didn't consider whether it also made sense for the other things when I added this [Dec 2025]
+                self.tableView.noteHeightOfRows(withIndexesChanged: IndexSet(0 ..< self.tableView.numberOfRows))
+            }
+            
+            /// Update tableView size
+            self.tableView.updateSize(withAnimation: false, tabContentView: self.view)
         }
-        
-        /// Update tableView size
-        self.tableView.updateSize(withAnimation: false, tabContentView: self.view)
+        NSAnimationContext.endGrouping()
         
         /// Display extra UI
         ///     Doing this with a delay because it doesn't work if the tab switch animation is still ongoing

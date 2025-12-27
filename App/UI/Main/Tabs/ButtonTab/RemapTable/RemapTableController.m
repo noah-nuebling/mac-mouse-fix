@@ -746,7 +746,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
     
-    /// TODO: Look into just using `self.tableView.usesAutomaticRowHeights` instead of this. (We're using that inside mf-xcloc-editor) [Dec 2025]
+    /// Note: There is a HACK inside `ButtonTabController.swift` which calls `self.tableView.noteHeightOfRows()` to force this to be called at the right time. [Dec 2025]
     
     /// Calculate trigger cell text height
     NSDictionary *rowDict = self.groupedDataModel[row];
@@ -773,10 +773,9 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
             
             /// Size the triggerCellView we just created to match the real triggerCellView in the table
             [triggerCellView setFrameSize: (NSSize) { .width = colwidth, .height = triggerCellView.frame.size.height }];
-            [triggerCellView layoutSubtreeIfNeeded];
+            [triggerCellView layoutSubtreeIfNeeded]; /// Note: This may be slow – We replaced more complex (possibly faster?) method of getting height in commit after b872ff8. [Dec 2025]
             
             /// Measure height
-            ///     Note: We replaced more complex (possibly faster?) method of getting height in commit after b872ff8. [Dec 2025]
             result = triggerCellView.frame.size.height;
         }
         
