@@ -21,6 +21,7 @@
 #import "RemapTableUtility.h"
 #import "Mac_Mouse_Fix-Swift.h"
 #import "Localization.h"
+#import "RemapTableCellView.h"
 
 @interface RemapTableTranslator ()
 
@@ -221,10 +222,24 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                   kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad)
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": MFLocalizedString(@"effect.left-space", @""), @"tool": MFLocalizedString(@"effect.left-space.hint", @""), @"dict": @{
+        @{
+            @"ui": MFLocalizedString(
+                @"effect.left-space",
+                @""
+                    "The English string takes after"
+                    "\nSystem Settings > Keyboard > Keyboard Shortcuts... > Mission Control > Mission Control > Move left a space."
+                    "\nBut it looks like for some languages, the translation inside macOS is suboptimal, so maybe you can come up with something better."
+                    "\n[Dec 2025, macOS 26 Tahoe]"
+            ),
+            @"tool": MFLocalizedString(
+                @"effect.left-space.hint",
+                @""
+            ),
+            @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
-        }},
+            }
+        },
         @{@"ui": MFLocalizedString(@"effect.right-space", @""), @"tool": MFLocalizedString(@"effect.right-space.hint", @""), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
                   kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)

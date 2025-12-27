@@ -5980,7 +5980,7 @@
       }
     },
     "effect.left-space" : {
-      "comment" : "",
+      "comment" : "The English string takes after\nSystem Settings > Keyboard > Keyboard Shortcuts... > Mission Control > Mission Control > Move left a space.\nBut it looks like for some languages, the translation inside macOS is suboptimal, so maybe you can come up with something better.\n[Dec 2025, macOS 26 Tahoe]",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -6063,7 +6063,6 @@
       }
     },
     "effect.left-space.hint" : {
-      "comment" : "",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
