@@ -20,8 +20,10 @@ New translations have already been generously provided by the following people:
 - [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 French translations
 - [@hasanbeder](https://github.com/hasanbeder) and [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 Turkish translations
 - [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Czech translations
-- [@Dro9an](https://github.com/Dro9an) and [@jihao](https://github.com/jihao): 🇨🇳 Chinese translation of [the website](macmousefix.com)
+- [@Dro9an](https://github.com/Dro9an) and [@jihao](https://github.com/jihao): 🇨🇳 Chinese translation of [the website](https://macmousefix.com/zh-Hans)
 - [@manghidev](https://github.com/manghidev): 🇪🇸 Spanish translations
+- **Jakub**: 🇵🇱 Polish translations of [the website](https://macmousefix.com/pl)
+- [ETMH](https://t.me/sos_soon_ok): 🇷🇺 Russian translations
 
 Thanks for your work!
 
@@ -78,3 +80,10 @@ Updates:
     - Build number of MacMouseFixApp.zip asset: 24827
     - Date [Dec 21 2025]
     - Change: Added Spanish translations by @manghidev
+    
+5. Update
+    - Build number of MacMouseFixApp.zip asset: 24828
+    - Date [Dec 27 2025]
+    - Changes:
+        - Updated Russian translations provided by ETMH
+        - Fixed a layout bug on the Buttons tab that surfaced with the Russian translations.

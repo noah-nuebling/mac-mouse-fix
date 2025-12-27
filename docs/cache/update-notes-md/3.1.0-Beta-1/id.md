@@ -1,11 +1,11 @@
-Mac Mouse Fix **3.1.0 Beta 1** menghadirkan sistem terjemahan baru yang hebat, yang telah dikerjakan untuk beberapa waktu.\
+Mac Mouse Fix **3.1.0 Beta 1** menghadirkan sistem terjemahan baru yang hebat, yang telah dikerjakan selama beberapa waktu.\
 Ada juga beberapa perbaikan UI.
 
 ### Sistem lokalisasi baru!
 
 - Sekarang sangat mudah untuk berkontribusi terjemahan berkualitas tinggi ke Mac Mouse Fix, tanpa memerlukan latar belakang teknis sama sekali.
-- Ada banyak tangkapan layar beranotasi dan komentar, serta fungsi pencarian yang bagus, sehingga penerjemah dapat dengan mudah memahami persis bagaimana terjemahan mereka muncul di aplikasi.
-    - Saya pikir tangkapan layar dan UI terjemahan (aplikasi `Xcloc Editor`) adalah yang terbaik di pasaran, dan saya harap ini akan membantu kamu memberikan terjemahan yang hebat!
+- Tersedia banyak tangkapan layar beranotasi dan komentar, serta fungsi pencarian yang bagus, sehingga penerjemah dapat dengan mudah memahami persis bagaimana terjemahan mereka muncul di aplikasi.
+    - Saya rasa tangkapan layar dan UI terjemahan (aplikasi `Xcloc Editor`) adalah yang terbaik di pasaran, dan saya berharap ini akan membantu Anda memberikan terjemahan yang hebat!
 - Hampir semua bagian proyek sekarang dapat diterjemahkan, termasuk 'Panduan Tombol yang Ditangkap', GitHub Readme, Website, dan lainnya.
     - Semua bagian proyek ini dapat diterjemahkan dari satu tempat terpusat dengan referensi silang yang mudah menggunakan aplikasi `Xcloc Editor`, sehingga mudah bagi penerjemah untuk menjaga semuanya tetap konsisten.
 - Sistem ini dirancang agar sangat mudah dipelihara, jadi seiring Mac Mouse Fix berkembang dan layar atau teks baru ditambahkan, semuanya akan diperbarui secara otomatis.
@@ -14,14 +14,16 @@ Ada juga beberapa perbaikan UI.
 
 
 
-Terjemahan baru telah dengan murah hati disediakan oleh orang-orang berikut:
+Terjemahan baru telah disediakan dengan murah hati oleh orang-orang berikut:
 
 - **Eduardo Rodrigues**: 🇧🇷 Terjemahan Portugis Brasil
 - [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 Terjemahan Prancis
 - [@hasanbeder](https://github.com/hasanbeder) dan [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 Terjemahan Turki
 - [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Terjemahan Ceko
-- [@Dro9an](https://github.com/Dro9an) dan [@jihao](https://github.com/jihao): 🇨🇳 Terjemahan Tiongkok untuk [website](macmousefix.com)
+- [@Dro9an](https://github.com/Dro9an) dan [@jihao](https://github.com/jihao): 🇨🇳 Terjemahan Tiongkok untuk [website](https://macmousefix.com/zh-Hans)
 - [@manghidev](https://github.com/manghidev): 🇪🇸 Terjemahan Spanyol
+- **Jakub**: 🇵🇱 Terjemahan Polandia untuk [website](https://macmousefix.com/pl)
+- [ETMH](https://t.me/sos_soon_ok): 🇷🇺 Terjemahan Rusia
 
 Terima kasih atas kerja kalian!
 
@@ -30,11 +32,11 @@ Namun, **semua bahasa masih memerlukan pekerjaan**, karena banyak hal baru telah
 Oleh karena itu:
 
 > [!TIP]
-> Lihat [Panduan Terjemahan](https://redirect.macmousefix.com/?target=mmf-localization-contribution) baru jika kamu ingin membantu menghadirkan terjemahan hebat ke pengguna Mac Mouse Fix di seluruh dunia! 🌎
+> Lihat [Panduan Terjemahan](https://redirect.macmousefix.com/?target=mmf-localization-contribution) yang baru jika Anda ingin membantu menghadirkan terjemahan hebat kepada pengguna Mac Mouse Fix di seluruh dunia! 🌎
 
 ### Perubahan lainnya
 
-Saat menggunakan Mac Mouse Fix dalam bahasa Inggris, tidak banyak yang berubah, tetapi beberapa hal telah diperbarui di UI, dan banyak yang bergeser di balik layar, untuk membantu membuat terjemahan lebih baik:
+Saat menggunakan Mac Mouse Fix dalam bahasa Inggris, tidak banyak yang berubah, tetapi beberapa hal telah diperbarui di UI, dan banyak yang berubah di balik layar, untuk membantu membuat terjemahan lebih baik:
 
 - Tampilan yang lebih halus untuk notifikasi popup kecil.
 - Tooltip dan pesan kesalahan yang lebih jelas di berbagai tempat.
@@ -49,7 +51,7 @@ Saat menggunakan Mac Mouse Fix dalam bahasa Inggris, tidak banyak yang berubah, 
 
 ---
 
-Kamu dapat menemukan rilis Mac Mouse Fix sebelumnya di sini: [3.0.8](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8)
+Anda dapat menemukan rilis Mac Mouse Fix sebelumnya di sini: [3.0.8](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8)
 
 ---
 
@@ -78,3 +80,10 @@ Pembaruan:
     - Nomor build aset MacMouseFixApp.zip: 24827
     - Tanggal [21 Des 2025]
     - Perubahan: Menambahkan terjemahan Spanyol oleh @manghidev
+    
+5. Pembaruan
+    - Nomor build aset MacMouseFixApp.zip: 24828
+    - Tanggal [27 Des 2025]
+    - Perubahan:
+        - Memperbarui terjemahan Rusia yang disediakan oleh ETMH
+        - Memperbaiki bug tata letak pada tab Buttons yang muncul dengan terjemahan Rusia.

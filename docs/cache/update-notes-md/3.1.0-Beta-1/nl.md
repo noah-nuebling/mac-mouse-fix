@@ -20,8 +20,10 @@ Nieuwe vertalingen zijn al genereus geleverd door de volgende mensen:
 - [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 Franse vertalingen
 - [@hasanbeder](https://github.com/hasanbeder) en [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 Turkse vertalingen
 - [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Tsjechische vertalingen
-- [@Dro9an](https://github.com/Dro9an) en [@jihao](https://github.com/jihao): 🇨🇳 Chinese vertaling van [de website](macmousefix.com)
+- [@Dro9an](https://github.com/Dro9an) en [@jihao](https://github.com/jihao): 🇨🇳 Chinese vertaling van [de website](https://macmousefix.com/zh-Hans)
 - [@manghidev](https://github.com/manghidev): 🇪🇸 Spaanse vertalingen
+- **Jakub**: 🇵🇱 Poolse vertalingen van [de website](https://macmousefix.com/pl)
+- [ETMH](https://t.me/sos_soon_ok): 🇷🇺 Russische vertalingen
 
 Bedankt voor jullie werk!
 
@@ -39,11 +41,11 @@ Bij gebruik van Mac Mouse Fix in het Engels is er niet veel veranderd, maar een 
 - Verfijnd uiterlijk voor de kleine pop-upmeldingen.
 - Duidelijkere tooltips en foutmeldingen op verschillende plaatsen.
 - De escape-toets kan nu overal gebruikt worden om meldingen, sheets en pop-ups te sluiten.
-- Een 'Help Translate'-link is toegevoegd aan het About-tabblad.
+- Een 'Help Translate' link is toegevoegd aan het About-tabblad.
 - De breedte van weergaven en pop-ups is aangepast om er geweldig uit te zien in verschillende talen.
-- Betere tekstindeling voor Chinees en Koreaans, die problemen hadden met tekstterugloop in enkele van de kleine pop-upmeldingen.
-- Markdown-parsebibliotheek vervangen om enkele opmaakfouten in Chinees en Koreaans op te lossen.
-- Veel meer onder-de-motorkap wijzigingen en verbeteringen.
+- Betere tekstindeling voor Chinees en Koreaans, die problemen hadden met tekstomloop in enkele van de kleine pop-upmeldingen.
+- Markdown-parsingbibliotheek vervangen om enkele opmaakfouten in Chinees en Koreaans op te lossen.
+- Veel meer wijzigingen en verbeteringen onder de motorkap.
 
 
 
@@ -72,9 +74,16 @@ Updates:
     - Wijzigingen:
         - Turkse vertalingen toegevoegd door Eren.
         - Horizontale marges op het Scrolling-tabblad iets smaller gemaakt om beter te werken met enkele bredere Turkse UI-strings.
-        - Markdown-renderingprobleem opgelost waarbij opsommingstekens onderstreept zouden zijn als het eerste na de lijst een link was. Dit betrof Turks op een paar plaatsen.
+        - Markdown-renderingprobleem opgelost waarbij lijstopsommingstekens onderstreept zouden zijn als het eerste na de lijst een link was. Dit betrof Turks op een paar plaatsen.
 
 4. Update
     - Buildnummer van MacMouseFixApp.zip asset: 24827
     - Datum [21 dec 2025]
     - Wijziging: Spaanse vertalingen toegevoegd door @manghidev
+    
+5. Update
+    - Buildnummer van MacMouseFixApp.zip asset: 24828
+    - Datum [27 dec 2025]
+    - Wijzigingen:
+        - Russische vertalingen bijgewerkt geleverd door ETMH
+        - Een lay-outfout op het Buttons-tabblad opgelost die naar boven kwam met de Russische vertalingen.

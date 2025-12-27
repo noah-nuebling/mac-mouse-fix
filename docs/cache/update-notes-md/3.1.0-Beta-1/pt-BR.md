@@ -1,4 +1,4 @@
-O Mac Mouse Fix **3.1.0 Beta 1** traz um ótimo sistema de tradução novo, que está em desenvolvimento há algum tempo.\
+Mac Mouse Fix **3.1.0 Beta 1** traz um ótimo sistema de tradução novo, que está em desenvolvimento há algum tempo.\
 Também há algumas melhorias na interface.
 
 ### Novo sistema de localização!
@@ -20,8 +20,10 @@ Novas traduções já foram generosamente fornecidas pelas seguintes pessoas:
 - [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 Traduções para francês
 - [@hasanbeder](https://github.com/hasanbeder) e [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 Traduções para turco
 - [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Traduções para tcheco
-- [@Dro9an](https://github.com/Dro9an) e [@jihao](https://github.com/jihao): 🇨🇳 Tradução para chinês do [site](macmousefix.com)
+- [@Dro9an](https://github.com/Dro9an) e [@jihao](https://github.com/jihao): 🇨🇳 Tradução para chinês [do site](https://macmousefix.com/zh-Hans)
 - [@manghidev](https://github.com/manghidev): 🇪🇸 Traduções para espanhol
+- **Jakub**: 🇵🇱 Traduções para polonês [do site](https://macmousefix.com/pl)
+- [ETMH](https://t.me/sos_soon_ok): 🇷🇺 Traduções para russo
 
 Obrigado pelo trabalho de vocês!
 
@@ -34,12 +36,12 @@ Portanto:
 
 ### Outras mudanças
 
-Ao usar o Mac Mouse Fix em inglês, não mudou muita coisa, mas algumas coisas foram atualizadas na interface, e muito mudou nos bastidores, para ajudar a tornar as traduções melhores:
+Ao usar o Mac Mouse Fix em inglês, não mudou muita coisa, mas algumas coisas foram atualizadas na interface, e muito mudou nos bastidores, para ajudar a melhorar as traduções:
 
 - Visual refinado para as pequenas notificações popup.
 - Dicas de ferramentas e erros mais claros em vários lugares.
 - A tecla escape agora pode ser usada em todos os lugares para dispensar notificações, painéis e popups.
-- Um link 'Ajude a Traduzir' foi adicionado à aba Sobre.
+- Um link 'Ajudar a Traduzir' foi adicionado à aba Sobre.
 - A largura das visualizações e popups foi ajustada para ficar ótima em vários idiomas.
 - Melhor layout de texto para chinês e coreano, que tinham problemas de quebra de texto em algumas das pequenas notificações popup.
 - Biblioteca de análise de Markdown substituída para corrigir alguns bugs de formatação em chinês e coreano.
@@ -69,12 +71,19 @@ Atualizações:
 3. Atualização:
     - Número de build do arquivo MacMouseFixApp.zip: 24822
     - Data: [15 de dezembro de 2025]
-    - Mudanças:
+    - Mudanças: 
         - Adicionadas traduções para turco por Eren.
         - Margens horizontais na aba Rolagem ligeiramente mais estreitas para funcionar melhor com algumas strings de interface em turco mais largas.
         - Corrigido problema de renderização de Markdown onde marcadores de lista teriam sublinhado se a primeira coisa após a lista fosse um link. Isso afetou o turco em alguns lugares.
 
 4. Atualização
     - Número de build do arquivo MacMouseFixApp.zip: 24827
-    - Data: [21 de dezembro de 2025]
+    - Data [21 de dezembro de 2025]
     - Mudança: Adicionadas traduções para espanhol por @manghidev
+    
+5. Atualização
+    - Número de build do arquivo MacMouseFixApp.zip: 24828
+    - Data [27 de dezembro de 2025]
+    - Mudanças:
+        - Traduções para russo atualizadas fornecidas por ETMH
+        - Corrigido um bug de layout na aba Botões que apareceu com as traduções para russo.
