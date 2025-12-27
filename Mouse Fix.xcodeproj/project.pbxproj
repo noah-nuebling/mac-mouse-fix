@@ -17,6 +17,7 @@
 		4F0D906C2E89731D005859A0 /* TabControllerUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F0D906B2E89731C005859A0 /* TabControllerUtility.swift */; };
 		4F0D90722E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0D90712E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m */; };
 		4F0D90732E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0D90712E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m */; };
+		4F0DAB552EFF4E2100129041 /* RemapTableCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F0DAB542EFF4E2100129041 /* RemapTableCellView.m */; };
 		4F12525C2CAA88A400A079BD /* UNIXSignals.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F12523D2CA9421600A079BD /* UNIXSignals.m */; };
 		4F12952028D2D5E1009A49AB /* NSTextField+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */; };
 		4F143E462B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */ = {isa = PBXBuildFile; fileRef = 4F143E452B2D1F5600FE4092 /* fallback_licenseinfo_config.json */; };
@@ -279,7 +280,6 @@
 		4FC55B982915652C00663B24 /* Alerts.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55B972915652C00663B24 /* Alerts.m */; };
 		4FC55E31285E6F1F00F2FCCF /* GlobalDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC55E2F285E6BF800F2FCCF /* GlobalDefaults.swift */; };
 		4FC8A7D528ABDEFE007DB982 /* MFClipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7D428ABDEFD007DB982 /* MFClipView.swift */; };
-		4FC8A7D928AD3FC7007DB982 /* RemapTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC8A7D828AD3FC7007DB982 /* RemapTableCellView.swift */; };
 		4FCA07D625F3129B00BFE209 /* RemapTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FCA07D525F3129B00BFE209 /* RemapTableController.m */; };
 		4FCABCF72933A7090018E538 /* Toasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCABCF62933A7090018E538 /* Toasts.swift */; };
 		4FCC03352757B181002E5A57 /* ScreenDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC03322757A50C002E5A57 /* ScreenDrawer.swift */; };
@@ -497,6 +497,8 @@
 		4F0D906F2E8A773E005859A0 /* Lowering Build Times.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Lowering Build Times.md"; sourceTree = "<group>"; };
 		4F0D90702E8A9D5F005859A0 /* NSLayoutConstraint+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+Additions.h"; sourceTree = "<group>"; };
 		4F0D90712E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+Additions.m"; sourceTree = "<group>"; };
+		4F0DAB532EFF4E2100129041 /* RemapTableCellView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableCellView.h; sourceTree = "<group>"; };
+		4F0DAB542EFF4E2100129041 /* RemapTableCellView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableCellView.m; sourceTree = "<group>"; };
 		4F12523C2CA9421600A079BD /* UNIXSignals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UNIXSignals.h; sourceTree = "<group>"; };
 		4F12523D2CA9421600A079BD /* UNIXSignals.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UNIXSignals.m; sourceTree = "<group>"; };
 		4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+Extentions.swift"; sourceTree = "<group>"; };
@@ -2349,7 +2351,6 @@
 		4FC7D5D82B455A60002AED77 /* update-state-of-localization.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "update-state-of-localization.yml"; sourceTree = "<group>"; };
 		4FC8A7CC28AAF1BC007DB982 /* MarkdownParser_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownParser_old.swift; sourceTree = "<group>"; };
 		4FC8A7D428ABDEFD007DB982 /* MFClipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MFClipView.swift; sourceTree = "<group>"; };
-		4FC8A7D828AD3FC7007DB982 /* RemapTableCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapTableCellView.swift; sourceTree = "<group>"; };
 		4FCA07D425F3129B00BFE209 /* RemapTableController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RemapTableController.h; sourceTree = "<group>"; };
 		4FCA07D525F3129B00BFE209 /* RemapTableController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RemapTableController.m; sourceTree = "<group>"; };
 		4FCABCF62933A7090018E538 /* Toasts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toasts.swift; sourceTree = "<group>"; };
@@ -7032,7 +7033,8 @@
 				4F79C2E9260976950067B381 /* RemapTableTranslator.m */,
 				4F92A706260F4BF000529D1F /* RemapTableView.h */,
 				4F92A707260F4BF000529D1F /* RemapTableView.m */,
-				4FC8A7D828AD3FC7007DB982 /* RemapTableCellView.swift */,
+				4F0DAB532EFF4E2100129041 /* RemapTableCellView.h */,
+				4F0DAB542EFF4E2100129041 /* RemapTableCellView.m */,
 				4FB5FE8A27AE563F0092C9B4 /* MFScrollView.h */,
 				4F37FAD725FDFDC4004C34C4 /* MFScrollView.m */,
 				4FC8A7D428ABDEFD007DB982 /* MFClipView.swift */,
@@ -8311,7 +8313,6 @@
 				4F909D2528A0C3D2009349A2 /* TabViewController.swift in Sources */,
 				4F0D90722E8A9D5F005859A0 /* NSLayoutConstraint+Additions.m in Sources */,
 				4F1B832D26081A5500AEAF37 /* CaptureToasts.m in Sources */,
-				4FC8A7D928AD3FC7007DB982 /* RemapTableCellView.swift in Sources */,
 				4FEA63CF2921510F00E464D6 /* NSImage+Additions.m in Sources */,
 				4F909D3628A0C3D2009349A2 /* Collapse.swift in Sources */,
 				4F909D4128A0C412009349A2 /* SwiftUITest.swift in Sources */,
@@ -8401,6 +8402,7 @@
 				4FB8B2992CCEBADA00A5A580 /* GetLicenseState.swift in Sources */,
 				4F5170162CBFD75C0018D388 /* MFDataClassImpls.m in Sources */,
 				4F09284528B8E82B00BDC2FF /* LicenseSheetController.swift in Sources */,
+				4F0DAB552EFF4E2100129041 /* RemapTableCellView.m in Sources */,
 				4FFAEBEA2E74367300832CE2 /* AddField.swift in Sources */,
 				4F909D3E28A0C3D2009349A2 /* SensitivityDisplay.swift in Sources */,
 				4F8A44522925311B00361EFF /* SFSymbolStrings.m in Sources */,
