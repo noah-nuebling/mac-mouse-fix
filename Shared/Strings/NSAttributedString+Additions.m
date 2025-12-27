@@ -222,8 +222,6 @@
     /// Replaces occurrences of `searchedString` with `replacementString`.
     ///     Replaces at most `count` occurences. To replace *all* occurences, set `count` to -1.
     
-    assert(false); /// Unused [Dec 2025]
-    
     NSMutableAttributedString *result = [self mutableCopy];
     
     NSUInteger searchStart = 0;
