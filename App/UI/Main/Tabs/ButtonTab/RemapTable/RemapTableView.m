@@ -10,6 +10,7 @@
 /// Auto-adjust width like this: https://stackoverflow.com/questions/35657740/automatically-adjust-width-of-a-view-based-nstableview-based-on-content
 
 #import "RemapTableView.h"
+#import "RemapTableCellView.h"
 #import "Mac_Mouse_Fix-Swift.h"
 
 @interface RemapTableView ()
@@ -144,7 +145,8 @@ NSMutableArray *columnConstraints = nil;
     
     /// TESTING
     ///     This lets you manually resize the columns to test layout stuff. [Dec 2025]
-    if ((0))
+    #define MF_TEST 0
+    if ((MF_TEST))
     {
         [self setAllowsColumnResizing: YES];
         self.headerView = [NSTableHeaderView new];
@@ -154,6 +156,7 @@ NSMutableArray *columnConstraints = nil;
         
         return;
     }
+    #undef MF_TEST
     
     /// Create columnConstraints array
     if (columnConstraints == nil) {
