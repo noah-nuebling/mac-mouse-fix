@@ -212,26 +212,35 @@
 #pragma mark Replace substring
 
 - (NSAttributedString *) attributedStringByReplacing: (NSString *)old with: (NSAttributedString *)new {
-    return [self attributedStringByReplacing: old with: new count: -1];
+    return [self attributedStringByReplacing: old with: new  options: 0];
 }
-- (NSAttributedString *) attributedStringByReplacing: (NSString *)old with: (NSAttributedString *)new count: (int)count {
+- (NSAttributedString *) attributedStringByReplacing: (NSString *)old with: (NSAttributedString *)new options: (NSStringCompareOptions) options {
+    return [self attributedStringByReplacing: old with: new  options: options count: -1];
+}
+- (NSAttributedString *) attributedStringByReplacing: (NSString *)old with: (NSAttributedString *)new options: (NSStringCompareOptions)options count: (int)count {
     
     /// Replaces occurrences of `searchedString` with `replacementString`.
     ///     Replaces at most `count` occurences. To replace *all* occurences, set `count` to -1.
     
+    assert(false); /// Unused [Dec 2025]
+    
     NSMutableAttributedString *result = [self mutableCopy];
     
-    if ([old isEqual: new.string]) return result; /// Prevent infinite loop in edge case.
+    NSUInteger searchStart = 0;
     
     for (int i = 0;; i++) {
 
         if (count > 0)
             if (i >= count) break;
-    
-        NSRange replaceRange = [result.string rangeOfString: old]; /// Could activate regex here [Sep 2025]
+        
+        if (searchStart > result.string.length) break; /// Prevent NSUInteger underflow. || Can happen due to `searchStart += 1;` below [Dec 2025]
+        NSRange replaceRange = [result.string rangeOfString: old options: options range: NSMakeRange(searchStart, result.string.length - searchStart)];
         if (replaceRange.location == NSNotFound) break;
         
         [result replaceCharactersInRange: replaceRange withAttributedString: new];
+        
+        searchStart = replaceRange.location + new.length;
+        if (searchStart == replaceRange.location) searchStart += 1; /// Prevent infinite loop.
     }
     
     return result;
@@ -567,20 +576,24 @@ static NSRect MFUnionRect(NSRect r, NSRect s) {
 
 }
 
-- (NSSize)sizeAtMaxWidthOld:(CGFloat)maxWidth {
+- (NSSize)___sizeAtMaxWidth:(CGFloat)maxWidth {
     /// Old function for getting size at some max width. Cleaner than the new one in principle becuase it reuses other functions. b
     /// Unfortunately it doesn't work properly because we can't get self.preferredWidth to work properly.
     
-    CGFloat preferredWidth = self.preferredWidth;
+    assert(false); /// Use `sizeAtMaxWidth:` instead. [Dec 2025]
+    
+    CGFloat preferredWidth = self.___preferredWidth;
     
     CGFloat width = preferredWidth <= maxWidth ? preferredWidth : maxWidth;
-    CGFloat height = [self heightAtWidth:width];
+    CGFloat height = [self ___heightAtWidth:width];
     
     return NSMakeSize(width, height);
 }
 
-- (CGFloat)heightAtWidth:(CGFloat)width {
+- (CGFloat)___heightAtWidth:(CGFloat)width {
     /// Derived from sizeAtMaxWidth
+    
+    assert(false); /// Use `sizeAtMaxWidth:` instead [Dec 2025]
     
     /// Method 1
     //    NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:self];
@@ -603,9 +616,11 @@ static NSRect MFUnionRect(NSRect r, NSRect s) {
 }
 
 
-- (CGFloat)preferredWidth {
+- (CGFloat)___preferredWidth {
     /// Width of the string if we don't introduce any extra line breaks.
     /// Can't get this to work properly
+    
+    assert(false); /// Unused [Dec 2025]
     
     /// Method 1
     //    NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:self];

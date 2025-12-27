@@ -58,6 +58,19 @@ MFDataClassImplement2(MFDataClassBase, FoundSecretMessage,
     readwrite, assign,        , NSRange,    rangeInString
 )
 
+static NSString *secretMessageRegexString(void) {
+    NSString *pattern = @""
+        "\u2060\u200C\u2060\u200D\u2060"            /// Start sequence
+        "(?:(?:[\u200C\u200D]{8})*)"                /// Arbitrary sequence of the 2 characters encoding 0 and 1. Each packet of 8 0/1 encodes one UTF-8 char.
+        @"\u2060\u200D\u2060\u200C\u2060";          /// End sequence
+    return pattern;
+}
+
+static NSRegularExpression *secretMessageRegex(void) {
+    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern: secretMessageRegexString() options: 0 error: NULL];
+    return expression;
+}
+
 @implementation NSAttributedString (MFSteganography)
 
 - (NSAttributedString *)attributedStringByAppendingStringAsSecretMessage:(NSString *)message {
@@ -69,6 +82,11 @@ MFDataClassImplement2(MFDataClassBase, FoundSecretMessage,
 - (NSArray<FoundSecretMessage *> *)_secretMessages {
     NSArray *result = [self.string _secretMessages];
     return result;
+}
+
+- (NSAttributedString *)withoutSecretMessages { /// Also see `-[NSString withoutSecretMessages]` below [Dec 2025]
+    assert(false); /// Unused [Dec 2025]
+    return [self attributedStringByReplacing: secretMessageRegexString() with: @"".attributed options: NSRegularExpressionSearch];
 }
 
 @end
@@ -112,33 +130,8 @@ int steg_charToBit(unichar c) {
     return result;
 }
 
-static NSRegularExpression *secretMessageRegex(void) {
-    
-    /// Define pattern
-    NSString *pattern = @""
-        "\u2060\u200C\u2060\u200D\u2060"            /// Start sequence
-        "(?:(?:[\u200C\u200D]{8})*)"                /// Arbitrary sequence of the 2 characters encoding 0 and 1. Each packet of 8 0/1 encodes one UTF-8 char.
-        @"\u2060\u200D\u2060\u200C\u2060";          /// End sequence
-    
-    /// Create regex
-    NSRegularExpressionOptions expressionOptions = 0;
-    NSRegularExpression *expression = [NSRegularExpression regularExpressionWithPattern:pattern options:expressionOptions error:NULL];
-    
-    /// Return
-    return expression;
-}
-
-- (NSString *)withoutSecretMessages {
-    
-    /// Find secretMessages
-    NSRegularExpression *regex = secretMessageRegex();
-    NSMatchingOptions matchingOptions = 0;
-    
-    /// Remove secretMessages
-    NSString *result = [regex stringByReplacingMatchesInString:self options:matchingOptions range:NSMakeRange(0, self.length) withTemplate:@""];
-    
-    /// Return
-    return result;
+- (NSString *)withoutSecretMessages { /// Also see `-[NSAttributedString withoutSecretMessages]` above
+    return [self stringByReplacingOccurrencesOfString: secretMessageRegexString() withString: @"" options: NSRegularExpressionSearch range: NSMakeRange(0, self.length)];
 }
 
 - (NSArray<FoundSecretMessage *> *)_secretMessages { /// Probably don't use this directly, and use `extractAnnotationsFromString:` instead [Dec 2025]
