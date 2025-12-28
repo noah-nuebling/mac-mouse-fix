@@ -731,8 +731,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "填写一个功能请求"
+            "state" : "translated",
+            "value" : "帮助翻译更多语言"
           }
         },
         "zh-Hant" : {
@@ -1548,7 +1548,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "让您快速关闭或开启平滑滚动等功能"
           }
         },
@@ -1800,8 +1800,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "在您关闭Mac Mouse Fix后，它仍会保持启用状态"
+            "state" : "translated",
+            "value" : "在您退出Mac Mouse Fix后，所有功能仍会保持有效"
           }
         },
         "zh-Hant" : {
@@ -2281,8 +2281,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "提交错误报告"
+            "state" : "translated",
+            "value" : "提交反馈报告"
           }
         },
         "zh-Hant" : {
@@ -2723,7 +2723,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "按钮"
+            "value" : "按键"
           }
         },
         "zh-Hant" : {
@@ -5377,7 +5377,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "按钮"
+            "value" : "按键"
           }
         },
         "zh-Hant" : {
@@ -5448,8 +5448,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hold Command (⌘) and Shift (⇧), then click this icon to reveal the Mac Mouse Fix configuration file in Finder"
+            "state" : "translated",
+            "value" : "按住 Command 键 (⌘) 和 Shift 键 (⇧)， 然后点击这个图标，以访问 Mac Mouse Fix 的配置文件"
           }
         },
         "zh-Hant" : {
@@ -5532,8 +5532,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "移动鼠标指针到“+”区域内，然后点按鼠标按钮来指定动作。  您也可以连按、点按并拖移、执行[更多]()操作。"
+            "state" : "translated",
+            "value" : "移动鼠标指针到“+”区域内，然后点按鼠标按键来指定动作。  您也可以*连按*、*点按并拖移*或执行[更多]()操作。"
           }
         },
         "zh-Hant" : {
@@ -7013,7 +7013,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "当您打开这个窗口时，您会收到更新通知"
           }
         },

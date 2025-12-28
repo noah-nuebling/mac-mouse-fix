@@ -149,7 +149,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "您**已经在使用**默认的**三鍵**鼠标设置"
           }
         },
@@ -226,7 +226,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "您**已经在使用**默认的**五鍵**鼠标设置"
           }
         },
@@ -299,6 +299,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Phiên bản %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本：%@"
           }
         }
       }
@@ -1907,7 +1913,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "鼠标按钮%@"
+            "value" : "鼠标按键%@"
           }
         },
         "zh-Hant" : {
@@ -2187,7 +2193,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "中键"
           }
         },
@@ -2270,8 +2276,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "按钮%@"
+            "state" : "translated",
+            "value" : "按键%@"
           }
         },
         "zh-Hant" : {
@@ -2353,7 +2359,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "主键"
           }
         },
@@ -2436,7 +2442,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "辅键"
           }
         },
@@ -2751,7 +2757,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%2$@被Mac Mouse Fix捕获到。"
                     }
                   }
@@ -3101,8 +3107,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
+                      "state" : "translated",
+                      "value" : "其他app无法再识别这个按键"
                     }
                   }
                 }
@@ -3219,7 +3225,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "[了解更多](%@)"
           }
         },
@@ -3534,7 +3540,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%2$@不再被Mac Mouse Fix所捕获。"
                     }
                   }
@@ -3976,6 +3982,12 @@
             "state" : "translated",
             "value" : "**Kaydırma** hareketi şu anda Mac Mouse Fix tarafından yakalandı"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**滚动**被 Mac Mouse Fix 所捕获"
+          }
         }
       }
     },
@@ -4056,7 +4068,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "[了解更多](%@)"
           }
         },
@@ -4111,6 +4123,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Kaydırma** haraketinin Mac Mouse Fix tarafından yakalanması sona erdi"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**滚动**不再被 Mac Mouse Fix 所捕获"
           }
         }
       }
@@ -5179,8 +5197,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "以新标签页打开链接、在“终端”中粘贴文字等。\n \n作用相当于在标准鼠标上点按鼠标中键（又称鼠标滚轮键或鼠标按钮３）。"
+            "state" : "translated",
+            "value" : "以新标签页打开链接、在“终端”中粘贴文字等。\n \n作用相当于在标准鼠标上点按鼠标中键（又称鼠标滚轮键或鼠标按键３）。"
           }
         },
         "zh-Hant" : {
@@ -5253,6 +5271,12 @@
             "state" : "translated",
             "value" : "Kích nút chính"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主键"
+          }
         }
       }
     },
@@ -5321,8 +5345,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "… 鼠标主键（又称鼠标左键或鼠标按钮１） …"
+            "state" : "translated",
+            "value" : "点击鼠标主键（又称鼠标左键或鼠标按键１）"
           }
         },
         "zh-Hant" : {
@@ -5395,6 +5419,12 @@
             "state" : "translated",
             "value" : "Kích nút phụ"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "辅键"
+          }
         }
       }
     },
@@ -5463,8 +5493,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "… 鼠标辅键（又称鼠标右键或鼠标按钮２） …"
+            "state" : "translated",
+            "value" : "点击鼠标辅键（又称鼠标右键或鼠标按键２）"
           }
         },
         "zh-Hant" : {
@@ -6292,8 +6322,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "查询词典、在Finder中“快速查看”等。\n \n作用相当于在Apple触控板上用单指用力点按。"
+            "state" : "translated",
+            "value" : "查询与快速查看"
           }
         },
         "zh-Hant" : {
@@ -7101,6 +7131,12 @@
             "state" : "translated",
             "value" : "Uygulamayı **etkinleştirme konusunda sorun yaşıyorsanız**, [buraya](%@) tıklayın."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如果您在**启用软件时遇到困难**，点[这里](%@)"
+          }
         }
       }
     },
@@ -7170,7 +7206,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "不能使用**鼠标主键**\n请换一个按钮再试"
+            "value" : "不能使用**鼠标主键**\n请换一个按键再试"
           }
         },
         "zh-Hant" : {
@@ -7253,7 +7289,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "不能使用**鼠标辅键**\n请换一个按钮再试"
+            "value" : "不能使用**鼠标辅键**\n请换一个按键再试"
           }
         },
         "zh-Hant" : {
@@ -7418,8 +7454,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "系统偏好设置中已**禁用**Mac Mouse Fix\n\n若要启用Mac Mouse Fix：\n\n⒈前往[登录项](%@)\n⒉开启“Mac Mouse Fix.app”"
+            "state" : "translated",
+            "value" : "系统偏好设置中已**禁用**Mac Mouse Fix\n\n若要启用Mac Mouse Fix：\n\n⒈前往[登录时打开](%@)\n⒉开启“Mac Mouse Fix.app”"
           }
         },
         "zh-Hant" : {
@@ -7501,7 +7537,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "无法启用Mac Mouse Fix，因为您的电脑上已有**另一版本**的Mac Mouse Fix\n\n若要启用Mac Mouse Fix：\n\n⒈删除[其他版本](%@)\n⒉清倒废纸篓\n⒊重新启动您的Mac\n⒋再试一次！"
           }
         },
@@ -7750,7 +7786,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%1$@、%2$@"
           }
         },
@@ -8082,7 +8118,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "此许可证已被激活**%2$d**次。上限是**%3$d**次。\n\n因而此许可证已失效。这是为了防止盗版。如果您有其他原因需要如此多次激活这个许可证，还望见谅。\n\n与我[联系](%1$@)，我会提供一个新的许可证给您！感谢理解。"
           }
         },
@@ -8165,7 +8201,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "此许可证**已激活**!"
           }
         },
@@ -8331,7 +8367,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**无法激活**此许可证，但Mac Mouse Fix目前**在您所在的国家或地区免费**！"
           }
         },
@@ -8414,7 +8450,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**许可证服务器发生错误**\n\n服务器回应：\n\n%@"
           }
         },
@@ -8497,8 +8533,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**没有接入互联网**\n\n当您的电脑接入互联网时再次尝试激活许可证。"
+            "state" : "translated",
+            "value" : "**无法连接网络**\n\n请确保您的电脑可以访问互联网，并且没有防火墙阻止 Mac Mouse Fix 访问网络。\n\n如果这个问题一直出现，[请联系我](%@)"
           }
         },
         "zh-Hant" : {
@@ -8551,6 +8587,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Lisanslama sunucusunda bir hata oluştu.**\n\nLütfen daha sonra tekrar deneyin.\n\nEğer bu problem devam ederse bana [buradan](%@) bir e-posta gönderin."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**许可证服务器**未响应\n\n请稍后重试\n\n如果这个问题一直出现，[请联系我](%@)"
           }
         }
       }
@@ -8620,8 +8662,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**发生了未知错误：**\n\n%@"
+            "state" : "translated",
+            "value" : "发生了**未知错误**：\n\n%@"
           }
         },
         "zh-Hant" : {
@@ -8703,8 +8745,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "“**%@**”并不是已知的许可证。\n请换一个许可证再试。"
+            "state" : "translated",
+            "value" : "“**%@**”并不是有效的许可证。\n请确认您输入的许可证与您收到的一致"
           }
         },
         "zh-Hant" : {
@@ -8786,7 +8828,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "由于**未知的原因**，许可证激活失败。\n\n请到[这里](%@)提交**错误报告**"
           }
         },
@@ -8869,7 +8911,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "设置速度：\n[%1$@ > 鼠标 > 滚动速度](%2$@)"
           }
         },
@@ -9035,8 +9077,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "我无法回复所有的邮件，但我会阅读并感谢所有的反馈"
+            "state" : "translated",
+            "value" : "我可能无法及时回复邮件，但我会认真阅读所有的意见和建议，感谢您的反馈！"
           }
         },
         "zh-Hant" : {
@@ -9700,7 +9742,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "*慢慢*滚动滚轮来精准滚动，甚至无需键盘修饰键"
           }
         },
@@ -9949,8 +9991,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "您的**%1$@**鼠标回报了**%2$d**个按钮"
+            "state" : "translated",
+            "value" : "您的**%1$@**鼠标回报了**%2$d**个按键"
           }
         },
         "zh-Hant" : {
@@ -10281,7 +10323,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**点按此处**来载入您的**%@**鼠标的建议设置"
           }
         },
@@ -10364,7 +10406,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**已启用**Mac Mouse Fix调校：%1$@\n此前由菜单栏%2$@停用"
           }
         },
@@ -10447,8 +10489,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**按钮**"
+            "state" : "translated",
+            "value" : "**按键**"
           }
         },
         "zh-Hant" : {
@@ -12190,8 +12232,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🌟感谢购买Mac Mouse Fix！"
+            "state" : "translated",
+            "value" : "🙌感谢购买Mac Mouse Fix！"
           }
         },
         "zh-Hant" : {
@@ -12356,8 +12398,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🙌感谢您购买Mac Mouse Fix！"
+            "state" : "translated",
+            "value" : "🌟感谢您购买Mac Mouse Fix！"
           }
         },
         "zh-Hant" : {
@@ -12688,8 +12730,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🏂一生不悔低头族！！"
+            "state" : "translated",
+            "value" : "🦆苦日子到头了"
           }
         },
         "zh-Hant" : {
@@ -12854,8 +12896,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🐠比死神利维坦可爱。"
+            "state" : "translated",
+            "value" : "🐠你...是...谁？"
           }
         },
         "zh-Hant" : {
@@ -12909,6 +12951,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🏍️ Sence de CBR 1000RR-R'ın isminde çok fazla R yok mu?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐁这是我的宠物！"
           }
         }
       }
@@ -13061,7 +13109,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "免费期第**%1$d／%2$d**天"
           }
         },
@@ -13310,7 +13358,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "您好！您使用Mac Mouse Fix已经有**%1$d天**了。希望您喜欢这个软件！\n\n如果您想要继续使用Mac Mouse Fix，不妨[立即购买](%2$@)。"
           }
         },
@@ -13642,7 +13690,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "中键"
           }
         },
@@ -13725,8 +13773,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "按钮%@"
+            "state" : "translated",
+            "value" : "按键%@"
           }
         },
         "zh-Hant" : {
@@ -13808,7 +13856,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "主键"
           }
         },
@@ -13891,7 +13939,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "辅键"
           }
         },
@@ -14223,7 +14271,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "点按并拖移%@"
           }
         },
@@ -14306,7 +14354,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "连按并拖移%@"
           }
         },
@@ -14389,7 +14437,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "连按三次并拖移%@"
           }
         },
@@ -14472,8 +14520,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "并拖移"
+            "state" : "translated",
+            "value" : "并拖移鼠标"
           }
         },
         "zh-Hant" : {
@@ -14804,7 +14852,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "点按并滚动%@"
           }
         },
@@ -14887,7 +14935,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "连按并滚动%@"
           }
         },
@@ -14970,7 +15018,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "连按三次并滚动%@"
           }
         },
@@ -15053,8 +15101,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "并滚动"
+            "state" : "translated",
+            "value" : "并滚动滚轮"
           }
         },
         "zh-Hant" : {
@@ -15136,7 +15184,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "中键"
           }
         },
@@ -15219,8 +15267,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "按钮%@"
+            "state" : "translated",
+            "value" : "按键%@"
           }
         },
         "zh-Hant" : {
@@ -15302,7 +15350,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "主键"
           }
         },
@@ -15385,7 +15433,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "辅键"
           }
         },

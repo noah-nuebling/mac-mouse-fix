@@ -22,6 +22,12 @@
             "state" : "new",
             "value" : "Mac Mouse Fix Helper"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix Helper"
+          }
         }
       }
     },

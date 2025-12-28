@@ -39,6 +39,12 @@
             "state" : "translated",
             "value" : "# 🙌 Teşekkürler\n\nMac Mouse Fix kullanan herkese ve yorum yapanlara çok teşekkür ederim. Bu muhteşem bir şey ve benim geliştirdiğim bir uygulamayı bu kadar fazla insanın kullanması çok motive edici.\n\nBu dokümanda destek olan kişileri ve projeleri isimlendirmek ve onlara teşekkür etmek istedim"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# 🙌 感恩\n非常感谢每一位 Mac Mouse Fix 的用户以及向我提供反馈的你们。看到自己亲手创造的东西能被这么多人喜爱和使用，这让我备受鼓舞，也充满了动力。\n\n在此，我特别想向本文档中提到的所有个人和项目表达最诚挚的谢意。"
+          }
         }
       }
     },
@@ -80,6 +86,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "## 🌏 Çeviriler\n\nMac Mouse Fix'i dünyadaki herkesin erişimine açtığınız için çok teşekkürler!\n\n- 🇨🇳 Chinese translations by \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n- 🇰🇷 Korece çeviri [@jeongtae]({url_4})\n- 🇻🇳 Vietnamca çeviri [@nghlt]({url_5})\n- 🇧🇷 Brezilya Portekizcesi çeviri **Eduardo Rodrigues**\n- 🇫🇷 Fransızca çeviri [@DimitriDR]({url_6})\n- 🇹🇷 Turkish translations by \n    - [@hasanbeder]({url_7})\n    - [@erentomurcuk]({url_8})\n- 🇨🇿 Lehçe çeviri [Petr Pavlík]({url_9})\n- 🇷🇺 Russian translations by [ETMH]({url_10})\n- 🇪🇸 Spanish translations by [@manghidev]({url_11})\n- 🇵🇱 Polish translations by **Jakub** (Website translation)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 🌏 多语言翻译\n\n感谢你们将 Mac Mouse Fix 推广给全球各地的用户！\n\n- 🇨🇳 **中文翻译**：\n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2})（网页翻译）\n    - [@jihao]({url_3})（网页翻译）\n- 🇰🇷 **韩语翻译**：[@jeongtae]({url_4})\n- 🇻🇳 **越南语翻译**：[@nghlt]({url_5})\n- 🇧🇷 **巴西葡萄牙语翻译**：**Eduardo Rodrigues**\n- 🇫🇷 **法语翻译**：[@DimitriDR]({url_6})\n- 🇹🇷 **土耳其语翻译**：\n    - [@hasanbeder]({url_7})\n    - [@erentomurcuk]({url_8})\n- 🇨🇿 **捷克语翻译**：[Petr Pavlík]({url_9})\n- 🇷🇺 **俄语翻译**：[ETMH]({url_10})\n- 🇪🇸 **西班牙语翻译**：[@manghidev]({url_11})\n- 🇵🇱 **波兰语翻译**：**Jakub**（网页翻译）"
           }
         }
       }
@@ -123,6 +135,12 @@
             "state" : "translated",
             "value" : "## 💰 Para\n\nBana bir milkshake ısmarlayan herkese ve Mac Mouse Fix satın alan **{sales_count}** herkese çok teşekkürler.\n\nSayenizde yapmayı sevdiğim bir şeye bolca zaman ayırabiliyorum.\n\nMac Mouse Fix'e standart fiyatın üzerinde harcama yaparak beni destekleyen kişilerin isimlerini de ayrıca belirtmek isterim:"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 💰 赞助与支持\n\n衷心感谢每一位请我喝奶昔的朋友，以及所有购买了 Mac Mouse Fix 的 **{sales_count}** 位用户。\n正是因为有了你们的支持，我才能投入大量时间去做我热爱的事情。\n\n对于那些以高于标准价格购买 Mac Mouse Fix 来支持我的朋友，我在这里特别予以致谢："
+          }
         }
       }
     },
@@ -163,6 +181,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "### ⭐️ Cömertce Katkıda Bulunanlar\n\nDesteğiniz için teşekkürler! :)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ⭐️ 资助者\n\n感谢你们的支持！:)"
           }
         }
       }
@@ -205,6 +229,12 @@
             "state" : "translated",
             "value" : "### 🚀 Fazlasıyla Cömertce Katkıda Bulunanlar\n\nBu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem bir Milkshake** ısmarladılar. (Hatta bazıları bir mesaj bile gönderdi!) *Ekstra şeker* için teşekkürler!"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### 🚀 极其慷慨的资助者\n\n这些朋友支付了远高于标准的价格，请我喝了一杯 **“超级无敌奶昔”**。（有些人还留下了寄语）感谢你们带来的*糖分冲击*！"
+          }
         }
       }
     },
@@ -245,6 +275,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "### ❤️ GitHub Sponsorları\n\nGitHub'da bana sponsor olan [herkese]({url}) **çok teşekkürler**! Umarım bir gün sizin sayenizde o milkshake fabrikasını kurabilirim. :)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ❤️ GitHub 赞助者\n\n**万分感谢**在 GitHub 上赞助我的[每一位朋友]({url})！希望有朝一日在你们的支持下，我真的能开上一家奶昔工厂。:)"
           }
         }
       }
@@ -287,6 +323,12 @@
             "state" : "translated",
             "value" : "### ✨ PayPal Bağışları\n\nMac Mouse Fix tamamen ücretsizken birçok cömert insan bana PayPal'dan milkshake aldı.\n\nEğer siz de onlardan biriyseniz, **ücretsiz lisans** almak için [buraya]({url}) tıklayın!"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ✨ PayPal 捐赠\n\n在 Mac Mouse Fix 还是完全免费的阶段，许多慷慨的朋友通过 PayPal 请我喝了奶昔。\n\n如果你也是其中一员，请点击[这里]({url})领取你的**免费授权许可**！"
+          }
         }
       }
     },
@@ -328,6 +370,12 @@
             "state" : "translated",
             "value" : "## 👾 Diğer Yazılımlar"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 👾 其他软件"
+          }
         }
       }
     },
@@ -368,6 +416,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix'e ilham veren **yazılımlar**:\n\n- [SteerMouse]({url_1}) - Mac için öncü bir fare yazılımı, birçok özelliğe ilham veriyor. \"Bunun muhtemelen mümkün olmadığını\" düşündüğüm anlar oldu, ama sonra \"ah, SteerMouse bunu yapıyor\" dedim ve üç yıl sonra bunu nasıl uygulayacağımı da buldum.\n- [Calftrail Touch]({url_2}) - Mac Mouse Fix'in sınıfının en iyisi ve türünün ilk örneği olan Sanal İzleme dörtgeni sistemini destekleyen \"tersine mühendislik\" yapısının temeli!\n- [MOS]({url_3}) - Mac Mouse Fix'in \"Yüksek Kaydırma Akıcılığı\" seçeneği, \"Uygulamaya Özgü Ayarlar\"'ı ve daha fazlası MOS'tan ilham aldı. - [SensibleSideButtons]({url_4}) - \"Safari ve diğer uygulamalarda bir sayfa geri/ileri git\" özelliğinin erken bir uygulaması için kodunu kopyaladım ve ayrıca Calftrail Touch projesini keşfetmemi sağladı.\n- [Gifski]({url_5}) - Mac Mouse Fix için [Readme.md]({url_6}) dosyasının tasarımına ve içeriğine büyük ölçüde ilham verdi.\n- [Vue Sorun Yardımcısı]({url_7}) - [Mac Mouse Fix Geribildirim Asistanı]({url_8})'nın tasarımı ve teknik uygulaması için temel oldu."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "对 Mac Mouse Fix 产生启发或影响的**软件项目**：\n\n- [SteerMouse]({url_1}) —— Mac 鼠标控制软件的先驱，启发了本作的许多功能。曾几何时，我一度认为某些功能“可能无法实现”，但每当我看到“哦，SteerMouse 做到了”，我便重拾信心。三年后，我也终于摸索出了实现它们的方法。\n- [Calftrail Touch]({url_2}) —— 本作“逆向工程”工作的基石。正是基于此，Mac Mouse Fix 才得以实现业界领先且首创的触控板模拟功能！\n- [MOS]({url_3}) —— Mac Mouse Fix 的“高滚动平滑度”选项、“特定应用设置”的实现等功能均深受 MOS 的启发。\n- [SensibleSideButtons]({url_4}) —— 在实现“在 Safari 等应用中前进/后退”功能的早期阶段，我参考并使用了该项目的代码；同时，它也引导我发现了 Calftrail Touch 项目。\n- [Gifski]({url_5}) —— 极大地启发了 Mac Mouse Fix [Readme.md]({url_6}) 文档的设计与内容排版。\n- [Vue Issue Helper]({url_7}) —— 为 [Mac Mouse Fix 反馈助手]({url_8}) 的设计与技术实现奠定了基础。"
           }
         }
       }

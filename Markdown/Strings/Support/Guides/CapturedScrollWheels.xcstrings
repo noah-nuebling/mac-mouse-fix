@@ -39,6 +39,12 @@
             "state" : "translated",
             "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix farenizin **kaydırma tekerleğini de varsayılan olarak** [fare düğmelerini yakaladığı gibi](<{url}>) yakalar."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_scroll_wheels}\n\n与[捕获鼠标按键](<{url}>)的机制类似，Mac Mouse Fix **在默认情况下会捕获鼠标的滚轮**。"
+          }
         }
       }
     },
@@ -81,6 +87,12 @@
             "state" : "translated",
             "value" : "**Kaydırma tekerleğinin yakalanmasını engellemek istiyorsanız**\n\n1. Mac Mouse Fix üzerinde 'Kaydırma' sekmesine gidin.\n2. **Bütün** ayarları devre dışı bırakın.\n\t- Hız ayarını 'macOS' olarak ayarlayın.\n\t- Klavye değiştiricileri maddelerini de yanlarındaki 'x' düğmesini kullanarak kaldırın.\n\nBundan sonra kaydırma tekerleğinin yakalandığına dair mesajları görmeyeceksiniz."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**若要防止滚轮被捕获：**\n\n1. 进入 Mac Mouse Fix 的“滚动”标签页\n2. 关闭**所有**选项\n    - 针对“速度”选项，将其设置为“macOS”\n    - 点击每个修饰键旁边的“x”按钮，删除“键盘修饰键”下的所有条目\n\n完成这些操作后，你应该会看到一条提示，说明滚轮已不再被捕获。"
+          }
         }
       }
     },
@@ -122,6 +134,12 @@
             "state" : "translated",
             "value" : "**Kaydırma tekerleği yakalanmadığında ne olacak?**\n\nMac Mouse Fix kaydırma tekerleğini tamamen yok sayacaktır - bu esnada kaydırma yaparken herhangi bir işlem gücü veya enerji kullanımı olmayacaktır. Bu, [MOS]({url}) gibi kaydırma tekerleği modifikasyon uygulamalarını dilediğiniz gibi kullanmanızı sağlar."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**当滚轮“不再”被捕获时，会发生什么？**\n\n届时，Mac Mouse Fix 将完全忽略你的滚轮——在滚动期间，它不会消耗任何处理器性能或电池电量，也不会产生任何干扰。这让你能够完全自由地使用其他应用（如 [MOS]({url})）来接管和处理你的滚轮。"
+          }
         }
       }
     },
@@ -162,6 +180,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "##Ayrıca bakınız\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Claude 3.5 Sonnet'in muhteşem yardımı ile düzenlendi)*\n\nNot: Birebir çeviri olup çeviride yapay zekâ kullanılmamıştır.\n"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 另请参阅\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n（本文档在 Claude 3.5 Sonnet 的协助下完成校订）"
           }
         }
       }

@@ -40,6 +40,12 @@
             "state" : "translated",
             "value" : "# {docname_captured_buttons_mmf3}\n\nMac Mouse Fix kullanırken bir düğmenin 'yakalandığını' söyleyen bir kutucuk görmüş olabilirsiniz.\n\n{screenshot_0}\n\nBu dokümanda bunun ne anlama geldiğini, nasıl sorunlar oluşturabileceğini ve bunların çözümlerini göreceksiniz."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_buttons_mmf3}\n\n在使用 Mac Mouse Fix 时，你可能遇到过一条提示，称你鼠标上的某个按键正被 Mac Mouse Fix “捕获”。\n\n{screenshot_0}\n\n在本文中，你将了解这一提示的含义、它可能导致的问题，以及如何解决这些问题。"
+          }
         }
       }
     },
@@ -80,6 +86,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Bir fare düğmesini 'yakalamak' ne anlama geliyor?\n\nBir fare düğmesinin Mac Mouse Fix tarafından yakalanması artık macOS'in veya diğer uygulamaların o düğmeyi artık göremiyor olması anlamına gelir. Bu düğmenin normalde yapacağı aksiyonlar yakalanmış haldeyken çalışmayacaktır.\n\n**Örnek**: Normalde, farenizin yan tarafında bulunan düğmeler ile Chrome tarayıcıda geri veya ileri gidebilirsiniz. (Düğme 4 ve 5) Bu düğmeler Mac Mouse Fix ile yakalandığında önceki özellik yerine sizin tarafınızdan atanmış olan aksiyonların çalışması sağlanacaktır.\n\n**Mac Mouse Fix neden bunu yapıyor?**: Mac Mouse Fix düğmeleri diğer uygulamalardan gizleyerek atadığınız aksiyonlar dışında uygulamaların yanlışlıkla başka aksiyonlar gerçekleştirmesini engeller.\nÖrnek olarak, Düğme 4'ü masaüstülerinizin arasında geçiş yapmak için kullanıyorken istemsizce **aynı anda** Chrome tarayıcı üzerinden geri dönebilirsiniz."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 什么是“捕获”鼠标按键？\n\n一旦某个鼠标按键被 Mac Mouse Fix 捕获，其他应用程序或 macOS 系统将无法再识别到该按键的信号。\n在该按键被捕获期间，它原本的功能将失效。\n\n**示例**：通常情况下，你可以通过点击鼠标侧键（按键 4 和 5）在 Chrome 浏览器中执行“后退”或“前进”。\n但当这些侧键被 Mac Mouse Fix 捕获后，原本的功能将不再生效。取而代之的是，侧键只会触发你在 Mac Mouse Fix 中为它们分配的动作。\n\n**Mac Mouse Fix 为什么要这样做？** Mac Mouse Fix 对其他应用隐藏按键信号，是为了防止你在使用 Mac Mouse Fix 手势时意外触发其他功能。\n例如，如果你通过“按住并拖动按键 4”来切换桌面，如果没有捕获机制，你在切换桌面的**同时**，Chrome 浏览器也会执行“后退一页”的操作。"
           }
         }
       }
@@ -123,6 +135,12 @@
             "state" : "translated",
             "value" : "## Fare düğmelerimin hangilerinin Mac Mouse Fix tarafından yakalanmış olduğunu nasıl bileceğim?\n\nMac Mouse Fix'in sol tarafında, 'Düğmeler' sekmesinin altında görülen tüm düğmeler yakalanmaktadır.\n\nBundan sonra göreceğiniz resimde 'Orta Düğme', 'Düğme 5' ve 'Düğme 4' yakalanmıştır.<br>\n\n{screenshot_1}"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 我该如何知道哪些按键正被 Mac Mouse Fix 捕获？\n\n任何显示在“按键”标签页左侧列表中的按键，都正处于被 Mac Mouse Fix 捕获的状态。\n\n如下图所示，**“中键”**、**“按键 5”**以及**“按键 4”**已被捕获：<br>\n\n{screenshot_1}"
+          }
         }
       }
     },
@@ -165,6 +183,12 @@
             "state" : "translated",
             "value" : "## Mac Mouse Fix'in bir düğmeyi yakalamasını nasıl engellerim?\n\nMac Mouse Fix'in bir düğmeyi yakalamasını engellemek için 'Düğmeler' sekmesinde o butona atanmış tüm aksiyonları kaldırın.\n'Düğmeler' sekmesindeki bir aksiyonu, yanındaki '-' düğmesine basarak kaldırabilirsiniz.\n\nÖrneğin, bir sonraki resimde, 'Düğme 4'ün' yakalanmasını engellemek için belirtilmiş olan iki **'-'** düğmesine tıklayabilirsiniz.\n\n{screenshot_2}"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 如何防止 Mac Mouse Fix 捕获某个鼠标按键？\n\n若要防止 Mac Mouse Fix 捕获某个鼠标按键，请从“按键”标签页中删除该按键的所有配置项。\n你可以通过点击左侧的 **“-”** 按钮来删除“按键”标签页中的条目。\n\n例如，在下图中，你可以通过点击高亮显示的两个 **“-”** 按钮，来防止 **“按键 4”** 被捕获：\n\n{screenshot_2}"
+          }
         }
       }
     },
@@ -205,6 +229,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Bir düğmenin orijinal fonksiyonunu nasıl geri getirebilirim?\n\nBir düğmenin Mac Mouse Fix yüklemeden önceki haline getirmek için aşağıdakileri yapabilirsiniz:\n\n1. Yukarıda belirtildiği üzere düğmenin **yakalanmasını kapatabilirsiniz**.\n\n2. Direkt **Mac Mouse Fix'i** kapatabilirsiniz. Böylece hiçbir düğme yakalanmayacaktır.\n\n3. **Mac Mouse Fix'te belirli aksiyonları düğmeye atayabilirsiniz** - böylece atama yapmış olsanız dahi belirli özellikleri geri getirmiş olursunuz."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 如何恢复按键的原始功能？\n\n若要让按键恢复到安装 Mac Mouse Fix 之前的行为模式，你可以采取以下几种方法：\n\n1. **防止该按键被捕获** —— 具体操作如上文所述。\n\n2. **直接关闭 Mac Mouse Fix** —— 这样所有的按键都不会被捕获。\n\n3. **在 Mac Mouse Fix 中为该按键分配特定动作** —— 通过这种方式，即使在按键被捕获的情况下，你也可以恢复某些特定功能："
           }
         }
       }
@@ -248,6 +278,12 @@
             "state" : "translated",
             "value" : "Düğme"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按键"
+          }
         }
       }
     },
@@ -289,6 +325,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Orijinal Aksiyonu"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "原始功能"
           }
         }
       }
@@ -332,6 +374,12 @@
             "state" : "translated",
             "value" : "Mac Mouse Fix üzerindeki aksiyonu"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在Mac Mouse Fix中的功能"
+          }
         }
       }
     },
@@ -373,6 +421,12 @@
             "state" : "translated",
             "value" : "Orta Düğme"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中键"
+          }
         }
       }
     },
@@ -413,6 +467,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tarayıcınızda bağlantıları yeni bir sekmede açar"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在浏览器的新标签中打开链接"
           }
         }
       }
@@ -456,6 +516,12 @@
             "state" : "translated",
             "value" : "'Orta tık'<br>(Herhangi bir düğmeye **tıklanarak** eklenebilir)"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'按中键'<br>（可分配至点击按键的动作）"
+          }
         }
       }
     },
@@ -497,6 +563,12 @@
             "state" : "translated",
             "value" : "Orta Düğme"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中键"
+          }
         }
       }
     },
@@ -537,6 +609,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Terminal'e yazı yapıştır"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在终端中粘贴"
           }
         }
       }
@@ -580,6 +658,12 @@
             "state" : "translated",
             "value" : "'Orta tık'<br>(Herhangi bir düğmeye **tıklanarak** eklenebilir)"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'按中键'<br>（可分配至点击按键的动作）"
+          }
         }
       }
     },
@@ -620,6 +704,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fare Düğmesi 4 / Fare Düğmesi 5"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按键 4 / 按键 5"
           }
         }
       }
@@ -663,6 +753,12 @@
             "state" : "translated",
             "value" : "Geri git / Chrome ve diğer uygulamalarda ileri git"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 Chrome 及其他应用中执行“后退/前进”"
+          }
         }
       }
     },
@@ -705,6 +801,12 @@
             "state" : "translated",
             "value" : "'Geri' / 'İleri'<br>(Herhangi bir düğmeye **tıklayarak** eklenebilir)"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“后退” / “前进”<br>（可分配至点击按键的动作）"
+          }
         }
       }
     },
@@ -746,6 +848,12 @@
             "state" : "translated",
             "value" : "Orta Düğme"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中键"
+          }
         }
       }
     },
@@ -786,6 +894,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Blender ve diğer 3D uygulamalarda yörüngede dönme"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在Blender（或其他3D软件）中围绕物体旋转"
           }
         }
       }
@@ -829,6 +943,12 @@
             "state" : "translated",
             "value" : "'Kaydır ve Yönlendir'<br> (Herhangi bir düğmeye **tıkla ve kaydır** aksiyonu ile eklenebilir)"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“滚动与导航”<br>（可分配至点击按键的动作）"
+          }
         }
       }
     },
@@ -870,6 +990,12 @@
             "state" : "translated",
             "value" : "Böylece düğmenin orijinal özelliğini de kullanıyorken Mac Mouse Fix ile ekstra özellikler de ekleyebilirsiniz."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通过这种方式，你可以在保留按键原有功能的同时，还能在 Mac Mouse Fix 中为其分配“额外”的扩展功能。"
+          }
         }
       }
     },
@@ -910,6 +1036,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Ayrıca bakınız\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 另请参阅\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
           }
         }
       }

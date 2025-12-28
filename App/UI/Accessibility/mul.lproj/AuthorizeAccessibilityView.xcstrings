@@ -67,8 +67,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "授权访问“辅助功能”允许Mac Mouse Fix\n拦截您的鼠标和键盘信号"
+            "state" : "translated",
+            "value" : "授权“辅助功能”以便我们可以\n识别您的鼠标和键盘输入"
           }
         },
         "zh-Hant" : {

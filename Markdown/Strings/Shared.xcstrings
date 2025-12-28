@@ -39,6 +39,12 @@
             "state" : "translated",
             "value" : "Teşekkürler"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鸣谢"
+          }
         }
       }
     },
@@ -79,6 +85,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yakalanan Fare Düğmeleri"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "被捕获的鼠标按键"
           }
         }
       }
@@ -121,6 +133,12 @@
             "state" : "translated",
             "value" : "Yakalanan Kaydırma Düğmeleri"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "被捕获的滚轮"
+          }
         }
       }
     },
@@ -161,6 +179,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beni Oku"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "说明文档"
           }
         }
       }
@@ -203,6 +227,12 @@
             "state" : "translated",
             "value" : "Destek"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "支持"
+          }
         }
       }
     },
@@ -243,6 +273,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Umuyorum ki bu destek dokümanı yardımcı olmuştur!"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "希望这份指南对你有所帮助！"
           }
         }
       }
@@ -285,6 +321,12 @@
             "state" : "translated",
             "value" : "Umarım bu bilgiler yararlı olmuştur."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "希望这些信息对你有所帮助！"
+          }
         }
       }
     },
@@ -326,6 +368,12 @@
             "state" : "translated",
             "value" : "Umarım bu doküman kafanızdaki soru işaretlerini kaldırmıştır."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "希望这份指南已经解答了您的疑惑！"
+          }
         }
       }
     },
@@ -366,6 +414,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hâlâ sorularınız mı mevcut? [Buraya tıklayın]({url})."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "还有其他疑问？请点击[这里]({url})"
           }
         }
       }
@@ -409,6 +463,12 @@
             "state" : "translated",
             "value" : "`{localization_progress}` adındaki doküman `{current_language}` diline çevrilmiştir.\n[Çeviri için yardımcı olun]({url})"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本文档的 `{current_language}` 翻译进度已达 `{localization_progress}`。\n[参与翻译贡献]({url})"
+          }
         }
       }
     },
@@ -450,6 +510,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "[🌎 Çeviri için yardımcı olun!]({url})"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[🌎 欢迎提供翻译贡献！]({url})"
           }
         }
       }

@@ -39,6 +39,12 @@
             "state" : "translated",
             "value" : "# {docname_support}\n\nMac Mouse Fix hakkında sorular ve problemler için yardım."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_support}\n\n获取有关 Mac Mouse Fix 的问题解答与技术支持。"
+          }
         }
       }
     },
@@ -79,6 +85,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Sorular\n\nSıkça sorulan sorular için hızlı cevaplar [buradadır](<{url}>)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 疑问解答\n\n[此处](<{url}>)可以快速找到常见问题的简要回答。"
           }
         }
       }
@@ -121,6 +133,12 @@
             "state" : "translated",
             "value" : "## Kılavuzlar\n\nMac Mouse Fix mümkün olduğunca kendini açıklamaya çalışan bir uygulamadır. Fakat, bazı konular için açıklamalar yardımcı olabilir:\n\n [{docname_captured_scroll_wheels}](<{url_1}>)\n- [{docname_captured_buttons_mmf3}](<{url_2}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_3}>) (Mac Mouse Fix 2) {only_in_english} (Sadece İngilizce dilinde mevcuttur)"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 指南\n\nMac Mouse Fix 力求做到简单直观、无需解释。但在某些情况下，更详细的说明会有所帮助：\n\n- [{docname_captured_scroll_wheels}](<{url_1}>)\n- [{docname_captured_buttons_mmf3}](<{url_2}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_3}>) (Mac Mouse Fix 2) {only_in_english}"
+          }
         }
       }
     },
@@ -162,6 +180,12 @@
             "state" : "translated",
             "value" : "## Daha eski kılavuzlar\n\nMac Mouse Fix'in daha eski sürümleri için kılavuzlar.\n\n- [{docname_enabling}](<{url_1}>) {only_in_english}\n    -**macOS 13 Ventura** ve **macOS 14 Sonoma** için (Sadece İngilizce).\n- [{docname_ax_access}](<{url_2}>) {only_in_english}\n    - **Mac Mouse Fix 2.2.1** veya da eskisi ya da **macOS 10.14 Mojave** veya daha eskisi için (Sadece İngilizce)\n- [{docname_opening}](<{url_3}>) {only_in_english}\n    - **Mac Mouse Fix 2.2.3** veya daha eskisi için. (Sadece İngilizce)"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### 旧版指南\n\n针对旧版本 Mac Mouse Fix 或 macOS 的参考指南。\n\n- [{docname_enabling}](<{url_1}>) {only_in_english}\n    - 适用于 **macOS 13 Ventura** 和 **macOS 14 Sonoma**。\n- [{docname_ax_access}](<{url_2}>) {only_in_english}\n    - 适用于 **Mac Mouse Fix 2.2.1** 及更早版本，或 **macOS 10.14 Mojave** 及更早版本的用户。\n- [{docname_opening}](<{url_3}>) {only_in_english}\n    - 适用于 **Mac Mouse Fix 2.2.3** 及更早版本。"
+          }
         }
       }
     },
@@ -202,6 +226,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Bana ulaşın\n\nHala sorularınız mı var? [Buraya]({url}) tıklayın!"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 联系方式\n\n还有其他疑问？请点击[这里]({url})。"
           }
         }
       }
