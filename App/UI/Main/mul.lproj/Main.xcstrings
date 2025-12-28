@@ -5467,7 +5467,7 @@
       }
     },
     "N7H-9j-DIr.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.\\nYou can also *Double Click*, *Click and Drag* and [more]().\"; ObjectID = \"N7H-9j-DIr\"; Note = \"Buttons > Add Field Hint\\n\\nNOTE:\\n\\nThe emphasized bits like *Double Click* or *Click and Drag* should ideally match the text seen in the Action Table (Such as trigger.substring.drag.1, trigger.substring.click.2, etc.). This should help the user draw the connection to the Action Table (which appears in the UI right below this hint as of [Dec 2025])\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.\\nYou can also *Double Click*, *Click and Drag* and more.\"; ObjectID = \"N7H-9j-DIr\"; Note = \"Buttons > Add Field Hint\\n\\nNote:\\n\\nThe emphasized bits like *Double Click* or *Click and Drag* should ideally match the text seen in the Action Table (Such as trigger.substring.drag.1, trigger.substring.click.2, etc.). This should help the user draw the connection to the Action Table (which appears in the UI right below this hint as of [Dec 2025])\\n\\nNote to self:\\n\\nIf we ever write an article listing all the possible triggers, we could link it from \\\"and more\\\".\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -5485,7 +5485,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.\nYou can also *Double Click*, *Click and Drag* and [more]()."
+            "value" : "Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.\nYou can also *Double Click*, *Click and Drag* and more."
           }
         },
         "es" : {

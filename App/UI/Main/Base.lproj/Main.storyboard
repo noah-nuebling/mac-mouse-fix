@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="24412" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24128"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24412"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -707,16 +707,20 @@ NOTE: Primarily meant to teach the right mental model to users who have the comm
                                                 <textFieldCell key="cell" alignment="center" id="N7H-9j-DIr">
                                                     <font key="font" metaFont="smallSystem"/>
                                                     <string key="title">Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.
-You can also *Double Click*, *Click and Drag* and [more]().</string>
+You can also *Double Click*, *Click and Drag* and more.</string>
                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <attributedString key="userComments">
                                                         <fragment>
                                                             <string key="content">Buttons &gt; Add Field Hint
 
-NOTE:
+Note:
 
-The emphasized bits like *Double Click* or *Click and Drag* should ideally match the text seen in the Action Table (Such as trigger.substring.drag.1, trigger.substring.click.2, etc.). This should help the user draw the connection to the Action Table (which appears in the UI right below this hint as of [Dec 2025])</string>
+The emphasized bits like *Double Click* or *Click and Drag* should ideally match the text seen in the Action Table (Such as trigger.substring.drag.1, trigger.substring.click.2, etc.). This should help the user draw the connection to the Action Table (which appears in the UI right below this hint as of [Dec 2025])
+
+Note to self:
+
+If we ever write an article listing all the possible triggers, we could link it from "and more".</string>
                                                         </fragment>
                                                     </attributedString>
                                                 </textFieldCell>
