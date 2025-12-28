@@ -22,6 +22,7 @@ Thanks for bringing Mac Mouse Fix to people around the globe!
     - [@groverlynn](https://github.com/groverlynn)
     - [@Dro9an](https://github.com/Dro9an) (Website translation)
     - [@jihao](https://github.com/jihao) (Website translation)
+    - [@xianyu-wang](https://github.com/xianyu-wang)
 - 🇰🇷 Korean translations by [@jeongtae](https://github.com/jeongtae)
 - 🇻🇳 Vietnamese translations by [@nghlt](https://github.com/nghlt)
 - 🇧🇷 Brazilian Portuguese translations by **Eduardo Rodrigues**
