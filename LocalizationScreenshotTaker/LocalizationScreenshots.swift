@@ -715,13 +715,23 @@ final class LocalizationScreenshotClass: XCTestCase {
     
     func sharedf_launch_app(url: URL, args: [String], env: [String: String], kill_app: Bool) -> XCUIApplication {
         
-        /// `kill_app` does 2 things:
-        ///     1. kills the app after the testrunner quits.
-        ///     2. kills already-running app instance before attaching the testrunner
-        ///  –> This is the default `XCUIApplication` behavior
-        ///  The goal of `!kill_app` is to help speed-up iteration during development.
+        func _remoteMessagePortForAppURL(_ url: URL) -> String { /// Helper
+            let remotePort: String
+            if (url == sharedf_mainapp_url())       { remotePort = kMFBundleIDApp }
+            else if (url == sharedf_helper_url())   { remotePort = kMFBundleIDHelper }
+            else                                    { remotePort = ""; assert(false); }
+            return remotePort;
+        }
+        
+        var result: XCUIApplication
         
         if (!kill_app) {
+            
+            /// `kill_app` does 2 things:
+            ///     1. kills the app after the testrunner quits.
+            ///     2. kills already-running app instance before attaching the testrunner
+            ///  –> This is the default `XCUIApplication` behavior
+            ///  The goal of `!kill_app` is to help speed-up iteration during development.
             
             let alreadyRunning = XCUIApplication(url: url).state == .notRunning
             if alreadyRunning || true { /// Open even if already running, to bring it to the foreground. Otherwise I see weird errors on .click() later [Sep 4 2025]
@@ -744,14 +754,10 @@ final class LocalizationScreenshotClass: XCTestCase {
                 /// Get real env and args via MFMessagePort
                 let envAndArgsNS: NSDictionary
                 do {
-                    let remotePort: String
-                    if (url == sharedf_mainapp_url())       { remotePort = kMFBundleIDApp }
-                    else if (url == sharedf_helper_url())   { remotePort = kMFBundleIDHelper }
-                    else                                    { remotePort = ""; assert(false); }
                     var envAndArgs: Any? = nil
                     for i in 0..<5 { /// Think I observed this to be necessary. But shortly after it wasn't. Maybe observed wrong [Dec 2025]
                         print("sharedf_launch_app: getEnvAndArgs – attempt \(i)")
-                        envAndArgs = MFMessagePort.sendMessage("getEnvAndArgs", withPayload: nil, toRemotePort: remotePort, waitForReply: true)
+                        envAndArgs = MFMessagePort.sendMessage("getEnvAndArgs", withPayload: nil, toRemotePort: _remoteMessagePortForAppURL(url), waitForReply: true)
                         if (envAndArgs != nil) { break; }
                     }
                     envAndArgsNS = envAndArgs as! NSDictionary
@@ -769,13 +775,13 @@ final class LocalizationScreenshotClass: XCTestCase {
                 if (!argsMatch || !envMatches) {
                     if !kill_app {
                         print("sharedf_launch_app: env/arg mismatch – Killing the app despite `kill_app: false`")
-                        return sharedf_launch_app(url: url, args: args, env: env, kill_app: true)
+                        result = sharedf_launch_app(url: url, args: args, env: env, kill_app: true)
                     }
                     else { fatalError("Don't think this can happen. [Dec 2025]") }
                 }
             }
 
-            return xcapp
+            result = xcapp
         }
         else {
         
@@ -792,8 +798,21 @@ final class LocalizationScreenshotClass: XCTestCase {
                 assert(succ)
             }
             
-            return xcapp
+            result = xcapp
         }
+        
+        /// Assert that the app is in light-mode
+        ///     (So all the screenshots are in lightmode)
+        ///     Sidenote: I tried passing `-NSRequiresAquaSystemAppearance YES` commandline arg to force lightmode, but the window background color is off [Dec 2025, macOS 26 Tahoe]
+        
+        if (MFMessagePort.sendMessage("isDarkMode", withPayload: nil, toRemotePort: _remoteMessagePortForAppURL(url), waitForReply: true) as? NSNumber)?.boolValue != false {
+            assert(false, """
+                App is running in darkmode. Switch to lightmode before taking screenshots.
+                (Choose System Settings > Appearance > Appearance > Light)
+                """)
+        }
+        
+        return result
     }
     
     ///
