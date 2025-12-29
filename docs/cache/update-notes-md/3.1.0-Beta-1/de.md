@@ -1,14 +1,14 @@
 Mac Mouse Fix **3.1.0 Beta 1** bringt ein großartiges neues Übersetzungssystem, an dem schon eine Weile gearbeitet wurde.\
-Es gibt auch einige UI-Verbesserungen.
+Außerdem gibt es einige UI-Verbesserungen.
 
 ### Neues Lokalisierungssystem!
 
-- Es ist jetzt super einfach, hochwertige Übersetzungen zu Mac Mouse Fix beizutragen, ohne jegliche technischen Vorkenntnisse.
-- Es gibt viele kommentierte Screenshots und Erklärungen sowie eine großartige Suchfunktion, sodass Übersetzer leicht verstehen können, wie ihre Übersetzungen in der App erscheinen.
+- Es ist jetzt super einfach, hochwertige Übersetzungen zu Mac Mouse Fix beizutragen, ohne jeglichen technischen Hintergrund.
+- Es gibt viele kommentierte Screenshots und Erklärungen sowie eine großartige Suchfunktion, damit Übersetzer genau verstehen können, wie ihre Übersetzungen in der App erscheinen.
     - Ich denke, die Screenshots und die Übersetzungs-UI (`Xcloc Editor` App) sind die besten auf dem Markt, und ich hoffe, sie helfen dir dabei, großartige Übersetzungen zu liefern!
 - Fast alle Teile des Projekts sind jetzt übersetzbar, einschließlich des 'Captured Buttons Guide', der GitHub-Readme, der Website und mehr.
-    - All diese Projektteile können von einem zentralen Ort aus übersetzt werden, mit einfacher Querverweisfunktion über die `Xcloc Editor` App, sodass es für Übersetzer leicht ist, alles konsistent zu halten.
-- Das System ist so aufgebaut, dass es sehr einfach zu pflegen ist. Während Mac Mouse Fix sich weiterentwickelt und neue Bildschirme oder Texte hinzugefügt werden, wird sich alles automatisch aktualisieren.
+    - All diese Projektteile können von einem zentralen Ort aus mit einfacher Querverweisfunktion über die `Xcloc Editor` App übersetzt werden, sodass es für Übersetzer leicht ist, alles konsistent zu halten.
+- Das System ist so aufgebaut, dass es sehr einfach zu pflegen ist. Wenn Mac Mouse Fix weiterentwickelt wird und neue Bildschirme oder Texte hinzugefügt werden, wird sich alles automatisch aktualisieren.
 - Disclaimer: Ich verwende das Wort 'einfach' oft. Die Arbeitsabläufe sind einfach, aber sich großartige Übersetzungen auszudenken ist natürlich immer noch viel harte und respektable Arbeit! Es gibt jetzt nur weniger Hürden im Weg.
 
 
@@ -20,7 +20,8 @@ Neue Übersetzungen wurden bereits großzügigerweise von folgenden Personen ber
 - [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 Französische Übersetzungen
 - [@hasanbeder](https://github.com/hasanbeder) und [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 Türkische Übersetzungen
 - [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Tschechische Übersetzungen
-- [@Dro9an](https://github.com/Dro9an) und [@jihao](https://github.com/jihao): 🇨🇳 Chinesische Übersetzung [der Website](https://macmousefix.com/zh-Hans)
+- [@Dro9an](https://github.com/Dro9an) und [@jihao](https://github.com/jihao): 🇨🇳 Vereinfachte Chinesische Übersetzung [der Website](https://macmousefix.com/zh-Hans)
+- [@xianyu-wang](https://github.com/xianyu-wang): 🇨🇳 Vereinfachte Chinesische Übersetzungen
 - [@manghidev](https://github.com/manghidev): 🇪🇸 Spanische Übersetzungen
 - **Jakub**: 🇵🇱 Polnische Übersetzungen [der Website](https://macmousefix.com/pl)
 - [ETMH](https://t.me/sos_soon_ok): 🇷🇺 Russische Übersetzungen
@@ -43,7 +44,7 @@ Bei Verwendung von Mac Mouse Fix auf Englisch hat sich nicht viel geändert, abe
 - Die Escape-Taste kann jetzt überall verwendet werden, um Benachrichtigungen, Sheets und Popups zu schließen.
 - Ein 'Beim Übersetzen helfen'-Link wurde zum Info-Tab hinzugefügt.
 - Die Breite von Ansichten und Popups wurde angepasst, um in verschiedenen Sprachen gut auszusehen.
-- Besseres Textlayout für Chinesisch und Koreanisch, die Probleme mit Textumbrüchen in einigen der kleinen Popup-Benachrichtigungen hatten.
+- Besseres Textlayout für Chinesisch und Koreanisch, die in einigen der kleinen Popup-Benachrichtigungen Probleme mit dem Textumbruch hatten.
 - Markdown-Parsing-Bibliothek ersetzt, um einige Formatierungsfehler in Chinesisch und Koreanisch zu beheben.
 - Viele weitere Änderungen und Verbesserungen unter der Haube.
 
@@ -80,10 +81,16 @@ Updates:
     - Build-Nummer des MacMouseFixApp.zip-Assets: 24827
     - Datum [21. Dez. 2025]
     - Änderung: Spanische Übersetzungen von @manghidev hinzugefügt
-
+    
 5. Update
     - Build-Nummer des MacMouseFixApp.zip-Assets: 24828
     - Datum [27. Dez. 2025]
     - Änderungen:
         - Russische Übersetzungen von ETMH aktualisiert
         - Layout-Fehler im Buttons-Tab behoben, der mit den russischen Übersetzungen auftrat.
+
+6. Update
+    - Build-Nummer des MacMouseFixApp.zip-Assets: 24829
+    - Datum [29. Dez. 2025]
+    - Änderungen:
+        - Vereinfachte Chinesische Übersetzungen von @xianyu-wang aktualisiert

@@ -9,7 +9,7 @@ Mac Mouse Fix **3.1.0 Beta 1** 带来了一个全新的翻译系统，这个系�
 - 现在项目的几乎所有部分都可以翻译了，包括"捕获按钮指南"、GitHub Readme、网站等等。
     - 项目的所有这些部分都可以在一个集中的地方使用 `Xcloc Editor` 应用进行翻译，并且可以轻松交叉引用，因此译者可以轻松保持所有内容的一致性。
 - 该系统的设计非常易于维护，因此随着 Mac Mouse Fix 的发展和新屏幕或文本的添加，一切都会自动更新。
-- 免责声明：我经常使用"简单"这个词。工作流程是简单的，但想出优秀的翻译当然仍然是大量艰苦且值得尊敬的工作！只是现在障碍更少了。
+- 免责声明：我多次使用了"简单"这个词。工作流程是简单的，但想出优秀的翻译当然仍然是大量艰苦且值得尊敬的工作！只是现在障碍更少了。
 
 
 
@@ -20,7 +20,8 @@ Mac Mouse Fix **3.1.0 Beta 1** 带来了一个全新的翻译系统，这个系�
 - [@DimitriDR](https://github.com/DimitriDR)：🇫🇷 法语翻译
 - [@hasanbeder](https://github.com/hasanbeder) 和 [@erentomurcuk](https://github.com/erentomurcuk)：🇹🇷 土耳其语翻译
 - [Petr Pavlík](http://www.petrpavlik.com)：🇨🇿 捷克语翻译
-- [@Dro9an](https://github.com/Dro9an) 和 [@jihao](https://github.com/jihao)：🇨🇳 [网站](https://macmousefix.com/zh-Hans)的中文翻译
+- [@Dro9an](https://github.com/Dro9an) 和 [@jihao](https://github.com/jihao)：🇨🇳 [网站](https://macmousefix.com/zh-Hans)的简体中文翻译
+- [@xianyu-wang](https://github.com/xianyu-wang)：🇨🇳 简体中文翻译
 - [@manghidev](https://github.com/manghidev)：🇪🇸 西班牙语翻译
 - **Jakub**：🇵🇱 [网站](https://macmousefix.com/pl)的波兰语翻译
 - [ETMH](https://t.me/sos_soon_ok)：🇷🇺 俄语翻译
@@ -32,11 +33,11 @@ Mac Mouse Fix **3.1.0 Beta 1** 带来了一个全新的翻译系统，这个系�
 因此：
 
 > [!TIP]
-> 如果你想帮助为全世界的 Mac Mouse Fix 用户带来优质翻译，请查看全新的[翻译指南](https://redirect.macmousefix.com/?target=mmf-localization-contribution)！🌎
+> 如果你想帮助为全球的 Mac Mouse Fix 用户带来优秀的翻译，请查看全新的[翻译指南](https://redirect.macmousefix.com/?target=mmf-localization-contribution)！🌎
 
 ### 其他变化
 
-对于使用英语版 Mac Mouse Fix 的用户，变化不大，但界面上有一些更新，底层也进行了大量调整，以帮助改进翻译：
+在英语环境下使用 Mac Mouse Fix 时，变化不大，但界面上有一些更新，底层也进行了大量调整，以帮助改进翻译：
 
 - 改进了小型弹出通知的外观。
 - 在多个地方提供了更清晰的工具提示和错误信息。
@@ -87,3 +88,9 @@ Mac Mouse Fix **3.1.0 Beta 1** 带来了一个全新的翻译系统，这个系�
     - 变化：
         - 更新了 ETMH 提供的俄语翻译
         - 修复了"按钮"标签页上的布局错误，该错误在俄语翻译中出现。
+
+6. 更新
+    - MacMouseFixApp.zip 资源的构建编号：24829
+    - 日期：[2025年12月29日]
+    - 变化：
+        - 更新了 @xianyu-wang 提供的简体中文翻译

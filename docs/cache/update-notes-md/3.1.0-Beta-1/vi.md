@@ -3,31 +3,32 @@ Ngoài ra còn có một số cải tiến giao diện người dùng.
 
 ### Hệ thống bản địa hóa mới!
 
-- Giờ đây việc đóng góp bản dịch chất lượng cao cho Mac Mouse Fix trở nên cực kỳ dễ dàng, không yêu cầu kiến thức kỹ thuật.
+- Giờ đây việc đóng góp bản dịch chất lượng cao cho Mac Mouse Fix trở nên cực kỳ dễ dàng, không cần bất kỳ kiến thức kỹ thuật nào.
 - Có rất nhiều ảnh chụp màn hình có chú thích và bình luận, cùng với chức năng tìm kiếm tuyệt vời, giúp người dịch dễ dàng hiểu chính xác bản dịch của họ xuất hiện như thế nào trong ứng dụng.
     - Tôi nghĩ rằng các ảnh chụp màn hình và giao diện dịch thuật (ứng dụng `Xcloc Editor`) có chất lượng cao nhất trên thị trường, và tôi hy vọng chúng sẽ giúp bạn cung cấp những bản dịch tuyệt vời!
 - Hầu hết các phần của dự án giờ đây đều có thể dịch được, bao gồm 'Hướng dẫn Nút Bắt', GitHub Readme, Website và nhiều hơn nữa.
     - Tất cả các phần này của dự án có thể được dịch từ một nơi tập trung với khả năng tham chiếu chéo dễ dàng bằng ứng dụng `Xcloc Editor`, giúp người dịch dễ dàng giữ mọi thứ nhất quán.
 - Hệ thống được thiết lập để rất dễ bảo trì, vì vậy khi Mac Mouse Fix phát triển và các màn hình hoặc văn bản mới được thêm vào, mọi thứ sẽ tự động cập nhật.
-- Lưu ý: Tôi dùng từ 'dễ dàng' rất nhiều. Quy trình làm việc thì dễ dàng, nhưng tất nhiên việc nghĩ ra những bản dịch tuyệt vời vẫn là công việc khó khăn và đáng trân trọng! Chỉ là giờ đây có ít rào cản hơn.
+- Lưu ý: Tôi dùng từ 'dễ dàng' rất nhiều. Quy trình làm việc thì dễ dàng, nhưng tất nhiên việc nghĩ ra những bản dịch tuyệt vời vẫn là một công việc khó khăn và đáng trân trọng! Chỉ là giờ đây có ít rào cản hơn mà thôi.
 
 
 
 
 Các bản dịch mới đã được cung cấp một cách hào phóng bởi những người sau:
 
-- **Eduardo Rodrigues**: Bản dịch tiếng Bồ Đào Nha Brazil 🇧🇷
-- [@DimitriDR](https://github.com/DimitriDR): Bản dịch tiếng Pháp 🇫🇷
-- [@hasanbeder](https://github.com/hasanbeder) và [@erentomurcuk](https://github.com/erentomurcuk): Bản dịch tiếng Thổ Nhĩ Kỳ 🇹🇷
-- [Petr Pavlík](http://www.petrpavlik.com): Bản dịch tiếng Séc 🇨🇿
-- [@Dro9an](https://github.com/Dro9an) và [@jihao](https://github.com/jihao): Bản dịch tiếng Trung 🇨🇳 của [website](https://macmousefix.com/zh-Hans)
-- [@manghidev](https://github.com/manghidev): Bản dịch tiếng Tây Ban Nha 🇪🇸
-- **Jakub**: Bản dịch tiếng Ba Lan 🇵🇱 của [website](https://macmousefix.com/pl)
-- [ETMH](https://t.me/sos_soon_ok): Bản dịch tiếng Nga 🇷🇺
+- **Eduardo Rodrigues**: 🇧🇷 Bản dịch tiếng Bồ Đào Nha (Brazil)
+- [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 Bản dịch tiếng Pháp
+- [@hasanbeder](https://github.com/hasanbeder) và [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 Bản dịch tiếng Thổ Nhĩ Kỳ
+- [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Bản dịch tiếng Séc
+- [@Dro9an](https://github.com/Dro9an) và [@jihao](https://github.com/jihao): 🇨🇳 Bản dịch tiếng Trung giản thể của [website](https://macmousefix.com/zh-Hans)
+- [@xianyu-wang](https://github.com/xianyu-wang): 🇨🇳 Bản dịch tiếng Trung giản thể
+- [@manghidev](https://github.com/manghidev): 🇪🇸 Bản dịch tiếng Tây Ban Nha
+- **Jakub**: 🇵🇱 Bản dịch tiếng Ba Lan của [website](https://macmousefix.com/pl)
+- [ETMH](https://t.me/sos_soon_ok): 🇷🇺 Bản dịch tiếng Nga
 
 Cảm ơn công sức của các bạn!
 
-Tuy nhiên, **tất cả các ngôn ngữ vẫn cần hoàn thiện**, vì nhiều nội dung mới đã được làm cho có thể dịch được.
+Tuy nhiên, **tất cả các ngôn ngữ vẫn cần được hoàn thiện**, vì nhiều nội dung mới đã được làm cho có thể dịch được.
 
 Do đó:
 
@@ -43,15 +44,15 @@ Khi sử dụng Mac Mouse Fix bằng tiếng Anh, không có nhiều thay đổi
 - Phím escape giờ đây có thể được sử dụng ở mọi nơi để đóng thông báo, sheet và popup.
 - Liên kết 'Giúp Dịch' đã được thêm vào Tab Giới thiệu.
 - Độ rộng của các khung nhìn và popup đã được điều chỉnh để trông đẹp mắt trong nhiều ngôn ngữ khác nhau.
-- Bố cục văn bản tốt hơn cho tiếng Trung và tiếng Hàn, vốn gặp vấn đề ngắt dòng trong một số thông báo popup nhỏ.
+- Bố cục văn bản tốt hơn cho tiếng Trung và tiếng Hàn, vốn gặp vấn đề về ngắt dòng trong một số thông báo popup nhỏ.
 - Thay thế thư viện phân tích Markdown để sửa một số lỗi định dạng trong tiếng Trung và tiếng Hàn.
-- Nhiều thay đổi và cải tiến bên dưới khác.
+- Nhiều thay đổi và cải tiến bên dưới nữa.
 
 
 
 ---
 
-Bạn có thể tìm phiên bản trước của Mac Mouse Fix tại đây: [3.0.8](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8)
+Bạn có thể tìm phiên bản phát hành trước của Mac Mouse Fix tại đây: [3.0.8](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8)
 
 ---
 
@@ -71,10 +72,10 @@ Cập nhật:
 3. Cập nhật:
     - Số build của tài nguyên MacMouseFixApp.zip: 24822
     - Ngày: [15 tháng 12 năm 2025]
-    - Các thay đổi:
+    - Thay đổi:
         - Đã thêm bản dịch tiếng Thổ Nhĩ Kỳ bởi Eren.
         - Làm cho lề ngang trên tab Cuộn hẹp hơn một chút để hoạt động tốt hơn với một số chuỗi giao diện tiếng Thổ Nhĩ Kỳ dài hơn.
-        - Sửa lỗi hiển thị Markdown khi dấu đầu dòng danh sách có gạch chân nếu thứ đầu tiên sau danh sách là một liên kết. Điều này ảnh hưởng đến tiếng Thổ Nhĩ Kỳ ở một số nơi.
+        - Sửa lỗi hiển thị Markdown khi dấu đầu dòng danh sách bị gạch chân nếu thứ đầu tiên sau danh sách là một liên kết. Điều này ảnh hưởng đến tiếng Thổ Nhĩ Kỳ ở một số nơi.
 
 4. Cập nhật
     - Số build của tài nguyên MacMouseFixApp.zip: 24827
@@ -84,6 +85,12 @@ Cập nhật:
 5. Cập nhật
     - Số build của tài nguyên MacMouseFixApp.zip: 24828
     - Ngày [27 tháng 12 năm 2025]
-    - Các thay đổi:
+    - Thay đổi:
         - Đã cập nhật bản dịch tiếng Nga được cung cấp bởi ETMH
         - Đã sửa lỗi bố cục trên tab Nút xuất hiện với bản dịch tiếng Nga.
+
+6. Cập nhật
+    - Số build của tài nguyên MacMouseFixApp.zip: 24829
+    - Ngày [29 tháng 12 năm 2025]
+    - Thay đổi:
+        - Đã cập nhật bản dịch tiếng Trung giản thể bởi @xianyu-wang

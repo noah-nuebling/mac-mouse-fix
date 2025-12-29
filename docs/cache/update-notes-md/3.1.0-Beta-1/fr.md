@@ -1,7 +1,7 @@
 Mac Mouse Fix **3.1.0 Beta 1** apporte un nouveau système de traduction génial, qui était en préparation depuis un moment.\
 Il y a aussi quelques améliorations de l'interface utilisateur.
 
-### Nouveau système de localisation !
+### Nouveau système de localisation ! 
 
 - Il est maintenant super facile de contribuer des traductions de haute qualité à Mac Mouse Fix, sans aucune compétence technique requise.
 - Il y a plein de captures d'écran annotées et de commentaires, ainsi qu'une excellente fonction de recherche, pour que les traducteurs puissent facilement comprendre exactement comment leurs traductions apparaissent dans l'application.
@@ -20,9 +20,10 @@ De nouvelles traductions ont déjà été généreusement fournies par les perso
 - [@DimitriDR](https://github.com/DimitriDR) : 🇫🇷 Traductions françaises
 - [@hasanbeder](https://github.com/hasanbeder) et [@erentomurcuk](https://github.com/erentomurcuk) : 🇹🇷 Traductions turques
 - [Petr Pavlík](http://www.petrpavlik.com) : 🇨🇿 Traductions tchèques
-- [@Dro9an](https://github.com/Dro9an) et [@jihao](https://github.com/jihao) : 🇨🇳 Traduction chinoise du [site web](https://macmousefix.com/zh-Hans)
+- [@Dro9an](https://github.com/Dro9an) et [@jihao](https://github.com/jihao) : 🇨🇳 Traduction en chinois simplifié [du site web](https://macmousefix.com/zh-Hans)
+- [@xianyu-wang](https://github.com/xianyu-wang) : 🇨🇳 Traductions en chinois simplifié
 - [@manghidev](https://github.com/manghidev) : 🇪🇸 Traductions espagnoles
-- **Jakub** : 🇵🇱 Traductions polonaises du [site web](https://macmousefix.com/pl)
+- **Jakub** : 🇵🇱 Traductions polonaises [du site web](https://macmousefix.com/pl)
 - [ETMH](https://t.me/sos_soon_ok) : 🇷🇺 Traductions russes
 
 Merci pour votre travail !
@@ -34,9 +35,9 @@ Par conséquent :
 > [!TIP]
 > Consulte le nouveau [Guide de traduction](https://redirect.macmousefix.com/?target=mmf-localization-contribution) si tu souhaites aider à apporter d'excellentes traductions aux utilisateurs de Mac Mouse Fix à travers le monde ! 🌎
 
-### Autres changements
+### Autres changements 
 
-Lors de l'utilisation de Mac Mouse Fix en anglais, peu de choses ont changé, mais quelques éléments ont été mis à jour dans l'interface utilisateur, et beaucoup de choses ont évolué en coulisses pour améliorer les traductions :
+Lors de l'utilisation de Mac Mouse Fix en anglais, peu de choses ont changé, mais quelques éléments ont été mis à jour dans l'interface utilisateur, et beaucoup de choses ont évolué en coulisses, pour améliorer les traductions :
 
 - Apparence raffinée pour les petites notifications popup.
 - Info-bulles et messages d'erreur plus clairs à divers endroits.
@@ -44,7 +45,7 @@ Lors de l'utilisation de Mac Mouse Fix en anglais, peu de choses ont changé, ma
 - Un lien « Aider à traduire » a été ajouté à l'onglet À propos.
 - La largeur des vues et des popups a été ajustée pour un rendu optimal dans différentes langues.
 - Meilleure mise en page du texte pour le chinois et le coréen, qui avaient des problèmes de retour à la ligne dans certaines petites notifications popup.
-- Remplacement de la bibliothèque d'analyse Markdown pour corriger certains bugs de formatage en chinois et en coréen.
+- Remplacement de la bibliothèque d'analyse Markdown pour corriger certains bugs de formatage en chinois et coréen.
 - Beaucoup d'autres changements et améliorations en coulisses.
 
 
@@ -71,7 +72,7 @@ Mises à jour :
 3. Mise à jour :
     - Numéro de build de l'asset MacMouseFixApp.zip : 24822
     - Date : [15 déc. 2025]
-    - Changements :
+    - Changements : 
         - Ajout des traductions turques par Eren.
         - Marges horizontales légèrement réduites sur l'onglet Défilement pour mieux fonctionner avec certaines chaînes d'interface turques plus larges.
         - Correction d'un problème de rendu Markdown où les puces de liste étaient soulignées si le premier élément après la liste était un lien. Cela affectait le turc à plusieurs endroits.
@@ -87,3 +88,9 @@ Mises à jour :
     - Changements :
         - Mise à jour des traductions russes fournies par ETMH
         - Correction d'un bug de mise en page sur l'onglet Boutons qui apparaissait avec les traductions russes.
+
+6. Mise à jour
+    - Numéro de build de l'asset MacMouseFixApp.zip : 24829
+    - Date [29 déc. 2025]
+    - Changements :
+        - Mise à jour des traductions en chinois simplifié par @xianyu-wang

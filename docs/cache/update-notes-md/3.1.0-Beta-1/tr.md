@@ -14,20 +14,21 @@ Ayrıca bazı kullanıcı arayüzü iyileştirmeleri de var.
 
 
 
-Yeni çeviriler şu kişiler tarafından cömertçe sağlanmıştır:
+Yeni çeviriler aşağıdaki kişiler tarafından cömertçe sağlanmıştır:
 
 - **Eduardo Rodrigues**: 🇧🇷 Brezilya Portekizcesi çevirileri
 - [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 Fransızca çeviriler
 - [@hasanbeder](https://github.com/hasanbeder) ve [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 Türkçe çeviriler
 - [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Çekçe çeviriler
-- [@Dro9an](https://github.com/Dro9an) ve [@jihao](https://github.com/jihao): 🇨🇳 [Web sitesinin](https://macmousefix.com/zh-Hans) Çince çevirisi
+- [@Dro9an](https://github.com/Dro9an) ve [@jihao](https://github.com/jihao): 🇨🇳 [Web sitesinin](https://macmousefix.com/zh-Hans) Basitleştirilmiş Çince çevirisi
+- [@xianyu-wang](https://github.com/xianyu-wang): 🇨🇳 Basitleştirilmiş Çince çeviriler
 - [@manghidev](https://github.com/manghidev): 🇪🇸 İspanyolca çeviriler
 - **Jakub**: 🇵🇱 [Web sitesinin](https://macmousefix.com/pl) Lehçe çevirileri
 - [ETMH](https://t.me/sos_soon_ok): 🇷🇺 Rusça çeviriler
 
 Çalışmanız için teşekkürler!
 
-Ancak, **tüm diller hala çalışma gerektiriyor**, çünkü birçok yeni şey çevrilebilir hale getirildi.
+Ancak, çok fazla yeni şey çevrilebilir hale getirildiği için **tüm diller hala çalışma gerektiriyor**.
 
 Bu nedenle:
 
@@ -73,8 +74,8 @@ Güncellemeler:
     - Tarih: [15 Aralık 2025]
     - Değişiklikler:
         - Eren tarafından Türkçe çeviriler eklendi.
-        - Bazı daha geniş Türkçe kullanıcı arayüzü dizileriyle daha iyi çalışması için Kaydırma sekmesindeki yatay kenar boşlukları biraz daraltıldı.
-        - Listenin ardından gelen ilk şey bir bağlantıysa liste işaretlerinin altı çizili olacağı Markdown oluşturma sorunu düzeltildi. Bu birkaç yerde Türkçe'yi etkiledi.
+        - Bazı daha geniş Türkçe arayüz dizileriyle daha iyi çalışması için Kaydırma sekmesindeki yatay kenar boşlukları biraz daraltıldı.
+        - Listeden sonraki ilk şey bir bağlantı olduğunda liste işaretlerinin altı çizili olacağı Markdown oluşturma sorunu düzeltildi. Bu birkaç yerde Türkçe'yi etkiledi.
 
 4. Güncelleme
     - MacMouseFixApp.zip dosyasının yapı numarası: 24827
@@ -87,3 +88,9 @@ Güncellemeler:
     - Değişiklikler:
         - ETMH tarafından sağlanan Rusça çeviriler güncellendi
         - Rusça çevirilerle ortaya çıkan Düğmeler sekmesindeki bir düzen hatası düzeltildi.
+
+6. Güncelleme
+    - MacMouseFixApp.zip dosyasının yapı numarası: 24829
+    - Tarih [29 Aralık 2025]
+    - Değişiklikler:
+        - @xianyu-wang tarafından Basitleştirilmiş Çince Çeviriler güncellendi
