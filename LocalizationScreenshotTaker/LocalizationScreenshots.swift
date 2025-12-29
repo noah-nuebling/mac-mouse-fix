@@ -158,13 +158,28 @@ final class LocalizationScreenshotClass: XCTestCase {
         end tell
         """)
     }
-    
-    func sharedf_position_main_app_window(_ screen: NSScreen, _ window: XCUIElement, targetWindowY: Double) {
+
+    func _mfscale(_ x: Double, _ from: (Double, Double), _ to: (Double, Double)) -> Double { /// Reimplementation of Math.scale() without dependencies [Dec 2025]
+        assert(false); /// Unused
+        let unit = (x - from.0) / (from.1 - from.0)
+        return (unit * (to.1 - to.0)) + to.0
+    }
+
+    func sharedf_position_main_app_window(_ screen: NSScreen, _ window: XCUIElement) {
         
-        /// `targetWindowY` arg is normalized between 0 and 1
+        /// Define `menuBarOffset`  – the distance between the top of the window and the menuBar.
+        ///     What value to choose?
+        ///         Set to 30.0 -> hide menuBar from screenshots – looks prettier.
+        ///         Problem: Slightly cuts off one of the menus when running `func testTakeScreenshots_Localization` on my M1 MBA at default screen resolution on macOS 26 Tahoe [Dec 2025]
+        ///         Solution: Set to 0.0  [Dec 2025]
+        let menuBarOffset = 0.0
         
-        let targetWindowPosition = NSMakePoint(screen.frame.midX - window.frame.width/2.0, /// Just center the window horizontally
-                                               targetWindowY * (screen.frame.height - window.frame.height))
+        let flippedVisibleFrameMinY = NSScreen.screens[0].frame.height - screen.visibleFrame.maxY /// AppleScript coordinates start at the top of the screen, NSScreen coordinates start at the bottom, so we need to flip.
+        
+        let targetWindowPosition = NSMakePoint(
+            screen.visibleFrame.midX - window.frame.width/2.0, /// Just center the window horizontally
+            flippedVisibleFrameMinY + menuBarOffset
+        )
         sharedf_do_apple_script(scriptText: """
         tell application "System Events"
             set position of window 1 of process "Mac Mouse Fix" to {\(targetWindowPosition.x), \(targetWindowPosition.y)}
@@ -618,7 +633,7 @@ final class LocalizationScreenshotClass: XCTestCase {
                 let (screen, window, toolbarButtons, menuBar) = sharedf_find_elements_for_navigating_main_app()
                 
                 /// Center window
-                sharedf_position_main_app_window(screen, window, targetWindowY: 0.5)
+                sharedf_position_main_app_window(screen, window)
                 
                 /// Take screenshot of capture toast
                 do {
@@ -807,7 +822,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         
         if (MFMessagePort.sendMessage("isDarkMode", withPayload: nil, toRemotePort: _remoteMessagePortForAppURL(url), waitForReply: true) as? NSNumber)?.boolValue != false {
             assert(false, """
-                App is running in darkmode. Switch to lightmode before taking screenshots.
+                App is running in darkmode (Or the IPC failed). Switch to lightmode before taking screenshots.
                 (Choose System Settings > Appearance > Appearance > Light)
                 """)
         }
@@ -961,7 +976,11 @@ final class LocalizationScreenshotClass: XCTestCase {
         let (screen, window, toolbarButtons, menuBar) = sharedf_find_elements_for_navigating_main_app()
         
         /// Position the window
-        sharedf_position_main_app_window(screen, window, targetWindowY: 0.2)
+        sharedf_position_main_app_window(screen, window)
+        
+        /// Hide embarassing stuff
+        window.click() /// Bring to front so Command-Option-H shortcut simulated by `sharedf_hide_other_apps()` works. [Dec 2025]
+        sharedf_hide_other_apps()
         
         /// Validate that the app is enabled
         sharedf_validate_that_main_app_is_enabled(window, toolbarButtons)
