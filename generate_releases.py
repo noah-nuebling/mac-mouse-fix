@@ -17,9 +17,12 @@ import argparse
 import hashlib
 from typing import Callable
 import tempfile
+
 import mfutils
 from mfutils import deptracked, mfdedent, HumanBytes
 import mflocales
+
+
 from dataclasses import dataclass
 
 from babel import dates as bdates
@@ -286,35 +289,18 @@ download_folder_absolute = os.path.join(current_directory, folder_downloads)
 source_locale = 'en'
 
 locales = [
-    'en',
-    'de',
+    "de",
     "zh-Hant",
     "zh-HK",
     "zh-Hans",
-    'ko',
-    'vi',
-    'ar',
-    'ca',
-    'cs',
-    'nl',
-    'fr',
-    'el',
-    'he',
-    'hu',
-    'it',
-    'ja',
-    'pl',
+    "ko",
+    "vi",
+    "cs",
+    "fr",
     "pt-BR",
-    "pt-PT",
-    'ro',
-    'ru',
-    'es',
-    'sv',
-    'tr',
-    'uk',
-    'th',
-    'id',
-    'hi',
+    "ru",
+    "es",
+    "tr"
 ]
 
 # Validate locales
@@ -327,11 +313,18 @@ locales = [
 #           [Mar 2025] Maybe this explanation should be moved to some central place since it concerns all the localizable repos in the MMF project
 print(f"Validating locales against main repo...")
 if not args.no_locale_validation:
-    p = os.path.join('../mac-mouse-fix', mflocales.path_to_xcodeproj['mac-mouse-fix'])
-    assert os.path.exists(p), f"Wanted to validate locales, but main repo Xcode project not found at expected location: {p}"
-    loc_dev, loc_trans = mflocales.find_xcode_project_locales(p)
-    assert loc_dev == source_locale,                            f"Source locale doesn't match main repo: '{loc_dev}' vs '{source_locale}'"
-    assert set(loc_trans) == set(locales)-{source_locale},      f"Translation locales don't match main repo. Symmetric difference: {set(loc_trans).symmetric_difference(set(locales))}. App locales: ({loc_trans}), Hardcoded locales: ({locales})\nPass --no-locale-validation to ignore the main repo and just use the locales hardcoded here."
+    reporootp = '../mac-mouse-fix'
+    xcprojp = os.path.join(reporootp, mflocales.path_to_xcodeproj['mac-mouse-fix'])
+    assert os.path.exists(xcprojp), f"Wanted to validate locales, but main repo Xcode project not found at expected location: {xcprojp}"
+    loc_dev, loc_trans = mflocales.find_xcode_project_locales(xcprojp)
+    xcstrings_objs = [mfutils.read_xcstrings_file(p) for p in mflocales.find_xcstrings_files(reporootp)]
+    prog = mflocales.get_localization_progress(xcstrings_objs, loc_trans)
+    loc_trans_active = [locale for locale in loc_trans if (prog[locale]['percentage'] > 0)]
+
+    def jsonpp(obj): return json.dumps(obj, indent=4)
+
+    assert loc_dev == source_locale,                                f"Source locale doesn't match main repo: '{loc_dev}' vs '{source_locale}'"
+    assert set(loc_trans_active) == set(locales)-{source_locale},   f"Translation locales don't match main repo. Symmetric difference: {jsonpp(list(set(loc_trans_active).symmetric_difference(set(locales))))}. App locales: {jsonpp(loc_trans_active)}, Hardcoded locales: {jsonpp(locales)}\nPass --no-locale-validation to ignore the main repo and just use the locales hardcoded here.\nOr just replace the hardcoded locales with the App locales."
 
 # Sort locales
 locales = mflocales.sorted_locales(locales, source_locale)
