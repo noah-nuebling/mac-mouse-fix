@@ -16,6 +16,7 @@ This document is `0%` translated into `🇺🇦 Українська`
   [🇨🇿 Čeština](../../../../../Markdown/LocalizedDocuments/cs/Support/Guides/CapturedScrollWheels.md)\
   [🇷🇺 Русский](../../../../../Markdown/LocalizedDocuments/ru/Support/Guides/CapturedScrollWheels.md)\
   **🇺🇦 Українська**\
+  [🇨🇳 中文 (简体)](../../../../../Markdown/LocalizedDocuments/zh-Hans/Support/Guides/CapturedScrollWheels.md)\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=uk&target=mmf-localization-contribution)
 </details>
 

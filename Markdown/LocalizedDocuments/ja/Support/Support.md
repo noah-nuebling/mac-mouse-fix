@@ -15,6 +15,7 @@ This document is `0%` translated into `🇯🇵 日本語`
   [🇹🇷 Türkçe](../../../../Markdown/LocalizedDocuments/tr/Support/Support.md)\
   [🇨🇿 Čeština](../../../../Markdown/LocalizedDocuments/cs/Support/Support.md)\
   [🇷🇺 Русский](../../../../Markdown/LocalizedDocuments/ru/Support/Support.md)\
+  [🇨🇳 中文 (简体)](../../../../Markdown/LocalizedDocuments/zh-Hans/Support/Support.md)\
   **🇯🇵 日本語**\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=ja&target=mmf-localization-contribution)
 </details>

@@ -2534,12 +2534,6 @@
             "state" : "translated",
             "value" : "**Geribildirim**"
           }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "你可以通过 [反馈助手 (Feedback Assistant)]({url}) 分享你的**想法**、**问题** 以及**建议**，以此来帮助我们改进。"
-          }
         }
       }
     },

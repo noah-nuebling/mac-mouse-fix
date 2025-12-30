@@ -16,6 +16,7 @@ This document is `0%` translated into `🇷🇴 Română`
   [🇹🇷 Türkçe](../../../../../Markdown/LocalizedDocuments/tr/Support/Guides/CapturedButtonsMMF3.md)\
   [🇨🇿 Čeština](../../../../../Markdown/LocalizedDocuments/cs/Support/Guides/CapturedButtonsMMF3.md)\
   [🇷🇺 Русский](../../../../../Markdown/LocalizedDocuments/ru/Support/Guides/CapturedButtonsMMF3.md)\
+  [🇨🇳 中文 (简体)](../../../../../Markdown/LocalizedDocuments/zh-Hans/Support/Guides/CapturedButtonsMMF3.md)\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=ro&target=mmf-localization-contribution)
 </details>
 

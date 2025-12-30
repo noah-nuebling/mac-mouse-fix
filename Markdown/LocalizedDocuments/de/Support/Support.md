@@ -15,6 +15,7 @@ Dieses Dokument ist zu `87%` übersetzt auf `🇩🇪 Deutsch`
   [🇹🇷 Türkçe](../../../../Markdown/LocalizedDocuments/tr/Support/Support.md)\
   [🇨🇿 Čeština](../../../../Markdown/LocalizedDocuments/cs/Support/Support.md)\
   [🇷🇺 Русский](../../../../Markdown/LocalizedDocuments/ru/Support/Support.md)\
+  [🇨🇳 中文 (简体)](../../../../Markdown/LocalizedDocuments/zh-Hans/Support/Support.md)\
   [🌎 Beim Übersetzen helfen!](https://redirect.macmousefix.com/?locale=de&target=mmf-localization-contribution)
 </details>
 

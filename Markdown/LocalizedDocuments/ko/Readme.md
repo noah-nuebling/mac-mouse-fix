@@ -15,6 +15,7 @@ This document is `0%` translated into `🇰🇷 한국어`
   [🇹🇷 Türkçe](../../../Markdown/LocalizedDocuments/tr/Readme.md)\
   [🇨🇿 Čeština](../../../Markdown/LocalizedDocuments/cs/Readme.md)\
   [🇷🇺 Русский](../../../Markdown/LocalizedDocuments/ru/Readme.md)\
+  [🇨🇳 中文 (简体)](../../../Markdown/LocalizedDocuments/zh-Hans/Readme.md)\
   **🇰🇷 한국어**\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=ko&target=mmf-localization-contribution)
 </details>

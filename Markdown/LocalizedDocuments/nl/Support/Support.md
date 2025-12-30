@@ -16,6 +16,7 @@ This document is `0%` translated into `🇳🇱 Nederlands`
   [🇹🇷 Türkçe](../../../../Markdown/LocalizedDocuments/tr/Support/Support.md)\
   [🇨🇿 Čeština](../../../../Markdown/LocalizedDocuments/cs/Support/Support.md)\
   [🇷🇺 Русский](../../../../Markdown/LocalizedDocuments/ru/Support/Support.md)\
+  [🇨🇳 中文 (简体)](../../../../Markdown/LocalizedDocuments/zh-Hans/Support/Support.md)\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=nl&target=mmf-localization-contribution)
 </details>
 
