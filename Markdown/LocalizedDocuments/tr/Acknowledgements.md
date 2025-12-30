@@ -72,6 +72,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Aralık 2025**
 
+- 🇧🇬&nbsp;Bsj&nbsp;Llc - "IT Consulting."
 - 🇺🇸&nbsp;James&nbsp;Nakashima
 - 🇺🇸&nbsp;Usirin - "thanks for making one of the best software out there"
 - 🇳🇱&nbsp;Webaccounts
