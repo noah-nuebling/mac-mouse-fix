@@ -85,7 +85,7 @@
       }
     },
     "already-using-defaults-toast.3" : {
-      "comment" : ".",
+      "comment" : "This toast notification appears in response to selecting the 'restore-buttons-alert.radio1' radio button.",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -168,7 +168,7 @@
       }
     },
     "already-using-defaults-toast.5" : {
-      "comment" : ".",
+      "comment" : "This toast notification appears in response to selecting the 'restore-buttons-alert.radio2' radio button.",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -202,7 +202,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Você **já está usando** a configuração padrão para mouses com **5 ou mais botões**"
           }
         },
@@ -214,14 +214,14 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Halihazırda** 5 düğmeli fareler için varsayılan ayarı kullanıyorsunuz."
+            "state" : "needs_review",
+            "value" : "**Halihazırda** 5+ düğmeli fareler için varsayılan ayarı kullanıyorsunuz."
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bạn **đã và đang sử dụng** thiết lập mặc định với chuột **5 nút**"
+            "value" : "Bạn **đã và đang sử dụng** thiết lập mặc định với chuột **5+ nút**"
           }
         },
         "zh-Hans" : {
@@ -10117,7 +10117,7 @@
       }
     },
     "restore-buttons-alert.radio2" : {
-      "comment" : "",
+      "comment" : "If '5+' seems unnatural in your language, translate it as something like '5 or more'. Don't translate '5+' as 'more than 5' (common mistake)",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -10145,19 +10145,19 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Une souris avec plus de 5 boutons"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "5버튼 이상의 마우스"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mouse com mais de 5 botões"
           }
         },
@@ -10200,7 +10200,7 @@
       }
     },
     "restore-buttons-alert.title" : {
-      "comment" : "",
+      "comment" : ".",
       "localizations" : {
         "cs" : {
           "stringUnit" : {

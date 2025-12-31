@@ -44,7 +44,7 @@ import Foundation
         
         let alert = NSAlert()
         alert.alertStyle = .informational
-        alert.messageText = MFLocalizedString("restore-buttons-alert.title", comment: "")
+        alert.messageText = MFLocalizedString("restore-buttons-alert.title", comment: ".")
         alert.informativeText = ""
         
         let restoreButton = alert.addButton(withTitle: MFLocalizedString("restore-buttons-alert.commit", comment: ""))
@@ -68,7 +68,7 @@ import Foundation
         ///
         
         let radio1 = NSButton(radioButtonWithTitle: MFLocalizedString("restore-buttons-alert.radio1", comment: ""), target: self, action: #selector(nullAction(sender:)))
-        let radio2 = NSButton(radioButtonWithTitle: MFLocalizedString("restore-buttons-alert.radio2", comment: ""), target: self, action: #selector(nullAction(sender:)))
+        let radio2 = NSButton(radioButtonWithTitle: MFLocalizedString("restore-buttons-alert.radio2", comment: "If '5+' seems unnatural in your language, translate it as something like '5 or more'. Don't translate '5+' as 'more than 5' (common mistake)"), target: self, action: #selector(nullAction(sender:)))
         radio1.setAccessibilityIdentifier("axRestoreButtons3")
         radio2.setAccessibilityIdentifier("axRestoreButtons5")
         
