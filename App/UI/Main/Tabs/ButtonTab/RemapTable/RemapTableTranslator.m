@@ -110,12 +110,20 @@ static NSArray *getScrollEffectsTable() {
 }
 static NSArray *getDragEffectsTable() {
     NSArray *dragEffectsTable = @[
-        @{@"ui": MFLocalizedString(@"drag-effect.dock-swipe", @""), @"tool": MFLocalizedString(@"drag-effect.dock-swipe.hint", @"") , @"dict": @{
+        @{
+            @"ui": MFLocalizedString(@"drag-effect.dock-swipe", @""),
+            @"tool": MFLocalizedString(@"drag-effect.dock-swipe.hint", @"") ,
+            @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
-        }},
-        @{@"ui": MFLocalizedString(@"drag-effect.scroll-swipe", @""), @"tool": MFLocalizedString(@"drag-effect.scroll-swipe.hint", @"") , @"dict": @{
+            }
+        },
+        @{
+            @"ui": MFLocalizedString(@"drag-effect.scroll-swipe", @""),
+            @"tool": MFLocalizedString(@"drag-effect.scroll-swipe.hint", @"") ,
+            @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
-        }},
+            }
+        },
 //        separatorEffectsTableEntry(),
 //        @{
 ////          @"ui": [NSString stringWithFormat:@"%@ Click and Drag", [UIStrings getButtonString:3]],
@@ -236,16 +244,24 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                 @""
             ),
             @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                  kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
+              kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+              kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
             }
         },
-        @{@"ui": MFLocalizedString(@"effect.right-space", @""), @"tool": MFLocalizedString(@"effect.right-space.hint", @""), @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                  kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
-        }},
+        @{
+            @"ui": MFLocalizedString(@"effect.right-space", @""),
+            @"tool": MFLocalizedString(@"effect.right-space.hint", @""),
+            @"dict": @{
+              kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+              kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
+            }
+        },
         separatorEffectsTableEntry(),
-        @{@"ui": MFLocalizedString(@"effect.record-shortcut", @""), @"tool": MFLocalizedString(@"effect.record-shortcut.hint", @""), @"keyCaptureEntry": @YES},
+        @{
+            @"ui": MFLocalizedString(@"effect.record-shortcut", @""),
+            @"tool": MFLocalizedString(@"effect.record-shortcut.hint", @""),
+            @"keyCaptureEntry": @YES
+        },
     ].mutableCopy;
     
     /// Insert button specific entry
