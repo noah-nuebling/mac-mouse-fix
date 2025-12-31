@@ -501,7 +501,7 @@ final class LocalizationScreenshotClass: XCTestCase {
             var allFilePaths: [String]
         }
         var args = Args(
-            onlyUpdateLocales: ["zh-Hans"],      /// Only update screenshots for these locales. (leave empty to update all)
+            onlyUpdateLocales: ["pt-BR"],      /// Only update screenshots for these locales. (leave empty to update all)
             continueFromLocale: nil,    /// Set in case of interruption, to avoid redoing already-completed localizations. Restart from this locale
             killApp: true,              /// Set false to leave app running for faster iterations.
             allFilePaths: [
@@ -824,6 +824,7 @@ final class LocalizationScreenshotClass: XCTestCase {
             assert(false, """
                 App is running in darkmode (Or the IPC failed). Switch to lightmode before taking screenshots.
                 (Choose System Settings > Appearance > Appearance > Light)
+                (Use Control-Option-Command-G to rerun the test again)
                 """)
         }
         
