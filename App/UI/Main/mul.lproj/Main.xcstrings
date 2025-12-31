@@ -5514,7 +5514,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mova o ponteiro do mouse dentro do campo '+' e *Clique* em um botão do mouse para atribuir uma ação a ele.\nVocê também pode dar *Clique Duplo*, *Arrastar e Soltar* e mais."
           }
         },

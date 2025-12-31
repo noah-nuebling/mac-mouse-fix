@@ -4189,7 +4189,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Spaces e Mission Control"
           }
         },
@@ -6144,7 +6144,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mova para a Mesa à esquerda criada no Mission Control"
           }
         },
@@ -11485,7 +11485,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mover entre Espaços"
           }
         },
