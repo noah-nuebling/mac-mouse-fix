@@ -11,6 +11,7 @@ Este documento está traducido `98%` al `🇪🇸 Español` [Ayudar a traducir](
   [🇬🇧 English](../../../Readme.md)\
   [🇩🇪 Deutsch](../../../Markdown/LocalizedDocuments/de/Readme.md)\
   **🇪🇸 Español**\
+  [🇧🇷 Português (Brasil)](../../../Markdown/LocalizedDocuments/pt-BR/Readme.md)\
   [🇹🇷 Türkçe](../../../Markdown/LocalizedDocuments/tr/Readme.md)\
   [🇨🇿 Čeština](../../../Markdown/LocalizedDocuments/cs/Readme.md)\
   [🇷🇺 Русский](../../../Markdown/LocalizedDocuments/ru/Readme.md)\

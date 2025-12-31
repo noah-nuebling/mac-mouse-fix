@@ -12,6 +12,7 @@ This document is `0%` translated into `🇻🇳 Tiếng Việt`
   [🇬🇧 English](../../../Readme.md)\
   [🇩🇪 Deutsch](../../../Markdown/LocalizedDocuments/de/Readme.md)\
   [🇪🇸 Español](../../../Markdown/LocalizedDocuments/es/Readme.md)\
+  [🇧🇷 Português (Brasil)](../../../Markdown/LocalizedDocuments/pt-BR/Readme.md)\
   **🇻🇳 Tiếng Việt**\
   [🇹🇷 Türkçe](../../../Markdown/LocalizedDocuments/tr/Readme.md)\
   [🇨🇿 Čeština](../../../Markdown/LocalizedDocuments/cs/Readme.md)\

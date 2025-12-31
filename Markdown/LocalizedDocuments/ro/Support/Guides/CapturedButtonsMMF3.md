@@ -12,6 +12,7 @@ This document is `0%` translated into `🇷🇴 Română`
   [🇬🇧 English](../../../../../Support/Guides/CapturedButtonsMMF3.md)\
   [🇩🇪 Deutsch](../../../../../Markdown/LocalizedDocuments/de/Support/Guides/CapturedButtonsMMF3.md)\
   [🇪🇸 Español](../../../../../Markdown/LocalizedDocuments/es/Support/Guides/CapturedButtonsMMF3.md)\
+  [🇧🇷 Português (Brasil)](../../../../../Markdown/LocalizedDocuments/pt-BR/Support/Guides/CapturedButtonsMMF3.md)\
   **🇷🇴 Română**\
   [🇹🇷 Türkçe](../../../../../Markdown/LocalizedDocuments/tr/Support/Guides/CapturedButtonsMMF3.md)\
   [🇨🇿 Čeština](../../../../../Markdown/LocalizedDocuments/cs/Support/Guides/CapturedButtonsMMF3.md)\
