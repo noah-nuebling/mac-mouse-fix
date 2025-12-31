@@ -82,6 +82,12 @@
             "value" : "## 🌏 Traducciones\n\n¡Gracias por llevar Mac Mouse Fix a personas de todo el mundo!\n\n- 🇨🇳 Chinese translations by \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n    - [@xianyu-wang]({url_4})\n  - 🇰🇷 Traducciones al coreano por [@jeongtae]({url_5})\n  - 🇻🇳 Traducciones al vietnamita por [@nghlt]({url_6})\n  - 🇧🇷 Traducciones al portugués brasileño por **Eduardo Rodrigues**\n  - 🇫🇷 Traducciones al francés por [@DimitriDR]({url_7})\n- 🇹🇷 Turkish translations by \n    - [@hasanbeder]({url_8})\n    - [@erentomurcuk]({url_9})\n- 🇨🇿 Traducciones al checo por [Petr Pavlík]({url_10})\n- 🇷🇺 Russian translations by [ETMH]({url_11})\n- 🇪🇸 Spanish translations by [@manghidev]({url_12})\n- 🇵🇱 Polish translations by **Jakub** (Website translation)"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 🌏 Traduções\n\nObrigado por levar o Mac Mouse Fix para pessoas ao redor do mundo!\n\n- 🇨🇳 Traduções para o chinês por  \n  - [@groverlynn]({url_1})  \n  - [@Dro9an]({url_2}) (Tradução do site)  \n  - [@jihao]({url_3}) (Tradução do site)\n  - [@xianyu-wang]({url_4})\n- 🇰🇷 Traduções para o coreano por [@jeongtae]({url_5})\n- 🇻🇳 Traduções para o vietnamita por [@nghlt]({url_6})\n- 🇧🇷 Traduções para o português brasileiro por **Eduardo Rodrigues**\n- 🇫🇷 Traduções para o francês por [@DimitriDR]({url_7})\n- 🇹🇷 Traduções para o turco por  \n  - [@hasanbeder]({url_8})  \n  - [@erentomurcuk]({url_9})\n- 🇨🇿 Traduções para o tcheco por [Petr Pavlík]({url_10})\n- 🇷🇺 Traduções para o russo por [ETMH]({url_11})\n- 🇪🇸 Traduções para o espanhol por [@manghidev]({url_12})\n- 🇵🇱 Traduções para o polonês por **Jakub** (Tradução do site)\n"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
