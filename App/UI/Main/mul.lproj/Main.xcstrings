@@ -707,8 +707,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Solicite um Recurso"
+            "state" : "translated",
+            "value" : "Ajude a traduzir"
           }
         },
         "ru" : {
@@ -1524,7 +1524,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Permite ativar ou desativar rapidamente recursos como\nrolagem suave"
           }
         },
@@ -1776,7 +1776,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "O Mac Mouse Fix continuará ativo mesmo depois que você fechá-lo"
           }
         },
@@ -2257,7 +2257,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Reportar um problema"
           }
         },
@@ -5428,6 +5428,12 @@
             "value" : "Hold Command (⌘) and Shift (⇧), then click this icon to reveal the Mac Mouse Fix configuration file in Finder"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantenha Command (⌘) e Shift (⇧) pressionadas e clique neste ícone para abrir o arquivo de configuração do Mac Mouse Fix no Finder."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6989,8 +6995,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Você será notificado sobre atualizações ao abrir\nesta janela"
+            "state" : "translated",
+            "value" : "Você receberá avisos de atualização ao abrir esta janela"
           }
         },
         "ru" : {

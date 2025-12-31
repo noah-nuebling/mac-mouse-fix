@@ -43,7 +43,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "O Acesso à Acessibilidade permite que o \nMac Mouse Fix intercepte sinais do mouse e do teclado"
           }
         },
@@ -295,7 +295,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ativar o 'Ajudante do Controlador de guia inicial do Mac Mouse Fix'"
           }
         },

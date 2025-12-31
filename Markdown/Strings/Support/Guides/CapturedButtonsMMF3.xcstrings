@@ -29,6 +29,12 @@
             "value" : "# {docname_captured_buttons_mmf3}\n\nMientras usabas Mac Mouse Fix, es posible que hayas encontrado un mensaje que indica que un botón de tu ratón está siendo 'capturado' por Mac Mouse Fix.\n\n{screenshot_0}\n\nEn este artículo, aprenderás lo que esto significa, qué problemas puede causar y cómo solucionarlos."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_buttons_mmf3}\n\nAo usar o Mac Mouse Fix, você pode ter visto uma mensagem dizendo que um botão do seu mouse foi \"capturado\" pelo Mac Mouse Fix.\n\n{screenshot_0}\n\nNeste artigo, você vai entender o que isso significa, quais problemas pode causar e como contornar."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -74,6 +80,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## ¿Qué significa 'capturar' un botón del ratón?\n\nUn botón del ratón capturado por Mac Mouse Fix ya no puede ser visto por otras aplicaciones ni por macOS.\nLas funciones que este botón realizaría normalmente no funcionarán mientras esté capturado.\n\n**Ejemplo**: Normalmente puedes ir hacia atrás y hacia adelante en Chrome haciendo clic en los botones laterales (botones 4 y 5) del ratón.\nPero cuando los botones laterales son capturados por Mac Mouse Fix, esto ya no funciona. En su lugar, los botones laterales solo activarán las acciones que les hayas asignado en Mac Mouse Fix.\n\n**¿Por qué Mac Mouse Fix hace esto?** Mac Mouse Fix oculta los botones de otras aplicaciones para evitar que actives accidentalmente otras funciones mientras utilizas los gestos de Mac Mouse Fix.\nPor ejemplo, si haces clic y arrastras el botón 4 para cambiar entre escritorios, siempre irías hacia atrás una página en Chrome **simultáneamente**."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## O que significa \"capturar\" um botão do mouse?\n\nUm botão capturado pelo Mac Mouse Fix deixa de ser visto por outros apps ou pelo macOS.\nAs funções que ele executaria normalmente não funcionam enquanto ele estiver capturado.\n\n**Exemplo**: normalmente você pode voltar e avançar no Chrome clicando nos botões laterais (botões 4 e 5) do mouse.\nQuando esses botões são capturados pelo Mac Mouse Fix, isso deixa de funcionar. Em vez disso, eles só disparam as ações atribuídas no Mac Mouse Fix.\n\n**Por que o Mac Mouse Fix faz isso?** Ele esconde os botões de outros apps para evitar que você acione funções por engano ao usar gestos do Mac Mouse Fix.\nPor exemplo, ao clicar e arrastar o botão 4 para trocar de mesa, você acabaria **ao mesmo tempo** voltando uma página no Chrome."
           }
         },
         "ru" : {
@@ -124,6 +136,12 @@
             "value" : "## ¿Cómo sé qué botones están siendo capturados por Mac Mouse Fix?\n\nCualquier botón que aparezca en el lado izquierdo de la pestaña 'Botones' está siendo capturado por Mac Mouse Fix.\n\nEn la siguiente imagen, **'Botón central'**, **'Botón 5'** y **'Botón 4'** están siendo capturados:<br>\n\n{screenshot_1}"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Como sei quais botões estão sendo capturados pelo Mac Mouse Fix?\n\nQualquer botão que aparece no lado esquerdo da aba \"Botões\" está sendo capturado pelo Mac Mouse Fix.\n\nNa imagem a seguir, **\"Botão do Meio\"**, **\"Botão 5\"** e **\"Botão 4\"** estão sendo capturados: <br>\n\n{screenshot_1}"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -172,6 +190,12 @@
             "value" : "## ¿Cómo evito que Mac Mouse Fix capture un botón del ratón?\n\nPara evitar que Mac Mouse Fix capture un botón del ratón, elimina todas las entradas para ese botón del ratón de la pestaña 'Botones'.\nPuedes eliminar una entrada en la pestaña 'Botones' haciendo clic en el botón '-' de la izquierda.\n\nPor ejemplo, en la siguiente imagen, podrías evitar que **'Botón 4'** sea capturado haciendo clic en los dos botones **'-'** resaltados:\n\n{screenshot_2}"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Como impedir que o Mac Mouse Fix capture um botão do mouse?\n\nPara impedir o Mac Mouse Fix de capturar um botão, exclua todas as entradas desse botão na aba \"Botões\".\nVocê pode apagar uma entrada clicando no botão \"-\" à esquerda.\n\nNo exemplo abaixo, você impediria que o **\"Botão 4\"** fosse capturado clicando nos dois botões **\"-\"** destacados:\n\n{screenshot_2}"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -217,6 +241,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## ¿Cómo puedo restaurar la funcionalidad original de un botón?\n\nPara hacer que un botón se comporte como lo hacía antes de instalar Mac Mouse Fix, puedes hacer lo siguiente:\n\n1. Puedes **evitar que el botón sea capturado**, como se describe arriba.\n\n2. Simplemente puedes **desactivar Mac Mouse Fix**, así no se capturará ningún botón.\n\n3. Puedes **asignar acciones específicas al botón en Mac Mouse Fix**, de esta manera puedes restaurar ciertas funciones, *incluso mientras el botón está siendo capturado*:"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Como restaurar a funcionalidade original de um botão?\n\nPara fazer um botão se comportar como antes de instalar o Mac Mouse Fix, você pode:\n\n1. **Impedir que o botão seja capturado** – como descrito acima.\n\n2. Simplesmente **desativar o Mac Mouse Fix** – assim nenhum botão será capturado.\n\n3. **Atribuir ações específicas ao botão no Mac Mouse Fix** – desse modo você recupera certas funções *mesmo enquanto o botão está capturado*:"
           }
         },
         "ru" : {
@@ -267,6 +297,12 @@
             "value" : "Botón"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botão"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -313,6 +349,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Función Original"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Função original"
           }
         },
         "ru" : {
@@ -363,6 +405,12 @@
             "value" : "Acción en Mac Mouse Fix"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ação no Mac Mouse Fix"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -410,6 +458,12 @@
             "value" : "Botón Central del Ratón"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botão do Meio"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -455,6 +509,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abrir enlaces en el navegador en una pestaña nueva"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir links do navegador em nova aba"
           }
         },
         "ru" : {
@@ -505,6 +565,12 @@
             "value" : "'Clic Central'<br>(Se puede asignar al **hacer clic** en un botón)"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"Clique do Meio\"<br>(Pode ser atribuído ao **clique** de um botão)"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -552,6 +618,12 @@
             "value" : "Botón Central del Ratón"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botão do Meio"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -597,6 +669,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pegar texto en la terminal"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Colar texto no terminal"
           }
         },
         "ru" : {
@@ -647,6 +725,12 @@
             "value" : "'Clic Central'<br>(Se puede asignar al **hacer clic** en un botón)"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"Clique do Meio\"<br>(Pode ser atribuído ao **clique** de um botão)"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -692,6 +776,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Botón 4 del Ratón / Botón 5 del Ratón"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botão 4 / Botão 5"
           }
         },
         "ru" : {
@@ -742,6 +832,12 @@
             "value" : "Volver / avanzar en Chrome y otras aplicaciones"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voltar / avançar no Chrome e outros apps"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -788,6 +884,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "'Atrás' / 'Adelante'<br>(Se puede asignar al **hacer clic** en un botón)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"Voltar\" / \"Avançar\"<br>(Pode ser atribuído ao **clique** de um botão)"
           }
         },
         "ru" : {
@@ -837,6 +939,12 @@
             "value" : "Botón Central del Ratón"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botão do Meio"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -882,6 +990,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Orbitar alrededor de objetos en Blender (y otras aplicaciones 3D)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orbitar objetos no Blender (e outros apps 3D)"
           }
         },
         "ru" : {
@@ -932,6 +1046,12 @@
             "value" : "'Desplazamiento y Navegación'<br>(Se puede asignar a **hacer clic y arrastrar** un botón)"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"Rolar e Navegar\"<br>(Pode ser atribuído ao **clicar e arrastar** de um botão)"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -979,6 +1099,12 @@
             "value" : "De esta forma, puedes seguir utilizando la funcionalidad habitual del botón, a la vez que le asignas funciones *adicionales* en Mac Mouse Fix."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assim você mantém a funcionalidade usual do botão e ainda atribui funções *extras* no Mac Mouse Fix."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1024,6 +1150,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Ver también\n\n  - [{docname_captured_scroll_wheels}](<{url}>)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Veja também\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
           }
         },
         "ru" : {

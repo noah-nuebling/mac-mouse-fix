@@ -28,6 +28,12 @@
             "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **captura la rueda de desplazamiento de tu ratón por defecto**, de forma similar a cómo [captura los botones del ratón](<{url}>)."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_scroll_wheels}\n\nO Mac Mouse Fix **captura a roda de rolagem do seu mouse por padrão**, assim como [captura os botões do mouse](<{url}>)."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -74,6 +80,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Para evitar la captura de la rueda de desplazamiento:**\n\n1. Ve a la pestaña 'Desplazamiento' en Mac Mouse Fix\n2. Desactiva **todas** las opciones\n    - En el caso de la opción 'Velocidad', configúrala en 'macOS'\n    - Elimina todas las entradas en 'Modificadores de teclado' haciendo clic en el botón 'x' junto a cada modificador\n\nDespués de esto, deberías ver un mensaje que indica que la rueda de desplazamiento ya no se está capturando."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Para evitar capturar a roda de rolagem:**\n\n1. Vá à aba \"Rolagem\" no Mac Mouse Fix\n2. Desative **todas** as opções\n    - No caso da opção \"Velocidade\", defina como \"macOS\"\n    - Remova todas as entradas em \"Modificadores de Teclado\" clicando no \"x\" ao lado de cada modificador\n\nDepois disso, você verá uma mensagem indicando que a roda de rolagem não está mais sendo capturada."
           }
         },
         "ru" : {
@@ -123,6 +135,12 @@
             "value" : "**¿Qué pasa cuando la rueda de desplazamiento *ya no* está siendo capturada?**\n\nMac Mouse Fix ignorará por completo la rueda de desplazamiento de tu ratón; no utilizará potencia del procesador ni carga de batería durante el desplazamiento, ni interferirá de ninguna manera. Esto te da total libertad para usar otras aplicaciones como [MOS]({url}) para manejar tu rueda de desplazamiento."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**O que acontece quando a roda *não* está mais sendo capturada?**\n\nO Mac Mouse Fix passa a ignorar totalmente a roda de rolagem — não usa processamento ou bateria ao rolar, nem interfere de nenhuma forma. Assim você tem liberdade para usar outros apps como o [MOS]({url}) para controlar a rolagem."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -168,6 +186,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Ver también\n\n  - [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Editado con la excelente asistencia de Claude 3.5 Sonnet)*"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Veja também\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Editado com a excelente ajuda do Claude 3.5 Sonnet)*"
           }
         },
         "ru" : {

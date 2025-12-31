@@ -28,6 +28,12 @@
             "value" : "Mac Mouse Fix"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -75,6 +81,12 @@
             "value" : "¡Haz que Tu Ratón de $10 sea Mejor que un Trackpad de Apple!"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Faça seu mouse de US$10 ser melhor que um trackpad da Apple!\n"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -120,6 +132,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sitio Web&nbsp;↗"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Site&nbsp;↗"
           }
         },
         "ru" : {
@@ -170,6 +188,12 @@
             "value" : "Ayuda&nbsp;&amp;&nbsp;Comentarios"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajuda&nbsp;&amp;&nbsp;Feedback"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -217,6 +241,12 @@
             "value" : "Lanzamientos"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lançamentos"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -262,6 +292,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Agradecimientos"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agradecimentos"
           }
         },
         "ru" : {
@@ -312,6 +348,12 @@
             "value" : "Descargas"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Downloads"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -357,6 +399,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix es una aplicación que mejora tu ratón.\n\n¡Quiero convertir Mac Mouse Fix en el mejor controlador de ratón *de todos los tiempos*! Por el momento todavía faltan algunas funciones, pero creo que ya **convierte los ratones normales en los mejores dispositivos de entrada para Mac** en algunos aspectos. Al mismo nivel o incluso mejor que un Apple Trackpad o un ratón Logitech MX Master.\n\nPara obtener más información sobre cómo exactamente Mac Mouse Fix mejora tu ratón, visita el [sitio web]({url})."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Mac Mouse Fix é um app que deixa o seu mouse muito melhor.\n\nQuero transformar o Mac Mouse Fix no **melhor driver de mouse de todos os tempos**! Algumas funcionalidades ainda estão faltando no momento, mas acredito que ele já **transforma mouses comuns nos melhores dispositivos de entrada para Macs**, em alguns aspectos sendo tão bom — ou até melhor — que um Apple Trackpad ou um mouse Logitech MX Master.\n\nPara saber exatamente como o Mac Mouse Fix melhora o seu mouse, visite o [site]({url}).\n"
           }
         },
         "ru" : {
@@ -406,6 +454,12 @@
             "value" : "## Funciones\n\nConsulta el [sitio web]({url_1}) para ver un resumen de las funciones de Mac Mouse Fix, ¡incluidas demostraciones en vídeo!\n\nPara más detalles, consulta los [Lanzamientos]({url_2})."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Funcionalidades\n\nVeja o [site]({url_1}) para ter uma visão geral das funcionalidades do Mac Mouse Fix, incluindo demonstrações em vídeo!\n\nPara mais detalhes, consulte os [Lançamentos]({url_2}).\n"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -451,6 +505,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Instalación\n\nDescarga la última versión de Mac Mouse Fix en el [sitio web]({url_1}).\n\n¡También puedes instalar Mac Mouse Fix a través de [Homebrew]({url_2})! Simplemente escribe el siguiente comando en el terminal:\n\n```bash\nbrew install mac-mouse-fix\n```\n\nPuedes descargar versiones anteriores de Mac Mouse Fix en [Lanzamientos]({url_3})."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Instalação\n\nBaixe a versão mais recente do Mac Mouse Fix no [site]({url_1}).\n\nVocê também pode instalar o Mac Mouse Fix via [Homebrew]({url_2})! Basta digitar o seguinte comando no terminal:\n\n```bash\nbrew install mac-mouse-fix\n```\n\nVocê pode baixar versões anteriores do Mac Mouse Fix em [Lançamentos]({url_3}).\n\n"
           }
         },
         "ru" : {
@@ -500,6 +560,12 @@
             "value" : "## Compatibilidad con macOS\n\nLa última versión de Mac Mouse Fix está diseñada para **macOS 11 Big Sur** o posterior.\n\nSi utilizas **macOS 10.15 Catalina**, **macOS 10.14 Mojave** o **macOS 10.13 High Sierra**, puedes usar la [última versión de Mac Mouse Fix 2]({url_1}). Mac Mouse Fix 3.0.0 y versiones posteriores podrían seguir funcionando en tu máquina, pero tendrán problemas visuales y es posible que algunas funciones no funcionen correctamente.\n\nSi utilizas **macOS 10.12 Sierra** o **10.11 El Capitan**, puedes usar Mac Mouse Fix [2.2.0]({url_2}) o anterior."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Compatibilidade com macOS\n\nA versão mais recente do Mac Mouse Fix foi desenvolvida para **macOS 11 Big Sur** ou superior.\n\nSe você estiver usando macOS **10.15 Catalina**, macOS **10.14 Mojave** ou macOS **10.13 High Sierra**, pode utilizar a [versão mais recente do Mac Mouse Fix 2]({url_1}). O Mac Mouse Fix 3.0.0 e versões posteriores ainda podem funcionar na sua máquina, mas podem apresentar problemas visuais e algumas funcionalidades podem não funcionar corretamente.\n\nSe você estiver usando macOS **10.12 Sierra** ou **10.11 El Capitan**, pode utilizar o Mac Mouse Fix [2.2.0]({url_2}) ou versões anteriores.\n"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -545,6 +611,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Precios\n\nConsulta el [sitio web]({url}) para ver un resumen de los precios de Mac Mouse Fix 3.<br>\nMac Mouse Fix 2 y versiones anteriores seguirán siendo gratuitas para siempre."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Preços\n\nVeja o [site]({url}) para conferir uma visão geral dos preços do Mac Mouse Fix 3.<br>\nO Mac Mouse Fix 2 e versões anteriores permanecerão gratuitos para sempre.\n``\n"
           }
         },
         "ru" : {
@@ -594,6 +666,12 @@
             "value" : "## Desinstalación\n\nDesinstala Mac Mouse Fix simplemente moviéndolo a la papelera.\n\nSin embargo, quedarán archivos en tu sistema. Para deshacerte de estos archivos, recomiendo la impresionante aplicación [AppCleaner de FreeMacSoft]({url}).\n\nEn macOS, no es factible que las aplicaciones eliminen estos archivos sobrantes por sí mismas al eliminarlas. Por eso recomiendo encarecidamente utilizar una aplicación como AppCleaner."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Desinstalação\n\nPara desinstalar o Mac Mouse Fix, basta movê-lo para a lixeira.\n\nNo entanto, alguns arquivos permanecerão no sistema. Para removê-los completamente, recomendo o excelente [AppCleaner da FreeMacSoft]({url}).\n\nNo macOS, não é possível que os próprios aplicativos removam esses arquivos residuais automaticamente ao serem excluídos. Por isso, recomendo fortemente o uso de um app como o AppCleaner.\n"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -639,6 +717,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Lo que dice la gente\n\n¡Muchas gracias a todos los que comparten su entusiasmo por Mac Mouse Fix!<br>\nEn el [sitio web]({url}) puedes encontrar una colección de cosas bonitas que la gente ha dicho sobre la aplicación."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## O que as pessoas dizem\n\nMuito obrigado a todos que compartilham seu entusiasmo pelo Mac Mouse Fix!<br>\nNo [site]({url}), você pode encontrar uma coleção de comentários incríveis que as pessoas fizeram sobre o app.\n"
           }
         },
         "ru" : {
@@ -688,6 +772,12 @@
             "value" : "## Consejos"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Dicas"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -733,6 +823,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Gestiona ventanas con un simple Clic y arrastrar**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Gerencie janelas com um simples clique e arrastar**\n"
           }
         },
         "ru" : {
@@ -782,6 +878,12 @@
             "value" : "[Swish]({url}) es mi forma favorita de gestionar ventanas en macOS. Con un simple deslizamiento en tu trackpad, te permite colocar cualquier ventana para que ocupe la mitad, un cuarto o toda la pantalla.\n\nSwish está diseñado para gestos de trackpad, ¡pero con Mac Mouse Fix puedes usarlo desde cualquier ratón de terceros! Simplemente ve a Mac Mouse Fix y configura la acción \"Clic y Arrastrar\" de cualquier botón en \"Desplazamiento y Navegación\" y luego podrás ajustar ventanas con un simple Clic y arrastrar.\n\nCualquier cosa que puedas hacer con un deslizamiento de dos dedos en un trackpad de Apple funciona igual de bien con la función \"Desplazamiento y navegación\" de Mac Mouse Fix."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O [Swish]({url}) é a minha forma favorita de gerenciar janelas no macOS. Com um simples gesto no trackpad, ele permite posicionar qualquer janela para ocupar metade, um quarto ou a tela inteira.\n\nO Swish foi projetado para gestos no trackpad, mas com o Mac Mouse Fix você pode usá-lo com qualquer mouse de terceiros! Basta ir até o Mac Mouse Fix e configurar a ação **\"Clique e Arrastar\"** de qualquer botão como **\"Rolar e Navegar\"** — assim, você poderá encaixar janelas com um simples clique e arrastar.\n\nTudo o que você pode fazer com um gesto de dois dedos no trackpad da Apple também funciona perfeitamente com o recurso **\"Rolar e Navegar\"** do Mac Mouse Fix.\n"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -827,6 +929,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Controla el brillo de la pantalla, el volumen del audio o la reproducción multimedia directamente desde el ratón**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Controle o brilho da tela, o volume do áudio ou a reprodução de mídia diretamente pelo mouse**\n"
           }
         },
         "ru" : {
@@ -876,6 +984,12 @@
             "value" : "Mac Mouse Fix te permite usar **cualquier tecla de tu teclado** directamente desde el ratón, incluso teclas especiales que solo se encuentran en los teclados de Apple y que te permiten controlar el brillo de la pantalla, el Volumen del Audio, la Reproducción Multimedia y más.\n\nSi no tienes un teclado de Apple a mano, **mantén pulsada Opción (⌥)** para elegir las teclas especiales de Apple."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Mac Mouse Fix permite que você use **qualquer tecla do teclado** diretamente pelo mouse -  \ninclusive teclas especiais encontradas apenas nos teclados da Apple, que permitem controlar o brilho da tela, o volume do áudio, a reprodução de mídia e muito mais.\n\nSe você não tiver um teclado da Apple à mão, **segure a tecla Option (⌥)** para escolher as teclas especiais da Apple.\n"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -921,6 +1035,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Preguntas"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Perguntas\n"
           }
         },
         "ru" : {
@@ -970,6 +1090,12 @@
             "value" : "**¿Es Mac Mouse Fix nativo en Apple Silicon?**"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**O Mac Mouse Fix é nativo no Apple Silicon?**"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1017,6 +1143,12 @@
             "value" : "Sí, Mac Mouse Fix se ejecuta 100% de forma nativa en Apple Silicon."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sim, o Mac Mouse Fix roda 100% de forma nativa no Apple Silicon.\n"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1062,6 +1194,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**¿Por qué hay un retraso cuando hago clic?**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Por que há um atraso quando eu clico?**\n"
           }
         },
         "ru" : {
@@ -1112,6 +1250,12 @@
             "value" : "Cuando haces clic, Mac Mouse Fix podría esperar para ver si vas a hacer doble clic.<br>\nPara eliminar el retraso de un botón, elimina cualquier acción de \"Doble Clic\" para ese botón."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quando você clica, o Mac Mouse Fix pode aguardar para verificar se você vai dar um duplo clique.<br>\nPara remover esse atraso em um botão, exclua qualquer ação de **\"Duplo Clique\"** associada a ele.\n"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -1157,6 +1301,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**¿Puedo abrir App Exposé mediante un gesto de Clic y arrastrar?**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Posso abrir o App Exposé usando um gesto de Clique e Arrastar?**\n"
           }
         },
         "ru" : {
@@ -1206,6 +1356,12 @@
             "value" : "Sí. Simplemente elige la acción 'Espacios y Mission Control' y luego haz Clic y arrastrar *hacia abajo*.\n\nSi esto no funciona, es probable que el gesto de trackpad 'App Exposé' esté deshabilitado en tu Mac.<br>\nPuedes habilitar el gesto en Ajustes del Sistema o ejecutando el siguiente comando en el terminal:\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sim! Basta escolher a ação **\"Spaces e Mission Control\"** e então clicar e arrastar *para baixo*.\n\nSe isso não funcionar, provavelmente o gesto de **App Exposé** do trackpad está desativado no seu Mac.<br>\nVocê pode ativá-lo em **Ajustes do Sistema** ou executando o seguinte comando no terminal:\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1251,6 +1407,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**¿Hay 'Ajustes específicos de la aplicación' o 'Perfiles'?**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Existem \"Configurações Específicas por App\" ou \"Perfis\"?**\n"
           }
         },
         "ru" : {
@@ -1301,6 +1463,12 @@
             "value" : "En Mac Mouse Fix 2, puedes **desactivar funciones como el Desplazamiento suave** en `Más... > Ajustes específicos de la aplicación`.\n\nEn Mac Mouse Fix 3, esta función aún no existe. <br>\nTanto los 'ajustes específicos de la aplicación' como los 'ajustes específicos del ratón' están planificados, pero aún no tengo un cronograma de cuándo se lanzarán.\n\n**Consejo:** Hasta que lleguen los 'ajustes específicos de la aplicación' a Mac Mouse Fix 3, puedes hacer esto:\n\n  - Abre la pestaña `General`\n  - Activa `Mostrar en la barra de menú`\n  - Ahora puedes **desactivar funciones como el Desplazamiento suave** directamente desde la Barra de menú\n\nTambién me interesa saber cuál es tu *caso de uso*. No dudes en enviar una [solicitud de función]({url}). Tu aporte ayudará a que la función sea lo mejor posible cuando llegue."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Mac Mouse Fix 2, você pode **desativar recursos como a Rolagem Suave** em `Mais... > Configurações específicas por app`.\n\nNo Mac Mouse Fix 3, esse recurso ainda não existe.<br>\nTanto as **configurações específicas por app** quanto as **configurações específicas por mouse** estão planejadas, mas ainda não há um prazo definido para o lançamento.\n\n**Dica:** Até que as configurações específicas por app cheguem ao Mac Mouse Fix 3, você pode fazer o seguinte:\n- Abra a aba `Geral`\n- Ative `Mostrar na Barra de Menus`\n- Assim, você poderá **desativar recursos como a Rolagem Suave** diretamente pela barra de menus\n\nTambém gostaria muito de saber qual é o seu *caso de uso*. Fique à vontade para enviar uma [sugestão de recurso]({url}). Sua contribuição vai ajudar a tornar essa funcionalidade o melhor possível quando ela for lançada.\n"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1346,6 +1514,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**¿Es compatible mi ratón?**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Meu mouse é compatível?**\n"
           }
         },
         "ru" : {
@@ -1395,6 +1569,12 @@
             "value" : "Probablemente. Si quieres saberlo con seguridad, lo mejor es descargar Mac Mouse Fix y probarlo.\n\nMac Mouse Fix funciona muy bien con la mayoría de los ratones. Sin embargo, en ciertos ratones diseñados para usarse con software de controlador propietario como Logitech Options, Mac Mouse Fix no puede reconocer todos los botones en este momento.\n\nEsto se debe a que estos ratones se comunican con tu ordenador utilizando un protocolo especial y propietario, en lugar del protocolo USB estándar.<br>\nMe encantaría añadir compatibilidad total para estos ratones en algún momento, pero es muchísimo trabajo y no será pronto."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Provavelmente sim. Para ter certeza, o melhor é baixar o Mac Mouse Fix e testá-lo.\n\nO Mac Mouse Fix funciona muito bem com a maioria dos mouses. No entanto, em alguns modelos projetados para funcionar com softwares proprietários, como o Logitech Options, o Mac Mouse Fix ainda não consegue reconhecer todos os botões.\n\nIsso acontece porque esses mouses se comunicam com o computador usando um protocolo proprietário especial, em vez do protocolo USB padrão.<br>\nEu adoraria adicionar compatibilidade completa com esses mouses no futuro, mas isso exige muito trabalho e não deve acontecer tão cedo.\n"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1440,6 +1620,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Algunos botones de mi ratón no son reconocidos**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Alguns botões do meu mouse não são reconhecidos**"
           }
         },
         "ru" : {
@@ -1489,6 +1675,12 @@
             "value" : "Consulta la pregunta **\"¿Es compatible mi ratón?\"** más arriba."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veja a pergunta **\"Meu mouse é compatível?\"** acima."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1534,6 +1726,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**¿Es compatible el Magic Mouse?**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**O Magic Mouse é compatível?**"
           }
         },
         "ru" : {
@@ -1583,6 +1781,12 @@
             "value" : "Es posible que añada funciones en el futuro que mejoren el Apple Magic Mouse, pero actualmente, Mac Mouse Fix no tiene ningún efecto en él."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posso adicionar recursos no futuro para melhorar o Apple Magic Mouse, mas no momento o Mac Mouse Fix não tem efeito sobre ele."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1628,6 +1832,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**¿Son compatibles las ruedas de desplazamiento inclinables?**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Rodas de rolagem inclináveis são compatíveis?**"
           }
         },
         "ru" : {
@@ -1677,6 +1887,12 @@
             "value" : "Algunos ratones te permiten inclinar la rueda de desplazamiento hacia la izquierda o hacia la derecha para desplazarte horizontalmente. Mac Mouse Fix hará que esto se sienta más natural y fácil de controlar. Sin embargo, actualmente no es posible activar otras acciones, como cambiar entre escritorios, inclinando la rueda de desplazamiento. Me encantaría implementar esta función en algún momento, pero es muchísimo trabajo y no será pronto."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alguns mouses permitem inclinar a roda para a esquerda ou direita para rolar horizontalmente. O Mac Mouse Fix deixa isso mais natural e fácil de controlar. Porém, no momento não é possível acionar outras ações, como trocar de mesa, inclinando a roda. Quero implementar isso no futuro, mas é muito trabalho e não deve chegar tão cedo."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1722,6 +1938,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Desactivar la aceleración del puntero**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Desativar a aceleração do ponteiro**"
           }
         },
         "ru" : {
@@ -1771,6 +1993,12 @@
             "value" : "Mac Mouse Fix no te permite desactivar la aceleración del puntero, pero si utilizas **macOS 14 Sonoma** o posterior, puedes desactivar la aceleración del puntero en `Ajustes del Sistema > Ratón > Avanzado... > Aceleración del puntero`.\n\nPlaneo añadir formas realmente buenas de mejorar la aceleración del puntero en el futuro, pero no estoy seguro de cuándo estará disponible."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Mac Mouse Fix não permite desativar a aceleração do ponteiro, mas se você estiver no **macOS 14 Sonoma** ou posterior, pode desativá-la em `Ajustes do Sistema > Mouse > Avançado... > Aceleração do ponteiro`.\n\nPlanejo adicionar formas bem legais de melhorar a aceleração do ponteiro no futuro, mas ainda não sei quando."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1816,6 +2044,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**¿Cuál es la diferencia entre Mac Mouse Fix 2 y 3?**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Qual a diferença entre o Mac Mouse Fix 2 e o 3?**"
           }
         },
         "ru" : {
@@ -1865,6 +2099,12 @@
             "value" : "**Monetización:** <br>\nMac Mouse Fix 2 es 100% gratuito y planeo seguir dándole soporte. <br>\nMac Mouse Fix 3 es gratuito durante 30 días, y luego cuesta unos pocos dólares para poseerlo.\n\n**Funciones:** <br>\nAquí tienes una [comparativa de funciones]({url_1}). La escribí poco después del lanzamiento de Mac Mouse Fix 3, por lo que puede estar ligeramente desactualizada. <br>\nTambién puedes descargar Mac Mouse Fix [2]({url_2}) y [3]({url_3}) de forma gratuita para evaluarlos tú mismo."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Monetização:** <br>\nO Mac Mouse Fix 2 é 100% gratuito e pretendo continuar dando suporte. <br>\nO Mac Mouse Fix 3 é grátis por 30 dias e depois custa alguns dólares. \n\n**Funcionalidades:** <br>\nAqui está uma [comparação de recursos]({url_1}). Escrevi logo após o lançamento do Mac Mouse Fix 3, então pode estar um pouco desatualizada. <br>\nVocê também pode baixar o Mac Mouse Fix [2]({url_2}) e [3]({url_3}) gratuitamente para testá-los você mesmo!"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1910,6 +2150,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**¿Recopila Mac Mouse Fix mis datos?**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**O Mac Mouse Fix coleta meus dados?**"
           }
         },
         "ru" : {
@@ -1959,6 +2205,12 @@
             "value" : "Mac Mouse Fix no tiene anuncios y no recopila ninguna información personal sobre ti.\n\nSin embargo, en el momento en que compras la aplicación, el proveedor de ventas Gumroad.com recopila cierta información personal, como tu dirección de correo electrónico, y esta información es visible para mí. Esto es necesario para poder emitir reembolsos, enviar una clave de licencia a tu correo electrónico, etc. No puedo desactivar esto. Para obtener más información sobre los datos recopilados al comprar Mac Mouse Fix, consulta la [Política de privacidad de Gumroad]({url})."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Mac Mouse Fix não tem anúncios nem coleta informações pessoais suas.\n\nNo momento da compra, porém, o provedor de vendas Gumroad.com coleta alguns dados, como seu e-mail, e esses dados ficam visíveis para mim. Isso é necessário para emitir reembolsos, enviar a chave de licença por e-mail etc. Não há como desativar isso. Para saber mais sobre os dados coletados ao comprar o Mac Mouse Fix, consulte a [Política de Privacidade da Gumroad]({url})."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2004,6 +2256,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**¿En cuántos dispositivos puedo usar mi licencia?**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Em quantos dispositivos posso usar minha licença?**"
           }
         },
         "ru" : {
@@ -2053,6 +2311,12 @@
             "value" : "Tu licencia funciona en **todos tus Mac**.<br>\nEl objetivo es que simplemente puedas comprar una licencia, activarla y no tener que preocuparte por ella nunca más.<br>\nSi inicias sesión con la misma cuenta de Apple, ¡la licencia incluso se sincronizará automáticamente con tus otros dispositivos a través de iCloud!\n\nSi tienes problemas para activar tu licencia, puedes [enviarme un correo electrónico]({url}).<br>\nA veces tardo un poco en responder. Pido disculpas por esto. ¡Pero me pondré en contacto contigo!\n\nHay una restricción:<br>\nLas licencias no están destinadas a ser compartidas públicamente. Una licencia está destinada a una persona. Las licencias compartidas públicamente pueden ser invalidadas. (¡Tu madre no es 'el público' y compartirla con ella está bien!)"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sua licença funciona em **todos os seus Macs**. <br>\nA ideia é que você compre, ative e nunca mais precise se preocupar. <br>\nSe você entrar com a mesma conta Apple, a licença ainda sincroniza automaticamente com seus outros dispositivos via iCloud!\n\nSe tiver problemas para ativar, você pode [me enviar um e-mail]({url}). <br>\nÀs vezes demoro a responder. Desculpe por isso, mas eu retorno!\n\nHá uma restrição: <br>\nLicenças não devem ser compartilhadas publicamente. Uma licença é para uma pessoa. Licenças compartilhadas em público podem ser invalidadas. (Compartilhar com a mãe pode.)"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2098,6 +2362,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**¿Funcionará mi licencia con futuras versiones?**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Minha licença vai funcionar em versões futuras?**"
           }
         },
         "ru" : {
@@ -2147,6 +2417,12 @@
             "value" : "Tu licencia cubre todas las versiones de Mac Mouse Fix 3.x.\n\nLas versiones futuras, como la 4.0, podrían requerir una nueva compra, pero intentaré evitarlo, a menos que sea necesario para apoyar el desarrollo continuo de la aplicación."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sua licença cobre todas as versões 3.x do Mac Mouse Fix.\n\nVersões futuras, como a 4.0, podem exigir uma nova compra, mas vou tentar evitar isso, a menos que seja necessário para sustentar o desenvolvimento do app."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2192,6 +2468,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**¿Existe una política de reembolso?**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Existe política de reembolso?**"
           }
         },
         "ru" : {
@@ -2241,6 +2523,12 @@
             "value" : "No hay una política de reembolso oficial, pero la aplicación es gratuita durante 30 días.\n\nSi experimentas algún problema después de comprar la aplicación, simplemente ponte en contacto conmigo y haré todo lo posible para ayudarte."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Não há política oficial de reembolso, mas o app é gratuito por 30 dias.\n\nSe tiver problemas depois da compra, entre em contato comigo e farei o possível para ajudar."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2286,6 +2574,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**¿Mac Mouse Fix seguirá siendo de código abierto ahora que está monetizado?**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**O Mac Mouse Fix continuará open source agora que é pago?**"
           }
         },
         "ru" : {
@@ -2335,6 +2629,12 @@
             "value" : "Sí, ¡Mac Mouse Fix seguirá siendo de código abierto!\n\nAnimo a cualquiera a utilizar el código fuente de Mac Mouse Fix en sus propios proyectos, siempre y cuando no lancen una simple copia de Mac Mouse Fix.\n\nInfórmate sobre los detalles en la [Licencia MMF]({url}) bajo la cual están licenciados Mac Mouse Fix 3 y versiones posteriores."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sim, o Mac Mouse Fix continuará open source!\n\nIncentivo todos a usar o código-fonte do Mac Mouse Fix em seus projetos, desde que não publiquem uma cópia simples do app.\n\nVeja os detalhes na [Licença do MMF]({url}) sob a qual o Mac Mouse Fix 3 e posteriores são licenciados."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2380,6 +2680,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**¿Puedo obtener Mac Mouse Fix gratis si ya hice una donación?**"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Posso obter o Mac Mouse Fix de graça se já fiz uma doação?**"
           }
         },
         "ru" : {
@@ -2429,6 +2735,12 @@
             "value" : "Sí. Si donaste a través de PayPal, haz clic [aquí]({url}) para recibir una **licencia gratuita**."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sim! Se você doou via PayPal, clique [aqui]({url}) para receber uma **licença gratuita**."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2474,6 +2786,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Cómo puedes contribuir\n\nHay varias formas de ayudar al proyecto.<br>\n¡Consulta los [Agradecimientos]({url}) para obtener más información sobre quién ha contribuido ya!"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Como você pode contribuir\n\nHá várias maneiras de ajudar o projeto.<br>\nVeja os [Agradecimentos]({url}) para saber quem já contribuiu!"
           }
         },
         "ru" : {
@@ -2523,6 +2841,12 @@
             "value" : "**Dar comentarios**"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Dar feedback**"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2562,6 +2886,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Puedes ayudar compartiendo tus **ideas**, **problemas** y **comentarios** a través del [Asistente de comentarios]({url})."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você pode ajudar compartilhando suas **ideias**, **problemas** e **feedback** pelo [Assistente de Feedback]({url})."
           }
         },
         "ru" : {
@@ -2611,6 +2941,12 @@
             "value" : "**Contribuir con dinero**"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Contribuir com dinheiro**"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2656,6 +2992,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Espero poder mantenerme económicamente a través de Mac Mouse Fix. De esa manera, puedo seguir mejorando y trabajando en la aplicación. Si deseas ayudar, puedes:\n\n1.  Comprar Mac Mouse Fix haciendo clic en el botón de la aplicación o haciendo clic [aquí]({url_1}).\n2.  Darme una [propina]({url_2}) en PayPal. No gano mucho dinero con esto, pero siempre es lindo y motivador recibir una donación.\n3.  [Patrocinarme]({url_3}) en GitHub. Un patrocinio mensual es una excelente manera de apoyar el proyecto y ayudarme a tener un ingreso más estable."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espero conseguir me sustentar financeiramente com o Mac Mouse Fix. Assim posso continuar melhorando e trabalhando no app. Se quiser ajudar, você pode:\n1. Comprar o Mac Mouse Fix clicando no botão do app ou [aqui]({url_1}).\n2. [Me dar uma gorjeta]({url_2}) no PayPal. Não ganho muito com isso, mas é sempre fofo e motivador receber uma doação.\n3. [Me patrocinar]({url_3}) no GitHub. Um patrocínio mensal é uma ótima forma de apoiar o projeto e me dar uma renda mais estável."
           }
         },
         "ru" : {
@@ -2705,6 +3047,12 @@
             "value" : "**Añadir traducciones**"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Adicionar traduções**"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2750,6 +3098,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix está disponible en inglés, alemán, así como en los idiomas listados en los [Agradecimientos]({url_1}).\n\nSi deseas **ayudar a traducir el proyecto**, consulta la [Guía de traducción]({url_2}).<br>\nSi quieres **informar de traducciones faltantes o no óptimas**, eso también es muy útil. La mejor manera de informar sobre problemas es comentando en la [Guía de traducción]({url_3})."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Mac Mouse Fix está disponível em inglês, alemão e nos idiomas listados nos [Agradecimentos]({url_1}).\n\nSe quiser **ajudar na tradução do projeto**, veja o [Guia de Tradução]({url_2}).<br>\nSe quiser **reportar traduções ausentes ou ruins**, isso também ajuda. A melhor forma é comentar no [Guia de Tradução]({url_3})."
           }
         },
         "ru" : {
@@ -2799,6 +3153,12 @@
             "value" : "**Contribuir con código**"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Contribuir com código**"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2844,6 +3204,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Si deseas contribuir con código, ¡eso es genial\\! Estaré encantado con cualquier [solicitud de extracción]({url}).\n\nSin embargo, es posible que no acepte todas las solicitudes de extracción. Si quieres asegurarte de que tu trabajo no se desperdicie, puedes enviar una solicitud de extracción inicial que solo *describa* los cambios que deseas realizar, pero que contenga poco o ningún código. Luego podré darte mi opinión y decirte si adoptaría los cambios que deseas realizar de esa manera."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se quiser contribuir com código, ótimo! Vou ficar feliz com qualquer [pull request]({url}).\n\nNo entanto, talvez eu não aceite todas. Para garantir que seu trabalho não seja perdido, você pode abrir primeiro um pull request descrevendo as mudanças que pretende fazer, com pouco ou nenhum código. Assim posso dar feedback e dizer se adotaria as mudanças desse jeito."
           }
         },
         "ru" : {
@@ -2893,6 +3259,12 @@
             "value" : "**¡Gracias** a todos los que ya han contribuido y me han apoyado en el intento de hacer el mejor controlador de ratón *de todos los tiempos*! :)🚀"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Obrigado** a todos que já contribuíram e me apoiaram na missão de criar o melhor driver de mouse *de todos os tempos*! :)🚀"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2940,6 +3312,12 @@
             "value" : "**¿Cómo puedo orbitar alrededor de objetos en aplicaciones 3D como Blender?**"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Como orbitar objetos em apps 3D como o Blender?**"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2985,6 +3363,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "En aplicaciones 3D como Blender, normalmente se hace Clic y arrastrar con el botón central del ratón para orbitar alrededor de los objetos.<br>\nPero si asignas acciones al botón central del ratón en Mac Mouse Fix, esto ya no funcionará.\n\nPara solucionarlo, conozco 2 opciones:\n\n1.  Asignar el clic y arrastrar de uno de los botones de tu ratón a la función \"Desplazamiento y navegación\". Esta función simula el deslizamiento con 2 dedos en un Apple Trackpad. ¡Esto te permitirá, entre otras cosas, orbitar en aplicaciones 3D!\n2.  *Descapturar* el botón central del ratón eliminando todas las acciones asignadas a él en Mac Mouse Fix. Consulta [esta guía]({url}) para obtener más información."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Em apps 3D como o Blender, normalmente você clica e arrasta o Botão do Meio para orbitar objetos.<br>\nMas, se você atribuir ações ao Botão do Meio no Mac Mouse Fix, isso deixa de funcionar.\n\nPara resolver, há duas opções:\n1. Atribua o clique e arraste de algum botão do mouse ao recurso \"Rolar e Navegar\". Ele simula deslizar com dois dedos em um Trackpad da Apple e permite orbitar em apps 3D!\n2. *Descapture* o Botão do Meio apagando todas as ações atribuídas a ele no Mac Mouse Fix. Veja [este guia]({url}) para mais detalhes."
           }
         },
         "ru" : {

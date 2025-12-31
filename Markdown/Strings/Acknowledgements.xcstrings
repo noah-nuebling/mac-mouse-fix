@@ -28,6 +28,12 @@
             "value" : "# 🙌 Agradecimientos\n\nMuchas gracias a todos los que utilizan Mac Mouse Fix y brindan comentarios. Es increíble y muy motivador ver a tanta gente disfrutar e interactuar con algo que he creado.\n\nQuiero agradecer especialmente a las personas y proyectos nombrados en este documento."
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# 🙌 Agradecimentos\n\nMuito obrigado a todos que usam o Mac Mouse Fix e compartilham feedback. É incrível, e extremamente motivador, ver tantas pessoas aproveitando e interagindo com algo que eu criei.\n\nQuero agradecer especialmente às pessoas e aos projetos mencionados neste documento."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -124,6 +130,12 @@
             "value" : "## 💰 Dinero\n\nMuchas gracias a todos los que me invitaron a un batido y a las **{sales_count}** personas que compraron Mac Mouse Fix.\nGracias a ustedes, puedo dedicar mucho tiempo a hacer algo que amo.\n\nLas personas que me apoyaron gastando más del precio estándar en Mac Mouse Fix reciben una mención especial aquí:"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 💰 Apoio financeiro\n\nMuito obrigado a todos que me pagaram um milk-shake e a todas as {sales_count} pessoas que compraram o Mac Mouse Fix.\nGraças a vocês, posso dedicar bastante tempo fazendo algo que eu realmente amo.\n\nAs pessoas que apoiaram o projeto pagando mais do que o valor padrão do Mac Mouse Fix recebem um agradecimento especial aqui:"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -169,6 +181,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "### ⭐️ Contribuyentes generosos\n\n¡Gracias por tu apoyo! :)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ⭐️ Colaboradores Generosos\n\nObrigado pelo apoio! :)"
           }
         },
         "ru" : {
@@ -218,6 +236,12 @@
             "value" : "### 🚀 Contribuyentes muy generosos\n\nEstas personas gastaron mucho más que el precio estándar y me invitaron un **Batido increíble**. (Y algunos incluso dejaron un mensaje) ¡Gracias por el *subidón de azúcar*!"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### 🚀 Colaboradores Super Generosos\n\nEssas pessoas contribuíram com um valor bem acima do preço padrão e me presentearam com um milk-shake incrível. (E algumas ainda deixaram uma mensagem!) Obrigado pelo pico de açúcar! 😄"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -263,6 +287,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "### ❤️ Patrocinadores de GitHub\n\n¡**Enormes gracias** a [todos]({url}) los que me patrocinan en GitHub! Con suerte, algún día podré abrir esa fábrica de batidos gracias a ustedes. :)"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "❤️ Patrocinadores no GitHub\n\nMuito obrigado a [todos]({url}) por me apoiarem no GitHub! Com sorte, um dia consigo montar minha própria fábrica de milk-shake graças a vocês. 😄"
           }
         },
         "ru" : {
@@ -312,6 +342,12 @@
             "value" : "### ✨ Donaciones por PayPal\n\nMucha gente generosa me compró batidos en PayPal cuando Mac Mouse Fix todavía era completamente gratuito.\n\nSi eres uno de ellos, haz clic [aquí]({url}) para recibir una **licencia gratuita**!"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ✨ Doações via PayPal\n\nMuitas pessoas generosas me pagaram milk-shakes no PayPal quando o Mac Mouse Fix ainda era totalmente gratuito.\n\nSe você é uma delas, clique [aqui]({url}) para receber uma **licença gratuita**!\n"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -359,6 +395,12 @@
             "value" : "## 👾 Otro software"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 👾 Outros Softwares"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -404,6 +446,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Software** que inspiró Mac Mouse Fix:\n\n  - [SteerMouse]({url_1}) - Software pionero para ratones en Mac, que inspiró muchas funciones. Hubo momentos en los que pensé \"esto probablemente no es posible\", pero luego vi \"oh, SteerMouse lo hace\", y tres años después, también descubrí cómo implementarlo.\n  - [Calftrail Touch]({url_2}) - La base para el trabajo de \"ingeniería inversa\" que impulsa la mejor simulación de trackpad y la primera en su tipo de Mac Mouse Fix.\n  - [MOS]({url_3}) - La opción de \"Alta fluidez de desplazamiento\" de Mac Mouse Fix, la implementación de \"Ajustes específicos de la aplicación\" y más, fueron inspiradas por MOS.\n  - [SensibleSideButtons]({url_4}) - Copié su código para una implementación temprana de la función \"Volver/Avanzar una página en Safari y otras aplicaciones\", y también me llevó a descubrir el proyecto Calftrail Touch.\n  - [Gifski]({url_5}) - Inspiró enormemente el diseño y el contenido del [Readme.md]({url_6}) para Mac Mouse Fix.\n  - [Vue Issue Helper]({url_7}) - Base para el diseño y la implementación técnica del [Asistente de comentarios de Mac Mouse Fix]({url_8})."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Softwares** que inspiraram o Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) – Software pioneiro para mouse no Mac, que inspirou muitos recursos. Houve momentos em que pensei \"isso provavelmente não é possível\", mas então vi \"opa, o SteerMouse faz isso\", e três anos depois consegui implementar também.\n- [Calftrail Touch]({url_2}) – A base do trabalho de *engenharia reversa* que tornou possível a simulação de trackpad do Mac Mouse Fix, considerada a melhor da categoria e única no seu tipo!\n- [MOS]({url_3}) – A opção de **Alta Suavidade de Rolagem**, as **Configurações Específicas por Aplicativo** e outros recursos do Mac Mouse Fix foram inspirados no MOS.\n- [SensibleSideButtons]({url_4}) – Copiei parte do código para uma implementação inicial do recurso *\"Voltar/Avançar uma página no Safari e em outros apps\"*, e também foi assim que descobri o projeto Calftrail Touch.\n- [Gifski]({url_5}) – Inspirou fortemente o design e o conteúdo do [Readme.md]({url_6}) do Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) – Base para o design e a implementação técnica do [Assistente de Feedback do Mac Mouse Fix]({url_8}).\n"
           }
         },
         "ru" : {

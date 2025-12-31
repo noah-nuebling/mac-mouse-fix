@@ -28,6 +28,12 @@
             "value" : "Agradecimientos"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agradecimentos"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -73,6 +79,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Botones del Ratón Capturados"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botões do Mouse Capturados\n"
           }
         },
         "ru" : {
@@ -122,6 +134,12 @@
             "value" : "Ruedas de desplazamiento capturadas"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rodas de Rolagem Capturadas"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -167,6 +185,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Léame"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Readme"
           }
         },
         "ru" : {
@@ -216,6 +240,12 @@
             "value" : "Soporte"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suporte"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -261,6 +291,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "¡Espero que esta guía haya sido útil!"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espero que esse guia seja útil!"
           }
         },
         "ru" : {
@@ -310,6 +346,12 @@
             "value" : "¡Espero que esta información haya sido útil!"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espero que essa informação seja útil!"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -357,6 +399,12 @@
             "value" : "¡Espero que esta guía haya aclarado las cosas!"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espero que este guia tenha esclarecido as coisas!"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -402,6 +450,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "¿Aún tiene preguntas? Haga clic [aquí]({url})."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ainda tem dúvidas? Clique [aqui]({url}).\n"
           }
         },
         "ru" : {
@@ -452,6 +506,12 @@
             "value" : "Este documento está traducido `{localization_progress}` al `{current_language}` [Ayudar a traducir]({url})"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este documento está `{localization_progress}` traduzido para `{current_language}`  \n[Ajude a traduzir]({url})\n"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -498,6 +558,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "[🌎 ¡Ayudar a traducir!]({url})"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[🌎 Ajude a traduzir!]({url})\n"
           }
         },
         "ru" : {

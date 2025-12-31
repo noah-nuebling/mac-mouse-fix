@@ -211,7 +211,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Bloquear o ponteiro do mouse durante gestos de 'Cliquar e Arrastar'"
           }
         },
