@@ -295,7 +295,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Ativar o 'Ajudante do Controlador de guia inicial do Mac Mouse Fix'"
           }
         },
