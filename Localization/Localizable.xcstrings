@@ -7698,13 +7698,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : ","
+            "value" : ", "
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : ","
+            "value" : ", "
           }
         },
         "tr" : {
@@ -7744,7 +7744,7 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%1$@ and %2$@"
           }
         },
@@ -8745,7 +8745,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "'**%@**' não é uma chave de licença válida\n\nTente uma chave diferente"
           }
         },
