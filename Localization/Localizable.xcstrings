@@ -4272,7 +4272,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mova o Mouse:\n - Para cima para mostrar o Mission Control\n - Para baixo para mostrar as Janelas do Aplicativo Aberto\n - Esquerda ou Direita para mover entre os Espaços da Mesa\n \nFunciona como deslizar com três dedos em um Trackpad da Apple"
           }
         },
@@ -5102,7 +5102,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Botão do Meio"
           }
         },
@@ -5262,7 +5262,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Clique Primário"
           }
         },
@@ -5410,7 +5410,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Clique Secundário"
           }
         },
@@ -6062,7 +6062,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mova para a Mesa à esquerda"
           }
         },
@@ -6725,7 +6725,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mova para a Mesa à direita"
           }
         },
@@ -6808,7 +6808,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Mova para a Mesa à esquerda"
           }
         },
@@ -11568,7 +11568,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Role para cima para mover um espaço para a esquerda e para baixo para mover um espaço para a direitain Funciona como deslizar horizontalmente com 3 dedos em um Trackpad da Apple"
           }
         },
