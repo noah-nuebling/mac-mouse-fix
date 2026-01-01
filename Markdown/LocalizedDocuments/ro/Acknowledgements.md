@@ -12,6 +12,7 @@ This document is `0%` translated into `🇷🇴 Română`
   [🇬🇧 English](../../../Acknowledgements.md)\
   [🇩🇪 Deutsch](../../../Markdown/LocalizedDocuments/de/Acknowledgements.md)\
   [🇪🇸 Español](../../../Markdown/LocalizedDocuments/es/Acknowledgements.md)\
+  [🇧🇷 Português (Brasil)](../../../Markdown/LocalizedDocuments/pt-BR/Acknowledgements.md)\
   **🇷🇴 Română**\
   [🇹🇷 Türkçe](../../../Markdown/LocalizedDocuments/tr/Acknowledgements.md)\
   [🇨🇿 Čeština](../../../Markdown/LocalizedDocuments/cs/Acknowledgements.md)\
@@ -38,7 +39,9 @@ Thanks for bringing Mac Mouse Fix to people around the globe!
     - [@xianyu-wang](https://github.com/xianyu-wang)
 - 🇰🇷 Korean translations by [@jeongtae](https://github.com/jeongtae)
 - 🇻🇳 Vietnamese translations by [@nghlt](https://github.com/nghlt)
-- 🇧🇷 Brazilian Portuguese translations by **Eduardo Rodrigues**
+- 🇧🇷 Brazilian Portuguese translations by 
+    - **Eduardo Rodrigues**
+    - [@denini08](https://github.com/denini08)
 - 🇫🇷 French translations by [@DimitriDR](https://github.com/DimitriDR)
 - 🇹🇷 Turkish translations by 
     - [@hasanbeder](https://github.com/hasanbeder)
