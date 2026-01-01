@@ -4177,7 +4177,7 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Espaces & Mission Control"
           }
         },
@@ -4260,7 +4260,7 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Déplacer votre souris :\n - Vers le haut pour afficher Mission Control\n - Vers le bas pour afficher Fenêtres de l'application\n - Vers la gauche ou la droite pour passer d'un espace à un autre\n \nFonctionne comme le balayage à 3 doigts sur un Trackpad Apple"
           }
         },
@@ -5126,7 +5126,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按中键"
           }
         },
@@ -5286,7 +5286,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "主键"
           }
         }
@@ -5434,7 +5434,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "辅键"
           }
         }
@@ -6050,7 +6050,7 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Déplacer vers le bureau de gauche"
           }
         },
@@ -6105,6 +6105,7 @@
       }
     },
     "effect.left-space.hint" : {
+      "comment" : "Try to keep the translations of Space / Spaces consistent.\n\nIf you're using Xcloc Editor.app, you can find all the translations for 'Spaces' like this:\n- Go to 'All Project Files' (Command-J)\n- Select the search-field (Command-F)\n- Enter 'space'\n-> Now you can see all the occurrences and translations for 'space'!\n\nNote to self:\nThis hint is similar to questions.click-delay.body",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -6126,13 +6127,13 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Moverse un Espacio a la Izquierda"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Se déplacer d'un espace vers la gauche"
           }
         },
@@ -6707,13 +6708,13 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Moverse un espacio a la derecha"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Déplacer vers le bureau de droite"
           }
         },
@@ -6790,13 +6791,13 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Moverse un espacio a la derecha"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Se déplacer d'un espace vers la droite"
           }
         },
@@ -11473,7 +11474,7 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Déplacer entre les espaces"
           }
         },
@@ -11556,7 +11557,7 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Défiler vers le haut pour se déplacer d'un espace vers la gauche et vers le bas pour se déplacer d'un espace vers la droite\n \nFonctionne comme le balayage horizontal avec 3 doigts sur un Trackpad Apple"
           }
         },

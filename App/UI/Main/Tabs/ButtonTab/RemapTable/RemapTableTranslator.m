@@ -242,6 +242,16 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
             @"tool": MFLocalizedString(
                 @"effect.left-space.hint",
                 @""
+                         "Try to keep the translations of Space / Spaces consistent."
+                    "\n" ""
+                    "\n" "If you're using Xcloc Editor.app, you can find all the translations for 'Spaces' like this:"
+                    "\n" "- Go to 'All Project Files' (Command-J)"
+                    "\n" "- Select the search-field (Command-F)"
+                    "\n" "- Enter 'space'"
+                    "\n" "-> Now you can see all the occurrences and translations for 'space'!"
+                    "\n" ""
+                    "\n" "Note to self:"
+                    "\n" "This hint is similar to questions.click-delay.body"
             ),
             @"dict": @{
               kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
