@@ -9,14 +9,14 @@ Ayrıca bazı kullanıcı arayüzü iyileştirmeleri de var.
 - Artık projenin neredeyse tüm bölümleri çevrilebilir, 'Yakalanan Düğmeler Kılavuzu', GitHub Readme, Web Sitesi ve daha fazlası dahil.
     - Projenin tüm bu bölümleri, `Xcloc Editor` uygulamasını kullanarak kolay çapraz referanslama ile tek bir merkezi yerden çevrilebilir, böylece çevirmenlerin her şeyi tutarlı tutması kolay.
 - Sistem çok kolay bakım yapılabilecek şekilde kuruldu, böylece Mac Mouse Fix geliştikçe ve yeni ekranlar veya metinler eklendikçe her şey otomatik olarak güncellenecek.
-- Sorumluluk reddi: 'Kolay' kelimesini çok kullanıyorum. İş akışları kolay, ancak harika çeviriler düşünmek elbette hala çok zor ve saygıdeğer bir iş! Artık sadece önünüzde daha az engel var.
+- Sorumluluk reddi: 'Kolay' kelimesini çok kullanıyorum. İş akışları kolay, ancak harika çeviriler düşünmek elbette hala çok zor ve saygıdeğer bir iş! Artık önünüzde daha az engel var.
 
 
 
 
 Yeni çeviriler aşağıdaki kişiler tarafından cömertçe sağlanmıştır:
 
-- **Eduardo Rodrigues**: 🇧🇷 Brezilya Portekizcesi çevirileri
+- **Eduardo Rodrigues** ve [@denini08](https://github.com/denini08): 🇧🇷 Brezilya Portekizcesi çevirileri
 - [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 Fransızca çeviriler
 - [@hasanbeder](https://github.com/hasanbeder) ve [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 Türkçe çeviriler
 - [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Çekçe çeviriler
@@ -28,7 +28,7 @@ Yeni çeviriler aşağıdaki kişiler tarafından cömertçe sağlanmıştır:
 
 Çalışmanız için teşekkürler!
 
-Ancak, çok fazla yeni şey çevrilebilir hale getirildiği için **tüm diller hala çalışma gerektiriyor**.
+Ancak, **tüm diller hala çalışma gerektiriyor**, çünkü çok sayıda yeni şey çevrilebilir hale getirildi.
 
 Bu nedenle:
 
@@ -93,4 +93,10 @@ Güncellemeler:
     - MacMouseFixApp.zip dosyasının yapı numarası: 24829
     - Tarih [29 Aralık 2025]
     - Değişiklikler:
-        - @xianyu-wang tarafından Basitleştirilmiş Çince Çeviriler güncellendi
+        - @xianyu-wang tarafından Basitleştirilmiş Çince çeviriler güncellendi
+
+7. Güncelleme
+    - MacMouseFixApp.zip dosyasının yapı numarası: 24830
+    - Tarih [1 Ocak 2026]
+    - Değişiklikler:
+        - [@denini08](https://github.com/denini08) tarafından Brezilya Portekizcesi çevirileri güncellendi

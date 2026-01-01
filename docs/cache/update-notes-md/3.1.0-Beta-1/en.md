@@ -16,7 +16,7 @@ There are also some UI improvements.
 
 New translations have already been generously provided by the following people:
 
-- **Eduardo Rodrigues**: 🇧🇷 Brazilian Portuguese translations
+- **Eduardo Rodrigues** and [@denini08](https://github.com/denini08): 🇧🇷 Brazilian Portuguese translations
 - [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 French translations
 - [@hasanbeder](https://github.com/hasanbeder) and [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 Turkish translations
 - [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Czech translations
@@ -93,4 +93,10 @@ Updates:
     - Build number of MacMouseFixApp.zip asset: 24829
     - Date [Dec 29 2025]
     - Changes:
-        - Updated Simplified Chinese Translations by @xianyu-wang
+        - Updated Simplified Chinese translations by @xianyu-wang
+
+7. Update 
+    - Build number of MacMouseFixApp.zip asset: 24830
+    - Date [Jan 1 2026]
+    - Changes:
+        - Updated Brazilian Portuguese translations by [@denini08](https://github.com/denini08)

@@ -4,8 +4,8 @@ Mac Mouse Fix **3.1.0 Beta 1** 帶來了一個全新的翻譯系統,這已經籌
 ### 全新的本地化系統!
 
 - 現在為 Mac Mouse Fix 貢獻高品質翻譯變得超級簡單,完全不需要任何技術背景。
-- 有大量附註的截圖和註解,以及強大的搜尋功能,讓譯者能輕鬆理解他們的翻譯在應用程式中的確切呈現方式。
-    - 我認為這些截圖和翻譯介面(`Xcloc Editor` 應用程式)是市場上品質最高的,希望它們能幫助你提供優質的翻譯!
+- 有大量附註的螢幕截圖和註解,以及強大的搜尋功能,讓譯者能輕鬆理解他們的翻譯在應用程式中的確切呈現方式。
+    - 我認為這些螢幕截圖和翻譯介面(`Xcloc Editor` 應用程式)是市場上品質最高的,希望它們能幫助你提供優質的翻譯!
 - 現在專案的幾乎所有部分都可以翻譯了,包括「已捕捉按鈕指南」、GitHub Readme、網站等等。
     - 專案的所有這些部分都可以在一個集中的地方使用 `Xcloc Editor` 應用程式進行翻譯,並輕鬆交叉參照,讓譯者能輕鬆保持一切的一致性。
 - 這個系統設計得非常容易維護,所以隨著 Mac Mouse Fix 的演進和新畫面或文字的加入,一切都會自動更新。
@@ -16,15 +16,15 @@ Mac Mouse Fix **3.1.0 Beta 1** 帶來了一個全新的翻譯系統,這已經籌
 
 以下人士已慷慨提供了新的翻譯:
 
-- **Eduardo Rodrigues**: 🇧🇷 巴西葡萄牙文翻譯
-- [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 法文翻譯
-- [@hasanbeder](https://github.com/hasanbeder) 和 [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 土耳其文翻譯
-- [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 捷克文翻譯
-- [@Dro9an](https://github.com/Dro9an) 和 [@jihao](https://github.com/jihao): 🇨🇳 [網站](https://macmousefix.com/zh-Hans)的簡體中文翻譯
-- [@xianyu-wang](https://github.com/xianyu-wang): 🇨🇳 簡體中文翻譯
-- [@manghidev](https://github.com/manghidev): 🇪🇸 西班牙文翻譯
-- **Jakub**: 🇵🇱 [網站](https://macmousefix.com/pl)的波蘭文翻譯
-- [ETMH](https://t.me/sos_soon_ok): 🇷🇺 俄文翻譯
+- **Eduardo Rodrigues** 和 [@denini08](https://github.com/denini08):🇧🇷 巴西葡萄牙文翻譯
+- [@DimitriDR](https://github.com/DimitriDR):🇫🇷 法文翻譯
+- [@hasanbeder](https://github.com/hasanbeder) 和 [@erentomurcuk](https://github.com/erentomurcuk):🇹🇷 土耳其文翻譯
+- [Petr Pavlík](http://www.petrpavlik.com):🇨🇿 捷克文翻譯
+- [@Dro9an](https://github.com/Dro9an) 和 [@jihao](https://github.com/jihao):🇨🇳 [網站](https://macmousefix.com/zh-Hans)的簡體中文翻譯
+- [@xianyu-wang](https://github.com/xianyu-wang):🇨🇳 簡體中文翻譯
+- [@manghidev](https://github.com/manghidev):🇪🇸 西班牙文翻譯
+- **Jakub**:🇵🇱 [網站](https://macmousefix.com/pl)的波蘭文翻譯
+- [ETMH](https://t.me/sos_soon_ok):🇷🇺 俄文翻譯
 
 感謝你們的付出!
 
@@ -33,11 +33,11 @@ Mac Mouse Fix **3.1.0 Beta 1** 帶來了一個全新的翻譯系統,這已經籌
 因此:
 
 > [!TIP]
-> 如果你想幫助為全世界的 Mac Mouse Fix 使用者帶來優質翻譯,請查看全新的[翻譯指南](https://redirect.macmousefix.com/?target=mmf-localization-contribution)! 🌎
+> 如果你想幫助為全世界的 Mac Mouse Fix 使用者帶來優質翻譯,請查看全新的[翻譯指南](https://redirect.macmousefix.com/?target=mmf-localization-contribution)!🌎
 
 ### 其他變更
 
-在英文環境下使用 Mac Mouse Fix 時,變化不大,但使用者介面有一些更新,底層也有很多改動,以幫助改善翻譯:
+在英文環境下使用 Mac Mouse Fix 時,變化不大,但使用者介面有一些更新,而且底層有很多改動,以幫助改善翻譯:
 
 - 改進了小型彈出通知的外觀。
 - 在各處提供了更清晰的工具提示和錯誤訊息。
@@ -74,8 +74,8 @@ Mac Mouse Fix **3.1.0 Beta 1** 帶來了一個全新的翻譯系統,這已經籌
     - 日期:[2025 年 12 月 15 日]
     - 變更:
         - 新增 Eren 提供的土耳其文翻譯。
-        - 將「捲動」標籤頁的水平邊距稍微縮小,以更好地配合一些較長的土耳其文介面字串。
-        - 修復 Markdown 渲染問題,該問題會導致如果清單後的第一個元素是連結,清單項目符號會出現底線。這在土耳其文的幾個地方有影響。
+        - 將「捲動」標籤頁的水平邊距稍微縮小,以更好地適應一些較寬的土耳其文介面字串。
+        - 修復 Markdown 渲染問題,該問題會導致如果列表後的第一個元素是連結,列表項目符號會有底線。這在土耳其文的幾個地方有影響。
 
 4. 更新
     - MacMouseFixApp.zip 資源的建置編號:24827
@@ -87,10 +87,16 @@ Mac Mouse Fix **3.1.0 Beta 1** 帶來了一個全新的翻譯系統,這已經籌
     - 日期 [2025 年 12 月 27 日]
     - 變更:
         - 更新 ETMH 提供的俄文翻譯
-        - 修復「按鈕」標籤頁上因俄文翻譯而出現的排版錯誤。
+        - 修復「按鈕」標籤頁上的排版錯誤,該錯誤在俄文翻譯中出現。
 
 6. 更新
     - MacMouseFixApp.zip 資源的建置編號:24829
     - 日期 [2025 年 12 月 29 日]
     - 變更:
         - 更新 @xianyu-wang 提供的簡體中文翻譯
+
+7. 更新
+    - MacMouseFixApp.zip 資源的建置編號:24830
+    - 日期 [2026 年 1 月 1 日]
+    - 變更:
+        - 更新 [@denini08](https://github.com/denini08) 提供的巴西葡萄牙文翻譯

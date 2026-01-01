@@ -9,14 +9,14 @@ Il y a aussi quelques améliorations de l'interface utilisateur.
 - Presque toutes les parties du projet sont maintenant traduisibles, y compris le « Guide des boutons capturés », le Readme GitHub, le site web, et plus encore.
     - Toutes ces parties du projet peuvent être traduites depuis un seul endroit centralisé avec des références croisées faciles en utilisant l'application `Xcloc Editor`, ce qui facilite la cohérence pour les traducteurs.
 - Le système est conçu pour être très facile à maintenir, donc au fur et à mesure que Mac Mouse Fix évolue et que de nouveaux écrans ou textes sont ajoutés, tout se mettra à jour automatiquement.
-- Avertissement : j'utilise beaucoup le mot « facile ». Les processus sont faciles, mais trouver d'excellentes traductions reste bien sûr beaucoup de travail difficile et respectable ! Il y a juste moins d'obstacles maintenant.
+- Avertissement : J'utilise beaucoup le mot « facile ». Les processus sont faciles, mais trouver d'excellentes traductions reste bien sûr beaucoup de travail difficile et respectable ! Il y a juste moins d'obstacles maintenant.
 
 
 
 
 De nouvelles traductions ont déjà été généreusement fournies par les personnes suivantes :
 
-- **Eduardo Rodrigues** : 🇧🇷 Traductions en portugais brésilien
+- **Eduardo Rodrigues** et [@denini08](https://github.com/denini08) : 🇧🇷 Traductions en portugais brésilien
 - [@DimitriDR](https://github.com/DimitriDR) : 🇫🇷 Traductions françaises
 - [@hasanbeder](https://github.com/hasanbeder) et [@erentomurcuk](https://github.com/erentomurcuk) : 🇹🇷 Traductions turques
 - [Petr Pavlík](http://www.petrpavlik.com) : 🇨🇿 Traductions tchèques
@@ -45,7 +45,7 @@ Lors de l'utilisation de Mac Mouse Fix en anglais, peu de choses ont changé, ma
 - Un lien « Aider à traduire » a été ajouté à l'onglet À propos.
 - La largeur des vues et des popups a été ajustée pour un rendu optimal dans différentes langues.
 - Meilleure mise en page du texte pour le chinois et le coréen, qui avaient des problèmes de retour à la ligne dans certaines petites notifications popup.
-- Remplacement de la bibliothèque d'analyse Markdown pour corriger certains bugs de formatage en chinois et coréen.
+- Remplacement de la bibliothèque d'analyse Markdown pour corriger certains bugs de formatage en chinois et en coréen.
 - Beaucoup d'autres changements et améliorations en coulisses.
 
 
@@ -94,3 +94,9 @@ Mises à jour :
     - Date [29 déc. 2025]
     - Changements :
         - Mise à jour des traductions en chinois simplifié par @xianyu-wang
+
+7. Mise à jour 
+    - Numéro de build de l'asset MacMouseFixApp.zip : 24830
+    - Date [1er janv. 2026]
+    - Changements :
+        - Mise à jour des traductions en portugais brésilien par [@denini08](https://github.com/denini08)

@@ -4,7 +4,7 @@ Jsou tu také některá vylepšení uživatelského rozhraní.
 ### Nový lokalizační systém!
 
 - Nyní je velmi snadné přispívat kvalitními překlady do Mac Mouse Fix, bez jakýchkoliv technických znalostí.
-- K dispozici je spousta okomentovaných screenshotů a poznámek a skvělá vyhledávací funkce, takže překladatelé mohou snadno pochopit, jak přesně se jejich překlady zobrazují v aplikaci.
+- K dispozici je spousta anotovaných screenshotů a komentářů a skvělá vyhledávací funkce, takže překladatelé mohou snadno pochopit, jak přesně se jejich překlady zobrazují v aplikaci.
     - Myslím, že screenshoty a překladové rozhraní (aplikace `Xcloc Editor`) jsou nejkvalitnější na trhu a doufám, že ti pomohou vytvořit skvělé překlady!
 - Téměř všechny části projektu jsou nyní přeložitelné, včetně 'Průvodce zachycenými tlačítky', GitHub Readme, webových stránek a dalších.
     - Všechny tyto části projektu lze překládat z jednoho centrálního místa se snadným křížovým odkazováním pomocí aplikace `Xcloc Editor`, takže je pro překladatele snadné udržet vše konzistentní.
@@ -16,19 +16,19 @@ Jsou tu také některá vylepšení uživatelského rozhraní.
 
 Nové překlady již velkorysě poskytli následující lidé:
 
-- **Eduardo Rodrigues**: 🇧🇷 brazilská portugalština
-- [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 francouzština
-- [@hasanbeder](https://github.com/hasanbeder) a [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 turečtina
-- [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 čeština
-- [@Dro9an](https://github.com/Dro9an) a [@jihao](https://github.com/jihao): 🇨🇳 zjednodušená čínština pro [webové stránky](https://macmousefix.com/zh-Hans)
-- [@xianyu-wang](https://github.com/xianyu-wang): 🇨🇳 zjednodušená čínština
-- [@manghidev](https://github.com/manghidev): 🇪🇸 španělština
-- **Jakub**: 🇵🇱 polština pro [webové stránky](https://macmousefix.com/pl)
-- [ETMH](https://t.me/sos_soon_ok): 🇷🇺 ruština
+- **Eduardo Rodrigues** a [@denini08](https://github.com/denini08): 🇧🇷 brazilské portugalské překlady
+- [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 francouzské překlady
+- [@hasanbeder](https://github.com/hasanbeder) a [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 turecké překlady
+- [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 české překlady
+- [@Dro9an](https://github.com/Dro9an) a [@jihao](https://github.com/jihao): 🇨🇳 zjednodušený čínský překlad [webových stránek](https://macmousefix.com/zh-Hans)
+- [@xianyu-wang](https://github.com/xianyu-wang): 🇨🇳 zjednodušené čínské překlady
+- [@manghidev](https://github.com/manghidev): 🇪🇸 španělské překlady
+- **Jakub**: 🇵🇱 polské překlady [webových stránek](https://macmousefix.com/pl)
+- [ETMH](https://t.me/sos_soon_ok): 🇷🇺 ruské překlady
 
 Díky za vaši práci!
 
-Nicméně **všechny jazyky stále potřebují práci**, protože bylo zpřístupněno k překladu mnoho nového obsahu.
+Nicméně **všechny jazyky stále potřebují práci**, protože bylo zpřístupněno mnoho nového obsahu k překladu.
 
 Proto:
 
@@ -37,7 +37,7 @@ Proto:
 
 ### Další změny
 
-Při používání Mac Mouse Fix v angličtině se toho moc nezměnilo, ale několik věcí bylo aktualizováno v uživatelském rozhraní a hodně se změnilo pod kapotou, aby byly překlady lepší:
+Při používání Mac Mouse Fix v angličtině se toho moc nezměnilo, ale několik věcí bylo aktualizováno v uživatelském rozhraní a hodně se změnilo pod kapotou, aby se zlepšily překlady:
 
 - Vylepšený vzhled malých vyskakovacích oznámení.
 - Jasnější tooltipy a chybové hlášky na různých místech.
@@ -74,8 +74,8 @@ Aktualizace:
     - Datum: [15. prosince 2025]
     - Změny:
         - Přidány turecké překlady od Erena.
-        - Horizontální okraje na záložce Scrollování mírně zúženy, aby lépe fungovaly s některými delšími tureckými texty v UI.
-        - Opraven problém s vykreslováním Markdown, kdy odrážky seznamu měly podtržení, pokud první věc po seznamu byl odkaz. To ovlivňovalo turečtinu na několika místech.
+        - Horizontální okraje na záložce Scrollování mírně zúženy, aby lépe fungovaly s některými širšími tureckými texty v UI.
+        - Opravena chyba vykreslování Markdown, kde by odrážky seznamu měly podtržení, pokud by první věc po seznamu byl odkaz. To ovlivnilo turečtinu na několika místech.
 
 4. Aktualizace
     - Číslo buildu souboru MacMouseFixApp.zip: 24827
@@ -87,10 +87,16 @@ Aktualizace:
     - Datum [27. prosince 2025]
     - Změny:
         - Aktualizovány ruské překlady poskytnuté ETMH
-        - Opraven chyba v rozložení na záložce Tlačítka, která se objevila s ruskými překlady.
+        - Opravena chyba rozložení na záložce Tlačítka, která se objevila s ruskými překlady.
 
 6. Aktualizace
     - Číslo buildu souboru MacMouseFixApp.zip: 24829
     - Datum [29. prosince 2025]
     - Změny:
-        - Aktualizovány překlady do zjednodušené čínštiny od @xianyu-wang
+        - Aktualizovány zjednodušené čínské překlady od @xianyu-wang
+
+7. Aktualizace
+    - Číslo buildu souboru MacMouseFixApp.zip: 24830
+    - Datum [1. ledna 2026]
+    - Změny:
+        - Aktualizovány brazilské portugalské překlady od [@denini08](https://github.com/denini08)

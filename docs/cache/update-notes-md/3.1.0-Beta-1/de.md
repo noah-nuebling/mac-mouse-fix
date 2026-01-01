@@ -3,10 +3,10 @@ Außerdem gibt es einige UI-Verbesserungen.
 
 ### Neues Lokalisierungssystem!
 
-- Es ist jetzt super einfach, hochwertige Übersetzungen zu Mac Mouse Fix beizutragen, ohne jeglichen technischen Hintergrund.
+- Es ist jetzt super einfach, hochwertige Übersetzungen zu Mac Mouse Fix beizutragen, ohne jegliche technischen Vorkenntnisse.
 - Es gibt viele kommentierte Screenshots und Erklärungen sowie eine großartige Suchfunktion, damit Übersetzer genau verstehen können, wie ihre Übersetzungen in der App erscheinen.
     - Ich denke, die Screenshots und die Übersetzungs-UI (`Xcloc Editor` App) sind die besten auf dem Markt, und ich hoffe, sie helfen dir dabei, großartige Übersetzungen zu liefern!
-- Fast alle Teile des Projekts sind jetzt übersetzbar, einschließlich des 'Captured Buttons Guide', der GitHub-Readme, der Website und mehr.
+- Fast alle Teile des Projekts sind jetzt übersetzbar, einschließlich der 'Captured Buttons Guide', der GitHub-Readme, der Website und mehr.
     - All diese Projektteile können von einem zentralen Ort aus mit einfacher Querverweisfunktion über die `Xcloc Editor` App übersetzt werden, sodass es für Übersetzer leicht ist, alles konsistent zu halten.
 - Das System ist so aufgebaut, dass es sehr einfach zu pflegen ist. Wenn Mac Mouse Fix weiterentwickelt wird und neue Bildschirme oder Texte hinzugefügt werden, wird sich alles automatisch aktualisieren.
 - Disclaimer: Ich verwende das Wort 'einfach' oft. Die Arbeitsabläufe sind einfach, aber sich großartige Übersetzungen auszudenken ist natürlich immer noch viel harte und respektable Arbeit! Es gibt jetzt nur weniger Hürden im Weg.
@@ -16,7 +16,7 @@ Außerdem gibt es einige UI-Verbesserungen.
 
 Neue Übersetzungen wurden bereits großzügigerweise von folgenden Personen bereitgestellt:
 
-- **Eduardo Rodrigues**: 🇧🇷 Brasilianisch-Portugiesische Übersetzungen
+- **Eduardo Rodrigues** und [@denini08](https://github.com/denini08): 🇧🇷 Brasilianisch-Portugiesische Übersetzungen
 - [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 Französische Übersetzungen
 - [@hasanbeder](https://github.com/hasanbeder) und [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 Türkische Übersetzungen
 - [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Tschechische Übersetzungen
@@ -94,3 +94,9 @@ Updates:
     - Datum [29. Dez. 2025]
     - Änderungen:
         - Vereinfachte Chinesische Übersetzungen von @xianyu-wang aktualisiert
+
+7. Update
+    - Build-Nummer des MacMouseFixApp.zip-Assets: 24830
+    - Datum [1. Jan. 2026]
+    - Änderungen:
+        - Brasilianisch-Portugiesische Übersetzungen von [@denini08](https://github.com/denini08) aktualisiert
