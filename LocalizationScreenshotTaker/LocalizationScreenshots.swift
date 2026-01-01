@@ -158,6 +158,14 @@ final class LocalizationScreenshotClass: XCTestCase {
         end tell
         """)
     }
+    func sharedf_unhide_other_apps() { /// [Jan 2026] Credits to Claude
+        sharedf_do_apple_script(scriptText: """
+        tell application "System Events"
+            set visible of every process to true
+        end tell
+        """)
+    }
+    
 
     func _mfscale(_ x: Double, _ from: (Double, Double), _ to: (Double, Double)) -> Double { /// Reimplementation of Math.scale() without dependencies [Dec 2025]
         assert(false); /// Unused
@@ -726,6 +734,9 @@ final class LocalizationScreenshotClass: XCTestCase {
                 }
             }
         }
+        
+        /// Unhide other apps
+        sharedf_unhide_other_apps()
     }
     
     func sharedf_launch_app(url: URL, args: [String], env: [String: String], kill_app: Bool) -> XCUIApplication {
@@ -931,6 +942,11 @@ final class LocalizationScreenshotClass: XCTestCase {
         XCTContext.runActivity(named: "Write results") { activity in
             testTakeScreenshots_Localization_writeResults(screenshotsAndMetaData, outputDir)
         }
+        
+        ///
+        /// Unhide other apps
+        ///
+        sharedf_unhide_other_apps()
     }
     
     // --------------------------
@@ -1378,7 +1394,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         ///     If we screenshot them separately we can screenshot all the UI our app is displaying without screenshotting the whole screen.
         
         /// Take screenshot
-        let screenshot = topLevelElement.screenshot()
+        let screenshot = topLevelElement.screenshot() /// [Jan 1 2025] Just saw this fail randomly with error:      > /Users/noah/mmf-stuff/mac-mouse-fix/LocalizationScreenshotTaker/LocalizationScreenshots.swift:1381: error: -[Localization_Screenshot_Taker.LocalizationScreenshotClass testTakeScreenshots_Localization] : Element Window cannot request screenshot data because it does not exist
         
         /// Get screenshot frame
         var screenshotFrame = topLevelElement.screenshotFrame()
