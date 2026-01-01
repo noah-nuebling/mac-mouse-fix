@@ -164,17 +164,22 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
               kMFActionDictKeyGenericVariant: @(kMFSHLookUp)
             }
         },
-        @{@"ui": MFLocalizedString(@"effect.smart-zoom", @""), @"tool": MFLocalizedString(@"effect.smart-zoom.hint", @""), @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
-        }},
-        @{@"ui": MFLocalizedString(@"effect.click.primary", @""),
-          @"tool": MFLocalizedString(@"effect.click.primary.hint", @""),
-          @"hideable": @YES,
-          @"dict": @{
+        @{
+            @"ui": MFLocalizedString(@"effect.smart-zoom", @""),
+            @"tool": MFLocalizedString(@"effect.smart-zoom.hint", @""),
+            @"dict": @{
+              kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
+            }
+        },
+        @{
+            @"ui": MFLocalizedString(@"effect.click.primary", @""),
+            @"tool": MFLocalizedString(@"effect.click.primary.hint", @""),
+            @"hideable": @YES,
+            @"dict": @{
               kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
               kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @1,
               kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
-          }
+            }
         },
         @{@"ui": MFLocalizedString(@"effect.click.secondary", @""),
           @"tool": MFLocalizedString(@"effect.click.secondary.hint", @""),
