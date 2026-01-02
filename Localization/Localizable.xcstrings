@@ -13531,7 +13531,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Duplo Clique %@ +"
           }
         },
@@ -13614,7 +13614,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Triplo Clique %@ +"
           }
         },
@@ -14112,7 +14112,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "duplo clique %@"
           }
         },
@@ -14195,7 +14195,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "triplo clique %@"
           }
         },
@@ -14361,7 +14361,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "clique duas vezes e arraste %@"
           }
         },
@@ -14385,7 +14385,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "连按并拖移%@"
           }
         },
@@ -14444,7 +14444,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "clique três vezes e arraste %@"
           }
         },
@@ -14693,7 +14693,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "clique duas vezes e segure %@"
           }
         },
@@ -14776,7 +14776,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "clique três vezes e segure %@"
           }
         },
@@ -14942,7 +14942,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "clique duas vezes e role %@"
           }
         },
@@ -14966,7 +14966,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "连按并滚动%@"
           }
         },
@@ -15025,7 +15025,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "clique três vezes e role %@"
           }
         },

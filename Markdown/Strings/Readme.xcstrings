@@ -1252,7 +1252,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Quando você clica, o Mac Mouse Fix pode aguardar para verificar se você vai dar um duplo clique.<br>\nPara remover esse atraso em um botão, exclua qualquer ação de **\"Duplo Clique\"** associada a ele.\n"
           }
         },
