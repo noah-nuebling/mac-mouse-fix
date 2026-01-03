@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Ocak 2026**
 
+- 🇻🇳&nbsp;Quý&nbsp;Trương
 - 🇺🇸&nbsp;Jptrosclair
 
 **Aralık 2025**

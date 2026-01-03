@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **gennaio 2026**
 
+- 🇻🇳&nbsp;Quý&nbsp;Trương
 - 🇺🇸&nbsp;Jptrosclair
 
 **dicembre 2025**

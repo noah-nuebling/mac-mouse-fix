@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Januar 2026**
 
+- 🇻🇳&nbsp;Quý&nbsp;Trương
 - 🇺🇸&nbsp;Jptrosclair
 
 **Dezember 2025**
