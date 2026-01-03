@@ -72,6 +72,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den *Zucker-Kick*!
 
+**Januar 2026**
+
+- 🇺🇸&nbsp;Jptrosclair
+
 **Dezember 2025**
 
 - 🇺🇸&nbsp;Douglas&nbsp;Drouillard - "Got it working in under 30 seconds."

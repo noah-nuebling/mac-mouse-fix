@@ -74,6 +74,10 @@ Obrigado pelo apoio! :)
 
 Essas pessoas contribuíram com um valor bem acima do preço padrão e me presentearam com um milk-shake incrível. (E algumas ainda deixaram uma mensagem!) Obrigado pelo pico de açúcar! 😄
 
+**janeiro 2026**
+
+- 🇺🇸&nbsp;Jptrosclair
+
 **dezembro 2025**
 
 - 🇺🇸&nbsp;Douglas&nbsp;Drouillard - "Got it working in under 30 seconds."

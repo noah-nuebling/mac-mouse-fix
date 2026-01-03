@@ -73,6 +73,10 @@ Desteğiniz için teşekkürler! :)
 
 Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem bir Milkshake** ısmarladılar. (Hatta bazıları bir mesaj bile gönderdi!) *Ekstra şeker* için teşekkürler!
 
+**Ocak 2026**
+
+- 🇺🇸&nbsp;Jptrosclair
+
 **Aralık 2025**
 
 - 🇺🇸&nbsp;Douglas&nbsp;Drouillard - "Got it working in under 30 seconds."

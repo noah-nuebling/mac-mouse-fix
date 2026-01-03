@@ -72,6 +72,10 @@ Děkujeme za vaši podporu! :)
 
 Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neuvěřitelným milkšejkem**. (A někteří mi dokonce zanechali zprávu) Díky za *cukrovou nálož*!
 
+**leden 2026**
+
+- 🇺🇸&nbsp;Jptrosclair
+
 **prosinec 2025**
 
 - 🇺🇸&nbsp;Douglas&nbsp;Drouillard - "Got it working in under 30 seconds."
