@@ -2264,8 +2264,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@. Fare Düğmesi"
+            "state" : "translated",
+            "value" : "Düğme %@"
           }
         },
         "vi" : {
@@ -2710,13 +2710,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2$@ düğmesi şu anda Mac Mouse Fix tarafından yakalandı"
+                      "value" : "%2$@ şu anda Mac Mouse Fix tarafından yakalandı"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2$@ düğmeleri şu anda Mac Mouse Fix tarafından yakalandı"
+                      "value" : "%2$@ şu anda Mac Mouse Fix tarafından yakalandı"
                     }
                   }
                 }
@@ -3493,13 +3493,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2$@ düğmesinin Mac Mouse Fix tarafından yakalanması sona erdi"
+                      "value" : "%2$@ Mac Mouse Fix tarafından yakalanması sona erdi"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2$@ düğmelerinin Mac Mouse Fix tarafından yakalanması sona erdi"
+                      "value" : "%2$@ Mac Mouse Fix tarafından yakalanması sona erdi"
                     }
                   }
                 }
@@ -8126,7 +8126,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bu lisans halihazırda **%2$d** kez aktifleştirilmiştir. Bir lisans için maksimum aktifleştirme sayısı **%3$d** kadardır\n\nKorsan yazılım kullanımını engellemek için bu lisans artık geçersizdir. Lisansı bu kadar çok kez etkinleştirmek için başka nedenleriniz varsa bu sorun için üzgünüz.\n\n[Buraya tıklayarak](%1$@) bana bir e-posta gönderin, size yeni bir lisans oluşturacağım! Anlayışınız için teşekkürler.\";"
+            "value" : "Bu lisans halihazırda **%2$d** kez aktifleştirilmiştir. Bir lisans için maksimum aktifleştirme sayısı **%3$d** kadardır\n\nKorsan yazılım kullanımını engellemek için bu lisans artık geçersizdir. Lisansı bu kadar çok kez etkinleştirmek için başka nedenleriniz varsa bu sorun için üzgünüz.\n\n[Buraya tıklayarak](%1$@) bana bir e-posta gönderin, size yeni bir lisans oluşturacağım! Anlayışınız için teşekkürler."
           }
         },
         "vi" : {
@@ -8208,7 +8208,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Bu lisans **zaten aktif**!"
           }
         },
@@ -8540,8 +8540,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**İnternet bağlantısı yok**\n\nBilgisayarınız çevrimiçi olduğunda lisansınızı tekrar aktifleştirmeyi deneyin."
+            "state" : "translated",
+            "value" : "**İnternet bağlantısı yok**\n\nBilgisayarınız çevrimiçi olduğunda lisansınızı tekrar aktifleştirmeyi deneyin.\n\nEğer bu problemi çözmez ise, bana [buradan](%@) ulaşın."
           }
         },
         "vi" : {
@@ -8758,7 +8758,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "*'%@'** geçerli bir lisans anahtarı değildir\n\nLütfen başka bir anahtarı deneyin veya elinize geçen anahtarı olduğu gibi yazın."
           }
         },
@@ -9091,7 +9091,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ütün e-postalara geri dönemesem de hepsini okuyorum ve takdir ediyorum"
+            "value" : "Bilginiz olsun, bütün e-postalara geri dönemesem de hepsini okuyorum ve takdir ediyorum"
           }
         },
         "vi" : {
@@ -10336,7 +10336,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : " **%@** fareniz için önerilen ayarları yüklemek için **buraya tıklayın**"
           }
         },
@@ -11831,7 +11831,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yakınlaştır veya Uzaklaştır"
+            "value" : "Yakınlaştır / Uzaklaştır"
           }
         },
         "vi" : {
@@ -13460,8 +13460,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ düğmesine tıkla +"
+            "state" : "translated",
+            "value" : "%@ Tıkla +"
           }
         },
         "vi" : {
@@ -13543,7 +13543,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%@ düğmesine çift tıkla +"
           }
         },
@@ -13626,8 +13626,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ düğmesine üç kez tıkla +"
+            "state" : "translated",
+            "value" : "%@ Üç Kez Tıkla +"
           }
         },
         "vi" : {
@@ -13793,7 +13793,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ Düğmesi"
+            "value" : "Düğme %@"
           }
         },
         "vi" : {
@@ -14041,8 +14041,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ düğmesine tıkla"
+            "state" : "translated",
+            "value" : "%@ Tıkla"
           }
         },
         "vi" : {
@@ -14124,7 +14124,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%@ düğmesine çift tıkla"
           }
         },
@@ -14207,8 +14207,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ düğmesine üç kez tıkla"
+            "state" : "translated",
+            "value" : "%@ Üç Kez Tıkla"
           }
         },
         "vi" : {
@@ -14290,8 +14290,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ düğmesine tıkla ve sürükle"
+            "state" : "translated",
+            "value" : "%@ Tıkla ve Sürükle"
           }
         },
         "vi" : {
@@ -14373,7 +14373,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%@ düğmesine çift tıkla ve sürükle"
           }
         },
@@ -14456,8 +14456,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ düğmesine üç kez tıkla ve sürükle"
+            "state" : "translated",
+            "value" : "%@ Üç Kez Tıkla ve Kaydır"
           }
         },
         "vi" : {
@@ -14539,7 +14539,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "ve sürükle"
           }
         },
@@ -14622,8 +14622,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ düğmesine tıkla ve basılı tut"
+            "state" : "translated",
+            "value" : "%@ Tıkla ve Basılı Tut"
           }
         },
         "vi" : {
@@ -14705,7 +14705,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%@ düğmesine çift tıkla ve basılı tut"
           }
         },
@@ -14788,8 +14788,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ düğmesine üç kez tıkla ve basılı tut"
+            "state" : "translated",
+            "value" : "%@ Üç Kez Tıkla ve Basılı Tut"
           }
         },
         "vi" : {
@@ -14871,8 +14871,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ düğmesine tıkla ve kaydır"
+            "state" : "translated",
+            "value" : "%@ Tıkla ve Kaydır"
           }
         },
         "vi" : {
@@ -14954,7 +14954,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%@ düğmesine çift tıkla ve kaydır"
           }
         },
@@ -15037,8 +15037,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ düğmesine üç kez tıkla ve kaydır"
+            "state" : "translated",
+            "value" : "%@ Üç Kez Tıkla ve Kaydır"
           }
         },
         "vi" : {
@@ -15120,7 +15120,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "ve kaydır"
           }
         },
@@ -15287,7 +15287,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ Düğmesi"
+            "value" : "Düğme %@"
           }
         },
         "vi" : {
