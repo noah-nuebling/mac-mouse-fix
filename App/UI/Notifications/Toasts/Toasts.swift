@@ -33,10 +33,7 @@ import Foundation
         [
             "key": "k-is-disabled-toast",
             "block": {
-                var messageRaw = MFLocalizedString("is-disabled-toast", comment: """
-                    Note: The "Login Items Settings" can be found at "System Settings > General > Login Items & Extensions" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings.
-                    Note: Keep the .app name in-sync with the string with the key CFBundleName. That is how the app will be named in Finder.
-                    """)
+                var messageRaw = MFLocalizedString("is-disabled-toast", comment: "Note: The \"Login Items Settings\" can be found at \"System Settings > General > Login Items & Extensions\" under macOS 13 Ventura and later. You should probably use the same terminology that is used inside macOS' System Settings.")
                 messageRaw = String(format: messageRaw, Links.link(kMFLinkID_MacOSSettingsLoginItems) ?? "")
                 
                 let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)
