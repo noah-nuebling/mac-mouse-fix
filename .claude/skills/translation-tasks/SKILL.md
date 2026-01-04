@@ -21,7 +21,7 @@ Use `./run mfstrings` to inspect and edit .xcstrings localization files.
 # View translations for a locale (replace LOCALE with e.g., pt-BR, de, fr)
 ./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key
 
-# Find strings needing review
+# Find strings needing review (state is binary: 'translated' or 'needs_review')
 ./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key | grep "needs_review"
 
 # Find a string with context
