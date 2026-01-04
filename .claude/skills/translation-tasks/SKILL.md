@@ -12,17 +12,20 @@ Use `./run mfstrings` to inspect and edit .xcstrings localization files.
 ### Common commands
 
 ```bash
-# List all available columns
+# List all available columns (Also lists locales)
 ./run mfstrings list-cols
 
+# List all source files (fileid + full path)
+./run mfstrings list-files
+
 # View translations for a locale (replace LOCALE with e.g., pt-BR, de, fr)
-./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,LOCALE_state --sortcol key
+./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key
 
 # Find strings needing review
-./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,LOCALE_state --sortcol key | grep "needs_review"
+./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key | grep "needs_review"
 
 # Find a string with context
-./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,LOCALE_state --sortcol key | grep -C 3 "effect.click.primary"
+./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key | grep -C 3 "effect.click.primary"
 
 # Edit a translation value and mark as translated
 ./run mfstrings edit --path "fileid/key/LOCALE" --value "new text" --state "translated"
@@ -53,52 +56,48 @@ When making multiple edits, consider running them in a single command (separated
 
 ## Review guidelines
 
-### 1. Flag uncertainties about technical details
-- If unsure about something technical (like CFBundleName behavior, whether .app filenames get localized, etc.), notify the user
-- Ask if it should be documented in the localization context/comments
-- Don't assume - document the uncertainty
-
-### 2. Use grep/search to verify consistency
+### 1. Use grep/search to verify consistency
 - When reviewing a term, grep for ALL occurrences across the project
 - Check both the term being translated AND related terms
 - Example: Searching "Mac Mouse Fix Helper" should show consistent translation everywhere
 
-### 3. Check comments for critical context
+### 2. Check comments for critical context
 Comments often contain important notes about:
 - Technical limitations (format specifiers, etc.)
 - Related strings to check for consistency
 - Layout constraints
 - Where to find official Apple translations
-- A lot of these comments are written with human translators in mind.
-    - If there's a reference you'd like to follow but cannot easily do so (e.g. a string inside System Settings), mark the uncertainty
-        with 'needs_review' and report back to the human later.
 
-### 4. Strive for great translations, not just correct ones
+### 3. Strive for great translations, not just correct ones
 - Don't *just* aim for consistency with existing translations
 - Ask: "Could this be simpler? Does it need to deviate from the English?"
 - Bias towards: **Keep things simple** and **match the English version, unless your deviation makes things better**
 - Example: "5 ou mais botões" is correct, but "5+ botões" is simpler and matches the English "5+ buttons" better
 
-### 5. Autonomous work with uncertainty flagging
-- Work through translations autonomously, making fixes where confident
-- When uncertain: fix it if you can, but mark as `needs_review` (not `translated`)
-- Keep a mental list of uncertainties as you work
+### 4. Jot down uncertainties as you go
 
-### 6. IMPORTANT: Report uncertainties when done
-Before finishing, report ALL flagged uncertainties to the user:
+Translation involves lots of small judgment calls. As you work through strings, jot down anything you're not 100% sure about in a scratch file:
 
-```
-I fixed N strings. M remain flagged as `needs_review`:
-- `fileid/key`: [reason for uncertainty]
-- `fileid/key`: [reason for uncertainty]
+```bash
+# Start of your session
+echo "# Uncertainties" > /tmp/uncertainties.md
+
+# As you encounter things you're unsure about
+echo "- Localizable/some-key: Used 'arrastar' but maybe 'arraste' is more natural?" >> /tmp/uncertainties.md
 ```
 
-Common uncertainties worth flagging:
-- macOS terminology you couldn't verify (e.g., "Is 'Login Items' called 'Itens de Início' in pt-BR System Settings?")
-- App names that may or may not be localized by macOS
-- Layout/length concerns you can't visually verify
+Things worth jotting down:
+- macOS terminology you couldn't verify ("Is 'Login Items' called 'Itens de Início' in pt-BR System Settings?")
+- Comments written for human translators that you can't fully follow (e.g., "Check System Settings > Privacy for exact wording")
+- Layout/length concerns ("This is much longer than the English")
+- Choices between equally valid options ("Kept original translator's 'arraste' vs my instinct for 'arrastar'")
+- App names or technical terms that may or may not be localized
 
-## Common issues to watch for
+When uncertain about a string, you can still fix it - just mark it `needs_review` instead of `translated`.
+
+When you're done, read back your notes (`cat /tmp/uncertainties.md`) and share them with the user. This helps them know what to double-check.
+
+## Important issues to watch for
 
 - Inconsistent translation of specific terms across strings
 - Inconsistent phrasing in strings that show up close to each other in the UI
