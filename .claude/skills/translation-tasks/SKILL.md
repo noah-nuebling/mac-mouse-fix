@@ -16,28 +16,40 @@ Use `./run mfstrings` to inspect and edit .xcstrings localization files.
 ./run mfstrings list-cols
 
 # View translations for a locale (replace LOCALE with e.g., pt-BR, de, fr)
-./run mfstrings inspect --pretty --cols LOCALE_state,fileid,key,en,LOCALE
+./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,LOCALE_state --sortcol key
 
 # Find strings needing review
-./run mfstrings inspect --pretty --cols LOCALE_state,fileid,key,en,LOCALE | grep "needs_review"
+./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,LOCALE_state --sortcol key | grep "needs_review"
+
+# Find a string with context
+./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,LOCALE_state --sortcol key | grep -C 3 "effect.click.primary"
 
 # Edit a translation value and mark as translated
 ./run mfstrings edit --path "fileid/key/LOCALE" --value "new text" --state "translated"
 
 # Flag a string for review (without changing the value)
 ./run mfstrings edit --path "fileid/key/LOCALE" --state "needs_review"
-
-# Check consistency of a term across all files
-./run mfstrings inspect --cols en,LOCALE | grep "term"
 ```
 
-### Sorting
+### Sorting to gather context
 
-- Default sorting is by the first column
-- Use `--sortcol` to sort by a different column
-- Some files (like 'Main') should be sorted by 'comment' - check the string comments for guidance
+- Sorting by `key` groups related strings together (e.g., `effect.click.primary`, `effect.click.secondary`)
+    - When grepping, use `grep -C <lines_of_context>` to see surrounding context
+    - Treat this as the default mode when exploring.
 
-- When you sort by 'key' or 'comment', related strings will be grouped together naturally. When you then grep with context (` ... | grep -C ...`) you'll see important context, that you might miss otherwise.
+- Sort the `Main` file by `comment` instead. (It's an Interface Builder file that has non-sorting-friendly keys like `4gx-d0-WNb.title`)
+
+- You may want to look for earlier comments that apply to similar later strings. (e.g., `effect.click.primary` might have a comment that applies to `effect.click.secondary`). Usually, the first string in a 'logical group' will have a comment that applies to the whole group.
+
+### Batch edits
+
+When making multiple edits, consider running them in a single command (separated by newlines) to speed things up:
+
+```bash
+./run mfstrings edit --path "Localizable/trigger.substring.click.2/pt-BR" --value "duplo clique %@" --state "translated"
+./run mfstrings edit --path "Localizable/trigger.substring.click.3/pt-BR" --value "triplo clique %@" --state "translated"
+./run mfstrings edit --path "Localizable/trigger.substring.drag.2/pt-BR" --value "clique duas vezes e *arraste* %@" --state "translated"
+```
 
 ## Review guidelines
 
@@ -53,13 +65,12 @@ Use `./run mfstrings` to inspect and edit .xcstrings localization files.
 
 ### 3. Check comments for critical context
 Comments often contain important notes about:
-- Technical limitations (CFBundleName, format specifiers, etc.)
+- Technical limitations (format specifiers, etc.)
 - Related strings to check for consistency
 - Layout constraints
 - Where to find official Apple translations
 - A lot of these comments are written with human translators in mind.
-    - If there's a reference you'd like to follow but cannot easily do so 
-    - (e.g. a string deep inside System Settings), mark the uncertainty
+    - If there's a reference you'd like to follow but cannot easily do so (e.g. a string inside System Settings), mark the uncertainty
         with 'needs_review' and report back to the human later.
 
 ### 4. Strive for great translations, not just correct ones
