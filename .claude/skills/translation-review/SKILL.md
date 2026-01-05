@@ -1,6 +1,6 @@
 ---
 name: translation-review
-description: Review and edit existing translations. Use when reviewing, fixing, or updating translations for an existing locale (like pt-BR, de, fr).
+description: Review and edit existing translations. Use when reviewing, fixing, or updating translations for an existing locale (like pt-BR, de, fr), or when discussing mfstrings.py.
 ---
 
 # Translation Review Workflow
