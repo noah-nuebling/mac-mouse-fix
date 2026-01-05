@@ -11,12 +11,6 @@ The `./mac-mouse-fix-scripts` folder contains a submodule with various Python sc
 ./run [<run_args> --] <subcommand> <subcommand_args>
 ```
 
-## Finding available commands
+## Listing available commands
 
-Run `./run` with no arguments to see all available subcommands.
-
-## Finding script implementations
-
-The scripts live in a **git submodule** (`./mac-mouse-fix-scripts`).
-
-**Important:** Exploration agents and glob/grep tools seem to sometimes not find files in submodules. [Jan 2026] To reliably find script source code, run `./run` with no arguments which will print a mapping from subcommands to script files
+Run `./run` with no arguments to see all available subcommands and their source files.
