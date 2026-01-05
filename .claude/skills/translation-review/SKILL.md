@@ -1,6 +1,6 @@
 ---
-name: translation-tasks
-description: Review and edit translations in .xcstrings localization files. Use when working with translations, localization, reviewing strings for a locale (like pt-BR, de, fr), or using the mfstrings tool.
+name: translation-review
+description: Review and edit existing translations. Use when reviewing, fixing, or updating translations for an existing locale (like pt-BR, de, fr).
 ---
 
 # Translation Review Workflow
