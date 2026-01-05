@@ -18,14 +18,17 @@ Use `./run mfstrings` to inspect and edit .xcstrings localization files.
 # List all source files (fileid + full path)
 ./run mfstrings list-files
 
-# View translations for a locale (replace LOCALE with e.g., pt-BR, de, fr)
-./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key
+# View translations for a locale across all files (replace LOCALE with e.g., pt-BR, de, fr)
+./run mfstrings inspect --fileid all --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key
+
+# View translations for a specific file
+./run mfstrings inspect --fileid Localizable --cols key,comment,en,LOCALE,state:LOCALE --sortcol key
 
 # Find strings needing review (state is binary: 'translated' or 'needs_review')
-./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key | grep "needs_review"
+./run mfstrings inspect --fileid all --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key | grep "needs_review"
 
 # Find a string with context
-./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key | grep -C 3 "effect.click.primary"
+./run mfstrings inspect --fileid all --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key | grep -C 3 "effect.click.primary"
 
 # Edit a translation value and mark as translated
 ./run mfstrings edit --path "fileid/key/LOCALE" --value "new text" --state "translated"
