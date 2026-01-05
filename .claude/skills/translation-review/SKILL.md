@@ -18,6 +18,9 @@ Use `./run mfstrings` to inspect and edit .xcstrings localization files.
 # List all source files (fileid + full path)
 ./run mfstrings list-files
 
+# Show translation progress (files × locales table)
+./run mfstrings progress --files all --locales de,ko,tr
+
 # View translations for a locale across all files (replace LOCALE with e.g., pt-BR, de, fr)
 ./run mfstrings inspect --fileid all --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key
 
