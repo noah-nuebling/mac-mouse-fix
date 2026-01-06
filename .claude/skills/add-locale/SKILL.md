@@ -27,3 +27,43 @@ Translation comments often reference other strings (e.g., "match the translation
 4. Return to complete your original file
 
 Don't just translate file-by-file mechanically. Follow references as they arise—this ensures consistency across related strings. If you've translated a term before but it's no longer in your context, look it up to maintain consistency.
+
+## Using mfstrings
+
+Use `./run mfstrings` to inspect and edit translations. Key commands:
+
+```bash
+# View strings for a file
+./run mfstrings inspect --fileid Localizable --cols key,comment,en --sortcol key
+
+# For Main.xcstrings, sort by comment (its keys are non-descriptive Interface Builder IDs)
+./run mfstrings inspect --fileid Main --cols key,comment,en --sortcol comment
+
+# Edit a translation
+./run mfstrings edit --path "fileid/key/LOCALE" --value "translated text" --state "translated"
+
+# Check progress
+./run mfstrings progress --files all --locales LOCALE
+```
+
+Batch multiple edits in a single command block:
+```bash
+./run mfstrings edit --path "Localizable/effect.click/de" --value "Klick" --state "translated"
+./run mfstrings edit --path "Localizable/effect.scroll/de" --value "Scrollen" --state "translated"
+```
+
+## Tracking Uncertainties
+
+Translation involves judgment calls. Track things you're unsure about:
+
+```bash
+echo "# Uncertainties" > /tmp/uncertainties.md
+echo "- Localizable/effect.desktop: Used 'Schreibtisch' but unsure if macOS uses this" >> /tmp/uncertainties.md
+```
+
+Things worth noting:
+- macOS terminology you couldn't verify
+- Layout/length concerns
+- Choices between equally valid options
+
+When uncertain about a string, you can still translate it—just use `--state "needs_review"` instead of `"translated"`. At the end, share your uncertainties with the user.
