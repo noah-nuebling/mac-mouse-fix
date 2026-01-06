@@ -74,6 +74,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **January 2026**
 
+- 🇺🇸&nbsp;Roger - "So much better the Logi+ Thank you so much!"
 - 🇻🇳&nbsp;Quý&nbsp;Trương
 - 🇺🇸&nbsp;Jptrosclair
 
