@@ -27,9 +27,6 @@ Use `./run mfstrings` to inspect and edit .xcstrings localization files.
 # List all source files (fileid + full path)
 ./run mfstrings list-files
 
-# Show translation progress (files × locales table)
-./run mfstrings progress --files all --locales de,ko,tr
-
 # View translations for a locale across all files
 ./run mfstrings inspect --fileid all --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key
 
@@ -43,98 +40,69 @@ Use `./run mfstrings` to inspect and edit .xcstrings localization files.
 ./run mfstrings edit --path "fileid/key/LOCALE" --state "translated" --value "new text"
 ```
 
-### Sorting to gather context
+## Resolving Dependencies (Critical Step)
 
-- Sorting by `key` groups related strings together (e.g., `effect.click.primary`, `effect.click.secondary`)
-- When grepping, use `grep -C <lines_of_context>` to see surrounding strings
-- Treat key-sorting as the default mode when exploring
+**Before translating any string, resolve ALL its dependencies:**
 
-- Sort the `Main` file by `comment` instead (it has non-sorting-friendly Interface Builder keys like `4gx-d0-WNb.title`)
+### 1. Comment references
+When a comment says "See X" or mentions another string key, look up that string's comment first.
 
-- Look for earlier comments that apply to later strings in a group (e.g., `effect.click.primary` might have a comment that applies to `effect.click.secondary`)
-
-## Context Gathering (Critical Step)
-
-Before translating any string, thoroughly research its context:
-
-### 1. Inspect the string with surrounding context
+**Example**: `capture-toast.button-name.numbered` says "See trigger.substring.button-modifier.2". That comment contains capitalization rules. Missing this → incorrect translations.
 
 ```bash
-# See the string and related strings (sorted by key)
-./run mfstrings inspect --fileid all --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key | grep -C 10 "your.string.key"
+# Look up a referenced string:
+./run mfstrings inspect --fileid all --cols key,comment --sortcol key | grep -C 10 "trigger.substring.button-modifier.2"
 ```
 
-### 2. Read comments carefully
-
-Comments often contain:
-- Technical limitations (format specifiers, character limits)
-- Related strings to check for consistency
-- Where to find official Apple/macOS translations
-- Layout constraints
-
-### 3. Check existing translations of related terms
-
-If the string uses terminology that appears elsewhere, check how it's already translated:
+### 2. Shared terminology
+If your string uses a term that might appear elsewhere, check how it's already translated:
 
 ```bash
-# See how a term is translated across all strings
 ./run mfstrings inspect --fileid all --cols key,en,LOCALE --sortcol key | grep -i "scroll"
 ```
 
-### 4. Follow references in comments
+### 3. Related strings (same key prefix)
+Strings like `effect.click.*` share context. 
+Phrasing and terminology needs to be consistent within the group. 
+Earlier strings in a group may have comments that apply to later ones.
 
-If a comment says "effect.click.primary appears right above in the UI" follow that reference before translating.
+**Tip**: Sort by `key` so strings with the same prefix appear together, then use `grep -C` to see them:
 
-## Handling Dependencies
+```bash
+./run mfstrings inspect --fileid all --cols key,comment,en,LOCALE --sortcol key | grep -C 5 "effect.click"
+```
 
-Strings often depend on each other through shared terminology. Before translating:
+If you notice that you can't see the beginning of the group, yet, grep again until you find it, and read the comments.
+```bash
+# Earliest string you saw was effect.click.secondary.hint, you suspect effect.click.primary appears earlier, so you grep again:
+./run mfstrings inspect --fileid all --cols key,comment,en,LOCALE --sortcol key | grep -B 10 -A 5 "effect.click"
+```
 
-1. **Identify the logical group** - strings with similar key prefixes or shared terms
-2. **Find the "root" terms** - base terminology that other strings build on
-3. **Translate in order** - root/independent terms first, dependent strings after
+Exception: Sort the `Main` file by `comment` instead of `key` (it has Interface Builder keys like `4gx-d0-WNb.title`).
 
-Example dependency chain:
-- `scroll.smooth` ("Smooth scrolling") - root term, translate first
-- `scroll.smooth.enabled` ("Smooth scrolling enabled") - depends on translation of "Smooth scrolling"
-- `scroll.smooth.hint` ("Enable smooth scrolling for...") - depends on same term
+### 4. Apple/macOS terminology
+If a comment references Apple terminology (e.g., "match the wording in System Settings"), you can't resolve this yourself. Stop and ask the user.
 
 ## Context Gaps - When to Stop
 
-**Stop immediately and ask the user** when you encounter:
+**Stop and ask the user** when you encounter:
 
-- macOS/Apple terminology you can't verify (e.g., "What is 'Login Items' called in German System Settings?")
-- Comments that require checking something external (e.g., "Match the wording in System Settings > Privacy")
-- Technical terms or app names where localization status is unclear
-- Ambiguous source strings where the meaning isn't clear from context
-- Strings with format specifiers like %@ where you don't understand exactly what those format specifiers will be replaced with.
+- Unresolvable dependencies (like Apple terminology in #4 above)
+- Ambiguous source strings where the meaning isn't clear
+- Format specifiers like %@ where you don't understand exactly what they'll contain
 
-When stopping, report:
-1. Which string(s) you're blocked on
-2. What specific information you need
-3. Why you couldn't find it yourself
+When stopping, report which string(s) you're blocked on and what you need.
 
-**Do not guess** at official Apple terminology or make assumptions about ambiguous strings.
+**Do not guess** at official terminology or make assumptions about ambiguous strings.
 
 ## Translation Guidelines
 
-### Strive for great translations, not just correct ones
-- Ask: "Could this be simpler? Does it need to deviate from the English?"
-- Bias towards: **Keep things simple** and **match the English version, unless your deviation makes things better**
-- Example: "5 ou mais botões" is correct, but "5+ botões" is simpler and matches English "5+ buttons"
-
-### Consistency is critical
-- When translating a term, grep for ALL occurrences across the project
-- Check both the term being translated AND related terms
-- Ensure consistent translation everywhere
-
-### Batch edits
-
-When making multiple edits, run them in a single command block:
+- **Keep it simple** - match the English unless your deviation is better. Example: "5+ botões" beats "5 ou mais botões"
+- **Batch edits** in a single command block:
 
 ```bash
 ./run mfstrings edit --path "Localizable/scroll.smooth/de" --state "translated" --value "Flüssiges Scrollen"
 ./run mfstrings edit --path "Localizable/scroll.smooth.enabled/de" --state "translated" --value "Flüssiges Scrollen aktiviert"
-./run mfstrings edit --path "Localizable/scroll.smooth.hint/de" --state "translated"  --value "Flüssiges Scrollen aktivieren für..."
 ```
 
 ## Expanding Scope
