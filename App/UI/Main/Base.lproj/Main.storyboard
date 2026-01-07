@@ -1129,7 +1129,13 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <attributedString key="userComments">
-                                                        <fragment content="Scrolling &gt; Smoothness Label"/>
+                                                        <fragment>
+                                                            <string key="content">Scrolling &gt; Smoothness Label
+
+If you're unsure what translation of 'smooth scrolling' sounds most natural in your language,
+think of how you'd describe smooth movements on a high-refresh-rate display.
+(So more like 'fluid scrolling' than like 'gentle scrolling')</string>
+                                                        </fragment>
                                                     </attributedString>
                                                 </textFieldCell>
                                             </textField>
