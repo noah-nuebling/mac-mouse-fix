@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Ocak 2026**
 
+- 🇩🇪&nbsp;P&nbsp;Gruzkov
 - 🇫🇷&nbsp;Fabrice&nbsp;Sberro - "Good job Noah Nuebling"
 - 🇩🇪&nbsp;Mad
 - 🇰🇷&nbsp;Hld - "Bless you"

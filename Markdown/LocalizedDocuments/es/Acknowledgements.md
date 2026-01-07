@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **enero 2026**
 
+- 🇩🇪&nbsp;P&nbsp;Gruzkov
 - 🇫🇷&nbsp;Fabrice&nbsp;Sberro - "Good job Noah Nuebling"
 - 🇩🇪&nbsp;Mad
 - 🇰🇷&nbsp;Hld - "Bless you"

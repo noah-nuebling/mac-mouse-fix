@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **leden 2026**
 
+- 🇩🇪&nbsp;P&nbsp;Gruzkov
 - 🇫🇷&nbsp;Fabrice&nbsp;Sberro - "Good job Noah Nuebling"
 - 🇩🇪&nbsp;Mad
 - 🇰🇷&nbsp;Hld - "Bless you"

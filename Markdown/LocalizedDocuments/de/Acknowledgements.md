@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Januar 2026**
 
+- 🇩🇪&nbsp;P&nbsp;Gruzkov
 - 🇫🇷&nbsp;Fabrice&nbsp;Sberro - "Good job Noah Nuebling"
 - 🇩🇪&nbsp;Mad
 - 🇰🇷&nbsp;Hld - "Bless you"
