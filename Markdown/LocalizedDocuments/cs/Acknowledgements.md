@@ -48,14 +48,14 @@ Děkujeme, že přinášíte Mac Mouse Fix lidem po celém světě!
 <!-- 
   Old stuff from Money section:
 
-  Thanks so much to everyone who bought me a milkshake and to all 33400+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
+  Thanks so much to everyone who bought me a milkshake and to all 33500+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
   You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. 
 -->
 
 <a name="money"></a> 
 ## 💰 Peníze
 
-Moc děkuji všem, kteří mi poslali milkšejk, a všem **33400+** lidem, kteří si koupili Mac Mouse Fix.
+Moc děkuji všem, kteří mi poslali milkšejk, a všem **33500+** lidem, kteří si koupili Mac Mouse Fix.
 Díky vám můžu trávit spoustu času děláním něčeho, co miluji.
 
 Zvláštní uznání si zaslouží lidé, kteří mě podpořili tím, že za Mac Mouse Fix utratili více, než je standardní cena:
@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **leden 2026**
 
+- 🇰🇷&nbsp;Hld - "Bless you"
 - 🇮🇩&nbsp;Kresno&nbsp;Adityowibowo
 - 🇺🇸&nbsp;Shane&nbsp;Hoover - "Switching because Logitech can't be trusted to keep a current server cert."
 - 🇺🇸&nbsp;Roger - "So much better the Logi+ Thank you so much!"
