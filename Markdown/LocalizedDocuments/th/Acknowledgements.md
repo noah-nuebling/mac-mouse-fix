@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **มกราคม 2026**
 
+- 🇩🇪&nbsp;Mad
 - 🇰🇷&nbsp;Hld - "Bless you"
 - 🇮🇩&nbsp;Kresno&nbsp;Adityowibowo
 - 🇺🇸&nbsp;Shane&nbsp;Hoover - "Switching because Logitech can't be trusted to keep a current server cert."

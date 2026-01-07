@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **enero 2026**
 
+- 🇩🇪&nbsp;Mad
 - 🇰🇷&nbsp;Hld - "Bless you"
 - 🇮🇩&nbsp;Kresno&nbsp;Adityowibowo
 - 🇺🇸&nbsp;Shane&nbsp;Hoover - "Switching because Logitech can't be trusted to keep a current server cert."
