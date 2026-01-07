@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Ocak 2026**
 
+- 🇩🇪&nbsp;Dennis&nbsp;Reinartz
 - 🇨🇭&nbsp;Daniel - "Amazing work, thanks so much, well worth the milkshake!"
 - 🇩🇪&nbsp;P&nbsp;Gruzkov
 - 🇫🇷&nbsp;Fabrice&nbsp;Sberro - "Good job Noah Nuebling"
