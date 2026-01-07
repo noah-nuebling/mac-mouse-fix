@@ -4146,7 +4146,7 @@
       }
     },
     "capture-toast.scroll.uncaptured.hint" : {
-
+      "shouldTranslate" : false
     },
     "drag-effect.dock-swipe" : {
       "comment" : "",
