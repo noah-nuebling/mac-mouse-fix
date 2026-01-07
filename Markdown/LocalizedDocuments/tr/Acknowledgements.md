@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Ocak 2026**
 
+- 🇺🇸&nbsp;Shane&nbsp;Hoover - "Switching because Logitech can't be trusted to keep a current server cert."
 - 🇺🇸&nbsp;Roger - "So much better the Logi+ Thank you so much!"
 - 🇻🇳&nbsp;Quý&nbsp;Trương
 - 🇺🇸&nbsp;Jptrosclair
