@@ -7099,7 +7099,7 @@
       "shouldTranslate" : false
     },
     "SjO-Dq-CEX.title" : {
-      "comment" : "Class = \"NSTextFieldCell\"; title = \"Smoothness:\"; ObjectID = \"SjO-Dq-CEX\"; Note = \"Scrolling > Smoothness Label\\n\\nIf you're unsure what translation of 'smooth scrolling' sounds most natural in your language,\\nthink of how you'd describe smooth movements on a high-refresh-rate display.\\n(So more like 'fluid scrolling' than like like 'gentle scrolling')\";",
+      "comment" : "Class = \"NSTextFieldCell\"; title = \"Smoothness:\"; ObjectID = \"SjO-Dq-CEX\"; Note = \"Scrolling > Smoothness Label\\n\\nIf you're unsure what translation of 'smooth scrolling' sounds most natural in your language,\\nthink of how you'd describe smooth movements on a high-refresh-rate display.\\n(So more like 'fluid scrolling' than like 'gentle scrolling')\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
