@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Ocak 2026**
 
+- 🇺🇸&nbsp;Pasindu&nbsp;Gunasekara
 - 🇺🇦&nbsp;Bolboteg
 - 🇫🇷&nbsp;Damien&nbsp;Contact
 - 🇰🇷&nbsp;Seokhyun&nbsp;Noh - "noggong"
