@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **enero 2026**
 
+- 🇹🇼&nbsp;Alex
 - 🇦🇺&nbsp;Jlesouef
 - 🇩🇪&nbsp;Birgit&nbsp;Christof
 - 🇩🇪&nbsp;Finn&nbsp;Voigtländer

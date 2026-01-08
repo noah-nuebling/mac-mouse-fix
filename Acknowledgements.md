@@ -74,6 +74,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **January 2026**
 
+- 🇹🇼&nbsp;Alex
 - 🇦🇺&nbsp;Jlesouef
 - 🇩🇪&nbsp;Birgit&nbsp;Christof
 - 🇩🇪&nbsp;Finn&nbsp;Voigtländer

@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **janeiro 2026**
 
+- 🇹🇼&nbsp;Alex
 - 🇦🇺&nbsp;Jlesouef
 - 🇩🇪&nbsp;Birgit&nbsp;Christof
 - 🇩🇪&nbsp;Finn&nbsp;Voigtländer

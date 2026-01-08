@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **leden 2026**
 
+- 🇹🇼&nbsp;Alex
 - 🇦🇺&nbsp;Jlesouef
 - 🇩🇪&nbsp;Birgit&nbsp;Christof
 - 🇩🇪&nbsp;Finn&nbsp;Voigtländer
