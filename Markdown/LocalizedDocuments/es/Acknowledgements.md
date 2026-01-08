@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **enero 2026**
 
+- 🇺🇦&nbsp;Bolboteg
 - 🇫🇷&nbsp;Damien&nbsp;Contact
 - 🇰🇷&nbsp;Seokhyun&nbsp;Noh - "noggong"
 - 🇹🇼&nbsp;Alex

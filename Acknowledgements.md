@@ -74,6 +74,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **January 2026**
 
+- 🇺🇦&nbsp;Bolboteg
 - 🇫🇷&nbsp;Damien&nbsp;Contact
 - 🇰🇷&nbsp;Seokhyun&nbsp;Noh - "noggong"
 - 🇹🇼&nbsp;Alex
