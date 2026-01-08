@@ -13,10 +13,10 @@ This skill is for adding new translations to a locale. The workflow emphasizes t
 
 1. **User provides**: A locale (e.g., `de`, `pt-BR`) and a list of string keys to translate
 2. **Agent researches context** for each string thoroughly
-3. **Agent identifies dependencies** between strings (shared terminology, related strings)
+3. **Agent identifies dependencies** and adds them to the translation list (even if not requested)
 4. **Agent either**:
    - Reports a context gap and stops immediately (if missing critical info)
-   - Translates strings in dependency order (independent strings first)
+   - Translates strings in dependency order (dependencies first, then requested strings)
 
 ## The mfstrings tool
 
@@ -45,9 +45,13 @@ Use `./run mfstrings` to inspect and edit .xcstrings localization files.
 **Before translating any string, resolve ALL its dependencies:**
 
 ### 1. Comment references
-When a comment says "See X" or mentions another string key, look up that string's comment first.
+When a comment says "See X" or mentions another string key, look up that string's comment. Comments may:
+- Contain rules to follow (e.g., capitalization guidelines)
+- Reference other strings that yours must be consistent with (these are translation dependencies)
 
-**Example**: `capture-toast.button-name.numbered` says "See trigger.substring.button-modifier.2". That comment contains capitalization rules. Missing this → incorrect translations.
+**Example**: `capture-toast.button-name.numbered` says "capitalization should follow `trigger.substring.button-name.[...]` strings. See trigger.substring.button-modifier.2".
+- `trigger.substring.button-modifier.2` contains the capitalization *rules*
+- `trigger.substring.button-name.*` are the strings to *match* - if untranslated, add them to your list
 
 ```bash
 # Look up a referenced string:
@@ -55,16 +59,15 @@ When a comment says "See X" or mentions another string key, look up that string'
 ```
 
 ### 2. Shared terminology
-If your string uses a term that might appear elsewhere, check how it's already translated:
+If your string uses a term that might appear elsewhere, check how it's already translated. If the term isn't translated yet, the strings that establish that terminology are dependencies - add them to your list.
 
 ```bash
 ./run mfstrings inspect --fileid all --cols key,en,LOCALE --sortcol key | grep -i "scroll"
 ```
 
 ### 3. Related strings (same key prefix)
-Strings like `effect.click.*` share context. 
-Phrasing and terminology needs to be consistent within the group. 
-Earlier strings in a group may have comments that apply to later ones.
+Strings like `effect.click.*` share context - phrasing and terminology must be consistent within the group. Earlier strings may have comments that apply to later ones. If earlier strings in the group aren't translated, add them to your list.
+
 
 **Tip**: Sort by `key` so strings with the same prefix appear together, then use `grep -C` to see them:
 
@@ -72,13 +75,12 @@ Earlier strings in a group may have comments that apply to later ones.
 ./run mfstrings inspect --fileid all --cols key,comment,en,LOCALE --sortcol key | grep -C 5 "effect.click"
 ```
 
-If you notice that you can't see the beginning of the group, yet, grep again until you find it, and read the comments.
+If you can't see the beginning of the group, widen your search:
 ```bash
-# Earliest string you saw was effect.click.secondary.hint, you suspect effect.click.primary appears earlier, so you grep again:
+# If the earliest visible string was effect.click.secondary.hint, grep with more context:
 ./run mfstrings inspect --fileid all --cols key,comment,en,LOCALE --sortcol key | grep -B 10 -A 5 "effect.click"
-```
 
-Exception: Sort the `Main` file by `comment` instead of `key` (it has Interface Builder keys like `4gx-d0-WNb.title`).
+Important Exception: Sort the `Main` file by `comment` instead of `key` (it has Interface Builder keys like `4gx-d0-WNb.title`).
 
 ### 4. Apple/macOS terminology
 If a comment references Apple terminology (e.g., "match the wording in System Settings"), you can't resolve this yourself. Stop and ask the user.
@@ -98,15 +100,52 @@ When stopping, report which string(s) you're blocked on and what you need.
 ## Translation Guidelines
 
 - **Keep it simple** - match the English unless your deviation is better. Example: "5+ botões" beats "5 ou mais botões"
-- **Batch edits** in a single command block:
 
-```bash
-./run mfstrings edit --path "Localizable/scroll.smooth/de" --state "translated" --value "Flüssiges Scrollen"
-./run mfstrings edit --path "Localizable/scroll.smooth.enabled/de" --state "translated" --value "Flüssiges Scrollen aktiviert"
+### Translate in dependency order
+
+When you find dependencies during analysis, you MUST add them to your translation list - even if not originally requested. Dependencies include:
+
+1. **Strings referenced in comments** - If string A's comment says "See string B", look up string B
+2. **Strings that must be consistent** - If a comment says "should match the style of X strings", those X strings are dependencies
+3. **Shared terminology** - If multiple string groups use the same terms, establish the terminology first
+
+**Always translate dependencies before the strings that depend on them.**
+
+**Example**: `capture-toast.button-name.numbered` says "capitalization should follow the `trigger.substring.button-name.[...]` strings":
+1. The `trigger.substring.button-name.*` strings are dependencies (they establish the style to follow)
+2. Check if `trigger.substring.button-name.*` are translated for your locale
+3. If not translated: add them to your list and translate them FIRST
+4. Then translate `capture-toast.button-name.numbered` matching their style
+
+**Key insight**: Dependencies aren't just for understanding rules - they're strings that must be translated first to establish consistent terminology and style. If string A says "match the style of string B", you cannot translate A correctly until B exists.
+
+### Translation process
+
+After analyzing context and resolving dependencies:
+
+**Step 1: Write a Constraints Checklist**
+
+Before translating anything, write out an explicit checklist of all constraints you discovered. Extract specific, actionable rules from comments. Example:
+
+```
+Constraints for this batch:
+- [ ] Capitalization: adjectives lowercase, only nouns capitalized (from trigger.substring.button-modifier.2)
+- [ ] Use "abfangen" for "capture" (established in earlier translation)
+- [ ] Button names must match trigger.substring.button-name.* style
 ```
 
-## Expanding Scope
+**Step 2: Make an ordered translation list**
 
-The goal is to translate the requested strings PLUS any strings they depend on. If you discover that translating `feature.enabled` requires first establishing terminology from `feature.name`, add `feature.name` to your translation list even if it wasn't originally requested.
+List all strings to translate in dependency order (dependencies first, then requested strings).
 
-Document any strings you added beyond the original request when reporting back to the user.
+(The goal is to translate the requested strings PLUS any strings they depend on. If you discover that translating `feature.enabled` requires first establishing terminology from `feature.name`, add `feature.name` to your translation list even if it wasn't originally requested.)
+
+**Step 3: Translate in batches of 5 or fewer**
+
+After each batch, STOP and verify against your checklist:
+
+1. Re-read each constraint from your checklist
+2. For each constraint, check every translation you just made
+3. If any translation violates a constraint, fix it before continuing
+
+This verification must be explicit - actually write out "Checking constraint X against translations Y, Z..."
