@@ -1,6 +1,6 @@
 ---
 name: code-style
-description: Code structure and style preferences. Use when writing or modifying code - prefer inline logic over outlined functions.
+description: Code structure and style preferences. Use when writing or modifying code
 ---
 
 # Code Style Preferences
@@ -18,7 +18,7 @@ The key test: *If you have to think about what's inside the function while readi
 
 ### Costs of Unnecessary Outlining
 
-- **Over-engineering**: Tendency to add documentation and handle edge cases for a "general" problem that only exists in one place
+- **Over-engineering**: Tendency to add documentation and handle edge cases for a "general" problem that actually only exists in one place
 - **Navigation overhead**: More top-level functions makes it harder to orient yourself and understand what's important
 - **Mental overhead**: Jumping in and out of functions and tracking how values are renamed as they're passed around
 
@@ -148,7 +148,7 @@ Design code that naturally handles edge cases in one codepath, rather than scatt
 
 ### Why prefer single codepaths?
 
-Your code becomes shorter and simpler, which makes it less error prone, and easier to understand.
+Your code becomes shorter and less complicated, which makes it less error prone, and easier to understand.
 
 ### Example: Nested Data Access
 
@@ -173,7 +173,7 @@ string_unit = mfkeypath(xcstrings_obj, f"strings/{key}/localizations/{locale}/st
 # Returns {} if path doesn't exist - no checks needed
 ```
 
-The `mfkeypath` helper returns an empty dict for missing paths, allowing the code to continue without explicit null checks. Look for similar patterns: APIs that return sensible defaults, operations that are no-ops on empty inputs, etc.
+The `mfkeypath` helper returns an empty dict for missing paths, allowing the code to continue without explicit null checks. Look for similar patterns.
 
 ### Use Asserts Instead of "Just In Case" Checks
 
@@ -197,7 +197,7 @@ def process_item(item):
     ...
 ```
 
-Asserts are documentation that will loudly fail if your assumptions are wrong - much better than silently returning `None` and causing confusing behavior downstream.
+Asserts are documentation that will loudly fail if your assumptions are wrong - much better than likely-unnecessary and potentially-harmful fallback behaviors cluttering up the code.
 
 ---
 
