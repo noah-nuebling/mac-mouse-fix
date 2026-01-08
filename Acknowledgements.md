@@ -74,6 +74,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **January 2026**
 
+- 🇦🇺&nbsp;Jlesouef
 - 🇩🇪&nbsp;Birgit&nbsp;Christof
 - 🇩🇪&nbsp;Finn&nbsp;Voigtländer
 - 🇿🇦&nbsp;Matt - "Good man! Thank you for your effort. Fantastic piece of software! You’ve saved me from the bane of Logitech mice, which is LogiOptions+. I am contributing extra towards the development of future features. I’ve sent you two feature requests separate to this. (1. The ability to Import/Export/Backup settings / 2. Multiple profiles with quick switch ability &/or (if possible) automatic app-specific profiles.)"
