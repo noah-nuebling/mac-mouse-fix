@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **Ιανουάριος 2026**
 
+- 🇫🇷&nbsp;Damien&nbsp;Contact
 - 🇰🇷&nbsp;Seokhyun&nbsp;Noh - "noggong"
 - 🇹🇼&nbsp;Alex
 - 🇦🇺&nbsp;Jlesouef
