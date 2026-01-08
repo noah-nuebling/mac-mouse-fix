@@ -958,7 +958,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             buttonModString = stringf(MFLocalizedString(
                 @"trigger.substring.button-modifier.2",
                 @""
-                "Note: All the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them."
+                "Note:"
+                "\nAll the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them."
                 "\nIn English, that reason is that we're using \"Title Case\", but this isn't common in other languages. "
                 "\nFor example, in German, the substring \"Click and Drag %@\" is localized as \"%@ klicken und ziehen\""
                 "\nand \"Middle Button\" is translated as \"mittlere Taste\"."
@@ -966,6 +967,15 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
                 "\nNotice that not even the first word is capitalized."
                 "\nThat's because these substrings are joined programmatically to create a combined string."
                 "\n(The start of that combined string will be capitalized automatically.)"
+                "\n"
+                "\nNote 2: (For Claude)"
+                "\nThe trigger.[...] strings and the effect.[...] strings appear in the 'Action Table' together. The trigger.[...] strings are"
+                "\non the left and describe some input that the user can perform on their mouse, while the effect.[...] strings are on the"
+                "\nright side and describe what will happen, when the user performs that trigger."
+                "\nConsider translating the trigger.[...] strings more as a description of the action '(to) click and drag'"
+                "\ninstead of and imperative ('please click and drag')"
+                "\nAt least in German, this works better I think."
+                "\nI don't speak other languages, so this is up to you. Choose whatever feels the most natural and allows for the most consistency between the different trigger.substring.[...] strings."
             ), buttonStr);
         } else if (lvl.intValue == 3) {
             buttonModString = stringf(MFLocalizedString(@"trigger.substring.button-modifier.3", @""), buttonStr);
