@@ -37,7 +37,10 @@ Use `./run mfstrings` to inspect and edit .xcstrings localization files.
 ./run mfstrings inspect --fileid all --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key | grep -C 5 "effect.click"
 
 # Edit a translation value and mark as translated
-./run mfstrings edit --path "fileid/key/LOCALE" --state "translated" --value "new text"
+./run mfstrings edit --path 'fileid/key/LOCALE' --state 'translated' --value 'new text'
+
+# ⚠️ Use single quotes for --value! Double quotes corrupt format specifiers:
+#    "%2$@" becomes "%2" (bash expands $@ to nothing)
 ```
 
 ## Resolving Dependencies (Critical Step)
@@ -98,6 +101,8 @@ When stopping, report which string(s) you're blocked on and what you need.
 **Do not guess** at official terminology or make assumptions about ambiguous strings.
 
 ## Translation Guidelines
+
+- **Follow Apple's style** - This is a macOS app. Follow Apple's terminology and style guides where possible. Use the same terms that appear in System Settings, Finder, and other Apple apps for your locale.
 
 - **Keep it simple** - match the English unless your deviation is better. Example: "5+ botões" beats "5 ou mais botões"
 

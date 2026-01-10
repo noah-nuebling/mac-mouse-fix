@@ -34,10 +34,13 @@ Use `./run mfstrings` to inspect and edit .xcstrings localization files.
 ./run mfstrings inspect --fileid all --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key | grep -C 3 "effect.click.primary"
 
 # Edit a translation value and mark as translated
-./run mfstrings edit --path "fileid/key/LOCALE" --value "new text" --state "translated"
+./run mfstrings edit --path 'fileid/key/LOCALE' --value 'new text' --state 'translated'
 
 # Flag a string for review (without changing the value)
-./run mfstrings edit --path "fileid/key/LOCALE" --state "needs_review"
+./run mfstrings edit --path 'fileid/key/LOCALE' --state 'needs_review'
+
+# ⚠️ Use single quotes for --value! Double quotes corrupt format specifiers:
+#    "%2$@" becomes "%2" (bash expands $@ to nothing)
 ```
 
 ### Sorting to gather context
@@ -55,12 +58,15 @@ Use `./run mfstrings` to inspect and edit .xcstrings localization files.
 When making multiple edits, consider running them in a single command (separated by newlines) to speed things up:
 
 ```bash
-./run mfstrings edit --path "Localizable/trigger.substring.click.2/pt-BR" --value "duplo clique %@" --state "translated"
-./run mfstrings edit --path "Localizable/trigger.substring.click.3/pt-BR" --value "triplo clique %@" --state "translated"
-./run mfstrings edit --path "Localizable/trigger.substring.drag.2/pt-BR" --value "clique duas vezes e *arraste* %@" --state "translated"
+./run mfstrings edit --path 'Localizable/trigger.substring.click.2/pt-BR' --value 'duplo clique %@' --state 'translated'
+./run mfstrings edit --path 'Localizable/trigger.substring.click.3/pt-BR' --value 'triplo clique %@' --state 'translated'
+./run mfstrings edit --path 'Localizable/trigger.substring.drag.2/pt-BR' --value 'clique duas vezes e *arraste* %@' --state 'translated'
 ```
 
 ## Review guidelines
+
+### 0. Follow Apple's style
+This is a macOS app. Follow Apple's terminology and style guides where possible. Use the same terms that appear in System Settings, Finder, and other Apple apps for your locale.
 
 ### 1. Use grep/search to verify consistency
 - When reviewing a term, grep for ALL occurrences across the project
