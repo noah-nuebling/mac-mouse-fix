@@ -4,52 +4,10 @@
     "1: intro" : {
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **ve výchozím nastavení zachycuje kolečko myši**, podobně jako [zachycuje tlačítka myši](<{url}>)."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **fängt standardmäßig das Scrollrad deiner Maus ab**, ähnlich wie es [Maustasten abfängt](<{url}>).\n"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **captures your mouse's scroll wheel by default**, similar to how it [captures mouse buttons](<{url}>)."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **captura la rueda de desplazamiento de tu ratón por defecto**, de forma similar a cómo [captura los botones del ratón](<{url}>)."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# {docname_captured_scroll_wheels}\n\nO Mac Mouse Fix **captura a roda de rolagem do seu mouse por padrão**, assim como [captura os botões do mouse](<{url}>)."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **по умолчанию захватывает колесико прокрутки мыши**, аналогично тому, как он [захватывает кнопки мыши](<{url}>)."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix farenizin **kaydırma tekerleğini de varsayılan olarak** [fare düğmelerini yakaladığı gibi](<{url}>) yakalar."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# {docname_captured_scroll_wheels}\n\n与[捕获鼠标按键](<{url}>)的机制类似，Mac Mouse Fix **在默认情况下会捕获鼠标的滚轮**。"
           }
         }
       }
@@ -58,52 +16,10 @@
       "comment" : "For the step-by-step instructions, make sure to mirror the strings that are seen on the 'Scrolling' Tab in Mac Mouse Fix.\n\nHow to find the strings seen on the 'Scrolling' Tab:\n\nMost strings on the 'Scrolling' Tab have a comment containing 'Scrolling >' as of September 2025.\n\nHow to find the strings used in the message 'indicating that the scroll wheel is no longer being captured':\n\nSearch for 'capture-toast.scroll.uncaptured'",
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Jak zabránit zachycení rolovacího kolečka:**\n\n1. V Mac Mouse Fix přejděte na kartu 'Rolování'\n2. Vypněte **všechny** možnosti\n- V případě možnosti 'Rychlost' ji nastavte na 'macOS'\n- Odstraňte všechny položky v části 'Modifikátory klávesnice' kliknutím na tlačítko 'x' vedle každého modifikátoru\n\nPoté by se měla zobrazit zpráva, že rolovací kolečko již není zachycováno."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Um das Abfangen des Scrollrads zu verhindern:** \n\n1. Gehe in Mac Mouse Fix zum 'Scrollen' Tab\n2. Schalte alle Optionen aus\n    - Im Falle der 'Tempo' Option, setze sie auf 'macOS'\n    - Lösche alle Sondertasten, indem du auf den 'x' Knopf neben jeder Sondertaste klickst\n\nDanach solltest du eine Nachricht sehen, die besagt, dass das Scrollrad nun nicht länger abgefangen wird.\n"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "**To prevent scroll wheel capture:**\n\n1. Go to the 'Scrolling' tab in Mac Mouse Fix\n2. Turn off **all** options\n    - In case of the 'Speed' option, set it to 'macOS'\n    - Remove all entries under 'Keyboard Modifiers' by clicking the 'x' button next to each modifier\n\nAfter this, you should see a message indicating that the scroll wheel is no longer being captured."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Para evitar la captura de la rueda de desplazamiento:**\n\n1. Ve a la pestaña 'Desplazamiento' en Mac Mouse Fix\n2. Desactiva **todas** las opciones\n    - En el caso de la opción 'Velocidad', configúrala en 'macOS'\n    - Elimina todas las entradas en 'Modificadores de teclado' haciendo clic en el botón 'x' junto a cada modificador\n\nDespués de esto, deberías ver un mensaje que indica que la rueda de desplazamiento ya no se está capturando."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Para evitar capturar a roda de rolagem:**\n\n1. Vá à aba \"Rolagem\" no Mac Mouse Fix\n2. Desative **todas** as opções\n    - No caso da opção \"Velocidade\", defina como \"macOS\"\n    - Remova todas as entradas em \"Modificadores de Teclado\" clicando no \"x\" ao lado de cada modificador\n\nDepois disso, você verá uma mensagem indicando que a roda de rolagem não está mais sendo capturada."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Чтобы предотвратить захват колесика прокрутки:**\n\n1. Перейдите на вкладку «Прокрутка» в Mac Mouse Fix\n2. Отключите **все** опции\n- В случае опции «Скорость» установите значение «macOS»\n- Удалите все записи в разделе «Модификаторы клавиатуры», нажав кнопку «x» рядом с каждым модификатором\n\nПосле этого вы должны увидеть сообщение о том, что колесико прокрутки больше не захватывается."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Kaydırma tekerleğinin yakalanmasını engellemek istiyorsanız**\n\n1. Mac Mouse Fix üzerinde 'Kaydırma' sekmesine gidin.\n2. **Bütün** ayarları devre dışı bırakın.\n\t- Hız ayarını 'macOS' olarak ayarlayın.\n\t- Klavye değiştiricileri maddelerini de yanlarındaki 'x' düğmesini kullanarak kaldırın.\n\nBundan sonra kaydırma tekerleğinin yakalandığına dair mesajları görmeyeceksiniz."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**若要防止滚轮被捕获：**\n\n1. 进入 Mac Mouse Fix 的“滚动”标签页\n2. 关闭**所有**选项\n    - 针对“速度”选项，将其设置为“macOS”\n    - 点击每个修饰键旁边的“x”按钮，删除“键盘修饰键”下的所有条目\n\n完成这些操作后，你应该会看到一条提示，说明滚轮已不再被捕获。"
           }
         }
       }
@@ -111,52 +27,10 @@
     "3: uncapturing-purpose" : {
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Co se stane, když se rolovací kolečko *přestane* zaznamenávat?**\n\nAplikace Mac Mouse Fix pak rolovací kolečko zcela ignoruje – během rolování nebude spotřebovávat energii procesoru ani nabíjet baterii, ani jinak nerušit. To vám dává naprostou svobodu používat k ovládání rolovacího kolečka jiné aplikace, jako je [MOS]({url})."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Was passiert wenn das Scrollrad *nicht länger* abgefangen wird?** \n\nMac Mouse Fix ignoriert dann dein Scrollrad komplett – Es wird beim Scrollen keine Prozessorleistung oder Batterieladung mehr verwenden oder sich in irgendeiner Weise einmischen. So hast du die volle Freiheit, andere Apps wie [MOS]({url}) zu verwenden um dein Scrollrad zu handhaben.\n"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "**What happens when the scroll wheel is *no longer* being captured?**\n\nMac Mouse Fix will then completely ignore your scroll wheel – it won't use any processor power or battery charge during scrolling, or interfere in any way. This gives you complete freedom to use other apps like [MOS]({url}) to handle your scroll wheel."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**¿Qué pasa cuando la rueda de desplazamiento *ya no* está siendo capturada?**\n\nMac Mouse Fix ignorará por completo la rueda de desplazamiento de tu ratón; no utilizará potencia del procesador ni carga de batería durante el desplazamiento, ni interferirá de ninguna manera. Esto te da total libertad para usar otras aplicaciones como [MOS]({url}) para manejar tu rueda de desplazamiento."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**O que acontece quando a roda *não* está mais sendo capturada?**\n\nO Mac Mouse Fix passa a ignorar totalmente a roda de rolagem — não usa processamento ou bateria ao rolar, nem interfere de nenhuma forma. Assim você tem liberdade para usar outros apps como o [MOS]({url}) para controlar a rolagem."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Что происходит, когда колесико прокрутки *больше* не захватывается?**\n\nMac Mouse Fix полностью игнорирует ваше колесико прокрутки — оно не будет использовать ресурсы процессора или заряд батареи во время прокрутки и не будет мешать вам никоим образом. Это дает вам полную свободу использовать другие приложения, такие как [MOS]({url}), для управления колесиком прокрутки."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**Kaydırma tekerleği yakalanmadığında ne olacak?**\n\nMac Mouse Fix kaydırma tekerleğini tamamen yok sayacaktır - bu esnada kaydırma yaparken herhangi bir işlem gücü veya enerji kullanımı olmayacaktır. Bu, [MOS]({url}) gibi kaydırma tekerleği modifikasyon uygulamalarını dilediğiniz gibi kullanmanızı sağlar."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "**当滚轮“不再”被捕获时，会发生什么？**\n\n届时，Mac Mouse Fix 将完全忽略你的滚轮——在滚动期间，它不会消耗任何处理器性能或电池电量，也不会产生任何干扰。这让你能够完全自由地使用其他应用（如 [MOS]({url})）来接管和处理你的滚轮。"
           }
         }
       }
@@ -164,52 +38,10 @@
     "4: also-see" : {
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Viz také\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Upraveno s vynikající pomocí Claude 3.5 Sonnet)*"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Siehe auch\n\n- [{docname_captured_buttons_mmf3}](<{url}>)"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "## Also see\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Edited with excellent assistance by Claude 3.5 Sonnet)*"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Ver también\n\n  - [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Editado con la excelente asistencia de Claude 3.5 Sonnet)*"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Veja também\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Editado com a excelente ajuda do Claude 3.5 Sonnet)*"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## См. также\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Отредактировано при отличной помощи Claude 3.5 Sonnet)*"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "##Ayrıca bakınız\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Claude 3.5 Sonnet'in muhteşem yardımı ile düzenlendi)*\n\nNot: Birebir çeviri olup çeviride yapay zekâ kullanılmamıştır.\n"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## 另请参阅\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n（本文档在 Claude 3.5 Sonnet 的协助下完成校订）"
           }
         }
       }

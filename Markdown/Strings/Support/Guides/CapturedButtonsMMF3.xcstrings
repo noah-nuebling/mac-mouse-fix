@@ -5,52 +5,10 @@
       "comment" : "{screenshot_0} will be replaced with a screenshot of the notification that pops up when a button is captured by Mac Mouse Fix. \n\nConsider mirroring the terminology used by that notification. \n\nSearch for 'capture-toast' to find the strings used in that notification.",
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# {docname_captured_buttons_mmf3}\n\nPři používání nástroje Mac Mouse Fix jste se mohli setkat se zprávou, že tlačítko na vaší myši je nyní 'zachycováno' nástrojem Mac Mouse Fix.\n\n{screenshot_0}\n\nV tomto článku se dozvíte, co to znamená, jaké problémy to může způsobit a jak je obejít."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# {docname_captured_buttons_mmf3}\n\nBeim Verwenden von Mac Mouse Fix, bist du vielleicht schonmal auf eine Nachricht gestoßen, die besagt, dass eine Taste deiner Maus jetzt von Mac Mouse Fix 'abgefangen' wird.\n\n{screenshot_0}\n\nIn diesem Artikel erfährst du, was das bedeutet, welche Probleme es auslösen kann, und wie du mit ihnen umgehen kannst."
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "# {docname_captured_buttons_mmf3}\n\nWhile using Mac Mouse Fix, you may have encountered a message saying that a button on your mouse is now being 'captured' by Mac Mouse Fix.\n\n{screenshot_0}\n\nIn this article, you'll learn what this means, what problems it can cause, and how to work around them."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# {docname_captured_buttons_mmf3}\n\nMientras usabas Mac Mouse Fix, es posible que hayas encontrado un mensaje que indica que un botón de tu ratón está siendo 'capturado' por Mac Mouse Fix.\n\n{screenshot_0}\n\nEn este artículo, aprenderás lo que esto significa, qué problemas puede causar y cómo solucionarlos."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# {docname_captured_buttons_mmf3}\n\nAo usar o Mac Mouse Fix, você pode ter visto uma mensagem dizendo que um botão do seu mouse foi \"capturado\" pelo Mac Mouse Fix.\n\n{screenshot_0}\n\nNeste artigo, você vai entender o que isso significa, quais problemas pode causar e como contornar."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# {docname_captured_buttons_mmf3}\n\nПри использовании Mac Mouse Fix вы могли столкнуться с сообщением о том, что кнопка на вашей мыши в данный момент «захвачена» Mac Mouse Fix.\n\n{screenshot_0}\n\nВ этой статье вы узнаете, что это означает, какие проблемы это может вызвать и как их решить."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# {docname_captured_buttons_mmf3}\n\nMac Mouse Fix kullanırken bir düğmenin 'yakalandığını' söyleyen bir kutucuk görmüş olabilirsiniz.\n\n{screenshot_0}\n\nBu dokümanda bunun ne anlama geldiğini, nasıl sorunlar oluşturabileceğini ve bunların çözümlerini göreceksiniz."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "# {docname_captured_buttons_mmf3}\n\n在使用 Mac Mouse Fix 时，你可能遇到过一条提示，称你鼠标上的某个按键正被 Mac Mouse Fix “捕获”。\n\n{screenshot_0}\n\n在本文中，你将了解这一提示的含义、它可能导致的问题，以及如何解决这些问题。"
           }
         }
       }
@@ -58,52 +16,10 @@
     "02: terminology" : {
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Co znamená 'zachycení' tlačítka myši?\n\nTlačítko myši, které je zachyceno aplikací Mac Mouse Fix, již nevidí ostatní aplikace ani systém macOS.\nFunkce, které by toto tlačítko normálně plnilo, nebudou během jeho zachycování fungovat.\n\n**Příklad**: V Chromu se obvykle můžete pohybovat vpřed a vzad kliknutím na boční tlačítka (tlačítka 4 a 5) myši.\nKdyž ale Mac Mouse Fix boční tlačítka zachytí, tato funkce již nefunguje. Místo toho budou boční tlačítka spouštět pouze akce, které jste jim v Mac Mouse Fix přiřadili.\n\n**Proč to Mac Mouse Fix dělá?** Mac Mouse Fix skrývá tlačítka před ostatními aplikacemi, aby se zabránilo náhodnému spuštění jiných funkcí při používání gest Mac Mouse Fix.\nPokud například kliknete a přetáhnete tlačítko 4 pro přepínání mezi plochami, vždy se **současně** vrátíte o stránku zpět v Chromu."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Was bedeutet 'abfangen' einer Maustaste?\n\nEine Maustaste, die von Mac Mouse Fix abgefangen wird, kann von anderen Apps und von macOS nicht mehr gesehen werden.\nDie Funktionen, die diese Taste normalerweise ausführen würde, funktionieren nicht, solange sie abgefangen wird.\n\n**Beispiel**: Normalerweise kann man in Chrome Vor und Zurück gehen, indem man die Seitentasten (Taste 4 und 5) der Maus klickt.\nDoch wenn die Seitentasten von Mac Mouse Fix abgefangen werden, dann funktioniert das nicht mehr. Stattdessen lösen die Seitentasten dann nur noch die Aktionen aus, die du ihnen in Mac Mouse Fix zugewiesen hast.\n\n**Warum macht Mac Mouse Fix das?** Mac Mouse Fix versteckt Tasten vor anderen Apps, damit du beim Verwenden von Mac Mouse Fix Gesten nicht aus Versehen auch gleichzeitig andere Funktionen auslöst. \nWenn du z.B. Taste 4 klickst und ziehst um zwischen Schreibtischen zu wechseln, dann würdest du auch immer **gleichzeitig** eine Seite in Chrome zurückgehen."
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "## What does 'capturing' a mouse button mean?\n\nA mouse button that is captured by Mac Mouse Fix can't be seen by other apps or by macOS anymore.\nThe functions which this button would normally perform won't work while it's being captured.\n\n**Example**: Normally you can go backward and forward in Chrome by clicking the side buttons (buttons 4 and 5) of the mouse.\nBut when the side buttons are captured by Mac Mouse Fix, this no longer works. Instead, the side buttons will only trigger the actions that you've assigned to them in Mac Mouse Fix.\n\n**Why does Mac Mouse Fix do this?** Mac Mouse Fix hides buttons from other apps to prevent you from accidentally triggering other functions while using Mac Mouse Fix gestures.\nFor example, if you click and drag button 4 to switch between desktops, you would always **simultaneously** go back a page in Chrome."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## ¿Qué significa 'capturar' un botón del ratón?\n\nUn botón del ratón capturado por Mac Mouse Fix ya no puede ser visto por otras aplicaciones ni por macOS.\nLas funciones que este botón realizaría normalmente no funcionarán mientras esté capturado.\n\n**Ejemplo**: Normalmente puedes ir hacia atrás y hacia adelante en Chrome haciendo clic en los botones laterales (botones 4 y 5) del ratón.\nPero cuando los botones laterales son capturados por Mac Mouse Fix, esto ya no funciona. En su lugar, los botones laterales solo activarán las acciones que les hayas asignado en Mac Mouse Fix.\n\n**¿Por qué Mac Mouse Fix hace esto?** Mac Mouse Fix oculta los botones de otras aplicaciones para evitar que actives accidentalmente otras funciones mientras utilizas los gestos de Mac Mouse Fix.\nPor ejemplo, si haces clic y arrastras el botón 4 para cambiar entre escritorios, siempre irías hacia atrás una página en Chrome **simultáneamente**."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## O que significa \"capturar\" um botão do mouse?\n\nUm botão capturado pelo Mac Mouse Fix deixa de ser visto por outros apps ou pelo macOS.\nAs funções que ele executaria normalmente não funcionam enquanto ele estiver capturado.\n\n**Exemplo**: normalmente você pode voltar e avançar no Chrome clicando nos botões laterais (botões 4 e 5) do mouse.\nQuando esses botões são capturados pelo Mac Mouse Fix, isso deixa de funcionar. Em vez disso, eles só disparam as ações atribuídas no Mac Mouse Fix.\n\n**Por que o Mac Mouse Fix faz isso?** Ele esconde os botões de outros apps para evitar que você acione funções por engano ao usar gestos do Mac Mouse Fix.\nPor exemplo, ao clicar e arrastar o botão 4 para trocar de mesa, você acabaria **ao mesmo tempo** voltando uma página no Chrome."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Что означает «захват» кнопки мыши?\n\nКнопка мыши, захваченная Mac Mouse Fix, больше не видна другим приложениям или macOS.\nФункции, которые обычно выполняет эта кнопка, не будут работать, пока она захвачена.\n\n**Пример**: Обычно в Chrome можно переходить назад и вперед, нажимая боковые кнопки (кнопки 4 и 5) мыши.\nНо когда боковые кнопки захвачены Mac Mouse Fix, это больше не работает. Вместо этого боковые кнопки будут запускать только те действия, которые вы им назначили в Mac Mouse Fix.\n\n**Почему Mac Mouse Fix так поступает?** Mac Mouse Fix скрывает кнопки от других приложений, чтобы вы не могли случайно запустить другие функции при использовании жестов Mac Mouse Fix.\nНапример, если вы нажмете и перетащите кнопку 4 для переключения между рабочими столами, вы всегда будете **одновременно** возвращаться на предыдущую страницу в Chrome."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Bir fare düğmesini 'yakalamak' ne anlama geliyor?\n\nBir fare düğmesinin Mac Mouse Fix tarafından yakalanması artık macOS'in veya diğer uygulamaların o düğmeyi artık göremiyor olması anlamına gelir. Bu düğmenin normalde yapacağı aksiyonlar yakalanmış haldeyken çalışmayacaktır.\n\n**Örnek**: Normalde, farenizin yan tarafında bulunan düğmeler ile Chrome tarayıcıda geri veya ileri gidebilirsiniz. (Düğme 4 ve 5) Bu düğmeler Mac Mouse Fix ile yakalandığında önceki özellik yerine sizin tarafınızdan atanmış olan aksiyonların çalışması sağlanacaktır.\n\n**Mac Mouse Fix neden bunu yapıyor?**: Mac Mouse Fix düğmeleri diğer uygulamalardan gizleyerek atadığınız aksiyonlar dışında uygulamaların yanlışlıkla başka aksiyonlar gerçekleştirmesini engeller.\nÖrnek olarak, Düğme 4'ü masaüstülerinizin arasında geçiş yapmak için kullanıyorken istemsizce **aynı anda** Chrome tarayıcı üzerinden geri dönebilirsiniz."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## 什么是“捕获”鼠标按键？\n\n一旦某个鼠标按键被 Mac Mouse Fix 捕获，其他应用程序或 macOS 系统将无法再识别到该按键的信号。\n在该按键被捕获期间，它原本的功能将失效。\n\n**示例**：通常情况下，你可以通过点击鼠标侧键（按键 4 和 5）在 Chrome 浏览器中执行“后退”或“前进”。\n但当这些侧键被 Mac Mouse Fix 捕获后，原本的功能将不再生效。取而代之的是，侧键只会触发你在 Mac Mouse Fix 中为它们分配的动作。\n\n**Mac Mouse Fix 为什么要这样做？** Mac Mouse Fix 对其他应用隐藏按键信号，是为了防止你在使用 Mac Mouse Fix 手势时意外触发其他功能。\n例如，如果你通过“按住并拖动按键 4”来切换桌面，如果没有捕获机制，你在切换桌面的**同时**，Chrome 浏览器也会执行“后退一页”的操作。"
           }
         }
       }
@@ -112,52 +28,10 @@
       "comment" : "{screenshot_1} will be replaced by a screenshot of the 'Buttons' tab where you can see 3 buttons being captured: 'Middle Button', 'Button 5' and 'Button 4' (In that order)\n\nTo help the reader make the connection between the text and the screenshot, keep the order of the buttons and match the terminology that is seen on the 'Buttons' tab. \n\nSearch for 'trigger.substring.button-name' inside 'Localizable' to find the button names used on the 'Buttons' tab.",
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Jak zjistím, která tlačítka jsou zachycena programem Mac Mouse Fix?\n\nMac Mouse Fix zachycuje všechna tlačítka, která se zobrazují na levé straně záložky 'Tlačítka'.\n\nNa následujícím obrázku jsou zachycena **'Prostřední tlačítko'**, **'Tlačítko 5'** a **'Tlačítko 4'**: <br>\n\n{screenshot_1}"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Woher weiß ich, welche Tasten von Mac Mouse Fix abgefangen werden?\n\nJede Taste, die links im 'Tasten'-Tab angezeigt wird, wird von Mac Mouse Fix abgefangen.\n\nIm folgenden Bild werden die **'Mittlere Taste'**, **'Taste 5'** und **'Taste 4'** abgefangen: <br>\n\n{screenshot_1}"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "## How do I know which buttons are being captured by Mac Mouse Fix?\n\nAny button that shows up on the left side of the 'Buttons' tab is being captured by Mac Mouse Fix.\n\nIn the following image **'Middle Button'**, **'Button 5'**, and **'Button 4'** are being captured: <br>\n\n{screenshot_1}"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## ¿Cómo sé qué botones están siendo capturados por Mac Mouse Fix?\n\nCualquier botón que aparezca en el lado izquierdo de la pestaña 'Botones' está siendo capturado por Mac Mouse Fix.\n\nEn la siguiente imagen, **'Botón central'**, **'Botón 5'** y **'Botón 4'** están siendo capturados:<br>\n\n{screenshot_1}"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Como sei quais botões estão sendo capturados pelo Mac Mouse Fix?\n\nQualquer botão que aparece no lado esquerdo da aba \"Botões\" está sendo capturado pelo Mac Mouse Fix.\n\nNa imagem a seguir, **\"Botão do Meio\"**, **\"Botão 5\"** e **\"Botão 4\"** estão sendo capturados: <br>\n\n{screenshot_1}"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Как узнать, какие кнопки захватываются Mac Mouse Fix?\n\nЛюбая кнопка, отображаемая в левой части «Кнопки», захватывается Mac Mouse Fix.\n\nНа следующем изображении захватываются **«Средняя кнопка»**, **«Кнопка 5»** и **«Кнопка 4»**: <br>\n\n{screenshot_1}"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Fare düğmelerimin hangilerinin Mac Mouse Fix tarafından yakalanmış olduğunu nasıl bileceğim?\n\nMac Mouse Fix'in sol tarafında, 'Düğmeler' sekmesinin altında görülen tüm düğmeler yakalanmaktadır.\n\nBundan sonra göreceğiniz resimde 'Orta Düğme', 'Düğme 5' ve 'Düğme 4' yakalanmıştır.<br>\n\n{screenshot_1}"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## 我该如何知道哪些按键正被 Mac Mouse Fix 捕获？\n\n任何显示在“按键”标签页左侧列表中的按键，都正处于被 Mac Mouse Fix 捕获的状态。\n\n如下图所示，**“中键”**、**“按键 5”**以及**“按键 4”**已被捕获：<br>\n\n{screenshot_1}"
           }
         }
       }
@@ -166,52 +40,10 @@
       "comment" : "{screenshot_2} will be replaced by a screenshot of the 'Buttons' tab where 'Button 4' and two '-' buttons are highlighted.\n\nMatch the terminology seen on the 'Buttons' tab.\n\nSearch for these:\n- ‘Toolbar > Buttons Tab Button' (Title of the ‘Buttons’ tab) \n- ‘trigger.y.group-row.button-name.numbered' (‘Button 4’ string)",
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Jak zabráním nástroji Mac Mouse Fix v zachycení tlačítka myši?\n\nChcete-li zabránit nástroji Mac Mouse Fix v zachycení tlačítka myši, smažte všechny položky pro dané tlačítko myši na kartě 'Tlačítka'. Položku na kartě 'Tlačítka' můžete smazat kliknutím na tlačítko '-' vlevo.\n\nNapříklad na následujícím obrázku můžete zabránit zachycení tlačítka **'Tlačítko 4'** kliknutím na dvě zvýrazněná tlačítka **'-'**:\n\n{screenshot_2}"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Wie verhindere ich, dass Mac Mouse Fix eine Maustaste abfängt?\n\nUm zu verhindern, dass Mac Mouse Fix eine Maustaste abfängt, lösche alle Einträge für diese Maustaste aus dem 'Tasten'-Tab.\nDu kannst einen Eintrag im 'Tasten'-Tab löschen, indem du die '-' Taste links anklickst.\n\nz.B. könnte man im folgenden Bild das Abfangen von **'Taste 4'** verhindern, indem man die beiden hervorgehobenen **'-'** Tasten anklickt:\n\n{screenshot_2}"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "## How do I prevent Mac Mouse Fix from capturing a mouse button?\n\nTo prevent Mac Mouse Fix from capturing a mouse button, delete all entries for that mouse button from the 'Buttons' tab.\nYou can delete an entry in the 'Buttons' tab by clicking the '-' button on the left.\n\nFor example, in the following image, you could prevent **'Button 4'** from being captured by clicking the two highlighted **'-'** buttons:\n\n{screenshot_2}"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## ¿Cómo evito que Mac Mouse Fix capture un botón del ratón?\n\nPara evitar que Mac Mouse Fix capture un botón del ratón, elimina todas las entradas para ese botón del ratón de la pestaña 'Botones'.\nPuedes eliminar una entrada en la pestaña 'Botones' haciendo clic en el botón '-' de la izquierda.\n\nPor ejemplo, en la siguiente imagen, podrías evitar que **'Botón 4'** sea capturado haciendo clic en los dos botones **'-'** resaltados:\n\n{screenshot_2}"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Como impedir que o Mac Mouse Fix capture um botão do mouse?\n\nPara impedir o Mac Mouse Fix de capturar um botão, exclua todas as entradas desse botão na aba \"Botões\".\nVocê pode apagar uma entrada clicando no botão \"-\" à esquerda.\n\nNo exemplo abaixo, você impediria que o **\"Botão 4\"** fosse capturado clicando nos dois botões **\"-\"** destacados:\n\n{screenshot_2}"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Как запретить Mac Mouse Fix захватывать кнопку мыши?\n\nЧтобы запретить Mac Mouse Fix захватывать кнопку мыши, удалите все записи для этой кнопки мыши на вкладке «Кнопки».\nВы можете удалить запись на вкладке «Кнопки», нажав кнопку «-» слева.\n\nНапример, на следующем изображении вы можете запретить захват **«Кнопки 4»**, нажав две выделенные кнопки **«-»**:\n\n{screenshot_2}"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Mac Mouse Fix'in bir düğmeyi yakalamasını nasıl engellerim?\n\nMac Mouse Fix'in bir düğmeyi yakalamasını engellemek için 'Düğmeler' sekmesinde o butona atanmış tüm aksiyonları kaldırın.\n'Düğmeler' sekmesindeki bir aksiyonu, yanındaki '-' düğmesine basarak kaldırabilirsiniz.\n\nÖrneğin, bir sonraki resimde, 'Düğme 4'ün' yakalanmasını engellemek için belirtilmiş olan iki **'-'** düğmesine tıklayabilirsiniz.\n\n{screenshot_2}"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## 如何防止 Mac Mouse Fix 捕获某个鼠标按键？\n\n若要防止 Mac Mouse Fix 捕获某个鼠标按键，请从“按键”标签页中删除该按键的所有配置项。\n你可以通过点击左侧的 **“-”** 按钮来删除“按键”标签页中的条目。\n\n例如，在下图中，你可以通过点击高亮显示的两个 **“-”** 按钮，来防止 **“按键 4”** 被捕获：\n\n{screenshot_2}"
           }
         }
       }
@@ -219,52 +51,10 @@
     "05: restoring" : {
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Jak mohu obnovit původní funkčnost tlačítka?\n\nChcete-li, aby se tlačítko chovalo stejně jako před instalací Mac Mouse Fix, můžete provést následující:\n\n1. Můžete **zabránit zachycení tlačítka** – jak je popsáno výše.\n\n2. Můžete jednoduše **vypnout Mac Mouse Fix** – pak se žádná tlačítka nebudou zachycovat.\n\n3. Můžete **tlačítku v Mac Mouse Fix** přiřadit konkrétní akce – tímto způsobem můžete obnovit určité funkce, *i během zachycování tlačítka*:"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Wie kann ich die ursprüngliche Funktion einer Taste wiederherstellen?\n\nDamit sich eine Taste wieder so verhält, wie bevor du Mac Mouse Fix installiert hast, kannst du:\n\n1. Du kannst **verhindern, dass die Taste abgefangen wird** – so wie oben beschrieben.\n\n2. Du kannst **Mac Mouse Fix** auch einfach **ausschalten** – dann werden keinerlei Tasten mehr abgefangen.\n\n3. Du kannst **der Taste bestimmte Aktionen in Mac Mouse Fix zuweisen** – so kannst du bestimmte Funktionen wiederherstellen, *auch während die Taste abgefangen wird*:"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "## How can I restore the original functionality of a button?\n\nTo make a button behave like it did before you installed Mac Mouse Fix, you can do the following:\n\n1. You can **prevent the button from being captured** – as described above.\n\n2. You can simply **turn off Mac Mouse Fix** – then no buttons will be captured.\n\n3. You can **assign specific actions to the button in Mac Mouse Fix** – this way you can restore certain functions, *even while the button is being captured*:"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## ¿Cómo puedo restaurar la funcionalidad original de un botón?\n\nPara hacer que un botón se comporte como lo hacía antes de instalar Mac Mouse Fix, puedes hacer lo siguiente:\n\n1. Puedes **evitar que el botón sea capturado**, como se describe arriba.\n\n2. Simplemente puedes **desactivar Mac Mouse Fix**, así no se capturará ningún botón.\n\n3. Puedes **asignar acciones específicas al botón en Mac Mouse Fix**, de esta manera puedes restaurar ciertas funciones, *incluso mientras el botón está siendo capturado*:"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Como restaurar a funcionalidade original de um botão?\n\nPara fazer um botão se comportar como antes de instalar o Mac Mouse Fix, você pode:\n\n1. **Impedir que o botão seja capturado** – como descrito acima.\n\n2. Simplesmente **desativar o Mac Mouse Fix** – assim nenhum botão será capturado.\n\n3. **Atribuir ações específicas ao botão no Mac Mouse Fix** – desse modo você recupera certas funções *mesmo enquanto o botão está capturado*:"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Как восстановить исходную функциональность кнопки?\n\nЧтобы кнопка работала так же, как до установки Mac Mouse Fix, можно выполнить следующие действия:\n\n1. Можно **запретить захват кнопки**, как описано выше.\n\n2. Вы можете просто **отключить Mac Mouse Fix** – тогда никакие кнопки не будут захватываться.\n\n3. Вы можете **назначить кнопке определенные действия в Mac Mouse Fix** – таким образом вы сможете восстановить определенные функции, *даже когда кнопка захвачена*:"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Bir düğmenin orijinal fonksiyonunu nasıl geri getirebilirim?\n\nBir düğmenin Mac Mouse Fix yüklemeden önceki haline getirmek için aşağıdakileri yapabilirsiniz:\n\n1. Yukarıda belirtildiği üzere düğmenin **yakalanmasını kapatabilirsiniz**.\n\n2. Direkt **Mac Mouse Fix'i** kapatabilirsiniz. Böylece hiçbir düğme yakalanmayacaktır.\n\n3. **Mac Mouse Fix'te belirli aksiyonları düğmeye atayabilirsiniz** - böylece atama yapmış olsanız dahi belirli özellikleri geri getirmiş olursunuz."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## 如何恢复按键的原始功能？\n\n若要让按键恢复到安装 Mac Mouse Fix 之前的行为模式，你可以采取以下几种方法：\n\n1. **防止该按键被捕获** —— 具体操作如上文所述。\n\n2. **直接关闭 Mac Mouse Fix** —— 这样所有的按键都不会被捕获。\n\n3. **在 Mac Mouse Fix 中为该按键分配特定动作** —— 通过这种方式，即使在按键被捕获的情况下，你也可以恢复某些特定功能："
           }
         }
       }
@@ -273,52 +63,10 @@
       "comment" : "Header of the 1st column of the table\n\nThe 1st column describes which mouse button triggers the 'Original Function' by default (when Mac Mouse Fix is not enabled)",
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tlačítko"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Taste"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Button"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Botón"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Botão"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Кнопка"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Düğme"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按键"
           }
         }
       }
@@ -327,52 +75,10 @@
       "comment" : "Header of the 2nd column of the table\n\nThe 2nd column describes the 'Original Function' triggered by the mouse button described in the 1st column.",
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Původní funkce"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ursprüngliche Funktion"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Original Function"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Función Original"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Função original"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Исходная функция"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Orijinal Aksiyonu"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "原始功能"
           }
         }
       }
@@ -381,52 +87,10 @@
       "comment" : "Header of the 3rd column of the table\n\nThe 3rd column describes the option that can be assigned inside Mac Mouse Fix to replicate the 'Original Function' described in the 2nd column.",
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Akce v Mac Mouse Fix"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aktion in Mac Mouse Fix"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Action in Mac Mouse Fix"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Acción en Mac Mouse Fix"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ação no Mac Mouse Fix"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Действие в Mac Mouse Fix"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mac Mouse Fix üzerindeki aksiyonu"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在Mac Mouse Fix中的功能"
           }
         }
       }
@@ -434,52 +98,10 @@
     "09: restoring.row1.default" : {
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Prostřední tlačítko myši"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mittlere Maustaste"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Middle Mouse Button"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Botón Central del Ratón"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Botão do Meio"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Средняя кнопка мыши"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Orta Düğme"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "中键"
           }
         }
       }
@@ -487,52 +109,10 @@
     "10: restoring.row1.function" : {
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Otevírat odkazy v prohlížeči na nové kartě"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Links im Browser in einem neuen Tab öffnen"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Open links in the browser in a new tab"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abrir enlaces en el navegador en una pestaña nueva"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abrir links do navegador em nova aba"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Открыть ссылки в браузере в новой вкладке"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tarayıcınızda bağlantıları yeni bir sekmede açar"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在浏览器的新标签中打开链接"
           }
         }
       }
@@ -541,52 +121,10 @@
       "comment" : "This is a cell in the 3rd column of the table.\n\n'Middle Click' should match the text that is seen in MMF when you click one of the pop-up buttons on the 'Buttons' tab.\n\n(See effect.click.middle)",
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'Kliknutí prostředním tlačítkem'<br>(Lze přiřadit **kliknutí** na tlačítko)"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'Mittelklick'<br>(Kann dem *klicken* einer Taste zugewiesen werden)"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "'Middle Click'<br>(Can be assigned to **clicking** a button)"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'Clic Central'<br>(Se puede asignar al **hacer clic** en un botón)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "\"Clique do Meio\"<br>(Pode ser atribuído ao **clique** de um botão)"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "«Средний клик»<br>(Может быть назначен для **нажатия** кнопки)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'Orta tık'<br>(Herhangi bir düğmeye **tıklanarak** eklenebilir)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'按中键'<br>（可分配至点击按键的动作）"
           }
         }
       }
@@ -594,52 +132,10 @@
     "12: restoring.row2.default" : {
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Prostřední tlačítko myši"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mittlere Maustaste"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Middle Mouse Button"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Botón Central del Ratón"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Botão do Meio"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Средняя кнопка мыши"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Orta Düğme"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "中键"
           }
         }
       }
@@ -647,52 +143,10 @@
     "13: restoring.row2.function" : {
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vložení textu do terminálu"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Text im Terminal einfügen"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Paste text in the terminal"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pegar texto en la terminal"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Colar texto no terminal"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Вставить текст в терминал"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Terminal'e yazı yapıştır"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在终端中粘贴"
           }
         }
       }
@@ -701,52 +155,10 @@
       "comment" : "'Middle Click' should match the text seen in the pop-up buttons on the  'Buttons' Tab in MMF. \n\n(See effect.click.middle)",
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'Kliknutí prostředním tlačítkem'<br>(Lze přiřadit **kliknutí** na tlačítko)"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'Mittelklick'<br>(Kann dem *klicken* einer Taste zugewiesen werden)"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "'Middle Click'<br>(Can be assigned to **clicking** a button)"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'Clic Central'<br>(Se puede asignar al **hacer clic** en un botón)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "\"Clique do Meio\"<br>(Pode ser atribuído ao **clique** de um botão)"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "«Средний клик»<br>(Может быть назначен для **нажатия** кнопки)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'Orta tık'<br>(Herhangi bir düğmeye **tıklanarak** eklenebilir)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'按中键'<br>（可分配至点击按键的动作）"
           }
         }
       }
@@ -754,52 +166,10 @@
     "15: restoring.row3.default" : {
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tlačítko myši 4 / Tlačítko myši 5"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Maustaste 4 / Maustaste 5"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Mouse Button 4 / Mouse Button 5"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Botón 4 del Ratón / Botón 5 del Ratón"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Botão 4 / Botão 5"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Кнопка мыши 4 / Кнопка мыши 5"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fare Düğmesi 4 / Fare Düğmesi 5"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按键 4 / 按键 5"
           }
         }
       }
@@ -808,52 +178,10 @@
       "comment" : "Consider putting 'back' *before* 'forward' here even if it sounds a bit unnatural in your language – That way it better matches 'Button 4' and 'Button 5' in the previous column (restoring.row3.default). \n\n(*Button 4 goes back* and *Button 5 goes forward*)",
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Přechod zpět / vpřed v Chromu a dalších aplikacích"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zurück / Vorwärts gehen in Chrome und anderen Apps"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Go back / forward in Chrome and other apps"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Volver / avanzar en Chrome y otras aplicaciones"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Voltar / avançar no Chrome e outros apps"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Вернуться назад / перейти вперед в Chrome и других приложениях"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Geri git / Chrome ve diğer uygulamalarda ileri git"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在 Chrome 及其他应用中执行“后退/前进”"
           }
         }
       }
@@ -862,52 +190,10 @@
       "comment" : "'Back' and 'Forward' should match the text seen in the pop-up buttons on the  'Buttons' Tab in MMF.\n\n(See effect.back)",
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'Zpět'/ 'Vpřed'<br>(Lze přiřadit **kliknutí** tlačítka)"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'Zurück' / 'Vorwärts'<br>(Kann dem *klicken* einer Taste zugewiesen werden)"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "'Back' / 'Forward'<br>(Can be assigned to **clicking** a button)"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'Atrás' / 'Adelante'<br>(Se puede asignar al **hacer clic** en un botón)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "\"Voltar\" / \"Avançar\"<br>(Pode ser atribuído ao **clique** de um botão)"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "«Назад» / «Вперед»<br>(Может быть назначен для **щелчка** кнопкой)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'Geri' / 'İleri'<br>(Herhangi bir düğmeye **tıklayarak** eklenebilir)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "“后退” / “前进”<br>（可分配至点击按键的动作）"
           }
         }
       }
@@ -915,52 +201,10 @@
     "18: restoring.row4.default" : {
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Prostřední tlačítko myši"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mittlere Maustaste"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Middle Mouse Button"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Botón Central del Ratón"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Botão do Meio"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Средняя кнопка мыши"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Orta Düğme"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "中键"
           }
         }
       }
@@ -968,52 +212,10 @@
     "19: restoring.row4.function" : {
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Obíhání objektů v Blenderu (a dalších 3D aplikacích)"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Um Objekte in Blender (und anderen 3D-Apps) kreisen"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Orbit around objects in Blender (and other 3D apps)"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Orbitar alrededor de objetos en Blender (y otras aplicaciones 3D)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Orbitar objetos no Blender (e outros apps 3D)"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Орбита вокруг объектов в Blender (и других 3D-приложениях)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Blender ve diğer 3D uygulamalarda yörüngede dönme"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在Blender（或其他3D软件）中围绕物体旋转"
           }
         }
       }
@@ -1022,52 +224,10 @@
       "comment" : "'Scroll & Navigate' should match the text seen in the pop-up buttons on the  'Buttons' Tab in MMF.\n\n(See drag-effect.scroll-swipe)",
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'Scrolování a navigace'<br>(Lze přiřadit **kliknutí a přetažení** tlačítka)"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'Scrollen & Navigieren'<br>(Kann dem *klicken und ziehen* einer Taste zugewiesen werden)"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "'Scroll & Navigate'<br>(Can be assigned to **clicking and dragging** a button)"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'Desplazamiento y Navegación'<br>(Se puede asignar a **hacer clic y arrastrar** un botón)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "\"Rolar e Navegar\"<br>(Pode ser atribuído ao **clicar e arrastar** de um botão)"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "«Прокрутка и навигация»<br>(Может быть назначено **щелчку и перетаскиванию** кнопки)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "'Kaydır ve Yönlendir'<br> (Herhangi bir düğmeye **tıkla ve kaydır** aksiyonu ile eklenebilir)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "“滚动与导航”<br>（可分配至点击按键的动作）"
           }
         }
       }
@@ -1075,52 +235,10 @@
     "21: restoring.footer" : {
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tímto způsobem můžete i nadále používat obvyklé funkce tlačítka a zároveň mu v nástroji Mac Mouse Fix přiřadit *další* funkce."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "So kannst du weiter wie gewohnt die Taste verwenden, aber ihr gleichzeitig *zusätzliche* Funktionen in Mac Mouse Fix zuweisen!"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "This way you can keep using the button's usual functionality, while also assigning *additional* functions to it in Mac Mouse Fix."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "De esta forma, puedes seguir utilizando la funcionalidad habitual del botón, a la vez que le asignas funciones *adicionales* en Mac Mouse Fix."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Assim você mantém a funcionalidade usual do botão e ainda atribui funções *extras* no Mac Mouse Fix."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Таким образом, вы можете продолжать использовать обычную функциональность кнопки, а также назначать ей *дополнительные* функции в Mac Mouse Fix."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Böylece düğmenin orijinal özelliğini de kullanıyorken Mac Mouse Fix ile ekstra özellikler de ekleyebilirsiniz."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "通过这种方式，你可以在保留按键原有功能的同时，还能在 Mac Mouse Fix 中为其分配“额外”的扩展功能。"
           }
         }
       }
@@ -1128,52 +246,10 @@
     "22: also-see" : {
       "extractionState" : "manual",
       "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Viz také\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Siehe auch\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "## Also see\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Ver también\n\n  - [{docname_captured_scroll_wheels}](<{url}>)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Veja também\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## См. также\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Ayrıca bakınız\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "## 另请参阅\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
           }
         }
       }
