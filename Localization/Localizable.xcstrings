@@ -389,7 +389,7 @@
       "shouldTranslate" : false
     },
     "capture-toast.button-name.middle" : {
-      "comment" : "Note: These button names will be inserted into other \"capture-toast.buttons.[...]\" strings.\n\nExample: \nMiddle Button and Button 4 are now captured by Mac Mouse Fix.",
+      "comment" : "Note: These button names will be joined programmatically and inserted into other \"capture-toast.buttons.[...]\" strings.\n\nExample: \nMiddle Button and Button 4 are now captured by Mac Mouse Fix.",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -400,7 +400,7 @@
       }
     },
     "capture-toast.button-name.numbered" : {
-      "comment" : "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings.\nSee trigger.substring.button-modifier.2",
+      "comment" : "These button names are joined programmatically. Capitalization should match trigger.substring.button-name.[...] strings. See trigger.substring.button-modifier.2 for details.",
       "localizations" : {
         "en" : {
           "stringUnit" : {
