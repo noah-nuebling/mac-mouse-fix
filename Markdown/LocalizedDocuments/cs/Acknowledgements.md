@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **leden 2026**
 
+- 🇺🇸&nbsp;Brent&nbsp;Miller
 - 🇩🇪&nbsp;Joshuacyberdine
 - 🇺🇸&nbsp;Pasindu&nbsp;Gunasekara
 - 🇺🇦&nbsp;Bolboteg
