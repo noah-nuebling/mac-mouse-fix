@@ -389,7 +389,7 @@
       "shouldTranslate" : false
     },
     "capture-toast.button-name.middle" : {
-      "comment" : "Note: These button names will be joined programmatically and inserted into other \"capture-toast.buttons.[...]\" strings.\n\nExample: \nMiddle Button and Button 4 are now captured by Mac Mouse Fix.",
+      "comment" : "Note: These button names will be inserted into other \"capture-toast.buttons.[...]\" strings.\n\nExample: \nMiddle Button and Button 4 are now captured by Mac Mouse Fix.",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -400,7 +400,7 @@
       }
     },
     "capture-toast.button-name.numbered" : {
-      "comment" : "These button names are joined programmatically. Capitalization should match trigger.substring.button-name.[...] strings. See trigger.substring.button-modifier.2 for details.",
+      "comment" : "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings.\nSee trigger.substring.button-modifier.2",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -433,7 +433,7 @@
       }
     },
     "capture-toast.buttons.captured.body" : {
-      "comment" : "Note: This is a \"pluralizable\" string, which means it has different versions depending on how many buttons the string is talking about.\n\nNote: \"%2$@\" will be replaced with the names of the captured buttons.\nExample where those buttons are \"Middle Button\" and \"Button 4\":\n\"Middle Button and Button 4 are now captured by Mac Mouse Fix.\"\nIf you're editing this in Xcode: Click the disclosure triangles (>) to edit the different versions of the string. Do not localize or modify \"@pluralizable\" - it's just a placeholder. \n",
+      "comment" : "Note: This is a \"pluralizable\" string, which means it has different versions depending on how many buttons the string is talking about.\n\nNote: \"%2$@\" will be replaced with the names of the captured buttons.\nExample where those buttons are \"Middle Button\" and \"Button 4\":\"Middle Button and Button 4 are now captured by Mac Mouse Fix.\"\n\nNote: \n\nNote: If you're editing this in Xcode: Click the disclosure triangles (>) to edit the different versions of the string. Do not localize or modify \"@pluralizable\" - it's just a placeholder. \n",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -585,7 +585,6 @@
     },
     "capture-toast.scroll.captured.hint" : {
       "comment" : "",
-      "localizations" : {},
       "shouldTranslate" : false
     },
     "capture-toast.scroll.link" : {
