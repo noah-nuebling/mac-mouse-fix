@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **1月 2026**
 
+- 🇦🇹&nbsp;Laurin&nbsp;Sausgruber
 - 🇩🇪&nbsp;Till&nbsp;Witt
 - 🇩🇪&nbsp;Pianoandsunsets
 - 🇺🇸&nbsp;Brent&nbsp;Miller

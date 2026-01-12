@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **enero 2026**
 
+- 🇦🇹&nbsp;Laurin&nbsp;Sausgruber
 - 🇩🇪&nbsp;Till&nbsp;Witt
 - 🇩🇪&nbsp;Pianoandsunsets
 - 🇺🇸&nbsp;Brent&nbsp;Miller

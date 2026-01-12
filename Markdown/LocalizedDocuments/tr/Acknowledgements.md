@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Ocak 2026**
 
+- 🇦🇹&nbsp;Laurin&nbsp;Sausgruber
 - 🇩🇪&nbsp;Till&nbsp;Witt
 - 🇩🇪&nbsp;Pianoandsunsets
 - 🇺🇸&nbsp;Brent&nbsp;Miller
