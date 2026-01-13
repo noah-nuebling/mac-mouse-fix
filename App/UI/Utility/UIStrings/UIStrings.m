@@ -116,8 +116,13 @@
             @1: MFLocalizedString(@"trigger.y.group-row.button-name.primary",     @""), /// The '.y.' is just used to group things in the .xcstrings file. Not sure if smart.
             @2: MFLocalizedString(@"trigger.y.group-row.button-name.secondary",   @""),
             @3: MFLocalizedString(@"trigger.y.group-row.button-name.middle",      @""
-                "Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions which are triggered by the same button.\n"
-                "Note: The \".y\" is there to influence the sorting when you sort by \"Key\" so you hopefully don't have to jump around as much while translating."),
+                "Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions which are triggered by the same button."
+                "\n"
+                "\nNote: The \".y\" is there to influence the sorting when you sort by \"Key\" so you hopefully don't have to jump around as much while translating."
+                "\n"
+                "\nNote: The \"trigger.y.group-row.button-name.[...]\" button names are auto-capitalized, so they can be lowercase, just like the trigger.substring.[...] button names. See trigger.substring.button-modifier.2"
+            ),
+                
             @-1: MFLocalizedString(@"trigger.y.group-row.button-name.numbered",   @"Note: The comment next to capture-toast.button-name.numbered also applies here."),
         };
         
@@ -134,7 +139,7 @@
                 "Middle Button and Button 4 are now captured by Mac Mouse Fix."
             ),
             @-1: MFLocalizedString(@"capture-toast.button-name.numbered",   @""
-                "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings.\n"
+                "Note: These strings can be joined programmatically if multiple buttons are captured. For visual consistency, capitalization of the these button-name strings should follow the capitalization of the trigger.substring.button-name.[...] strings.\n"
                 "See trigger.substring.button-modifier.2"),
         };
         

@@ -400,7 +400,7 @@
       }
     },
     "capture-toast.button-name.numbered" : {
-      "comment" : "Note: For visual consistency, capitalization of the these button-name strings should probably follow the capitalization of the trigger.substring.button-name.[...] strings.\nSee trigger.substring.button-modifier.2",
+      "comment" : "Note: These strings can be joined programmatically if multiple buttons are captured. For visual consistency, capitalization of the these button-name strings should follow the capitalization of the trigger.substring.button-name.[...] strings.\nSee trigger.substring.button-modifier.2",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2087,7 +2087,7 @@
       }
     },
     "trigger.y.group-row.button-name.middle" : {
-      "comment" : "Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions which are triggered by the same button.\nNote: The \".y\" is there to influence the sorting when you sort by \"Key\" so you hopefully don't have to jump around as much while translating.",
+      "comment" : "Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions which are triggered by the same button.\n\nNote: The \".y\" is there to influence the sorting when you sort by \"Key\" so you hopefully don't have to jump around as much while translating.\n\nNote: The \"trigger.y.group-row.button-name.[...]\" button names are auto-capitalized, so they can be lowercase, just like the trigger.substring.[...] button names. See trigger.substring.button-modifier.2",
       "localizations" : {
         "en" : {
           "stringUnit" : {

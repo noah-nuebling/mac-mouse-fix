@@ -258,13 +258,15 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
         map = @{
             
             @"captured.body": MFLocalizedString(@"capture-toast.buttons.captured.body", @""
-                "Note: This is a \"pluralizable\" string, which means it has different versions depending on how many buttons the string is talking about.\n"
+                "Note: This is a \"pluralizable\" string, which means it has different versions depending on how many buttons the string is talking about."
                 "\n"
-                "Note: \"%2$@\" will be replaced with the names of the captured buttons.\n"
-                "Example where those buttons are \"Middle Button\" and \"Button 4\":\n"
+                "\nNote: \"%2$@\" will be replaced with the names of the captured buttons."
+                "\nExample where those buttons are \"Middle Button\" and \"Button 4\":"
                 "\"Middle Button and Button 4 are now captured by Mac Mouse Fix.\""
                 "\n"
-                "If you're editing this in Xcode: Click the disclosure triangles (>) to edit the different versions of the string. Do not localize or modify \"@pluralizable\" - it's just a placeholder. \n"
+                "\nNote: "
+                "\n"
+                "\nNote: If you're editing this in Xcode: Click the disclosure triangles (>) to edit the different versions of the string. Do not localize or modify \"@pluralizable\" - it's just a placeholder. \n"
             ),
             @"captured.hint": MFLocalizedString(
                 @"capture-toast.buttons.captured.hint",
