@@ -28,6 +28,13 @@ Counterarguments:
 
 
 
+UPDATE: [jan 14 2026]
+
+I tried just making a standalong subagent for glossary research. Spent the WHOLE FUCKING DAY. Can not get it to produce reasonable output for a single batch of German strings. (The trigger.* strings).
+    -> The problem is it finds lots of 'bewegen' translations for 'drag' and then translates as 'klicken und bewegen' instead of 'klicken und ziehen' which is completely retarded. It consistently, always does this. I cannot get it stop doing this. I think it just finds more examples, and it doesn't understand that the context is different.
+
+    -> Update 2: Actually made it work later that day. Phew. Produces reasonable output for the trigger.* strings in German and simplified Chinese.
+
 ---
 
 
