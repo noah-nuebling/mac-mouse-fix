@@ -137,3 +137,17 @@ The `trigger.substring.button-name.*` strings and `trigger.y.group-row.button-na
 5. When done, report back with a summary of your translations
 
 Good luck!
+
+## Desired translations
+
+The rest of this document is designed to help you make your own decisions about how to translate into ANY language.
+But for some texts, I found it helpful to specify the desired translations directly.
+
+The 'Explanation' sections may help you choose translations for other languages, by using the same guiding principles.
+
+German
+    Desired Translation: Translate 'Button' as 'Taste' instead of 'Maustaste'.
+        Explanation: In the glossary, you'll find 'Button' translated as 'Taste' or 'Maustaste'. 'Maustaste' is more frequent. But since we strongly prefer simplicity, we choose 'Taste' instead. Given the context of where these strings appear in the UI ('Action Table' on the 'Buttons Tab' in the 'Mac Mouse Fix' app) it's clear that 'Taste' doesn't refer to a keyboard key, so the longer 'Maustaste' is not necessary to disambiguate.
+Chinese
+    Desired Translation: Translate the button names as 主键, 辅键, 中键, and 第%@键
+        Explanation: In the glossary you'll find various Chinese translations for the mouse buttons like '按钮%@', '第3键', '鼠标第%@键' and '鼠标主按钮'. The above choices are very short while staying natural and consistently using '键'.
