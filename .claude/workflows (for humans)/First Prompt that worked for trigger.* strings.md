@@ -21,3 +21,22 @@ Below is the FIRST approach that ever produced a reasonable set of translations 
 
     Model I used:
         Opus 4.5 in Claude Code, WITH thinking. (Never turned on thinking before. Also didn't A/B test whether thinking makes a difference.)
+
+
+    Update: 
+        ... [Jan 16 2026] This now produced totally wrong grammar for German xD (`Klicken Taste 4` instead of `Taste 4 klicken`). 
+        
+        This was the exact prompt that worked before for German: 
+
+            Hi there Claude! Please use the TRANSLATION_CONTEXT.md doc to translate the trigger.* strings into German (de)
+
+            The TRANSLATION_CONTEXT.md is the result of doing extensive research on the the existing strings and their comments, trust this and don't do extensive research yourself. 
+
+            Use a glossary-research subagent for the Apple-specific terms. Explain to the subagent the context of how the strings you're requesting are used, so it can focus on relevant examples from the glossary. Think for yourself about whether the example translations that the subagent shows you are relevant here. If not, disregard Apple's translations and simply choose the translation that feels most natural and functional for its purpose.
+
+            Do not read / invoke adding-translations/SKILL.md
+        
+        Testing this prompt again: 
+            STILL works. 
+            
+            -> So those 2 extra sentences about not overindexing on the glossary (which were necessary for optimal Chinese output) makes it produce completely retarded translations for German... (Or maybe it's the formating? Nothing else changed.) I feel like sisyphus. How can this every scale to all 20+ languages.
