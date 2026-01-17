@@ -323,7 +323,7 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
 
 static NSArray *buttonStringArrayFromButtonNumberArray(NSArray<NSNumber *> *buttons) {
     return [buttons map:^id _Nonnull(NSNumber * _Nonnull button) {
-        return [UIStrings getButtonString:button.intValue context:kMFButtonStringUsageContextCaptureNotification];
+        return [UIStrings getButtonString:button.intValue context:kMFButtonStringUsageContext_CaptureNotification];
     }];
 }
 //static NSString *buttonStringFromButtonNumberArray(NSArray<NSNumber *> *buttons) {

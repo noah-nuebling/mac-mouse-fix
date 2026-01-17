@@ -18,9 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UIStrings : NSObject
 
 typedef enum {
-    kMFButtonStringUsageContextActionTableTriggerSubstring,
-    kMFButtonStringUsageContextActionTableGroupRow,
-    kMFButtonStringUsageContextCaptureNotification,
+    kMFButtonStringUsageContext_ActionTableTriggerSubstring,
+    kMFButtonStringUsageContext_ActionTableGroupRow,
+    kMFButtonStringUsageContext_CaptureNotification,
 } MFButtonStringUsageContext;
 
 + (NSString * _Nullable)flagEmoji:(NSString *)countryCode;

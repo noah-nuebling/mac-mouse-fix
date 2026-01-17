@@ -87,7 +87,7 @@
     }
 }
 
-+ (NSString *)getButtonString:(MFMouseButtonNumber)buttonNumber context:(MFButtonStringUsageContext)context {
++ (NSString *) getButtonString: (MFMouseButtonNumber)buttonNumber context: (MFButtonStringUsageContext)context {
     
     /// Notes:
     ///     - Having all these different strings for the same buttons, creates extra room for inconsistencies on the side of localizers - so we should do our best with comments and organization of the .xcloc files to help them avoid inconsistencies!
@@ -101,7 +101,7 @@
     
     NSDictionary *map;
     
-    if (context == kMFButtonStringUsageContextActionTableTriggerSubstring) {
+    if (context == kMFButtonStringUsageContext_ActionTableTriggerSubstring) {
         
         map = @{
             @1: MFLocalizedString(@"trigger.substring.button-name.primary",     @""),
@@ -110,7 +110,7 @@
             @-1: MFLocalizedString(@"trigger.substring.button-name.numbered",   @""), /// Note to self: Removed the old notes (see later in this line) after giving the trigger.substring. prefix to these string keys, since we're already explaining the capitalization on other `trigger.substring.[...]` comments. || Old notes: All the \"button-name.[...]\" strings should be lowercase unless there's a specific reason to capitalize some words. For example, in Vietnamese, \"Middle Button\" should be localized as \"nút giữa\". Note that not even the first letter is capitalized. That's because the button names will appear in the middle of other pieces of text, and we don't want a randomly capitalized button name in the middle of that text. In English, we capitalize because we're using \"Title Case\", but this isn't common in other languages. So for most languages, these strings should probably be all-lowercase, just like Vietnamese. Exceptions: Some languages have special capitalization rules similar to English \"Title Case\". For example, German always capitalizes all nouns, so therefore \"Middle Button\" should be localized as \"mittlere Taste\" in German. Please see the comment on \"trigger.substring.button-modifier.2\" for more info."), /// Note to self: We put the long comment on the 'numbered'-button-string since that shows up second in the .xcstrings file under alphabetic sorting. We think putting it second has the highest changes of the localizers noticing the comment. Since, if it's first, they might be busy processing "oh here's a new set of strings" /// Old note: || Note: This is capitalized in English since we use 'title case' there. In your language, 'title case' might not be a thing, and you might *not* want to capitalize this. If this string appears at the start of a line, it will be capitalized programmatically.
         };
         
-    } else if (context == kMFButtonStringUsageContextActionTableGroupRow) {
+    } else if (context == kMFButtonStringUsageContext_ActionTableGroupRow) {
         
         map = @{
             @1: MFLocalizedString(@"trigger.y.group-row.button-name.primary",     @""), /// The '.y.' is just used to group things in the .xcstrings file. Not sure if smart.
@@ -126,7 +126,7 @@
             @-1: MFLocalizedString(@"trigger.y.group-row.button-name.numbered",   @"Note: The comment next to capture-toast.button-name.numbered also applies here."),
         };
         
-    } else if (context == kMFButtonStringUsageContextCaptureNotification) {
+    } else if (context == kMFButtonStringUsageContext_CaptureNotification) {
         
         map = @{
             @1: MFLocalizedString(@"capture-toast.button-name.primary",     @""),
