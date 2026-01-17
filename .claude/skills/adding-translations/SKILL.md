@@ -27,7 +27,6 @@ This skill is for adding new translations to a locale.
       - Reason 2: If the subagent DOES come up with the right strings, we can be reasonably confident that it can also come up with good strings for OTHER languages. This is helpful for validating the approach and than scaling it to many languages (The human speaks German so that is the easiest to validate)
    - **mfstrings tool:** Claude will instruct the subagent to write its translations using the `./run mfstrings edit` tool. It will let it know about the `./run mfstrings inspect` tool, too, in case it wants to look anything up. The goal is that the subagent can just focus on translating, without having to do research, but still CAN do research, if necessary. The subagent should be instructed NOT to invoke the adding-translations skill.
    - **Terminology:** Claude should tell the subagent that we're translating for a macOS app, and that Apple's terminology in System Settings and elsewhere should be matched. But the subagent should do this from memory, without accessing the internet. Later there will be a review pass that checks consistency with Apple's glossary. 
-   - **No glossary, yet:** Claude should NOT research Apple's glossary, yet. The subagent has Apple's terminology in its training data and will be able to make better intuitive decisions by just understanding how and where the strings are used.
 7. Then Claude spawns a subagent (Must be Opus, not Sonnet or Haiku) and gives it two pieces of information and nothing else: 1. A link to ./`TRANSLATION_GUIDE.md` 2. The target language it should translate into.
 8. After the subagent is done, Claude will review and analyze its work. If necessary. Claude will report any constraints that aren't well satisfied, inconsistencies with established terminology in the glossary, inconsistencies with already-translated parts of the project, and any other things that Claude thinks could be improved. Claude will be very critical, and will not try to justify or rationalize questionable decisions or unfulfilled constraints. Unfulfilled constraints or mistakes in the first pass are normal. Pointing them out is a very helpful thing. Claude will report his findings and ask for input before making proceeding.
 9.  After this, the user may request to spawn more subagents that translate into even more languages using the `./TRANSLATION_CONTEXT.md`.
@@ -64,22 +63,7 @@ Use `./run mfstrings` to inspect and edit .xcstrings localization files.
 ## Referencing Apple's official terminology
 
 After the subagent is done, Claude will review its work. 
-If established terms from inside macOS are used, Claude may consult Apple's glossary.
-
-Here are two example paths for Apple's glossary files:
-
-~/Documents/Glossaries_For_Claude/macOS_10.15.2/German/
-~/Documents/Glossaries_For_Claude/macOS_10.15.2/Simplified_Chinese/
-
-(Note that we're translating for macOS 26, but 10.15.2 is the latest glossary version available. It may be out of date.)
-
-Claude can search through the glossary files using ripgrep. For example:
-```bash
-rg -i -A 1 '\Whold\W'
-```
-
-(-A lets you see the translation which typically appears on the next line)
-(`\W` is useful when searching for 'hold' so you don't get overwhelmed with matches for unrelated words like 'placeholder')
+If established terms from inside macOS are used, Claude may consult Apple's glossary by spawning a glossary-research subagent.
 
 ## Additional constraints
 

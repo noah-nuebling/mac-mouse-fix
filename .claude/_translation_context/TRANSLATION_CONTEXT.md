@@ -151,3 +151,13 @@ German
 Chinese
     Desired Translation: Translate the button names as 主键, 辅键, 中键, and 第%@键
         Explanation: In the glossary you'll find various Chinese translations for the mouse buttons like '按钮%@', '第3键', '鼠标第%@键' and '鼠标主按钮'. The above choices are very short while staying natural and consistently using '键'.
+Korean
+    Desired Translation: Translate the button names as 주 버튼, 보조 버튼, 중간 버튼, %@번 버튼
+        Explanation: These are optimized for length. Except for `%@번 버튼`, which we're using over `버튼 %@` since it's more natural and has consistent word order with the other strings.
+    Desired Translation: Translate 'Hold' (as in 'Double Click and Hold Button 4') as '길게 누름'. 
+        Explanation: Apple uses '길게 누르기' pretty consistently but '길게 누름' is slightly shorter while still sounding natural (I'm not actually sure this is the best choice – but lets go with it for now.)
+Turkish
+    Desired Translation: Translate 'Button' as 'düğmeyi' instead of 'düğme' (in the 'trigger.substring.button-name.*' strings.)
+        Explanation: Some of the trigger.substring.* strings have %@ format specifiers where button names will be inserted. In Turkish, we need to add inflections to make the joined strings grammatically correct. düğmeyi seemed like the best choice among other possible inflections like düğmesine or düğmesini. (Not sure if that's the best possible choice, but let's roll with it for now)
+        Desired Translation: Translate 'Button %@' as '%@. düğmeyi' instead of 'düğme %@' (in the trigger.substring.button-name.* strings.)
+            Explanation: Grammar (see above)

@@ -90,13 +90,14 @@ Below is the FIRST approach that ever produced a reasonable set of translations 
         Assessment:     
             If we get it to treat all the 'observations' as errors, we'd mostly get the desired results for German and Chinese. Except for `连按` vs `连按三次`. Where it would make `连按` longer to be consistent with `连按三次` ... I think that would be alright, though? ... Not sure this would scale to other languages,
 
-    New idea: Accept imperfections (and just micromanage desired translations)
-        Taking a step back: These translations for German and Chinese 
+    New idea: **micromanage desired translations** (And accept some imperfections)
+        Taking a step back: The ` **Extension** of the **hybrid prompt**` translations for German and Chinese 
             - don't properly follow the specified constraints 
             - make some stupid decisions
-       BUT. They're really close great. Chinese seems better than then human's translations (which also had some inconsistencies)
+       BUT. They're really close great. Chinese seems better than the human's translations (which also had some inconsistencies)
        -> Therefore: Why not roll with these translations?
-            -> They're not perfect but perhaps (hopefully) better than volunteer human's on average.
+            -> They're not perfect but perhaps (hopefully) better than volunteer human's translations (on average.)
             -> If we prefer some decisions by the humans (where we can't nudge the AI to make the right 'judgement calls' by itself) ... Then just tell the AI explicitly how to translate those terms.
             ->> It's labour intensive. It's not perfect. But it might be the best path forward.
+        Update: It worked for de and zh-Hans!
 
