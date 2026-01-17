@@ -938,10 +938,13 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     NSMutableArray *buttonModifierStrings = [NSMutableArray array];
     
     for (NSDictionary *buttonPress in buttonPressSequence) {
+    
         NSNumber *btn = buttonPress[kMFButtonModificationPreconditionKeyButtonNumber];
         NSNumber *lvl = buttonPress[kMFButtonModificationPreconditionKeyClickLevel];
         NSString *buttonStr;
-        buttonStr = [UIStrings getButtonString:btn.intValue context:kMFButtonStringUsageContext_ActionTableTriggerSubstring];
+        buttonStr = [UIStrings getButtonString: btn.intValue context: kMFButtonStringUsageContext_ActionTableTriggerSubstring];
+        buttonStr = [[MarkdownParser attributedStringWithCoolMarkdown: buttonStr fillOutBase: NO] string]; /// Remove the *markdown emphasis* [Jan 2026]
+        
         
         NSString *buttonModString;
         if (lvl.intValue == 1) {
@@ -983,10 +986,10 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             @throw [NSException exceptionWithName:@"Invalid click level" reason:@"Modification precondition contains undisplayable click level" userInfo:@{@"Trigger dict containing invalid value": triggerGeneric}];
         }
         buttonModString = buttonModString.firstCapitalized; /// Capitalize each button mod string.
-        [buttonModifierStrings addObject:buttonModString];
+        [buttonModifierStrings addObject: buttonModString];
     }
     if (buttonModifierStrings.count > 0) {
-        btnMod = [buttonModifierStrings componentsJoinedByString:@""];
+        btnMod = [buttonModifierStrings componentsJoinedByString: @""];
     } else {
         btnMod = @"";
     }
@@ -1007,8 +1010,18 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         
         /// Display main button – only if there *are* button modifiers
         
-        NSAttributedString *mainButton = [UIStrings getButtonString:btn.intValue context:kMFButtonStringUsageContext_ActionTableTriggerSubstring].attributed;
-        mainButton = [mainButton attributedStringByAddingColor:NSColor.secondaryLabelColor forRange:NULL];
+        NSString *mainButton_raw = [UIStrings getButtonString: btn.intValue context: kMFButtonStringUsageContext_ActionTableTriggerSubstring];
+        NSAttributedString *mainButton = [MarkdownParser            /// Convert *markdown emphasis* into grayed-out text. || Idea: The substring of the `ActionTableTriggerSubstring` string  that matches `ActionTableGroupRow` should be grayed-out for easy visual matching. (For most languages, that 'substring' is the entire string.) [Jan 2026]
+            attributedStringWithCoolMarkdown: mainButton_raw
+            fillOutBase: NO
+            styleOverrides: @{
+                @(CMARK_NODE_EMPH): ^NSAttributedString *(NSAttributedString *str, NSRange *range) {
+                    return [str attributedStringByAddingColor: NSColor.secondaryLabelColor forRange: range];
+                }
+            }
+        ];
+        
+        mainButton =
         tr = astringf(tr, mainButton);
         
     } else {

@@ -2069,72 +2069,72 @@
       }
     },
     "trigger.substring.button-name.middle" : {
-      "comment" : ".",
+      "comment" : "Note: These trigger.substring.button-name.[...] strings are inserted into the other trigger.substring.[...] strings at the format specifiers (%@). Make sure that the combined strings are grammatically correct.\n\nNote 2:\nUse *markdown emphasis* to mark the part of a trigger.substring.button-name.[...] string that matches the corresponding trigger.y.group-row.button-name.[...] string.\nFor most languages, this is the entire string.       E.g. English:   `*Middle Button*`         (Where the corresponding group-row string is: `Middle Button`)\nFor some languages, it's only a part of the string.  E.g. French:    `du *bouton central*`     (Where the corresponding group-row string is: `bouton central`)\nReason: The marked parts will be grayed-out. This helps the visual scannability of the UI a lot. (Hard to explain without seeing the UI.)",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "na střední tlačítko"
+            "value" : "na *střední tlačítko*"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "mittlere Taste"
+            "value" : "*mittlere Taste*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Middle Button"
+            "value" : "*Middle Button*"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "del botón central"
+            "value" : "del *botón central*"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "du bouton central"
+            "value" : "du *bouton central*"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "중간 버튼"
+            "value" : "*중간 버튼*"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "no botão do meio"
+            "value" : "no *botão do meio*"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "на среднюю кнопку"
+            "value" : "на *среднюю кнопку*"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "orta düğmeyi"
+            "value" : "*orta düğme*yi"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "nút giữa"
+            "value" : "*nút giữa*"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "中键"
+            "value" : "*中键*"
           }
         }
       }
@@ -2145,67 +2145,67 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "na tlačítko %@"
+            "value" : "na *tlačítko %@*"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Taste %@"
+            "value" : "*Taste %@*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Button %@"
+            "value" : "*Button %@*"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "del botón %@"
+            "value" : "del *botón %@*"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "du bouton %@"
+            "value" : "du *bouton %@*"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@번 버튼"
+            "value" : "*%@번 버튼*"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "no botão %@"
+            "value" : "no *botão %@*"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "на кнопку %@"
+            "value" : "на *кнопку %@*"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@. düğmeyi"
+            "value" : "*%@. düğme*yi"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "nút %@"
+            "value" : "*nút %@*"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "第%@键"
+            "value" : "*第%@键*"
           }
         }
       }
@@ -2216,67 +2216,67 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "na primární tlačítko"
+            "value" : "na *primární tlačítko*"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "primäre Taste"
+            "value" : "*primäre Taste*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Primary Button"
+            "value" : "*Primary Button*"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "del botón principal"
+            "value" : "del *botón principal*"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "du bouton principal"
+            "value" : "du *bouton principal*"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "주 버튼"
+            "value" : "*주 버튼*"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "no botão principal"
+            "value" : "no *botão principal*"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "на основную кнопку"
+            "value" : "на *основную кнопку*"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "birincil düğmeyi"
+            "value" : "*birincil düğme*yi"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "nút chính"
+            "value" : "*nút chính*"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "主键"
+            "value" : "*主键*"
           }
         }
       }
@@ -2287,67 +2287,67 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "na sekundární tlačítko"
+            "value" : "na *sekundární tlačítko*"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "sekundäre Taste"
+            "value" : "*sekundäre Taste*"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Secondary Button"
+            "value" : "*Secondary Button*"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "del botón secundario"
+            "value" : "del *botón secundario*"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "du bouton secondaire"
+            "value" : "du *bouton secondaire*"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "보조 버튼"
+            "value" : "*보조 버튼*"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "no botão secundário"
+            "value" : "no *botão secundário*"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "на вспомогательную кнопку"
+            "value" : "на *вспомогательную кнопку*"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ikincil düğmeyi"
+            "value" : "*ikincil düğme*yi"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "nút phụ"
+            "value" : "*nút phụ*"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "辅键"
+            "value" : "*辅键*"
           }
         }
       }

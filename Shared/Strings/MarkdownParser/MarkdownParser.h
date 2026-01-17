@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 ///         Explanation:  An `unsafe context` is an HTML parser, especially if it allows JavaScript or is not sandboxed (WKWebView doesn't allow js by default and is sandboxed.)
 ///         Explanation:  `sanitizing` content means to remove any unsafe HTML tags like `<script>`.
 
-typedef NSAttributedString *_Nonnull (^MDStyleOverride)(NSAttributedString *_Nonnull str, NSRangePointer nodeRange); /// The callback should modify `nodeRange` inside `str`
+typedef NSAttributedString *_Nonnull (^MDStyleOverride)(NSAttributedString *_Nonnull str, NSRange *nodeRange); /// The callback should modify `nodeRange` inside `str`
 typedef NSDictionary <NSNumber *, MDStyleOverride> MDStyleOverrides;  /// Map from `@(cmark_node_type)` -> `MDStyleOverride` [Oct 2025]
 
 + (NSAttributedString *_Nullable) attributedStringWithCoolMarkdown: (NSString *)md fillOutBase: (BOOL)fillOutBase styleOverrides: (MDStyleOverrides *_Nullable)styleOverrides;
