@@ -2074,7 +2074,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "střední tlačítko"
+            "value" : "na střední tlačítko"
           }
         },
         "de" : {
@@ -2092,13 +2092,13 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "botón central"
+            "value" : "del botón central"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "bouton central"
+            "value" : "du bouton central"
           }
         },
         "ko" : {
@@ -2110,13 +2110,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "botão do meio"
+            "value" : "no botão do meio"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "средняя кнопка"
+            "value" : "на среднюю кнопку"
           }
         },
         "tr" : {
@@ -2145,7 +2145,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "tlačítko %@"
+            "value" : "na tlačítko %@"
           }
         },
         "de" : {
@@ -2163,13 +2163,13 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "botón %@"
+            "value" : "del botón %@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "bouton %@"
+            "value" : "du bouton %@"
           }
         },
         "ko" : {
@@ -2181,13 +2181,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "botão %@"
+            "value" : "no botão %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "кнопка %@"
+            "value" : "на кнопку %@"
           }
         },
         "tr" : {
@@ -2216,7 +2216,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "primární tlačítko"
+            "value" : "na primární tlačítko"
           }
         },
         "de" : {
@@ -2234,13 +2234,13 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "botón principal"
+            "value" : "del botón principal"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "bouton principal"
+            "value" : "du bouton principal"
           }
         },
         "ko" : {
@@ -2252,13 +2252,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "botão principal"
+            "value" : "no botão principal"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "основная кнопка"
+            "value" : "на основную кнопку"
           }
         },
         "tr" : {
@@ -2287,7 +2287,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "sekundární tlačítko"
+            "value" : "na sekundární tlačítko"
           }
         },
         "de" : {
@@ -2305,13 +2305,13 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "botón secundario"
+            "value" : "del botón secundario"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "bouton secondaire"
+            "value" : "du bouton secondaire"
           }
         },
         "ko" : {
@@ -2323,13 +2323,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "botão secundário"
+            "value" : "no botão secundário"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "вспомогательная кнопка"
+            "value" : "на вспомогательную кнопку"
           }
         },
         "tr" : {
