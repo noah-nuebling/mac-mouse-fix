@@ -161,3 +161,22 @@ Turkish
         Explanation: Some of the trigger.substring.* strings have %@ format specifiers where button names will be inserted. In Turkish, we need to add inflections to make the joined strings grammatically correct. düğmeyi seemed like the best choice among other possible inflections like düğmesine or düğmesini. (Not sure if that's the best possible choice, but let's roll with it for now)
         Desired Translation: Translate 'Button %@' as '%@. düğmeyi' instead of 'düğme %@' (in the trigger.substring.button-name.* strings.)
             Explanation: Grammar (see above)
+Multiple Languages
+    Desired Translation: Grammatical connectors in `trigger.substring.button-name.*` strings.
+        Explanation: The `trigger.substring.button-name.*` strings are inserted into the other `trigger.substring.*` strings at the format specifiers (%@). The combined strings needs to feel grammatically sound. In some languages this requires connectors.
+        By language:
+            French: Use "du" (of the)       
+                → "du *bouton central*", "du *bouton %@*", "du *bouton principal*", "du *bouton secondaire*"
+                    Reasoning: "du" is shorter than "sur le" while still sounding natural (I hope)
+            Spanish: Use "del" (of the)     
+                → "del *botón central*", "del *botón %@*", "del *botón principal*", "del *botón secundario*"
+                    Reasoning: "del" is shorter than "en el" while still sounding natural (I hope)
+            Portuguese: Use "no" (on the)   
+                → "no *botão do meio*", "no *botão %@*", "no *botão principal*", "no *botão secundário*"
+            Czech: Use "na" (on) 
+                → "na *střední tlačítko*", "na *tlačítko %@*", "na *primární tlačítko*", "na *sekundární tlačítko*"
+            Russian: Use "на" + accusative case 
+                → "на *среднюю кнопку*", "на *кнопку %@*", "на *основную кнопку*", "на *вспомогательную кнопку*"
+                    Note: Russian accusative case changes the word endings, so the emphasized part won't exactly match the group-row header (e.g., "среднюю кнопку" vs "средняя кнопка"). This is an accepted tradeoff.
+        Note: We decided English does NOT need "the" and that "Click Middle Button" (instead of "Click the Middle Button") feels like acceptable UI shorthand.
+        Note to self: We also added comments about this to trigger.substring.button-name.middle (I'm not sure explaining it again here is useful.)
