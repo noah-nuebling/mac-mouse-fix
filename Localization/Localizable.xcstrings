@@ -2353,7 +2353,7 @@
       }
     },
     "trigger.substring.click.1" : {
-      "comment" : "Note: \"%@\" will be a button name (or nothing, if the button name can be inferred from context)\nExample where %@ is \"Button 5\": ⌥⌘ Double Click Button 4 + Click Button 5",
+      "comment" : "Note: The trigger.substring.[...] strings have format specifiers (\"%@\") which get replaced with the trigger.substring.button-name.[...] strings OR with nothing (if the button can be inferred from context).\nMake sure that the combined strings feel grammatically sound, no matter if a trigger.substring.button-name.[...] string OR nothing is inserted for \"%@\".\nExample where %@ is \"the *Middle Button*\": Click the *Middle Button*\nExample where %@ is nothing:                 Click\n\nNote regarding examples: We added 'the' for demonstration purposes. The real English string doesn't use 'the' (as of [Jan 2026]) because we value conciseness and it doesn't feel too odd for a UI label. In other languages, such connective words may be more necessary.",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2566,7 +2566,7 @@
       }
     },
     "trigger.substring.drag.1" : {
-      "comment" : "",
+      "comment" : ".",
       "localizations" : {
         "cs" : {
           "stringUnit" : {

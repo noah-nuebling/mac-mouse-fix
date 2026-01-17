@@ -812,12 +812,17 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Declare map
         
         NSDictionary *map = @{
-            @[@(1), @"click"]:  MFLocalizedString(@"trigger.substring.click.1",   @""
-                "Note: \"%@\" will be a button name (or nothing, if the button name can be inferred from context)\n"
-                "Example where %@ is \"Button 5\": ⌥⌘ Double Click Button 4 + Click Button 5"
-                ), /// || NOTE: This 'substring' will be combined with other substrings to form the 'Action Table Trigger Strings' which show up on the left side of the Action Table || NOTE 2: '%@' will be replaced by a mouse button name (or by nothing, if the button name can be inferred from context.) || EXAMPLE of an Action Table Trigger String, which is composed of this and other substrings, where '%@' in this substring was replaced by 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || NOTE 3: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'Title Case' there. In your language, 'Title Case' might not be a thing, and so you might not want to capitalize these substrings. The first letter of the Action Table Trigger String will be programmatically capitalized in any language."),
-            
-            @[@(2), @"click"]:  MFLocalizedString(@"trigger.substring.click.2",   @""), ///|| NOTE: You might not want to capitalize this and other strings whose key starts with 'trigger.substring.' We only capitalize these strings in English because we use 'Title Case' there, which is not common in most languages aside from English. For more info, see the comments on 'trigger.substring.click.1'"),
+            @[@(1), @"click"]:  MFLocalizedString(
+                @"trigger.substring.click.1",
+                @""
+                "Note: The trigger.substring.[...] strings have format specifiers (\"%@\") which get replaced with the trigger.substring.button-name.[...] strings OR with nothing (if the button can be inferred from context).\n"
+                "Make sure that the combined strings feel grammatically sound, no matter if a trigger.substring.button-name.[...] string OR nothing is inserted for \"%@\".\n"
+                "Example where %@ is \"the *Middle Button*\": Click the *Middle Button*\n"
+                "Example where %@ is nothing:                 Click\n"
+                "\n"
+                "Note regarding examples: We added 'the' for demonstration purposes. The real English string doesn't use 'the' (as of [Jan 2026]) because we value conciseness and it doesn't feel too odd for a UI label. In other languages, such connective words may be more necessary."
+            ), /// || NOTE: This 'substring' will be combined with other substrings to form the 'Action Table Trigger Strings' which show up on the left side of the Action Table || NOTE 2: '%@' will be replaced by a mouse button name (or by nothing, if the button name can be inferred from context.) || EXAMPLE of an Action Table Trigger String, which is composed of this and other substrings, where '%@' in this substring was replaced by 'Button 5': ⌥⌘ Double Click Button 4 + Click Button 5 || NOTE 3: Most of the substrings that are used to build the Action Table Trigger Strings (this is one of those substrings) are capitalized in English because it's common to use 'Title Case' there. In your language, 'Title Case' might not be a thing, and so you might not want to capitalize these substrings. The first letter of the Action Table Trigger String will be programmatically capitalized in any language."),
+            @[@(2), @"click"]:  MFLocalizedString(@"trigger.substring.click.2",   @""), /// || NOTE: You might not want to capitalize this and other strings whose key starts with 'trigger.substring.' We only capitalize these strings in English because we use 'Title Case' there, which is not common in most languages aside from English. For more info, see the comments on 'trigger.substring.click.1'"),
             @[@(3), @"click"]:  MFLocalizedString(@"trigger.substring.click.3",   @""),
             @[@(1), @"hold"]:   MFLocalizedString(@"trigger.substring.hold.1",    @"Remember: The strings starting with \"trigger.substring.[...]\" should be lowercase in most languages. See trigger.substring.button-modifier.2 for the explanation."),
             @[@(2), @"hold"]:   MFLocalizedString(@"trigger.substring.hold.2",    @""),
@@ -854,7 +859,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Define maps
         
         NSDictionary *map = @{
-            @[@(1), @"_drag"]:      MFLocalizedString(@"trigger.substring.drag.1",    @""), /// (Removed the note because it's redundant with other notes. ) /// Note: %@ will be replaced by a mouse button name (or by nothing if it can be inferred from context) || Example where %@ is 'Button 5': ⌥⌘ Triple Click Button 4 + Click and Drag Button 5"),
+            @[@(1), @"_drag"]:      MFLocalizedString(@"trigger.substring.drag.1",    @"."),
             @[@(2), @"_drag"]:      MFLocalizedString(@"trigger.substring.drag.2",    @""),
             @[@(3), @"_drag"]:      MFLocalizedString(@"trigger.substring.drag.3",    @""),
             @[@(1), @"_scroll"]:    MFLocalizedString(@"trigger.substring.scroll.1",  @""),
