@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **leden 2026**
 
+- 🇺🇸&nbsp;Ashley&nbsp;Poppen - "Thanks for making what Apple should've but sucked to much to do <3"
 - 🇲🇪&nbsp;Peng&nbsp;Yao
 - 🇲🇪&nbsp;Peng&nbsp;Yao
 - 🇵🇭&nbsp;Jeph - "Not even kidding, this "fix" boosted my productivity like crazy. Way to go!!"
