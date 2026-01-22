@@ -955,7 +955,22 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         if (lvl.intValue == 1) {
             buttonModString = stringf(MFLocalizedString(@"trigger.substring.button-modifier.1", @""
                 "Note: %@ will be a button name\n"
-                "Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5"
+                "Example where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5\n"
+                "\n"
+                "Explanation of the strings:\n"
+                "The trigger.substring.button-modifier.[...] strings describe a feature where holding a mouse button will modify what the other buttons do\n"
+                "In the SteerMouse app, this feature is called 'button chording'.\n"
+                "In Mac Mouse Fix, it's just one of many ways to assign multiple actions to a button – so it's not as importand and more of a hidden feature."
+                "\n"
+                "Discussion of the thinking behind the English string:\n"
+                "Perhaps, using 'hold' would be more fitting, but for English we chose 'click' instead.\n"
+                "That's because it makes the strings shorter and more scannable ('Double Click and Hold Button 4 + ' vs 'Double Click Button 4 + '\n"
+                "With the '+' in the strings, it should still be pretty clear in practise, especially since users have to perform the gesture first,\n"
+                "before these strings ever show up in the UI.\n"
+                "Also, in English, 'Click and Drag' is an established phrase (which we're also using in the other trigger.substring.[...] strings), and it sets a precedent for using 'click' \n"
+                "to describe *holding* a button while doing something else. So it should feel relatively natural in English.\n"
+                "\n"
+                "Ideas for translations into other languages: If a literal translation doesn't feel natural, it may make sense to draw from how 'click and drag' is translated (in the other trigger.substring.[...] strings) or to use something closer to 'hold' instead or 'click'.\n"
             ), buttonStr);
         } else if (lvl.intValue == 2) {
             /// Notes:
