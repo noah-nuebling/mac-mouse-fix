@@ -167,17 +167,15 @@ Multiple Languages
         By language:
             French: Use "du" (of the)       
                 → "du *bouton central*", "du *bouton %@*", "du *bouton principal*", "du *bouton secondaire*"
-                    Reasoning: "du" is shorter than "sur le" while still sounding natural (I hope)
-            Spanish: Use "del" (of the)     
-                → "del *botón central*", "del *botón %@*", "del *botón principal*", "del *botón secundario*"
-                    Reasoning: "del" is shorter than "en el" while still sounding natural (I hope)
-            Portuguese: Use "no" (on the)   
-                → "no *botão do meio*", "no *botão %@*", "no *botão principal*", "no *botão secundário*"
-            Czech: Use "na" (on) 
-                → "na *střední tlačítko*", "na *tlačítko %@*", "na *primární tlačítko*", "na *sekundární tlačítko*"
-            Russian: Use "на" + accusative case 
-                → "на *среднюю кнопку*", "на *кнопку %@*", "на *основную кнопку*", "на *вспомогательную кнопку*"
-                    Note: Russian accusative case changes the word endings, so the emphasized part won't exactly match the group-row header (e.g., "среднюю кнопку" vs "средняя кнопка"). This is an accepted tradeoff.
+                    Reasoning: "du" is shorter than "sur le" while still sounding natural (I hope). "du" is also more semantically sound for some strings ('Click and Drag *of* the Middle Button' is more reasonable than 'Click and Drag *on* the Middle button)
+            Czech: Use genitive case (expresses "of", like French "du")
+                → "*středního tlačítka*", "*tlačítka %@*", "*primárního tlačítka*", "*sekundárního tlačítka*"
+                    Note: Genitive case endings differ from nominative, so these won't match the group-row headers exactly.
+            Russian: Use genitive case (expresses "of", like French "du")
+                → "*средней кнопки*", "*кнопки %@*", "*основной кнопки*", "*вспомогательной кнопки*"
+                    Note: Genitive case endings differ from nominative, so these won't match the group-row headers exactly.
+            Other languages:
+                Some other languages like Spanish and Portuguese also use such grammatical connectors, but we prefer to keep things simple and decided we could get away without them. 
         Note: We decided English does NOT need "the" and that "Click Middle Button" (instead of "Click the Middle Button") feels like acceptable UI shorthand.
         Note to self: We also added comments about this to 
             trigger.substring.button-name.middle AND 

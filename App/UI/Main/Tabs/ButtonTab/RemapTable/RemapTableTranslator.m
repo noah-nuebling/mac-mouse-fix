@@ -859,7 +859,27 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         /// Define maps
         
         NSDictionary *map = @{
-            @[@(1), @"_drag"]:      MFLocalizedString(@"trigger.substring.drag.1",    @"."),
+            @[@(1), @"_drag"]: MFLocalizedString(
+                @"trigger.substring.drag.1",
+                @"Thinking behind the English trigger.substring.drag.[...] and trigger.substring.scroll.[...] strings: \n"
+                "In English, we're putting the button name at the end instead of the middle. So it's 'Click and Drag Button 4'\n"
+                "instead of 'Click Button 4 and Drag' (which would be more semantically correct).\n"
+                "The reason we do this, is to keep the recognizable phrase 'click and drag' as one unit to make it more scannable\n"
+                "Also, it felt ok to use the phrase 'click and drag'\n"
+                "almost like a singular action / verb. As in '(perform a) Click and Drag (using) Button 4'\n"
+                "Even though the more literal interpretation of 'Click and Drag Button 4' would imply \n"
+                "'dragging' the mouse button itself, which doesn't quite make sense\n"
+                "\n"
+                "For the phrase 'click and scroll' (See trigger.substring.scroll.[...]) we mirrored the 'click and drag' phrasing,\n"
+                "even though 'click and scroll' is not an established phrase like 'click and drag' is. This helps keep things consistent\n"
+                "and scannable while still making intuitive sense next to 'click and drag' in the UI."
+                "\n"
+                "Tips for translations based on the thoughts behind the English strings:\n"
+                "Consider placing the '%@' format specifier (which is where the trigger.substring.button-name.[...] strings will be inserted)\n"
+                "at the start or the end of the phrase, to help with scannability. Optimize for scannability, conciseness, and consistency, without\n"
+                "making things too grammatically awkward."
+                "(Heads up: The trigger.substring.[...] and trigger.substring.button-name.[...] strings can contain grammatical particles and inflections. See trigger.substring.button-name.middle)"
+            ),
             @[@(2), @"_drag"]:      MFLocalizedString(@"trigger.substring.drag.2",    @""),
             @[@(3), @"_drag"]:      MFLocalizedString(@"trigger.substring.drag.3",    @""),
             @[@(1), @"_scroll"]:    MFLocalizedString(@"trigger.substring.scroll.1",  @""),
@@ -995,8 +1015,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
                 "\nThe trigger.[...] strings and the effect.[...] strings appear in the 'Action Table' together. The trigger.[...] strings are"
                 "\non the left and describe some input that the user can perform on their mouse, while the effect.[...] strings are on the"
                 "\nright side and describe what will happen, when the user performs that trigger."
-                "\nConsider translating the trigger.[...] strings more as a description of the action '(to) click and drag'"
-                "\ninstead of and imperative ('please click and drag')"
+                "\nConsider translating the trigger.[...] strings more as a description of the action '(you can) click and drag (to ...)'"
+                "\ninstead of an imperative ('(please) click and drag (to ...)')"
                 "\nAt least in German, this works better I think."
                 "\nI don't speak other languages, so this is up to you. Choose whatever feels the most natural and allows for the most consistency between the different trigger.substring.[...] strings."
             ), buttonStr);

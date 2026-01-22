@@ -1927,7 +1927,7 @@
       }
     },
     "trigger.substring.button-modifier.2" : {
-      "comment" : "Note:\nAll the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them.\nIn English, that reason is that we're using \"Title Case\", but this isn't common in other languages. \nFor example, in German, the substring \"Click and Drag %@\" is localized as \"%@ klicken und ziehen\"\nand \"Middle Button\" is translated as \"mittlere Taste\".\n\nNotice that not even the first word is capitalized.\nThat's because these substrings are joined programmatically to create a combined string.\n(The start of that combined string will be capitalized automatically.)\n\nNote 2: (For Claude)\nThe trigger.[...] strings and the effect.[...] strings appear in the 'Action Table' together. The trigger.[...] strings are\non the left and describe some input that the user can perform on their mouse, while the effect.[...] strings are on the\nright side and describe what will happen, when the user performs that trigger.\nConsider translating the trigger.[...] strings more as a description of the action '(to) click and drag'\ninstead of and imperative ('please click and drag')\nAt least in German, this works better I think.\nI don't speak other languages, so this is up to you. Choose whatever feels the most natural and allows for the most consistency between the different trigger.substring.[...] strings.",
+      "comment" : "Note:\nAll the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them.\nIn English, that reason is that we're using \"Title Case\", but this isn't common in other languages. \nFor example, in German, the substring \"Click and Drag %@\" is localized as \"%@ klicken und ziehen\"\nand \"Middle Button\" is translated as \"mittlere Taste\".\n\nNotice that not even the first word is capitalized.\nThat's because these substrings are joined programmatically to create a combined string.\n(The start of that combined string will be capitalized automatically.)\n\nNote 2: (For Claude)\nThe trigger.[...] strings and the effect.[...] strings appear in the 'Action Table' together. The trigger.[...] strings are\non the left and describe some input that the user can perform on their mouse, while the effect.[...] strings are on the\nright side and describe what will happen, when the user performs that trigger.\nConsider translating the trigger.[...] strings more as a description of the action '(you can) click and drag (to ...)'\ninstead of an imperative ('(please) click and drag (to ...)')\nAt least in German, this works better I think.\nI don't speak other languages, so this is up to you. Choose whatever feels the most natural and allows for the most consistency between the different trigger.substring.[...] strings.",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2069,12 +2069,12 @@
       }
     },
     "trigger.substring.button-name.middle" : {
-      "comment" : "Note: These trigger.substring.button-name.[...] strings are inserted into the other trigger.substring.[...] strings at the format specifiers (%@). Make sure that the combined strings are grammatically correct.\n\nNote 2:\nUse *markdown emphasis* to mark the part of a trigger.substring.button-name.[...] string that matches the corresponding trigger.y.group-row.button-name.[...] string.\nFor most languages, this is the entire string.       E.g. English:   `*Middle Button*`         (Where the corresponding group-row string is: `Middle Button`)\nFor some languages, it's only a part of the string.  E.g. French:    `du *bouton central*`     (Where the corresponding group-row string is: `bouton central`)\nReason: The marked parts will be grayed-out. This helps the visual scannability of the UI a lot. (Hard to explain without seeing the UI.)",
+      "comment" : "Note: These trigger.substring.button-name.[...] strings are inserted into the other trigger.substring.[...] strings at the format specifiers (%@). Make sure that the combined strings are grammatically correct.\n\nNote 2:\nUse *markdown emphasis* to mark the part of a trigger.substring.button-name.[...] string that matches the corresponding trigger.y.group-row.button-name.[...] string.\nFor most languages, this is the entire string.       E.g. English:   `*Middle Button*`         (Where the corresponding group-row string is: `Middle Button`)\nFor some languages, it's only a part of the string.  E.g. French:    `du *bouton central*`     (Where the corresponding group-row string is: `bouton central`)\nReason: The marked parts will be grayed-out. This helps the visual scannability of the UI.     (Bit hard to explain without seeing the UI.)",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "na *střední tlačítko*"
+            "value" : "*středního tlačítka*"
           }
         },
         "de" : {
@@ -2092,7 +2092,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "del *botón central*"
+            "value" : "*botón central*"
           }
         },
         "fr" : {
@@ -2110,13 +2110,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "no *botão do meio*"
+            "value" : "*botão do meio*"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "на *среднюю кнопку*"
+            "value" : "*средней кнопки*"
           }
         },
         "tr" : {
@@ -2145,7 +2145,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "na *tlačítko %@*"
+            "value" : "*tlačítka %@*"
           }
         },
         "de" : {
@@ -2163,7 +2163,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "del *botón %@*"
+            "value" : "*botón %@*"
           }
         },
         "fr" : {
@@ -2181,13 +2181,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "no *botão %@*"
+            "value" : "*botão %@*"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "на *кнопку %@*"
+            "value" : "*кнопки %@*"
           }
         },
         "tr" : {
@@ -2216,7 +2216,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "na *primární tlačítko*"
+            "value" : "*primárního tlačítka*"
           }
         },
         "de" : {
@@ -2234,7 +2234,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "del *botón principal*"
+            "value" : "*botón principal*"
           }
         },
         "fr" : {
@@ -2252,13 +2252,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "no *botão principal*"
+            "value" : "*botão principal*"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "на *основную кнопку*"
+            "value" : "*основной кнопки*"
           }
         },
         "tr" : {
@@ -2287,7 +2287,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "na *sekundární tlačítko*"
+            "value" : "*sekundárního tlačítka*"
           }
         },
         "de" : {
@@ -2305,7 +2305,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "del *botón secundario*"
+            "value" : "*botón secundario*"
           }
         },
         "fr" : {
@@ -2323,13 +2323,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "no *botão secundário*"
+            "value" : "*botão secundário*"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "на *вспомогательную кнопку*"
+            "value" : "*вспомогательной кнопки*"
           }
         },
         "tr" : {
@@ -2566,7 +2566,7 @@
       }
     },
     "trigger.substring.drag.1" : {
-      "comment" : ".",
+      "comment" : "Thinking behind the English trigger.substring.drag.[...] and trigger.substring.scroll.[...] strings: \nIn English, we're putting the button name at the end instead of the middle. So it's 'Click and Drag Button 4'\ninstead of 'Click Button 4 and Drag' (which would be more semantically correct).\nThe reason we do this, is to keep the recognizable phrase 'click and drag' as one unit to make it more scannable\nAlso, it felt ok to use the phrase 'click and drag'\nalmost like a singular action / verb. As in '(perform a) Click and Drag (using) Button 4'\nEven though the more literal interpretation of 'Click and Drag Button 4' would imply \n'dragging' the mouse button itself, which doesn't quite make sense\n\nFor the phrase 'click and scroll' (See trigger.substring.scroll.[...]) we mirrored the 'click and drag' phrasing,\neven though 'click and scroll' is not an established phrase like 'click and drag' is. This helps keep things consistent\nand scannable while still making intuitive sense next to 'click and drag' in the UI.\nTips for translations based on the thoughts behind the English strings:\nConsider placing the '%@' format specifier (which is where the trigger.substring.button-name.[...] strings will be inserted)\nat the start or the end of the phrase, to help with scannability. Optimize for scannability, conciseness, and consistency, without\nmaking things too grammatically awkward.(Heads up: The trigger.substring.[...] and trigger.substring.button-name.[...] strings can contain grammatical particles and inflections. See trigger.substring.button-name.middle)",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
