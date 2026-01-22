@@ -1025,7 +1025,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         } else {
             @throw [NSException exceptionWithName:@"Invalid click level" reason:@"Modification precondition contains undisplayable click level" userInfo:@{@"Trigger dict containing invalid value": triggerGeneric}];
         }
-        buttonModString = buttonModString.firstCapitalized; /// Capitalize each button mod string.
+        buttonModString = [buttonModString firstCapitalized]; /// Capitalize each button mod string.
         [buttonModifierStrings addObject: buttonModString];
     }
     if (buttonModifierStrings.count > 0) {

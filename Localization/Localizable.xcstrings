@@ -2122,7 +2122,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "*orta düğme*yi"
+            "value" : "*orta düğmeyi*"
           }
         },
         "vi" : {
@@ -2193,7 +2193,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "*%@. düğme*yi"
+            "value" : "*%@. düğmeyi*"
           }
         },
         "vi" : {
@@ -2264,7 +2264,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "*birincil düğme*yi"
+            "value" : "*birincil düğmeyi*"
           }
         },
         "vi" : {
@@ -2335,7 +2335,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "*ikincil düğme*yi"
+            "value" : "*ikincil düğmeyi*"
           }
         },
         "vi" : {

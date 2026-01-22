@@ -37,14 +37,17 @@
         return [self copy];
     }
     
-    /// Find the first letter
+    /// Find the first non-invisible letter
+    ///     Note: Don't use `NSCharacterSet.letterCharacterSet` since that will skip over numbers (which we don't want for Turkish '5. Button' strings) [Jan 2026]
     NSUInteger firstLetterIndex = NSUIntegerMax;
     {
         unichar chars[self.length];
         [self.string getCharacters: chars];
         
+        auto charset = [NSString secretMessageChars];
+        
         loopc(i, self.length) {
-            if ([NSCharacterSet.letterCharacterSet characterIsMember: chars[i]]) {
+            if (![charset characterIsMember: chars[i]]) {
                 firstLetterIndex = i;
                 break;
             }
@@ -97,7 +100,7 @@
     ///     "Trimming" should maybe be "stripping"? Trimming usually only refers to cutting off the leading and trailing.
     ///     
     ///     Performance:
-    ///     - I was somehow worrying about the performance of this but I used an MFBenchmark and it takes 0.003 ms on averate (3/1000 of a millisecond), so nothing to worry about.
+    ///     - I was somehow worrying about the performance of this but I used an MFBenchmark and it takes 0.003 ms on average (3/1000 of a millisecond), so nothing to worry about.
     
     /// Null check
     if (!self.length) return [self copy];
