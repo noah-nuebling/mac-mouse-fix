@@ -995,9 +995,8 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     }
     if (buttonModifierStrings.count > 0) {
         /// Join the strings for each button-modifier
-        ///     Add linebreaks for scannability [Jan 2026]
-        btnMod = [@"" mutableCopy];
-        for (NSString *s in buttonModifierStrings) [btnMod appendFormat: @"%@\n", s];
+        btnMod = [[buttonModifierStrings componentsJoinedByString: @" "] mutableCopy];
+        
     } else {
         btnMod = [@"" mutableCopy];
     }
@@ -1048,11 +1047,22 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     tr = [tr attributedStringByTrimmingWhitespace];
     tr = [tr attributedStringByCapitalizingFirst];
     
+    
     ///
     /// Join all substrings to get result
     ///
     
-    NSAttributedString *fullTriggerCellString = astringf(@"%@ %@%@", [kbMod attributed], [btnMod attributed], tr); /// Note: [Jan 2026] Have to omit space before %@ here since `attributedStringByTrimmingWhitespace` doesn't trim after linebreaks (and btnMod has linebreaks now)
+    if (btnMod.length) [btnMod appendString: @"\n"];///     Add linebreaks for scannability [Jan 2026]
+    if (kbMod.length)  kbMod = [kbMod stringByAppendingString: @" "]; /// Note: [Jan 2026] Have to conditionally put space here since `attributedStringByTrimmingWhitespace` doesn't trim after linebreaks (and btnMod has linebreaks now)
+    
+    NSAttributedString *fullTriggerCellString = astringf(@""
+        "%@"
+        "%@"
+        "%@",
+        [kbMod attributed],
+        [btnMod attributed],
+        tr
+    );
     
     /// Clean up string
     fullTriggerCellString = [fullTriggerCellString attributedStringByTrimmingWhitespace];
