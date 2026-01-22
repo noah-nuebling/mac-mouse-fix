@@ -36,6 +36,25 @@
             - This Claude conversation: https://claude.ai/share/cc16b141-f206-4c0a-a4f1-07cf5cf74515
                 -> At the end, Claude says it was confused the whole time, and was saying wrong things about the length and security of the keys.
             - XPKeygen: https://github.com/Endermanch/XPKeygen
+            
+        Update: [Jan 2026]
+            New Idea: 
+                - Use a short, normal-looking license key, but embed a zero-width character sequence that serves as the signature. 
+                     -> Normal, length, normal-looking keys
+                     -> Can offline validate in the usual case, where ppl just copy-paste from their email
+                     -> If zero-width validation fails (e.g. due to ppl hand-copying the key, or email-client corrupting zero-width chars), we can still validate with the server.
+            Problem:
+                We can't do activation counting at all. 
+                    -> If a key is publicly shared, we can't really detect that or do anything about it.
+                        ... Except maybe if we make server-validation the default and offline validation the fallback? 
+            
+            Clarity: The whole motivation behind this is a person who emailed us about not being able to activate due to corporate network.
+                -> Maybe we can find a better solution to that problem. 
+                Ideas:
+                    -> Maybe Stripe won't be blocked anyways?
+                    -> Maybe the app could export an offline license or something? (which could consume an activation) 
+                    -> Maybe we could provide special offline license for corporate users (instead of making it the default)
+                    -> Maybe we just send corporate users a special build with no license activation?
 
 ## Async/Await
 
