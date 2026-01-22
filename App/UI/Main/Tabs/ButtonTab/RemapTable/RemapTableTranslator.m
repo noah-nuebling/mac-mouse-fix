@@ -937,7 +937,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     /// Build button modifier string
     ///
 
-    NSString *btnMod;
+    NSMutableString *btnMod;
     
     NSMutableArray *buttonPressSequence = rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyButtons];
     NSMutableArray *buttonModifierStrings = [NSMutableArray array];
@@ -994,9 +994,12 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         [buttonModifierStrings addObject: buttonModString];
     }
     if (buttonModifierStrings.count > 0) {
-        btnMod = [buttonModifierStrings componentsJoinedByString: @""];
+        /// Join the strings for each button-modifier
+        ///     Add linebreaks for scannability [Jan 2026]
+        btnMod = [@"" mutableCopy];
+        for (NSString *s in buttonModifierStrings) [btnMod appendFormat: @"%@\n", s];
     } else {
-        btnMod = @"";
+        btnMod = [@"" mutableCopy];
     }
     
     
@@ -1005,13 +1008,13 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     ///
     
     NSNumber *flags = rowDict[kMFRemapsKeyModificationPrecondition][kMFModificationPreconditionKeyKeyboard];
-    NSString *kbMod = [UIStrings getKeyboardModifierString:flags.unsignedIntegerValue];
+    NSString *kbMod = [UIStrings getKeyboardModifierString: flags.unsignedIntegerValue];
     
     ///
     /// Post processing on the substrings
     ///
     
-    if (![btnMod isEqual:@""]) {
+    if (![btnMod isEqual: @""]) {
         
         /// Display main button – only if there *are* button modifiers
         
@@ -1049,7 +1052,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     /// Join all substrings to get result
     ///
     
-    NSAttributedString *fullTriggerCellString = astringf(@"%@ %@ %@", [kbMod attributed], [btnMod attributed], tr);
+    NSAttributedString *fullTriggerCellString = astringf(@"%@ %@%@", [kbMod attributed], [btnMod attributed], tr); /// Note: [Jan 2026] Have to omit space before %@ here since `attributedStringByTrimmingWhitespace` doesn't trim after linebreaks (and btnMod has linebreaks now)
     
     /// Clean up string
     fullTriggerCellString = [fullTriggerCellString attributedStringByTrimmingWhitespace];
