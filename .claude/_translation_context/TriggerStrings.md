@@ -179,4 +179,7 @@ Multiple Languages
                 → "на *среднюю кнопку*", "на *кнопку %@*", "на *основную кнопку*", "на *вспомогательную кнопку*"
                     Note: Russian accusative case changes the word endings, so the emphasized part won't exactly match the group-row header (e.g., "среднюю кнопку" vs "средняя кнопка"). This is an accepted tradeoff.
         Note: We decided English does NOT need "the" and that "Click Middle Button" (instead of "Click the Middle Button") feels like acceptable UI shorthand.
-        Note to self: We also added comments about this to trigger.substring.button-name.middle (I'm not sure explaining it again here is useful.)
+        Note to self: We also added comments about this to 
+            trigger.substring.button-name.middle AND 
+            trigger.substring.click.1 
+            (So I'm not sure explaining it again here is useful.)
