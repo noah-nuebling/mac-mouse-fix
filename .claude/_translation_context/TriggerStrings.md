@@ -141,9 +141,9 @@ Good luck!
 ## Desired translations
 
 The rest of this document is designed to help you make your own decisions about how to translate into ANY language.
-But for some texts, I found it helpful to specify the desired translations directly.
+But for some texts, this wasn't enough to help Claude make good decisions about the translations, so we worked out some really good translations and wrote them down here.
 
-The 'Explanation' sections may help you choose translations for other languages, by using the same guiding principles.
+Please read these (and pay special attention to the 'explanation' sections) to help avoid similar mistakes when translating other languages.
 
 German
     Desired Translation: Translate 'Button' as 'Taste' instead of 'Maustaste'.
@@ -174,8 +174,7 @@ Multiple Languages
             Russian: Use genitive case (expresses "of", like French "du")
                 → "*средней кнопки*", "*кнопки %@*", "*основной кнопки*", "*вспомогательной кнопки*"
                     Note: Genitive case endings differ from nominative, so these won't match the group-row headers exactly.
-            Other languages:
-                Some other languages like Spanish and Portuguese also use such grammatical connectors, but we prefer to keep things simple and decided we could get away without them. 
+        Note: Spanish and Portuguese also like to use such grammatical connectors, but we prefer to keep things simple and decided we could get away without them. 
         Note: We decided English does NOT need "the" and that "Click Middle Button" (instead of "Click the Middle Button") feels like acceptable UI shorthand.
         Note to self: We also added comments about this to 
             trigger.substring.button-name.middle AND 
