@@ -1858,18 +1858,6 @@
     "trigger.substring.button-modifier.1" : {
       "comment" : "Note: %@ will be a button name\nExample where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5\n\nExplanation of the strings:\nThe trigger.substring.button-modifier.[...] strings describe a feature where holding a mouse button will modify what the other buttons do\nIn the SteerMouse app, this feature is called 'button chording'.\nIn Mac Mouse Fix, it's just one of many ways to assign multiple actions to a button – so it's not as importand and more of a hidden feature.\nDiscussion of the thinking behind the English string:\nPerhaps, using 'hold' would be more fitting, but for English we chose 'click' instead.\nThat's because it makes the strings shorter and more scannable ('Double Click and Hold Button 4 + ' vs 'Double Click Button 4 + '\nWith the '+' in the strings, it should still be pretty clear in practise, especially since users have to perform the gesture first,\nbefore these strings ever show up in the UI.\nAlso, in English, 'Click and Drag' is an established phrase (which we're also using in the other trigger.substring.[...] strings), and it sets a precedent for using 'click' \nto describe *holding* a button while doing something else. So it should feel relatively natural in English.\n\nIdeas for translations into other languages: If a literal translation doesn't feel natural, it may make sense to draw from how 'click and drag' is translated (in the other trigger.substring.[...] strings) or to use something closer to 'hold' instead or 'click'.\n",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "نقر %@ +"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "clic %@ + "
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1880,12 +1868,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ klicken + "
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "κλικ %@ +"
           }
         },
         "en" : {
@@ -1906,52 +1888,22 @@
             "value" : "clic %@ + "
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "לחיצה על %@ +"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "clic %@ +"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 클릭 + "
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "klik %@ + "
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique %@ + "
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "clic %@ + "
+            "value" : "clique %@ +"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "нажатие %@ +"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "klicka på %@ + "
           }
         },
         "tr" : {
@@ -1977,18 +1929,6 @@
     "trigger.substring.button-modifier.2" : {
       "comment" : "Note:\nAll the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them.\nIn English, that reason is that we're using \"Title Case\", but this isn't common in other languages. \nFor example, in German, the substring \"Click and Drag %@\" is localized as \"%@ klicken und ziehen\"\nand \"Middle Button\" is translated as \"mittlere Taste\".\n\nNotice that not even the first word is capitalized.\nThat's because these substrings are joined programmatically to create a combined string.\n(The start of that combined string will be capitalized automatically.)\n\nNote 2: (For Claude)\nThe trigger.[...] strings and the effect.[...] strings appear in the 'Action Table' together. The trigger.[...] strings are\non the left and describe some input that the user can perform on their mouse, while the effect.[...] strings are on the\nright side and describe what will happen, when the user performs that trigger.\nConsider translating the trigger.[...] strings more as a description of the action '(you can) click and drag (to ...)'\ninstead of an imperative ('(please) click and drag (to ...)')\nAt least in German, this works better I think.\nI don't speak other languages, so this is up to you. Choose whatever feels the most natural and allows for the most consistency between the different trigger.substring.[...] strings.",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "نقر مزدوج %@ +"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "doble clic %@ + "
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1999,12 +1939,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ doppelklicken + "
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "διπλό κλικ %@ +"
           }
         },
         "en" : {
@@ -2025,52 +1959,22 @@
             "value" : "double-clic %@ + "
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "לחיצה כפולה על %@ +"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "doppio clic %@ +"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 이중 클릭 + "
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "dubbelklik %@ + "
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique duplo %@ + "
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "dublu clic %@ + "
+            "value" : "clique duplo %@ +"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "двойное нажатие %@ +"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "dubbelklicka på %@ + "
           }
         },
         "tr" : {
@@ -2096,18 +2000,6 @@
     "trigger.substring.button-modifier.3" : {
       "comment" : "",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "نقر ثلاثي %@ +"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "triple clic %@ + "
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2118,12 +2010,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ dreifachklicken + "
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "τριπλό κλικ %@ +"
           }
         },
         "en" : {
@@ -2144,52 +2030,22 @@
             "value" : "triple-clic %@ + "
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "לחיצה משולשת על %@ +"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "triplo clic %@ +"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 삼중 클릭 + "
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "drievoudige klik %@ + "
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique triplo %@ + "
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "triplu clic %@ + "
+            "value" : "clique triplo %@ +"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "тройное нажатие %@ +"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "trippelklicka på %@ + "
           }
         },
         "tr" : {
@@ -2215,18 +2071,6 @@
     "trigger.substring.button-name.middle" : {
       "comment" : "Note: These trigger.substring.button-name.[...] strings are inserted into the other trigger.substring.[...] strings at the format specifiers (%@). Make sure that the combined strings are grammatically correct.\n\nNote 2:\nUse *markdown emphasis* to mark the part of a trigger.substring.button-name.[...] string that matches the corresponding trigger.y.group-row.button-name.[...] string.\nFor most languages, this is the entire string.       E.g. English:   `*Middle Button*`         (Where the corresponding group-row string is: `Middle Button`)\nFor some languages, it's only a part of the string.  E.g. French:    `du *bouton central*`     (Where the corresponding group-row string is: `bouton central`)\nReason: The marked parts will be grayed-out. This helps the visual scannability of the UI.     (Bit hard to explain without seeing the UI.)",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الزر الأوسط"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "botó central"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2237,12 +2081,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*mittlere Taste*"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "μεσαίου κουμπιού"
           }
         },
         "en" : {
@@ -2263,52 +2101,22 @@
             "value" : "du *bouton central*"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "כפתור אמצעי"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "pulsante centrale"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "*중간 버튼*"
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "middelste knop"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "botão do meio"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "buton mijloc"
+            "value" : "*botão do meio*"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "*средней кнопки*"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "mittknappen"
           }
         },
         "tr" : {
@@ -2334,18 +2142,6 @@
     "trigger.substring.button-name.numbered" : {
       "comment" : "",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الزر %@"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "botó %@"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2356,12 +2152,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*Taste %@*"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "κουμπιού %@"
           }
         },
         "en" : {
@@ -2382,52 +2172,22 @@
             "value" : "du *bouton %@*"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "כפתור %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "pulsante %@"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "*%@번 버튼*"
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "knop %@"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "botão %@"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "buton %@"
+            "value" : "*botão %@*"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "*кнопки %@*"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "knapp %@"
           }
         },
         "tr" : {
@@ -2453,18 +2213,6 @@
     "trigger.substring.button-name.primary" : {
       "comment" : "",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الزر الأساسي"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "botó principal"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2475,12 +2223,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*primäre Taste*"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "πρωτεύοντος κουμπιού"
           }
         },
         "en" : {
@@ -2501,52 +2243,22 @@
             "value" : "du *bouton principal*"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "כפתור ראשי"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "pulsante principale"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "*주 버튼*"
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "primaire knop"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "botão principal"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "buton principal"
+            "value" : "*botão principal*"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "*основной кнопки*"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "primärknappen"
           }
         },
         "tr" : {
@@ -2572,18 +2284,6 @@
     "trigger.substring.button-name.secondary" : {
       "comment" : "",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الزر الثانوي"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "botó secundari"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2594,12 +2294,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*sekundäre Taste*"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "δευτερεύοντος κουμπιού"
           }
         },
         "en" : {
@@ -2620,52 +2314,22 @@
             "value" : "du *bouton secondaire*"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "כפתור משני"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "pulsante secondario"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "*보조 버튼*"
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "secundaire knop"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "botão secundário"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "buton secundar"
+            "value" : "*botão secundário*"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "*вспомогательной кнопки*"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "sekundärknappen"
           }
         },
         "tr" : {
@@ -2691,18 +2355,6 @@
     "trigger.substring.click.1" : {
       "comment" : "Note: The trigger.substring.[...] strings have format specifiers (\"%@\") which get replaced with the trigger.substring.button-name.[...] strings OR with nothing (if the button can be inferred from context).\nMake sure that the combined strings feel grammatically sound, no matter if a trigger.substring.button-name.[...] string OR nothing is inserted for \"%@\".\nExample where %@ is \"the *Middle Button*\": Click the *Middle Button*\nExample where %@ is nothing:                 Click\n\nNote regarding examples: We added 'the' for demonstration purposes. The real English string doesn't use 'the' (as of [Jan 2026]) because we value conciseness and it doesn't feel too odd for a UI label. In other languages, such connective words may be more necessary.",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "نقر %@"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "clic %@"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2713,12 +2365,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ klicken"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "κλικ %@"
           }
         },
         "en" : {
@@ -2739,28 +2385,10 @@
             "value" : "clic %@"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "לחיצה על %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "clic %@"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 클릭"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "klik %@"
           }
         },
         "pt-BR" : {
@@ -2769,22 +2397,10 @@
             "value" : "clique %@"
           }
         },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "clic %@"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "нажатие %@"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "klicka på %@"
           }
         },
         "tr" : {
@@ -2810,18 +2426,6 @@
     "trigger.substring.click.2" : {
       "comment" : "",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "نقر مزدوج %@"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "doble clic %@"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2832,12 +2436,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ doppelklicken"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "διπλό κλικ %@"
           }
         },
         "en" : {
@@ -2858,28 +2456,10 @@
             "value" : "double-clic %@"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "לחיצה כפולה על %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "doppio clic %@"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 이중 클릭"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "dubbelklik %@"
           }
         },
         "pt-BR" : {
@@ -2888,22 +2468,10 @@
             "value" : "clique duplo %@"
           }
         },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "dublu clic %@"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "двойное нажатие %@"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "dubbelklicka på %@"
           }
         },
         "tr" : {
@@ -2929,18 +2497,6 @@
     "trigger.substring.click.3" : {
       "comment" : "",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "نقر ثلاثي %@"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "triple clic %@"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2951,12 +2507,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ dreifachklicken"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "τριπλό κλικ %@"
           }
         },
         "en" : {
@@ -2977,28 +2527,10 @@
             "value" : "triple-clic %@"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "לחיצה משולשת על %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "triplo clic %@"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 삼중 클릭"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "drievoudige klik %@"
           }
         },
         "pt-BR" : {
@@ -3007,22 +2539,10 @@
             "value" : "clique triplo %@"
           }
         },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "triplu clic %@"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "тройное нажатие %@"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "trippelklicka på %@"
           }
         },
         "tr" : {
@@ -3048,18 +2568,6 @@
     "trigger.substring.drag.1" : {
       "comment" : "Thinking behind the English trigger.substring.drag.[...] and trigger.substring.scroll.[...] strings: \nIn English, we're putting the button name at the end instead of the middle. So it's 'Click and Drag Button 4'\ninstead of 'Click Button 4 and Drag' (which would be more semantically correct).\nThe reason we do this, is to keep the recognizable phrase 'click and drag' as one unit to make it more scannable\nAlso, it felt ok to use the phrase 'click and drag'\nalmost like a singular action / verb. As in '(perform a) Click and Drag (using) Button 4'\nEven though the more literal interpretation of 'Click and Drag Button 4' would imply \n'dragging' the mouse button itself, which doesn't quite make sense\n\nFor the phrase 'click and scroll' (See trigger.substring.scroll.[...]) we mirrored the 'click and drag' phrasing,\neven though 'click and scroll' is not an established phrase like 'click and drag' is. This helps keep things consistent\nand scannable while still making intuitive sense next to 'click and drag' in the UI.\nTips for translations based on the thoughts behind the English strings:\nConsider placing the '%@' format specifier (which is where the trigger.substring.button-name.[...] strings will be inserted)\nat the start or the end of the phrase, to help with scannability. Optimize for scannability, conciseness, and consistency, without\nmaking things too grammatically awkward.(Heads up: The trigger.substring.[...] and trigger.substring.button-name.[...] strings can contain grammatical particles and inflections. See trigger.substring.button-name.middle)",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "نقر و*سحب* %@"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "clic i *arrossegar* %@"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3070,12 +2578,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ klicken und *ziehen*"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "κλικ και *μεταφορά* %@"
           }
         },
         "en" : {
@@ -3096,52 +2598,22 @@
             "value" : "clic et *glissement* %@"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "לחיצה ו*גרירה* על %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "clic e *trascina* %@"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 클릭 및 *드래그*"
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "klik en *sleep* %@"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique e *arrastar* %@"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "clic și *tragere* %@"
+            "value" : "clique e *arraste* %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "нажатие и *перетягивание* %@"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "klicka och *dra* med %@"
           }
         },
         "tr" : {
@@ -3167,18 +2639,6 @@
     "trigger.substring.drag.2" : {
       "comment" : "",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "نقر مزدوج و*سحب* %@"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "doble clic i *arrossegar* %@"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3189,12 +2649,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ doppelklicken und *ziehen*"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "διπλό κλικ και *μεταφορά* %@"
           }
         },
         "en" : {
@@ -3215,52 +2669,22 @@
             "value" : "double-clic et *glissement* %@"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "לחיצה כפולה ו*גרירה* על %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "doppio clic e *trascina* %@"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 이중 클릭 및 *드래그*"
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "dubbelklik en *sleep* %@"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique duplo e *arrastar* %@"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "dublu clic și *tragere* %@"
+            "value" : "clique duplo e *arraste* %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "двойное нажатие и *перетягивание* %@"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "dubbelklicka och *dra* med %@"
           }
         },
         "tr" : {
@@ -3286,18 +2710,6 @@
     "trigger.substring.drag.3" : {
       "comment" : "",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "نقر ثلاثي و*سحب* %@"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "triple clic i *arrossegar* %@"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3308,12 +2720,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ dreifachklicken und *ziehen*"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "τριπλό κλικ και *μεταφορά* %@"
           }
         },
         "en" : {
@@ -3334,52 +2740,22 @@
             "value" : "triple-clic et *glissement* %@"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "לחיצה משולשת ו*גרירה* על %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "triplo clic e *trascina* %@"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 삼중 클릭 및 *드래그*"
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "drievoudige klik en *sleep* %@"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique triplo e *arrastar* %@"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "triplu clic și *tragere* %@"
+            "value" : "clique triplo e *arraste* %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "тройное нажатие и *перетягивание* %@"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "trippelklicka och *dra* med %@"
           }
         },
         "tr" : {
@@ -3405,18 +2781,6 @@
     "trigger.substring.drag.flags" : {
       "comment" : "Example: ⌥⌘ and Drag\nNote: This will be used for Drag Actions that only need keyboard modifiers to be activated (And no mouse buttons)\nNote: The modifier flags such as '⌥⌘' will always appear at the _start_ of this string, not at the end.\nNote: Also see trigger.substring.scroll.flags",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "و*سحب*"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "i *arrossegar*"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3427,12 +2791,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "und *ziehen*"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "και *μεταφορά*"
           }
         },
         "en" : {
@@ -3453,52 +2811,22 @@
             "value" : "et *glissement*"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ו*גרירה*"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "e *trascina*"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "및 *드래그*"
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "en *sleep*"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "e *arrastar*"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "și *tragere*"
+            "value" : "e *arraste*"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "и *перетягивание*"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "och *dra*"
           }
         },
         "tr" : {
@@ -3524,18 +2852,6 @@
     "trigger.substring.hold.1" : {
       "comment" : "Remember: The strings starting with \"trigger.substring.[...]\" should be lowercase in most languages. See trigger.substring.button-modifier.2 for the explanation.",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "إمساك %@"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "mantenir premut %@"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3546,12 +2862,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ halten"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "κράτημα %@"
           }
         },
         "en" : {
@@ -3572,52 +2882,22 @@
             "value" : "maintien %@"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "לחיצה והחזקה על %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "tieni premuto %@"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 길게 누름"
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "houd %@ vast"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "segurar %@"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "menținere %@"
+            "value" : "segure %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "удерживание %@"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "håll ned %@"
           }
         },
         "tr" : {
@@ -3643,18 +2923,6 @@
     "trigger.substring.hold.2" : {
       "comment" : "",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "نقر مزدوج وإمساك %@"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "doble clic i mantenir premut %@"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3665,12 +2933,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ doppelklicken und halten"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "διπλό κλικ και κράτημα %@"
           }
         },
         "en" : {
@@ -3691,52 +2953,22 @@
             "value" : "double-clic et maintien %@"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "לחיצה כפולה והחזקה על %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "doppio clic e tieni premuto %@"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 이중 클릭 및 길게 누름"
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "dubbelklik en houd %@ vast"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique duplo e segurar %@"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "dublu clic și menținere %@"
+            "value" : "clique duplo e segure %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "двойное нажатие и удерживание %@"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "dubbelklicka och håll ned %@"
           }
         },
         "tr" : {
@@ -3762,18 +2994,6 @@
     "trigger.substring.hold.3" : {
       "comment" : "",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "نقر ثلاثي وإمساك %@"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "triple clic i mantenir premut %@"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3784,12 +3004,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ dreifachklicken und halten"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "τριπλό κλικ και κράτημα %@"
           }
         },
         "en" : {
@@ -3810,52 +3024,22 @@
             "value" : "triple-clic et maintien %@"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "לחיצה משולשת והחזקה על %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "triplo clic e tieni premuto %@"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 삼중 클릭 및 길게 누름"
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "drievoudige klik en houd %@ vast"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique triplo e segurar %@"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "triplu clic și menținere %@"
+            "value" : "clique triplo e segure %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "тройное нажатие и удерживание %@"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "trippelklicka och håll ned %@"
           }
         },
         "tr" : {
@@ -3881,18 +3065,6 @@
     "trigger.substring.scroll.1" : {
       "comment" : "",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "نقر و*تمرير* %@"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "clic i *desplaçar* %@"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3903,12 +3075,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ klicken und *scrollen*"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "κλικ και *κύλιση* %@"
           }
         },
         "en" : {
@@ -3929,52 +3095,22 @@
             "value" : "clic et *défilement* %@"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "לחיצה ו*גלילה* על %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "clic e *scorri* %@"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 클릭 및 *스크롤*"
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "klik en *scrol* %@"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique e *rolar* %@"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "clic și *derulare* %@"
+            "value" : "clique e *role* %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "нажатие и *прокрутка* %@"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "klicka och *rulla* med %@"
           }
         },
         "tr" : {
@@ -4000,18 +3136,6 @@
     "trigger.substring.scroll.2" : {
       "comment" : "",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "نقر مزدوج و*تمرير* %@"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "doble clic i *desplaçar* %@"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4022,12 +3146,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ doppelklicken und *scrollen*"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "διπλό κλικ και *κύλιση* %@"
           }
         },
         "en" : {
@@ -4048,52 +3166,22 @@
             "value" : "double-clic et *défilement* %@"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "לחיצה כפולה ו*גלילה* על %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "doppio clic e *scorri* %@"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 이중 클릭 및 *스크롤*"
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "dubbelklik en *scrol* %@"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique duplo e *rolar* %@"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "dublu clic și *derulare* %@"
+            "value" : "clique duplo e *role* %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "двойное нажатие и *прокрутка* %@"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "dubbelklicka och *rulla* med %@"
           }
         },
         "tr" : {
@@ -4119,18 +3207,6 @@
     "trigger.substring.scroll.3" : {
       "comment" : "",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "نقر ثلاثي و*تمرير* %@"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "triple clic i *desplaçar* %@"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4141,12 +3217,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ dreifachklicken und *scrollen*"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "τριπλό κλικ και *κύλιση* %@"
           }
         },
         "en" : {
@@ -4167,52 +3237,22 @@
             "value" : "triple-clic et *défilement* %@"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "לחיצה משולשת ו*גלילה* על %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "triplo clic e *scorri* %@"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 삼중 클릭 및 *스크롤*"
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "drievoudige klik en *scrol* %@"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique triplo e *rolar* %@"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "triplu clic și *derulare* %@"
+            "value" : "clique triplo e *role* %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "тройное нажатие и *прокрутка* %@"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "trippelklicka och *rulla* med %@"
           }
         },
         "tr" : {
@@ -4238,18 +3278,6 @@
     "trigger.substring.scroll.flags" : {
       "comment" : "Example: ⌥⌘ and Scroll\nNote: Also see trigger.substring.drag.flags",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "و*تمرير*"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "i *desplaçar*"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4260,12 +3288,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "und *scrollen*"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "και *κύλιση*"
           }
         },
         "en" : {
@@ -4286,52 +3308,22 @@
             "value" : "et *défilement*"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ו*גלילה*"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "e *scorri*"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "및 *스크롤*"
           }
         },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "en *scrol*"
-          }
-        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "e *rolar*"
-          }
-        },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "și *derulare*"
+            "value" : "e *role*"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "и *прокрутка*"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "och *rulla*"
           }
         },
         "tr" : {
@@ -4357,18 +3349,6 @@
     "trigger.y.group-row.button-name.middle" : {
       "comment" : "Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions which are triggered by the same button.\n\nNote: The \".y\" is there to influence the sorting when you sort by \"Key\" so you hopefully don't have to jump around as much while translating.\n\nNote: The \"trigger.y.group-row.button-name.[...]\" button names are auto-capitalized, so they can be lowercase, just like the trigger.substring.[...] button names. See trigger.substring.button-modifier.2",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الزر الأوسط"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "botó central"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4379,12 +3359,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "mittlere Taste"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "μεσαίο κουμπί"
           }
         },
         "en" : {
@@ -4405,28 +3379,10 @@
             "value" : "bouton central"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "כפתור אמצעי"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "pulsante centrale"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "중간 버튼"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "middelste knop"
           }
         },
         "pt-BR" : {
@@ -4435,22 +3391,10 @@
             "value" : "botão do meio"
           }
         },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "buton mijloc"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "средняя кнопка"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "mittknapp"
           }
         },
         "tr" : {
@@ -4476,18 +3420,6 @@
     "trigger.y.group-row.button-name.numbered" : {
       "comment" : "Note: The comment next to capture-toast.button-name.numbered also applies here.",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الزر %@"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "botó %@"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4498,12 +3430,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Taste %@"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "κουμπί %@"
           }
         },
         "en" : {
@@ -4524,28 +3450,10 @@
             "value" : "bouton %@"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "כפתור %@"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "pulsante %@"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@번 버튼"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "knop %@"
           }
         },
         "pt-BR" : {
@@ -4554,22 +3462,10 @@
             "value" : "botão %@"
           }
         },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "buton %@"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "кнопка %@"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "knapp %@"
           }
         },
         "tr" : {
@@ -4595,18 +3491,6 @@
     "trigger.y.group-row.button-name.primary" : {
       "comment" : "",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الزر الأساسي"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "botó principal"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4617,12 +3501,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "primäre Taste"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "πρωτεύον κουμπί"
           }
         },
         "en" : {
@@ -4643,28 +3521,10 @@
             "value" : "bouton principal"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "כפתור ראשי"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "pulsante principale"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "주 버튼"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "primaire knop"
           }
         },
         "pt-BR" : {
@@ -4673,22 +3533,10 @@
             "value" : "botão principal"
           }
         },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "buton principal"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "основная кнопка"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "primärknapp"
           }
         },
         "tr" : {
@@ -4714,18 +3562,6 @@
     "trigger.y.group-row.button-name.secondary" : {
       "comment" : "",
       "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الزر الثانوي"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "botó secundari"
-          }
-        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4736,12 +3572,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "sekundäre Taste"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "δευτερεύον κουμπί"
           }
         },
         "en" : {
@@ -4762,28 +3592,10 @@
             "value" : "bouton secondaire"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "כפתור משני"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "pulsante secondario"
-          }
-        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "보조 버튼"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "secundaire knop"
           }
         },
         "pt-BR" : {
@@ -4792,22 +3604,10 @@
             "value" : "botão secundário"
           }
         },
-        "ro" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "buton secundar"
-          }
-        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "вспомогательная кнопка"
-          }
-        },
-        "sv" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "sekundärknapp"
           }
         },
         "tr" : {
