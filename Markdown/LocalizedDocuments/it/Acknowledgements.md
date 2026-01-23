@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **gennaio 2026**
 
+- 🇺🇸&nbsp;Phillipm
 - 🇺🇸&nbsp;Aram&nbsp;Eskridge - "Thank you for blessing us with the piece of tech. 🤲 Much love! 💛"
 - 🇺🇸&nbsp;Ashley&nbsp;Poppen - "Thanks for making what Apple should've but sucked to much to do <3"
 - 🇲🇪&nbsp;Peng&nbsp;Yao
