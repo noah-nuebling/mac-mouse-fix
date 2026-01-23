@@ -1894,6 +1894,12 @@
             "value" : "%@ 클릭 + "
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ klikken +"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1963,6 +1969,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 이중 클릭 + "
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ dubbelklikken +"
           }
         },
         "pt-BR" : {
@@ -2036,6 +2048,12 @@
             "value" : "%@ 삼중 클릭 + "
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ driemaal klikken +"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2105,6 +2123,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*중간 버튼*"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "de *middelste knop*"
           }
         },
         "pt-BR" : {
@@ -2178,6 +2202,12 @@
             "value" : "*%@번 버튼*"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*knop %@*"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2247,6 +2277,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*주 버튼*"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "de *primaire knop*"
           }
         },
         "pt-BR" : {
@@ -2320,6 +2356,12 @@
             "value" : "*보조 버튼*"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "de *secundaire knop*"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2389,6 +2431,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 클릭"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ klikken"
           }
         },
         "pt-BR" : {
@@ -2462,6 +2510,12 @@
             "value" : "%@ 이중 클릭"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ dubbelklikken"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2531,6 +2585,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 삼중 클릭"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ driemaal klikken"
           }
         },
         "pt-BR" : {
@@ -2604,6 +2664,12 @@
             "value" : "%@ 클릭 및 *드래그*"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ klikken en *slepen*"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2673,6 +2739,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 이중 클릭 및 *드래그*"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ dubbelklikken en *slepen*"
           }
         },
         "pt-BR" : {
@@ -2746,6 +2818,12 @@
             "value" : "%@ 삼중 클릭 및 *드래그*"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ driemaal klikken en *slepen*"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2815,6 +2893,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "및 *드래그*"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "en *slepen*"
           }
         },
         "pt-BR" : {
@@ -2888,6 +2972,12 @@
             "value" : "%@ 길게 누름"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ vasthouden"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2957,6 +3047,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 이중 클릭 및 길게 누름"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ dubbelklikken en vasthouden"
           }
         },
         "pt-BR" : {
@@ -3030,6 +3126,12 @@
             "value" : "%@ 삼중 클릭 및 길게 누름"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ driemaal klikken en vasthouden"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3099,6 +3201,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 클릭 및 *스크롤*"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ klikken en *scrollen*"
           }
         },
         "pt-BR" : {
@@ -3172,6 +3280,12 @@
             "value" : "%@ 이중 클릭 및 *스크롤*"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ dubbelklikken en *scrollen*"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3241,6 +3355,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 삼중 클릭 및 *스크롤*"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ driemaal klikken en *scrollen*"
           }
         },
         "pt-BR" : {
@@ -3314,6 +3434,12 @@
             "value" : "및 *스크롤*"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "en *scrollen*"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3383,6 +3509,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "중간 버튼"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "middelste knop"
           }
         },
         "pt-BR" : {
@@ -3456,6 +3588,12 @@
             "value" : "%@번 버튼"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "knop %@"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3527,6 +3665,12 @@
             "value" : "주 버튼"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "primaire knop"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3596,6 +3740,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "보조 버튼"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "secundaire knop"
           }
         },
         "pt-BR" : {
