@@ -29,64 +29,56 @@ If you need to inspect strings:
 ./run mfstrings inspect --fileid Localizable --cols key,en,LOCALE --sortcol key | grep "trigger\."
 ```
 
-## Strings to Translate (24 total)
+## Strings to Translate (25 total)
 
-### Button Names (4)
-| Key | English |
-|-----|---------|
-| `trigger.substring.button-name.middle` | Middle Button |
-| `trigger.substring.button-name.numbered` | Button %@ |
-| `trigger.substring.button-name.primary` | Primary Button |
-| `trigger.substring.button-name.secondary` | Secondary Button |
+**First, look up the current English strings and existing translations:**
+```bash
+./run mfstrings inspect --fileid Localizable --cols key,en,LOCALE --sortcol key | grep "trigger\."
+```
+(Replace `LOCALE` with your target locale, e.g., `de`, `fr`, `zh-Hans`)
 
-### Button Modifiers (3)
+### String Categories
+
+**Button Names (4)** — `trigger.substring.button-name.*`
+- `trigger.substring.button-name.middle`
+- `trigger.substring.button-name.numbered`
+- `trigger.substring.button-name.primary`
+- `trigger.substring.button-name.secondary`
+
+**Button Modifiers (3)** — `trigger.substring.button-modifier.*`
 These appear when chaining actions. Example: "Click Button 4 + Double Click Button 5"
+- `trigger.substring.button-modifier.1`
+- `trigger.substring.button-modifier.2`
+- `trigger.substring.button-modifier.3`
 
-| Key | English |
-|-----|---------|
-| `trigger.substring.button-modifier.1` | Click %@ + |
-| `trigger.substring.button-modifier.2` | Double Click %@ + |
-| `trigger.substring.button-modifier.3` | Triple Click %@ + |
+**Click Actions (3)** — `trigger.substring.click.*`
+- `trigger.substring.click.1`
+- `trigger.substring.click.2`
+- `trigger.substring.click.3`
 
-### Click Actions (3)
-| Key | English |
-|-----|---------|
-| `trigger.substring.click.1` | Click %@ |
-| `trigger.substring.click.2` | Double Click %@ |
-| `trigger.substring.click.3` | Triple Click %@ |
+**Drag Actions (4)** — `trigger.substring.drag.*`
+- `trigger.substring.drag.1`
+- `trigger.substring.drag.2`
+- `trigger.substring.drag.3`
+- `trigger.substring.drag.flags`
 
-### Drag Actions (4)
-| Key | English |
-|-----|---------|
-| `trigger.substring.drag.1` | Click and *Drag* %@ |
-| `trigger.substring.drag.2` | Double Click and *Drag* %@ |
-| `trigger.substring.drag.3` | Triple Click and *Drag* %@ |
-| `trigger.substring.drag.flags` | and *Drag* |
+**Hold Actions (3)** — `trigger.substring.hold.*`
+- `trigger.substring.hold.1`
+- `trigger.substring.hold.2`
+- `trigger.substring.hold.3`
 
-### Hold Actions (3)
-| Key | English |
-|-----|---------|
-| `trigger.substring.hold.1` | Hold %@ |
-| `trigger.substring.hold.2` | Double Click and Hold %@ |
-| `trigger.substring.hold.3` | Triple Click and Hold %@ |
+**Scroll Actions (4)** — `trigger.substring.scroll.*`
+- `trigger.substring.scroll.1`
+- `trigger.substring.scroll.2`
+- `trigger.substring.scroll.3`
+- `trigger.substring.scroll.flags`
 
-### Scroll Actions (4)
-| Key | English |
-|-----|---------|
-| `trigger.substring.scroll.1` | Click and *Scroll* %@ |
-| `trigger.substring.scroll.2` | Double Click and *Scroll* %@ |
-| `trigger.substring.scroll.3` | Triple Click and *Scroll* %@ |
-| `trigger.substring.scroll.flags` | and *Scroll* |
-
-### Group Row Button Names (4)
+**Group Row Button Names (4)** — `trigger.y.group-row.button-name.*`
 Used as headers to group actions by button. These are auto-capitalized by the UI.
-
-| Key | English |
-|-----|---------|
-| `trigger.y.group-row.button-name.middle` | Middle Button |
-| `trigger.y.group-row.button-name.numbered` | Button %@ |
-| `trigger.y.group-row.button-name.primary` | Primary Button |
-| `trigger.y.group-row.button-name.secondary` | Secondary Button |
+- `trigger.y.group-row.button-name.middle`
+- `trigger.y.group-row.button-name.numbered`
+- `trigger.y.group-row.button-name.primary`
+- `trigger.y.group-row.button-name.secondary`
 
 ## Critical Constraints
 
