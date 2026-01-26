@@ -179,12 +179,13 @@ Portuguese (pt-PT and pt-BR)
             Therefore we use "duplo clique" and "triplo clique" instead, which means we mix nouns + infinitives (`clique e *arrastar* %@`). We think this is a bit awkward but not too bad.
             We chose to use "clique" even for single-clicks, to keep it consistent with "duplo clique" and "triplo clique". (Not sure if that's the best choice, but lets roll with it for now.)
 Catalan
-    Desired Translation: Use noun + infinitive pattern for drag/scroll (`clic i *arrossegar* %@`, `clic i *desplaçar* %@`)
+    Desired Translation: Use noun + infinitive pattern for drag/scroll (`clic i *arrossegar* %@`, `clic i *desplaçar* %@`, ...)
         Explanation: This is similar to Portuguese, but for different reasons. Turning the phrase into consistent 
             infinitive/imperatives requires adding "fer clic"/"fes clic". For conciseness' sake, we omit fer/fes and turn clic into a noun.
             For the verb parts (drag, scroll), we use infinitives (arrossegar, desplaçar) rather than imperatives (arrossega, desplaça).
-            Catalan menus use imperatives (Desfes, Copia, Enganxa), but we use infinitives for the trigger.* instead (Deviating from the suggestion above in 
-            `4. Think about the %@ placeholders`) since it feels more appropriate in Catalan for this kind of descriptive label.
+            Catalan menus actually use imperatives (Desfes, Copia, Enganxa), but we still use infinitives for the trigger.* instead 
+            (Deviating a bit from the suggestion above under `4. Think about the %@ placeholders`) since it feels more appropriate in Catalan 
+            for this kind of descriptive label.
             Apple's "Click & drag" → "Fer clic i arrossegar" also uses infinitives for this kind of descriptive label.
             The noun + infinitive mix is slightly unusual grammatically but acceptable for UI brevity.
     Desired Translation: Use "mantén %@" for Hold (without "clicat" or "premut")
@@ -198,7 +199,8 @@ Multiple Languages
         By language:
             French: Use "du" (of the)       
                 → "du *bouton central*", "du *bouton %@*", "du *bouton principal*", "du *bouton secondaire*"
-                    Reasoning: "du" is shorter than "sur le" while still sounding natural (I hope). "du" is also more semantically sound for some strings ('Click and Drag *of* the Middle Button' is more reasonable than 'Click and Drag *on* the Middle button)
+                    Combined string example: "clic et *glissement* du *bouton principal*"
+                    Reasoning: "du" is shorter than "sur le" while still sounding natural (I hope). "du" is also more semantically sound for some strings ("clic et *glissement* du *bouton principal*" is more reasonable than "clic et *glissement* sur le *bouton principal*")
             Czech: Use genitive case (expresses "of", like French "du")
                 → "*středního tlačítka*", "*tlačítka %@*", "*primárního tlačítka*", "*sekundárního tlačítka*"
                     Note: Genitive case endings differ from nominative, so these won't match the group-row headers exactly.
