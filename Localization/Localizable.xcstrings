@@ -1894,6 +1894,12 @@
             "value" : "clic %@ + "
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clic %@ +"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1987,6 +1993,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "double-clic %@ + "
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "doppio clic %@ +"
           }
         },
         "ko" : {
@@ -2084,6 +2096,12 @@
             "value" : "triple-clic %@ + "
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triplo clic %@ +"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2177,6 +2195,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "du *bouton central*"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*pulsante centrale*"
           }
         },
         "ko" : {
@@ -2274,6 +2298,12 @@
             "value" : "du *bouton %@*"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*pulsante %@*"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2367,6 +2397,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "du *bouton principal*"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*pulsante principale*"
           }
         },
         "ko" : {
@@ -2464,6 +2500,12 @@
             "value" : "du *bouton secondaire*"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*pulsante secondario*"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2554,6 +2596,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clic %@"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "clic %@"
@@ -2654,6 +2702,12 @@
             "value" : "double-clic %@"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "doppio clic %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2747,6 +2801,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "triple-clic %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triplo clic %@"
           }
         },
         "ko" : {
@@ -2844,6 +2904,12 @@
             "value" : "clic et *glissement* %@"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clic e *trascina* %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2937,6 +3003,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "double-clic et *glissement* %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "doppio clic e *trascina* %@"
           }
         },
         "ko" : {
@@ -3034,6 +3106,12 @@
             "value" : "triple-clic et *glissement* %@"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triplo clic e *trascina* %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3127,6 +3205,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "et *glissement*"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "e *trascina*"
           }
         },
         "ko" : {
@@ -3224,6 +3308,12 @@
             "value" : "maintien %@"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tieni premuto %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3317,6 +3407,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "double-clic et maintien %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "doppio clic e tieni premuto %@"
           }
         },
         "ko" : {
@@ -3414,6 +3510,12 @@
             "value" : "triple-clic et maintien %@"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triplo clic e tieni premuto %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3507,6 +3609,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "clic et *défilement* %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clic e *scorri* %@"
           }
         },
         "ko" : {
@@ -3604,6 +3712,12 @@
             "value" : "double-clic et *défilement* %@"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "doppio clic e *scorri* %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3697,6 +3811,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "triple-clic et *défilement* %@"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triplo clic e *scorri* %@"
           }
         },
         "ko" : {
@@ -3794,6 +3914,12 @@
             "value" : "et *défilement*"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "e *scorri*"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3887,6 +4013,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "bouton central"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pulsante centrale"
           }
         },
         "ko" : {
@@ -3984,6 +4116,12 @@
             "value" : "bouton %@"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pulsante %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4079,6 +4217,12 @@
             "value" : "bouton principal"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pulsante principale"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4172,6 +4316,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "bouton secondaire"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pulsante secondario"
           }
         },
         "ko" : {
