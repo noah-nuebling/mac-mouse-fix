@@ -1858,6 +1858,12 @@
     "trigger.substring.button-modifier.1" : {
       "comment" : "Note: %@ will be a button name\nExample where %@ is 'Button 4': Click Button 4 + Double Click and Drag Button 5\n\nExplanation of the strings:\nThe trigger.substring.button-modifier.[...] strings describe a feature where holding a mouse button will modify what the other buttons do\nIn the SteerMouse app, this feature is called 'button chording'.\nIn Mac Mouse Fix, it's just one of many ways to assign multiple actions to a button – so it's not as importand and more of a hidden feature.\nDiscussion of the thinking behind the English string:\nPerhaps, using 'hold' would be more fitting, but for English we chose 'click' instead.\nThat's because it makes the strings shorter and more scannable ('Double Click and Hold Button 4 + ' vs 'Double Click Button 4 + '\nWith the '+' in the strings, it should still be pretty clear in practise, especially since users have to perform the gesture first,\nbefore these strings ever show up in the UI.\nAlso, in English, 'Click and Drag' is an established phrase (which we're also using in the other trigger.substring.[...] strings), and it sets a precedent for using 'click' \nto describe *holding* a button while doing something else. So it should feel relatively natural in English.\n\nIdeas for translations into other languages: If a literal translation doesn't feel natural, it may make sense to draw from how 'click and drag' is translated (in the other trigger.substring.[...] strings) or to use something closer to 'hold' instead or 'click'.\n",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clic %@ +"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1947,6 +1953,12 @@
     "trigger.substring.button-modifier.2" : {
       "comment" : "Note:\nAll the \"trigger.substring.[...]\" strings should be lowercase unless there's a specific reason to capitalize them.\nIn English, that reason is that we're using \"Title Case\", but this isn't common in other languages. \nFor example, in German, the substring \"Click and Drag %@\" is localized as \"%@ klicken und ziehen\"\nand \"Middle Button\" is translated as \"mittlere Taste\".\n\nNotice that not even the first word is capitalized.\nThat's because these substrings are joined programmatically to create a combined string.\n(The start of that combined string will be capitalized automatically.)\n\nNote 2: (For Claude)\nThe trigger.[...] strings and the effect.[...] strings appear in the 'Action Table' together. The trigger.[...] strings are\non the left and describe some input that the user can perform on their mouse, while the effect.[...] strings are on the\nright side and describe what will happen, when the user performs that trigger.\nConsider translating the trigger.[...] strings more as a description of the action '(you can) click and drag (to ...)'\ninstead of an imperative ('(please) click and drag (to ...)')\nAt least in German, this works better I think.\nI don't speak other languages, so this is up to you. Choose whatever feels the most natural and allows for the most consistency between the different trigger.substring.[...] strings.",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "doble clic %@ +"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2036,6 +2048,12 @@
     "trigger.substring.button-modifier.3" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triple clic %@ +"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2125,6 +2143,12 @@
     "trigger.substring.button-name.middle" : {
       "comment" : "Note: These trigger.substring.button-name.[...] strings are inserted into the other trigger.substring.[...] strings at the format specifiers (%@). Make sure that the combined strings are grammatically correct.\n\nNote 2:\nUse *markdown emphasis* to mark the part of a trigger.substring.button-name.[...] string that matches the corresponding trigger.y.group-row.button-name.[...] string.\nFor most languages, this is the entire string.       E.g. English:   `*Middle Button*`         (Where the corresponding group-row string is: `Middle Button`)\nFor some languages, it's only a part of the string.  E.g. French:    `du *bouton central*`     (Where the corresponding group-row string is: `bouton central`)\nReason: The marked parts will be grayed-out. This helps the visual scannability of the UI.     (Bit hard to explain without seeing the UI.)",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*botó central*"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2214,6 +2238,12 @@
     "trigger.substring.button-name.numbered" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*botó %@*"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2303,6 +2333,12 @@
     "trigger.substring.button-name.primary" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*botó principal*"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2392,6 +2428,12 @@
     "trigger.substring.button-name.secondary" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*botó secundari*"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2481,6 +2523,12 @@
     "trigger.substring.click.1" : {
       "comment" : "Note: The trigger.substring.[...] strings have format specifiers (\"%@\") which get replaced with the trigger.substring.button-name.[...] strings OR with nothing (if the button can be inferred from context).\nMake sure that the combined strings feel grammatically sound, no matter if a trigger.substring.button-name.[...] string OR nothing is inserted for \"%@\".\nExample where %@ is \"the *Middle Button*\": Click the *Middle Button*\nExample where %@ is nothing:                 Click\n\nNote regarding examples: We added 'the' for demonstration purposes. The real English string doesn't use 'the' (as of [Jan 2026]) because we value conciseness and it doesn't feel too odd for a UI label. In other languages, such connective words may be more necessary.",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clic %@"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2570,6 +2618,12 @@
     "trigger.substring.click.2" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "doble clic %@"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2659,6 +2713,12 @@
     "trigger.substring.click.3" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triple clic %@"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2748,6 +2808,12 @@
     "trigger.substring.drag.1" : {
       "comment" : "Thinking behind the English trigger.substring.drag.[...] and trigger.substring.scroll.[...] strings: \nIn English, we're putting the button name at the end instead of the middle. So it's 'Click and Drag Button 4'\ninstead of 'Click Button 4 and Drag' (which would be more semantically correct).\nThe reason we do this, is to keep the recognizable phrase 'click and drag' as one unit to make it more scannable\nAlso, it felt ok to use the phrase 'click and drag'\nalmost like a singular action / verb. As in '(perform a) Click and Drag (using) Button 4'\nEven though the more literal interpretation of 'Click and Drag Button 4' would imply \n'dragging' the mouse button itself, which doesn't quite make sense\n\nFor the phrase 'click and scroll' (See trigger.substring.scroll.[...]) we mirrored the 'click and drag' phrasing,\neven though 'click and scroll' is not an established phrase like 'click and drag' is. This helps keep things consistent\nand scannable while still making intuitive sense next to 'click and drag' in the UI.\nTips for translations based on the thoughts behind the English strings:\nConsider placing the '%@' format specifier (which is where the trigger.substring.button-name.[...] strings will be inserted)\nat the start or the end of the phrase, to help with scannability. Optimize for scannability, conciseness, and consistency, without\nmaking things too grammatically awkward.(Heads up: The trigger.substring.[...] and trigger.substring.button-name.[...] strings can contain grammatical particles and inflections. See trigger.substring.button-name.middle)",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clic i *arrossegar* %@"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2837,6 +2903,12 @@
     "trigger.substring.drag.2" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "doble clic i *arrossegar* %@"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2926,6 +2998,12 @@
     "trigger.substring.drag.3" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triple clic i *arrossegar* %@"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3015,6 +3093,12 @@
     "trigger.substring.drag.flags" : {
       "comment" : "Example: ⌥⌘ and Drag\nNote: This will be used for Drag Actions that only need keyboard modifiers to be activated (And no mouse buttons)\nNote: The modifier flags such as '⌥⌘' will always appear at the _start_ of this string, not at the end.\nNote: Also see trigger.substring.scroll.flags",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "i *arrossegar*"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3104,6 +3188,12 @@
     "trigger.substring.hold.1" : {
       "comment" : "Remember: The strings starting with \"trigger.substring.[...]\" should be lowercase in most languages. See trigger.substring.button-modifier.2 for the explanation.",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mantén %@"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3193,6 +3283,12 @@
     "trigger.substring.hold.2" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "doble clic i mantén %@"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3282,6 +3378,12 @@
     "trigger.substring.hold.3" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triple clic i mantén %@"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3371,6 +3473,12 @@
     "trigger.substring.scroll.1" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clic i *desplaçar* %@"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3460,6 +3568,12 @@
     "trigger.substring.scroll.2" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "doble clic i *desplaçar* %@"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3549,6 +3663,12 @@
     "trigger.substring.scroll.3" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triple clic i *desplaçar* %@"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3638,6 +3758,12 @@
     "trigger.substring.scroll.flags" : {
       "comment" : "Example: ⌥⌘ and Scroll\nNote: Also see trigger.substring.drag.flags",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "i *desplaçar*"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3727,6 +3853,12 @@
     "trigger.y.group-row.button-name.middle" : {
       "comment" : "Note: The \"trigger.y.group-row.button-name.[...]\" button names are used as headers to group together actions which are triggered by the same button.\n\nNote: The \".y\" is there to influence the sorting when you sort by \"Key\" so you hopefully don't have to jump around as much while translating.\n\nNote: The \"trigger.y.group-row.button-name.[...]\" button names are auto-capitalized, so they can be lowercase, just like the trigger.substring.[...] button names. See trigger.substring.button-modifier.2",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "botó central"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3816,6 +3948,12 @@
     "trigger.y.group-row.button-name.numbered" : {
       "comment" : "Note: The comment next to capture-toast.button-name.numbered also applies here.",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "botó %@"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3905,6 +4043,12 @@
     "trigger.y.group-row.button-name.primary" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "botó principal"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3994,6 +4138,12 @@
     "trigger.y.group-row.button-name.secondary" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "botó secundari"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",

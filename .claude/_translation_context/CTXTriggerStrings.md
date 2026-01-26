@@ -178,6 +178,20 @@ Portuguese (pt-PT and pt-BR)
             We *want* to use infinitives, too, but there's a problem: "duplo clicar" and "triplo clicar" don't work in Portuguese.
             Therefore we use "duplo clique" and "triplo clique" instead, which means we mix nouns + infinitives (`clique e *arrastar* %@`). We think this is a bit awkward but not too bad.
             We chose to use "clique" even for single-clicks, to keep it consistent with "duplo clique" and "triplo clique". (Not sure if that's the best choice, but lets roll with it for now.)
+Catalan
+    Desired Translation: Use noun + infinitive pattern for drag/scroll (`clic i *arrossegar* %@`, `clic i *desplaçar* %@`)
+        Explanation: This is similar to Portuguese, but for different reasons. Turning the phrase into consistent 
+            infinitive/imperatives requires adding "fer clic"/"fes clic". For conciseness' sake, we omit fer/fes and turn clic into a noun.
+            For the verb parts (drag, scroll), we use infinitives (arrossegar, desplaçar) rather than imperatives (arrossega, desplaça).
+            Catalan menus use imperatives (Desfes, Copia, Enganxa), but we use infinitives for the trigger.* instead (Deviating from the suggestion above in 
+            `4. Think about the %@ placeholders`) since it feels more appropriate in Catalan for this kind of descriptive label.
+            Apple's "Click & drag" → "Fer clic i arrossegar" also uses infinitives for this kind of descriptive label.
+            The noun + infinitive mix is slightly unusual grammatically but acceptable for UI brevity.
+    Desired Translation: Use "mantén %@" for Hold (without "clicat" or "premut")
+        Explanation: The glossary-research agent only found "mantén premut". But this is used for tapping touch screens. For mice, Apple uses "mantén clicat". 
+            Sometimes, Apple also uses "mantén" alone.
+            Since we strongly value concisenes, we went with "mantén" – this should be clear enough in the context of the app.
+                (Context example: "mantén botó central" = "hold middle button" - the meaning is unambiguous in a mouse button trigger list.)
 Multiple Languages
     Desired Translation: Grammatical connectors in `trigger.substring.button-name.*` strings.
         Explanation: The `trigger.substring.button-name.*` strings are inserted into the other `trigger.substring.*` strings at the format specifiers (%@). The combined strings needs to feel grammatically sound. In some languages this requires connectors.
