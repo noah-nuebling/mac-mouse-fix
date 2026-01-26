@@ -90,10 +90,19 @@ The `trigger.substring.*` strings are **joined programmatically** to create comb
 Example of how strings combine:
 - "Double Click %@ +" + "Click and *Drag* %@" → "Double Click Button 4 + Click and *Drag* Button 5"
 
-### 2. Descriptive Tone (not imperative)
-Translate these as **descriptions of actions** rather than commands.
+### 2. Descriptive Tone (not instructive)
+
+Translate these as **UI labels describing actions** rather than instructions for the user.
 - Good: "(to) click and drag" 
-- Avoid: "please click and drag" / "click and drag!"
+- Bad: "(please) click and drag" / "(you should) click and drag(!)"
+
+Motivation:
+In German, commands in macOS typically use infinitive (Wiederholen, Widerrufen) and using 
+imperative (Wiederhole, Widerrufe) would sound awkward, and not appropriately 'descriptive',
+even though both are correct literal translations of (Redo, Undo). 
+The same thinking applies to the trigger.* strings (in German)
+
+Consider this German example when choosing the tone and grammatical structure for your translations.
 
 ### 3. Preserve Markdown Emphasis
 Keep the `*asterisks*` around Drag and Scroll for UI rendering:
@@ -163,6 +172,12 @@ Turkish
         Explanation: Some of the trigger.substring.* strings have %@ format specifiers where button names will be inserted. In Turkish, we need to add inflections to make the joined strings grammatically correct. düğmeyi seemed like the best choice among other possible inflections like düğmesine or düğmesini. (Not sure if that's the best possible choice, but let's roll with it for now)
         Desired Translation: Translate 'Button %@' as '%@. düğmeyi' instead of 'düğme %@' (in the trigger.substring.button-name.* strings.)
             Explanation: Grammar (see above)
+Portuguese (pt-PT and pt-BR)
+    Desired Translation: Prefer infinitives, but use a noun for 'clique' (`clique e *arrastar* %@`, `clique duplo e segurar %@`, ...)
+        Explanation: In Portuguese, Apple likes to use infinitives for action-describing UI labels (e.g. Desfazer, Refazer in the MainMenu).
+            We *want* to use infinitives, too, but there's a problem: "duplo clicar" and "triplo clicar" don't work in Portuguese.
+            Therefore we use "duplo clique" and "triplo clique" instead, which means we mix nouns + infinitives (`clique e *arrastar* %@`). We think this is a bit awkward but not too bad.
+            We chose to use "clique" even for single-clicks, to keep it consistent with "duplo clique" and "triplo clique". (Not sure if that's the best choice, but lets roll with it for now.)
 Multiple Languages
     Desired Translation: Grammatical connectors in `trigger.substring.button-name.*` strings.
         Explanation: The `trigger.substring.button-name.*` strings are inserted into the other `trigger.substring.*` strings at the format specifiers (%@). The combined strings needs to feel grammatically sound. In some languages this requires connectors.

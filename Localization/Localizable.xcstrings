@@ -1906,6 +1906,12 @@
             "value" : "clique %@ +"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clique %@ +"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1987,6 +1993,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "clique duplo %@ +"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "duplo clique %@ +"
           }
         },
         "ru" : {
@@ -2072,6 +2084,12 @@
             "value" : "clique triplo %@ +"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triplo clique %@ +"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2150,6 +2168,12 @@
           }
         },
         "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*botão do meio*"
+          }
+        },
+        "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "*botão do meio*"
@@ -2238,6 +2262,12 @@
             "value" : "*botão %@*"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*botão %@*"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2316,6 +2346,12 @@
           }
         },
         "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*botão principal*"
+          }
+        },
+        "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "*botão principal*"
@@ -2404,6 +2440,12 @@
             "value" : "*botão secundário*"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*botão secundário*"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2482,6 +2524,12 @@
           }
         },
         "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clique %@"
+          }
+        },
+        "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "clique %@"
@@ -2570,6 +2618,12 @@
             "value" : "clique duplo %@"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "duplo clique %@"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2653,6 +2707,12 @@
             "value" : "clique triplo %@"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triplo clique %@"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2733,7 +2793,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique e *arraste* %@"
+            "value" : "clique e *arrastar* %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clique e *arrastar* %@"
           }
         },
         "ru" : {
@@ -2816,7 +2882,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique duplo e *arraste* %@"
+            "value" : "clique duplo e *arrastar* %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "duplo clique e *arrastar* %@"
           }
         },
         "ru" : {
@@ -2899,7 +2971,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique triplo e *arraste* %@"
+            "value" : "clique triplo e *arrastar* %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triplo clique e *arrastar* %@"
           }
         },
         "ru" : {
@@ -2982,7 +3060,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "e *arraste*"
+            "value" : "e *arrastar*"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "e *arrastar*"
           }
         },
         "ru" : {
@@ -3065,7 +3149,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "segure %@"
+            "value" : "segurar %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "manter %@"
           }
         },
         "ru" : {
@@ -3148,7 +3238,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique duplo e segure %@"
+            "value" : "clique duplo e segurar %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "duplo clique e manter %@"
           }
         },
         "ru" : {
@@ -3231,7 +3327,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique triplo e segure %@"
+            "value" : "clique triplo e segurar %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triplo clique e manter %@"
           }
         },
         "ru" : {
@@ -3314,7 +3416,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique e *role* %@"
+            "value" : "clique e *rolar* %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clique e *deslocar* %@"
           }
         },
         "ru" : {
@@ -3397,7 +3505,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique duplo e *role* %@"
+            "value" : "clique duplo e *rolar* %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "duplo clique e *deslocar* %@"
           }
         },
         "ru" : {
@@ -3480,7 +3594,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique triplo e *role* %@"
+            "value" : "clique triplo e *rolar* %@"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triplo clique e *deslocar* %@"
           }
         },
         "ru" : {
@@ -3563,7 +3683,13 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "e *role*"
+            "value" : "e *rolar*"
+          }
+        },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "e *deslocar*"
           }
         },
         "ru" : {
@@ -3644,6 +3770,12 @@
           }
         },
         "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "botão do meio"
+          }
+        },
+        "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "botão do meio"
@@ -3732,6 +3864,12 @@
             "value" : "botão %@"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "botão %@"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3815,6 +3953,12 @@
             "value" : "botão principal"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "botão principal"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3893,6 +4037,12 @@
           }
         },
         "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "botão secundário"
+          }
+        },
+        "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "botão secundário"

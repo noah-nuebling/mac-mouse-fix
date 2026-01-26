@@ -101,3 +101,16 @@ Below is the FIRST approach that ever produced a reasonable set of translations 
             ->> It's labour intensive. It's not perfect. But it might be the best path forward.
         Update: It worked for de and zh-Hans!
 
+
+**Review / followup promt**
+
+    (Used after the initial `**Extension** of the **hybrid prompt** that...`)
+
+    This review prompt actually worked! 
+        (After the pt-PT translations) (Strings were grammatically inconsistent.)
+
+        > Thanks Claude! I notice some things that could be improved. Could you go over the strings once more?
+
+    This prompt also worked:
+
+        > Thanks Claude! Can you review your results once more for any consistency and other improvements?
