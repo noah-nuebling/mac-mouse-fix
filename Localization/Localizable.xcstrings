@@ -2128,7 +2128,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "de *middelste knop*"
+            "value" : "*middelste knop*"
           }
         },
         "pt-BR" : {
@@ -2282,7 +2282,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "de *primaire knop*"
+            "value" : "*primaire knop*"
           }
         },
         "pt-BR" : {
@@ -2359,7 +2359,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "de *secundaire knop*"
+            "value" : "*secundaire knop*"
           }
         },
         "pt-BR" : {
