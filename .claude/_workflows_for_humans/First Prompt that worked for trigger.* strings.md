@@ -64,9 +64,9 @@ Below is the FIRST approach that ever produced a reasonable set of translations 
     **Extension** of the **hybrid prompt** that encourages German agent to not forget about like ALL of the constraints:
 
         Prompt: 
-            Hi there Claude! Please use the _translation_context/TriggerStrings.md doc to translate the trigger.* strings into Simplified Chinese (zh-Hans)
+            Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into Simplified Chinese (zh-Hans)
 
-            The _translation_context/TriggerStrings.md is the result of doing extensive research on the the existing strings and their comments, trust this and don't do extensive research yourself.
+            The CTXTriggerStrings.md is the result of doing extensive research on the the existing strings and their comments, trust this and don't do extensive research yourself.
 
             Use a glossary-research subagent for the Apple-specific terms. Explain to the subagent the context of how the strings you're requesting are used, so it can focus on relevant examples from the glossary. Think for yourself about whether the example translations that the subagent shows you are relevant here. If not, disregard Apple's translations and simply choose the translation that feels most natural and functional for its purpose. When translating a group of related strings, favor a consistent pattern. Glossary research may return inconsistent terms from different Apple source files.
 
