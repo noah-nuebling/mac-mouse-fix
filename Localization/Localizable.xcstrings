@@ -1897,7 +1897,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ klikken +"
+            "value" : "klik %@ +"
           }
         },
         "pt-BR" : {
@@ -1974,7 +1974,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ dubbelklikken +"
+            "value" : "klik dubbel %@ +"
           }
         },
         "pt-BR" : {
@@ -2051,7 +2051,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ driemaal klikken +"
+            "value" : "klik driemaal %@ +"
           }
         },
         "pt-BR" : {
@@ -2436,7 +2436,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ klikken"
+            "value" : "klik %@"
           }
         },
         "pt-BR" : {
@@ -2513,7 +2513,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ dubbelklikken"
+            "value" : "klik dubbel %@"
           }
         },
         "pt-BR" : {
@@ -2590,7 +2590,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ driemaal klikken"
+            "value" : "klik driemaal %@"
           }
         },
         "pt-BR" : {
@@ -2667,7 +2667,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ klikken en *slepen*"
+            "value" : "klik en *sleep* %@"
           }
         },
         "pt-BR" : {
@@ -2744,7 +2744,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ dubbelklikken en *slepen*"
+            "value" : "klik dubbel en *sleep* %@"
           }
         },
         "pt-BR" : {
@@ -2821,7 +2821,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ driemaal klikken en *slepen*"
+            "value" : "klik driemaal en *sleep* %@"
           }
         },
         "pt-BR" : {
@@ -2898,7 +2898,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "en *slepen*"
+            "value" : "en *sleep*"
           }
         },
         "pt-BR" : {
@@ -2975,7 +2975,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ vasthouden"
+            "value" : "houd %@ vast"
           }
         },
         "pt-BR" : {
@@ -3052,7 +3052,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ dubbelklikken en vasthouden"
+            "value" : "klik dubbel en houd %@ vast"
           }
         },
         "pt-BR" : {
@@ -3129,7 +3129,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ driemaal klikken en vasthouden"
+            "value" : "klik driemaal en houd %@ vast"
           }
         },
         "pt-BR" : {
@@ -3206,7 +3206,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ klikken en *scrollen*"
+            "value" : "klik en *scrol* %@"
           }
         },
         "pt-BR" : {
@@ -3283,7 +3283,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ dubbelklikken en *scrollen*"
+            "value" : "klik dubbel en *scrol* %@"
           }
         },
         "pt-BR" : {
@@ -3360,7 +3360,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ driemaal klikken en *scrollen*"
+            "value" : "klik driemaal en *scrol* %@"
           }
         },
         "pt-BR" : {
@@ -3437,7 +3437,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "en *scrollen*"
+            "value" : "en *scrol*"
           }
         },
         "pt-BR" : {
@@ -3514,7 +3514,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "middelste knop"
+            "value" : "Middelste knop"
           }
         },
         "pt-BR" : {
@@ -3591,7 +3591,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "knop %@"
+            "value" : "Knop %@"
           }
         },
         "pt-BR" : {
@@ -3668,7 +3668,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "primaire knop"
+            "value" : "Primaire knop"
           }
         },
         "pt-BR" : {
@@ -3745,7 +3745,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "secundaire knop"
+            "value" : "Secundaire knop"
           }
         },
         "pt-BR" : {
