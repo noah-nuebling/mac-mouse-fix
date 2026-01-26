@@ -12,8 +12,12 @@ Use `./run mfstrings` to inspect and edit .xcstrings localization files.
 ### Common commands
 
 ```bash
+
 # List all available columns (Also lists locales)
 ./run mfstrings list-cols
+
+# See the number of translated/untranslated strings per file and locale in a TSV (rows: fileids, cols: locales) 
+./run mfstrings progress --files all --locales all
 
 # List all source files (fileid + full path)
 ./run mfstrings list-files
@@ -22,16 +26,16 @@ Use `./run mfstrings` to inspect and edit .xcstrings localization files.
 ./run mfstrings progress --files all --locales de,ko,tr
 
 # View translations for a locale across all files (replace LOCALE with e.g., pt-BR, de, fr)
-./run mfstrings inspect --fileid all --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key
+./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key
 
 # View translations for a specific file
-./run mfstrings inspect --fileid Localizable --cols key,comment,en,LOCALE,state:LOCALE --sortcol key
+./run mfstrings inspect --cols key,comment,en,LOCALE,state:LOCALE --sortcol key --filter fileid=Localizable
 
 # Find strings needing review (state is binary: 'translated' or 'needs_review')
-./run mfstrings inspect --fileid all --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key | grep "needs_review"
+./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key | grep "needs_review"
 
 # Find a string with context
-./run mfstrings inspect --fileid all --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key | grep -C 3 "effect.click.primary"
+./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key | grep -C 3 "effect.click.primary"
 
 # Edit a translation value and mark as translated
 ./run mfstrings edit --path 'fileid/key/LOCALE' --value 'new text' --state 'translated'

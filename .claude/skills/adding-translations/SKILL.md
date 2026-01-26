@@ -46,14 +46,14 @@ Use `./run mfstrings` to inspect and edit .xcstrings localization files.
 ./run mfstrings list-cols
 
 # View translations for a locale across all files
-./run mfstrings inspect --fileid all --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key
+./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key
 
 # View translations for a specific file
-./run mfstrings inspect --fileid Localizable --cols key,comment,en,LOCALE,state:LOCALE --sortcol key
+./run mfstrings inspect --cols        key,comment,en,LOCALE,state:LOCALE --sortcol key --filter fileid=Localizable
 
 # Find a string with context (use grep -C to see surrounding related strings)
 #  (Tip: Use --sortcol comment for the 'Main' file, since it has non-sorting-friendly interface builder keys.)
-./run mfstrings inspect --fileid all --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key | grep -C 5 "effect.click"
+./run mfstrings inspect --cols fileid,key,comment,en,LOCALE,state:LOCALE --sortcol key | grep -C 5 "effect.click"
 
 # Edit a translation value and mark as translated
 #  (Tip: Use single quotes for `--value 'newValue'`. Double quotes can corrupt format specifiers (bash expands $@ to nothing))

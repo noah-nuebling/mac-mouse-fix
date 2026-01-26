@@ -26,14 +26,14 @@ Example:
 
 If you need to inspect strings:
 ```bash
-./run mfstrings inspect --fileid Localizable --cols key,en,LOCALE --sortcol key | grep "trigger\."
+./run mfstrings inspect --cols key,en,LOCALE --sortcol key --filter fileid=Localizable | grep "trigger\."
 ```
 
 ## Strings to Translate (25 total)
 
 **First, look up the current English strings and existing translations:**
 ```bash
-./run mfstrings inspect --fileid Localizable --cols key,en,LOCALE --sortcol key | grep "trigger\."
+./run mfstrings inspect --cols key,en,LOCALE --sortcol key --filter fileid=Localizable | grep "trigger\."
 ```
 (Replace `LOCALE` with your target locale, e.g., `de`, `fr`, `zh-Hans`)
 
