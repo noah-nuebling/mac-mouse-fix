@@ -100,8 +100,18 @@ Keep the `*asterisks*` around Drag and Scroll for UI rendering:
 - `*Drag*` → `*[translated]*`
 - `*Scroll*` → `*[translated]*`
 
-### 4. Preserve %@ Placeholder
-The `%@` gets replaced with button names (or may be empty). Keep it in the appropriate position for your language's grammar.
+### 4. Think about the %@ placeholders
+
+`%@` gets replaced with button names, or it may be empty.
+
+Make sure the combined strings make grammatical sense in both cases:
+    1. A button name is inserted for `%@` 
+    2. Empty string `@""` is inserted for `%@`
+
+You can insert grammatical inflections into the substrings (e.g. we're using `du *bouton principal*` in French)
+
+But we also strongly value conciseness. So a slightly telegraphed style is acceptable if it's not too wrong-sounding in the target language.
+(E.g. we're using `Click Middle Button` instead of `Click the Middle Button` in English, but in French, we decided omitting `du` would sound too wrong.)
 
 ### 5. Use Apple's macOS Terminology
 This is a macOS app. Match Apple's official terminology as it appears in System Settings, macOS UI, and Apple documentation. Use your knowledge of Apple's localized terms from your training data or spawn a glossary-research subagent. 

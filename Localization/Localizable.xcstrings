@@ -1912,6 +1912,12 @@
             "value" : "нажатие %@ +"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klicka %@ +"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1987,6 +1993,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "двойное нажатие %@ +"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dubbelklicka %@ +"
           }
         },
         "tr" : {
@@ -2066,6 +2078,12 @@
             "value" : "тройное нажатие %@ +"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "trippelklicka %@ +"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2141,6 +2159,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*средней кнопки*"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*mittknapp*"
           }
         },
         "tr" : {
@@ -2220,6 +2244,12 @@
             "value" : "*кнопки %@*"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*knapp %@*"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2295,6 +2325,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*основной кнопки*"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*primär knapp*"
           }
         },
         "tr" : {
@@ -2374,6 +2410,12 @@
             "value" : "*вспомогательной кнопки*"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*sekundär knapp*"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2449,6 +2491,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "нажатие %@"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klicka %@"
           }
         },
         "tr" : {
@@ -2528,6 +2576,12 @@
             "value" : "двойное нажатие %@"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dubbelklicka %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2603,6 +2657,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "тройное нажатие %@"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "trippelklicka %@"
           }
         },
         "tr" : {
@@ -2682,6 +2742,12 @@
             "value" : "нажатие и *перетягивание* %@"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klicka och *dra* %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2757,6 +2823,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "двойное нажатие и *перетягивание* %@"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dubbelklicka och *dra* %@"
           }
         },
         "tr" : {
@@ -2836,6 +2908,12 @@
             "value" : "тройное нажатие и *перетягивание* %@"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "trippelklicka och *dra* %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2911,6 +2989,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "и *перетягивание*"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "och *dra*"
           }
         },
         "tr" : {
@@ -2990,6 +3074,12 @@
             "value" : "удерживание %@"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "håll %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3065,6 +3155,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "двойное нажатие и удерживание %@"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dubbelklicka och håll %@"
           }
         },
         "tr" : {
@@ -3144,6 +3240,12 @@
             "value" : "тройное нажатие и удерживание %@"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "trippelklicka och håll %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3219,6 +3321,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "нажатие и *прокрутка* %@"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klicka och *rulla* %@"
           }
         },
         "tr" : {
@@ -3298,6 +3406,12 @@
             "value" : "двойное нажатие и *прокрутка* %@"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dubbelklicka och *rulla* %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3373,6 +3487,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "тройное нажатие и *прокрутка* %@"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "trippelklicka och *rulla* %@"
           }
         },
         "tr" : {
@@ -3452,6 +3572,12 @@
             "value" : "и *прокрутка*"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "och *rulla*"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3527,6 +3653,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "средняя кнопка"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mittknapp"
           }
         },
         "tr" : {
@@ -3606,6 +3738,12 @@
             "value" : "кнопка %@"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "knapp %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3683,6 +3821,12 @@
             "value" : "основная кнопка"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "primär knapp"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3758,6 +3902,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "вспомогательная кнопка"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sekundär knapp"
           }
         },
         "tr" : {
