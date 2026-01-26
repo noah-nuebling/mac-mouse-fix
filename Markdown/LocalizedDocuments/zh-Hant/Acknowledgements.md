@@ -54,14 +54,14 @@ Thanks for bringing Mac Mouse Fix to people around the globe!
 <!-- 
   Old stuff from Money section:
 
-  Thanks so much to everyone who bought me a milkshake and to all 34800 people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
+  Thanks so much to everyone who bought me a milkshake and to all 34800+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
   You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. 
 -->
 
 <a name="money"></a> 
 ## 💰 Money
 
-Thanks so much to everyone who treated me to a milkshake and to all **34800** people who bought Mac Mouse Fix.
+Thanks so much to everyone who treated me to a milkshake and to all **34800+** people who bought Mac Mouse Fix.
 Thanks to you, I can spend lots of time doing something I love. 
 
 People who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:
@@ -80,6 +80,8 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **1月 2026**
 
+- 🇺🇸&nbsp;Matthew&nbsp;Fieldhouse
+- 🇨🇦&nbsp;Anton
 - 🇨🇦&nbsp;Viro
 - 🇯🇵&nbsp;飯野英城
 - 🇺🇸&nbsp;Phillipm
