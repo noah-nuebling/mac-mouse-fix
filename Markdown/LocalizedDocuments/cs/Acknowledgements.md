@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **leden 2026**
 
+- 🇯🇵&nbsp;飯野英城
 - 🇺🇸&nbsp;Phillipm
 - 🇺🇸&nbsp;Aram&nbsp;Eskridge - "Thank you for blessing us with the piece of tech. 🤲 Much love! 💛"
 - 🇺🇸&nbsp;Ashley&nbsp;Poppen - "Thanks for making what Apple should've but sucked to much to do <3"
