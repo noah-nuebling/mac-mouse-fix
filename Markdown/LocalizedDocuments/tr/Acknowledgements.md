@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Ocak 2026**
 
+- 🇫🇮&nbsp;Hartza&nbsp;K - "the Best app"
 - 🇺🇸&nbsp;Matthew&nbsp;Fieldhouse
 - 🇨🇦&nbsp;Anton
 - 🇨🇦&nbsp;Viro

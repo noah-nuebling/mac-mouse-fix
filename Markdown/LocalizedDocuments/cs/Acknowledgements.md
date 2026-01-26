@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **leden 2026**
 
+- 🇫🇮&nbsp;Hartza&nbsp;K - "the Best app"
 - 🇺🇸&nbsp;Matthew&nbsp;Fieldhouse
 - 🇨🇦&nbsp;Anton
 - 🇨🇦&nbsp;Viro

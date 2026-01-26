@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Januar 2026**
 
+- 🇫🇮&nbsp;Hartza&nbsp;K - "the Best app"
 - 🇺🇸&nbsp;Matthew&nbsp;Fieldhouse
 - 🇨🇦&nbsp;Anton
 - 🇨🇦&nbsp;Viro

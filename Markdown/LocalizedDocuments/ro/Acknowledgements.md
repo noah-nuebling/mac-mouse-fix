@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **ianuarie 2026**
 
+- 🇫🇮&nbsp;Hartza&nbsp;K - "the Best app"
 - 🇺🇸&nbsp;Matthew&nbsp;Fieldhouse
 - 🇨🇦&nbsp;Anton
 - 🇨🇦&nbsp;Viro
