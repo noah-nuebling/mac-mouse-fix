@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Ocak 2026**
 
+- 🇩🇪&nbsp;André&nbsp;Fabian - "The best Mouse App, clear and simple"
 - 🇫🇮&nbsp;Hartza&nbsp;K - "the Best app"
 - 🇺🇸&nbsp;Matthew&nbsp;Fieldhouse
 - 🇨🇦&nbsp;Anton
