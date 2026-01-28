@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Januar 2026**
 
+- 🇺🇸&nbsp;J&nbsp;Hood - "Love this. Thank you!"
 - 🇩🇪&nbsp;André&nbsp;Fabian - "The best Mouse App, clear and simple"
 - 🇫🇮&nbsp;Hartza&nbsp;K - "the Best app"
 - 🇺🇸&nbsp;Matthew&nbsp;Fieldhouse
