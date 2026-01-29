@@ -1900,6 +1900,12 @@
             "value" : "clic %@ + "
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kattintás %@ +"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2011,6 +2017,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "double-clic %@ + "
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dupla kattintás %@ +"
           }
         },
         "it" : {
@@ -2126,6 +2138,12 @@
             "value" : "triple-clic %@ + "
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tripla kattintás %@ +"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2237,6 +2255,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "du *bouton central*"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*középső gombbal*"
           }
         },
         "it" : {
@@ -2352,6 +2376,12 @@
             "value" : "du *bouton %@*"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*%@. gombbal*"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2463,6 +2493,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "du *bouton principal*"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*elsődleges gombbal*"
           }
         },
         "it" : {
@@ -2578,6 +2614,12 @@
             "value" : "du *bouton secondaire*"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*másodlagos gombbal*"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2689,6 +2731,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "clic %@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kattintás %@"
           }
         },
         "it" : {
@@ -2804,6 +2852,12 @@
             "value" : "double-clic %@"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dupla kattintás %@"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2915,6 +2969,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "triple-clic %@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tripla kattintás %@"
           }
         },
         "it" : {
@@ -3030,6 +3090,12 @@
             "value" : "clic et *glissement* %@"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kattintás és *húzás* %@"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3141,6 +3207,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "double-clic et *glissement* %@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dupla kattintás és *húzás* %@"
           }
         },
         "it" : {
@@ -3256,6 +3328,12 @@
             "value" : "triple-clic et *glissement* %@"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tripla kattintás és *húzás* %@"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3367,6 +3445,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "et *glissement*"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "és *húzás*"
           }
         },
         "it" : {
@@ -3482,6 +3566,12 @@
             "value" : "maintien %@"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tartás %@"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3593,6 +3683,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "double-clic et maintien %@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dupla kattintás és tartás %@"
           }
         },
         "it" : {
@@ -3708,6 +3804,12 @@
             "value" : "triple-clic et maintien %@"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tripla kattintás és tartás %@"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3819,6 +3921,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "clic et *défilement* %@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kattintás és *görgetés* %@"
           }
         },
         "it" : {
@@ -3934,6 +4042,12 @@
             "value" : "double-clic et *défilement* %@"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dupla kattintás és *görgetés* %@"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4045,6 +4159,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "triple-clic et *défilement* %@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tripla kattintás és *görgetés* %@"
           }
         },
         "it" : {
@@ -4160,6 +4280,12 @@
             "value" : "et *défilement*"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "és *görgetés*"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4271,6 +4397,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "bouton central"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "középső gomb"
           }
         },
         "it" : {
@@ -4386,6 +4518,12 @@
             "value" : "bouton %@"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "gomb %@"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4499,6 +4637,12 @@
             "value" : "bouton principal"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "elsődleges gomb"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4610,6 +4754,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "bouton secondaire"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "másodlagos gomb"
           }
         },
         "it" : {
