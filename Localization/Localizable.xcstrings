@@ -1876,6 +1876,12 @@
             "value" : "%@ klicken + "
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "κλικ %@ +"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1981,6 +1987,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ doppelklicken + "
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "διπλό κλικ %@ +"
           }
         },
         "en" : {
@@ -2090,6 +2102,12 @@
             "value" : "%@ dreifachklicken + "
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "τριπλό κλικ %@ +"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2195,6 +2213,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*mittlere Taste*"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*μεσαίου κουμπιού*"
           }
         },
         "en" : {
@@ -2304,6 +2328,12 @@
             "value" : "*Taste %@*"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*κουμπιού %@*"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2409,6 +2439,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*primäre Taste*"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*πρωτεύοντος κουμπιού*"
           }
         },
         "en" : {
@@ -2518,6 +2554,12 @@
             "value" : "*sekundäre Taste*"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*δευτερεύοντος κουμπιού*"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2623,6 +2665,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ klicken"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "κλικ %@"
           }
         },
         "en" : {
@@ -2732,6 +2780,12 @@
             "value" : "%@ doppelklicken"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "διπλό κλικ %@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2837,6 +2891,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ dreifachklicken"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "τριπλό κλικ %@"
           }
         },
         "en" : {
@@ -2946,6 +3006,12 @@
             "value" : "%@ klicken und *ziehen*"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "κλικ και *μεταφορά* %@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3051,6 +3117,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ doppelklicken und *ziehen*"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "διπλό κλικ και *μεταφορά* %@"
           }
         },
         "en" : {
@@ -3160,6 +3232,12 @@
             "value" : "%@ dreifachklicken und *ziehen*"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "τριπλό κλικ και *μεταφορά* %@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3265,6 +3343,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "und *ziehen*"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "και *μεταφορά*"
           }
         },
         "en" : {
@@ -3374,6 +3458,12 @@
             "value" : "%@ halten"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "κράτημα %@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3479,6 +3569,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ doppelklicken und halten"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "διπλό κλικ και κράτημα %@"
           }
         },
         "en" : {
@@ -3588,6 +3684,12 @@
             "value" : "%@ dreifachklicken und halten"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "τριπλό κλικ και κράτημα %@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3693,6 +3795,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ klicken und *scrollen*"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "κλικ και *κύλιση* %@"
           }
         },
         "en" : {
@@ -3802,6 +3910,12 @@
             "value" : "%@ doppelklicken und *scrollen*"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "διπλό κλικ και *κύλιση* %@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3907,6 +4021,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ dreifachklicken und *scrollen*"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "τριπλό κλικ και *κύλιση* %@"
           }
         },
         "en" : {
@@ -4016,6 +4136,12 @@
             "value" : "und *scrollen*"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "και *κύλιση*"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4121,6 +4247,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "mittlere Taste"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "μεσαίο κουμπί"
           }
         },
         "en" : {
@@ -4230,6 +4362,12 @@
             "value" : "Taste %@"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "κουμπί %@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4337,6 +4475,12 @@
             "value" : "primäre Taste"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "πρωτεύον κουμπί"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4442,6 +4586,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "sekundäre Taste"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "δευτερεύον κουμπί"
           }
         },
         "en" : {

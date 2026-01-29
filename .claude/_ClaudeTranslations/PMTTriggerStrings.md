@@ -114,3 +114,9 @@ Below is the FIRST approach that ever produced a reasonable set of translations 
     This prompt also worked:
 
         > Thanks Claude! Can you review your results once more for any consistency and other improvements?
+
+**Update – Weren't Using Planning Mode** [Jan 29 2026]
+    
+    When running the `**Extension** of the **hybrid prompt**` 
+        ... Maybe I should've been using planning mode! 
+        Perhaps then it would've made less mistakes (See CTXTriggerStrings.md)
