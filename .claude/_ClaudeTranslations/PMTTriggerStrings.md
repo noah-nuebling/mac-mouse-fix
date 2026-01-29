@@ -120,3 +120,5 @@ Below is the FIRST approach that ever produced a reasonable set of translations 
     When running the `**Extension** of the **hybrid prompt**` 
         ... Maybe I should've been using planning mode! 
         Perhaps then it would've made less mistakes (See CTXTriggerStrings.md)
+
+        UPDATE: For Hungarian, using planning mode didn't prevent mistakes and afterwards it started gaslighting me. (Might have prompted it wrong) Without planning mode worked better.
