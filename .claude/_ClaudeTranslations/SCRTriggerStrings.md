@@ -1,4 +1,4 @@
-Locales with human backing
+# Locales with human backing
 
     Germanic
     - de    
@@ -22,7 +22,7 @@ Locales with human backing
     Southeast Asian
     - vi
 
-Locales with no human backing
+# Locales with no human backing
 
     Germanic
     - nl
@@ -52,7 +52,7 @@ Locales with no human backing
     - id
     - th
 
-Locales to work on RN
+# Locales to work on RN
 
     Germanic
     - [x] nl
@@ -68,7 +68,7 @@ Locales to work on RN
     - [x] el
 
     Slavic
-    - [ ] hu
+    - [x ] hu
     - [ ] pl
     - [ ] uk
 
@@ -91,7 +91,7 @@ Locales to work on RN
 
 # PROMPT
 
-Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into el (Greek)
+Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into hu (Hungarian)
 
 The CTXTriggerStrings.md is the result of doing extensive research on the the existing strings and their comments, trust this and don't do extensive research yourself.
 
