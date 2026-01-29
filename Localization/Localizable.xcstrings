@@ -1924,6 +1924,12 @@
             "value" : "clique %@ +"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clic %@ +"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2023,6 +2029,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "duplo clique %@ +"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dublu clic %@ +"
           }
         },
         "ru" : {
@@ -2126,6 +2138,12 @@
             "value" : "triplo clique %@ +"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triplu clic %@ +"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2225,6 +2243,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*botão do meio*"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*buton mijloc*"
           }
         },
         "ru" : {
@@ -2328,6 +2352,12 @@
             "value" : "*botão %@*"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*buton %@*"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2427,6 +2457,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*botão principal*"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*buton principal*"
           }
         },
         "ru" : {
@@ -2530,6 +2566,12 @@
             "value" : "*botão secundário*"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*buton secundar*"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2629,6 +2671,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "clique %@"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clic %@"
           }
         },
         "ru" : {
@@ -2732,6 +2780,12 @@
             "value" : "duplo clique %@"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dublu clic %@"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2831,6 +2885,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "triplo clique %@"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triplu clic %@"
           }
         },
         "ru" : {
@@ -2934,6 +2994,12 @@
             "value" : "clique e *arrastar* %@"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clic și *tragere* %@"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3033,6 +3099,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "duplo clique e *arrastar* %@"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dublu clic și *tragere* %@"
           }
         },
         "ru" : {
@@ -3136,6 +3208,12 @@
             "value" : "triplo clique e *arrastar* %@"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triplu clic și *tragere* %@"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3235,6 +3313,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "e *arrastar*"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "și *tragere*"
           }
         },
         "ru" : {
@@ -3338,6 +3422,12 @@
             "value" : "manter %@"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "menținere %@"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3437,6 +3527,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "duplo clique e manter %@"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dublu clic și menținere %@"
           }
         },
         "ru" : {
@@ -3540,6 +3636,12 @@
             "value" : "triplo clique e manter %@"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triplu clic și menținere %@"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3639,6 +3741,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "clique e *deslocar* %@"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clic și *derulare* %@"
           }
         },
         "ru" : {
@@ -3742,6 +3850,12 @@
             "value" : "duplo clique e *deslocar* %@"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dublu clic și *derulare* %@"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3841,6 +3955,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "triplo clique e *deslocar* %@"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "triplu clic și *derulare* %@"
           }
         },
         "ru" : {
@@ -3944,6 +4064,12 @@
             "value" : "e *deslocar*"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "și *derulare*"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4043,6 +4169,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "botão do meio"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "buton mijloc"
           }
         },
         "ru" : {
@@ -4146,6 +4278,12 @@
             "value" : "botão %@"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "buton %@"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4247,6 +4385,12 @@
             "value" : "botão principal"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "buton principal"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4346,6 +4490,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "botão secundário"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "buton secundar"
           }
         },
         "ru" : {

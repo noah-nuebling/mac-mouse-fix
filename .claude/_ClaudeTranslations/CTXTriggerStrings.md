@@ -214,3 +214,6 @@ Multiple Languages
             trigger.substring.button-name.middle AND 
             trigger.substring.click.1 
             (So I'm not sure explaining it again here is useful.)
+        
+        Exception: (Romanian) For Romanian, we decided to omit the grammatical connectors (genitive) – So `*buton principal*` instead of `*butonului principal*`.
+                Explanation: The combined strings will have slightly inelegant noun+noun juxtaposition (E.g. triplu clic *butonului principal*), but we strongly value conciseness and Apple's Romanian glossary also seems to use the noun+noun juxtaposition without genitive (e.g., "Dublu clic buton principal", "Tragere maus", "Modificatori tragere și eliberare").
