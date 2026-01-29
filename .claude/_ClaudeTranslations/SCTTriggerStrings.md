@@ -68,8 +68,8 @@
     - [x] el
 
     Slavic
-    - [x ] hu
-    - [ ] pl
+    - [x] hu
+    - [x] pl
     - [ ] uk
 
     Chinese
@@ -91,7 +91,7 @@
 
 # PROMPT
 
-Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into hu (Hungarian)
+Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into uk (Ukrainian)
 
 The CTXTriggerStrings.md is the result of doing extensive research on the the existing strings and their comments, trust this and don't do extensive research yourself.
 
@@ -100,3 +100,20 @@ Use a glossary-research subagent for the Apple-specific terms. Explain to the su
 Before translating each batch of strings (try to keep the batches around 5 or smaller), write out all the constraints that are relevant for the batch.
 
 Do not read / invoke adding-translations/SKILL.md
+
+
+
+
+
+
+  Polish:
+  - Current:     Kliknąć trzykrotnie i *przeciągać* *przycisk 4* (to triple-click and drag button 4)
+  - Alternative: Trzykrotne kliknięcie i *przeciąganie* *przycisku 4* (triple click and dragging of button 4)
+
+  Russian:
+  - Current:     Тройное нажатие и *перетягивание* *кнопки 4* (triple press and dragging of button 4)
+  - Alternative: Трижды нажать и *перетягивать* *кнопку 4* (to press thrice and drag button 4)
+
+  Czech:
+  - Current: Trojí kliknutí a *tažení* *tlačítka 4* (triple clicking and dragging of button 4)
+  - Alternative: Třikrát kliknout a *táhnout* *tlačítko 4* (to click thrice and drag button 4)
