@@ -109,11 +109,21 @@ Below is the FIRST approach that ever produced a reasonable set of translations 
     This review prompt actually worked! 
         (After the pt-PT translations) (Strings were grammatically inconsistent.)
 
-        > Thanks Claude! I notice some things that could be improved. Could you go over the strings once more?
+        Thanks Claude! I notice some things that could be improved. Could you go over the strings once more?
 
     This prompt also worked:
 
-        > Thanks Claude! Can you review your results once more for any consistency and other improvements?
+        Thanks Claude! Can you review your results once more for any consistency and other improvements?
+
+**Simplification Prompt**
+    (This found a simplification for Ukrainian)
+
+    Ok great, thanks for looking into that !
+    Are there any more things about the [[[Ukrainian]]] strings that could be simplified or improved?
+
+Ok great, thanks for looking into that !
+
+  Are there any more things about the Ukrainian strings that could be simplified or improved?
 
 **Update – Weren't Using Planning Mode** [Jan 29 2026]
     

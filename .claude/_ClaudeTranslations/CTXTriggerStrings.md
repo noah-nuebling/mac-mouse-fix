@@ -181,6 +181,13 @@ Portuguese (pt-PT and pt-BR)
             We *want* to use infinitives, too, but there's a problem: "duplo clicar" and "triplo clicar" don't work in Portuguese.
             Therefore we use "duplo clique" and "triplo clique" instead, which means we mix nouns + infinitives (`clique e *arrastar* %@`). We think this is a bit awkward but not too bad.
             We chose to use "clique" even for single-clicks, to keep it consistent with "duplo clique" and "triplo clique". (Not sure if that's the best choice, but lets roll with it for now.)
+Ukrainian
+    Desired Translation: `і` instead of `й` in the `trigger.substring.*.flags` strings. (`і *перетягування*` and `і *прокрутка*`)
+        Explanation: These strings get appended after modifier key symbols (e.g. `⇧⌘ і *прокрутка*`). In Ukrainian, "й" expects to flow from a preceding vowel sound while "і" works naturally after a consonant or pause. (If the user doesn't read ⇧⌘ out loud in their mind it may feel like a pause?) Elsewhere, we're using "й".
+    Desired Translation: прокрутка instead of прокручування for "Scroll".
+        Explanation: Both are valid Ukrainian, but "прокрутка" is 4 characters shorter. Apple uses "прокрутка" rarely, but we prefer it since we care about brevity.
+
+
 Catalan
     Desired Translation: Use noun + infinitive pattern for drag/scroll (`clic i *arrossegar* %@`, `clic i *desplaçar* %@`, ...)
         Explanation: This is similar to Portuguese, but for different reasons. Turning the phrase into consistent 

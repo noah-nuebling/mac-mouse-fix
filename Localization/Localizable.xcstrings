@@ -1966,6 +1966,12 @@
             "value" : "%@ tıkla +"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "клацання %@ +"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2089,6 +2095,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ çift tıkla +"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "подвійне клацання %@ +"
           }
         },
         "vi" : {
@@ -2216,6 +2228,12 @@
             "value" : "%@ üç kez tıkla +"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "потрійне клацання %@ +"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2339,6 +2357,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*orta düğmeyi*"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*середньої кнопки*"
           }
         },
         "vi" : {
@@ -2466,6 +2490,12 @@
             "value" : "*%@. düğmeyi*"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*кнопки %@*"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2589,6 +2619,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*birincil düğmeyi*"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*основної кнопки*"
           }
         },
         "vi" : {
@@ -2716,6 +2752,12 @@
             "value" : "*ikincil düğmeyi*"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*допоміжної кнопки*"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2839,6 +2881,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ tıkla"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "клацання %@"
           }
         },
         "vi" : {
@@ -2966,6 +3014,12 @@
             "value" : "%@ çift tıkla"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "подвійне клацання %@"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3089,6 +3143,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ üç kez tıkla"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "потрійне клацання %@"
           }
         },
         "vi" : {
@@ -3216,6 +3276,12 @@
             "value" : "%@ tıkla ve *sürükle*"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "клацання й *перетягування* %@"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3339,6 +3405,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ çift tıkla ve *sürükle*"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "подвійне клацання й *перетягування* %@"
           }
         },
         "vi" : {
@@ -3466,6 +3538,12 @@
             "value" : "%@ üç kez tıkla ve *sürükle*"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "потрійне клацання й *перетягування* %@"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3589,6 +3667,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ve *sürükle*"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "і *перетягування*"
           }
         },
         "vi" : {
@@ -3716,6 +3800,12 @@
             "value" : "%@ basılı tut"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "утримання %@"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3839,6 +3929,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ çift tıkla ve basılı tut"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "подвійне клацання й утримання %@"
           }
         },
         "vi" : {
@@ -3966,6 +4062,12 @@
             "value" : "%@ üç kez tıkla ve basılı tut"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "потрійне клацання й утримання %@"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4089,6 +4191,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ tıkla ve *kaydır*"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "клацання й *прокрутка* %@"
           }
         },
         "vi" : {
@@ -4216,6 +4324,12 @@
             "value" : "%@ çift tıkla ve *kaydır*"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "подвійне клацання й *прокрутка* %@"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4339,6 +4453,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ üç kez tıkla ve *kaydır*"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "потрійне клацання й *прокрутка* %@"
           }
         },
         "vi" : {
@@ -4466,6 +4586,12 @@
             "value" : "ve *kaydır*"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "і *прокрутка*"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4589,6 +4715,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "orta düğme"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "середня кнопка"
           }
         },
         "vi" : {
@@ -4716,6 +4848,12 @@
             "value" : "%@. düğme"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "кнопка %@"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4841,6 +4979,12 @@
             "value" : "birincil düğme"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "основна кнопка"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4964,6 +5108,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ikincil düğme"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "допоміжна кнопка"
           }
         },
         "vi" : {
