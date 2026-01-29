@@ -167,6 +167,9 @@ Korean
         Explanation: These are optimized for length. Except for `%@번 버튼`, which we're using over `버튼 %@` since it's more natural and has consistent word order with the other strings.
     Desired Translation: Translate 'Hold' (as in 'Double Click and Hold Button 4') as '길게 누름'. 
         Explanation: Apple uses '길게 누르기' pretty consistently but '길게 누름' is slightly shorter while still sounding natural (I'm not actually sure this is the best choice – but lets go with it for now.)
+Hungarian
+    Desired Translation: Translate 'Hold' as 'tartás' instead of 'lenyomva tartás' or 'nyomva tartás'.
+        Explanation: Apple's glossary shows all 3, but the glossary-research agent didn't find the shorter standalone form 'tartás' (which we prefer due to brevity)
 Turkish
     Desired Translation: Translate 'Button' as 'düğmeyi' instead of 'düğme' (in the 'trigger.substring.button-name.*' strings.)
         Explanation: Some of the trigger.substring.* strings have %@ format specifiers where button names will be inserted. In Turkish, we need to add inflections to make the joined strings grammatically correct. düğmeyi seemed like the best choice among other possible inflections like düğmesine or düğmesini. (Not sure if that's the best possible choice, but let's roll with it for now)
@@ -216,4 +219,9 @@ Multiple Languages
             (So I'm not sure explaining it again here is useful.)
         
         Exception: (Romanian) For Romanian, we decided to omit the grammatical connectors (genitive) – So `*buton principal*` instead of `*butonului principal*`.
-                Explanation: The combined strings will have slightly inelegant noun+noun juxtaposition (E.g. triplu clic *butonului principal*), but we strongly value conciseness and Apple's Romanian glossary also seems to use the noun+noun juxtaposition without genitive (e.g., "Dublu clic buton principal", "Tragere maus", "Modificatori tragere și eliberare").
+                Explanation: The combined strings will have slightly inelegant noun+noun juxtaposition (E.g. triplu clic *butonului principal*), but we strongly value conciseness and Apple's Romanian glossary also seems to use the noun+noun juxtaposition without genitive. 
+                    (e.g.:
+                        "Double-Click Home Button"  -> "Dublu clic buton principal", 
+                        "Mouse drag"                -> "Tragere maus", 
+                        "Drag and Drop Modifiers"   -> "Modificatori tragere și eliberare"
+                    ).

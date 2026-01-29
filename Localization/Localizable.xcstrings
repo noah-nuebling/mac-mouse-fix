@@ -2260,7 +2260,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "*középső gombbal*"
+            "value" : "*középső gomb*"
           }
         },
         "it" : {
@@ -2379,7 +2379,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "*%@. gombbal*"
+            "value" : "*%@. gomb*"
           }
         },
         "it" : {
@@ -2498,7 +2498,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "*elsődleges gombbal*"
+            "value" : "*elsődleges gomb*"
           }
         },
         "it" : {
@@ -2617,7 +2617,7 @@
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "*másodlagos gombbal*"
+            "value" : "*másodlagos gomb*"
           }
         },
         "it" : {
