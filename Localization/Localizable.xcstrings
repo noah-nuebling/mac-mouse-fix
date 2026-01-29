@@ -1924,6 +1924,12 @@
             "value" : "klik %@ +"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kliknąć %@ +"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2041,6 +2047,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "klik dubbel %@ +"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kliknąć dwukrotnie %@ +"
           }
         },
         "pt-BR" : {
@@ -2162,6 +2174,12 @@
             "value" : "klik driemaal %@ +"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kliknąć trzykrotnie %@ +"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2279,6 +2297,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*middelste knop*"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*przycisk środkowy*"
           }
         },
         "pt-BR" : {
@@ -2400,6 +2424,12 @@
             "value" : "*knop %@*"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*przycisk %@*"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2517,6 +2547,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*primaire knop*"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*przycisk podstawowy*"
           }
         },
         "pt-BR" : {
@@ -2638,6 +2674,12 @@
             "value" : "*secundaire knop*"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*przycisk dodatkowy*"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2755,6 +2797,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "klik %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kliknąć %@"
           }
         },
         "pt-BR" : {
@@ -2876,6 +2924,12 @@
             "value" : "klik dubbel %@"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kliknąć dwukrotnie %@"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2993,6 +3047,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "klik driemaal %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kliknąć trzykrotnie %@"
           }
         },
         "pt-BR" : {
@@ -3114,6 +3174,12 @@
             "value" : "klik en *sleep* %@"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kliknąć i *przeciągać* %@"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3231,6 +3297,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "klik dubbel en *sleep* %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kliknąć dwukrotnie i *przeciągać* %@"
           }
         },
         "pt-BR" : {
@@ -3352,6 +3424,12 @@
             "value" : "klik driemaal en *sleep* %@"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kliknąć trzykrotnie i *przeciągać* %@"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3469,6 +3547,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "en *sleep*"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "i *przeciągać*"
           }
         },
         "pt-BR" : {
@@ -3590,6 +3674,12 @@
             "value" : "houd %@ vast"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "przytrzymać %@"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3707,6 +3797,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "klik dubbel en houd %@ vast"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kliknąć dwukrotnie i przytrzymać %@"
           }
         },
         "pt-BR" : {
@@ -3828,6 +3924,12 @@
             "value" : "klik driemaal en houd %@ vast"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kliknąć trzykrotnie i przytrzymać %@"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3945,6 +4047,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "klik en *scrol* %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kliknąć i *przewijać* %@"
           }
         },
         "pt-BR" : {
@@ -4066,6 +4174,12 @@
             "value" : "klik dubbel en *scrol* %@"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kliknąć dwukrotnie i *przewijać* %@"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4183,6 +4297,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "klik driemaal en *scrol* %@"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kliknąć trzykrotnie i *przewijać* %@"
           }
         },
         "pt-BR" : {
@@ -4304,6 +4424,12 @@
             "value" : "en *scrol*"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "i *przewijać*"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4421,6 +4547,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Middelste knop"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "przycisk środkowy"
           }
         },
         "pt-BR" : {
@@ -4542,6 +4674,12 @@
             "value" : "Knop %@"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "przycisk %@"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4661,6 +4799,12 @@
             "value" : "Primaire knop"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "przycisk podstawowy"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4778,6 +4922,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Secundaire knop"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "przycisk dodatkowy"
           }
         },
         "pt-BR" : {
