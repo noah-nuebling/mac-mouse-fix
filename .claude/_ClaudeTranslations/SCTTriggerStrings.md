@@ -27,30 +27,32 @@
     Germanic
     - nl
     - sv
-    - hi            (Hindi – closer to German than Southeast Asian languages, apparently)
+    
+    Greek
     - el            (Indo European, I guess)
 
     Romance
+    - pt-PT
     - ca
     - it
-    - pt-PT
     - ro
 
     Slavic
-    - hu
     - pl
     - uk
 
-    Middle Eastern
-    - ar
-    - he
-
     East Asian
+    - hu            (Hungarian is sorta similar to Turkish I guess)
     - ja
 
     Southeast Asian
     - id
     - th
+    - hi            (Hindi – closer to German than Southeast Asian languages, apparently)
+
+    Middle Eastern
+    - ar
+    - he
 
 # Locales to work on RN
 
@@ -69,31 +71,30 @@
 
     Slavic
     - [x] pl
-    - [ ] uk
+    - [x] uk
 
     East Asian
-    - [x] hu        (Hungarian is sorta similar to Turkish I guess)
+    - [x] hu        
     - [ ] ja
     
     Southeast Asian
+    - [ ] id
     - [ ] th
     - [ ] hi
-    - [ ] id
-
-    Chinese
-    - [ ] zh-Hant
-    - [ ] zh-HK
 
     Middle Eastern
     - [ ] ar
     - [ ] he
 
+    Chinese
+    - [ ] zh-Hant
+    - [ ] zh-HK
 
 ---
 
 # PROMPT
 
-Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into uk (Ukrainian)
+Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into ja (Japanese)
 
 The CTXTriggerStrings.md is the result of doing extensive research on the the existing strings and their comments, trust this and don't do extensive research yourself.
 

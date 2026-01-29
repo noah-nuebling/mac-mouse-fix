@@ -159,7 +159,7 @@ The 'Explanation' sections may help you choose translations for other languages,
 German
     Desired Translation: Translate 'Button' as 'Taste' instead of 'Maustaste'.
         Explanation: In the glossary, you'll find 'Button' translated as 'Taste' or 'Maustaste'. 'Maustaste' is more frequent. But since we strongly prefer simplicity, we choose 'Taste' instead. Given the context of where these strings appear in the UI ('Action Table' on the 'Buttons Tab' in the 'Mac Mouse Fix' app) it's clear that 'Taste' doesn't refer to a keyboard key, so the longer 'Maustaste' is not necessary to disambiguate.
-Chinese
+Chinese (Simplified)
     Desired Translation: Translate the button names as 主键, 辅键, 中键, and 第%@键
         Explanation: In the glossary you'll find various Chinese translations for the mouse buttons like '按钮%@', '第3键', '鼠标第%@键' and '鼠标主按钮'. The above choices are very short while staying natural and consistently using '键'.
 Korean
@@ -180,14 +180,12 @@ Portuguese (pt-PT and pt-BR)
         Explanation: In Portuguese, Apple likes to use infinitives for action-describing UI labels (e.g. Desfazer, Refazer in the MainMenu).
             We *want* to use infinitives, too, but there's a problem: "duplo clicar" and "triplo clicar" don't work in Portuguese.
             Therefore we use "duplo clique" and "triplo clique" instead, which means we mix nouns + infinitives (`clique e *arrastar* %@`). We think this is a bit awkward but not too bad.
-            We chose to use "clique" even for single-clicks, to keep it consistent with "duplo clique" and "triplo clique". (Not sure if that's the best choice, but lets roll with it for now.)
+            We chose to use "clique" (over "clicar") even for single-clicks, to keep it consistent with "duplo clique" and "triplo clique". (Not sure if that's the best choice, but lets roll with it for now.)
 Ukrainian
-    Desired Translation: `і` instead of `й` in the `trigger.substring.*.flags` strings. (`і *перетягування*` and `і *прокрутка*`)
-        Explanation: These strings get appended after modifier key symbols (e.g. `⇧⌘ і *прокрутка*`). In Ukrainian, "й" expects to flow from a preceding vowel sound while "і" works naturally after a consonant or pause. (If the user doesn't read ⇧⌘ out loud in their mind it may feel like a pause?) Elsewhere, we're using "й".
-    Desired Translation: прокрутка instead of прокручування for "Scroll".
-        Explanation: Both are valid Ukrainian, but "прокрутка" is 4 characters shorter. Apple uses "прокрутка" rarely, but we prefer it since we care about brevity.
-
-
+    Desired Translation: Use 'і' over 'й' in the `trigger.substring.*.flags` strings. ('і *перетягування*', 'і *прокрутка*')
+        Explanation: These strings get appended after modifier key symbols (e.g. '⇧⌘ і *прокрутка*'). In Ukrainian, "й" expects to flow from a preceding vowel sound while "і" works naturally after a consonant or pause. (If the user doesn't read ⇧⌘ out loud in their mind, it may feel like a pause?) Elsewhere, we're using "й".
+    Desired Translation: Use 'прокрутка' over 'прокручування' for 'Scroll'.
+        Explanation: Both are valid Ukrainian. Apple uses "прокрутка" rarely, but we prefer it since we care about brevity.
 Catalan
     Desired Translation: Use noun + infinitive pattern for drag/scroll (`clic i *arrossegar* %@`, `clic i *desplaçar* %@`, ...)
         Explanation: This is similar to Portuguese, but for different reasons. Turning the phrase into consistent 
@@ -219,16 +217,15 @@ Multiple Languages
                     Note: Genitive case endings differ from nominative, so these won't match the group-row headers exactly.
             Other languages:
                 Some other languages like Spanish and Portuguese also use such grammatical connectors, but we prefer to keep things simple and decided we could get away without them. 
+                Romanian: For Romanian, we decided to omit the grammatical connectors (genitive) – So `*buton principal*` instead of `*butonului principal*`.
+                        Explanation: The combined strings will have slightly inelegant noun+noun juxtaposition (E.g. triplu clic *butonului principal*), but we strongly value conciseness and Apple's Romanian glossary also seems to use the noun+noun juxtaposition without genitive. 
+                            (Examples from Apple's glossary:
+                                "Double-Click Home Button"  -> "Dublu clic buton principal", 
+                                "Mouse drag"                -> "Tragere maus", 
+                                "Drag and Drop Modifiers"   -> "Modificatori tragere și eliberare"
+                            ).
         Note: We decided English does NOT need "the" and that "Click Middle Button" (instead of "Click the Middle Button") feels like acceptable UI shorthand.
         Note to self: We also added comments about this to 
             trigger.substring.button-name.middle AND 
             trigger.substring.click.1 
             (So I'm not sure explaining it again here is useful.)
-        
-        Exception: (Romanian) For Romanian, we decided to omit the grammatical connectors (genitive) – So `*buton principal*` instead of `*butonului principal*`.
-                Explanation: The combined strings will have slightly inelegant noun+noun juxtaposition (E.g. triplu clic *butonului principal*), but we strongly value conciseness and Apple's Romanian glossary also seems to use the noun+noun juxtaposition without genitive. 
-                    (e.g.:
-                        "Double-Click Home Button"  -> "Dublu clic buton principal", 
-                        "Mouse drag"                -> "Tragere maus", 
-                        "Drag and Drop Modifiers"   -> "Modificatori tragere și eliberare"
-                    ).
