@@ -1912,6 +1912,12 @@
             "value" : "clic %@ +"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@クリック +"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2041,6 +2047,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "doppio clic %@ +"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ダブルクリック +"
           }
         },
         "ko" : {
@@ -2174,6 +2186,12 @@
             "value" : "triplo clic %@ +"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@トリプルクリック +"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2303,6 +2321,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*pulsante centrale*"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*中央ボタン*の"
           }
         },
         "ko" : {
@@ -2436,6 +2460,12 @@
             "value" : "*pulsante %@*"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*ボタン%@*の"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2565,6 +2595,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*pulsante principale*"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*主ボタン*の"
           }
         },
         "ko" : {
@@ -2698,6 +2734,12 @@
             "value" : "*pulsante secondario*"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*副ボタン*の"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2827,6 +2869,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "clic %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@クリック"
           }
         },
         "ko" : {
@@ -2960,6 +3008,12 @@
             "value" : "doppio clic %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ダブルクリック"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3089,6 +3143,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "triplo clic %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@トリプルクリック"
           }
         },
         "ko" : {
@@ -3222,6 +3282,12 @@
             "value" : "clic e *trascina* %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@クリック＆*ドラッグ*"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3351,6 +3417,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "doppio clic e *trascina* %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ダブルクリック＆*ドラッグ*"
           }
         },
         "ko" : {
@@ -3484,6 +3556,12 @@
             "value" : "triplo clic e *trascina* %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@トリプルクリック＆*ドラッグ*"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3613,6 +3691,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "e *trascina*"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "＆*ドラッグ*"
           }
         },
         "ko" : {
@@ -3746,6 +3830,12 @@
             "value" : "tieni premuto %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ホールド"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3875,6 +3965,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "doppio clic e tieni premuto %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ダブルクリック＆ホールド"
           }
         },
         "ko" : {
@@ -4008,6 +4104,12 @@
             "value" : "triplo clic e tieni premuto %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@トリプルクリック＆ホールド"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4137,6 +4239,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "clic e *scorri* %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@クリック＆*スクロール*"
           }
         },
         "ko" : {
@@ -4270,6 +4378,12 @@
             "value" : "doppio clic e *scorri* %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ダブルクリック＆*スクロール*"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4399,6 +4513,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "triplo clic e *scorri* %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@トリプルクリック＆*スクロール*"
           }
         },
         "ko" : {
@@ -4532,6 +4652,12 @@
             "value" : "e *scorri*"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "＆*スクロール*"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4661,6 +4787,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "pulsante centrale"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中央ボタン"
           }
         },
         "ko" : {
@@ -4794,6 +4926,12 @@
             "value" : "pulsante %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボタン%@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4925,6 +5063,12 @@
             "value" : "pulsante principale"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主ボタン"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5054,6 +5198,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "pulsante secondario"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "副ボタン"
           }
         },
         "ko" : {

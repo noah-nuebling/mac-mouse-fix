@@ -167,6 +167,9 @@ Korean
         Explanation: These are optimized for length. Except for `%@번 버튼`, which we're using over `버튼 %@` since it's more natural and has consistent word order with the other strings.
     Desired Translation: Translate 'Hold' (as in 'Double Click and Hold Button 4') as '길게 누름'. 
         Explanation: Apple uses '길게 누르기' pretty consistently but '길게 누름' is slightly shorter while still sounding natural (I'm not actually sure this is the best choice – but lets go with it for now.)
+Japanese
+    Desired Translation: Use no (の) as a grammatical connector in the button names ('trigger.substring.button-name.*') instead of wo (を)
+        Explanation: Both work, but we thought no (の) fits a bit better with this 'descriptive' context.
 Hungarian
     Desired Translation: Translate 'Hold' as 'tartás' instead of 'lenyomva tartás' or 'nyomva tartás'.
         Explanation: Apple's glossary shows all 3, but the glossary-research agent didn't find the shorter standalone form 'tartás' (which we prefer due to brevity)
