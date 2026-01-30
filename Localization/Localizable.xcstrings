@@ -1906,6 +1906,12 @@
             "value" : "clic %@ + "
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לחיצה %@ +"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2065,6 +2071,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "double-clic %@ + "
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לחיצה כפולה %@ +"
           }
         },
         "hi" : {
@@ -2228,6 +2240,12 @@
             "value" : "triple-clic %@ + "
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לחיצה משולשת %@ +"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2387,6 +2405,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "du *bouton central*"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*בכפתור אמצעי*"
           }
         },
         "hi" : {
@@ -2550,6 +2574,12 @@
             "value" : "du *bouton %@*"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*בכפתור %@*"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2709,6 +2739,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "du *bouton principal*"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*בכפתור ראשי*"
           }
         },
         "hi" : {
@@ -2872,6 +2908,12 @@
             "value" : "du *bouton secondaire*"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*בכפתור משני*"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3031,6 +3073,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "clic %@"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לחיצה %@"
           }
         },
         "hi" : {
@@ -3194,6 +3242,12 @@
             "value" : "double-clic %@"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לחיצה כפולה %@"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3353,6 +3407,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "triple-clic %@"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לחיצה משולשת %@"
           }
         },
         "hi" : {
@@ -3516,6 +3576,12 @@
             "value" : "clic et *glissement* %@"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לחיצה ו*גרירה* %@"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3675,6 +3741,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "double-clic et *glissement* %@"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לחיצה כפולה ו*גרירה* %@"
           }
         },
         "hi" : {
@@ -3838,6 +3910,12 @@
             "value" : "triple-clic et *glissement* %@"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לחיצה משולשת ו*גרירה* %@"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3997,6 +4075,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "et *glissement*"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ו*גרירה*"
           }
         },
         "hi" : {
@@ -4160,6 +4244,12 @@
             "value" : "maintien %@"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "החזקה %@"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4319,6 +4409,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "double-clic et maintien %@"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לחיצה כפולה והחזקה %@"
           }
         },
         "hi" : {
@@ -4482,6 +4578,12 @@
             "value" : "triple-clic et maintien %@"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לחיצה משולשת והחזקה %@"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4641,6 +4743,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "clic et *défilement* %@"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לחיצה ו*גלילה* %@"
           }
         },
         "hi" : {
@@ -4804,6 +4912,12 @@
             "value" : "double-clic et *défilement* %@"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לחיצה כפולה ו*גלילה* %@"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4963,6 +5077,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "triple-clic et *défilement* %@"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "לחיצה משולשת ו*גלילה* %@"
           }
         },
         "hi" : {
@@ -5126,6 +5246,12 @@
             "value" : "et *défilement*"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ו*גלילה*"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5285,6 +5411,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "bouton central"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "כפתור אמצעי"
           }
         },
         "hi" : {
@@ -5448,6 +5580,12 @@
             "value" : "bouton %@"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "כפתור %@"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5609,6 +5747,12 @@
             "value" : "bouton principal"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "כפתור ראשי"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5768,6 +5912,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "bouton secondaire"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "כפתור משני"
           }
         },
         "hi" : {

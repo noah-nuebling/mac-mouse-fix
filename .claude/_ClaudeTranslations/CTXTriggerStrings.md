@@ -208,6 +208,13 @@ Catalan
             Sometimes, Apple also uses "mantén" alone.
             Since we strongly value concisenes, we went with "mantén" – this should be clear enough in the context of the app.
                 (Context example: "mantén botó central" = "hold middle button" - the meaning is unambiguous in a mouse button trigger list.)
+Hebrew
+    Desired Translation: Use "ב" (in/with) instead of "על" (on) for the grammatical connector in `trigger.substring.button-name.*` strings.
+        → "*בכפתור אמצעי*", "*בכפתור %@*", "*בכפתור ראשי*", "*בכפתור משני*"
+            Combined string example: "לחיצה ו*גרירה* *בכפתור אמצעי*" (click and drag with middle button)
+        Explanation: "על" (on) doesn't work semantically for actions like drag and scroll — you don't drag "on" a button, you drag "with" the button.
+            "ב" expresses the instrumental relationship (using the button) and works naturally for all action types: לחיצה בכפתור (click), גרירה בכפתור (drag), החזקה בכפתור (hold).
+            "ב" is also shorter since it's a prefix that attaches to כפתור, rather than a separate word.
 Multiple Languages
     Desired Translation: Grammatical connectors in `trigger.substring.button-name.*` strings.
         Explanation: The `trigger.substring.button-name.*` strings are inserted into the other `trigger.substring.*` strings at the format specifiers (%@). The combined strings needs to feel grammatically sound. In some languages this requires connectors.
