@@ -83,7 +83,7 @@
     - [x] hi
 
     Middle Eastern
-    - [ ] ar
+    - [x] ar
     - [ ] he
 
     Chinese
@@ -94,7 +94,7 @@
 
 # PROMPT
 
-Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into hi (Hindi)
+Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into ar (Arabic)
 
 The CTXTriggerStrings.md is the result of doing extensive research on the the existing strings and their comments, trust this and don't do extensive research yourself.
 
@@ -119,6 +119,12 @@ Finally, could you go over the strings once more and see if you can find any pot
 
 Ok great, thanks for looking into that !
 Are there any more things about the [[[Ukrainian]]] strings that could be simplified or improved?
+
+# Followup 5
+
+Hi Claude! Can you review this [[Arabic]] UI I've been working on with Gemini?
+
+---
 
 # TODO
 
