@@ -46,8 +46,8 @@
     - ja
 
     Southeast Asian
-    - id
     - th
+    - id
     - hi            (Hindi – closer to German than Southeast Asian languages, apparently)
 
     Middle Eastern
@@ -75,11 +75,11 @@
 
     East Asian
     - [x] hu        
-    - [ ] ja
+    - [x] ja
     
     Southeast Asian
-    - [ ] id
     - [ ] th
+    - [ ] id
     - [ ] hi
 
     Middle Eastern
@@ -94,7 +94,7 @@
 
 # PROMPT
 
-Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into ja (Japanese)
+Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into th (Thai)
 
 The CTXTriggerStrings.md is the result of doing extensive research on the the existing strings and their comments, trust this and don't do extensive research yourself.
 
@@ -103,3 +103,16 @@ Use a glossary-research subagent for the Apple-specific terms. Explain to the su
 Before translating each batch of strings (try to keep the batches around 5 or smaller), write out all the constraints that are relevant for the batch.
 
 Do not read / invoke adding-translations/SKILL.md
+
+# TODO
+
+- After these are done:
+    - [ ] Ask this for all languages:
+        One thing I just thought of that I'm not totally sure is explained in the translation context, is that the Click %@ + strings actually mean holding that button and then doing whatever comes after the +. In English we think this works partly because of context and because it draws on the established 'Click and Drag' phrase which also uses 'Click' to
+        actually imply holding and then doing something else.
+
+        Was that something you were thinking about?
+
+        If not, does that change what you think the optimal translations for these strings would be?
+    - [ ] Test / fix the ActionTable layouts
+        - [ ] Saw it erroneously making space for 3 lines in Japanese (Text only took up 2 lines)
