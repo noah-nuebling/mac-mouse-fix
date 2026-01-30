@@ -2,7 +2,7 @@
 File naming convention:
 - CTX prefix -> Context to have Claude read during translation
 - PMT prefix -> Prompts to start Claude conversations
-- SCT prefix -> Scratchpad files (for constructing prompts in different languages.?)
+- SCR prefix -> Scratchpad files (for constructing prompts in different languages.?)
 
 From the end of CTXTriggerStrings.md: (Moving it here to not accidentally throw Claude off.)
 (

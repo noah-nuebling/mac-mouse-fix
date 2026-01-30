@@ -94,7 +94,7 @@
 
 # PROMPT
 
-Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into ar (Arabic)
+Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into he (Hebrew)
 
 The CTXTriggerStrings.md is the result of doing extensive research on the the existing strings and their comments, trust this and don't do extensive research yourself.
 
