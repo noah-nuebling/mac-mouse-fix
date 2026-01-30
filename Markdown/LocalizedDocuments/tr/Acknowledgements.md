@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Ocak 2026**
 
+- 🇺🇸&nbsp;Jordan&nbsp;Lee
 - 🇪🇸&nbsp;Trino
 - 🇺🇸&nbsp;J&nbsp;Hood - "Love this. Thank you!"
 - 🇩🇪&nbsp;André&nbsp;Fabian - "The best Mouse App, clear and simple"
