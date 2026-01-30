@@ -80,7 +80,7 @@
     Southeast Asian
     - [x] th
     - [x] id
-    - [ ] hi
+    - [x] hi
 
     Middle Eastern
     - [ ] ar

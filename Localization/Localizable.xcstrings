@@ -1900,6 +1900,12 @@
             "value" : "clic %@ + "
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ क्लिक +"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2047,6 +2053,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "double-clic %@ + "
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ डबल क्लिक +"
           }
         },
         "hu" : {
@@ -2198,6 +2210,12 @@
             "value" : "triple-clic %@ + "
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ट्रिपल क्लिक +"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2345,6 +2363,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "du *bouton central*"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*मध्य बटन*"
           }
         },
         "hu" : {
@@ -2496,6 +2520,12 @@
             "value" : "du *bouton %@*"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*बटन %@*"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2643,6 +2673,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "du *bouton principal*"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*प्राथमिक बटन*"
           }
         },
         "hu" : {
@@ -2794,6 +2830,12 @@
             "value" : "du *bouton secondaire*"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*द्वितीयक बटन*"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2941,6 +2983,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "clic %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ क्लिक"
           }
         },
         "hu" : {
@@ -3092,6 +3140,12 @@
             "value" : "double-clic %@"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ डबल क्लिक"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3239,6 +3293,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "triple-clic %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ट्रिपल क्लिक"
           }
         },
         "hu" : {
@@ -3390,6 +3450,12 @@
             "value" : "clic et *glissement* %@"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ क्लिक और *ड्रैग*"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3537,6 +3603,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "double-clic et *glissement* %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ डबल क्लिक और *ड्रैग*"
           }
         },
         "hu" : {
@@ -3688,6 +3760,12 @@
             "value" : "triple-clic et *glissement* %@"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ट्रिपल क्लिक और *ड्रैग*"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3835,6 +3913,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "et *glissement*"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "और *ड्रैग*"
           }
         },
         "hu" : {
@@ -3986,6 +4070,12 @@
             "value" : "maintien %@"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ होल्ड"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4133,6 +4223,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "double-clic et maintien %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ डबल क्लिक और होल्ड"
           }
         },
         "hu" : {
@@ -4284,6 +4380,12 @@
             "value" : "triple-clic et maintien %@"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ट्रिपल क्लिक और होल्ड"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4431,6 +4533,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "clic et *défilement* %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ क्लिक और *स्क्रोल*"
           }
         },
         "hu" : {
@@ -4582,6 +4690,12 @@
             "value" : "double-clic et *défilement* %@"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ डबल क्लिक और *स्क्रोल*"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4729,6 +4843,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "triple-clic et *défilement* %@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ट्रिपल क्लिक और *स्क्रोल*"
           }
         },
         "hu" : {
@@ -4880,6 +5000,12 @@
             "value" : "et *défilement*"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "और *स्क्रोल*"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5027,6 +5153,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "bouton central"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "मध्य बटन"
           }
         },
         "hu" : {
@@ -5178,6 +5310,12 @@
             "value" : "bouton %@"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "बटन %@"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5327,6 +5465,12 @@
             "value" : "bouton principal"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "प्राथमिक बटन"
+          }
+        },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5474,6 +5618,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "bouton secondaire"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "द्वितीयक बटन"
           }
         },
         "hu" : {
