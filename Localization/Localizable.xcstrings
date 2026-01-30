@@ -1966,6 +1966,12 @@
             "value" : "klicka %@ +"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คลิก %@ +"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2101,6 +2107,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "dubbelklicka %@ +"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คลิกสองครั้ง %@ +"
           }
         },
         "tr" : {
@@ -2240,6 +2252,12 @@
             "value" : "trippelklicka %@ +"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คลิกสามครั้ง %@ +"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2375,6 +2393,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*mittknapp*"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*ปุ่มกลาง*"
           }
         },
         "tr" : {
@@ -2514,6 +2538,12 @@
             "value" : "*knapp %@*"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*ปุ่ม %@*"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2649,6 +2679,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*primär knapp*"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*ปุ่มหลัก*"
           }
         },
         "tr" : {
@@ -2788,6 +2824,12 @@
             "value" : "*sekundär knapp*"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*ปุ่มรอง*"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2923,6 +2965,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "klicka %@"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คลิก %@"
           }
         },
         "tr" : {
@@ -3062,6 +3110,12 @@
             "value" : "dubbelklicka %@"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คลิกสองครั้ง %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3197,6 +3251,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "trippelklicka %@"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คลิกสามครั้ง %@"
           }
         },
         "tr" : {
@@ -3336,6 +3396,12 @@
             "value" : "klicka och *dra* %@"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คลิกแล้ว*ลาก* %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3471,6 +3537,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "dubbelklicka och *dra* %@"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คลิกสองครั้งแล้ว*ลาก* %@"
           }
         },
         "tr" : {
@@ -3610,6 +3682,12 @@
             "value" : "trippelklicka och *dra* %@"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คลิกสามครั้งแล้ว*ลาก* %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3745,6 +3823,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "och *dra*"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แล้ว*ลาก*"
           }
         },
         "tr" : {
@@ -3884,6 +3968,12 @@
             "value" : "håll %@"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ค้าง %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4019,6 +4109,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "dubbelklicka och håll %@"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คลิกสองครั้งค้าง %@"
           }
         },
         "tr" : {
@@ -4158,6 +4254,12 @@
             "value" : "trippelklicka och håll %@"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คลิกสามครั้งค้าง %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4293,6 +4395,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "klicka och *rulla* %@"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คลิกแล้ว*เลื่อน* %@"
           }
         },
         "tr" : {
@@ -4432,6 +4540,12 @@
             "value" : "dubbelklicka och *rulla* %@"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คลิกสองครั้งแล้ว*เลื่อน* %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4567,6 +4681,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "trippelklicka och *rulla* %@"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คลิกสามครั้งแล้ว*เลื่อน* %@"
           }
         },
         "tr" : {
@@ -4706,6 +4826,12 @@
             "value" : "och *rulla*"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แล้ว*เลื่อน*"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4841,6 +4967,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "mittknapp"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปุ่มกลาง"
           }
         },
         "tr" : {
@@ -4980,6 +5112,12 @@
             "value" : "knapp %@"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปุ่ม %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5117,6 +5255,12 @@
             "value" : "primär knapp"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปุ่มหลัก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5252,6 +5396,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "sekundär knapp"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปุ่มรอง"
           }
         },
         "tr" : {
