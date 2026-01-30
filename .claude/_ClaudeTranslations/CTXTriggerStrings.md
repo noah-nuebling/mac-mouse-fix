@@ -169,7 +169,11 @@ Korean
         Explanation: Apple uses '길게 누르기' pretty consistently but '길게 누름' is slightly shorter while still sounding natural (I'm not actually sure this is the best choice – but lets go with it for now.)
 Japanese
     Desired Translation: Use no (の) as a grammatical connector in the button names ('trigger.substring.button-name.*') instead of wo (を)
-        Explanation: Both work, but we thought no (の) fits a bit better with this 'descriptive' context.
+        Explanation: の creates noun phrases ("click of the primary button") while を creates action phrases ("click the primary button"). We thought の fits better with the 'descriptive' (not instructive) tone. 
+            We found Apple using の in (somewhat?) similar contexts. e.g.: 
+                "Secondary click"     → "副ボタンのクリック"
+                "Double Click Action" → "ダブルクリックのアクション"
+            (Not sure this was the best choice, but lets roll with it for now.)
 Hungarian
     Desired Translation: Translate 'Hold' as 'tartás' instead of 'lenyomva tartás' or 'nyomva tartás'.
         Explanation: Apple's glossary shows all 3, but the glossary-research agent didn't find the shorter standalone form 'tartás' (which we prefer due to brevity)
