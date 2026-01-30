@@ -94,7 +94,7 @@
 
 # PROMPT
 
-Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into id (Indonesian)
+Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into hi (Hindi)
 
 The CTXTriggerStrings.md is the result of doing extensive research on the the existing strings and their comments, trust this and don't do extensive research yourself.
 
@@ -103,6 +103,22 @@ Use a glossary-research subagent for the Apple-specific terms. Explain to the su
 Before translating each batch of strings (try to keep the batches around 5 or smaller), write out all the constraints that are relevant for the batch.
 
 Do not read / invoke adding-translations/SKILL.md
+
+# Followup
+Thanks Claude! I notice some things that could be improved. Could you go over the strings once more?
+
+# Followup 2
+To be honest, I didn't notice anything wrong. I just found that asking leading questions like that makes the Claudes really look into things, you know? I hope that's ok. Thanks again for your work!
+
+# Followup 3
+
+Ok great, thanks for your work on that!
+Finally, could you go over the strings once more and see if you can find any potential improvements or simplifications?
+
+# Followup 4
+
+Ok great, thanks for looking into that !
+Are there any more things about the [[[Ukrainian]]] strings that could be simplified or improved?
 
 # TODO
 
