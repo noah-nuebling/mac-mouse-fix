@@ -1906,6 +1906,12 @@
             "value" : "kattintás %@ +"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klik %@ +"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2047,6 +2053,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "dupla kattintás %@ +"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klik dua kali %@ +"
           }
         },
         "it" : {
@@ -2192,6 +2204,12 @@
             "value" : "tripla kattintás %@ +"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klik tiga kali %@ +"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2333,6 +2351,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*középső gomb*"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*tombol tengah*"
           }
         },
         "it" : {
@@ -2478,6 +2502,12 @@
             "value" : "*%@. gomb*"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*tombol %@*"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2619,6 +2649,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*elsődleges gomb*"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*tombol utama*"
           }
         },
         "it" : {
@@ -2764,6 +2800,12 @@
             "value" : "*másodlagos gomb*"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*tombol kedua*"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2905,6 +2947,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "kattintás %@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klik %@"
           }
         },
         "it" : {
@@ -3050,6 +3098,12 @@
             "value" : "dupla kattintás %@"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klik dua kali %@"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3191,6 +3245,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "tripla kattintás %@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klik tiga kali %@"
           }
         },
         "it" : {
@@ -3336,6 +3396,12 @@
             "value" : "kattintás és *húzás* %@"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klik dan *seret* %@"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3477,6 +3543,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "dupla kattintás és *húzás* %@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klik dua kali dan *seret* %@"
           }
         },
         "it" : {
@@ -3622,6 +3694,12 @@
             "value" : "tripla kattintás és *húzás* %@"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klik tiga kali dan *seret* %@"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3763,6 +3841,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "és *húzás*"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dan *seret*"
           }
         },
         "it" : {
@@ -3908,6 +3992,12 @@
             "value" : "tartás %@"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tahan %@"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4049,6 +4139,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "dupla kattintás és tartás %@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klik dua kali dan tahan %@"
           }
         },
         "it" : {
@@ -4194,6 +4290,12 @@
             "value" : "tripla kattintás és tartás %@"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klik tiga kali dan tahan %@"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4335,6 +4437,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "kattintás és *görgetés* %@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klik dan *gulir* %@"
           }
         },
         "it" : {
@@ -4480,6 +4588,12 @@
             "value" : "dupla kattintás és *görgetés* %@"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klik dua kali dan *gulir* %@"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4621,6 +4735,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "tripla kattintás és *görgetés* %@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klik tiga kali dan *gulir* %@"
           }
         },
         "it" : {
@@ -4766,6 +4886,12 @@
             "value" : "és *görgetés*"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "dan *gulir*"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4907,6 +5033,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "középső gomb"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tombol tengah"
           }
         },
         "it" : {
@@ -5052,6 +5184,12 @@
             "value" : "gomb %@"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tombol %@"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5195,6 +5333,12 @@
             "value" : "elsődleges gomb"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tombol utama"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5336,6 +5480,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "másodlagos gomb"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tombol kedua"
           }
         },
         "it" : {

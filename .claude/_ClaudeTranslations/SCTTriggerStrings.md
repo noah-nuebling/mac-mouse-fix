@@ -78,8 +78,8 @@
     - [x] ja
     
     Southeast Asian
-    - [ ] th
-    - [ ] id
+    - [x] th
+    - [x] id
     - [ ] hi
 
     Middle Eastern
@@ -94,7 +94,7 @@
 
 # PROMPT
 
-Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into th (Thai)
+Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into id (Indonesian)
 
 The CTXTriggerStrings.md is the result of doing extensive research on the the existing strings and their comments, trust this and don't do extensive research yourself.
 
