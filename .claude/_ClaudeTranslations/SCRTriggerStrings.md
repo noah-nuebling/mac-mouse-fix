@@ -84,17 +84,17 @@
 
     Middle Eastern
     - [x] ar
-    - [ ] he
+    - [x] he
 
     Chinese
-    - [ ] zh-Hant
+    - [x] zh-Hant
     - [ ] zh-HK
 
 ---
 
 # PROMPT
 
-Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into he (Hebrew)
+Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into zh-Hant (Traditional Chinese)
 
 The CTXTriggerStrings.md is the result of doing extensive research on the the existing strings and their comments, trust this and don't do extensive research yourself.
 
@@ -138,3 +138,4 @@ Hi Claude! Can you review this [[Arabic]] UI I've been working on with Gemini?
         If not, does that change what you think the optimal translations for these strings would be?
     - [ ] Test / fix the ActionTable layouts
         - [ ] Saw it erroneously making space for 3 lines in Japanese (Text only took up 2 lines)
+    - [ ] Check all languages for unnecessary spaces around the format specifiers.

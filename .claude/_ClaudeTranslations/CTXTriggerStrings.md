@@ -162,6 +162,13 @@ German
 Chinese (Simplified)
     Desired Translation: Translate the button names as 主键, 辅键, 中键, and 第%@键
         Explanation: In the glossary you'll find various Chinese translations for the mouse buttons like '按钮%@', '第3键', '鼠标第%@键' and '鼠标主按钮'. The above choices are very short while staying natural and consistently using '键'.
+Chinese (Traditional)
+    Desired Translation: No spaces around button names. ('按下%@' instead '按下 %@')
+        Explanation: Spaces aren't typically used like this in Chinese. The button names are short and already visually distinct (grayed out in UI), so spaces aren't needed for scannability.
+    Desired Translation: Use 按下 instead of 按一下 for 'Click'.
+        Explanation: Apple seems to use 按一下 more, but they also use 按下 and that's shorter. 
+            We hope it's still clear/natural in context.
+            (Not sure this was the best decision but let's roll with it for now.)
 Korean
     Desired Translation: Translate the button names as 주 버튼, 보조 버튼, 중간 버튼, %@번 버튼
         Explanation: These are optimized for length. Except for `%@번 버튼`, which we're using over `버튼 %@` since it's more natural and has consistent word order with the other strings.
@@ -214,7 +221,7 @@ Hebrew
             Combined string example: "לחיצה ו*גרירה* *בכפתור אמצעי*" (click and drag with middle button)
         Explanation: "על" (on) doesn't work semantically for actions like drag and scroll — you don't drag "on" a button, you drag "with" the button.
             "ב" expresses the instrumental relationship (using the button) and works naturally for all action types: לחיצה בכפתור (click), גרירה בכפתור (drag), החזקה בכפתור (hold).
-            "ב" is also shorter since it's a prefix that attaches to כפתור, rather than a separate word.
+            "ב" is also shorter since it's a prefix that attaches to כפתור, rather than a separate word.=
 Multiple Languages
     Desired Translation: Grammatical connectors in `trigger.substring.button-name.*` strings.
         Explanation: The `trigger.substring.button-name.*` strings are inserted into the other `trigger.substring.*` strings at the format specifiers (%@). The combined strings needs to feel grammatically sound. In some languages this requires connectors.

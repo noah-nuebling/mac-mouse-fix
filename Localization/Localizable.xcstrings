@@ -2019,6 +2019,12 @@
             "state" : "translated",
             "value" : "点按%@ + "
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按下%@ +"
+          }
         }
       }
     },
@@ -2185,6 +2191,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "连按%@ + "
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按兩下%@ +"
           }
         }
       }
@@ -2353,6 +2365,12 @@
             "state" : "translated",
             "value" : "连按三次%@ + "
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按三下%@ +"
+          }
         }
       }
     },
@@ -2519,6 +2537,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*中键*"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*中鍵*"
           }
         }
       }
@@ -2687,6 +2711,12 @@
             "state" : "translated",
             "value" : "*第%@键*"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*第%@鍵*"
+          }
         }
       }
     },
@@ -2853,6 +2883,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*主键*"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*主鍵*"
           }
         }
       }
@@ -3021,6 +3057,12 @@
             "state" : "translated",
             "value" : "*辅键*"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*輔鍵*"
+          }
         }
       }
     },
@@ -3187,6 +3229,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "点按%@"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按下%@"
           }
         }
       }
@@ -3355,6 +3403,12 @@
             "state" : "translated",
             "value" : "连按%@"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按兩下%@"
+          }
         }
       }
     },
@@ -3521,6 +3575,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "连按三次%@"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按三下%@"
           }
         }
       }
@@ -3689,6 +3749,12 @@
             "state" : "translated",
             "value" : "点按并*拖移*%@"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按下並*拖移*%@"
+          }
         }
       }
     },
@@ -3855,6 +3921,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "连按并*拖移*%@"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按兩下並*拖移*%@"
           }
         }
       }
@@ -4023,6 +4095,12 @@
             "state" : "translated",
             "value" : "连按三次并*拖移*%@"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按三下並*拖移*%@"
+          }
         }
       }
     },
@@ -4190,6 +4268,12 @@
             "state" : "translated",
             "value" : "并*拖移*"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "並*拖移*"
+          }
         }
       }
     },
@@ -4353,6 +4437,12 @@
           }
         },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按住%@"
+          }
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "按住%@"
@@ -4524,6 +4614,12 @@
             "state" : "translated",
             "value" : "连按并按住%@"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按兩下並按住%@"
+          }
         }
       }
     },
@@ -4690,6 +4786,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "连按三次并按住%@"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按三下並按住%@"
           }
         }
       }
@@ -4858,6 +4960,12 @@
             "state" : "translated",
             "value" : "点按并*滚动*%@"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按下並*捲動*%@"
+          }
         }
       }
     },
@@ -5024,6 +5132,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "连按并*滚动*%@"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按兩下並*捲動*%@"
           }
         }
       }
@@ -5192,6 +5306,12 @@
             "state" : "translated",
             "value" : "连按三次并*滚动*%@"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按三下並*捲動*%@"
+          }
         }
       }
     },
@@ -5358,6 +5478,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "并*滚动*"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "並*捲動*"
           }
         }
       }
@@ -5526,6 +5652,12 @@
             "state" : "translated",
             "value" : "中键"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中鍵"
+          }
         }
       }
     },
@@ -5692,6 +5824,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "第%@键"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第%@鍵"
           }
         }
       }
@@ -5860,6 +5998,12 @@
             "state" : "translated",
             "value" : "主键"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主鍵"
+          }
         }
       }
     },
@@ -6026,6 +6170,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "辅键"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "輔鍵"
           }
         }
       }
