@@ -78,6 +78,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!
 
+**février 2026**
+
+- 🇺🇸&nbsp;Alan&nbsp;F&nbsp;Xenos - "Lets me remap the dumb emoji button on my Pop Mouse to control Exposé - worth it for sure"
+
 **janvier 2026**
 
 - 🇺🇸&nbsp;Jordan&nbsp;Lee

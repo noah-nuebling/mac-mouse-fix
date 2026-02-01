@@ -72,6 +72,10 @@ Las personas que me apoyaron gastando más del precio estándar en Mac Mouse Fix
 
 Estas personas gastaron mucho más que el precio estándar y me invitaron un **Batido increíble**. (Y algunos incluso dejaron un mensaje) ¡Gracias por el *subidón de azúcar*!
 
+**febrero 2026**
+
+- 🇺🇸&nbsp;Alan&nbsp;F&nbsp;Xenos - "Lets me remap the dumb emoji button on my Pop Mouse to control Exposé - worth it for sure"
+
 **enero 2026**
 
 - 🇺🇸&nbsp;Jordan&nbsp;Lee

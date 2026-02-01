@@ -78,6 +78,10 @@ Desteğiniz için teşekkürler! :)
 
 Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem bir Milkshake** ısmarladılar. (Hatta bazıları bir mesaj bile gönderdi!) *Ekstra şeker* için teşekkürler!
 
+**Şubat 2026**
+
+- 🇺🇸&nbsp;Alan&nbsp;F&nbsp;Xenos - "Lets me remap the dumb emoji button on my Pop Mouse to control Exposé - worth it for sure"
+
 **Ocak 2026**
 
 - 🇺🇸&nbsp;Jordan&nbsp;Lee

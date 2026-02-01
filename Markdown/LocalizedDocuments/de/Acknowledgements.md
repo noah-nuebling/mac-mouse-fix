@@ -72,6 +72,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den *Zucker-Kick*!
 
+**Februar 2026**
+
+- 🇺🇸&nbsp;Alan&nbsp;F&nbsp;Xenos - "Lets me remap the dumb emoji button on my Pop Mouse to control Exposé - worth it for sure"
+
 **Januar 2026**
 
 - 🇺🇸&nbsp;Jordan&nbsp;Lee

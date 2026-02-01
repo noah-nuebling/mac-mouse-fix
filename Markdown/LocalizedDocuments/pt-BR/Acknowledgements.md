@@ -74,6 +74,10 @@ Obrigado pelo apoio! :)
 
 Essas pessoas contribuíram com um valor bem acima do preço padrão e me presentearam com um milk-shake incrível. (E algumas ainda deixaram uma mensagem!) Obrigado pelo pico de açúcar! 😄
 
+**fevereiro 2026**
+
+- 🇺🇸&nbsp;Alan&nbsp;F&nbsp;Xenos - "Lets me remap the dumb emoji button on my Pop Mouse to control Exposé - worth it for sure"
+
 **janeiro 2026**
 
 - 🇺🇸&nbsp;Jordan&nbsp;Lee
