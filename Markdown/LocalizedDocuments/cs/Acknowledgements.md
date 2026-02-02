@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **únor 2026**
 
+- 🇺🇸&nbsp;David&nbsp;E&nbsp;Lee - "Worth. Every. Penny. Thank you!"
 - 🇺🇸&nbsp;Alan&nbsp;F&nbsp;Xenos - "Lets me remap the dumb emoji button on my Pop Mouse to control Exposé - worth it for sure"
 
 **leden 2026**
