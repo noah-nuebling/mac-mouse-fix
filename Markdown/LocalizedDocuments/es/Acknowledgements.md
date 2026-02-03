@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **febrero 2026**
 
+- 🇫🇮&nbsp;Yuri
 - 🇺🇸&nbsp;David&nbsp;E&nbsp;Lee - "Worth. Every. Penny. Thank you!"
 - 🇺🇸&nbsp;Alan&nbsp;F&nbsp;Xenos - "Lets me remap the dumb emoji button on my Pop Mouse to control Exposé - worth it for sure"
 
