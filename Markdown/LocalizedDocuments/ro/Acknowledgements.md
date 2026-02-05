@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **februarie 2026**
 
+- 🇩🇪&nbsp;Björn&nbsp;Ahrens
 - 🇦🇺&nbsp;Lorraine - "Great app and happy to support your great work"
 - 🇵🇰&nbsp;Austin&nbsp;Zafar - "Always love supporting simple solutions that actually get stuff done"
 - 🇺🇸&nbsp;Bth
