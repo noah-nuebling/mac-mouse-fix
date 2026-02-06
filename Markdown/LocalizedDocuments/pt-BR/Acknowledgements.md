@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **fevereiro 2026**
 
+- 🇰🇷&nbsp;Kmt1768
 - 🇩🇪&nbsp;Björn&nbsp;Ahrens
 - 🇦🇺&nbsp;Lorraine - "Great app and happy to support your great work"
 - 🇵🇰&nbsp;Austin&nbsp;Zafar - "Always love supporting simple solutions that actually get stuff done"
