@@ -32,6 +32,7 @@
 
 #import "SharedUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "HIDPPListener.h"
 
 @implementation DeviceManager
 
@@ -39,6 +40,7 @@
 
 static IOHIDManagerRef _manager;
 static NSMutableArray<Device *> *_attachedDevices;
+static NSMutableDictionary<NSNumber *, HIDPPListener *> *_hidppListeners; // Best-effort HID++ listeners keyed by IORegistry ID.
 
 + (BOOL)devicesAreAttached {
     return _attachedDevices.count > 0;
@@ -48,6 +50,15 @@ static NSMutableArray<Device *> *_attachedDevices;
 }
 
 static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
+
+#if IS_HELPER
+static uint64_t registryIDForDevice(IOHIDDeviceRef device) {
+    io_service_t service = IOHIDDeviceGetService(device);
+    uint64_t rid = 0;
+    IORegistryEntryGetRegistryEntryID(service, &rid);
+    return rid;
+}
+#endif
 + (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice {
     
     /// NOTE: Tried caching here using `_iohidToAttachedCache`, but it actually makes things slower.
@@ -92,6 +103,7 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 + (void)load_Manual {
     setupDeviceMatchingAndRemovalCallbacks();
     _attachedDevices = [NSMutableArray array];
+    _hidppListeners = [NSMutableDictionary dictionary];
 }
 
 + (void)deconfigureDevices {
@@ -231,6 +243,19 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         /// Notify
 //        [ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
         [SwitchMaster.shared attachedDevicesChangedWithDevices:_attachedDevices];
+
+        // Start HIDPP listener for Logitech devices (best-effort)
+        NSNumber *registryID = @(registryIDForDevice(device));
+        if (_hidppListeners[registryID] == nil) {
+            HIDPPListener *listener = [[HIDPPListener alloc] initWithDevice:device];
+            NSError *err = nil;
+            if ([listener start:&err]) {
+                _hidppListeners[registryID] = listener;
+                DDLogInfo(@"Started HIDPP listener for device %@ (registryID %@)", newDevice.name, registryID);
+            } else {
+                DDLogDebug(@"HIDPP listener failed for device %@ (registryID %@): %@", newDevice.name, registryID, err.localizedDescription);
+            }
+        }
         
         ///  Notify other objects
 //        [Scroll decide];
@@ -291,9 +316,18 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
         [_attachedDevices removeObject:attachedDevice];
         
         /// Reset cache
-        
+
         _maxButtonNumberAmongDevices_IsCached = false;
         [_iohidToAttachedCache removeAllObjects];
+
+        // Stop HIDPP listener
+        NSNumber *registryID = @(registryIDForDevice(device));
+        HIDPPListener *listener = _hidppListeners[registryID];
+        if (listener != nil) {
+            [listener stop];
+            [_hidppListeners removeObjectForKey:registryID];
+            DDLogInfo(@"Stopped HIDPP listener for registryID %@", registryID);
+        }
         
         /// Notify
 //        [ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
