@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **únor 2026**
 
+- 🇺🇸&nbsp;Ben&nbsp;Walsh
 - 🇰🇷&nbsp;Kmt1768
 - 🇩🇪&nbsp;Björn&nbsp;Ahrens
 - 🇦🇺&nbsp;Lorraine - "Great app and happy to support your great work"

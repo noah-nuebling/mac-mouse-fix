@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2026**
 
+- 🇺🇸&nbsp;Ben&nbsp;Walsh
 - 🇰🇷&nbsp;Kmt1768
 - 🇩🇪&nbsp;Björn&nbsp;Ahrens
 - 🇦🇺&nbsp;Lorraine - "Great app and happy to support your great work"

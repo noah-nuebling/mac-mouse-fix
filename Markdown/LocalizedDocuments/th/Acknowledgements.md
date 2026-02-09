@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **กุมภาพันธ์ 2026**
 
+- 🇺🇸&nbsp;Ben&nbsp;Walsh
 - 🇰🇷&nbsp;Kmt1768
 - 🇩🇪&nbsp;Björn&nbsp;Ahrens
 - 🇦🇺&nbsp;Lorraine - "Great app and happy to support your great work"

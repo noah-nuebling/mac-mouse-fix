@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Şubat 2026**
 
+- 🇺🇸&nbsp;Ben&nbsp;Walsh
 - 🇰🇷&nbsp;Kmt1768
 - 🇩🇪&nbsp;Björn&nbsp;Ahrens
 - 🇦🇺&nbsp;Lorraine - "Great app and happy to support your great work"
