@@ -50,14 +50,14 @@ Obrigado por levar o Mac Mouse Fix para pessoas ao redor do mundo!
 <!-- 
   Old stuff from Money section:
 
-  Thanks so much to everyone who bought me a milkshake and to all 35700 people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
+  Thanks so much to everyone who bought me a milkshake and to all 35700+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
   You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. 
 -->
 
 <a name="money"></a> 
 ## 💰 Apoio financeiro
 
-Muito obrigado a todos que me pagaram um milk-shake e a todas as 35700 pessoas que compraram o Mac Mouse Fix.
+Muito obrigado a todos que me pagaram um milk-shake e a todas as 35700+ pessoas que compraram o Mac Mouse Fix.
 Graças a vocês, posso dedicar bastante tempo fazendo algo que eu realmente amo.
 
 As pessoas que apoiaram o projeto pagando mais do que o valor padrão do Mac Mouse Fix recebem um agradecimento especial aqui:
@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **fevereiro 2026**
 
+- 🇺🇸&nbsp;As&nbsp;If
 - 🇩🇪&nbsp;Benjamin&nbsp;Kelch
 - 🇺🇸&nbsp;Alex&nbsp;M&nbsp; - "Long live Mac Mouse Fix"
 - 🇺🇸&nbsp;Sam&nbsp;Bobb
