@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Şubat 2026**
 
+- 🇩🇪&nbsp;Benjamin&nbsp;Kelch
 - 🇺🇸&nbsp;Alex&nbsp;M&nbsp; - "Long live Mac Mouse Fix"
 - 🇺🇸&nbsp;Sam&nbsp;Bobb
 - 🇺🇸&nbsp;Ben&nbsp;Walsh
