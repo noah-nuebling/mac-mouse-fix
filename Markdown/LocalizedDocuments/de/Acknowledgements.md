@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2026**
 
+- 🇺🇸&nbsp;Alex&nbsp;M&nbsp; - "Long live Mac Mouse Fix"
 - 🇺🇸&nbsp;Sam&nbsp;Bobb
 - 🇺🇸&nbsp;Ben&nbsp;Walsh
 - 🇰🇷&nbsp;Kmt1768

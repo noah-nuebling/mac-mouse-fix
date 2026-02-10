@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **fevereiro 2026**
 
+- 🇺🇸&nbsp;Alex&nbsp;M&nbsp; - "Long live Mac Mouse Fix"
 - 🇺🇸&nbsp;Sam&nbsp;Bobb
 - 🇺🇸&nbsp;Ben&nbsp;Walsh
 - 🇰🇷&nbsp;Kmt1768
