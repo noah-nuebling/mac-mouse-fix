@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2026**
 
+- 🇺🇸&nbsp;Brett&nbsp;Curtiss
 - 🇺🇸&nbsp;Anonymouse - "Thankyou! The missing MacOs mouse settings."
 - 🇬🇷&nbsp;Ioannis - "Game changer!!!!"
 - 🇺🇸&nbsp;As&nbsp;If
