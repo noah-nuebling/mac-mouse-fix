@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Şubat 2026**
 
+- 🇺🇸&nbsp;Anonymouse - "Thankyou! The missing MacOs mouse settings."
 - 🇬🇷&nbsp;Ioannis - "Game changer!!!!"
 - 🇺🇸&nbsp;As&nbsp;If
 - 🇩🇪&nbsp;Benjamin&nbsp;Kelch

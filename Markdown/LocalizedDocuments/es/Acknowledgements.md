@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **febrero 2026**
 
+- 🇺🇸&nbsp;Anonymouse - "Thankyou! The missing MacOs mouse settings."
 - 🇬🇷&nbsp;Ioannis - "Game changer!!!!"
 - 🇺🇸&nbsp;As&nbsp;If
 - 🇩🇪&nbsp;Benjamin&nbsp;Kelch

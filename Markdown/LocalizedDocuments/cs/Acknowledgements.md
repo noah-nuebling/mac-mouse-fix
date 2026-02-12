@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **únor 2026**
 
+- 🇺🇸&nbsp;Anonymouse - "Thankyou! The missing MacOs mouse settings."
 - 🇬🇷&nbsp;Ioannis - "Game changer!!!!"
 - 🇺🇸&nbsp;As&nbsp;If
 - 🇩🇪&nbsp;Benjamin&nbsp;Kelch

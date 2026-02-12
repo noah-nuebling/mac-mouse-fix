@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **fevereiro 2026**
 
+- 🇺🇸&nbsp;Anonymouse - "Thankyou! The missing MacOs mouse settings."
 - 🇬🇷&nbsp;Ioannis - "Game changer!!!!"
 - 🇺🇸&nbsp;As&nbsp;If
 - 🇩🇪&nbsp;Benjamin&nbsp;Kelch
