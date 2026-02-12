@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **février 2026**
 
+- 🇺🇸&nbsp;Roman&nbsp;Beylin
 - 🇺🇸&nbsp;Brett&nbsp;Curtiss
 - 🇺🇸&nbsp;Anonymouse - "Thankyou! The missing MacOs mouse settings."
 - 🇬🇷&nbsp;Ioannis - "Game changer!!!!"
