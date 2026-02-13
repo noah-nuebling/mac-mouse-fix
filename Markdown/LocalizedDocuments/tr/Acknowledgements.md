@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Şubat 2026**
 
+- 🇦🇹&nbsp;Luca&nbsp;C&nbsp;
 - 🇦🇪&nbsp;Manoj&nbsp;Kumar
 - 🇺🇸&nbsp;Roman&nbsp;Beylin
 - 🇺🇸&nbsp;Brett&nbsp;Curtiss
