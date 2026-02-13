@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **פברואר 2026**
 
+- 🇦🇪&nbsp;Manoj&nbsp;Kumar
 - 🇺🇸&nbsp;Roman&nbsp;Beylin
 - 🇺🇸&nbsp;Brett&nbsp;Curtiss
 - 🇺🇸&nbsp;Anonymouse - "Thankyou! The missing MacOs mouse settings."
