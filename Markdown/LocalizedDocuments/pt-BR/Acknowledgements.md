@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **fevereiro 2026**
 
+- 🇺🇸&nbsp;David&nbsp;Mackenzie - "Thank you for fixing this very weird Mac quirk!"
 - 🇺🇸&nbsp;Phil&nbsp;Adkins
 - 🇷🇴&nbsp;Horia - "Thanks, great product"
 - 🇿🇦&nbsp;Sigstart - "Milkshakes improve coding skill. It is known."

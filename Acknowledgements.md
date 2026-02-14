@@ -74,6 +74,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **February 2026**
 
+- 🇺🇸&nbsp;David&nbsp;Mackenzie - "Thank you for fixing this very weird Mac quirk!"
 - 🇺🇸&nbsp;Phil&nbsp;Adkins
 - 🇷🇴&nbsp;Horia - "Thanks, great product"
 - 🇿🇦&nbsp;Sigstart - "Milkshakes improve coding skill. It is known."
