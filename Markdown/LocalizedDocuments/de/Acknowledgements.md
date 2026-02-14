@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2026**
 
+- 🇺🇸&nbsp;Phil&nbsp;Adkins
 - 🇷🇴&nbsp;Horia - "Thanks, great product"
 - 🇿🇦&nbsp;Sigstart - "Milkshakes improve coding skill. It is known."
 - 🇦🇹&nbsp;Luca&nbsp;C&nbsp;

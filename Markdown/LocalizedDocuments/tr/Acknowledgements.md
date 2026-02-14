@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Şubat 2026**
 
+- 🇺🇸&nbsp;Phil&nbsp;Adkins
 - 🇷🇴&nbsp;Horia - "Thanks, great product"
 - 🇿🇦&nbsp;Sigstart - "Milkshakes improve coding skill. It is known."
 - 🇦🇹&nbsp;Luca&nbsp;C&nbsp;
