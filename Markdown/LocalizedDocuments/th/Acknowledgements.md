@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **กุมภาพันธ์ 2026**
 
+- 🇷🇴&nbsp;Horia - "Thanks, great product"
 - 🇿🇦&nbsp;Sigstart - "Milkshakes improve coding skill. It is known."
 - 🇦🇹&nbsp;Luca&nbsp;C&nbsp;
 - 🇦🇪&nbsp;Manoj&nbsp;Kumar

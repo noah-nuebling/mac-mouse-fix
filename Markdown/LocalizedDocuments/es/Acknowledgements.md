@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **febrero 2026**
 
+- 🇷🇴&nbsp;Horia - "Thanks, great product"
 - 🇿🇦&nbsp;Sigstart - "Milkshakes improve coding skill. It is known."
 - 🇦🇹&nbsp;Luca&nbsp;C&nbsp;
 - 🇦🇪&nbsp;Manoj&nbsp;Kumar
