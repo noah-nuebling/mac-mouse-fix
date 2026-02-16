@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **únor 2026**
 
+- 🇹🇼&nbsp;Daniel&nbsp;Lin
 - 🇺🇸&nbsp;David&nbsp;Mackenzie - "Thank you for fixing this very weird Mac quirk!"
 - 🇺🇸&nbsp;Phil&nbsp;Adkins
 - 🇷🇴&nbsp;Horia - "Thanks, great product"
