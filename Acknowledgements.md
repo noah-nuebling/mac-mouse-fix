@@ -74,6 +74,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **February 2026**
 
+- 🇦🇺&nbsp;Markz0R - "🙏"
 - 🇹🇼&nbsp;Daniel&nbsp;Lin
 - 🇺🇸&nbsp;David&nbsp;Mackenzie - "Thank you for fixing this very weird Mac quirk!"
 - 🇺🇸&nbsp;Phil&nbsp;Adkins
