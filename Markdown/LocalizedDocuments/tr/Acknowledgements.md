@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Şubat 2026**
 
+- 🇺🇦&nbsp;Alex - "Its great!!!"
 - 🇦🇺&nbsp;Markz0R - "🙏"
 - 🇹🇼&nbsp;Daniel&nbsp;Lin
 - 🇺🇸&nbsp;David&nbsp;Mackenzie - "Thank you for fixing this very weird Mac quirk!"

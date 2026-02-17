@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **febrer 2026**
 
+- 🇺🇦&nbsp;Alex - "Its great!!!"
 - 🇦🇺&nbsp;Markz0R - "🙏"
 - 🇹🇼&nbsp;Daniel&nbsp;Lin
 - 🇺🇸&nbsp;David&nbsp;Mackenzie - "Thank you for fixing this very weird Mac quirk!"
