@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **febrero 2026**
 
+- 🇩🇰&nbsp;Szymon&nbsp;Bęczkowski
 - 🇫🇷&nbsp;Rolldav - "Support from France"
 - 🇺🇦&nbsp;Alex - "Its great!!!"
 - 🇦🇺&nbsp;Markz0R - "🙏"

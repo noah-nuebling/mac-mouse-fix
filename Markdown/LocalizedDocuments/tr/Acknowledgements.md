@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Şubat 2026**
 
+- 🇩🇰&nbsp;Szymon&nbsp;Bęczkowski
 - 🇫🇷&nbsp;Rolldav - "Support from France"
 - 🇺🇦&nbsp;Alex - "Its great!!!"
 - 🇦🇺&nbsp;Markz0R - "🙏"

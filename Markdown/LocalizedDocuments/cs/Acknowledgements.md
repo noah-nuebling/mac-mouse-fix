@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **únor 2026**
 
+- 🇩🇰&nbsp;Szymon&nbsp;Bęczkowski
 - 🇫🇷&nbsp;Rolldav - "Support from France"
 - 🇺🇦&nbsp;Alex - "Its great!!!"
 - 🇦🇺&nbsp;Markz0R - "🙏"

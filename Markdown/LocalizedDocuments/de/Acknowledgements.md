@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2026**
 
+- 🇩🇰&nbsp;Szymon&nbsp;Bęczkowski
 - 🇫🇷&nbsp;Rolldav - "Support from France"
 - 🇺🇦&nbsp;Alex - "Its great!!!"
 - 🇦🇺&nbsp;Markz0R - "🙏"
