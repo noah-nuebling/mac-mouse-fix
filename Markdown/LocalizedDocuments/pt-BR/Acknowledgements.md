@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **fevereiro 2026**
 
+- 🇺🇸&nbsp;Ryan&nbsp;Fererro
 - 🇩🇪&nbsp;Leo&nbsp;L&nbsp;
 - 🇺🇸&nbsp;Sean&nbsp;Moser
 - 🇮🇪&nbsp;Dylan - "This is amazing, thank you!"
