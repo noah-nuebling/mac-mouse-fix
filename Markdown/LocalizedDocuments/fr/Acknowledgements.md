@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **février 2026**
 
+- 🇩🇪&nbsp;Leo&nbsp;L&nbsp;
 - 🇺🇸&nbsp;Sean&nbsp;Moser
 - 🇮🇪&nbsp;Dylan - "This is amazing, thank you!"
 - 🇩🇰&nbsp;Szymon&nbsp;Bęczkowski

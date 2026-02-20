@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **febrero 2026**
 
+- 🇩🇪&nbsp;Leo&nbsp;L&nbsp;
 - 🇺🇸&nbsp;Sean&nbsp;Moser
 - 🇮🇪&nbsp;Dylan - "This is amazing, thank you!"
 - 🇩🇰&nbsp;Szymon&nbsp;Bęczkowski
