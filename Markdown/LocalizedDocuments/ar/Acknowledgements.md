@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **فبراير 2026**
 
+- 🇺🇸&nbsp;Sean&nbsp;Moser
 - 🇮🇪&nbsp;Dylan - "This is amazing, thank you!"
 - 🇩🇰&nbsp;Szymon&nbsp;Bęczkowski
 - 🇫🇷&nbsp;Rolldav - "Support from France"

@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **fevereiro 2026**
 
+- 🇺🇸&nbsp;Sean&nbsp;Moser
 - 🇮🇪&nbsp;Dylan - "This is amazing, thank you!"
 - 🇩🇰&nbsp;Szymon&nbsp;Bęczkowski
 - 🇫🇷&nbsp;Rolldav - "Support from France"
