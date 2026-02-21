@@ -48,14 +48,14 @@ Quiero agradecer especialmente a las personas y proyectos nombrados en este docu
 <!-- 
   Old stuff from Money section:
 
-  Thanks so much to everyone who bought me a milkshake and to all 36300+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
+  Thanks so much to everyone who bought me a milkshake and to all 36400+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
   You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. 
 -->
 
 <a name="money"></a> 
 ## 💰 Dinero
 
-Muchas gracias a todos los que me invitaron a un batido y a las **36300+** personas que compraron Mac Mouse Fix.
+Muchas gracias a todos los que me invitaron a un batido y a las **36400+** personas que compraron Mac Mouse Fix.
 Gracias a ustedes, puedo dedicar mucho tiempo a hacer algo que amo.
 
 Las personas que me apoyaron gastando más del precio estándar en Mac Mouse Fix reciben una mención especial aquí:
@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **febrero 2026**
 
+- 🇺🇸&nbsp;Brian&nbsp;Kimball
 - 🇺🇸&nbsp;Albert&nbsp;Lee - "I'm only mad that I didn't find this sooner. My trackball scroll wheel now scrolls like a hot knife through butter."
 - 🇺🇸&nbsp;Ryan&nbsp;Fererro
 - 🇩🇪&nbsp;Leo&nbsp;L&nbsp;
