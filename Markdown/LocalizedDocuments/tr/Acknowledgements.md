@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Şubat 2026**
 
+- 🇺🇸&nbsp;Albert&nbsp;Lee - "I'm only mad that I didn't find this sooner. My trackball scroll wheel now scrolls like a hot knife through butter."
 - 🇺🇸&nbsp;Ryan&nbsp;Fererro
 - 🇩🇪&nbsp;Leo&nbsp;L&nbsp;
 - 🇺🇸&nbsp;Sean&nbsp;Moser

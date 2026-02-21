@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **fevereiro 2026**
 
+- 🇺🇸&nbsp;Albert&nbsp;Lee - "I'm only mad that I didn't find this sooner. My trackball scroll wheel now scrolls like a hot knife through butter."
 - 🇺🇸&nbsp;Ryan&nbsp;Fererro
 - 🇩🇪&nbsp;Leo&nbsp;L&nbsp;
 - 🇺🇸&nbsp;Sean&nbsp;Moser
