@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Februar 2026**
 
+- 🇦🇺&nbsp;Juno&nbsp;Lee - "Awesome! This is exactly what I needed. Truly deserves the support!"
 - 🇺🇸&nbsp;Brian&nbsp;Kimball
 - 🇺🇸&nbsp;Albert&nbsp;Lee - "I'm only mad that I didn't find this sooner. My trackball scroll wheel now scrolls like a hot knife through butter."
 - 🇺🇸&nbsp;Ryan&nbsp;Fererro
