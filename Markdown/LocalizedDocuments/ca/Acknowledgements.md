@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **febrer 2026**
 
+- 🇺🇸&nbsp;Vivak&nbsp;Patel
 - 🇺🇸&nbsp;Dave&nbsp;Weller&nbsp;Fahy
 - 🇦🇺&nbsp;Juno&nbsp;Lee - "Awesome! This is exactly what I needed. Truly deserves the support!"
 - 🇺🇸&nbsp;Brian&nbsp;Kimball
