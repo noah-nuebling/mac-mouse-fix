@@ -19,6 +19,39 @@
 
 @implementation SharedUtility
 
+#pragma mark - MFLocales
+
+NSString *MFLocale(void) {
+
+    /// Return the app's current locale code
+    /// E.g. `en`, `de`, `pt-BR`, `fr`, `zh-Hans`, ...
+    ///
+    /// These codes are also found:
+    ///     - In the .pbxproj (under `knownRegions`)
+    ///     - In the .xcstrings files (under `localizations`)
+    ///     - In our Python scripts that localize the website and markdown-files [Feb 2026]
+    ///
+    /// Alternative APIs:
+    ///     These return the *System Settings'* locale (not the *app's* locale):
+    ///         - `[NSLocale currentLocale]`     (aka `Locale.currentLocale` in Swift),
+    ///         - `[NSLocale preferredLocale]` (private)
+    ///         (We're using these deliberately in the `LicenseUtility.currentRegionCode`)
+    ///     - These return the *app's* locale:
+    ///         - `[[NSBundle mainBundle] preferredLocalizations]` (Currently using this [Feb 2026])
+    ///         - `[NSLocale preferredLanguages]`                                       (Not sure what the difference is [Feb 2026])
+    ///         - `[[[NSUserDefaults standardUserDefaults] objectForKey: @"AppleLanguages"] firstObject]` (Not sure what the difference is [Feb 2026])
+    ///     - See: https://stackoverflow.com/questions/1522210/nslocale-currentlocale-always-returns-en-us-not-users-current-language
+    ///         - See this (about `@"AppleLanguages"`): https://developer.apple.com/library/archive/qa/qa1391/_index.html
+    
+    
+    NSString *result = [[[NSBundle mainBundle] preferredLocalizations] firstObject]; /// I've only ever seen this contain one entry [Feb 2026]
+    if (!result) {
+        assert(false); /// Don't think this can happen [Feb 2026]
+        result = @"en";
+    }
+    return result;
+}
+
 #pragma mark - runLoops
 
 void MFCFRunLoopPerform(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, void (^_Nonnull workload)(void)) {

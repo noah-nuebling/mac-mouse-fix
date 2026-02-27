@@ -19,8 +19,7 @@
 
     /// Note: [Apr 2025] Why is the result optional? I feel like we should just assert(false) and return "<Invalid MFLinkID>" or something
     
-    NSString *currentLocale = NSBundle.mainBundle.preferredLocalizations.firstObject ?: @"";
-    
+    NSString *currentLocale = MFLocale();
     
     NSString *result = nil;
     {

@@ -32,6 +32,7 @@ NSString *_MFLocalizedString(NSString *key) {
     ///     Improvement idea: Fall-back to closest available language instead of falling back to English:
     ///         - IIRC, in our Python scripts are doing this using Babel, but this feels good enough – just keep the UI as usable as possible when translations are missing – English is likely understood by most people [Oct 2025]
     ///         - See research / usage elsehwere of private `[NSLocale preferredLocale]` – it and related APIs might be used to implement this.
+    ///             - Also see `MFLocale()` [Feb 2026]
     ///     Also see
     ///         - `LocalizedStringAnnotation.m` where we customized `NSLocalizedString` through swizzling (now that we have `MFLocalizedString` swizzling is probably not be necessary anymore) [Oct 2025]
     ///         - Other solutions to the fallback problem: https://stackoverflow.com/questions/3263859/localizing-strings-in-ios-default-fallback-language
