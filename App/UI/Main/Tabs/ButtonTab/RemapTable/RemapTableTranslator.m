@@ -1030,7 +1030,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     }
     if (buttonModifierStrings.count > 0) {
         /// Join the strings for each button-modifier
-        btnMod = [[buttonModifierStrings componentsJoinedByString: @" "] mutableCopy];
+        btnMod = [[buttonModifierStrings componentsJoinedByString: @""] mutableCopy];
         
     } else {
         btnMod = [@"" mutableCopy];
