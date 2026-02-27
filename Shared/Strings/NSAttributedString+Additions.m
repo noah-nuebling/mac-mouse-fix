@@ -871,6 +871,16 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
             NSForegroundColorAttributeName: color //NSColor.secondaryLabelColor
         } forRange:range];
     }
+    
+    #pragma mark Underline
+
+    - (NSAttributedString *)attributedStringByAddingUnderlineWithStyle:(NSUnderlineStyle)style color:(NSColor *_Nullable)color forRange:(const NSRangePointer _Nullable)range {
+        auto attributes = [NSMutableDictionary new]; {
+            attributes[NSUnderlineStyleAttributeName] = @(style);
+            attributes[NSUnderlineColorAttributeName] = color; /// Not using dict literal so this can be nil
+        }
+        return [self attributedStringByAddingAttributes: attributes forRange:range];
+    }
 
     #pragma mark Baseline offset
 

@@ -68,6 +68,7 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 - (NSAttributedString *)attributedStringBySettingFontSize:(CGFloat)size;
 - (NSAttributedString *)attributedStringByAddingColor:(NSColor *)color forSubstring:(NSString *)subStr;
 - (NSAttributedString *)attributedStringByAddingColor:(NSColor *)color forRange:(const NSRangePointer _Nullable)range;
+- (NSAttributedString *)attributedStringByAddingUnderlineWithStyle:(NSUnderlineStyle)style color:(NSColor *_Nullable)color forRange:(const NSRangePointer _Nullable)range;
 
 - (NSAttributedString *) attributedStringByAddingBlankLineHeight: (CGFloat)height forRange:(const NSRangePointer _Nullable)range;
 - (NSAttributedString *)attributedStringByAddingHintStyle;
