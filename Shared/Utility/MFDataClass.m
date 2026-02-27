@@ -44,7 +44,7 @@
     ///             Sidenote: The CFRelease() source code contains a really interesting method for detecting recursion: Taking the address of goto-labels and comparing them to `__builtin_return_address(0)`.  (I used NSThread dicts when I needed to detect recursion which might be much slower –– But I also saw there's the `static __thread` storage modifier for more lightweight thread-local storage.)
     ///     - Should/could we validate against somebody trying to subclass an MFDataClass without using the MFDataClassX() macros? That might be possible by having [MFDataClassBase +load] find and iterate all its subclasses and then applying this validation. But since I'm working on this project alone, I won't make that mistake.
     
-    #if DEBUG
+    #if DEBUG && (0) /// Disable cause I don't think this every caught any issues, and it might worsen iteration times [Feb 2026]
     
     /// Log
     NSLog(@"Validating MFDataClass: %@", self); /// Using NSLog since I don't know if DDLog works in `+ load`.
