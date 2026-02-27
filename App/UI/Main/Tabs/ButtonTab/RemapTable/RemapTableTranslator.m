@@ -963,14 +963,14 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
                 color = NSColor.controlTextColor;   /// `NSColor.controlTextColor` no longer seems to be darker than the default under macOS Tahoe – See comments above [Feb 2026]
                 
                 NSColor *evenDarkerColor = color;   /// Disabled.   We liked the look of using NSColor.textColor for "ko" and "th" on macOS 26 – but NSColor.textColor doesn't flip. (See comments above)
-                NSColor *ligherColor     = color;   /// Disabled. `.secondaryLabelColor` is too light. Not sure if there's a flipping color in-between [Feb 2026, macOS 26]
+                NSColor *lighterColor     = color;   /// Disabled. `.secondaryLabelColor` is too light. Not sure if there's a flipping color in-between [Feb 2026, macOS 26]
                 
                 /// Override default values
                 if ([currentLocale hasPrefix: @"zh-"])      weight = NSFontWeightSemibold;  /// Looks nice to me.
                 else if ([currentLocale isEqual: @"ko"]) {  weight = NSFontWeightSemibold;  /// Semibold is a bit hard to pick out, but Bold looks ugly.
                                                             color = evenDarkerColor; }
                 else if ([currentLocale isEqual: @"ja"]) {  weight = NSFontWeightBold;      /// Semibold is invisible. Bold is a bit ugly.
-                                                            color = ligherColor; }
+                                                            color = lighterColor; }
                 else if ([currentLocale isEqual: @"th"]) {  weight = NSFontWeightBlack;     /// Even Black is a bit hard to pick out. But that's the most boldness available.
                                                             color = evenDarkerColor; }
 

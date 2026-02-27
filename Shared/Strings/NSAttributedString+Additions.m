@@ -455,10 +455,12 @@ static NSRect MFUnionRect(NSRect r, NSRect s) {
 
 - (NSSize)sizeAtMaxWidth:(CGFloat)maxWidth {
     
-    /// Notes:
-    /// - Why didn't we use the native `boundingRectWithSize:`? Was there really no way to make it work? Well this works so no need to change it.
     
-    { /// HACK (?) [Nov 2025] The `FB21078671` workaround in `ToastController.m` only works by using `boundingRectWithSize:` instead of the `TextKit 2 implementation`
+    
+    /// HACK (?) [Nov 2025] Using `boundingRectWithSize:`: The `FB21078671` workaround in `ToastController.m` only works by using `boundingRectWithSize:` instead of the `TextKit 2 implementation`
+    ///     Old note:
+    ///         - Why didn't we use `NSString`/`NSAttributedString`'s `boundingRectWithSize:` directly? Was there really no way to make it work? Well this works so no need to change it.
+    {
         auto size = [self
             boundingRectWithSize: NSMakeSize(maxWidth, CGFLOAT_MAX)
             options: NSStringDrawingUsesLineFragmentOrigin
