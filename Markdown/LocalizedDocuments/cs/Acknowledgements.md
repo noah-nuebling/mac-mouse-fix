@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **únor 2026**
 
+- 🇪🇸&nbsp;Woza - "-"
 - 🇩🇪&nbsp;Martin&nbsp;Schenk - "Gute Arbeit. Durchdacht und unkompliziert. Danke!"
 - 🇺🇸&nbsp;Benedict&nbsp;Aquino - "noice"
 - 🇺🇸&nbsp;Brent&nbsp;Watkins - "Great work!"

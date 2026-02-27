@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Şubat 2026**
 
+- 🇪🇸&nbsp;Woza - "-"
 - 🇩🇪&nbsp;Martin&nbsp;Schenk - "Gute Arbeit. Durchdacht und unkompliziert. Danke!"
 - 🇺🇸&nbsp;Benedict&nbsp;Aquino - "noice"
 - 🇺🇸&nbsp;Brent&nbsp;Watkins - "Great work!"
