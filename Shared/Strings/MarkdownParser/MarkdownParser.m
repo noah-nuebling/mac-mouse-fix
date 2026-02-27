@@ -254,7 +254,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSString *src, MDStyleOv
             ///     - Performance testing: [Apr 2025]
             ///         Switch vs NSDictionary:
             ///             Instead of a C-switch, we used to use an NSDictionary containing objc-blocks. That seems slow, but from my benchmarking, the difference to the C-switch looks much smaller than the random fluctuations from run to run.
-            ///             But we still stuck to switch since the code is a bit cleaner (at least with our bcase macros)
+            ///             But we still stuck to switch since the code is a bit cleaner (at least with our bcase macros!)
             ///         All the invocations of MarkdownParser take 10ths or 100ths of a millisecond, (and it's only called once per UI string, when the app first loads – I think)
             ///             -> Therefore, there is absolutely *zero* reason to try to optimize this any further.
             #pragma clang diagnostic push
