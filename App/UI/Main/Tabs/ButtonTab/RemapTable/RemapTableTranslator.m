@@ -921,28 +921,65 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         ///             - 26.08.2024: I saw the French and Brazillian loclizers not capitalize and spell the drag-particles exactly as they are in the trigger.substring.[...] strings.
         ///                 So we added more extensive comments and added `.z.` in the key so that translators see the drag-particles *after* the trigger.substring.[...] strings - hopefully making it more understandable how the particles affect the substrings.
         
+        NSString *currentLocale = MFLocale(); /// Put this outside the callback for speed. Not sure if stupid [Feb 2026]
+        
         tr = [MarkdownParser attributedStringWithCoolMarkdown: tr_ fillOutBase: NO styleOverrides: @{ /// Should we `fillOutBase:`? [Oct 2025]
             @(CMARK_NODE_EMPH): ^NSAttributedString *(NSAttributedString *dst, NSRangePointer nodeRange) {
                 
-                /// Set 'semibold' weight
-                /// Notes:
-                ///     - Old impl used `NSFontManager` with weight 7 (weight 8 was commented out)
-                ///         This seems to match `NSFontWeightMedium`, not `NSFontWeightSemibold`, so we're using `NSFontWeightMedium` [Sep 2025]
-                ///     - We're implementing bold and italic with `NSFontDescriptorSymbolicTraits`, but that doesn't seem to support semibold [Sep 2025]
-                ///         (Maybe we should just not use symbolicTraits at all, and instead use fontTraits and fontAttributes directly? symbolicTraits don't seem super useful.)
-                dst = [dst attributedStringByAddingWeight: NSFontWeightMedium forRange: nodeRange];
+                /// Determine weight and color
+                NSFontWeight weight;
+                NSColor *color;
                 
-                /// Set 'semibold' color
-                /// I can't really get a semibold. It's too thick or too thin. So I'm trying to make it appear thicker by darkening the color.
-                ///     Update: We're no longer using `NSFontManager` so we may have more control over thickness now and no longer need the color adjustment. [Oct 2025]
-                {
-                    
-                    NSColor *color;
-                    if ((0)) color = [NSColor.textColor colorWithAlphaComponent: 1.0];   /// Custom colors disable the automatic color inversion when selecting a tableViewCell. See https://stackoverflow.com/a/29860102/10601702
-                    else     color = NSColor.controlTextColor;                           /// This is almost black and automatically inverts. See: http://sethwillits.com/temp/nscolor/
-                    
-                    dst = [dst attributedStringByAddingColor: color forRange: nodeRange];
-                }
+                /// Discussion
+                ///     Pre macOS 26 comment:
+                ///         I can't really get a semibold. It's too thick or too thin. So I'm trying to make it appear thicker ...
+                ///             - ... by darkening the color.
+                ///                 We used `NSColor.controlTextColor` –  this color is almost black and automatically inverts. See: http://sethwillits.com/temp/nscolor/
+                ///                     Update: (macOS 26 Tahoe, Feb 2026). It seems that `.controlTextColor` is the same now (maybe always been?) as `.textColor` (the default) (Update: [Feb 2026] Did I mean `.labelColor` - that's probably the default?)
+                ///                         The only darker option is `NSColor.textColor`, but that doesn't flip (by 'flip' I mean the automatic color inversion when selecting a tableViewCell)
+                ///                         Sidenote: Apple docs mention some flipping colors like `.labelColor` at `NSTableCellView.h > NSBackgroundStyle` (But none of those are darker than `.controlTextColor` default)
+                ///                     Alternatives:
+                ///                         - Fully custom color?: Those don't flip.
+                ///                             See https://stackoverflow.com/a/29860102/10601702
+                ///                             (Could hack around this. I think by subclassing `NSTableRowView` (I believe we did that in `mf-xcloc-editor`), or perhaps by customizing/hacking NSColor. [Feb 2026])
+                ///                         - ... By using 'in-between' weight
+                ///                             - It seems that, while`NSFontWeight` constants uses floats under the hood, the in-between values don't work  [Feb 2026]
+                ///                                 (I tried the It tried the in-between value of Semibold and Bold (0.35))
+                ///                         - ... By making the width compressed
+                ///                             - Didn't seem to make the font render any differently [Feb 2026] (tested Thai)
+                ///                     Conclusion:
+                ///                         ... On second thought: Just using `NSFontWeightMedium` with the default color looks like a decent 'semibold' for Latin Scripts under macOS Tahoe – so I think we can live without the color darkening! for English[Feb 2026]
+                ///                         ... However, for some non-latin scripts, ("ko", "ja", and "th" – see below), we would still like in-between values for the weights. But it's not that important – I'll give up on it for now [Feb 2026]
+                ///
+                ///     Old comments from when we used NSFontManager / symbolicFontTraits:
+                ///         - On setting 'semibold' weight
+                ///             - Old impl used `NSFontManager` with weight 7 (weight 8 was commented out)
+                ///                 This seems to match `NSFontWeightMedium`, not `NSFontWeightSemibold`, so we're using `NSFontWeightMedium` [Sep 2025]
+                ///         - We're implementing bold and italic with `NSFontDescriptorSymbolicTraits`, but that doesn't seem to support semibold [Sep 2025]
+                ///             (Maybe we should just not use symbolicTraits at all, and instead use fontTraits and fontAttributes directly? symbolicTraits don't seem super useful.)
+                
+                /// Default values (applied to Latin and Cyrillic scripts)
+                weight = NSFontWeightMedium;
+                color = NSColor.controlTextColor;   /// `NSColor.controlTextColor` no longer seems to be darker than the default under macOS Tahoe – See comments above [Feb 2026]
+                
+                NSColor *evenDarkerColor = color;   /// Disabled.   We liked the look of using NSColor.textColor for "ko" and "th" on macOS 26 – but NSColor.textColor doesn't flip. (See comments above)
+                NSColor *ligherColor     = color;   /// Disabled. `.secondaryLabelColor` is too light. Not sure if there's a flipping color in-between [Feb 2026, macOS 26]
+                
+                /// Override default values
+                if ([currentLocale hasPrefix: @"zh-"])      weight = NSFontWeightSemibold;  /// Looks nice to me.
+                else if ([currentLocale isEqual: @"ko"]) {  weight = NSFontWeightSemibold;  /// Semibold is a bit hard to pick out, but Bold looks ugly.
+                                                            color = evenDarkerColor; }
+                else if ([currentLocale isEqual: @"ja"]) {  weight = NSFontWeightBold;      /// Semibold is invisible. Bold is a bit ugly.
+                                                            color = ligherColor; }
+                else if ([currentLocale isEqual: @"th"]) {  weight = NSFontWeightBlack;     /// Even Black is a bit hard to pick out. But that's the most boldness available.
+                                                            color = evenDarkerColor; }
+
+                /// Other weird scripts that just use the default values (just listing them here for documentation)
+                ///     `@[@"ar", @"el", @"he", @"hi"]`
+                
+                /// Set weight and color
+                dst = [dst attributedStringByAddingColor: color forRange: nodeRange];
+                dst = [dst attributedStringByAddingWeight: weight forRange: nodeRange];
                 
                 return dst;
             }
