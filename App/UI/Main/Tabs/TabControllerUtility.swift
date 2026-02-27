@@ -75,7 +75,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                 fatalError("Calling this from unexpected tab: \(tabController)")
         }
         
-        var windowWidth = map[LocalizationUtility.currentLanguageCode() ?? ""]
+        var windowWidth = map[MFLanguageCode()]
         if (windowWidth == nil) {
             assert(false)
             windowWidth = map["en"]! /// Fallback in case I forget to update the map for a new language [Sep 2025]

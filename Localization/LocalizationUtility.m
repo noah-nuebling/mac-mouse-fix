@@ -8,15 +8,12 @@
 //
 
 #import "LocalizationUtility.h"
+#import "SharedUtility.h" /// Just for `MFLocale()`
 
 @implementation LocalizationUtility
 
-+ (NSString *) currentLanguageCode {
-    return [NSLocale.currentLocale objectForKey: NSLocaleLanguageCode]; /// Should this use `MFLocale()`?
-}
-
 + (double)informationDensityOfCurrentLanguage {
-    return [self informationDensityOfLanguage: [self currentLanguageCode]];
+    return [self informationDensityOfLanguage: MFLanguageCode()];
 }
 
 + (double)informationDensityOfLanguage:(NSString *)languageCode {

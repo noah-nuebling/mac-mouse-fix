@@ -21,6 +21,8 @@
 
 #pragma mark - MFLocales
 
+/// TODO: Why is this in SharedUtility.m, and not in Localization.m / LocalizationUtility.m? [Feb 2026]
+
 NSString *MFLocale(void) {
 
     /// Return the app's current locale code
@@ -42,7 +44,14 @@ NSString *MFLocale(void) {
     ///         - `[[[NSUserDefaults standardUserDefaults] objectForKey: @"AppleLanguages"] firstObject]` (Not sure what the difference is [Feb 2026])
     ///     - See: https://stackoverflow.com/questions/1522210/nslocale-currentlocale-always-returns-en-us-not-users-current-language
     ///         - See this (about `@"AppleLanguages"`): https://developer.apple.com/library/archive/qa/qa1391/_index.html
-    
+    ///
+    /// Usage tip:
+    ///     The resulting strings can be passed as 'locale identifiers' to `[NSLocale localeWithLocaleIdentifier:]`, `[NSLocale componentsFromLocaleIdentifier:]` and related APIs.
+    ///
+    /// Current usage pattern: [Feb 2026]
+    ///     - When we need to get the **app's locale/language**, we always use `MFLocale()` or (`MFLanguageCode()`)
+    ///     - When we need to get the **system locale** (for freeCountry mechanism), we use `NSLocale.currentLocale` (aka `Locale.current` in Swift)
+    ///     - We use `NSLocale.preferredLocale` (private) in one instance, IIRC because we were recreating Apple framework disassembly, and they used that – not totally sure how this behaves.
     
     NSString *result = [[[NSBundle mainBundle] preferredLocalizations] firstObject]; /// I've only ever seen this contain one entry [Feb 2026]
     if (!result) {
@@ -51,6 +60,18 @@ NSString *MFLocale(void) {
     }
     return result;
 }
+
+NSString *MFLanguageCode(void) {
+    /// Returns just the first part of the `MFLocale()` e.g. zh for zh-Hans, or pt for pt-Br
+    ///     ... This is pretty unnecessary – we should probably stop using this and just use MFLocale() directly. [Feb 2026]
+    auto result = [[NSLocale componentsFromLocaleIdentifier: MFLocale()] objectForKey: NSLocaleLanguageCode];
+    if (!result) {
+        assert(false); /// Don't think this can happen [Feb 2026]
+        result = @"en";
+    }
+    return (id)result;
+}
+
 
 #pragma mark - runLoops
 
