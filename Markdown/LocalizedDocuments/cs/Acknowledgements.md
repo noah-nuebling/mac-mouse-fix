@@ -72,6 +72,10 @@ Děkujeme za vaši podporu! :)
 
 Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neuvěřitelným milkšejkem**. (A někteří mi dokonce zanechali zprávu) Díky za *cukrovou nálož*!
 
+**březen 2026**
+
+- 🇨🇴&nbsp;Andres&nbsp;Santiago&nbsp;Ruiz&nbsp;Movi003899
+
 **únor 2026**
 
 - 🇪🇸&nbsp;Woza - "-"

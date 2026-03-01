@@ -78,6 +78,10 @@ Desteğiniz için teşekkürler! :)
 
 Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem bir Milkshake** ısmarladılar. (Hatta bazıları bir mesaj bile gönderdi!) *Ekstra şeker* için teşekkürler!
 
+**Mart 2026**
+
+- 🇨🇴&nbsp;Andres&nbsp;Santiago&nbsp;Ruiz&nbsp;Movi003899
+
 **Şubat 2026**
 
 - 🇪🇸&nbsp;Woza - "-"

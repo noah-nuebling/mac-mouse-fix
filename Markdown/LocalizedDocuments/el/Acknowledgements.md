@@ -78,6 +78,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!
 
+**Μάρτιος 2026**
+
+- 🇨🇴&nbsp;Andres&nbsp;Santiago&nbsp;Ruiz&nbsp;Movi003899
+
 **Φεβρουάριος 2026**
 
 - 🇪🇸&nbsp;Woza - "-"

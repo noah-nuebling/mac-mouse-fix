@@ -74,6 +74,10 @@ Obrigado pelo apoio! :)
 
 Essas pessoas contribuíram com um valor bem acima do preço padrão e me presentearam com um milk-shake incrível. (E algumas ainda deixaram uma mensagem!) Obrigado pelo pico de açúcar! 😄
 
+**março 2026**
+
+- 🇨🇴&nbsp;Andres&nbsp;Santiago&nbsp;Ruiz&nbsp;Movi003899
+
 **fevereiro 2026**
 
 - 🇪🇸&nbsp;Woza - "-"
