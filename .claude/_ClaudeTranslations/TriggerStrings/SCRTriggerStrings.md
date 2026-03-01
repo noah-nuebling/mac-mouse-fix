@@ -161,7 +161,7 @@ Hi Claude! Can you review this [[Arabic]] UI I've been working on with Gemini?
                     - [x] cs: 
                         - kliknutí-> kliknutí, dvojí kliknutí → dvojklik, trojí kliknutí → trojklik
                             - (Introduces a slight grammatical 'inconsistency' for shortness. But the human did it this way. Claude says it's ok.)
-                    - [ ] ru: удерживание -> удержание 
+                    - [x] ru: удерживание -> удержание 
                         - Slightly shorter and that's what the human chose.
                         - Apple's glossary contains удерживание 2x (holding), удержание 0x (retention), удерживайте >30x (hold)
                     - [ ] pl: It says switching infinitives -> nouns is actually longer (but more Apple-standard (true – we told it that in the initial prompt.))
