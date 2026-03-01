@@ -1,3 +1,6 @@
 [submodule "mac-mouse-fix-scripts"]
 	path = mac-mouse-fix-scripts
 	url = https://github.com/noah-nuebling/mac-mouse-fix-scripts
+[submodule "Helper/External/hidapi"]
+	path = Helper/External/hidapi
+	url = https://github.com/libusb/hidapi
