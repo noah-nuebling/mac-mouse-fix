@@ -2,7 +2,7 @@
 (Notes for operating Claude Code to translate the repo.)
 
 
-# Prompt
+# Prompt (Outdated, see PMTContextDebugging.md [Feb 2026])
 
 Hi Claude! 
 
@@ -29,12 +29,14 @@ capture-toast.scroll.uncaptured.body
 Compare Claude's German translations against mine:
 
 
-./run mfstrings inspect --cols key,fileid,en,de,state:de --sortcol key --pretty --diff-filter HEAD --diff-highlight 72ca917f9,472bb34
+./run mfstrings inspect --cols key,fileid,en,de,state:de --sortcol key --pretty --filter state:de=translated --diff-highlight 72ca917f9,472bb34
 
 (72ca917f9 -> Last commit in mac-mouse-fix         before deleting handwritten translations)
 (472bb34   -> Last commit in mac-mouse-fix-website before deleting handwritten translations)
 
-# Iterate
+
+
+# Iterate (Outdated [Feb 2026])
 
 ## Ask Claude to help after spotting errors:
 
@@ -43,7 +45,7 @@ Wait wait. That looks like a good correction, but the goal is to try to improve 
 Can you help me with that?
 
 
-## Improve
+## Improve (Outdated [Feb 2026])
 
 Improve 
 - adding-translations/SKILL.md
@@ -53,5 +55,5 @@ Improve
 ## Restart
 
 - Stash / discard .xcstrings changes.
-    - ./run mfstrings bulk-edit delete --locale de --force
+    - `./run mfstrings bulk-edit delete --locale de --force`
 -  Start again.

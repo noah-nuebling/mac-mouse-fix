@@ -169,6 +169,7 @@ Chinese (Traditional)
         Explanation: Apple seems to use 按一下 more, but they also use 按下 and that's shorter. 
             We hope it's still clear/natural in context.
             (Not sure this was the best decision but let's roll with it for now.)
+            (Additional thought: [Feb 2026] Maybe my intuition for omitting 'single' stems from English scannability concerns which don't apply to Chinese since there are so much fewer characters)
     Desired Translation: Translate the button names as 主鍵, 輔鍵, 中鍵, and 第%@鍵
         Explanation: Apple's zh-Hant glossary uses longer forms (主要按鈕, 輔助按鈕, 滑鼠中間按鈕, 按鈕%@). An earlier human translator also chose these longer forms.
             We decided to deviate because we value conciseness. Plus, Apple also uses 鍵 in mouse contexts (I found 點按左鍵, 點按右鍵 for "Left Click", "Right Click"), so we think (hope) it won't feel out of place here.
