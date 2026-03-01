@@ -267,7 +267,17 @@ Multiple Languages
                                 "Drag and Drop Modifiers"   -> "Modificatori tragere și eliberare"
                             ).
         Note: We decided English does NOT need "the" and that "Click Middle Button" (instead of "Click the Middle Button") feels like acceptable UI shorthand.
-        Note to self: We also added comments about this to 
-            trigger.substring.button-name.middle AND 
-            trigger.substring.click.1 
+        Note to self: We also added comments about this to
+            trigger.substring.button-name.middle AND
+            trigger.substring.click.1
             (So I'm not sure explaining it again here is useful.)
+
+## Open Questions
+
+Polish
+    Infinitives vs. noun forms.
+        Current state: Uses infinitives (kliknąć, przytrzymać, przeciągać, ...).
+        The case for switching to nouns: Apple's glossary consistently uses noun forms (kliknięcie, przytrzymanie, przeciąganie, ...) for descriptive UI labels. A different Claude independently noted that nouns would be slightly more natural here.
+        The case for keeping infinitives: Nouns are slightly longer (e.g. kliknięcie vs kliknąć). Infinitives aren't wrong for Polish UI labels either.
+            (Sidenote: Switching would also require updating the button-name strings to genitive case (e.g. *przycisku środkowego* instead of *przycisk środkowy*))
+        Decision: Left as-is for now. The gain feels small, and the current infinitives aren't clearly wrong.

@@ -139,9 +139,10 @@ Hi Claude! Can you review this [[Arabic]] UI I've been working on with Gemini?
             - [x] zh-Hant   | Suggests changing "按下" to "按一下" for single-click cases to match the established Apple/Microsoft convention and maintain pattern consistency with the double/triple click strings (which already use 按兩下/按三下)
                 - Deliberate decision. See CTXTriggerStrings.md
             - [x] Ukrainian │ Notably verbose (~2x English character count) - could affect UI spacing. Could consider shorter "клік" instead of formal "клацання"    │
-                -> Claude backpedaled. uk and ru are same length. It says using shorter "клік" (loanword) would feel 'lower quality' and not match what Apple/Microsoft use. (It hallucinated glossary research commands, so not sure this is trustworthy. Seufz.) (Also we often accepted slightly less polished sounding things for conciseness)
+                -> Claude backpedaled. uk and ru are same length. It says using shorter "клік" (loanword) would feel 'lower quality' and not match what Apple/Microsoft use. (It hallucinated glossary research commands, so not sure this is trustworthy. Seufz.) (Also we often accepted slightly less polished sounding things for conciseness) 
             - [x] Polish    │ Uses infinitive verb forms which is slightly unusual for UI labels. Imperative forms ("Kliknij i przeciągnij") might feel more natural │
                 - After learning about 'descriptive' context and doing more research, Claude backpedals on imperatives and suggests noun-forms instead: "The current infinitives seem to be the odd choice - neither matching Apple's imperatives for commands nor their nouns for descriptions."
+                -> Assessment: Apple does indeed use noun-forms instead of infinitives. BUT nouns-forms make the strings slightly longer. And I'm tired, and don't want to review the changes and am not 100% certain the Claude has all the relevant context to make best decisions about changes right now. Plus the gain is small I think -> Will leave it like it is.
 
         - (Used in Thai and Korean)
 
@@ -164,7 +165,8 @@ Hi Claude! Can you review this [[Arabic]] UI I've been working on with Gemini?
                     - [x] ru: удерживание -> удержание 
                         - Slightly shorter and that's what the human chose.
                         - Apple's glossary contains удерживание 2x (holding), удержание 0x (retention), удерживайте >30x (hold)
-                    - [ ] pl: It says switching infinitives -> nouns is actually longer (but more Apple-standard (true – we told it that in the initial prompt.))
+                    - [x] pl: It says switching infinitives -> nouns is actually longer (but more Apple-standard (true – we told it that in the initial prompt.))
+                        - Assessment: See above.
                     - [x] el: πρωτεύοντος κουμπιού → κύριου κουμπιού (primary button -> main button)
                         - Assessment: Says it's more 'apple aligned'. This is hallucination. It didn't have access to the glossary. 'primary button' also doesn't appear very often so shortness is not as important -> Don't do this.
         - [ ] One of the modifier lines wraps in Russian and it looks weird.
