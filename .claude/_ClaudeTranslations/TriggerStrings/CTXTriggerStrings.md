@@ -210,6 +210,12 @@ Ukrainian
         Explanation: These strings get appended after modifier key symbols (e.g. '⇧⌘ і *прокрутка*'). In Ukrainian, "й" expects to flow from a preceding vowel sound while "і" works naturally after a consonant or pause. (If the user doesn't read ⇧⌘ out loud in their mind, it may feel like a pause?) Elsewhere, we're using "й".
     Desired Translation: Use 'прокрутка' over 'прокручування' for 'Scroll'.
         Explanation: Both are valid Ukrainian. Apple uses "прокрутка" rarely, but we prefer it since we care about brevity.
+Czech
+    Desired Translation: Use 'kliknutí'/'dvojklik'/'trojklik' for Click/Double Click/Triple Click.
+        Explanation:
+            This introduces a slight grammatical inconsistency between 'kliknutí' and 'dvojklik'/'trojklik'.
+            We accept this inconsistency for the sake of brevity. 
+            Also a human translator made this choice earlier – so we think it probably sounds natural.
 Catalan
     Desired Translation: Use noun + infinitive pattern for drag/scroll (`clic i *arrossegar* %@`, `clic i *desplaçar* %@`, ...)
         Explanation: This is similar to Portuguese, but for different reasons. Turning the phrase into consistent 

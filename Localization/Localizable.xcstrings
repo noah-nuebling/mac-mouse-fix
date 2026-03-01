@@ -2046,7 +2046,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "dvojí kliknutí %@ + "
+            "value" : "dvojklik %@ + "
           }
         },
         "de" : {
@@ -2219,7 +2219,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "trojí kliknutí %@ + "
+            "value" : "trojklik %@ + "
           }
         },
         "de" : {
@@ -3257,7 +3257,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "dvojí kliknutí %@"
+            "value" : "dvojklik %@"
           }
         },
         "de" : {
@@ -3430,7 +3430,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "trojí kliknutí %@"
+            "value" : "trojklik %@"
           }
         },
         "de" : {
@@ -3776,7 +3776,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "dvojí kliknutí a *tažení* %@"
+            "value" : "dvojklik a *tažení* %@"
           }
         },
         "de" : {
@@ -3949,7 +3949,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "trojí kliknutí a *tažení* %@"
+            "value" : "trojklik a *tažení* %@"
           }
         },
         "de" : {
@@ -4468,7 +4468,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "dvojí kliknutí a podržení %@"
+            "value" : "dvojklik a podržení %@"
           }
         },
         "de" : {
@@ -4641,7 +4641,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "trojí kliknutí a podržení %@"
+            "value" : "trojklik a podržení %@"
           }
         },
         "de" : {
@@ -4987,7 +4987,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "dvojí kliknutí a *posuv* %@"
+            "value" : "dvojklik a *posuv* %@"
           }
         },
         "de" : {
@@ -5160,7 +5160,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "trojí kliknutí a *posuv* %@"
+            "value" : "trojklik a *posuv* %@"
           }
         },
         "de" : {

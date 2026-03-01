@@ -158,7 +158,7 @@ Hi Claude! Can you review this [[Arabic]] UI I've been working on with Gemini?
                 - Claude suggests small improvements:
                     - [x] ru: нажатие -> клик, uk: клацання -> клік
                         - Loanword that could feel less 'professional' but is more concise.
-                    - [ ] cs: 
+                    - [x] cs: 
                         - kliknutí-> kliknutí, dvojí kliknutí → dvojklik, trojí kliknutí → trojklik
                             - (Introduces a slight grammatical 'inconsistency' for shortness. But the human did it this way. Claude says it's ok.)
                     - [ ] ru: удерживание -> удержание 
