@@ -3,6 +3,7 @@ File naming convention:
 - CTX prefix -> Context to have Claude read during translation
 - PMT prefix -> Prompts to start Claude conversations
 - SCR prefix -> Scratchpad files (for constructing prompts in different languages.?)
+- CNC prefix -> Conclusion / reflection after working on this batch of strings.
 
 From the end of CTXTriggerStrings.md: (Moving it here to not accidentally throw Claude off.)
 (
