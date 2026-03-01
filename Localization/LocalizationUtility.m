@@ -26,6 +26,7 @@
     ///           This approach is documented in `InformationDensity.md`
     /// - These languageCodes and their order is taken from `Mouse Fix.xcodeproj/project.pbxproj` and should probably be kept in sync.
     /// - Reflection: Most densities hover around 1.0, and so encoding them here doesn't really make a difference for the user experience. The outliers are: Korean, Japanese, Chinese (as of 07.09.2024)
+    /// - Update: [Feb 2026] Alternative approach: Just query the English string to determine Toast duration.
     ///
     /// Also see:
     ///     - `InformationDensity.md`

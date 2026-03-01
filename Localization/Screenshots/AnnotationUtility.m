@@ -22,6 +22,7 @@
 ///
 /// Discussion:
 ///     These are general, powerful, utility functions, and we should probably move them to other files and delete this file eventually.
+///         ... Update [Feb 2026] I don't need most of this stuff. It's interesting, but should this really live in MMF?
 ///
 
 @implementation AnnotationUtility
