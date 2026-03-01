@@ -156,17 +156,17 @@ Hi Claude! Can you review this [[Arabic]] UI I've been working on with Gemini?
                 - cs and ru had human translations that were very similar in length and in general.
                 - Claude says there isn't much to improve
                 - Claude suggests small improvements:
+                    - [x] ru: нажатие -> клик, uk: клацання -> клік
+                        - Loanword that could feel less 'professional' but is more concise.
                     - [ ] cs: 
                         - kliknutí-> kliknutí, dvojí kliknutí → dvojklik, trojí kliknutí → trojklik
                             - (Introduces a slight grammatical 'inconsistency' for shortness. But the human did it this way. Claude says it's ok.)
-                    - [ ] ru: нажатие -> клик, uk: клацання -> клік
-                        - Loanword that could feel less 'professional' but is more concise.
                     - [ ] ru: удерживание -> удержание 
                         - Slightly shorter and that's what the human chose.
                         - Apple's glossary contains удерживание 2x (holding), удержание 0x (retention), удерживайте >30x (hold)
                     - [ ] pl: It says switching infinitives -> nouns is actually longer (but more Apple-standard (true – we told it that in the initial prompt.))
-                    - [ ] el: πρωτεύοντος κουμπιού → κύριου κουμπιού (primary button -> main button)
-                        - Says it's more 'apple aligned'. This is hallucination. It didn't have access to the glossary.
+                    - [x] el: πρωτεύοντος κουμπιού → κύριου κουμπιού (primary button -> main button)
+                        - Assessment: Says it's more 'apple aligned'. This is hallucination. It didn't have access to the glossary. 'primary button' also doesn't appear very often so shortness is not as important -> Don't do this.
         - [ ] One of the modifier lines wraps in Russian and it looks weird.
         - [ ] ` + ` vs `＋` in Chinese (Human chose `＋` IIRC)
         - [ ] Inconsistent space across languages at end of strings like `trigger.substring.button-modifier.1`

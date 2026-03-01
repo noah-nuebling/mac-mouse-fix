@@ -201,6 +201,10 @@ Portuguese (pt-PT and pt-BR)
             We *want* to use infinitives, too, but there's a problem: "duplo clicar" and "triplo clicar" don't work in Portuguese.
             Therefore we use "duplo clique" and "triplo clique" instead, which means we mix nouns + infinitives (`clique e *arrastar* %@`). We think this is a bit awkward but not too bad.
             We chose to use "clique" (over "clicar") even for single-clicks, to keep it consistent with "duplo clique" and "triplo clique". (Not sure if that's the best choice, but lets roll with it for now.)
+Russian
+    Desired Translation: Use 'клик' instead of 'нажатие' for 'Click'. ('клік' instead of 'клацання' for Ukrainian)
+        Explanation: 'клик' is a loanword that could feel less 'professional' than the native 'нажатие', and which doesn't match Apple's usage but it is more concise.
+        (We're not totally sure deviating from Apple's standard is worth it here, but lets roll with it for now – 'Click' tends to appear in a *lot* in the UI – so we value the shortness quite a lot.)
 Ukrainian
     Desired Translation: Use 'і' over 'й' in the `trigger.substring.*.flags` strings. ('і *перетягування*', 'і *прокрутка*')
         Explanation: These strings get appended after modifier key symbols (e.g. '⇧⌘ і *прокрутка*'). In Ukrainian, "й" expects to flow from a preceding vowel sound while "і" works naturally after a consonant or pause. (If the user doesn't read ⇧⌘ out loud in their mind, it may feel like a pause?) Elsewhere, we're using "й".
