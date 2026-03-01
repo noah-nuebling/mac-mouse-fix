@@ -4480,6 +4480,28 @@
         }
       }
     },
+    "drag-effect.media-control" : {
+      "comment" : "",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Media Control"
+          }
+        }
+      }
+    },
+    "drag-effect.media-control.hint" : {
+      "comment" : "",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Control media playback and volume by dragging your mouse:\n - Left to skip to previous track\n - Right to skip to next track\n - Up to increase volume\n - Down to decrease volume"
+          }
+        }
+      }
+    },
     "effect.app-expose" : {
       "comment" : "Note: Apple refers to this feature by different names like 'Application Windows' or 'App Exposé'. In English I chose the same name that is used at\nSystem Settings > Keyboard > Keyboard Shortcuts > Mission Control > Application Windows. (Under macOS 26 Tahoe)\n\nFurther details: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'App Exposé' felt a bit outdated. (Exposé was the predecessor to Mission Control, and the term mostly doesn't occur anymore in macOS now.)",
       "localizations" : {
