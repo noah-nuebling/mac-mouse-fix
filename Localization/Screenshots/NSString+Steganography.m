@@ -166,21 +166,13 @@ int steg_charToBit(unichar c) {
     
     unichar invisibleChars[coreMessage.length];
     [coreMessage getCharacters: invisibleChars];
-    if (arrcount(invisibleChars) % 8 != 0) {
-        assert(false);
-        return @"";
-    }
+    if (arrcount(invisibleChars) % 8 != 0) { assert(false); return @""; }
     char decodedChars[arrcount(invisibleChars) / 8] = {};
     {
-        int i = 0;
-        int j = 0;
-        while (1) {
-            if (i >= arrcount(invisibleChars)) break;
-            
-            decodedChars[j] |= steg_charToBit(invisibleChars[i]) << (i % 8);
-            
-            i++;
-            if (i % 8 == 0) j += 1; /// Move to next decoded char
+        int i = 0, d = 0;
+        for (; i < arrcount(invisibleChars); i++) {
+            if (i) if (i % 8 == 0) d += 1; /// Move to next decoded char
+            decodedChars[d] |= steg_charToBit(invisibleChars[i]) << (i % 8);
         }
     }
     
