@@ -201,10 +201,8 @@ Portuguese (pt-PT and pt-BR)
             We *want* to use infinitives, too, but there's a problem: "duplo clicar" and "triplo clicar" don't work in Portuguese.
             Therefore we use "duplo clique" and "triplo clique" instead, which means we mix nouns + infinitives (`clique e *arrastar* %@`). We think this is a bit awkward but not too bad.
             We chose to use "clique" (over "clicar") even for single-clicks, to keep it consistent with "duplo clique" and "triplo clique". (Not sure if that's the best choice, but lets roll with it for now.)
+            (The alternative would have been using something like "clicar duas vezes e *arrastar*" – IIRC that's what the human chose. But it's quite a bit longer.)
 Russian
-    Desired Translation: Use 'клик' instead of 'нажатие' for 'Click'. ('клік' instead of 'клацання' for Ukrainian)
-        Explanation: 'клик' is a loanword that could feel less 'professional' than the native 'нажатие', and which doesn't match Apple's usage but it is more concise.
-        (We're not totally sure deviating from Apple's standard is worth it here, but lets roll with it for now – 'Click' tends to appear in a *lot* in the UI – so we value the shortness quite a lot.)
     Desired Translation: Use 'удержание' instead of 'удерживание' for 'Hold'.
         Explanation: Apple's glossary prefers удерживание/удерживайте and doesn't contain удержание at all, but удержание is a little shorter, and a human translator chose удержание, so we think it should feel natural and appropriate.
 Ukrainian
@@ -212,6 +210,11 @@ Ukrainian
         Explanation: These strings get appended after modifier key symbols (e.g. '⇧⌘ і *прокрутка*'). In Ukrainian, "й" expects to flow from a preceding vowel sound while "і" works naturally after a consonant or pause. (If the user doesn't read ⇧⌘ out loud in their mind, it may feel like a pause?) Elsewhere, we're using "й".
     Desired Translation: Use 'прокрутка' over 'прокручування' for 'Scroll'.
         Explanation: Both are valid Ukrainian. Apple uses "прокрутка" rarely, but we prefer it since we care about brevity.
+Russian and Ukrainian
+    Desired Translation: Use 'клик' instead of 'нажатие' for 'Click'. ('клік' instead of 'клацання' for Ukrainian)
+        Explanation: 'клик' is a loanword that could feel less 'professional' than the native 'нажатие', and it doesn't match Apple's glossary but it is more concise.
+        (We're not totally sure deviating from Apple's standard is worth it here, but lets roll with it for now – 'Click' tends to appear in a *lot* in the UI – so we value the shortness even more than usual.)
+        (Sidenote: 'клик' is still commonly surrounded some pretty long terms, most notably перетягивание – I looked into shortening that, but couldn't come up with a good solution.)
 Czech
     Desired Translation: Use 'kliknutí'/'dvojklik'/'trojklik' for Click/Double Click/Triple Click.
         Explanation:
