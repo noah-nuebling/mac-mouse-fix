@@ -746,7 +746,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
 
 - (CGFloat)tableView:(NSTableView *)tableView heightOfRow:(NSInteger)row {
     
-    /// Note: There is a HACK inside `ButtonTabController.swift` which calls `self.tableView.noteHeightOfRows()` to force this to be called at the right time. [Dec 2025]
+    /// Note: There is a HACK inside `RemapTableView.m` which calls `tableView.noteHeightOfRowsWithIndexesChanged:` to force this to be called at the right time. [Dec 2025]
     
     /// Calculate trigger cell text height
     NSDictionary *rowDict = self.groupedDataModel[row];
@@ -762,7 +762,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
         /// Case 2 - normal row
         
         /// Get width of the trigger column
-        ///     Relies on HACK: We need to call `tableView.noteHeightOfRows(withIndexesChanged:` inside `ButtonTabController.swift` to get the correct column width here. [Dec 2025]
+        ///     Relies on HACK: We need to call `tableView.noteHeightOfRowsWithIndexesChanged:` inside `RemapTableView.m` to get the correct column width here. [Dec 2025]
         CGFloat colwidth = self.tableView.tableColumns[0].width;
         
         CGFloat result;
@@ -778,6 +778,8 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
             /// Measure height
             result = triggerCellView.frame.size.height;
         }
+        
+        if ((0)) DDLogDebug(@"wrapdbg: tableView:heightOfRow: returning height for row %ld: %f (colwidth: %f)", row, result, colwidth);
         
         /// Return
         return result;

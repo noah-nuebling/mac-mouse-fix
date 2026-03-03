@@ -176,6 +176,6 @@ Hi Claude! Can you review this [[Arabic]] UI I've been working on with Gemini?
         - [ ] Inconsistent space across languages at end of strings like `trigger.substring.button-modifier.1`
             - We recently removed the part where our code manually adds a space there – for some reason.
 
-    - [ ] Test / fix the ActionTable layouts
-        - [ ] Saw it erroneously making space for 3 lines in Japanese (Text only took up 2 lines)
+    - [x] Test / fix the ActionTable layouts
+        - [x] Saw it erroneously making space for 3 lines in Japanese (Text only took up 2 lines)
     - [x] TODO: `NSColor.textColor` doesn't flip when rows are selected! UGHGHAGHAGHAHAHA

@@ -13,44 +13,110 @@
 #import "RemapTableCellView.h"
 #import "Mac_Mouse_Fix-Swift.h"
 
+@interface NSObject (MFAssociatedObjects)
+    @property (readonly) NSMutableDictionary *mf_associatedObjects;
+@end
+@implementation NSObject (MFAssociatedObjects) /** associatedObjects convenience. TODO: Maybe move into shared utility class. Maybe rename to just 'assoc' like we did in most sideprojects. */
+    - (NSMutableDictionary *)mf_associatedObjects {
+        id result = objc_getAssociatedObject(self, (void *)[@"MFAssociatedObjects" hash]);
+        if (!result) {
+            result = [NSMutableDictionary new];
+            objc_setAssociatedObject(self, (void *)[@"MFAssociatedObjects" hash], result, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        }
+        return result;
+    }
+@end
+
+@interface RemapTableView () /// Forward declaration
+    - (void)updateSizeWithAnimation:(BOOL)animate tabContentView:(NSView * _Nullable)tabContentView;
+@end
+
+@interface RemapTableColumn : NSTableColumn @end
+@implementation RemapTableColumn
+    
+    - (void)setWidth:(CGFloat)width {
+        [super setWidth: width];
+        
+        RemapTableView *table = (id)self.tableView;
+        #define iscol(colid) [self.identifier isEqual: (colid)]
+        
+        assert(iscol(@"trigger") || iscol(@"effect"));
+        
+        /// Init the `RemapTable` layout
+        ///     [Mar 3 2026] Moved this from `ButtonTabController.viewDidAppear()` to `RemapTableColumn.setWidth:`
+        ///         Reason: The bug (see HACK below) still occurred when we launched the app on the General tab and then switched to the Buttons tab. (Instead of launching on the Buttons tab directly)
+        ///         Observations: It seems this was caused by the triggerColumn width being set to the correct size, then *back* to a smaller size and then back to the correct size. And `tableView:heightOfRow:` was called exactly during this period where the col width was set back to the incorrect size – no clue why this happens. [Mar 2026, macOS 26 Tahoe]
+        ///         Alternatives: This is logically part of the `RemapTableView`'s initialization, I think, but I cannot find a better hook than `RemapTableColumn.setWidth:`, they're all called too early.
+        ///                 (I tried `ButtonTabController.viewDidAppear()`, `RemapTableView.viewDidMoveToSuperview` and `RemapTableView.viewDidMoveToWindow`, `RemapTableView.viewDidUnhide`)
+        ///             If we could find a hook that is fired *before* AppKit temporarily sets the wrong value, that might also work. But I have no real clue how to find such a hook. (I already stared at stack traces and couldn't really make sense of them.)
+        ///             (The HACK section below lists some more alternatives)
+        if (
+            iscol(@"trigger") &&                  /// Only the 'trigger' col has wrapping lines that affect the row height. (... But this is an init for the RemapTableView so does that matter?)
+            table.window &&                       /// When you launch the app on the General tab, `RemapTableColumn.setWidth:` is called like 4 times with different values. Checking `table.window` seems to let us identify the last call, where the width is actually correct. [Mar 2026, macOS 26 Tahoe]
+            !self.mf_associatedObjects[@"MFOnce"] /// This is an initialization for the RemapTableView, so we only want to do it once.
+        ) {
+            if ((0)) DDLogDebug(@"wrapdbg: RemapTableColumn.setWidth: %f (tablewin: %@)", width, table.window);
+            
+            /// Turn off animations
+            ///     This prevents visible jank in case the `self.tableView.noteHeightOfRows` HACK below actually ends up changing the height of a row. I don't know why animations are enabled by default. [Dec 2025]
+            [NSAnimationContext beginGrouping]; NSAnimationContext *ctx = NSAnimationContext.currentContext;
+            ctx.duration = 0.0;
+            {
+                /// HACK
+                ///     Purpose: Force `-[RemapTableController tableView:heightOfRow:]` to be called with final column widths. (AppKit already calls it too early / with wrong widths, resulting in wrong heights, so we need to call it again.)
+                ///     Specific bug this prevents: Bug where rows sometimes make vertical space for two lines of text even though the text doesn't wrap – Specifically this currently happens when running `func testTakeScreenshots_Documentation()` in Russian [Dec 2025]
+                ///     All observations made in env: `[Dec 2025, macOS 26 Tahoe, UIDesignRequiresCompatibility]`
+                ///     Performance Note: The first round of size calculations for the RemapTableView will be thrown away completely – inefficient (I think - haven't investigated much) [Dec 2025]
+                ///     Debugging tip: See the disabled `wrapdbg` logs which we used to figure out what's going on.
+                ///     Alternative solution ideas: [Dec 2025]
+                ///         - Somehow update the `RemapTableView` column widths to their final value before the 'natural' invocation of `-[RemapTableController tableView:heightOfRow:]`
+                ///         - Use `tableView.usesAutomaticRowHeights` somehow.
+                ///             - We're using that inside mf-xcloc-editor
+                ///             - Old reference:  https://developer.apple.com/forums/thread/126767
+                [table noteHeightOfRowsWithIndexesChanged: [NSIndexSet indexSetWithIndexesInRange: NSMakeRange(0, table.numberOfRows)]];
+                
+                /// Update tableView size
+                ///     Order-Of-Operations note: Important to call this right after the `noteHeightOfRowsWithIndexesChanged:`, so the table height updates to match the updated row heights.[Dec 2025]
+                ///     IIRC, we did this in `ButtonTabController.viewDidAppear()` even before we introduced the `noteHeightOfRowsWithIndexesChanged:` HACK (above) – I'm not sure why (might also be misremembering) [Mar 2026]
+                NSView *tabContentView = [[MainAppState.shared buttonTabController] view]; /// We moved this code from `ButtonTabController.viewDidAppear()` to `RemapTableColumn.setWidth:` -> Is passing the `tabContentView` still necessary? [Mar 3 2026]
+                assert(tabContentView);                                                    ///  ... We seem to still be able to retrieve the view just fine.
+                [table updateSizeWithAnimation: NO tabContentView: tabContentView];
+            }
+            [NSAnimationContext endGrouping];
+            
+            self.mf_associatedObjects[@"MFOnce"] = @YES;
+        }
+        #undef iscol
+    }
+@end
+
 @interface RemapTableView ()
 
-@property (weak) IBOutlet MFScrollView *scrollView;
-@property (weak) IBOutlet NSLayoutConstraint *scrollViewMaxHeightConstraint;
+    @property (weak) IBOutlet MFScrollView *scrollView;
+    @property (weak) IBOutlet NSLayoutConstraint *scrollViewMaxHeightConstraint; /// This is a constraint on the enclosing `MFScrollView` [Mar 2026]
 
 @end
 
-@implementation RemapTableView {
+@implementation RemapTableView
+{
     NSLayoutConstraint *_heightConstraint;
 }
 
-
-
-- (instancetype)init {
-    
-    /// This is seemingly never called
-    
-    if (self = [super init]) {
-        
-        self.intercellSpacing = NSMakeSize(20,20);
-
-    }
+- (instancetype)init { /// This is seemingly never called
+    if (!(self = [super init])) return nil;
+    [self commonInit];
     return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)coder {
-    
-    /// This is seemingly called before the view has loaded it's rows
-    
-    if (self = [super initWithCoder:coder]) {
-
-        
-        
-    }
+- (instancetype)initWithCoder:(NSCoder *)coder { /// This is seemingly called before the view has loaded it's rows
+    if (!(self = [super initWithCoder:coder])) return nil;
+    [self commonInit];
     return self;
 }
 
-
+- (void) commonInit {
+    if ((0)) DDLogDebug(@"wrapdbg: commonInit");
+}
 - (void)coolDidLoad {
  
     /// This is called after the table has loaded all it's rows for the first time.
@@ -62,7 +128,6 @@
     
     /// Set column widths
     [self updateColumnWidths];
-    
 }
 
 - (void)didAddRowView:(NSTableRowView *)rowView forRow:(NSInteger)row {
@@ -244,6 +309,17 @@ NSMutableArray *columnConstraints = nil;
     [effectColumn setMinWidth:effectColumnWidth]; /// Don't don't I'm desparate. TF this works!! ... story of AppKit programming. Actually it just makes both colums equal sized. Weird. Edit; Also setting maxWidth it works!
     [effectColumn setMaxWidth:effectColumnWidth];
     
+    /// DEBUG
+    if ((0))
+    DDLogDebug(@"wrapdbg: updateColumnWidths: (1: (%f|%f|%f), 2: (%f|%f|%f)",
+        self.tableColumns[0].minWidth,
+        self.tableColumns[0].width,
+        self.tableColumns[0].maxWidth,
+        self.tableColumns[1].minWidth,
+        self.tableColumns[1].width,
+        self.tableColumns[1].maxWidth
+    );
+    
 }
 
 - (void)updateSizeWithAnimation {
@@ -257,25 +333,25 @@ NSMutableArray *columnConstraints = nil;
     
     /// Investigation on glitchy size when opening app directly into Buttons tab
     ///   - (Only happens when the tableView content is too large for the window to fit on screen, so when the maxHeightConstraint comes into play)
-    ///   - This is called twice in a row, when the app opens into ButtonTab directly. because ButtonTabController.viewDidAppear() is called twice in a row (Is that an Apple bug?). Not totally sure if that's relevant. Both times, this method sets the same height and maxHeight constraints as far as I've seen. Yet still, the whole window first renders too small, with the bottom row of buttons squished, before becoming slightly too big to fit on the screen.
+    ///   - This is called twice in a row, when the app opens into ButtonTab directly. because `ButtonTabController.viewDidAppear()` is called twice in a row (Is that an Apple bug?). Not totally sure if that's relevant. Both times, this method sets the same height and maxHeight constraints as far as I've seen. Yet still, the whole window first renders too small, with the bottom row of buttons squished, before becoming slightly too big to fit on the screen.
+    ///     - Update: [Mar 2026] Moved that code from `ButtonTabController.viewDidAppear()` to `RemapTableColumn.setWidth:`
     ///   - Update: We set the vertical compression resistance on the button row and the buttons to 1000 and now the window ends up snapping to the correct size. But still shows up too small at first.
     
     ///
     /// Update scrollView maxHeight
     ///     So the window doesn't grow bigger than the screen
     /// Notes:
-    /// - Not sure this scrollView height code belongs here but this way we have all the height code in one place.
-    /// - Need to pass in tabContentView if this is called during a tabSwitch to get the correct `windowDiff`. That is the height difference between the actionTable and the window when both have been fully layed out and the tabSwitch animation has finished.
+    /// - Not sure this scrollView height code (`scrollViewMaxHeightConstraint`) belongs here but this way we have all the height code in one place.
+    /// - Need to pass-in tabContentView if this is called during a tabSwitch to get the correct `windowDiff`. That is the height difference between the actionTable and the window when both have been fully layed out and the tabSwitch animation has finished.
     /// - We only really need to update this when the screen size changes, but that would make the code more complicated, and performance doesn't really matter here.
     /// - Limiting to 500.0 is an aesthetic choice
+    /// - Update: [Mar 2026] I do feel it makes more sense for the scrollView height to be controlled by its parent (probably enclosing `ButtonTabController`) instead of its documentView (self) – I think that might simplify the code below.
+    ///         TODO: It would be nice if this was recalculated on every tab-switch, in case the window moved to another screen.
     
     double scrollH = self.scrollView.frame.size.height;
     double windowH;
-    if (tabContentView != nil) {
-        windowH = [self.window frameRectForContentRect:tabContentView.frame].size.height;
-    } else {
-        windowH = self.window.frame.size.height;
-    }
+    if (tabContentView) windowH = [self.window frameRectForContentRect:tabContentView.frame].size.height;
+    else                windowH = self.window.frame.size.height;
     double windowHDiff = windowH - scrollH;
     double screenH = self.window.screen.visibleFrame.size.height;
     double maxH = MIN(screenH - windowHDiff, /*500.0*/INFINITY);
