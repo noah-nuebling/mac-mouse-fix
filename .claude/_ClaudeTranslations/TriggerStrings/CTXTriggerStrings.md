@@ -187,6 +187,17 @@ Japanese
                 "Secondary click"     → "副ボタンのクリック"
                 "Double Click Action" → "ダブルクリックのアクション"
             (Not sure this is the best choice, but lets roll with it for now.)
+Chinese, Korean and Japanese (CJK languages)
+    Desired Translation: Translate the `+` suffixes in the button modifer strings ('trigger.substring.button-modifier.*'),  using full-width plus `＋` in CJK languages. But make an exception for Japanese and use half-width plus `+` (without spaces) instead.
+        Context: The button modifier strings end with a plus sign to indicate chained triggers (e.g. "Click Button 4 + Double Click Button 5").
+        Explanation: Fullwidth plus nicely visually integrates with the characters in Chinese and Korean (For Korean, Apple's font even auto-shrinks the plus and adds nice spacing to make it look very harmonious.)
+            For Japanese we made an exception and used `+` instead, since `＋` blends in and doesn't act as a visual separator. (Making the chained triggers hard to scan.)
+        Examples:
+            - English: `Click %@ +`
+            - Chinese (Simplified): `点按%@＋`
+            - Chinese (Traditional): `按下%@＋`
+            - Korean: `%@ 클릭＋`   (No space needed before `＋` since Apple's font automatically adds nice spacing.)
+            - Japanese: `%@クリック+`   (Use halfwidth `+` here.)
 Hungarian
     Desired Translation: Translate 'Hold' as 'tartás' instead of 'lenyomva tartás' or 'nyomva tartás'.
         Explanation: Apple's glossary shows all 3, but the glossary-research agent didn't find the shorter standalone form 'tartás' (which we prefer due to brevity)

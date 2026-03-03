@@ -1939,13 +1939,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@クリック +"
+            "value" : "%@クリック+"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ 클릭 + "
+            "value" : "%@ 클릭＋"
           }
         },
         "nl" : {
@@ -2017,13 +2017,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "点按%@ + "
+            "value" : "点按%@＋"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "按下%@ +"
+            "value" : "按下%@＋"
           }
         }
       }
@@ -2112,13 +2112,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ダブルクリック +"
+            "value" : "%@ダブルクリック+"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ 이중 클릭 + "
+            "value" : "%@ 이중 클릭＋"
           }
         },
         "nl" : {
@@ -2190,13 +2190,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "连按%@ + "
+            "value" : "连按%@＋"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "按兩下%@ +"
+            "value" : "按兩下%@＋"
           }
         }
       }
@@ -2285,13 +2285,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@トリプルクリック +"
+            "value" : "%@トリプルクリック+"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ 삼중 클릭 + "
+            "value" : "%@ 삼중 클릭＋"
           }
         },
         "nl" : {
@@ -2363,13 +2363,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "连按三次%@ + "
+            "value" : "连按三次%@＋"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "按三下%@ +"
+            "value" : "按三下%@＋"
           }
         }
       }

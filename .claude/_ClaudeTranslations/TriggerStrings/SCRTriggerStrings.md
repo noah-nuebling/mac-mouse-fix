@@ -169,12 +169,13 @@ Hi Claude! Can you review this [[Arabic]] UI I've been working on with Gemini?
                         - Assessment: See above.
                     - [x] el: πρωτεύοντος κουμπιού → κύριου κουμπιού (primary button -> main button)
                         - Assessment: Says it's more 'apple aligned'. This is hallucination. It didn't have access to the glossary. 'primary button' also doesn't appear very often so shortness is not as important -> Don't do this.
-        - [ ] One of the modifier lines wraps in Russian and it looks weird.
-        - [ ] ` + ` vs `＋` in Chinese (Human chose `＋` IIRC)
+        - [x] One of the modifier lines wraps in Russian and it looks weird.
+            -> 'fixed' since we shortened the Russian strings a little.
+        - [x] ` + ` vs `＋` in Chinese (Human chose `＋` IIRC)
+        - [ ] Check all languages for unnecessary spaces around the format specifiers.
         - [ ] Inconsistent space across languages at end of strings like `trigger.substring.button-modifier.1`
             - We recently removed the part where our code manually adds a space there – for some reason.
 
     - [ ] Test / fix the ActionTable layouts
         - [ ] Saw it erroneously making space for 3 lines in Japanese (Text only took up 2 lines)
-    - [ ] Check all languages for unnecessary spaces around the format specifiers.
     - [x] TODO: `NSColor.textColor` doesn't flip when rows are selected! UGHGHAGHAGHAHAHA
