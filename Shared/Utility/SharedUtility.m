@@ -211,6 +211,7 @@ NSException * _Nullable tryCatch(void (^tryBlock)(void)) {
     /// Look through all ivars and properties of `obj` and return the first value with name `name`
     /// -> Actually this only looks at ivars, and ignores values that aren't objects. Because that's all we need it for right now.
     /// -> We use this for changing tabs programmatically in `coolSelectTab(identifier: String)`, so don't break it!
+    ///     Update: [Mar 2026] Why not just use `valueForKey:`?
     
     id result;
     id __strong * resultPtr = &result;
@@ -612,31 +613,21 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitpos
     return result;
 }
 
-/*
-+ (NSString *)binaryRepresentation:(int64_t)value {
-        
-    /// Note: [Apr 2025]: (While cleaning up merge of branch master into feature-strings-catalog)
-    /// Moved this from HelperUtility.m to SharedUtility.m. Other parts of the program need this in SharedUtility to compile. Not sure what happened here. I guess the merge got messed up. The arg type changed from `unsigned int` to `int64_t` I think.
-    ///     Update: Oh but all usages of this are commented out.
-    ///         Also, I think we had a macro for this that was more powerful in EventLoggerForBrad or somewhere. So we're commenting this out. Use the macro instead probably.
-    ///             Update: The macro was binarystring() I think
-        
-    uint64_t one = 1; /// A literal 1 is apparently 32 bits, so we need to declare it here to make it 64 bits. Declaring as unsigned only to silence an error when shiftting this left by 63 places.
-    
-    int64_t nibbleCount = sizeof(value) * 2;
-    NSMutableString *bitString = [NSMutableString stringWithCapacity:nibbleCount * 5];
-    
-    for (int64_t index = 4 * nibbleCount - 1; index >= 0; index--)
-    {
-        [bitString appendFormat:@"%i", value & (one << index) ? 1 : 0];
-        if (index % 4 == 0)
-        {
-            [bitString appendString:@" "];
-        }
+NSString *binarystring(uint64_t x) {
+    /// Notes:
+    ///     - Consider using `bitflagstring()` instead to debug-print binary flags
+    ///     - A previous version of this utility was a macro that determined the width of the output string using the sizeof() the input value. [Mar 2026]
+    #define nibblesize 8 /** Add a space every `nibblesize` characters for readability */
+    char result[64 + 64/nibblesize + 1] = {0}; /// +1 is only necessary if the nibblesize doesn't perfectly divide the bits.
+    int n = arrcount(result)-1; /// Fill the string buffer backwards (since numbers are RTL)
+    for (int i = 0; x; i++) {
+        if (i && !(i % nibblesize)) result[--n] = ' ';
+        result[--n] = (x & 1) ? '1' : '0';
+        x >>= 1;
     }
-    return bitString;
+    return [NSString stringWithUTF8String: result+n]; /// Don't include leading zeros. (x==0 will result in emptystring)
+    #undef nibblesize
 }
-*/
 
 + (NSString *)callerInfo {
     return [NSString stringWithFormat:@" - %@", [[NSThread callStackSymbols] objectAtIndex:2]];

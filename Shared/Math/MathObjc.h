@@ -8,6 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SharedHelperMacros.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// When in doubt, use Math.swift instead of this
 /// This is only used to do stuff that you can't do in Swift
 /// Like define a struct or enum that can be used in Swift as well as ObjC
+///     Update: [Mar 2026] I've become an anti-Swift zealot – probably use this over Math.swift.
 
 typedef enum {
     kMFIntervalDirectionAscending,
@@ -30,6 +32,9 @@ bool greaterEqual(double a, double b, double tolerance);
 
 double signedFloor(double num);
 double signedCeil(double num);
+
+double _mfcycle(double n, double lower, double upper, char closedSide);
+#define mfcycle(n, range, closedSide) _mfcycle(n, UNPACK range, closedSide)
 
 /// CLIP aka CLAMP, BOUND
 ///     Other implementations: https://stackoverflow.com/a/14770282/10601702

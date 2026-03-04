@@ -76,7 +76,10 @@ bool runningHelper(void);
 + (BOOL)button:(NSNumber * _Nonnull)button isPartOfModificationPrecondition:(NSDictionary *)modificationPrecondition;
 + (void)resetDispatchGroupCount:(dispatch_group_t)group;
 NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitToNameMap[_Nullable], int bitToNameMapCount);
+NSString *binarystring(uint64_t x);
 
 NS_ASSUME_NONNULL_END
 
 @end
+
+

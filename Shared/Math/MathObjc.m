@@ -68,4 +68,27 @@ double signedCeil(double num) {
     }
 }
 
+double _mfcycle(double n, double lower, double upper, char closedSide) {
+    
+    /// mfcycle
+    ///     - Generalization of modulo.
+    ///     - Moves n into the half-open interval `[lower, upper)` (if `closedSide == '['`) or `(lower, upper]` (if `closedSide == ']'`)
+    ///     - If lower > upper, the result will be mirrored (see code)  – feels like a natural extension of this operation?
+    ///     - `mfcycle(n, (0, z), '[')` is equivalent to `n % z`
+    ///         ... Actually not quite true bc `%` is weird for negative inputs in C. Something about euclidian modulo iirc.
+    /// Also see:
+    ///     [May 22 2025] mfround, mffloor, mfceil function in our IDAPython scripts – They use a similar idea of 'extending' round/floor/ceil
+    ///     Math.swift > cycle()
+    
+    assert(closedSide == '[' || closedSide == ']');
+    
+    if (lower == upper) return lower;
+    if (lower > upper) { double temp = lower; lower = upper; upper = temp; closedSide = (closedSide == '[') ? ']' : '['; n = lower+upper-n; } /// Respond to inverted bounds by mirroring everything along the center of the interval.
+    double stride = upper - lower;
+    while (closedSide == '[' ? (n < lower) : (n <= lower)) n += stride;
+    while (closedSide == '[' ? (n >= upper) : (n > upper)) n -= stride;
+    
+    return n;
+}
+
 @end
