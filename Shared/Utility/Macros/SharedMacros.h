@@ -363,84 +363,13 @@
     __n;                                                                                    \
 })
 
-/// Helper macros:`_scopeins_var` / `_scopeins_statement_start` / `_scopeins_statement_end`
-/// What:   Insert a variable declaration or statement into the scope following the macro
-/// Why:    Useful for implementing other macros – The macro can be used as a 'header' for a scope and insert useful variables or statements into it.
-///         -> The real benefit of this is that the scope, which effectively acts like an argument to the macro, is *outside* the macro. And scopes outside a macro have much better debugging support. (Setting breakpoints inside a macro argument doesn't work in Xcode [Feb 2025])
-/// How:    The macros use for-loop(s). Little hacky. Alternatives: In CPP there's `If Statement with Initializer`, but afaik, in C, this is the only way to insert a declaration into a scope from outside the scope.
-///
-/// Caution: Using`break` or `continue` inside a `_scopeins_...()` macro's scope will simply break out of that scope. It won't interact with any enclosing loops (since the `_scopeins_...()` macros use for-loops under-the-hood)
-///         > `break` and `continue` also won't work for **any macros that use _scopeins_...() macros** – Don't forget this!
-///
-/// Examples:
-///
-///     1. Insert var – into a scope without braces.
-///         `_scopeins_var(int x = 5) printf("%d", x);  // Despite the lack of braces, this is a scope. x only exists for this printf`
-///
-///     2. Insert var – into a scope with { braces }
-///         ```
-///         _scopeins_var(NSMutableString *str = [NSMutableString string]) // str only exists inside { ... }
-///         {
-///             [str appendString:@"Hello"];
-///             [str appendString:@" World"];
-///             NSLog(@"%@", str);
-///         }
-///     3. Insert statements - at the start and end of a scope
-///         ```
-///         _scopeins_statement_start(pthread_mutex_lock(&mutex))
-///             _scopeins_statement_end(pthread_mutex_unlock(&mutex))
-///                 {
-///                     // (mutex is locked here)
-///                     shared_state++;
-///                     // (mutex is unlocked here)
-///                 }
-///         ```
-///     4. Insert multiple statements using ({ statement-expressions })
-///         ```
-///             _scopeins_var(FILE* f = fopen("test.txt", "r"))
-///                 _scopeins_statement_start(printf("file %p was opened\n", f))
-///                     _scopeins_statement_end( ({ fclose(f); printf("file %p was closed\n", f); }) ) // Insert an fclose and a printf statement at the end of the scope.
-///                         {
-///                             // File operations here
-///                             char buf[100];
-///                             fgets(buf, sizeof(buf), f);
-///                             ...
-///                         }
-///         ```
-
-/// Variable inserter
-    
-#define _scopeins_var(declaration...)                                                                   /** vararg... so the declaration may contain commas without being interpreted as multiple macro args */\
-    for (int __scopeins_oncetoken = 0;     __scopeins_oncetoken == 0;)                                \
-    for (declaration;                      __scopeins_oncetoken == 0; __scopeins_oncetoken = 1)      \
-
-/// Statement inserters
-
-#define _scopeins_statement_start(statement...)                         \
-    for (                                                               \
-        int __scopeins_oncetoken = 0;                                   \
-        __scopeins_oncetoken == 0 ? ({ statement; true; }) : false;     \
-        __scopeins_oncetoken = 1                                        \
-    )
-
-#define _scopeins_statement_end(statement...)                           \
-    for (                                                               \
-        int __scopeins_oncetoken = 0;                                   \
-        __scopeins_oncetoken == 0;                                      \
-        ({ statement; __scopeins_oncetoken = 1; })                      \
-    )
-
-/// Other
-#define scoped_preprocess(statements...) /** Untested. Not well thought-through. Don't use this. Could perhaps be useful for validation or compile-time-checks of a _scopeins_var(). Since this is an if statement, the macro args could also easily prevent the scope from being executed entirely. */\
-    if (({ statements }))
-
 /// ifcast & ifcastn
 ///
 /// What:   Check if objc object O is of class C. If so, cast O to C and make O available in a dedicated scope.
 /// Why:    Makes working with objc objects of unknown type more concise.
 /// Note:   Similar to Swift if-let-as statement.
 ///
-/// Caution: Uses `scopedvar()` macro, so will behave unexpectedly with `break` and `continue` statements.
+/// Caution: Uses for-loops to insert vars into scope, so will behave unexpectedly with `break` and `continue` statements.
 ///     ... Maybe that's a good reason not to use these...
 ///
 /// Examples:
@@ -457,7 +386,7 @@
 ///     id obj = @"hello";
 ///     ifcastn(obj, NSString, str) {               // Re(n)ame obj to str inside the scope
 ///         NSLog(@"Length: %lu", str.length);
-///         obj = nil;                              // obj can be overriden (it would be shadowed when using ifcast())
+///         obj = nil;                              // obj can be overriden when using ifcastn (it would be shadowed when using ifcast())
 ///     }
 ///     ```
 /// 3. if-else-statement
@@ -489,20 +418,9 @@
 
 #define ifcastn(varname, classname, newvarname)                                                         \
     if (varname && [varname isKindOfClass: [classname class]])                                          \
-        _scopeins_var(id __ifcast_temp = varname)                                                           /** The temp var allows us to shadow `varname` if `newvarname` == `varname` */ \
-            _scopeins_var(classname *_Nonnull const __attribute__((unused)) newvarname = __ifcast_temp)     /** 1. Notice `_Nonnull`. We're not only guaranteed the class but also the non-null-ity of newvarname || 2. Notice __attribute__((unused)) – it turns off warnings when the macro user doesn't use newvarname. 3. Notice `const` it warns the user when they try to override the inner variable. (Since they're probably trying to override the outer one.) */ \
+        for (int _once = 1; _once;) \
+        for (id __ifcast_temp = varname; _once;)                                                               /** The temp var allows us to shadow `varname` if `newvarname` == `varname` */ \
+        for (classname *_Nonnull const __attribute__((unused)) newvarname = __ifcast_temp; _once; _once = 0)   /** 1. Notice `_Nonnull`. We're not only guaranteed the class but also the non-null-ity of newvarname || 2. Notice __attribute__((unused)) – it turns off warnings when the macro user doesn't use newvarname. 3. Notice `const` it warns the user when they try to override the inner variable. (Since they're probably trying to override the outer one.) */ \
 
 #define ifcast(varname, classname)  \
     ifcastn(varname, classname, varname)
-
-/// ifcastp & ifcastpn
-///     Works just like ifcast & ifcastn but for objc protocols instead of classes.
-
-#define ifcastpn(varname, protocolname, newvarname)                                                             \
-    if (varname && [varname conformsToProtocol: @protocol(protocolname)])                                        \
-        _scopeins_var(id __ifcast_temp = varname)                                                                   \
-            _scopeins_var(id<protocolname> _Nonnull const __attribute__((unused)) newvarname = __ifcast_temp)
-
-#define ifcastp(varname, protocolname)  \
-    ifcastpn(varname, protocolname, varname)
-

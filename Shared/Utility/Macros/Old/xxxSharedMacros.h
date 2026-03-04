@@ -308,3 +308,15 @@
 
 #define _strongify(varname) \
     __strong __auto_type varname = _weakified_##varname;
+
+
+/// ifcastp & ifcastpn
+///     Works just like ifcast & ifcastn but for objc protocols instead of classes.
+
+#define ifcastpn(varname, protocolname, newvarname)                                                             \
+    if (varname && [varname conformsToProtocol: @protocol(protocolname)])                                        \
+        _scopeins_var(id __ifcast_temp = varname)                                                                   \
+            _scopeins_var(id<protocolname> _Nonnull const __attribute__((unused)) newvarname = __ifcast_temp)
+
+#define ifcastp(varname, protocolname)  \
+    ifcastpn(varname, protocolname, varname)

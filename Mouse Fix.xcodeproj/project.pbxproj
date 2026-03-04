@@ -2142,6 +2142,7 @@
 		4F676CEB2F589BB300223E1D /* vardesc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = vardesc.m; sourceTree = "<group>"; };
 		4F676CEF2F589C5E00223E1D /* vardesc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vardesc.h; sourceTree = "<group>"; };
 		4F676CF02F58A66100223E1D /* SharedHelperMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedHelperMacros.h; sourceTree = "<group>"; };
+		4F676E792F58AEB200223E1D /* xxxSharedHelperMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xxxSharedHelperMacros.h; sourceTree = "<group>"; };
 		4F67978A2DCFB76100516167 /* DevToggles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DevToggles.h; sourceTree = "<group>"; };
 		4F67978B2DCFB76100516167 /* DevToggles.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DevToggles.m; sourceTree = "<group>"; };
 		4F6F679F28A8141800C6C40F /* ButtonTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTabController.swift; sourceTree = "<group>"; };
@@ -6631,6 +6632,7 @@
 				4FBC83312DAFB28B00354981 /* xxxListOperations.h */,
 				4F676CEA2F588E2300223E1D /* xxxSharedMacros.h */,
 				4FBC83322DAFB28B00354981 /* xxxListOperations.m */,
+				4F676E792F58AEB200223E1D /* xxxSharedHelperMacros.h */,
 				4FBC83332DAFB28B00354981 /* xxxMFLoop.h */,
 				4FBC83342DAFB28B00354981 /* xxxMFLoop.m */,
 				4F2E8FE12D53EB8D00689058 /* xxxMFOnceMacro.h */,
