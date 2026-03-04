@@ -1861,13 +1861,13 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "نقر %@ +"
+            "value" : "نقر %@ + "
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clic %@ +"
+            "value" : "clic %@ + "
           }
         },
         "cs" : {
@@ -1885,13 +1885,13 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "κλικ %@ +"
+            "value" : "κλικ %@ + "
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Click %@ +"
+            "value" : "Click %@ + "
           }
         },
         "es" : {
@@ -1909,31 +1909,31 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "לחיצה %@ +"
+            "value" : "לחיצה %@ + "
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ क्लिक +"
+            "value" : "%@ क्लिक + "
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "kattintás %@ +"
+            "value" : "kattintás %@ + "
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "klik %@ +"
+            "value" : "klik %@ + "
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clic %@ +"
+            "value" : "clic %@ + "
           }
         },
         "ja" : {
@@ -1951,61 +1951,61 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "klik %@ +"
+            "value" : "klik %@ + "
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "kliknąć %@ +"
+            "value" : "kliknąć %@ + "
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique %@ +"
+            "value" : "clique %@ + "
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique %@ +"
+            "value" : "clique %@ + "
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clic %@ +"
+            "value" : "clic %@ + "
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "клик %@ +"
+            "value" : "клик %@ + "
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "klicka %@ +"
+            "value" : "klicka %@ + "
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลิก %@ +"
+            "value" : "คลิก %@ + "
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ tıkla +"
+            "value" : "%@ tıkla + "
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "клік %@ +"
+            "value" : "клік %@ + "
           }
         },
         "vi" : {
@@ -2034,13 +2034,13 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "نقر مزدوج %@ +"
+            "value" : "نقر مزدوج %@ + "
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "doble clic %@ +"
+            "value" : "doble clic %@ + "
           }
         },
         "cs" : {
@@ -2058,13 +2058,13 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "διπλό κλικ %@ +"
+            "value" : "διπλό κλικ %@ + "
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Double Click %@ +"
+            "value" : "Double Click %@ + "
           }
         },
         "es" : {
@@ -2082,31 +2082,31 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "לחיצה כפולה %@ +"
+            "value" : "לחיצה כפולה %@ + "
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ डबल क्लिक +"
+            "value" : "%@ डबल क्लिक + "
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "dupla kattintás %@ +"
+            "value" : "dupla kattintás %@ + "
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "klik dua kali %@ +"
+            "value" : "klik dua kali %@ + "
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "doppio clic %@ +"
+            "value" : "doppio clic %@ + "
           }
         },
         "ja" : {
@@ -2124,61 +2124,61 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "klik dubbel %@ +"
+            "value" : "klik dubbel %@ + "
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "kliknąć dwukrotnie %@ +"
+            "value" : "kliknąć dwukrotnie %@ + "
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique duplo %@ +"
+            "value" : "clique duplo %@ + "
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "duplo clique %@ +"
+            "value" : "duplo clique %@ + "
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "dublu clic %@ +"
+            "value" : "dublu clic %@ + "
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "двойной клик %@ +"
+            "value" : "двойной клик %@ + "
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "dubbelklicka %@ +"
+            "value" : "dubbelklicka %@ + "
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลิกสองครั้ง %@ +"
+            "value" : "คลิกสองครั้ง %@ + "
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ çift tıkla +"
+            "value" : "%@ çift tıkla + "
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "подвійний клік %@ +"
+            "value" : "подвійний клік %@ + "
           }
         },
         "vi" : {
@@ -2207,13 +2207,13 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "نقر ثلاثي %@ +"
+            "value" : "نقر ثلاثي %@ + "
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "triple clic %@ +"
+            "value" : "triple clic %@ + "
           }
         },
         "cs" : {
@@ -2231,13 +2231,13 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "τριπλό κλικ %@ +"
+            "value" : "τριπλό κλικ %@ + "
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Triple Click %@ +"
+            "value" : "Triple Click %@ + "
           }
         },
         "es" : {
@@ -2255,31 +2255,31 @@
         "he" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "לחיצה משולשת %@ +"
+            "value" : "לחיצה משולשת %@ + "
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ ट्रिपल क्लिक +"
+            "value" : "%@ ट्रिपल क्लिक + "
           }
         },
         "hu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "tripla kattintás %@ +"
+            "value" : "tripla kattintás %@ + "
           }
         },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "klik tiga kali %@ +"
+            "value" : "klik tiga kali %@ + "
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "triplo clic %@ +"
+            "value" : "triplo clic %@ + "
           }
         },
         "ja" : {
@@ -2297,61 +2297,61 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "klik driemaal %@ +"
+            "value" : "klik driemaal %@ + "
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "kliknąć trzykrotnie %@ +"
+            "value" : "kliknąć trzykrotnie %@ + "
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "clique triplo %@ +"
+            "value" : "clique triplo %@ + "
           }
         },
         "pt-PT" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "triplo clique %@ +"
+            "value" : "triplo clique %@ + "
           }
         },
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "triplu clic %@ +"
+            "value" : "triplu clic %@ + "
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "тройной клик %@ +"
+            "value" : "тройной клик %@ + "
           }
         },
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "trippelklicka %@ +"
+            "value" : "trippelklicka %@ + "
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลิกสามครั้ง %@ +"
+            "value" : "คลิกสามครั้ง %@ + "
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ üç kez tıkla +"
+            "value" : "%@ üç kez tıkla + "
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "потрійний клік %@ +"
+            "value" : "потрійний клік %@ + "
           }
         },
         "vi" : {
