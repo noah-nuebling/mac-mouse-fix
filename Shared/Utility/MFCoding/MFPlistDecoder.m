@@ -227,7 +227,7 @@
     if (decodeUsing_InitWithCoder) {
     
         if (self->_requiresSecureCoding) {
-            if (!isprotocol(resultClass, NSSecureCoding))
+            if (![resultClass conformsToProtocol: @protocol(NSSecureCoding)])
                 failWithError(NSCoderReadCorruptError, @"MFPlistDecoder - Class found in archive (%@) does not conform to NSSecureCoding.", resultClass);
         }
         else {

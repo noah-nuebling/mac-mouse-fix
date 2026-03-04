@@ -285,9 +285,8 @@ NSTimeInterval runKVOTest_Strings(NSInteger iterations) {
         checkSum += lastChar;
     }];
     
-    @weakify(testObject);
-    _memoryTestVariable = [testObject.string1 mf_observe:@"self" block:^(NSString *_Nonnull updatedString1) {
-        @strongify(testObject);
+    __weak auto weakTestObject = testObject;
+    _memoryTestVariable = [testObject.string1 mf_observe:@"self" block:^(NSString *_Nonnull updatedString1) { auto testObject = weakTestObject;
             
         static BOOL isFirst = YES;
         if (isFirst) { isFirst = NO; return; }

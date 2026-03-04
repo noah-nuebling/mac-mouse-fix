@@ -163,7 +163,7 @@
     ///     Note: Only need to do this here since, in all other codepaths, we're dealing with plist types, and we know they support NSSecureCoding.
     if (!isPlistNode) {
         if (self->_requireSecureCoding) {
-            if (!isprotocol(obj, NSSecureCoding))
+            if (![obj conformsToProtocol: @protocol(NSSecureCoding)])
                 failWithError(NSCoderInvalidValueError, @"_requireSecureCoding is turned on, but object to encode (%@) doesn't conform to NSSecureCoding.", obj);
         }
         else {

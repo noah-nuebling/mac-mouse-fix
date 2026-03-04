@@ -190,8 +190,8 @@ static NSDictionary *sideButtonActions;
                     if (@available(macOS 26.0, *)) {
                         NSWindow *win = (NSWindow *)notification.object;
                         assert(win.contentView.prefersCompactControlSizeMetrics == YES
-                            || isclassd(win, _NSAlertPanel)                         /// NSAlert windows
-                            || isclassd(win, NSPopupMenuWindow)                     /// NSMenu windows
+                            || isclassd(win, @"_NSAlertPanel")                      /// NSAlert windows
+                            || isclassd(win, @"NSPopupMenuWindow")                  /// NSMenu windows
                             || [win.frameAutosaveName isEqual: @"SUStatusFrame"]    /// Sparkle window
                             || [win.frameAutosaveName isEqual: @"SUUpdateAlert"]    /// Sparkle window
                         );

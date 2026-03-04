@@ -2137,6 +2137,7 @@
 		4F616D6027BDCD56004A6A72 /* ScrollConfigTesting.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ScrollConfigTesting.md; sourceTree = "<group>"; };
 		4F626E97292A842D00E6FFD5 /* KeyCaptureMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCaptureMode.h; sourceTree = "<group>"; };
 		4F626E98292A842D00E6FFD5 /* KeyCaptureMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyCaptureMode.m; sourceTree = "<group>"; };
+		4F676CEA2F588E2300223E1D /* xxxSharedMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xxxSharedMacros.h; sourceTree = "<group>"; };
 		4F67978A2DCFB76100516167 /* DevToggles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DevToggles.h; sourceTree = "<group>"; };
 		4F67978B2DCFB76100516167 /* DevToggles.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DevToggles.m; sourceTree = "<group>"; };
 		4F6F679F28A8141800C6C40F /* ButtonTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTabController.swift; sourceTree = "<group>"; };
@@ -6625,6 +6626,7 @@
 			isa = PBXGroup;
 			children = (
 				4FBC83312DAFB28B00354981 /* xxxListOperations.h */,
+				4F676CEA2F588E2300223E1D /* xxxSharedMacros.h */,
 				4FBC83322DAFB28B00354981 /* xxxListOperations.m */,
 				4FBC83332DAFB28B00354981 /* xxxMFLoop.h */,
 				4FBC83342DAFB28B00354981 /* xxxMFLoop.m */,

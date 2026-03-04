@@ -813,7 +813,7 @@ NSString *_Nullable typeEncodingForProperty(NSString *_Nullable propertyAttribut
     
     if (!dict) { assert(false); return nil; }
         
-    self = (id)MFDecode(dict, requireSecureCoding, MFNSSetMake(self.class), kMFEncoding_MFPlist);
+    self = (id)MFDecode(dict, requireSecureCoding, [NSSet setWithObject: self.class], kMFEncoding_MFPlist);
     return self;
 }
 
@@ -1088,11 +1088,11 @@ TreeNode<Class> *_Nonnull extractClassesFromRawTypeString(NSString *_Nonnull raw
                 else if (chars[j] == '>')  bracketBalance--;
                 
                 else if (chars[j] == ',' && bracketBalance == 1) {
-                    [specializations addObject: [rawTypeString substringWithRange: makerange_fromto(i+1, j-1)]];
+                    [specializations addObject: [rawTypeString substringWithRange: NSMakeRange(i+1, j-(i+1))]];
                     i = j;
                 }
                 if (bracketBalance <= 0) {
-                    [specializations addObject: [rawTypeString substringWithRange: makerange_fromto(i+1, j-1)]];
+                    [specializations addObject: [rawTypeString substringWithRange: NSMakeRange(i+1, j-(i+1))]];
                     break;
                 }
             }

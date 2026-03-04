@@ -34,11 +34,11 @@ double signedCeil(double num);
 /// CLIP aka CLAMP, BOUND
 ///     Other implementations: https://stackoverflow.com/a/14770282/10601702
 
-#define CLIPLOW(x, low) (x < low ? low : x)
-#define CLIPHIGH(x, high) (high < x ? high : x)
-#define CLIP(x, low, high) (CLIPHIGH(CLIPLOW(x, low), high))
+#define CLIPLOW(x, low)     ({ double _x = (x); double _low = (low);   (_x < _low ? _low : _x); })          /// We cast everything to double to avoid unsigned underflow issues. (Not sure if necessary) [Mar 2026]
+#define CLIPHIGH(x, high)   ({ double _x = (x); double _high = (high); (_x >_high ? _high : _x); })
+#define CLIP(x, low, high)  (CLIPHIGH(CLIPLOW(x, low), high))
 
-#define ISBETWEEN(x, low, high) (low <= x && x <= high)
+#define ISBETWEEN(x, low, high) ((low) <= (x) && (x) <= (high))
 
 //#define MIN(A,B)    ({ __typeof__(A) __a = (A); __typeof__(B) __b = (B); __a < __b ? __a : __b; })
 //#define MAX(A,B)    ({ __typeof__(A) __a = (A); __typeof__(B) __b = (B); __a < __b ? __b : __a; })
