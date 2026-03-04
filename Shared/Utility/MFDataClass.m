@@ -399,7 +399,7 @@
                     exit(1);                                                                    \
                 })
                 
-                ifcastn(value, NSNumber, decodedNum) {
+                if trycast(value, NSNumber, decodedNum) {
                 
                     /// Define standard numeric type encodings
                     ///     References:
@@ -597,7 +597,12 @@
     
         /// Check for circular refs
         ///     This prevents infinite loops if there are circular references in the datastructure. But [NSDictionary -description] seems to just infinite-loop in this case... Maybe this was overkill.
-        NSMutableArray *const visitedObjects = threadobject([[NSMutableArray alloc] init]);
+        
+        NSMutableArray *visitedObjects = NSThread.currentThread.threadDictionary[@"MFDataClass_VisitedObjects"];
+        if (!visitedObjects) {
+            visitedObjects = [NSMutableArray new];
+            NSThread.currentThread.threadDictionary[@"MFDataClass_VisitedObjects"] = visitedObjects;
+        }
         NSNumber *s = @((uintptr_t)self); /// We cast self to an NSNumber so that we effectively do pointer-based equality checking instead of using the full `-isEqual` implementation.
         BOOL didFindCircularRef = [visitedObjects containsObject: s];
         [visitedObjects addObject: s];
@@ -658,7 +663,7 @@
     ///     (Update: [Apr 2025] If we wanted to really overengineer this, we could see how the objc runtime handles method lookup caching. It must have some mechanism to reset the cache when the instance changes at runtime, which we could possibly tap into (**Dont do this, this is overkill**))
     
     /// Create cache
-    NSCache *cache = staticobject([[NSCache alloc] init]);
+    static NSCache *cache; mfonce(mfoncet, ^{ cache = [NSCache new]; });
     NSString *cacheKey = [self className];
     
     /// Retrieve cache
@@ -974,7 +979,7 @@ NSString *_Nullable classNameForProperty(const char *_Nullable typeEncoding) {
     ///             > We'd have to manually write different code for every generic type > I don't think it's worth it, especially since automatic validation isn't that useful anyways as explained in MFCoding.m (This calls into question this whole lightweight-generics parsing here. But I guess it was fun.)
     
     /// Get cache
-    NSCache *cache      = staticobject([[NSCache alloc] init]);
+    static NSCache *cache; mfonce(mfoncet, ^{ cache = [NSCache new]; });
     NSString *cacheKey  = stringf(@"%@.%@", [self className], propName);
     
     /// Retrieve cached

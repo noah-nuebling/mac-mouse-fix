@@ -311,7 +311,7 @@
 
 
 /// ifcastp & ifcastpn
-///     Works just like ifcast & ifcastn but for objc protocols instead of classes.
+///     Works just like ifcast & if trycast but for objc protocols instead of classes.
 
 #define ifcastpn(varname, protocolname, newvarname)                                                             \
     if (varname && [varname conformsToProtocol: @protocol(protocolname)])                                        \
@@ -320,3 +320,73 @@
 
 #define ifcastp(varname, protocolname)  \
     ifcastpn(varname, protocolname, varname)
+
+/// `threadobject()` and `staticobject()`  macros – creates an objc object whose state is retained between invocations.
+///     Scope:
+///     > `threadobject()` retains the state between all invocations on the same thread. (like a `static __thread` variable)
+///     > `staticobject()` retains the state between all invocations in the same process. (like a `static` variable)
+///
+///     Example usage:
+///     `staticobject()`:
+///         ```
+///         NSCache *cache = staticobject([[NSCache alloc] init]);
+///         id fromCache = [cache valueForKey: @"SomeKey"];
+///         if (fromCache) return fromCache;
+///         <...>
+///         [cache setValue: expensiveValue forKey: @"SomeKey"]; /// (Caution: Generally, modifying the result of staticobject() isn't thread-safe. This particular example is thread-safe because NSCache uses locks internally.)
+///         ```
+///     `threadobject()`:
+///         ```
+///         NSMutableArray *arr = threadobject([NSMutableArray alloc] init]);
+///         [arr addObject: @"a"];
+///         NSLog("%@", arr);       // Will print more and more "a" strings as this code is invoked multiple times on the same thread.
+///         ```
+///
+///     Meta: why is the threadobject implementation so complicated?
+///         Objc objects aren't compatible with `static __thread` variables under ARC. That's why our implementation uses `[[NSThread currentThread] threadDictionary]` under the hood.
+///
+///     Meta: Only use mutable objects.
+///         Overriding the returned pointer will not update the static/thread-local state. Instead you have to create mutable objects in static/thread-local storage, and then modify them.
+///
+///     Meta: what about storing non-objects?
+///        To create non-objects variables that are static or thread-local, you can just use the `static`/`static __thread` keywords directly.
+///        How to initialize non-objects?
+///         - If your initial value is a compile-time-constant:          you can even initialize them very simply, like this `static int count = 99;`.
+///         - If your initial value is not compile-time-constant:       you can use `dispatch_once()` (for static vars) or a `static __thread bool is_initialized` flag (for thread local vars.).
+///
+///     Off-topic:
+///         - [ ] Go through MMF project and replace `static NSMutable...` with  staticobject / threadobject / NSCache. (NSMutableDictionary and NSMutableArray are not thread safe!) (Once we move everything to a single 'IOThread' some of this might be unnecessary.)
+///
+///     Update: [Mar 2026]
+///         Removed this. Too complicated. Saves like 2 lines of boilerplate for something we used a few times. (I think those thread safety concerns should probably be solved at a higher level by isolating sections of the app to their own thread.)
+
+#define staticobject(initializer_expr)              \
+    (typeof(initializer_expr))                      \
+    ({                                              \
+        static_assert(_isobject(initializer_expr), "Use `static` for static variables that are not Objective-C objects."); \
+        static typeof(initializer_expr) __result;   \
+        static dispatch_once_t __oncetoken;         \
+        dispatch_once(&__oncetoken, ^{              \
+            __result = (initializer_expr);          \
+        });                                         \
+        __result;                                   \
+    })
+
+#define threadobject(initializer_expr)                                  \
+    (typeof(initializer_expr))                                          \
+    ({                                                                  \
+        static_assert(_isobject(initializer_expr), "Use `static __thread` for thread-local variables that are not Objective-C objects."); \
+        static NSString *__key;                                         \
+        static dispatch_once_t __oncetoken;                             \
+        dispatch_once(&__oncetoken, ^{                                  \
+            __key = stringf(@"mf.threadobject.%p", &__key);             \
+        });                                                             \
+        NSMutableDictionary *__thread_dict =                            \
+            [[NSThread currentThread] threadDictionary];                \
+        typeof(initializer_expr) __result = __thread_dict[__key];       \
+        if (!__result) {                                                \
+            __result = (initializer_expr);                              \
+            __thread_dict[__key] = __result;                            \
+        }                                                               \
+        __result;                                                       \
+    })

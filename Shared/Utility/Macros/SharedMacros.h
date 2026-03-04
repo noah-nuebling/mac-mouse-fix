@@ -14,7 +14,10 @@
 
 #define range(i, count) (int i = 0; i < (count); i++) /// for-loop sugar
 
-#define arr(expr, header) ({ /** Python style 'list-comprehension' sugar. */\
+/// `arr()` et al.
+///     Python-style 'comprehension' sugar --- turns simple array transformations into a single expression. --- more flexible/intuitive version of map/filter.
+
+#define arr(expr, header) ({ /** Python-style 'list-comprehension' sugar. */\
     auto _result = [NSMutableArray new]; \
     header { [_result addObject: (expr)]; } \
     _result; \
@@ -24,6 +27,7 @@
     header { if (expr) { _result = true; goto _end; } } \
     _end: _result; \
 })
+
 #define arrmax(expr, header) ({  /** Python-style max-item sugar || Not sure this is worth the complexity. [Mar 4 2026] */\
     double _result = -INFINITY; \
     header { auto _expr = (expr); if (_expr > _result) _result = _expr; } \
@@ -80,8 +84,25 @@
 #define isclass(x, classname) [[(x) class] isSubclassOfClass: [classname class]]
 
 /// `isclassd` macro
-///     `isclass`, but (d)ynamic. Meaning the compiler doesn't have to know about the class we're comparing against.
+///     `isclass`, but (d)ynamic. Meaning the compiler/linker doesn't have to know about the class we're comparing against.
 #define isclassd(x, classname) [[(x) class] isSubclassOfClass: NSClassFromString(classname)]
+
+/// trycast
+/// Similar to Swift if-let-as statement
+/// Example:
+///     ```
+///     id obj = @"hello";
+///     if trycast(obj, NSString, str)            // Try to cast obj to NSString. If success, store obj in typed var str, and then run the if-body
+///         NSLog(@"Length: %lu", str.length);    // str is of type NSString, so NSString's properties can be accessed directly
+///     ```
+/// Caution: Uses for-loops to insert vars into scope, so will behave unexpectedly with `break` and `continue` statements.
+/// Worth it? ... Not sure. Not much less boilerplate than using the super simple and flexible `isclass()/isclassd()` macros. Also, dynamic typing as id is fine in objc. [Mar 2026]
+
+#define trycast(varname, classname, newvarname)                                                         \
+    (varname && [varname isKindOfClass: [classname class]])                                          \
+        for (int _once = 1; _once;) \
+        for (id __trycast_temp = varname; _once;)                                                               /** The temp var allows us to shadow `varname` if `newvarname` == `varname` */ \
+        for (classname *_Nonnull const __attribute__((unused)) newvarname = __trycast_temp; _once; _once = 0)   /** 1. Notice `_Nonnull`. We're not only guaranteed the class but also the non-null-ity of newvarname || 2. Notice __attribute__((unused)) – it turns off warnings when the macro user doesn't use newvarname. 3. Notice `const` it warns the user when they try to override the inner variable. (Since they're probably trying to override the outer one.) */ \
 
 /// stringf – (string) (f)ormatting convenience.
 ///  Notes:
@@ -225,73 +246,6 @@
 #define bcase(values...) \
     break; fcase(values)
 
-/// `threadobject()` and `staticobject()`  macros – creates an objc object whose state is retained between invocations.
-///     Scope:
-///     > `threadobject()` retains the state between all invocations on the same thread. (like a `static __thread` variable)
-///     > `staticobject()` retains the state between all invocations in the same process. (like a `static` variable)
-///
-///     Example usage:
-///     `staticobject()`:
-///         ```
-///         NSCache *cache = staticobject([[NSCache alloc] init]);
-///         id fromCache = [cache valueForKey: @"SomeKey"];
-///         if (fromCache) return fromCache;
-///         <...>
-///         [cache setValue: expensiveValue forKey: @"SomeKey"]; /// (Caution: Generally, modifying the result of staticobject() isn't thread-safe. This particular example is thread-safe because NSCache uses locks internally.)
-///         ```
-///     `threadobject()`:
-///         ```
-///         NSMutableArray *arr = threadobject([NSMutableArray alloc] init]);
-///         [arr addObject: @"a"];
-///         NSLog("%@", arr);       // Will print more and more "a" strings as this code is invoked multiple times on the same thread.
-///         ```
-///
-///     Meta: why is the threadobject implementation so complicated?
-///         Objc objects aren't compatible with `static __thread` variables under ARC. That's why our implementation uses `[[NSThread currentThread] threadDictionary]` under the hood.
-///
-///     Meta: Only use mutable objects.
-///         Overriding the returned pointer will not update the static/thread-local state. Instead you have to create mutable objects in static/thread-local storage, and then modify them.
-///
-///     Meta: what about storing non-objects?
-///        To create non-objects variables that are static or thread-local, you can just use the `static`/`static __thread` keywords directly.
-///        How to initialize non-objects?
-///         - If your initial value is a compile-time-constant:          you can even initialize them very simply, like this `static int count = 99;`.
-///         - If your initial value is not compile-time-constant:       you can use `dispatch_once()` (for static vars) or a `static __thread bool is_initialized` flag (for thread local vars.).
-///
-///     Off-topic:
-///         - [ ] Go through MMF project and replace `static NSMutable...` with  staticobject / threadobject / NSCache. (NSMutableDictionary and NSMutableArray are not thread safe!) (Once we move everything to a single 'IOThread' some of this might be unnecessary.)
-
-#define staticobject(initializer_expr)              \
-    (typeof(initializer_expr))                      \
-    ({                                              \
-        static_assert(_isobject(initializer_expr), "Use `static` for static variables that are not Objective-C objects."); \
-        static typeof(initializer_expr) __result;   \
-        static dispatch_once_t __oncetoken;         \
-        dispatch_once(&__oncetoken, ^{              \
-            __result = (initializer_expr);          \
-        });                                         \
-        __result;                                   \
-    })
-
-#define threadobject(initializer_expr)                                  \
-    (typeof(initializer_expr))                                          \
-    ({                                                                  \
-        static_assert(_isobject(initializer_expr), "Use `static __thread` for thread-local variables that are not Objective-C objects."); \
-        static NSString *__key;                                         \
-        static dispatch_once_t __oncetoken;                             \
-        dispatch_once(&__oncetoken, ^{                                  \
-            __key = stringf(@"mf.threadobject.%p", &__key);             \
-        });                                                             \
-        NSMutableDictionary *__thread_dict =                            \
-            [[NSThread currentThread] threadDictionary];                \
-        typeof(initializer_expr) __result = __thread_dict[__key];       \
-        if (!__result) {                                                \
-            __result = (initializer_expr);                              \
-            __thread_dict[__key] = __result;                            \
-        }                                                               \
-        __result;                                                       \
-    })
-
 /// Debugging helper - get binary representation
 ///     Discussion:
 ///     - This is a macro to make this function generic -> The output string's width will automatically match the byte count of the input type (by using sizeof())
@@ -362,65 +316,3 @@
     }                                                                                       \
     __n;                                                                                    \
 })
-
-/// ifcast & ifcastn
-///
-/// What:   Check if objc object O is of class C. If so, cast O to C and make O available in a dedicated scope.
-/// Why:    Makes working with objc objects of unknown type more concise.
-/// Note:   Similar to Swift if-let-as statement.
-///
-/// Caution: Uses for-loops to insert vars into scope, so will behave unexpectedly with `break` and `continue` statements.
-///     ... Maybe that's a good reason not to use these...
-///
-/// Examples:
-///
-/// 1. ifcast
-///     ```
-///     id obj = @"hello";
-///     ifcast(obj, NSString) {                    // obj is now an (NSString *) inside the scope
-///         NSLog(@"Length: %lu", obj.length);     // Can use NSString methods directly
-///     }
-///     ```
-/// 2. ifcastn
-///     ```
-///     id obj = @"hello";
-///     ifcastn(obj, NSString, str) {               // Re(n)ame obj to str inside the scope
-///         NSLog(@"Length: %lu", str.length);
-///         obj = nil;                              // obj can be overriden when using ifcastn (it would be shadowed when using ifcast())
-///     }
-///     ```
-/// 3. if-else-statement
-///     ```
-///     ifcast          (obj, NSArray)                     NSLog(@"Array: %@", obj.firstObject);
-///     else ifcast     (obj, NSDictionary)                NSLog(@"Dict: %@", obj.allKeys);
-///     else ifcastn    (obj, NSString, str)
-///     {
-///         NSString *upper = [str uppercaseString];
-///         NSLog(@"Uppercased string: %@", upper);
-///     }
-///     else                                                NSLog(@"Unknown class: %@", [obj className]);
-///     ```
-///
-///     Equivalent macro-free code: (more boilerplate)
-///         ```
-///         if      ([obj isKindOfClass: [NSArray class]])        NSLog(@"Array: %@", ((NSArray *)obj).firstObject);
-///         else if ([obj isKindOfClass: [NSDictionary class]])   NSLog(@"Dict: %@", ((NSDictionary *)obj).allKeys);
-///         else if ([obj isKindOfClass: [NSString class]])
-///         {
-///             NSString *str = (id)obj;
-///             NSString *upper = [str uppercaseString];
-///             NSLog(@"Uppercased string: %@", upper);
-///         }
-///         else                                                        NSLog(@"Unknown class: %@", [obj className]);
-///         ```
-///
-///         ... Actually not that much boilerplate –> Probably shouldn't use these macros.
-
-#define ifcastn(varname, classname, newvarname)                                                         \
-    if (varname && [varname isKindOfClass: [classname class]])                                          \
-        for (int _once = 1; _once;) \
-        for (id __ifcast_temp = varname; _once;)                                                               /** The temp var allows us to shadow `varname` if `newvarname` == `varname` */ \
-        for (classname *_Nonnull const __attribute__((unused)) newvarname = __ifcast_temp; _once; _once = 0)   /** 1. Notice `_Nonnull`. We're not only guaranteed the class but also the non-null-ity of newvarname || 2. Notice __attribute__((unused)) – it turns off warnings when the macro user doesn't use newvarname. 3. Notice `const` it warns the user when they try to override the inner variable. (Since they're probably trying to override the outer one.) */ \
-
-#define ifcast(varname, classname)  \
-    ifcastn(varname, classname, varname)

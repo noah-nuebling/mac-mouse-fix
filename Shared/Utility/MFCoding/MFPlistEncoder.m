@@ -122,7 +122,11 @@
     #define ERROR_RETURN_VALUE nil
     
     /// Track circular references
-    NSMutableArray *visitedObjects = threadobject([[NSMutableArray alloc] init]);
+    NSMutableArray *visitedObjects = NSThread.currentThread.threadDictionary[@"MFPlistEncoder_VisitedObjects"];
+    if (!visitedObjects) {
+        visitedObjects = [NSMutableArray new];
+        NSThread.currentThread.threadDictionary[@"MFPlistEncoder_VisitedObjects"] = visitedObjects;
+    }
     bool didAddToVisitedObjects = false;
     if (obj) {
         NSNumber *obj_key = @((intptr_t)obj); /// Converting obj reference to NSNumber for performance. Not sure if it helps.
@@ -206,7 +210,7 @@
             ///     When you call -[NSDictionary encodeWithCoder:], it passes "NS.keys" and "NS.objects" keys to -[NSCoder encodeObject: forKey:]
             ///     -> We don't wanna use these keys. Instead we just wanna keep the natural NSArrays and NSDictionaries structure in our archive, since they're already plist types. -> That way the resulting archive should be more human-readable.
                 
-            ifcastn(obj, NSArray, arr) {
+            if trycast(obj, NSArray, arr) {
                 /// Plist container - NSArray
                 
                 id __unsafe_unretained objects[arr.count];
@@ -223,7 +227,7 @@
                 
                 result = [[NSArray alloc] initWithObjects: resultObjects count: arrcount(resultObjects)];
                 
-            } else ifcastn(obj, NSDictionary, dict) {
+            } else if trycast(obj, NSDictionary, dict) {
                 /// Plist container - NSDictionary
 
                 id __unsafe_unretained keys[dict.count];    /// Due to the MFPlistIsValidNode() checks above, we know the dict keys are strings and don't need further encoding.

@@ -178,7 +178,7 @@
     Class resultClass = [valueFromArchive class];
     bool decodeUsing_InitWithCoder = false;
     ({
-        ifcastn(valueFromArchive, NSDictionary, dictFromArchive) do {
+        if trycast(valueFromArchive, NSDictionary, dictFromArchive) do {
             
             /// If the dict is encoding a non-plist class's instance, get that class.
             
@@ -296,7 +296,7 @@
             ///     When decoding raw plist nodes, we always instantiate the mutable subclasses (NSMutableArray and NSMutableString, ...).
             ///     Explanation in `MFPlistIsValidNode()` as of [Feb 2025]
             
-            ifcastn(valueFromArchive, NSArray, arr) {
+            if trycast(valueFromArchive, NSArray, arr) {
                 /// Plist container - NSArray
                 
                 id __unsafe_unretained objects[arr.count];
@@ -313,7 +313,7 @@
                 
                 result = [[NSMutableArray alloc] initWithObjects: resultObjects count: arrcount(resultObjects)];
             }
-            else ifcastn(valueFromArchive, NSDictionary, dict) {
+            else if trycast(valueFromArchive, NSDictionary, dict) {
                 /// Plist container - NSDictionary
                 
                 id __unsafe_unretained keys[dict.count];

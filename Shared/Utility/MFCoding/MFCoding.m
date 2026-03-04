@@ -191,12 +191,12 @@ NSData *MFEncode(NSObject<NSCoding> *codable, BOOL requireSecureCoding, MFEncodi
     ({
         @try {
             [encoder encodeObject: codable forKey: NSKeyedArchiveRootObjectKey]; /// This can throw, at least for MFPlistEncoder
-            ifcastn(encoder, NSKeyedArchiver, archiver) {
+            if trycast(encoder, NSKeyedArchiver, archiver) {
                 [archiver finishEncoding];               /// `-finishEncoding` needs to be called before `-encodedData`.
                 finishEncodingNeedsToBeCalled = NO;
                 result = [archiver encodedData];         /// I think this can throw since it returns a non-nullable.
             }
-            else ifcastn(encoder,MFPlistEncoder, encoder) {
+            else if trycast(encoder, MFPlistEncoder, encoder) {
                 result = [encoder encodedPlist];
             }
             exception = nil;
