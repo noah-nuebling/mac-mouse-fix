@@ -139,7 +139,7 @@
         }
             
         /// Remove trailling whitespace
-        for (int i = ((int)(s.length))-1; i >= realStartIndex; i--)
+        for (int i = (int)s.length-1; i >= realStartIndex; i--)
             if (![whitespaceAndNewlineChars characterIsMember: str(i)]) {
                 [s deleteCharactersInRange: NSMakeRange(i+1, s.length - (i+1))]; /// (i+1) is the first of the trailing whitespace chars
                 break;
@@ -147,7 +147,7 @@
         
         /// Remove duplicates
         ///     Note how we're using `whitespaceChars` here not `whitespaceAndNewlineChars`. Since we don't want to remove double linebreaks.
-        for (int i = realStartIndex; i < s.length-1; i++) /// Only iterate up to the second-last element. [Sep 2025]
+        for (int i = realStartIndex; i < (int)s.length-1; i++) /// Only iterate up to the second-last element. [Sep 2025]
             if (
                 [whitespaceChars characterIsMember: str(i)] &&
                 [whitespaceChars characterIsMember: str(i+1)]
