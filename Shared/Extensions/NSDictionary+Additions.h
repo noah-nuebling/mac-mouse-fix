@@ -16,7 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
     - (NSObject * _Nullable) objectForCoolKeyPath: (NSString *)keyPath;
     - (void) iterateCoolKeyPaths: (void (^)(NSString *keyPath, id object))callback;
     
-    + (NSMutableDictionary *) doDeepMutateDictionary: (NSDictionary *)dict;
+    #if 0
+        + (NSMutableDictionary *) doDeepMutateDictionary: (NSDictionary *)dict;
+    #endif
 @end
 
 @interface NSMutableDictionary (Additions)

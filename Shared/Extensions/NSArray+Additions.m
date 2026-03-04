@@ -12,6 +12,16 @@
 
 @implementation NSArray (Additions)
 
+- (NSMutableAttributedString *) componentsJoinedByAttributedString: (NSAttributedString *)joiner {
+    /// Also see `componentsSeparatedByAttributedString:maxSeparations:` [Mar 4 2026]
+    NSMutableAttributedString *result = [NSMutableAttributedString new];
+    for (int i = 0; i < self.count; i++) {
+        if (i) [result appendAttributedString: joiner];
+        [result appendAttributedString: self[i]];
+    }
+    return result;
+}
+
 
 #pragma mark - Higher order functions
 // source: https://medium.com/@weijentu/higher-order-functions-in-objective-c-850f6c90de30
@@ -65,35 +75,38 @@
     return flatArray.copy;
 }
 
-// Mutable deep copy
-// Src: https://github.com/alfonsotesauro/NSDictionary-and-NSArray-Deep-mutable-copy/
-+ (NSMutableArray *)doDeepMutateArray:(NSArray *)array {
-    
-    NSMutableArray *toReturn = [NSMutableArray arrayWithArray:array];
-    
-    for (id obj in array)
-    {
+#if 0
+
+    // Mutable deep copy
+    // Src: https://github.com/alfonsotesauro/NSDictionary-and-NSArray-Deep-mutable-copy/
+    + (NSMutableArray *)doDeepMutateArray:(NSArray *)array {
         
-        if ([obj isKindOfClass:[NSDictionary class]])
+        NSMutableArray *toReturn = [NSMutableArray arrayWithArray:array];
+        
+        for (id obj in array)
         {
             
-            NSMutableDictionary *theNew = [NSMutableDictionary doDeepMutateDictionary:obj];
-            
-            [toReturn replaceObjectAtIndex:[array indexOfObject:obj] withObject:theNew];
-        }
-        else
-            if ([obj isKindOfClass:[NSArray class]])
+            if ([obj isKindOfClass:[NSDictionary class]])
             {
-                NSMutableArray *theNew = [self doDeepMutateArray:obj];
+                
+                NSMutableDictionary *theNew = [NSMutableDictionary doDeepMutateDictionary:obj];
                 
                 [toReturn replaceObjectAtIndex:[array indexOfObject:obj] withObject:theNew];
-                
             }
+            else
+                if ([obj isKindOfClass:[NSArray class]])
+                {
+                    NSMutableArray *theNew = [self doDeepMutateArray:obj];
+                    
+                    [toReturn replaceObjectAtIndex:[array indexOfObject:obj] withObject:theNew];
+                    
+                }
+            
+        }
+        
+        return toReturn;
         
     }
-    
-    return toReturn;
-    
-}
+#endif
 
 @end

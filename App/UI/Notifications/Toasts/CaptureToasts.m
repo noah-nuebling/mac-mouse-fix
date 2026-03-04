@@ -18,6 +18,12 @@
 #import "Mac_Mouse_Fix-Swift.h"
 #import "Localization.h"
 
+#define arr(expr, header) ({ /** Python style 'list-comprehension' sugar. ||  TODO: Maybe put this in a shared utility class [Mar 4 2026] */\
+    auto _result = [NSMutableArray new]; \
+    header { [_result addObject: (expr)]; } \
+    _result; \
+})
+
 @implementation CaptureToasts
 
 typedef enum {
@@ -140,12 +146,8 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
     NSInteger capturedCount = capturedItemArray.count;
     NSInteger uncapturedCount = uncapturedItemArray.count;
     
-    /// Add markdown emphasis to items
-    NSString *(^addMDEmphasis)(NSString *) = ^NSString *(NSString *item) {
-        return stringf(@"**%@**", item);
-    };
-    capturedItemArray = [capturedItemArray map:addMDEmphasis];
-    uncapturedItemArray = [uncapturedItemArray map:addMDEmphasis];
+    capturedItemArray   = arr(stringf(@"**%@**", item), for (NSString *item in capturedItemArray)); /// Add markdown emphasis to items
+    uncapturedItemArray = arr(stringf(@"**%@**", item), for (NSString *item in uncapturedItemArray));
     
     /// Create natural language list of items
     NSString *capturedItemEnumeration = [UIStrings naturalLanguageListFromStringArray:capturedItemArray];
@@ -322,9 +324,10 @@ static NSString *getLocalizedString(MFCapturedInputType inputType, NSString *sim
 }
 
 static NSArray *buttonStringArrayFromButtonNumberArray(NSArray<NSNumber *> *buttons) {
-    return [buttons map:^id _Nonnull(NSNumber * _Nonnull button) {
-        return [UIStrings getButtonString:button.intValue context:kMFButtonStringUsageContext_CaptureNotification];
-    }];
+    return arr(
+        [UIStrings getButtonString: [button intValue] context: kMFButtonStringUsageContext_CaptureNotification],
+        for (NSNumber *button in buttons)
+    );
 }
 //static NSString *buttonStringFromButtonNumberArray(NSArray<NSNumber *> *buttons) {
 //    NSArray *buttonStrings = buttonStringArrayFromButtonNumberArray(buttons);

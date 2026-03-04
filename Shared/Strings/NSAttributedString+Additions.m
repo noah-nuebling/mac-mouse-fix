@@ -305,21 +305,23 @@
 
 #pragma mark Split string
 
-- (NSArray<NSAttributedString *> *) split: (NSString *)separator maxSplit: (int)maxSplit {
+- (NSArray<NSAttributedString *> *) componentsSeparatedByAttributedString: (NSString *)separator maxSeparations: (int)maxSeparations {
     
-    /// Overview: Like `-[NSString componentsSeparatedByString:]`, but for NSAttributedString and the API is a bit more like Python's `str.split()`
-    /// Question: Is it a good idea to make the method name shorter and more Python-y instead of following the verbose naming scheme of the other methods? [Sep 2025]
+    /// Overview: Like `-[NSString componentsSeparatedByString:]`, but for NSAttributedString
+    ///     and with maxSeparations: param like Python's `str.split()`
     /// Usage:
     ///     Pass in -1 for maxSplit to turn it off.
+    /// Also see:
+    ///     `-[NSArray componentsJoinedByAttributedString:]`
     
     auto result = [NSMutableArray new];
     
     auto restRange = NSMakeRange(0, self.length);
     
-    for (int split = 1; ; split++) {
+    for (int separations = 1; ; separations++) {
         
-        if (maxSplit > 0)
-            if (split > maxSplit)
+        if (maxSeparations > 0)
+            if (separations > maxSeparations)
                 break;
         
         auto separatorRange = [self.string
@@ -1308,3 +1310,4 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 #endif
 
 @end
+

@@ -193,7 +193,7 @@ void _iterate_cool_key_paths(NSDictionary *dict, NSMutableArray *key_stack, void
     }
 }
 
-
+#if 0
 + (NSMutableDictionary *)doDeepMutateDictionary:(NSDictionary *)dict {
     
     NSMutableDictionary *toReturn = [NSMutableDictionary dictionaryWithDictionary:dict];
@@ -219,7 +219,7 @@ void _iterate_cool_key_paths(NSDictionary *dict, NSMutableArray *key_stack, void
     }];
     
     return toReturn;
-    
 }
+#endif
 
 @end

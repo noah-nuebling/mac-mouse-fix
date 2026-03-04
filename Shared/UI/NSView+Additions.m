@@ -16,51 +16,50 @@
 #pragma mark - Frame conversion
 
 - (CGRect)rectInQuartzScreenCoordinates {
-    
     /// Not sure if this still works when self.isFlipped. Should test that.
-    
-    return [SharedUtility cocoaToQuartzScreenSpace:[self.window convertRectToScreen:self.rectInWindowCoordinates]];
+    return [SharedUtility cocoaToQuartzScreenSpace: [self.window convertRectToScreen: self.rectInWindowCoordinates]];
 }
 
 - (CGRect)rectInScreenCoordinates {
-    return [self.window convertRectToScreen:self.rectInWindowCoordinates];
+    return [self.window convertRectToScreen: self.rectInWindowCoordinates];
 }
 
 - (CGRect)rectInWindowCoordinates {
-    return [self convertRect:self.bounds toView:nil];
+    return [self convertRect: self.bounds toView: nil];
 }
 
 #pragma mark - Accessing related views
 
-- (NSArray<NSView *> *)nestedSubviews {
+- (NSArray<NSView *> *)nestedSubviews { /// Might be more efficient to use an iterator (didn't measure if it would matter though) [Mar 2026]
     
-    NSArray<NSView *> *subviews = self.subviews;
-    NSArray<NSArray<NSView *> *> *recursiveSubviews = [subviews map:^id _Nonnull(NSView *mappedView) {
-        return mappedView.nestedSubviews;
-    }];
-    NSArray<NSView *> *recursiveSubviewsFlat = recursiveSubviews.flattenedArray;
-    return [self.subviews arrayByAddingObjectsFromArray:recursiveSubviewsFlat];
+    auto result = [NSMutableArray new];
+    [result addObjectsFromArray: self.subviews];
+    for (NSView *subview in self.subviews) [result addObjectsFromArray: [subview nestedSubviews]];
+    return result;
+    
+    #if 0 /** Old implementation using `-map:` and `-flattenedArray` (Replaced [Mar 4 2026] */
+        NSArray<NSView *> *subviews = self.subviews;
+        NSArray<NSArray<NSView *> *> *recursiveSubviews = [subviews map:^id _Nonnull(NSView *mappedView) {
+            return mappedView.nestedSubviews;
+        }];
+        NSArray<NSView *> *recursiveSubviewsFlat = recursiveSubviews.flattenedArray;
+        return [self.subviews arrayByAddingObjectsFromArray:recursiveSubviewsFlat];
+    #endif
+    
 }
 
 - (NSArray *)nestedSubviewsWithIdentifier:(NSUserInterfaceItemIdentifier)identifier {
-    
     return viewsWithIdentifier(identifier, self.nestedSubviews);
 }
 
 - (NSArray *)subviewsWithIdentifier:(NSString *)identifier {
-    
     return viewsWithIdentifier(identifier, self.subviews);
 }
 
-NSArray *viewsWithIdentifier(NSUserInterfaceItemIdentifier identifier, NSArray *viewArray) {
-    
-    NSMutableArray *outViews = [[NSMutableArray alloc] init];
-    for (NSView *v in viewArray) {
-        if ([v.identifier isEqualToString:identifier]) {
-            [outViews addObject:v];
-        }
-    }
-    return outViews;
+NSArray *viewsWithIdentifier(NSUserInterfaceItemIdentifier identifier, NSArray *views) {
+    auto result = [NSMutableArray new];
+    for (NSView *v in views) if ([v.identifier isEqualToString: identifier]) [result addObject: v];
+    return result;
 }
 
 @end

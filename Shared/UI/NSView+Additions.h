@@ -20,8 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// v Are these still used in MMF 3?
 
 - (NSArray<NSView *> *)subviewsWithIdentifier:(NSString *)identifier;
-- (NSArray<NSView *> *)nestedSubviews;
 - (NSArray<NSView *> *)nestedSubviewsWithIdentifier:(NSUserInterfaceItemIdentifier)identifier;
+#if 0
+    - (NSArray<NSView *> *)nestedSubviews;
+#endif
 
 @end
 
