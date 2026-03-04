@@ -81,6 +81,7 @@
 #import "HelperUtility.h"
 #import <Carbon/Carbon.h>
 #import "SharedUtility.h"
+#import "vardesc.h"
 #import "MFDefer.h"
 
 @implementation SymbolicHotKeys

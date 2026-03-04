@@ -104,6 +104,9 @@
 		4F5F3EF12756EC0400C350C0 /* RemapSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF02756EC0400C350C0 /* RemapSwizzler.m */; };
 		4F5F3EF32756F1DB00C350C0 /* ScrollModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */; };
 		4F626E99292A842D00E6FFD5 /* KeyCaptureMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F626E98292A842D00E6FFD5 /* KeyCaptureMode.m */; };
+		4F676CEC2F589BBB00223E1D /* vardesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F676CEB2F589BB300223E1D /* vardesc.m */; };
+		4F676CED2F589BBC00223E1D /* vardesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F676CEB2F589BB300223E1D /* vardesc.m */; };
+		4F676CEE2F589BBC00223E1D /* vardesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F676CEB2F589BB300223E1D /* vardesc.m */; };
 		4F67978C2DCFB76100516167 /* DevToggles.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F67978B2DCFB76100516167 /* DevToggles.m */; };
 		4F6F67A028A8141800C6C40F /* ButtonTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F6F679F28A8141800C6C40F /* ButtonTabController.swift */; };
 		4F70ECB7267E810900325A76 /* IOUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F70ECB6267E810900325A76 /* IOUtility.m */; };
@@ -260,10 +263,8 @@
 		4FBC829C2DAE93AD00354981 /* MFObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82872DAE93AD00354981 /* MFObserver.m */; };
 		4FBC833C2DAFB28B00354981 /* MFBenchmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83362DAFB28B00354981 /* MFBenchmark.m */; };
 		4FBC833F2DAFB28B00354981 /* PrivateFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC832D2DAFB28B00354981 /* PrivateFunctions.m */; };
-		4FBC83422DAFB28B00354981 /* SharedMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83302DAFB28B00354981 /* SharedMacros.m */; };
 		4FBC83432DAFB28B00354981 /* MFBenchmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83362DAFB28B00354981 /* MFBenchmark.m */; };
 		4FBC83462DAFB28B00354981 /* PrivateFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC832D2DAFB28B00354981 /* PrivateFunctions.m */; };
-		4FBC83492DAFB28B00354981 /* SharedMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83302DAFB28B00354981 /* SharedMacros.m */; };
 		4FBC834B2DAFD7DB00354981 /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */; };
 		4FBC834C2DAFD7DB00354981 /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */; };
 		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
@@ -2138,6 +2139,9 @@
 		4F626E97292A842D00E6FFD5 /* KeyCaptureMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KeyCaptureMode.h; sourceTree = "<group>"; };
 		4F626E98292A842D00E6FFD5 /* KeyCaptureMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KeyCaptureMode.m; sourceTree = "<group>"; };
 		4F676CEA2F588E2300223E1D /* xxxSharedMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xxxSharedMacros.h; sourceTree = "<group>"; };
+		4F676CEB2F589BB300223E1D /* vardesc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = vardesc.m; sourceTree = "<group>"; };
+		4F676CEF2F589C5E00223E1D /* vardesc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vardesc.h; sourceTree = "<group>"; };
+		4F676CF02F58A66100223E1D /* SharedHelperMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedHelperMacros.h; sourceTree = "<group>"; };
 		4F67978A2DCFB76100516167 /* DevToggles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DevToggles.h; sourceTree = "<group>"; };
 		4F67978B2DCFB76100516167 /* DevToggles.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DevToggles.m; sourceTree = "<group>"; };
 		4F6F679F28A8141800C6C40F /* ButtonTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTabController.swift; sourceTree = "<group>"; };
@@ -2322,7 +2326,6 @@
 		4FBC832C2DAFB28B00354981 /* PrivateFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrivateFunctions.h; sourceTree = "<group>"; };
 		4FBC832D2DAFB28B00354981 /* PrivateFunctions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrivateFunctions.m; sourceTree = "<group>"; };
 		4FBC832F2DAFB28B00354981 /* SharedMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMacros.h; sourceTree = "<group>"; };
-		4FBC83302DAFB28B00354981 /* SharedMacros.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMacros.m; sourceTree = "<group>"; };
 		4FBC83312DAFB28B00354981 /* xxxListOperations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xxxListOperations.h; sourceTree = "<group>"; };
 		4FBC83322DAFB28B00354981 /* xxxListOperations.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = xxxListOperations.m; sourceTree = "<group>"; };
 		4FBC83332DAFB28B00354981 /* xxxMFLoop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xxxMFLoop.h; sourceTree = "<group>"; };
@@ -7126,9 +7129,9 @@
 			isa = PBXGroup;
 			children = (
 				4FBC832F2DAFB28B00354981 /* SharedMacros.h */,
-				4FBC83302DAFB28B00354981 /* SharedMacros.m */,
 				4FBC83352DAFB28B00354981 /* MFBenchmark.h */,
 				4FBC83362DAFB28B00354981 /* MFBenchmark.m */,
+				4F676CF02F58A66100223E1D /* SharedHelperMacros.h */,
 				4F676B612F587F2B00223E1D /* Old */,
 				4F428CFF2CD6690F006322AB /* MFDefer.h */,
 				4FAF8FA12E9FC1CC00D90CD7 /* vardesc_benchmarks.m */,
@@ -7919,6 +7922,8 @@
 			children = (
 				4FE1A1B72C56A50100CE3347 /* Logging.h */,
 				4FE1A1B82C56A50100CE3347 /* Logging.m */,
+				4F676CEF2F589C5E00223E1D /* vardesc.h */,
+				4F676CEB2F589BB300223E1D /* vardesc.m */,
 				4F58FDFF2C56DE9B00926A00 /* Logging.swift */,
 				4F58FE0D2C56EA7E00926A00 /* Tests */,
 			);
@@ -8274,6 +8279,7 @@
 				4FFA973C2EC2576200A52849 /* LocalizedStringAnnotation.m in Sources */,
 				4FE78C342C4FFA2F00C54103 /* TreeNode.h in Sources */,
 				4FE78C352C4FFA2F00C54103 /* TreeNode.m in Sources */,
+				4F676CEC2F589BBB00223E1D /* vardesc.m in Sources */,
 				4FA773D92E66FEF50056E9B4 /* MFCoding.m in Sources */,
 				4FE78C462C50362800C54103 /* DisableSwiftBridging.swift in Sources */,
 				4FE78C362C4FFA7A00C54103 /* NSString+Steganography.m in Sources */,
@@ -8365,7 +8371,6 @@
 				4F85C05428BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */,
 				4FBC833C2DAFB28B00354981 /* MFBenchmark.m in Sources */,
 				4FBC833F2DAFB28B00354981 /* PrivateFunctions.m in Sources */,
-				4FBC83422DAFB28B00354981 /* SharedMacros.m in Sources */,
 				4FCABCF72933A7090018E538 /* Toasts.swift in Sources */,
 				4FA2F1262C29A125000C5535 /* NotificationLabel.m in Sources */,
 				4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */,
@@ -8417,6 +8422,7 @@
 				4F428D082CD8C688006322AB /* MFCoding.swift in Sources */,
 				4F1B418F2D49960E00026C94 /* MFSemaphore.m in Sources */,
 				4FAA5601293A41AF00BA782C /* BezierCappedAccelerationCurve.swift in Sources */,
+				4F676CEE2F589BBC00223E1D /* vardesc.m in Sources */,
 				4FA40D1028A0D8F100499E53 /* VectorSubPixelator.m in Sources */,
 				4FA40D0228A0CE5B00499E53 /* VectorUtility.m in Sources */,
 				4FBC834B2DAFD7DB00354981 /* HashablePair.swift in Sources */,
@@ -8543,7 +8549,6 @@
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,
 				4FBC83432DAFB28B00354981 /* MFBenchmark.m in Sources */,
 				4FBC83462DAFB28B00354981 /* PrivateFunctions.m in Sources */,
-				4FBC83492DAFB28B00354981 /* SharedMacros.m in Sources */,
 				4F2E8FD32D52229100689058 /* NSCoderErrors.m in Sources */,
 				4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */,
 				4FAA3DAD2C55E94600CBA413 /* IBUtility.m in Sources */,
@@ -8591,6 +8596,7 @@
 				4FF6654F25F2C7B000689B77 /* NSArray+Additions.m in Sources */,
 				4FFA4E4328B7D28C0062A1FE /* ReactiveAnimatorProxy.swift in Sources */,
 				4FF6654525F2C7B000689B77 /* Locator.m in Sources */,
+				4F676CED2F589BBC00223E1D /* vardesc.m in Sources */,
 				4F5F3EF12756EC0400C350C0 /* RemapSwizzler.m in Sources */,
 				4FD66E0B27BB9BAE00F67559 /* EventUtility.m in Sources */,
 				4FFA4E3C28B79D9B0062A1FE /* NSAttributedString+Extensions.swift in Sources */,

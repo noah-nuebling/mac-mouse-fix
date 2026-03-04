@@ -17,6 +17,7 @@
 #import "Constants.h"
 
 #import "Logging.h"
+#import "vardesc.h"
 /*
 @import Carbon;
 #import "CGSHotKeys.h"
