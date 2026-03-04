@@ -18,12 +18,6 @@
 #import "Mac_Mouse_Fix-Swift.h"
 #import "Localization.h"
 
-#define arr(expr, header) ({ /** Python style 'list-comprehension' sugar. ||  TODO: Maybe put this in a shared utility class [Mar 4 2026] */\
-    auto _result = [NSMutableArray new]; \
-    header { [_result addObject: (expr)]; } \
-    _result; \
-})
-
 @implementation CaptureToasts
 
 typedef enum {

@@ -67,7 +67,7 @@ Benchmark results
 #import "time.h"
 #import <os/log.h>
 
-#define loopc(i, count) for (int i = 0; i < (count); i++)
+#define range(i, count) (int i = 0; i < (count); i++)
 //#define nowtime() ((double)clock() / CLOCKS_PER_SEC * 1000.0) /* in ms */
 #define nowtime() ({ struct timespec ts; clock_gettime(CLOCK_MONOTONIC, &ts); (ts.tv_sec * 1000.0 + ts.tv_nsec / 1000000.0); })
 #define oslog(fmt, args...) os_log_debug(OS_LOG_DEFAULT, fmt, ## args)
@@ -79,9 +79,9 @@ int main(void) {
     #define runtest(name, dolog)                        \
         {                                               \
             double ts_start = nowtime();                \
-            loopc(t, TEST_COUNT) {                      \
+            for range(t, TEST_COUNT) {                      \
                 char letters[] = "a is the letter";     \
-                loopc(i, ('z' - 'a' + 1)) {             \
+                for range(i, ('z' - 'a' + 1)) {             \
                     dolog;                              \
                     letters[0] += 1;                    \
                 }                                       \

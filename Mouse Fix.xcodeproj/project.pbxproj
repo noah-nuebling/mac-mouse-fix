@@ -259,14 +259,10 @@
 		4FBC82962DAE93AD00354981 /* MFObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82872DAE93AD00354981 /* MFObserver.m */; };
 		4FBC829C2DAE93AD00354981 /* MFObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC82872DAE93AD00354981 /* MFObserver.m */; };
 		4FBC833C2DAFB28B00354981 /* MFBenchmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83362DAFB28B00354981 /* MFBenchmark.m */; };
-		4FBC833E2DAFB28B00354981 /* MFLoop.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83342DAFB28B00354981 /* MFLoop.m */; };
 		4FBC833F2DAFB28B00354981 /* PrivateFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC832D2DAFB28B00354981 /* PrivateFunctions.m */; };
-		4FBC83412DAFB28B00354981 /* ListOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83322DAFB28B00354981 /* ListOperations.m */; };
 		4FBC83422DAFB28B00354981 /* SharedMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83302DAFB28B00354981 /* SharedMacros.m */; };
 		4FBC83432DAFB28B00354981 /* MFBenchmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83362DAFB28B00354981 /* MFBenchmark.m */; };
-		4FBC83452DAFB28B00354981 /* MFLoop.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83342DAFB28B00354981 /* MFLoop.m */; };
 		4FBC83462DAFB28B00354981 /* PrivateFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC832D2DAFB28B00354981 /* PrivateFunctions.m */; };
-		4FBC83482DAFB28B00354981 /* ListOperations.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83322DAFB28B00354981 /* ListOperations.m */; };
 		4FBC83492DAFB28B00354981 /* SharedMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83302DAFB28B00354981 /* SharedMacros.m */; };
 		4FBC834B2DAFD7DB00354981 /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */; };
 		4FBC834C2DAFD7DB00354981 /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */; };
@@ -2070,8 +2066,8 @@
 		4F2E8FD22D52229100689058 /* NSCoderErrors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSCoderErrors.m; sourceTree = "<group>"; };
 		4F2E8FD52D52877F00689058 /* MFPlistEncoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFPlistEncoder.h; sourceTree = "<group>"; };
 		4F2E8FD62D52877F00689058 /* MFPlistEncoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFPlistEncoder.m; sourceTree = "<group>"; };
-		4F2E8FE12D53EB8D00689058 /* MFOnceMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFOnceMacro.h; sourceTree = "<group>"; };
-		4F2E8FE22D53EB8D00689058 /* MFOnceMacro.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFOnceMacro.m; sourceTree = "<group>"; };
+		4F2E8FE12D53EB8D00689058 /* xxxMFOnceMacro.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xxxMFOnceMacro.h; sourceTree = "<group>"; };
+		4F2E8FE22D53EB8D00689058 /* xxxMFOnceMacro.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = xxxMFOnceMacro.m; sourceTree = "<group>"; };
 		4F2F0B2A28E6258B00246D59 /* MessagePortUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagePortUtility.swift; sourceTree = "<group>"; };
 		4F319CB926252A2D004E5F63 /* ButtonGroupRowView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonGroupRowView.h; sourceTree = "<group>"; };
 		4F319CBA26252A2D004E5F63 /* ButtonGroupRowView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonGroupRowView.m; sourceTree = "<group>"; };
@@ -2326,10 +2322,10 @@
 		4FBC832D2DAFB28B00354981 /* PrivateFunctions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PrivateFunctions.m; sourceTree = "<group>"; };
 		4FBC832F2DAFB28B00354981 /* SharedMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SharedMacros.h; sourceTree = "<group>"; };
 		4FBC83302DAFB28B00354981 /* SharedMacros.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SharedMacros.m; sourceTree = "<group>"; };
-		4FBC83312DAFB28B00354981 /* ListOperations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListOperations.h; sourceTree = "<group>"; };
-		4FBC83322DAFB28B00354981 /* ListOperations.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListOperations.m; sourceTree = "<group>"; };
-		4FBC83332DAFB28B00354981 /* MFLoop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFLoop.h; sourceTree = "<group>"; };
-		4FBC83342DAFB28B00354981 /* MFLoop.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFLoop.m; sourceTree = "<group>"; };
+		4FBC83312DAFB28B00354981 /* xxxListOperations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xxxListOperations.h; sourceTree = "<group>"; };
+		4FBC83322DAFB28B00354981 /* xxxListOperations.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = xxxListOperations.m; sourceTree = "<group>"; };
+		4FBC83332DAFB28B00354981 /* xxxMFLoop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = xxxMFLoop.h; sourceTree = "<group>"; };
+		4FBC83342DAFB28B00354981 /* xxxMFLoop.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = xxxMFLoop.m; sourceTree = "<group>"; };
 		4FBC83352DAFB28B00354981 /* MFBenchmark.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFBenchmark.h; sourceTree = "<group>"; };
 		4FBC83362DAFB28B00354981 /* MFBenchmark.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFBenchmark.m; sourceTree = "<group>"; };
 		4FBC9434260F8AA60062F186 /* MASShortcut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASShortcut.m; sourceTree = "<group>"; };
@@ -6625,6 +6621,19 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
+		4F676B612F587F2B00223E1D /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				4FBC83312DAFB28B00354981 /* xxxListOperations.h */,
+				4FBC83322DAFB28B00354981 /* xxxListOperations.m */,
+				4FBC83332DAFB28B00354981 /* xxxMFLoop.h */,
+				4FBC83342DAFB28B00354981 /* xxxMFLoop.m */,
+				4F2E8FE12D53EB8D00689058 /* xxxMFOnceMacro.h */,
+				4F2E8FE22D53EB8D00689058 /* xxxMFOnceMacro.m */,
+			);
+			path = Old;
+			sourceTree = "<group>";
+		};
 		4F6F67A128A8188000C6C40F /* ButtonTab */ = {
 			isa = PBXGroup;
 			children = (
@@ -7118,13 +7127,8 @@
 				4FBC83302DAFB28B00354981 /* SharedMacros.m */,
 				4FBC83352DAFB28B00354981 /* MFBenchmark.h */,
 				4FBC83362DAFB28B00354981 /* MFBenchmark.m */,
-				4FBC83312DAFB28B00354981 /* ListOperations.h */,
-				4FBC83322DAFB28B00354981 /* ListOperations.m */,
-				4FBC83332DAFB28B00354981 /* MFLoop.h */,
-				4FBC83342DAFB28B00354981 /* MFLoop.m */,
+				4F676B612F587F2B00223E1D /* Old */,
 				4F428CFF2CD6690F006322AB /* MFDefer.h */,
-				4F2E8FE12D53EB8D00689058 /* MFOnceMacro.h */,
-				4F2E8FE22D53EB8D00689058 /* MFOnceMacro.m */,
 				4FAF8FA12E9FC1CC00D90CD7 /* vardesc_benchmarks.m */,
 			);
 			path = Macros;
@@ -8358,9 +8362,7 @@
 				4FA40D0028A0CCCB00499E53 /* CombinedLinearCurve.swift in Sources */,
 				4F85C05428BBE6FA00E96E9C /* TrialSectionManager.swift in Sources */,
 				4FBC833C2DAFB28B00354981 /* MFBenchmark.m in Sources */,
-				4FBC833E2DAFB28B00354981 /* MFLoop.m in Sources */,
 				4FBC833F2DAFB28B00354981 /* PrivateFunctions.m in Sources */,
-				4FBC83412DAFB28B00354981 /* ListOperations.m in Sources */,
 				4FBC83422DAFB28B00354981 /* SharedMacros.m in Sources */,
 				4FCABCF72933A7090018E538 /* Toasts.swift in Sources */,
 				4FA2F1262C29A125000C5535 /* NotificationLabel.m in Sources */,
@@ -8538,9 +8540,7 @@
 				4FFA4E4628B7D2960062A1FE /* Replace.swift in Sources */,
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,
 				4FBC83432DAFB28B00354981 /* MFBenchmark.m in Sources */,
-				4FBC83452DAFB28B00354981 /* MFLoop.m in Sources */,
 				4FBC83462DAFB28B00354981 /* PrivateFunctions.m in Sources */,
-				4FBC83482DAFB28B00354981 /* ListOperations.m in Sources */,
 				4FBC83492DAFB28B00354981 /* SharedMacros.m in Sources */,
 				4F2E8FD32D52229100689058 /* NSCoderErrors.m in Sources */,
 				4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */,

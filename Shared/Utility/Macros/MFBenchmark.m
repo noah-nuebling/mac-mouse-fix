@@ -7,8 +7,7 @@
 
 #import "MFBenchmark.h"
 #import "Logging.h"
-#import "MFLoop.h"
-#import "ListOperations.h"
+#import "SharedMacros.h"
 
 MFDataClassImplement2(MFDataClassBase, MFBenchResult,
                       readonly, strong, nonnull, NSString *,        label,
@@ -19,8 +18,7 @@ inline NSString *mfbench_format_results(NSArray<MFBenchResult *> *mfBenchResults
     if (!mfBenchResults || mfBenchResults.count == 0) { /// We expect this when benchmarking is disabled.
         return nil;
     }
- 
-    NSUInteger longestLabelLen = listmaxk(mfBenchResults, mfBenchResults.count, r, r.label.length).key;
+    NSUInteger longestLabelLen = arrmax(r.label.length, for (MFBenchResult *r in mfBenchResults));
     
     if (longestLabelLen <= 0) {
         mfassert(false, @"maxLabelLength %lu is <= 0. mfbench_results: %@", longestLabelLen, mfBenchResults);
@@ -29,7 +27,7 @@ inline NSString *mfbench_format_results(NSArray<MFBenchResult *> *mfBenchResults
     
     NSMutableString *result = [NSMutableString string];
     
-    loopc(i, mfBenchResults.count) {
+    for range(i, mfBenchResults.count) {
         double benchTime = mfBenchResults[i].duration;
         const char *label = [mfBenchResults[i].label cStringUsingEncoding:NSUTF8StringEncoding];
         if (i != 0) [result appendString:@"\n"];

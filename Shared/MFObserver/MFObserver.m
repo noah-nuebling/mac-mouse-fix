@@ -8,7 +8,7 @@
 #import "MFObserver.h"
 #import "objc/runtime.h"
 #import "objc/objc-sync.h"
-#import "ListOperations.h"
+#import "SharedUtility.h"
 
 
 /// I think we can replace any need for reactive frameworks in our app with a very simple custom API providing a thin wrapper around Apple's Key-Value-Observation.
@@ -408,7 +408,7 @@ static NSArray<MFObserver *> *_Nonnull mfobs_observe_latest_values(NSArray<NSObj
     __block LatestValueCache latestValueCache = {0}; /// Init all values to nil
     
     /// Init cache
-    loopc(i, nmax)
+    for range(i, nmax)
         latestValueCache._[i] = (i >= n || i == indexForWhichToReceiveInitialCallback) ?
                                 nil :
                                 [objects[i] valueForKeyPath:keyPaths[i]];
@@ -417,7 +417,7 @@ static NSArray<MFObserver *> *_Nonnull mfobs_observe_latest_values(NSArray<NSObj
     ///     [Apr 2025] We used `pthread_mutex` before, but I'm not sure when to clean that up, since the lock should be 'owned' by all n MFObservers.
     __block id cache_sync_token = @"the_sync_token";
     
-    loopc(i, n) {
+    for range(i, n) {
         
         /// Iterate objects
         
@@ -442,7 +442,7 @@ static NSArray<MFObserver *> *_Nonnull mfobs_observe_latest_values(NSArray<NSObj
             /// Retrieve cache
             ///     Get a local, strong ref to each cache variable while we still have the lock
             __strong id _Nonnull retrievedLatestValues[n];
-            loopc(j, n) retrievedLatestValues[j] = latestValueCache._[j];
+            for range(j, n) retrievedLatestValues[j] = latestValueCache._[j];
             
             /// Release lock
             ///     Note: We could invoke the callbackBlock while we still hold the lock, then we could skip the cache-retrieval step, possibly speeding things up a bit. But that could lead to deadlocks depending on what the callbackBlock code does.

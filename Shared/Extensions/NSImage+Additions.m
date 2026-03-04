@@ -15,8 +15,7 @@
 
 /// MARK: - Macros
 
-#define loopc(i, n) \
-    for (typeof(n+0) i = 0 ; i < (n) ; i++)
+#define range(i, n) (typeof(n+0) i = 0 ; i < (n) ; i++)
 
 #define MF_CGImage_rect(cgImage) \
     NSMakeRect(0, 0, CGImageGetWidth(cgImage), CGImageGetHeight(cgImage))
@@ -165,7 +164,7 @@ CGContextRef MF_CGImage_createRGBAContext(CGImageRef cgImage) {
     if (!buf) fail();
     
     /// Modify pixel buffer
-    loopc(y, h) loopc(x, w) {
+    for range(y, h) for range(x, w) {
         MF_RGBAPixel *px = buf + (y*w + x);
         modifierBlock(px, x, y, w, h);
     }

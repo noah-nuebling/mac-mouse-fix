@@ -10,7 +10,6 @@
 #import "NSString+Steganography.h"
 #import "NSAttributedString+Additions.h"
 #import "NSString+Additions.h"
-#import "MFLoop.h"
 
 #if IS_MAIN_APP
 #import "Mac_Mouse_Fix-Swift.h"
@@ -188,7 +187,7 @@ int steg_charToBit(unichar c) {
     unichar invisibleChars[strlen(decodedChars) * 8] = {};
     
     for (int i = 0; decodedChars[i]; i++)
-        loopc(j, 8)
+        for range(j, 8)
             invisibleChars[(i*8)+j] = steg_bitToChar(!!(decodedChars[i] & (1 << j)));
     
     auto result = stringf(@"%@%@%@",

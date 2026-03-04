@@ -9,7 +9,7 @@
 
 #import "NSAttributedString+Additions.h"
 #import <Cocoa/Cocoa.h>
-#import "MFLoop.h"
+#import "SharedMacros.h"
 #import "NSString+Steganography.h"
 #import "NSDictionary+Additions.h"
 
@@ -46,7 +46,7 @@
         
         auto charset = [NSString secretMessageChars];
         
-        loopc(i, self.length) {
+        for range(i, self.length) {
             if (![charset characterIsMember: chars[i]]) {
                 firstLetterIndex = i;
                 break;
@@ -117,7 +117,7 @@
     ///     Skip over the zero-width characters we insert when taking screenshots (See `NSString+Steganography.m`) [Sep 2025]
     NSInteger realStartIndex = 0;
     if ([NSProcessInfo.processInfo.arguments containsObject:@"-MF_ANNOTATE_LOCALIZED_STRINGS"]) {
-        loopc(i, s.length) {
+        for range(i, s.length) {
             BOOL isSecretMessageChar = [[NSString secretMessageChars] characterIsMember: str(i)]; /// [Sep 2025] Maybe we should use `-[NSString _secretMessages]` instead?
             if (!isSecretMessageChar) {
                 realStartIndex = (NSInteger)i;
@@ -130,7 +130,7 @@
     nowarn_push(-Wsign-compare)         ///         But this way we get lots of signed/unsigned warnings! Not sure how to deal with this except `nowarn_push`. See `Clang Diagnostic Flags - Sign.md`
     {
         /// Remove leading whitespace
-        loopc(i, realStartIndex, s.length, +1) {
+        for (int i = realStartIndex; i < s.length; i++) {
             if (![whitespaceAndNewlineChars characterIsMember: str(i)]) {
                 [s deleteCharactersInRange: NSMakeRange(realStartIndex, i - realStartIndex)]; /// (i-1) is the last of the leading whitespace chars
                 break;
@@ -139,7 +139,7 @@
         }
             
         /// Remove trailling whitespace
-        loopc(i, realStartIndex, s.length, -1)
+        for (int i = ((int)(s.length))-1; i >= realStartIndex; i--)
             if (![whitespaceAndNewlineChars characterIsMember: str(i)]) {
                 [s deleteCharactersInRange: NSMakeRange(i+1, s.length - (i+1))]; /// (i+1) is the first of the trailing whitespace chars
                 break;
@@ -147,7 +147,7 @@
         
         /// Remove duplicates
         ///     Note how we're using `whitespaceChars` here not `whitespaceAndNewlineChars`. Since we don't want to remove double linebreaks.
-        loopc(i, realStartIndex, s.length-1, +1) /// Only iterate up to the second-last element. [Sep 2025]
+        for (int i = realStartIndex; i < s.length-1; i++) /// Only iterate up to the second-last element. [Sep 2025]
             if (
                 [whitespaceChars characterIsMember: str(i)] &&
                 [whitespaceChars characterIsMember: str(i+1)]
@@ -292,7 +292,7 @@
     /// Replace
     ///     Note: [Sep 2025] We replace in a second pass after finding the formatSpecifiers, so we don't replace formatSpecifiers *contained inside* the replacement strings.
     int offset = 0;
-    loopc(j, i) {
+    for range(j, i) {
         auto replaceRange = ((NSRange *)[formatSpecifierRanges bytes])[j];
         replaceRange.location += offset; /// This converts signed to unsigned, which I'd expect to underflow, but somehow works correctly in my godbolt testing. (Also see `Clang Diagnostic Flags - Sign.md`)
         [mutableFormat replaceCharactersInRange: replaceRange withAttributedString: args[j] ?: [@"" attributed]];

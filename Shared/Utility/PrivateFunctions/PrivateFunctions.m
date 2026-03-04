@@ -11,7 +11,6 @@
 #import "Logging.h"
 
 #import "MFBenchmark.h"
-#import "ListOperations.h"
 
 /// Import all the weird mach-o and dyld stuff
 
@@ -524,7 +523,8 @@ static void find_load_commands(const struct mach_header_64 *mh, bool (^__strong 
     /// Note:   ... This excessive input-validation might be a bit silly since this is just an internal helper function.
     
     /// Get nUnmetConditions
-    int64_t nUnmetConditions = countmatches(conditions, nConditions, c, (c != NULL)); /// We don't need to meet NULL conditions
+    int64_t nUnmetConditions = 0;
+    for range(i, nConditions) if (conditions[i]) nUnmetConditions++; /// We don't need to meet NULL conditions
     
     /// Iterate loadCommands
     struct load_command *lc = (void *)(mh + 1); /// Get first command - they start right after the header || Note: Because of fancy C ptr arithmetic, `+ 1` moves the struct pointer past the struct, not to the next byte.

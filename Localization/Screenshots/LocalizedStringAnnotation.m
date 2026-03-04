@@ -14,7 +14,6 @@
 #import "NSAttributedString+Additions.h"
 #import "NSString+Additions.h"
 #import "Logging.h"
-#import "MFLoop.h"
 
 #define kannotationSuffix               @"\u2062" /// See `MFZeroWidthCharacter`. This should not be one of the `-secretMessageChars`, which make up the prefix [Nov 2025]
 
@@ -48,7 +47,7 @@ mfdata_cls_m(StringAnnotation)
     auto prefixes = [NSMutableArray new];
     {
         auto secretMessages = string._secretMessages; /// Extract this for optimization, so we don't call it over and over [Nov 2025]
-        loopc(i, secretMessages.count) {
+        for range(i, secretMessages.count) {
             
             NSError *err = nil;
             auto regex = [NSRegularExpression regularExpressionWithPattern: @"<mfkey:(.+):(.*)>" options: 0 error: &err];
@@ -91,7 +90,7 @@ mfdata_cls_m(StringAnnotation)
     {
         NSMutableArray<NSDictionary *> *stack = [NSMutableArray new];
         
-        loopc(i, fixes.count) {
+        for range(i, fixes.count) {
             if ([fixes[i][@"isPrefix"] boolValue])
                 [stack addObject: fixes[i]];
             else {

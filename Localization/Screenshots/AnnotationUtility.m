@@ -15,7 +15,6 @@
 #import "objc/runtime.h"
 #import "mach-o/dyld.h"
 #import "Logging.h"
-#import "MFLoop.h"
 
 ///
 /// Utility functions copied over from the xcode-localization-screenshot-fix repo
@@ -289,7 +288,7 @@ NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria
     
     /// Get framework handles from framework paths
     void **frameworkHandles = calloc(frameworkCount, sizeof(void *));
-    loopc(i, frameworkCount) {
+    for range(i, frameworkCount) {
         frameworkHandles[i] = dlopen(frameworkPaths[i], RTLD_LAZY | RTLD_GLOBAL); /// Maybe we could/should use `RTLD_NOLOAD` here for better performance? [Aug 2025] Question is – do we want to search through opened images or all images? I think all images is fine.
         if (!frameworkHandles[i]) {
             NSLog(@"Error: dlopen failed to open framework at path %s with error %s", frameworkPaths[i], dlerror());
@@ -299,7 +298,7 @@ NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria
     
     /// Find classes
     NSMutableArray *result = [NSMutableArray array];
-    loopc(i, frameworkCount) {
+    for range(i, frameworkCount) {
             
         if (!frameworkHandles[i]) continue;
         
@@ -311,7 +310,7 @@ NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria
         else {
             unsigned int classCount;
             const char **classNames = objc_copyClassNamesForImage(frameworkPaths[i], &classCount);
-            loopc(i, classCount) {
+            for range(i, classCount) {
                 Class class = objc_getClass(classNames[i]);
                 bool hasNamePrefix      = !namePrefix ? true : strncmp(namePrefix, classNames[i], strlen(namePrefix)) == 0;
                 bool conformsToProtocol = !protocol   ? true : class_conformsToProtocol(class, protocol);
@@ -326,9 +325,9 @@ NSArray<Class> *searchClasses(NSDictionary<MFClassSearchCriterion, id> *criteria
     
     cleanup: {
         if (individualFrameworkPathsNeedToBeFreed)
-            loopc(i, frameworkCount) free((void *)frameworkPaths[i]);
+            for range(i, frameworkCount) free((void *)frameworkPaths[i]);
         free(frameworkPaths);
-        loopc(i, frameworkCount) if (frameworkHandles[i]) dlclose(frameworkHandles[i]);
+        for range(i, frameworkCount) if (frameworkHandles[i]) dlclose(frameworkHandles[i]);
         free(frameworkHandles);
     }
     
@@ -370,7 +369,7 @@ char *_Nonnull copyFrameworkPath(const char *frameworkName) {
     };
     
     /// Search for the framework
-    loopc(i, arrcount(frameworkSearchPaths)) {
+    for range(i, arrcount(frameworkSearchPaths)) {
         
         char *frameworkPath = NULL;
         asprintf(&frameworkPath, "%s/%s", frameworkSearchPaths[i], frameworkSubpath);
@@ -406,7 +405,7 @@ char *_Nonnull copyFrameworkPath(const char *frameworkName) {
     
     unsigned int imageCount;
     imagePaths = objc_copyImageNames(&imageCount); /// The API is called imageNames, but it returns full framework paths from what I can tell.
-    loopc(i, imageCount) {
+    for range(i, imageCount) {
         if (strstr(imagePaths[i], frameworkSubpath2)) { /// If framework paths are substrings of other framework paths this could give us the wrong result. We really wanna match at the end of the string.
             result = strdup(imagePaths[i]);
             break;

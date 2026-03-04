@@ -14,7 +14,6 @@
 #import "SharedUtility.h"
 #import "NSString+Additions.h"
 #import "NSAttributedString+Additions.h"
-#import "ListOperations.h"
 
 /**
  
@@ -192,7 +191,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSString *src, MDStyleOv
             CMARK_NODE_CODE,
             CMARK_NODE_HTML_INLINE
         };
-        bool is_leaf_type = anysatisfy(leaf_types, arrcount(leaf_types), x, x == node_type);
+        bool is_leaf_type = any(leaf_types[i] == node_type, for range(i, arrcount(leaf_types)));
         
         /// Valdiate info from node
         

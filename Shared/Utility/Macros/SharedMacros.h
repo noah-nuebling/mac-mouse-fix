@@ -60,6 +60,27 @@
 #define _FOR_EACH_19(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_18(function, separator, rest)
 #define _FOR_EACH_20(function, separator, functionarg, rest...) function(functionarg) UNPACK separator _FOR_EACH_19(function, separator, rest)
 
+#pragma mark - New macros (Added Mar 4 2026)
+///     New philosophy: I'm over testing what's possible with macros just for the sake of it. New macros need to be simple and flexible (-> worth their complexity). And I'll only add them when I actually need them.
+
+#define range(i, count) (int i = 0; i < (count); i++) /// for-loop sugar
+
+#define arr(expr, header) ({ /** Python style 'list-comprehension' sugar. */\
+    auto _result = [NSMutableArray new]; \
+    header { [_result addObject: (expr)]; } \
+    _result; \
+})
+#define any(expr, header) ({ /** Python-style 'any()' sugar */\
+    auto _result = false; \
+    header { if (expr) { _result = true; goto _end; } } \
+    _end: _result; \
+})
+#define arrmax(expr, header) ({  /** Python-style max-item sugar || Not sure this is worth the complexity. [Mar 4 2026] */\
+    double _result = -INFINITY; \
+    header { auto _expr = (expr); if (_expr > _result) _result = _expr; } \
+    _result; \
+})
+
 #pragma mark - Macros from mac-mouse-fix > SharedUtility.h
 
 /// `mfonce` – abbreviation for `dispatch_once`

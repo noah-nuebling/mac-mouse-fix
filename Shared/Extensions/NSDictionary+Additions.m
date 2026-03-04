@@ -17,7 +17,6 @@
 #import "NSDictionary+Additions.h"
 #import "NSArray+Additions.h"
 #import "SharedMacros.h"
-#import "MFLoop.h"
 
 #pragma mark - Utiliy
 
