@@ -11,7 +11,7 @@
 #import <objc/runtime.h>
 #import <Foundation/Foundation.h>
 
-#define arrcount(x...) (sizeof(x) / sizeof((x)[0]))
+#define countof(x...) (sizeof(x) / sizeof((x)[0]))
 #define auto __auto_type
 #define range(i, count) (int i = 0; i < (count); i++)
 #define stringf(x...) ([NSString stringWithFormat: x])
@@ -22,7 +22,7 @@ id __mfbox(void *thing, char *type) {
     char *ogtype = type;
     
     char modifiers[] = { _C_COMPLEX, _C_ATOMIC, _C_CONST, _C_IN, _C_INOUT, _C_OUT, _C_BYCOPY, _C_BYREF, _C_ONEWAY, _C_GNUREGISTER };
-    again: for range(m, arrcount(modifiers)) if (modifiers[m] == *type) { type++; goto again; } /// Skip the modifiers in the type-encoding. Not totally sure this is necessary [Mar 4 2026]
+    again: for range(m, countof(modifiers)) if (modifiers[m] == *type) { type++; goto again; } /// Skip the modifiers in the type-encoding. Not totally sure this is necessary [Mar 4 2026]
     
     if (*type == _C_ID)          return *(id __strong *)thing; /// Is `__strong` right to use here? [Mar 4 2026]
     if (*type == _C_CLASS)       return *(Class *)thing;

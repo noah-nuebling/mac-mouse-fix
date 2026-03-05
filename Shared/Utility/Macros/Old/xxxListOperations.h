@@ -13,7 +13,7 @@
 ///
 ///     Should we actually use these?
 ///         - Contra: This is just syntax sugar around simple for-loops. Adding unnecessary abstractions is bad.
-///         - Pro: Can be kinda fun and expressive for very simple stuff. E.g. `long nNulls = countmatches(arr, arrcount(arr), x, x == NULL);`.
+///         - Pro: Can be kinda fun and expressive for very simple stuff. E.g. `long nNulls = countmatches(arr, countof(arr), x, x == NULL);`.
 ///         - Pro: The macros are pretty short and simple and probably won't have to be updated much. So not really error prone or hard-to-maintain like macros sometimes are.
 ///
 ///     Why did I make this?
@@ -43,7 +43,7 @@
     ///
     /// `firstmatchi/lastmatchi` - Get index of first/last matching element (-1 if none found)
     ///     `int64_t firstDigitIdx    = firstmatchi(str, strlen(str), c, isdigit(c));`
-    ///     `int64_t lastZeroIdx      = lastmatchi(numbers, arrcount(numbers), x, x == 0);`
+    ///     `int64_t lastZeroIdx      = lastmatchi(numbers, countof(numbers), x, x == 0);`
     ///
     /// `firstmatch/lastmatch` - Get first/last matching element (Or a `fallback` value if none found)
     ///     `char firstVowel       = firstmatch(str, strlen(str), '\0', c, (strchr("aeiou", c) != NULL));`
@@ -83,7 +83,7 @@
     ///     Examples:
     ///     `countmatches`: Get number of matching elements:
     ///         ```
-    ///         int64_t nNulls         = countmatches(arr, arrcount(arr), x, x == NULL);
+    ///         int64_t nNulls         = countmatches(arr, countof(arr), x, x == NULL);
     ///         ```
     ///     Notes:
     ///         - `partres_initval` means "Initial value of the partial result"
@@ -136,13 +136,13 @@
     ///     Find string with maximum length:
     ///         ```
     ///         const char* strings[] = {"helloooo", "world", "test"};
-    ///         __auto_type result = listmaxk(strings, arrcount(strings), str, strlen(str));
+    ///         __auto_type result = listmaxk(strings, countof(strings), str, strlen(str));
     ///         // result.key = 8, result.index = 0, result.element = "helloooo"
     ///         ```
     ///     Find number with minimum absolute value
     ///         ```
     ///         int nums[] = {5, -3, 4, -7};
-    ///         __auto_type result = listmink(nums, arrcount(nums), n, abs(n));
+    ///         __auto_type result = listmink(nums, countof(nums), n, abs(n));
     ///         // result.key = 3, result.index = 1, result.element = -3,
     ///         ```
     ///     Custom comparison: find person with highest age, break ties by alphabetic name order
@@ -150,7 +150,7 @@
     ///         struct Person { char* name; int age; } people[] = {
     ///           {"Alice", 25}, {"Bob", 25}, {"Charlie", 20}
     ///         };
-    ///         __auto_type result = listmax(people, arrcount(people), p, p, a, b, ({
+    ///         __auto_type result = listmax(people, countof(people), p, p, a, b, ({
     ///             (a.age - b.age) ?: strcmp(a.name, b.name);
     ///         }));
     ///         /// result.key = <bob's struct>, result.index = 1, result.element = <bob's struct>
@@ -208,30 +208,30 @@
     ///     Sort numbers in descending order
     ///         ```
     ///         int nums[] = {3, 1, 4, 1, 5};
-    ///         sortlistk(nums, arrcount(nums), n, -n);
+    ///         sortlistk(nums, countof(nums), n, -n);
     ///         // nums becomes {5, 4, 3, 1, 1}
     ///         ```
     ///     Sort by string-length
     ///         ```
     ///         const char *words[] = {"tree", "larbre", "bicycle", "fahrrad", "velo"};
-    ///         sortlistk(words, arrcount(words), w, strlen(w));
+    ///         sortlistk(words, countof(words), w, strlen(w));
     ///         ```
     ///     Sort alphabetically:
     ///         ```
     ///         const char *words[] = {"tree", "larbre", "bicycle", "fahrrad", "velo"};
-    ///         sortlist(words, arrcount(words), w1, w2, strcmp(w1, w2));
+    ///         sortlist(words, countof(words), w1, w2, strcmp(w1, w2));
     ///         ```
     ///     Sort reverse-alphabetically
     ///         ```
     ///         const char *words[] = {"tree", "larbre", "bicycle", "fahrrad", "velo"};
-    ///         sortlist(words, arrcount(words), w1, w2, -strcmp(w1, w2));
+    ///         sortlist(words, countof(words), w1, w2, -strcmp(w1, w2));
     ///         ```
     ///     Custom comparison: sort people by highest age, break ties by alphabetic name order
     ///         ```
     ///         struct Person { char* name; int age; } people[] = {
     ///           {"Alice", 25}, {"Bob", 25}, {"Charlie", 20}
     ///         };
-    ///         sortlist(people, arrcount(people), p1, p2, ({
+    ///         sortlist(people, countof(people), p1, p2, ({
     ///             (p1.age - p2.age) ?: strcmp(p1.name, p2.name);
     ///         }));
     ///         ```

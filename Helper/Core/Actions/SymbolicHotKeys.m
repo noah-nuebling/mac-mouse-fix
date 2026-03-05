@@ -396,7 +396,7 @@ NSString *getStrForVKC(MFKeyboardType keyboardType, const UCKeyboardLayout *keyb
             if (filterOutControlCharacters) {
                 return @""; /// emptyString matches the return value we see from UCKeyTranslate for modifier keys. That way all non-character-generating keys output emptyString.
             } else {
-                if (c < arrcount(macRomanCharToPlaceholderMap) && macRomanCharToPlaceholderMap[c] != NULL) {
+                if (c < countof(macRomanCharToPlaceholderMap) && macRomanCharToPlaceholderMap[c] != NULL) {
                     return macRomanCharToPlaceholderMap[c]; /// Output a placeholder based on our MacRoman character map
                 } else {
                     DDLogError(@"Control character %c not covered by our macRoman map.", c);

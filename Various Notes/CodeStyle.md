@@ -44,7 +44,7 @@ Unfortunately there's only `NS_ASSUME_NONNULL` and no `NS_ASSUME_NULLABLE`, whic
             [kMFMyEnum_Second] = @"Second",
             [kMFMyEnum_Third]  = @"Third",
         };
-        NSString *result = safeindex(map, arrcount(map), case, nil);
+        NSString *result = safeindex(map, countof(map), case, nil);
         return result ?: stringf(@"%d", case);
     }
     ```

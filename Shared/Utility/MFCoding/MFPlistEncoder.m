@@ -216,34 +216,34 @@
                 id __unsafe_unretained objects[arr.count];
                 [arr getObjects: objects];
                 
-                id resultObjects[arrcount(objects)];
+                id resultObjects[countof(objects)];
                 
-                for (NSUInteger i = 0; i < arrcount(objects); i++) {
+                for (NSUInteger i = 0; i < countof(objects); i++) {
                     id e = [self _encodeObjectToPlist: objects[i]];
                     propagateError();
                     if (!e) failWithError(kMFNSCoderError_InternalInconsistency, @"nil slipped through propagateError(). (nil only signals errors. Actual nil values in the object hierarchy should be encoded with kMFPlistCoder_Nil.)");
                     resultObjects[i] = e;
                 }
                 
-                result = [[NSArray alloc] initWithObjects: resultObjects count: arrcount(resultObjects)];
+                result = [[NSArray alloc] initWithObjects: resultObjects count: countof(resultObjects)];
                 
             } else if trycast(obj, NSDictionary, dict) {
                 /// Plist container - NSDictionary
 
                 id __unsafe_unretained keys[dict.count];    /// Due to the MFPlistIsValidNode() checks above, we know the dict keys are strings and don't need further encoding.
-                id __unsafe_unretained objects[arrcount(keys)];
+                id __unsafe_unretained objects[countof(keys)];
                 [dict getObjects: objects andKeys: keys];    /// Unboxing the dictionary onto the stack, for efficiency mostly. Not sure if necessary.
                 
-                id resultObjects[arrcount(objects)];
+                id resultObjects[countof(objects)];
                 
-                for (NSUInteger i = 0; i < arrcount(objects); i++) {
+                for (NSUInteger i = 0; i < countof(objects); i++) {
                     id e = [self _encodeObjectToPlist: objects[i]];   /// Recurse
                     propagateError();
                     if (!e) failWithError(kMFNSCoderError_InternalInconsistency, @"nil slipped through propagateError().");
                     resultObjects[i] = e;
                 }
                 
-                result = [[NSDictionary alloc] initWithObjects: resultObjects forKeys: keys count: arrcount(keys)]; /// Use the same keys in the archive dict as the original dictionary -> We keep the same structure!
+                result = [[NSDictionary alloc] initWithObjects: resultObjects forKeys: keys count: countof(keys)]; /// Use the same keys in the archive dict as the original dictionary -> We keep the same structure!
                 
             } else {
             

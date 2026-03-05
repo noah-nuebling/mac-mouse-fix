@@ -191,7 +191,7 @@ static NSAttributedString *attributedStringWithMarkdown(NSString *src, MDStyleOv
             CMARK_NODE_CODE,
             CMARK_NODE_HTML_INLINE
         };
-        bool is_leaf_type = any(leaf_types[i] == node_type, for range(i, arrcount(leaf_types)));
+        bool is_leaf_type = any(leaf_types[i] == node_type, for range(i, countof(leaf_types)));
         
         /// Valdiate info from node
         

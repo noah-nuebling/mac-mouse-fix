@@ -55,11 +55,11 @@
     ///     - I knowww this is totally unnecessary, I'm just obsessed with designing my own shitty language with macros and I can't stop.
     ///         - But it seriously feels kinda wrong to wrap such a fundamental language feature in macros?
     ///         - Update [Sep 2025] This actually seems quite valuable:
-    ///             - For quick iteration, the `for range(i, arrcount(arr))` syntax has proven valuable.
+    ///             - For quick iteration, the `for range(i, countof(arr))` syntax has proven valuable.
     ///             - It's nice I think having all the worries/decisions about types of the loop variable and params centralized in one place.
     ///                 - Example of tricky decision: Backwards loops have a footgun due to unsigned integer underflows. (See `Clang Diagnostic Flags - Sign.md`) (Not that I write too many backwards loops)
     ///             - I think it's nice to have a 'small delta' between syntax for forward and backward loops over the same range of numbers.
-    ///             - Criticism: `for range(i, arrcount(arr))` is used dramatically more often than the other variants. Maybe we should only keep that, but remove the more complex cases – perhaps, for the more complex cases, the abstraction is not worth learning and we should just use native c for-loops. I think the only thing I dislike about native C for loops for more complex cases is backwards iteration. But I could probably just get used to that.
+    ///             - Criticism: `for range(i, countof(arr))` is used dramatically more often than the other variants. Maybe we should only keep that, but remove the more complex cases – perhaps, for the more complex cases, the abstraction is not worth learning and we should just use native c for-loops. I think the only thing I dislike about native C for loops for more complex cases is backwards iteration. But I could probably just get used to that.
 
     #define for range(varname, args...) _loopc_selector(args, _loopc_3, _loopc_2, _loopc_1)(varname, args)
 

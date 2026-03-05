@@ -108,7 +108,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
         [bitpos(kCGDisplayDesktopShapeChangedFlag)]     = @"DesktopShapeChanged",
     };
     
-    NSString *result = bitflagstring(flags, map, arrcount(map));
+    NSString *result = bitflagstring(flags, map, countof(map));
     return result;
 };
 

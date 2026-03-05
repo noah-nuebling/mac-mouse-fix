@@ -1087,7 +1087,7 @@ TreeNode<Class> *_Nonnull extractClassesFromRawTypeString(NSString *_Nonnull raw
             
             for ( ;; j++) {
                 
-                if (j >= arrcount(chars)) { assert(false); break; } /// Failsafe so we don't infinite-loop/segfault
+                if (j >= countof(chars)) { assert(false); break; } /// Failsafe so we don't infinite-loop/segfault
                 
                 if      (chars[j] == '<')  bracketBalance++; /// Guaranteed to hit this during first iteration.
                 else if (chars[j] == '>')  bracketBalance--;

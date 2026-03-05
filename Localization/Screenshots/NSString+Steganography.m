@@ -165,11 +165,11 @@ int steg_charToBit(unichar c) {
     
     unichar invisibleChars[coreMessage.length];
     [coreMessage getCharacters: invisibleChars];
-    if (arrcount(invisibleChars) % 8 != 0) { assert(false); return @""; }
-    char decodedChars[arrcount(invisibleChars) / 8] = {};
+    if (countof(invisibleChars) % 8 != 0) { assert(false); return @""; }
+    char decodedChars[countof(invisibleChars) / 8] = {};
     {
         int i = 0, d = 0;
-        for (; i < arrcount(invisibleChars); i++) {
+        for (; i < countof(invisibleChars); i++) {
             if (i) if (i % 8 == 0) d += 1; /// Move to next decoded char
             decodedChars[d] |= steg_charToBit(invisibleChars[i]) << (i % 8);
         }
@@ -192,7 +192,7 @@ int steg_charToBit(unichar c) {
     
     auto result = stringf(@"%@%@%@",
         [self secretMessageStartSequence],
-        [NSString stringWithCharacters: invisibleChars length: arrcount(invisibleChars)],
+        [NSString stringWithCharacters: invisibleChars length: countof(invisibleChars)],
         [self secretMessageEndSequence]
     );
     

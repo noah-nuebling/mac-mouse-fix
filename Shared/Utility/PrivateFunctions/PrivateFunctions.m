@@ -157,7 +157,7 @@ void *_Nullable MFLoadSymbol_native(MFFramework framework, NSString *nonUndersco
     if (!nonUnderscoredSymbolName || nonUnderscoredSymbolName.length == 0) return NULL;
     
     /// Get framework path.
-    const char *targetframeworkName = safeindex(MFFrameworkToNameMap, arrcount(MFFrameworkToNameMap), framework, NULL);
+    const char *targetframeworkName = safeindex(MFFrameworkToNameMap, countof(MFFrameworkToNameMap), framework, NULL);
     if (!targetframeworkName) return NULL;
     
     /// Clear existing errors
@@ -323,8 +323,8 @@ void *_Nullable mfdlsym(void *mfdlopen_handle, MFSymbolTableSection symtabSectio
             NULL :
             ^bool (struct load_command *lc) { return lc->cmd == LC_DYSYMTAB; },
     };
-    struct load_command *lcs[arrcount(conditions)];
-    find_load_commands(mh, conditions, arrcount(conditions), lcs);
+    struct load_command *lcs[countof(conditions)];
+    find_load_commands(mh, conditions, countof(conditions), lcs);
     struct symtab_command       *lc_symtab           = (void *)lcs[0];
     struct segment_command_64   *lc_first_segment    = (void *)lcs[1];
     struct segment_command_64   *lc_linkedit_segment = (void *)lcs[2];
@@ -568,11 +568,11 @@ void *_Nullable mfdlopen(MFFramework framework) {
     ///     - Returns NULL on failure
     
     /// Get framework path.
-    const char *targetframeworkName = safeindex(MFFrameworkToNameMap, arrcount(MFFrameworkToNameMap), framework, NULL);
+    const char *targetframeworkName = safeindex(MFFrameworkToNameMap, countof(MFFrameworkToNameMap), framework, NULL);
         
     /// Validate
     if (!targetframeworkName) {
-        mfassert(false, @"Framework name couldn't be obtained. framework: %d. namemap count: %lu", framework, arrcount(MFFrameworkToNameMap));
+        mfassert(false, @"Framework name couldn't be obtained. framework: %d. namemap count: %lu", framework, countof(MFFrameworkToNameMap));
         return NULL;
     }
 
@@ -652,7 +652,7 @@ static uint32_t mf_dyld_framework_index(MFFramework framework) {
     ///         > IIRC I saw in some source code that there is a framework UUID, but the entire `dyld shared cache` shares one UUID – so it's not that useful.
     
     /// Query map
-    const char *targetframeworkName = safeindex(MFFrameworkToNameMap, arrcount(MFFrameworkToNameMap), framework, NULL);
+    const char *targetframeworkName = safeindex(MFFrameworkToNameMap, countof(MFFrameworkToNameMap), framework, NULL);
     
     /// Guard
     if (!targetframeworkName) {
@@ -740,7 +740,7 @@ void *_Nullable MFLoadPrivateFunction_WithNSImageFunctions(MFFramework framework
     #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
     
     /// Query map
-    const char *targetframeworkName = (framework >= arrcount(MFFrameworkToNameMap)) ? NULL : MFFrameworkToNameMap[framework];
+    const char *targetframeworkName = (framework >= countof(MFFrameworkToNameMap)) ? NULL : MFFrameworkToNameMap[framework];
     
     /// Get framework's image
     const struct mach_header *imageHeader = NSAddImage(targetframeworkName,

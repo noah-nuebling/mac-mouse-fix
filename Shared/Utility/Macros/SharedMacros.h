@@ -77,7 +77,7 @@
     _Pragma("clang diagnostic pop")
 
 /// array count convenience
-#define arrcount(x) ({ static_assert(!_isobject(x), "Use a method like -[count] for objects."); (sizeof(x) / sizeof((x)[0])); })
+#define countof(x) ({ static_assert(!_isobject(x), "Use a method like -[count] for objects."); (sizeof(x) / sizeof((x)[0])); })
 
 /// `isclass` macro
 ///     Shorthand for `-[isKindOfClass:]` and `-[isSubclassOfClass:]`
@@ -117,7 +117,7 @@
     NSAttributedString *__strong _args[] = { args_ };   \
     id _format = (format);                              \
     _format = isclass((_format), NSString) ? [_format attributed] : (_format); /** Automatically map NSString to NSAttributedString for convenience */  \
-    [NSAttributedString attributedStringWithAttributedFormat: _format args: _args argcount: arrcount(_args)];                        \
+    [NSAttributedString attributedStringWithAttributedFormat: _format args: _args argcount: countof(_args)];                        \
 })
 
 ///
@@ -152,7 +152,7 @@
 ///     - Usage example:
 ///         ```
 ///         const char *fruits[] = {"apple", "banana", "orange"};
-///         const char *fruit = safeindex(fruits, arrcount(fruits), 3, "<no fruit at index 3>");`
+///         const char *fruit = safeindex(fruits, countof(fruits), 3, "<no fruit at index 3>");`
 ///         // Returns "<no fruit at index 3>"
 ///         ```
 #define safeindex(list, count, i, fallback) /*(typeof((list)[0]))*/ ({          \

@@ -261,7 +261,7 @@
 
 #define MFNSSetMake(objects...) ({                                          \
     id __objects[] = { objects };                                           \
-    [[NSSet alloc] initWithObjects: __objects count: arrcount(__objects)];    \
+    [[NSSet alloc] initWithObjects: __objects count: countof(__objects)];    \
 })
 
 /// `isprotocol` macro

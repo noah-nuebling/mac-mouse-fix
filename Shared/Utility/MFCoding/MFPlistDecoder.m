@@ -302,34 +302,34 @@
                 id __unsafe_unretained objects[arr.count];
                 [arr getObjects: objects];
                 
-                id resultObjects[arrcount(objects)];
+                id resultObjects[countof(objects)];
                 
-                for (NSUInteger i = 0; i < arrcount(objects); i++) {
+                for (NSUInteger i = 0; i < countof(objects); i++) {
                     id d = [self _decodeObjectFromPlist: objects[i]];   /// Recurse
                     propagateError();
                     if (!d) failWithError(NSCoderReadCorruptError, @"Decoded nil for encoded NSArray element (%@). But NSArray can't store nil.", objects[i]);
                     resultObjects[i] = d;
                 }
                 
-                result = [[NSMutableArray alloc] initWithObjects: resultObjects count: arrcount(resultObjects)];
+                result = [[NSMutableArray alloc] initWithObjects: resultObjects count: countof(resultObjects)];
             }
             else if trycast(valueFromArchive, NSDictionary, dict) {
                 /// Plist container - NSDictionary
                 
                 id __unsafe_unretained keys[dict.count];
-                id __unsafe_unretained objects[arrcount(keys)];
+                id __unsafe_unretained objects[countof(keys)];
                 [dict getObjects: objects andKeys: keys];
                 
-                id resultObjects[arrcount(objects)];
+                id resultObjects[countof(objects)];
                 
-                for (NSUInteger i = 0; i < arrcount(objects); i++) {
+                for (NSUInteger i = 0; i < countof(objects); i++) {
                     id d = [self _decodeObjectFromPlist: objects[i]];   /// Recurse
                     propagateError();
                     if (!d) failWithError(NSCoderReadCorruptError, @"Decoded nil for encoded NSDictionary value (%@). But NSDictionary can't store nil.", objects[i]);
                     resultObjects[i] = d;
                 }
                 
-                result = [[NSMutableDictionary alloc] initWithObjects: resultObjects forKeys: keys count: arrcount(keys)]; /// Note how we're making an NS*Mutable*Dictionary
+                result = [[NSMutableDictionary alloc] initWithObjects: resultObjects forKeys: keys count: countof(keys)]; /// Note how we're making an NS*Mutable*Dictionary
             }
             else {
                 /// Plist is leaf

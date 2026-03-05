@@ -7136,7 +7136,6 @@
 				4F676CF02F58A66100223E1D /* SharedHelperMacros.h */,
 				4F676B612F587F2B00223E1D /* Old */,
 				4F428CFF2CD6690F006322AB /* MFDefer.h */,
-				4FAF8FA12E9FC1CC00D90CD7 /* vardesc_benchmarks.m */,
 			);
 			path = Macros;
 			sourceTree = "<group>";
@@ -7926,6 +7925,7 @@
 				4FE1A1B82C56A50100CE3347 /* Logging.m */,
 				4F676CEF2F589C5E00223E1D /* vardesc.h */,
 				4F676CEB2F589BB300223E1D /* vardesc.m */,
+				4FAF8FA12E9FC1CC00D90CD7 /* vardesc_benchmarks.m */,
 				4F58FDFF2C56DE9B00926A00 /* Logging.swift */,
 				4F58FE0D2C56EA7E00926A00 /* Tests */,
 			);

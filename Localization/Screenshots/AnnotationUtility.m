@@ -369,7 +369,7 @@ char *_Nonnull copyFrameworkPath(const char *frameworkName) {
     };
     
     /// Search for the framework
-    for range(i, arrcount(frameworkSearchPaths)) {
+    for range(i, countof(frameworkSearchPaths)) {
         
         char *frameworkPath = NULL;
         asprintf(&frameworkPath, "%s/%s", frameworkSearchPaths[i], frameworkSubpath);
