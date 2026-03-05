@@ -619,7 +619,7 @@ NSString *binarystring(uint64_t x) {
     ///     - A previous version of this utility was a macro that determined the width of the output string using the sizeof() the input value. [Mar 2026]
     #define nibblesize 8 /** Add a space every `nibblesize` characters for readability */
     char result[64 + 64/nibblesize + 1] = {0}; /// +1 is only necessary if the nibblesize doesn't perfectly divide the bits.
-    int n = countof(result)-1; /// Fill the string buffer backwards (since numbers are RTL)
+    int n = (int)countof(result)-1; /// Fill the string buffer backwards (since numbers are RTL)
     for (int i = 0; x; i++) {
         if (i && !(i % nibblesize)) result[--n] = ' ';
         result[--n] = (x & 1) ? '1' : '0';

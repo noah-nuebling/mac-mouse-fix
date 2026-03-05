@@ -12,10 +12,11 @@
 #import <Foundation/Foundation.h>
 #import "SharedHelperMacros.h"
 
-#define range(i, count) (int i = 0; i < (count); i++) /// for-loop sugar
+/// `range()` et al. -> for-loop sugar
 
-/// `arr()` et al.
-///     Python-style 'comprehension' sugar --- turns simple array transformations into a single expression. --- more flexible/intuitive version of map/filter.
+#define range(i, count) (int i = 0; i < (count); i++)
+
+/// `arr()` et al. -> Python-style 'comprehension' sugar --- turns simple array transformations into a single expression. --- more flexible/intuitive version of map/filter.
 
 #define arr(expr, header) ({ /** Python-style 'list-comprehension' sugar. */\
     auto _result = [NSMutableArray new]; \
@@ -77,6 +78,7 @@
     _Pragma("clang diagnostic pop")
 
 /// array count convenience
+///     Caution: Returns `size_t` aka `unsigned long` -> subtracting from this risks unsigned underflow [Mar 2026]
 #define countof(x) ({ static_assert(!_isobject(x), "Use a method like -[count] for objects."); (sizeof(x) / sizeof((x)[0])); })
 
 /// `isclass` macro
