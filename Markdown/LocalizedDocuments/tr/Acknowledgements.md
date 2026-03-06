@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Mart 2026**
 
+- 🇨🇦&nbsp;Bruce&nbsp;Tubbe
 - 🇺🇸&nbsp;Travis&nbsp;Millward
 - 🇺🇸&nbsp;Drew&nbsp;Parker
 - 🇨🇴&nbsp;Andres&nbsp;Santiago&nbsp;Ruiz&nbsp;Movi003899

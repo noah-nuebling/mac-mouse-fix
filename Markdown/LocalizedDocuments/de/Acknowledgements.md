@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **März 2026**
 
+- 🇨🇦&nbsp;Bruce&nbsp;Tubbe
 - 🇺🇸&nbsp;Travis&nbsp;Millward
 - 🇺🇸&nbsp;Drew&nbsp;Parker
 - 🇨🇴&nbsp;Andres&nbsp;Santiago&nbsp;Ruiz&nbsp;Movi003899

@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **marzec 2026**
 
+- 🇨🇦&nbsp;Bruce&nbsp;Tubbe
 - 🇺🇸&nbsp;Travis&nbsp;Millward
 - 🇺🇸&nbsp;Drew&nbsp;Parker
 - 🇨🇴&nbsp;Andres&nbsp;Santiago&nbsp;Ruiz&nbsp;Movi003899

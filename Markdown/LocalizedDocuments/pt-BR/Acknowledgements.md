@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **março 2026**
 
+- 🇨🇦&nbsp;Bruce&nbsp;Tubbe
 - 🇺🇸&nbsp;Travis&nbsp;Millward
 - 🇺🇸&nbsp;Drew&nbsp;Parker
 - 🇨🇴&nbsp;Andres&nbsp;Santiago&nbsp;Ruiz&nbsp;Movi003899
