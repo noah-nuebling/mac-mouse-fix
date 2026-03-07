@@ -11,7 +11,7 @@
 
 @interface NSArray (Additions)
 
-    - (NSMutableAttributedString *) attributedComponentsJoinedByString: (NSAttributedString *)joiner;
+    - (NSMutableAttributedString *) attributedComponentsJoinedBy: (NSAttributedString *)joiner;
 
     #if 0
         - (NSArray *)map:(id (^)(id obj))block;

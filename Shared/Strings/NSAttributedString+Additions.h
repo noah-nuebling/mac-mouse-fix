@@ -29,7 +29,7 @@ void assignAttributedStringKeepingBase(NSAttributedString *_Nonnull *_Nonnull as
 
 - (NSAttributedString *) attributedStringByAppending: (NSAttributedString *)string;
 + (NSAttributedString *) attributedStringWithAttributedFormat: (NSAttributedString *)format args: (NSAttributedString *__strong _Nullable [_Nonnull])args argcount: (int)argcount;
-- (NSArray<NSAttributedString *> *) attributedComponentsSeparatedByString: (NSString *)separator maxSeparations: (int)maxSplit;
+- (NSArray<NSAttributedString *> *) attributedComponentsSeparatedBy: (NSString *)separator maxSeparations: (int)maxSplit;
 
 - (NSAttributedString *)attributedStringByAddingBaseLineOffset:(CGFloat)offset forRange:(const NSRangePointer _Nullable)range;
 

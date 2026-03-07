@@ -162,7 +162,7 @@ typedef enum {
         ///             - This is a little 'magical'. We could instead have separate args for the title and subtitle, but then we'd kinda have to split up all the localizable strings into title and subtitle and I'm too lazy for that now. This approach also may be more flexible, since the caller could theoretically override the hint styling, which I might use for the 'Learn More' links at the end of the CaptureToasts.
         ///             - `attributedStringByTrimmingWhitespace` is a bit of a hack. Before, we had some toasts with a single and others with a double linebreak after the first 'title' line. But that looks weird now. The 'semantic' difference is still in the localizable strings but not displayed anymore.
         {
-            auto splitMessage    = [message attributedComponentsSeparatedByString: @"\n" maxSeparations: 1];
+            auto splitMessage    = [message attributedComponentsSeparatedBy: @"\n" maxSeparations: 1];
             if (splitMessage.count > 1) {
                 auto messageTitle    = splitMessage.firstObject;
                 auto messageSubtitle = splitMessage.lastObject;

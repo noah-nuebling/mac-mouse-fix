@@ -1131,14 +1131,14 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         [btnMod attributed],
         [(btnMod.length ? @"\n" : @"") attributed],///     Add linebreak for scannability [Jan 2026]
         tr
-    ] attributedComponentsJoinedByString: [@"" attributed]];
+    ] attributedComponentsJoinedBy: [@"" attributed]];
     
     /// Clean up string
     ///     Note:  Have to do this per-line since `attributedStringByTrimmingWhitespace` doesn't trim after linebreaks `@"\n"` (and fullTriggerCellString can have linebreaks now – see right above [Mar 7 2026]) 
     fullTriggerCellString = [arr(
         [line attributedStringByTrimmingWhitespace],
-        for (NSAttributedString *line in [fullTriggerCellString attributedComponentsSeparatedByString: @"\n" maxSeparations: -1])
-    ) attributedComponentsJoinedByString: [@"\n" attributed]];
+        for (NSAttributedString *line in [fullTriggerCellString attributedComponentsSeparatedBy: @"\n" maxSeparations: -1])
+    ) attributedComponentsJoinedBy: [@"\n" attributed]];
     
     #pragma mark --- Create view ---
     

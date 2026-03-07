@@ -324,7 +324,7 @@ class AboutTabController: NSViewController {
                 if (thankYouMessages.count > 0) {
                     message = Randomizer.select(from: thankYouMessages)
                 } else {
-                    assert(false) /// If none of the thanks messages are available, it falls back to the "You shouldn't be seeing this" message [Oct 2025]
+                    //assert(false) /// If none of the thanks messages are available, it falls back to the "You shouldn't be seeing this" message [Oct 2025]
                 }
             }
             
