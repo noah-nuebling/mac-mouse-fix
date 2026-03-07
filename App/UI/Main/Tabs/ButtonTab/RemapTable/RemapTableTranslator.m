@@ -12,6 +12,7 @@
 #import "UIStrings.h"
 #import "SharedUtility.h"
 #import "NSAttributedString+Additions.h"
+#import "NSArray+Additions.h"
 #import "NSTextField+Additions.h"
 #import "Config.h"
 #import "RemapTableController.h"
@@ -1067,7 +1068,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     }
     if (buttonModifierStrings.count > 0) {
         /// Join the strings for each button-modifier
-        btnMod = [[buttonModifierStrings componentsJoinedByString: @""] mutableCopy];
+        btnMod = [[buttonModifierStrings componentsJoinedByString: @""] mutableCopy]; /// We join without inserting spaces -> therefore, the button-modifier strings need to end with spaces (except in CJK languages)
         
     } else {
         btnMod = [@"" mutableCopy];
@@ -1124,20 +1125,20 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     /// Join all substrings to get result
     ///
     
-    if (btnMod.length) [btnMod appendString: @"\n"];///     Add linebreaks for scannability [Jan 2026]
-    if (kbMod.length)  kbMod = [kbMod stringByAppendingString: @" "]; /// Note: [Jan 2026] Have to conditionally put space here since `attributedStringByTrimmingWhitespace` doesn't trim after linebreaks (and btnMod has linebreaks now)
-    
-    NSAttributedString *fullTriggerCellString = astringf(@""
-        "%@"
-        "%@"
-        "%@",
+    NSAttributedString *fullTriggerCellString = [@[
         [kbMod attributed],
+        [@" " attributed],
         [btnMod attributed],
+        [(btnMod.length ? @"\n" : @"") attributed],///     Add linebreak for scannability [Jan 2026]
         tr
-    );
+    ] attributedComponentsJoinedByString: [@"" attributed]];
     
     /// Clean up string
-    fullTriggerCellString = [fullTriggerCellString attributedStringByTrimmingWhitespace];
+    ///     Note:  Have to do this per-line since `attributedStringByTrimmingWhitespace` doesn't trim after linebreaks `@"\n"` (and fullTriggerCellString can have linebreaks now – see right above [Mar 7 2026]) 
+    fullTriggerCellString = [arr(
+        [line attributedStringByTrimmingWhitespace],
+        for (NSAttributedString *line in [fullTriggerCellString attributedComponentsSeparatedByString: @"\n" maxSeparations: -1])
+    ) attributedComponentsJoinedByString: [@"\n" attributed]];
     
     #pragma mark --- Create view ---
     
