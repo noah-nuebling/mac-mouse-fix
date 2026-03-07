@@ -193,11 +193,19 @@ Chinese, Korean and Japanese (CJK languages)
         Explanation: Fullwidth plus nicely visually integrates with the characters in Chinese and Korean (For Korean, Apple's font even auto-shrinks the plus and adds nice spacing to make it look very harmonious.)
             For Japanese we made an exception and used `+` instead, since `＋` blends in and doesn't act as a visual separator. (Making the chained triggers hard to scan.)
         Examples:
-            - English: `Click %@ +`
+            - English: `Click %@ + ` (note trailing space)
             - Chinese (Simplified): `点按%@＋`
             - Chinese (Traditional): `按下%@＋`
             - Korean: `%@ 클릭＋`   (No space needed before `＋` since Apple's font automatically adds nice spacing.)
             - Japanese: `%@クリック+`   (Use halfwidth `+` here.)
+Most languages (non-CJK)
+    Desired Translation: Include a trailing space after `+` in the button-modifier strings (`trigger.substring.button-modifier.*`).
+        Context: The button-modifier strings are joined programmatically *without* inserting spaces between them.
+        Explanation: If a space is needed between the `+` and what follows, that space must be part of the button-modifier string itself. Most languages (except CJK) put spaces around `+`, so the button-modifier strings should end with `+ ` (plus followed by space).
+        Examples:
+            - English: `Click %@ + ` → when joined: "Click Button 4 + Double Click Button 5"
+            - Chinese: `点按%@＋` → when joined: "点按第4键＋双击第5键" (no trailing space needed)
+        CJK languages don't need this trailing space because they use fullwidth `＋` or compact spacing conventions.
 Hungarian
     Desired Translation: Translate 'Hold' as 'tartás' instead of 'lenyomva tartás' or 'nyomva tartás'.
         Explanation: Apple's glossary shows all 3, but the glossary-research agent didn't find the shorter standalone form 'tartás' (which we prefer due to brevity)
