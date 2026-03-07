@@ -12,8 +12,8 @@
 
 @implementation NSArray (Additions)
 
-- (NSMutableAttributedString *) componentsJoinedByAttributedString: (NSAttributedString *)joiner {
-    /// Also see `componentsSeparatedByAttributedString:maxSeparations:` [Mar 4 2026]
+- (NSMutableAttributedString *) attributedComponentsJoinedByString: (NSAttributedString *)joiner {
+    /// Also see `attributedComponentsSeparatedByString:maxSeparations:` [Mar 4 2026]
     NSMutableAttributedString *result = [NSMutableAttributedString new];
     for (int i = 0; i < self.count; i++) {
         if (i) [result appendAttributedString: joiner];

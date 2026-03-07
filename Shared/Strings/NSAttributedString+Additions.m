@@ -305,14 +305,14 @@
 
 #pragma mark Split string
 
-- (NSArray<NSAttributedString *> *) componentsSeparatedByAttributedString: (NSString *)separator maxSeparations: (int)maxSeparations {
+- (NSArray<NSAttributedString *> *) attributedComponentsSeparatedByString: (NSString *)separator maxSeparations: (int)maxSeparations {
     
     /// Overview: Like `-[NSString componentsSeparatedByString:]`, but for NSAttributedString
     ///     and with maxSeparations: param like Python's `str.split()`
     /// Usage:
     ///     Pass in -1 for maxSplit to turn it off.
     /// Also see:
-    ///     `-[NSArray componentsJoinedByAttributedString:]`
+    ///     `-[NSArray attributedComponentsJoinedByString:]`
     
     auto result = [NSMutableArray new];
     
