@@ -1993,7 +1993,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลิก %@ + "
+            "value" : "คลิก%@ + "
           }
         },
         "tr" : {
@@ -2166,7 +2166,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลิกสองครั้ง %@ + "
+            "value" : "คลิกสองครั้ง%@ + "
           }
         },
         "tr" : {
@@ -2339,7 +2339,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลิกสามครั้ง %@ + "
+            "value" : "คลิกสามครั้ง%@ + "
           }
         },
         "tr" : {
@@ -3204,7 +3204,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลิก %@"
+            "value" : "คลิก%@"
           }
         },
         "tr" : {
@@ -3377,7 +3377,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลิกสองครั้ง %@"
+            "value" : "คลิกสองครั้ง%@"
           }
         },
         "tr" : {
@@ -3550,7 +3550,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลิกสามครั้ง %@"
+            "value" : "คลิกสามครั้ง%@"
           }
         },
         "tr" : {
@@ -3723,7 +3723,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลิกแล้ว*ลาก* %@"
+            "value" : "คลิกแล้ว*ลาก*%@"
           }
         },
         "tr" : {
@@ -3896,7 +3896,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลิกสองครั้งแล้ว*ลาก* %@"
+            "value" : "คลิกสองครั้งแล้ว*ลาก*%@"
           }
         },
         "tr" : {
@@ -4069,7 +4069,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลิกสามครั้งแล้ว*ลาก* %@"
+            "value" : "คลิกสามครั้งแล้ว*ลาก*%@"
           }
         },
         "tr" : {
@@ -4415,7 +4415,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ค้าง %@"
+            "value" : "ค้าง%@"
           }
         },
         "tr" : {
@@ -4588,7 +4588,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลิกสองครั้งค้าง %@"
+            "value" : "คลิกสองครั้งค้าง%@"
           }
         },
         "tr" : {
@@ -4761,7 +4761,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลิกสามครั้งค้าง %@"
+            "value" : "คลิกสามครั้งค้าง%@"
           }
         },
         "tr" : {
@@ -4934,7 +4934,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลิกแล้ว*เลื่อน* %@"
+            "value" : "คลิกแล้ว*เลื่อน*%@"
           }
         },
         "tr" : {
@@ -5107,7 +5107,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลิกสองครั้งแล้ว*เลื่อน* %@"
+            "value" : "คลิกสองครั้งแล้ว*เลื่อน*%@"
           }
         },
         "tr" : {
@@ -5280,7 +5280,7 @@
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "คลิกสามครั้งแล้ว*เลื่อน* %@"
+            "value" : "คลิกสามครั้งแล้ว*เลื่อน*%@"
           }
         },
         "tr" : {

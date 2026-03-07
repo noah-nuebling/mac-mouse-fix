@@ -172,8 +172,8 @@ Hi Claude! Can you review this [[Arabic]] UI I've been working on with Gemini?
         - [x] One of the modifier lines wraps in Russian and it looks weird.
             -> 'fixed' since we shortened the Russian strings a little.
         - [x] ` + ` vs `＋` in Chinese (Human chose `＋` IIRC)
-        - [ ] Check all languages for unnecessary spaces around the format specifiers.
-        - [ ] Inconsistent space across languages at end of strings like `trigger.substring.button-modifier.1`
+        - [x] Check all languages for unnecessary spaces around the format specifiers.
+        - [x] Inconsistent space across languages at end of strings like `trigger.substring.button-modifier.1`
             - We recently removed the part where our code manually adds a space there – for some reason.
 
     - [x] Test / fix the ActionTable layouts

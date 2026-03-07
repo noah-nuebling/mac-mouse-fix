@@ -206,6 +206,14 @@ Most languages (non-CJK)
             - English: `Click %@ + ` → when joined: "Click Button 4 + Double Click Button 5"
             - Chinese: `点按%@＋` → when joined: "点按第4键＋双击第5键" (no trailing space needed)
         CJK languages don't need this trailing space because they use fullwidth `＋` or compact spacing conventions.
+Thai
+    Desired Translation: No spaces before `%@` when it's replaced with Thai button names, but keep spaces before numbers.
+        Context: Thai script flows continuously without spaces between words (similar to CJK), but Thai uses spaces around foreign elements like English words and Arabic numerals.
+        Explanation: The `%@` in most trigger.substring.* strings gets replaced with Thai button names (`*ปุ่มหลัก*`, `*ปุ่มกลาง*`, etc.), so no space is needed. But in `trigger.substring.button-name.numbered` and `trigger.y.group-row.button-name.numbered`, the `%@` is replaced with a number, which warrants a space.
+        Examples:
+            - `คลิก%@` → `คลิก*ปุ่มหลัก*` (no space before Thai button name)
+            - `*ปุ่ม %@*` → `*ปุ่ม 4*` (space before number)
+        Note: Thai keeps the trailing space after `+` in button-modifier strings (e.g., `คลิก%@ + `), since Thai uses spaces around `+` like Western languages.
 Hungarian
     Desired Translation: Translate 'Hold' as 'tartás' instead of 'lenyomva tartás' or 'nyomva tartás'.
         Explanation: Apple's glossary shows all 3, but the glossary-research agent didn't find the shorter standalone form 'tartás' (which we prefer due to brevity)
