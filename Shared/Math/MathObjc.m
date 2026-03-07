@@ -86,7 +86,7 @@ double _mfcycle(double n, double lower, double upper, char closedSide) {
     if (lower > upper) { double temp = lower; lower = upper; upper = temp; closedSide = (closedSide == '[') ? ']' : '['; n = lower+upper-n; } /// Respond to inverted bounds by mirroring everything along the center of the interval.
     double stride = upper - lower;
     while (closedSide == '[' ? (n < lower) : (n <= lower)) n += stride;
-    while (closedSide == '[' ? (n >= upper) : (n > upper)) n -= stride;
+    while (closedSide == ']' ? (n > upper) : (n >= upper)) n -= stride;
     
     return n;
 }
