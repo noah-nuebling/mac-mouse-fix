@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **március 2026**
 
+- 🇺🇸&nbsp;Kyle&nbsp;S - "Great and usefool tool!"
 - 🇰🇭&nbsp;Rithsila
 - 🇩🇪&nbsp;Jonathan - "godsent"
 - 🇺🇸&nbsp;Cameron&nbsp;Stinnett
