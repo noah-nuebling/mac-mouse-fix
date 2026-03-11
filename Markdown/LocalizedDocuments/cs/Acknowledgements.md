@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **březen 2026**
 
+- 🇺🇸&nbsp;Thomas&nbsp;C&nbsp;Crafford
 - 🇺🇸&nbsp;Kyle&nbsp;S - "Great and usefool tool!"
 - 🇰🇭&nbsp;Rithsila
 - 🇩🇪&nbsp;Jonathan - "godsent"

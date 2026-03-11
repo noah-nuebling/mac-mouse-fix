@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **março 2026**
 
+- 🇺🇸&nbsp;Thomas&nbsp;C&nbsp;Crafford
 - 🇺🇸&nbsp;Kyle&nbsp;S - "Great and usefool tool!"
 - 🇰🇭&nbsp;Rithsila
 - 🇩🇪&nbsp;Jonathan - "godsent"
