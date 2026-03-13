@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **marzo 2026**
 
+- 🇯🇵&nbsp;Shunsuke&nbsp;Sakurazawa
 - 🇺🇸&nbsp;Thomas&nbsp;C&nbsp;Crafford
 - 🇺🇸&nbsp;Kyle&nbsp;S - "Great and usefool tool!"
 - 🇰🇭&nbsp;Rithsila
