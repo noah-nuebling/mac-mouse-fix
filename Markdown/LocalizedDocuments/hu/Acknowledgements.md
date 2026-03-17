@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **március 2026**
 
+- 🇫🇷&nbsp;Julien&nbsp;Schlegel - "Thanks for this awesome software - Support from Baguette Land"
 - 🇨🇭&nbsp;Mkody
 - 🇬🇧&nbsp;Kshitij&nbsp;Jain
 - 🇬🇧&nbsp;Alex&nbsp;S - "Thank you, been using for years now!"

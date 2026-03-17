@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **marzo 2026**
 
+- 🇫🇷&nbsp;Julien&nbsp;Schlegel - "Thanks for this awesome software - Support from Baguette Land"
 - 🇨🇭&nbsp;Mkody
 - 🇬🇧&nbsp;Kshitij&nbsp;Jain
 - 🇬🇧&nbsp;Alex&nbsp;S - "Thank you, been using for years now!"

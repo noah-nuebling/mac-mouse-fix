@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **março 2026**
 
+- 🇫🇷&nbsp;Julien&nbsp;Schlegel - "Thanks for this awesome software - Support from Baguette Land"
 - 🇨🇭&nbsp;Mkody
 - 🇬🇧&nbsp;Kshitij&nbsp;Jain
 - 🇬🇧&nbsp;Alex&nbsp;S - "Thank you, been using for years now!"
