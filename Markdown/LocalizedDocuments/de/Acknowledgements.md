@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **März 2026**
 
+- 🇧🇷&nbsp;Klaos&nbsp;Lacerda
 - 🇰🇿&nbsp;Ivan&nbsp;Perelivskiy
 - 🇯🇵&nbsp;Saito
 - 🇫🇷&nbsp;Julien&nbsp;Schlegel - "Thanks for this awesome software - Support from Baguette Land"

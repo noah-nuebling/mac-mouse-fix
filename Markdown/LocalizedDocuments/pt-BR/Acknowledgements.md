@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **março 2026**
 
+- 🇧🇷&nbsp;Klaos&nbsp;Lacerda
 - 🇰🇿&nbsp;Ivan&nbsp;Perelivskiy
 - 🇯🇵&nbsp;Saito
 - 🇫🇷&nbsp;Julien&nbsp;Schlegel - "Thanks for this awesome software - Support from Baguette Land"
