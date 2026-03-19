@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Mart 2026**
 
+- 🇩🇪&nbsp;Pascal&nbsp;Stockert - "We love quality open source software."
 - 🇧🇷&nbsp;Klaos&nbsp;Lacerda
 - 🇰🇿&nbsp;Ivan&nbsp;Perelivskiy
 - 🇯🇵&nbsp;Saito

@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **März 2026**
 
+- 🇩🇪&nbsp;Pascal&nbsp;Stockert - "We love quality open source software."
 - 🇧🇷&nbsp;Klaos&nbsp;Lacerda
 - 🇰🇿&nbsp;Ivan&nbsp;Perelivskiy
 - 🇯🇵&nbsp;Saito

@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **marzo 2026**
 
+- 🇩🇪&nbsp;Pascal&nbsp;Stockert - "We love quality open source software."
 - 🇧🇷&nbsp;Klaos&nbsp;Lacerda
 - 🇰🇿&nbsp;Ivan&nbsp;Perelivskiy
 - 🇯🇵&nbsp;Saito

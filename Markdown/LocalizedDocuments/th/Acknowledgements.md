@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **มีนาคม 2026**
 
+- 🇩🇪&nbsp;Pascal&nbsp;Stockert - "We love quality open source software."
 - 🇧🇷&nbsp;Klaos&nbsp;Lacerda
 - 🇰🇿&nbsp;Ivan&nbsp;Perelivskiy
 - 🇯🇵&nbsp;Saito
