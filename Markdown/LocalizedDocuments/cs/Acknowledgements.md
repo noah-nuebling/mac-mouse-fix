@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **březen 2026**
 
+- 🇨🇦&nbsp;Erin&nbsp;T&nbsp;Needham
 - 🇩🇪&nbsp;Pascal&nbsp;Stockert - "We love quality open source software."
 - 🇧🇷&nbsp;Klaos&nbsp;Lacerda
 - 🇰🇿&nbsp;Ivan&nbsp;Perelivskiy
