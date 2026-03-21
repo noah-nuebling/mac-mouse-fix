@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **març 2026**
 
+- 🇺🇸&nbsp;Jonathan&nbsp;Wight
 - 🇨🇦&nbsp;Erin&nbsp;T&nbsp;Needham
 - 🇩🇪&nbsp;Pascal&nbsp;Stockert - "We love quality open source software."
 - 🇧🇷&nbsp;Klaos&nbsp;Lacerda
