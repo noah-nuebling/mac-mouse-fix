@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Mart 2026**
 
+- 🇩🇰&nbsp;Liv&nbsp;Ajse&nbsp;Olsen
 - 🇺🇸&nbsp;Jonathan&nbsp;Wight
 - 🇨🇦&nbsp;Erin&nbsp;T&nbsp;Needham
 - 🇩🇪&nbsp;Pascal&nbsp;Stockert - "We love quality open source software."
