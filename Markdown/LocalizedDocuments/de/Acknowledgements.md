@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **März 2026**
 
+- 🇸🇬&nbsp;Dev
 - 🇩🇰&nbsp;Liv&nbsp;Ajse&nbsp;Olsen
 - 🇺🇸&nbsp;Jonathan&nbsp;Wight
 - 🇨🇦&nbsp;Erin&nbsp;T&nbsp;Needham
