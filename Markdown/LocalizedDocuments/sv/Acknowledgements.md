@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **mars 2026**
 
+- 🇷🇴&nbsp;Stefan&nbsp;R&nbsp; - "Congrats! Excelent product!"
 - 🇺🇸&nbsp;Spacemanriff - ":)"
 - 🇺🇸&nbsp;Mark&nbsp;E&nbsp;Henson
 - 🇬🇷&nbsp;Alexander&nbsp;Ioannidis
