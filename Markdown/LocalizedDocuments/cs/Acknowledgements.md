@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **březen 2026**
 
+- 🇺🇸&nbsp;Benjamin&nbsp;Quiles - "Incredible little app that fills a big need. Thank you so much"
 - 🇺🇸&nbsp;Rocco&nbsp;Femia
 - 🇧🇷&nbsp;Danyelvarejao - "Simplesmente incrível."
 - 🇹🇼&nbsp;Kychehe - "This is fantastic!"
