@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **मार्च 2026**
 
+- 🇨🇱&nbsp;Cristóbal&nbsp;Rojas - "¡¡Wena ctm!! La mejor app del mundo para customizar tu mouse <3"
 - 🇺🇸&nbsp;Benjamin&nbsp;Quiles - "Incredible little app that fills a big need. Thank you so much"
 - 🇺🇸&nbsp;Rocco&nbsp;Femia
 - 🇧🇷&nbsp;Danyelvarejao - "Simplesmente incrível."
