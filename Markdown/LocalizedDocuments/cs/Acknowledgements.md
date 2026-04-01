@@ -72,6 +72,10 @@ Děkujeme za vaši podporu! :)
 
 Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neuvěřitelným milkšejkem**. (A někteří mi dokonce zanechali zprávu) Díky za *cukrovou nálož*!
 
+**duben 2026**
+
+- 🇺🇸&nbsp;Rkb - "Thanks!"
+
 **březen 2026**
 
 - 🇺🇸&nbsp;Steven&nbsp;Petryk

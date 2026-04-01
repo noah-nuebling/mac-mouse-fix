@@ -78,6 +78,10 @@ Desteğiniz için teşekkürler! :)
 
 Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem bir Milkshake** ısmarladılar. (Hatta bazıları bir mesaj bile gönderdi!) *Ekstra şeker* için teşekkürler!
 
+**Nisan 2026**
+
+- 🇺🇸&nbsp;Rkb - "Thanks!"
+
 **Mart 2026**
 
 - 🇺🇸&nbsp;Steven&nbsp;Petryk

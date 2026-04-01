@@ -74,6 +74,10 @@ Obrigado pelo apoio! :)
 
 Essas pessoas contribuíram com um valor bem acima do preço padrão e me presentearam com um milk-shake incrível. (E algumas ainda deixaram uma mensagem!) Obrigado pelo pico de açúcar! 😄
 
+**abril 2026**
+
+- 🇺🇸&nbsp;Rkb - "Thanks!"
+
 **março 2026**
 
 - 🇺🇸&nbsp;Steven&nbsp;Petryk

@@ -72,6 +72,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!
 
+**April 2026**
+
+- 🇺🇸&nbsp;Rkb - "Thanks!"
+
 **March 2026**
 
 - 🇺🇸&nbsp;Steven&nbsp;Petryk
