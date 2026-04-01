@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Nisan 2026**
 
+- 🇨🇭&nbsp;Thomas - "No Mac should have to live without it!"
 - 🇺🇸&nbsp;Rkb - "Thanks!"
 
 **Mart 2026**

@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2026**
 
+- 🇨🇭&nbsp;Thomas - "No Mac should have to live without it!"
 - 🇺🇸&nbsp;Rkb - "Thanks!"
 
 **März 2026**

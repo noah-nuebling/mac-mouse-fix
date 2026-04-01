@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **abril 2026**
 
+- 🇨🇭&nbsp;Thomas - "No Mac should have to live without it!"
 - 🇺🇸&nbsp;Rkb - "Thanks!"
 
 **marzo 2026**
