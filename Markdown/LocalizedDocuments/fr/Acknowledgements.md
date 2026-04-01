@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **avril 2026**
 
+- 🇺🇸&nbsp;Jamee&nbsp;Messer&nbsp;Tadej
 - 🇨🇭&nbsp;Thomas - "No Mac should have to live without it!"
 - 🇺🇸&nbsp;Rkb - "Thanks!"
 

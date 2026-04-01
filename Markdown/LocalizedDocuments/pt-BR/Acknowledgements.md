@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **abril 2026**
 
+- 🇺🇸&nbsp;Jamee&nbsp;Messer&nbsp;Tadej
 - 🇨🇭&nbsp;Thomas - "No Mac should have to live without it!"
 - 🇺🇸&nbsp;Rkb - "Thanks!"
 
