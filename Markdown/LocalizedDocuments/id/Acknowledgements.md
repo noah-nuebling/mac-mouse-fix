@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **April 2026**
 
+- 🇨🇿&nbsp;Jiri&nbsp;Daněk - "Dostal jsi nohy, abys mohl jít. Dostal jsi hlavu, abys mohl snít."
 - 🇺🇸&nbsp;Jamee&nbsp;Messer&nbsp;Tadej
 - 🇨🇭&nbsp;Thomas - "No Mac should have to live without it!"
 - 🇺🇸&nbsp;Rkb - "Thanks!"
