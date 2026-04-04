@@ -219,10 +219,29 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2);
     int64_t drawingTabletID  = CGEventGetIntegerValueField(event, kCGTabletEventDeviceID);
     bool isDiagonal = scrollDeltaAxis1 != 0 && scrollDeltaAxis2 != 0;
-    if (isPixelBased != 0
-        || scrollPhase != 0 /// Not entirely sure if testing for 'scrollPhase' here makes sense
-        || drawingTabletID != 0 /// Untested
-        || isDiagonal) {
+    
+    /// Check if event comes from a physical device
+    ///     Universal Control and other virtual input sources (screen sharing, VMs) don't register
+    ///     as IOHIDDevices, so CGEventGetSendingDevice returns NULL. We skip the scrollPhase filter
+    ///     for these events because UC relays trackpad gestures which carry phase data that real
+    ///     scroll wheels never have - filtering on scrollPhase would discard all UC scroll input.
+    IOHIDDeviceRef scrollSendingDev = CGEventGetSendingDevice(event);
+    BOOL isVirtualInput = (scrollSendingDev == NULL);
+    
+    if (!isVirtualInput
+        && (isPixelBased != 0
+            || scrollPhase != 0 /// Not entirely sure if testing for 'scrollPhase' here makes sense
+            || drawingTabletID != 0 /// Untested
+            || isDiagonal)) {
+        
+        return event;
+    }
+    
+    /// For virtual input: still filter pixel-based, tablet, and diagonal - just not scrollPhase
+    if (isVirtualInput
+        && (isPixelBased != 0
+            || drawingTabletID != 0
+            || isDiagonal)) {
         
         return event;
     }
@@ -268,7 +287,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         IOHIDDeviceRef sendingDev = CGEventGetSendingDevice(event);
         
         /// Debug
-        assert(sendingDev != NULL);
+        /// Note: Universal Control and other virtual input sources may have NULL sendingDev
+        /// assert(sendingDev != NULL);
         
         /// Print info on sendingDev
         if (sendingDev != NULL) {
