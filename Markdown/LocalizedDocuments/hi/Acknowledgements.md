@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **अप्रैल 2026**
 
+- 🇩🇰&nbsp;Senk0N - "Best thing that can happen to your mouse on mac!"
 - 🇨🇿&nbsp;Jiri&nbsp;Daněk - "Dostal jsi nohy, abys mohl jít. Dostal jsi hlavu, abys mohl snít."
 - 🇺🇸&nbsp;Jamee&nbsp;Messer&nbsp;Tadej
 - 🇨🇭&nbsp;Thomas - "No Mac should have to live without it!"
