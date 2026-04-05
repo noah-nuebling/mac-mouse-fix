@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **duben 2026**
 
+- 🇩🇪&nbsp;Sik - "🛠️MacMouseFix + 🖱️Keychron M5 == ❤️"
 - 🇩🇰&nbsp;Senk0N - "Best thing that can happen to your mouse on mac!"
 - 🇨🇿&nbsp;Jiri&nbsp;Daněk - "Dostal jsi nohy, abys mohl jít. Dostal jsi hlavu, abys mohl snít."
 - 🇺🇸&nbsp;Jamee&nbsp;Messer&nbsp;Tadej
