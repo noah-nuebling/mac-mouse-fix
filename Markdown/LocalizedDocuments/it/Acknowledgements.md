@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **aprile 2026**
 
+- 🇺🇸&nbsp;Daniel&nbsp;Webb - "Always appreciate excellent utilities that save time!"
 - 🇨🇦&nbsp;Pierre&nbsp;Myre - "Makes my mac usable when docked!"
 - 🇩🇪&nbsp;Sik - "🛠️MacMouseFix + 🖱️Keychron M5 == ❤️"
 - 🇩🇰&nbsp;Senk0N - "Best thing that can happen to your mouse on mac!"
