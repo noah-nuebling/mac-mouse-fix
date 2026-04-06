@@ -51,7 +51,7 @@ NSString * _vardesc(NSString *__strong *keys, id __strong * objects, int count) 
     else if (count == 1)
         return stringf(@"{ %@ = %@; }", keys[0], objects[0]);
     else {
-        auto result = [NSMutableString string];
+        auto result = [NSMutableString new];
         
         [result appendString: @"{\n"];
         for range(i, count) [result appendString: indented(stringf(@"%@ = %@;\n", keys[i], objects[i]))];
