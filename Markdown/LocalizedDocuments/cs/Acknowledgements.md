@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **duben 2026**
 
+- 🇩🇪&nbsp;Christian&nbsp;Mürtz
 - 🇺🇸&nbsp;Daniel&nbsp;Webb - "Always appreciate excellent utilities that save time!"
 - 🇨🇦&nbsp;Pierre&nbsp;Myre - "Makes my mac usable when docked!"
 - 🇩🇪&nbsp;Sik - "🛠️MacMouseFix + 🖱️Keychron M5 == ❤️"

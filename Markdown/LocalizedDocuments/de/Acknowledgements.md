@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2026**
 
+- 🇩🇪&nbsp;Christian&nbsp;Mürtz
 - 🇺🇸&nbsp;Daniel&nbsp;Webb - "Always appreciate excellent utilities that save time!"
 - 🇨🇦&nbsp;Pierre&nbsp;Myre - "Makes my mac usable when docked!"
 - 🇩🇪&nbsp;Sik - "🛠️MacMouseFix + 🖱️Keychron M5 == ❤️"
