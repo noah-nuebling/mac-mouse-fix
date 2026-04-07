@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **abril 2026**
 
+- 🇺🇸&nbsp;Scott&nbsp;Waldron
 - 🇩🇰&nbsp;Rk
 - 🇩🇪&nbsp;Christian&nbsp;Mürtz
 - 🇺🇸&nbsp;Daniel&nbsp;Webb - "Always appreciate excellent utilities that save time!"
