@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Nisan 2026**
 
+- 🇵🇱&nbsp;Łukasz&nbsp;Androsiuk
 - 🇺🇸&nbsp;Andika&nbsp;Dwipayana
 - 🇺🇸&nbsp;Mark&nbsp;Covert - "yipee"
 - 🇺🇸&nbsp;Scott&nbsp;Waldron

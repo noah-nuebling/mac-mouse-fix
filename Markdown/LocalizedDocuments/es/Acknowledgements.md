@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **abril 2026**
 
+- 🇵🇱&nbsp;Łukasz&nbsp;Androsiuk
 - 🇺🇸&nbsp;Andika&nbsp;Dwipayana
 - 🇺🇸&nbsp;Mark&nbsp;Covert - "yipee"
 - 🇺🇸&nbsp;Scott&nbsp;Waldron
