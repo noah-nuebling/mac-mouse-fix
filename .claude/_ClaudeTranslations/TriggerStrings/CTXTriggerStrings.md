@@ -175,6 +175,11 @@ Chinese (Traditional)
             We decided to deviate because we value conciseness. Plus, Apple also uses 鍵 in mouse contexts (I found 點按左鍵, 點按右鍵 for "Left Click", "Right Click"), so we think (hope) it won't feel out of place here.
             (Not sure this was the best choice. But let's roll with it for now.)
             (Sidenote: The names happen to parallel the button names found in the *zh-Hans* glossary (主键, 辅键, 中键, 第%@键) – but that's not why we chose them.)
+Hong Kong Chinese (zh-HK)
+    Desired Translation: Use identical translations to zh-Hant.
+        Explanation: When translating zh-HK, Claude independently arrived at the same translations as zh-Hant by following the glossary and conciseness guidelines.
+            This is also validated by a previous human translator who actively differentiated zh-HK from zh-Hant elsewhere in the app (你/您, 觸控板/觸控式軌跡板, 快捷鍵/快速鍵, 軟件/軟體, etc.) but kept trigger.* strings identical between the two locales.
+            (I didn't verify whether Apple's glossary differentiates these specific terms between zh-HK and zh-Hant, but the Claude looked at the glossary very closely while translating, so I trust it.)
 Korean
     Desired Translation: Translate the button names as 주 버튼, 보조 버튼, 중간 버튼, %@번 버튼
         Explanation: These are optimized for length. Except for `%@번 버튼`, which we're using over `버튼 %@` since it's more natural and has consistent word order with the other strings.

@@ -2014,6 +2014,12 @@
             "value" : "bấm %@ + "
           }
         },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按下%@＋"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2185,6 +2191,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "bấm đúp %@ + "
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按兩下%@＋"
           }
         },
         "zh-Hans" : {
@@ -2360,6 +2372,12 @@
             "value" : "bấm ba lần %@ + "
           }
         },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按三下%@＋"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2531,6 +2549,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*nút giữa*"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*中鍵*"
           }
         },
         "zh-Hans" : {
@@ -2706,6 +2730,12 @@
             "value" : "*nút %@*"
           }
         },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*第%@鍵*"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2877,6 +2907,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "*nút chính*"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*主鍵*"
           }
         },
         "zh-Hans" : {
@@ -3052,6 +3088,12 @@
             "value" : "*nút phụ*"
           }
         },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*輔鍵*"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3223,6 +3265,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "bấm %@"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按下%@"
           }
         },
         "zh-Hans" : {
@@ -3398,6 +3446,12 @@
             "value" : "bấm đúp %@"
           }
         },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按兩下%@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3569,6 +3623,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "bấm ba lần %@"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按三下%@"
           }
         },
         "zh-Hans" : {
@@ -3744,6 +3804,12 @@
             "value" : "bấm và *kéo* %@"
           }
         },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按下並*拖移*%@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3915,6 +3981,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "bấm đúp và *kéo* %@"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按兩下並*拖移*%@"
           }
         },
         "zh-Hans" : {
@@ -4090,6 +4162,12 @@
             "value" : "bấm ba lần và *kéo* %@"
           }
         },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按三下並*拖移*%@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4261,6 +4339,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "và *kéo*"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "並*拖移*"
           }
         },
         "zh-Hans" : {
@@ -4436,6 +4520,12 @@
             "value" : "giữ %@"
           }
         },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按住%@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4607,6 +4697,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "bấm đúp và giữ %@"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按兩下並按住%@"
           }
         },
         "zh-Hans" : {
@@ -4782,6 +4878,12 @@
             "value" : "bấm ba lần và giữ %@"
           }
         },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按三下並按住%@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4953,6 +5055,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "bấm và *cuộn* %@"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按下並*捲動*%@"
           }
         },
         "zh-Hans" : {
@@ -5128,6 +5236,12 @@
             "value" : "bấm đúp và *cuộn* %@"
           }
         },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按兩下並*捲動*%@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5299,6 +5413,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "bấm ba lần và *cuộn* %@"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按三下並*捲動*%@"
           }
         },
         "zh-Hans" : {
@@ -5474,6 +5594,12 @@
             "value" : "và *cuộn*"
           }
         },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "並*捲動*"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5645,6 +5771,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "nút giữa"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中鍵"
           }
         },
         "zh-Hans" : {
@@ -5820,6 +5952,12 @@
             "value" : "nút %@"
           }
         },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第%@鍵"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5993,6 +6131,12 @@
             "value" : "nút chính"
           }
         },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主鍵"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6164,6 +6308,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "nút phụ"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "輔鍵"
           }
         },
         "zh-Hans" : {

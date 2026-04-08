@@ -88,7 +88,7 @@
 
     Chinese
     - [x] zh-Hant
-    - [ ] zh-HK
+    - [x] zh-HK
 
 ---
 
