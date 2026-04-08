@@ -92,7 +92,7 @@
 
 ---
 
-# PROMPT
+# PROMPT (Copied from PMTTriggerStrings.md for convenience)
 
 Hi there Claude! Please use the CTXTriggerStrings.md doc to translate the trigger.* strings into zh-Hant (Traditional Chinese)
 
