@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **duben 2026**
 
+- 🇺🇸&nbsp;Mark&nbsp;Covert - "yipee"
 - 🇺🇸&nbsp;Scott&nbsp;Waldron
 - 🇩🇰&nbsp;Rk
 - 🇩🇪&nbsp;Christian&nbsp;Mürtz

@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **abril 2026**
 
+- 🇺🇸&nbsp;Mark&nbsp;Covert - "yipee"
 - 🇺🇸&nbsp;Scott&nbsp;Waldron
 - 🇩🇰&nbsp;Rk
 - 🇩🇪&nbsp;Christian&nbsp;Mürtz

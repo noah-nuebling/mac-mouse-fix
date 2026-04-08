@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Nisan 2026**
 
+- 🇺🇸&nbsp;Mark&nbsp;Covert - "yipee"
 - 🇺🇸&nbsp;Scott&nbsp;Waldron
 - 🇩🇰&nbsp;Rk
 - 🇩🇪&nbsp;Christian&nbsp;Mürtz
