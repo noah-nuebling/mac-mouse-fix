@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **duben 2026**
 
+- 🇺🇸&nbsp;Dustin&nbsp;Schreiber - "I can't use Logi Options due to a bug that breaks scrolling when using the magnifier, this is the only software that let's me tweak my mouse and not break scrolling."
 - 🇳🇴&nbsp;Christoffer&nbsp;Winterkvist
 - 🇵🇱&nbsp;Łukasz&nbsp;Androsiuk
 - 🇺🇸&nbsp;Andika&nbsp;Dwipayana
