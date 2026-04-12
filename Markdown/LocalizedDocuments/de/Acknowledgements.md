@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2026**
 
+- 🇺🇸&nbsp;Alejandro&nbsp;Barreto - "So worth it. Thank you for making quality software!"
 - 🇺🇸&nbsp;Dustin&nbsp;Schreiber - "I can't use Logi Options due to a bug that breaks scrolling when using the magnifier, this is the only software that let's me tweak my mouse and not break scrolling."
 - 🇳🇴&nbsp;Christoffer&nbsp;Winterkvist
 - 🇵🇱&nbsp;Łukasz&nbsp;Androsiuk
