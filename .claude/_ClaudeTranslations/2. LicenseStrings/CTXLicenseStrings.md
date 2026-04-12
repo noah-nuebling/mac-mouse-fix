@@ -35,6 +35,9 @@ The 'Explanation' sections may help you choose translations for other languages,
 German 
     Desired translation: Use 'kostenloser Tag' for 'free day' (Instead of Testtag)
         Explanation: We're deliberately using 'free' in English over 'trial' or 'test' to imply that the user is using the full version of the app with no feature restrictions.
+    Desired translation: Use forward slash for the free-day counter (x/y) just like English
+        Explanation: The comment mentions using 'whatever formatting looks natural in your language', and gives the example 'x of y'. 
+            While both 'x von y' and 'x/y' feel natural in German, 'x/y' is more scannable, so we prefer it.
     Desired translation: Use 'Fehlermeldung' for 'It says' in license-toast.gumroad-error
         Explanation: 'It says:' doesn't exactly translate to German. Approximations feel a little awkward.
     Desired translation: Use 'Gib deinen Lizenzschlüssel ein' for 'Enter your license key'.
