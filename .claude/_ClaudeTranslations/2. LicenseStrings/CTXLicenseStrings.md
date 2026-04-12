@@ -10,19 +10,6 @@ You are translating strings for **Mac Mouse Fix**, an indie macOS app that enhan
     license-toast.*
     JJv-GH-7io.placeholderString
 
-    How these strings are used:
-        
-        There's a sheet where the user can enter their license key. 
-            On this sheet, there's the license field (textfield where the user can enter their license key), and the license field has a placeholder of JJv-GH-7io.placeholderString.
-            Below the license field there's a 'Cancel' button and license button using the license-button.* strings. It lets the user confirm the edits they made in the license field.
-        After the user tries to activate or deactivate their license using the license button, a little toast with one of the license-toast.* messages provides feedback.
-
-        On the 'About' tab, there is a little 'trial-counter' widget that shows the user how many free days have been used. It uses the the trial-counter.* strings.
-        When you hover over this widget, a link appears that opens the license sheet. The link uses the (misnamed) trial-notif.activate-license-button string.
-
-        Once the free days are used up, the app stops affecting the user's mouse, and the 'trial notification' appears in the top-right of the screen. It uses the trial-notif.* strings.
-            The trial notification also features the same trial-counter.* widget from the About tab, and hovering it reveals the same trial-notif.activate-license-button link.
-
 **The mfstrings tool**
 
 Use this to inspect and edit strings in the project.
