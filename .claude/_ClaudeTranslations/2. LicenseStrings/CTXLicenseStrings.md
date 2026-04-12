@@ -42,3 +42,5 @@ German
         Explanation: 'It says:' doesn't exactly translate to German. Approximations feel a little awkward.
     Desired translation: Use 'Gib deinen Lizenzschlüssel ein' for 'Enter your license key'.
         Explanation: German mostly avoids imperative in UI text (Kopieren, Einfügen, etc...) but here, imperative feels appropriate. (Perhaps because we're directly prompting the user to do something, not just describing an available command for the computer)
+    Desired translation: Use 'deine App' for 'your app' in 'license-toast.already-active'
+        Explanation: Using just 'die app' makes the message ambiguous – It could imply the activation failed because the license has been used before.
