@@ -10,6 +10,20 @@ You are translating strings for **Mac Mouse Fix**, an indie macOS app that enhan
     license-toast.*
     JJv-GH-7io.placeholderString
 
+    How these strings are used:
+        The trial-notif.* and trial-counter.* strings appear on:
+            1. The 'trial notification' (which shows up once the trial is over) 
+            2. The About tab (only while the trial is active)
+            These strings are part of a UI widget that:
+                1. Informs the user of the status of their trial (How many of their 'free days' they have used up)
+                2. Provides convenient way to open the 'license sheet', where the license can be entered and activated
+        The license-button.* and JJv-GH-7io.placeholderString strings appear on the 'license sheet'.
+            The 'license sheet' presents a simple interface with 3 elements:
+                1. The 'license field' where the user can enter their key
+                2. The 'license button' which activates or deactivates the key
+                3. A 'Cancel' button which dismisses the sheet (But its label is auto-translated by AppKit, so we don't need to worry about it here.)
+        When the user clicks the 'license button' to activate/deactivate their license, a toast notification provides feedback using one of the license-toast.* strings.
+
 **The mfstrings tool**
 
 Use this to inspect and edit strings in the project.
@@ -25,6 +39,16 @@ Tips:
         - If you need to output literal single quotes, use the standard '\'' trick.
     - Replace `LOCALE` with your target locale, e.g., `de`, `fr`, `zh-Hans`
     - Use `--help` after mfstrings or one of its subcommands (like 'inspect') to learn more.
+
+**Constraints and Guidance**
+
+Quotes
+    Guidance:
+        - Use what feels most appropriate for your specific context/language.
+        - If the decision seems arbitrary – tend towards the simplest option, and keep it consistent inside the language. (Like we're consistently using single quotes over double quotes in English - see below)
+    Explanation / Background:
+        In English, we use single quotes (') everywhere. That's because before, I just randomly mixed single quotes and double quotes, and my brain doesn't usually differentiate between them, so I eventually standardized on single quotes since that seems simpler.
+        In German, we don't like to use special 'smart quotes' characters, since normal ascii quotes work fine and are easier to work with – I also find it 'simpler' or 'more honest' in a digital world to just use characters that can be directly typed on a (native-speaker's) keyboard. People will also be guaranteed to be familiar with the characters that their keyboard directly outputs – even if it doesn't perfectly resemble the conventions of hand-written text.
 
 **Desired translations**
 
@@ -43,6 +67,7 @@ German
         Explanation: 'It says:' doesn't exactly translate to German. Approximations feel a little awkward. 'Fehlermeldung:' works well.
     Desired translation: Use 'Gib deinen Lizenzschlüssel ein' for 'Enter your license key'.
         Explanation: German mostly avoids imperative in UI text (Kopieren, Einfügen, etc...) but here, imperative feels appropriate. (Perhaps because we're directly prompting the user to do something, not just describing an available command for the computer)
+        (Counterargument?: Safari uses 'Suchbegriff oder Websitenamen eingeben' as the placeholder in the address bar, not 'Gib einen Suchbegriff oder Websitenamen ein' – this is a similar context, but imperative still feels better for the license field - I'm not sure why)
     Desired translation: 'Deine App **ist bereits** mit diesem Schlüssel **lizenziert**' for 'Your app is **already licensed** with this key'. (license-toast.already-active)
         Explanation: We accept splitting the emphasized substring into two, to keep the most natural grammatical structure for German.
         Background: The emphasis in these kinds of strings exists for scannability. The idea is that, when someone only reads the emphasized words, they already get the gist.
@@ -55,3 +80,11 @@ German
     Desired translation: Use 'Stell sicher, dass du ...' for 'Make sure you ...' in license-toast.unknown-key
         Explanation: This is a general tip about a common mistake. We're not sure this is the reason for the error.
             Dropping the 'make sure' and using bare imperative could make it sound like we're diagnosing a specific mistake that the user made with certainty, which could be confusing or frustrating.
+
+French
+    Desired translation: Use `m'excuser` (personal voice) in license-toast.activation-overload (instead of corporate 'we' voice `nous excuser` )
+        Explanation: These texts are messages by me (the indie developer) to the user. There's no corporation or collective behind the app. 
+    Desired translation: Use 'une licence' instead of 'la license' in trial-notif.activate-license-button
+        Explanation: This string is the label for a button that appears on the 'About tab' and on the 'trial notification'. It takes you to the 'license sheet' where you can enter and activate (or deactivate) your license key. But before you open the license sheet, there's no specific license in context to refer to, so 'la license' would feel wrong. (English 'Activate License' circumvents this issue by not using 'a'/'the' at all)
+    Desired translation: Use 'jours offerts' for 'free days'
+        Explanation: It seems about as good as 'jours gratuits', but 'jours offerts' is what a previous human translator chose, so we respect their choice.

@@ -9,12 +9,12 @@ Batch of strings to translate:
 Languages to work on (Do human-backed first)          (Based on SCRTriggerStrings.md)
 
     Germanic
-      - [ ] de            (human-backed)
+      - [x] de            (human-backed)
       - [ ] nl
       - [ ] sv
 
       Romance
-      - [ ] fr            (human-backed)
+      - [x] fr            (human-backed)
       - [ ] pt-BR         (human-backed)
       - [ ] es            (human-backed)
       - [ ] pt-PT
@@ -70,10 +70,22 @@ Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
     Followups
         - Thanks Claude! I notice some things that could be improved. Could you go over the strings once more?
         - To be honest, I didn't notice anything wrong. I just found that asking leading questions like that makes the Claudes really look into things, you know? I hope that's ok. Thanks again for your work!
-
+        
     Followups with bad results:
         Ah perfect! It looks good to me then, can you go over one more time and see if you find anything that could be simplified or expressed better?
             Explanation: Found one 'correction' in German which was made up. (But also not much worse) (Said it was more natural and the previous version sounded 'slightly off' which is not true)
+
+    Review prompts (Fresh Chat)
+        1. 
+            Hi there Claude! I've been working on doing some translations with coding Agents. I'm starting with languages where we already had human translations so we can validate the translations and improve the context for the agent (for the other languages)
+
+            Could you check the French (fr) translations?
+
+            This command will let you see the human and the generated translations side-by-side: (Some of the bigger differences are because the human translations were a bit outdated)
+
+            ./run mfstrings inspect --sortcol key --pretty --diff-highlight 72ca917f9,472bb34 --grep 'trial-notif|trial-counter|license-button|license-toast|JJv-GH-7io' --cols fileid,key,en,fr
+
+            See CTXLicenseStrings.md for the full context of which strings we were translating and what guidance we gave to the translator.
 
 Review 
     ./run mfstrings inspect --sortcol key --pretty --diff-highlight 72ca917f9,472bb34 --grep 'trial-notif|trial-counter|license-button|license-toast|JJv-GH-7io' --cols fileid,key,en,LOCALE

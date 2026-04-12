@@ -1121,6 +1121,12 @@
             "state" : "translated",
             "value" : "Activate License"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer la licence"
+          }
         }
       }
     },
@@ -1137,6 +1143,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Deactivate License"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Désactiver la licence"
           }
         }
       }
@@ -1155,6 +1167,12 @@
             "state" : "translated",
             "value" : "Your license has been **activated**! 🎉"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre licence a été **activée** ! 🎉"
+          }
         }
       }
     },
@@ -1171,6 +1189,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "This license has been activated **%2$d** times. The maximum is **%3$d**.\n\nBecause of this, the license has been invalidated. This is to prevent piracy. If you have other reasons for activating the license this many times, please excuse the inconvenience.\n\nJust [reach out](%1$@) and I will provide you with a new license! Thanks for understanding."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette licence a été activée **%2$d** fois. Le maximum est de **%3$d**.\n\nEn raison de cela, la licence a été invalidée. C'est pour prévenir le piratage. Si vous avez d'autres raisons d'avoir activé la licence autant de fois, je m'excuse pour le désagrément.\n\nContactez-moi simplement [ici](%1$@) et je vous fournirai une nouvelle licence ! Merci pour votre compréhension."
           }
         }
       }
@@ -1189,6 +1213,12 @@
             "state" : "translated",
             "value" : "Your app is **already licensed** with this key"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre app est **déjà licenciée** avec cette clé"
+          }
         }
       }
     },
@@ -1205,6 +1235,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your license has been **deactivated**"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votre licence a été **désactivée**"
           }
         }
       }
@@ -1223,6 +1259,12 @@
             "state" : "translated",
             "value" : "This license **could not be activated** but Mac Mouse Fix is currently **free in your country**."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette licence **n'a pas pu être activée**, mais Mac Mouse Fix est actuellement **gratuit dans votre pays**."
+          }
         }
       }
     },
@@ -1239,6 +1281,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "An **error with the license server** occurred\n\nIt says:\n\n%@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une **erreur avec le serveur de licences** s'est produite\n\nMessage d'erreur :\n\n%@"
           }
         }
       }
@@ -1257,6 +1305,12 @@
             "state" : "translated",
             "value" : "There is a **problem with the internet connection**\n\nMake sure your computer is online and no firewalls are blocking Mac Mouse Fix from connecting to the internet.\n\nIf this doesn't solve the problem, contact me [here](%@)."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il y a un **problème avec la connexion internet**\n\nAssurez-vous que votre ordinateur est en ligne et qu'aucun pare-feu ne bloque Mac Mouse Fix pour se connecter à internet.\n\nSi cela ne résout pas le problème, contactez-moi [ici](%@)."
+          }
         }
       }
     },
@@ -1272,6 +1326,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "There is a **problem with the license server**\n\nPlease try again later.\n\nIf the issue persists, contact me [here](%@)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il y a un **problème avec le serveur de licences**\n\nVeuillez réessayer plus tard.\n\nSi le problème persiste, contactez-moi [ici](%@)."
           }
         }
       }
@@ -1290,6 +1350,12 @@
             "state" : "translated",
             "value" : "An **unknown error** occurred:\n\n%@"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une **erreur inconnue** s'est produite :\n\n%@"
+          }
         }
       }
     },
@@ -1307,6 +1373,12 @@
             "state" : "translated",
             "value" : "'**%@**' is not a valid license key\n\nMake sure you enter your Mac Mouse Fix key exactly as you received it."
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "« **%@** » n'est pas une clé de licence valide\n\nVeillez à saisir votre clé Mac Mouse Fix exactement telle que vous l'avez reçue."
+          }
         }
       }
     },
@@ -1323,6 +1395,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](%@)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'activation de votre licence a échoué pour des **raisons inconnues**\n\nVeuillez écrire un **rapport de bug** [ici](%@)"
           }
         }
       }
@@ -1903,6 +1981,12 @@
             "state" : "translated",
             "value" : "Free day **%1$d/%2$d**"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jour offert **%1$d/%2$d**"
+          }
         }
       }
     },
@@ -1919,6 +2003,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Free days are over"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les jours offerts sont écoulés"
           }
         }
       }
@@ -1937,6 +2027,12 @@
             "state" : "translated",
             "value" : "Activate License"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer une licence"
+          }
         }
       }
     },
@@ -1953,6 +2049,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hi there! You've been using Mac Mouse Fix for **%1$d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%2$@)."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bonjour ! Vous utilisez Mac Mouse Fix depuis **%1$d jours** maintenant. J'espère que vous l'appréciez !\n\nSi vous souhaitez continuer à utiliser Mac Mouse Fix, vous pouvez [l'acheter maintenant](%2$@)."
           }
         }
       }

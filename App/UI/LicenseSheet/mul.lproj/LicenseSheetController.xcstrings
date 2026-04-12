@@ -41,6 +41,12 @@
             "state" : "new",
             "value" : "Enter Your License Key"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrez votre clé de licence"
+          }
         }
       }
     }
