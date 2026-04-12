@@ -1,0 +1,13 @@
+{
+  "env":   {
+    "_comment1": "env voodoo",
+    "_comment2": " Src: https://www.reddit.com/r/ClaudeCode/comments/1sfihyr/psa_if_your_opus_is_lobotomized_disable_adaptive/",
+    "_comment3": " Date: [Apr 8 2026] (Will probably go out of date, even if it does work)",
+    "CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING": "1",
+    "MAX_THINKING_TOKENS": "128000",
+    "_comment4": "Disable showing Claude recent commits at conversation start",
+    "_comment5": "  Explanation: I worry that commit messages saying it did poor work or was being stupid will prime it negatively.",
+    "_comment6": "    This apparently also disables commit / PR workflow instructions – good because we don't use those.",
+    "CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS": "1"
+  }
+}
