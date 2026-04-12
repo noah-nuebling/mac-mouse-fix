@@ -1,7 +1,6 @@
+**Overview**
 
-Don't invoke the adding-translations/SKILL.md. This prompt should contain all the necessary information.
-
----
+You are translating strings for **Mac Mouse Fix**, an indie macOS app that enhances mouse functionality.
 
 **Strings we're translating:**
 
@@ -36,3 +35,5 @@ The 'Explanation' sections may help you choose translations for other languages,
 German 
     Desired translation: 'kostenloser Tag' for 'free day' (Instead of 'Testtag')
         Explanation: We're deliberately using 'free' in English over 'trial' or 'test' to imply that the user is using the full version of the app with no feature restrictions.
+    Desired translation: 'Gib deinen Lizenzschlüssel ein' for 'Enter Your License Key' (Instead of 'Lizenzschlüssel eingeben')
+        Explanation: This is a placeholder text in a text field – it's specifically prompting the user to do something, so imperative in German seems most appropriate (Even though German often avoids imperative in UI, e.g. for action-labels like 'Copy' and 'Paste', where 'Kopiere', 'Füge ein' would sound awkward.)

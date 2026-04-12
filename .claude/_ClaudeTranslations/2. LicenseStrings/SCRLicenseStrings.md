@@ -60,24 +60,19 @@ Generating CTXLicenseStrings.md
 Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
 
     Main prompt
-
         Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into German (de)
-
-        The CTXLicenseStrings.md is the result of doing research on the the existing strings and their comments, trust this and don't do extensive research yourself.
-
-        If necessary, use a glossary-research subagent for the Apple-specific terms. Explain to the subagent the context of how the strings you're requesting are used, so it can focus on relevant examples from the glossary. Think for yourself about whether the example translations that the subagent shows you are relevant here. If not, disregard Apple's translations and simply choose the translation that feels most natural and functional for its purpose. When translating a group of related strings, favor a consistent pattern. Glossary research may return inconsistent terms from different Apple source files.
 
         Before translating each batch of strings (try to keep the batches around 5 or smaller), write out all the constraints that are relevant for the batch.
 
         Do not read / invoke adding-translations/SKILL.md
 
     Followups
+        - Thanks Claude! I notice some things that could be improved. Could you go over the strings once more?
+        - To be honest, I didn't notice anything wrong. I just found that asking leading questions like that makes the Claudes really look into things, you know? I hope that's ok. Thanks again for your work!
 
-        Followup
-            Thanks Claude! I notice some things that could be improved. Could you go over the strings once more?
-
-        Followup 2
-            To be honest, I didn't notice anything wrong. I just found that asking leading questions like that makes the Claudes really look into things, you know? I hope that's ok. Thanks again for your work!
+    Followups with bad results:
+        Ah perfect! It looks good to me then, can you go over one more time and see if you find anything that could be simplified or expressed better?
+            Explanation: Found one 'correction' in German which was made up. (But also not much worse) (Said it was more natural and the previous version sounded 'slightly off' which is not true)
 
 Review 
     ./run mfstrings inspect --sortcol key --pretty --diff-highlight 72ca917f9,472bb34 --grep 'trial-notif|trial-counter|license-button|license-toast|JJv-GH-7io' --cols fileid,key,en,LOCALE
