@@ -104,23 +104,23 @@ Before translating each batch of strings (try to keep the batches around 5 or sm
 
 Do not read / invoke adding-translations/SKILL.md
 
-# Followup
+# Followup 1
 Thanks Claude! I notice some things that could be improved. Could you go over the strings once more?
 
-# Followup 2
+# Followup 1.1
 To be honest, I didn't notice anything wrong. I just found that asking leading questions like that makes the Claudes really look into things, you know? I hope that's ok. Thanks again for your work!
 
-# Followup 3
+# Followup 2
 
 Ok great, thanks for your work on that!
 Finally, could you go over the strings once more and see if you can find any potential improvements or simplifications?
 
-# Followup 4
+# Followup 3
 
 Ok great, thanks for looking into that !
 Are there any more things about the [[[Ukrainian]]] strings that could be simplified or improved?
 
-# Followup 5
+# Followup 4
 
 Hi Claude! Can you review this [[Arabic]] UI I've been working on with Gemini?
 
