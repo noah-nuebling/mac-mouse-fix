@@ -35,5 +35,7 @@ The 'Explanation' sections may help you choose translations for other languages,
 German 
     Desired translation: Use 'kostenloser Tag' for 'free day' (Instead of Testtag)
         Explanation: We're deliberately using 'free' in English over 'trial' or 'test' to imply that the user is using the full version of the app with no feature restrictions.
-    Desired translation: Use 'Fehlermeldung:' for 'It says' in license-toast.gumroad-error
+    Desired translation: Use 'Fehlermeldung' for 'It says' in license-toast.gumroad-error
         Explanation: 'It says:' doesn't exactly translate to German. Approximations feel a little awkward.
+    Desired translation: Use 'Gib deinen Lizenzschlüssel ein' for 'Enter your license key'.
+        Explanation: German mostly avoids imperative in UI text (Kopieren, Einfügen, etc...) but here, imperative feels appropriate. (Perhaps because we're directly prompting the user to do something, not just describing an available command for the computer)
