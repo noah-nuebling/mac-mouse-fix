@@ -33,7 +33,7 @@ But for some texts, I found it helpful to specify the desired translations direc
 The 'Explanation' sections may help you choose translations for other languages, by using the same guiding principles.
 
 German 
-    Desired translation: 'kostenloser Tag' for 'free day' (Instead of 'Testtag')
+    Desired translation: Use 'kostenloser Tag' for 'free day' (Instead of Testtag)
         Explanation: We're deliberately using 'free' in English over 'trial' or 'test' to imply that the user is using the full version of the app with no feature restrictions.
-    Desired translation: 'Gib deinen Lizenzschlüssel ein' for 'Enter Your License Key' (Instead of 'Lizenzschlüssel eingeben')
-        Explanation: This is a placeholder text in a text field – it's specifically prompting the user to do something, so imperative in German seems most appropriate (Even though German often avoids imperative in UI, e.g. for action-labels like 'Copy' and 'Paste', where 'Kopiere', 'Füge ein' would sound awkward.)
+    Desired translation: Use 'Fehlermeldung:' for 'It says' in license-toast.gumroad-error
+        Explanation: 'It says:' doesn't exactly translate to German. Approximations feel a little awkward.

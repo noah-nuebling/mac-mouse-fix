@@ -65,6 +65,7 @@ Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
         Before translating each batch of strings (try to keep the batches around 5 or smaller), write out all the constraints that are relevant for the batch.
 
         Do not read / invoke adding-translations/SKILL.md
+        Do not read the files next to CTXLicenseStrings.md
 
     Followups
         - Thanks Claude! I notice some things that could be improved. Could you go over the strings once more?
