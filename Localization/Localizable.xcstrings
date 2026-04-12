@@ -1190,7 +1190,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "An **error with the licensing server** occurred\n\nIt says:\n\n%@"
+            "value" : "An **error with the license server** occurred\n\nIt says:\n\n%@"
           }
         }
       }
@@ -1211,7 +1211,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "There is a **problem with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, contact me [here](%@)."
+            "value" : "There is a **problem with the license server**\n\nPlease try again later.\n\nIf the issue persists, contact me [here](%@)."
           }
         }
       }
@@ -2014,12 +2014,6 @@
             "value" : "bấm %@ + "
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按下%@＋"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2027,6 +2021,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按下%@＋"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "按下%@＋"
@@ -2193,12 +2193,6 @@
             "value" : "bấm đúp %@ + "
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按兩下%@＋"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2206,6 +2200,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按兩下%@＋"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "按兩下%@＋"
@@ -2372,12 +2372,6 @@
             "value" : "bấm ba lần %@ + "
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按三下%@＋"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2385,6 +2379,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按三下%@＋"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "按三下%@＋"
@@ -2551,12 +2551,6 @@
             "value" : "*nút giữa*"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "*中鍵*"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2564,6 +2558,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*中鍵*"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "*中鍵*"
@@ -2730,12 +2730,6 @@
             "value" : "*nút %@*"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "*第%@鍵*"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2743,6 +2737,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*第%@鍵*"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "*第%@鍵*"
@@ -2909,12 +2909,6 @@
             "value" : "*nút chính*"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "*主鍵*"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2922,6 +2916,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*主鍵*"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "*主鍵*"
@@ -3088,12 +3088,6 @@
             "value" : "*nút phụ*"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "*輔鍵*"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3101,6 +3095,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*輔鍵*"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "*輔鍵*"
@@ -3267,12 +3267,6 @@
             "value" : "bấm %@"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按下%@"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3280,6 +3274,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按下%@"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "按下%@"
@@ -3446,12 +3446,6 @@
             "value" : "bấm đúp %@"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按兩下%@"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3459,6 +3453,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按兩下%@"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "按兩下%@"
@@ -3625,12 +3625,6 @@
             "value" : "bấm ba lần %@"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按三下%@"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3638,6 +3632,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按三下%@"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "按三下%@"
@@ -3804,12 +3804,6 @@
             "value" : "bấm và *kéo* %@"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按下並*拖移*%@"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3817,6 +3811,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按下並*拖移*%@"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "按下並*拖移*%@"
@@ -3983,12 +3983,6 @@
             "value" : "bấm đúp và *kéo* %@"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按兩下並*拖移*%@"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3996,6 +3990,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按兩下並*拖移*%@"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "按兩下並*拖移*%@"
@@ -4162,12 +4162,6 @@
             "value" : "bấm ba lần và *kéo* %@"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按三下並*拖移*%@"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4175,6 +4169,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按三下並*拖移*%@"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "按三下並*拖移*%@"
@@ -4341,12 +4341,6 @@
             "value" : "và *kéo*"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "並*拖移*"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4354,6 +4348,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "並*拖移*"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "並*拖移*"
@@ -4520,12 +4520,6 @@
             "value" : "giữ %@"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按住%@"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4533,6 +4527,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按住%@"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "按住%@"
@@ -4699,12 +4699,6 @@
             "value" : "bấm đúp và giữ %@"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按兩下並按住%@"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4712,6 +4706,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按兩下並按住%@"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "按兩下並按住%@"
@@ -4878,12 +4878,6 @@
             "value" : "bấm ba lần và giữ %@"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按三下並按住%@"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4891,6 +4885,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按三下並按住%@"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "按三下並按住%@"
@@ -5057,12 +5057,6 @@
             "value" : "bấm và *cuộn* %@"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按下並*捲動*%@"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5070,6 +5064,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按下並*捲動*%@"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "按下並*捲動*%@"
@@ -5236,12 +5236,6 @@
             "value" : "bấm đúp và *cuộn* %@"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按兩下並*捲動*%@"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5249,6 +5243,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按兩下並*捲動*%@"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "按兩下並*捲動*%@"
@@ -5415,12 +5415,6 @@
             "value" : "bấm ba lần và *cuộn* %@"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按三下並*捲動*%@"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5428,6 +5422,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按三下並*捲動*%@"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "按三下並*捲動*%@"
@@ -5594,12 +5594,6 @@
             "value" : "và *cuộn*"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "並*捲動*"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5607,6 +5601,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "並*捲動*"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "並*捲動*"
@@ -5773,12 +5773,6 @@
             "value" : "nút giữa"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "中鍵"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5786,6 +5780,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中鍵"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "中鍵"
@@ -5952,12 +5952,6 @@
             "value" : "nút %@"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "第%@鍵"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5965,6 +5959,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第%@鍵"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "第%@鍵"
@@ -6131,12 +6131,6 @@
             "value" : "nút chính"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "主鍵"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6144,6 +6138,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主鍵"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "主鍵"
@@ -6310,12 +6310,6 @@
             "value" : "nút phụ"
           }
         },
-        "zh-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "輔鍵"
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6323,6 +6317,12 @@
           }
         },
         "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "輔鍵"
+          }
+        },
+        "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "輔鍵"
