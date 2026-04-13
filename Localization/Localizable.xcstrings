@@ -1110,6 +1110,12 @@
     "license-button.activate" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivovat licenci"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1145,6 +1151,12 @@
     "license-button.deactivate" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deaktivovat licenci"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1180,6 +1192,12 @@
     "license-toast.activate" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tvoje licence byla **aktivována**! 🎉"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1215,6 +1233,12 @@
     "license-toast.activation-overload" : {
       "comment" : "Note: \"%2$d\", \"%3$d\", and \"%1$@\" are so-called \"C Format Specifers\". They will be replaced by numbers or text when the program runs. Make sure to type the format specifiers exactly like in the English version so that the text-replacement-code works correctly.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tato licence byla aktivována **%2$d**krát. Maximum je **%3$d**.\n\nZ tohoto důvodu byla licence zneplatněna. Toto opatření slouží k prevenci pirátství. Pokud máš jiné důvody pro tolik aktivací, omlouvám se za nepříjemnosti.\n\nStačí se mi [ozvat](%1$@) a poskytnu ti novou licenci! Díky za pochopení."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1250,6 +1274,12 @@
     "license-toast.already-active" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tvoje aplikace **je už licencovaná** tímto klíčem"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1285,6 +1315,12 @@
     "license-toast.deactivate" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tvoje licence byla **deaktivována**"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1320,6 +1356,12 @@
     "license-toast.free-country" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tuto licenci **se nepodařilo aktivovat**, ale Mac Mouse Fix je momentálně **zdarma v tvé zemi**."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1355,6 +1397,12 @@
     "license-toast.gumroad-error" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Došlo k **chybě licenčního serveru**\n\nHlášení:\n\n%@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1390,6 +1438,12 @@
     "license-toast.no-internet" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vyskytl se **problém s internetovým připojením**\n\nUjisti se, že je tvůj počítač online a žádný firewall neblokuje Mac Mouse Fix v připojení k internetu.\n\nPokud to problém nevyřeší, kontaktuj mě [zde](%@)."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1424,6 +1478,12 @@
     },
     "license-toast.server-response-invalid" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vyskytl se **problém s licenčním serverem**\n\nZkus to prosím později.\n\nPokud problém přetrvává, kontaktuj mě [zde](%@)."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1459,6 +1519,12 @@
     "license-toast.unknown-error" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Došlo k **neznámé chybě**:\n\n%@"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1494,6 +1560,12 @@
     "license-toast.unknown-key" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'**%@**' není platný licenční klíč\n\nUjisti se, že zadáváš svůj klíč pro Mac Mouse Fix přesně tak, jak jsi ho obdržel."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1529,6 +1601,12 @@
     "license-toast.unknown-reason" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivace licence selhala z **neznámých důvodů**\n\nNapiš prosím **hlášení o chybě** [zde](%@)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2126,6 +2204,12 @@
     "trial-counter.active" : {
       "comment" : "Note: You can use whatever formatting looks natural in your language, such as \"x of y\" instead of \"x/y\".",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bezplatný den **%1$d/%2$d**"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2161,6 +2245,12 @@
     "trial-counter.expired" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bezplatné dny vypršely"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2196,6 +2286,12 @@
     "trial-notif.activate-license-button" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktivovat licenci"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2231,6 +2327,12 @@
     "trial-notif.body" : {
       "comment" : "",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ahoj! Používáš Mac Mouse Fix už **%1$d dní**. Doufám, že se ti líbí!\n\nPokud chceš Mac Mouse Fix používat dál, můžeš si ho [koupit tady](%2$@)."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",

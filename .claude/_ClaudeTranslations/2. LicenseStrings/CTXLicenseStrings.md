@@ -108,3 +108,6 @@ Spanish
         Explanation: 'Dice:' is short and simple. Unlike German, Spanish can translate 'It says:' naturally.
     Desired translation: Use '**ya está licenciada**' for '**already licensed**' in license-toast.already-active
         Explanation: The emphasis contains the same words as in English making it form an equivalent 'gist'. (See 'On emphasis:' above)
+Czech
+    Desired translation: Use informal 'ty' (over formal 'vy')
+        Explanation: 'ty' feels appropriate for an indie app. (This differs by language, e.g. in French we're using 'vous')
