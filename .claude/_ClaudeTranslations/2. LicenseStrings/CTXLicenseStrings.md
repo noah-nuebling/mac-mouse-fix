@@ -50,7 +50,7 @@ Quotes
         In English, we use single quotes (') everywhere. 
             Before, I randomly mixed single quotes and double quotes, because my brain doesn't really differentiate between them. Eventually, I standardized on single quotes since they are a little simpler.
         In German, we don't like to use special 'smart quotes' characters, since normal ascii quotes work fine and are easier to work with – I also find it 'simpler' or 'more honest' in a digital world to just use characters that can be directly typed on a (native-speaker's) keyboard, without smart-substitution. People will also be guaranteed to be familiar with the characters that their keyboard directly outputs – even if it doesn't perfectly resemble the conventions of hand-written text.
-            (Might have to revisit this guidance for languages that rely heavily on IMEs like Japanese)
+            (Might have to revisit this decisions for languages that rely on IMEs like Japanese)
 
 **Desired translations**
 
@@ -90,3 +90,9 @@ French
         Explanation: This string is the label for a button that appears on the 'About tab' and on the 'trial notification'. It takes you to the 'license sheet' where you can enter and activate (or deactivate) your license key. But before you open the license sheet, there's no specific license in context to refer to, so 'la license' would feel wrong. (English 'Activate License' circumvents this issue by not using 'a'/'the' at all)
     Desired translation: Use 'jours offerts' for 'free days'
         Explanation: It seems about as good as 'jours gratuits', but 'jours offerts' is what a previous human translator chose, so we defer to that.
+
+Brazilian Portuguese
+    Desired translation: Use 'servidor de licenças' for 'license server'
+        Explanation: Using plural for licenças sounds more natural
+    Desired translation: Use 'Ocorreu um **erro com o servidor de licenças**' for 'An **error with the licensing server** occurred'
+        Explanation: Verb-first sounds more natural

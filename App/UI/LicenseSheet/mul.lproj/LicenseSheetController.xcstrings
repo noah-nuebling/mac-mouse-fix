@@ -47,6 +47,12 @@
             "state" : "translated",
             "value" : "Entrez votre clé de licence"
           }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insira sua chave de licença"
+          }
         }
       }
     }
