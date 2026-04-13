@@ -78,7 +78,7 @@ German
     Desired translation: Use 'deine App' for 'your app' in license-toast.already-active
         Explanation: Using just 'die app' makes the message ambiguous – It could imply the activation failed because the license has been used before
     Desired translation: Use 'momentan **in deinem Land kostenlos**' for 'currently **free in your country**' (In license-toast.free-country)
-        Explanation: We want to make the emphasized bits form a 'gist' that contains ~the same information in German as in the English original. See the 'On emphasis:' section above.
+        Explanation: We want to make the emphasized bits form a 'gist' that contains ~the same information in German as in the English original. (See 'On emphasis:' above.)
     Desired translation: Use 'Stell sicher, dass du ...' for 'Make sure you ...' in license-toast.unknown-key
         Explanation: This is a general tip about a common mistake. We're not sure this is the reason for the error.
             Dropping the 'make sure' and using bare imperative could make it sound like we're diagnosing a specific mistake that the user made with certainty, which could be confusing or frustrating.
@@ -96,3 +96,15 @@ Brazilian Portuguese
         Explanation: Using plural for licenças sounds more natural
     Desired translation: Use 'Ocorreu um **erro com o servidor de licenças**' for 'An **error with the licensing server** occurred'
         Explanation: Verb-first sounds more natural
+
+Spanish
+    Desired translation: Use '¡Tu licencia ha sido **activada**! 🎉' for 'Your license has been **activated**! 🎉'
+        Explanation: Use exclamation marks over period to match the original tone.
+    Desired translation: Use 'ordenador' for 'computer' (over 'computadora')
+        Explanation: The Spanish (es) locale should use European Spanish conventions over Latin American Spanish ones.
+    Desired translation: Use `Llevas usando Mac Mouse Fix` for `You've been using Mac Mouse Fix` (instead of `Has estado usando Mac Mouse Fix`)
+        Explanation: Sounds more natural than the more literal translation.
+    Desired translation: Use 'Dice:' for 'It says:'.
+        Explanation: 'Dice:' is short and simple. Unlike German, Spanish can translate 'It says:' naturally.
+    Desired translation: Use '**ya está licenciada**' for '**already licensed**' in license-toast.already-active
+        Explanation: The emphasis contains the same words as in English making it form an equivalent 'gist'. (See 'On emphasis:' above)

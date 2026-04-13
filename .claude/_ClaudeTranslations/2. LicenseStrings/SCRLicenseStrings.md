@@ -16,7 +16,7 @@ Languages to work on (Do human-backed first)          (Based on SCRTriggerString
       Romance
       - [x] fr            (human-backed)
       - [x] pt-BR         (human-backed)
-      - [ ] es            (human-backed)
+      - [x] es            (human-backed)
       - [ ] pt-PT
       - [ ] ca
       - [ ] it
@@ -60,9 +60,9 @@ Generating CTXLicenseStrings.md
 Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
 
     Main prompt
-        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Brazilian Portuguese (pt-BR)
+        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Spanish (es)
 
-        Before translating each batch of strings (try to keep the batches around 5 or smaller), write out all the constraints that are relevant for the batch.
+        Before translating each batch of strings (try to keep the batches around 5 or smaller), to help you keep the relevant constraints in mind, list all the string keys you've included in the batch, and then write out all the constraints that are relevant for those strings.
 
         Do not read / invoke adding-translations/SKILL.md
         Do not read the files next to CTXLicenseStrings.md
@@ -79,7 +79,7 @@ Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
         1. 
             Hi there Claude! I've been working on doing some translations with coding Agents. I'm starting with languages where we already had human translations so we can validate the translations and improve the context for the agent (for the other languages)
 
-            Could you check the Brazilian Portuguese (pt-BR) translations?
+            Could you check the Spanish (es) translations?
 
             This command will let you see the human and the generated translations side-by-side: (Some of the bigger differences are because the human translations were a bit outdated)
 
