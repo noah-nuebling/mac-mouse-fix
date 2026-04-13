@@ -26,8 +26,8 @@ Languages to work on (Do human-backed first)          (Based on SCRTriggerString
       - [ ] el
 
       Slavic
-      - [ ] cs            (human-backed)
-      - [ ] ru            (human-backed)
+      - [x] cs            (human-backed)
+      - [x] ru            (human-backed)
       - [ ] pl
       - [ ] uk
 
@@ -60,7 +60,7 @@ Generating CTXLicenseStrings.md
 Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
 
     Main prompt
-        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Czech (cs)
+        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Russian (ru)
 
         Before translating each batch of strings (try to keep the batches around 5 or smaller), to help you keep the relevant constraints in mind, list all the string keys you've included in the batch, and then write out all the constraints that are relevant for those strings.
 
@@ -80,7 +80,7 @@ Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
             Hi there Claude! I've been working on doing some translations with ChatGPT. I'm starting with languages where we already had human translations so we can validate the translations and improve
             the context for the agent (for the other languages)
 
-            Could you check the Czech (cs) translations?
+            Could you check the Russian (ru) translations?
 
             This command will let you see the human and the generated translations side-by-side: (Some of the bigger differences are because the human translations were a bit outdated)
 
@@ -88,9 +88,8 @@ Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
 
             See CTXLicenseStrings.md for the full context of which strings we were translating and what guidance we gave to the translator.
 
-            [
-            Please check for any regressions or interesting differences. Please explain the differences to me to help me gain an intuitive understanding. (I don't speak Czech)
-            ]
+            Please check for any regressions or interesting differences. Please explain the differences to me to help me gain an intuitive understanding. (I don't speak Russian)
+            
             [
             ... Actually, I'll just show you all the strings, please just read CTXLicenseStrings.md and then we'll go through the strings one by one, ok?
             ]

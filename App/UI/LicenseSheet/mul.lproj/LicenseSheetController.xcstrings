@@ -65,6 +65,12 @@
             "state" : "translated",
             "value" : "Insira sua chave de licença"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введи лицензионный ключ"
+          }
         }
       }
     }
