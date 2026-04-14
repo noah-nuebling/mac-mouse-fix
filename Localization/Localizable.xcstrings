@@ -1157,6 +1157,12 @@
             "state" : "translated",
             "value" : "Lisansı Etkinleştir"
           }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kích hoạt giấy phép"
+          }
         }
       }
     },
@@ -1209,6 +1215,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisansı Devre Dışı Bırak"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hủy kích hoạt giấy phép"
           }
         }
       }
@@ -1263,6 +1275,12 @@
             "state" : "translated",
             "value" : "Lisansınız **etkinleştirildi**! 🎉"
           }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giấy phép của bạn đã được **kích hoạt**! 🎉"
+          }
         }
       }
     },
@@ -1315,6 +1333,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bu lisans **%2$d** kez etkinleştirildi. Maksimum sayı **%3$d**.\n\nBu nedenle lisans geçersiz kılındı. Bu, korsanlığı önlemek içindir. Lisansı bu kadar çok kez etkinleştirmenizin başka nedenleri varsa, verdiğim rahatsızlık için özür dilerim.\n\n[Benimle iletişime geçin](%1$@), size yeni bir lisans sağlayacağım! Anlayışınız için teşekkürler."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giấy phép này đã được kích hoạt **%2$d** lần. Số lần tối đa là **%3$d**.\n\nVì vậy, giấy phép đã bị vô hiệu hóa. Điều này nhằm ngăn chặn việc sử dụng trái phép. Nếu bạn có lý do khác để kích hoạt giấy phép nhiều lần như vậy, xin thứ lỗi vì sự bất tiện này.\n\nChỉ cần [liên hệ với tôi](%1$@) và tôi sẽ cung cấp cho bạn giấy phép mới! Cảm ơn bạn đã thông cảm."
           }
         }
       }
@@ -1369,6 +1393,12 @@
             "state" : "translated",
             "value" : "Uygulamanız bu anahtarla **zaten lisanslı**"
           }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ứng dụng của bạn **đã được cấp phép** với khóa này"
+          }
         }
       }
     },
@@ -1421,6 +1451,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisansınız **devre dışı bırakıldı**"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giấy phép của bạn đã bị **hủy kích hoạt**"
           }
         }
       }
@@ -1475,6 +1511,12 @@
             "state" : "translated",
             "value" : "Bu lisans **etkinleştirilemedi** ancak Mac Mouse Fix şu anda **ülkenizde ücretsiz**."
           }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giấy phép này **không thể kích hoạt** nhưng Mac Mouse Fix hiện đang **miễn phí tại quốc gia của bạn**."
+          }
         }
       }
     },
@@ -1527,6 +1569,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Lisans sunucusunda bir hata** oluştu\n\nHata mesajı:\n\n%@"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đã xảy ra **lỗi với máy chủ cấp phép**\n\nNội dung lỗi:\n\n%@"
           }
         }
       }
@@ -1581,6 +1629,12 @@
             "state" : "translated",
             "value" : "**İnternet bağlantısında bir sorun** var\n\nBilgisayarınızın çevrimiçi olduğundan ve güvenlik duvarlarının Mac Mouse Fix'in internete bağlanmasını engellemediğinden emin olun.\n\nBu sorunu çözmezse, [buradan](%@) benimle iletişime geçin."
           }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Có **vấn đề với kết nối internet**\n\nHãy đảm bảo máy tính của bạn đang trực tuyến và không có tường lửa nào chặn Mac Mouse Fix kết nối với internet.\n\nNếu vẫn không khắc phục được, hãy liên hệ với tôi [tại đây](%@)."
+          }
         }
       }
     },
@@ -1632,6 +1686,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Lisans sunucusunda bir sorun** var\n\nLütfen daha sonra tekrar deneyin.\n\nSorun devam ederse, [buradan](%@) benimle iletişime geçin."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Có **vấn đề với máy chủ cấp phép**\n\nVui lòng thử lại sau.\n\nNếu vấn đề vẫn tiếp diễn, hãy liên hệ với tôi [tại đây](%@)."
           }
         }
       }
@@ -1686,6 +1746,12 @@
             "state" : "translated",
             "value" : "**Bilinmeyen bir hata** oluştu:\n\n%@"
           }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đã xảy ra **lỗi không xác định**:\n\n%@"
+          }
         }
       }
     },
@@ -1739,6 +1805,12 @@
             "state" : "translated",
             "value" : "'**%@**' geçerli bir lisans anahtarı değil\n\nMac Mouse Fix anahtarınızı tam olarak aldığınız şekilde girdiğinizden emin olun."
           }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'**%@**' không phải là khóa giấy phép hợp lệ\n\nHãy đảm bảo bạn nhập khóa Mac Mouse Fix chính xác như bạn đã nhận được."
+          }
         }
       }
     },
@@ -1791,6 +1863,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisansınızın etkinleştirilmesi **bilinmeyen nedenlerle** başarısız oldu\n\n[Buradan](%@) bir **Hata Raporu** yazın lütfen"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kích hoạt giấy phép thất bại vì **lý do không xác định**\n\nVui lòng viết **Báo cáo lỗi** [tại đây](%@)"
           }
         }
       }
@@ -2407,6 +2485,12 @@
             "state" : "translated",
             "value" : "Ücretsiz gün **%1$d/%2$d**"
           }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ngày miễn phí **%1$d/%2$d**"
+          }
         }
       }
     },
@@ -2459,6 +2543,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ücretsiz günler sona erdi"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hết ngày miễn phí"
           }
         }
       }
@@ -2513,6 +2603,12 @@
             "state" : "translated",
             "value" : "Lisansı Etkinleştir"
           }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kích hoạt giấy phép"
+          }
         }
       }
     },
@@ -2565,6 +2661,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Merhaba! Mac Mouse Fix'i **%1$d gündür** kullanıyorsunuz. Umarım keyif alıyorsunuzdur!\n\nMac Mouse Fix'i kullanmaya devam etmek istiyorsanız, [şimdi satın alabilirsiniz](%2$@)."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xin chào! Bạn đã sử dụng Mac Mouse Fix được **%1$d ngày** rồi. Hy vọng bạn đang hài lòng với nó!\n\nNếu bạn muốn tiếp tục sử dụng Mac Mouse Fix, bạn có thể [mua ngay](%2$@)."
           }
         }
       }

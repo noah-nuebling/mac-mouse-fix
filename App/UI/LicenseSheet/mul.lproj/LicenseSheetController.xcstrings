@@ -77,6 +77,12 @@
             "state" : "translated",
             "value" : "Lisans Anahtarınızı Girin"
           }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nhập khóa giấy phép của bạn"
+          }
         }
       }
     }
