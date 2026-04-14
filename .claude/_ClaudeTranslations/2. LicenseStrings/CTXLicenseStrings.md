@@ -127,3 +127,10 @@ Korean:
             (Mirrors German guidance about using 'deine App' over 'die App' here)
     Desired translation: Use '버그 제보' for 'Bug Report'
         Explanation: Short, natural, what human translator chose
+
+Simplified Chinese:
+    Desired translation: Use '你的应用**已使用此密钥激活**' for 'Your app is **already licensed** with this key' (license-toast.already-active)
+        Explanation: 
+            We don't like including extra information in the emphasis (使用此密钥 = "with this key") since that may lower scannability,
+            but splitting to '你的应用**已**使用此密钥**激活**' feels grammatically awkward because 已 naturally binds to the verb immediately following it (使用), not to 激活 at the end.
+            (I'm not sure this is the right tradeoff, but let's roll with it for now.)

@@ -96,6 +96,12 @@
             "value" : "輸入你的授權金鑰"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输入你的许可证密钥"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",

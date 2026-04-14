@@ -1176,6 +1176,12 @@
             "value" : "啟用授權"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "激活许可证"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1251,6 +1257,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "停用授權"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停用许可证"
           }
         },
         "zh-Hant" : {
@@ -1330,6 +1342,12 @@
             "value" : "你的授權已**啟用**！🎉"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的许可证已**激活**！🎉"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1405,6 +1423,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "此授權已啟用 **%2$d** 次。上限為 **%3$d** 次。\n\n因此，此授權已被作廢。這是為了防止盜版。如果你有其他原因需要這麼多次啟用，造成不便還請見諒。\n\n只需[聯絡我](%1$@)，我會提供你新的授權！感謝你的理解。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此许可证已被激活 **%2$d** 次，最大激活次数为 **%3$d** 次。\n\n因此，该许可证已被作废。这是为了防止盗版。如果你是因为其他原因需要多次激活，很抱歉给你带来不便。\n\n只需[联系我](%1$@)，我会为你提供一个新的许可证！感谢你的理解。"
           }
         },
         "zh-Hant" : {
@@ -1484,6 +1508,12 @@
             "value" : "你的應用程式**已使用此金鑰授權**"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的应用**已使用此密钥激活**"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1559,6 +1589,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你的授權已**停用**"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的许可证已**停用**"
           }
         },
         "zh-Hant" : {
@@ -1638,6 +1674,12 @@
             "value" : "此授權**無法啟用**，但 Mac Mouse Fix 目前在**你所在的國家可以免費使用**。"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此许可证**无法激活**，但 Mac Mouse Fix 目前**在你所在的国家/地区免费**。"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1713,6 +1755,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**授權伺服器發生錯誤**\n\n錯誤訊息：\n\n%@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**许可证服务器出错**\n\n错误信息：\n\n%@"
           }
         },
         "zh-Hant" : {
@@ -1792,6 +1840,12 @@
             "value" : "**網絡連線有問題**\n\n請確保你的電腦已連線，且防火牆沒有阻擋 Mac Mouse Fix 連線。\n\n如果問題仍然存在，請[在這裏](%@)聯絡我。"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**网络连接出现问题**\n\n请确保你的电脑已联网，且没有防火墙阻止 Mac Mouse Fix 连接到互联网。\n\n如果问题仍未解决，请[点此联系我](%@)。"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1866,6 +1920,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**授權伺服器有問題**\n\n請稍後再試。\n\n如果問題持續，請[在這裏](%@)聯絡我。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**许可证服务器出现问题**\n\n请稍后重试。\n\n如果问题持续存在，请[点此联系我](%@)。"
           }
         },
         "zh-Hant" : {
@@ -1945,6 +2005,12 @@
             "value" : "發生**未知錯誤**：\n\n%@"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发生**未知错误**：\n\n%@"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2022,6 +2088,12 @@
             "value" : "「**%@**」不是有效的授權金鑰\n\n請確保輸入的是你收到的 Mac Mouse Fix 金鑰，並且沒有輸入錯誤。"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"**%@**\"不是有效的许可证密钥\n\n请确保你输入的 Mac Mouse Fix 密钥与收到的完全一致。"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2097,6 +2169,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "授權啟用因**不明原因**失敗\n\n請[在這裏](%@)撰寫**錯誤報告**"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "许可证激活因**未知原因**失败\n\n请在[这里](%@)提交**错误报告**"
           }
         },
         "zh-Hant" : {
@@ -2738,6 +2816,12 @@
             "value" : "免費日數 **%1$d/%2$d**"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "免费天数 **%1$d/%2$d**"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2813,6 +2897,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "免費日數已用完"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "免费天数已用完"
           }
         },
         "zh-Hant" : {
@@ -2892,6 +2982,12 @@
             "value" : "啟用授權"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "激活许可证"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2967,6 +3063,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你好！你已經使用 Mac Mouse Fix **%1$d 日**了。希望你用得開心！\n\n如果想繼續使用 Mac Mouse Fix，可以[立即購買](%2$@)。"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你好！你已经使用 Mac Mouse Fix **%1$d 天**了。希望你用得开心！\n\n如果你想继续使用 Mac Mouse Fix，可以[立即购买](%2$@)。"
           }
         },
         "zh-Hant" : {
