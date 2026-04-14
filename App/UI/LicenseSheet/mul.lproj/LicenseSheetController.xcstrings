@@ -60,6 +60,12 @@
             "value" : "Entrez votre clé de licence"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "라이선스 키를 입력하세요"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",

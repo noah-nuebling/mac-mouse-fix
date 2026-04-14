@@ -38,7 +38,7 @@ Languages to work on (Do human-backed first)          (Based on SCRTriggerString
 
       East Asian
       - [x] tr            (human-backed)
-      - [ ] ko            (human-backed)
+      - [x] ko            (human-backed)
       - [ ] hu
       - [ ] ja
 

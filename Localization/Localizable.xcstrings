@@ -1140,6 +1140,12 @@
             "value" : "Activer la licence"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "라이선스 활성화"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1197,6 +1203,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Désactiver la licence"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "라이선스 비활성화"
           }
         },
         "pt-BR" : {
@@ -1258,6 +1270,12 @@
             "value" : "Votre licence a été **activée** ! 🎉"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "라이선스가 **활성화**되었습니다! 🎉"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1315,6 +1333,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cette licence a été activée **%2$d** fois. Le maximum est de **%3$d**.\n\nEn raison de cela, la licence a été invalidée. C'est pour prévenir le piratage. Si vous avez d'autres raisons d'avoir activé la licence autant de fois, je m'excuse pour le désagrément.\n\nContactez-moi simplement [ici](%1$@) et je vous fournirai une nouvelle licence ! Merci pour votre compréhension."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 라이선스는 **%2$d**회 활성화되었습니다. 최대 횟수는 **%3$d**회입니다.\n\n이로 인해 라이선스가 무효화되었습니다. 이는 불법 복제를 방지하기 위함입니다. 이렇게 여러 번 활성화한 다른 이유가 있다면, 불편을 끼쳐 죄송합니다.\n\n[연락](%1$@)해 주시면 새 라이선스를 제공해 드리겠습니다! 이해해 주셔서 감사합니다."
           }
         },
         "pt-BR" : {
@@ -1376,6 +1400,12 @@
             "value" : "Votre app est **déjà licenciée** avec cette clé"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 앱은 이 키로 **이미 라이선스가 활성화**되어 있습니다"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1433,6 +1463,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Votre licence a été **désactivée**"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "라이선스가 **비활성화**되었습니다"
           }
         },
         "pt-BR" : {
@@ -1494,6 +1530,12 @@
             "value" : "Cette licence **n'a pas pu être activée**, mais Mac Mouse Fix est actuellement **gratuit dans votre pays**."
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 라이선스는 **활성화할 수 없지만** Mac Mouse Fix는 현재 **귀하의 국가에서 무료**입니다."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1551,6 +1593,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Une **erreur avec le serveur de licences** s'est produite\n\nMessage d'erreur :\n\n%@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**라이선스 서버 오류**가 발생했습니다\n\n오류 메시지:\n\n%@"
           }
         },
         "pt-BR" : {
@@ -1612,6 +1660,12 @@
             "value" : "Il y a un **problème avec la connexion internet**\n\nAssurez-vous que votre ordinateur est en ligne et qu'aucun pare-feu ne bloque Mac Mouse Fix pour se connecter à internet.\n\nSi cela ne résout pas le problème, contactez-moi [ici](%@)."
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**인터넷 연결에 문제**가 있습니다\n\n컴퓨터가 온라인 상태인지, 방화벽이 Mac Mouse Fix의 인터넷 연결을 차단하고 있지 않은지 확인해 주세요.\n\n문제가 해결되지 않으면 [여기](%@)로 연락해 주세요."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1668,6 +1722,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Il y a un **problème avec le serveur de licences**\n\nVeuillez réessayer plus tard.\n\nSi le problème persiste, contactez-moi [ici](%@)."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**라이선스 서버에 문제**가 있습니다\n\n나중에 다시 시도해 주세요.\n\n문제가 지속되면 [여기](%@)로 연락해 주세요."
           }
         },
         "pt-BR" : {
@@ -1729,6 +1789,12 @@
             "value" : "Une **erreur inconnue** s'est produite :\n\n%@"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**알 수 없는 오류**가 발생했습니다:\n\n%@"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1788,6 +1854,12 @@
             "value" : "« **%@** » n'est pas une clé de licence valide\n\nVeillez à saisir votre clé Mac Mouse Fix exactement telle que vous l'avez reçue."
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'**%@**'은(는) 유효한 라이선스 키가 아닙니다\n\nMac Mouse Fix 키를 받은 그대로 정확히 입력했는지 확인해 주세요."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1845,6 +1917,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "L'activation de votre licence a échoué pour des **raisons inconnues**\n\nVeuillez écrire un **rapport de bug** [ici](%@)"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**알 수 없는 이유**로 라이선스 활성화에 실패했습니다\n\n[여기](%@)에서 **버그 제보**를 해주세요"
           }
         },
         "pt-BR" : {
@@ -2468,6 +2546,12 @@
             "value" : "Jour offert **%1$d/%2$d**"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "무료 사용일 **%1$d/%2$d**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2525,6 +2609,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Les jours offerts sont écoulés"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "무료 사용 기간이 끝났습니다"
           }
         },
         "pt-BR" : {
@@ -2586,6 +2676,12 @@
             "value" : "Activer une licence"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "라이선스 활성화"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2643,6 +2739,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bonjour ! Vous utilisez Mac Mouse Fix depuis **%1$d jours** maintenant. J'espère que vous l'appréciez !\n\nSi vous souhaitez continuer à utiliser Mac Mouse Fix, vous pouvez [l'acheter maintenant](%2$@)."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "안녕하세요! Mac Mouse Fix를 **%1$d일** 동안 사용하고 계시네요. 만족하셨으면 좋겠습니다!\n\n계속 Mac Mouse Fix를 사용하시려면 [지금 구매](%2$@)하실 수 있습니다."
           }
         },
         "pt-BR" : {

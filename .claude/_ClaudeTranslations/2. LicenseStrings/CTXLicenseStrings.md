@@ -36,7 +36,7 @@ Examples:
 
 Tips:
     - Use single quotes for `--value`. Double quotes can corrupt format specifiers.
-        - If you need to output literal single quotes, use the standard '\'' trick.
+        - If you need to output literal single quotes, use the standard '\'' trick or $''.
     - Replace `LOCALE` with your target locale, e.g., `de`, `fr`, `zh-Hans`
     - Use `--help` after mfstrings or one of its subcommands (like 'inspect') to learn more.
 
@@ -117,3 +117,10 @@ Turkish
         Explanation: Both seem good for Turkish. But this is what a previous human translator chose, so we defer to that.
     Desired translation: Use 'keyif almak' for 'enjoying' in trial-notif.body (over 'beğenmek')
         Explanation: Claude says 'Keyif almak' is warmer than 'beğenmek'. This is what a previous human translator chose, so we defer to that.
+
+Korean:
+    Desired translation: Include topic marker '이 앱은' (this app) in license-toast.already-active
+        Explanation: Without something like 'this' or 'your', the message is ambiguous – It could imply the activation failed because the license has been used before
+            (Mirrors German guidance about using 'deine App' over 'die App' here)
+    Desired translation: Use '버그 제보' for 'Bug Report'
+        Explanation: Short, natural, what human translator chose
