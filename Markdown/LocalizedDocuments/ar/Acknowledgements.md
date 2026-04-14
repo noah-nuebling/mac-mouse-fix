@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **أبريل 2026**
 
+- 🇱🇰&nbsp;Sisira&nbsp;Jayawardena - "My MacBook's battery & MX Master 3S thank you very much for this! -@sizijay"
 - 🇺🇸&nbsp;Alejandro&nbsp;Barreto - "So worth it. Thank you for making quality software!"
 - 🇺🇸&nbsp;Dustin&nbsp;Schreiber - "I can't use Logi Options due to a bug that breaks scrolling when using the magnifier, this is the only software that let's me tweak my mouse and not break scrolling."
 - 🇳🇴&nbsp;Christoffer&nbsp;Winterkvist
