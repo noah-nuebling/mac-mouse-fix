@@ -111,3 +111,15 @@ Removed from CTXLicenseStrings.md
         Desired translation: Use 3rd person possessive suffixes for 'free day' ('Ücretsiz günü'/'Ücretsiz günleri')
             Explanation: This is what a previous human translator chose, so we defer to that.
             Removal reason: Apparently a subtle grammatical case implying "*your* license key" based on context. Claude didn't follow this, used full formal second person possessive forms instead. Added long unrequested second person possessive elsewhere, too I think. Review Claude took forever to explain what is even going on here and contradicted itself/flip flopped based on my questions. And it's just a minor stylistic thing - Waste of time.
+
+---
+
+(Yet inconclusive) observations on formality
+    - German    - macOS: Informal (du), Us: Informal (du)
+    - Czech     - macOS: Formal (vy),   Us: Informal (ty)
+    - Turkish   - macOS: Formal (siz),  Us: Formal (siz)
+    - French    - macOS: Formal (vous), Us: Formal (vous)
+-> Thoughts behind this: 
+    - We want to use what feels common/natural for software addressing the user.
+    - But the tone of the app is a bit more casual than macOS, I think. 
+    - In some cases we deferred to what the human translator chose.
