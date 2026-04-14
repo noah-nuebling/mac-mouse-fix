@@ -111,3 +111,9 @@ Spanish
 Czech
     Desired translation: Use informal 'ty' (over formal 'vy')
         Explanation: 'ty' feels appropriate for an indie app. (This differs by language, e.g. in French we're using 'vous')
+
+Turkish
+    Desired translation: Use formal address 'siz' (over informal 'sen')
+        Explanation: Both seem good for Turkish. But this is what a previous human translator chose, so we defer to that.
+    Desired translation: Use 'keyif almak' for 'enjoying' in trial-notif.body (over 'beğenmek')
+        Explanation: Claude says 'Keyif almak' is warmer than 'beğenmek'. This is what a previous human translator chose, so we defer to that.

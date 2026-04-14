@@ -1,4 +1,9 @@
 
+TODO: 
+    - [ ] [Apr 13 2026] One of the recent locales had a string with \ or ' corruption at the start. (Looked like Claude messed up the '\'' trick) I forgot to address it.
+
+---
+
 Batch of strings to translate:
     trial-notif.*
     trial-counter.*
@@ -32,7 +37,7 @@ Languages to work on (Do human-backed first)          (Based on SCRTriggerString
       - [ ] uk
 
       East Asian
-      - [ ] tr            (human-backed)
+      - [x] tr            (human-backed)
       - [ ] ko            (human-backed)
       - [ ] hu
       - [ ] ja
@@ -60,7 +65,7 @@ Generating CTXLicenseStrings.md
 Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
 
     Main prompt
-        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Russian (ru)
+        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Turkish (tr)
 
         Before translating each batch of strings (try to keep the batches around 5 or smaller), to help you keep the relevant constraints in mind, list all the string keys you've included in the batch, and then write out all the constraints that are relevant for those strings.
 
@@ -86,7 +91,7 @@ Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
 
             ./run mfstrings inspect --sortcol key --pretty --diff-highlight 72ca917f9,472bb34 --grep 'trial-notif|trial-counter|license-button|license-toast|JJv-GH-7io' --cols fileid,key,en,LOCALE
 
-            See CTXLicenseStrings.md for the full context of which strings we were translating and what guidance we gave to the translator.
+            See CTXLicenseStrings.md for the full context of which strings we we're translating and what guidance we gave to the translator.
 
             Please check for any regressions or interesting differences. Please explain the differences to me to help me gain an intuitive understanding. (I don't speak Russian)
             
@@ -96,3 +101,13 @@ Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
 
 Review 
     ./run mfstrings inspect --sortcol key --pretty --diff-highlight 72ca917f9,472bb34 --grep 'trial-notif|trial-counter|license-button|license-toast|JJv-GH-7io' --cols fileid,key,en,LOCALE
+
+
+---
+
+Removed from CTXLicenseStrings.md
+
+    Turkish
+        Desired translation: Use 3rd person possessive suffixes for 'free day' ('Ücretsiz günü'/'Ücretsiz günleri')
+            Explanation: This is what a previous human translator chose, so we defer to that.
+            Removal reason: Apparently a subtle grammatical case implying "*your* license key" based on context. Claude didn't follow this, used full formal second person possessive forms instead. Added long unrequested second person possessive elsewhere, too I think. Review Claude took forever to explain what is even going on here and contradicted itself/flip flopped based on my questions. And it's just a minor stylistic thing - Waste of time.

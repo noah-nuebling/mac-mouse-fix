@@ -71,6 +71,12 @@
             "state" : "translated",
             "value" : "Введи лицензионный ключ"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisans Anahtarınızı Girin"
+          }
         }
       }
     }
