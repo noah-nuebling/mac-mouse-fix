@@ -89,6 +89,12 @@
             "state" : "translated",
             "value" : "Nhập khóa giấy phép của bạn"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "輸入你的授權金鑰"
+          }
         }
       }
     }

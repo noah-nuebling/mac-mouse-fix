@@ -43,14 +43,17 @@ Tips:
 **Constraints and Guidance**
 
 Quotes
-    Guidance:
-        - Use what feels most appropriate for your specific context/language.
-        - If the decision seems arbitrary – tend towards the simplest option, and keep it consistent inside the language. (Like we're consistently using single quotes over double quotes in English - see below)
-    Explanation / Background:
-        In English, we use single quotes (') everywhere. 
-            Before, I randomly mixed single quotes and double quotes, because my brain doesn't really differentiate between them. Eventually, I standardized on single quotes since they are a little simpler.
-        In German, we don't like to use special 'smart quotes' characters, since normal ascii quotes work fine and are easier to work with – I also find it 'simpler' or 'more honest' in a digital world to just use characters that can be directly typed on a (native-speaker's) keyboard, without smart-substitution. People will also be guaranteed to be familiar with the characters that their keyboard directly outputs – even if it doesn't perfectly resemble the conventions of hand-written text.
-            (Might have to revisit this decisions for languages that rely on IMEs like Japanese)
+    Guidance: Use the simplest option that feels natural.
+    Examples: 
+        English -> we use single quotes (') everywhere. 
+            Explanation: Feels semantically identical to me and slightly simpler than double quotes ("), so we standardized on that.
+        German -> we use single quotes (') everywhere
+            Explanation: Feels simpler, still familiar vs the standard „bottom-opening/top-closing“ quotes
+                May signal slight unprofessionalism, but I really dislike 'smart substitution' – I think it preserves a convention from hand writing that serves no more purpose, and is harder to work with vs using characters that keyboard can directly output. (Breaks grepping, only works in some text fields).
+        French -> we use standard « guillements »
+            Explanation: In contrast to German „bottom-opening/top-closing“, these can be typed directly on a (French speaker's) keyboard without smart substitution. They also have a very different shape, so 'simplifying' to single quotes feels less appropriate.
+        Traditional Chinese -> We use standard 「corner brackets」
+            Explanation: CJK languages rely on IME's anyways so the anti-smart-substitution argument doesn't apply. 「corner brackets」 also have a very different shape (and width), so 'simplifying' to single quotes feels less appropriate.
 
 **Desired translations**
 

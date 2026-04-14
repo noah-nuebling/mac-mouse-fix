@@ -1169,6 +1169,12 @@
             "state" : "translated",
             "value" : "Kích hoạt giấy phép"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "啟用授權"
+          }
         }
       }
     },
@@ -1233,6 +1239,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hủy kích hoạt giấy phép"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停用授權"
           }
         }
       }
@@ -1299,6 +1311,12 @@
             "state" : "translated",
             "value" : "Giấy phép của bạn đã được **kích hoạt**! 🎉"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的授權已**啟用**！🎉"
+          }
         }
       }
     },
@@ -1363,6 +1381,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Giấy phép này đã được kích hoạt **%2$d** lần. Số lần tối đa là **%3$d**.\n\nVì vậy, giấy phép đã bị vô hiệu hóa. Điều này nhằm ngăn chặn việc sử dụng trái phép. Nếu bạn có lý do khác để kích hoạt giấy phép nhiều lần như vậy, xin thứ lỗi vì sự bất tiện này.\n\nChỉ cần [liên hệ với tôi](%1$@) và tôi sẽ cung cấp cho bạn giấy phép mới! Cảm ơn bạn đã thông cảm."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此授權已啟用 **%2$d** 次。上限為 **%3$d** 次。\n\n因此，此授權已被作廢。這是為了防止盜版。如果你有其他原因需要這麼多次啟用，造成不便還請見諒。\n\n只需[聯絡我](%1$@)，我會提供你新的授權！感謝你的理解。"
           }
         }
       }
@@ -1429,6 +1453,12 @@
             "state" : "translated",
             "value" : "Ứng dụng của bạn **đã được cấp phép** với khóa này"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的 App **已使用此金鑰授權**"
+          }
         }
       }
     },
@@ -1493,6 +1523,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Giấy phép của bạn đã bị **hủy kích hoạt**"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的授權已**停用**"
           }
         }
       }
@@ -1559,6 +1595,12 @@
             "state" : "translated",
             "value" : "Giấy phép này **không thể kích hoạt** nhưng Mac Mouse Fix hiện đang **miễn phí tại quốc gia của bạn**."
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此授權**無法啟用**，但 Mac Mouse Fix 目前在**你所在的國家可以免費使用**。"
+          }
         }
       }
     },
@@ -1623,6 +1665,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Đã xảy ra **lỗi với máy chủ cấp phép**\n\nNội dung lỗi:\n\n%@"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**授權伺服器發生錯誤**\n\n錯誤訊息：\n\n%@"
           }
         }
       }
@@ -1689,6 +1737,12 @@
             "state" : "translated",
             "value" : "Có **vấn đề với kết nối internet**\n\nHãy đảm bảo máy tính của bạn đang trực tuyến và không có tường lửa nào chặn Mac Mouse Fix kết nối với internet.\n\nNếu vẫn không khắc phục được, hãy liên hệ với tôi [tại đây](%@)."
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**網路連線有問題**\n\n請確認你的電腦已連線，且防火牆沒有阻擋 Mac Mouse Fix 連線。\n\n如果問題仍然存在，請[在這裡](%@)聯絡我。"
+          }
         }
       }
     },
@@ -1752,6 +1806,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Có **vấn đề với máy chủ cấp phép**\n\nVui lòng thử lại sau.\n\nNếu vấn đề vẫn tiếp diễn, hãy liên hệ với tôi [tại đây](%@)."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**授權伺服器有問題**\n\n請稍後再試。\n\n如果問題持續，請[在這裡](%@)聯絡我。"
           }
         }
       }
@@ -1818,6 +1878,12 @@
             "state" : "translated",
             "value" : "Đã xảy ra **lỗi không xác định**:\n\n%@"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "發生**未知錯誤**：\n\n%@"
+          }
         }
       }
     },
@@ -1883,6 +1949,12 @@
             "state" : "translated",
             "value" : "'**%@**' không phải là khóa giấy phép hợp lệ\n\nHãy đảm bảo bạn nhập khóa Mac Mouse Fix chính xác như bạn đã nhận được."
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「**%@**」不是有效的授權金鑰\n\n請確認你輸入的是收到的 Mac Mouse Fix 金鑰，並且沒有輸入錯誤。"
+          }
         }
       }
     },
@@ -1947,6 +2019,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kích hoạt giấy phép thất bại vì **lý do không xác định**\n\nVui lòng viết **Báo cáo lỗi** [tại đây](%@)"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "授權啟用因**不明原因**失敗\n\n請[在這裡](%@)撰寫**錯誤回報**"
           }
         }
       }
@@ -2575,6 +2653,12 @@
             "state" : "translated",
             "value" : "Ngày miễn phí **%1$d/%2$d**"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "免費天數 **%1$d/%2$d**"
+          }
         }
       }
     },
@@ -2639,6 +2723,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hết ngày miễn phí"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "免費天數已用完"
           }
         }
       }
@@ -2705,6 +2795,12 @@
             "state" : "translated",
             "value" : "Kích hoạt giấy phép"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "啟用授權"
+          }
         }
       }
     },
@@ -2769,6 +2865,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xin chào! Bạn đã sử dụng Mac Mouse Fix được **%1$d ngày** rồi. Hy vọng bạn đang hài lòng với nó!\n\nNếu bạn muốn tiếp tục sử dụng Mac Mouse Fix, bạn có thể [mua ngay](%2$@)."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "嗨！你已經使用 Mac Mouse Fix **%1$d 天**了。希望你用得開心！\n\n如果想繼續使用 Mac Mouse Fix，可以[立即購買](%2$@)。"
           }
         }
       }
