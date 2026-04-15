@@ -30,6 +30,12 @@
       "comment" : "Class = \"NSTextFieldCell\"; placeholderString = \"Enter Your License Key\"; ObjectID = \"JJv-GH-7io\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Introdueix la teva clau de llicència"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",

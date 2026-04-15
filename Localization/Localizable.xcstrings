@@ -1110,6 +1110,12 @@
     "license-button.activate" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar llicència"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1199,6 +1205,12 @@
     "license-button.deactivate" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desactivar llicència"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1288,6 +1300,12 @@
     "license-toast.activate" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La teva llicència ha estat **activada**! 🎉"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1377,6 +1395,12 @@
     "license-toast.activation-overload" : {
       "comment" : "Note: \"%2$d\", \"%3$d\", and \"%1$@\" are so-called \"C Format Specifers\". They will be replaced by numbers or text when the program runs. Make sure to type the format specifiers exactly like in the English version so that the text-replacement-code works correctly.",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aquesta llicència s'ha activat **%2$d** vegades. El màxim és **%3$d**.\n\nPer aquest motiu, la llicència ha estat invalidada. Això és per prevenir la pirateria. Si tens altres raons per haver activat la llicència tantes vegades, disculpa les molèsties.\n\nNomés [contacta'm](%1$@) i et proporcionaré una nova llicència! Gràcies per la teva comprensió."
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1466,6 +1490,12 @@
     "license-toast.already-active" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La teva app **ja està llicenciada** amb aquesta clau"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1555,6 +1585,12 @@
     "license-toast.deactivate" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La teva llicència ha estat **desactivada**"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1644,6 +1680,12 @@
     "license-toast.free-country" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aquesta llicència **no s'ha pogut activar**, però Mac Mouse Fix actualment és **gratuït al teu país**."
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1733,6 +1775,12 @@
     "license-toast.gumroad-error" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ha ocorregut un **error amb el servidor de llicències**\n\nDiu:\n\n%@"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1822,6 +1870,12 @@
     "license-toast.no-internet" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hi ha un **problema amb la connexió a Internet**\n\nAssegura't que el teu ordinador estigui connectat i que cap tallafoc estigui bloquejant la connexió de Mac Mouse Fix a Internet.\n\nSi això no resol el problema, contacta'm [aquí](%@)."
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1910,6 +1964,12 @@
     },
     "license-toast.server-response-invalid" : {
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hi ha un **problema amb el servidor de llicències**\n\nSi us plau, torna-ho a provar més tard.\n\nSi el problema persisteix, contacta'm [aquí](%@)."
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1999,6 +2059,12 @@
     "license-toast.unknown-error" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ha ocorregut un **error desconegut**:\n\n%@"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2088,6 +2154,12 @@
     "license-toast.unknown-key" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'**%@**' no és una clau de llicència vàlida\n\nAssegura't d'introduir la teva clau de Mac Mouse Fix exactament tal com la vas rebre."
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2177,6 +2249,12 @@
     "license-toast.unknown-reason" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'activació de la teva llicència ha fallat per **raons desconegudes**\n\nSi us plau, escriu un **informe d'error** [aquí](%@)"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2828,6 +2906,12 @@
     "trial-counter.active" : {
       "comment" : "Note: You can use whatever formatting looks natural in your language, such as \"x of y\" instead of \"x/y\".",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dia gratuït **%1$d/%2$d**"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2917,6 +3001,12 @@
     "trial-counter.expired" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S'han acabat els dies gratuïts"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3006,6 +3096,12 @@
     "trial-notif.activate-license-button" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar llicència"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3095,6 +3191,12 @@
     "trial-notif.body" : {
       "comment" : "",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hola! Fa **%1$d dies** que fas servir Mac Mouse Fix. Espero que n'estiguis gaudint!\n\nSi vols continuar usant Mac Mouse Fix, pots [comprar-lo ara](%2$@)."
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
