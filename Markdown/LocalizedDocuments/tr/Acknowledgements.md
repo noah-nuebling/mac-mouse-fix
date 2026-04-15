@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Nisan 2026**
 
+- 🇺🇸&nbsp;Vadim&nbsp;Matchtakov
 - 🇺🇸&nbsp;Idan&nbsp;Marcus
 - 🇱🇰&nbsp;Sisira&nbsp;Jayawardena - "My MacBook's battery & MX Master 3S thank you very much for this! -@sizijay"
 - 🇺🇸&nbsp;Alejandro&nbsp;Barreto - "So worth it. Thank you for making quality software!"

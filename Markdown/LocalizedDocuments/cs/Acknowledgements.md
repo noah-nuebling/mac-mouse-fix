@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **duben 2026**
 
+- 🇺🇸&nbsp;Vadim&nbsp;Matchtakov
 - 🇺🇸&nbsp;Idan&nbsp;Marcus
 - 🇱🇰&nbsp;Sisira&nbsp;Jayawardena - "My MacBook's battery & MX Master 3S thank you very much for this! -@sizijay"
 - 🇺🇸&nbsp;Alejandro&nbsp;Barreto - "So worth it. Thank you for making quality software!"
