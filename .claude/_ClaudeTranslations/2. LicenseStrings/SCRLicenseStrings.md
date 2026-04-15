@@ -2,6 +2,8 @@
 TODO: 
     - [ ] [Apr 13 2026] One of the recent locales had a string with \ or ' corruption at the start. (Looked like Claude messed up the '\'' trick) I forgot to address it.
     - [ ] [Apr 14 2026] Added some spaces in Chinese vs human translations – forgot to review that.
+    - [ ] [Apr 15 2026] Check all languages for captialization mistakes
+        - I noticed pt-BR has some random upper case (Relatório de **B**ug)
 ---
 
 Batch of strings to translate:
@@ -22,7 +24,7 @@ Languages to work on (Do human-backed first)          (Based on SCRTriggerString
       - [x] fr            (human-backed)
       - [x] pt-BR         (human-backed)
       - [x] es            (human-backed)
-      - [ ] pt-PT
+      - [x] pt-PT
       - [ ] ca
       - [ ] it
       - [ ] ro
@@ -65,7 +67,7 @@ Generating CTXLicenseStrings.md
 Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
 
     Main prompt
-        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Simplified Chinese (zh-Hans)
+        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Portuguese (pt-PT)
 
         Before translating each batch of strings (try to keep the batches around 5 or smaller), to help you keep the relevant constraints in mind, list all the string keys you've included in the batch, and then write out all the constraints that are relevant for those strings.
 
@@ -73,12 +75,12 @@ Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
         Do not read the files next to CTXLicenseStrings.md
 
     Review prompts (Fresh Chat)
-        1. 
+        1. (Human-backed languages)
             Main prompt: 
                 Hi there Claude! I've been working on doing some translations with ChatGPT. I'm starting with languages where we already had human translations so we can validate the translations and improve
                 the context for the agent (for the other languages)
 
-                Could you check the Simplified Chinese (zh-Hans) translations?
+                Could you check the Portuguese (pt-PT) translations?
 
                 This command will let you see the human and the generated translations side-by-side: (Some of the bigger differences are because the human translations were a bit outdated)
 
@@ -86,16 +88,33 @@ Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
 
                 See CTXLicenseStrings.md for the full context of which strings we we're translating and what guidance we gave to the translator.
 
-                Please check for any regressions or interesting differences. Please explain the differences to me to help me gain an intuitive understanding. (I don't speak Chinese)
+                Please check for any regressions or interesting differences. Please explain the differences to me to help me gain an intuitive understanding. (I don't speak Portuguese)
                 
-                [
+            Amendment 1: (For early languages, if we want to understand every change ourselves.)
                 ... Actually, I'll just show you all the strings, please just read CTXLicenseStrings.md and then we'll go through the strings one by one, ok?
-                ]
 
             Followup 1:
                 Thanks for the review!
 
                 Do you notice anything that could be considered a regression?
+
+        2. (non-human-backed languages)
+            Main prompt: 
+                Hi there Claude! I've been working on doing some translations with ChatGPT. 
+
+                Let's review the Portuguese (pt-PT) translations.
+
+                This command will let you see the translations side-by-side with the Brazilian Portuguese (pt-BR) translations (Which are the closest existing translations):
+
+                ./run mfstrings inspect --sortcol key --pretty --grep 'trial-notif|trial-counter|license-button|license-toast|JJv-GH-7io' --cols fileid,key,en,LOCALE1,LOCALE2
+
+                Consistency between the different locales is not important, the idea behind the cross-comparison is to help us analyze and notice things to improve (In either locale – The reference locale has been validated against (outdated) human translations, but could still have potential for improvement)
+
+                See CTXLicenseStrings.md for the full context of which strings we're translating and what guidance we gave to the translator.
+
+                Please compare the translations and analyze them for any mistakes or other improvements. Please explain the problems and differences to me to help me gain an intuitive understanding. (I don't speak Portuguese)
+
+                Do not read / invoke translation-review/SKILL.md
 
     Followups (Not using these anymore.)
         - Thanks Claude! I notice some things that could be improved. Could you go over the strings once more?

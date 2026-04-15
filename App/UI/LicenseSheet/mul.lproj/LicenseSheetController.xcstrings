@@ -72,6 +72,12 @@
             "value" : "Insira sua chave de licença"
           }
         },
+        "pt-PT" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Introduz a tua chave de licença"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",

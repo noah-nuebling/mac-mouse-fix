@@ -134,3 +134,13 @@ Simplified Chinese:
             We don't like including extra information in the emphasis (使用此密钥 = "with this key") since that may lower scannability,
             but splitting to '你的应用**已**使用此密钥**激活**' feels grammatically awkward because 已 naturally binds to the verb immediately following it (使用), not to 激活 at the end.
             (I'm not sure this is the right tradeoff, but let's roll with it for now.)
+
+European Portuguese (pt-PT)
+    Desired translation: Use informal 'tu' address
+        Explanation: Seems appropriate for an indie app with a more casual voice
+    Desired translation: Avoid mesoclisis
+        Explanation: Mesoclisis sounds very formal/literary, clashing with informal 'tu' address
+    Desired translation: Use 'está' (not 'é') in '... Mac Mouse Fix está atualmente **gratuito no teu país**' (license-toast.free-country)
+        Explanation: atualmente implies a temporary condition clashing with 'é'
+    Desired translation: Use lower case
+        Explanation: The English original strings often use title case, but this is not a convention in Portuguese UI

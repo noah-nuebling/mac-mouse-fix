@@ -10,6 +10,7 @@ Human start here: (If you come back after a while and forgot context) [Apr 8 202
             - TODO: Distill the still-relevant bits from `PMTContextDebugging.md` and then move that file to Old/
         - Maybe grep through glossary yourself. (See glossary-research.md)
         - Use follow-up/review prompts from SCR*.md or PMT*.md file
+        - Uncertainty – Use a fresh Claude to translate/discuss isolated strings
         - Note mistakes/corrections/decisions under CTX*.md > Desired Translations
 
 File naming convention:
@@ -38,3 +39,8 @@ From the end of CTXTriggerStrings.md: (Moving it here to not accidentally throw 
     Note to self: None of Claude's translations into the other locales out of the human-translated ones (de, zh-Hans, ko, vi, cs, fr, pt-BR, ru, es, tr) had problems that I noticed. 
     NOTE2: All these translations were made before adding the 'Desired translations' so I don't know if Claude actually pays attention to them. 
 )
+
+**Ideas:** 
+    (Maybe for after `2. LicenseStrings`)
+        - There's a lot of randomness in the mistakes it makes. 
+            -> Maybe, we should run the human-backed/easy-to-review/earlier translations multiple times, to find all the **error-prone** things and add 'Desired translations:' for them, so we can have more confidence for the non-human-backed/hard-to-review/later translations.
