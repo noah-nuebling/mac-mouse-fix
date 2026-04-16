@@ -4,6 +4,7 @@ TODO:
     - [ ] [Apr 14 2026] Added some spaces in Chinese vs human translations – forgot to review that.
     - [ ] [Apr 15 2026] Check all languages for captialization mistakes
         - I noticed pt-BR has some random upper case (Relatório de **B**ug)
+    - [ ] [Apr 16 2026] AI often chose especially 'warm' tone for trial-notif.body (following Turkish translator, I think) – maybe that's annoying for a 'bad news, paywall' message like this? (Only part of the app that is not designed in user interest I think – because I have to eat somehow)
 ---
 
 Batch of strings to translate:
@@ -26,7 +27,7 @@ Languages to work on (Do human-backed first)          (Based on SCRTriggerString
       - [x] es            (human-backed)
       - [x] pt-PT
       - [x] ca
-      - [ ] it
+      - [x] it
       - [ ] ro
 
       Greek
@@ -67,7 +68,7 @@ Generating CTXLicenseStrings.md
 Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
 
     Main prompt
-        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Catalan (ca)
+        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Italian (it)
 
         Before translating each batch of strings (try to keep the batches around 5 or smaller), to help you keep the relevant constraints in mind, list all the string keys you've included in the batch, and then write out all the constraints that are relevant for those strings.
 
@@ -105,7 +106,7 @@ Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
                 Main prompt: (Comparison locale)
                     Hi there Claude! I've been working on doing some translations with ChatGPT. 
 
-                    Let's review the Catalan (ca) translations.
+                    Let's review the Italian (it) translations.
 
                     This command will let you see the translations side-by-side with the Spanish (es) translations (Which are the closest existing translations):
 
@@ -115,7 +116,7 @@ Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
 
                     See CTXLicenseStrings.md for the full context of which strings we're translating and what guidance we gave to the translator.
 
-                    Please compare the translations and analyze them for any mistakes or other improvements. Please explain the problems and differences to me to help me gain an intuitive understanding. (I don't speak Catalan)
+                    Please compare the translations and analyze them for any mistakes or other improvements. Please explain the problems and differences to me to help me gain an intuitive understanding. (I don't speak Italian)
 
                     Do not read / invoke translation-review/SKILL.md
             2. 

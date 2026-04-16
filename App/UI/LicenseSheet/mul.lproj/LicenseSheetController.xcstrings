@@ -66,6 +66,12 @@
             "value" : "Entrez votre clé de licence"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inserisci la tua chiave di licenza"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",

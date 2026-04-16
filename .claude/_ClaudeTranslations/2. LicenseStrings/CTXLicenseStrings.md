@@ -30,7 +30,7 @@ Use this to inspect and edit strings in the project.
 
 Examples:
     Inspect:
-        ./run mfstrings inspect --cols fileid,key,comment,en,LOCALE[,LOCALE2,...] --sortcol key | grep PATTERN
+        ./run mfstrings inspect --cols fileid,key,comment,en,LOCALE --sortcol key | grep PATTERN
     Edit:
         ./run mfstrings edit --path 'FILEID/KEY/LOCALE' --state 'translated' --value 'new text'
 
