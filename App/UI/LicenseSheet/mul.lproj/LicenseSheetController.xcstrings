@@ -114,6 +114,12 @@
             "value" : "Введи лицензионный ключ"
           }
         },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ange din licensnyckel"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",

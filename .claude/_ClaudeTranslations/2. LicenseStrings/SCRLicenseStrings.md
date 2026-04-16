@@ -67,7 +67,7 @@ Generating CTXLicenseStrings.md
 
 Prompt
     Main prompt
-        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Dutch (nl)
+        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Swedish (sv)
 
         Before translating each batch of strings (try to keep the batches around 5 or smaller), to help you keep the relevant constraints in mind, list all the string keys you've included in the batch, and then write out all the constraints that are relevant for those strings.
 
@@ -75,12 +75,12 @@ Prompt
 
         Do not read / invoke adding-translations/SKILL.md
         Do not read the files next to CTXLicenseStrings.md
-    
+            
     Review prompt (fresh chat)
 
         Hi there Claude! I've been working on doing some translations with ChatGPT. 
 
-        Let's review the Dutch (nl) translations.
+        Let's review the Swedish (sv) translations.
 
         This command will let you see the translations side-by-side with the German (de) translations (Which are the closest existing translations):
 
@@ -90,7 +90,7 @@ Prompt
 
         See .../CTXLicenseStrings.md for the full context of which strings we're translating and what guidance we gave to the translator.
 
-        Please compare the translations and analyze them for any mistakes or other improvements. Please explain the problems and differences to me to help me gain an intuitive understanding. (I don't speak Dutch)
+        Please compare the translations and analyze them for any mistakes or other improvements. Please explain the problems and differences to me to help me gain an intuitive understanding. (I don't speak Swedish)
 
         Do not read / invoke translation-review/SKILL.md
 
