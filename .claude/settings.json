@@ -8,6 +8,9 @@
     "_comment4": "Disable showing Claude recent commits at conversation start",
     "_comment5": "  Explanation: I worry that commit messages saying it did poor work or was being stupid will prime it negatively.",
     "_comment6": "    This apparently also disables commit / PR workflow instructions – good because we don't use those.",
-    "CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS": "1"
+    "CLAUDE_CODE_DISABLE_GIT_INSTRUCTIONS": "1",
+    "_comment7": "Disable file checkpointing (When pressing esc-esc)",
+    "_comment8": "  Explanation: Options show up randomly once in a blue moon and are then selected as default and then it deletes all my (manual) edits.",
+    "CLAUDE_CODE_DISABLE_FILE_CHECKPOINTING": "1"
   }
 }
