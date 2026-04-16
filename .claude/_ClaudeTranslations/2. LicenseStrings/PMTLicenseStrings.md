@@ -1,4 +1,4 @@
-Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
+Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)      (Moved here from SCRLicenseStrings.md after it got too long / too many variations.)
 
     Main prompt
         Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Romanian (ro)

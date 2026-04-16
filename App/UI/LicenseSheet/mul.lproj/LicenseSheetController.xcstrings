@@ -78,6 +78,12 @@
             "value" : "라이선스 키를 입력하세요"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voer je licentiesleutel in"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",

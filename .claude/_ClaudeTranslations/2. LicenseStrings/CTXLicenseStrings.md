@@ -144,3 +144,8 @@ European Portuguese (pt-PT)
         Explanation: atualmente implies a temporary condition clashing with 'é'
     Desired translation: Use lower case
         Explanation: The English original strings often use title case, but this is not a convention in Portuguese UI
+
+Dutch
+    Desired translation: Use 'hier' for link text (e.g., '[hier](%@) contact met me op') instead of linking separable verb parts
+        Explanation: Dutch has separable verbs like 'contact opnemen'. Linking just the separated parts (e.g., '[contact op]()') is a bit awkward since they don't form a self-contained phrase. Using 'hier' as the link text sidesteps the problem. 
+        (Sidenote: German also uses 'hier' in this way.)
