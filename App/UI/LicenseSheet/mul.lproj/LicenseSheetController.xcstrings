@@ -78,6 +78,12 @@
             "value" : "라이선스 키를 입력하세요"
           }
         },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wprowadź swój klucz licencyjny"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
