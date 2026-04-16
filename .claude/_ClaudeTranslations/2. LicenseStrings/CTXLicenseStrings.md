@@ -111,6 +111,7 @@ Spanish
         Explanation: 'Dice:' is short and simple. Unlike German, Spanish can translate 'It says:' naturally.
     Desired translation: Use '**ya está licenciada**' for '**already licensed**' in license-toast.already-active
         Explanation: The emphasis contains the same words as in English making it form an equivalent 'gist'. (See 'On emphasis:' above)
+
 Czech
     Desired translation: Use informal 'ty' (over formal 'vy')
         Explanation: 'ty' feels appropriate for an indie app. (This differs by language, e.g. in French we're using 'vous')
@@ -156,3 +157,7 @@ Swedish
     Desired translation: Don't use 'Det står:' for 'It says:' in license-toast.gumroad-error
         Explanation: 'Det står:' implies something physically written on a surface, which feels a bit off for a server error.
             (Sidenote: We avoid German equivalent 'Da steht:' for similar reasons)
+
+Arabic
+    Desired translation: Use 'يومًا' (singular accusative) for 'days' in trial-notif.body
+        Explanation: There are 11+ trial days (30 at the time of writing). Therefore, singular accusative is the correct form.

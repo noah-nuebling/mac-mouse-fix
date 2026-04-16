@@ -1110,6 +1110,12 @@
     "license-button.activate" : {
       "comment" : "",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تفعيل الترخيص"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1247,6 +1253,12 @@
     "license-button.deactivate" : {
       "comment" : "",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إلغاء تفعيل الترخيص"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1384,6 +1396,12 @@
     "license-toast.activate" : {
       "comment" : "",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم **تفعيل** ترخيصك! 🎉"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1521,6 +1539,12 @@
     "license-toast.activation-overload" : {
       "comment" : "Note: \"%2$d\", \"%3$d\", and \"%1$@\" are so-called \"C Format Specifers\". They will be replaced by numbers or text when the program runs. Make sure to type the format specifiers exactly like in the English version so that the text-replacement-code works correctly.",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تفعيل هذا الترخيص **%2$d** مرة. الحد الأقصى هو **%3$d**.\n\nلهذا السبب، تم إبطال الترخيص. هذا لمنع القرصنة. إذا كانت لديك أسباب أخرى لتفعيل الترخيص هذا العدد من المرات، أعتذر عن الإزعاج.\n\nفقط تواصل معي [هنا](%1$@) وسأوفر لك ترخيصًا جديدًا! شكرًا لتفهمك."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1658,6 +1682,12 @@
     "license-toast.already-active" : {
       "comment" : "",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تطبيقك **مرخّص بالفعل** بهذا المفتاح"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1795,6 +1825,12 @@
     "license-toast.deactivate" : {
       "comment" : "",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم **إلغاء تفعيل** ترخيصك"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1932,6 +1968,12 @@
     "license-toast.free-country" : {
       "comment" : "",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**تعذّر تفعيل** هذا الترخيص، لكن Mac Mouse Fix حاليًا **مجاني في بلدك**."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2069,6 +2111,12 @@
     "license-toast.gumroad-error" : {
       "comment" : "",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حدث **خطأ في خادم الترخيص**\n\nالرسالة:\n\n%@"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2206,6 +2254,12 @@
     "license-toast.no-internet" : {
       "comment" : "",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هناك **مشكلة في الاتصال بالإنترنت**\n\nتأكد من أن جهازك متصل بالإنترنت وأنه لا توجد جدران حماية تمنع Mac Mouse Fix من الاتصال بالإنترنت.\n\nإذا لم يحل هذا المشكلة، تواصل معي [هنا](%@)."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2342,6 +2396,12 @@
     },
     "license-toast.server-response-invalid" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هناك **مشكلة في خادم الترخيص**\n\nيرجى المحاولة مرة أخرى لاحقًا.\n\nإذا استمرت المشكلة، تواصل معي [هنا](%@)."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2479,6 +2539,12 @@
     "license-toast.unknown-error" : {
       "comment" : "",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حدث **خطأ غير معروف**:\n\n%@"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2616,6 +2682,12 @@
     "license-toast.unknown-key" : {
       "comment" : "",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'**%@**' ليس مفتاح ترخيص صالحًا\n\nتأكد من إدخال مفتاح Mac Mouse Fix تمامًا كما استلمته."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2753,6 +2825,12 @@
     "license-toast.unknown-reason" : {
       "comment" : "",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فشل تفعيل ترخيصك لـ**أسباب غير معروفة**\n\nيرجى كتابة **تقرير خطأ** [هنا](%@)"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3452,6 +3530,12 @@
     "trial-counter.active" : {
       "comment" : "Note: You can use whatever formatting looks natural in your language, such as \"x of y\" instead of \"x/y\".",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اليوم المجاني **%1$d/%2$d**"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3589,6 +3673,12 @@
     "trial-counter.expired" : {
       "comment" : "",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انتهت الأيام المجانية"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3726,6 +3816,12 @@
     "trial-notif.activate-license-button" : {
       "comment" : "",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تفعيل الترخيص"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3863,6 +3959,12 @@
     "trial-notif.body" : {
       "comment" : "",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مرحبًا! لقد استخدمت Mac Mouse Fix لمدة **%1$d يومًا** حتى الآن. آمل أنك تستمتع به!\n\nإذا أردت الاستمرار في استخدام Mac Mouse Fix، يمكنك [شراؤه الآن](%2$@)."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
