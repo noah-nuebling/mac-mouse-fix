@@ -2433,7 +2433,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\"**%@**\" ist kein gültiger Lizenzschlüssel\n\nStell sicher, dass du deinen Mac Mouse Fix Schlüssel genau so eingibst, wie du ihn erhalten hast."
+            "value" : "'**%@**' ist kein gültiger Lizenzschlüssel\n\nStell sicher, dass du deinen Mac Mouse Fix Schlüssel genau so eingibst, wie du ihn erhalten hast."
           }
         },
         "en" : {
