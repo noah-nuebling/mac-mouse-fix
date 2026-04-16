@@ -114,6 +114,12 @@
             "value" : "Lisans Anahtarınızı Girin"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введи свій ліцензійний ключ"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",

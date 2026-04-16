@@ -1194,6 +1194,12 @@
             "value" : "Lisansı Etkinleştir"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Активувати ліцензію"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1305,6 +1311,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisansı Devre Dışı Bırak"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Деактивувати ліцензію"
           }
         },
         "vi" : {
@@ -1420,6 +1432,12 @@
             "value" : "Lisansınız **etkinleştirildi**! 🎉"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ліцензію **активовано**! 🎉"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1531,6 +1549,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bu lisans **%2$d** kez etkinleştirildi. Maksimum sayı **%3$d**.\n\nBu nedenle lisans geçersiz kılındı. Bu, korsanlığı önlemek içindir. Lisansı bu kadar çok kez etkinleştirmenizin başka nedenleri varsa, verdiğim rahatsızlık için özür dilerim.\n\n[Benimle iletişime geçin](%1$@), size yeni bir lisans sağlayacağım! Anlayışınız için teşekkürler."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цю ліцензію було активовано **%2$d** разів. Максимум — **%3$d**.\n\nЧерез це ліцензію було анульовано. Це зроблено для запобігання піратству. Якщо у тебе є інші причини для такої кількості активацій, прошу вибачення за незручності.\n\nПросто [напиши мені](%1$@), і я надам тобі нову ліцензію! Дякую за розуміння."
           }
         },
         "vi" : {
@@ -1646,6 +1670,12 @@
             "value" : "Uygulamanız bu anahtarla **zaten lisanslı**"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Твій застосунок **вже ліцензовано** цим ключем"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1757,6 +1787,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisansınız **devre dışı bırakıldı**"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ліцензію **деактивовано**"
           }
         },
         "vi" : {
@@ -1872,6 +1908,12 @@
             "value" : "Bu lisans **etkinleştirilemedi** ancak Mac Mouse Fix şu anda **ülkenizde ücretsiz**."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цю ліцензію **не вдалось активувати**, але Mac Mouse Fix зараз **безкоштовний у твоїй країні**."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1983,6 +2025,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Lisans sunucusunda bir hata** oluştu\n\nHata mesajı:\n\n%@"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сталася **помилка сервера ліцензій**\n\nПовідомлення:\n\n%@"
           }
         },
         "vi" : {
@@ -2098,6 +2146,12 @@
             "value" : "**İnternet bağlantısında bir sorun** var\n\nBilgisayarınızın çevrimiçi olduğundan ve güvenlik duvarlarının Mac Mouse Fix'in internete bağlanmasını engellemediğinden emin olun.\n\nBu sorunu çözmezse, [buradan](%@) benimle iletişime geçin."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Проблема з інтернет-з'єднанням**\n\nПереконайся, що твій комп'ютер підключено до інтернету і брандмауери не блокують з'єднання Mac Mouse Fix.\n\nЯкщо це не допоможе, зв'яжись зі мною [тут](%@)."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2208,6 +2262,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Lisans sunucusunda bir sorun** var\n\nLütfen daha sonra tekrar deneyin.\n\nSorun devam ederse, [buradan](%@) benimle iletişime geçin."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Проблема з сервером ліцензій**\n\nБудь ласка, спробуй пізніше.\n\nЯкщо проблема не зникне, зв'яжись зі мною [тут](%@)."
           }
         },
         "vi" : {
@@ -2323,6 +2383,12 @@
             "value" : "**Bilinmeyen bir hata** oluştu:\n\n%@"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сталася **невідома помилка**:\n\n%@"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2436,6 +2502,12 @@
             "value" : "'**%@**' geçerli bir lisans anahtarı değil\n\nMac Mouse Fix anahtarınızı tam olarak aldığınız şekilde girdiğinizden emin olun."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'**%@**' не є дійсним ліцензійним ключем\n\nПереконайся, що ти вводиш ключ Mac Mouse Fix саме так, як отримав його."
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2547,6 +2619,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisansınızın etkinleştirilmesi **bilinmeyen nedenlerle** başarısız oldu\n\n[Buradan](%@) bir **Hata Raporu** yazın lütfen"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Активація ліцензії не вдалася з **невідомих причин**\n\nБудь ласка, напиши **звіт про помилку** [тут](%@)"
           }
         },
         "vi" : {
@@ -3224,6 +3302,12 @@
             "value" : "Ücretsiz gün **%1$d/%2$d**"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Безкоштовний день **%1$d/%2$d**"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3335,6 +3419,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ücretsiz günler sona erdi"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Безкоштовні дні закінчились"
           }
         },
         "vi" : {
@@ -3450,6 +3540,12 @@
             "value" : "Lisansı Etkinleştir"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Активувати ліцензію"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3561,6 +3657,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Merhaba! Mac Mouse Fix'i **%1$d gündür** kullanıyorsunuz. Umarım keyif alıyorsunuzdur!\n\nMac Mouse Fix'i kullanmaya devam etmek istiyorsanız, [şimdi satın alabilirsiniz](%2$@)."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Привіт! Ти використовуєш Mac Mouse Fix вже **%1$d днів**. Сподіваюсь, тобі подобається!\n\nЯкщо хочеш продовжити використовувати Mac Mouse Fix, можеш [придбати його зараз](%2$@)."
           }
         },
         "vi" : {

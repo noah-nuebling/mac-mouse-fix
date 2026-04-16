@@ -36,7 +36,7 @@ Languages to work on (Do human-backed first)          (Based on SCRTriggerString
       Slavic
       - [x] cs            (human-backed)
       - [x] ru            (human-backed)
-      - [ ] pl            (reference: cs)
+      - [x] pl            (reference: cs)
       - [ ] uk            (reference: ru)
 
       East Asian
@@ -67,11 +67,11 @@ Generating CTXLicenseStrings.md
 
 Prompt
     Main prompt
-        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Polish (pl)
+        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Ukrainian (uk)
 
         Before translating each batch of strings (try to keep the batches around 5 or smaller), to help you keep the relevant constraints in mind, list all the string keys you've included in the batch, and then write out all the constraints that are relevant for those strings.
 
-        You can also read the existing Czech (cs) translations for reference/comparison. (Consistency between languages is not important. What matters is the user experience.)
+        You can also read the existing Russian (ru) translations for reference/comparison. (Consistency between languages is not important. What matters is the user experience.)
 
         Do not read / invoke adding-translations/SKILL.md
         Do not read the files next to CTXLicenseStrings.md
@@ -80,9 +80,9 @@ Prompt
 
         Hi there Claude! I've been working on doing some translations with ChatGPT. 
 
-        Let's review the Polish (pl) translations.
+        Let's review the Ukrainian (uk) translations.
 
-        This command will let you see the translations side-by-side with the Czech (cs) translations (Which are the closest existing translations):
+        This command will let you see the translations side-by-side with the Russian (ru) translations (Which are the closest existing translations):
 
         ./run mfstrings inspect --sortcol key --pretty --grep 'trial-notif|trial-counter|license-button|license-toast|JJv-GH-7io' --cols fileid,key,en,LOCALE1,LOCALE2
 
@@ -90,7 +90,7 @@ Prompt
 
         See .../CTXLicenseStrings.md for the full context of which strings we're translating and what guidance we gave to the translator.
 
-        Please compare the translations and analyze them for any mistakes or other improvements. Please explain the problems and differences to me to help me gain an intuitive understanding. (I don't speak Polish)
+        Please compare the translations and analyze them for any mistakes or other improvements. Please explain the problems and differences to me to help me gain an intuitive understanding. (I don't speak Russian)
 
         Do not read / invoke translation-review/SKILL.md
 
