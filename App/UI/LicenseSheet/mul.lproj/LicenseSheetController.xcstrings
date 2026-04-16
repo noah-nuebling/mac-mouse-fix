@@ -66,6 +66,12 @@
             "value" : "Entrez votre clé de licence"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अपनी लाइसेंस कुंजी दर्ज करें"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",

@@ -1146,6 +1146,12 @@
             "value" : "Activer la licence"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "लाइसेंस सक्रिय करें"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1275,6 +1281,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Désactiver la licence"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "लाइसेंस निष्क्रिय करें"
           }
         },
         "it" : {
@@ -1408,6 +1420,12 @@
             "value" : "Votre licence a été **activée** ! 🎉"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपका लाइसेंस **सक्रिय** हो गया! 🎉"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1537,6 +1555,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cette licence a été activée **%2$d** fois. Le maximum est de **%3$d**.\n\nEn raison de cela, la licence a été invalidée. C'est pour prévenir le piratage. Si vous avez d'autres raisons d'avoir activé la licence autant de fois, je m'excuse pour le désagrément.\n\nContactez-moi simplement [ici](%1$@) et je vous fournirai une nouvelle licence ! Merci pour votre compréhension."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "यह लाइसेंस **%2$d** बार सक्रिय किया गया है। अधिकतम सीमा **%3$d** है।\n\nइसी वजह से लाइसेंस अमान्य कर दिया गया है। यह पायरेसी रोकने के लिए है। अगर आपके पास इतनी बार लाइसेंस सक्रिय करने के अन्य कारण थे, तो असुविधा के लिए क्षमा करें।\n\nबस [यहाँ](%1$@) संपर्क करें और मैं आपको नया लाइसेंस दूंगा! समझने के लिए धन्यवाद।"
           }
         },
         "it" : {
@@ -1670,6 +1694,12 @@
             "value" : "Votre app est **déjà licenciée** avec cette clé"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपकी ऐप इस कुंजी से **पहले से लाइसेंस प्राप्त** है"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1799,6 +1829,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Votre licence a été **désactivée**"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपका लाइसेंस **निष्क्रिय** हो गया"
           }
         },
         "it" : {
@@ -1932,6 +1968,12 @@
             "value" : "Cette licence **n'a pas pu être activée**, mais Mac Mouse Fix est actuellement **gratuit dans votre pays**."
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "यह लाइसेंस **सक्रिय नहीं हो सका** लेकिन Mac Mouse Fix वर्तमान में **आपके देश में मुफ़्त** है।"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2061,6 +2103,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Une **erreur avec le serveur de licences** s'est produite\n\nMessage d'erreur :\n\n%@"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**लाइसेंस सर्वर में त्रुटि** हुई\n\nत्रुटि संदेश:\n\n%@"
           }
         },
         "it" : {
@@ -2194,6 +2242,12 @@
             "value" : "Il y a un **problème avec la connexion internet**\n\nAssurez-vous que votre ordinateur est en ligne et qu'aucun pare-feu ne bloque Mac Mouse Fix pour se connecter à internet.\n\nSi cela ne résout pas le problème, contactez-moi [ici](%@)."
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**इंटरनेट कनेक्शन में समस्या** है\n\nसुनिश्चित करें कि आपका कंप्यूटर ऑनलाइन है और कोई फ़ायरवॉल Mac Mouse Fix को इंटरनेट से कनेक्ट होने से नहीं रोक रहा है।\n\nअगर इससे समस्या हल नहीं होती, तो मुझसे [यहाँ](%@) संपर्क करें।"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2322,6 +2376,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Il y a un **problème avec le serveur de licences**\n\nVeuillez réessayer plus tard.\n\nSi le problème persiste, contactez-moi [ici](%@)."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**लाइसेंस सर्वर में समस्या** है\n\nकृपया बाद में पुनः प्रयास करें।\n\nअगर समस्या बनी रहती है, तो मुझसे [यहाँ](%@) संपर्क करें।"
           }
         },
         "it" : {
@@ -2455,6 +2515,12 @@
             "value" : "Une **erreur inconnue** s'est produite :\n\n%@"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "एक **अज्ञात त्रुटि** हुई:\n\n%@"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2586,6 +2652,12 @@
             "value" : "« **%@** » n'est pas une clé de licence valide\n\nVeillez à saisir votre clé Mac Mouse Fix exactement telle que vous l'avez reçue."
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'**%@**' एक मान्य लाइसेंस कुंजी नहीं है\n\nसुनिश्चित करें कि आपने अपनी Mac Mouse Fix कुंजी ठीक वैसे ही दर्ज की है जैसी आपको मिली थी।"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2715,6 +2787,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "L'activation de votre licence a échoué pour des **raisons inconnues**\n\nVeuillez écrire un **rapport de bug** [ici](%@)"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आपके लाइसेंस की सक्रियता **अज्ञात कारणों** से विफल हुई\n\nकृपया [यहाँ](%@) **बग रिपोर्ट** लिखें"
           }
         },
         "it" : {
@@ -3410,6 +3488,12 @@
             "value" : "Jour offert **%1$d/%2$d**"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "मुफ़्त दिन **%1$d/%2$d**"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3539,6 +3623,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Les jours offerts sont écoulés"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "मुफ़्त दिन समाप्त"
           }
         },
         "it" : {
@@ -3672,6 +3762,12 @@
             "value" : "Activer une licence"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "लाइसेंस सक्रिय करें"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3801,6 +3897,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bonjour ! Vous utilisez Mac Mouse Fix depuis **%1$d jours** maintenant. J'espère que vous l'appréciez !\n\nSi vous souhaitez continuer à utiliser Mac Mouse Fix, vous pouvez [l'acheter maintenant](%2$@)."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "नमस्ते! आप **%1$d दिनों** से Mac Mouse Fix का उपयोग कर रहे हैं। मुझे उम्मीद है कि आपको यह पसंद आ रहा है!\n\nअगर आप Mac Mouse Fix का उपयोग जारी रखना चाहते हैं, तो आप इसे [अभी खरीद](%2$@) सकते हैं।"
           }
         },
         "it" : {

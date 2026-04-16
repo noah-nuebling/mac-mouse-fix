@@ -155,4 +155,4 @@ Swedish
         Explanation: 'Gratis dag' / 'Gratis dagarna' as separate words feels unnatural in this context.
     Desired translation: Don't use 'Det står:' for 'It says:' in license-toast.gumroad-error
         Explanation: 'Det står:' implies something physically written on a surface, which feels a bit off for a server error.
-            (Sidenote: We avoid German equivalent 'da steht:')
+            (Sidenote: We avoid German equivalent 'Da steht:' for similar reasons)
