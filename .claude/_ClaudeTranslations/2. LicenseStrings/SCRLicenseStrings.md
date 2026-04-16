@@ -18,42 +18,42 @@ Languages to work on (Do human-backed first)          (Based on SCRTriggerString
 
     Germanic
       - [x] de            (human-backed)
-      - [ ] nl
-      - [ ] sv
+      - [ ] nl            (reference: de)
+      - [ ] sv            (reference: de)
 
       Romance
       - [x] fr            (human-backed)
       - [x] pt-BR         (human-backed)
       - [x] es            (human-backed)
-      - [x] pt-PT         (closest: pt-BR)
-      - [x] ca            (closest: es)
-      - [x] it            (closest: es)
-      - [ ] ro            (closest: es) (it if we use non-human-backed)
+      - [x] pt-PT         (reference: pt-BR)
+      - [x] ca            (reference: es)
+      - [x] it            (reference: es)
+      - [x] ro            (reference: es) (it if we use non-human-backed)
 
       Greek
-      - [ ] el
+      - [ ] el            (reference: es)
 
       Slavic
       - [x] cs            (human-backed)
       - [x] ru            (human-backed)
-      - [ ] pl
-      - [ ] uk
+      - [ ] pl            (reference: cs)
+      - [ ] uk            (reference: ru)
 
       East Asian
       - [x] tr            (human-backed)
       - [x] ko            (human-backed)
-      - [ ] hu
-      - [ ] ja
+      - [ ] hu            (reference: cs [not same language family but same region?])
+      - [ ] ja            (reference: ko [not same language family but same region?])
 
       Southeast Asian
       - [x] vi            (human-backed)
-      - [ ] th
-      - [ ] id
-      - [ ] hi
+      - [ ] th            (reference: vi)
+      - [ ] id            (reference: vi)
+      - [ ] hi            (reference: de)
 
       Middle Eastern
-      - [ ] ar
-      - [ ] he
+      - [ ] ar            (reference: de [not very close but wrote de by hand])
+      - [ ] he            (reference: de [not very close but wrote de by hand])
 
       Chinese
       - [x] zh-Hant       (human-backed)
@@ -68,14 +68,14 @@ Generating CTXLicenseStrings.md
 Prompt              (Based on SCRTriggerStrings.md / PMTTriggerStrings.md)
 
     Main prompt
-        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Romanian (ro)
+Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Romanian (ro)
 
-        Before translating each batch of strings (try to keep the batches around 5 or smaller), to help you keep the relevant constraints in mind, list all the string keys you've included in the batch, and then write out all the constraints that are relevant for those strings.
+Before translating each batch of strings (try to keep the batches around 5 or smaller), to help you keep the relevant constraints in mind, list all the string keys you've included in the batch, and then write out all the constraints that are relevant for those strings.
 
-        You can also read the existing Spanish (es) translations for reference/comparison. (Consistency between languages is not important. What matters is the user experience.)
+You can also read the existing Spanish (es) translations for reference/comparison. (Consistency between languages is not important. What matters is the user experience.)
 
-        Do not read / invoke adding-translations/SKILL.md
-        Do not read the files next to CTXLicenseStrings.md
+Do not read / invoke adding-translations/SKILL.md
+Do not read the files next to CTXLicenseStrings.md
 
     Review prompts (Fresh Chat)
         (Human-backed languages)
