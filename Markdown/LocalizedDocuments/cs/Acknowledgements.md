@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **duben 2026**
 
+- 🇨🇦&nbsp;Benjamin&nbsp;Ye
 - 🇺🇸&nbsp;Kenyatta&nbsp;Blakeley
 - 🇺🇸&nbsp;Vadim&nbsp;Matchtakov
 - 🇺🇸&nbsp;Idan&nbsp;Marcus
