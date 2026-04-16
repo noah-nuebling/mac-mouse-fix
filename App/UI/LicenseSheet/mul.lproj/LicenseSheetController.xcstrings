@@ -90,6 +90,12 @@
             "value" : "Introduz a tua chave de licença"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Introdu cheia de licență"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",

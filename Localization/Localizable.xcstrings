@@ -1170,6 +1170,12 @@
             "value" : "Ativar licença"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activează licența"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1269,6 +1275,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Desativar licença"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dezactivează licența"
           }
         },
         "ru" : {
@@ -1372,6 +1384,12 @@
             "value" : "A tua licença foi **ativada**! 🎉"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licența ta a fost **activată**! 🎉"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1471,6 +1489,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Esta licença foi ativada **%2$d** vezes. O máximo é **%3$d**.\n\nPor isso, a licença foi invalidada. Isto serve para prevenir a pirataria. Se tiveres outras razões para ativar a licença tantas vezes, peço desculpa pelo incómodo.\n\nBasta [contactar-me](%1$@) e forneço-te uma nova licença! Obrigado pela compreensão."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Această licență a fost activată de **%2$d** ori. Maximul este **%3$d**.\n\nDin această cauză, licența a fost invalidată. Asta este pentru a preveni pirateria. Dacă ai alte motive pentru care ai activat licența de atâtea ori, te rog să mă scuzi pentru neplăceri.\n\nDar [contactează-mă](%1$@) și îți voi oferi o licență nouă! Mulțumesc pentru înțelegere."
           }
         },
         "ru" : {
@@ -1574,6 +1598,12 @@
             "value" : "A tua aplicação **já está licenciada** com esta chave"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aplicația ta **este deja licențiată** cu această cheie"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1673,6 +1703,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "A tua licença foi **desativada**"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licența ta a fost **dezactivată**"
           }
         },
         "ru" : {
@@ -1776,6 +1812,12 @@
             "value" : "Esta licença **não pôde ser ativada**, mas o Mac Mouse Fix está atualmente **gratuito no teu país**."
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Această licență **nu a putut fi activată**, dar Mac Mouse Fix este momentan **gratuit în țara ta**."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1875,6 +1917,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ocorreu um **erro com o servidor de licenças**\n\nDiz:\n\n%@"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A apărut o **eroare cu serverul de licențe**\n\nSpune:\n\n%@"
           }
         },
         "ru" : {
@@ -1978,6 +2026,12 @@
             "value" : "Existe um **problema com a ligação à internet**\n\nCertifica-te de que o teu computador está ligado à internet e que nenhuma firewall está a bloquear o Mac Mouse Fix de se ligar à internet.\n\nSe isto não resolver o problema, contacta-me [aqui](%@)."
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Există o **problemă cu conexiunea la internet**\n\nAsigură-te că calculatorul tău este conectat și că niciun firewall nu blochează Mac Mouse Fix să se conecteze la internet.\n\nDacă asta nu rezolvă problema, contactează-mă [aici](%@)."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2076,6 +2130,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Existe um **problema com o servidor de licenças**\n\nPor favor, tenta mais tarde.\n\nSe o problema persistir, contacta-me [aqui](%@)."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Există o **problemă cu serverul de licențe**\n\nTe rog să încerci din nou mai târziu.\n\nDacă problema persistă, contactează-mă [aici](%@)."
           }
         },
         "ru" : {
@@ -2179,6 +2239,12 @@
             "value" : "Ocorreu um **erro desconhecido**:\n\n%@"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A apărut o **eroare necunoscută**:\n\n%@"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2280,6 +2346,12 @@
             "value" : "'**%@**' não é uma chave de licença válida\n\nCertifica-te de que introduzes a tua chave do Mac Mouse Fix exatamente como a recebeste."
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'**%@**' nu este o cheie de licență validă\n\nAsigură-te că introduci cheia ta Mac Mouse Fix exact așa cum ai primit-o."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2379,6 +2451,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "A ativação da tua licença falhou por **razões desconhecidas**\n\nPor favor, escreve um **relatório de erro** [aqui](%@)"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activarea licenței tale a eșuat din **motive necunoscute**\n\nTe rog să scrii un **Raport de eroare** [aici](%@)"
           }
         },
         "ru" : {
@@ -3044,6 +3122,12 @@
             "value" : "Dia gratuito **%1$d/%2$d**"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zi gratuită **%1$d/%2$d**"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3143,6 +3227,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Os dias gratuitos terminaram"
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zilele gratuite s-au terminat"
           }
         },
         "ru" : {
@@ -3246,6 +3336,12 @@
             "value" : "Ativar licença"
           }
         },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activează licența"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3345,6 +3441,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Olá! Usas o Mac Mouse Fix há **%1$d dias**. Espero que estejas a gostar!\n\nSe quiseres continuar a usar o Mac Mouse Fix, podes [comprá-lo agora](%2$@)."
+          }
+        },
+        "ro" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salut! Folosești Mac Mouse Fix de **%1$d zile**. Sper că îți place!\n\nDacă vrei să continui să folosești Mac Mouse Fix, poți să îl [cumperi acum](%2$@)."
           }
         },
         "ru" : {
