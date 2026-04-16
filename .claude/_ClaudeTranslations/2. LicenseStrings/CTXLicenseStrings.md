@@ -146,6 +146,13 @@ European Portuguese (pt-PT)
         Explanation: The English original strings often use title case, but this is not a convention in Portuguese UI
 
 Dutch
-    Desired translation: Use 'hier' for link text (e.g., '[hier](%@) contact met me op') instead of linking separable verb parts
-        Explanation: Dutch has separable verbs like 'contact opnemen'. Linking just the separated parts (e.g., '[contact op]()') is a bit awkward since they don't form a self-contained phrase. Using 'hier' as the link text sidesteps the problem. 
-        (Sidenote: German also uses 'hier' in this way.)
+    Desired translation: Don't put links on separated verb-parts (e.g. 'Neem gewoon [contact op]()' for 'Just [reach out]()').
+        Explanation: It's a bit awkward, since the link-text doesn't form a self-contained phrase.
+        Tip: You can always use '[hier]()' as the link text to sidestep the problem.
+
+Swedish
+    Desired translation: Use compounds for 'free day' ('Gratisdag' / 'Gratisdagarna') in trial-counter.*
+        Explanation: 'Gratis dag' / 'Gratis dagarna' as separate words feels unnatural in this context.
+    Desired translation: Don't use 'Det står:' for 'It says:' in license-toast.gumroad-error
+        Explanation: 'Det står:' implies something physically written on a surface, which feels a bit off for a server error.
+            (Sidenote: We avoid German equivalent 'da steht:')
