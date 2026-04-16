@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **abril 2026**
 
+- 🇺🇸&nbsp;Kenyatta&nbsp;Blakeley
 - 🇺🇸&nbsp;Vadim&nbsp;Matchtakov
 - 🇺🇸&nbsp;Idan&nbsp;Marcus
 - 🇱🇰&nbsp;Sisira&nbsp;Jayawardena - "My MacBook's battery & MX Master 3S thank you very much for this! -@sizijay"
