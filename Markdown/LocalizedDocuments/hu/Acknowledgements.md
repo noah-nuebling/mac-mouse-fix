@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **április 2026**
 
+- 🇺🇸&nbsp;Kurt&nbsp;Claussen - "Mac Mouse Fix makes my life a whole lot easier. Thanks!"
 - 🇨🇦&nbsp;Benjamin&nbsp;Ye
 - 🇺🇸&nbsp;Kenyatta&nbsp;Blakeley
 - 🇺🇸&nbsp;Vadim&nbsp;Matchtakov
