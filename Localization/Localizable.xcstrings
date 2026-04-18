@@ -3056,7 +3056,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A ativação da sua licença falhou por **motivos desconhecidos**\n\nPor favor, escreva um **Relatório de Bug** [aqui](%@)"
+            "value" : "A ativação da sua licença falhou por **motivos desconhecidos**\n\nPor favor, escreva um **relatório de bug** [aqui](%@)"
           }
         },
         "pt-PT" : {
@@ -3068,7 +3068,7 @@
         "ro" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Activarea licenței tale a eșuat din **motive necunoscute**\n\nTe rog să scrii un **Raport de eroare** [aici](%@)"
+            "value" : "Activarea licenței tale a eșuat din **motive necunoscute**\n\nTe rog să scrii un **raport de eroare** [aici](%@)"
           }
         },
         "ru" : {
@@ -3098,7 +3098,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kích hoạt giấy phép thất bại vì **lý do không xác định**\n\nVui lòng viết **Báo cáo lỗi** [tại đây](%@)"
+            "value" : "Kích hoạt giấy phép thất bại vì **lý do không xác định**\n\nVui lòng viết **báo cáo lỗi** [tại đây](%@)"
           }
         },
         "zh-HK" : {
