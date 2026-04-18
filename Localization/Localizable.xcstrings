@@ -1134,6 +1134,12 @@
             "value" : "Lizenz aktivieren"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ενεργοποίηση άδειας"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1281,6 +1287,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lizenz deaktivieren"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Απενεργοποίηση άδειας"
           }
         },
         "en" : {
@@ -1432,6 +1444,12 @@
             "value" : "Deine Lizenz wurde **aktiviert**! 🎉"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η άδειά σου **ενεργοποιήθηκε**! 🎉"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1579,6 +1597,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Diese Lizenz wurde **%2$d** Mal aktiviert. Das Maximum ist **%3$d**.\n\nAus diesem Grund wurde die Lizenz ungültig gemacht. Das dient dazu, Piraterie zu verhindern. Wenn du andere Gründe hattest, die Lizenz so oft zu aktivieren, entschuldige ich mich für die Unannehmlichkeiten.\n\nMelde dich einfach [hier](%1$@) und ich stelle dir eine neue Lizenz aus! Danke für dein Verständnis."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αυτή η άδεια έχει ενεργοποιηθεί **%2$d** φορές. Το μέγιστο είναι **%3$d**.\n\nΕξαιτίας αυτού, η άδεια έχει ακυρωθεί. Αυτό γίνεται για την αποτροπή της πειρατείας. Αν έχεις άλλους λόγους που ενεργοποίησες την άδεια τόσες φορές, ζητώ συγγνώμη για την ταλαιπωρία.\n\nΑπλά [επικοινώνησε μαζί μου](%1$@) και θα σου δώσω μια νέα άδεια! Ευχαριστώ για την κατανόηση."
           }
         },
         "en" : {
@@ -1730,6 +1754,12 @@
             "value" : "Deine App **ist bereits** mit diesem Schlüssel **lizenziert**"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η εφαρμογή σου **είναι ήδη ενεργοποιημένη** με αυτόν τον κωδικό"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1877,6 +1907,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Deine Lizenz wurde **deaktiviert**"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η άδειά σου **απενεργοποιήθηκε**"
           }
         },
         "en" : {
@@ -2028,6 +2064,12 @@
             "value" : "Diese Lizenz **konnte nicht aktiviert werden**, aber Mac Mouse Fix ist momentan **in deinem Land kostenlos**."
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αυτή η άδεια **δεν μπόρεσε να ενεργοποιηθεί**, αλλά το Mac Mouse Fix είναι αυτή τη στιγμή **δωρεάν στη χώρα σου**."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2175,6 +2217,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ein **Fehler mit dem Lizenzserver** ist aufgetreten\n\nFehlermeldung:\n\n%@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παρουσιάστηκε **σφάλμα με τον διακομιστή αδειών**\n\nΑναφέρει:\n\n%@"
           }
         },
         "en" : {
@@ -2326,6 +2374,12 @@
             "value" : "Es gibt ein **Problem mit der Internetverbindung**\n\nStell sicher, dass dein Computer online ist und keine Firewalls Mac Mouse Fix am Verbinden mit dem Internet hindern.\n\nWenn das das Problem nicht löst, kontaktiere mich [hier](%@)."
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Υπάρχει **πρόβλημα με τη σύνδεση στο διαδίκτυο**\n\nΒεβαιώσου ότι ο υπολογιστής σου είναι συνδεδεμένος και ότι κανένα τείχος προστασίας δεν εμποδίζει το Mac Mouse Fix να συνδεθεί στο διαδίκτυο.\n\nΑν αυτό δεν λύσει το πρόβλημα, επικοινώνησε μαζί μου [εδώ](%@)."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2472,6 +2526,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Es gibt ein **Problem mit dem Lizenzserver**\n\nBitte versuche es später erneut.\n\nWenn das Problem weiterhin besteht, kontaktiere mich [hier](%@)."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Υπάρχει **πρόβλημα με τον διακομιστή αδειών**\n\nΠαρακαλώ δοκίμασε ξανά αργότερα.\n\nΑν το πρόβλημα συνεχίζεται, επικοινώνησε μαζί μου [εδώ](%@)."
           }
         },
         "en" : {
@@ -2623,6 +2683,12 @@
             "value" : "Ein **unbekannter Fehler** ist aufgetreten:\n\n%@"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παρουσιάστηκε ένα **άγνωστο σφάλμα**:\n\n%@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2772,6 +2838,12 @@
             "value" : "'**%@**' ist kein gültiger Lizenzschlüssel\n\nStell sicher, dass du deinen Mac Mouse Fix Schlüssel genau so eingibst, wie du ihn erhalten hast."
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'**%@**' δεν είναι έγκυρος κωδικός άδειας\n\nΒεβαιώσου ότι εισάγεις τον κωδικό Mac Mouse Fix ακριβώς όπως τον έλαβες."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2919,6 +2991,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Die Aktivierung deiner Lizenz ist aus **unbekannten Gründen** fehlgeschlagen\n\nBitte schreibe einen **Fehlerbericht** [hier](%@)"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η ενεργοποίηση της άδειας απέτυχε για **άγνωστους λόγους**\n\nΠαρακαλώ γράψε μια **Αναφορά Σφάλματος** [εδώ](%@)"
           }
         },
         "en" : {
@@ -3632,6 +3710,12 @@
             "value" : "Kostenloser Tag **%1$d/%2$d**"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δωρεάν ημέρα **%1$d/%2$d**"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3779,6 +3863,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kostenlose Tage sind vorbei"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οι δωρεάν ημέρες τελείωσαν"
           }
         },
         "en" : {
@@ -3930,6 +4020,12 @@
             "value" : "Lizenz aktivieren"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ενεργοποίηση άδειας"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4077,6 +4173,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hallo! Du nutzt Mac Mouse Fix jetzt seit **%1$d Tagen**. Ich hoffe, es gefällt dir!\n\nWenn du Mac Mouse Fix weiter nutzen möchtest, kannst du es [jetzt kaufen](%2$@)."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Γεια σου! Χρησιμοποιείς το Mac Mouse Fix εδώ και **%1$d ημέρες**. Ελπίζω να σου αρέσει!\n\nΑν θέλεις να συνεχίσεις να χρησιμοποιείς το Mac Mouse Fix, μπορείς να [το αγοράσεις τώρα](%2$@)."
           }
         },
         "en" : {

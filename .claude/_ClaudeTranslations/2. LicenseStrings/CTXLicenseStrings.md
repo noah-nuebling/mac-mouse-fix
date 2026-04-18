@@ -143,8 +143,8 @@ European Portuguese (pt-PT)
         Explanation: Mesoclisis sounds very formal/literary, clashing with informal 'tu' address
     Desired translation: Use 'está' (not 'é') in '... Mac Mouse Fix está atualmente **gratuito no teu país**' (license-toast.free-country)
         Explanation: atualmente implies a temporary condition clashing with 'é'
-    Desired translation: Use lower case
-        Explanation: The English original strings often use title case, but this is not a convention in Portuguese UI
+    Desired translation: Use sentence case (not title case)
+        Explanation: English UI often uses title case, but Portuguese UI uses sentence case.
 
 Dutch
     Desired translation: Don't put links on separated verb-parts (e.g. 'Neem gewoon [contact op]()' for 'Just [reach out]()').
@@ -167,3 +167,7 @@ Hebrew
         Explanation: This option simply disassociates the license from the app, but does not permanently annul it. 'ביטול' implies permanence.
     Desired translation: Emphasize 'לא ניתן היה להפעיל' (could not be activated) in license-toast.free-country
         Explanation: Emphasizing '**לא ניתן היה להפעיל**' matches the English gist '**could not be activated**'
+
+Greek
+    Desired translation: Use sentence case (not title case)
+        Explanation: Greek UI text uses sentence case - only the first word is capitalized. E.g. 'Ενεργοποίηση άδειας' not 'Ενεργοποίηση Άδειας'.

@@ -54,6 +54,12 @@
             "value" : "Gib deinen Lizenzschlüssel ein"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εισάγαγε τον κωδικό άδειας"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
