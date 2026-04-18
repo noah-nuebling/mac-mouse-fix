@@ -1188,6 +1188,12 @@
             "value" : "Attiva licenza"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンスを有効化"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1359,6 +1365,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Disattiva licenza"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンスを無効化"
           }
         },
         "ko" : {
@@ -1534,6 +1546,12 @@
             "value" : "La tua licenza è stata **attivata**! 🎉"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンスが**有効化**されました！🎉"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1705,6 +1723,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Questa licenza è stata attivata **%2$d** volte. Il massimo è **%3$d**.\n\nPer questo motivo, la licenza è stata invalidata. Questo serve a prevenire la pirateria. Se hai altri motivi per aver attivato la licenza così tante volte, scusami per l'inconveniente.\n\n[Contattami](%1$@) e ti fornirò una nuova licenza! Grazie per la comprensione."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このライセンスは**%2$d**回有効化されました。上限は**%3$d**回です。\n\nそのため、このライセンスは無効になりました。これは不正利用を防ぐための措置です。他の理由でこれほど多く有効化された場合は、ご不便をおかけして申し訳ありません。\n\n[ご連絡](%1$@)いただければ、新しいライセンスを発行いたします！ご理解ありがとうございます。"
           }
         },
         "ko" : {
@@ -1880,6 +1904,12 @@
             "value" : "La tua app è **già attivata** con questa chiave"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このアプリはこのキーで**すでに有効化済み**です"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2051,6 +2081,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "La tua licenza è stata **disattivata**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンスが**無効化**されました"
           }
         },
         "ko" : {
@@ -2226,6 +2262,12 @@
             "value" : "Questa licenza **non può essere attivata**, ma Mac Mouse Fix è attualmente **gratuito nel tuo paese**."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このライセンスは**有効化できませんでした**が、Mac Mouse Fixは現在**お住まいの国で無料**です。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2397,6 +2439,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Si è verificato un **errore con il server delle licenze**\n\nDice:\n\n%@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**ライセンスサーバーでエラー**が発生しました\n\nエラーメッセージ:\n\n%@"
           }
         },
         "ko" : {
@@ -2572,6 +2620,12 @@
             "value" : "C'è un **problema con la connessione a Internet**\n\nAssicurati che il tuo computer sia online e che nessun firewall stia bloccando la connessione di Mac Mouse Fix a Internet.\n\nSe questo non risolve il problema, contattami [qui](%@)."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**インターネット接続に問題**があります\n\nコンピュータがオンラインであること、ファイアウォールがMac Mouse Fixのインターネット接続をブロックしていないことを確認してください。\n\n問題が解決しない場合は、[こちら](%@)からお問い合わせください。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2742,6 +2796,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "C'è un **problema con il server delle licenze**\n\nRiprova più tardi.\n\nSe il problema persiste, contattami [qui](%@)."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**ライセンスサーバーに問題**があります\n\n後でもう一度お試しください。\n\n問題が解決しない場合は、[こちら](%@)からお問い合わせください。"
           }
         },
         "ko" : {
@@ -2917,6 +2977,12 @@
             "value" : "Si è verificato un **errore sconosciuto**:\n\n%@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**不明なエラー**が発生しました:\n\n%@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3090,6 +3156,12 @@
             "value" : "'**%@**' non è una chiave di licenza valida\n\nAssicurati di inserire la tua chiave di Mac Mouse Fix esattamente come l'hai ricevuta."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「**%@**」は有効なライセンスキーではありません\n\nMac Mouse Fixのキーを受け取った通りに正確に入力しているか確認してください。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3261,6 +3333,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "L'attivazione della licenza non è riuscita per **motivi sconosciuti**\n\nScrivi una **segnalazione bug** [qui](%@)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**不明な理由**でライセンスの有効化に失敗しました\n\n[こちら](%@)から**バグ報告**をお願いします"
           }
         },
         "ko" : {
@@ -3998,6 +4076,12 @@
             "value" : "Giorno gratuito **%1$d/%2$d**"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無料使用日 **%1$d/%2$d**"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4169,6 +4253,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "I giorni gratuiti sono finiti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無料期間が終了しました"
           }
         },
         "ko" : {
@@ -4344,6 +4434,12 @@
             "value" : "Attiva licenza"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンスを有効化"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4515,6 +4611,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ciao! Stai usando Mac Mouse Fix da **%1$d giorni**. Spero che ti piaccia!\n\nSe vuoi continuare a usare Mac Mouse Fix, puoi [acquistarlo ora](%2$@)."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "こんにちは！Mac Mouse Fixを**%1$d日間**ご利用いただいています。気に入っていただけていれば嬉しいです！\n\n引き続きMac Mouse Fixをお使いいただくには、[今すぐ購入](%2$@)できます。"
           }
         },
         "ko" : {

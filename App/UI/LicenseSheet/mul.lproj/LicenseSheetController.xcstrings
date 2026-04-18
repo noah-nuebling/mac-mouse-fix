@@ -108,6 +108,12 @@
             "value" : "Inserisci la tua chiave di licenza"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンスキーを入力してください"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",

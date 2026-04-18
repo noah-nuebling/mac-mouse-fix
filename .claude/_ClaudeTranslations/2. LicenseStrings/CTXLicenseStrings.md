@@ -191,3 +191,7 @@ Hungarian
             (Mirrors German and Korean guidance about using possessive here.)
     Desired translation: Don't use a colon in trial-counter.active ('Ingyenes nap **%1$d/%2$d**', not 'Ingyenes nap: **%1$d/%2$d**')
         Explanation: Unnecessary punctuation. Keep it simple.
+
+Japanese
+    Desired translation: Use '有効化済み' for 'already licensed' in license-toast.already-active (instead of '認証済み')
+        Explanation: Keep terminology consistent with license-button.activate and license-toast.activate, which use 有効化. Users who see 有効化 on the button should see the same term in feedback messages.
