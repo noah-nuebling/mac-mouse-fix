@@ -1,0 +1,33 @@
+
+- This was still really hard and slow, even though I had a workflow figured out from `1. TriggerStrings`
+- I should've perhaps reviewed Danish and Swedish first
+    - Even though they were not human-backed, I could provide value and build up the context, because I can read them (They are very close to German)
+    - I can sort of read Romance and Germanic languages – so maybe those are the ones I should review manually / use to build up context for the more automated languages. (Instead of basing it purely on human-backed vs non-human-backed)
+- I should make a clear order for the languages. (Or at least document the order) -> That way, if we find a new mistake, we can go back to the languages that were translated without the correction in-context.
+- Automation potentional – the 'non-human-backed' languages:
+    - For the later languages, which I didn't read/review string-by-string, I felt like I provided relatively little value and was sort of the bottleneck in Claude's workflow. 
+    - What value I did still provide:
+        - Apply judgement to the mistakes pointed out by review-claude
+        - Sometimes find errors based on reading the review, that Claude didn't notice / flag as problematic.
+            - It has an interesting tendency to mention pretty much all problematic things in the review, but then rationalize many of them away. 
+                - (I'm not totally sure where I got this impression, but I think it was in the earlier locales where I went through string-by-string analyzing everything in detail. – So I think it's pretty grounded in reality)
+        - I'd notice 'something off' and run the translator Claude again. 
+            - (IIRC in one Japanese run it seemed oddly fixated on the Korean examples, and made weird rationalizations and the review Claude found lots of issues, so I just reran the translator and then it was better)
+    - But this value I provided was somewhat rare. For lots of locales I was just:
+        - editing and copy-pasting prompts
+        - Reading reviews closely
+        - Often the reviewer didn't find any issues
+        - If the reviewer found issues, I'd apply 'common sense' but often (mostly?) still totally reliant on Claude's judgement in a way that seems automatable:
+            - I'd have the Claude explain to me or have different fresh-context Claudes re-translate, or assess the problem from different angle to arrive at a (hopefully) common sense solution. (Single Claude gets easily locked into nonsense view that confirms whatever bias is in the conversation already)
+            - In the last commit (Japanese) I had translator and reviewer Claude's debate and they arrived at a consensus. Interesting. This seems like:
+                - 1. More streamlined version of what I had been doing, when trying to 'apply judgement' to Claude's reviews.
+                - 2. Perhaps automatable
+- Perhaps bigger batches (~50 instead of ~20?) would speed things up.
+    - The mechanical / context switching work of: [editing the prompts, prompting for translation, waiting, prompting for review, waiting for review, discussing review, updating context with mistakes, possibly iterating and running translation again with updated context, committing] took quite a lot of time I feel. 
+        - Bigger batches might speed things up
+        - Or perhaps, if we automate more of this somehow, smaller batches could be just as fast, and easier to work with?
+- Perhaps parallelization would speed things up
+    - The first few languages, especially German, where we're building up a lot of context, make sense sequentially, but for the later languages, where we're not catching a lot of (new) mistakes / building up a lot of context, and where the review is mostly done by Claude not by me – parallelization seems like it would make sense.
+        - I'll have to look into how to do that – If the translator is a subagent, I think it cannot spawn a 'glossary-research' subagent? That will be a core part of the workflow for some string batches.
+-> Try agent teams
+    CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 claude --model claude-opus-4-5 --dangerously-skip-permissions
