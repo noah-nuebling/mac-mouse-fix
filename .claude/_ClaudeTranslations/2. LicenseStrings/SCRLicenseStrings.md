@@ -47,8 +47,8 @@ Languages to work on (Do human-backed first)          (Based on SCRTriggerString
 
       Southeast Asian
       - [x] vi            (human-backed)
-      - [ ] th            (reference: vi)
-      - [ ] id            (reference: vi)
+      - [x] th            (reference: vi)
+      - [x] id            (reference: vi)
       - [x] hi            (reference: de)
 
       Middle Eastern
@@ -67,7 +67,7 @@ Generating CTXLicenseStrings.md
 
 Prompt
     Main prompt
-        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Thai (th)
+        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Indonesian (id)
 
         Before translating each batch of strings (try to keep the batches around 5 or smaller), to help you keep the relevant constraints in mind, list all the string keys you've included in the batch, and then write out all the constraints that are relevant for those strings.
 
@@ -80,7 +80,7 @@ Prompt
 
         Hi there Claude! I've been working on doing some translations with ChatGPT. 
 
-        Let's review the Thai (th) translations.
+        Let's review the Indonesian (id) translations.
 
         This command will let you see the translations side-by-side with the Vietnamese (vi) translations (Which are the closest existing translations)
 
@@ -90,7 +90,7 @@ Prompt
 
         See .../CTXLicenseStrings.md for the full context of which strings we're translating and what guidance we gave to the translator.
 
-        Please compare the translations and analyze them for any mistakes or other improvements. Please explain the problems and differences to me to help me gain an intuitive understanding. (I don't speak Thai (th))
+        Please compare the translations and analyze them for any mistakes or other improvements. Please explain the problems and differences to me to help me gain an intuitive understanding. (I don't speak Indonesian (id))
 
         Do not read / invoke translation-review/SKILL.md
 
@@ -110,10 +110,11 @@ Removed from CTXLicenseStrings.md
 ---
 
 (Yet inconclusive) observations on formality
-    - German    - macOS: Informal (du), Us: Informal (du)
-    - Czech     - macOS: Formal (vy),   Us: Informal (ty)
-    - Turkish   - macOS: Formal (siz),  Us: Formal (siz)
-    - French    - macOS: Formal (vous), Us: Formal (vous)
+    - German        - macOS: Informal (du),     Us: Informal (du)
+    - Czech         - macOS: Formal (vy),       Us: Informal (ty)
+    - Turkish       - macOS: Formal (siz),      Us: Formal (siz)
+    - French        - macOS: Formal (vous),     Us: Formal (vous)
+    - Indonesian    - macOS: Formal (Anda),     Us: Formal (Anda)
 -> Thoughts behind this: 
     - We want to use what feels common/natural for software addressing the user.
     - But the tone of the app is a bit more casual than macOS, I think. 

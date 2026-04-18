@@ -171,8 +171,16 @@ Hebrew
 Greek
     Desired translation: Use sentence case (not title case)
         Explanation: Greek UI text uses sentence case - only the first word is capitalized. E.g. 'Ενεργοποίηση άδειας' not 'Ενεργοποίηση Άδειας'.
+            (Mirrors European Portuguese guidance about avoiding title case)
 
 Thai
     Desired translation: Use 'วันฟรี' for 'free day' (instead of 'วันทดลองใช้ฟรี')
         Explanation: 'ทดลอง' means 'trial', which could imply a limited version. 
             (Mirrors German guidance about using 'kostenloser Tag' over 'Testtag' here.)
+
+Indonesian
+    Desired translation: Use 'kesalahan' for 'error' (instead of English loanword 'error')
+        Explanation: While 'error' is widely understood in Indonesian tech contexts, mixing English and Indonesian (e.g. 'Pesan error:') reads slightly jarring. Using native 'kesalahan' creates a more cohesive feel.
+    Desired translation: Use sentence case for 'Bug Report' ('Laporan bug', not 'Laporan Bug')
+        Explanation: Indonesian UI text uses sentence case like most languages. Title case follows English convention but feels unnatural in Indonesian.
+            (Mirrors European Portuguese guidance about avoiding title case)

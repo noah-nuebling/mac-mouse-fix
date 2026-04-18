@@ -90,6 +90,12 @@
             "value" : "अपनी लाइसेंस कुंजी दर्ज करें"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masukkan kunci lisensi Anda"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
