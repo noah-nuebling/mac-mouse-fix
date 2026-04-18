@@ -161,3 +161,9 @@ Swedish
 Arabic
     Desired translation: Use 'يومًا' (singular accusative) for 'days' in trial-notif.body
         Explanation: There are 11+ trial days (30 at the time of writing). Therefore, singular accusative is the correct form.
+
+Hebrew
+    Desired translation: Don't use 'ביטול' for 'deactivate' in license-toast.deactivate and license-button.deactivate
+        Explanation: This option simply disassociates the license from the app, but does not permanently annul it. 'ביטול' implies permanence.
+    Desired translation: Emphasize 'לא ניתן היה להפעיל' (could not be activated) in license-toast.free-country
+        Explanation: Emphasizing '**לא ניתן היה להפעיל**' matches the English gist '**could not be activated**'

@@ -52,8 +52,8 @@ Languages to work on (Do human-backed first)          (Based on SCRTriggerString
       - [x] hi            (reference: de)
 
       Middle Eastern
-      - [ ] ar            (reference: de [not very close but wrote de by hand])
-      - [ ] he            (reference: de [not very close but wrote de by hand])
+      - [x] ar            (reference: de [not very close but wrote de by hand])
+      - [x] he            (reference: de [not very close but wrote de by hand])
 
       Chinese
       - [x] zh-Hant       (human-backed)
@@ -67,7 +67,7 @@ Generating CTXLicenseStrings.md
 
 Prompt
     Main prompt
-        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Arabic (ar)
+        Hi there Claude! Please use the CTXLicenseStrings.md doc to translate the license strings into Hebrew (he)
 
         Before translating each batch of strings (try to keep the batches around 5 or smaller), to help you keep the relevant constraints in mind, list all the string keys you've included in the batch, and then write out all the constraints that are relevant for those strings.
 
@@ -80,9 +80,9 @@ Prompt
 
         Hi there Claude! I've been working on doing some translations with ChatGPT. 
 
-        Let's review the Arabic (ar) translations.
+        Let's review the Hebrew (he) translations.
 
-        This command will let you see the translations side-by-side with the German (de) translations (Which are the closest existing translations) (Actually, there are no close existing translations, but cross-referencing with German might still be helpful):
+        This command will let you see the translations side-by-side with the Arabic (ar) translations (Which are the closest existing translations)
 
         ./run mfstrings inspect --sortcol key --pretty --grep 'trial-notif|trial-counter|license-button|license-toast|JJv-GH-7io' --cols fileid,key,en,LOCALE1,LOCALE2
 
@@ -90,7 +90,7 @@ Prompt
 
         See .../CTXLicenseStrings.md for the full context of which strings we're translating and what guidance we gave to the translator.
 
-        Please compare the translations and analyze them for any mistakes or other improvements. Please explain the problems and differences to me to help me gain an intuitive understanding. (I don't speak Arabic)
+        Please compare the translations and analyze them for any mistakes or other improvements. Please explain the problems and differences to me to help me gain an intuitive understanding. (I don't speak Hebrew)
 
         Do not read / invoke translation-review/SKILL.md
 

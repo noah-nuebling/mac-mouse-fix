@@ -1152,6 +1152,12 @@
             "value" : "Activer la licence"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הפעל רישיון"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1293,6 +1299,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Désactiver la licence"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "השבת רישיון"
           }
         },
         "hi" : {
@@ -1438,6 +1450,12 @@
             "value" : "Votre licence a été **activée** ! 🎉"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הרישיון שלך **הופעל**! 🎉"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1579,6 +1597,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cette licence a été activée **%2$d** fois. Le maximum est de **%3$d**.\n\nEn raison de cela, la licence a été invalidée. C'est pour prévenir le piratage. Si vous avez d'autres raisons d'avoir activé la licence autant de fois, je m'excuse pour le désagrément.\n\nContactez-moi simplement [ici](%1$@) et je vous fournirai une nouvelle licence ! Merci pour votre compréhension."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "רישיון זה הופעל **%2$d** פעמים. המקסימום הוא **%3$d**.\n\nבגלל זה, הרישיון בוטל. זה כדי למנוע פיראטיות. אם היו לך סיבות אחרות להפעיל את הרישיון כל כך הרבה פעמים, אני מתנצל על אי הנוחות.\n\nפשוט [צור איתי קשר](%1$@) ואספק לך רישיון חדש! תודה על ההבנה."
           }
         },
         "hi" : {
@@ -1724,6 +1748,12 @@
             "value" : "Votre app est **déjà licenciée** avec cette clé"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "האפליקציה שלך **כבר מורשית** עם מפתח זה"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1865,6 +1895,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Votre licence a été **désactivée**"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הרישיון שלך **הושבת**"
           }
         },
         "hi" : {
@@ -2010,6 +2046,12 @@
             "value" : "Cette licence **n'a pas pu être activée**, mais Mac Mouse Fix est actuellement **gratuit dans votre pays**."
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "רישיון זה **לא ניתן היה להפעיל**, אבל Mac Mouse Fix כרגע **חינמי במדינתך**."
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2151,6 +2193,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Une **erreur avec le serveur de licences** s'est produite\n\nMessage d'erreur :\n\n%@"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אירעה **שגיאה בשרת הרישיונות**\n\nהודעת השגיאה:\n\n%@"
           }
         },
         "hi" : {
@@ -2296,6 +2344,12 @@
             "value" : "Il y a un **problème avec la connexion internet**\n\nAssurez-vous que votre ordinateur est en ligne et qu'aucun pare-feu ne bloque Mac Mouse Fix pour se connecter à internet.\n\nSi cela ne résout pas le problème, contactez-moi [ici](%@)."
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "יש **בעיה בחיבור לאינטרנט**\n\nודא שהמחשב שלך מחובר לאינטרנט ושאין חומת אש שחוסמת את Mac Mouse Fix מלהתחבר לאינטרנט.\n\nאם זה לא פותר את הבעיה, צור איתי קשר [כאן](%@)."
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2436,6 +2490,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Il y a un **problème avec le serveur de licences**\n\nVeuillez réessayer plus tard.\n\nSi le problème persiste, contactez-moi [ici](%@)."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "יש **בעיה בשרת הרישיונות**\n\nאנא נסה שוב מאוחר יותר.\n\nאם הבעיה נמשכת, צור איתי קשר [כאן](%@)."
           }
         },
         "hi" : {
@@ -2581,6 +2641,12 @@
             "value" : "Une **erreur inconnue** s'est produite :\n\n%@"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אירעה **שגיאה לא ידועה**:\n\n%@"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2724,6 +2790,12 @@
             "value" : "« **%@** » n'est pas une clé de licence valide\n\nVeillez à saisir votre clé Mac Mouse Fix exactement telle que vous l'avez reçue."
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'**%@**' אינו מפתח רישיון תקף\n\nודא שאתה מזין את מפתח Mac Mouse Fix שלך בדיוק כפי שקיבלת אותו."
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2865,6 +2937,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "L'activation de votre licence a échoué pour des **raisons inconnues**\n\nVeuillez écrire un **rapport de bug** [ici](%@)"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הפעלת הרישיון שלך נכשלה **מסיבות לא ידועות**\n\nאנא כתוב **דוח באג** [כאן](%@)"
           }
         },
         "hi" : {
@@ -3572,6 +3650,12 @@
             "value" : "Jour offert **%1$d/%2$d**"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "יום חינם **%1$d/%2$d**"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3713,6 +3797,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Les jours offerts sont écoulés"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ימי החינם הסתיימו"
           }
         },
         "hi" : {
@@ -3858,6 +3948,12 @@
             "value" : "Activer une licence"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הפעל רישיון"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3999,6 +4095,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bonjour ! Vous utilisez Mac Mouse Fix depuis **%1$d jours** maintenant. J'espère que vous l'appréciez !\n\nSi vous souhaitez continuer à utiliser Mac Mouse Fix, vous pouvez [l'acheter maintenant](%2$@)."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שלום! אתה משתמש ב-Mac Mouse Fix כבר **%1$d ימים**. אני מקווה שאתה נהנה!\n\nאם אתה רוצה להמשיך להשתמש ב-Mac Mouse Fix, תוכל [לקנות אותו עכשיו](%2$@)."
           }
         },
         "hi" : {

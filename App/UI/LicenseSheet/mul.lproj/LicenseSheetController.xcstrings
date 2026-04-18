@@ -72,6 +72,12 @@
             "value" : "Entrez votre clé de licence"
           }
         },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הזן את מפתח הרישיון שלך"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
