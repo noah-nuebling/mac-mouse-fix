@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **4月 2026**
 
+- 🇺🇸&nbsp;Wendell&nbsp;Troy - "Shut up and take my money! <3"
 - 🇺🇸&nbsp;Denys&nbsp;Kalinkin
 - 🇺🇸&nbsp;Kurt&nbsp;Claussen - "Mac Mouse Fix makes my life a whole lot easier. Thanks!"
 - 🇨🇦&nbsp;Benjamin&nbsp;Ye
