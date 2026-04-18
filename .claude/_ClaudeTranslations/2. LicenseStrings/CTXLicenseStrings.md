@@ -184,3 +184,10 @@ Indonesian
     Desired translation: Use sentence case for 'Bug Report' ('Laporan bug', not 'Laporan Bug')
         Explanation: Indonesian UI text uses sentence case like most languages. Title case follows English convention but feels unnatural in Indonesian.
             (Mirrors European Portuguese guidance about avoiding title case)
+
+Hungarian
+    Desired translation: Use 'Az alkalmazásod' (your app) in license-toast.already-active (instead of 'Az alkalmazás')
+        Explanation: Without the possessive, the message is ambiguous.
+            (Mirrors German and Korean guidance about using possessive here.)
+    Desired translation: Don't use a colon in trial-counter.active ('Ingyenes nap **%1$d/%2$d**', not 'Ingyenes nap: **%1$d/%2$d**')
+        Explanation: Unnecessary punctuation. Keep it simple.

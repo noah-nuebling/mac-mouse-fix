@@ -90,6 +90,12 @@
             "value" : "अपनी लाइसेंस कुंजी दर्ज करें"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add meg a licenckulcsod"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",

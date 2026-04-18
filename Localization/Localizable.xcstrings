@@ -1170,6 +1170,12 @@
             "value" : "लाइसेंस सक्रिय करें"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licenc aktiválása"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1335,6 +1341,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "लाइसेंस निष्क्रिय करें"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licenc deaktiválása"
           }
         },
         "id" : {
@@ -1504,6 +1516,12 @@
             "value" : "आपका लाइसेंस **सक्रिय** हो गया! 🎉"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A licenced **aktiválva lett**! 🎉"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1669,6 +1687,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "यह लाइसेंस **%2$d** बार सक्रिय किया गया है। अधिकतम सीमा **%3$d** है।\n\nइसी वजह से लाइसेंस अमान्य कर दिया गया है। यह पायरेसी रोकने के लिए है। अगर आपके पास इतनी बार लाइसेंस सक्रिय करने के अन्य कारण थे, तो असुविधा के लिए क्षमा करें।\n\nबस [यहाँ](%1$@) संपर्क करें और मैं आपको नया लाइसेंस दूंगा! समझने के लिए धन्यवाद।"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ezt a licencet **%2$d** alkalommal aktiválták. A maximum **%3$d**.\n\nEmiatt a licenc érvénytelenítve lett. Ez a kalózkodás megelőzését szolgálja. Ha más okból aktiváltad ennyiszer a licencet, elnézést kérek a kellemetlenségért.\n\nEgyszerűen [írj nekem](%1$@), és adok egy új licencet! Köszönöm a megértést."
           }
         },
         "id" : {
@@ -1838,6 +1862,12 @@
             "value" : "आपकी ऐप इस कुंजी से **पहले से लाइसेंस प्राप्त** है"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Az alkalmazásod **már licencelve van** ezzel a kulccsal"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2003,6 +2033,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "आपका लाइसेंस **निष्क्रिय** हो गया"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A licenced **deaktiválva lett**"
           }
         },
         "id" : {
@@ -2172,6 +2208,12 @@
             "value" : "यह लाइसेंस **सक्रिय नहीं हो सका** लेकिन Mac Mouse Fix वर्तमान में **आपके देश में मुफ़्त** है।"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ezt a licencet **nem sikerült aktiválni**, de a Mac Mouse Fix jelenleg **ingyenes az országodban**."
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2337,6 +2379,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**लाइसेंस सर्वर में त्रुटि** हुई\n\nत्रुटि संदेश:\n\n%@"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Hiba történt a licencszerverrel**\n\nHibaüzenet:\n\n%@"
           }
         },
         "id" : {
@@ -2506,6 +2554,12 @@
             "value" : "**इंटरनेट कनेक्शन में समस्या** है\n\nसुनिश्चित करें कि आपका कंप्यूटर ऑनलाइन है और कोई फ़ायरवॉल Mac Mouse Fix को इंटरनेट से कनेक्ट होने से नहीं रोक रहा है।\n\nअगर इससे समस्या हल नहीं होती, तो मुझसे [यहाँ](%@) संपर्क करें।"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Probléma van az internetkapcsolattal**\n\nGyőződj meg róla, hogy a számítógéped online van, és egyetlen tűzfal sem akadályozza a Mac Mouse Fix internethez való csatlakozását.\n\nHa ez nem oldja meg a problémát, keress meg [itt](%@)."
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2670,6 +2724,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**लाइसेंस सर्वर में समस्या** है\n\nकृपया बाद में पुनः प्रयास करें।\n\nअगर समस्या बनी रहती है, तो मुझसे [यहाँ](%@) संपर्क करें।"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Probléma van a licencszerverrel**\n\nKérlek, próbáld újra később.\n\nHa a probléma továbbra is fennáll, keress meg [itt](%@)."
           }
         },
         "id" : {
@@ -2839,6 +2899,12 @@
             "value" : "एक **अज्ञात त्रुटि** हुई:\n\n%@"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Ismeretlen hiba** történt:\n\n%@"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3006,6 +3072,12 @@
             "value" : "'**%@**' एक मान्य लाइसेंस कुंजी नहीं है\n\nसुनिश्चित करें कि आपने अपनी Mac Mouse Fix कुंजी ठीक वैसे ही दर्ज की है जैसी आपको मिली थी।"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A(z) '**%@**' nem érvényes licenckulcs\n\nGyőződj meg róla, hogy pontosan úgy adod meg a Mac Mouse Fix kulcsodat, ahogy megkaptad."
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3171,6 +3243,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "आपके लाइसेंस की सक्रियता **अज्ञात कारणों** से विफल हुई\n\nकृपया [यहाँ](%@) **बग रिपोर्ट** लिखें"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A licenc aktiválása **ismeretlen okból** sikertelen volt\n\nKérlek, írj egy **hibajelentést** [ide](%@)"
           }
         },
         "id" : {
@@ -3902,6 +3980,12 @@
             "value" : "मुफ़्त दिन **%1$d/%2$d**"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingyenes nap **%1$d/%2$d**"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4067,6 +4151,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "मुफ़्त दिन समाप्त"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Az ingyenes napok lejártak"
           }
         },
         "id" : {
@@ -4236,6 +4326,12 @@
             "value" : "लाइसेंस सक्रिय करें"
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Licenc aktiválása"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4401,6 +4497,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "नमस्ते! आप **%1$d दिनों** से Mac Mouse Fix का उपयोग कर रहे हैं। मुझे उम्मीद है कि आपको यह पसंद आ रहा है!\n\nअगर आप Mac Mouse Fix का उपयोग जारी रखना चाहते हैं, तो आप इसे [अभी खरीद](%2$@) सकते हैं।"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Szia! Már **%1$d napja** használod a Mac Mouse Fix-et. Remélem, elégedett vagy vele!\n\nHa továbbra is használni szeretnéd, [megvásárolhatod itt](%2$@)."
           }
         },
         "id" : {
