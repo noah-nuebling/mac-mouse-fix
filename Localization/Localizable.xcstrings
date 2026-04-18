@@ -1227,7 +1227,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lisansı Etkinleştir"
+            "value" : "Lisansı etkinleştir"
           }
         },
         "uk" : {
@@ -1382,7 +1382,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lisansı Devre Dışı Bırak"
+            "value" : "Lisansı devre dışı bırak"
           }
         },
         "uk" : {
@@ -3086,7 +3086,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lisansınızın etkinleştirilmesi **bilinmeyen nedenlerle** başarısız oldu\n\n[Buradan](%@) bir **Hata Raporu** yazın lütfen"
+            "value" : "Lisansınızın etkinleştirilmesi **bilinmeyen nedenlerle** başarısız oldu\n\n[Buradan](%@) bir **hata raporu** yazın lütfen"
           }
         },
         "uk" : {
@@ -4113,7 +4113,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lisansı Etkinleştir"
+            "value" : "Lisansı etkinleştir"
           }
         },
         "uk" : {
