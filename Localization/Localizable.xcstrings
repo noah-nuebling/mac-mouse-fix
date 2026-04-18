@@ -1224,6 +1224,12 @@
             "value" : "Aktivera licens"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปิดใช้งานใบอนุญาต"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1377,6 +1383,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Inaktivera licens"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปิดใช้งานใบอนุญาต"
           }
         },
         "tr" : {
@@ -1534,6 +1546,12 @@
             "value" : "Din licens har **aktiverats**! 🎉"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใบอนุญาตของคุณถูก**เปิดใช้งาน**แล้ว! 🎉"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1687,6 +1705,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Denna licens har aktiverats **%2$d** gånger. Maximum är **%3$d**.\n\nDärför har licensen blivit ogiltig. Detta är för att förhindra piratkopiering. Om du har andra anledningar till att aktivera licensen så många gånger, ber jag om ursäkt för besväret.\n\nHör bara av dig [här](%1$@) så ger jag dig en ny licens! Tack för din förståelse."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใบอนุญาตนี้ถูกเปิดใช้งานแล้ว **%2$d** ครั้ง จำนวนสูงสุดคือ **%3$d** ครั้ง\n\nด้วยเหตุนี้ ใบอนุญาตจึงถูกยกเลิก เพื่อป้องกันการละเมิดลิขสิทธิ์ หากคุณมีเหตุผลอื่นในการเปิดใช้งานใบอนุญาตหลายครั้งเช่นนี้ ต้องขออภัยในความไม่สะดวก\n\nเพียง[ติดต่อฉัน](%1$@) แล้วฉันจะให้ใบอนุญาตใหม่แก่คุณ! ขอบคุณที่เข้าใจ"
           }
         },
         "tr" : {
@@ -1844,6 +1868,12 @@
             "value" : "Din app är **redan licensierad** med denna nyckel"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แอปของคุณ**ได้รับอนุญาตแล้ว**ด้วยคีย์นี้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1997,6 +2027,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Din licens har **inaktiverats**"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใบอนุญาตของคุณถูก**ปิดใช้งาน**แล้ว"
           }
         },
         "tr" : {
@@ -2154,6 +2190,12 @@
             "value" : "Denna licens **kunde inte aktiveras**, men Mac Mouse Fix är för närvarande **gratis i ditt land**."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใบอนุญาตนี้**ไม่สามารถเปิดใช้งานได้** แต่ Mac Mouse Fix ปัจจุบัน**ใช้ฟรีในประเทศของคุณ**"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2307,6 +2349,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ett **fel med licensservern** inträffade\n\nFelmeddelande:\n\n%@"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เกิด**ข้อผิดพลาดกับเซิร์ฟเวอร์ใบอนุญาต**\n\nข้อความ:\n\n%@"
           }
         },
         "tr" : {
@@ -2464,6 +2512,12 @@
             "value" : "Det finns ett **problem med internetanslutningen**\n\nKontrollera att din dator är online och att inga brandväggar blockerar Mac Mouse Fix från att ansluta till internet.\n\nOm detta inte löser problemet, kontakta mig [här](%@)."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "มี**ปัญหาเกี่ยวกับการเชื่อมต่ออินเทอร์เน็ต**\n\nตรวจสอบให้แน่ใจว่าคอมพิวเตอร์ของคุณออนไลน์อยู่ และไม่มีไฟร์วอลล์ปิดกั้นการเชื่อมต่อของ Mac Mouse Fix\n\nหากยังไม่สามารถแก้ไขปัญหาได้ กรุณาติดต่อฉัน[ที่นี่](%@)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2616,6 +2670,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Det finns ett **problem med licensservern**\n\nFörsök igen senare.\n\nOm problemet kvarstår, kontakta mig [här](%@)."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "มี**ปัญหากับเซิร์ฟเวอร์ใบอนุญาต**\n\nกรุณาลองใหม่อีกครั้งในภายหลัง\n\nหากปัญหายังคงอยู่ กรุณาติดต่อฉัน[ที่นี่](%@)"
           }
         },
         "tr" : {
@@ -2773,6 +2833,12 @@
             "value" : "Ett **okänt fel** inträffade:\n\n%@"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เกิด**ข้อผิดพลาดที่ไม่ทราบสาเหตุ**:\n\n%@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2928,6 +2994,12 @@
             "value" : "'**%@**' är inte en giltig licensnyckel\n\nKontrollera att du anger din Mac Mouse Fix-nyckel exakt som du fick den."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'**%@**' ไม่ใช่คีย์ใบอนุญาตที่ถูกต้อง\n\nตรวจสอบให้แน่ใจว่าคุณป้อนคีย์ Mac Mouse Fix ตรงตามที่ได้รับ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3081,6 +3153,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aktivering av din licens misslyckades av **okända skäl**\n\nSkriv gärna en **felrapport** [här](%@)"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การเปิดใช้งานใบอนุญาตล้มเหลวเนื่องจาก**สาเหตุที่ไม่ทราบ**\n\nกรุณาเขียน**รายงานข้อผิดพลาด**[ที่นี่](%@)"
           }
         },
         "tr" : {
@@ -3800,6 +3878,12 @@
             "value" : "Gratisdag **%1$d/%2$d**"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "วันฟรี **%1$d/%2$d**"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3953,6 +4037,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gratisdagarna är slut"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หมดวันฟรีแล้ว"
           }
         },
         "tr" : {
@@ -4110,6 +4200,12 @@
             "value" : "Aktivera licens"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปิดใช้งานใบอนุญาต"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4263,6 +4359,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hej! Du har använt Mac Mouse Fix i **%1$d dagar** nu. Jag hoppas du trivs!\n\nOm du vill fortsätta använda Mac Mouse Fix kan du [köpa det nu](%2$@)."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สวัสดี! คุณใช้ Mac Mouse Fix มาได้ **%1$d วัน** แล้ว หวังว่าคุณจะชอบมัน!\n\nหากคุณต้องการใช้ Mac Mouse Fix ต่อไป คุณสามารถ[ซื้อได้ตอนนี้](%2$@)"
           }
         },
         "tr" : {

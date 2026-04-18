@@ -144,6 +144,12 @@
             "value" : "Ange din licensnyckel"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ป้อนคีย์ใบอนุญาตของคุณ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",

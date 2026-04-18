@@ -171,3 +171,8 @@ Hebrew
 Greek
     Desired translation: Use sentence case (not title case)
         Explanation: Greek UI text uses sentence case - only the first word is capitalized. E.g. 'Ενεργοποίηση άδειας' not 'Ενεργοποίηση Άδειας'.
+
+Thai
+    Desired translation: Use 'วันฟรี' for 'free day' (instead of 'วันทดลองใช้ฟรี')
+        Explanation: 'ทดลอง' means 'trial', which could imply a limited version. 
+            (Mirrors German guidance about using 'kostenloser Tag' over 'Testtag' here.)
