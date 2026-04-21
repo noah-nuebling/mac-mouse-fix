@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **april 2026**
 
+- 🇿🇦&nbsp;Christopher&nbsp;Araujo
 - 🇨🇭&nbsp;Pascal - "Thank you!"
 - 🇹🇼&nbsp;Yen&nbsp;Huang
 - 🇺🇸&nbsp;Wendell&nbsp;Troy - "Shut up and take my money! <3"
