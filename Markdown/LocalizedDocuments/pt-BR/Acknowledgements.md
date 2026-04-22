@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **abril 2026**
 
+- 🇺🇸&nbsp;Tony&nbsp;Wong - "Thank you for this incredible tool! It works like a absolute gem and has completely transformed my Mac experience. Happily donating to support your great work. Keep it up!"
 - 🇿🇦&nbsp;Christopher&nbsp;Araujo
 - 🇨🇭&nbsp;Pascal - "Thank you!"
 - 🇹🇼&nbsp;Yen&nbsp;Huang
