@@ -7,9 +7,12 @@ on:
         description: Upstream release tag to repackage as DMG
         required: true
         default: "3.0.8"
+  release:
+    types:
+      - published
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build-dmg:
@@ -39,7 +42,12 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p "$ZIP_DOWNLOAD_DIR"
-          gh release download "${{ inputs.release_tag }}" \
+          RELEASE_TAG="${{ inputs.release_tag }}"
+          if [ -z "$RELEASE_TAG" ]; then
+            RELEASE_TAG="${{ github.event.release.tag_name }}"
+          fi
+          test -n "$RELEASE_TAG"
+          gh release download "$RELEASE_TAG" \
             --repo "$UPSTREAM_REPO" \
             --pattern "$UPSTREAM_ASSET_NAME" \
             --dir "$ZIP_DOWNLOAD_DIR"
@@ -71,6 +79,20 @@ jobs:
       - name: Upload DMG artifact
         uses: actions/upload-artifact@v4
         with:
-          name: mac-mouse-fix-dmg-${{ inputs.release_tag }}
+          name: mac-mouse-fix-dmg-${{ inputs.release_tag || github.event.release.tag_name }}
           path: ${{ github.workspace }}/build/dmg/*.dmg
           if-no-files-found: error
+
+      - name: Upload DMG to release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          RELEASE_TAG="${{ inputs.release_tag }}"
+          if [ -z "$RELEASE_TAG" ]; then
+            RELEASE_TAG="${{ github.event.release.tag_name }}"
+          fi
+          test -n "$RELEASE_TAG"
+          gh release upload "$RELEASE_TAG" \
+            "$DMG_OUTPUT_DIR"/*.dmg \
+            --repo "$GITHUB_REPOSITORY" \
+            --clobber
