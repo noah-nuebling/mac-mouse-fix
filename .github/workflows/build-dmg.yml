@@ -1,0 +1,58 @@
+name: Build DMG
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  build-dmg:
+    runs-on: macos-15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install create-dmg
+        run: npm install --global create-dmg
+
+      - name: Build Mac Mouse Fix.app
+        env:
+          DERIVED_DATA_PATH: ${{ github.workspace }}/build/DerivedData
+          SOURCE_PACKAGES_PATH: ${{ github.workspace }}/build/SourcePackages
+        run: |
+          xcodebuild \
+            -project "Mouse Fix.xcodeproj" \
+            -scheme "App - Release" \
+            -configuration Release \
+            -derivedDataPath "$DERIVED_DATA_PATH" \
+            -clonedSourcePackagesDirPath "$SOURCE_PACKAGES_PATH" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            build
+
+      - name: Create DMG
+        env:
+          APP_PATH: ${{ github.workspace }}/build/DerivedData/Build/Products/Release/Mac Mouse Fix.app
+          DMG_OUTPUT_DIR: ${{ github.workspace }}/build/dmg
+        run: |
+          test -d "$APP_PATH"
+          mkdir -p "$DMG_OUTPUT_DIR"
+          create-dmg --overwrite --no-code-sign "$APP_PATH" "$DMG_OUTPUT_DIR"
+
+      - name: Upload DMG artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mac-mouse-fix-dmg
+          path: ${{ github.workspace }}/build/dmg/*.dmg
+          if-no-files-found: error
