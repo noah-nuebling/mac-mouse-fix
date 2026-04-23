@@ -1,10 +1,12 @@
-name: Build DMG
+name: Build DMG From Upstream Release
 
 on:
   workflow_dispatch:
-  push:
-    tags:
-      - "v*"
+    inputs:
+      release_tag:
+        description: Upstream release tag to repackage as DMG
+        required: true
+        default: "3.0.8"
 
 permissions:
   contents: read
@@ -13,46 +15,62 @@ jobs:
   build-dmg:
     runs-on: macos-15
 
+    env:
+      UPSTREAM_REPO: noah-nuebling/mac-mouse-fix
+      UPSTREAM_ASSET_NAME: MacMouseFixApp.zip
+      ZIP_DOWNLOAD_DIR: ${{ github.workspace }}/build/upstream
+      EXTRACT_DIR: ${{ github.workspace }}/build/extracted
+      DMG_OUTPUT_DIR: ${{ github.workspace }}/build/dmg
+
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: "20"
+          node-version: "24"
 
       - name: Install create-dmg
         run: npm install --global create-dmg
 
-      - name: Build Mac Mouse Fix.app
+      - name: Download upstream release asset
         env:
-          DERIVED_DATA_PATH: ${{ github.workspace }}/build/DerivedData
-          SOURCE_PACKAGES_PATH: ${{ github.workspace }}/build/SourcePackages
+          GH_TOKEN: ${{ github.token }}
         run: |
-          xcodebuild \
-            -project "Mouse Fix.xcodeproj" \
-            -scheme "App - Release" \
-            -configuration Release \
-            -derivedDataPath "$DERIVED_DATA_PATH" \
-            -clonedSourcePackagesDirPath "$SOURCE_PACKAGES_PATH" \
-            CODE_SIGNING_ALLOWED=NO \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGN_IDENTITY="" \
-            build
+          mkdir -p "$ZIP_DOWNLOAD_DIR"
+          gh release download "${{ inputs.release_tag }}" \
+            --repo "$UPSTREAM_REPO" \
+            --pattern "$UPSTREAM_ASSET_NAME" \
+            --dir "$ZIP_DOWNLOAD_DIR"
+          test -f "$ZIP_DOWNLOAD_DIR/$UPSTREAM_ASSET_NAME"
+
+      - name: Extract upstream app
+        env:
+          APP_PATH: ${{ github.workspace }}/build/extracted/Mac Mouse Fix.app
+        run: |
+          rm -rf "$EXTRACT_DIR"
+          mkdir -p "$EXTRACT_DIR"
+          ditto -x -k "$ZIP_DOWNLOAD_DIR/$UPSTREAM_ASSET_NAME" "$EXTRACT_DIR"
+          test -d "$APP_PATH"
+
+      - name: Verify upstream app signature
+        env:
+          APP_PATH: ${{ github.workspace }}/build/extracted/Mac Mouse Fix.app
+        run: |
+          codesign --verify --deep --strict "$APP_PATH"
+          spctl -a -vv "$APP_PATH"
 
       - name: Create DMG
         env:
-          APP_PATH: ${{ github.workspace }}/build/DerivedData/Build/Products/Release/Mac Mouse Fix.app
-          DMG_OUTPUT_DIR: ${{ github.workspace }}/build/dmg
+          APP_PATH: ${{ github.workspace }}/build/extracted/Mac Mouse Fix.app
         run: |
-          test -d "$APP_PATH"
           mkdir -p "$DMG_OUTPUT_DIR"
           create-dmg --overwrite --no-code-sign "$APP_PATH" "$DMG_OUTPUT_DIR"
 
       - name: Upload DMG artifact
         uses: actions/upload-artifact@v4
         with:
-          name: mac-mouse-fix-dmg
+          name: mac-mouse-fix-dmg-${{ inputs.release_tag }}
           path: ${{ github.workspace }}/build/dmg/*.dmg
           if-no-files-found: error
