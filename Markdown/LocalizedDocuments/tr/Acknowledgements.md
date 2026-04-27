@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Nisan 2026**
 
+- 🇺🇸&nbsp;Connor - "🐭"
 - 🇬🇧&nbsp;Chris&nbsp;Hayden - "Superb stuff"
 - 🇺🇸&nbsp;Eric&nbsp;Nix
 - 🇺🇸&nbsp;Tony&nbsp;Wong - "Thank you for this incredible tool! It works like a absolute gem and has completely transformed my Mac experience. Happily donating to support your great work. Keep it up!"
