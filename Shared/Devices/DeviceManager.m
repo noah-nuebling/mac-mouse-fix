@@ -32,6 +32,7 @@
 
 #import "SharedUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "LogitechCIDActivator.h"
 
 @implementation DeviceManager
 
@@ -267,6 +268,9 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         
     #endif
         
+        /// Activate Logitech HID++ CID diversion for extra buttons
+        [[LogitechCIDActivator shared] handleDeviceAttached: device];
+
         /// Log
         DDLogInfo(@"New device added to attached devices:\n%@", newDevice);
         
@@ -307,6 +311,9 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
 //        [Scroll decide];
 //        [ButtonInputReceiver decide];
         
+        /// Clean up Logitech CID diversion
+        [[LogitechCIDActivator shared] handleDeviceRemoved: device];
+
         /// Log
         
         DDLogInfo(@"Attached device was removed:\n%@", attachedDevice);
