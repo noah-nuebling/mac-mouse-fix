@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **duben 2026**
 
+- 🇬🇧&nbsp;Svetlomir&nbsp;Stratiev
 - 🇹🇼&nbsp;益伸&nbsp;周
 - 🇺🇸&nbsp;Connor - "🐭"
 - 🇬🇧&nbsp;Chris&nbsp;Hayden - "Superb stuff"

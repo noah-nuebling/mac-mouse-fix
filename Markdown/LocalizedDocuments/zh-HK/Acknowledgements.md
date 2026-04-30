@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **4月 2026**
 
+- 🇬🇧&nbsp;Svetlomir&nbsp;Stratiev
 - 🇹🇼&nbsp;益伸&nbsp;周
 - 🇺🇸&nbsp;Connor - "🐭"
 - 🇬🇧&nbsp;Chris&nbsp;Hayden - "Superb stuff"

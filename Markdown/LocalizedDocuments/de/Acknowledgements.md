@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **April 2026**
 
+- 🇬🇧&nbsp;Svetlomir&nbsp;Stratiev
 - 🇹🇼&nbsp;益伸&nbsp;周
 - 🇺🇸&nbsp;Connor - "🐭"
 - 🇬🇧&nbsp;Chris&nbsp;Hayden - "Superb stuff"
