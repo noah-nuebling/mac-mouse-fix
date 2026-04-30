@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Nisan 2026**
 
+- 🇧🇷&nbsp;Thiago&nbsp;Veloso&nbsp;Miranda
 - 🇬🇧&nbsp;Svetlomir&nbsp;Stratiev
 - 🇹🇼&nbsp;益伸&nbsp;周
 - 🇺🇸&nbsp;Connor - "🐭"
