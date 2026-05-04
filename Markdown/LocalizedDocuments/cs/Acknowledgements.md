@@ -72,6 +72,10 @@ Děkujeme za vaši podporu! :)
 
 Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neuvěřitelným milkšejkem**. (A někteří mi dokonce zanechali zprávu) Díky za *cukrovou nálož*!
 
+**květen 2026**
+
+- 🇸🇦&nbsp;Prof&nbsp;B - "Thank you Noah for making my life easier!"
+
 **duben 2026**
 
 - 🇧🇷&nbsp;Thiago&nbsp;Veloso&nbsp;Miranda

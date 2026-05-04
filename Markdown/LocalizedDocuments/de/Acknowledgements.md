@@ -72,6 +72,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den *Zucker-Kick*!
 
+**Mai 2026**
+
+- 🇸🇦&nbsp;Prof&nbsp;B - "Thank you Noah for making my life easier!"
+
 **April 2026**
 
 - 🇧🇷&nbsp;Thiago&nbsp;Veloso&nbsp;Miranda

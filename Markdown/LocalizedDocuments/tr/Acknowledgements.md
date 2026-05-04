@@ -78,6 +78,10 @@ Desteğiniz için teşekkürler! :)
 
 Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem bir Milkshake** ısmarladılar. (Hatta bazıları bir mesaj bile gönderdi!) *Ekstra şeker* için teşekkürler!
 
+**Mayıs 2026**
+
+- 🇸🇦&nbsp;Prof&nbsp;B - "Thank you Noah for making my life easier!"
+
 **Nisan 2026**
 
 - 🇧🇷&nbsp;Thiago&nbsp;Veloso&nbsp;Miranda

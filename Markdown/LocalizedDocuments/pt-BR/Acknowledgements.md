@@ -74,6 +74,10 @@ Obrigado pelo apoio! :)
 
 Essas pessoas contribuíram com um valor bem acima do preço padrão e me presentearam com um milk-shake incrível. (E algumas ainda deixaram uma mensagem!) Obrigado pelo pico de açúcar! 😄
 
+**maio 2026**
+
+- 🇸🇦&nbsp;Prof&nbsp;B - "Thank you Noah for making my life easier!"
+
 **abril 2026**
 
 - 🇧🇷&nbsp;Thiago&nbsp;Veloso&nbsp;Miranda
