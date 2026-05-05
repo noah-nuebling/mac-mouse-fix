@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **5月 2026**
 
+- 🇹🇭&nbsp;Valad&nbsp;Saneeh - "Thanks for making this app!"
 - 🇸🇰&nbsp;Mario&nbsp;Zila
 - 🇸🇦&nbsp;Prof&nbsp;B - "Thank you Noah for making my life easier!"
 

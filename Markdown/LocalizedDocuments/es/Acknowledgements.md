@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **mayo 2026**
 
+- 🇹🇭&nbsp;Valad&nbsp;Saneeh - "Thanks for making this app!"
 - 🇸🇰&nbsp;Mario&nbsp;Zila
 - 🇸🇦&nbsp;Prof&nbsp;B - "Thank you Noah for making my life easier!"
 

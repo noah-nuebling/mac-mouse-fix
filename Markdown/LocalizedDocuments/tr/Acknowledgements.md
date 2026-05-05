@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Mayıs 2026**
 
+- 🇹🇭&nbsp;Valad&nbsp;Saneeh - "Thanks for making this app!"
 - 🇸🇰&nbsp;Mario&nbsp;Zila
 - 🇸🇦&nbsp;Prof&nbsp;B - "Thank you Noah for making my life easier!"
 

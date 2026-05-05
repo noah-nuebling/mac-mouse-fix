@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **maio 2026**
 
+- 🇹🇭&nbsp;Valad&nbsp;Saneeh - "Thanks for making this app!"
 - 🇸🇰&nbsp;Mario&nbsp;Zila
 - 🇸🇦&nbsp;Prof&nbsp;B - "Thank you Noah for making my life easier!"
 
