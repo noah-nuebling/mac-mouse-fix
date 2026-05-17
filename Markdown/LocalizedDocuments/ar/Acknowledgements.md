@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **مايو 2026**
 
+- 🇬🇧&nbsp;Pencilcaseman - ":D"
 - 🇧🇪&nbsp;Ives&nbsp;Aerts - "Simple, efficient, and open source! What's not to love?"
 - 🇺🇸&nbsp;Jamison&nbsp;Lofthouse
 - 🇺🇸&nbsp;Randy - "This actually works REALLY well with a thumb style trackball! You have to get one with the buttons in the right locations tho. The ProtoArc EM05NL is what I am using and would recommend it for many reasons. Amazing app! I'm so glad I found this! I never thought I would be able to give up the Apple Trackpad, but this makes it possible. Please keep this app alive and keep improving it for us."
