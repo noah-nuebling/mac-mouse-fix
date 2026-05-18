@@ -339,6 +339,7 @@
 		4FF0255127B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0255027B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m */; };
 		4FF0255427B007FC00923107 /* ModifiedDragOutputFakeDrag.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0255327B007FC00923107 /* ModifiedDragOutputFakeDrag.m */; };
 		4FF0255727B0091700923107 /* ModifiedDragOutputAddMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0255627B0091700923107 /* ModifiedDragOutputAddMode.m */; };
+		8BBBB086F30314C0735B7FCD /* ModifiedDragOutputMediaControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 210E75CBA1280BFC1F08104D /* ModifiedDragOutputMediaControl.m */; };
 		4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0255E27B013A100923107 /* PointerFreeze.m */; };
 		4FF0BD4B266A8B7E003935EA /* Bezier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD4A266A8B7E003935EA /* Bezier.swift */; };
 		4FF0BD51266AC10C003935EA /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0BD50266AC10C003935EA /* Math.swift */; };
@@ -2436,6 +2437,8 @@
 		4FF0255327B007FC00923107 /* ModifiedDragOutputFakeDrag.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifiedDragOutputFakeDrag.m; sourceTree = "<group>"; };
 		4FF0255527B0091700923107 /* ModifiedDragOutputAddMode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifiedDragOutputAddMode.h; sourceTree = "<group>"; };
 		4FF0255627B0091700923107 /* ModifiedDragOutputAddMode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifiedDragOutputAddMode.m; sourceTree = "<group>"; };
+		44C3DF1C10F0CFB60C8C19B1 /* ModifiedDragOutputMediaControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifiedDragOutputMediaControl.h; sourceTree = "<group>"; };
+		210E75CBA1280BFC1F08104D /* ModifiedDragOutputMediaControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifiedDragOutputMediaControl.m; sourceTree = "<group>"; };
 		4FF0255D27B013A100923107 /* PointerFreeze.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerFreeze.h; sourceTree = "<group>"; };
 		4FF0255E27B013A100923107 /* PointerFreeze.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerFreeze.m; sourceTree = "<group>"; };
 		4FF0BD4A266A8B7E003935EA /* Bezier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bezier.swift; sourceTree = "<group>"; };
@@ -7416,6 +7419,15 @@
 			path = AddMode;
 			sourceTree = "<group>";
 		};
+		759217989439E42FAA8177AA /* MediaControl */ = {
+			isa = PBXGroup;
+			children = (
+				44C3DF1C10F0CFB60C8C19B1 /* ModifiedDragOutputMediaControl.h */,
+				210E75CBA1280BFC1F08104D /* ModifiedDragOutputMediaControl.m */,
+			);
+			path = MediaControl;
+			sourceTree = "<group>";
+		};
 		4FF6652B25F2C7B000689B77 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -7718,6 +7730,7 @@
 				4FF0255927B00FA400923107 /* TwoFingerSwipe */,
 				4FF0255A27B00FAF00923107 /* FakeDrag */,
 				4FF0255B27B00FBA00923107 /* AddMode */,
+				759217989439E42FAA8177AA /* MediaControl */,
 			);
 			path = Drag;
 			sourceTree = "<group>";
