@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **květen 2026**
 
+- 🇩🇪&nbsp;Https://Duels&nbsp;De - "Makes my life so much better, thank you!"
 - 🇬🇧&nbsp;Pencilcaseman - ":D"
 - 🇧🇪&nbsp;Ives&nbsp;Aerts - "Simple, efficient, and open source! What's not to love?"
 - 🇺🇸&nbsp;Jamison&nbsp;Lofthouse
