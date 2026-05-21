@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **maio 2026**
 
+- 🇺🇸&nbsp;D&nbsp;Tmd
 - 🇫🇷&nbsp;Dmitry
 - 🇺🇸&nbsp;Roman&nbsp;Beylin
 - 🇩🇪&nbsp;Https://Duels&nbsp;De - "Makes my life so much better, thank you!"
