@@ -74,6 +74,8 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **mayo 2026**
 
+- 🇫🇷&nbsp;Dmitry
+- 🇺🇸&nbsp;Roman&nbsp;Beylin
 - 🇩🇪&nbsp;Https://Duels&nbsp;De - "Makes my life so much better, thank you!"
 - 🇬🇧&nbsp;Pencilcaseman - ":D"
 - 🇧🇪&nbsp;Ives&nbsp;Aerts - "Simple, efficient, and open source! What's not to love?"
