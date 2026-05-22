@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **květen 2026**
 
+- 🇺🇸&nbsp;Samuel&nbsp;Malkasian - "This is an example of great software made by a good human. If you too, want to support software that makes the world a better, less overly capitalized place, come support cool projects: https://carpathian.ai/open-source."
 - 🇺🇸&nbsp;D&nbsp;Tmd
 - 🇫🇷&nbsp;Dmitry
 - 🇺🇸&nbsp;Roman&nbsp;Beylin
