@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **mayo 2026**
 
+- 🇺🇸&nbsp;Charlie&nbsp;Wingate - "Great little bit of softwareware work here. Nice job."
 - 🇺🇸&nbsp;Rpgium
 - 🇺🇸&nbsp;Scott&nbsp;Wiggins
 - 🇺🇸&nbsp;Samuel&nbsp;Malkasian - "This is an example of great software made by a good human. If you too, want to support software that makes the world a better, less overly capitalized place, come support cool projects: https://carpathian.ai/open-source."
