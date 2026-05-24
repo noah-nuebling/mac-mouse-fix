@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **květen 2026**
 
+- 🇺🇸&nbsp;Hamwithglasses - "🍖🕶️"
 - 🇺🇸&nbsp;Charlie&nbsp;Wingate - "Great little bit of softwareware work here. Nice job."
 - 🇺🇸&nbsp;Rpgium
 - 🇺🇸&nbsp;Scott&nbsp;Wiggins

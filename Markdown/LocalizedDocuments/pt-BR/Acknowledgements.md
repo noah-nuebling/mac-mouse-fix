@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **maio 2026**
 
+- 🇺🇸&nbsp;Hamwithglasses - "🍖🕶️"
 - 🇺🇸&nbsp;Charlie&nbsp;Wingate - "Great little bit of softwareware work here. Nice job."
 - 🇺🇸&nbsp;Rpgium
 - 🇺🇸&nbsp;Scott&nbsp;Wiggins
