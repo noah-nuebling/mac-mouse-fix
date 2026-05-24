@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **مايو 2026**
 
+- 🇨🇦&nbsp;Leo&nbsp;Li
 - 🇺🇸&nbsp;Hamwithglasses - "🍖🕶️"
 - 🇺🇸&nbsp;Charlie&nbsp;Wingate - "Great little bit of softwareware work here. Nice job."
 - 🇺🇸&nbsp;Rpgium

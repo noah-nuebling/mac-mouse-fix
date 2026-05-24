@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Mayıs 2026**
 
+- 🇨🇦&nbsp;Leo&nbsp;Li
 - 🇺🇸&nbsp;Hamwithglasses - "🍖🕶️"
 - 🇺🇸&nbsp;Charlie&nbsp;Wingate - "Great little bit of softwareware work here. Nice job."
 - 🇺🇸&nbsp;Rpgium

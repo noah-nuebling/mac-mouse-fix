@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **mayo 2026**
 
+- 🇨🇦&nbsp;Leo&nbsp;Li
 - 🇺🇸&nbsp;Hamwithglasses - "🍖🕶️"
 - 🇺🇸&nbsp;Charlie&nbsp;Wingate - "Great little bit of softwareware work here. Nice job."
 - 🇺🇸&nbsp;Rpgium
