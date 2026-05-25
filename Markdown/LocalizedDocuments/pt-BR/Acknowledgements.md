@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **maio 2026**
 
+- 🇮🇹&nbsp;Sergio - "Great tool, exactly what I was looking for, thank you"
 - 🇨🇦&nbsp;Leo&nbsp;Li
 - 🇺🇸&nbsp;Hamwithglasses - "🍖🕶️"
 - 🇺🇸&nbsp;Charlie&nbsp;Wingate - "Great little bit of softwareware work here. Nice job."
