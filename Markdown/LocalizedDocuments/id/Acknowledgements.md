@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **Mei 2026**
 
+- 🇨🇦&nbsp;Somebody&nbsp;Who&nbsp;Likes&nbsp;It - "👍"
 - 🇨🇭&nbsp;Decore16 - "thank you, amazing work!"
 - 🇹🇼&nbsp;Alex&nbsp;Tsai
 - 🇮🇹&nbsp;Sergio - "Great tool, exactly what I was looking for, thank you"

@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Mai 2026**
 
+- 🇨🇦&nbsp;Somebody&nbsp;Who&nbsp;Likes&nbsp;It - "👍"
 - 🇨🇭&nbsp;Decore16 - "thank you, amazing work!"
 - 🇹🇼&nbsp;Alex&nbsp;Tsai
 - 🇮🇹&nbsp;Sergio - "Great tool, exactly what I was looking for, thank you"

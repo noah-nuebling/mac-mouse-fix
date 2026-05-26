@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **mayo 2026**
 
+- 🇨🇦&nbsp;Somebody&nbsp;Who&nbsp;Likes&nbsp;It - "👍"
 - 🇨🇭&nbsp;Decore16 - "thank you, amazing work!"
 - 🇹🇼&nbsp;Alex&nbsp;Tsai
 - 🇮🇹&nbsp;Sergio - "Great tool, exactly what I was looking for, thank you"
