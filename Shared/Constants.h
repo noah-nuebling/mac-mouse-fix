@@ -178,6 +178,7 @@ typedef NSString*                                                       MFString
 #define kMFActionDictTypeSymbolicHotkey                                 @"symbolicHotkey"
 #define kMFActionDictTypeNavigationSwipe                                @"navigationSwipe"
 #define kMFActionDictTypeSmartZoom                                      @"smartZoom"
+#define kMFActionDictTypeStopScroll                                     @"stopScroll"
 #define kMFActionDictTypeKeyboardShortcut                               @"keyboardShortcut"
 #define kMFActionDictTypeSystemDefinedEvent                             @"systemDefinedEvent"
 #define kMFActionDictTypeMouseButtonClicks                              @"mouseButton"

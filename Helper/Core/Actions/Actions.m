@@ -17,6 +17,7 @@
 #import "Constants.h"
 #import "CGSHotKeys.h"
 #import "SymbolicHotKeys.h"
+#import "Scroll.h"
 #import <Carbon/Carbon.h>
 
 @implementation Actions
@@ -145,6 +146,11 @@
         } else if ([actionType isEqualToString:kMFActionDictTypeSmartZoom]) {
             
             [TouchSimulator postSmartZoomEvent];
+            
+        } else if ([actionType isEqualToString:kMFActionDictTypeStopScroll]) {
+            
+            /// Immediately arrest any ongoing scroll momentum
+            [Scroll resetState];
             
         } else if ([actionType isEqualToString:kMFActionDictTypeKeyboardShortcut]) {
             

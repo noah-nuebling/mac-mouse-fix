@@ -562,3 +562,7 @@
 
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "Type a Keyboard Shortcut";
+
+/* Stop scroll action */
+"effect.stop-scroll" = "Stop Scroll";
+"effect.stop-scroll.hint" = "Instantly stop any ongoing scroll momentum\n \nLike touching the trackpad surface to stop a page from coasting";
