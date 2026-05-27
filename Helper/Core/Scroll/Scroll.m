@@ -28,6 +28,7 @@
 #import "Actions.h"
 #import "EventUtility.h"
 #import "MathObjc.h"
+#import "ScrollOutputUtility.h"
 
 @import IOKit;
 #import "MFHIDEventImports.h"
@@ -483,22 +484,109 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         }
         
         ///
-        /// Make direction change stop scroll animation
+        /// Make direction change / deceleration stop scroll animation
         ///
-        /// Notes:
-        /// - We implemented this here without much consideration to play around with it. I haven't really thought about the control flow and stuff - maybe it's not super clean to just return here? Maybe we should set pxToScrollForThisTick to zero? Idk. But I've been using it for a while and it works well.
-        /// - We used to have a threshold for the currentAnimationSpeed of 200 to actually cancel the animator, but it seems to feel nicer to just set the threshold to 0. At this point it might be simpler or more efficient to not use the `currentAnimationSpeed` here or use something else instead. Buttt the performance impact reallyyy shouldn't be significant and it works fine so it's whatever.
-        /// - Improvement idea: [Aug 2025]
-        ///     - Swallow the first 2 or 3 ticks of the scrollSwipe instead of just the 1st one.
-        ///         - Benefit:                  This would make it physically easier to avoid accidentally scrolling in the opposite direction
-        ///         - Implementation:     Should probably implement this in ScrollAnalyzer.m instead of doing a hack here
-        ///         - Credit for idea:       This email by 'A day of Software Engineer': (message:<510CF7AC-5BE0-4CED-BF9A-A3A3327EE2A5@gmail.com>)
+        /// Three modes controlled by `momentumArrestMode`:
+        ///   - "off"             : Original — cancel on direction change, swallow 1 tick
+        ///   - "directionChange" : Swallow 2 ticks on direction change, then allow reverse
+        ///   - "deceleration"    : Detect wheel stop via timeout (best for free-spinning wheels)
+        ///                         When ticks were fast and then stop arriving, arrest momentum.
+        ///                         Also includes directionChange behavior.
         
-        double currentAnimationSpeed = magnitudeOfVector(_animator.getLastAnimationSpeed);
-        if (_lastScrollAnalysisResult.scrollDirectionDidChange && currentAnimationSpeed > 0) {
-            DDLogDebug(@"Scroll.m: Direction change – cancel scroll.");
-            [_animator cancel];
-            return;
+        static int _directionChangeTicksSwallowed = 0;
+        static BOOL _momentumWasArrestedByDirectionChange = NO;
+        static dispatch_source_t _decelerationTimer = nil;
+        static BOOL _wasScrollingFast = NO;
+        
+        BOOL animatorIsRunning = _animator.isRunning;
+        NSString *arrestMode = (NSString *)_scrollConfig.momentumArrestMode;
+        BOOL useDeceleration = [arrestMode isEqualToString:@"deceleration"];
+        BOOL useDirectionChange = useDeceleration || [arrestMode isEqualToString:@"directionChange"];
+        
+        /// --- Deceleration detection (free-spinning wheel mode) ---
+        /// Detects hard-stop only: wheel spinning very fast then ticks stop completely.
+        /// Natural slowdown (gradual tick spacing increase) does NOT trigger this.
+        
+        if (useDeceleration) {
+            
+            double currentTimeBetweenTicks = scrollAnalysisResult.timeBetweenTicks;
+            BOOL isVeryFast = (currentTimeBetweenTicks != DBL_MAX && currentTimeBetweenTicks < 0.020);
+            
+            /// Cancel any existing timer (we got a new tick, so wheel is still moving)
+            if (_decelerationTimer != nil) {
+                dispatch_source_cancel(_decelerationTimer);
+                _decelerationTimer = nil;
+            }
+            
+            /// Only track "fast" state when ticks are very fast (< 20ms)
+            /// Reset immediately when ticks slow down — this prevents triggering during natural deceleration
+            if (isVeryFast) {
+                _wasScrollingFast = YES;
+            } else {
+                _wasScrollingFast = NO;
+            }
+            
+            /// Arm timer ONLY when wheel is currently spinning very fast.
+            /// If the wheel naturally slows down, _wasScrollingFast becomes NO and timer won't arm.
+            /// Timer only fires if ticks were very fast and then NOTHING arrives for 100ms (hard stop).
+            if (_wasScrollingFast && _animator.isRunning) {
+                _decelerationTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _scrollQueue);
+                dispatch_source_set_timer(_decelerationTimer, dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), DISPATCH_TIME_FOREVER, 5 * NSEC_PER_MSEC);
+                dispatch_source_set_event_handler(_decelerationTimer, ^{
+                    if (_animator.isRunning) {
+                        DDLogDebug(@"Scroll.m: Hard stop detected – wheel went from fast to zero ticks.");
+                        [_animator cancel];
+                        [GestureScrollSimulator stopMomentumScroll];
+                    }
+                    _wasScrollingFast = NO;
+                    _decelerationTimer = nil;
+                });
+                dispatch_resume(_decelerationTimer);
+            }
+        }
+        
+        /// --- Direction change handling ---
+        
+        if (_lastScrollAnalysisResult.scrollDirectionDidChange) {
+            
+            if (useDirectionChange) {
+                /// Enhanced momentum arrest (trackpad-like)
+                
+                if (animatorIsRunning) {
+                    DDLogDebug(@"Scroll.m: Direction change – arresting momentum.");
+                    [_animator cancel];
+                    [GestureScrollSimulator stopMomentumScroll];
+                    _momentumWasArrestedByDirectionChange = YES;
+                    _directionChangeTicksSwallowed = 0;
+                    _wasScrollingFast = NO;
+                    if (_decelerationTimer != nil) {
+                        dispatch_source_cancel(_decelerationTimer);
+                        _decelerationTimer = nil;
+                    }
+                }
+                
+                if (_momentumWasArrestedByDirectionChange) {
+                    _directionChangeTicksSwallowed += 1;
+                    if (_directionChangeTicksSwallowed <= 2) {
+                        DDLogDebug(@"Scroll.m: Direction change – swallowing tick %d (momentum arrest).", _directionChangeTicksSwallowed);
+                        return;
+                    }
+                }
+                
+            } else {
+                /// "off" mode: cancel and swallow first tick
+                double currentAnimationSpeed = magnitudeOfVector(_animator.getLastAnimationSpeed);
+                if (currentAnimationSpeed > 0) {
+                    DDLogDebug(@"Scroll.m: Direction change – cancel scroll (legacy).");
+                    [_animator cancel];
+                    return;
+                }
+            }
+            
+        } else {
+            /// Direction didn't change — reset arrest state
+            _momentumWasArrestedByDirectionChange = NO;
+            _directionChangeTicksSwallowed = 0;
         }
         
         /// Debug
@@ -845,6 +933,10 @@ static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL animated, M
         outputType = kMFScrollOutputTypeCommandTab;
     } else if (_modifications.effectMod == kMFScrollEffectModificationThreeFingerSwipeHorizontal) {
         outputType = kMFScrollOutputTypeThreeFingerSwipeHorizontal;
+    } else if (_modifications.effectMod == kMFScrollEffectModificationVolume) {
+        outputType = kMFScrollOutputTypeVolume;
+    } else if (_modifications.effectMod == kMFScrollEffectModificationBrightness) {
+        outputType = kMFScrollOutputTypeBrightness;
     } /// kMFScrollEffectModificationHorizontalScroll is handled above when determining scroll direction
     
     /// Send event
@@ -863,6 +955,8 @@ typedef enum {
     kMFScrollOutputTypeZoom,
     kMFScrollOutputTypeRotation,
     kMFScrollOutputTypeCommandTab,
+    kMFScrollOutputTypeVolume,
+    kMFScrollOutputTypeBrightness,
 } MFScrollOutputType;
 
 /// Output
@@ -1244,6 +1338,32 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 sendKeyEvent(48, kCGEventFlagMaskCommand | kCGEventFlagMaskShift, false);
             }
         }
+        
+    } else if (outputType == kMFScrollOutputTypeVolume) {
+        
+        /// --- Volume ---
+        /// Smoothly adjust system volume using CoreAudio scalar API
+        
+        double d = dx + dy;
+        if (d == 0) return;
+        
+        float currentVolume = [ScrollOutputUtility getSystemVolume];
+        float delta = (float)(d / 4000.0); /// Scale scroll delta to a small volume increment
+        float newVolume = currentVolume + delta;
+        [ScrollOutputUtility setSystemVolume:newVolume]; /// Clamping is handled internally
+        
+    } else if (outputType == kMFScrollOutputTypeBrightness) {
+        
+        /// --- Brightness ---
+        /// Smoothly adjust display brightness using DisplayServices private framework
+        
+        double d = dx + dy;
+        if (d == 0) return;
+        
+        float currentBrightness = [ScrollOutputUtility getDisplayBrightness];
+        float delta = (float)(d / 4000.0); /// Scale scroll delta to a small brightness increment
+        float newBrightness = currentBrightness + delta;
+        [ScrollOutputUtility setDisplayBrightness:newBrightness]; /// Clamping is handled internally
         
     } else {
         assert(false);

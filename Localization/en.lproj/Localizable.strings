@@ -137,6 +137,18 @@
 /* First draft: Learn More */
 "capture-toast.link" = "Learn More";
 
+/* Brightness */
+"drag-effect.brightness" = "Brightness";
+
+/* Brightness (Horizontal) */
+"drag-effect.brightness-horizontal" = "Brightness (Horizontal)";
+
+/* Smoothly adjust display brightness by moving your mouse left and right\n \nMove right to increase, move left to decrease */
+"drag-effect.brightness-horizontal.hint" = "Smoothly adjust display brightness by moving your mouse left and right\n \nMove right to increase, move left to decrease";
+
+/* Smoothly adjust display brightness by moving your mouse up and down\n \nMove up to increase, move down to decrease */
+"drag-effect.brightness.hint" = "Smoothly adjust display brightness by moving your mouse up and down\n \nMove up to increase, move down to decrease";
+
 /* First draft: Spaces & Mission Control */
 "drag-effect.dock-swipe" = "Spaces & Mission Control";
 
@@ -148,6 +160,18 @@
 
 /* First draft: Scroll freely by moving your mouse in any direction\n \nAlso Navigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right\n \nWorks like swiping with 2 fingers on an Apple Trackpad */
 "drag-effect.scroll-swipe.hint" = "Scroll freely by moving your mouse in any direction\n \nAlso Navigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right\n \nWorks like swiping with 2 fingers on an Apple Trackpad";
+
+/* Volume */
+"drag-effect.volume" = "Volume";
+
+/* Volume (Horizontal) */
+"drag-effect.volume-horizontal" = "Volume (Horizontal)";
+
+/* Smoothly adjust system volume by moving your mouse left and right\n \nMove right to increase, move left to decrease */
+"drag-effect.volume-horizontal.hint" = "Smoothly adjust system volume by moving your mouse left and right\n \nMove right to increase, move left to decrease";
+
+/* Smoothly adjust system volume by moving your mouse up and down\n \nMove up to increase, move down to decrease */
+"drag-effect.volume.hint" = "Smoothly adjust system volume by moving your mouse up and down\n \nMove up to increase, move down to decrease";
 
 /* First draft: Application Windows || Note: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings and all other places I found. */
 "effect.app-expose" = "Application Windows";
@@ -338,6 +362,18 @@
 /* First draft: Shift (⇧) */
 "modifer-key.tool.shift" = "Shift (⇧)";
 
+/* Hard Stop (Free Spin) */
+"momentum-arrest.deceleration" = "Hard Stop (Free Spin)";
+
+/* Direction Change */
+"momentum-arrest.direction-change" = "Direction Change";
+
+/* Stop: */
+"momentum-arrest.label" = "Stop:";
+
+/* Off */
+"momentum-arrest.off" = "Off";
+
 /* First draft: Scroll precisely, even without a keyboard modifier,\nbymoving the scroll wheel _slowly_ || Note: The line break (\n) is there so the layout of the Scroll tab doesn't become too wide which looks weird. You can set it to your own taste. */
 "precise-scrolling-hint" = "Scroll precisely, even without a keyboard modifier,\nby moving the scroll wheel _slowly_";
 
@@ -383,6 +419,12 @@
 /* First draft: Quickly switch between open apps\n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard */
 "scroll-effect.app-switcher.hint" = "Quickly switch between open apps\n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard";
 
+/* Brightness */
+"scroll-effect.brightness" = "Brightness";
+
+/* Smoothly adjust display brightness\n \nScroll up to increase, scroll down to decrease */
+"scroll-effect.brightness.hint" = "Smoothly adjust display brightness\n \nScroll up to increase, scroll down to decrease";
+
 /* First draft: Horizontal Scroll */
 "scroll-effect.horizontal" = "Horizontal Scroll";
 
@@ -412,6 +454,12 @@
 
 /* First draft: Scroll long distances with minimal effort */
 "scroll-effect.swift.hint" = "Scroll long distances with minimal effort";
+
+/* Volume */
+"scroll-effect.volume" = "Volume";
+
+/* Smoothly adjust system volume\n \nScroll up to increase, scroll down to decrease */
+"scroll-effect.volume.hint" = "Smoothly adjust system volume\n \nScroll up to increase, scroll down to decrease";
 
 /* First draft: Zoom In or Out */
 "scroll-effect.zoom" = "Zoom In or Out";

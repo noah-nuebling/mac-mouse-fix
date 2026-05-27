@@ -24,6 +24,7 @@ class ScrollTabController: NSViewController {
     var zoomMod = ConfigValue<UInt>(configPath: "Scroll.modifiers.zoom")
     var swiftMod = ConfigValue<UInt>(configPath: "Scroll.modifiers.swift")
     var preciseMod = ConfigValue<UInt>(configPath: "Scroll.modifiers.precise")
+    var momentumArrestMode = ConfigValue<String>(configPath: "Scroll.momentumArrestMode")
     
     /// Also see `ReactiveFlags` is this doesn't work
     
@@ -106,6 +107,39 @@ class ScrollTabController: NSViewController {
         /// Natural direction
         reverseDirection.bindingTarget <~ reverseDirectionToggle.reactive.boolValues
         reverseDirectionToggle.reactive.boolValue <~ reverseDirection.producer
+        
+        /// Momentum Arrest Mode
+        ///     Inline with the same style as "Smoothness:" and "Speed:" rows
+        
+        let momentumLabel = NSTextField(labelWithString: NSLocalizedString("momentum-arrest.label", comment: "Stop:"))
+        momentumLabel.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
+        momentumLabel.textColor = .labelColor
+        momentumLabel.setContentHuggingPriority(.required, for: .horizontal)
+        momentumLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        
+        let momentumPicker = NSPopUpButton(frame: .zero, pullsDown: false)
+        momentumPicker.addItem(withTitle: NSLocalizedString("momentum-arrest.off", comment: "Off"))
+        momentumPicker.lastItem?.identifier = NSUserInterfaceItemIdentifier("off")
+        momentumPicker.addItem(withTitle: NSLocalizedString("momentum-arrest.direction-change", comment: "Direction Change"))
+        momentumPicker.lastItem?.identifier = NSUserInterfaceItemIdentifier("directionChange")
+        momentumPicker.addItem(withTitle: NSLocalizedString("momentum-arrest.deceleration", comment: "Hard Stop (Free Spin)"))
+        momentumPicker.lastItem?.identifier = NSUserInterfaceItemIdentifier("deceleration")
+        
+        let momentumStack = NSStackView(views: [momentumLabel, momentumPicker])
+        momentumStack.orientation = .horizontal
+        momentumStack.alignment = .centerY
+        momentumStack.spacing = 5
+        
+        /// Insert into the master stack after the reverse direction toggle
+        if let reverseIndex = masterStack.arrangedSubviews.firstIndex(where: { $0 == reverseDirectionToggle.superview || $0 == reverseDirectionToggle }) {
+            masterStack.insertArrangedSubview(momentumStack, at: reverseIndex + 1)
+        } else {
+            masterStack.addArrangedSubview(momentumStack)
+        }
+        
+        /// Bind momentum picker to config
+        momentumArrestMode.bindingTarget <~ momentumPicker.reactive.selectedIdentifiers.map({ $0!.rawValue })
+        momentumPicker.reactive.selectedIdentifier <~ momentumArrestMode.producer.map({ NSUserInterfaceItemIdentifier($0) })
         
         /// Scroll speed
         scrollSpeed.bindingTarget <~ speedPicker.reactive.selectedIdentifiers.map({ identifier in

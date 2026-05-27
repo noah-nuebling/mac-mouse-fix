@@ -161,6 +161,16 @@ import CocoaLumberjackSwift
             } else if modifiers.effectMod == kMFScrollEffectModificationNone {
             } else if modifiers.effectMod == kMFScrollEffectModificationAddModeFeedback {
                 /// We don't wanna scroll at all in this case but I don't think it makes a difference.
+            } else if modifiers.effectMod == kMFScrollEffectModificationVolume {
+                
+                /// Disable animation — we want direct, immediate response
+                animationCurveOverride = kMFScrollAnimationCurveNameNone
+                
+            } else if modifiers.effectMod == kMFScrollEffectModificationBrightness {
+                
+                /// Disable animation — we want direct, immediate response
+                animationCurveOverride = kMFScrollAnimationCurveNameNone
+                
             } else {
                 assert(false);
             }
@@ -254,6 +264,22 @@ import CocoaLumberjackSwift
     @objc var useAppleAcceleration: Bool {
         return accelerationCurve == nil
     }
+    
+    /// Momentum arrest mode:
+    ///   - "off"           : Original behavior — cancel animation on direction change, swallow 1 tick
+    ///   - "directionChange": Enhanced — swallow 2 ticks on direction change, then allow reverse (good for notched wheels)
+    ///   - "deceleration"  : Detect wheel deceleration as stop signal (best for free-spinning/infinite scroll wheels)
+    /// Default: "deceleration"
+    @objc lazy var momentumArrestMode: NSString = {
+        if let val = c("momentumArrestMode") as? NSString {
+            return val
+        }
+        /// Legacy support: check old boolean key
+        if let val = c("momentumArrest") as? Bool {
+            return val ? "directionChange" as NSString : "off" as NSString
+        }
+        return "deceleration" as NSString
+    }()
     
     // MARK: Invert Direction
     
