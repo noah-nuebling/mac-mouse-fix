@@ -125,6 +125,10 @@ static NSArray *getDragEffectsTable() {
 //                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeFakeDrag,
 //                  kMFModifiedDragDictKeyFakeDragVariantButtonNumber: @3,
 //        }},
+        separatorEffectsTableEntry(),
+        @{@"ui": NSLocalizedString(@"drag-effect.window-move", @"Move Window"), @"tool": NSLocalizedString(@"drag-effect.window-move.hint", @"Move the window under the cursor by dragging your mouse\n \nHold the button and move your mouse to reposition any window"), @"dict": @{
+                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeWindowMove,
+        }},
     ];
     return dragEffectsTable;
 }

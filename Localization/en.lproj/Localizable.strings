@@ -562,3 +562,7 @@
 
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "Type a Keyboard Shortcut";
+
+/* Window move drag effect */
+"drag-effect.window-move" = "Move Window";
+"drag-effect.window-move.hint" = "Move the window under the cursor by dragging your mouse\n \nHold the button and move your mouse to reposition any window";
