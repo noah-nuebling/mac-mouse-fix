@@ -141,6 +141,10 @@ typedef NSString*                                                       MFString
 #define kMFModifiedDragTypeThreeFingerSwipe                             @"threeFingerSwipe"
 #define kMFModifiedDragTypeFakeDrag                                     @"fakeDrag"
 #define kMFModifiedDragTypeAddModeFeedback                              @"addModeDrag"
+#define kMFModifiedDragTypeVolume                                       @"volume"
+#define kMFModifiedDragTypeBrightness                                   @"brightness"
+#define kMFModifiedDragTypeVolumeHorizontal                             @"volumeHorizontal"
+#define kMFModifiedDragTypeBrightnessHorizontal                         @"brightnessHorizontal"
 // Variant keys
 #define kMFModifiedDragDictKeyFakeDragVariantButtonNumber               @"buttonNumber"
 
@@ -161,6 +165,8 @@ typedef NSString*                                                       MFString
 #define kMFModifiedScrollEffectModificationTypeRotate                                       @"rotate"
 #define kMFModifiedScrollEffectModificationTypeCommandTab                                   @"commandTab"
 #define kMFModifiedScrollEffectModificationTypeAddModeFeedback                              @"addModeScroll"
+#define kMFModifiedScrollEffectModificationTypeVolume                                       @"volume"
+#define kMFModifiedScrollEffectModificationTypeBrightness                                   @"brightness"
 
 // Oneshot Actions
 // TODO: Used to be named ActionDict... Rename to OneShot..., or OneShotDict

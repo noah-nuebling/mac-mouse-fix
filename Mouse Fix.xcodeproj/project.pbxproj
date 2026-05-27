@@ -324,6 +324,9 @@
 		4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662D25F2C93A00689B77 /* SmoothScroll_old_.m */; };
 		4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662E25F2C93A00689B77 /* ScrollModifiers_old_.m */; };
 		4FF6669125F2C93A00689B77 /* ScrollUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662F25F2C93A00689B77 /* ScrollUtility.m */; };
+		BB000001000000000000BB03 /* LogitechCIDActivator.m in Sources */ = {isa = PBXBuildFile; fileRef = BB000001000000000000BB02 /* LogitechCIDActivator.m */; };
+		AA000001000000000000AA03 /* ScrollOutputUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA02 /* ScrollOutputUtility.m */; };
+		AA000001000000000000AA06 /* ModifiedDragOutputVolumeBrightness.m in Sources */ = {isa = PBXBuildFile; fileRef = AA000001000000000000AA05 /* ModifiedDragOutputVolumeBrightness.m */; };
 		4FF6669225F2C93A00689B77 /* RoughScroll_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6663025F2C93A00689B77 /* RoughScroll_old_.m */; };
 		4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6663325F2C93A00689B77 /* TouchSimulator.m */; };
 		4FF6669525F2C93A00689B77 /* ModifiedDrag.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6663825F2C93A00689B77 /* ModifiedDrag.m */; };
@@ -2399,6 +2402,12 @@
 		4FF6662D25F2C93A00689B77 /* SmoothScroll_old_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmoothScroll_old_.m; sourceTree = "<group>"; };
 		4FF6662E25F2C93A00689B77 /* ScrollModifiers_old_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollModifiers_old_.m; sourceTree = "<group>"; };
 		4FF6662F25F2C93A00689B77 /* ScrollUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollUtility.m; sourceTree = "<group>"; };
+		BB000001000000000000BB01 /* LogitechCIDActivator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogitechCIDActivator.h; sourceTree = "<group>"; };
+		BB000001000000000000BB02 /* LogitechCIDActivator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogitechCIDActivator.m; sourceTree = "<group>"; };
+		AA000001000000000000AA01 /* ScrollOutputUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScrollOutputUtility.h; sourceTree = "<group>"; };
+		AA000001000000000000AA02 /* ScrollOutputUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScrollOutputUtility.m; sourceTree = "<group>"; };
+		AA000001000000000000AA04 /* ModifiedDragOutputVolumeBrightness.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifiedDragOutputVolumeBrightness.h; sourceTree = "<group>"; };
+		AA000001000000000000AA05 /* ModifiedDragOutputVolumeBrightness.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifiedDragOutputVolumeBrightness.m; sourceTree = "<group>"; };
 		4FF6663025F2C93A00689B77 /* RoughScroll_old_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoughScroll_old_.m; sourceTree = "<group>"; };
 		4FF6663225F2C93A00689B77 /* GestureScrollSimulator_old_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GestureScrollSimulator_old_.h; sourceTree = "<group>"; };
 		4FF6663325F2C93A00689B77 /* TouchSimulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchSimulator.m; sourceTree = "<group>"; };
@@ -7427,6 +7436,8 @@
 			children = (
 				4FF6661B25F2C93A00689B77 /* ButtonInputReceiver.h */,
 				4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */,
+					BB000001000000000000BB01 /* LogitechCIDActivator.h */,
+					BB000001000000000000BB02 /* LogitechCIDActivator.m */,
 				4FF8C8A22895AACB007EC31F /* Buttons.swift */,
 				4FF8C89928955490007EC31F /* ClickCycle.swift */,
 				4FE479DF2933C87A00B75E9B /* ButtonModifiers.h */,
@@ -7452,6 +7463,8 @@
 				4F5F3EF22756F1DB00C350C0 /* ScrollModifiers.swift */,
 				4FF6662B25F2C93A00689B77 /* ScrollUtility.h */,
 				4FF6662F25F2C93A00689B77 /* ScrollUtility.m */,
+					AA000001000000000000AA01 /* ScrollOutputUtility.h */,
+					AA000001000000000000AA02 /* ScrollOutputUtility.m */,
 				4FF6662225F2C93A00689B77 /* Unused */,
 				4F3CDB272837D889000E28F0 /* ScrollNotes.md */,
 			);
@@ -7493,6 +7506,8 @@
 			children = (
 				4FF6663725F2C93A00689B77 /* ModifiedDrag.h */,
 				4FF6663825F2C93A00689B77 /* ModifiedDrag.m */,
+					AA000001000000000000AA04 /* ModifiedDragOutputVolumeBrightness.h */,
+					AA000001000000000000AA05 /* ModifiedDragOutputVolumeBrightness.m */,
 				4FCB260D293147CD0066EE56 /* ModifiedDrag.swift */,
 				4FF0255827B00F9700923107 /* ThreeFingerSwipe */,
 				4FF0255927B00FA400923107 /* TwoFingerSwipe */,
@@ -8274,6 +8289,9 @@
 				4FF6668125F2C93A00689B77 /* FileMonitor.m in Sources */,
 				4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */,
 				4FF6669125F2C93A00689B77 /* ScrollUtility.m in Sources */,
+					BB000001000000000000BB03 /* LogitechCIDActivator.m in Sources */,
+					AA000001000000000000AA03 /* ScrollOutputUtility.m in Sources */,
+					AA000001000000000000AA06 /* ModifiedDragOutputVolumeBrightness.m in Sources */,
 				4FB8B29B2CCEBAEB00A5A580 /* GetLicenseConfig.swift in Sources */,
 				4F1B41902D49960E00026C94 /* MFSemaphore.m in Sources */,
 				4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */,
@@ -8480,7 +8498,7 @@
 				MARKETING_VERSION = 3.0.8;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.virgoh.mac-mouse-fix";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_MAIN_APP";
@@ -8517,7 +8535,7 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				MARKETING_VERSION = 3.0.8;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.virgoh.mac-mouse-fix";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) IS_MAIN_APP";
@@ -8798,7 +8816,7 @@
 				INFOPLIST_FILE = Helper/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.virgoh.mac-mouse-fix.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -8839,7 +8857,7 @@
 				INFOPLIST_FILE = Helper/SupportFiles/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.virgoh.mac-mouse-fix.helper";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;

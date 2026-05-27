@@ -31,6 +31,7 @@
 #import "ModifiedDragOutputTwoFingerSwipe.h"
 #import "ModifiedDragOutputFakeDrag.h"
 #import "ModifiedDragOutputAddMode.h"
+#import "ModifiedDragOutputVolumeBrightness.h"
 
 #import "GlobalEventTapThread.h"
 
@@ -170,6 +171,14 @@ static ModifiedDragState _drag;
             p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputFakeDrag.class;
         } else if ([type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
             p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputAddMode.class;
+        } else if ([type isEqualToString:kMFModifiedDragTypeVolume]) {
+            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputVolumeBrightness.class;
+        } else if ([type isEqualToString:kMFModifiedDragTypeBrightness]) {
+            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputVolumeBrightness.class;
+        } else if ([type isEqualToString:kMFModifiedDragTypeVolumeHorizontal]) {
+            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputVolumeBrightness.class;
+        } else if ([type isEqualToString:kMFModifiedDragTypeBrightnessHorizontal]) {
+            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputVolumeBrightness.class;
         } else {
             assert(false);
         }

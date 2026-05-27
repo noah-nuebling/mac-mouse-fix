@@ -92,6 +92,13 @@ static NSArray *getScrollEffectsTable() {
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
         }}, /// We only have this option so the menu layout looks better. I can't really think of a usecase
         separatorEffectsTableEntry(),
+        @{@"ui": NSLocalizedString(@"scroll-effect.volume", @"Volume"), @"tool": NSLocalizedString(@"scroll-effect.volume.hint", @"Smoothly adjust system volume\n \nScroll up to increase, scroll down to decrease"), @"dict": @{
+            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeVolume
+        }},
+        @{@"ui": NSLocalizedString(@"scroll-effect.brightness", @"Brightness"), @"tool": NSLocalizedString(@"scroll-effect.brightness.hint", @"Smoothly adjust display brightness\n \nScroll up to increase, scroll down to decrease"), @"dict": @{
+            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeBrightness
+        }},
+        separatorEffectsTableEntry(),
         @{@"ui": NSLocalizedString(@"scroll-effect.swift", @"First draft: Swift Scroll"), @"tool": NSLocalizedString(@"scroll-effect.swift.hint", @"First draft: Scroll long distances with minimal effort"), @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
         }},
@@ -125,6 +132,19 @@ static NSArray *getDragEffectsTable() {
 //                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeFakeDrag,
 //                  kMFModifiedDragDictKeyFakeDragVariantButtonNumber: @3,
 //        }},
+        separatorEffectsTableEntry(),
+        @{@"ui": NSLocalizedString(@"drag-effect.volume", @"Volume"), @"tool": NSLocalizedString(@"drag-effect.volume.hint", @"Smoothly adjust system volume by moving your mouse up and down\n \nMove up to increase, move down to decrease"), @"dict": @{
+                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeVolume,
+        }},
+        @{@"ui": NSLocalizedString(@"drag-effect.brightness", @"Brightness"), @"tool": NSLocalizedString(@"drag-effect.brightness.hint", @"Smoothly adjust display brightness by moving your mouse up and down\n \nMove up to increase, move down to decrease"), @"dict": @{
+                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeBrightness,
+        }},
+        @{@"ui": NSLocalizedString(@"drag-effect.volume-horizontal", @"Volume (Horizontal)"), @"tool": NSLocalizedString(@"drag-effect.volume-horizontal.hint", @"Smoothly adjust system volume by moving your mouse left and right\n \nMove right to increase, move left to decrease"), @"dict": @{
+                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeVolumeHorizontal,
+        }},
+        @{@"ui": NSLocalizedString(@"drag-effect.brightness-horizontal", @"Brightness (Horizontal)"), @"tool": NSLocalizedString(@"drag-effect.brightness-horizontal.hint", @"Smoothly adjust display brightness by moving your mouse left and right\n \nMove right to increase, move left to decrease"), @"dict": @{
+                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeBrightnessHorizontal,
+        }},
     ];
     return dragEffectsTable;
 }
