@@ -15,6 +15,7 @@
 #import "Modifiers.h"
 #import "Remap.h"
 #import "Constants.h"
+#import "Config.h"
 #import "CGSHotKeys.h"
 #import "SymbolicHotKeys.h"
 #import <Carbon/Carbon.h>
@@ -145,6 +146,17 @@
         } else if ([actionType isEqualToString:kMFActionDictTypeSmartZoom]) {
             
             [TouchSimulator postSmartZoomEvent];
+            
+        } else if ([actionType isEqualToString:kMFActionDictTypeToggleMMF]) {
+            
+            /// Toggle Mac Mouse Fix on/off (gaming mode)
+            BOOL scrollKilled = [(id)config(@"General.scrollKillSwitch") boolValue];
+            BOOL buttonKilled = [(id)config(@"General.buttonKillSwitch") boolValue];
+            BOOL isKilled = scrollKilled || buttonKilled;
+            
+            setConfig(@"General.scrollKillSwitch", @(!isKilled));
+            setConfig(@"General.buttonKillSwitch", @(!isKilled));
+            commitConfig();
             
         } else if ([actionType isEqualToString:kMFActionDictTypeKeyboardShortcut]) {
             

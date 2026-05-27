@@ -142,6 +142,9 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         @{@"ui": NSLocalizedString(@"effect.smart-zoom", @"First draft: Smart Zoom"), @"tool": NSLocalizedString(@"effect.smart-zoom.hint", @"First draft: Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad."), @"dict": @{
                   kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
         }},
+        @{@"ui": NSLocalizedString(@"effect.toggle-mmf", @"Toggle Mac Mouse Fix"), @"tool": NSLocalizedString(@"effect.toggle-mmf.hint", @"Temporarily disable all Mac Mouse Fix features\n \nPress again to re-enable. Useful for gaming."), @"dict": @{
+                  kMFActionDictKeyType: kMFActionDictTypeToggleMMF,
+        }},
         @{@"ui": NSLocalizedString(@"effect.primary-click", @"First draft: Primary Click"),
           @"tool": stringf(NSLocalizedString(@"effect.primary-click.hint", @"First draft: Works like clicking %@ on a standard mouse."), [UIStrings getButtonStringToolTip:1]),
           @"hideable": @YES,

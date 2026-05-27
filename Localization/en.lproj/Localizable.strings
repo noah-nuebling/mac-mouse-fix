@@ -562,3 +562,7 @@
 
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "Type a Keyboard Shortcut";
+
+/* Toggle MMF action */
+"effect.toggle-mmf" = "Toggle Mac Mouse Fix";
+"effect.toggle-mmf.hint" = "Temporarily disable all Mac Mouse Fix features\n \nPress again to re-enable. Useful for gaming.";
