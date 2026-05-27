@@ -845,6 +845,8 @@ static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL animated, M
         outputType = kMFScrollOutputTypeCommandTab;
     } else if (_modifications.effectMod == kMFScrollEffectModificationThreeFingerSwipeHorizontal) {
         outputType = kMFScrollOutputTypeThreeFingerSwipeHorizontal;
+    } else if (_modifications.effectMod == kMFScrollEffectModificationWindowResize) {
+        outputType = kMFScrollOutputTypeWindowResize;
     } /// kMFScrollEffectModificationHorizontalScroll is handled above when determining scroll direction
     
     /// Send event
@@ -863,6 +865,7 @@ typedef enum {
     kMFScrollOutputTypeZoom,
     kMFScrollOutputTypeRotation,
     kMFScrollOutputTypeCommandTab,
+    kMFScrollOutputTypeWindowResize,
 } MFScrollOutputType;
 
 /// Output
@@ -1244,6 +1247,67 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 sendKeyEvent(48, kCGEventFlagMaskCommand | kCGEventFlagMaskShift, false);
             }
         }
+        
+    } else if (outputType == kMFScrollOutputTypeWindowResize) {
+        
+        /// --- Window Resize ---
+        /// Scroll up = bigger, scroll down = smaller. Resizes window under cursor.
+        
+        double d = dx + dy;
+        if (d == 0) return;
+        
+        double resizeDelta = d * 0.5; /// Scale: each px of scroll = 0.5px of resize
+        
+        /// Get window under mouse via Accessibility
+        AXUIElementRef systemWide = AXUIElementCreateSystemWide();
+        AXUIElementRef element = NULL;
+        NSPoint mouse = [NSEvent mouseLocation];
+        
+        /// Convert to screen coordinates (AX uses top-left origin)
+        NSScreen *screen = [NSScreen mainScreen];
+        CGFloat screenHeight = screen.frame.size.height;
+        CGPoint point = CGPointMake(mouse.x, screenHeight - mouse.y);
+        
+        AXUIElementCopyElementAtPosition(systemWide, point.x, point.y, &element);
+        CFRelease(systemWide);
+        
+        if (!element) return;
+        
+        /// Find window
+        AXUIElementRef window = NULL;
+        CFStringRef role = NULL;
+        AXUIElementCopyAttributeValue(element, kAXRoleAttribute, (CFTypeRef *)&role);
+        
+        if (role && CFStringCompare(role, kAXWindowRole, 0) == kCFCompareEqualTo) {
+            window = element;
+            element = NULL;
+        } else {
+            AXUIElementCopyAttributeValue(element, kAXWindowAttribute, (CFTypeRef *)&window);
+        }
+        if (role) CFRelease(role);
+        if (element) CFRelease(element);
+        if (!window) return;
+        
+        /// Get current size
+        CFTypeRef sizeValue = NULL;
+        AXUIElementCopyAttributeValue(window, kAXSizeAttribute, &sizeValue);
+        if (!sizeValue) { CFRelease(window); return; }
+        
+        CGSize size;
+        AXValueGetValue(sizeValue, kAXValueCGSizeType, &size);
+        CFRelease(sizeValue);
+        
+        /// Apply resize (proportional)
+        size.width += resizeDelta;
+        size.height += resizeDelta * (size.height / size.width); /// Maintain aspect ratio
+        if (size.width < 200) size.width = 200;
+        if (size.height < 100) size.height = 100;
+        
+        /// Set new size
+        AXValueRef newSize = AXValueCreate(kAXValueCGSizeType, &size);
+        AXUIElementSetAttributeValue(window, kAXSizeAttribute, newSize);
+        CFRelease(newSize);
+        CFRelease(window);
         
     } else {
         assert(false);

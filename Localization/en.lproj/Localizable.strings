@@ -562,3 +562,7 @@
 
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "Type a Keyboard Shortcut";
+
+/* Window resize scroll effect */
+"scroll-effect.window-resize" = "Resize Window";
+"scroll-effect.window-resize.hint" = "Resize the window under the cursor by scrolling\n \nScroll up to make bigger, scroll down to make smaller";

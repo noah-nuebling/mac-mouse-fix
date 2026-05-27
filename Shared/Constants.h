@@ -161,6 +161,7 @@ typedef NSString*                                                       MFString
 #define kMFModifiedScrollEffectModificationTypeRotate                                       @"rotate"
 #define kMFModifiedScrollEffectModificationTypeCommandTab                                   @"commandTab"
 #define kMFModifiedScrollEffectModificationTypeAddModeFeedback                              @"addModeScroll"
+#define kMFModifiedScrollEffectModificationTypeWindowResize                                 @"windowResize"
 
 // Oneshot Actions
 // TODO: Used to be named ActionDict... Rename to OneShot..., or OneShotDict

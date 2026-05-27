@@ -92,6 +92,10 @@ static NSArray *getScrollEffectsTable() {
             kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeRotate
         }}, /// We only have this option so the menu layout looks better. I can't really think of a usecase
         separatorEffectsTableEntry(),
+        @{@"ui": NSLocalizedString(@"scroll-effect.window-resize", @"Resize Window"), @"tool": NSLocalizedString(@"scroll-effect.window-resize.hint", @"Resize the window under the cursor by scrolling\n \nScroll up to make bigger, scroll down to make smaller"), @"dict": @{
+            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeWindowResize
+        }},
+        separatorEffectsTableEntry(),
         @{@"ui": NSLocalizedString(@"scroll-effect.swift", @"First draft: Swift Scroll"), @"tool": NSLocalizedString(@"scroll-effect.swift.hint", @"First draft: Scroll long distances with minimal effort"), @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypeQuickScroll
         }},

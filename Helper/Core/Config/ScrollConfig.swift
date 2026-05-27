@@ -161,6 +161,8 @@ import CocoaLumberjackSwift
             } else if modifiers.effectMod == kMFScrollEffectModificationNone {
             } else if modifiers.effectMod == kMFScrollEffectModificationAddModeFeedback {
                 /// We don't wanna scroll at all in this case but I don't think it makes a difference.
+            } else if modifiers.effectMod == kMFScrollEffectModificationWindowResize {
+                animationCurveOverride = kMFScrollAnimationCurveNameNone
             } else {
                 assert(false);
             }
