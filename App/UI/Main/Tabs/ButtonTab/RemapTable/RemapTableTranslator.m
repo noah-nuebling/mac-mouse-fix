@@ -98,6 +98,13 @@ static NSArray *getScrollEffectsTable() {
         @{@"ui": NSLocalizedString(@"scroll-effect.precise", @"First draft: Precise Scroll"), @"tool": NSLocalizedString(@"scroll-effect.precise.hint", @"First draft: Scroll small distances and use sensitive UI elements with precision"), @"dict": @{
             kMFModifiedScrollDictKeyInputModificationType: kMFModifiedScrollInputModificationTypePrecisionScroll
         }},
+        separatorEffectsTableEntry(),
+        @{@"ui": NSLocalizedString(@"scroll-effect.arrow-keys", @"Arrow Keys (Vertical)"), @"tool": NSLocalizedString(@"scroll-effect.arrow-keys.hint", @"Send Up/Down arrow key presses from scroll\n \nGreat for navigating lists, slides, and presentations"), @"dict": @{
+            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeArrowKeys
+        }},
+        @{@"ui": NSLocalizedString(@"scroll-effect.arrow-keys-horizontal", @"Arrow Keys (Horizontal)"), @"tool": NSLocalizedString(@"scroll-effect.arrow-keys-horizontal.hint", @"Send Left/Right arrow key presses from scroll\n \nGreat for timeline scrubbing in video players like QuickTime and YouTube"), @"dict": @{
+            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeArrowKeysHorizontal
+        }},
 //        separatorEffectsTableEntry(),
 //        @{@"ui": NSLocalizedString(@"scroll-effect.app-switcher", @"First draft: App Switcher"), @"tool": NSLocalizedString(@"scroll-effect.app-switcher.hint", @"First draft: Quickly switch between open apps\n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard"), @"dict": @{
 //            kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeCommandTab

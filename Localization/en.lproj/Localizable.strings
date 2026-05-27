@@ -562,3 +562,9 @@
 
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "Type a Keyboard Shortcut";
+
+/* Arrow keys scroll effects */
+"scroll-effect.arrow-keys" = "Arrow Keys (Vertical)";
+"scroll-effect.arrow-keys.hint" = "Send Up/Down arrow key presses from scroll\n \nGreat for navigating lists, slides, and presentations";
+"scroll-effect.arrow-keys-horizontal" = "Arrow Keys (Horizontal)";
+"scroll-effect.arrow-keys-horizontal.hint" = "Send Left/Right arrow key presses from scroll\n \nGreat for timeline scrubbing in video players like QuickTime and YouTube";

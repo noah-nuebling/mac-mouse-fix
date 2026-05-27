@@ -845,6 +845,10 @@ static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL animated, M
         outputType = kMFScrollOutputTypeCommandTab;
     } else if (_modifications.effectMod == kMFScrollEffectModificationThreeFingerSwipeHorizontal) {
         outputType = kMFScrollOutputTypeThreeFingerSwipeHorizontal;
+    } else if (_modifications.effectMod == kMFScrollEffectModificationArrowKeys) {
+        outputType = kMFScrollOutputTypeArrowKeys;
+    } else if (_modifications.effectMod == kMFScrollEffectModificationArrowKeysHorizontal) {
+        outputType = kMFScrollOutputTypeArrowKeysHorizontal;
     } /// kMFScrollEffectModificationHorizontalScroll is handled above when determining scroll direction
     
     /// Send event
@@ -863,6 +867,8 @@ typedef enum {
     kMFScrollOutputTypeZoom,
     kMFScrollOutputTypeRotation,
     kMFScrollOutputTypeCommandTab,
+    kMFScrollOutputTypeArrowKeys,
+    kMFScrollOutputTypeArrowKeysHorizontal,
 } MFScrollOutputType;
 
 /// Output
@@ -1244,6 +1250,32 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 sendKeyEvent(48, kCGEventFlagMaskCommand | kCGEventFlagMaskShift, false);
             }
         }
+        
+    } else if (outputType == kMFScrollOutputTypeArrowKeys) {
+        
+        /// --- Arrow Keys (Vertical) ---
+        /// Scroll up → Up arrow, scroll down → Down arrow
+        /// One key press per scroll tick. Great for navigating lists, slides, etc.
+        
+        double d = dx + dy;
+        if (d == 0) return;
+        
+        CGKeyCode keyCode = (d > 0) ? 126 : 125; /// 126 = up arrow, 125 = down arrow
+        sendKeyEvent(keyCode, 0, true);
+        sendKeyEvent(keyCode, 0, false);
+        
+    } else if (outputType == kMFScrollOutputTypeArrowKeysHorizontal) {
+        
+        /// --- Arrow Keys (Horizontal) ---
+        /// Scroll up → Right arrow, scroll down → Left arrow
+        /// One key press per scroll tick. Great for timeline scrubbing in video players.
+        
+        double d = dx + dy;
+        if (d == 0) return;
+        
+        CGKeyCode keyCode = (d > 0) ? 124 : 123; /// 124 = right arrow, 123 = left arrow
+        sendKeyEvent(keyCode, 0, true);
+        sendKeyEvent(keyCode, 0, false);
         
     } else {
         assert(false);
