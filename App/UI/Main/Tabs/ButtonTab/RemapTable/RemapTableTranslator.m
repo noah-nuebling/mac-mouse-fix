@@ -114,6 +114,13 @@ static NSArray *getDragEffectsTable() {
         @{@"ui": NSLocalizedString(@"drag-effect.scroll-swipe", @"First draft: Scroll & Navigate"), @"tool": NSLocalizedString(@"drag-effect.scroll-swipe.hint", @"First draft: Scroll freely by moving your mouse in any direction\n \nAlso Navigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right\n \nWorks like swiping with 2 fingers on an Apple Trackpad") , @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
         }},
+        separatorEffectsTableEntry(),
+        @{@"ui": NSLocalizedString(@"drag-effect.rotate", @"Rotate"), @"tool": NSLocalizedString(@"drag-effect.rotate.hint", @"Rotate content in Apple Maps and other apps by moving your mouse left and right\n \nWorks like twisting with 2 fingers on an Apple Trackpad"), @"dict": @{
+                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeRotate,
+        }},
+        @{@"ui": NSLocalizedString(@"drag-effect.zoom", @"Zoom In or Out"), @"tool": NSLocalizedString(@"drag-effect.zoom.hint", @"Zoom in or out by moving your mouse up and down\n \nWorks like pinching with 2 fingers on an Apple Trackpad"), @"dict": @{
+                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeZoom,
+        }},
 //        separatorEffectsTableEntry(),
 //        @{
 ////          @"ui": [NSString stringWithFormat:@"%@ Click and Drag", [UIStrings getButtonString:3]],

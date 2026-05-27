@@ -562,3 +562,9 @@
 
 /* First draft: Type a Keyboard Shortcut */
 "type-shortcut-prompt" = "Type a Keyboard Shortcut";
+
+/* Rotate and zoom drag effects */
+"drag-effect.rotate" = "Rotate";
+"drag-effect.rotate.hint" = "Rotate content in Apple Maps and other apps by moving your mouse left and right\n \nWorks like twisting with 2 fingers on an Apple Trackpad";
+"drag-effect.zoom" = "Zoom In or Out";
+"drag-effect.zoom.hint" = "Zoom in or out by moving your mouse up and down\n \nWorks like pinching with 2 fingers on an Apple Trackpad";
