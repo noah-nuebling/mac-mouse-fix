@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Mai 2026**
 
+- 🇵🇹&nbsp;Nuno - "Essential, and beautifully built."
 - 🇺🇸&nbsp;Seth&nbsp;Ryan - "10 years since Harambe. We miss you, king."
 - 🇹🇼&nbsp;Davis&nbsp;Lin - "This app is absolutely awesome !!!!"
 - 🇨🇦&nbsp;Somebody&nbsp;Who&nbsp;Likes&nbsp;It - "👍"

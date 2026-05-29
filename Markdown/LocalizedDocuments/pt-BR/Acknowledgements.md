@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **maio 2026**
 
+- 🇵🇹&nbsp;Nuno - "Essential, and beautifully built."
 - 🇺🇸&nbsp;Seth&nbsp;Ryan - "10 years since Harambe. We miss you, king."
 - 🇹🇼&nbsp;Davis&nbsp;Lin - "This app is absolutely awesome !!!!"
 - 🇨🇦&nbsp;Somebody&nbsp;Who&nbsp;Likes&nbsp;It - "👍"
