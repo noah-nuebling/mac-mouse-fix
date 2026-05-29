@@ -219,15 +219,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2);
     int64_t drawingTabletID  = CGEventGetIntegerValueField(event, kCGTabletEventDeviceID);
     bool isDiagonal = scrollDeltaAxis1 != 0 && scrollDeltaAxis2 != 0;
-
-    static NSTimeInterval lastLogTime = 0;
-    NSTimeInterval currentTime = [NSDate timeIntervalSinceReferenceDate];
-    if (currentTime - lastLogTime > 0.1) { // Throttle log to prevent spamming
-        DDLogInfo(@"[Scroll.m] eventTapCallback - isPixelBased: %lld, scrollPhase: %lld, delta1: %lld, delta2: %lld, tabletID: %lld, isDiagonal: %d",
-              isPixelBased, scrollPhase, scrollDeltaAxis1, scrollDeltaAxis2, drawingTabletID, isDiagonal);
-        lastLogTime = currentTime;
-    }
-
     if (isPixelBased != 0
         || scrollPhase != 0 /// Not entirely sure if testing for 'scrollPhase' here makes sense
         || drawingTabletID != 0 /// Untested
@@ -236,48 +227,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         return event;
     }
     
-    // 检测是否在状态栏菜单上滚动，若是则直接通过，避免在modal loop下发送合成事件失效
-    // 使用纯 CG API 以确保后台线程安全性，绝对避免 AppKit 锁死 EventTap
-    CGPoint mouseLocation = CGEventGetLocation(event);
-    int windowLayer = -1;
-    NSArray *windowList = (__bridge_transfer NSArray *)CGWindowListCopyWindowInfo(
-        kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements,
-        kCGNullWindowID
-    );
-    for (NSDictionary *windowInfo in windowList) {
-        int layer = [windowInfo[(__bridge NSString *)kCGWindowLayer] intValue];
-        if (layer == 21) { // kCGStatusWindowLevel (21)
-            NSDictionary *boundsDict = windowInfo[(__bridge NSString *)kCGWindowBounds];
-            if (boundsDict) {
-                CGRect bounds;
-                if (CGRectMakeWithDictionaryRepresentation((__bridge CFDictionaryRef)boundsDict, &bounds)) {
-                    if (bounds.size.width < 1000 && bounds.size.height < 1000) {
-                        if (CGRectContainsPoint(bounds, mouseLocation)) {
-                            windowLayer = layer;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    if (windowLayer == 21 || windowLayer == 101) {
-        [Scroll resetState]; // 异步取消当前的平滑滚动动画，彻底清除残留合成事件
-        
-        if (_scrollConfig == nil) {
-            _scrollConfig = ScrollConfig.shared;
-        }
-        if (_scrollConfig.u_invertDirection == kMFScrollInversionInverted) {
-            event = [ScrollUtility invertScrollEvent:event direction:-1];
-        }
-        
-        static NSTimeInterval lastPassThroughLog = 0;
-        if (currentTime - lastPassThroughLog > 1.0) {
-            DDLogInfo(@"[Scroll.m] eventTapCallback - Menu window level %d detected via CG API, passing through scroll event", windowLayer);
-            lastPassThroughLog = currentTime;
-        }
-        return event;
-    }
     /// Filter out scroll events by wacom tablet
     if (CGEvent_IsWacomEvent(event))
         return event;
@@ -397,7 +346,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         [ScrollUtility updateMouseDidMoveWithEvent:event];
         
         /// Update application Overrides
-        if ((YES)) {
+        if ((NO)) { /// Unused in MMF 3
             if (!ScrollUtility.mouseDidMove) {
                 [ScrollUtility updateFrontMostAppDidChange];
                 /// Only checking this if mouse didn't move, because of || in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.
@@ -410,7 +359,6 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 BOOL didChange = [Config.shared loadOverridesForAppUnderMousePointerWithEvent:event];
                 if (didChange) {
                     DDLogDebug(@"Scroll.m: Config did change. Resetting state.");
-                    [Config updateDerivedStates];
                     resetState_Unsafe();
                 }
             }
