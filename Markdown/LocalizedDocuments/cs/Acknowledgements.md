@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **květen 2026**
 
+- 🇺🇸&nbsp;Seth&nbsp;Ryan - "10 years since Harambe. We miss you, king."
 - 🇹🇼&nbsp;Davis&nbsp;Lin - "This app is absolutely awesome !!!!"
 - 🇨🇦&nbsp;Somebody&nbsp;Who&nbsp;Likes&nbsp;It - "👍"
 - 🇨🇭&nbsp;Decore16 - "thank you, amazing work!"
