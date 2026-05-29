@@ -232,10 +232,10 @@
         /// Listen to frontmost application changes to apply overrides immediately
         [NSWorkspace.sharedWorkspace.notificationCenter addObserverForName:NSWorkspaceDidActivateApplicationNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
             NSRunningApplication *app = note.userInfo[NSWorkspaceApplicationKey];
-            NSString *bundleID = app.bundleIdentifier;
-            if (bundleID) {
-                DDLogDebug(@"Helper - Frontmost app did change to: %@", bundleID);
-                BOOL didChange = [Config.shared loadOverridesForApp:bundleID];
+            NSString *appIdentifier = [Config appOverrideIdentifierForRunningApplication:app];
+            if (appIdentifier.length > 0) {
+                DDLogDebug(@"Helper - Frontmost app did change to: %@", appIdentifier);
+                BOOL didChange = [Config.shared loadOverridesForApp:appIdentifier];
                 if (didChange) {
                     DDLogDebug(@"Helper - Config overrides changed for app. Updating derived states.");
                     [Config updateDerivedStates];
@@ -245,8 +245,9 @@
         
         /// Apply overrides for the initial frontmost application
         NSRunningApplication *frontApp = NSWorkspace.sharedWorkspace.frontmostApplication;
-        if (frontApp && frontApp.bundleIdentifier) {
-            [Config.shared loadOverridesForApp:frontApp.bundleIdentifier];
+        NSString *frontAppIdentifier = [Config appOverrideIdentifierForRunningApplication:frontApp];
+        if (frontAppIdentifier.length > 0) {
+            [Config.shared loadOverridesForApp:frontAppIdentifier];
             [Config updateDerivedStates];
         }
         
