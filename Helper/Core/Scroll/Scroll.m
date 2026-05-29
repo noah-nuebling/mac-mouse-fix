@@ -236,7 +236,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         return event;
     }
     
-    // 检测是否在弹出菜单或状态栏菜单上滚动，若是则直接通过，避免在modal loop下发送合成事件失效
+    // 检测是否在状态栏菜单上滚动，若是则直接通过，避免在modal loop下发送合成事件失效
     // 使用纯 CG API 以确保后台线程安全性，绝对避免 AppKit 锁死 EventTap
     CGPoint mouseLocation = CGEventGetLocation(event);
     int windowLayer = -1;
@@ -246,7 +246,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     );
     for (NSDictionary *windowInfo in windowList) {
         int layer = [windowInfo[(__bridge NSString *)kCGWindowLayer] intValue];
-        if (layer == 21 || layer == 101) { // kCGStatusWindowLevel (21) or kCGPopUpMenuWindowLevel (101)
+        if (layer == 21) { // kCGStatusWindowLevel (21)
             NSDictionary *boundsDict = windowInfo[(__bridge NSString *)kCGWindowBounds];
             if (boundsDict) {
                 CGRect bounds;

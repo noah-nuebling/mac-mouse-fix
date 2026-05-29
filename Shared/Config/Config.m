@@ -206,6 +206,13 @@ void commitConfig(void) {
     /// Update states across the app that depend on the config.
     /// We should generally call this whenever the config changes.
     
+    if (!NSThread.isMainThread) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self updateDerivedStates];
+        });
+        return;
+    }
+    
 #if IS_MAIN_APP
     [ReactiveConfig.shared reactWithNewConfig:Config.shared.config];
 
@@ -213,8 +220,8 @@ void commitConfig(void) {
     
 #if IS_HELPER
     
-    NSString *frontmostAppIdentifier = [self appOverrideIdentifierForRunningApplication:NSWorkspace.sharedWorkspace.frontmostApplication] ?: @"";
-    [self.shared loadOverridesForApp:frontmostAppIdentifier];
+    NSString *currentAppIdentifier = self.shared->_bundleIDOfAppWhichCausesAppOverride ?: @"";
+    [self.shared loadOverridesForApp:currentAppIdentifier];
     
     /// Notify other modules
     [Remap reload];
