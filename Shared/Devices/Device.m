@@ -135,14 +135,9 @@
         _nOfButtons = maxButtonNumber;
         
 #if IS_HELPER
-        
-//        /// Set values of interest for callback
-//        NSDictionary *buttonMatchDict = @{ @(kIOHIDElementUsagePageKey): @(kHIDPage_Button) };
-//        IOHIDDeviceSetInputValueMatching(_iohidDevice, (__bridge CFDictionaryRef)buttonMatchDict);
-//
-//        /// Register callback
-//        IOHIDDeviceScheduleWithRunLoop(IOHIDDevice, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
-//        IOHIDDeviceRegisterInputValueCallback(IOHIDDevice, &handleInput, (__bridge void * _Nullable)(self));
+        /// Register low-level input callback for all elements (without SetInputValueMatching filter)
+        IOHIDDeviceScheduleWithRunLoop(self.iohidDevice, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
+        IOHIDDeviceRegisterInputValueCallback(self.iohidDevice, &handleInput, (__bridge void * _Nullable)(self));
 #endif
         
     }
@@ -198,6 +193,33 @@
 //}
 
 
+#if IS_HELPER
+static void postVirtualButtonEvent(MFMouseButtonNumber button, BOOL down) {
+    CGEventTapLocation tapLoc = kCGHIDEventTap;
+    CGEventRef ourEvent = CGEventCreate(NULL);
+    CGPoint mouseLoc = CGPointZero;
+    if (ourEvent != NULL) {
+        mouseLoc = CGEventGetLocation(ourEvent);
+        CFRelease(ourEvent);
+    }
+    
+    CGEventType eventType = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:down];
+    CGMouseButton buttonCG = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:button];
+    
+    CGEventRef event = CGEventCreateMouseEvent(NULL, eventType, mouseLoc, buttonCG);
+    if (event == NULL) return;
+    
+    CGEventSetIntegerValueField(event, kCGMouseEventClickState, 1);
+    
+    if (button >= 4) {
+        CGEventSetIntegerValueField(event, kCGMouseEventButtonNumber, button - 1);
+    }
+    
+    CGEventPost(tapLoc, event);
+    CFRelease(event);
+}
+#endif
+
 //static int64_t _previousDeltaY;
 
 static void handleInput(void *context, IOReturn result, void *sender, IOHIDValueRef value) {
@@ -225,23 +247,77 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     IOHIDElementRef elem = IOHIDValueGetElement(value);
     uint32_t usage = IOHIDElementGetUsage(elem);
     uint32_t usagePage = IOHIDElementGetUsagePage(elem);
+    CFIndex integerValue = IOHIDValueGetIntegerValue(value);
 
-    /// Get info
-    BOOL isButton = usagePage == 9;
-    assert(isButton);
-    MFMouseButtonNumber button = usage;
+    // Ignore Generic Desktop Page (X/Y mouse pointer coordinates) to avoid flooding the logs
+    if (usagePage == 1 && (usage == 48 || usage == 49)) {
+        return;
+    }
 
-    /// Debug
-    DDLogDebug(@"Received HID input - usagePage: %d usage: %d value: %ld from device: %@", usagePage, usage, (long)IOHIDValueGetIntegerValue(value), sendingDev.name);
+    DDLogInfo(@"[TEMP LowLevel HID Log] Device: %@, UsagePage: %u, Usage: %u, Value: %ld", 
+              sendingDev.name, usagePage, usage, (long)integerValue);
 
-    /// Notify ButtonInputReceiver
-    /// Not needed now since we deactivated AppSwitcher feature. If we do implement it in the future we'll probably take a completely different approach
-//    [ButtonInputReceiver handleHIDButtonInputFromRelevantDeviceOccured:sendingDev button:@(button)];
+    // Remap Logitech proprietary button reports (Usage Page 65347/0xFF43) to standard buttons
+    if (usagePage == 65347) {
+        static BOOL logiButton4IsDown = NO;
+        static BOOL logiButton5IsDown = NO;
+        static BOOL logiButton6IsDown = NO;
+        static BOOL logiButton7IsDown = NO;
+        
+        if (integerValue == 83) {
+            if (logiButton5IsDown) { logiButton5IsDown = NO; postVirtualButtonEvent(5, NO); }
+            if (logiButton6IsDown) { logiButton6IsDown = NO; postVirtualButtonEvent(6, NO); }
+            if (logiButton7IsDown) { logiButton7IsDown = NO; postVirtualButtonEvent(7, NO); }
+            logiButton4IsDown = YES;
+            DDLogInfo(@"[TEMP Logi Remap] Detected Back button press, posting virtual Button 4 down");
+            postVirtualButtonEvent(4, YES);
+        } else if (integerValue == 86) {
+            if (logiButton4IsDown) { logiButton4IsDown = NO; postVirtualButtonEvent(4, NO); }
+            if (logiButton6IsDown) { logiButton6IsDown = NO; postVirtualButtonEvent(6, NO); }
+            if (logiButton7IsDown) { logiButton7IsDown = NO; postVirtualButtonEvent(7, NO); }
+            logiButton5IsDown = YES;
+            DDLogInfo(@"[TEMP Logi Remap] Detected Forward button press, posting virtual Button 5 down");
+            postVirtualButtonEvent(5, YES);
+        } else if (integerValue == 196) {
+            if (logiButton4IsDown) { logiButton4IsDown = NO; postVirtualButtonEvent(4, NO); }
+            if (logiButton5IsDown) { logiButton5IsDown = NO; postVirtualButtonEvent(5, NO); }
+            if (logiButton7IsDown) { logiButton7IsDown = NO; postVirtualButtonEvent(7, NO); }
+            logiButton6IsDown = YES;
+            DDLogInfo(@"[TEMP Logi Remap] Detected Mode Shift button press, posting virtual Button 6 down");
+            postVirtualButtonEvent(6, YES);
+        } else if (integerValue == 82) {
+            if (logiButton4IsDown) { logiButton4IsDown = NO; postVirtualButtonEvent(4, NO); }
+            if (logiButton5IsDown) { logiButton5IsDown = NO; postVirtualButtonEvent(5, NO); }
+            if (logiButton6IsDown) { logiButton6IsDown = NO; postVirtualButtonEvent(6, NO); }
+            logiButton7IsDown = YES;
+            DDLogInfo(@"[TEMP Logi Remap] Detected Gesture button press, posting virtual Button 7 down");
+            postVirtualButtonEvent(7, YES);
+        } else if (integerValue == 0) {
+            if (logiButton4IsDown) {
+                logiButton4IsDown = NO;
+                DDLogInfo(@"[TEMP Logi Remap] Posting virtual Button 4 up");
+                postVirtualButtonEvent(4, NO);
+            }
+            if (logiButton5IsDown) {
+                logiButton5IsDown = NO;
+                DDLogInfo(@"[TEMP Logi Remap] Posting virtual Button 5 up");
+                postVirtualButtonEvent(5, NO);
+            }
+            if (logiButton6IsDown) {
+                logiButton6IsDown = NO;
+                DDLogInfo(@"[TEMP Logi Remap] Posting virtual Button 6 up");
+                postVirtualButtonEvent(6, NO);
+            }
+            if (logiButton7IsDown) {
+                logiButton7IsDown = NO;
+                DDLogInfo(@"[TEMP Logi Remap] Posting virtual Button 7 up");
+                postVirtualButtonEvent(7, NO);
+            }
+        }
+    }
 
-    /// Stop momentumScroll on LMB click
-    ///     ButtonInputReceiver tries to filter out LMB and RMB events as early as possible, so it's better to do this here
-    int64_t pressure = IOHIDValueGetIntegerValue(value);
-    if (button == 1 && pressure != 0) {
+    // Stop momentumScroll on LMB (Usage Page 9, Usage 1) click
+    if (usagePage == 9 && usage == 1 && integerValue != 0) {
         [GestureScrollSimulator stopMomentumScroll];
     }
 

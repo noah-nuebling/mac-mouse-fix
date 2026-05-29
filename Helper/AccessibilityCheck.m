@@ -229,6 +229,27 @@
         [TrialCounter load_Manual];
         [License checkAndReactWithTriggeredByUser:NO];
         
+        /// Listen to frontmost application changes to apply overrides immediately
+        [NSWorkspace.sharedWorkspace.notificationCenter addObserverForName:NSWorkspaceDidActivateApplicationNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+            NSRunningApplication *app = note.userInfo[NSWorkspaceApplicationKey];
+            NSString *bundleID = app.bundleIdentifier;
+            if (bundleID) {
+                DDLogDebug(@"Helper - Frontmost app did change to: %@", bundleID);
+                BOOL didChange = [Config.shared loadOverridesForApp:bundleID];
+                if (didChange) {
+                    DDLogDebug(@"Helper - Config overrides changed for app. Updating derived states.");
+                    [Config updateDerivedStates];
+                }
+            }
+        }];
+        
+        /// Apply overrides for the initial frontmost application
+        NSRunningApplication *frontApp = NSWorkspace.sharedWorkspace.frontmostApplication;
+        if (frontApp && frontApp.bundleIdentifier) {
+            [Config.shared loadOverridesForApp:frontApp.bundleIdentifier];
+            [Config updateDerivedStates];
+        }
+        
         ///
         /// Debug & testing
         ///

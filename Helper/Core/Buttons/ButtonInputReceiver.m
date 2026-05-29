@@ -56,12 +56,18 @@ static void registerInputCallback() {
     ///     Edit: will just see what happens when we turn it off.
     
     CGEventMask mask =
-    CGEventMaskBit(kCGEventOtherMouseDown) | CGEventMaskBit(kCGEventOtherMouseUp);
-//    | CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventLeftMouseUp)
-//    | CGEventMaskBit(kCGEventRightMouseDown) | CGEventMaskBit(kCGEventRightMouseUp);
+    CGEventMaskBit(kCGEventOtherMouseDown) | CGEventMaskBit(kCGEventOtherMouseUp) |
+    CGEventMaskBit(kCGEventLeftMouseDown) | CGEventMaskBit(kCGEventLeftMouseUp) |
+    CGEventMaskBit(kCGEventRightMouseDown) | CGEventMaskBit(kCGEventRightMouseUp) |
+    CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(kCGEventKeyUp);
 
     /// Create tap
     _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
+    if (_eventTap == NULL) {
+        DDLogError(@"ButtonInputReceiver - Failed to create event tap! (Accessibility permissions might be missing)");
+    } else {
+        DDLogInfo(@"ButtonInputReceiver - Successfully created event tap: %@", _eventTap);
+    }
     
     /// Get source
     CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
@@ -90,6 +96,18 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         if (type == kCGEventTapDisabledByTimeout) {
             CGEventTapEnable(_eventTap, true);
         }
+        return event;
+    }
+
+    // [TEMP LOG] Log all events caught by the tap
+    NSUInteger tempButton = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
+    int64_t tempKeycode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
+    DDLogInfo(@"[TEMP LOG] EventTap received event: type=%d, button=%lu, keycode=%lld", (int)type, (unsigned long)tempButton, tempKeycode);
+
+    // Pass through left/right click and key events immediately so we don't interfere
+    if (type == kCGEventLeftMouseDown || type == kCGEventLeftMouseUp ||
+        type == kCGEventRightMouseDown || type == kCGEventRightMouseUp ||
+        type == kCGEventKeyDown || type == kCGEventKeyUp) {
         return event;
     }
     

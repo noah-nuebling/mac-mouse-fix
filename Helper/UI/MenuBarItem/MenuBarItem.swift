@@ -79,11 +79,14 @@ import Foundation
     // MARK: SwitchMaster interface
     
     static func enableButtonsItem(_ enable: Bool) { /// Note: [Mar 2025] 'enabled' doesn't mean the item is checked. It means that it's clickable and not grayed-out.
-        instance?.buttonsEnabledItem.isEnabled = enable
-        
+        DispatchQueue.main.async {
+            instance?.buttonsEnabledItem.isEnabled = enable
+        }
     }
     static func enableScrollItem(_ enable: Bool) {
-        instance?.scrollEnabledItem.isEnabled = enable
+        DispatchQueue.main.async {
+            instance?.scrollEnabledItem.isEnabled = enable
+        }
     }
     
     static func buttonsItemIsEnabled() -> Bool { /// This is for introspection for debugging SwitchMaster
@@ -96,29 +99,30 @@ import Foundation
     // MARK: Reload
     
     @objc static func reload() {
-        
-        let shouldShow = config("General.showMenuBarItem") as? Bool ?? false
-        instance?.statusItem?.isVisible = shouldShow
-        
-        let buttonsKilled = config("General.buttonKillSwitch") as? Bool ?? false
-        let scrollKilled = config("General.scrollKillSwitch") as? Bool ?? false
-        
-        if shouldShow {
+        DispatchQueue.main.async {
+            let shouldShow = config("General.showMenuBarItem") as? Bool ?? false
+            instance?.statusItem?.isVisible = shouldShow
             
-            instance?.buttonsEnabledItem.state = !buttonsKilled ? .on : .off
-            instance?.scrollEnabledItem.state = !scrollKilled ? .on : .off
+            let buttonsKilled = config("General.buttonKillSwitch") as? Bool ?? false
+            let scrollKilled = config("General.scrollKillSwitch") as? Bool ?? false
             
-            return
-            
-        } else {
-            
-            /// Disable all settings from the menuItem, if the menuItem is disabled
-            /// Need to do the killed check to prevent infinite loops. (Not sure if true anymore). This would be easier if we just used the reactive ConfigValue instead.
-            
-            if (buttonsKilled || scrollKilled) {
-                setConfig("General.scrollKillSwitch", false as NSObject)
-                setConfig("General.buttonKillSwitch", false as NSObject)
-                commitConfig()
+            if shouldShow {
+                
+                instance?.buttonsEnabledItem.state = !buttonsKilled ? .on : .off
+                instance?.scrollEnabledItem.state = !scrollKilled ? .on : .off
+                
+                return
+                
+            } else {
+                
+                /// Disable all settings from the menuItem, if the menuItem is disabled
+                /// Need to do the killed check to prevent infinite loops. (Not sure if true anymore). This would be easier if we just used the reactive ConfigValue instead.
+                
+                if (buttonsKilled || scrollKilled) {
+                    setConfig("General.scrollKillSwitch", false as NSObject)
+                    setConfig("General.buttonKillSwitch", false as NSObject)
+                    commitConfig()
+                }
             }
         }
     }

@@ -96,8 +96,9 @@ static NSArray *coolKeyPathToKeyArray(NSString * _Nonnull keyPath) {
 
 - (void)setObject:(NSObject * _Nullable)object forCoolKeyArray:(NSArray *)keys {
     NSMutableDictionary *thisNode = self;
-    for (NSString *key in keys) {
-        if ([keys indexOfObject:key] == keys.count - 1) { // `key` is last key
+    for (NSUInteger idx = 0; idx < keys.count; idx++) {
+        id key = keys[idx];
+        if (idx == keys.count - 1) { // `key` is last key
             thisNode[key] = object;
         } else { // `key` is inner key
             NSObject *nextNode = thisNode[key];

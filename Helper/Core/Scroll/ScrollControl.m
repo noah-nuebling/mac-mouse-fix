@@ -187,6 +187,15 @@ static int _scrollDirection;
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
+    // Re-enable on timeout or user input disabling
+    if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
+        NSLog(@"ScrollControl eventTap was disabled by %@. Re-enabling.", type == kCGEventTapDisabledByTimeout ? @"timeout" : @"user input");
+        if (type == kCGEventTapDisabledByTimeout) {
+            CGEventTapEnable(_eventTap, true);
+        }
+        return event;
+    }
+    
     // Return non-scrollwheel events unaltered
     int64_t isPixelBased     = CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
     int64_t scrollPhase      = CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
