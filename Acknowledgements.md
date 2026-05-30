@@ -74,6 +74,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **May 2026**
 
+- 🇺🇸&nbsp;Seacasper - "Mac Mouse Fix makes it reasonable to actually use a mouse on mac."
 - 🇵🇹&nbsp;Nuno - "Essential, and beautifully built."
 - 🇺🇸&nbsp;Seth&nbsp;Ryan - "10 years since Harambe. We miss you, king."
 - 🇹🇼&nbsp;Davis&nbsp;Lin - "This app is absolutely awesome !!!!"
