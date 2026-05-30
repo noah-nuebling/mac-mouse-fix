@@ -52,6 +52,7 @@ typedef enum {
     dispatch_queue_t _displayLinkQueue;
     MFDisplayLinkRequestedState _requestedState;
     MFDisplayLinkWorkType _optimizedWorkType;
+    uint64_t _startGeneration;
 }
 
 @synthesize dispatchQueue=_displayLinkQueue;
@@ -146,6 +147,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
         
         /// Init `_requestedState`
         _requestedState = kMFDisplayLinkRequestedStateStopped;
+        _startGeneration = 0;
         
         /// Setup display reconfiguration callback
         CGDisplayRegisterReconfigurationCallback(displayReconfigurationCallback, (__bridge void * _Nullable)(self));
@@ -255,18 +257,28 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
     
     /// Define block that starts displayLink
     
+    _startGeneration += 1;
+    uint64_t startGeneration = _startGeneration;
+    
     void (^startDisplayLinkBlock)(void) = ^{
         
         int64_t failedAttempts = 0;
         int64_t maxAttempts = 100;
+        CVReturn rt = kCVReturnSuccess;
         
         while (true) {
-            CVReturn rt = CVDisplayLinkStart(self->_displayLink); /// This locks until the displayLinkCallback is done
-            if (rt == kCVReturnSuccess) break;
+            rt = CVDisplayLinkStart(self->_displayLink); /// This locks until the displayLinkCallback is done
+            if (rt == kCVReturnSuccess || rt == kCVReturnDisplayLinkAlreadyRunning) break;
             
             failedAttempts += 1;
             if (failedAttempts >= maxAttempts) {
-                DDLogInfo(@"DisplayLink.m: (%@) Failed to start CVDisplayLink after %lld tries. Last error code: %d", [self identifier], failedAttempts, rt);
+                DDLogWarn(@"DisplayLink.m: (%@) Failed to start CVDisplayLink after %lld tries. Last error code: %@. Rebuilding displayLink and marking stopped so the next input can recover.", [self identifier], failedAttempts, MFCVReturn_ToString(rt));
+                dispatch_async(self->_displayLinkQueue, ^{
+                    if (self->_requestedState == kMFDisplayLinkRequestedStateRunning && self->_startGeneration == startGeneration) {
+                        self->_requestedState = kMFDisplayLinkRequestedStateStopped;
+                        [self setUpNewDisplayLinkWithActiveDisplays];
+                    }
+                });
                 break;
             }
         }
@@ -354,6 +366,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
         ///     before async dispatching to main -> so that isRunning() works properly
         
         _requestedState = kMFDisplayLinkRequestedStateStopped;
+        _startGeneration += 1;
         
         if ((NO)) {
             

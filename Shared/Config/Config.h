@@ -12,6 +12,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class NSRunningApplication;
+
 @interface Config : NSObject
 
 #pragma mark - For both
@@ -34,6 +36,11 @@ void setConfig(NSString *keyPath, NSObject *value);
 void removeFromConfig(NSString *keyPath);
 void commitConfig(void);
 
+/// UI app overrides bundle ID
++ (void)setUIAppOverrideBundleID:(NSString * _Nullable)bundleID;
++ (NSString * _Nullable)uiAppOverrideBundleID;
++ (NSString * _Nullable)appOverrideIdentifierForRunningApplication:(NSRunningApplication * _Nullable)application;
+
 /// Repair
 - (void) repairIncompleteAppOverrideForBundleID: (NSString *)bundleID                           
                                relevantKeyPaths: (NSArray <NSString *> *)keyPathsToDefaultValues;
@@ -43,10 +50,12 @@ void commitConfig(void);
 
 /// Overrides
 - (BOOL)loadOverridesForAppUnderMousePointerWithEvent:(CGEventRef)event;
+- (BOOL)loadOverridesForApp:(NSString *)bundleID;
 @property (strong, nonatomic, readonly) NSMutableDictionary *configWithAppOverridesApplied; /// [Aug 2025] This could just be an ivar
 
 /// React
 + (void)loadFileAndUpdateStates;
++ (void)updateDerivedStates;
 
 
 @end

@@ -229,6 +229,7 @@ NSMutableArray *columnConstraints = nil;
     double minTableWidth = effectColumnWidth * 2 + 4*columnPadding;
     
     NSLayoutConstraint *c = [self.enclosingScrollView.widthAnchor constraintGreaterThanOrEqualToConstant:minTableWidth];
+    c.priority = 999.0;
     [c setActive:YES];
     NSLayoutConstraint *c2 = [self.enclosingScrollView.widthAnchor constraintEqualToConstant:minTableWidth];
     c2.priority = 999.0;

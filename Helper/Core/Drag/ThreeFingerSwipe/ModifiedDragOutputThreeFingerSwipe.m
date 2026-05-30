@@ -13,6 +13,8 @@
 @import Cocoa;
 #import "PointerFreeze.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "SymbolicHotKeys.h"
+#import "Constants.h"
 
 @implementation ModifiedDragOutputThreeFingerSwipe
 
@@ -21,6 +23,15 @@
 static ModifiedDragState *_drag;
 
 static int16_t _nOfSpaces = 1;
+
+/// Track the vertical direction determined when the gesture usage threshold is first crossed.
+///   YES = moving UP  → Mission Control (animated dock swipe)
+///   NO  = moving DOWN → App Exposé
+static BOOL _verticalIsUpward;
+
+/// Whether the one-shot App Exposé symbolic-hotkey fallback has already fired
+/// for the current downward gesture.
+static BOOL _appExposeSymbolicHotKeyFired;
 
 /// Interface funcs
 
@@ -37,6 +48,15 @@ static int16_t _nOfSpaces = 1;
     _nOfSpaces = uniqueSpaces.count;
     
     CFRelease(spaces);
+    
+    /// Determine the vertical direction from the accumulated originOffset
+    ///   (ModifiedDrag.m sets usageAxis and accumulates originOffset before calling handleBecameInUse)
+    ///   originOffset.y < 0 → mouse went UP  (screen-coords: Y grows downward)
+    ///   originOffset.y > 0 → mouse went DOWN
+    if (_drag->usageAxis == kMFAxisVertical) {
+        _verticalIsUpward              = (_drag->originOffset.y < 0);
+        _appExposeSymbolicHotKeyFired  = NO;
+    }
     
     /// Freeze pointer
     if (GeneralConfig.freezePointerDuringModifiedDrag) {
@@ -58,46 +78,79 @@ static int16_t _nOfSpaces = 1;
     double threeFingerScaleH = originOffsetForOneSpace / (screenSize.width + spaceSeparatorWidth);
     
     /// Vertical dockSwipe scaling
-    ///     Not sure if it makes sense to scale this with screen height
     double threeFingerScaleV = 1.0 / screenSize.height;
     
     /// Get phase
-    
     IOHIDEventPhaseBits eventPhase = _drag->firstCallback ? kIOHIDEventPhaseBegan : kIOHIDEventPhaseChanged;
     
     /// Send events
     
     if (_drag->usageAxis == kMFAxisHorizontal) {
+        
+        /// Horizontal → switch Spaces (animated dock swipe)
         double delta = -deltaX * threeFingerScaleH;
         [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:eventPhase invertedFromDevice:_drag->naturalDirection];
+        
     } else if (_drag->usageAxis == kMFAxisVertical) {
-        double delta = deltaY * threeFingerScaleV;
-        [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:eventPhase invertedFromDevice:_drag->naturalDirection];
+        
+        if (_verticalIsUpward) {
+            
+            /// Swipe UP → Mission Control  (animated vertical dock swipe, negative delta)
+            double delta = deltaY * threeFingerScaleV; /// deltaY is negative for upward mouse movement
+            [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:eventPhase invertedFromDevice:_drag->naturalDirection];
+            
+        } else {
+            
+            /// Swipe DOWN → App Exposé
+            ///
+            /// Primary path: animated vertical dock swipe with positive delta.
+            ///   The system maps a positive-delta kMFDockSwipeTypeVertical event to App Exposé –
+            ///   exactly the same way a real trackpad sends it when you swipe three fingers down.
+            ///   This gives the full interactive animation (the windows spread out as you drag).
+            ///
+            /// Fallback path (symbolic hotkey):
+            ///   On some macOS versions or when the App Exposé trackpad gesture is disabled in
+            ///   System Settings → Trackpad → More Gestures, the dock-swipe positive delta is
+            ///   silently ignored.  In that case we fire the SymbolicHotKey on the first callback
+            ///   so App Exposé still activates (without animation).
+            
+            double delta = deltaY * threeFingerScaleV; /// deltaY is positive for downward movement
+            [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:eventPhase invertedFromDevice:_drag->naturalDirection];
+            
+            /// Symbolic-hotkey fallback – fire once on the first callback.
+            ///   We fire it regardless of whether the dock swipe succeeded, so it acts as a
+            ///   guaranteed trigger.  If the dock swipe already worked the SHK will just be a
+            ///   no-op (the UI is already shown).
+            if (!_appExposeSymbolicHotKeyFired) {
+                _appExposeSymbolicHotKeyFired = YES;
+                [SymbolicHotKeys post:(CGSSymbolicHotKey)kMFSHAppExpose];
+            }
+        }
     }
 }
 
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancel {
     
-    MFDockSwipeType type;
-    IOHIDEventPhaseBits phase;
+    IOHIDEventPhaseBits phase = cancel ? kIOHIDEventPhaseCancelled : kIOHIDEventPhaseEnded;
     
     if (_drag->usageAxis == kMFAxisHorizontal) {
-        type = kMFDockSwipeTypeHorizontal;
+        [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeHorizontal phase:phase invertedFromDevice:_drag->naturalDirection];
+        
     } else if (_drag->usageAxis == kMFAxisVertical) {
-        type = kMFDockSwipeTypeVertical;
-    } else {
-        assert(false);
+        if (_verticalIsUpward) {
+            /// Mission Control – close out the dock swipe stream
+            [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeVertical phase:phase invertedFromDevice:_drag->naturalDirection];
+        } else {
+            /// App Exposé downward drag – we still send the end event so the dock swipe
+            /// stream is properly closed even if the system ignored it.
+            [TouchSimulator postDockSwipeEventWithDelta:0.0 type:kMFDockSwipeTypeVertical phase:phase invertedFromDevice:_drag->naturalDirection];
+        }
     }
-    
-    phase = cancel ? kIOHIDEventPhaseCancelled : kIOHIDEventPhaseEnded;
-    
-    [TouchSimulator postDockSwipeEventWithDelta:0.0 type:type phase:phase invertedFromDevice:_drag->naturalDirection];
     
     /// Unfreeze pointer
     if (GeneralConfig.freezePointerDuringModifiedDrag) {
         [PointerFreeze unfreeze];
     }
-    
 }
 
 + (void)suspend {}

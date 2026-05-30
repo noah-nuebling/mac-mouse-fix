@@ -44,6 +44,10 @@
 #import "Mac_Mouse_Fix-Swift.h"
 #endif
 
+@interface Config (Private)
+- (void)repairContaminatedOverrides;
+@end
+
 @implementation Config {
     
     NSString*_configFilePath; /// [Jun 2025] This is currently unused. We're using Locator.m instead.
@@ -51,6 +55,31 @@
 //    NSDictionary *_stringToEventFlagMask; /// Delete this
 }
 @synthesize config=_config, configWithAppOverridesApplied=_configWithAppOverridesApplied;
+
+static NSString *_uiAppOverrideBundleID = nil;
+
++ (void)setUIAppOverrideBundleID:(NSString * _Nullable)bundleID {
+    _uiAppOverrideBundleID = bundleID;
+}
++ (NSString * _Nullable)uiAppOverrideBundleID {
+    return _uiAppOverrideBundleID;
+}
+
++ (NSString * _Nullable)appOverrideIdentifierForRunningApplication:(NSRunningApplication * _Nullable)application {
+    if (!application) return nil;
+    
+    NSString *bundleID = application.bundleIdentifier;
+    if (bundleID.length > 0) {
+        return bundleID;
+    }
+    
+    NSString *bundlePath = application.bundleURL.path;
+    if (bundlePath.length > 0) {
+        return [@"path:" stringByAppendingString:bundlePath.stringByStandardizingPath];
+    }
+    
+    return nil;
+}
 
 #pragma mark - Init & singleton instance
 
@@ -90,8 +119,24 @@ static Config *_instance;
 
 NSObject * _Nullable config(NSString *keyPath) {
     /// Convenience function for accessing config
-    NSMutableDictionary *config = Config.shared.config;
-    NSObject *result = [config objectForCoolKeyPath:keyPath];
+    NSMutableDictionary *configDict = Config.shared.config;
+#if IS_MAIN_APP
+    if (_uiAppOverrideBundleID != nil && ![keyPath hasPrefix:@"State"] && ![keyPath hasPrefix:@"Constants"] && ![keyPath hasPrefix:@"AppOverrides"]) {
+        NSString *escapedBundleID = [_uiAppOverrideBundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
+        NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", escapedBundleID, keyPath];
+        NSObject *overrideValue = [configDict objectForCoolKeyPath:overrideKeyPath];
+        if (overrideValue != nil) {
+            return overrideValue;
+        }
+    }
+#endif
+#if IS_HELPER
+    NSMutableDictionary *configDictWithAppOverridesApplied = Config.shared.configWithAppOverridesApplied;
+    if (configDictWithAppOverridesApplied != nil) {
+        configDict = configDictWithAppOverridesApplied;
+    }
+#endif
+    NSObject *result = [configDict objectForCoolKeyPath:keyPath];
     return result;
 }
 void setConfig(NSString *keyPath, NSObject *value) {
@@ -106,6 +151,14 @@ void setConfig(NSString *keyPath, NSObject *value) {
     }
 #endif
     
+#if IS_MAIN_APP
+    if (_uiAppOverrideBundleID != nil && ![keyPath hasPrefix:@"State"] && ![keyPath hasPrefix:@"Constants"] && ![keyPath hasPrefix:@"AppOverrides"]) {
+        NSString *escapedBundleID = [_uiAppOverrideBundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
+        NSString *overrideKeyPath = [NSString stringWithFormat:@"AppOverrides.%@.Root.%@", escapedBundleID, keyPath];
+        [Config.shared.config setObject:value forCoolKeyPath:overrideKeyPath];
+        return;
+    }
+#endif
     [Config.shared.config setObject:value forCoolKeyPath:keyPath];
 }
 void removeFromConfig(NSString *keyPath) {
@@ -153,6 +206,13 @@ void commitConfig(void) {
     /// Update states across the app that depend on the config.
     /// We should generally call this whenever the config changes.
     
+    if (!NSThread.isMainThread) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self updateDerivedStates];
+        });
+        return;
+    }
+    
 #if IS_MAIN_APP
     [ReactiveConfig.shared reactWithNewConfig:Config.shared.config];
 
@@ -160,9 +220,8 @@ void commitConfig(void) {
     
 #if IS_HELPER
     
-    /// Force update of internal state, (even the active app hastn't changed)
-    ///     (Not sure if we need to always do this or only after loading from file)
-    [self.shared loadOverridesForApp:@""];
+    NSString *currentAppIdentifier = self.shared->_bundleIDOfAppWhichCausesAppOverride ?: @"";
+    [self.shared loadOverridesForApp:currentAppIdentifier];
     
     /// Notify other modules
     [Remap reload];
@@ -180,10 +239,6 @@ void commitConfig(void) {
 
 - (BOOL)loadOverridesForAppUnderMousePointerWithEvent:(CGEventRef)event {
     
-    /// Unused in MMF 3
-    ///     Reactivate when we reimplement app-specific settings.
-    return NO;
-    
     /// Returns yes when it's made a change
     /// TODO: Add compatibility for command line executables
     /// TODO: Look into using kCGMouseEventWindowUnderMousePointer to get the window under the mouse pointer
@@ -194,48 +249,58 @@ void commitConfig(void) {
     
 #if IS_HELPER
     
-    /// Get bundleID
+    /// Get app identifier
     NSRunningApplication *app = [HelperUtility appUnderMousePointerWithEvent:event];
-    NSString *bundleID = app.bundleIdentifier;
+    NSString *appIdentifier = [Config appOverrideIdentifierForRunningApplication:app] ?: @"";
     
-    /// Debug
-    DDLogDebug(@"Loading overrides for app %@", bundleID);
+    static NSTimeInterval lastLogTime = 0;
+    NSTimeInterval currentTime = [NSDate timeIntervalSinceReferenceDate];
+    if (currentTime - lastLogTime > 0.5) { // Throttle log to prevent spamming
+        DDLogInfo(@"[Config.m] appUnderPointer PID: %d, appIdentifier: '%@', prev: '%@'",
+              app ? app.processIdentifier : 0, appIdentifier, self->_bundleIDOfAppWhichCausesAppOverride);
+        lastLogTime = currentTime;
+    }
     
     /// Set internal state
-    if (![_bundleIDOfAppWhichCausesAppOverride isEqual:bundleID]) {
-        [self loadOverridesForApp:bundleID];
-        return YES;
+    if (![_bundleIDOfAppWhichCausesAppOverride isEqual:appIdentifier]) {
+        DDLogInfo(@"[Config.m] Overrides changing from '%@' to '%@'", self->_bundleIDOfAppWhichCausesAppOverride, appIdentifier);
+        return [self loadOverridesForApp:appIdentifier];
     }
 #endif
     
     return NO;
 }
 
-/// Applies AppOverrides from app with `bundleIdentifier` to `self->_config` and writes the result into `_configWithAppOverridesApplied`.
-- (void)loadOverridesForApp:(NSString *)bundleID {
+/// Applies AppOverrides from app with `appIdentifier` to `self->_config` and writes the result into `_configWithAppOverridesApplied`.
+- (BOOL)loadOverridesForApp:(NSString *)appIdentifier {
     
     /// Validate
     assert(runningHelper());
     
 #if IS_HELPER
-    
+    if ([_bundleIDOfAppWhichCausesAppOverride isEqualToString:appIdentifier]) {
+        return NO;
+    }
     /// Store app
-    _bundleIDOfAppWhichCausesAppOverride = bundleID;
+    _bundleIDOfAppWhichCausesAppOverride = appIdentifier;
     
     /// Get overrides for app
     NSDictionary *overrides = [self->_config objectForKey:kMFConfigKeyAppOverrides];
-    NSDictionary *overridesForThisApp;
+    NSDictionary *overridesForThisApp = nil;
     for (NSString *b in overrides.allKeys) {
-        if ([bundleID isEqualToString:b]) {
+        if ([appIdentifier isEqualToString:b]) {
                 overridesForThisApp = [[overrides objectForKey: b] objectForKey:@"Root"];
+                break;
         }
     }
     if (overridesForThisApp) {
         _configWithAppOverridesApplied = [[SharedUtility dictionaryWithOverridesAppliedFrom:overridesForThisApp to:self->_config] mutableCopy];
     } else {
-        _configWithAppOverridesApplied = self->_config;
+        _configWithAppOverridesApplied = [self->_config mutableCopy];
     }
+    return YES;
 #endif
+    return NO;
 }
 
 #pragma mark - Listen to filesystem changes
@@ -597,10 +662,57 @@ NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __aut
         self->_config = defaultConfig;
         commitConfig();
     }
-    dontReplace: return;
+    dontReplace:
+    [self repairContaminatedOverrides];
+    return;
     
     #undef fail
     #undef log
+}
+
+- (void)repairContaminatedOverrides {
+    NSMutableDictionary *appOverrides = self->_config[kMFConfigKeyAppOverrides];
+    if (![appOverrides isKindOfClass:[NSMutableDictionary class]]) return;
+    
+    BOOL didChange = NO;
+    
+    for (NSString *appKey in [appOverrides.allKeys copy]) {
+        id appDict = appOverrides[appKey];
+        if ([appDict isKindOfClass:[NSDictionary class]] || [appDict isKindOfClass:[NSMutableDictionary class]]) {
+            id rootDict = appDict[@"Root"];
+            if ([rootDict isKindOfClass:[NSDictionary class]] || [rootDict isKindOfClass:[NSMutableDictionary class]]) {
+                id nestedOverrides = rootDict[@"AppOverrides"];
+                if (nestedOverrides) {
+                    didChange = YES;
+                    if ([nestedOverrides isKindOfClass:[NSDictionary class]] || [nestedOverrides isKindOfClass:[NSMutableDictionary class]]) {
+                        for (NSString *nestedKey in [nestedOverrides allKeys]) {
+                            if (!appOverrides[nestedKey]) {
+                                appOverrides[nestedKey] = nestedOverrides[nestedKey];
+                            }
+                        }
+                    }
+                    if ([rootDict isKindOfClass:[NSMutableDictionary class]]) {
+                        [rootDict removeObjectForKey:@"AppOverrides"];
+                    } else {
+                        NSMutableDictionary *mutableRoot = [rootDict mutableCopy];
+                        [mutableRoot removeObjectForKey:@"AppOverrides"];
+                        if ([appDict isKindOfClass:[NSMutableDictionary class]]) {
+                            appDict[@"Root"] = mutableRoot;
+                        } else {
+                            NSMutableDictionary *mutableAppDict = [appDict mutableCopy];
+                            mutableAppDict[@"Root"] = mutableRoot;
+                            appOverrides[appKey] = mutableAppDict;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    if (didChange) {
+        DDLogInfo(@"Config.m: Repaired contaminated (nested) AppOverrides in config.plist");
+        commitConfig();
+    }
 }
 
 - (void) repairIncompleteAppOverrideForBundleID: (NSString *)bundleID                            /// Bundle ID of the app with the faulty override
