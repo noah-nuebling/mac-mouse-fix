@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **květen 2026**
 
+- 🇵🇹&nbsp;Ron&nbsp;Berlinski
 - 🇺🇸&nbsp;Seacasper - "Mac Mouse Fix makes it reasonable to actually use a mouse on mac."
 - 🇵🇹&nbsp;Nuno - "Essential, and beautifully built."
 - 🇺🇸&nbsp;Seth&nbsp;Ryan - "10 years since Harambe. We miss you, king."

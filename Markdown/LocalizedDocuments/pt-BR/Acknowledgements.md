@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **maio 2026**
 
+- 🇵🇹&nbsp;Ron&nbsp;Berlinski
 - 🇺🇸&nbsp;Seacasper - "Mac Mouse Fix makes it reasonable to actually use a mouse on mac."
 - 🇵🇹&nbsp;Nuno - "Essential, and beautifully built."
 - 🇺🇸&nbsp;Seth&nbsp;Ryan - "10 years since Harambe. We miss you, king."
