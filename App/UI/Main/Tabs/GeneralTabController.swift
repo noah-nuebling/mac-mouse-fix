@@ -92,6 +92,7 @@ class GeneralTabController: NSViewController {
                 let userClickTS = CACurrentMediaTime()
                 
                 EnabledState.shared.enable(onComplete: { error in
+                    DispatchQueue.main.async {
                     
                     if error == nil {
                         
@@ -198,11 +199,10 @@ class GeneralTabController: NSViewController {
                         guard let error = error else { assert(false); return }
                         
                         
-                        if #available(macOS 13.0, *), error.domain == "SMAppServiceErrorDomain", error.code == 1 {
-                            
-                            Toasts.showSimpleToast(name: "k-is-disabled-toast")
-                        }
-                        else { assert(false) }
+                        DDLogError("GeneralTabController - enabling helper failed with error: \(error)")
+                        
+                        Toasts.showSimpleToast(name: "k-is-disabled-toast")
+                    }
                     }
                 })
                 

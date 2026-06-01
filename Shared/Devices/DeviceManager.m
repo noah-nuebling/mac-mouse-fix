@@ -32,6 +32,7 @@
 
 #import "SharedUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "LogitechCIDActivator.h"
 
 @implementation DeviceManager
 
@@ -44,6 +45,9 @@ static NSMutableArray<Device *> *_attachedDevices;
     return _attachedDevices.count > 0;
 }
 + (NSArray<Device *> *)attachedDevices {
+    return _attachedDevices;
+}
++ (id)__SWIFT_UNBRIDGED_attachedDevices {
     return _attachedDevices;
 }
 
@@ -192,7 +196,7 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
     /// Register the Matching Dictionary to the HID Manager
     IOHIDManagerSetDeviceMatchingMultiple(_manager, (__bridge CFArrayRef)matchArray);
     
-    /// Register the HID Manager on our app's run loop
+    /// Register the HID Manager on our app’s run loop
     IOHIDManagerScheduleWithRunLoop(_manager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
     
     /// Open the HID Manager
@@ -264,6 +268,9 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         
     #endif
         
+        /// Activate Logitech HID++ CID diversion for extra buttons
+        [[LogitechCIDActivator shared] handleDeviceAttached: device];
+
         /// Log
         DDLogInfo(@"New device added to attached devices:\n%@", newDevice);
         
@@ -304,6 +311,9 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
 //        [Scroll decide];
 //        [ButtonInputReceiver decide];
         
+        /// Clean up Logitech CID diversion
+        [[LogitechCIDActivator shared] handleDeviceRemoved: device];
+
         /// Log
         
         DDLogInfo(@"Attached device was removed:\n%@", attachedDevice);
@@ -315,7 +325,6 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
 
 static BOOL devicePassesFiltering(IOHIDDeviceRef device) {
     /// Helper function for handleDeviceMatching()
-    ///     [May 2025] Perhaps we could specify this Product/VendorID-based filtering directly in the matching dict with the kIOPropertyMatchKey?  ... But there doesn't seem to be 'negative' matching.
     
     NSString *deviceName = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR("Product"));
     NSNumber *deviceVendorID = (__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR("VendorID"));
@@ -323,7 +332,7 @@ static BOOL devicePassesFiltering(IOHIDDeviceRef device) {
     if ([deviceName isEqualToString:@"Apple Internal Keyboard / Trackpad"]) { // TODO: Does it make sense? Does this work on other machines that are not mine? Shouldn't ignoring all Apple devices be enough?
         return NO;
     }
-    if (deviceVendorID.integerValue == 1452) { /// Apple's Vendor ID is 1452 (sometimes written as 0x5ac or 05ac) || Update: [May 2025] My Magic Mouse has a VendorID of 76.
+    if (deviceVendorID.integerValue == 1452) { /// Apple's Vendor ID is 1452 (sometimes written as 0x5ac or 05ac)
         return NO;
     }
     return YES;

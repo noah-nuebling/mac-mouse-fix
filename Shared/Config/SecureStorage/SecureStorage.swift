@@ -69,22 +69,31 @@ import Foundation
         
         do {
             let dict = try readDict().mutableCopy() as! NSMutableDictionary
-            dict.setObject((value as! NSObject?), forCoolKeyPath: keyPath)
+            dict.setObject((value as? NSObject), forCoolKeyPath: keyPath)
             
             try replaceDict(dict)
         
         } catch KeychainError.itemNotFound {
             
             do {
-                try createItem(dict: [:])
-                set(keyPath, value: value)
+                let dict = NSMutableDictionary()
+                dict.setObject((value as? NSObject), forCoolKeyPath: keyPath)
+                try createItem(dict: dict)
                 
+            } catch KeychainError.duplicateItem {
+                do {
+                    let dict = NSMutableDictionary()
+                    dict.setObject((value as? NSObject), forCoolKeyPath: keyPath)
+                    try replaceDict(dict)
+                } catch {
+                    DDLogError("SecureStorage.set(\(keyPath)) failed after duplicate keychain item recovery: \(error)")
+                }
             } catch {
-                assert(false)
+                DDLogError("SecureStorage.set(\(keyPath)) failed while creating keychain item: \(error)")
             }
             
         } catch {
-            assert(false)
+            DDLogError("SecureStorage.set(\(keyPath)) failed: \(error)")
         }
     }
     
@@ -113,7 +122,6 @@ import Foundation
             return dict as! NSDictionary
             
         } catch {
-            assert(false)
             throw KeychainError.invalidItemData
         }
     }
@@ -141,6 +149,7 @@ import Foundation
         
         let status = SecItemAdd(query as CFDictionary, nil)
 
+        guard status != errSecDuplicateItem else { throw KeychainError.duplicateItem }
         guard status == errSecSuccess else { throw KeychainError.unhandledError(status: status) }
     }
     
@@ -199,6 +208,7 @@ import Foundation
     private enum KeychainError: Error {
         case unhandledError(status: OSStatus)
         case itemNotFound
+        case duplicateItem
         case invalidItemData
     }
 }

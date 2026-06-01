@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F00E8802D00A00100000003 /* LogitechCIDActivator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F00E8802D00A00100000002 /* LogitechCIDActivator.m */; };
 		4F0438152E59F08200368E60 /* Old MFDisplayLinkWorkType stuff.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F0438142E59F08200368E60 /* Old MFDisplayLinkWorkType stuff.md */; };
 		4F0438162E59F08200368E60 /* Old MFDisplayLinkWorkType stuff.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F0438142E59F08200368E60 /* Old MFDisplayLinkWorkType stuff.md */; };
 		4F09283F28B8101600BDC2FF /* TrialSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F09283E28B8101600BDC2FF /* TrialSection.swift */; };
@@ -473,6 +474,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4F00E8802D00A00100000001 /* LogitechCIDActivator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogitechCIDActivator.h; sourceTree = "<group>"; };
+		4F00E8802D00A00100000002 /* LogitechCIDActivator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogitechCIDActivator.m; sourceTree = "<group>"; };
 		4F0028012C58303B00CDB9D0 /* LocalizationScreenshotTakerTestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = LocalizationScreenshotTakerTestPlan.xctestplan; path = LocalizationScreenshotTaker/LocalizationScreenshotTakerTestPlan.xctestplan; sourceTree = SOURCE_ROOT; };
 		4F02C71C2899448900ED0AA8 /* OutputCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputCoordinator.swift; sourceTree = "<group>"; };
 		4F02C7202899453200ED0AA8 /* OutputCoordinator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OutputCoordinator.h; sourceTree = "<group>"; };
@@ -2049,7 +2052,7 @@
 		4F21531B2B2E144400DD3957 /* jeongtae-korean-translation */ = {isa = PBXFileReference; lastKnownFileType = text; path = "jeongtae-korean-translation"; sourceTree = "<group>"; };
 		4F21531C2B2E144400DD3957 /* update-feed */ = {isa = PBXFileReference; lastKnownFileType = text; path = "update-feed"; sourceTree = "<group>"; };
 		4F21531D2B2E144400DD3957 /* stash */ = {isa = PBXFileReference; lastKnownFileType = text; path = stash; sourceTree = "<group>"; };
-		4F21531E2B2E144400DD3957 /* index */ = {isa = PBXFileReference; lastKnownFileType = file; path = index; sourceTree = "<group>"; };
+		4F21531E2B2E144400DD3957 /* index */ = {isa = PBXFileReference; lastKnownFileType = text; path = index; sourceTree = "<group>"; };
 		4F21531F2B2E144400DD3957 /* packed-refs */ = {isa = PBXFileReference; lastKnownFileType = text; path = "packed-refs"; sourceTree = "<group>"; };
 		4F2153202B2E144400DD3957 /* COMMIT_EDITMSG */ = {isa = PBXFileReference; lastKnownFileType = text; path = COMMIT_EDITMSG; sourceTree = "<group>"; };
 		4F2153212B2E144400DD3957 /* FETCH_HEAD */ = {isa = PBXFileReference; lastKnownFileType = text; path = FETCH_HEAD; sourceTree = "<group>"; };
@@ -7647,6 +7650,8 @@
 		4FF6661825F2C93A00689B77 /* Buttons */ = {
 			isa = PBXGroup;
 			children = (
+				4F00E8802D00A00100000001 /* LogitechCIDActivator.h */,
+				4F00E8802D00A00100000002 /* LogitechCIDActivator.m */,
 				4FF6661B25F2C93A00689B77 /* ButtonInputReceiver.h */,
 				4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */,
 				4FF8C8A22895AACB007EC31F /* Buttons.swift */,
@@ -8456,6 +8461,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F00E8802D00A00100000003 /* LogitechCIDActivator.m in Sources */,
 				4FB8B29F2CCEBB1700A5A580 /* GetTrialState.swift in Sources */,
 				4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */,
 				4FFA4E4428B7D28E0062A1FE /* ConstraintUtility.swift in Sources */,
@@ -8701,7 +8707,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = A4P8NY6A4J;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -8740,7 +8746,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = A4P8NY6A4J;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -8773,7 +8779,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = A4P8NY6A4J;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8810,7 +8816,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = A4P8NY6A4J;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8844,7 +8850,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = A4P8NY6A4J;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -8887,7 +8893,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = A4P8NY6A4J;
 				ENABLE_HARDENED_RUNTIME = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -9117,7 +9123,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = A4P8NY6A4J;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_ON_DEMAND_RESOURCES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9162,7 +9168,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = LM5Z78756B;
+				DEVELOPMENT_TEAM = A4P8NY6A4J;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_ON_DEMAND_RESOURCES = NO;
 				FRAMEWORK_SEARCH_PATHS = (

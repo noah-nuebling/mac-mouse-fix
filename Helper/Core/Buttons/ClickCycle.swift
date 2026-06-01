@@ -234,9 +234,10 @@ class ClickCycle: NSObject {
                     state?.upTimer.invalidate()
                     state?.downTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, block: { timer in
                         self.buttonQueue.async {
+                            guard let currentState = self.state else { return }
                             /// Callback
                             var c: [UnconditionalReleaseCallback] = []
-                            triggerCallback(.hold, self.state!.clickLevel, device, button, &c)
+                            triggerCallback(.hold, currentState.clickLevel, device, button, &c)
                             if !c.isEmpty {
                                 self.releaseCallbacks[button, default: []].append(contentsOf: c)
                             }
@@ -248,8 +249,8 @@ class ClickCycle: NSObject {
                     /// Not sure whether to start started upTimer on mouseDown or up
                     state?.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.26, repeats: false, block: { timer in
                         self.buttonQueue.async {
-                            if self.state == nil { return } /// Guard race conditions. Not totally sure why this happens.
-                            self.callTriggerCallback(triggerCallback, ClickCycleTriggerPhase.levelExpired, self.state!.clickLevel, device, button)
+                            guard let currentState = self.state else { return }
+                            self.callTriggerCallback(triggerCallback, ClickCycleTriggerPhase.levelExpired, currentState.clickLevel, device, button)
                             self.kill()
                         }
                     })

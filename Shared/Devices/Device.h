@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Device : NSObject
 
 @property (atomic, assign, readonly, nullable) IOHIDDeviceRef iohidDevice;
+@property (nonatomic, assign) BOOL isLogitechDiverted;
 
 + (instancetype)new NS_UNAVAILABLE;
 

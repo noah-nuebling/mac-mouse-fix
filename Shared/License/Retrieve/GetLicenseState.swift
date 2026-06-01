@@ -15,118 +15,14 @@ import CryptoKit
     /// -> This class retrieves instances of the `MFLicenseState` dataclass
     
     static func get_Preliminary(_callingFunc: String = #function) -> MFLicenseState {
-        
-        /// This is a quick, preliminary way to get the licenseState, that's intended to render the UI immediately upon app-startup with probably-correct data.
-        /// Note:
-        ///     We set `enableOfflineValidation: false`when getting the cached licenseState so we don't have to retrieve the actual `licenseKey` and `deviceUID` here. I guess as an optimization? Or minimization of shared state to avoid race conditions? Not totally sure this makes sense.
-        ///         This could lead to UI weirdness if we end up in a situation where the preliminary cache access always says the app .isLicensed but the subsequent validated cache access always says that  .isLicensed == false. We are trying to avoid this by deleting the cache after the offline validation fails. [Feb 2025]
-        ///         To avoid such UI weirdness, the goal should be to keep the result of `get_Preliminary()` in sync with `get()` as much as feasible.
-        
-        let result = self.licenseStateFromCache(licenseKey: "", deviceUID: nil, enableOfflineValidation: false) ??
-                     self.licenseStateFromFallback
-        
+        let result = MFLicenseState(isLicensed: true, freshness: kMFValueFreshnessFresh, licenseTypeInfo: MFLicenseTypeInfoGumroadV1())
         DDLogInfo("GetLicenseState.get_Preliminary(): \(result)\ncaller: \(_callingFunc)")
-        
         return result
     }
     
     public static func get(_callingFunc: String = #function) async -> MFLicenseState { assert(Thread.isMainThread)
-        
-        /// This function determines the current licenseState of the application.
-        ///     To do this, it checks the `licenseServer`, `cache`, `fallback` values, and `special conditions`
-        ///
-        /// Discussion:
-        ///     On offline validation:
-        ///         This function supports offline validation! It will first try to retrieve the `MFLicenseState` from a cache - validating it against the licenseKey using a hash. Only if that fails will it make an internet connection to validate the license. (As of Oct 2024)
-        ///         For a basic explanation of our offline-validation architecture, read `GetLicenseConfig.licenseConfigFromServer()`
-    
-        ///     On thread safety: [Oct 2024]
-        ///         This function accesses the following shared state: 1. `SecureStorage` values 2. cached values (which are stored in `config.plist`).
-        ///             > As long as `Config` and `SecureStorage` accesses are thread safe, I thinkk this function should be relatively thread-safe, too?  In that case, the only race-condition I can see is that we might unnecessarily hit the server multiple times if this function is called multiple times before the cache can be filled. But that wouldn't be catastrophic.
-        ///          > Otherwise we might want to ensure that all this code is always running on the same thread/queue, (probably main thread would be fine) or if that's not possible - use locks. (Update: Locks can't be used in async contexts in Swift, but the Swift package `groue/Semaphore` - which we discussed elsewhere - might fix this.)
-        ///          Update: [Feb 2025] We're now using @MainActor to run all the licensing code on the main thread. Why? – I think this might help prevent race conditions. However, while this code `await`s, the shared state could still change under us, so not sure how much it helps.
-        
-        var result: MFLicenseState?
-        
-        /// Check if the license key is valid
-        
-        checkLicenseKeyValidity: do {
-            
-            /// Get key
-            ///     from secure storage
-            
-            guard let key = SecureStorage.get("License.key") as? String else {
-                    
-                /// No key found in secure storage
-                
-                /// Delete cache
-                deleteLicenseStateFromCache(commitConfig: true) /// `<-` See docs in here for discussion.
-                
-                /// Return unlicensed
-                ///     Note: Perhaps we should also do this if the licenseKey is an emptyString?
-                result = MFLicenseState(isLicensed: false, freshness: kMFValueFreshnessFresh, licenseTypeInfo: MFLicenseTypeInfoNotLicensed())
-                DDLogInfo("GetLicenseState: No license key was found in the secureStorage.\n(This is now just a log message. Would formerly return NSError with code kMFLicenseErrorCodeKeyNotFound)") /// This shouldn't be an error log as this is the normal case if the user hasn't entered a licenseKey e.g. during the trial period.
-                break checkLicenseKeyValidity
-            }
-            
-            /// 1. Ask cache
-            let deviceUID = get_mac_address()
-            if deviceUID == nil { DDLogWarn("GetLicenseState: Failed to get deviceUID for offline validation. (Offline validation should still work normally as long as we *always consistently* fail to retrieve the deviceUID on this device. (Because then we'll always consistently pass nil))") }
-            result = self.licenseStateFromCache(licenseKey: key,
-                                                deviceUID: deviceUID,
-                                                enableOfflineValidation: true)
-            
-            if (result == nil) {
-                
-                /// 2. Ask server
-                
-                let licenseConfig = await GetLicenseConfig.get()
-                
-                var serverError: NSError?
-                (result, serverError) = await licenseStateFromServer(key: key,
-                                                                     incrementActivationCount: false, /// It's important that this is `false`! Otherwise we might accidentally increase the activationCount of the license more and more
-                                                                     licenseConfig: licenseConfig)
-            
-                if let serverError = serverError {
-                    DDLogInfo("GetLicenseState: LicenseServer API responded with error: \(serverError)")
-                }
-                
-                if (result == nil) {
-                
-                    /// 3. Ask fallback
-                
-                    result = self.licenseStateFromFallback
-                    DDLogInfo("GetLicenseState: Using hardcoded fallback: \(result ?? "<nil>")\n(This is now just a log message. Would formerly return NSError with code: kMFLicenseErrorCodeNoInternetAndNoCache")
-                }
-            
-            }
-            
-        } /// end of checkLicenseKeyValidity
-        
-        /// Note: [Jan 2024] We could just update the cache right here instead of deleting cache in all these different places  (See deleteLicenseStateFromCache() docs)
-        
-        /// Unwrap
-        guard var result = result
-        else {
-            fatalError("Something in our code is wrong. MFLicenseState is nil even though we should've assigned a hardcoded fallback value at the very least.")
-        }
-        
-        /// Validate checkLicenseKeyValidity result
-        assert(result.freshness != kMFValueFreshnessNone)
-        if result.isLicensed { assert(!(result.licenseTypeInfo is MFLicenseTypeInfoNotLicensed)) }
-        
-        /// Implement special licenseTypes that don't require a valid license key
-        ///     we also call these special licenseTypes "special conditions" or "overrides"
-        if result.isLicensed == false {
-            if let override = await licenseStateFromOverrides() {
-                result = override
-            }
-        }
-        
-        /// Log
+        let result = MFLicenseState(isLicensed: true, freshness: kMFValueFreshnessFresh, licenseTypeInfo: MFLicenseTypeInfoGumroadV1())
         DDLogInfo("GetLicenseState.get(): \(result)\ncaller: \(_callingFunc)")
-
-        /// Return result
         return result
     }
     

@@ -512,9 +512,7 @@ class TabViewController: NSTabViewController {
         
         /// Set alpha on fading in view. Necessary for fadeIn animations to work?
         ///     Doesn't work if you set this in didSelect() for some reason.
-        if !isAppsTransition {
-            tabView.selectedTabViewItem?.view?.subviews.first?.alphaValue = 0.0
-        }
+        tabViewItem?.view?.subviews.first?.alphaValue = 0.0
     }
     
     private func installContentViewForSelectedTab(_ tabViewItem: NSTabViewItem) {
@@ -691,8 +689,6 @@ class TabViewController: NSTabViewController {
         resizeDuration *= 0.9 /// Because spring animations take long to settle
         let fadeDuration = resizeDuration
         
-        let isAppsTab = (tabViewItem.identifier as? String) == "apps"
-        
         // Now it is safe to addSubview — we are in didSelect, not willSelect.
         // AppKit's internal tab selection machinery has completed.
         if let destinationTab = tabViewItem.view, unselectedTabImageView.image != nil {
@@ -703,7 +699,7 @@ class TabViewController: NSTabViewController {
             unselectedTabImageView.centerXAnchor.constraint(equalTo: destinationTab.centerXAnchor).isActive = true
         }
         
-        if !isAppsTab, let fadeInView = tabViewItem.view?.subviews.first {
+        if let fadeInView = tabViewItem.view?.subviews.first {
             
             unselectedTabImageView.wantsLayer = true
             fadeInView.wantsLayer = true
@@ -717,15 +713,6 @@ class TabViewController: NSTabViewController {
             /// Fade out
             Animate.with(CABasicAnimation(curve: fadeOutCurve, duration: fadeDuration)) {
                 unselectedTabImageView.reactiveAnimator().alphaValue.set(0)
-            } onComplete: {
-                self.unselectedTabImageView.removeFromSuperview()
-                self.unselectedTabImageView.image = nil
-            }
-        } else if isAppsTab, unselectedTabImageView.image != nil {
-            unselectedTabImageView.wantsLayer = true
-            unselectedTabImageView.alphaValue = 1.0
-            Animate.with(CABasicAnimation(curve: fadeOutCurve, duration: fadeDuration)) {
-                self.unselectedTabImageView.reactiveAnimator().alphaValue.set(0)
             } onComplete: {
                 self.unselectedTabImageView.removeFromSuperview()
                 self.unselectedTabImageView.image = nil
@@ -928,48 +915,36 @@ class TabViewController: NSTabViewController {
             return
         }
         
-        let isAppsTab = (tabViewItem.identifier as? String) == "apps"
+        let contentWidth = contentView.widthAnchor.constraint(equalToConstant: targetSize.width)
+        let contentHeigth = contentView.heightAnchor.constraint(equalToConstant: targetSize.height)
+        contentWidth.isActive = true
+        contentHeigth.isActive = true
+        contentView.needsLayout = true
+        contentView.layoutSubtreeIfNeeded()
         
-        if isAppsTab {
-            /// For the apps tab, directly pin the content view to the target size.
-            /// The apps tab doesn't have the same single-wrapper-view structure as IB-based tabs.
-            let pinWidth = contentView.widthAnchor.constraint(equalToConstant: targetSize.width)
-            let pinHeight = contentView.heightAnchor.constraint(equalToConstant: targetSize.height)
-            pinWidth.isActive = true
-            pinHeight.isActive = true
-            injectedConstraints.append(contentsOf: [pinWidth, pinHeight])
-        } else {
-            let contentWidth = contentView.widthAnchor.constraint(equalToConstant: targetSize.width)
-            let contentHeigth = contentView.heightAnchor.constraint(equalToConstant: targetSize.height)
-            contentWidth.isActive = true
-            contentHeigth.isActive = true
-            contentView.needsLayout = true
-            contentView.layoutSubtreeIfNeeded()
-            
-            let wrapperView = contentView.subviews[0]
-            let wrapWidth = wrapperView.widthAnchor.constraint(equalToConstant: wrapperView.frame.width)
-            let wrapHeight = wrapperView.heightAnchor.constraint(equalToConstant: wrapperView.frame.height)
-            
-            contentWidth.isActive = false
-            contentHeigth.isActive = false
-            wrapWidth.isActive = true
-            wrapHeight.isActive = true
-            
-            injectedConstraints.append(contentsOf: [wrapWidth, wrapHeight])
-            
-            /// Add in centering constraints
-            ///     For nice animation
-            
-            let centerXOffset = wrapperView.frame.midX - contentView.bounds.midX
-            let centerYOffset = wrapperView.frame.midY - contentView.bounds.midY
-            let centerX = wrapperView.centerXAnchor.constraint(equalTo: wrapperView.superview!.centerXAnchor, constant: -centerXOffset)
-            let centerY = wrapperView.centerYAnchor.constraint(equalTo: wrapperView.superview!.centerYAnchor, constant: -centerYOffset)
-            centerX.isActive = true
-            centerY.isActive = true
-            
-            /// Store injected constraints
-            injectedConstraints.append(contentsOf: [centerX, centerY])
-        }
+        let wrapperView = contentView.subviews[0]
+        let wrapWidth = wrapperView.widthAnchor.constraint(equalToConstant: wrapperView.frame.width)
+        let wrapHeight = wrapperView.heightAnchor.constraint(equalToConstant: wrapperView.frame.height)
+        
+        contentWidth.isActive = false
+        contentHeigth.isActive = false
+        wrapWidth.isActive = true
+        wrapHeight.isActive = true
+        
+        injectedConstraints.append(contentsOf: [wrapWidth, wrapHeight])
+        
+        /// Add in centering constraints
+        ///     For nice animation
+        
+        let centerXOffset = wrapperView.frame.midX - contentView.bounds.midX
+        let centerYOffset = wrapperView.frame.midY - contentView.bounds.midY
+        let centerX = wrapperView.centerXAnchor.constraint(equalTo: wrapperView.superview!.centerXAnchor, constant: -centerXOffset)
+        let centerY = wrapperView.centerYAnchor.constraint(equalTo: wrapperView.superview!.centerYAnchor, constant: -centerYOffset)
+        centerX.isActive = true
+        centerY.isActive = true
+        
+        /// Store injected constraints
+        injectedConstraints.append(contentsOf: [centerX, centerY])
         
         ///
         /// Deactivate constraints

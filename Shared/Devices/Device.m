@@ -257,61 +257,50 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     DDLogInfo(@"[TEMP LowLevel HID Log] Device: %@, UsagePage: %u, Usage: %u, Value: %ld", 
               sendingDev.name, usagePage, usage, (long)integerValue);
 
-    // Remap Logitech proprietary button reports (Usage Page 65347/0xFF43) to standard buttons
-    if (usagePage == 65347) {
-        static BOOL logiButton4IsDown = NO;
-        static BOOL logiButton5IsDown = NO;
-        static BOOL logiButton6IsDown = NO;
-        static BOOL logiButton7IsDown = NO;
+    // Remap Logitech proprietary button reports (Usage Page 65347/0xFF43) to standard buttons.
+    // Newer Logi devices can report large vendor-defined values instead of the older small fixed values,
+    // so keep known mappings stable and assign unknown non-zero values to virtual buttons dynamically.
+    if (usagePage == 65347 && !sendingDev.isLogitechDiverted) {
+        static NSMutableDictionary<NSNumber *, NSNumber *> *logiValueToButton = nil;
+        static NSMutableSet<NSNumber *> *logiButtonsDown = nil;
         
-        if (integerValue == 83) {
-            if (logiButton5IsDown) { logiButton5IsDown = NO; postVirtualButtonEvent(5, NO); }
-            if (logiButton6IsDown) { logiButton6IsDown = NO; postVirtualButtonEvent(6, NO); }
-            if (logiButton7IsDown) { logiButton7IsDown = NO; postVirtualButtonEvent(7, NO); }
-            logiButton4IsDown = YES;
-            DDLogInfo(@"[TEMP Logi Remap] Detected Back button press, posting virtual Button 4 down");
-            postVirtualButtonEvent(4, YES);
-        } else if (integerValue == 86) {
-            if (logiButton4IsDown) { logiButton4IsDown = NO; postVirtualButtonEvent(4, NO); }
-            if (logiButton6IsDown) { logiButton6IsDown = NO; postVirtualButtonEvent(6, NO); }
-            if (logiButton7IsDown) { logiButton7IsDown = NO; postVirtualButtonEvent(7, NO); }
-            logiButton5IsDown = YES;
-            DDLogInfo(@"[TEMP Logi Remap] Detected Forward button press, posting virtual Button 5 down");
-            postVirtualButtonEvent(5, YES);
-        } else if (integerValue == 196) {
-            if (logiButton4IsDown) { logiButton4IsDown = NO; postVirtualButtonEvent(4, NO); }
-            if (logiButton5IsDown) { logiButton5IsDown = NO; postVirtualButtonEvent(5, NO); }
-            if (logiButton7IsDown) { logiButton7IsDown = NO; postVirtualButtonEvent(7, NO); }
-            logiButton6IsDown = YES;
-            DDLogInfo(@"[TEMP Logi Remap] Detected Mode Shift button press, posting virtual Button 6 down");
-            postVirtualButtonEvent(6, YES);
-        } else if (integerValue == 82) {
-            if (logiButton4IsDown) { logiButton4IsDown = NO; postVirtualButtonEvent(4, NO); }
-            if (logiButton5IsDown) { logiButton5IsDown = NO; postVirtualButtonEvent(5, NO); }
-            if (logiButton6IsDown) { logiButton6IsDown = NO; postVirtualButtonEvent(6, NO); }
-            logiButton7IsDown = YES;
-            DDLogInfo(@"[TEMP Logi Remap] Detected Gesture button press, posting virtual Button 7 down");
-            postVirtualButtonEvent(7, YES);
-        } else if (integerValue == 0) {
-            if (logiButton4IsDown) {
-                logiButton4IsDown = NO;
-                DDLogInfo(@"[TEMP Logi Remap] Posting virtual Button 4 up");
-                postVirtualButtonEvent(4, NO);
+        if (logiValueToButton == nil) {
+            logiValueToButton = [@{
+                @83: @4,       // Older Logi back button report
+                @86: @5,       // Older Logi forward button report
+                @196: @6,      // Older Logi mode-shift button report
+                @1052927: @6,  // Newer Logi mode-shift button report (0x1010ff)
+                @82: @7,       // Older Logi gesture button report
+            } mutableCopy];
+            logiButtonsDown = [NSMutableSet set];
+        }
+        
+        if (integerValue == 0) {
+            for (NSNumber *button in logiButtonsDown.allObjects) {
+                DDLogInfo(@"[TEMP Logi Remap] Posting virtual Button %@ up", button);
+                postVirtualButtonEvent(button.intValue, NO);
             }
-            if (logiButton5IsDown) {
-                logiButton5IsDown = NO;
-                DDLogInfo(@"[TEMP Logi Remap] Posting virtual Button 5 up");
-                postVirtualButtonEvent(5, NO);
+            [logiButtonsDown removeAllObjects];
+        } else {
+            NSNumber *valueKey = @(integerValue);
+            NSNumber *button = logiValueToButton[valueKey];
+            
+            if (button == nil) {
+                return;
             }
-            if (logiButton6IsDown) {
-                logiButton6IsDown = NO;
-                DDLogInfo(@"[TEMP Logi Remap] Posting virtual Button 6 up");
-                postVirtualButtonEvent(6, NO);
+            
+            for (NSNumber *pressedButton in logiButtonsDown.allObjects) {
+                if (![pressedButton isEqualToNumber:button]) {
+                    DDLogInfo(@"[TEMP Logi Remap] Posting virtual Button %@ up before switching to Button %@", pressedButton, button);
+                    postVirtualButtonEvent(pressedButton.intValue, NO);
+                    [logiButtonsDown removeObject:pressedButton];
+                }
             }
-            if (logiButton7IsDown) {
-                logiButton7IsDown = NO;
-                DDLogInfo(@"[TEMP Logi Remap] Posting virtual Button 7 up");
-                postVirtualButtonEvent(7, NO);
+            
+            if (![logiButtonsDown containsObject:button]) {
+                DDLogInfo(@"[TEMP Logi Remap] Detected Logi report value %@ (0x%lx), posting virtual Button %@ down", valueKey, (long)integerValue, button);
+                [logiButtonsDown addObject:button];
+                postVirtualButtonEvent(button.intValue, YES);
             }
         }
     }
