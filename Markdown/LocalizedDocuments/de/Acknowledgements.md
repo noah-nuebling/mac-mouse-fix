@@ -72,6 +72,10 @@ Danke für euren Beitrag! :)
 
 Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **unglaublichen Milchshake** spendiert. (Und manche haben sogar eine Nachricht hinterlassen) Danke für den *Zucker-Kick*!
 
+**Juni 2026**
+
+- 🇬🇧&nbsp;Michael - "Go Vegan!"
+
 **Mai 2026**
 
 - 🇵🇹&nbsp;Ron&nbsp;Berlinski

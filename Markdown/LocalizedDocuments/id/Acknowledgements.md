@@ -78,6 +78,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!
 
+**Juni 2026**
+
+- 🇬🇧&nbsp;Michael - "Go Vegan!"
+
 **Mei 2026**
 
 - 🇵🇹&nbsp;Ron&nbsp;Berlinski
