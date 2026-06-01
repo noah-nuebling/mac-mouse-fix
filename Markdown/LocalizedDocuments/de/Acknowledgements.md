@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2026**
 
+- 🇺🇸&nbsp;Boris&nbsp;The&nbsp;Dog
 - 🇬🇧&nbsp;Michael - "Go Vegan!"
 
 **Mai 2026**

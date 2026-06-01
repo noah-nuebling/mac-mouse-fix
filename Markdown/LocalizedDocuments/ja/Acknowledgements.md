@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **6月 2026**
 
+- 🇺🇸&nbsp;Boris&nbsp;The&nbsp;Dog
 - 🇬🇧&nbsp;Michael - "Go Vegan!"
 
 **5月 2026**

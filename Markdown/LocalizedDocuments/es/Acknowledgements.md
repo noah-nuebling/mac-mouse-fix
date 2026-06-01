@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **junio 2026**
 
+- 🇺🇸&nbsp;Boris&nbsp;The&nbsp;Dog
 - 🇬🇧&nbsp;Michael - "Go Vegan!"
 
 **mayo 2026**

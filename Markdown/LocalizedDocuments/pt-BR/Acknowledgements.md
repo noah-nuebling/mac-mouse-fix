@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **junho 2026**
 
+- 🇺🇸&nbsp;Boris&nbsp;The&nbsp;Dog
 - 🇬🇧&nbsp;Michael - "Go Vegan!"
 
 **maio 2026**
