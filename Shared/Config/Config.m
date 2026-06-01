@@ -193,6 +193,9 @@ void commitConfig(void) {
 #pragma mark - React
 
 + (void)loadFileAndUpdateStates {
+    if (self.shared == nil) {
+        return;
+    }
     /// Notes:
     ///     This method used to be called `handleConfigFileChange`
     ///     TODO: [Aug 2025] Consider:
@@ -202,6 +205,9 @@ void commitConfig(void) {
 }
 
 + (void)updateDerivedStates {
+    if (self.shared == nil) {
+        return;
+    }
     
     /// Update states across the app that depend on the config.
     /// We should generally call this whenever the config changes.

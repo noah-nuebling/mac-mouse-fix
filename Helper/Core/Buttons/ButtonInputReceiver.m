@@ -16,6 +16,7 @@
 #import "ModificationUtility.h"
 #import "HelperUtility.h"
 #import "GestureScrollSimulator.h"
+#import "Constants.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation ButtonInputReceiver
@@ -83,6 +84,54 @@ static void registerInputCallback() {
 }
 
 NSArray *_buttonParseBlacklist; /// Don't send inputs from these buttons to ButtonInputParser
+static NSMutableSet<NSString *> *_logitechSideButtonSyntheticHoldKeys;
+
+static NSString *logitechSideButtonSyntheticHoldKey(Device *device, NSUInteger buttonNumber) {
+    return [NSString stringWithFormat:@"%@-%lu", device.uniqueID, (unsigned long)buttonNumber];
+}
+
+static BOOL logitechSideButtonUsesSyntheticHold(NSUInteger buttonNumber) {
+    if (Remap.addModeIsEnabled) {
+        return YES;
+    }
+    
+    NSNumber *button = @(buttonNumber);
+    NSDictionary *remaps = Remap.remaps;
+    for (NSDictionary *precondition in remaps) {
+        if (![SharedUtility button:button isPartOfModificationPrecondition:precondition]) {
+            continue;
+        }
+        
+        NSDictionary *modifications = remaps[precondition];
+        if (modifications[kMFTriggerScroll] != nil || modifications[kMFTriggerDrag] != nil) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+static BOOL shouldDelayLogitechSideButtonUp(Device *device, NSUInteger buttonNumber, BOOL mouseDown) {
+    if (_logitechSideButtonSyntheticHoldKeys == nil) {
+        _logitechSideButtonSyntheticHoldKeys = [NSMutableSet set];
+    }
+    
+    if (device.isLogitechDiverted && (buttonNumber == 4 || buttonNumber == 5) && mouseDown && logitechSideButtonUsesSyntheticHold(buttonNumber)) {
+        [_logitechSideButtonSyntheticHoldKeys addObject:logitechSideButtonSyntheticHoldKey(device, buttonNumber)];
+    }
+    
+    if (mouseDown) return NO;
+    if (buttonNumber != 4 && buttonNumber != 5) return NO;
+    if (!device.isLogitechDiverted) return NO;
+    
+    NSString *holdKey = logitechSideButtonSyntheticHoldKey(device, buttonNumber);
+    if (![_logitechSideButtonSyntheticHoldKeys containsObject:holdKey]) {
+        return NO;
+    }
+    
+    [_logitechSideButtonSyntheticHoldKeys removeObject:holdKey];
+    return YES;
+}
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
@@ -191,6 +240,23 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     /// Log
     DDLogDebug(@"Input Receiver - Device for CG Button Input - iohidDevice: %@, device: %@", iohidDevice, device);
+    
+    if (shouldDelayLogitechSideButtonUp(device, buttonNumber, mouseDown)) {
+        CGEventRef delayedEvent = CGEventCreateCopy(event);
+        NSNumber *delayedButton = @(buttonNumber);
+        Device *delayedDevice = device;
+        DDLogDebug(@"Input Receiver - Delaying Logitech side-button up for synthetic hold - button: %@, device: %@", delayedButton, delayedDevice);
+        [Buttons beginLogitechSideButtonSyntheticHoldWithButton:delayedButton];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.55 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            DDLogDebug(@"Input Receiver - Delivering delayed Logitech side-button up for synthetic hold - button: %@, device: %@", delayedButton, delayedDevice);
+            [Buttons handleInputWithDevice:delayedDevice button:delayedButton downNotUp:NO event:delayedEvent];
+            [Buttons endLogitechSideButtonSyntheticHoldWithButton:delayedButton];
+            CFRelease(delayedEvent);
+        });
+        
+        return nil;
+    }
     
     /// Pass to buttonInput processor
     MFEventPassThroughEvaluation eval = [Buttons handleInputWithDevice:device button:@(buttonNumber) downNotUp:mouseDown event:event];

@@ -300,6 +300,11 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
 static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGEventRef event) {
     
     /// Activate the modified drag if the mouse has been moved far enough from the point where the drag started
+    if ([_drag.type isEqual:kMFModifiedDragTypeAddModeFeedback] &&
+        [Buttons logitechSideButtonSyntheticHoldIsActive] &&
+        CACurrentMediaTime() - _drag.initTime < 0.25) {
+        return;
+    }
     
     Vector ofs = _drag.originOffset;
     if (MAX(fabs(ofs.x), fabs(ofs.y)) > _drag.usageThreshold) {
