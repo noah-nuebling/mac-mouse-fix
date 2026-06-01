@@ -605,6 +605,7 @@ import Foundation
     
     var pointerIsInsideAddField: Bool
     var trackingArea: NSTrackingArea
+    var pendingAddModeDisableWorkItem: DispatchWorkItem?
     
     /// AddField callbacks
     ///     TODO: Maybe think about race condition for the mouseEntered and mouseExited functions
@@ -619,6 +620,8 @@ import Foundation
             DDLogInfo("trackingg: mouseEntered")
             
             self.pointerIsInsideAddField = true
+            self.pendingAddModeDisableWorkItem?.cancel()
+            self.pendingAddModeDisableWorkItem = nil
             let success = MFMessagePort.sendMessage("enableAddMode", withPayload: nil, waitForReply: true)
             if let success = success as? Bool, success == true {
                 self.addField.hoverEffect(enable: true)
@@ -636,13 +639,30 @@ import Foundation
         DDLogInfo("trackingg: mouseExited dueToAddMode: \(dueToAddModeFeeback)")
         
         self.pointerIsInsideAddField = false
-        MFMessagePort.sendMessage("disableAddMode", withPayload: nil, waitForReply: false)
         self.addField.hoverEffect(enable: false, playAcceptAnimation: dueToAddModeFeeback)
+
+        self.pendingAddModeDisableWorkItem?.cancel()
+        self.pendingAddModeDisableWorkItem = nil
+
+        if dueToAddModeFeeback {
+            MFMessagePort.sendMessage("disableAddMode", withPayload: nil, waitForReply: false)
+            return
+        }
+
+        let workItem = DispatchWorkItem { [weak self] in
+            guard let self = self, !self.pointerIsInsideAddField else { return }
+            MFMessagePort.sendMessage("disableAddMode", withPayload: nil, waitForReply: false)
+            self.pendingAddModeDisableWorkItem = nil
+        }
+        self.pendingAddModeDisableWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.45, execute: workItem)
     }
 
     @objc func handleAddModeFeedback(payload: NSDictionary) {
         
         DispatchQueue.main.async {
+            self.pendingAddModeDisableWorkItem?.cancel()
+            self.pendingAddModeDisableWorkItem = nil
             
             /// Debug
             DDLogDebug("Received AddMode feedback with payload: \(payload)")

@@ -46,6 +46,7 @@
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "AccessibilityCheck.h"
 #import "KeyCaptureMode.h"
+#import "LogitechCIDActivator.h"
 #endif
 
 /// This class is used to communicate between the MainApp and the Helper.
@@ -261,6 +262,32 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
                     @"name": dev.name == nil ? @"" : dev.name,
                     @"manufacturer": dev.manufacturer == nil ? @"" : dev.manufacturer,
                     @"nOfButtons": @(dev.nOfButtons),
+                };
+            }
+        }
+        xxx(@"queryLogitechInfo") {
+            Device *dev = HelperState.shared.activeDevice;
+            if (dev != nil && dev.isLogitechDiverted) {
+                static NSMutableDictionary<NSNumber *, NSNumber *> *lastQueryTimes = nil;
+                if (lastQueryTimes == nil) {
+                    lastQueryTimes = [NSMutableDictionary dictionary];
+                }
+                NSNumber *devId = [dev uniqueID];
+                NSTimeInterval lastQueryTime = [lastQueryTimes[devId] doubleValue];
+                NSTimeInterval now = [[NSProcessInfo processInfo] systemUptime];
+                if (now - lastQueryTime > 10.0) {
+                    [[LogitechCIDActivator shared] queryBatteryAndDPIForDevice:dev];
+                    lastQueryTimes[devId] = @(now);
+                }
+                response = @{
+                    @"isLogitech": @YES,
+                    @"batteryPercentage": @(dev.logitechBatteryPercentage),
+                    @"batteryStatus": @(dev.logitechBatteryStatus),
+                    @"dpi": @(dev.logitechDPI)
+                };
+            } else {
+                response = @{
+                    @"isLogitech": @NO
                 };
             }
         }

@@ -34,6 +34,8 @@
 
 @implementation Device {
     int _nOfButtons;
+@public
+    BOOL _isLogitechDiverted;
 }
 
 #pragma mark - Init
@@ -133,6 +135,9 @@
         
         /// Store result
         _nOfButtons = maxButtonNumber;
+        _logitechBatteryPercentage = -1;
+        _logitechBatteryStatus = -1;
+        _logitechDPI = -1;
         
 #if IS_HELPER
         /// Register low-level input callback for all elements (without SetInputValueMatching filter)
@@ -253,14 +258,6 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     uint32_t usagePage = IOHIDElementGetUsagePage(elem);
     CFIndex integerValue = IOHIDValueGetIntegerValue(value);
 
-    // Ignore Generic Desktop Page (X/Y mouse pointer coordinates) to avoid flooding the logs
-    if (usagePage == 1 && (usage == 48 || usage == 49)) {
-        return;
-    }
-
-    DDLogInfo(@"[TEMP LowLevel HID Log] Device: %@, UsagePage: %u, Usage: %u, Value: %ld", 
-              sendingDev.name, usagePage, usage, (long)integerValue);
-
     // Remap legacy Logitech proprietary button reports (Usage Page 65347/0xFF43) to standard buttons.
     // Newer Logi devices also report Back/Forward natively on Usage Page 9. Do not synthesize
     // buttons 4/5 for those devices, or Page 65347 zero packets can prematurely end hold/drag gestures.
@@ -281,7 +278,6 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         
         if (integerValue == 0) {
             for (NSNumber *button in logiButtonsDown.allObjects) {
-                DDLogInfo(@"[TEMP Logi Remap] Posting virtual Button %@ up", button);
                 postVirtualButtonEvent(button.intValue, NO);
             }
             [logiButtonsDown removeAllObjects];
@@ -300,14 +296,12 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
             
             for (NSNumber *pressedButton in logiButtonsDown.allObjects) {
                 if (![pressedButton isEqualToNumber:button]) {
-                    DDLogInfo(@"[TEMP Logi Remap] Posting virtual Button %@ up before switching to Button %@", pressedButton, button);
                     postVirtualButtonEvent(pressedButton.intValue, NO);
                     [logiButtonsDown removeObject:pressedButton];
                 }
             }
             
             if (![logiButtonsDown containsObject:button]) {
-                DDLogInfo(@"[TEMP Logi Remap] Detected Logi report value %@ (0x%lx), posting virtual Button %@ down", valueKey, (long)integerValue, button);
                 [logiButtonsDown addObject:button];
                 postVirtualButtonEvent(button.intValue, YES);
             }
@@ -324,6 +318,31 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 }
 
 #pragma mark - Properties + override NSObject methods
+
+- (BOOL)isLogitechDiverted {
+    if (_isLogitechDiverted) {
+        return YES;
+    }
+    NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(self.iohidDevice, CFSTR(kIOHIDVendorIDKey));
+    if (vid != nil && vid.intValue == 0x046D) { // Logitech
+        NSString *name = (__bridge NSString *)IOHIDDeviceGetProperty(self.iohidDevice, CFSTR(kIOHIDProductKey));
+        if (name != nil) {
+            for (Device *d in [DeviceManager attachedDevices]) {
+                if (d != self && d->_isLogitechDiverted) {
+                    NSString *dName = (__bridge NSString *)IOHIDDeviceGetProperty(d.iohidDevice, CFSTR(kIOHIDProductKey));
+                    if ([name isEqualToString:dName]) {
+                        return YES;
+                    }
+                }
+            }
+        }
+    }
+    return NO;
+}
+
+- (void)setIsLogitechDiverted:(BOOL)isLogitechDiverted {
+    _isLogitechDiverted = isLogitechDiverted;
+}
 
 - (NSNumber *)uniqueID {
     return (__bridge NSNumber *)IOHIDDeviceGetProperty(_iohidDevice, CFSTR(kIOHIDUniqueIDKey));

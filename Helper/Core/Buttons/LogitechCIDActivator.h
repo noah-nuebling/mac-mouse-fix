@@ -20,6 +20,8 @@
 #import <Foundation/Foundation.h>
 #import <IOKit/hid/IOHIDDevice.h>
 
+@class Device;
+
 @interface LogitechCIDActivator : NSObject
 
 + (instancetype)shared;
@@ -30,5 +32,8 @@
 
 /// Call when a device is removed. Cleans up state for that device.
 - (void)handleDeviceRemoved: (IOHIDDeviceRef)device;
+
+/// Queries and updates the cached Logitech battery percentage and native DPI.
+- (void)queryBatteryAndDPIForDevice:(Device *)device;
 
 @end

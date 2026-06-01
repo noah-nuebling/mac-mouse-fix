@@ -13,6 +13,7 @@
 #import "SharedUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "DeviceManager.h"
+#import "Device.h"
 
 #define kLogitechVID    0x046D
 #define kHIDPP_Long     0x11
@@ -153,6 +154,21 @@ static int activateDevice(IOHIDDeviceRef dev, MFCIDDeviceState *s) {
     return diverted;
 }
 
+static uint8_t lookupFeature(IOHIDDeviceRef dev, uint16_t featId) {
+    uint8_t pkt[20];
+    memset(pkt, 0, 20);
+    pkt[0] = kHIDPP_Long;
+    pkt[1] = kHIDPP_Device;
+    pkt[2] = 0x00; // Root feature
+    pkt[3] = 0x0E; // GetFeature command (function 0, software ID 0x0E)
+    pkt[4] = (featId >> 8) & 0xFF;
+    pkt[5] = featId & 0xFF;
+    if (sendAndWait(dev, pkt) != kIOReturnSuccess) {
+        return 0;
+    }
+    return sResp[4];
+}
+
 @interface LogitechCIDActivator ()
 @property (nonatomic) NSMutableArray *states;
 @property (nonatomic) NSTimer *reactivateTimer;
@@ -218,6 +234,7 @@ static int activateDevice(IOHIDDeviceRef dev, MFCIDDeviceState *s) {
         Device *attachedDev = [DeviceManager attachedDeviceWithIOHIDDevice:device];
         if (attachedDev) {
             attachedDev.isLogitechDiverted = YES;
+            [self queryBatteryAndDPIForDevice:attachedDev];
         }
     } else {
         DDLogWarn(@"LogitechCIDActivator: No CIDs diverted on '%@', closing device", name);
@@ -239,6 +256,53 @@ static int activateDevice(IOHIDDeviceRef dev, MFCIDDeviceState *s) {
     IOHIDDeviceClose(device, kIOHIDOptionsTypeNone);
     free(s);
     [_states removeObject: found];
+}
+
+- (void)queryBatteryAndDPIForDevice:(Device *)device {
+    IOHIDDeviceRef dev = device.iohidDevice;
+    if (!dev) return;
+    
+    // 1. Query battery
+    uint8_t featBattery = lookupFeature(dev, 0x1004);
+    BOOL is1004 = YES;
+    if (featBattery == 0) {
+        featBattery = lookupFeature(dev, 0x1000);
+        is1004 = NO;
+    }
+    
+    if (featBattery != 0) {
+        uint8_t pkt[20];
+        memset(pkt, 0, 20);
+        pkt[0] = kHIDPP_Long;
+        pkt[1] = kHIDPP_Device;
+        pkt[2] = featBattery;
+        pkt[3] = is1004 ? 0x1E : 0x0E; // Function 1 for 0x1004, Function 0 for 0x1000 (with software ID 0x0E)
+        if (sendAndWait(dev, pkt) == kIOReturnSuccess) {
+            device.logitechBatteryPercentage = sResp[4];
+            device.logitechBatteryStatus = sResp[6];
+            DDLogInfo(@"LogitechCIDActivator: Battery query successful. Percentage: %d%%, Status: %d", device.logitechBatteryPercentage, device.logitechBatteryStatus);
+        }
+    } else {
+        DDLogWarn(@"LogitechCIDActivator: Unified Battery feature (0x1004/0x1000) not found on device");
+    }
+    
+    // 2. Query DPI
+    uint8_t featDPI = lookupFeature(dev, 0x2201);
+    if (featDPI != 0) {
+        uint8_t pkt[20];
+        memset(pkt, 0, 20);
+        pkt[0] = kHIDPP_Long;
+        pkt[1] = kHIDPP_Device;
+        pkt[2] = featDPI;
+        pkt[3] = 0x1E; // Function 1 of 0x2201 (Adjustable DPI)
+        pkt[4] = 0; // Sensor index 0
+        if (sendAndWait(dev, pkt) == kIOReturnSuccess) {
+            device.logitechDPI = (sResp[4] << 8) | sResp[5];
+            DDLogInfo(@"LogitechCIDActivator: DPI query successful. DPI: %d", device.logitechDPI);
+        }
+    } else {
+        DDLogWarn(@"LogitechCIDActivator: Adjustable DPI feature (0x2201) not found on device");
+    }
 }
 
 @end

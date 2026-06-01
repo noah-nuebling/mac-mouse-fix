@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (atomic, assign, readonly, nullable) IOHIDDeviceRef iohidDevice;
 @property (nonatomic, assign) BOOL isLogitechDiverted;
+@property (nonatomic, assign) int logitechBatteryPercentage;
+@property (nonatomic, assign) int logitechBatteryStatus;
+@property (nonatomic, assign) int logitechDPI;
 
 + (instancetype)new NS_UNAVAILABLE;
 

@@ -99,11 +99,6 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         return event;
     }
 
-    // [TEMP LOG] Log all events caught by the tap
-    NSUInteger tempButton = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
-    int64_t tempKeycode = CGEventGetIntegerValueField(event, kCGKeyboardEventKeycode);
-    DDLogInfo(@"[TEMP LOG] EventTap received event: type=%d, button=%lu, keycode=%lld", (int)type, (unsigned long)tempButton, tempKeycode);
-
     // Pass through left/right click and key events immediately so we don't interfere
     if (type == kCGEventLeftMouseDown || type == kCGEventLeftMouseUp ||
         type == kCGEventRightMouseDown || type == kCGEventRightMouseUp ||
@@ -165,6 +160,9 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     IOHIDDeviceRef iohidDevice = CGEventGetSendingDevice(event);
     Device *device = iohidDevice == NULL ? nil : [DeviceManager attachedDeviceWithIOHIDDevice:iohidDevice];
+    if (device == nil) {
+        device = [HelperState shared].activeDevice;
+    }
     
     /// Filter out events from sources other than attached devices
     ///     Notes:
@@ -176,7 +174,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     ///             -> Big Picture: I'm really not sure how to handle the event-filtering – should it be a blacklist or whitelist ? Should it be the same for all events or should it perhaps be a whitelist for scrolling and blacklist for buttons (intercepting scrolling feels more likely to cause issues, as in the Wacom case)
     ///                 Case for simply making all event-filtering based on attachedDevices: I think once we have user-controlled device-specific-settings there might be stronger architectural reasons to whitelist based on attachedDevices – intuitively this also feels like the most sensible, straight-forward approach. If there are special cases we can still add an extra whitelist on-top. Also, IIRC we changed NO_FILTER to be always-on based on vibes not based on specific problems that the attachedDevices-based filter caused – I think this is the way to go. Maybe for MMF 4.
     
-    if (iohidDevice == NULL || device == nil) {
+    if (device == nil) {
 
 #if NO_FILTER
         device = [Device strangeDevice];

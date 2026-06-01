@@ -24,6 +24,7 @@ To support newer Logitech mice correctly without breaking older ones:
 2. **Diverted Device Isolation (`Device.h` / `Device.m` / `LogitechCIDActivator.m`)**
    - Added an `isLogitechDiverted` flag on the `Device` class.
    - When the `LogitechCIDActivator` successfully diverts CIDs on a Logitech mouse, it sets `device.isLogitechDiverted = YES`.
+   - To make this robust across multi-interface hardware (where standard buttons and vendor-specific HID++ endpoints register as separate `Device` instances), `Device.m` overrides the `isLogitechDiverted` getter dynamically. It returns `YES` if `_isLogitechDiverted` is set directly, or if any other attached device with the same `ProductKey` (sibling interface) is marked as diverted.
    - In `Device.m`'s low-level `handleInput` callback, the legacy `usagePage == 65347` remapping block is skipped entirely if `sendingDev.isLogitechDiverted` is `YES`:
      ```objc
      if (usagePage == 65347 && !sendingDev.isLogitechDiverted) {
@@ -36,6 +37,19 @@ To support newer Logitech mice correctly without breaking older ones:
 3. **Button Down/Up Robustness (`ButtonInputReceiver.m`)**
    - Mouse button state is resolved from the CGEvent type for mouse down/up events instead of relying only on `kCGMouseEventPressure`.
    - This keeps side-button hold and drag recognition stable on devices or macOS paths where pressure is not a reliable down-state signal.
+
+4. **Add Mode Drag Capture (`ButtonTabController.swift`)**
+   - The Buttons tab enables helper-side Add Mode while the pointer is inside the add field. Do not disable Add Mode immediately on `mouseExited`.
+   - "Click and Drag" capture must move the pointer, and on Logitech side buttons the helper often needs the first movement events after leaving the add field to cross the modified-drag threshold.
+   - `mouseExited_Internal(dueToAddModeFeeback: false)` therefore schedules a short delayed `disableAddMode`; `mouseEntered` and `handleAddModeFeedback` cancel the pending disable. This preserves ordinary hover behavior while giving buttons 4/5 a real capture window for drag gestures.
+   - When diagnosing this path, use the CocoaLumberjack file logs at `~/Library/Logs/Mac Mouse Fix Helper/`. Useful probes are `enableAddMode`, `disableAddMode`, `buttonModifiers`, `INITIALIZING MODIFIEDDRAG`, `Concluding addMode`, and `addModeFeedback`.
+
+5. **Mouse Tab Logitech Info & Polling (`PointerTabController.swift` / `MFMessagePort.m` / `LogitechCIDActivator.m`)**
+   - Implemented dynamic `"queryLogitechInfo"` message port command. It queries the active device's battery percentage/status and native DPI.
+   - To prevent query overhead from causing interface lag, queries to the physical device are rate-limited to at most once every 10 seconds per device in the helper.
+   - Programmatically constructed a collapsible horizontal status row (`logiInfoStack`) in `PointerTabController.swift` containing battery level, status, and DPI.
+   - Polling runs at a 3-second interval while the Mouse tab is visible (`viewWillAppear` / `viewWillDisappear`), collapsing the view dynamically if the active mouse is not a supported Logitech device.
+   - Added `#available(macOS 11.0, *)` guards for SF Symbols (`battery.100`, `battery.100.bolt`, `speedometer`) to ensure full backward compatibility with the macOS 10.15 deployment target.
 
 ---
 
@@ -88,6 +102,16 @@ Users want different mouse button and scroll behaviors depending on the active f
     --exclude='Mac Mouse Fix*.app' \
     --exclude='DerivedData' \
     ./ /tmp/MacMouseFix-build/
-  xcodebuild -project "Mouse Fix.xcodeproj" -scheme "App" -configuration Debug -destination 'platform=macOS' CODE_SIGNING_ALLOWED=NO build
+  cd /tmp/MacMouseFix-build
+  xcodebuild -project "Mouse Fix.xcodeproj" -scheme "App" -configuration Debug -destination 'platform=macOS' build
   ```
 - Keep source edits in the iCloud repo as the canonical working tree. Use `/tmp/MacMouseFix-build` only for build verification, then return to the original repo for `git status`, staging, commit, and push.
+- When the user asks to run the new build for manual testing, do not launch the app directly from DerivedData. Copy the freshly built app into `/Applications`, stop any running app/helper processes, then launch `/Applications/Mac Mouse Fix.app`:
+  ```bash
+  built_app="$(xcodebuild -project "Mouse Fix.xcodeproj" -scheme "App" -configuration Debug -showBuildSettings | awk -F' = ' '/BUILT_PRODUCTS_DIR/ { dir=$2 } END { print dir "/Mac Mouse Fix.app" }')"
+  rm -rf "/Applications/Mac Mouse Fix.app"
+  ditto "$built_app" "/Applications/Mac Mouse Fix.app"
+  osascript -e 'tell application "Mac Mouse Fix" to quit' >/dev/null 2>&1 || true
+  pkill -x "Mac Mouse Fix Helper" >/dev/null 2>&1 || true
+  open -n "/Applications/Mac Mouse Fix.app"
+  ```
