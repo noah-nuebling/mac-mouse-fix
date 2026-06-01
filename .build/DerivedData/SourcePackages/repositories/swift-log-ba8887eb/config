@@ -1,0 +1,14 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = true
+	ignorecase = true
+	precomposeunicode = true
+	symlinks = true
+	fsmonitor = false
+	longpaths = true
+[remote "origin"]
+	url = https://github.com/apple/swift-log
+	tagOpt = --no-tags
+	fetch = +refs/*:refs/*
+	mirror = true

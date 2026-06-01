@@ -24,11 +24,10 @@
 ///   each flag bit has a corresponding valid bit = flag << 1
 ///   0x03 = divert=1 (bit0) + divert_valid=1 (bit1)
 #define kDivertFlags    0x03
-/// Restore native reporting by explicitly clearing temporary divert, persistent
-/// divert, and rawXY divert. The valid bits are set; the value bits stay 0.
-#define kNativeReportingFlags 0x2A
-
-/// TIDs of controls that already report natively — must NOT be diverted
+/// TIDs of controls that already report natively — must NOT be diverted.
+/// The Back/Forward side buttons are the exception: on newer Logitech mice the
+/// firmware can delay their native reports for horizontal scroll, so we divert
+/// their CIDs and feed them into MMF as normal buttons 4/5.
 ///   0x0038=left, 0x0039=right, 0x003A=middle, 0x003C=back, 0x003E=forward
 static const uint16_t kNativeTIDs[] = { 0x0038, 0x0039, 0x003A, 0x003C, 0x003E };
 static const uint16_t kNativeSideButtonTIDs[] = { 0x003C, 0x003E };
@@ -74,6 +73,8 @@ static BOOL appendUniqueCID(uint16_t *cids, int *count, uint16_t cid, int maxCou
 }
 
 static int buttonForCID(MFCIDDeviceState *s, uint16_t cid) {
+    if (cid == 0x0053) return 4;
+    if (cid == 0x0056) return 5;
     for (int i = 0; i < s->cidCount; i++)
         if (s->cidMap[i] == cid) return kFirstCGButton + i;
     if (s->cidCount < 32) { s->cidMap[s->cidCount++] = cid; return kFirstCGButton + s->cidCount - 1; }
@@ -106,14 +107,65 @@ static void inputReportCallback(void *ctx, IOReturn result, void *sender,
         return;
     }
     if (!s) return; // Safety check
-    uint16_t cid = ((uint16_t)report[4] << 8) | report[5];
-    if (cid == 0) {
-        for (int i = 0; i < s->pressedCount; i++) injectButton(s, s->pressedCIDs[i], NO);
-        s->pressedCount = 0;
-    } else {
-        for (int i = 0; i < s->pressedCount; i++) if (s->pressedCIDs[i] == cid) return;
-        injectButton(s, cid, YES);
-        if (s->pressedCount < 32) s->pressedCIDs[s->pressedCount++] = cid;
+
+    // Parse the divertedButtonsEvent (up to 4 CIDs)
+    uint16_t currentPressed[4];
+    int currentCount = 0;
+    
+    // Bytes 4-11 correspond to Parameters 0-7 (cid1 to cid4)
+    if (len >= 6) {
+        uint16_t cid1 = ((uint16_t)report[4] << 8) | report[5];
+        if (cid1 != 0) currentPressed[currentCount++] = cid1;
+    }
+    if (len >= 8) {
+        uint16_t cid2 = ((uint16_t)report[6] << 8) | report[7];
+        if (cid2 != 0) currentPressed[currentCount++] = cid2;
+    }
+    if (len >= 10) {
+        uint16_t cid3 = ((uint16_t)report[8] << 8) | report[9];
+        if (cid3 != 0) currentPressed[currentCount++] = cid3;
+    }
+    if (len >= 12) {
+        uint16_t cid4 = ((uint16_t)report[10] << 8) | report[11];
+        if (cid4 != 0) currentPressed[currentCount++] = cid4;
+    }
+
+    // 1. Find released buttons: in s->pressedCIDs but not in currentPressed
+    for (int i = 0; i < s->pressedCount; i++) {
+        uint16_t oldCid = s->pressedCIDs[i];
+        BOOL stillPressed = NO;
+        for (int j = 0; j < currentCount; j++) {
+            if (currentPressed[j] == oldCid) {
+                stillPressed = YES;
+                break;
+            }
+        }
+        if (!stillPressed) {
+            injectButton(s, oldCid, NO);
+        }
+    }
+
+    // 2. Find newly pressed buttons: in currentPressed but not in s->pressedCIDs
+    for (int i = 0; i < currentCount; i++) {
+        uint16_t newCid = currentPressed[i];
+        BOOL alreadyPressed = NO;
+        for (int j = 0; j < s->pressedCount; j++) {
+            if (s->pressedCIDs[j] == newCid) {
+                alreadyPressed = YES;
+                break;
+            }
+        }
+        if (!alreadyPressed) {
+            injectButton(s, newCid, YES);
+        }
+    }
+
+    // 3. Update the state
+    s->pressedCount = 0;
+    for (int i = 0; i < currentCount; i++) {
+        if (s->pressedCount < 32) {
+            s->pressedCIDs[s->pressedCount++] = currentPressed[i];
+        }
     }
 }
 
@@ -183,8 +235,7 @@ static int activateDevice(MFCIDDeviceState *s) {
 
     /// 3. GetCidInfo — collect divertable CIDs
     uint16_t todivert[32]; int ndiv = 0;
-    uint16_t torestore[32]; int nrestore = 0;
-    for (int i = 0; i < count && (ndiv < 32 || nrestore < 32); i++) {
+    for (int i = 0; i < count && ndiv < 32; i++) {
         memset(pkt, 0, 20);
         pkt[0]=kHIDPP_Long; pkt[1]=s->deviceIndex; pkt[2]=feat; pkt[3]=0x1E; pkt[4]=(uint8_t)i;
         if (sendAndWaitWithTimeout(dev, pkt, 100) != kIOReturnSuccess) continue;
@@ -192,9 +243,11 @@ static int activateDevice(MFCIDDeviceState *s) {
         uint16_t tid = ((uint16_t)sResp[6]<<8)|sResp[7];
         uint8_t flags = sResp[8];
         if (isNativeSideButton(cid, tid)) {
-            appendUniqueCID(torestore, &nrestore, cid, 32);
+            appendUniqueCID(todivert, &ndiv, cid, 32);
+            DDLogInfo(@"LogitechCIDActivator: side-button CID 0x%04X/TID 0x%04X will be diverted as Button %d on '%@'", cid, tid, buttonForCID(s, cid), name);
+            continue;
         }
-        if ((flags & (1<<4)) && !isNativeTID(tid)) {
+        if ((flags & (1<<5)) && !isNativeTID(tid)) {
             appendUniqueCID(todivert, &ndiv, cid, 32);
         }
     }
@@ -202,28 +255,9 @@ static int activateDevice(MFCIDDeviceState *s) {
     /// 4. Pre-register button mapping for stable numbering
     for (int i = 0; i < ndiv; i++) buttonForCID(s, todivert[i]);
 
-    /// 5. Restore native Back/Forward reporting.
-    ///
-    /// Some modern Logitech mice route buttons 4/5 through a firmware-side
-    /// horizontal-scroll state machine. That makes the host see only a late
-    /// press/release pulse, which breaks hold, drag, scroll, and Add Mode
-    /// capture. Clear all HID++ diversion modes and remap each side button
-    /// back to its own native CID before leaving other native controls alone.
-    int restoredNativeSideButtons = 0;
-    for (int i = 0; i < nrestore; i++) {
-        memset(pkt, 0, 20);
-        pkt[0]=kHIDPP_Long; pkt[1]=s->deviceIndex; pkt[2]=feat; pkt[3]=0x3E;
-        pkt[4]=(torestore[i]>>8)&0xFF; pkt[5]=torestore[i]&0xFF; pkt[6]=kNativeReportingFlags;
-        pkt[7]=(torestore[i]>>8)&0xFF; pkt[8]=torestore[i]&0xFF;
-        if (sendAndWaitWithTimeout(dev, pkt, 100) == kIOReturnSuccess) {
-            restoredNativeSideButtons++;
-            DDLogInfo(@"LogitechCIDActivator: restored native reporting for side-button CID 0x%04X on '%@'", torestore[i], name);
-        } else {
-            DDLogError(@"LogitechCIDActivator: Failed to restore native reporting for side-button CID 0x%04X on '%@'", torestore[i], name);
-        }
-    }
-
-    /// 6. SetCidReporting — divert non-native controls
+    /// 5. SetCidReporting — divert non-native controls and side buttons.
+    /// Diverting side buttons disables the firmware's horizontal-scroll hold
+    /// state and gives MMF an immediate down/up signal for hold-and-drag.
     int diverted = 0;
     for (int i = 0; i < ndiv; i++) {
         memset(pkt, 0, 20);
@@ -231,11 +265,14 @@ static int activateDevice(MFCIDDeviceState *s) {
         pkt[4]=(todivert[i]>>8)&0xFF; pkt[5]=todivert[i]&0xFF; pkt[6]=kDivertFlags;
         if (sendAndWaitWithTimeout(dev, pkt, 100) == kIOReturnSuccess) {
             diverted++;
+            if (isNativeSideButton(todivert[i], todivert[i])) {
+                DDLogInfo(@"LogitechCIDActivator: diverted side-button CID 0x%04X as Button %d on '%@'", todivert[i], buttonForCID(s, todivert[i]), name);
+            }
         } else {
             DDLogError(@"LogitechCIDActivator: Failed to divert CID 0x%04X on '%@'", todivert[i], name);
         }
     }
-    return diverted + restoredNativeSideButtons;
+    return diverted;
 }
 
 static uint8_t lookupFeature(IOHIDDeviceRef dev, uint8_t deviceIndex, uint16_t featId) {

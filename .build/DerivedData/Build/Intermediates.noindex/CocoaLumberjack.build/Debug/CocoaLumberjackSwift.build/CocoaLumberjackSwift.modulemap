@@ -1,0 +1,4 @@
+module CocoaLumberjackSwift {
+header "CocoaLumberjackSwift-Swift.h"
+export *
+}

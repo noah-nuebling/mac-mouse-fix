@@ -1,0 +1,44 @@
+{
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/ReactiveSwift/Sources/Observers/TakeFirst.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeFirst.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeFirst.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeFirst.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeFirst.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeFirst.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/ReactiveSwift/Sources/Observers/TakeLast.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeLast.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeLast.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeLast.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeLast.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeLast.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/ReactiveSwift/Sources/Observers/TakeUntil.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeUntil.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeUntil.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeUntil.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeUntil.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeUntil.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/ReactiveSwift/Sources/Observers/TakeWhile.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeWhile.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeWhile.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeWhile.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeWhile.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/TakeWhile.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/ReactiveSwift/Sources/Observers/Throttle.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Throttle.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Throttle.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Throttle.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Throttle.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Throttle.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/ReactiveSwift/Sources/Observers/UnaryAsyncOperator.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/UnaryAsyncOperator.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/UnaryAsyncOperator.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/UnaryAsyncOperator.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/UnaryAsyncOperator.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/UnaryAsyncOperator.swiftdeps"
+  }
+}

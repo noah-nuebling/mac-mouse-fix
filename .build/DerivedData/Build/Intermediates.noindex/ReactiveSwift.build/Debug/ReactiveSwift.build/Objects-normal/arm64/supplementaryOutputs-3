@@ -1,0 +1,51 @@
+{
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/ReactiveSwift/Sources/Observers/CompactMap.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/CompactMap.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/CompactMap.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/CompactMap.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/CompactMap.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/CompactMap.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/ReactiveSwift/Sources/Observers/Debounce.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Debounce.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Debounce.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Debounce.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Debounce.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Debounce.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/ReactiveSwift/Sources/Observers/Delay.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Delay.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Delay.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Delay.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Delay.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Delay.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/ReactiveSwift/Sources/Observers/Dematerialize.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Dematerialize.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Dematerialize.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Dematerialize.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Dematerialize.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Dematerialize.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/ReactiveSwift/Sources/Observers/DematerializeResults.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/DematerializeResults.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/DematerializeResults.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/DematerializeResults.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/DematerializeResults.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/DematerializeResults.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/ReactiveSwift/Sources/Observers/Filter.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Filter.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Filter.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Filter.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Filter.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/Filter.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/ReactiveSwift/Sources/Observers/LazyMap.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/LazyMap.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/LazyMap.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/LazyMap.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/LazyMap.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/ReactiveSwift.build/Debug/ReactiveSwift.build/Objects-normal/arm64/LazyMap.swiftdeps"
+  }
+}

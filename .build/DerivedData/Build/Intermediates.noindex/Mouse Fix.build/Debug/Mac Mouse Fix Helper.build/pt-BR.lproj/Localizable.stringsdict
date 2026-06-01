@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>capture-toast.buttons.captured.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%2$@ foi capturado pelo Mac Mouse Fix.</string>
+			<key>other</key>
+			<string>%2$@ foram capturados pelo Mac Mouse Fix.</string>
+		</dict>
+	</dict>
+	<key>capture-toast.buttons.captured.hint</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Outros aplicativos não veem mais isso.</string>
+			<key>other</key>
+			<string>Outros aplicativos não conseguem mais vê-los.</string>
+		</dict>
+	</dict>
+	<key>capture-toast.buttons.uncaptured.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%2$@ não é mais capturado pelo Mac Mouse Fix.</string>
+			<key>other</key>
+			<string>%2$@ não são mais capturados pelo Mac Mouse Fix.</string>
+		</dict>
+	</dict>
+	<key>capture-toast.buttons.uncaptured.hint</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Outros aplicativos voltam a ver o botão.</string>
+			<key>other</key>
+			<string>Outros aplicativos voltam a vê-los.</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

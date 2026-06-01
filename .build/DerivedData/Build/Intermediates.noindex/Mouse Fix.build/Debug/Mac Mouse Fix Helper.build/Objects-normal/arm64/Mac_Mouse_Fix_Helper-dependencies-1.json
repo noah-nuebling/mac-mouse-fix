@@ -1,0 +1,691 @@
+[
+  {
+    "isFramework" : true,
+    "moduleName" : "Accessibility",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/Accessibility.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "AppKit",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/AppKit.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "Charts",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/Charts.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "CocoaLumberjackSwift",
+    "modulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Products\/Debug\/CocoaLumberjackSwift.swiftmodule\/arm64-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "Combine",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/Combine.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "CoreData",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/CoreData.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "CoreFoundation",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/CoreFoundation.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "CoreGraphics",
+    "modulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/CoreGraphics-5ELVYB1EN3LQ.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "CoreImage",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/CoreImage.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "CoreText",
+    "modulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/CoreText-1D084RQ2SBLLE.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "CoreTransferable",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/CoreTransferable.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "CoreVideo",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/CoreVideo.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "CryptoKit",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/CryptoKit.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Darwin",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/Darwin.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "DataDetection",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/DataDetection.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "DeveloperToolsSupport",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/DeveloperToolsSupport.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Dispatch",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/Dispatch.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "Foundation",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/Foundation.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "IOKit",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/IOKit.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "LocalAuthentication",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/LocalAuthentication.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Metal",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/Metal.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "OSLog",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/OSLog.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "ObjectiveC",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/ObjectiveC.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Observation",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/Observation.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "QuartzCore",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/QuartzCore.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "ReactiveCocoa",
+    "modulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Products\/Debug\/ReactiveCocoa.swiftmodule\/arm64-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "ReactiveSwift",
+    "modulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Products\/Debug\/ReactiveSwift.swiftmodule\/arm64-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Spatial",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/Spatial.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "Swift",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/Swift.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "SwiftOnoneSupport",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/SwiftOnoneSupport.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "SwiftUI",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/SwiftUI.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "SwiftUICore",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/SwiftUICore.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : true,
+    "moduleName" : "Symbols",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/Symbols.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "System",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/System.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "UniformTypeIdentifiers",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/UniformTypeIdentifiers.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "XPC",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/XPC.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_Builtin_float",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/_Builtin_float.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_Concurrency",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/_Concurrency.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation1",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/_DarwinFoundation1.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation2",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/_DarwinFoundation2.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation3",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/_DarwinFoundation3.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "_StringProcessing",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/_StringProcessing.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "os",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/os.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "isFramework" : false,
+    "moduleName" : "simd",
+    "modulePath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/swift\/macosx\/prebuilt-modules\/26.5\/simd.swiftmodule\/arm64e-apple-macos.swiftmodule"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Accessibility.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/Accessibility-554C5I7F3XA5NDHZLSUJIT2P2.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Accessibility"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/AppKit.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/AppKit-D9CQ5KZS9NTDB7K0J8O5WWDLL.pcm",
+    "isBridgingHeaderDependency" : true,
+    "isFramework" : false,
+    "moduleName" : "AppKit"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/ApplicationServices.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/ApplicationServices-7OUFH0X1J0Z3DLDBUIUK9O73E.pcm",
+    "isBridgingHeaderDependency" : true,
+    "isFramework" : false,
+    "moduleName" : "ApplicationServices"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CFNetwork.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/CFNetwork-2GN0EUJ8J6WG3RVZQS2WIZL6U.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CFNetwork"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/cups.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/CUPS-4PBA1MBIV4UKKPXQ2T1XL3DEK.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CUPS"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Cocoa.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/Cocoa-51324ZFLBM1UDFQW9QF9JABUY.pcm",
+    "isBridgingHeaderDependency" : true,
+    "isFramework" : false,
+    "moduleName" : "Cocoa"
+  },
+  {
+    "clangModuleMapPath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/GeneratedModuleMaps\/CocoaLumberjack.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/CocoaLumberjack-11F44NEWL0S7LKWWLYB5RADZW.pcm",
+    "isBridgingHeaderDependency" : true,
+    "isFramework" : false,
+    "moduleName" : "CocoaLumberjack"
+  },
+  {
+    "clangModuleMapPath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/GeneratedModuleMaps\/CocoaLumberjackSwiftSupport.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/CocoaLumberjackSwiftSupport-CR5S129EDFYFN7L1QS863Q4KS.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CocoaLumberjackSwiftSupport"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/ColorSync.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/ColorSync-AIE0SD8HRWXK3L7EBS6JR8IY2.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "ColorSync"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreData.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/CoreData-2DKQ5IDT5VM0K5GBWCIH9Y6P9.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreData"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreFoundation.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/CoreFoundation-1O4S77JZ66SQHFEUTKFCMHK3Y.pcm",
+    "isBridgingHeaderDependency" : true,
+    "isFramework" : false,
+    "moduleName" : "CoreFoundation"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreGraphics.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/CoreGraphics-6IIH1ES65CI5655NTGM2RARKB.pcm",
+    "isBridgingHeaderDependency" : true,
+    "isFramework" : false,
+    "moduleName" : "CoreGraphics"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreImage.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/CoreImage-BV1UJMNC2XVKHT8SVCDRNDZBM.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreImage"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreServices.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/CoreServices-DOU6CJV47JL1O0V3KV5563HPB.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreServices"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreText.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/CoreText-4F2Z31CXDRDDXNZPW490IARKH.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreText"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreTransferable.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/CoreTransferable-D3945ORVXGFMR120Q9AIGYM4U.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "CoreTransferable"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/CoreVideo.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/CoreVideo-R8FH02HTIL917K20ADDS7MO7.pcm",
+    "isBridgingHeaderDependency" : true,
+    "isFramework" : false,
+    "moduleName" : "CoreVideo"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/Darwin.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/Darwin-8DMUQRKE9KUJ8VSQ4S2TEHHPT.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Darwin"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/DataDetection.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/DataDetection-CUZMACHBM7USGR9RVU3KL2Y6O.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "DataDetection"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/DeveloperToolsSupport.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/DeveloperToolsSupport-79IJ6F0WXXBGEZZNPVLU84DU7.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "DeveloperToolsSupport"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/DiskArbitration.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/DiskArbitration-BOSTQE9XV1P5CGZFIRIE35J23.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "DiskArbitration"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/dispatch.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/Dispatch-93ZCNU4U138WWLQBIY24ET5C3.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Dispatch"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Foundation.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/Foundation-EA9U2YV7DLNWMM6T07KYGYT5T.pcm",
+    "isBridgingHeaderDependency" : true,
+    "isFramework" : false,
+    "moduleName" : "Foundation"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/IOKit.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/IOKit-88XNXCGDBF45PWCY70BYOSSUH.pcm",
+    "isBridgingHeaderDependency" : true,
+    "isFramework" : false,
+    "moduleName" : "IOKit"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/IOSurface.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/IOSurface-2Z340XGW7FODQNPEU2XPZ2KD8.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "IOSurface"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/ImageIO.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/ImageIO-618I9X54QU0NCGDUBP1YOHYOM.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "ImageIO"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/LocalAuthentication.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/LocalAuthentication-2U9W4KQAI06OYU1N4NF8LAYNE.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "LocalAuthentication"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinBasic.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/MachO-8U1ZQDQ75V6QL2ORQLR6VXRN4.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "MachO"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Metal.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/Metal-68GTGM3M34ZWCTCH1R6ZTCRM2.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Metal"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/OSLog.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/OSLog-AUTUOI0K40HLK7EVTCF2H8I3A.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "OSLog"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/ObjectiveC.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/ObjectiveC-6U7CORFITLCARSBPZIKEHH9IV.pcm",
+    "isBridgingHeaderDependency" : true,
+    "isFramework" : false,
+    "moduleName" : "ObjectiveC"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/OpenGL.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/OpenGL-5K7EXYSGFX4JQEFFRZ45QYXJF.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "OpenGL"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/QuartzCore.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/QuartzCore-AYTUXWGW3OWM7UGBCIGLGGBK1.pcm",
+    "isBridgingHeaderDependency" : true,
+    "isFramework" : false,
+    "moduleName" : "QuartzCore"
+  },
+  {
+    "clangModuleMapPath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/GeneratedModuleMaps\/ReactiveCocoaObjC.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/ReactiveCocoaObjC-DDN4RX1QAG79VDD876FK4M2OA.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "ReactiveCocoaObjC"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Security.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/Security-7NEKCQR8MI27KBK3PI1X3SX2B.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Security"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/Spatial\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/Spatial-9PMG7BCK7ARTHGHOMH0DRJOUF.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Spatial"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/lib\/swift\/shims\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/SwiftShims-6JW68GB0DISG72TLJBN3LG8YU.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "SwiftShims"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/SwiftUI.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/SwiftUI-2A83HDED1K9UKXQ56CUI7J34D.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "SwiftUI"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/SwiftUICore.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/Build\/Intermediates.noindex\/SwiftExplicitPrecompiledModules\/SwiftUICore-A9GWY52RTP4H6I2HUQW4VYD4E.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "SwiftUICore"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/Symbols.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/Symbols-129UO1D00UG7D71PZFJNYH1I5.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "Symbols"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/System\/Library\/Frameworks\/UniformTypeIdentifiers.framework\/Modules\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/UniformTypeIdentifiers-AI6ELVTQOIZZKKYCQ60KBAKMY.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "UniformTypeIdentifiers"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/xpc.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/XPC-2IY1ETMWK0PR42QYXOPTYQRNJ.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "XPC"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinFoundation1.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/_AvailabilityInternal-1SGYHUKX0NL6HEOYNU2Z35UJE.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_AvailabilityInternal"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/_Builtin_float-BVG6MIPHBTFMGRPBXFXYB7TE8.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_float"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/_Builtin_intrinsics-9J88PCWLTZFWGOBLD4K9DIZKP.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_intrinsics"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/_Builtin_inttypes-EB23RM28VA7RICL3ANQLK959V.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_inttypes"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/_Builtin_limits-9HR2YPLPN0USQWHBJLLG13MXZ.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_limits"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/_Builtin_stdarg-BO0AXIDJYZK1L980QKH8F6QAB.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_stdarg"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/_Builtin_stdatomic-2CZ59274JRUQAIBET5IOOLPC8.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_stdatomic"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/_Builtin_stdbool-26OQCZZFPXG6FS6QRDPUM2CE9.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_stdbool"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/_Builtin_stddef-5OJFTZVIXE9QTR0SHUND0VD1C.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_stddef"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/_Builtin_stdint-9DBNB2HEY6P0Y8397821OG32D.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_stdint"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/_Builtin_tgmath-49J7YTT9LBLKGO4VSQVXQ36S1.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_Builtin_tgmath"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinFoundation1.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/_DarwinFoundation1-CATT4M2ME8G51N322D00DABRO.pcm",
+    "isBridgingHeaderDependency" : true,
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation1"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinFoundation2.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/_DarwinFoundation2-155559AIC4ISKBN2JTXVN8RWY.pcm",
+    "isBridgingHeaderDependency" : true,
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation2"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinFoundation3.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/_DarwinFoundation3-E02P54RYF2MW7KV66IZ09X6Q7.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_DarwinFoundation3"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/lib\/swift\/shims\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/_SwiftConcurrencyShims-5IB8ENHFH7ZPVD5JRN2QEI2F.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "_SwiftConcurrencyShims"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/launch.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/launch-YUUZPHPH5MTM4XI6H42T2U18.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "launch"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/libDER\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/libDER-5X6ZRM7AO5L3UU94GCQ20EWQA.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "libDER"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/libkern.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/libkern-7EMQI2A3C6SO3IH4RAWFST3AQ.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "libkern"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/os.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/os-AQ52E41XYKCR84D4R8WN5FMKP.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "os"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/os.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/os_object-4GSW9VB4FKVZ0KTWBGRPNIK8E.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "os_object"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/os.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/os_workgroup-B3B3OUQAKJUY2C0QQDDWE5ANI.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "os_workgroup"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/ptrauth-9VQY95XTPOODYQHEHIOS8EQ69.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "ptrauth"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Toolchains\/XcodeDefault.xctoolchain\/usr\/lib\/clang\/21\/include\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/ptrcheck-5SASZYS10X8RMIQA20GM5LX6B.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "ptrcheck"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/simd\/module.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/simd-1GGRWG31UUGN400IHMQG0WKMK.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "simd"
+  },
+  {
+    "clangModuleMapPath" : "\/Applications\/Xcode.app\/Contents\/Developer\/Platforms\/MacOSX.platform\/Developer\/SDKs\/MacOSX.sdk\/usr\/include\/DarwinFoundation2.modulemap",
+    "clangModulePath" : "\/Users\/shawnrain\/Library\/Mobile Documents\/com~apple~CloudDocs\/Shawn Rain\/Vibe-Coding\/MacMouseFix\/.build\/DerivedData\/ModuleCache.noindex\/sys_types-38UVJ8WPNOLHPGTAL9UVNNSNB.pcm",
+    "isBridgingHeaderDependency" : false,
+    "isFramework" : false,
+    "moduleName" : "sys_types"
+  }
+]

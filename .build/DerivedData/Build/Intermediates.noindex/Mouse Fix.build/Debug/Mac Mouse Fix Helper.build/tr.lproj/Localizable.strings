@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>accessibility.settings-link.pre-ventura</key>
+	<string>'Güvenlik ve Gizlilik' Ayarlarını Açın</string>
+	<key>already-using-defaults-toast.3</key>
+	<string>**Halihazırda** 3 düğmeli fareler için varsayılan ayarı kullanıyorsunuz.</string>
+	<key>already-using-defaults-toast.5</key>
+	<string>**Halihazırda** 5+ düğmeli fareler için varsayılan ayarı kullanıyorsunuz.</string>
+	<key>app-version</key>
+	<string>Sürüm %@</string>
+	<key>apple-key-fallback.backward</key>
+	<string>&lt;Geri Sarma tuşu&gt;</string>
+	<key>apple-key-fallback.capslock</key>
+	<string>⇪</string>
+	<key>apple-key-fallback.forward</key>
+	<string>&lt;Hızlı-İleri Sarma tuşu&gt;</string>
+	<key>apple-key-fallback.globe</key>
+	<string>&lt;Emoji Seçici tuşu&gt;</string>
+	<key>apple-key-fallback.light.max</key>
+	<string>&lt;Klavye Parlaklığını Artırma tuşu&gt;</string>
+	<key>apple-key-fallback.light.min</key>
+	<string>&lt;Klavye Parlaklığını Azaltma tuşu&gt;</string>
+	<key>apple-key-fallback.magnifyingglass</key>
+	<string>&lt;Spotlight tuşu&gt;</string>
+	<key>apple-key-fallback.mic</key>
+	<string>&lt;Dikte tuşu&gt;</string>
+	<key>apple-key-fallback.moon</key>
+	<string>&lt;Rahatsız Etmeyin tuşu&gt;</string>
+	<key>apple-key-fallback.playpause</key>
+	<string>&lt;Oynat veya Duraklat tuşu&gt;</string>
+	<key>apple-key-fallback.power</key>
+	<string>&lt;Güç tuşu&gt;</string>
+	<key>apple-key-fallback.rectangle.3.group</key>
+	<string>&lt;Mission Control tuşu&gt;</string>
+	<key>apple-key-fallback.speaker</key>
+	<string>&lt;Sessize Alma tuşu&gt;</string>
+	<key>apple-key-fallback.speaker.wave.1</key>
+	<string>&lt;Sesi Azaltma tuşu&gt;</string>
+	<key>apple-key-fallback.speaker.wave.3</key>
+	<string>&lt;Sesi Artırma tuşu&gt;</string>
+	<key>apple-key-fallback.square.grid.3x2</key>
+	<string>&lt;Launchpad tuşu&gt;</string>
+	<key>apple-key-fallback.sun.max</key>
+	<string>&lt;Parlaklığı Artırma tuşu&gt;</string>
+	<key>apple-key-fallback.sun.min</key>
+	<string>&lt;Parlaklığı azaltma tuşu&gt;</string>
+	<key>apple-key-fallback.unknown-key</key>
+	<string>&lt;Açıklaması Olmayan tuş&gt;</string>
+	<key>beta-alert.back</key>
+	<string>İptal</string>
+	<key>beta-alert.body</key>
+	<string>Beta sürümlerinde birçok sorun olabilir.
+Bir sorunla karşılaştığınızda geri bildirim vermeyi unutmayın.
+Teşekkürler!</string>
+	<key>beta-alert.confirm</key>
+	<string>Beta Sürümlerini Al</string>
+	<key>beta-alert.title</key>
+	<string>Beta Sürümlerini Almak İster misiniz?</string>
+	<key>button-name.tool.numbered</key>
+	<string>Fare Düğmesi %@</string>
+	<key>buy-mouse-alert.body</key>
+	<string>Mac Mouse Fix'in tüm potansiyelini ortaya çıkarmak için 5+ düğmeli bir fare edinin!</string>
+	<key>buy-mouse-alert.ok</key>
+	<string>Tamam</string>
+	<key>buy-mouse-alert.title</key>
+	<string>Fareniz sadece 3 düğmeye sahip</string>
+	<key>capture-toast.button-name.middle</key>
+	<string>Orta Düğme</string>
+	<key>capture-toast.button-name.numbered</key>
+	<string>Düğme %@</string>
+	<key>capture-toast.button-name.primary</key>
+	<string>Birincil Düğme</string>
+	<key>capture-toast.button-name.secondary</key>
+	<string>İkincil Düğme</string>
+	<key>capture-toast.buttons.link</key>
+	<string>[Daha Fazla Bilgi Edinin](%@)</string>
+	<key>capture-toast.scroll.captured.body</key>
+	<string>**Kaydırma** hareketi şu anda Mac Mouse Fix tarafından yakalandı</string>
+	<key>capture-toast.scroll.link</key>
+	<string>[Daha Fazla Bilgi Edinin](%@)</string>
+	<key>capture-toast.scroll.uncaptured.body</key>
+	<string>**Kaydırma** haraketinin Mac Mouse Fix tarafından yakalanması sona erdi</string>
+	<key>drag-effect.dock-swipe</key>
+	<string>Spaces ve Mission Control</string>
+	<key>drag-effect.dock-swipe.hint</key>
+	<string>Farenizi:
+- Mission Control'u göstermek için yukarı doğru
+- Uygulama Pencelerini göstermek için aşağıya doğru
+- Space'ler arasında hareket ettirmek için sağa ve sola doğru hareket ettirin
+
+Apple İzleme Dörtgeninde üç parmakla sağa ve sola kaydırma hareketi gibi çalışmaktadır</string>
+	<key>drag-effect.scroll-swipe</key>
+	<string>Kaydırma ve Gezinme</string>
+	<key>drag-effect.scroll-swipe.hint</key>
+	<string>Farenizi herhangi bir yönde hareket ettirerek serbestçe kaydırın
+
+Ayrıca farenizi sola ve sağa hareket ettirerek Safari'de sayfalar arasında gezinin, Mail uygulamasında e-postaları silin ve daha fazlasını yapın
+
+Apple İzleme Dörtgeninde iki parmakla kaydırmak gibi çalışır</string>
+	<key>effect.app-expose</key>
+	<string>Uygulama Pencereleri</string>
+	<key>effect.app-expose.hint</key>
+	<string>Etkin uygulamanın tüm pencerelerini göster</string>
+	<key>effect.apple-keys-submenu</key>
+	<string> Özel Tuşları</string>
+	<key>effect.apple-keys-submenu.hint</key>
+	<string>Yalnızca Apple klavyelerinde bulunan tuşları seçin</string>
+	<key>effect.apple-shortcut.hint</key>
+	<string>Bir Apple klavyesinde '%@' tuşuna basmak gibi çalışır</string>
+	<key>effect.back</key>
+	<string>Geri</string>
+	<key>effect.back.hint</key>
+	<string>Safari ve diğer uygulamalarda bir sayfa geri git</string>
+	<key>effect.click.middle</key>
+	<string>Orta Tık</string>
+	<key>effect.click.middle.hint</key>
+	<string>Bağlantıları yeni sekmede açın, Terminal'e metin yapıştırın ve daha fazlasını yapın.
+ 
+Orta Fare Düğmesi (Kaydırma Tekerleği Düğmesi veya Fare Düğmesi 3 olarak da adlandırılır)</string>
+	<key>effect.click.primary</key>
+	<string>Birincil Tıklama (Sağ Tık)</string>
+	<key>effect.click.primary.hint</key>
+	<string>Birincil Fare Düğmesi (Sol Fare Düğmesi veya Birincil Fare Düğmesi olarak da adlandırılır)</string>
+	<key>effect.click.secondary</key>
+	<string>İkincil Tıklama (Sol Tık)</string>
+	<key>effect.click.secondary.hint</key>
+	<string>İkincil Fare Düğmesi (Sağ Fare Düğmesi veya Fare Düğmesi 2 olarak da adlandırılır)</string>
+	<key>effect.desktop</key>
+	<string>Masaüstünü Göster</string>
+	<key>effect.desktop.hint</key>
+	<string>Masaüstünü Göster</string>
+	<key>effect.forward</key>
+	<string>İleri</string>
+	<key>effect.forward.hint</key>
+	<string>Safari ve diğer uygulamalarda bir sayfa ileri git</string>
+	<key>effect.launchpad</key>
+	<string>Launchpad</string>
+	<key>effect.launchpad.hint</key>
+	<string>Launchpad'i aç</string>
+	<key>effect.left-space</key>
+	<string>Soldaki Space'e git</string>
+	<key>effect.left-space.hint</key>
+	<string>Soldaki Space'e git</string>
+	<key>effect.look-up</key>
+	<string>Sözlükte Ara ve Hızlı Bak</string>
+	<key>effect.look-up.hint</key>
+	<string>Sözlükte kelimeleri arayın, Finder'da dosyalara Hızlı Bakın ve daha fazlasını yapın.
+ 
+Apple İzleme Dörtgeninde Sert Tıklama gibi çalışır.</string>
+	<key>effect.mission-control</key>
+	<string>Mission Control</string>
+	<key>effect.mission-control.hint</key>
+	<string>Mission Control'ü göster</string>
+	<key>effect.record-shortcut</key>
+	<string>Klavye Kısayolu...</string>
+	<key>effect.record-shortcut.hint</key>
+	<string>Bir klavye kısayolu yazın, ardından farenizden kullanın</string>
+	<key>effect.right-space</key>
+	<string>Sağdaki Space'e Git</string>
+	<key>effect.right-space.hint</key>
+	<string>Sağdaki Space'e Git</string>
+	<key>effect.shortcut.hint</key>
+	<string>Klavyenizde '%@' tuşuna basmak gibi çalışır</string>
+	<key>effect.smart-zoom</key>
+	<string>Akıllı Yakınlaştırma</string>
+	<key>effect.smart-zoom.hint</key>
+	<string>Safari'de ve diğer uygulamalarda yakınlaştırma veya uzaklaştırma yapın.
+
+Apple İzleme Dörtgenindede iki parmakla çift dokunma gibi çalışır.</string>
+	<key>enable-timeout-toast</key>
+	<string>Uygulamayı **etkinleştirme konusunda sorun yaşıyorsanız**, [buraya](%@) tıklayın.</string>
+	<key>forbidden-capture-toast.1</key>
+	<string>**Birincil Fare Düğmesi** kullanılamaz
+Lütfen başka bir düğme deneyin</string>
+	<key>forbidden-capture-toast.2</key>
+	<string>**İkincil Fare Düğmesi** kullanılamaz
+Lütfen başka bir düğme deneyin</string>
+	<key>free-country</key>
+	<string>Mac Mouse Fix şu anda ülkenizde (%@) ücretsizdir</string>
+	<key>is-disabled-toast</key>
+	<string>Mac Mouse Fix, Sistem Ayarları'nda  **devre dışı**.
+
+Mac Mouse Fix'i devreye almak için:
+
+1. [Oturum Açma'da Açılan Uygulama Ayarları](%@) alanından
+2. Mac Mouse Fix.app'i devreye alın.</string>
+	<key>is-strange-helper-alert.body</key>
+	<string>Mac Mouse Fix etkinleştirilemiyor çünkü bilgisayarınızda Mac Mouse Fix'in **başka bir sürümü** mevcut
+
+Mac Mouse Fix'i aktifleştirmek için:
+
+1. [Diğer sürümü](%@)silin
+2. Çöp Kutusunu boşaltın
+3. Mac'inizi yeniden başlatın
+4. Tekrar deneyin!</string>
+	<key>is-strange-helper-alert.title</key>
+	<string>Lisans aktivasyonu başarısız oldu</string>
+	<key>join-list</key>
+	<string>, </string>
+	<key>join-list.last</key>
+	<string>%1$@ ve %2$@</string>
+	<key>license-button.activate</key>
+	<string>Lisansı Aktifleştir</string>
+	<key>license-button.deactivate</key>
+	<string>Lisansı Devre Dışı Bırak</string>
+	<key>license-toast.activate</key>
+	<string>Lisansınız **aktifleştirildi**! 🎉</string>
+	<key>license-toast.activation-overload</key>
+	<string>Bu lisans halihazırda **%2$d** kez aktifleştirilmiştir. Bir lisans için maksimum aktifleştirme sayısı **%3$d** kadardır
+
+Korsan yazılım kullanımını engellemek için bu lisans artık geçersizdir. Lisansı bu kadar çok kez etkinleştirmek için başka nedenleriniz varsa bu sorun için üzgünüz.
+
+[Buraya tıklayarak](%1$@) bana bir e-posta gönderin, size yeni bir lisans oluşturacağım! Anlayışınız için teşekkürler.</string>
+	<key>license-toast.already-active</key>
+	<string>Bu lisans **zaten aktif**!</string>
+	<key>license-toast.deactivate</key>
+	<string>Lisansınız **devre dışı bırakıldı**</string>
+	<key>license-toast.free-country</key>
+	<string>Bu lisans **aktifleştirilemedi** ancak Mac Mouse Fix şu anda **ülkenizde ücretsiz**!</string>
+	<key>license-toast.gumroad-error</key>
+	<string>**Lisans sunucusunda bir hata oluştu**
+
+Gelen hata mesajı:
+
+%@</string>
+	<key>license-toast.no-internet</key>
+	<string>**İnternet bağlantısı yok**
+
+Bilgisayarınız çevrimiçi olduğunda lisansınızı tekrar aktifleştirmeyi deneyin.
+
+Eğer bu problemi çözmez ise, bana [buradan](%@) ulaşın.</string>
+	<key>license-toast.server-response-invalid</key>
+	<string>**Lisanslama sunucusunda bir hata oluştu.**
+
+Lütfen daha sonra tekrar deneyin.
+
+Eğer bu problem devam ederse bana [buradan](%@) bir e-posta gönderin.</string>
+	<key>license-toast.unknown-error</key>
+	<string>**Bilinmeyen bir hata oluştu:**
+
+%@</string>
+	<key>license-toast.unknown-key</key>
+	<string>*'%@'** geçerli bir lisans anahtarı değildir
+
+Lütfen başka bir anahtarı deneyin veya elinize geçen anahtarı olduğu gibi yazın.</string>
+	<key>license-toast.unknown-reason</key>
+	<string>**Bilinmeyen sebepler nedeniyle** lisans aktivasyonunuz başarısız oldu
+
+Lütfen [buradan](%@) bir **hata raporu** oluşturun</string>
+	<key>macos-scrolling-hint</key>
+	<string>Fare hızını Ayarlarda bu alanda ayarlayın
+[%1$@ &gt; Fare &gt; Kaydırma Hızı](%2$@)</string>
+	<key>mail-alert.back</key>
+	<string>Geri</string>
+	<key>mail-alert.body</key>
+	<string>Bilginiz olsun, bütün e-postalara geri dönemesem de hepsini okuyorum ve takdir ediyorum</string>
+	<key>mail-alert.send</key>
+	<string>E-Posta Yaz</string>
+	<key>mail-alert.title</key>
+	<string>E-Posta Yaz?</string>
+	<key>modifer-key.tool.command</key>
+	<string>Command (⌘)</string>
+	<key>modifer-key.tool.control</key>
+	<string>Control (^)</string>
+	<key>modifer-key.tool.option</key>
+	<string>Option (⌥)</string>
+	<key>modifer-key.tool.shift</key>
+	<string>Shift (⇧)</string>
+	<key>natural-scrolling-hint</key>
+	<string>İçerik parmak hareketini izler</string>
+	<key>precise-scrolling-hint</key>
+	<string>Kaydırma tekerleğini *yavaşça* hareket ettirerek, klavye değiştiricisi tuşu olmadan bile hassas bir şekilde&amp;nbsp;kaydırın</string>
+	<key>restore-buttons-alert.back</key>
+	<string>İptal</string>
+	<key>restore-buttons-alert.commit</key>
+	<string>Geri Yükle</string>
+	<key>restore-buttons-alert.hint</key>
+	<string>**%1$@** fareniz **%2$d** düğmeye sahip olduğunu söylüyor</string>
+	<key>restore-buttons-alert.radio1</key>
+	<string>3 düğmeli fare</string>
+	<key>restore-buttons-alert.radio2</key>
+	<string>5+ düğmeli fare</string>
+	<key>restore-buttons-alert.title</key>
+	<string>... için varsayılan ayarları geri yükle</string>
+	<key>restore-default-buttons-popover.body</key>
+	<string> **%@** fareniz için önerilen ayarları yüklemek için **buraya tıklayın**</string>
+	<key>revive-toast</key>
+	<string>%1$@ için Mac Mouse Fix **etkinleştirildi**
+Menü Bar %2$@ alanından devre dışı bırakılmıştı</string>
+	<key>revive-toast.feature-buttons</key>
+	<string>**Düğmeler**</string>
+	<key>revive-toast.feature-scrolling</key>
+	<string>**Kaydırma**</string>
+	<key>scroll-effect.4-pinch</key>
+	<string>Masaüstü ve Launchpad</string>
+	<key>scroll-effect.4-pinch.hint</key>
+	<string>Launchpad için yukarı kaydırın ve Masaüstünü göstermek için aşağı kaydırın
+ 
+Apple İzleme Dörtgeninde 4 parmağı birleştirmek gibi çalışır</string>
+	<key>scroll-effect.app-switcher</key>
+	<string>Uygulama Değiştirici</string>
+	<key>scroll-effect.app-switcher.hint</key>
+	<string>Açık uygulamalar arasında hızlıca geçiş yapın
+ 
+Klavyenizde Command (⌘) tuşunu basılı tutup ardından Tab (⇥) tuşuna basmak gibi çalışır</string>
+	<key>scroll-effect.horizontal</key>
+	<string>Yatay Kaydırma</string>
+	<key>scroll-effect.horizontal.hint</key>
+	<string>Sola ve sağa kaydırın, Safari'de sayfalar arasında gezinin, Mail'deki mesajları silin ve daha fazlasını yapın
+ 
+Apple İzleme Dörtgeninde 2 parmakla yatay olarak kaydırma gibi çalışır</string>
+	<key>scroll-effect.precise</key>
+	<string>Hassas Kaydırma</string>
+	<key>scroll-effect.precise.hint</key>
+	<string>Kısa mesafeleri kaydırın ve hassas arayüz öğelerini incelikle kullanın</string>
+	<key>scroll-effect.rotate</key>
+	<string>Döndür</string>
+	<key>scroll-effect.rotate.hint</key>
+	<string>Apple Haritalar ve diğer uygulamalarda içeriği döndürün
+ 
+Apple İzleme Dörtgeninde 2 parmakla döndürme gibi çalışır</string>
+	<key>scroll-effect.spaces</key>
+	<string>Space'ler Arasında Geçiş Yap</string>
+	<key>scroll-effect.spaces.hint</key>
+	<string>Bir Space sola gitmek için yukarı kaydırın ve bir Space sağa gitmek için aşağı kaydırın
+ 
+Apple İzleme Dörtgeninde 3 parmakla yatay olarak kaydırma gibi çalışır</string>
+	<key>scroll-effect.swift</key>
+	<string>Hızlı Kaydırma</string>
+	<key>scroll-effect.swift.hint</key>
+	<string>Düşük efor ile uzun mesafe kaydırın</string>
+	<key>scroll-effect.zoom</key>
+	<string>Yakınlaştır / Uzaklaştır</string>
+	<key>scroll-effect.zoom.hint</key>
+	<string>Safari, Maps ve diğer uygulamalarda yakınlaştırın ve uzaklaştırın
+
+Apple İzleme Dörtgeninde iki parmakla kıstırma/açma gibi çalışır
+</string>
+	<key>system-settings-name</key>
+	<string>Sistem Ayarları</string>
+	<key>system-settings-name.pre-ventura</key>
+	<string>Sistem Tercihleri</string>
+	<key>thanks.01</key>
+	<string>⭐️ Mac Mouse Fix'i satın aldığınız için teşekkürler!</string>
+	<key>thanks.02</key>
+	<string>🌟 Mac Mouse Fix'i satın aldığınız için teşekkürler!</string>
+	<key>thanks.03</key>
+	<string>🚀 Mac Mouse Fix'i desteklediğiniz için teşekkürler!</string>
+	<key>thanks.04</key>
+	<string>🙌 Mac Mouse Fix'i satın aldığınız için teşekkürler!</string>
+	<key>thanks.05</key>
+	<string>🧠 Muhteşem bir satın alma seçimi! ;)</string>
+	<key>thanks.06</key>
+	<string>🔥 Fare düzeltme uygulamaları arasında müthiş bir seçim! ;)</string>
+	<key>thanks.09</key>
+	<string>♾️ 1881 - ∞ | Gazi Başkomutanımız Mustafa Kemal Atatürk anısına.</string>
+	<key>thanks.10</key>
+	<string>🎸 Tebrikler! Ödül olarak kendine bir Kayseri Yağlaması yap!</string>
+	<key>thanks.13</key>
+	<string>🅰️ AAAAAAAAAAAAAAAAA</string>
+	<key>thanks.21</key>
+	<string>⛑️ Kaskını takmadan trafiğe çıkma.</string>
+	<key>thanks.22</key>
+	<string>🏍️ Sence de CBR 1000RR-R'ın isminde çok fazla R yok mu?</string>
+	<key>thanks.25</key>
+	<string>🇹🇷 Çevirmene de teşekkür etmeyi unutma!</string>
+	<key>trial-counter.active</key>
+	<string>Ücretsiz günü **%1$d/%2$d**</string>
+	<key>trial-counter.expired</key>
+	<string>Ücretsiz günleri sona erdi</string>
+	<key>trial-notif.activate-license-button</key>
+	<string>Lisansı Aktifleştir</string>
+	<key>trial-notif.body</key>
+	<string>Merhaba! **%1$d gündür** Mac Mouse Fix kullanıyorsunuz. Umarım keyif alıyorsunuzdur!
+
+Mac Mouse Fix'i kullanmaya devam etmek istiyorsanız, [şimdi satın alabilirsiniz](%2$@).</string>
+	<key>trigger.substring.button-modifier.1</key>
+	<string>%@ Tıkla +</string>
+	<key>trigger.substring.button-modifier.2</key>
+	<string>%@ düğmesine çift tıkla +</string>
+	<key>trigger.substring.button-modifier.3</key>
+	<string>%@ Üç Kez Tıkla +</string>
+	<key>trigger.substring.button-name.middle</key>
+	<string>Orta düğme</string>
+	<key>trigger.substring.button-name.numbered</key>
+	<string>Düğme %@</string>
+	<key>trigger.substring.button-name.primary</key>
+	<string>Birincil Düğme</string>
+	<key>trigger.substring.button-name.secondary</key>
+	<string>İkincil Düğme</string>
+	<key>trigger.substring.click.1</key>
+	<string>%@ Tıkla</string>
+	<key>trigger.substring.click.2</key>
+	<string>%@ düğmesine çift tıkla</string>
+	<key>trigger.substring.click.3</key>
+	<string>%@ Üç Kez Tıkla</string>
+	<key>trigger.substring.drag.1</key>
+	<string>%@ Tıkla ve Sürükle</string>
+	<key>trigger.substring.drag.2</key>
+	<string>%@ düğmesine çift tıkla ve sürükle</string>
+	<key>trigger.substring.drag.3</key>
+	<string>%@ Üç Kez Tıkla ve Kaydır</string>
+	<key>trigger.substring.drag.flags</key>
+	<string>ve sürükle</string>
+	<key>trigger.substring.hold.1</key>
+	<string>%@ Tıkla ve Basılı Tut</string>
+	<key>trigger.substring.hold.2</key>
+	<string>%@ düğmesine çift tıkla ve basılı tut</string>
+	<key>trigger.substring.hold.3</key>
+	<string>%@ Üç Kez Tıkla ve Basılı Tut</string>
+	<key>trigger.substring.scroll.1</key>
+	<string>%@ Tıkla ve Kaydır</string>
+	<key>trigger.substring.scroll.2</key>
+	<string>%@ düğmesine çift tıkla ve kaydır</string>
+	<key>trigger.substring.scroll.3</key>
+	<string>%@ Üç Kez Tıkla ve Kaydır</string>
+	<key>trigger.substring.scroll.flags</key>
+	<string>ve kaydır</string>
+	<key>trigger.y.group-row.button-name.middle</key>
+	<string>Orta Düğme</string>
+	<key>trigger.y.group-row.button-name.numbered</key>
+	<string>Düğme %@</string>
+	<key>trigger.y.group-row.button-name.primary</key>
+	<string>Birincil Düğme</string>
+	<key>trigger.y.group-row.button-name.secondary</key>
+	<string>İkincil Düğme</string>
+	<key>type-shortcut-prompt</key>
+	<string>Bir Klavye Kısayolu Yazın</string>
+</dict>
+</plist>

@@ -1,0 +1,2 @@
+dependencies: \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjackSwiftSupport/empty.c

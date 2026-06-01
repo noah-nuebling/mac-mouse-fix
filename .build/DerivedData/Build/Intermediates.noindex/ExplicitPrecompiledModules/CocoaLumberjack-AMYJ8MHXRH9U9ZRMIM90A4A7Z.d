@@ -1,0 +1,24 @@
+moduledependenciestarget: \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/CocoaLumberjack.modulemap \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjack/include/CocoaLumberjack/CLIColor.h \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/usr/include/DarwinFoundation1.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/Foundation.framework/Modules/module.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/usr/include/os.modulemap \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/QuartzCore.framework/Modules/module.modulemap \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjack/include/CocoaLumberjack/DDASLLogCapture.h \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjack/include/CocoaLumberjack/DDASLLogger.h \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjack/include/CocoaLumberjack/DDLog.h \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjack/include/CocoaLumberjack/DDLoggerNames.h \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjack/include/CocoaLumberjack/DDAbstractDatabaseLogger.h \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjack/include/CocoaLumberjack/DDAssertMacros.h \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjack/include/CocoaLumberjack/DDContextFilterLogFormatter+Deprecated.h \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjack/include/CocoaLumberjack/DDContextFilterLogFormatter.h \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjack/include/CocoaLumberjack/DDDispatchQueueLogFormatter.h \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjack/include/CocoaLumberjack/DDFileLogger+Buffering.h \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjack/include/CocoaLumberjack/DDFileLogger.h \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjack/include/CocoaLumberjack/DDLog+LOGV.h \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjack/include/CocoaLumberjack/DDLogMacros.h \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjack/include/CocoaLumberjack/DDMultiFormatter.h \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjack/include/CocoaLumberjack/DDOSLogger.h \
+  /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/SourcePackages/checkouts/CocoaLumberjack/Sources/CocoaLumberjack/include/CocoaLumberjack/DDTTYLogger.h \
+  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.5.sdk/System/Library/Frameworks/AppKit.framework/Modules/module.modulemap

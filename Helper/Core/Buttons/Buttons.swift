@@ -19,7 +19,6 @@ import Cocoa
     static private var clickCycle = ClickCycle(buttonQueue: DispatchQueue(label: "replace this"))
     static private var buttonModifiers = ButtonModifiers()
     @objc static var useButtonModifiers = false
-    private static var logitechSideButtonSyntheticHoldButtons = Set<Int>()
     
     /// Vars that we only update once per clickCycle
     static var modifiers = NSDictionary()
@@ -63,16 +62,6 @@ import Cocoa
             self.maxClickLevel = 0
             if mouseDown {
                 self.maxClickLevel = RemapsAnalyzer.maxLevel(forButton: button, remaps: remaps, modificationsActingOnThisButton: modifications)
-                
-                if useButtonModifiers {
-                    let maxModifierClickLevel: Int
-                    if Remap.addModeIsEnabled {
-                        maxModifierClickLevel = 1
-                    } else {
-                        maxModifierClickLevel = self.maxClickLevelForButtonModifier(button: button, remaps: remaps, activeModifiers: modifiers)
-                    }
-                    self.maxClickLevel = max(self.maxClickLevel, maxModifierClickLevel)
-                }
             }
             
         }
@@ -97,12 +86,6 @@ import Cocoa
                         self.buttonModifiers.update(withButton: MFMouseButtonNumber(button.uint32Value), clickLevel: clickLevel, downNotUp: false)
                     }
                 }
-            }
-            
-            if self.logitechSideButtonSyntheticHoldButtons.contains(buttonNumber) &&
-                (triggerPhase == .hold || triggerPhase == .levelExpired) {
-                DDLogDebug("triggerCallback - suppressing \(triggerPhase) during Logitech side-button synthetic hold - btn: \(buttonNumber)")
-                return
             }
             
             ///
@@ -194,41 +177,6 @@ import Cocoa
         return passThroughEvaluation
     }
     
-    private static func maxClickLevelForButtonModifier(button: NSNumber, remaps: NSDictionary, activeModifiers: NSDictionary) -> Int {
-        
-        var result = 0
-        
-        remaps.enumerateKeysAndObjects { precondition, _, _ in
-            guard let precondition = precondition as? NSDictionary else { return }
-            guard preconditionMatchesCurrentNonButtonModifiers(precondition, activeModifiers: activeModifiers) else { return }
-            guard let buttonPreconditions = precondition.object(forKey: kMFModificationPreconditionKeyButtons) as? NSArray else { return }
-            
-            for entry in buttonPreconditions {
-                guard let entry = entry as? NSDictionary else { continue }
-                guard let buttonNumber = entry.object(forKey: kMFButtonModificationPreconditionKeyButtonNumber) as? NSNumber else { continue }
-                guard buttonNumber == button else { continue }
-                
-                let clickLevel = (entry.object(forKey: kMFButtonModificationPreconditionKeyClickLevel) as? NSNumber)?.intValue ?? 1
-                result = max(result, Int(clickLevel))
-            }
-        }
-        
-        return result
-    }
-    
-    private static func preconditionMatchesCurrentNonButtonModifiers(_ precondition: NSDictionary, activeModifiers: NSDictionary) -> Bool {
-        
-        guard let requiredKeyboard = precondition.object(forKey: kMFModificationPreconditionKeyKeyboard) as? NSNumber else {
-            return true
-        }
-        
-        guard let activeKeyboard = activeModifiers.object(forKey: kMFModificationPreconditionKeyKeyboard) as? NSNumber else {
-            return false
-        }
-        
-        return (requiredKeyboard.uint64Value & activeKeyboard.uint64Value) == requiredKeyboard.uint64Value
-    }
-    
     
     /// Effect feedback
     
@@ -261,18 +209,6 @@ import Cocoa
         if self.clickCycle.isActiveFor(button: button) {
             self.clickCycle.kill()
         }
-    }
-    
-    @objc static func beginLogitechSideButtonSyntheticHold(button: NSNumber) {
-        self.logitechSideButtonSyntheticHoldButtons.insert(ButtonNumber(truncating: button))
-    }
-    
-    @objc static func endLogitechSideButtonSyntheticHold(button: NSNumber) {
-        self.logitechSideButtonSyntheticHoldButtons.remove(ButtonNumber(truncating: button))
-    }
-    
-    @objc static func logitechSideButtonSyntheticHoldIsActive() -> Bool {
-        return !self.logitechSideButtonSyntheticHoldButtons.isEmpty
     }
     
     /// Interface for accessing submodules

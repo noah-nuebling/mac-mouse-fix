@@ -172,10 +172,6 @@ static BOOL isModifier(NSNumber *button, NSNumber *level, NSDictionary *remaps) 
     /// TODO: Check if this still works after modification precondition refactor
         /// Debugged this, now it seems to work fine
     
-    if (Remap.addModeIsEnabled && button.integerValue >= 3) {
-        return YES;
-    }
-    
     /// ^ I feel like, now that the button preconditions are ordered, we might wanna check if the sequence of buttons in the activeModifiers are the start (or the whole) of a sequence of buttons in some modification precondition. So if there is button Sequence in some button precondition that can still be reached based on the current state. (Right now we're just checking if the `button` is any part of any modification precondition's button sequence) But I guess if you consider that the user can let go of buttons, then any buttonSequence can "still be reached". And if we don't consider letting go of buttons (which probably doesn't make sense?) then it would be much more involved to determine this stuff.... So I think the current solution is probably the most practical.
     
     NSDictionary *buttonPrecondition = @{

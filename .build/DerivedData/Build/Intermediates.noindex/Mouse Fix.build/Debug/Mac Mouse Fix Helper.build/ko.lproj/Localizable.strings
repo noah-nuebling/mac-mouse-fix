@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>accessibility.settings-link.pre-ventura</key>
+	<string>'보안 및 개인 정보 보호' 설정 열기</string>
+	<key>already-using-defaults-toast.3</key>
+	<string>이미 **3개 버튼**의 마우스에 해당하는 기본 설정을 사용 중입니다.</string>
+	<key>already-using-defaults-toast.5</key>
+	<string>이미 **5개 버튼**의 마우스에 해당하는 기본 설정을 사용 중입니다.</string>
+	<key>apple-key-fallback.backward</key>
+	<string>&lt;되감기 키&gt;</string>
+	<key>apple-key-fallback.capslock</key>
+	<string>⇪</string>
+	<key>apple-key-fallback.forward</key>
+	<string>&lt;빨리감기 키&gt;</string>
+	<key>apple-key-fallback.globe</key>
+	<string>&lt;이모티콘 키&gt;</string>
+	<key>apple-key-fallback.light.max</key>
+	<string>&lt;키보드 밝기 증가 키&gt;</string>
+	<key>apple-key-fallback.light.min</key>
+	<string>&lt;키보드 밝기 감소 키&gt;</string>
+	<key>apple-key-fallback.magnifyingglass</key>
+	<string>&lt;Spotlight 키&gt;</string>
+	<key>apple-key-fallback.mic</key>
+	<string>&lt;마이크 키&gt;</string>
+	<key>apple-key-fallback.moon</key>
+	<string>&lt;방해금지 모드 키&gt;</string>
+	<key>apple-key-fallback.playpause</key>
+	<string>&lt;재생 또는 일시정지 키&gt;</string>
+	<key>apple-key-fallback.power</key>
+	<string>&lt;전원 키&gt;</string>
+	<key>apple-key-fallback.rectangle.3.group</key>
+	<string>&lt;Mission Control 키&gt;</string>
+	<key>apple-key-fallback.speaker</key>
+	<string>&lt;음소거 키&gt;</string>
+	<key>apple-key-fallback.speaker.wave.1</key>
+	<string>&lt;음량 감소 키&gt;</string>
+	<key>apple-key-fallback.speaker.wave.3</key>
+	<string>&lt;음량 증가 키&gt;</string>
+	<key>apple-key-fallback.square.grid.3x2</key>
+	<string>&lt;Launchpad 키&gt;</string>
+	<key>apple-key-fallback.sun.max</key>
+	<string>&lt;밝기 증가 키&gt;</string>
+	<key>apple-key-fallback.sun.min</key>
+	<string>&lt;밝기 감소 키&gt;</string>
+	<key>apple-key-fallback.unknown-key</key>
+	<string>&lt;설명 없는 키&gt;</string>
+	<key>beta-alert.back</key>
+	<string>취소</string>
+	<key>beta-alert.body</key>
+	<string>베타 버전을 사용하면 여러 문제를 겪을 수 있습니다.
+문제를 발견하시는 경우 의견을 보내주세요.
+감사합니다!</string>
+	<key>beta-alert.confirm</key>
+	<string>베타 버전 가져오기</string>
+	<key>beta-alert.title</key>
+	<string>베타 버전 가져오기</string>
+	<key>button-name.tool.numbered</key>
+	<string>마우스 %@번 버튼</string>
+	<key>buy-mouse-alert.body</key>
+	<string>5개 이상의 버튼이 있는 마우스를 사용하면, Mac Mouse Fix의 기능을 최대로 활용할 수 있습니다!</string>
+	<key>buy-mouse-alert.ok</key>
+	<string>확인</string>
+	<key>buy-mouse-alert.title</key>
+	<string>사용자 마우스는 버튼이 3개입니다.</string>
+	<key>capture-toast.button-name.middle</key>
+	<string>가운데 버튼</string>
+	<key>capture-toast.button-name.numbered</key>
+	<string>%@번 버튼</string>
+	<key>capture-toast.button-name.primary</key>
+	<string>주 버튼</string>
+	<key>capture-toast.button-name.secondary</key>
+	<string>보조 버튼</string>
+	<key>capture-toast.buttons.link</key>
+	<string>[더 알아보기](%@)</string>
+	<key>capture-toast.scroll.link</key>
+	<string>[더 알아보기](%@)</string>
+	<key>drag-effect.dock-swipe</key>
+	<string>Spaces 및 Mission Control</string>
+	<key>drag-effect.dock-swipe.hint</key>
+	<string>마우스를 움직여 다음 동작을 수행합니다.:
+ - 위로 올리면 Mission Control을 엽니다.
+ - 아래로 내리면 현재 앱에 대해 열린 모든 윈도우를 보여줍니다.
+ - 좌우로 움직이면 생성한 Spaces 사이를 이동합니다.
+ 
+이는 Apple 트랙패드에서 세 손가락으로 스와이프하는 것과 같습니다.</string>
+	<key>drag-effect.scroll-swipe</key>
+	<string>스크롤 및 탐색</string>
+	<key>drag-effect.scroll-swipe.hint</key>
+	<string>마우스가 움직이는 방향대로 자유롭게 스크롤합니다.
+ 
+마우스를 좌우로 이동하면 Safari에서는 페이지를 쓸어넘길 수 있으며, Mail에선 메시지를 삭제할 수도 있습니다.
+ 
+이는 Apple 트랙패드에서 두 손가락으로 스와이프하는 것과 같습니다.</string>
+	<key>effect.app-expose</key>
+	<string>앱 윈도우</string>
+	<key>effect.app-expose.hint</key>
+	<string>현재 앱에 대해 열린 모든 윈도우를 보여줍니다.</string>
+	<key>effect.apple-keys-submenu</key>
+	<string> 전용 키</string>
+	<key>effect.apple-keys-submenu.hint</key>
+	<string>Apple 키보드에서만 사용 가능한 키를 선택하세요.</string>
+	<key>effect.apple-shortcut.hint</key>
+	<string>Apple 키보드 상의 '%@'를 누르는 것처럼 동작합니다.</string>
+	<key>effect.back</key>
+	<string>뒤로</string>
+	<key>effect.back.hint</key>
+	<string>Safari 등의 앱에서 이전 페이지로 전환합니다.</string>
+	<key>effect.click.middle</key>
+	<string>휠 클릭</string>
+	<key>effect.click.middle.hint</key>
+	<string>링크를 새로운 탭에서 열거나, 터미널에서 텍스트를 붙여넣는 등의 동작을 수행합니다.
+ 
+이는 표준 마우스에서 마우스 가운데 버튼(또는 스크롤 휠 버튼 및 마우스 3번 버튼)를 클릭하는 것과 같습니다.</string>
+	<key>effect.click.primary.hint</key>
+	<string>… 마우스 주 버튼(또는 왼쪽 마우스 버튼 및 마우스 1번 버튼) …</string>
+	<key>effect.click.secondary.hint</key>
+	<string>… 마우스 보조 버튼(또는 오른쪽 마우스 버튼 및 마우스 2번 버튼) …</string>
+	<key>effect.desktop</key>
+	<string>데스크탑 보기</string>
+	<key>effect.desktop.hint</key>
+	<string>데스크탑 화면을 봅니다.</string>
+	<key>effect.forward</key>
+	<string>앞으로</string>
+	<key>effect.forward.hint</key>
+	<string>Safari 등의 앱에서 다음 페이지로 전환합니다.</string>
+	<key>effect.launchpad</key>
+	<string>Launchpad</string>
+	<key>effect.launchpad.hint</key>
+	<string>Launchpad를 엽니다.</string>
+	<key>effect.left-space</key>
+	<string>좌측 Space로 이동</string>
+	<key>effect.left-space.hint</key>
+	<string>좌측 Space로 이동합니다.</string>
+	<key>effect.look-up</key>
+	<string>찾아보기 및 데이터 탐색기</string>
+	<key>effect.look-up.hint</key>
+	<string>사전에서 단어를 찾아보거나, Finder에서 파일을 훑어보는 등의 동작을 수행합니다.
+ 
+이는 Apple 트랙패드에서 세게 클릭하는 것과 같습니다.</string>
+	<key>effect.mission-control</key>
+	<string>Mission Control</string>
+	<key>effect.mission-control.hint</key>
+	<string>Mission Control을 엽니다.</string>
+	<key>effect.record-shortcut</key>
+	<string>키보드 단축키...</string>
+	<key>effect.record-shortcut.hint</key>
+	<string>입력한 키를 마우스를 통해 사용합니다.</string>
+	<key>effect.right-space</key>
+	<string>우측 Space로 이동</string>
+	<key>effect.right-space.hint</key>
+	<string>우측 Space로 이동합니다.</string>
+	<key>effect.shortcut.hint</key>
+	<string>키보드 상의 '%@'를 누르는 것처럼 동작합니다.</string>
+	<key>effect.smart-zoom</key>
+	<string>스마트 확대/축소</string>
+	<key>effect.smart-zoom.hint</key>
+	<string>Safari 등의 앱에서 콘텐츠를 확대하거나 축소합니다.
+ 
+이는 Apple 트랙패드에서 두 손가락으로 이중 탭하는 것과 같습니다.</string>
+	<key>forbidden-capture-toast.1</key>
+	<string>**마우스 주 버튼**은 사용할 수 없습니다.
+다른 버튼으로 다시 시도하십시오.</string>
+	<key>forbidden-capture-toast.2</key>
+	<string>**마우스 보조 버튼**은 사용할 수 없습니다.
+다른 버튼으로 다시 시도하십시오.</string>
+	<key>free-country</key>
+	<string>사용자 국가(%@)에서 Mac Mouse Fix는 현재 무료로 제공됩니다.</string>
+	<key>is-disabled-toast</key>
+	<string>시스템 설정에서 Mac Mouse Fix가 **비활성화**되어있습니다.
+
+Mac Mouse Fix를 사용하려면 다음 절차를 따르십시오:
+
+1. [로그인 항목 설정](%@)을 엽니다.
+2. 'Mac Mouse Fix.app' 항목을 허용합니다.</string>
+	<key>is-strange-helper-alert.body</key>
+	<string>컴퓨터에 **다른 버전의 앱**이 발견되어 Mac Mouse Fix를 사용할 수 없습니다.
+
+Mac Mouse Fix를 사용하려면 다음 절차를 따르십시오:
+
+1. [다른 버전](%@)을 제거합니다.
+2. 휴지통을 비웁니다.
+3. Mac을 재시동합니다.
+4. 다시 시도합니다.</string>
+	<key>is-strange-helper-alert.title</key>
+	<string>활성화 실패</string>
+	<key>join-list</key>
+	<string>, </string>
+	<key>join-list.last</key>
+	<string>%1$@ 및 %2$@</string>
+	<key>license-button.activate</key>
+	<string>라이센스 활성화</string>
+	<key>license-button.deactivate</key>
+	<string>라이센스 비활성화</string>
+	<key>license-toast.activate</key>
+	<string>라이센스가 **활성화**되었습니다! 🎉</string>
+	<key>license-toast.activation-overload</key>
+	<string>이 라이센스는 **%2$d회** 활성화되어있으며, 최대 **%3$d회**까지만 활성화할 수 있습니다.
+
+불법 복제 방지를 위해 라이센스는 무효화되었습니다.
+
+동일한 라이센스를 여러번 활성화해야할 다른 이유가 있을 경우, [연락](%1$@) 주시면 새 라이센스를 발급해드리겠습니다. 이해해주셔서 감사합니다.</string>
+	<key>license-toast.already-active</key>
+	<string>이 라이센스는 **이미 활성화**되어있습니다!</string>
+	<key>license-toast.deactivate</key>
+	<string>라이센스가 **비활성화**되었습니다.</string>
+	<key>license-toast.free-country</key>
+	<string>라이센스가 **활성화되지 않았습니다**. 사용자 국가에서는 현재 **무료로 사용 가능**합니다.</string>
+	<key>license-toast.gumroad-error</key>
+	<string>**라이센스 서버 에러가 발생하였습니다.**
+
+에러 정보:
+
+%@</string>
+	<key>license-toast.no-internet</key>
+	<string>**인터넷 연결이 없습니다.**
+
+컴퓨터를 인터넷에 연결한 후에 다시 시도하십시오.</string>
+	<key>license-toast.unknown-error</key>
+	<string>**알 수 없는 에러가 발생하였습니다:**
+
+%@</string>
+	<key>license-toast.unknown-key</key>
+	<string>'**%@**' 키는 올바르지 않은 라이센스 키입니다.
+
+다시 입력하십시오.</string>
+	<key>license-toast.unknown-reason</key>
+	<string>**알 수 없는 이유**로 라이센스를 활성화하지 못했습니다.
+
+[여기](%@)에서 **버그 제보**를 작성해주십시오.</string>
+	<key>macos-scrolling-hint</key>
+	<string>[%1$@ &gt; 마우스 &gt; 스크롤 속도](%2$@)에서
+속도를 설정합니다.</string>
+	<key>mail-alert.back</key>
+	<string>뒤로</string>
+	<key>mail-alert.body</key>
+	<string>전부 답장할 수는 없지만, 항상 모든 이메일을 읽어보고 있습니다.</string>
+	<key>mail-alert.send</key>
+	<string>이메일 작성</string>
+	<key>mail-alert.title</key>
+	<string>이메일 보내기</string>
+	<key>modifer-key.tool.command</key>
+	<string>Command (⌘)</string>
+	<key>modifer-key.tool.control</key>
+	<string>Control (^)</string>
+	<key>modifer-key.tool.option</key>
+	<string>Option (⌥)</string>
+	<key>modifer-key.tool.shift</key>
+	<string>Shift (⇧)</string>
+	<key>natural-scrolling-hint</key>
+	<string>손가락이 움직임이는 방향에 따라 콘텐츠가 이동됩니다.</string>
+	<key>precise-scrolling-hint</key>
+	<string>스크롤을 *천천히* 움직이는 경우, 보조 키를 사용하지 않더라도
+정밀하게 스크롤합니다.</string>
+	<key>restore-buttons-alert.back</key>
+	<string>취소</string>
+	<key>restore-buttons-alert.commit</key>
+	<string>재설정</string>
+	<key>restore-buttons-alert.hint</key>
+	<string>사용자의 **%1$@** 마우스에서 **%2$d개**의 버튼이 감지되었습니다.</string>
+	<key>restore-buttons-alert.radio1</key>
+	<string>3버튼 마우스</string>
+	<key>restore-buttons-alert.radio2</key>
+	<string>5버튼 이상의 마우스</string>
+	<key>restore-buttons-alert.title</key>
+	<string>마우스에 맞는 기본값으로 재설정</string>
+	<key>restore-default-buttons-popover.body</key>
+	<string> **여기를 누르면** 사용자 마우스(**%@**)에 대한 추천 설정을 적용합니다.</string>
+	<key>revive-toast</key>
+	<string>%1$@에 대한 Mac Mouse Fix 동작이 **다시 활성화**되었습니다.
+이는 사용자에 의해 메뉴 막대 %2$@ 에서 수동으로 비활성화되어있었습니다.</string>
+	<key>revive-toast.feature-buttons</key>
+	<string> **버튼**</string>
+	<key>revive-toast.feature-scrolling</key>
+	<string>**스크롤**</string>
+	<key>scroll-effect.4-pinch</key>
+	<string>데스크탑 및 Launchpad</string>
+	<key>scroll-effect.4-pinch.hint</key>
+	<string>위로 스크롤하면 Launchpad를 열며, 아래로 스크롤하면 데스크탑 화면을 봅니다.
+ 
+이는 Apple 트랙패드에서 네 손가락을 오므리거나 펼치는 것과 같습니다.</string>
+	<key>scroll-effect.app-switcher</key>
+	<string>앱 전환</string>
+	<key>scroll-effect.app-switcher.hint</key>
+	<string>열려있는 앱 사이를 빠르게 전환합니다.
+ 
+이는 키보드의 Command (⌘) 키 및 Tab (⇥) 키를 누르는 것과 같습니다.</string>
+	<key>scroll-effect.horizontal</key>
+	<string>수평 스크롤</string>
+	<key>scroll-effect.horizontal.hint</key>
+	<string>좌우로 스크롤하여 Safari에서는 페이지를 쓸어넘길 수 있으며, Mail에선 메시지를 삭제할 수도 있습니다.
+ 
+이는 Apple 트랙패드에서 두 손가락으로 스와이프하는 것과 같습니다.</string>
+	<key>scroll-effect.precise</key>
+	<string>정밀 스크롤</string>
+	<key>scroll-effect.precise.hint</key>
+	<string>짧은 거리를 스크롤하여 민감한 UI 요소를 정밀하게 조작할 수 있습니다.</string>
+	<key>scroll-effect.rotate</key>
+	<string>회전</string>
+	<key>scroll-effect.rotate.hint</key>
+	<string>지도 등의 앱에서 콘텐츠를 회전시킵니다.
+ 
+이는 Apple 트랙패드에서 두 손가락으로 회전시키는 것과 같습니다.</string>
+	<key>scroll-effect.spaces</key>
+	<string>Spaces 간 이동</string>
+	<key>scroll-effect.spaces.hint</key>
+	<string>위로 스크롤하면 좌측 Space로 이동하며, 아래로 스크롤하면 우측 스페이스로 이동합니다.
+ 
+이는 Apple 트랙패드에서 세 손가락으로 수평 스와이프하는 것과 같습니다.</string>
+	<key>scroll-effect.swift</key>
+	<string>고속 스크롤</string>
+	<key>scroll-effect.swift.hint</key>
+	<string>적은 움직임으로 먼 거리를 스크롤합니다.</string>
+	<key>scroll-effect.zoom</key>
+	<string>확대/축소</string>
+	<key>scroll-effect.zoom.hint</key>
+	<string>Safari, 지도 등의 앱에서 콘텐츠를 확대 또는 축소합니다.
+ 
+이는 Apple 트랙패드에서 두 손가락을 오므리거나 펼쳐서 확대 또는 축소하는 것과 같습니다.</string>
+	<key>system-settings-name</key>
+	<string>시스템 설정</string>
+	<key>system-settings-name.pre-ventura</key>
+	<string>시스템 환경설정</string>
+	<key>thanks.01</key>
+	<string>⭐️ Mac Mouse Fix를 구입해주셔서 감사합니다!</string>
+	<key>thanks.02</key>
+	<string>🌟 Mac Mouse Fix를 결제해주셔서 감사합니다!</string>
+	<key>thanks.03</key>
+	<string>🚀 Mac Mouse Fix를 지원해주셔서 감사합니다!</string>
+	<key>thanks.04</key>
+	<string>🙌 Mac Mouse Fix를 구입해주셔서 감사합니다!</string>
+	<key>thanks.05</key>
+	<string>🧠 잘 사셨어요! ;)</string>
+	<key>thanks.06</key>
+	<string>🔥 이 앱, 마우스 참 잘 고치네! ;)</string>
+	<key>thanks.09</key>
+	<string>👽 Spacebook 친구분들께도 공유해주세요!</string>
+	<key>thanks.10</key>
+	<string>🏂 Duckgang 영원해줘!!</string>
+	<key>thanks.13</key>
+	<string>🐹 나비넥타이를 좀 사줘야겠네요.</string>
+	<key>thanks.21</key>
+	<string>🐠 What... are... you?</string>
+	<key>thanks.25</key>
+	<string>🌏 태초에 마우스가 있었고, 그 후에 세상 열렸다!! &gt;:)</string>
+	<key>trial-counter.active</key>
+	<string>무료 체험 기간 **%1$d/%2$d**일</string>
+	<key>trial-counter.expired</key>
+	<string>무료 체험 기간이 끝났습니다.</string>
+	<key>trial-notif.activate-license-button</key>
+	<string>라이센스 활성화</string>
+	<key>trial-notif.body</key>
+	<string>안녕하세요! Mac Mouse Fix를 **%1$d일째** 사용 중입니다.
+
+사용해주셔서 감사드리며, Mac Mouse Fix를 계속 사용하시려면 [구입](%2$@)해주십시오.</string>
+	<key>trigger.substring.button-modifier.1</key>
+	<string>%@ 클릭 +</string>
+	<key>trigger.substring.button-modifier.2</key>
+	<string>%@ 이중 클릭 +</string>
+	<key>trigger.substring.button-modifier.3</key>
+	<string>%@ 삼중 클릭 +</string>
+	<key>trigger.substring.button-name.middle</key>
+	<string>가운데 버튼</string>
+	<key>trigger.substring.button-name.numbered</key>
+	<string>%@번 버튼</string>
+	<key>trigger.substring.button-name.primary</key>
+	<string>주 버튼</string>
+	<key>trigger.substring.button-name.secondary</key>
+	<string>보조 버튼</string>
+	<key>trigger.substring.click.1</key>
+	<string>%@ 클릭</string>
+	<key>trigger.substring.click.2</key>
+	<string>%@ 이중 클릭</string>
+	<key>trigger.substring.click.3</key>
+	<string>%@ 삼중 클릭</string>
+	<key>trigger.substring.drag.1</key>
+	<string>클릭 및 %@ 드래그</string>
+	<key>trigger.substring.drag.2</key>
+	<string>이중 클릭 및 %@ 드래그</string>
+	<key>trigger.substring.drag.3</key>
+	<string>삼중 클릭 및 %@ 드래그</string>
+	<key>trigger.substring.drag.flags</key>
+	<string>및 드래그</string>
+	<key>trigger.substring.hold.1</key>
+	<string>%@ 유지</string>
+	<key>trigger.substring.hold.2</key>
+	<string>이중 클릭 및 %@ 유지</string>
+	<key>trigger.substring.hold.3</key>
+	<string>삼중 클릭 및 %@ 유지</string>
+	<key>trigger.substring.scroll.1</key>
+	<string>클릭 및 %@ 스크롤</string>
+	<key>trigger.substring.scroll.2</key>
+	<string>이중 클릭 및 %@ 스크롤</string>
+	<key>trigger.substring.scroll.3</key>
+	<string>삼중 클릭 및 %@ 스크롤</string>
+	<key>trigger.substring.scroll.flags</key>
+	<string>및 스크롤</string>
+	<key>trigger.y.group-row.button-name.middle</key>
+	<string>가운데 버튼</string>
+	<key>trigger.y.group-row.button-name.numbered</key>
+	<string>%@번 버튼</string>
+	<key>trigger.y.group-row.button-name.primary</key>
+	<string>주 버튼</string>
+	<key>trigger.y.group-row.button-name.secondary</key>
+	<string>보조 버튼</string>
+	<key>type-shortcut-prompt</key>
+	<string>키를 입력하세요.</string>
+</dict>
+</plist>
