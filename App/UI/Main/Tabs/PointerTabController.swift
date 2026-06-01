@@ -157,8 +157,13 @@ class PointerTabController: NSViewController {
         
         self.logiInfoStack = infoStack
         
+        /// Add as arranged subview of CollapsingStackView (accelerationStack)
+        /// But we do NOT call setCollapsed or isCollapsed on it.
+        /// We only use plain .isHidden to toggle it.
         accelerationStack.addArrangedSubview(infoStack)
-        infoStack.setCollapsedWithoutAnimation(true)
+        
+        /// Start hidden; polling will show it if a Logitech device is detected
+        infoStack.isHidden = true
     }
     
     override func viewWillAppear() {
@@ -176,7 +181,10 @@ class PointerTabController: NSViewController {
         queryTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { [weak self] _ in
             self?.pollLogitechInfo()
         }
-        pollLogitechInfo()
+        /// Dispatch the first poll async so it doesn't block the tab transition
+        DispatchQueue.main.async { [weak self] in
+            self?.pollLogitechInfo()
+        }
     }
     
     private func stopPolling() {
@@ -199,16 +207,13 @@ class PointerTabController: NSViewController {
     }
     
     private func updateLogitechUI(isLogitech: Bool, batteryPercentage: Int, batteryStatus: Int, dpi: Int) {
+        /// Use plain isHidden — no CollapsingStackView collapse system
         if !isLogitech {
-            if !self.logiInfoStack.isCollapsed {
-                self.logiInfoStack.isCollapsed = true
-            }
+            self.logiInfoStack.isHidden = true
             return
         }
         
-        if self.logiInfoStack.isCollapsed {
-            self.logiInfoStack.isCollapsed = false
-        }
+        self.logiInfoStack.isHidden = false
         
         // Update battery
         if batteryPercentage >= 0 {

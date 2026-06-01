@@ -1146,7 +1146,7 @@ class AppOverrideViewController: NSViewController {
     
     /// Hardcoded width for the apps tab, matching the style of applyHardcodedTabWidth() for other tabs.
     /// This prevents the view from expanding freely when resizeWindowToFit() temporarily sets window to 99999x99999.
-    static let hardcodedWidth: CGFloat = 350
+    static let hardcodedWidth: CGFloat = 420
     
     override func loadView() {
         let view = NSView()

@@ -286,22 +286,39 @@ static uint8_t lookupFeature(IOHIDDeviceRef dev, uint16_t featId) {
         DDLogWarn(@"LogitechCIDActivator: Unified Battery feature (0x1004/0x1000) not found on device");
     }
     
-    // 2. Query DPI
+    // 2. Query DPI — try 0x2201 (AdjustableDPI) first, then 0x2202 (ExtendedAdjustableDPI)
     uint8_t featDPI = lookupFeature(dev, 0x2201);
+    BOOL isExtendedDPI = NO;
+    if (featDPI == 0) {
+        featDPI = lookupFeature(dev, 0x2202);
+        isExtendedDPI = YES;
+    }
     if (featDPI != 0) {
         uint8_t pkt[20];
         memset(pkt, 0, 20);
         pkt[0] = kHIDPP_Long;
         pkt[1] = kHIDPP_Device;
         pkt[2] = featDPI;
-        pkt[3] = 0x1E; // Function 1 of 0x2201 (Adjustable DPI)
+        // 0x2201: Function 2 (GetSensorDpi) = 0x2E, 0x2202: Function 5 (GetSensorDpiParameters) = 0x5E
+        pkt[3] = isExtendedDPI ? 0x5E : 0x2E;
         pkt[4] = 0; // Sensor index 0
         if (sendAndWait(dev, pkt) == kIOReturnSuccess) {
-            device.logitechDPI = (sResp[4] << 8) | sResp[5];
-            DDLogInfo(@"LogitechCIDActivator: DPI query successful. DPI: %d", device.logitechDPI);
+            DDLogInfo(@"LogitechCIDActivator: DPI raw response: [%02x %02x %02x %02x %02x %02x %02x %02x %02x %02x]",
+                      sResp[0], sResp[1], sResp[2], sResp[3], sResp[4], sResp[5], sResp[6], sResp[7], sResp[8], sResp[9]);
+            // Response layout for 0x2201 GetSensorDpi (fn 2):
+            //   sResp[4] = sensorIndex, sResp[5..6] = currentDPI (big-endian), sResp[7..8] = defaultDPI
+            // Response layout for 0x2202 GetSensorDpiParameters (fn 5):
+            //   sResp[4] = sensorIndex, sResp[5..6] = currentDPI (big-endian)
+            int dpi = (sResp[5] << 8) | sResp[6];
+            if (dpi == 0 && !isExtendedDPI) {
+                // Fallback: use default DPI from bytes 7..8
+                dpi = (sResp[7] << 8) | sResp[8];
+            }
+            device.logitechDPI = dpi;
+            DDLogInfo(@"LogitechCIDActivator: DPI query successful (feat 0x%04X). DPI: %d", isExtendedDPI ? 0x2202 : 0x2201, device.logitechDPI);
         }
     } else {
-        DDLogWarn(@"LogitechCIDActivator: Adjustable DPI feature (0x2201) not found on device");
+        DDLogWarn(@"LogitechCIDActivator: Adjustable DPI feature (0x2201/0x2202) not found on device");
     }
 }
 
