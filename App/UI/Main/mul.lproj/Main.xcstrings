@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "1dS-BH-DIv.title" : {
-      "comment" : "Class = \"NSViewController\"; title = \"Pointer\"; ObjectID = \"1dS-BH-DIv\"; Note = \"Toolbar > Pointer Tab Title\";",
+      "comment" : "Class = \"NSViewController\"; title = \"Mouse\"; ObjectID = \"1dS-BH-DIv\"; Note = \"Toolbar > Mouse Tab Title\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -14,7 +14,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Pointer"
+            "value" : "Mouse"
           }
         },
         "fr" : {
@@ -44,7 +44,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "指针"
+            "value" : "鼠标"
           }
         },
         "zh-Hant" : {
@@ -4998,7 +4998,7 @@
       }
     },
     "lLu-45-nE3.label" : {
-      "comment" : "Class = \"NSTabViewItem\"; label = \"Pointer\"; ObjectID = \"lLu-45-nE3\"; Note = \"Toolbar > Pointer Tab Button\";",
+      "comment" : "Class = \"NSTabViewItem\"; label = \"Mouse\"; ObjectID = \"lLu-45-nE3\"; Note = \"Toolbar > Mouse Tab Button\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -5010,7 +5010,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Pointer"
+            "value" : "Mouse"
           }
         },
         "fr" : {
@@ -5040,7 +5040,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "指针"
+            "value" : "鼠标"
           }
         },
         "zh-Hant" : {

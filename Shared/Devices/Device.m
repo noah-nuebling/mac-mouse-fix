@@ -218,6 +218,10 @@ static void postVirtualButtonEvent(MFMouseButtonNumber button, BOOL down) {
     CGEventPost(tapLoc, event);
     CFRelease(event);
 }
+
+static BOOL deviceHasNativeButton(Device *device, MFMouseButtonNumber button) {
+    return button > 0 && device.nOfButtons >= button;
+}
 #endif
 
 //static int64_t _previousDeltaY;
@@ -257,9 +261,9 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     DDLogInfo(@"[TEMP LowLevel HID Log] Device: %@, UsagePage: %u, Usage: %u, Value: %ld", 
               sendingDev.name, usagePage, usage, (long)integerValue);
 
-    // Remap Logitech proprietary button reports (Usage Page 65347/0xFF43) to standard buttons.
-    // Newer Logi devices can report large vendor-defined values instead of the older small fixed values,
-    // so keep known mappings stable and assign unknown non-zero values to virtual buttons dynamically.
+    // Remap legacy Logitech proprietary button reports (Usage Page 65347/0xFF43) to standard buttons.
+    // Newer Logi devices also report Back/Forward natively on Usage Page 9. Do not synthesize
+    // buttons 4/5 for those devices, or Page 65347 zero packets can prematurely end hold/drag gestures.
     if (usagePage == 65347 && !sendingDev.isLogitechDiverted) {
         static NSMutableDictionary<NSNumber *, NSNumber *> *logiValueToButton = nil;
         static NSMutableSet<NSNumber *> *logiButtonsDown = nil;
@@ -286,6 +290,11 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
             NSNumber *button = logiValueToButton[valueKey];
             
             if (button == nil) {
+                return;
+            }
+
+            if ((button.intValue == 4 || button.intValue == 5) && deviceHasNativeButton(sendingDev, button.intValue)) {
+                DDLogDebug(@"Ignoring legacy Logitech Page 65347 value %@ for native Button %@", valueKey, button);
                 return;
             }
             

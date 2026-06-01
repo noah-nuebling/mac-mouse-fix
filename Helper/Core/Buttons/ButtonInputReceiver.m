@@ -138,7 +138,14 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     /// Get info from cgEvent
     NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
-    BOOL mouseDown = CGEventGetIntegerValueField(event, kCGMouseEventPressure) != 0;
+    BOOL mouseDown = false;
+    if (type == kCGEventOtherMouseDown || type == kCGEventLeftMouseDown || type == kCGEventRightMouseDown) {
+        mouseDown = true;
+    } else if (type == kCGEventOtherMouseUp || type == kCGEventLeftMouseUp || type == kCGEventRightMouseUp) {
+        mouseDown = false;
+    } else {
+        mouseDown = CGEventGetIntegerValueField(event, kCGMouseEventPressure) != 0;
+    }
     
     /// Filter buttons
     if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) return event;

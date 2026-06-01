@@ -56,7 +56,7 @@ class TabViewController: NSTabViewController {
     
     // MARK: Constants
     ///     TODO: Think about using validTabs in different places / if using it at all makes sense in the grand architecture
-    private let validTabs = ["general", "buttons", "scrolling", "apps", "about"]
+    private let validTabs = ["general", "buttons", "scrolling", "pointer", "apps", "about"]
     
     private var window: ResizingTabWindow? {
         if let w = self.tabView.window as? ResizingTabWindow {
@@ -288,16 +288,6 @@ class TabViewController: NSTabViewController {
         } else {
             assert(false)
         }
-        
-        ///
-        /// Hide Pointer tab (because it's unfinished and unused)
-        ///
-        
-        /// Notes:
-        /// - (Under Ventura Beta) For some reason, `removeTabViewItem(pointerTab)` (and `tabView.removeTabViewItem()`) crashes here saying the item is not in the tabView. This doesn't make sense since it is found in the array `self.tabViewItems`. So instead we use the hacky coolHideTab() instead.
-        /// - Maybe it's better to do this in viewWillAppear?
-        
-        coolHideTab(identifier: "pointer", window: self.window)
         
         ///
         /// Hide initial tab

@@ -31,6 +31,11 @@ To support newer Logitech mice correctly without breaking older ones:
      }
      ```
    - This ensures that native standard buttons (buttons 4 and 5) flow directly to `ButtonInputReceiver.m` without double-down conflicts or premature button-release interruptions from legacy code.
+   - For Logitech devices that expose native button elements 4 and 5, the legacy `65347` path also ignores old Back/Forward values (`83` and `86`). This prevents vendor-defined `Value: 0` packets from synthesizing an early button-up while the native side button is still physically held for long-press or click-and-drag gestures.
+
+3. **Button Down/Up Robustness (`ButtonInputReceiver.m`)**
+   - Mouse button state is resolved from the CGEvent type for mouse down/up events instead of relying only on `kCGMouseEventPressure`.
+   - This keeps side-button hold and drag recognition stable on devices or macOS paths where pressure is not a reliable down-state signal.
 
 ---
 
@@ -53,6 +58,7 @@ Users want different mouse button and scroll behaviors depending on the active f
 3. **UI Layout Transitions (`TabViewController.swift`)**
    - Optimized tab transitions and size calculations when switching to the App settings panel.
    - Cleans up transition frames, prevents frame jumps, and matches standard smooth animations of other App preferences.
+   - The existing pointer settings view is now exposed as the Mouse tab instead of being hidden at startup, and it is included in tab validation/autosave so it behaves like the other top-level preference tabs.
 
 ---
 
@@ -65,3 +71,23 @@ Users want different mouse button and scroll behaviors depending on the active f
 
 2. **ClickCycle Unconditional State Guard (`ClickCycle.swift`)**
    - Added defensive guard-let checks in asynchronous timer blocks (e.g. `.hold` and `.levelExpired` timers) to prevent Swift runtime force-unwrap nil crashes if the click cycle is invalidated or killed concurrently.
+
+---
+
+## 4. Build Workflow Notes
+
+### iCloud Workspace Build Stalls
+- This repo often lives under `/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/...`, and Xcode can stall there while listing schemes, resolving packages, or starting a build.
+- If `xcodebuild` hangs in the iCloud directory before real compile output appears, copy the source tree to a temporary local folder and build there:
+  ```bash
+  rm -rf /tmp/MacMouseFix-build
+  rsync -a --delete \
+    --exclude='.git' \
+    --exclude='.build' \
+    --exclude='releases' \
+    --exclude='Mac Mouse Fix*.app' \
+    --exclude='DerivedData' \
+    ./ /tmp/MacMouseFix-build/
+  xcodebuild -project "Mouse Fix.xcodeproj" -scheme "App" -configuration Debug -destination 'platform=macOS' CODE_SIGNING_ALLOWED=NO build
+  ```
+- Keep source edits in the iCloud repo as the canonical working tree. Use `/tmp/MacMouseFix-build` only for build verification, then return to the original repo for `git status`, staging, commit, and push.
