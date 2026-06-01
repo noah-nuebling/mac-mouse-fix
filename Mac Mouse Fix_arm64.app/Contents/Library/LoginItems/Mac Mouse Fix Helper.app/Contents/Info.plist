@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
-	<string>25F71</string>
+	<string>25G5028f</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -27,23 +27,23 @@
 		<string>MacOSX</string>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>24838</string>
+	<string>24839</string>
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
-	<string>25F70</string>
+	<string>25C58</string>
 	<key>DTPlatformName</key>
 	<string>macosx</string>
 	<key>DTPlatformVersion</key>
-	<string>26.5</string>
+	<string>26.2</string>
 	<key>DTSDKBuild</key>
-	<string>25F70</string>
+	<string>25C58</string>
 	<key>DTSDKName</key>
-	<string>macosx26.5</string>
+	<string>macosx26.2</string>
 	<key>DTXcode</key>
-	<string>2650</string>
+	<string>2630</string>
 	<key>DTXcodeBuild</key>
-	<string>17F42</string>
+	<string>17C519</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSBackgroundOnly</key>
