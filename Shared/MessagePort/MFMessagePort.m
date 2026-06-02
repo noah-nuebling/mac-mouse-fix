@@ -88,7 +88,21 @@
     
     /// Create port
     CFStringRef messagePortName = (__bridge CFStringRef)(runningMainApp() ? kMFBundleIDApp : kMFBundleIDHelper);
-    CFMessagePortRef localPort = CFMessagePortCreateLocal(kCFAllocatorDefault, messagePortName, didReceiveMessage, NULL, NULL);
+    
+    CFMessagePortRef localPort = NULL;
+    int maxRetries = 10;
+    for (int retry = 0; retry < maxRetries; retry++) {
+        localPort = CFMessagePortCreateLocal(kCFAllocatorDefault, messagePortName, didReceiveMessage, NULL, NULL);
+        if (localPort != NULL) {
+            break;
+        }
+        if (runningHelper()) {
+            DDLogWarn(@"Failed to create local message port, retrying in 100ms... (attempt %d/%d)", retry + 1, maxRetries);
+            [NSThread sleepForTimeInterval:0.1];
+        } else {
+            break; // Main App doesn't retry
+        }
+    }
 
     /// Log
     DDLogInfo(@"Created localPort: %@", localPort);
@@ -99,8 +113,9 @@
         if (runningMainApp()) {
             DDLogInfo(@"Failed to create a local message port. It will probably work anyway for some reason");
         } else {
-            DDLogError(@"Failed to create a local message port. This might be because there is another instance of %@ already running. Crashing the app.", kMFHelperName);
-            @throw [NSException exceptionWithName:@"NoMessagePortException" reason:@"Couldn't create a local CFMessagePort. Can't function properly without local CFMessagePort" userInfo:nil];
+            DDLogError(@"Failed to create a local message port after retries. This might be because there is another instance of %@ already running. Exiting.", kMFHelperName);
+            // Exit cleanly without throwing an exception to avoid triggering macOS crash reports and losing accessibility permissions
+            exit(0);
         }
         
         return;

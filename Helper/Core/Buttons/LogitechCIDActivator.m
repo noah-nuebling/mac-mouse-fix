@@ -45,12 +45,14 @@ typedef struct {
     uint16_t        pressedCIDs[32];
     int             pressedCount;
     uint8_t         deviceIndex;
+    
+    // Request/Response State (localized to each device)
+    uint8_t         resp[20];
+    BOOL            gotResp;
+    uint8_t         waitingIndex;
 } MFCIDDeviceState;
 
-static uint8_t sResp[20];
-static BOOL    sGotResp = NO;
-static IOHIDDeviceRef sWaitingDev = NULL;
-static uint8_t sWaitingIndex = 0;
+static BOOL sIsActivatingOrReactivating = NO;
 
 static BOOL isNativeTID(uint16_t tid) {
     for (int i = 0; i < 5; i++) if (kNativeTIDs[i] == tid) return YES;
@@ -94,19 +96,18 @@ static void inputReportCallback(void *ctx, IOReturn result, void *sender,
                                 IOHIDReportType type, uint32_t reportID,
                                 uint8_t *report, CFIndex len) {
     if (len < 5 || report[0] != kHIDPP_Long) return;
-    if (sWaitingDev && (IOHIDDeviceRef)sender != sWaitingDev) return;
     MFCIDDeviceState *s = (MFCIDDeviceState *)ctx;
-    if (s) {
-        if (report[1] != s->deviceIndex) return;
-    } else {
-        if (report[1] != sWaitingIndex) return;
-    }
+    if (!s) return;
+    
+    if (report[1] != s->deviceIndex) return;
+    
     if (report[3] != 0x00) {
-        memcpy(sResp, report, len < 20 ? (size_t)len : 20);
-        sGotResp = YES;
+        if (s->waitingIndex == report[1]) {
+            memcpy(s->resp, report, len < 20 ? (size_t)len : 20);
+            s->gotResp = YES;
+        }
         return;
     }
-    if (!s) return; // Safety check
 
     // Parse the divertedButtonsEvent (up to 4 CIDs)
     uint16_t currentPressed[4];
@@ -169,30 +170,29 @@ static void inputReportCallback(void *ctx, IOReturn result, void *sender,
     }
 }
 
-static IOReturn sendAndWaitWithTimeout(IOHIDDeviceRef dev, uint8_t *pkt, int maxLaps) {
-    sGotResp = NO;
-    sWaitingDev = dev;
-    sWaitingIndex = pkt[1];
-    IOReturn r = IOHIDDeviceSetReport(dev, kIOHIDReportTypeOutput, pkt[0], pkt, 20);
+static IOReturn sendAndWaitWithTimeout(MFCIDDeviceState *s, uint8_t *pkt, int maxLaps) {
+    s->gotResp = NO;
+    s->waitingIndex = pkt[1];
+    IOReturn r = IOHIDDeviceSetReport(s->writeDevice, kIOHIDReportTypeOutput, pkt[0], pkt, 20);
     if (r != kIOReturnSuccess) {
         DDLogError(@"LogitechCIDActivator: IOHIDDeviceSetReport failed with error 0x%x", r);
-        sWaitingDev = NULL;
         return r;
     }
-    for (int i = 0; i < maxLaps && !sGotResp; i++) CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.01, false);
-    sWaitingDev = NULL;
-    if (!sGotResp) {
+    for (int i = 0; i < maxLaps && !s->gotResp; i++) {
+        CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.01, false);
+    }
+    if (!s->gotResp) {
         return kIOReturnTimeout;
     }
-    if (sResp[2] == 0xFF) {
-        DDLogError(@"LogitechCIDActivator: sendAndWait received error packet: [%02x %02x %02x %02x %02x...]", sResp[0], sResp[1], sResp[2], sResp[3], sResp[4]);
+    if (s->resp[2] == 0xFF) {
+        DDLogError(@"LogitechCIDActivator: sendAndWait received error packet: [%02x %02x %02x %02x %02x...]", s->resp[0], s->resp[1], s->resp[2], s->resp[3], s->resp[4]);
         return kIOReturnError;
     }
     return kIOReturnSuccess;
 }
 
-static IOReturn sendAndWait(IOHIDDeviceRef dev, uint8_t *pkt) {
-    return sendAndWaitWithTimeout(dev, pkt, 100);
+static IOReturn sendAndWait(MFCIDDeviceState *s, uint8_t *pkt) {
+    return sendAndWaitWithTimeout(s, pkt, 100);
 }
 
 static int activateDevice(MFCIDDeviceState *s) {
@@ -213,9 +213,9 @@ static int activateDevice(MFCIDDeviceState *s) {
         pkt[0]=kHIDPP_Long; pkt[1]=testIndex; pkt[2]=0x00; pkt[3]=0x0E;
         pkt[4]=(kFeat_ReprogV4>>8)&0xFF; pkt[5]=kFeat_ReprogV4&0xFF;
         
-        if (sendAndWaitWithTimeout(dev, pkt, 10) == kIOReturnSuccess && sResp[4] != 0) {
+        if (sendAndWaitWithTimeout(s, pkt, 10) == kIOReturnSuccess && s->resp[4] != 0) {
             activeIndex = testIndex;
-            feat = sResp[4];
+            feat = s->resp[4];
             DDLogInfo(@"LogitechCIDActivator: Found active device index 0x%02X for feature 0x1B04 on '%@'", activeIndex, name);
             break;
         }
@@ -230,18 +230,18 @@ static int activateDevice(MFCIDDeviceState *s) {
     /// 2. GetCount
     memset(pkt, 0, 20);
     pkt[0]=kHIDPP_Long; pkt[1]=s->deviceIndex; pkt[2]=feat; pkt[3]=0x0E;
-    if (sendAndWaitWithTimeout(dev, pkt, 100) != kIOReturnSuccess) return 0;
-    int count = sResp[4];
+    if (sendAndWaitWithTimeout(s, pkt, 100) != kIOReturnSuccess) return 0;
+    int count = s->resp[4];
 
     /// 3. GetCidInfo — collect divertable CIDs
     uint16_t todivert[32]; int ndiv = 0;
     for (int i = 0; i < count && ndiv < 32; i++) {
         memset(pkt, 0, 20);
         pkt[0]=kHIDPP_Long; pkt[1]=s->deviceIndex; pkt[2]=feat; pkt[3]=0x1E; pkt[4]=(uint8_t)i;
-        if (sendAndWaitWithTimeout(dev, pkt, 100) != kIOReturnSuccess) continue;
-        uint16_t cid = ((uint16_t)sResp[4]<<8)|sResp[5];
-        uint16_t tid = ((uint16_t)sResp[6]<<8)|sResp[7];
-        uint8_t flags = sResp[8];
+        if (sendAndWaitWithTimeout(s, pkt, 100) != kIOReturnSuccess) continue;
+        uint16_t cid = ((uint16_t)s->resp[4]<<8)|s->resp[5];
+        uint16_t tid = ((uint16_t)s->resp[6]<<8)|s->resp[7];
+        uint8_t flags = s->resp[8];
         if (isNativeSideButton(cid, tid)) {
             appendUniqueCID(todivert, &ndiv, cid, 32);
             DDLogInfo(@"LogitechCIDActivator: side-button CID 0x%04X/TID 0x%04X will be diverted as Button %d on '%@'", cid, tid, buttonForCID(s, cid), name);
@@ -263,7 +263,7 @@ static int activateDevice(MFCIDDeviceState *s) {
         memset(pkt, 0, 20);
         pkt[0]=kHIDPP_Long; pkt[1]=s->deviceIndex; pkt[2]=feat; pkt[3]=0x3E;
         pkt[4]=(todivert[i]>>8)&0xFF; pkt[5]=todivert[i]&0xFF; pkt[6]=kDivertFlags;
-        if (sendAndWaitWithTimeout(dev, pkt, 100) == kIOReturnSuccess) {
+        if (sendAndWaitWithTimeout(s, pkt, 100) == kIOReturnSuccess) {
             diverted++;
             if (isNativeSideButton(todivert[i], todivert[i])) {
                 DDLogInfo(@"LogitechCIDActivator: diverted side-button CID 0x%04X as Button %d on '%@'", todivert[i], buttonForCID(s, todivert[i]), name);
@@ -275,19 +275,19 @@ static int activateDevice(MFCIDDeviceState *s) {
     return diverted;
 }
 
-static uint8_t lookupFeature(IOHIDDeviceRef dev, uint8_t deviceIndex, uint16_t featId) {
+static uint8_t lookupFeature(MFCIDDeviceState *s, uint16_t featId) {
     uint8_t pkt[20];
     memset(pkt, 0, 20);
     pkt[0] = kHIDPP_Long;
-    pkt[1] = deviceIndex;
+    pkt[1] = s->deviceIndex;
     pkt[2] = 0x00; // Root feature
     pkt[3] = 0x0E; // GetFeature command (function 0, software ID 0x0E)
     pkt[4] = (featId >> 8) & 0xFF;
     pkt[5] = featId & 0xFF;
-    if (sendAndWaitWithTimeout(dev, pkt, 100) != kIOReturnSuccess) {
+    if (sendAndWaitWithTimeout(s, pkt, 100) != kIOReturnSuccess) {
         return 0;
     }
-    return sResp[4];
+    return s->resp[4];
 }
 
 @interface LogitechCIDActivator ()
@@ -413,18 +413,24 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
 }
 
 - (void)reactivateAll {
+    sIsActivatingOrReactivating = YES;
     for (NSValue *v in _states) {
         MFCIDDeviceState *s = (MFCIDDeviceState *)v.pointerValue;
         activateDevice(s);
     }
+    sIsActivatingOrReactivating = NO;
     DDLogDebug(@"LogitechCIDActivator: re-activated %lu device(s)", (unsigned long)_states.count);
 }
 
 - (void)handleDeviceAttached: (IOHIDDeviceRef)device {
+    sIsActivatingOrReactivating = YES;
     NSString *name = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
     NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey));
     DDLogInfo(@"LogitechCIDActivator: handleDeviceAttached for device '%@' (VID: %@)", name, vid);
-    if (vid.integerValue != kLogitechVID) return;
+    if (vid.integerValue != kLogitechVID) {
+        sIsActivatingOrReactivating = NO;
+        return;
+    }
     
     // We already opened device in DeviceManager or Device.m, but let's make sure
     IOReturn openRes = IOHIDDeviceOpen(device, kIOHIDOptionsTypeNone);
@@ -442,6 +448,7 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
     IOHIDDeviceScheduleWithRunLoop(writeDevice, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
 
     int configured = activateDevice(s);
+    sIsActivatingOrReactivating = NO; // Reset flag before running post-config queries
     if (configured > 0) {
         DDLogInfo(@"LogitechCIDActivator: configured %d CID(s) on '%@'", configured, name);
         [_states addObject: [NSValue valueWithPointer: s]];
@@ -482,16 +489,15 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
 }
 
 - (void)queryBatteryAndDPIForDevice:(Device *)device {
+    if (sIsActivatingOrReactivating) {
+        DDLogWarn(@"LogitechCIDActivator: Skipping battery/DPI query because device activation/reactivation is in progress.");
+        return;
+    }
     IOHIDDeviceRef dev = device.iohidDevice;
     if (!dev) return;
     
-    uint8_t deviceIndex = 0xFF;
-    IOHIDDeviceRef targetDev = dev;
     MFCIDDeviceState *s = stateForDevice(dev);
-    if (s) {
-        deviceIndex = s->deviceIndex;
-        targetDev = s->writeDevice;
-    } else {
+    if (!s) {
         // Fallback: look if any other attached device with same Product name has a diverted state
         NSString *name = (__bridge NSString *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductKey));
         if (name != nil) {
@@ -499,19 +505,19 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
                 MFCIDDeviceState *otherS = (MFCIDDeviceState *)v.pointerValue;
                 NSString *otherName = (__bridge NSString *)IOHIDDeviceGetProperty(otherS->device, CFSTR(kIOHIDProductKey));
                 if ([name isEqualToString:otherName]) {
-                    deviceIndex = otherS->deviceIndex;
-                    targetDev = otherS->writeDevice;
+                    s = otherS;
                     break;
                 }
             }
         }
     }
+    if (!s) return; // If we still don't have a state, we can't query battery/DPI safely
     
     // 1. Query battery
-    uint8_t featBattery = lookupFeature(targetDev, deviceIndex, 0x1004);
+    uint8_t featBattery = lookupFeature(s, 0x1004);
     BOOL is1004 = YES;
     if (featBattery == 0) {
-        featBattery = lookupFeature(targetDev, deviceIndex, 0x1000);
+        featBattery = lookupFeature(s, 0x1000);
         is1004 = NO;
     }
     
@@ -519,12 +525,12 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
         uint8_t pkt[20];
         memset(pkt, 0, 20);
         pkt[0] = kHIDPP_Long;
-        pkt[1] = deviceIndex;
+        pkt[1] = s->deviceIndex;
         pkt[2] = featBattery;
         pkt[3] = is1004 ? 0x1E : 0x0E; // Function 1 for 0x1004, Function 0 for 0x1000 (with software ID 0x0E)
-        if (sendAndWaitWithTimeout(targetDev, pkt, 100) == kIOReturnSuccess) {
-            device.logitechBatteryPercentage = sResp[4];
-            device.logitechBatteryStatus = sResp[6];
+        if (sendAndWaitWithTimeout(s, pkt, 100) == kIOReturnSuccess) {
+            device.logitechBatteryPercentage = s->resp[4];
+            device.logitechBatteryStatus = s->resp[6];
             DDLogInfo(@"LogitechCIDActivator: Battery query successful. Percentage: %d%%, Status: %d", device.logitechBatteryPercentage, device.logitechBatteryStatus);
         }
     } else {
@@ -532,27 +538,27 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
     }
     
     // 2. Query DPI — try 0x2201 (AdjustableDPI) first, then 0x2202 (ExtendedAdjustableDPI)
-    uint8_t featDPI = lookupFeature(targetDev, deviceIndex, 0x2201);
+    uint8_t featDPI = lookupFeature(s, 0x2201);
     BOOL isExtendedDPI = NO;
     if (featDPI == 0) {
-        featDPI = lookupFeature(targetDev, deviceIndex, 0x2202);
+        featDPI = lookupFeature(s, 0x2202);
         isExtendedDPI = YES;
     }
     if (featDPI != 0) {
         uint8_t pkt[20];
         memset(pkt, 0, 20);
         pkt[0] = kHIDPP_Long;
-        pkt[1] = deviceIndex;
+        pkt[1] = s->deviceIndex;
         pkt[2] = featDPI;
         // 0x2201: Function 2 (GetSensorDpi) = 0x2E, 0x2202: Function 5 (GetSensorDpiParameters) = 0x5E
         pkt[3] = isExtendedDPI ? 0x5E : 0x2E;
         pkt[4] = 0; // Sensor index 0
-        if (sendAndWaitWithTimeout(targetDev, pkt, 100) == kIOReturnSuccess) {
+        if (sendAndWaitWithTimeout(s, pkt, 100) == kIOReturnSuccess) {
             DDLogInfo(@"LogitechCIDActivator: DPI raw response: [%02x %02x %02x %02x %02x %02x %02x %02x %02x %02x]",
-                      sResp[0], sResp[1], sResp[2], sResp[3], sResp[4], sResp[5], sResp[6], sResp[7], sResp[8], sResp[9]);
-            int dpi = (sResp[5] << 8) | sResp[6];
+                      s->resp[0], s->resp[1], s->resp[2], s->resp[3], s->resp[4], s->resp[5], s->resp[6], s->resp[7], s->resp[8], s->resp[9]);
+            int dpi = (s->resp[5] << 8) | s->resp[6];
             if (dpi == 0 && !isExtendedDPI) {
-                dpi = (sResp[7] << 8) | sResp[8];
+                dpi = (s->resp[7] << 8) | s->resp[8];
             }
             device.logitechDPI = dpi;
             DDLogInfo(@"LogitechCIDActivator: DPI query successful (feat 0x%04X). DPI: %d", isExtendedDPI ? 0x2202 : 0x2201, device.logitechDPI);
