@@ -50,9 +50,15 @@ typedef struct {
     uint8_t         resp[20];
     BOOL            gotResp;
     uint8_t         waitingIndex;
+    
+    // Connection Monitor feature ID (0 if not supported/found)
+    uint8_t         featConn;
 } MFCIDDeviceState;
 
 static BOOL sIsActivatingOrReactivating = NO;
+
+static int activateDevice(MFCIDDeviceState *s);
+static uint8_t lookupFeature(MFCIDDeviceState *s, uint16_t featId);
 
 static BOOL isNativeTID(uint16_t tid) {
     for (int i = 0; i < 5; i++) if (kNativeTIDs[i] == tid) return YES;
@@ -99,12 +105,54 @@ static void inputReportCallback(void *ctx, IOReturn result, void *sender,
     MFCIDDeviceState *s = (MFCIDDeviceState *)ctx;
     if (!s) return;
     
-    if (report[1] != s->deviceIndex) return;
+    // Allow receiver broadcast reports (deviceIndex 0xFF) to pass through for connection monitoring
+    if (report[1] != s->deviceIndex && report[1] != 0xFF) return;
     
     if (report[3] != 0x00) {
         if (s->waitingIndex == report[1]) {
             memcpy(s->resp, report, len < 20 ? (size_t)len : 20);
             s->gotResp = YES;
+        } else {
+            // Handle unsolicited notifications (e.g. wireless device reconnects)
+            BOOL reconnectDetected = NO;
+            
+            // 1. Unifying 1.0 connection notification:
+            //    report[1] == 0xFF, report[2] == 0x00, report[3] == 0x41
+            //    report[4] == deviceIndex, (report[5] & 0x40) != 0 -> connected
+            if (report[1] == 0xFF && report[2] == 0x00 && report[3] == 0x41 && len >= 6) {
+                uint8_t devIdx = report[4];
+                uint8_t status = report[5];
+                if (devIdx == s->deviceIndex && (status & 0x40)) {
+                    DDLogInfo(@"LogitechCIDActivator: Unifying reconnection event detected for deviceIndex 0x%02X", devIdx);
+                    reconnectDetected = YES;
+                }
+            }
+            
+            // 2. HID++ 2.0 Connection Monitor event:
+            //    report[1] == 0xFF, report[2] == s->featConn (if set)
+            //    report[3] == 0x00 (connection state changed event)
+            //    report[4] == deviceIndex, (report[5] & 0x01) -> link established
+            if (s->featConn != 0 && report[1] == 0xFF && report[2] == s->featConn && report[3] == 0x00 && len >= 6) {
+                uint8_t devIdx = report[4];
+                uint8_t status = report[5];
+                if (devIdx == s->deviceIndex && (status & 0x01)) {
+                    DDLogInfo(@"LogitechCIDActivator: HID++ 2.0 reconnection event detected for deviceIndex 0x%02X", devIdx);
+                    reconnectDetected = YES;
+                }
+            }
+            
+            if (reconnectDetected) {
+                DDLogInfo(@"LogitechCIDActivator: Device reconnected wirelessly. Scheduling activation in 1.0 second...");
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    sIsActivatingOrReactivating = YES;
+                    int activeCount = activateDevice(s);
+                    sIsActivatingOrReactivating = NO;
+                    DDLogInfo(@"LogitechCIDActivator: Async reactivation after wireless reconnect completed. CIDs configured: %d", activeCount);
+                });
+            } else {
+                DDLogDebug(@"LogitechCIDActivator: Unsolicited report received: [%02x %02x %02x %02x %02x %02x]",
+                           report[0], report[1], report[2], report[3], report[4], report[5]);
+            }
         }
         return;
     }
@@ -226,6 +274,10 @@ static int activateDevice(MFCIDDeviceState *s) {
     }
     
     s->deviceIndex = activeIndex;
+    s->featConn = lookupFeature(s, 0x0001);
+    if (s->featConn != 0) {
+        DDLogInfo(@"LogitechCIDActivator: Found Connection Monitor Feature 0x%02X for deviceIndex 0x%02X on '%@'", s->featConn, activeIndex, name);
+    }
 
     /// 2. GetCount
     memset(pkt, 0, 20);
