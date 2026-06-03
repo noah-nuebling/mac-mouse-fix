@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **červen 2026**
 
+- 🇩🇪&nbsp;Tobias - "Thank you for that great app. Greating from Eppingen, Germany"
 - 🇺🇸&nbsp;Boris&nbsp;The&nbsp;Dog
 - 🇬🇧&nbsp;Michael - "Go Vegan!"
 

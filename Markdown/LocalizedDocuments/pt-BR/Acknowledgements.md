@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **junho 2026**
 
+- 🇩🇪&nbsp;Tobias - "Thank you for that great app. Greating from Eppingen, Germany"
 - 🇺🇸&nbsp;Boris&nbsp;The&nbsp;Dog
 - 🇬🇧&nbsp;Michael - "Go Vegan!"
 

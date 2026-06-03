@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Haziran 2026**
 
+- 🇩🇪&nbsp;Tobias - "Thank you for that great app. Greating from Eppingen, Germany"
 - 🇺🇸&nbsp;Boris&nbsp;The&nbsp;Dog
 - 🇬🇧&nbsp;Michael - "Go Vegan!"
 

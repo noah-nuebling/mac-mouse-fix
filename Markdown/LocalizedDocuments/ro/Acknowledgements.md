@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **iunie 2026**
 
+- 🇩🇪&nbsp;Tobias - "Thank you for that great app. Greating from Eppingen, Germany"
 - 🇺🇸&nbsp;Boris&nbsp;The&nbsp;Dog
 - 🇬🇧&nbsp;Michael - "Go Vegan!"
 

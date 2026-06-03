@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **junio 2026**
 
+- 🇩🇪&nbsp;Tobias - "Thank you for that great app. Greating from Eppingen, Germany"
 - 🇺🇸&nbsp;Boris&nbsp;The&nbsp;Dog
 - 🇬🇧&nbsp;Michael - "Go Vegan!"
 
