@@ -41,16 +41,10 @@ echo "--- 开始为版本 $VERSION 准备发布 ---"
 
 # 2. 从项目设置中获取当前的 Build 号 (sparkle:version)
 echo "正在从项目设置中提取流水号 Build 号..."
-SPARKLE_VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$PROJECT_DIR/App/SupportFiles/Info.plist" 2>/dev/null || true)
+SPARKLE_VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "/tmp/MacMouseFix_build/Mac Mouse Fix_arm64.app/Contents/Info.plist" 2>/dev/null || true)
 
 if [ -z "$SPARKLE_VERSION" ]; then
-    echo "警告: 无法通过 PlistBuddy 提取，尝试从 /tmp/MacMouseFix_build 获取..."
-    XCODE_PROJ_PATH="$PROJECT_DIR/Mouse Fix.xcodeproj"
-    if [[ "$PROJECT_DIR" == *"/Library/Mobile Documents/"* ]]; then
-        XCODE_PROJ_PATH="/tmp/MacMouseFix_build/Mouse Fix.xcodeproj"
-    fi
-    XCODE_SETTINGS=$(xcodebuild -showBuildSettings -project "$XCODE_PROJ_PATH" -scheme "App" -configuration "Release" 2>/dev/null)
-    SPARKLE_VERSION=$(echo "$XCODE_SETTINGS" | grep " CURRENT_PROJECT_VERSION =" | head -n 1 | awk '{print $3}')
+    SPARKLE_VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$PROJECT_DIR/App/SupportFiles/Info.plist" 2>/dev/null || true)
 fi
 
 if [ -z "$SPARKLE_VERSION" ]; then
