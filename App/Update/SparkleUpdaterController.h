@@ -17,7 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 + (void)resetSkippedVersions;
-+ (void)enablePrereleaseChannel:(BOOL)pre;
 
 @end
 

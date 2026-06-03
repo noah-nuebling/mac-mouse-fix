@@ -47,6 +47,8 @@ class GeneralTabController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        betaToggle.isHidden = true
+        
         /// Determine width for this tab
         applyHardcodedTabWidth("general", self, widthControllingTextFields: [enabledHint, updatesHint, menuBarHint]);
         
@@ -223,7 +225,6 @@ class GeneralTabController: NSViewController {
         
         showInMenuBar <~ menuBarToggle.reactive.boolValues
         checkForUpdates <~ updatesToggle.reactive.boolValues
-        getBetaVersions <~ betaToggle.reactive.boolValues
         
         if usingSwitch, #available(macOS 10.15, *) {
             (enableToggle as? NSSwitcherino)?.reactive.boolValue <~ EnabledState.shared
@@ -232,7 +233,6 @@ class GeneralTabController: NSViewController {
         }
         menuBarToggle.reactive.boolValue <~ showInMenuBar
         updatesToggle.reactive.boolValue <~ checkForUpdates
-        betaToggle.reactive.boolValue <~ getBetaVersions
         
         mainHidableSection.reactive.isCollapsed <~ EnabledState.shared.producer.negate()
         updatesExtraSection.reactive.isCollapsed <~ checkForUpdates.producer.negate()
@@ -274,13 +274,6 @@ class GeneralTabController: NSViewController {
         checkForUpdates.producer.skip(first: 1).startWithValues { doCheckUpdates in
             SparkleUpdaterController.resetSkippedVersions()
             if doCheckUpdates {
-                SUUpdater.shared().checkForUpdatesInBackground()
-            }
-        }
-        getBetaVersions.producer.skip(first: 1).startWithValues { doCheckBetas in
-            SparkleUpdaterController.resetSkippedVersions()
-            SparkleUpdaterController.enablePrereleaseChannel(doCheckBetas)
-            if doCheckBetas {
                 SUUpdater.shared().checkForUpdatesInBackground()
             }
         }

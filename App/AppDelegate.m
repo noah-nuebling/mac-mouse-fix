@@ -323,32 +323,12 @@ static NSDictionary *sideButtonActions;
     
     BOOL checkForUpdates = [(id)config(@"General.checkForUpdates") boolValue];
     
-    BOOL checkForPrereleases = [(id)config(@"General.checkForPrereleases") boolValue];
-    
-    if (firstVersionLaunch && !appState().updaterDidRelaunchApplication) {
-        /// TODO: Test if updaterDidRelaunchApplication works.
-        ///     It will only work if `SparkleUpdaterDelegate - updaterDidRelaunchApplication:` is called before this
-        /// The app (or this version of it) has probably been downloaded from the internet and is running for the first time.
-        ///  -> Override check-for-prereleases setting
-        if (runningPreRelease()) {
-            /// If this is a pre-release version itself, we activate updates to pre-releases
-            checkForPrereleases = YES;
-        } else {
-            /// If this is not a pre-release, then we'll *deactivate* updates to pre-releases
-//            checkForPrereleases = NO;
-        }
-        setConfig(@"General.checkForPrereleases", @(checkForPrereleases));
-    }
-    
-    /// Write changes to we made to config through setConfig() to file. Also notifies helper app, which is probably unnecessary.
+    /// Write changes we made to config through setConfig() to file. Also notifies helper app, which is probably unnecessary.
     commitConfig();
     
-    /// Check for udates
+    /// Check for updates
     
     if (checkForUpdates) {
-        
-        [SparkleUpdaterController enablePrereleaseChannel:checkForPrereleases];
-        
         [up checkForUpdatesInBackground];
     }
     

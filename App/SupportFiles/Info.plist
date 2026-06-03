@@ -48,9 +48,9 @@
 	<key>SUEnableJavaScript</key>
 	<string>YES</string>
 	<key>SUFeedURL</key>
-	<string>https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed/appcast.xml</string>
+	<string>https://raw.githubusercontent.com/ShawnRn/mac-mouse-fix/feature/app-specific-logitech-zh-hans/appcast.xml</string>
 	<key>SUPublicEDKey</key>
-	<string>ZC69ciDfGYN4t3kwRiPc2SC7J4hchv9w+FfVv59r4+U=</string>
+	<string>xY62zS4nVoOoaisQVl0rx1TLnXo+n8ZA1pvCtzdYhnw=</string>
 	<key>UIDesignRequiresCompatibility</key>
 	<true/>
 </dict>
