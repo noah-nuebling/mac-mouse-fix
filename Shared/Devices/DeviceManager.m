@@ -103,7 +103,7 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
     /// Meant to be called when the app closes
     
     for (Device *device in _attachedDevices) {
-//        [PointerSpeed deconfigureDevice:device.iohidDevice];
+        [PointerSpeed deconfigureDevice:device.iohidDevice];
     }
 }
 
@@ -246,8 +246,8 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         
         /// Set pointer sensitivity and acceleration for device
         ///     Edit: Seems that parametric curves are always set under Ventura, so we can't use tableBased curves :/ And in its current form this code will always crash. See PointerSpeed for more details.
-    //    DDLogDebug(@"Setting PointerSpeed for device: %@", newDevice.description);
-    //    [PointerSpeed setForDevice:newDevice.IOHIDDevice];
+        DDLogDebug(@"Setting PointerSpeed for device: %@", newDevice.description);
+        [PointerSpeed setForDevice:newDevice.iohidDevice];
         
         ///
         

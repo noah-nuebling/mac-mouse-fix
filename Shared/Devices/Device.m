@@ -17,6 +17,8 @@
 #import "SharedUtility.h"
 #import <Cocoa/Cocoa.h>
 #import "Logging.h"
+#import "LogitechCIDActivator.h"
+#import "PointerSpeed.h"
 
 /// Old notes: (basically all outdated as of 28.08.2024)
 ///     Consider refactoring:
@@ -36,6 +38,10 @@
     int _nOfButtons;
 @public
     BOOL _isLogitechDiverted;
+    BOOL _supportsLogitechDPI;
+    int _logitechBatteryPercentage;
+    int _logitechBatteryStatus;
+    int _logitechDPI;
 }
 
 #pragma mark - Init
@@ -135,6 +141,7 @@
         
         /// Store result
         _nOfButtons = maxButtonNumber;
+        _supportsLogitechDPI = NO;
         _logitechBatteryPercentage = -1;
         _logitechBatteryStatus = -1;
         _logitechDPI = -1;
@@ -288,11 +295,12 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
             if (button == nil) {
                 return;
             }
-
-            if ((button.intValue == 4 || button.intValue == 5) && deviceHasNativeButton(sendingDev, button.intValue)) {
-                DDLogDebug(@"Ignoring legacy Logitech Page 65347 value %@ for native Button %@", valueKey, button);
-                return;
-            }
+            // Note: We intentionally do NOT check deviceHasNativeButton here.
+            // Older Logitech mice (e.g. Anywhere 2S) declare Page 9 button elements
+            // in their HID descriptor but send side button clicks exclusively via
+            // Page 65347. Filtering based on the descriptor drops those clicks entirely.
+            // The `!sendingDev.isLogitechDiverted` guard at the top of this block
+            // already ensures newer diverted mice skip this legacy path.
             
             for (NSNumber *pressedButton in logiButtonsDown.allObjects) {
                 if (![pressedButton isEqualToNumber:button]) {
@@ -313,11 +321,53 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
         [GestureScrollSimulator stopMomentumScroll];
     }
 
+    // If a Logitech device that should be diverted reports a native Page 9 side button click (usage 4 or 5),
+    // it means its internal volatile diversion configuration was reset (e.g. by turning it off and on).
+    // In this case, clear the diverted flag and trigger an immediate reactivation.
+    if (usagePage == 9 && (usage == 4 || usage == 5) && integerValue != 0) {
+        NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(sendingDev.iohidDevice, CFSTR(kIOHIDVendorIDKey));
+        if (vid != nil && vid.intValue == 0x046D) { // Logitech
+            if (sendingDev.isLogitechDiverted) {
+                DDLogInfo(@"Device: Detected native side button press (usage: %u) on diverted Logitech device. Volatile config lost? Triggering immediate reactivation...", usage);
+                sendingDev.isLogitechDiverted = NO;
+                // Dispatch reactivation asynchronously to avoid nesting IO calls
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[LogitechCIDActivator shared] reactivateDeviceWithIOHIDDevice:sendingDev.iohidDevice];
+                });
+            }
+        }
+    }
+
 #endif
 
 }
 
 #pragma mark - Properties + override NSObject methods
+
+static BOOL isSiblingDevice(Device *selfDevice, Device *otherDevice) {
+    if (selfDevice == otherDevice) return NO;
+    if (selfDevice.iohidDevice == NULL || otherDevice.iohidDevice == NULL) return NO;
+    
+    NSNumber *selfVid = (__bridge NSNumber *)IOHIDDeviceGetProperty(selfDevice.iohidDevice, CFSTR(kIOHIDVendorIDKey));
+    NSNumber *otherVid = (__bridge NSNumber *)IOHIDDeviceGetProperty(otherDevice.iohidDevice, CFSTR(kIOHIDVendorIDKey));
+    if (selfVid == nil || otherVid == nil || selfVid.intValue != otherVid.intValue) {
+        return NO;
+    }
+    
+    NSNumber *selfPid = (__bridge NSNumber *)IOHIDDeviceGetProperty(selfDevice.iohidDevice, CFSTR(kIOHIDProductIDKey));
+    NSNumber *otherPid = (__bridge NSNumber *)IOHIDDeviceGetProperty(otherDevice.iohidDevice, CFSTR(kIOHIDProductIDKey));
+    if (selfPid != nil && otherPid != nil && [selfPid isEqual:otherPid]) {
+        return YES;
+    }
+    
+    NSString *selfName = (__bridge NSString *)IOHIDDeviceGetProperty(selfDevice.iohidDevice, CFSTR(kIOHIDProductKey));
+    NSString *otherName = (__bridge NSString *)IOHIDDeviceGetProperty(otherDevice.iohidDevice, CFSTR(kIOHIDProductKey));
+    if (selfName != nil && otherName != nil && [selfName isEqualToString:otherName]) {
+        return YES;
+    }
+    
+    return NO;
+}
 
 - (BOOL)isLogitechDiverted {
     if (_isLogitechDiverted) {
@@ -325,15 +375,9 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     }
     NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(self.iohidDevice, CFSTR(kIOHIDVendorIDKey));
     if (vid != nil && vid.intValue == 0x046D) { // Logitech
-        NSString *name = (__bridge NSString *)IOHIDDeviceGetProperty(self.iohidDevice, CFSTR(kIOHIDProductKey));
-        if (name != nil) {
-            for (Device *d in [DeviceManager attachedDevices]) {
-                if (d != self && d->_isLogitechDiverted) {
-                    NSString *dName = (__bridge NSString *)IOHIDDeviceGetProperty(d.iohidDevice, CFSTR(kIOHIDProductKey));
-                    if ([name isEqualToString:dName]) {
-                        return YES;
-                    }
-                }
+        for (Device *d in [DeviceManager attachedDevices]) {
+            if (isSiblingDevice(self, d) && d->_isLogitechDiverted) {
+                return YES;
             }
         }
     }
@@ -341,7 +385,89 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 }
 
 - (void)setIsLogitechDiverted:(BOOL)isLogitechDiverted {
-    _isLogitechDiverted = isLogitechDiverted;
+    if (_isLogitechDiverted != isLogitechDiverted) {
+        _isLogitechDiverted = isLogitechDiverted;
+        [PointerSpeed setForAllDevices];
+    }
+}
+
+- (BOOL)supportsLogitechDPI {
+    if (_supportsLogitechDPI) {
+        return YES;
+    }
+    NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(self.iohidDevice, CFSTR(kIOHIDVendorIDKey));
+    if (vid != nil && vid.intValue == 0x046D) { // Logitech
+        for (Device *d in [DeviceManager attachedDevices]) {
+            if (isSiblingDevice(self, d) && d->_supportsLogitechDPI) {
+                return YES;
+            }
+        }
+    }
+    return NO;
+}
+
+- (void)setSupportsLogitechDPI:(BOOL)supportsLogitechDPI {
+    if (_supportsLogitechDPI != supportsLogitechDPI) {
+        _supportsLogitechDPI = supportsLogitechDPI;
+        [PointerSpeed setForAllDevices];
+    }
+}
+
+- (int)logitechDPI {
+    if (_logitechDPI != -1) {
+        return _logitechDPI;
+    }
+    NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(self.iohidDevice, CFSTR(kIOHIDVendorIDKey));
+    if (vid != nil && vid.intValue == 0x046D) { // Logitech
+        for (Device *d in [DeviceManager attachedDevices]) {
+            if (isSiblingDevice(self, d) && d->_logitechDPI != -1) {
+                return d->_logitechDPI;
+            }
+        }
+    }
+    return -1;
+}
+
+- (void)setLogitechDPI:(int)logitechDPI {
+    _logitechDPI = logitechDPI;
+}
+
+- (int)logitechBatteryPercentage {
+    if (_logitechBatteryPercentage != -1) {
+        return _logitechBatteryPercentage;
+    }
+    NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(self.iohidDevice, CFSTR(kIOHIDVendorIDKey));
+    if (vid != nil && vid.intValue == 0x046D) { // Logitech
+        for (Device *d in [DeviceManager attachedDevices]) {
+            if (isSiblingDevice(self, d) && d->_logitechBatteryPercentage != -1) {
+                return d->_logitechBatteryPercentage;
+            }
+        }
+    }
+    return -1;
+}
+
+- (void)setLogitechBatteryPercentage:(int)logitechBatteryPercentage {
+    _logitechBatteryPercentage = logitechBatteryPercentage;
+}
+
+- (int)logitechBatteryStatus {
+    if (_logitechBatteryStatus != -1) {
+        return _logitechBatteryStatus;
+    }
+    NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(self.iohidDevice, CFSTR(kIOHIDVendorIDKey));
+    if (vid != nil && vid.intValue == 0x046D) { // Logitech
+        for (Device *d in [DeviceManager attachedDevices]) {
+            if (isSiblingDevice(self, d) && d->_logitechBatteryStatus != -1) {
+                return d->_logitechBatteryStatus;
+            }
+        }
+    }
+    return -1;
+}
+
+- (void)setLogitechBatteryStatus:(int)logitechBatteryStatus {
+    _logitechBatteryStatus = logitechBatteryStatus;
 }
 
 - (NSNumber *)uniqueID {

@@ -35,6 +35,7 @@
 #import "HelperServices.h"
 #import "Locator.h"
 #import "Logging.h"
+#import "DeviceManager.h"
 
 #if IS_MAIN_APP
 #import "Mac_Mouse_Fix-Swift.h"
@@ -47,6 +48,7 @@
 #import "AccessibilityCheck.h"
 #import "KeyCaptureMode.h"
 #import "LogitechCIDActivator.h"
+#import <IOKit/hid/IOHIDKeys.h>
 #endif
 
 /// This class is used to communicate between the MainApp and the Helper.
@@ -72,7 +74,37 @@
 ///         I think the reason for this message is that the existing instance would already 'occupy' the kMFBundleIDHelper name.
 ///         Checking if `localPort != nil` should detect this case
 
+static CFMessagePortRef sLocalListeningPort = NULL;
+
+#if IS_HELPER
+static Device * _Nullable currentLogitechDevice(void) {
+    Device *dev = HelperState.shared.activeDevice;
+    if (dev != nil) {
+        NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(dev.iohidDevice, CFSTR(kIOHIDVendorIDKey));
+        if (vid != nil && vid.intValue == 0x046D) {
+            return dev;
+        }
+    }
+    for (Device *attachedDevice in DeviceManager.attachedDevices) {
+        NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(attachedDevice.iohidDevice, CFSTR(kIOHIDVendorIDKey));
+        if (vid != nil && vid.intValue == 0x046D) {
+            return attachedDevice;
+        }
+    }
+    return nil;
+}
+#endif
+
 @implementation MFMessagePort
+
++ (void)invalidateLocalPort {
+    if (sLocalListeningPort != NULL) {
+        DDLogInfo(@"MFMessagePort: Invalidating local message port to release ownership.");
+        CFMessagePortInvalidate(sLocalListeningPort);
+        CFRelease(sLocalListeningPort);
+        sLocalListeningPort = NULL;
+    }
+}
 
 + (void)load_Manual {
     
@@ -94,6 +126,7 @@
     for (int retry = 0; retry < maxRetries; retry++) {
         localPort = CFMessagePortCreateLocal(kCFAllocatorDefault, messagePortName, didReceiveMessage, NULL, NULL);
         if (localPort != NULL) {
+            sLocalListeningPort = localPort;
             break;
         }
         if (runningHelper()) {
@@ -281,8 +314,8 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
             }
         }
         xxx(@"queryLogitechInfo") {
-            Device *dev = HelperState.shared.activeDevice;
-            if (dev != nil && dev.isLogitechDiverted) {
+            Device *dev = currentLogitechDevice();
+            if (dev != nil && dev.iohidDevice != NULL) {
                 static NSMutableDictionary<NSNumber *, NSNumber *> *lastQueryTimes = nil;
                 if (lastQueryTimes == nil) {
                     lastQueryTimes = [NSMutableDictionary dictionary];
@@ -304,6 +337,140 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
                 response = @{
                     @"isLogitech": @NO
                 };
+            }
+        }
+        xxx(@"getLogitechState") {
+            Device *dev = currentLogitechDevice();
+            if (dev != nil && dev.iohidDevice != NULL) {
+                LogitechSmartShiftState state = {0};
+                LogitechDPICapabilities caps = {0};
+                BOOL gotSmartShift = [[LogitechCIDActivator shared] getSmartShiftState:&state forDevice:dev.iohidDevice];
+                BOOL gotDPI = [[LogitechCIDActivator shared] getDPICapabilities:&caps forDevice:dev.iohidDevice];
+                
+                response = @{
+                    @"supportsSmartShift": @(gotSmartShift),
+                    @"supportsTunableTorque": @(gotSmartShift && state.supportsTunableTorque),
+                    @"supportsDPI": @(gotDPI),
+                    @"wheelMode": @(state.wheelMode),
+                    @"autoShift": @(state.autoShift),
+                    @"threshold": @(state.threshold),
+                    @"torque": @(state.torque),
+                    @"currentDpi": @(caps.currentDpi),
+                    @"minDpi": @(caps.minDpi),
+                    @"maxDpi": @(caps.maxDpi),
+                    @"step": @(caps.step)
+                };
+            } else {
+                response = @{
+                    @"supportsSmartShift": @NO,
+                    @"supportsTunableTorque": @NO,
+                    @"supportsDPI": @NO
+                };
+            }
+        }
+        xxx(@"setLogitechSmartShift") {
+            Device *dev = currentLogitechDevice();
+            if (dev != nil && dev.iohidDevice != NULL) {
+                NSDictionary *args = (NSDictionary *)payload;
+                LogitechSmartShiftState state = {0};
+                state.wheelMode = [args[@"wheelMode"] unsignedCharValue];
+                state.autoShift = [args[@"autoShift"] unsignedCharValue];
+                state.threshold = [args[@"threshold"] unsignedCharValue];
+                state.torque = [args[@"torque"] unsignedCharValue];
+                BOOL success = [[LogitechCIDActivator shared] setSmartShiftState:state forDevice:dev.iohidDevice];
+                response = @(success);
+            } else {
+                response = @NO;
+            }
+        }
+        xxx(@"setLogitechDPI") {
+            Device *dev = currentLogitechDevice();
+            if (dev != nil && dev.iohidDevice != NULL) {
+                uint16_t dpi = [(NSNumber *)payload unsignedShortValue];
+                BOOL success = [[LogitechCIDActivator shared] setDpi:dpi forDevice:dev.iohidDevice];
+                response = @(success);
+            } else {
+                response = @NO;
+            }
+        }
+        xxx(@"getLogitechHiResState") {
+            Device *dev = currentLogitechDevice();
+            if (dev != nil && dev.iohidDevice != NULL) {
+                LogitechHiResWheelState state = {0};
+                BOOL got = [[LogitechCIDActivator shared] getHiResWheelState:&state forDevice:dev.iohidDevice];
+                if (got) {
+                    dev.supportsLogitechHiResWheel = state.supported;
+                    dev.logitechHiResEnabled = state.hiResEnabled;
+                }
+                response = @{
+                    @"supported": @(got && state.supported),
+                    @"hiResEnabled": @(state.hiResEnabled),
+                    @"multiplier": @(state.multiplier),
+                    @"hasRatchetSwitch": @(state.hasRatchetSwitch)
+                };
+            } else {
+                response = @{ @"supported": @NO };
+            }
+        }
+        xxx(@"setLogitechHiResMode") {
+            Device *dev = currentLogitechDevice();
+            if (dev != nil && dev.iohidDevice != NULL) {
+                BOOL enabled = [(NSNumber *)payload boolValue];
+                BOOL success = [[LogitechCIDActivator shared] setHiResWheelMode:enabled forDevice:dev.iohidDevice];
+                if (success) {
+                    dev.logitechHiResEnabled = enabled;
+                }
+                response = @(success);
+            } else {
+                response = @NO;
+            }
+        }
+        xxx(@"getLogitechReportRate") {
+            Device *dev = currentLogitechDevice();
+            if (dev != nil && dev.iohidDevice != NULL) {
+                LogitechReportRateInfo info = {0};
+                BOOL got = [[LogitechCIDActivator shared] getReportRateInfo:&info forDevice:dev.iohidDevice];
+                if (got) {
+                    dev.supportsLogitechReportRate = (info.rateCount > 0);
+                    if (info.currentRate > 0) {
+                        // Convert rate index to Hz for the Device property
+                        uint16_t hz = 0;
+                        switch(info.currentRate) {
+                            case 1: hz = 125; break;
+                            case 2: hz = 250; break;
+                            case 3: hz = 500; break;
+                            case 4: hz = 1000; break;
+                            case 5: hz = 2000; break;
+                            case 6: hz = 4000; break;
+                            case 8: hz = 8000; break;
+                        }
+                        dev.logitechReportRate = hz;
+                    }
+                    NSMutableArray *ratesArray = [NSMutableArray array];
+                    for (int i = 0; i < info.rateCount; i++) {
+                        [ratesArray addObject:@(info.rates[i])];
+                    }
+                    response = @{
+                        @"supported": @(info.rateCount > 0),
+                        @"currentRate": @(info.currentRate),
+                        @"currentRateHz": @(dev.logitechReportRate),
+                        @"rates": ratesArray
+                    };
+                } else {
+                    response = @{ @"supported": @NO };
+                }
+            } else {
+                response = @{ @"supported": @NO };
+            }
+        }
+        xxx(@"setLogitechReportRate") {
+            Device *dev = currentLogitechDevice();
+            if (dev != nil && dev.iohidDevice != NULL) {
+                uint8_t rateIndex = [(NSNumber *)payload unsignedCharValue];
+                BOOL success = [[LogitechCIDActivator shared] setReportRate:rateIndex forDevice:dev.iohidDevice];
+                response = @(success);
+            } else {
+                response = @NO;
             }
         }
         xxx(@"updateActiveDeviceWithEventSenderID") {

@@ -38,6 +38,8 @@ import Cocoa
         
         let passThroughEvaluation = kMFEventPassThroughRefusal
         
+        DDLogInfo("[SMARTSHIFT] Buttons.swift handleInput - device: \(device.name()), button: \(button), down: \(mouseDown)")
+        
             /// Init
         if !isInitialized { coolInitialize() }
         
@@ -62,12 +64,14 @@ import Cocoa
             self.maxClickLevel = 0
             if mouseDown {
                 self.maxClickLevel = RemapsAnalyzer.maxLevel(forButton: button, remaps: remaps, modificationsActingOnThisButton: modifications)
+                DDLogInfo("[SMARTSHIFT] Buttons.swift handleInput - calculated maxClickLevel: \(self.maxClickLevel), modifications: \(self.modifications)")
             }
             
         }
         
         /// Decide passthrough
         if self.maxClickLevel == 0 {
+            DDLogInfo("[SMARTSHIFT] Buttons.swift handleInput - passthrough approved (maxClickLevel == 0)")
             return kMFEventPassThroughApproval
         }
         

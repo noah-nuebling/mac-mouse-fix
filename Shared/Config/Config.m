@@ -70,6 +70,18 @@ static NSString *_uiAppOverrideBundleID = nil;
     
     NSString *bundleID = application.bundleIdentifier;
     if (bundleID.length > 0) {
+        if ([bundleID hasPrefix:@"com.apple.Safari.WebApp."]) {
+            return @"com.apple.Safari";
+        }
+        if ([bundleID hasPrefix:@"com.google.Chrome.app."]) {
+            return @"com.google.Chrome";
+        }
+        if ([bundleID hasPrefix:@"com.microsoft.edgemac.app."]) {
+            return @"com.microsoft.edgemac";
+        }
+        if ([bundleID hasPrefix:@"com.brave.Browser.app."]) {
+            return @"com.brave.Browser";
+        }
         return bundleID;
     }
     

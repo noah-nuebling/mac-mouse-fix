@@ -15,6 +15,8 @@
 #import "Modifiers.h"
 #import "Remap.h"
 #import "Constants.h"
+#import "LogitechCIDActivator.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 #import "Logging.h"
 /*
@@ -179,6 +181,18 @@
             ///  dataModel is to add the kMFRemapsKeyEffect key and corresponding values
             [Remap sendAddModeFeedback:payload];
             
+        } else if ([actionType isEqualToString:kMFActionDictTypeToggleSmartShift]) {
+            DDLogInfo(@"[SMARTSHIFT] Actions.m - ToggleSmartShift action triggered");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                Device *activeDev = [HelperState.shared activeDevice];
+                DDLogInfo(@"[SMARTSHIFT] Actions.m - ToggleSmartShift: activeDevice is %@ (iohidDevice: %p)", activeDev.name, activeDev ? activeDev.iohidDevice : NULL);
+                if (activeDev != nil && activeDev.iohidDevice != NULL) {
+                    BOOL success = [[LogitechCIDActivator shared] toggleSmartShiftForDevice:activeDev.iohidDevice];
+                    DDLogInfo(@"[SMARTSHIFT] Actions.m - ToggleSmartShift executed. Success: %d", success);
+                } else {
+                    DDLogWarn(@"[SMARTSHIFT] Actions.m - ToggleSmartShift failed because no active device was found");
+                }
+            });
         }
     }
 }

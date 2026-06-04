@@ -16,9 +16,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (atomic, assign, readonly, nullable) IOHIDDeviceRef iohidDevice;
 @property (nonatomic, assign) BOOL isLogitechDiverted;
+@property (nonatomic, assign) BOOL supportsLogitechDPI;
 @property (nonatomic, assign) int logitechBatteryPercentage;
 @property (nonatomic, assign) int logitechBatteryStatus;
 @property (nonatomic, assign) int logitechDPI;
+@property (nonatomic, assign) BOOL supportsLogitechHiResWheel;
+@property (nonatomic, assign) BOOL logitechHiResEnabled;
+@property (nonatomic, assign) BOOL supportsLogitechReportRate;
+@property (nonatomic, assign) uint16_t logitechReportRate; // Current rate in Hz
 
 + (instancetype)new NS_UNAVAILABLE;
 

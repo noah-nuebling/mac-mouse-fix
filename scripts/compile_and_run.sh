@@ -49,7 +49,7 @@ kill_all_instances() {
 # --- Execution ---
 
 # 1) Build only the current architecture app bundle and skip DMG packaging for dev loops
-run_step "Building ${APP_NAME} (debug)" env BUILD_ARCHS="${ARCH}" SKIP_DMG=1 "${ROOT_DIR}/scripts/build.sh" debug
+run_step "Building ${APP_NAME} (debug)" env BUILD_ARCHS="${ARCH}" SKIP_DMG=1 CODE_SIGN_IDENTITY="-" "${ROOT_DIR}/scripts/build.sh" debug
 
 APP_BUNDLE="${ROOT_DIR}/${APP_NAME}_${ARCH}.app"
 if [ ! -d "${APP_BUNDLE}" ]; then

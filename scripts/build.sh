@@ -62,17 +62,15 @@ create_dmg_with_layout() {
 
     if command -v create-dmg >/dev/null 2>&1; then
         echo "==> Creating styled DMG with create-dmg for ${target_arch}..."
-        rm -f "${styled_dmg_path}"
+        rm -f "${dmg_path}"
         create-dmg \
-            --overwrite \
-            --dmg-title "Mac Mouse Fix" \
-            --no-code-sign \
-            "${staging_dir}/${display_app_name}" \
-            "${dmg_dir}"
-
-        if [[ -f "${styled_dmg_path}" && "${styled_dmg_path}" != "${dmg_path}" ]]; then
-            mv -f "${styled_dmg_path}" "${dmg_path}"
-        fi
+            --volname "Mac Mouse Fix" \
+            --app-drop-link 380 205 \
+            --icon-size 104 \
+            --icon "Mac Mouse Fix.app" 110 205 \
+            --window-size 490 340 \
+            "${dmg_path}" \
+            "${staging_dir}" || true
     fi
 
     if [[ ! -f "${dmg_path}" ]]; then
@@ -193,7 +191,23 @@ for TARGET_ARCH in "${TARGET_ARCHS[@]}"; do
 
     if [[ "${SIGNING_IDENTITY}" == "-" ]]; then
         echo "==> Signing app bundle (Ad-hoc) for ${TARGET_ARCH}..."
-        codesign --force --deep --sign "${SIGNING_IDENTITY}" "${TEMP_SIGN_DIR}/${APP_NAME}"
+        APP_TO_SIGN="${TEMP_SIGN_DIR}/${APP_NAME}"
+        HELPER_TO_SIGN="${APP_TO_SIGN}/Contents/Library/LoginItems/Mac Mouse Fix Helper.app"
+
+        find "${APP_TO_SIGN}/Contents/Frameworks" -type f \( -perm -111 -o -name '*.dylib' \) -print0 2>/dev/null |
+            xargs -0 -I{} codesign --force --sign "${SIGNING_IDENTITY}" --timestamp=none "{}" 2>/dev/null || true
+        if [[ -d "${HELPER_TO_SIGN}/Contents/Frameworks" ]]; then
+            find "${HELPER_TO_SIGN}/Contents/Frameworks" -type f \( -perm -111 -o -name '*.dylib' \) -print0 2>/dev/null |
+                xargs -0 -I{} codesign --force --sign "${SIGNING_IDENTITY}" --timestamp=none "{}" 2>/dev/null || true
+        fi
+
+        if [[ -d "${APP_TO_SIGN}/Contents/Frameworks/Sparkle.framework" ]]; then
+            codesign --force --sign "${SIGNING_IDENTITY}" --timestamp=none "${APP_TO_SIGN}/Contents/Frameworks/Sparkle.framework"
+        fi
+        codesign --force --sign "${SIGNING_IDENTITY}" --timestamp=none --entitlements "Helper/SupportFiles/Helper.entitlements" "${HELPER_TO_SIGN}"
+        codesign --force --sign "${SIGNING_IDENTITY}" --timestamp=none --entitlements "App/SupportFiles/App.entitlements" "${APP_TO_SIGN}"
+        codesign --verify --deep --strict --verbose=2 "${APP_TO_SIGN}"
+        codesign --verify --strict --verbose=2 "${HELPER_TO_SIGN}"
     else
         echo "==> Preserving Xcode signing for ${TARGET_ARCH} (${SIGNING_IDENTITY})..."
     fi

@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Shouldn't use this yet, as it's still buggy
 
-//+ (void)setForAllDevices;
++ (void)setForAllDevices;
 + (void)setForDevice:(IOHIDDeviceRef)device;
 + (void)deconfigureDevice:(IOHIDDeviceRef)device;
 

@@ -219,11 +219,16 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2);
     int64_t drawingTabletID  = CGEventGetIntegerValueField(event, kCGTabletEventDeviceID);
     bool isDiagonal = scrollDeltaAxis1 != 0 && scrollDeltaAxis2 != 0;
+    
+    DDLogInfo(@"[Scroll.m eventTapCallback] type: %d, isPixelBased: %lld, scrollPhase: %lld, delta1: %lld, delta2: %lld, tablet: %lld, diagonal: %d",
+              type, isPixelBased, scrollPhase, scrollDeltaAxis1, scrollDeltaAxis2, drawingTabletID, isDiagonal);
+              
     if (isPixelBased != 0
         || scrollPhase != 0 /// Not entirely sure if testing for 'scrollPhase' here makes sense
         || drawingTabletID != 0 /// Untested
         || isDiagonal) {
         
+        DDLogInfo(@"[Scroll.m eventTapCallback] Bypassing scroll event");
         return event;
     }
     
@@ -346,7 +351,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         [ScrollUtility updateMouseDidMoveWithEvent:event];
         
         /// Update application Overrides
-        if ((NO)) { /// Unused in MMF 3
+        if (YES) {
             if (!ScrollUtility.mouseDidMove) {
                 [ScrollUtility updateFrontMostAppDidChange];
                 /// Only checking this if mouse didn't move, because of || in (mouseMoved || frontMostAppChanged). For optimization. Not sure if significant.

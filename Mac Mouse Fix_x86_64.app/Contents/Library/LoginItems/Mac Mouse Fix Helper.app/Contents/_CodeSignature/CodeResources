@@ -6,11 +6,11 @@
 	<dict>
 		<key>Resources/AppIconRound.icns</key>
 		<data>
-		qoH0houOdRpqEE1Jpu1SSCPPTf8=
+		vVHxw5LTX1Q89s+kG13ZvN8puDM=
 		</data>
 		<key>Resources/Assets.car</key>
 		<data>
-		H7tGBeEB+iy2VIEK9IJeYO+ZiFo=
+		vJmHKMmusymp2biCRy4RpzitYbg=
 		</data>
 		<key>Resources/Base.lproj/MenuBarItem.nib</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/Info.plist</key>
 		<data>
-		nwfQQTa/SWsUopp/Xmk4795fbw0=
+		enN/SdUZlCKX/Lj8nkMbx9gF+YE=
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/Resources/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -30,11 +30,11 @@
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeDirectory</key>
 		<data>
-		bDfHldkFS6ZAR+xBSIAt5B7MOJs=
+		6RRNrzMsLluCKULZoIH2O/DyMmw=
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeRequirements</key>
 		<data>
-		OnX22wWFKRSOFN1+obRynMCeyXM=
+		4pdCVPusLfVRUGfVLP7sEzO58UY=
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeResources</key>
 		<data>
@@ -42,7 +42,7 @@
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeSignature</key>
 		<data>
-		2jmj7l5rSw0yVb/vlWAYkK/YBwk=
+		ssEFOgD8D73ZqoYIKt6Epjrgrtg=
 		</data>
 		<key>Resources/InformationDensity.md</key>
 		<data>
@@ -77,7 +77,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			AnRFeLRGX4fE1gD6pAR1oK3XDHM=
+			qcZzhPIeoFTNTRR18Nlyw9WDqn8=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -113,7 +113,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			x+6zjkPA7ngJqeZZmR2jc6mwSrE=
+			Vn9iZwy39MPnwgYgZbB60mZRh10=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -144,7 +144,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			t/Wdb9NZYSUlOi507VbXnCTQZ+E=
+			oguEj7XPZz4RAEho6es0t3IAKy0=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -162,7 +162,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			WYEbtmt3HOLbaoUnfCDZOkRxuMg=
+			n++oXPOF6VIz+LS23IEh1Tixsao=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -193,7 +193,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ibt3UlDVsK9sL/9ze3DbqHJrt0E=
+			LKRVuqXGL/reS219hNfu2Y+ieNc=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -220,7 +220,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			g7O0tFrIn/+3cGWYRF7O5OJshFY=
+			MT4ZEiSmScZ2l8vJToG08m8vuaE=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -256,7 +256,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			RA+Q83kcIw/5R1Et3eCRWjV9bwU=
+			D3I0fd6MqrMrWbI4vCwGK2P6SSk=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -283,7 +283,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			wvKPd5S1bD75pz4Qu7mQR6F5JIA=
+			jRlkOSow91FjKzAfdi3XVB3hpzM=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -310,7 +310,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			6ve+wTkJCNBpRdRm27lk9zfptKI=
+			Vnf2kx+aRrS2p3sYQNmTfgTg7Dc=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -337,7 +337,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			kh0kHk0D67s9GjVV6YVw+ia0zDk=
+			NsleyQPdz38aRW22MHogrRPxm9Y=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -364,7 +364,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			y8iS/2pLA0OOdNsgQkuW5Ift8kE=
+			fk2WBVB0s02E1KU+hnBUg/zYHQA=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -400,7 +400,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			NyiuphpUGkVsfCupBiryvBs/vdc=
+			ai9vOMaY11LK4DOBs6R+MHpasyE=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -427,7 +427,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ZpFhZNZmg7YdhK2XCSctosCX3bc=
+			o8hvG2BQrzhAho+Z0bNq18reMR0=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -457,23 +457,23 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			Pr3e+QFHQ3D2oyoywLeBrPU4s88=
+			9t/Ardt/PRXrOumvRhpGhJJkNEU=
 			</data>
 			<key>requirement</key>
-			<string>cdhash H"3ebddef901474370f6a32a32c0b781acf538b3cf" or cdhash H"2df8f77ca131cd10508992f453212709099ea525"</string>
+			<string>identifier "com.apple.dt.runtime.swiftConcurrency" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: shawnrain@foxmail.com (ZQG28N5AK8)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
 		</dict>
 		<key>Resources/AppIconRound.icns</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			0xbasWYQ9kpcwjFBCPpn32MNg2pIiIdHirTcAJtEFvY=
+			PWXSB5SEbWuK7f4mi49BQANc2vvLjXlPI+R8iz7BeVA=
 			</data>
 		</dict>
 		<key>Resources/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			NQ9s6LLEpzy6z/P28anBIluOnOlJCU4j1QJDrspNRRQ=
+			TVpQo7qoiG0IHUdq4yivQm1MsH/7dPpdJbmhxYDdHRY=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/MenuBarItem.nib</key>
@@ -494,7 +494,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			X57+CowSzi8XxiOE04vJ1pmje6xsqGS7Pi0EziYX4VI=
+			QFJTUy1MlepZ1531s9wTsSWz/m4uWZSRw0wH3uRnD9Y=
 			</data>
 		</dict>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/Resources/PrivacyInfo.xcprivacy</key>
@@ -508,14 +508,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			XJ4U0bylk0GV8z8IpYAyeXHSPVyh0mu+Njzg6xGKuoY=
+			Cd2R24mc/fIbvsNOjEWyLqkkPwa6giQeEXMAOmhPn0g=
 			</data>
 		</dict>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeRequirements</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			mHkgkE6rZQ51eIwFSqCwUk5qgL/HGqMt+NI3phdD+YY=
+			EydSeYjC9yJ1eU9xmHaZrQBjhU9IAruH2M9Rnreil9I=
 			</data>
 		</dict>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeResources</key>
@@ -529,7 +529,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
+			wd2mLYUKpHVk5kQB/L0pDuLtmdEkYiP2pSCMa72yp0A=
 			</data>
 		</dict>
 		<key>Resources/InformationDensity.md</key>
@@ -580,7 +580,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			LXjYhBi5+Zi4uzaqHe/YdvTA25E4/yCSxV41GmFYv5s=
+			PV9WlMsRm3u4koQugykT1SW0fRu8gh1iXI46SXPAr08=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -616,7 +616,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			nLuE5SCGOAgryaN6zQ79zuI+5RC3Zm84xrLVzh4u0go=
+			kcwPfxO0QgM8y9ui1psTT7J7UPkAFFq8lggsL6uI2KU=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -650,7 +650,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			LBwOxs5Mel/md9T5924fY3lxGpXcyr9ONgGskjTbJps=
+			eMgn13LGscjAx2htwD6QSrp/XoCqjHZew6CFGhDzxVM=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -668,7 +668,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			S9uqB9FNbsdvoP5fhW8oWzzMkKD8W0TbhxX0KvV1cjU=
+			o6oPFhlcr2V+3ldqVg2O3K38nOcrcJyyE/UL/OA6mH4=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -702,7 +702,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			p0/Xj5raQZZpBRWfvHW0CTZWBNTQlHNhiiybyuhsSG0=
+			mru+4/MzDZ0qNfEGgFCqOz/HV27wxOyIT9zTlrL+Crs=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -729,7 +729,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			VPupFX7CpHyQG7fDmXmu/YgiMvzGPs2jx+uPPAmnfrk=
+			gCtU/3TIoJbxcS/Ix7r1lt8a0kuRcZdVrwMUGGj/Hio=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -765,7 +765,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			MxpD+QGiI9Za4oHJkzCv7sk24EKnlnVwwsNFOSTUZ4M=
+			cyinlQ3Ac+ah+XljCB7cEFnPIqrEO0BMxP88AqMUwPM=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -792,7 +792,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			kuRL5bCeZii7yiUUURlaHoJ3rqC7I0aW/FenfAqF5j4=
+			aiwZkBI0Erhse2D6RuctwwsKVIIZPztAyWz9nA1NoG8=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -819,7 +819,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			8z8Q9gjnPDPvJkwTPNaKo9YIzhKS0juGJ6zXZ3yMd1w=
+			/QoKds1EfDuwXonI4hqEN+zL/XJp2bfM795KCphhuAs=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -846,7 +846,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			2//LHCOoN5doEgOosk1clG943X67uFSasqT7iE0hdUM=
+			EVLjm7jU613idBslVKuYeTNSRxOEwp4CwkZRGVx+MW0=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -873,7 +873,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			gcgMUnDWzSiKfEcPx6ft139sOXGjYPiq7EWSeAuQna4=
+			9GprhyCF8wDPh6RaKxJIAPe/XarN74Bkwm1x+oj5Qo0=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -909,7 +909,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			s4VuKRyBPCwt7mn4bh69PXDrlzgGkW2KZ6mVuxLHa7g=
+			3LM7k1P2fkiE+8AdLbdClFoXUmW3dBgbHHXTcWwiaxc=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -936,7 +936,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			/sNFhcNMwdUcvFGh+MAtrT8pAHpKUKiUnHaxdHJoMf8=
+			QJdNEEtv9SLKBxG3zhhANDbiRzOX7pPF7SOyLTK2N+k=
 			</data>
 			<key>optional</key>
 			<true/>

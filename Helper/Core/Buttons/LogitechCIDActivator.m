@@ -54,11 +54,16 @@ typedef struct {
     uint8_t         resp[20];
     BOOL            gotResp;
     uint8_t         waitingIndex;
+    uint8_t         waitingFeature;
+    uint8_t         waitingFunction;
     uint8_t         featWirelessStatus;
     uint8_t         featReprogV4;
     uint8_t         featSmartShift;
     uint8_t         featAdjustableDpi;  // 0x2201
     uint8_t         featExtendedDpi;    // 0x2202
+    uint8_t         featHiResWheel;     // 0x2121
+    uint8_t         featReportRate;     // 0x8060
+    uint8_t         featReportRateExt;  // 0x8061
     uint8_t         lastErrorCode;
     int             lastNotifiedBatteryLevel;
     NSTimeInterval  lastBatteryQueryTime;
@@ -149,7 +154,25 @@ static void inputReportCallback(void *ctx, IOReturn result, void *sender,
     if (report[1] != s->deviceIndex && report[1] != 0xFF) return;
     
     // 1. Handle synchronous response we are waiting for
-    if (report[3] != 0x00 && s->waitingIndex == report[1]) {
+    //    Match by deviceIndex AND require long-report type (0x11) to avoid
+    //    misinterpreting short unsolicited notifications as our response.
+    BOOL isResponse = NO;
+    if (s->waitingIndex == report[1] && report[0] == kHIDPP_Long) {
+        if (report[2] == 0xFF) {
+            // Error response: Software ID is in report[4]
+            // report[3] is the feature index
+            if (len >= 5 && report[3] == s->waitingFeature && (report[4] & 0x0F) == 0x0E && (report[4] & 0xF0) == (s->waitingFunction & 0xF0)) {
+                isResponse = YES;
+            }
+        } else {
+            // Normal response: Software ID is in report[3]
+            // report[2] is the feature index
+            if (report[2] == s->waitingFeature && (report[3] & 0x0F) == 0x0E && (report[3] & 0xF0) == (s->waitingFunction & 0xF0)) {
+                isResponse = YES;
+            }
+        }
+    }
+    if (isResponse) {
         memcpy(s->resp, report, len < 20 ? (size_t)len : 20);
         s->gotResp = YES;
         return;
@@ -284,6 +307,8 @@ static void inputReportCallback(void *ctx, IOReturn result, void *sender,
 static IOReturn sendAndWaitWithTimeout(MFCIDDeviceState *s, uint8_t *pkt, int maxLaps) {
     s->gotResp = NO;
     s->waitingIndex = pkt[1];
+    s->waitingFeature = pkt[2];
+    s->waitingFunction = pkt[3];
     s->lastErrorCode = 0;
     IOReturn r = IOHIDDeviceSetReport(s->writeDevice, kIOHIDReportTypeOutput, pkt[0], pkt, 20);
     if (r != kIOReturnSuccess) {
@@ -366,6 +391,24 @@ static int activateDevice(MFCIDDeviceState *s) {
         DDLogInfo(@"LogitechCIDActivator: Adjustable DPI feature not supported on index 0x%02X", activeIndex);
     }
 
+    // Probe HiRes Scroll Wheel (0x2121)
+    s->featHiResWheel = lookupFeature(s, 0x2121);
+    if (s->featHiResWheel != 0) {
+        DDLogInfo(@"LogitechCIDActivator: Found HiRes Scroll Wheel feature index 0x%02X on index 0x%02X", s->featHiResWheel, activeIndex);
+    } else {
+        DDLogInfo(@"LogitechCIDActivator: HiRes Scroll Wheel feature not supported on index 0x%02X", activeIndex);
+    }
+
+    // Probe Report Rate (0x8060 / 0x8061)
+    s->featReportRate = lookupFeature(s, 0x8060);
+    s->featReportRateExt = lookupFeature(s, 0x8061);
+    if (s->featReportRate != 0 || s->featReportRateExt != 0) {
+        DDLogInfo(@"LogitechCIDActivator: Found Report Rate feature (0x8060 idx: 0x%02X, 0x8061 idx: 0x%02X) on index 0x%02X",
+                  s->featReportRate, s->featReportRateExt, activeIndex);
+    } else {
+        DDLogInfo(@"LogitechCIDActivator: Report Rate feature not supported on index 0x%02X", activeIndex);
+    }
+
     int diverted = 0;
     if (s->featReprogV4 != 0) {
         /// 2. GetCount
@@ -429,8 +472,10 @@ static int activateDevice(MFCIDDeviceState *s) {
         }
     }
     
-    // Apply persisted settings to the hardware when device is configured
-    if (s->featAdjustableDpi != 0) {
+    // Apply persisted settings to the hardware when device is configured.
+    // Check BOTH featAdjustableDpi (0x2201) and featExtendedDpi (0x2202) —
+    // newer mice (e.g. MX Anywhere 3S) only support 0x2202.
+    if (s->featAdjustableDpi != 0 || s->featExtendedDpi != 0) {
         NSNumber *savedDpi = (NSNumber *)config(@"Pointer.logitechDPI");
         if (savedDpi != nil) {
             uint16_t dpi = [savedDpi unsignedShortValue];
@@ -453,6 +498,26 @@ static int activateDevice(MFCIDDeviceState *s) {
             DDLogInfo(@"LogitechCIDActivator: activateDevice applying saved SmartShift settings (wheelMode: %d, autoShift: %d, threshold: %d, torque: %d)",
                       state.wheelMode, state.autoShift, state.threshold, state.torque);
             [[LogitechCIDActivator shared] setSmartShiftState:state forDevice:s->device];
+        }
+    }
+
+    // Restore saved HiRes Scroll Wheel setting
+    if (s->featHiResWheel != 0) {
+        NSNumber *savedHiRes = (NSNumber *)config(@"Pointer.logitechHiResWheel");
+        if (savedHiRes != nil) {
+            BOOL hiResEnabled = [savedHiRes boolValue];
+            DDLogInfo(@"LogitechCIDActivator: activateDevice applying saved HiRes Scroll setting: %d", hiResEnabled);
+            [[LogitechCIDActivator shared] setHiResWheelMode:hiResEnabled forDevice:s->device];
+        }
+    }
+
+    // Restore saved Report Rate setting
+    if (s->featReportRate != 0) {
+        NSNumber *savedRate = (NSNumber *)config(@"Pointer.logitechReportRate");
+        if (savedRate != nil) {
+            uint8_t rateIndex = [savedRate unsignedCharValue];
+            DDLogInfo(@"LogitechCIDActivator: activateDevice applying saved Report Rate index: %d", rateIndex);
+            [[LogitechCIDActivator shared] setReportRate:rateIndex forDevice:s->device];
         }
     }
 
@@ -778,12 +843,16 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
         DDLogWarn(@"LogitechCIDActivator: Unified Battery feature (0x1004/0x1000) not found on device");
     }
     
-    // 2. Query DPI — try 0x2201 (AdjustableDPI) first, then 0x2202 (ExtendedAdjustableDPI)
-    uint8_t featDPI = lookupFeature(s, 0x2201);
+    // 2. Query DPI — use cached feature indices from activateDevice() instead of re-querying.
+    //    Re-querying via lookupFeature wastes HID++ bandwidth and can fail during reconnect windows.
+    //    Prefer Extended DPI (0x2202) over standard (0x2201) to match setDpi: write priority.
+    uint8_t featDPI = 0;
     BOOL isExtendedDPI = NO;
-    if (featDPI == 0) {
-        featDPI = lookupFeature(s, 0x2202);
+    if (s->featExtendedDpi != 0) {
+        featDPI = s->featExtendedDpi;
         isExtendedDPI = YES;
+    } else if (s->featAdjustableDpi != 0) {
+        featDPI = s->featAdjustableDpi;
     }
     if (featDPI != 0) {
         device.supportsLogitechDPI = YES;
@@ -802,8 +871,14 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
             if (dpi == 0 && !isExtendedDPI) {
                 dpi = (s->resp[7] << 8) | s->resp[8];
             }
-            device.logitechDPI = dpi;
-            DDLogInfo(@"LogitechCIDActivator: DPI query successful (feat 0x%04X). DPI: %d", isExtendedDPI ? 0x2202 : 0x2201, device.logitechDPI);
+            // Sanity check: only accept plausible DPI values (1–32000)
+            if (dpi > 0 && dpi <= 32000) {
+                device.logitechDPI = dpi;
+                DDLogInfo(@"LogitechCIDActivator: DPI query successful (feat 0x%04X). DPI: %d", isExtendedDPI ? 0x2202 : 0x2201, device.logitechDPI);
+            } else {
+                DDLogWarn(@"LogitechCIDActivator: DPI query returned implausible value %d (feat 0x%04X), keeping previous DPI %d",
+                          dpi, isExtendedDPI ? 0x2202 : 0x2201, device.logitechDPI);
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [PointerSpeed setForAllDevices];
             });
@@ -1207,8 +1282,15 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
         if (dpi == 0 && s->featExtendedDpi == 0) {
             dpi = (s->resp[7] << 8) | s->resp[8];
         }
-        outCaps->currentDpi = dpi;
-        outCaps->defaultDpi = dpi;
+        // Sanity check: only accept plausible DPI values
+        if (dpi > 0 && dpi <= 32000) {
+            outCaps->currentDpi = dpi;
+            outCaps->defaultDpi = dpi;
+        } else {
+            DDLogWarn(@"LogitechCIDActivator: getDPICapabilities returned implausible DPI %d, using fallback 1000", dpi);
+            outCaps->currentDpi = 1000;
+            outCaps->defaultDpi = 1000;
+        }
     } else {
         outCaps->currentDpi = 1000;
         outCaps->defaultDpi = 1000;
@@ -1303,6 +1385,196 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
             }
         }];
     }
+}
+
+#pragma mark - HiRes Scroll Wheel (0x2121)
+
+static uint16_t rateIndexToHz(uint8_t idx) {
+    switch(idx) {
+        case 1: return 125;
+        case 2: return 250;
+        case 3: return 500;
+        case 4: return 1000;
+        case 5: return 2000;
+        case 6: return 4000;
+        case 8: return 8000;
+        default: return 0;
+    }
+}
+
+- (BOOL)getHiResWheelState:(LogitechHiResWheelState *)outState forDevice:(IOHIDDeviceRef)device {
+    MFCIDDeviceState *s = stateForDevice(device);
+    if (!s) {
+        NSString *name = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
+        if (name != nil) {
+            for (NSValue *v in _states) {
+                MFCIDDeviceState *otherS = (MFCIDDeviceState *)v.pointerValue;
+                NSString *otherName = (__bridge NSString *)IOHIDDeviceGetProperty(otherS->device, CFSTR(kIOHIDProductKey));
+                if ([name isEqualToString:otherName]) { s = otherS; break; }
+            }
+        }
+    }
+    if (!s || s->featHiResWheel == 0) {
+        outState->supported = NO;
+        return NO;
+    }
+    
+    outState->supported = YES;
+    
+    // Function 0 (0x0E): getWheelCapability
+    uint8_t pkt[20];
+    memset(pkt, 0, 20);
+    pkt[0] = kHIDPP_Long;
+    pkt[1] = s->deviceIndex;
+    pkt[2] = s->featHiResWheel;
+    pkt[3] = 0x0E; // Function 0
+    
+    if (sendAndWaitWithTimeout(s, pkt, 100) == kIOReturnSuccess) {
+        outState->multiplier = s->resp[4];
+        outState->hasRatchetSwitch = (s->resp[5] & 0x04) != 0; // bit 2
+    } else {
+        outState->multiplier = 8; // Fallback
+        outState->hasRatchetSwitch = NO;
+    }
+    
+    // Function 1 (0x1E): getWheelMode
+    memset(pkt, 0, 20);
+    pkt[0] = kHIDPP_Long;
+    pkt[1] = s->deviceIndex;
+    pkt[2] = s->featHiResWheel;
+    pkt[3] = 0x1E; // Function 1
+    
+    if (sendAndWaitWithTimeout(s, pkt, 100) == kIOReturnSuccess) {
+        outState->hiResEnabled = (s->resp[4] & 0x04) != 0; // bit 2 = hiRes enabled
+        DDLogInfo(@"LogitechCIDActivator: HiRes Wheel state: enabled=%d, multiplier=%d", outState->hiResEnabled, outState->multiplier);
+    } else {
+        outState->hiResEnabled = NO;
+    }
+    
+    return YES;
+}
+
+- (BOOL)setHiResWheelMode:(BOOL)enabled forDevice:(IOHIDDeviceRef)device {
+    MFCIDDeviceState *s = stateForDevice(device);
+    if (!s) {
+        NSString *name = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
+        if (name != nil) {
+            for (NSValue *v in _states) {
+                MFCIDDeviceState *otherS = (MFCIDDeviceState *)v.pointerValue;
+                NSString *otherName = (__bridge NSString *)IOHIDDeviceGetProperty(otherS->device, CFSTR(kIOHIDProductKey));
+                if ([name isEqualToString:otherName]) { s = otherS; break; }
+            }
+        }
+    }
+    if (!s || s->featHiResWheel == 0) return NO;
+    
+    // Function 2 (0x2E): setWheelMode
+    // bit 2 = target hiRes mode, bit 3 = hiRes valid (set to confirm the change)
+    uint8_t pkt[20];
+    memset(pkt, 0, 20);
+    pkt[0] = kHIDPP_Long;
+    pkt[1] = s->deviceIndex;
+    pkt[2] = s->featHiResWheel;
+    pkt[3] = 0x2E; // Function 2
+    pkt[4] = enabled ? 0x0C : 0x08; // bit 2 = mode, bit 3 = valid
+    
+    IOReturn ret = sendAndWaitWithTimeout(s, pkt, 100);
+    if (ret == kIOReturnSuccess) {
+        DDLogInfo(@"LogitechCIDActivator: HiRes Scroll Wheel mode set to %d", enabled);
+    } else {
+        DDLogError(@"LogitechCIDActivator: Failed to set HiRes Scroll Wheel mode, error: 0x%x", ret);
+    }
+    return (ret == kIOReturnSuccess);
+}
+
+#pragma mark - Report Rate (0x8060 / 0x8061)
+
+- (BOOL)getReportRateInfo:(LogitechReportRateInfo *)outInfo forDevice:(IOHIDDeviceRef)device {
+    MFCIDDeviceState *s = stateForDevice(device);
+    if (!s) {
+        NSString *name = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
+        if (name != nil) {
+            for (NSValue *v in _states) {
+                MFCIDDeviceState *otherS = (MFCIDDeviceState *)v.pointerValue;
+                NSString *otherName = (__bridge NSString *)IOHIDDeviceGetProperty(otherS->device, CFSTR(kIOHIDProductKey));
+                if ([name isEqualToString:otherName]) { s = otherS; break; }
+            }
+        }
+    }
+    
+    uint8_t feat = s ? (s->featReportRate != 0 ? s->featReportRate : s->featReportRateExt) : 0;
+    if (!s || feat == 0) return NO;
+    
+    memset(outInfo, 0, sizeof(LogitechReportRateInfo));
+    
+    // Function 0 (0x0E): getReportRateList
+    uint8_t pkt[20];
+    memset(pkt, 0, 20);
+    pkt[0] = kHIDPP_Long;
+    pkt[1] = s->deviceIndex;
+    pkt[2] = feat;
+    pkt[3] = 0x0E; // Function 0
+    
+    if (sendAndWaitWithTimeout(s, pkt, 100) == kIOReturnSuccess) {
+        int count = 0;
+        for (int i = 4; i < 12 && count < 8; i++) {
+            if (s->resp[i] == 0) break;
+            uint16_t hz = rateIndexToHz(s->resp[i]);
+            if (hz > 0) {
+                outInfo->rates[count++] = hz;
+            }
+        }
+        outInfo->rateCount = count;
+    }
+    
+    // Function 2 (0x2E): getReportRate
+    memset(pkt, 0, 20);
+    pkt[0] = kHIDPP_Long;
+    pkt[1] = s->deviceIndex;
+    pkt[2] = feat;
+    pkt[3] = 0x2E; // Function 2
+    
+    if (sendAndWaitWithTimeout(s, pkt, 100) == kIOReturnSuccess) {
+        outInfo->currentRate = s->resp[4];
+        DDLogInfo(@"LogitechCIDActivator: Report Rate query: current index=%d (%d Hz), %d rates supported",
+                  outInfo->currentRate, rateIndexToHz(outInfo->currentRate), outInfo->rateCount);
+    }
+    
+    return YES;
+}
+
+- (BOOL)setReportRate:(uint8_t)rateIndex forDevice:(IOHIDDeviceRef)device {
+    MFCIDDeviceState *s = stateForDevice(device);
+    if (!s) {
+        NSString *name = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
+        if (name != nil) {
+            for (NSValue *v in _states) {
+                MFCIDDeviceState *otherS = (MFCIDDeviceState *)v.pointerValue;
+                NSString *otherName = (__bridge NSString *)IOHIDDeviceGetProperty(otherS->device, CFSTR(kIOHIDProductKey));
+                if ([name isEqualToString:otherName]) { s = otherS; break; }
+            }
+        }
+    }
+    
+    uint8_t feat = s ? (s->featReportRate != 0 ? s->featReportRate : s->featReportRateExt) : 0;
+    if (!s || feat == 0) return NO;
+    
+    // Function 3 (0x3E): setReportRate
+    uint8_t pkt[20];
+    memset(pkt, 0, 20);
+    pkt[0] = kHIDPP_Long;
+    pkt[1] = s->deviceIndex;
+    pkt[2] = feat;
+    pkt[3] = 0x3E; // Function 3
+    pkt[4] = rateIndex;
+    
+    IOReturn ret = sendAndWaitWithTimeout(s, pkt, 100);
+    if (ret == kIOReturnSuccess) {
+        DDLogInfo(@"LogitechCIDActivator: Report Rate set to index %d (%d Hz)", rateIndex, rateIndexToHz(rateIndex));
+    } else {
+        DDLogError(@"LogitechCIDActivator: Failed to set Report Rate, error: 0x%x", ret);
+    }
+    return (ret == kIOReturnSuccess);
 }
 
 @end

@@ -278,6 +278,15 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
             @"keyCaptureEntry": @YES
         },
     ].mutableCopy;
+
+    [oneShotEffectsTable addObject:separatorEffectsTableEntry()];
+    [oneShotEffectsTable addObject:@{
+        @"ui": MFLocalizedString(@"effect.toggle-smart-shift", @"Toggle Scroll Wheel Mode"),
+        @"tool": MFLocalizedString(@"effect.toggle-smart-shift.hint", @"Toggle the scroll wheel between Ratchet and Free Spin mode."),
+        @"dict": @{
+            kMFActionDictKeyType: kMFActionDictTypeToggleSmartShift,
+        }
+    }];
     
     /// Insert button specific entry
     ///     Disabling this for now because I don't want to translate it and noone uses it.
