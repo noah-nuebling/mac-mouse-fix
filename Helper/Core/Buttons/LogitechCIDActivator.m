@@ -918,6 +918,15 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
 
 - (void)reactivateDeviceWithIOHIDDevice:(IOHIDDeviceRef)device {
     if (!device) return;
+    
+    static NSTimeInterval lastReactivateTime = 0;
+    NSTimeInterval now = [NSDate timeIntervalSinceReferenceDate];
+    if (now - lastReactivateTime < 2.0) {
+        DDLogInfo(@"LogitechCIDActivator: Skipping reactivation request for device because another reactivation occurred less than 2.0s ago.");
+        return;
+    }
+    lastReactivateTime = now;
+    
     sIsActivatingOrReactivating = YES;
     MFCIDDeviceState *s = stateForDevice(device);
     if (s) {

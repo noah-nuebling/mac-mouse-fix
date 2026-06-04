@@ -387,8 +387,16 @@ static BOOL isSiblingDevice(Device *selfDevice, Device *otherDevice) {
 - (void)setIsLogitechDiverted:(BOOL)isLogitechDiverted {
     if (_isLogitechDiverted != isLogitechDiverted) {
         _isLogitechDiverted = isLogitechDiverted;
-        [PointerSpeed setForAllDevices];
     }
+    NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(self.iohidDevice, CFSTR(kIOHIDVendorIDKey));
+    if (vid != nil && vid.intValue == 0x046D) { // Logitech
+        for (Device *d in [DeviceManager attachedDevices]) {
+            if (isSiblingDevice(self, d) && d->_isLogitechDiverted != isLogitechDiverted) {
+                d->_isLogitechDiverted = isLogitechDiverted;
+            }
+        }
+    }
+    [PointerSpeed setForAllDevices];
 }
 
 - (BOOL)supportsLogitechDPI {
@@ -409,8 +417,16 @@ static BOOL isSiblingDevice(Device *selfDevice, Device *otherDevice) {
 - (void)setSupportsLogitechDPI:(BOOL)supportsLogitechDPI {
     if (_supportsLogitechDPI != supportsLogitechDPI) {
         _supportsLogitechDPI = supportsLogitechDPI;
-        [PointerSpeed setForAllDevices];
     }
+    NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(self.iohidDevice, CFSTR(kIOHIDVendorIDKey));
+    if (vid != nil && vid.intValue == 0x046D) { // Logitech
+        for (Device *d in [DeviceManager attachedDevices]) {
+            if (isSiblingDevice(self, d) && d->_supportsLogitechDPI != supportsLogitechDPI) {
+                d->_supportsLogitechDPI = supportsLogitechDPI;
+            }
+        }
+    }
+    [PointerSpeed setForAllDevices];
 }
 
 - (int)logitechDPI {
@@ -430,6 +446,14 @@ static BOOL isSiblingDevice(Device *selfDevice, Device *otherDevice) {
 
 - (void)setLogitechDPI:(int)logitechDPI {
     _logitechDPI = logitechDPI;
+    NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(self.iohidDevice, CFSTR(kIOHIDVendorIDKey));
+    if (vid != nil && vid.intValue == 0x046D) { // Logitech
+        for (Device *d in [DeviceManager attachedDevices]) {
+            if (isSiblingDevice(self, d) && d->_logitechDPI != logitechDPI) {
+                d->_logitechDPI = logitechDPI;
+            }
+        }
+    }
 }
 
 - (int)logitechBatteryPercentage {
@@ -449,6 +473,14 @@ static BOOL isSiblingDevice(Device *selfDevice, Device *otherDevice) {
 
 - (void)setLogitechBatteryPercentage:(int)logitechBatteryPercentage {
     _logitechBatteryPercentage = logitechBatteryPercentage;
+    NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(self.iohidDevice, CFSTR(kIOHIDVendorIDKey));
+    if (vid != nil && vid.intValue == 0x046D) { // Logitech
+        for (Device *d in [DeviceManager attachedDevices]) {
+            if (isSiblingDevice(self, d) && d->_logitechBatteryPercentage != logitechBatteryPercentage) {
+                d->_logitechBatteryPercentage = logitechBatteryPercentage;
+            }
+        }
+    }
 }
 
 - (int)logitechBatteryStatus {
@@ -468,6 +500,14 @@ static BOOL isSiblingDevice(Device *selfDevice, Device *otherDevice) {
 
 - (void)setLogitechBatteryStatus:(int)logitechBatteryStatus {
     _logitechBatteryStatus = logitechBatteryStatus;
+    NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(self.iohidDevice, CFSTR(kIOHIDVendorIDKey));
+    if (vid != nil && vid.intValue == 0x046D) { // Logitech
+        for (Device *d in [DeviceManager attachedDevices]) {
+            if (isSiblingDevice(self, d) && d->_logitechBatteryStatus != logitechBatteryStatus) {
+                d->_logitechBatteryStatus = logitechBatteryStatus;
+            }
+        }
+    }
 }
 
 - (NSNumber *)uniqueID {
