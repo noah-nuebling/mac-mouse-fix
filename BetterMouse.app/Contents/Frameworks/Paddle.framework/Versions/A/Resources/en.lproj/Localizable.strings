@@ -1,0 +1,182 @@
+/* No comment provided by engineer. */
+"%@ - Checkout" = "%@ - Checkout";
+
+/* No comment provided by engineer. */
+"%@ can send me product updates and offers via email. You can opt-out at any time." = "%@ can send me product updates and offers via email. You can opt-out at any time.";
+
+/* No comment provided by engineer. */
+"%@%% off!" = "%@%% off!";
+
+/* No comment provided by engineer. */
+"A valid license code is required. Please try again." = "A valid license code is required. Please try again.";
+
+/* No comment provided by engineer. */
+"Activate" = "Activate";
+
+/* No comment provided by engineer. */
+"Activate License" = "Activate License";
+
+/* No comment provided by engineer. */
+"Already purchased a license? Fill in the form below and activate %@ instantly." = "Already purchased a license? Fill in the form below and activate %@ instantly.";
+
+/* No comment provided by engineer. */
+"An Error Occurred" = "An Error Occurred";
+
+/* No comment provided by engineer. */
+"An unexpected error occurred performing this action." = "An unexpected error occurred performing this action.";
+
+/* No comment provided by engineer. */
+"Buy Now" = "Buy Now";
+
+/* No comment provided by engineer. */
+"By %@" = "By %@";
+
+/* No comment provided by engineer. */
+"Cancel" = "Cancel";
+
+/* No comment provided by engineer. */
+"Close" = "Close";
+
+/* No comment provided by engineer. */
+"Continue Trial" = "Continue Trial";
+
+/* No comment provided by engineer. */
+"Deactivating License" = "Deactivating License";
+
+/* No comment provided by engineer. */
+"Email Address" = "Email Address";
+
+/* No comment provided by engineer. */
+"Enter License" = "Enter License";
+
+/* No comment provided by engineer. */
+"Error" = "Error";
+
+/* No comment provided by engineer. */
+"Forgotten your license key?" = "Forgotten your license key?";
+
+/* No comment provided by engineer. */
+"Join" = "Join";
+
+/* No comment provided by engineer. */
+"License Code" = "License Code";
+
+/* No comment provided by engineer. */
+"No Thanks!" = "No Thanks!";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"Order Complete" = "Order Complete";
+
+/* No comment provided by engineer. */
+"Order Success" = "Order Success";
+
+/* No comment provided by engineer. */
+"Please enter the email address used to purchase your license." = "Please enter the email address used to purchase your license.";
+
+/* No comment provided by engineer. */
+"Quit" = "Quit";
+
+/* No comment provided by engineer. */
+"Recover" = "Recover";
+
+/* No comment provided by engineer. */
+"Recover your %@ license" = "Recover your %@ license";
+
+/* No comment provided by engineer. */
+"Recovering your %@ license" = "Recovering your %@ license";
+
+/* No comment provided by engineer. */
+"Retry" = "Retry";
+
+/* No comment provided by engineer. */
+"Send anonymous usage information?" = "Send anonymous usage information?";
+
+/* No comment provided by engineer. */
+"Success" = "Success";
+
+/* No comment provided by engineer. */
+"Thank you for trying %@" = "Thank you for trying %@";
+
+/* No comment provided by engineer. */
+"Thank you for your order, you'll receive an email shortly." = "Thank you for your order, you'll receive an email shortly.";
+
+/* No comment provided by engineer. */
+"This copy of %@ is registered with the information below." = "This copy of %@ is registered with the information below.";
+
+/* No comment provided by engineer. */
+"Unable to deactivate license. Please try again later." = "Unable to deactivate license. Please try again later.";
+
+/* No comment provided by engineer. */
+"Unspecified error, please contact support." = "Unspecified error, please contact support.";
+
+/* No comment provided by engineer. */
+"Use a different email address" = "Use a different email address";
+
+/* No comment provided by engineer. */
+"We're already checking a license, please wait a moment." = "We're already checking a license, please wait a moment.";
+
+/* No comment provided by engineer. */
+"We're already deactivating a license, please wait a moment." = "We're already deactivating a license, please wait a moment.";
+
+/* No comment provided by engineer. */
+"We've sent details of any licenses for %@ to %@" = "We've sent details of any licenses for %1$@ to %2$@";
+
+/* No comment provided by engineer. */
+"Welcome to %@!" = "Welcome to %@!";
+
+/* No comment provided by engineer. */
+"Whoops! Something went wrong." = "Whoops! Something went wrong.";
+
+/* No comment provided by engineer. */
+"Would you like to send anonymous usage information to the developer of %@ to help improve the application?" = "Would you like to send anonymous usage information to the developer of %@ to help improve the application?";
+
+/* No comment provided by engineer. */
+"You have %d day remaining of your trial period." = "You have %d day remaining of your trial period.";
+
+/* No comment provided by engineer. */
+"You have %d days remaining of your trial period." = "You have %d days remaining of your trial period.";
+
+/* No comment provided by engineer. */
+"Your %@ License" = "Your %@ License";
+
+/* No comment provided by engineer. */
+"Your order is being processed" = "Your order is being processed";
+
+/* No comment provided by engineer. */
+"Your order is being processed. You'll receive an email soon." = "Your order is being processed. You'll receive an email soon.";
+
+/* No comment provided by engineer. */
+"Then %@/%ld days" = "Then %@/%ld days";
+
+/* No comment provided by engineer. */
+"Then %@/%ld months" = "Then %@/%ld months";
+
+/* No comment provided by engineer. */
+"Then %@/%ld weeks" = "Then %@/%ld weeks";
+
+/* No comment provided by engineer. */
+"Then %@/%ld years" = "Then %@/%ld years";
+
+/* No comment provided by engineer. */
+"Then %@/day" = "Then %@/day";
+
+/* No comment provided by engineer. */
+"Then %@/month" = "Then %@/month";
+
+/* No comment provided by engineer. */
+"Then %@/week" = "Then %@/week";
+
+/* No comment provided by engineer. */
+"Then %@/year" = "Then %@/year";
+
+/* No comment provided by engineer. */
+"after %ld days" = "after %ld days";
+
+/* No comment provided by engineer. */
+"after 1 day" = "after 1 day";
+
+/* No comment provided by engineer. */
+"License code has already been utilized" = "License code has already been utilized";

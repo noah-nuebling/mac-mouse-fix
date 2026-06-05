@@ -82,6 +82,11 @@ typedef struct {
 - (BOOL)getHiResWheelState:(LogitechHiResWheelState *)outState forDevice:(IOHIDDeviceRef)device;
 - (BOOL)setHiResWheelMode:(BOOL)enabled forDevice:(IOHIDDeviceRef)device;
 
+/// Firmware-level scroll direction control via 0x2121 setWheelMode.
+/// Sets the invert flag in firmware so scroll direction survives HiRes mode toggles.
+/// @param inverted YES to invert scroll direction, NO for normal
+- (BOOL)setFirmwareScrollDirection:(BOOL)inverted forDevice:(IOHIDDeviceRef)device;
+
 /// Report Rate control (feature 0x8060 / 0x8061)
 - (BOOL)getReportRateInfo:(LogitechReportRateInfo *)outInfo forDevice:(IOHIDDeviceRef)device;
 - (BOOL)setReportRate:(uint8_t)rateIndex forDevice:(IOHIDDeviceRef)device;

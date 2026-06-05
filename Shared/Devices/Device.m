@@ -363,6 +363,11 @@ static BOOL isSiblingDevice(Device *selfDevice, Device *otherDevice) {
     NSString *selfName = (__bridge NSString *)IOHIDDeviceGetProperty(selfDevice.iohidDevice, CFSTR(kIOHIDProductKey));
     NSString *otherName = (__bridge NSString *)IOHIDDeviceGetProperty(otherDevice.iohidDevice, CFSTR(kIOHIDProductKey));
     if (selfName != nil && otherName != nil && [selfName isEqualToString:otherName]) {
+        // Exclude generic receiver names to prevent false matching across different physical devices under the same receiver
+        NSString *lowerName = [selfName lowercaseString];
+        if ([lowerName containsString:@"receiver"]) {
+            return NO;
+        }
         return YES;
     }
     

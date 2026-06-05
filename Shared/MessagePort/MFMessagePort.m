@@ -425,6 +425,16 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
                 response = @NO;
             }
         }
+        xxx(@"setLogitechScrollDirection") {
+            Device *dev = currentLogitechDevice();
+            if (dev != nil && dev.iohidDevice != NULL) {
+                BOOL inverted = [(NSNumber *)payload boolValue];
+                BOOL success = [[LogitechCIDActivator shared] setFirmwareScrollDirection:inverted forDevice:dev.iohidDevice];
+                response = @(success);
+            } else {
+                response = @NO;
+            }
+        }
         xxx(@"getLogitechReportRate") {
             Device *dev = currentLogitechDevice();
             if (dev != nil && dev.iohidDevice != NULL) {

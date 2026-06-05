@@ -161,6 +161,7 @@ class PointerTabController: NSViewController {
     private var reportRatePopup: NSPopUpButton!
     private var confirmedReportRateSupport = false
     private var reportRateIndexMap: [Int: UInt8] = [:] // popup index → rate index
+    private var pendingSmartShiftTimer: Timer?
     
     private func loadAccelerationIdentifier() -> String {
         if config("Pointer.useSystemAcceleration") as? Bool ?? false {
@@ -310,7 +311,7 @@ class PointerTabController: NSViewController {
         autoShiftButton = NSButton(checkboxWithTitle: MFLocalizedString("pointer-tab.smartshift", comment: "SmartShift"), target: self, action: #selector(autoShiftChanged(_:)))
         settingsStack.addArrangedSubview(autoShiftButton)
         
-        thresholdSlider = NSSlider(value: 20, minValue: 1, maxValue: 100, target: self, action: #selector(thresholdChanged(_:)))
+        thresholdSlider = NSSlider(value: 20, minValue: 1, maxValue: 50, target: self, action: #selector(thresholdChanged(_:)))
         thresholdSlider.isContinuous = true
         thresholdLabel = NSTextField(labelWithString: "20")
         thresholdRow = makeSliderRow(title: MFLocalizedString("pointer-tab.threshold", comment: "Threshold"), slider: thresholdSlider, valueLabel: thresholdLabel)
@@ -572,11 +573,17 @@ class PointerTabController: NSViewController {
         }
         
         if supportsSmartShift {
-            let wheelMode = state["wheelMode"] as? Int ?? 1
-            wheelModeControl.selectedSegment = wheelMode == 0 ? 1 : 0
-            
-            let autoShift = state["autoShift"] as? Int ?? 0
+            let autoShift = config("Pointer.logitechAutoShift") as? Int ?? 0
             autoShiftButton.state = autoShift == 0 ? .off : .on
+            
+            let wheelMode = config("Pointer.logitechWheelMode") as? Int ?? 1
+            if autoShift != 0 {
+                wheelModeControl.selectedSegment = 0 // 强行设为 Ratchet 分段
+                wheelModeControl.isEnabled = false
+            } else {
+                wheelModeControl.selectedSegment = wheelMode == 0 ? 1 : 0
+                wheelModeControl.isEnabled = true
+            }
             
             let threshold = state["threshold"] as? Int ?? 20
             thresholdSlider.integerValue = threshold
@@ -627,17 +634,31 @@ class PointerTabController: NSViewController {
     
     @objc private func autoShiftChanged(_ sender: NSButton) {
         thresholdRow.isHidden = sender.state != .on
+        if sender.state == .on {
+            wheelModeControl.selectedSegment = 0 // 强行设为 Ratchet 分段
+            wheelModeControl.isEnabled = false   // 置灰
+        } else {
+            wheelModeControl.isEnabled = true    // 恢复
+        }
         sendSmartShiftSettings()
     }
     
     @objc private func thresholdChanged(_ sender: NSSlider) {
         thresholdLabel.stringValue = "\(sender.integerValue)"
-        sendSmartShiftSettings()
+        scheduleSendSmartShiftSettings()
     }
     
     @objc private func torqueChanged(_ sender: NSSlider) {
         torqueLabel.stringValue = "\(sender.integerValue)"
-        sendSmartShiftSettings()
+        scheduleSendSmartShiftSettings()
+    }
+    
+    private func scheduleSendSmartShiftSettings() {
+        NSLog("[PointerTab] scheduleSendSmartShiftSettings triggered")
+        pendingSmartShiftTimer?.invalidate()
+        pendingSmartShiftTimer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: false) { [weak self] _ in
+            self?.sendSmartShiftSettings()
+        }
     }
     
     private func sendSmartShiftSettings() {

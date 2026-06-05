@@ -67,6 +67,9 @@ typedef struct {
     uint8_t         lastErrorCode;
     int             lastNotifiedBatteryLevel;
     NSTimeInterval  lastBatteryQueryTime;
+    BOOL            isSmartShiftEnhanced;
+    uint8_t         featBattery;
+    BOOL            isBattery1004;
 } MFCIDDeviceState;
 
 static BOOL sIsActivatingOrReactivating = NO;
@@ -373,8 +376,11 @@ static int activateDevice(MFCIDDeviceState *s) {
     }
 
     s->featSmartShift = lookupFeature(s, 0x2111);
-    if (s->featSmartShift == 0) {
+    if (s->featSmartShift != 0) {
+        s->isSmartShiftEnhanced = YES;
+    } else {
         s->featSmartShift = lookupFeature(s, 0x2110);
+        s->isSmartShiftEnhanced = NO;
     }
     if (s->featSmartShift != 0) {
         DDLogInfo(@"[SMARTSHIFT] LogitechCIDActivator: Found SmartShift feature index 0x%02X on index 0x%02X", s->featSmartShift, activeIndex);
@@ -407,6 +413,20 @@ static int activateDevice(MFCIDDeviceState *s) {
                   s->featReportRate, s->featReportRateExt, activeIndex);
     } else {
         DDLogInfo(@"LogitechCIDActivator: Report Rate feature not supported on index 0x%02X", activeIndex);
+    }
+
+    // Probe Battery Features (0x1004 / 0x1000)
+    s->featBattery = lookupFeature(s, 0x1004);
+    s->isBattery1004 = YES;
+    if (s->featBattery == 0) {
+        s->featBattery = lookupFeature(s, 0x1000);
+        s->isBattery1004 = NO;
+    }
+    if (s->featBattery != 0) {
+        DDLogInfo(@"LogitechCIDActivator: Found Battery feature index 0x%02X (is 0x1004 Unified Battery: %d) on index 0x%02X",
+                  s->featBattery, s->isBattery1004, activeIndex);
+    } else {
+        DDLogWarn(@"LogitechCIDActivator: Battery features (0x1004/0x1000) not supported on index 0x%02X", activeIndex);
     }
 
     int diverted = 0;
@@ -501,13 +521,21 @@ static int activateDevice(MFCIDDeviceState *s) {
         }
     }
 
-    // Restore saved HiRes Scroll Wheel setting
+    // Restore saved HiRes Scroll Wheel setting + firmware scroll direction
     if (s->featHiResWheel != 0) {
         NSNumber *savedHiRes = (NSNumber *)config(@"Pointer.logitechHiResWheel");
         if (savedHiRes != nil) {
             BOOL hiResEnabled = [savedHiRes boolValue];
             DDLogInfo(@"LogitechCIDActivator: activateDevice applying saved HiRes Scroll setting: %d", hiResEnabled);
             [[LogitechCIDActivator shared] setHiResWheelMode:hiResEnabled forDevice:s->device];
+        } else {
+            // Device supports 0x2121 but user hasn't toggled HiRes yet.
+            // Write default config so Scroll.m can use its existence as a reliable
+            // indicator that firmware handles scroll direction inversion.
+            setConfig(@"Pointer.logitechHiResWheel", @NO);
+            commitConfig();
+            BOOL shouldInvert = [(NSNumber *)config(@"Scroll.reverseDirection") boolValue];
+            [[LogitechCIDActivator shared] setFirmwareScrollDirection:shouldInvert forDevice:s->device];
         }
     }
 
@@ -546,26 +574,79 @@ static uint8_t lookupFeature(MFCIDDeviceState *s, uint16_t featId) {
 
 static MFCIDDeviceState *stateForDevice(IOHIDDeviceRef dev) {
     LogitechCIDActivator *activator = [LogitechCIDActivator shared];
-    for (NSValue *v in activator.states) {
-        MFCIDDeviceState *s = (MFCIDDeviceState *)v.pointerValue;
-        if (s->device == dev || s->writeDevice == dev) {
-            return s;
-        }
-    }
-    // Fallback: match VID and PID
+    if (!dev) return NULL;
+    
+    NSString *name = (__bridge NSString *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductKey));
     NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDVendorIDKey));
     NSNumber *pid = (__bridge NSNumber *)IOHIDDeviceGetProperty(dev, CFSTR(kIOHIDProductIDKey));
-    if (vid != nil && pid != nil) {
+    
+    // 如果没有 VID，只能做精确指针匹配
+    if (vid == nil) {
+        for (NSValue *v in activator.states) {
+            MFCIDDeviceState *s = (MFCIDDeviceState *)v.pointerValue;
+            if (s->device == dev || s->writeDevice == dev) {
+                return s;
+            }
+        }
+        return NULL;
+    }
+    
+    // 搜集所有可能代表该物理鼠标（同名同VID）的状态
+    NSMutableArray<NSValue *> *candidates = [NSMutableArray array];
+    for (NSValue *v in activator.states) {
+        MFCIDDeviceState *s = (MFCIDDeviceState *)v.pointerValue;
+        BOOL isMatch = (s->device == dev || s->writeDevice == dev);
+        if (!isMatch && name != nil) {
+            NSString *sName = (__bridge NSString *)IOHIDDeviceGetProperty(s->device, CFSTR(kIOHIDProductKey));
+            NSNumber *sVid = (__bridge NSNumber *)IOHIDDeviceGetProperty(s->device, CFSTR(kIOHIDVendorIDKey));
+            if ([vid isEqualToNumber:sVid] && [name isEqualToString:sName]) {
+                isMatch = YES;
+            }
+        }
+        if (isMatch) {
+            [candidates addObject:v];
+        }
+    }
+    
+    // 如果同名同VID未找到，尝试同PID（以防名字由于驱动等原因不完全一致）
+    if (candidates.count == 0 && pid != nil) {
         for (NSValue *v in activator.states) {
             MFCIDDeviceState *s = (MFCIDDeviceState *)v.pointerValue;
             NSNumber *sVid = (__bridge NSNumber *)IOHIDDeviceGetProperty(s->device, CFSTR(kIOHIDVendorIDKey));
             NSNumber *sPid = (__bridge NSNumber *)IOHIDDeviceGetProperty(s->device, CFSTR(kIOHIDProductIDKey));
             if ([vid isEqualToNumber:sVid] && [pid isEqualToNumber:sPid]) {
-                return s;
+                [candidates addObject:v];
             }
         }
     }
-    return NULL;
+    
+    if (candidates.count == 0) return NULL;
+    
+    // 遍历候选状态，选出功能最强大的那个（即 0x2111 Enhanced 智能无阻拥有者优先，其次为 0x2110）
+    MFCIDDeviceState *bestState = NULL;
+    for (NSValue *v in candidates) {
+        MFCIDDeviceState *s = (MFCIDDeviceState *)v.pointerValue;
+        if (bestState == NULL) {
+            bestState = s;
+            continue;
+        }
+        
+        BOOL sHasSmartShift = (s->featSmartShift != 0);
+        BOOL bHasSmartShift = (bestState->featSmartShift != 0);
+        
+        if (sHasSmartShift && !bHasSmartShift) {
+            bestState = s;
+        } else if (sHasSmartShift && bHasSmartShift) {
+            // 两者均支持，优先选择 Enhanced 属性的
+            if (s->isSmartShiftEnhanced && !bestState->isSmartShiftEnhanced) {
+                bestState = s;
+            }
+        } else if (s->featReprogV4 != 0 && bestState->featReprogV4 == 0) {
+            bestState = s;
+        }
+    }
+    
+    return bestState;
 }
 
 static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
@@ -781,12 +862,8 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
     if (!s) return; // If we still don't have a state, we can't query battery/DPI safely
     
     // 1. Query battery
-    uint8_t featBattery = lookupFeature(s, 0x1004);
-    BOOL is1004 = YES;
-    if (featBattery == 0) {
-        featBattery = lookupFeature(s, 0x1000);
-        is1004 = NO;
-    }
+    uint8_t featBattery = s->featBattery;
+    BOOL is1004 = s->isBattery1004;
     
     if (featBattery != 0) {
         uint8_t pkt[20];
@@ -991,57 +1068,94 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
     }
     
     // 1. Get current mode
+    BOOL is2111 = s->isSmartShiftEnhanced;
     uint8_t pkt[20];
     memset(pkt, 0, 20);
     pkt[0] = kHIDPP_Long;
     pkt[1] = s->deviceIndex;
     pkt[2] = s->featSmartShift;
-    pkt[3] = 0x1E; // Function 1 (getStatus), software ID 0xE -> 0x1E
+    pkt[3] = is2111 ? 0x0E : 0x1E; // 0x2111 GetCapabilities is F0 (0x0E), 0x2110 GetStatus is F1 (0x1E)
     
-    DDLogInfo(@"[SMARTSHIFT] LogitechCIDActivator - toggleSmartShiftForDevice: Sending getStatus command...");
+    DDLogInfo(@"[SMARTSHIFT] LogitechCIDActivator - toggleSmartShiftForDevice: Sending get command (is2111: %d)...", is2111);
     IOReturn ret = sendAndWaitWithTimeout(s, pkt, 100);
     if (ret != kIOReturnSuccess) {
-        DDLogError(@"[SMARTSHIFT] LogitechCIDActivator - toggleSmartShiftForDevice failed to get current mode, error: 0x%x, lastError: 0x%02X", ret, s->lastErrorCode);
+        DDLogError(@"[SMARTSHIFT] LogitechCIDActivator - toggleSmartShiftForDevice failed to get current state, error: 0x%x, lastError: 0x%02X", ret, s->lastErrorCode);
         return NO;
     }
     
-    uint8_t currentMode = s->resp[4]; // 2 = SmartShift, 1 = Freespin, 0 = Ratchet
-    uint8_t newMode;
-    if (currentMode == 1) {
-        newMode = 2; // 优先切回 SmartShift (自动切换)
+    uint8_t newWheelMode = 1;
+    uint8_t newAutoShift = 0;
+    uint8_t newMode = 0;
+    uint8_t threshold = s->resp[5];
+    uint8_t torque = is2111 ? s->resp[7] : 0;
+    
+    if (is2111) {
+        uint8_t wheelMode = s->resp[4];
+        uint8_t autoShift = s->resp[5];
+        threshold = s->resp[6];
+        torque = s->resp[7];
+        
+        if (autoShift == 1) {
+            // 当前是 SmartShift，切换到固定无阻 (Freespin)
+            newWheelMode = 0;
+            newAutoShift = 0;
+        } else {
+            // 否则切回自动 SmartShift
+            newWheelMode = 1;
+            newAutoShift = 1;
+        }
+        DDLogInfo(@"[SMARTSHIFT] LogitechCIDActivator - toggleSmartShiftForDevice (is2111): Current wheelMode: %d, autoShift: %d. Toggling to wheelMode: %d, autoShift: %d",
+                  wheelMode, autoShift, newWheelMode, newAutoShift);
     } else {
-        newMode = 1; // 切到 Free-spin (固定无阻尼)
+        uint8_t currentMode = s->resp[4]; // 2 = SmartShift, 1 = Freespin, 0 = Ratchet
+        if (currentMode == 1) {
+            newMode = 2; // Freespin -> SmartShift
+        } else {
+            newMode = 1; // Ratchet/SmartShift -> Freespin
+        }
+        DDLogInfo(@"[SMARTSHIFT] LogitechCIDActivator - toggleSmartShiftForDevice (is2110): Current mode: %d. Toggling to mode: %d",
+                  currentMode, newMode);
     }
-    DDLogInfo(@"[SMARTSHIFT] LogitechCIDActivator - toggleSmartShiftForDevice: Current mode is %d. Toggling to %d...", currentMode, newMode);
     
     // 2. Set new mode
     memset(pkt, 0, 20);
     pkt[0] = kHIDPP_Long;
     pkt[1] = s->deviceIndex;
     pkt[2] = s->featSmartShift;
-    pkt[3] = 0x2E; // Function 2 (setStatus), software ID 0xE -> 0x2E
-    pkt[4] = newMode;
+    
+    if (is2111) {
+        // SmartShift Enhanced (0x2111): 写操作使用 Function 2 (0x2E)
+        // payload: [mode, threshold, torque]
+        // mode: 0=SmartShift/Auto, 1=Freespin, 2=Ratchet
+        uint8_t mode2111 = 0;
+        if (newAutoShift == 1) {
+            mode2111 = 0; // SmartShift auto
+        } else if (newWheelMode == 0) {
+            mode2111 = 1; // Freespin
+        } else {
+            mode2111 = 2; // Ratchet
+        }
+        pkt[3] = 0x2E; // Function 2
+        pkt[4] = mode2111;
+        pkt[5] = threshold;
+        pkt[6] = torque;
+    } else {
+        pkt[3] = 0x2E; // 0x2110 SetStatus is F2 (0x2E)
+        pkt[4] = newMode;
+        pkt[5] = threshold;
+    }
     
     ret = sendAndWaitWithTimeout(s, pkt, 100);
     if (ret != kIOReturnSuccess) {
-        DDLogWarn(@"[SMARTSHIFT] LogitechCIDActivator - toggleSmartShiftForDevice: Set mode to %d failed with error: 0x%x, lastError: 0x%02X", newMode, ret, s->lastErrorCode);
-        
-        // 如果之前尝试切回 SmartShift (2) 失败，可能是设备不支持自动切换，我们降级切回 Ratchet (0)
-        if (newMode == 2) {
-            newMode = 0;
-            pkt[4] = newMode;
-            DDLogInfo(@"[SMARTSHIFT] LogitechCIDActivator - toggleSmartShiftForDevice: Falling back to set mode to %d (Ratchet)...", newMode);
-            ret = sendAndWaitWithTimeout(s, pkt, 100);
-            if (ret != kIOReturnSuccess) {
-                DDLogError(@"[SMARTSHIFT] LogitechCIDActivator - toggleSmartShiftForDevice failed on fallback to %d, error: 0x%x, lastError: 0x%02X", newMode, ret, s->lastErrorCode);
-                return NO;
-            }
-        } else {
-            return NO;
-        }
+        DDLogWarn(@"[SMARTSHIFT] LogitechCIDActivator - toggleSmartShiftForDevice: Set state failed with error: 0x%x, lastError: 0x%02X", ret, s->lastErrorCode);
+        return NO;
     }
     
-    DDLogInfo(@"[SMARTSHIFT] LogitechCIDActivator - SmartShift mode toggled successfully from %d to %d", currentMode, newMode);
+    if (is2111) {
+        DDLogInfo(@"[SMARTSHIFT] LogitechCIDActivator - SmartShift mode toggled successfully (Enhanced). wheelMode: %d, autoShift: %d", newWheelMode, newAutoShift);
+    } else {
+        DDLogInfo(@"[SMARTSHIFT] LogitechCIDActivator - SmartShift mode toggled successfully (Basic) to mode: %d", newMode);
+    }
     return YES;
 }
 
@@ -1062,26 +1176,51 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
     }
     if (!s || s->featSmartShift == 0) return NO;
     
+    BOOL is2111 = s->isSmartShiftEnhanced;
+    outState->supportsTunableTorque = is2111;
+    
     uint8_t pkt[20];
     memset(pkt, 0, 20);
     pkt[0] = kHIDPP_Long;
     pkt[1] = s->deviceIndex;
     pkt[2] = s->featSmartShift;
-    pkt[3] = 0x0E; // Function 0
+    
+    if (is2111) {
+        // SmartShift Enhanced (0x2111): 读状态使用 Function 1 (0x1E)
+        pkt[3] = 0x1E;
+    } else {
+        // SmartShift Basic (0x2110): 读状态使用 Function 0 (0x0E)
+        pkt[3] = 0x0E;
+    }
     
     IOReturn ret = sendAndWaitWithTimeout(s, pkt, 100);
     if (ret != kIOReturnSuccess) {
-        pkt[3] = 0x1E; // Try fallback to Function 1
-        ret = sendAndWaitWithTimeout(s, pkt, 100);
-        if (ret != kIOReturnSuccess) {
-            return NO;
-        }
+        DDLogError(@"LogitechCIDActivator: getSmartShiftState failed with error 0x%x, lastError: 0x%02X", ret, s->lastErrorCode);
+        return NO;
     }
     
-    BOOL is2111 = (s->featSmartShift == lookupFeature(s, 0x2111));
-    outState->supportsTunableTorque = is2111;
-    
-    if (pkt[3] == 0x1E) {
+    if (is2111) {
+        // resp[4]: mode (0=SmartShift, 1=Freespin, 2=Ratchet)
+        // resp[5]: threshold
+        // resp[6]: torque
+        uint8_t currentMode = s->resp[4];
+        if (currentMode == 0) {
+            outState->autoShift = 1;
+            outState->wheelMode = 1;
+        } else if (currentMode == 1) {
+            outState->autoShift = 0;
+            outState->wheelMode = 0;
+        } else {
+            outState->autoShift = 0;
+            outState->wheelMode = 1;
+        }
+        outState->threshold = s->resp[5];
+        outState->torque = s->resp[6];
+        DDLogInfo(@"LogitechCIDActivator: getSmartShiftState (is2111) mode: %d, threshold: %d, torque: %d",
+                  currentMode, outState->threshold, outState->torque);
+    } else {
+        // resp[4]: mode (2=SmartShift, 1=Freespin, 0=Ratchet)
+        // resp[5]: threshold
         uint8_t currentMode = s->resp[4];
         if (currentMode == 2) {
             outState->autoShift = 1;
@@ -1093,17 +1232,10 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
             outState->autoShift = 0;
             outState->wheelMode = 1;
         }
-        outState->threshold = 20;
+        outState->threshold = s->resp[5];
         outState->torque = 0;
-    } else {
-        outState->wheelMode = s->resp[4];
-        outState->autoShift = s->resp[5];
-        outState->threshold = s->resp[6];
-        if (is2111) {
-            outState->torque = s->resp[7];
-        } else {
-            outState->torque = 0;
-        }
+        DDLogInfo(@"LogitechCIDActivator: getSmartShiftState (is2110) mode: %d, threshold: %d",
+                  currentMode, outState->threshold);
     }
     return YES;
 }
@@ -1125,45 +1257,52 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
     }
     if (!s || s->featSmartShift == 0) return NO;
     
+    BOOL is2111 = s->isSmartShiftEnhanced;
+    
+    // 计算硬件对应的模式值：
+    // Enhanced (0x2111): 0 = SmartShift, 1 = Freespin, 2 = Ratchet
+    // Basic (0x2110):    2 = SmartShift, 1 = Freespin, 0 = Ratchet
+    uint8_t mode = 0;
+    if (state.autoShift == 1) {
+        mode = is2111 ? 0 : 2;
+    } else if (state.wheelMode == 0) { // UI 中的 wheelMode 0=无阻，1=分段
+        mode = 1;
+    } else {
+        mode = is2111 ? 2 : 0;
+    }
+    uint8_t threshold = state.threshold;
+    if (threshold == 0) {
+        threshold = 20; // 默认值
+    } else if (threshold > 50) {
+        threshold = 50; // 限制在罗技硬件的最大允许值 50
+    }
+    
     uint8_t pkt[20];
     memset(pkt, 0, 20);
     pkt[0] = kHIDPP_Long;
     pkt[1] = s->deviceIndex;
     pkt[2] = s->featSmartShift;
-    pkt[3] = 0x1E; // Function 1
-    pkt[4] = state.wheelMode;
-    pkt[5] = state.autoShift;
-    pkt[6] = state.threshold;
     
-    BOOL is2111 = (s->featSmartShift == lookupFeature(s, 0x2111));
     if (is2111) {
-        pkt[7] = state.torque;
+        // SmartShift Enhanced (0x2111): 写操作使用 Function 2 (0x2E)
+        pkt[3] = 0x2E;
+        pkt[4] = mode;
+        pkt[5] = threshold;
+        pkt[6] = state.torque;
     } else {
-        pkt[7] = 0;
+        // SmartShift Basic (0x2110): 写操作使用 Function 1 (0x1E)
+        pkt[3] = 0x1E;
+        pkt[4] = mode;
+        pkt[5] = threshold;
     }
     
     IOReturn ret = sendAndWaitWithTimeout(s, pkt, 100);
     if (ret != kIOReturnSuccess) {
-        memset(pkt, 0, 20);
-        pkt[0] = kHIDPP_Long;
-        pkt[1] = s->deviceIndex;
-        pkt[2] = s->featSmartShift;
-        pkt[3] = 0x2E; // Function 2
-        
-        uint8_t mode = 0;
-        if (state.autoShift == 1) {
-            mode = 2;
-        } else if (state.wheelMode == 0) {
-            mode = 1;
-        } else {
-            mode = 0;
-        }
-        pkt[4] = mode;
-        ret = sendAndWaitWithTimeout(s, pkt, 100);
-        if (ret != kIOReturnSuccess && mode == 2) {
-            pkt[4] = 0;
-            ret = sendAndWaitWithTimeout(s, pkt, 100);
-        }
+        DDLogError(@"LogitechCIDActivator: setSmartShiftState failed with error 0x%x, lastError: 0x%02X (mode: %d, is2111: %d)",
+                   ret, s->lastErrorCode, mode, is2111);
+    } else {
+        DDLogInfo(@"LogitechCIDActivator: setSmartShiftState successfully set mode: %d, threshold: %d, torque: %d (is2111: %d)",
+                   mode, threshold, is2111 ? state.torque : 0, is2111);
     }
     return (ret == kIOReturnSuccess);
 }
@@ -1454,7 +1593,7 @@ static uint16_t rateIndexToHz(uint8_t idx) {
     pkt[3] = 0x1E; // Function 1
     
     if (sendAndWaitWithTimeout(s, pkt, 100) == kIOReturnSuccess) {
-        outState->hiResEnabled = (s->resp[4] & 0x04) != 0; // bit 2 = hiRes enabled
+        outState->hiResEnabled = (s->resp[4] & 0x02) != 0; // Bit 1 = hiRes enabled
         DDLogInfo(@"LogitechCIDActivator: HiRes Wheel state: enabled=%d, multiplier=%d", outState->hiResEnabled, outState->multiplier);
     } else {
         outState->hiResEnabled = NO;
@@ -1478,20 +1617,81 @@ static uint16_t rateIndexToHz(uint8_t idx) {
     if (!s || s->featHiResWheel == 0) return NO;
     
     // Function 2 (0x2E): setWheelMode
-    // bit 2 = target hiRes mode, bit 3 = hiRes valid (set to confirm the change)
+    // Bitmask flags in pkt[4]:
+    //   bit 0 = invert value,  bit 1 = invert valid
+    //   bit 2 = hiRes value,   bit 3 = hiRes valid
+    // CRITICAL: Always set inversion bits alongside hiRes bits to prevent
+    // firmware from resetting scroll direction when toggling HiRes mode.
+    BOOL shouldInvert = [(NSNumber *)config(@"Scroll.reverseDirection") boolValue];
+    
+    uint8_t flags = 0;
+    if (enabled) {
+        flags |= 0x02; // Bit 1: HiresSmoothResolution (15x)
+        if (shouldInvert) {
+            flags |= 0x04; // Bit 2: HiresSmoothInvert (硬件反转方向)
+        }
+    }
+    
     uint8_t pkt[20];
     memset(pkt, 0, 20);
     pkt[0] = kHIDPP_Long;
     pkt[1] = s->deviceIndex;
     pkt[2] = s->featHiResWheel;
     pkt[3] = 0x2E; // Function 2
-    pkt[4] = enabled ? 0x0C : 0x08; // bit 2 = mode, bit 3 = valid
+    pkt[4] = flags;
     
     IOReturn ret = sendAndWaitWithTimeout(s, pkt, 100);
     if (ret == kIOReturnSuccess) {
-        DDLogInfo(@"LogitechCIDActivator: HiRes Scroll Wheel mode set to %d", enabled);
+        DDLogInfo(@"LogitechCIDActivator: HiRes Scroll Wheel mode set to %d, invert: %d (flags: 0x%02X)", enabled, shouldInvert, flags);
     } else {
         DDLogError(@"LogitechCIDActivator: Failed to set HiRes Scroll Wheel mode, error: 0x%x", ret);
+    }
+    return (ret == kIOReturnSuccess);
+}
+
+- (BOOL)setFirmwareScrollDirection:(BOOL)inverted forDevice:(IOHIDDeviceRef)device {
+    MFCIDDeviceState *s = stateForDevice(device);
+    if (!s) {
+        NSString *name = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
+        if (name != nil) {
+            for (NSValue *v in _states) {
+                MFCIDDeviceState *otherS = (MFCIDDeviceState *)v.pointerValue;
+                NSString *otherName = (__bridge NSString *)IOHIDDeviceGetProperty(otherS->device, CFSTR(kIOHIDProductKey));
+                if ([name isEqualToString:otherName]) { s = otherS; break; }
+            }
+        }
+    }
+    if (!s || s->featHiResWheel == 0) return NO;
+    
+    // Function 2 (0x2E): setWheelMode
+    // CRITICAL: MX Anywhere 3S firmware treats the entire byte as a complete write.
+    // Any bit pair with valid=0 will have its value reset to 0 by firmware.
+    // We MUST always write ALL valid+value bits to avoid clearing hiRes state
+    // when setting invert, and vice versa.
+    // Read hiRes state from MMF config (not firmware — firmware may already be stale).
+    BOOL hiResEnabled = [(NSNumber *)config(@"Pointer.logitechHiResWheel") boolValue];
+    
+    uint8_t flags = 0;
+    if (hiResEnabled) {
+        flags |= 0x02; // Bit 1: HiresSmoothResolution (15x)
+        if (inverted) {
+            flags |= 0x04; // Bit 2: HiresSmoothInvert
+        }
+    }
+    
+    uint8_t pkt[20];
+    memset(pkt, 0, 20);
+    pkt[0] = kHIDPP_Long;
+    pkt[1] = s->deviceIndex;
+    pkt[2] = s->featHiResWheel;
+    pkt[3] = 0x2E; // Function 2
+    pkt[4] = flags;
+    
+    IOReturn ret = sendAndWaitWithTimeout(s, pkt, 100);
+    if (ret == kIOReturnSuccess) {
+        DDLogInfo(@"LogitechCIDActivator: Firmware scroll direction set to %@ (hiRes: %d, flags: 0x%02X)", inverted ? @"inverted" : @"normal", hiResEnabled, flags);
+    } else {
+        DDLogError(@"LogitechCIDActivator: Failed to set firmware scroll direction, error: 0x%x", ret);
     }
     return (ret == kIOReturnSuccess);
 }

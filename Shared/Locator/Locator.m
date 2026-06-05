@@ -26,6 +26,9 @@
 //    return NSBundle.mainBundle.bundleIdentifier;
 //}
 + (NSBundle *)helperBundle {
+    if (runningHelper()) {
+        return NSBundle.mainBundle;
+    }
     NSBundle *hhh;
     NSBundle *helperBundle;
     [self getBundlesForMainApp:&hhh helper:&helperBundle];
@@ -33,6 +36,9 @@
     return helperBundle;
 }
 + (NSBundle *)mainAppBundle {
+    if (runningMainApp()) {
+        return NSBundle.mainBundle;
+    }
     NSBundle *mainAppBundle;
     NSBundle *hhh;
     [self getBundlesForMainApp:&mainAppBundle helper:&hhh];

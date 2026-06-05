@@ -111,6 +111,15 @@ class ScrollTabController: NSViewController {
         reverseDirection.bindingTarget <~ reverseDirectionToggle.reactive.boolValues
         reverseDirectionToggle.reactive.boolValue <~ reverseDirection.producer
         
+        /// Sync firmware scroll direction for Logitech devices that support 0x2121
+        /// The firmware's invert flag must match MMF's reverseDirection config at all times,
+        /// otherwise toggling HiRes mode will reset the firmware's invert flag to 0.
+        reverseDirection.producer.startWithValues { inverted in
+            DispatchQueue.global(qos: .userInitiated).async {
+                _ = MFMessagePort.sendMessage("setLogitechScrollDirection", withPayload: NSNumber(value: inverted), waitForReply: false)
+            }
+        }
+        
         /// Scroll speed
         scrollSpeed.bindingTarget <~ speedPicker.reactive.selectedIdentifiers.map({ identifier in
             identifier!.rawValue

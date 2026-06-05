@@ -6,11 +6,11 @@
 	<dict>
 		<key>Resources/AppIconRound.icns</key>
 		<data>
-		vVHxw5LTX1Q89s+kG13ZvN8puDM=
+		qoH0houOdRpqEE1Jpu1SSCPPTf8=
 		</data>
 		<key>Resources/Assets.car</key>
 		<data>
-		vJmHKMmusymp2biCRy4RpzitYbg=
+		H7tGBeEB+iy2VIEK9IJeYO+ZiFo=
 		</data>
 		<key>Resources/Base.lproj/MenuBarItem.nib</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/Info.plist</key>
 		<data>
-		enN/SdUZlCKX/Lj8nkMbx9gF+YE=
+		Hz8HRF1IUkqFoXBgc5ugu08W9uE=
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/Resources/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -30,11 +30,11 @@
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeDirectory</key>
 		<data>
-		6RRNrzMsLluCKULZoIH2O/DyMmw=
+		49ag4WjqpSYuAy24Wl7p89xtMts=
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeRequirements</key>
 		<data>
-		4pdCVPusLfVRUGfVLP7sEzO58UY=
+		OnX22wWFKRSOFN1+obRynMCeyXM=
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeResources</key>
 		<data>
@@ -42,7 +42,7 @@
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeSignature</key>
 		<data>
-		ViXgQBZ33p4tns6dUWffHas588U=
+		2jmj7l5rSw0yVb/vlWAYkK/YBwk=
 		</data>
 		<key>Resources/InformationDensity.md</key>
 		<data>
@@ -144,7 +144,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			oguEj7XPZz4RAEho6es0t3IAKy0=
+			QLMZFpFG6v+A1EGL0xzFv4SXGU0=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -400,7 +400,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ai9vOMaY11LK4DOBs6R+MHpasyE=
+			E0HVN464wqHA/EOORuM6+9XlenY=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -457,23 +457,23 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			9t/Ardt/PRXrOumvRhpGhJJkNEU=
+			Pr3e+QFHQ3D2oyoywLeBrPU4s88=
 			</data>
 			<key>requirement</key>
-			<string>identifier "com.apple.dt.runtime.swiftConcurrency" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: shawnrain@foxmail.com (ZQG28N5AK8)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
+			<string>cdhash H"3ebddef901474370f6a32a32c0b781acf538b3cf" or cdhash H"2df8f77ca131cd10508992f453212709099ea525"</string>
 		</dict>
 		<key>Resources/AppIconRound.icns</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			PWXSB5SEbWuK7f4mi49BQANc2vvLjXlPI+R8iz7BeVA=
+			0xbasWYQ9kpcwjFBCPpn32MNg2pIiIdHirTcAJtEFvY=
 			</data>
 		</dict>
 		<key>Resources/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			TVpQo7qoiG0IHUdq4yivQm1MsH/7dPpdJbmhxYDdHRY=
+			NQ9s6LLEpzy6z/P28anBIluOnOlJCU4j1QJDrspNRRQ=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/MenuBarItem.nib</key>
@@ -494,7 +494,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			QFJTUy1MlepZ1531s9wTsSWz/m4uWZSRw0wH3uRnD9Y=
+			+IrmNfz0GNkTihvA/SUypfgOodWUJps3zMzx1/2k+gM=
 			</data>
 		</dict>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/Resources/PrivacyInfo.xcprivacy</key>
@@ -508,14 +508,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Cd2R24mc/fIbvsNOjEWyLqkkPwa6giQeEXMAOmhPn0g=
+			rhhJ55wk7Q0o4bIFaLmJsfmSFLnVQgKnBpV4/k+fT7U=
 			</data>
 		</dict>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeRequirements</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			EydSeYjC9yJ1eU9xmHaZrQBjhU9IAruH2M9Rnreil9I=
+			mHkgkE6rZQ51eIwFSqCwUk5qgL/HGqMt+NI3phdD+YY=
 			</data>
 		</dict>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeResources</key>
@@ -529,7 +529,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			zQWz7aQ32Pczuv2VrzXwYzSu7Gi/81rPeVVNpsM6dpc=
+			47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
 			</data>
 		</dict>
 		<key>Resources/InformationDensity.md</key>
@@ -650,7 +650,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			eMgn13LGscjAx2htwD6QSrp/XoCqjHZew6CFGhDzxVM=
+			e0D7JEmqxhp04qkcM7izhe4sjwkO8aA94dPZhCi2HwE=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -909,7 +909,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			3LM7k1P2fkiE+8AdLbdClFoXUmW3dBgbHHXTcWwiaxc=
+			PVP4LqF+zkI1QC6hiaAKRsjqJQeQYTr92uGGkg6lY/4=
 			</data>
 			<key>optional</key>
 			<true/>
