@@ -354,7 +354,7 @@ static int activateDevice(MFCIDDeviceState *s) {
         pkt[0]=kHIDPP_Long; pkt[1]=testIndex; pkt[2]=0x00; pkt[3]=0x0E;
         pkt[4]=0x00; pkt[5]=0x01; // Feature 0x0001 (Feature Set)
         
-        if (sendAndWaitWithTimeout(s, pkt, 10) == kIOReturnSuccess && s->resp[2] == 0x00) {
+        if (sendAndWaitWithTimeout(s, pkt, 100) == kIOReturnSuccess && s->resp[2] == 0x00) {
             activeIndex = testIndex;
             DDLogInfo(@"LogitechCIDActivator: Found active device index 0x%02X on '%@'", activeIndex, name);
             break;
@@ -561,7 +561,7 @@ static uint8_t lookupFeature(MFCIDDeviceState *s, uint16_t featId) {
     pkt[3] = 0x0E; // GetFeature command (function 0, software ID 0x0E)
     pkt[4] = (featId >> 8) & 0xFF;
     pkt[5] = featId & 0xFF;
-    if (sendAndWaitWithTimeout(s, pkt, 15) != kIOReturnSuccess) {
+    if (sendAndWaitWithTimeout(s, pkt, 100) != kIOReturnSuccess) {
         return 0;
     }
     return s->resp[4];

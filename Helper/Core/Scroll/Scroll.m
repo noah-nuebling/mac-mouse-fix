@@ -221,24 +221,40 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     bool isDiagonal = scrollDeltaAxis1 != 0 && scrollDeltaAxis2 != 0;
     
     IOHIDDeviceRef sendingDev = CGEventGetSendingDevice(event);
-    NSNumber *dbgVendorID = nil;
-    NSString *dbgProductName = nil;
-    BOOL isHiResLogitech = NO;
-    if (sendingDev != NULL) {
-        dbgVendorID = (__bridge NSNumber *)IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDVendorIDKey));
-        dbgProductName = (__bridge NSString *)IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDProductKey));
-        int vid = [dbgVendorID intValue];
+    
+    static IOHIDDeviceRef cachedDev = NULL;
+    static BOOL cachedIsHiResLogitech = NO;
+    static BOOL cachedIsApple = NO;
+    static BOOL cachedIsInternal = NO;
+    static BOOL cachedFirmwareHandlesInvert = NO;
+    
+    if (sendingDev != NULL && sendingDev != cachedDev) {
+        NSNumber *vendorID = (__bridge NSNumber *)IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDVendorIDKey));
+        NSString *productName = (__bridge NSString *)IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDProductKey));
+        
+        cachedIsApple = (vendorID != nil && [vendorID intValue] == 1452);
+        cachedIsInternal = (productName != nil && [productName isEqualToString:@"Apple Internal Keyboard / Trackpad"]);
+        int vid = vendorID ? [vendorID intValue] : 0;
         BOOL isLogitech = (vid == 1133 || vid == 13652 || vid == 0x046D || vid == 0x046d);
+        
+        cachedFirmwareHandlesInvert = NO;
         if (isLogitech) {
-            NSNumber *savedHiRes = (NSNumber *)config(@"Pointer.logitechHiResWheel");
-            if (savedHiRes != nil && [savedHiRes boolValue]) {
-                isHiResLogitech = YES;
-            }
+            NSNumber *hiResConfig = (NSNumber *)config(@"Pointer.logitechHiResWheel");
+            cachedFirmwareHandlesInvert = (hiResConfig != nil && [hiResConfig boolValue]);
         }
+        cachedIsHiResLogitech = cachedFirmwareHandlesInvert;
+        cachedDev = sendingDev;
     }
-    int64_t isNatural = CGEventGetIntegerValueField(event, (CGEventField)137);
-    DDLogInfo(@"[DEBUG eventTapCallback] type: %d, isPixelBased: %lld, isHiResLogitech: %d, scrollPhase: %lld, sendingDev: %p, Vid: %@, Product: %@, invertDir: %d, delta1: %lld, delta2: %lld, isNatural: %lld",
-              (int)type, isPixelBased, isHiResLogitech, scrollPhase, sendingDev, dbgVendorID, dbgProductName, (int)ScrollConfig.shared.u_invertDirection, scrollDeltaAxis1, scrollDeltaAxis2, isNatural);
+    
+    BOOL isHiResLogitech = cachedIsHiResLogitech;
+    
+    if (runningPreRelease()) {
+        int64_t isNatural = CGEventGetIntegerValueField(event, (CGEventField)137);
+        NSNumber *dbgVendorID = sendingDev ? (__bridge NSNumber *)IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDVendorIDKey)) : nil;
+        NSString *dbgProductName = sendingDev ? (__bridge NSString *)IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDProductKey)) : nil;
+        DDLogDebug(@"[DEBUG eventTapCallback] type: %d, isPixelBased: %lld, isHiResLogitech: %d, scrollPhase: %lld, sendingDev: %p, Vid: %@, Product: %@, invertDir: %d, delta1: %lld, delta2: %lld, isNatural: %lld",
+                  (int)type, isPixelBased, isHiResLogitech, scrollPhase, sendingDev, dbgVendorID, dbgProductName, (int)ScrollConfig.shared.u_invertDirection, scrollDeltaAxis1, scrollDeltaAxis2, isNatural);
+    }
               
     if (isPixelBased != 0
         || isHiResLogitech
@@ -246,51 +262,36 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         || drawingTabletID != 0 /// Untested
         || isDiagonal) {
         
-        if (drawingTabletID == 0) {
-            IOHIDDeviceRef sendingDev = CGEventGetSendingDevice(event);
-            if (sendingDev != NULL) {
-                NSNumber *vendorID = (__bridge NSNumber *)IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDVendorIDKey));
-                NSString *productName = (__bridge NSString *)IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDProductKey));
-                
-                BOOL isApple = (vendorID != nil && [vendorID intValue] == 1452);
-                BOOL isInternal = (productName != nil && [productName isEqualToString:@"Apple Internal Keyboard / Trackpad"]);
-                int vid = vendorID ? [vendorID intValue] : 0;
-                BOOL isLogitech = (vid == 1133 || vid == 13652 || vid == 0x046D || vid == 0x046d);
-                
-                // For Logitech devices with 0x2121 (HiRes Wheel) support, firmware handles
-                // scroll direction inversion directly via setWheelMode bitmask (set in
-                // activateDevice, setHiResWheelMode, and setFirmwareScrollDirection).
-                // Applying software inversion here would double-invert.
-                // Older Logitech mice without 0x2121 still need software inversion.
-                // Use config("Pointer.logitechHiResWheel") existence as a proxy for 0x2121 support.
-                BOOL firmwareHandlesInvert = NO;
-                if (isLogitech) {
-                    NSNumber *hiResConfig = (NSNumber *)config(@"Pointer.logitechHiResWheel");
-                    firmwareHandlesInvert = (hiResConfig != nil && [hiResConfig boolValue]);
-                }
-                
-                if (!isApple && !isInternal && !firmwareHandlesInvert) {
-                    if (ScrollConfig.shared.u_invertDirection == kMFScrollInversionInverted) {
-                        double d1 = CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis1);
-                        double dp1 = CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis1);
-                        double df1 = CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1);
-                        CGEventSetDoubleValueField(event, kCGScrollWheelEventDeltaAxis1, -d1);
-                        CGEventSetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis1, -dp1);
-                        CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, -df1);
-                        
-                        double d2 = CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis2);
-                        double dp2 = CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis2);
-                        double df2 = CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2);
-                        CGEventSetDoubleValueField(event, kCGScrollWheelEventDeltaAxis2, -d2);
-                        CGEventSetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis2, -dp2);
-                        CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, -df2);
-                        DDLogInfo(@"[Scroll.m eventTapCallback] HiRes event intercepted and inverted! d1: %f, d2: %f", d1, d2);
+        if (drawingTabletID == 0 && sendingDev != NULL) {
+            BOOL isApple = cachedIsApple;
+            BOOL isInternal = cachedIsInternal;
+            BOOL firmwareHandlesInvert = cachedFirmwareHandlesInvert;
+            
+            if (!isApple && !isInternal && !firmwareHandlesInvert) {
+                if (ScrollConfig.shared.u_invertDirection == kMFScrollInversionInverted) {
+                    double d1 = CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis1);
+                    double dp1 = CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis1);
+                    double df1 = CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1);
+                    CGEventSetDoubleValueField(event, kCGScrollWheelEventDeltaAxis1, -d1);
+                    CGEventSetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis1, -dp1);
+                    CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1, -df1);
+                    
+                    double d2 = CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis2);
+                    double dp2 = CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis2);
+                    double df2 = CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2);
+                    CGEventSetDoubleValueField(event, kCGScrollWheelEventDeltaAxis2, -d2);
+                    CGEventSetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis2, -dp2);
+                    CGEventSetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2, -df2);
+                    if (runningPreRelease()) {
+                        DDLogDebug(@"[Scroll.m eventTapCallback] HiRes event intercepted and inverted! d1: %f, d2: %f", d1, d2);
                     }
                 }
             }
         }
         
-        DDLogInfo(@"[Scroll.m eventTapCallback] Bypassing scroll event");
+        if (runningPreRelease()) {
+            DDLogDebug(@"[Scroll.m eventTapCallback] Bypassing scroll event");
+        }
         return event;
     }
     
