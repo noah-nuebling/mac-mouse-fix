@@ -331,7 +331,7 @@ static IOReturn sendAndWaitWithTimeout(MFCIDDeviceState *s, uint8_t *pkt, int ma
 }
 
 static IOReturn sendAndWait(MFCIDDeviceState *s, uint8_t *pkt) {
-    return sendAndWaitWithTimeout(s, pkt, 100);
+    return sendAndWaitWithTimeout(s, pkt, 30);
 }
 
 static int activateDevice(MFCIDDeviceState *s) {
@@ -351,7 +351,7 @@ static int activateDevice(MFCIDDeviceState *s) {
         pkt[0]=kHIDPP_Long; pkt[1]=testIndex; pkt[2]=0x00; pkt[3]=0x0E;
         pkt[4]=0x00; pkt[5]=0x01; // Feature 0x0001 (Feature Set)
         
-        if (sendAndWaitWithTimeout(s, pkt, 100) == kIOReturnSuccess && s->resp[2] == 0x00) {
+        if (sendAndWaitWithTimeout(s, pkt, 10) == kIOReturnSuccess && s->resp[2] == 0x00) {
             activeIndex = testIndex;
             DDLogInfo(@"LogitechCIDActivator: Found active device index 0x%02X on '%@'", activeIndex, name);
             break;
@@ -533,7 +533,7 @@ static uint8_t lookupFeature(MFCIDDeviceState *s, uint16_t featId) {
     pkt[3] = 0x0E; // GetFeature command (function 0, software ID 0x0E)
     pkt[4] = (featId >> 8) & 0xFF;
     pkt[5] = featId & 0xFF;
-    if (sendAndWaitWithTimeout(s, pkt, 100) != kIOReturnSuccess) {
+    if (sendAndWaitWithTimeout(s, pkt, 15) != kIOReturnSuccess) {
         return 0;
     }
     return s->resp[4];
@@ -795,7 +795,7 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
         pkt[1] = s->deviceIndex;
         pkt[2] = featBattery;
         pkt[3] = is1004 ? 0x1E : 0x0E; // Function 1 for 0x1004, Function 0 for 0x1000 (with software ID 0x0E)
-        if (sendAndWaitWithTimeout(s, pkt, 100) == kIOReturnSuccess) {
+        if (sendAndWaitWithTimeout(s, pkt, 30) == kIOReturnSuccess) {
             device.logitechBatteryPercentage = s->resp[4];
             device.logitechBatteryStatus = s->resp[6];
             DDLogInfo(@"LogitechCIDActivator: Battery query successful. Percentage: %d%%, Status: %d", device.logitechBatteryPercentage, device.logitechBatteryStatus);
@@ -864,7 +864,7 @@ static IOHIDDeviceRef findVendorInterface(IOHIDDeviceRef mouseDev) {
         // 0x2201: Function 2 (GetSensorDpi) = 0x2E, 0x2202: Function 5 (GetSensorDpiParameters) = 0x5E
         pkt[3] = isExtendedDPI ? 0x5E : 0x2E;
         pkt[4] = 0; // Sensor index 0
-        if (sendAndWaitWithTimeout(s, pkt, 100) == kIOReturnSuccess) {
+        if (sendAndWaitWithTimeout(s, pkt, 30) == kIOReturnSuccess) {
             DDLogInfo(@"LogitechCIDActivator: DPI raw response: [%02x %02x %02x %02x %02x %02x %02x %02x %02x %02x]",
                       s->resp[0], s->resp[1], s->resp[2], s->resp[3], s->resp[4], s->resp[5], s->resp[6], s->resp[7], s->resp[8], s->resp[9]);
             int dpi = (s->resp[5] << 8) | s->resp[6];
