@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **Tháng 6 2026**
 
+- 🇺🇸&nbsp;Aaron&nbsp;K - "Awesome project!"
 - 🇺🇸&nbsp;Paolo&nbsp;Enriquez
 - 🇺🇸&nbsp;Siddhartha&nbsp;Verma
 - 🇩🇪&nbsp;Tobias - "Thank you for that great app. Greating from Eppingen, Germany"
