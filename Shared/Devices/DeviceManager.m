@@ -32,7 +32,8 @@
 
 #import "SharedUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
-#import "LogitechCIDActivator.h"
+#import "LogitechActivator.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation DeviceManager
 

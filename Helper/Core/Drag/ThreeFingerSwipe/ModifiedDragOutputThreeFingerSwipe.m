@@ -33,6 +33,10 @@ static BOOL _verticalIsUpward;
 /// for the current downward gesture.
 static BOOL _appExposeSymbolicHotKeyFired;
 
+/// Whether the one-shot Mission Control symbolic-hotkey fallback has already fired
+/// for the current upward gesture.
+static BOOL _missionControlSymbolicHotKeyFired;
+
 /// Interface funcs
 
 + (void)initializeWithDragState:(ModifiedDragState *)dragStateRef {
@@ -56,6 +60,7 @@ static BOOL _appExposeSymbolicHotKeyFired;
     if (_drag->usageAxis == kMFAxisVertical) {
         _verticalIsUpward              = (_drag->originOffset.y < 0);
         _appExposeSymbolicHotKeyFired  = NO;
+        _missionControlSymbolicHotKeyFired = NO;
     }
     
     /// Freeze pointer
@@ -99,6 +104,10 @@ static BOOL _appExposeSymbolicHotKeyFired;
             double delta = deltaY * threeFingerScaleV; /// deltaY is negative for upward mouse movement
             [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeVertical phase:eventPhase invertedFromDevice:_drag->naturalDirection];
             
+            if (!_missionControlSymbolicHotKeyFired) {
+                _missionControlSymbolicHotKeyFired = YES;
+                [SymbolicHotKeys post:(CGSSymbolicHotKey)kMFSHMissionControl];
+            }
         } else {
             
             /// Swipe DOWN → App Exposé

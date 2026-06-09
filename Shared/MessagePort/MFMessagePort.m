@@ -47,7 +47,8 @@
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "AccessibilityCheck.h"
 #import "KeyCaptureMode.h"
-#import "LogitechCIDActivator.h"
+#import "LogitechActivator.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 #import <IOKit/hid/IOHIDKeys.h>
 #endif
 

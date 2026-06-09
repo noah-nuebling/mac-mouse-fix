@@ -17,7 +17,8 @@
 #import "SharedUtility.h"
 #import <Cocoa/Cocoa.h>
 #import "Logging.h"
-#import "LogitechCIDActivator.h"
+#import "LogitechActivator.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "PointerSpeed.h"
 
 /// Old notes: (basically all outdated as of 28.08.2024)

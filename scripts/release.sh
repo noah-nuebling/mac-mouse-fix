@@ -31,10 +31,14 @@ if [ -z "$SIGN_TOOL" ] || [ ! -x "$SIGN_TOOL" ]; then
 fi
 
 # 检查 DMG 是否存在
-if [ ! -f "$DMG_ARM64" ] || [ ! -f "$DMG_X86_64" ]; then
-    echo "错误: 找不到 DMG 文件。"
-    echo "请确保 $DMG_ARM64 和 $DMG_X86_64 都存在于 $RELEASE_DIR 文件夹下"
+if [ ! -f "$DMG_ARM64" ]; then
+    echo "错误: 找不到 arm64 DMG 文件：$DMG_ARM64"
     exit 1
+fi
+
+HAS_X86=0
+if [ -f "$DMG_X86_64" ]; then
+    HAS_X86=1
 fi
 
 echo "--- 开始为版本 $VERSION 准备发布 ---"
@@ -55,18 +59,30 @@ fi
 echo "提取到的 Build 号 (sparkle:version): $SPARKLE_VERSION"
 
 # 3. 生成签名与获取大小
-echo "正在为双架构生成 EdDSA 签名..."
+echo "正在为可用架构生成 EdDSA 签名..."
 SIG_ARM64=$($SIGN_TOOL "$DMG_ARM64")
-SIG_X86_64=$($SIGN_TOOL "$DMG_X86_64")
+SIG_X86_64=""
+if [ "$HAS_X86" -eq 1 ]; then
+    SIG_X86_64=$($SIGN_TOOL "$DMG_X86_64")
+fi
 
-if [ -z "$SIG_ARM64" ] || [ -z "$SIG_X86_64" ]; then
+if [ -z "$SIG_ARM64" ] || { [ "$HAS_X86" -eq 1 ] && [ -z "$SIG_X86_64" ]; }; then
     echo "错误: 签名生成失败，请确保 Sparkle 私钥已配置。"
     exit 1
 fi
 
 SIZE_ARM64=$(stat -f%z "$DMG_ARM64")
-SIZE_X86_64=$(stat -f%z "$DMG_X86_64")
+SIZE_X86_64=0
+if [ "$HAS_X86" -eq 1 ]; then
+    SIZE_X86_64=$(stat -f%z "$DMG_X86_64")
+fi
 PUB_DATE=$(date -R)
+
+echo "arm64 签名: $SIG_ARM64, 大小: $SIZE_ARM64"
+if [ "$HAS_X86" -eq 1 ]; then
+    echo "x86_64 签名: $SIG_X86_64, 大小: $SIZE_X86_64"
+fi
+echo "发布日期: $PUB_DATE"
 
 URL_ARM64="https://github.com/ShawnRn/mac-mouse-fix/releases/download/v$VERSION/Mac_Mouse_Fix_${VERSION}_arm64.dmg"
 URL_X86_64="https://github.com/ShawnRn/mac-mouse-fix/releases/download/v$VERSION/Mac_Mouse_Fix_${VERSION}_x86_64.dmg"
@@ -90,7 +106,15 @@ cat <<EOF > "$APPCAST_FILE"
             <sparkle:shortVersionString>$VERSION</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
             <enclosure url="$URL_ARM64" type="application/octet-stream" sparkle:os="macos" sparkle:nativeArchitecture="arm64" $SIG_ARM64/>
+EOF
+
+if [ "$HAS_X86" -eq 1 ]; then
+    cat <<EOF >> "$APPCAST_FILE"
             <enclosure url="$URL_X86_64" type="application/octet-stream" sparkle:os="macos" sparkle:nativeArchitecture="x86_64" $SIG_X86_64/>
+EOF
+fi
+
+cat <<EOF >> "$APPCAST_FILE"
         </item>
     </channel>
 </rss>
@@ -100,4 +124,8 @@ EOF
 echo "--- 准备完成！ ---"
 echo "appcast.xml 已更新。"
 echo "请执行:"
-echo "gh release create \"v\$VERSION\" \"$DMG_ARM64\" \"$DMG_X86_64\" --title \"Mac Mouse Fix \$VERSION\" --notes \"Sparkle Update Release\""
+if [ "$HAS_X86" -eq 1 ]; then
+    echo "gh release create \"v\$VERSION\" \"$DMG_ARM64\" \"$DMG_X86_64\" --title \"Mac Mouse Fix \$VERSION\" --notes \"Sparkle Update Release\""
+else
+    echo "gh release create \"v\$VERSION\" \"$DMG_ARM64\" --title \"Mac Mouse Fix \$VERSION\" --notes \"Sparkle Update Release\""
+fi

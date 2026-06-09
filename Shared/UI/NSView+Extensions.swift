@@ -77,34 +77,25 @@ extension NSView {
     }
     
     @objc func takeScreenshot() -> NSImage? {
-        
-        /// Note: See `takeImage()` for discussion
-        
-        /// Take the screenshot
-        
-        /// Approach 3: CGWindowListCreateImage
-        ///  This works! No screenRecording permission popup.
-        let screenRect = self.rectInQuartzScreenCoordinates()
-        guard let window = self.window
-        else { assert(false); return nil }
-        let windowID = CGWindowID(window.windowNumber)
-        guard let screenshot = CGWindowListCreateImage(screenRect, .optionIncludingWindow, windowID, [])
-        else { assert(false); return nil }
-        
-        /// Approach 2: CGWindowListCreateImageFromArray
-        ///    Didn't test this because approach 3 works
-        
-        /// Approach 1: CGDisplayCreateImage
-        ///  This works perfectly (where takeImage fails), butttt it causes a screenRecording permissions popup. It still works if you deny the permissions though?
-        
-//        let screenRect = self.rectInQuartzScreenCoordinates()
-//        guard let screen = self.window?.screen else { assert(false); return nil }
-//        let displayID = screen.displayID()
-//        guard let screenshot = CGDisplayCreateImage(displayID, rect: screenRect)
-//        else { assert(false); return nil }
-        
-        /// Return
-        return NSImage(cgImage: screenshot, size: self.frame.size)
+        /// Note: See `takeImage()` for discussion.
+        /// CGWindowListCreateImage was obsoleted in macOS 15.0, so we use layer.render(in:) or cacheDisplay(in:to:) instead.
+        if let layer = self.layer {
+            let imgSize = bounds.size
+            guard let bir = NSBitmapImageRep(bitmapDataPlanes: nil, pixelsWide: Int(imgSize.width), pixelsHigh: Int(imgSize.height), bitsPerSample: 8, samplesPerPixel: 4, hasAlpha: true, isPlanar: false, colorSpaceName: .deviceRGB, bytesPerRow: 0, bitsPerPixel: 0) else {
+                return takeImage()
+            }
+            bir.size = imgSize
+            if let context = NSGraphicsContext(bitmapImageRep: bir) {
+                NSGraphicsContext.saveGraphicsState()
+                NSGraphicsContext.current = context
+                layer.render(in: context.cgContext)
+                NSGraphicsContext.restoreGraphicsState()
+                let image = NSImage(size: imgSize)
+                image.addRepresentation(bir)
+                return image
+            }
+        }
+        return takeImage()
     }
     
     private func takeImageWithoutWindowBackground() -> NSImage? {
