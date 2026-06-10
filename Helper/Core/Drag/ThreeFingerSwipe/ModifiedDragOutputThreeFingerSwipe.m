@@ -11,6 +11,7 @@
 #import "CGSSpace.h"
 #import "TouchSimulator.h"
 @import Cocoa;
+@import QuartzCore;
 #import "PointerFreeze.h"
 #import "SymbolicHotKeys.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
@@ -30,10 +31,14 @@ static BOOL useSymbolicHotKeyFallback(void) {
 }
 
 static double _accumulatedDelta = 0;
-static BOOL _verticalSHKWasTriggered = NO;
+static double _smoothedVelocity = 0;       /// Exponential moving average of drag speed along the usage axis (px/s)
+static CFTimeInterval _lastInputTime = 0;
+static int _verticalState = 0;             /// 0: nothing open, -1: Mission Control opened by this gesture, +1: App Exposé opened
 
 static const double _thresholdHorizontal = 220.0; /// Pixels of drag per space-switch
 static const double _thresholdVertical = 150.0;   /// Pixels of drag to trigger Mission Control / App Exposé
+static const double _flickMinDistance = 50.0;     /// Minimum drag distance for a flick to count on release
+static const double _flickMinVelocity = 600.0;    /// px/s – release faster than this fires even below the distance threshold
 
 /// Interface funcs
 
@@ -55,8 +60,10 @@ static const double _thresholdVertical = 150.0;   /// Pixels of drag to trigger 
     }
 
     /// Reset state for the symbolic-hotkey fallback
+    ///     Note: `_verticalState` is deliberately NOT reset – if a previous drag opened Mission Control, the next drag (down) should close it again, like the real gesture.
     _accumulatedDelta = 0;
-    _verticalSHKWasTriggered = NO;
+    _smoothedVelocity = 0;
+    _lastInputTime = CACurrentMediaTime();
 
     /// Freeze pointer
     if (GeneralConfig.freezePointerDuringModifiedDrag) {
@@ -69,6 +76,15 @@ static const double _thresholdVertical = 150.0;   /// Pixels of drag to trigger 
     if (useSymbolicHotKeyFallback()) {
         /// The deltas are already inverted according to `naturalDirection` by ModifiedDrag before they reach this plugin.
 
+        /// Track drag velocity (EMA), for flick detection on release
+        CFTimeInterval now = CACurrentMediaTime();
+        CFTimeInterval dt = now - _lastInputTime;
+        _lastInputTime = now;
+        double axisDelta = (_drag->usageAxis == kMFAxisHorizontal) ? deltaX : deltaY;
+        if (dt > 0 && dt < 0.5) {
+            _smoothedVelocity = 0.7 * _smoothedVelocity + 0.3 * (axisDelta / dt);
+        }
+
         if (_drag->usageAxis == kMFAxisHorizontal) {
             _accumulatedDelta += deltaX;
             while (_accumulatedDelta >= _thresholdHorizontal) {
@@ -80,15 +96,32 @@ static const double _thresholdVertical = 150.0;   /// Pixels of drag to trigger 
                 _accumulatedDelta += _thresholdHorizontal;
             }
         } else if (_drag->usageAxis == kMFAxisVertical) {
-            /// Mission Control and App Exposé are toggles, so only fire once per drag to prevent flickering
-            if (!_verticalSHKWasTriggered) {
-                _accumulatedDelta += deltaY;
+            _accumulatedDelta += deltaY;
+            if (_verticalState == 0) {
                 if (_accumulatedDelta <= -_thresholdVertical) {
                     [SymbolicHotKeys post:kCGSHotKeyExposeAllWindows]; /// Drag up -> Mission Control
-                    _verticalSHKWasTriggered = YES;
+                    _verticalState = -1;
+                    _accumulatedDelta = 0;
                 } else if (_accumulatedDelta >= _thresholdVertical) {
                     [SymbolicHotKeys post:kCGSHotKeyExposeApplicationWindows]; /// Drag down -> App Exposé
-                    _verticalSHKWasTriggered = YES;
+                    _verticalState = +1;
+                    _accumulatedDelta = 0;
+                }
+            } else if (_verticalState == -1) {
+                /// Mission Control is open – dragging back down closes it (the SHK toggles), like the real gesture
+                if (_accumulatedDelta < 0) _accumulatedDelta = 0; /// Only track progress in the closing direction
+                if (_accumulatedDelta >= _thresholdVertical) {
+                    [SymbolicHotKeys post:kCGSHotKeyExposeAllWindows];
+                    _verticalState = 0;
+                    _accumulatedDelta = 0;
+                }
+            } else { /// _verticalState == +1
+                /// App Exposé is open – dragging back up closes it
+                if (_accumulatedDelta > 0) _accumulatedDelta = 0;
+                if (_accumulatedDelta <= -_thresholdVertical) {
+                    [SymbolicHotKeys post:kCGSHotKeyExposeApplicationWindows];
+                    _verticalState = 0;
+                    _accumulatedDelta = 0;
                 }
             }
         }
@@ -128,6 +161,30 @@ static const double _thresholdVertical = 150.0;   /// Pixels of drag to trigger 
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancel {
 
     if (useSymbolicHotKeyFallback()) {
+
+        /// Flick detection: a fast release below the distance threshold still fires, like the real gesture's momentum
+        if (!cancel
+            && fabs(_accumulatedDelta) >= _flickMinDistance
+            && fabs(_smoothedVelocity) >= _flickMinVelocity
+            && (_smoothedVelocity > 0) == (_accumulatedDelta > 0)) { /// Only if still moving in the accumulated direction
+
+            if (_drag->usageAxis == kMFAxisHorizontal) {
+                [SymbolicHotKeys post:(_accumulatedDelta > 0 ? kCGSHotKeySpaceLeft : kCGSHotKeySpaceRight)];
+            } else if (_drag->usageAxis == kMFAxisVertical) {
+                if (_verticalState == 0) {
+                    [SymbolicHotKeys post:(_accumulatedDelta < 0 ? kCGSHotKeyExposeAllWindows : kCGSHotKeyExposeApplicationWindows)];
+                    _verticalState = (_accumulatedDelta < 0) ? -1 : +1;
+                } else if (_verticalState == -1 && _accumulatedDelta > 0) {
+                    [SymbolicHotKeys post:kCGSHotKeyExposeAllWindows]; /// Flick down closes Mission Control
+                    _verticalState = 0;
+                } else if (_verticalState == +1 && _accumulatedDelta < 0) {
+                    [SymbolicHotKeys post:kCGSHotKeyExposeApplicationWindows]; /// Flick up closes App Exposé
+                    _verticalState = 0;
+                }
+            }
+        }
+        _accumulatedDelta = 0;
+
         /// No gesture-end event to send – just unfreeze the pointer
         if (GeneralConfig.freezePointerDuringModifiedDrag) {
             [PointerFreeze unfreeze];
