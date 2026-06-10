@@ -12,6 +12,7 @@
 #import "TouchSimulator.h"
 @import Cocoa;
 #import "PointerFreeze.h"
+#import "SymbolicHotKeys.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation ModifiedDragOutputThreeFingerSwipe
@@ -21,6 +22,18 @@
 static ModifiedDragState *_drag;
 
 static int16_t _nOfSpaces = 1;
+
+/// On macOS 26 (Tahoe) and later, the WindowServer drops synthetic dockSwipe gesture events (`CGXSenderCanSynthesizeEvents()` compares the sender PID against the WindowServer's – not bypassable through code signing or TCC grants). So instead of the smooth dockSwipe gesture we accumulate the drag and trigger the corresponding SymbolicHotKeys at fixed thresholds. Trade-off: discrete jumps instead of following the pointer.
+static BOOL useSymbolicHotKeyFallback(void) {
+    if (@available(macOS 26.0, *)) return YES;
+    return NO;
+}
+
+static double _accumulatedDelta = 0;
+static BOOL _verticalSHKWasTriggered = NO;
+
+static const double _thresholdHorizontal = 220.0; /// Pixels of drag per space-switch
+static const double _thresholdVertical = 150.0;   /// Pixels of drag to trigger Mission Control / App Exposé
 
 /// Interface funcs
 
@@ -32,12 +45,19 @@ static int16_t _nOfSpaces = 1;
     /// Get number of spaces
     ///     for use in `handleMouseInputWhileInUse()`. Getting it here for performance reasons. Not sure if significant.
     CFArrayRef spaces = CGSCopySpaces(CGSMainConnectionID(), CGSSpaceIncludesUser | CGSSpaceIncludesOthers | CGSSpaceIncludesCurrent);
-    /// Full screen spaces appear twice for some reason so we need to filter duplicates
-    NSSet *uniqueSpaces = [NSSet setWithArray:(__bridge NSArray *)spaces];
-    _nOfSpaces = uniqueSpaces.count;
-    
-    CFRelease(spaces);
-    
+    if (spaces != NULL) {
+        /// Full screen spaces appear twice for some reason so we need to filter duplicates
+        NSSet *uniqueSpaces = [NSSet setWithArray:(__bridge NSArray *)spaces];
+        _nOfSpaces = MAX((int16_t)1, (int16_t)uniqueSpaces.count);
+        CFRelease(spaces);
+    } else {
+        _nOfSpaces = 1;
+    }
+
+    /// Reset state for the symbolic-hotkey fallback
+    _accumulatedDelta = 0;
+    _verticalSHKWasTriggered = NO;
+
     /// Freeze pointer
     if (GeneralConfig.freezePointerDuringModifiedDrag) {
         [PointerFreeze freezePointerAtPosition:_drag->usageOrigin];
@@ -45,7 +65,36 @@ static int16_t _nOfSpaces = 1;
 }
 
 + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event {
-    
+
+    if (useSymbolicHotKeyFallback()) {
+        /// The deltas are already inverted according to `naturalDirection` by ModifiedDrag before they reach this plugin.
+
+        if (_drag->usageAxis == kMFAxisHorizontal) {
+            _accumulatedDelta += deltaX;
+            while (_accumulatedDelta >= _thresholdHorizontal) {
+                [SymbolicHotKeys post:kCGSHotKeySpaceLeft]; /// Drag right -> previous space (matches the natural-direction dockSwipe)
+                _accumulatedDelta -= _thresholdHorizontal;
+            }
+            while (_accumulatedDelta <= -_thresholdHorizontal) {
+                [SymbolicHotKeys post:kCGSHotKeySpaceRight];
+                _accumulatedDelta += _thresholdHorizontal;
+            }
+        } else if (_drag->usageAxis == kMFAxisVertical) {
+            /// Mission Control and App Exposé are toggles, so only fire once per drag to prevent flickering
+            if (!_verticalSHKWasTriggered) {
+                _accumulatedDelta += deltaY;
+                if (_accumulatedDelta <= -_thresholdVertical) {
+                    [SymbolicHotKeys post:kCGSHotKeyExposeAllWindows]; /// Drag up -> Mission Control
+                    _verticalSHKWasTriggered = YES;
+                } else if (_accumulatedDelta >= _thresholdVertical) {
+                    [SymbolicHotKeys post:kCGSHotKeyExposeApplicationWindows]; /// Drag down -> App Exposé
+                    _verticalSHKWasTriggered = YES;
+                }
+            }
+        }
+        return;
+    }
+
     /**
      Horizontal dockSwipe scaling
      This makes horizontal dockSwipes (switch between spaces) follow the pointer exactly
@@ -77,7 +126,15 @@ static int16_t _nOfSpaces = 1;
 }
 
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancel {
-    
+
+    if (useSymbolicHotKeyFallback()) {
+        /// No gesture-end event to send – just unfreeze the pointer
+        if (GeneralConfig.freezePointerDuringModifiedDrag) {
+            [PointerFreeze unfreeze];
+        }
+        return;
+    }
+
     MFDockSwipeType type;
     IOHIDEventPhaseBits phase;
     
