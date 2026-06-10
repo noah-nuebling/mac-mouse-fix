@@ -15,8 +15,8 @@
 #import "Modifiers.h"
 #import "Remap.h"
 #import "Constants.h"
-#import "LogitechCIDActivator.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+
 
 #import "Logging.h"
 /*
