@@ -1100,57 +1100,39 @@ public class LogitechActivator: NSObject {
             guard let s = self.state(for: device), s.featSmartShift != 0 else { return false }
             
             let is2111 = s.isSmartShiftEnhanced
-            let function: UInt8 = is2111 ? 0x00 : 0x01
+            let function: UInt8 = 0x01
             
             let resp = try await s.messenger.sendAndWait(feature: s.featSmartShift, function: function, params: [], timeout: 1.0)
             
+            let activeMode = resp[4]
+            let rawThreshold = resp[5]
+            
+            let currentWheelMode = (activeMode == 1) ? 0 : 1
+            let currentAutoShift = (rawThreshold == 255) ? 0 : 1
+            let currentThreshold = (rawThreshold == 255) ? 20 : rawThreshold
+            let currentTorque = is2111 ? resp[6] : 0
+            
             var newWheelMode: UInt8 = 1
             var newAutoShift: UInt8 = 0
-            var threshold = resp[6]
-            var torque = is2111 ? resp[7] : 0
             
-            if is2111 {
-                let wheelMode = resp[4]
-                let autoShift = resp[5]
-                threshold = resp[6]
-                torque = resp[7]
-                
-                if autoShift == 1 {
-                    newWheelMode = 0
-                    newAutoShift = 0
-                } else {
-                    if wheelMode == 0 {
-                        newWheelMode = 1
-                        newAutoShift = 0
-                    } else {
-                        newWheelMode = 1
-                        newAutoShift = 1
-                    }
-                }
+            if currentAutoShift == 1 {
+                newWheelMode = 0
+                newAutoShift = 0
             } else {
-                let wheelMode = resp[4]
-                let autoShift = resp[5]
-                threshold = resp[6]
-                
-                if autoShift == 1 {
-                    newWheelMode = 0
+                if currentWheelMode == 0 {
+                    newWheelMode = 1
                     newAutoShift = 0
                 } else {
-                    if wheelMode == 0 {
-                        newWheelMode = 1
-                        newAutoShift = 0
-                    } else {
-                        newWheelMode = 1
-                        newAutoShift = 1
-                    }
+                    newWheelMode = 1
+                    newAutoShift = 1
                 }
             }
             
             var newState = LogitechSmartShiftState()
             newState.wheelMode = newWheelMode
             newState.autoShift = newAutoShift
-            newState.threshold = threshold
-            newState.torque = torque
+            newState.threshold = currentThreshold
+            newState.torque = currentTorque
             newState.supportsTunableTorque = ObjCBool(is2111)
             
             return await self.setSmartShiftStateAsync(newState, forDevice: device)
@@ -1285,14 +1267,17 @@ public class LogitechActivator: NSObject {
     private func getSmartShiftStateAsync(_ outState: UnsafeMutablePointer<LogitechSmartShiftState>, forDevice device: IOHIDDevice) async -> Bool {
         guard let s = self.state(for: device), s.featSmartShift != 0 else { return false }
         let is2111 = s.isSmartShiftEnhanced
-        let function: UInt8 = is2111 ? 0x00 : 0x01
+        let function: UInt8 = 0x01
         
         do {
             let resp = try await s.messenger.sendAndWait(feature: s.featSmartShift, function: function, params: [], timeout: 1.0)
-            outState.pointee.wheelMode = resp[4]
-            outState.pointee.autoShift = resp[5]
-            outState.pointee.threshold = resp[6]
-            outState.pointee.torque = is2111 ? resp[7] : 0
+            let activeMode = resp[4]
+            let rawThreshold = resp[5]
+            
+            outState.pointee.wheelMode = (activeMode == 1) ? 0 : 1
+            outState.pointee.autoShift = (rawThreshold == 255) ? 0 : 1
+            outState.pointee.threshold = (rawThreshold == 255) ? 20 : rawThreshold
+            outState.pointee.torque = is2111 ? resp[6] : 0
             outState.pointee.supportsTunableTorque = ObjCBool(is2111)
             
             os_log("LogitechCIDActivator: SmartShift state queried: wheelMode=%{public}d, autoShift=%{public}d, threshold=%{public}d, torque=%{public}d",
@@ -1307,19 +1292,22 @@ public class LogitechActivator: NSObject {
     private func setSmartShiftStateAsync(_ state: LogitechSmartShiftState, forDevice device: IOHIDDevice) async -> Bool {
         guard let s = self.state(for: device), s.featSmartShift != 0 else { return false }
         let is2111 = s.isSmartShiftEnhanced
-        let function: UInt8 = is2111 ? 0x01 : 0x02
+        let function: UInt8 = 0x02
+        
+        let activeMode: UInt8 = (state.autoShift == 1) ? 2 : (state.wheelMode == 0 ? 1 : 2)
+        let thresholdVal: UInt8 = (state.autoShift == 1) ? state.threshold : 255
         
         var params: [UInt8] = []
         if is2111 {
-            params = [state.wheelMode, state.autoShift, state.threshold, state.torque]
+            params = [activeMode, thresholdVal, state.torque]
         } else {
-            params = [state.wheelMode, state.autoShift, state.threshold]
+            params = [activeMode, thresholdVal]
         }
         
         do {
             _ = try await s.messenger.sendAndWait(feature: s.featSmartShift, function: function, params: params, timeout: 1.0)
-            os_log("LogitechCIDActivator: SmartShift state set: wheelMode=%{public}d, autoShift=%{public}d, threshold=%{public}d, torque=%{public}d",
-                   log: self.logger, type: .info, state.wheelMode, state.autoShift, state.threshold, state.torque)
+            os_log("LogitechCIDActivator: SmartShift state set: activeMode=%{public}d, threshold=%{public}d, torque=%{public}d",
+                   log: self.logger, type: .info, activeMode, thresholdVal, is2111 ? state.torque : 0)
             return true
         } catch {
             os_log("LogitechCIDActivator: Failed to set SmartShift state: %{public}@", log: self.logger, type: .error, error.localizedDescription)
