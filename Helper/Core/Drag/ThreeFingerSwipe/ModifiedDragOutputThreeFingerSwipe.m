@@ -14,6 +14,7 @@
 @import QuartzCore;
 #import "PointerFreeze.h"
 #import "SymbolicHotKeys.h"
+#import "Config.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation ModifiedDragOutputThreeFingerSwipe
@@ -31,14 +32,60 @@ static BOOL useSymbolicHotKeyFallback(void) {
 }
 
 static double _accumulatedDelta = 0;
-static double _smoothedVelocity = 0;       /// Exponential moving average of drag speed along the usage axis (px/s)
+static double _smoothedVelocity = 0;              /// Exponential moving average of drag speed along the usage axis (px/s)
 static CFTimeInterval _lastInputTime = 0;
-static int _verticalState = 0;             /// 0: nothing open, -1: Mission Control opened by this gesture, +1: App Exposé opened
+static CGSSymbolicHotKey _lastVerticalSHK = -1;   /// The SHK we last opened an overlay with – tells us which SHK closes it again. -1: none
+static CFTimeInterval _lastVerticalPostTime = 0;
+static CFTimeInterval _lastHorizontalPostTime = 0;
 
-static const double _thresholdHorizontal = 220.0; /// Pixels of drag per space-switch
-static const double _thresholdVertical = 150.0;   /// Pixels of drag to trigger Mission Control / App Exposé
+static double _thresholdHorizontal = 220.0;       /// Pixels of drag per space-switch. Overridable via config.
+static double _thresholdVertical = 150.0;         /// Pixels of drag to trigger Mission Control / App Exposé. Overridable via config.
 static const double _flickMinDistance = 50.0;     /// Minimum drag distance for a flick to count on release
 static const double _flickMinVelocity = 600.0;    /// px/s – release faster than this fires even below the distance threshold
+static const double _flickMaxIdleTime = 0.08;     /// s – if the pointer rested longer than this before release, it's not a flick
+static const double _verticalCooldown = 0.4;      /// s – between vertical SHK posts, so a continuing drag doesn't re-toggle while the overlay is still animating in
+static const double _horizontalCooldown = 0.35;   /// s – between space-switches, roughly the slide-animation duration. One hard swipe moves exactly one space (like the real gesture); only sustained dragging chains, paced to the animation.
+
+/// On macOS 26+, Mission Control / App Exposé are rendered by the WindowManager process. While such an overlay is open,
+/// WindowManager owns onscreen windows at layers 16-19 (determined empirically on macOS 27.0); otherwise all its windows
+/// sit at kCGMinimumWindowLevel. Owner and layer are available without the Screen Recording permission.
+/// Querying the real state (instead of remembering what we posted) keeps us in sync when the user closes the overlay
+/// some other way, e.g. with Esc or a click.
+static BOOL exposeOverlayIsOpen(void) {
+    NSArray *windows = CFBridgingRelease(CGWindowListCopyWindowInfo(kCGWindowListOptionOnScreenOnly, kCGNullWindowID));
+    for (NSDictionary *w in windows) {
+        if (![w[(__bridge NSString *)kCGWindowOwnerName] isEqualToString:@"WindowManager"]) continue;
+        int layer = [w[(__bridge NSString *)kCGWindowLayer] intValue];
+        if (1 <= layer && layer <= 19) return YES;
+    }
+    return NO;
+}
+
+/// Open or close Mission Control / App Exposé for a vertical drag. Returns whether an SHK was posted.
+///     Closing only happens in the natural direction (down closes Mission Control, up closes App Exposé), like the real gesture.
+static BOOL triggerVerticalSHK(BOOL draggedUp, CFTimeInterval now) {
+
+    if (!exposeOverlayIsOpen()) {
+        CGSSymbolicHotKey shk = draggedUp ? kCGSHotKeyExposeAllWindows : kCGSHotKeyExposeApplicationWindows;
+        [SymbolicHotKeys post:shk];
+        _lastVerticalSHK = shk;
+        _lastVerticalPostTime = now;
+        return YES;
+    }
+
+    /// Overlay is open – the SHK that opened it toggles it closed
+    CGSSymbolicHotKey opener = _lastVerticalSHK;
+    if (opener == (CGSSymbolicHotKey)-1) { /// Opened externally (trackpad/keyboard) – infer from the drag direction
+        opener = draggedUp ? kCGSHotKeyExposeApplicationWindows : kCGSHotKeyExposeAllWindows;
+    }
+    BOOL closes = (opener == kCGSHotKeyExposeAllWindows) ? !draggedUp : draggedUp;
+    if (!closes) return NO;
+
+    [SymbolicHotKeys post:opener];
+    _lastVerticalSHK = -1;
+    _lastVerticalPostTime = now;
+    return YES;
+}
 
 /// Interface funcs
 
@@ -60,10 +107,16 @@ static const double _flickMinVelocity = 600.0;    /// px/s – release faster th
     }
 
     /// Reset state for the symbolic-hotkey fallback
-    ///     Note: `_verticalState` is deliberately NOT reset – if a previous drag opened Mission Control, the next drag (down) should close it again, like the real gesture.
+    ///     Note: `_lastVerticalSHK` is deliberately NOT reset – if a previous drag opened Mission Control, the next drag (down) should close it again, like the real gesture.
     _accumulatedDelta = 0;
     _smoothedVelocity = 0;
     _lastInputTime = CACurrentMediaTime();
+
+    /// Optional config overrides for the thresholds (not exposed in the UI – power users can set them in the config file)
+    NSNumber *configThresholdH = (NSNumber *)config(@"Other.threeFingerSwipeSHKThresholdHorizontal");
+    NSNumber *configThresholdV = (NSNumber *)config(@"Other.threeFingerSwipeSHKThresholdVertical");
+    _thresholdHorizontal = [configThresholdH isKindOfClass:NSNumber.class] && configThresholdH.doubleValue > 0 ? configThresholdH.doubleValue : 220.0;
+    _thresholdVertical   = [configThresholdV isKindOfClass:NSNumber.class] && configThresholdV.doubleValue > 0 ? configThresholdV.doubleValue : 150.0;
 
     /// Freeze pointer
     if (GeneralConfig.freezePointerDuringModifiedDrag) {
@@ -86,43 +139,22 @@ static const double _flickMinVelocity = 600.0;    /// px/s – release faster th
         }
 
         if (_drag->usageAxis == kMFAxisHorizontal) {
-            _accumulatedDelta += deltaX;
-            while (_accumulatedDelta >= _thresholdHorizontal) {
-                [SymbolicHotKeys post:kCGSHotKeySpaceLeft]; /// Drag right -> previous space (matches the natural-direction dockSwipe)
-                _accumulatedDelta -= _thresholdHorizontal;
-            }
-            while (_accumulatedDelta <= -_thresholdHorizontal) {
-                [SymbolicHotKeys post:kCGSHotKeySpaceRight];
-                _accumulatedDelta += _thresholdHorizontal;
+            if ((now - _lastHorizontalPostTime) < _horizontalCooldown) {
+                _accumulatedDelta = 0; /// Discard motion during the cooldown – a hard swipe shouldn't bank up extra switches
+            } else {
+                _accumulatedDelta += deltaX;
+                if (fabs(_accumulatedDelta) >= _thresholdHorizontal) {
+                    /// Drag right -> previous space (matches the natural-direction dockSwipe). One switch per threshold-crossing – chaining is paced by the cooldown.
+                    [SymbolicHotKeys post:(_accumulatedDelta > 0 ? kCGSHotKeySpaceLeft : kCGSHotKeySpaceRight)];
+                    _accumulatedDelta = 0;
+                    _lastHorizontalPostTime = now;
+                }
             }
         } else if (_drag->usageAxis == kMFAxisVertical) {
             _accumulatedDelta += deltaY;
-            if (_verticalState == 0) {
-                if (_accumulatedDelta <= -_thresholdVertical) {
-                    [SymbolicHotKeys post:kCGSHotKeyExposeAllWindows]; /// Drag up -> Mission Control
-                    _verticalState = -1;
-                    _accumulatedDelta = 0;
-                } else if (_accumulatedDelta >= _thresholdVertical) {
-                    [SymbolicHotKeys post:kCGSHotKeyExposeApplicationWindows]; /// Drag down -> App Exposé
-                    _verticalState = +1;
-                    _accumulatedDelta = 0;
-                }
-            } else if (_verticalState == -1) {
-                /// Mission Control is open – dragging back down closes it (the SHK toggles), like the real gesture
-                if (_accumulatedDelta < 0) _accumulatedDelta = 0; /// Only track progress in the closing direction
-                if (_accumulatedDelta >= _thresholdVertical) {
-                    [SymbolicHotKeys post:kCGSHotKeyExposeAllWindows];
-                    _verticalState = 0;
-                    _accumulatedDelta = 0;
-                }
-            } else { /// _verticalState == +1
-                /// App Exposé is open – dragging back up closes it
-                if (_accumulatedDelta > 0) _accumulatedDelta = 0;
-                if (_accumulatedDelta <= -_thresholdVertical) {
-                    [SymbolicHotKeys post:kCGSHotKeyExposeApplicationWindows];
-                    _verticalState = 0;
-                    _accumulatedDelta = 0;
-                }
+            if ((now - _lastVerticalPostTime) >= _verticalCooldown && fabs(_accumulatedDelta) >= _thresholdVertical) {
+                triggerVerticalSHK(_accumulatedDelta < 0, now);
+                _accumulatedDelta = 0; /// Reset even when nothing was posted, so dragging in a no-op direction doesn't pile up
             }
         }
         return;
@@ -162,24 +194,25 @@ static const double _flickMinVelocity = 600.0;    /// px/s – release faster th
 
     if (useSymbolicHotKeyFallback()) {
 
-        /// Flick detection: a fast release below the distance threshold still fires, like the real gesture's momentum
+        /// Flick detection: a fast release below the distance threshold still fires, like the real gesture's momentum.
+        ///     The idle check matters: if the pointer rested before release, `_smoothedVelocity` still holds the speed from
+        ///     the last movement (no events arrive while resting), so without it a drag-pause-release would falsely flick.
+        CFTimeInterval now = CACurrentMediaTime();
+        BOOL stillMoving = (now - _lastInputTime) <= _flickMaxIdleTime;
         if (!cancel
+            && stillMoving
             && fabs(_accumulatedDelta) >= _flickMinDistance
             && fabs(_smoothedVelocity) >= _flickMinVelocity
             && (_smoothedVelocity > 0) == (_accumulatedDelta > 0)) { /// Only if still moving in the accumulated direction
 
             if (_drag->usageAxis == kMFAxisHorizontal) {
-                [SymbolicHotKeys post:(_accumulatedDelta > 0 ? kCGSHotKeySpaceLeft : kCGSHotKeySpaceRight)];
+                if ((now - _lastHorizontalPostTime) >= _horizontalCooldown) { /// A threshold-switch just fired – don't double up
+                    [SymbolicHotKeys post:(_accumulatedDelta > 0 ? kCGSHotKeySpaceLeft : kCGSHotKeySpaceRight)];
+                    _lastHorizontalPostTime = now;
+                }
             } else if (_drag->usageAxis == kMFAxisVertical) {
-                if (_verticalState == 0) {
-                    [SymbolicHotKeys post:(_accumulatedDelta < 0 ? kCGSHotKeyExposeAllWindows : kCGSHotKeyExposeApplicationWindows)];
-                    _verticalState = (_accumulatedDelta < 0) ? -1 : +1;
-                } else if (_verticalState == -1 && _accumulatedDelta > 0) {
-                    [SymbolicHotKeys post:kCGSHotKeyExposeAllWindows]; /// Flick down closes Mission Control
-                    _verticalState = 0;
-                } else if (_verticalState == +1 && _accumulatedDelta < 0) {
-                    [SymbolicHotKeys post:kCGSHotKeyExposeApplicationWindows]; /// Flick up closes App Exposé
-                    _verticalState = 0;
+                if ((now - _lastVerticalPostTime) >= _verticalCooldown) {
+                    triggerVerticalSHK(_accumulatedDelta < 0, now);
                 }
             }
         }
