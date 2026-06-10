@@ -111,6 +111,7 @@ static BOOL triggerVerticalSHK(BOOL draggedUp, CFTimeInterval now) {
     _accumulatedDelta = 0;
     _smoothedVelocity = 0;
     _lastInputTime = CACurrentMediaTime();
+    _lastHorizontalPostTime = 0; /// The cooldown paces switches within ONE drag – a new drag is a new deliberate gesture, so rapid successive flicks can hop multiple spaces quickly. (`_lastVerticalPostTime` is deliberately kept – it guards the Mission Control toggle against re-firing while the overlay is still animating in.)
 
     /// Optional config overrides for the thresholds (not exposed in the UI – power users can set them in the config file)
     NSNumber *configThresholdH = (NSNumber *)config(@"Other.threeFingerSwipeSHKThresholdHorizontal");
