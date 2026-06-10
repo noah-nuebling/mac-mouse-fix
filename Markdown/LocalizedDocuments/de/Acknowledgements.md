@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2026**
 
+- 🇺🇸&nbsp;Mouseguy - "Awesome piece of software. Invaluable for anyone that has a Logitech mouse and can’t install their crapware on a work laptop"
 - 🇺🇸&nbsp;Aaron&nbsp;K - "Awesome project!"
 - 🇺🇸&nbsp;Paolo&nbsp;Enriquez
 - 🇺🇸&nbsp;Siddhartha&nbsp;Verma
