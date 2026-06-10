@@ -29,6 +29,9 @@ static int16_t _nOfSpaces = 1;
 ///   NO  = moving DOWN → App Exposé
 static BOOL _verticalIsUpward;
 
+static BOOL _horizontalIsLeftward;
+static BOOL _spaceSwitchSymbolicHotKeyFired;
+
 /// Whether the one-shot App Exposé symbolic-hotkey fallback has already fired
 /// for the current downward gesture.
 static BOOL _appExposeSymbolicHotKeyFired;
@@ -61,6 +64,9 @@ static BOOL _missionControlSymbolicHotKeyFired;
         _verticalIsUpward              = (_drag->originOffset.y < 0);
         _appExposeSymbolicHotKeyFired  = NO;
         _missionControlSymbolicHotKeyFired = NO;
+    } else if (_drag->usageAxis == kMFAxisHorizontal) {
+        _horizontalIsLeftward          = (_drag->originOffset.x < 0);
+        _spaceSwitchSymbolicHotKeyFired = NO;
     }
     
     /// Freeze pointer
@@ -95,6 +101,12 @@ static BOOL _missionControlSymbolicHotKeyFired;
         /// Horizontal → switch Spaces (animated dock swipe)
         double delta = -deltaX * threeFingerScaleH;
         [TouchSimulator postDockSwipeEventWithDelta:delta type:kMFDockSwipeTypeHorizontal phase:eventPhase invertedFromDevice:_drag->naturalDirection];
+        
+        if (!_spaceSwitchSymbolicHotKeyFired) {
+            _spaceSwitchSymbolicHotKeyFired = YES;
+            CGSSymbolicHotKey shk = _horizontalIsLeftward ? (CGSSymbolicHotKey)kMFSHMoveRightASpace : (CGSSymbolicHotKey)kMFSHMoveLeftASpace;
+            [SymbolicHotKeys post:shk];
+        }
         
     } else if (_drag->usageAxis == kMFAxisVertical) {
         
