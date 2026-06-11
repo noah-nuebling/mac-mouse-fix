@@ -29,13 +29,25 @@ APP_X86_64="$PROJECT_DIR/Mac Mouse Fix_x86_64.app"
 if [ -d "$APP_ARM64" ]; then
     echo "正在将 arm64 app 打包为 ZIP..."
     rm -f "$ZIP_ARM64"
-    ditto -c -k --sequesterRsrc --keepParent "$APP_ARM64" "$ZIP_ARM64"
+    
+    # Use a temporary directory to rename the app to 'Mac Mouse Fix.app'
+    # so Sparkle extracts it with the correct name and succeeds.
+    STAGE_DIR_ARM64=$(mktemp -d "${TMPDIR:-/tmp}/macmousefix-zip-arm64.XXXXXX")
+    cp -R "$APP_ARM64" "${STAGE_DIR_ARM64}/Mac Mouse Fix.app"
+    ditto -c -k --sequesterRsrc --keepParent "${STAGE_DIR_ARM64}/Mac Mouse Fix.app" "$ZIP_ARM64"
+    rm -rf "$STAGE_DIR_ARM64"
 fi
 
 if [ -d "$APP_X86_64" ]; then
     echo "正在将 x86_64 app 打包为 ZIP..."
     rm -f "$ZIP_X86_64"
-    ditto -c -k --sequesterRsrc --keepParent "$APP_X86_64" "$ZIP_X86_64"
+    
+    # Use a temporary directory to rename the app to 'Mac Mouse Fix.app'
+    # so Sparkle extracts it with the correct name and succeeds.
+    STAGE_DIR_X86_64=$(mktemp -d "${TMPDIR:-/tmp}/macmousefix-zip-x86_64.XXXXXX")
+    cp -R "$APP_X86_64" "${STAGE_DIR_X86_64}/Mac Mouse Fix.app"
+    ditto -c -k --sequesterRsrc --keepParent "${STAGE_DIR_X86_64}/Mac Mouse Fix.app" "$ZIP_X86_64"
+    rm -rf "$STAGE_DIR_X86_64"
 fi
 
 # 定位签名工具。允许通过环境变量覆盖，默认从当前 DerivedData 中查找。
