@@ -36,6 +36,23 @@ enum HIDPPError: Error {
     case notFound
 }
 
+extension HIDPPError: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .timeout:
+            return "timeout"
+        case .ioError(let ret):
+            return String(format: "ioError(IOReturn: 0x%08X)", ret)
+        case .deviceError(let code):
+            return String(format: "deviceError(Code: 0x%02X)", code)
+        case .invalidResponse:
+            return "invalidResponse"
+        case .notFound:
+            return "notFound"
+        }
+    }
+}
+
 actor HIDPPMessenger {
     let device: IOHIDDevice
     let writeDevice: IOHIDDevice
@@ -194,8 +211,6 @@ public class LogitechActivator: NSObject {
     @objc public static let shared = LogitechActivator()
     private let logger = OSLog(subsystem: "com.nuebling.mac-mouse-fix.helper", category: "LogitechActivator")
     
-
-    
     private let stateLock = NSLock()
     private var states: [IOHIDDevice: DeviceState] = [:]
     private var isActivatingOrReactivating = false
@@ -347,7 +362,7 @@ public class LogitechActivator: NSObject {
         return mouseDev
     }
     
-    private func lookupFeature(_ s: DeviceState, featureId: UInt16) async -> UInt8 {
+    private func lookupFeature(_ s: DeviceState, featureId: UInt16) async throws -> UInt8 {
         var pkt = [UInt8](repeating: 0, count: 20)
         pkt[0] = kHIDPP_Long
         pkt[1] = s.deviceIndex
@@ -360,8 +375,11 @@ public class LogitechActivator: NSObject {
             let resp = try await s.messenger.sendAndWait(feature: 0x00, function: 0x00, params: Array(pkt[4...5]), timeout: 1.0)
             return resp[4]
         } catch {
-            os_log("LogitechCIDActivator: lookupFeature 0x%{public}04X failed: %{public}@", log: self.logger, type: .error, featureId, error.localizedDescription)
-            return 0
+            os_log("LogitechCIDActivator: lookupFeature 0x%{public}04X failed: %{public}@", log: self.logger, type: .error, featureId, String(describing: error))
+            if case HIDPPError.deviceError = error {
+                return 0
+            }
+            throw error
         }
     }
     
@@ -440,7 +458,7 @@ public class LogitechActivator: NSObject {
                 }
             } catch {
                 os_log("LogitechCIDActivator: Probing index 0x%{public}02X failed with error: %{public}@",
-                       log: self.logger, type: .error, testIndex, error.localizedDescription)
+                       log: self.logger, type: .error, testIndex, String(describing: error))
             }
         }
         
@@ -451,80 +469,98 @@ public class LogitechActivator: NSObject {
         s.deviceIndex = activeIndex
         await s.messenger.setDeviceIndex(activeIndex)
         
-        s.featReprogV4 = await lookupFeature(s, featureId: kFeat_ReprogV4)
-        s.featWirelessStatus = await lookupFeature(s, featureId: 0x1D4B)
-        
-        if s.featWirelessStatus != 0 {
-            os_log("[SMARTSHIFT] LogitechCIDActivator: Found wireless status feature 0x1D4B index 0x%{public}02X on index 0x%{public}02X",
-                   log: self.logger, type: .info, s.featWirelessStatus, activeIndex)
-        } else {
-            os_log("[SMARTSHIFT] LogitechCIDActivator: Wireless status feature 0x1D4B not found on index 0x%{public}02X",
-                   log: self.logger, type: .info, activeIndex)
-        }
-        
-        s.featSmartShift = await lookupFeature(s, featureId: 0x2111)
-        if s.featSmartShift != 0 {
-            s.isSmartShiftEnhanced = true
-        } else {
-            s.featSmartShift = await lookupFeature(s, featureId: 0x2110)
-            s.isSmartShiftEnhanced = false
-        }
-        
-        if s.featSmartShift != 0 {
-            os_log("[SMARTSHIFT] LogitechCIDActivator: Found SmartShift feature index 0x%{public}02X on index 0x%{public}02X",
-                   log: self.logger, type: .info, s.featSmartShift, activeIndex)
-        } else {
-            os_log("[SMARTSHIFT] LogitechCIDActivator: SmartShift feature not supported on index 0x%{public}02X",
-                   log: self.logger, type: .info, activeIndex)
-        }
-        
-        s.featAdjustableDpi = await lookupFeature(s, featureId: kFeat_AdjustableDpi)
-        s.featExtendedDpi = await lookupFeature(s, featureId: kFeat_ExtendedDpi)
-        
-        if s.featAdjustableDpi != 0 {
-            os_log("LogitechCIDActivator: Found Adjustable DPI feature index 0x%{public}02X (Extended DPI support: %{public}d) on index 0x%{public}02X",
-                   log: self.logger, type: .info, s.featAdjustableDpi, (s.featExtendedDpi != 0 ? 1 : 0), activeIndex)
-        } else {
-            os_log("LogitechCIDActivator: Adjustable DPI feature not supported on index 0x%{public}02X",
-                   log: self.logger, type: .info, activeIndex)
-        }
-        
-        s.featHiResWheel = await lookupFeature(s, featureId: 0x2121)
-        if s.featHiResWheel != 0 {
-            os_log("LogitechCIDActivator: Found HiRes Scroll Wheel feature index 0x%{public}02X on index 0x%{public}02X",
-                   log: self.logger, type: .info, s.featHiResWheel, activeIndex)
-        } else {
-            os_log("LogitechCIDActivator: HiRes Scroll Wheel feature not supported on index 0x%{public}02X",
-                   log: self.logger, type: .info, activeIndex)
-        }
-        
-        s.featReportRate = await lookupFeature(s, featureId: 0x8060)
-        s.featReportRateExt = await lookupFeature(s, featureId: 0x8061)
-        if s.featReportRate != 0 || s.featReportRateExt != 0 {
-            os_log("LogitechCIDActivator: Found Report Rate feature (0x8060 idx: 0x%{public}02X, 0x8061 idx: 0x%{public}02X) on index 0x%{public}02X",
-                   log: self.logger, type: .info, s.featReportRate, s.featReportRateExt, activeIndex)
-        } else {
-            os_log("LogitechCIDActivator: Report Rate feature not supported on index 0x%{public}02X",
-                   log: self.logger, type: .info, activeIndex)
-        }
-        
-        s.featBattery = await lookupFeature(s, featureId: 0x1004)
-        s.isBattery1004 = true
-        if s.featBattery == 0 {
-            s.featBattery = await lookupFeature(s, featureId: 0x1000)
-            s.isBattery1004 = false
-        }
-        if s.featBattery != 0 {
-            os_log("LogitechCIDActivator: Found Battery feature index 0x%{public}02X (is 0x1004 Unified Battery: %{public}d) on index 0x%{public}02X",
-                   log: self.logger, type: .info, s.featBattery, (s.isBattery1004 ? 1 : 0), activeIndex)
-        } else {
-            os_log("LogitechCIDActivator: Battery features (0x1004/0x1000) not supported on index 0x%{public}02X",
-                   log: self.logger, type: .info, activeIndex)
-        }
-        
         var diverted = 0
-        if s.featReprogV4 != 0 {
-            do {
+        do {
+            let featReprogV4 = try await lookupFeature(s, featureId: kFeat_ReprogV4)
+            let featWirelessStatus = try await lookupFeature(s, featureId: 0x1D4B)
+            
+            if featWirelessStatus != 0 {
+                os_log("[SMARTSHIFT] LogitechCIDActivator: Found wireless status feature 0x1D4B index 0x%{public}02X on index 0x%{public}02X",
+                       log: self.logger, type: .info, featWirelessStatus, activeIndex)
+            } else {
+                os_log("[SMARTSHIFT] LogitechCIDActivator: Wireless status feature 0x1D4B not found on index 0x%{public}02X",
+                       log: self.logger, type: .info, activeIndex)
+            }
+            
+            var featSmartShift: UInt8 = 0
+            var isSmartShiftEnhanced = false
+            if let fs2 = try? await lookupFeature(s, featureId: 0x2111), fs2 != 0 {
+                featSmartShift = fs2
+                isSmartShiftEnhanced = true
+            } else {
+                featSmartShift = try await lookupFeature(s, featureId: 0x2110)
+                isSmartShiftEnhanced = false
+            }
+            
+            if featSmartShift != 0 {
+                os_log("[SMARTSHIFT] LogitechCIDActivator: Found SmartShift feature index 0x%{public}02X on index 0x%{public}02X",
+                       log: self.logger, type: .info, featSmartShift, activeIndex)
+            } else {
+                os_log("[SMARTSHIFT] LogitechCIDActivator: SmartShift feature not supported on index 0x%{public}02X",
+                       log: self.logger, type: .info, activeIndex)
+            }
+            
+            let featAdjustableDpi = try await lookupFeature(s, featureId: kFeat_AdjustableDpi)
+            let featExtendedDpi = try await lookupFeature(s, featureId: kFeat_ExtendedDpi)
+            
+            if featAdjustableDpi != 0 {
+                os_log("LogitechCIDActivator: Found Adjustable DPI feature index 0x%{public}02X (Extended DPI support: %{public}d) on index 0x%{public}02X",
+                       log: self.logger, type: .info, featAdjustableDpi, (featExtendedDpi != 0 ? 1 : 0), activeIndex)
+            } else {
+                os_log("LogitechCIDActivator: Adjustable DPI feature not supported on index 0x%{public}02X",
+                       log: self.logger, type: .info, activeIndex)
+            }
+            
+            let featHiResWheel = try await lookupFeature(s, featureId: 0x2121)
+            if featHiResWheel != 0 {
+                os_log("LogitechCIDActivator: Found HiRes Scroll Wheel feature index 0x%{public}02X on index 0x%{public}02X",
+                       log: self.logger, type: .info, featHiResWheel, activeIndex)
+            } else {
+                os_log("LogitechCIDActivator: HiRes Scroll Wheel feature not supported on index 0x%{public}02X",
+                       log: self.logger, type: .info, activeIndex)
+            }
+            
+            let featReportRate = try await lookupFeature(s, featureId: 0x8060)
+            let featReportRateExt = try await lookupFeature(s, featureId: 0x8061)
+            if featReportRate != 0 || featReportRateExt != 0 {
+                os_log("LogitechCIDActivator: Found Report Rate feature (0x8060 idx: 0x%{public}02X, 0x8061 idx: 0x%{public}02X) on index 0x%{public}02X",
+                       log: self.logger, type: .info, featReportRate, featReportRateExt, activeIndex)
+            } else {
+                os_log("LogitechCIDActivator: Report Rate feature not supported on index 0x%{public}02X",
+                       log: self.logger, type: .info, activeIndex)
+            }
+            
+            var featBattery: UInt8 = 0
+            var isBattery1004 = false
+            if let fb4 = try? await lookupFeature(s, featureId: 0x1004), fb4 != 0 {
+                featBattery = fb4
+                isBattery1004 = true
+            } else {
+                featBattery = try await lookupFeature(s, featureId: 0x1000)
+                isBattery1004 = false
+            }
+            if featBattery != 0 {
+                os_log("LogitechCIDActivator: Found Battery feature index 0x%{public}02X (is 0x1004 Unified Battery: %{public}d) on index 0x%{public}02X",
+                       log: self.logger, type: .info, featBattery, (isBattery1004 ? 1 : 0), activeIndex)
+            } else {
+                os_log("LogitechCIDActivator: Battery features (0x1004/0x1000) not supported on index 0x%{public}02X",
+                       log: self.logger, type: .info, activeIndex)
+            }
+            
+            // Apply Features to State only after successful query
+            s.featReprogV4 = featReprogV4
+            s.featWirelessStatus = featWirelessStatus
+            s.featSmartShift = featSmartShift
+            s.isSmartShiftEnhanced = isSmartShiftEnhanced
+            s.featAdjustableDpi = featAdjustableDpi
+            s.featExtendedDpi = featExtendedDpi
+            s.featHiResWheel = featHiResWheel
+            s.featReportRate = featReportRate
+            s.featReportRateExt = featReportRateExt
+            s.featBattery = featBattery
+            s.isBattery1004 = isBattery1004
+            
+            if s.featReprogV4 != 0 {
                 let resp = try await s.messenger.sendAndWait(feature: s.featReprogV4, function: 0x00, params: [], timeout: 1.0)
                 let count = Int(resp[4])
                 
@@ -532,9 +568,7 @@ public class LogitechActivator: NSObject {
                 for i in 0..<count {
                     guard todivert.count < 32 else { break }
                     
-                    guard let info = try? await s.messenger.sendAndWait(feature: s.featReprogV4, function: 0x01, params: [UInt8(i)], timeout: 1.0) else {
-                        continue
-                    }
+                    let info = try await s.messenger.sendAndWait(feature: s.featReprogV4, function: 0x01, params: [UInt8(i)], timeout: 1.0)
                     
                     let cid = (UInt16(info[4]) << 8) | UInt16(info[5])
                     let tid = (UInt16(info[6]) << 8) | UInt16(info[7])
@@ -594,12 +628,14 @@ public class LogitechActivator: NSObject {
                                log: self.logger, type: .info, cid, button(for: cid, state: s), name)
                     case .failure(let err):
                         os_log("LogitechCIDActivator: Failed to divert CID 0x%{public}04X on '%{public}@', error: %{public}@",
-                               log: self.logger, type: .error, cid, name, err.localizedDescription)
+                               log: self.logger, type: .error, cid, name, String(describing: err))
                     }
                 }
-            } catch {
-                os_log("LogitechCIDActivator: Failed to get count or divert CIDs: %{public}@", log: self.logger, type: .error, error.localizedDescription)
             }
+        } catch {
+            os_log("LogitechCIDActivator: Failed to query features or divert CIDs due to communication error on '%{public}@': %{public}@",
+                   log: self.logger, type: .error, name, String(describing: error))
+            return -1
         }
         
         // Apply persisted settings
@@ -654,6 +690,53 @@ public class LogitechActivator: NSObject {
         }
         
         return diverted
+    }
+    
+    private func performActivation(for s: DeviceState, maxRetries: Int = 3, retryDelay: TimeInterval = 0.5) {
+        stateLock.withLock { isActivatingOrReactivating = true }
+        
+        Task {
+            var attempt = 0
+            var configured = -1
+            let name = IOHIDDeviceGetProperty(s.device, kIOHIDProductKey as CFString) as? String ?? "Mouse"
+            
+            while attempt < maxRetries {
+                attempt += 1
+                os_log("LogitechCIDActivator: Attempting activation for '%{public}@' (attempt %{public}d/%{public}d)",
+                       log: self.logger, type: .info, name, attempt, maxRetries)
+                
+                configured = await activateDevice(s)
+                if configured >= 0 {
+                    break
+                }
+                
+                if attempt < maxRetries {
+                    os_log("LogitechCIDActivator: Activation attempt %{public}d failed on '%{public}@'. Retrying in %{public}.2f seconds...",
+                           log: self.logger, type: .error, attempt, name, retryDelay)
+                    try? await Task.sleep(nanoseconds: UInt64(retryDelay * 1_000_000_000))
+                }
+            }
+            
+            stateLock.withLock { isActivatingOrReactivating = false }
+            
+            if configured >= 0 {
+                os_log("LogitechCIDActivator: Successfully configured %{public}d CID(s) on '%{public}@' after %{public}d attempt(s)",
+                       log: self.logger, type: .info, configured, name, attempt)
+                if let attachedDev = DeviceManager.attachedDevice(with: s.device) {
+                    attachedDev.isLogitechDiverted = (s.featReprogV4 != 0)
+                    await queryBatteryAndDPI(for: s, devWrapper: attachedDev)
+                }
+            } else {
+                os_log("LogitechCIDActivator: Failed to configure device '%{public}@' after %{public}d attempts.",
+                       log: self.logger, type: .error, name, maxRetries)
+                if let attachedDev = DeviceManager.attachedDevice(with: s.device) {
+                    attachedDev.isLogitechDiverted = false
+                }
+                DispatchQueue.main.async {
+                    self.lastReactivateTime = 0
+                }
+            }
+        }
     }
     
     private func runSync<T>(_ block: @escaping () async throws -> T) -> T? {
@@ -912,26 +995,7 @@ public class LogitechActivator: NSObject {
             os_log("LogitechCIDActivator: Device reconnected wirelessly. Scheduling activation in 0.35 seconds...",
                    log: this.logger, type: .info)
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
-                this.stateLock.withLock { this.isActivatingOrReactivating = true }
-                Task {
-                    let activeCount = await this.activateDevice(s)
-                    this.stateLock.withLock { this.isActivatingOrReactivating = false }
-                    os_log("LogitechCIDActivator: Async reactivation after wireless reconnect completed. CIDs configured: %{public}d",
-                           log: this.logger, type: .info, activeCount)
-                    if activeCount >= 0 {
-                        if let attachedDev = DeviceManager.attachedDevice(with: s.device) {
-                            attachedDev.isLogitechDiverted = (s.featReprogV4 != 0)
-                            await this.queryBatteryAndDPI(for: s, devWrapper: attachedDev)
-                        }
-                    } else {
-                        if let attachedDev = DeviceManager.attachedDevice(with: s.device) {
-                            attachedDev.isLogitechDiverted = false
-                        }
-                        DispatchQueue.main.async {
-                            this.lastReactivateTime = 0
-                        }
-                    }
-                }
+                this.performActivation(for: s, maxRetries: 4, retryDelay: 0.8)
             }
             return
         }
@@ -995,8 +1059,6 @@ public class LogitechActivator: NSObject {
             return
         }
         
-        stateLock.withLock { isActivatingOrReactivating = true }
-        
         _ = IOHIDDeviceOpen(device, IOOptionBits(kIOHIDOptionsTypeNone))
         
         let writeDevice = findVendorInterface(for: device)
@@ -1015,27 +1077,7 @@ public class LogitechActivator: NSObject {
             states[device] = s
         }
         
-        Task {
-            let configured = await activateDevice(s)
-            stateLock.withLock { isActivatingOrReactivating = false }
-            
-            if configured >= 0 {
-                os_log("LogitechCIDActivator: configured %{public}d CID(s) on '%{public}@'",
-                       log: self.logger, type: .info, configured, name)
-                if let attachedDev = DeviceManager.attachedDevice(with: device) {
-                    attachedDev.isLogitechDiverted = (s.featReprogV4 != 0)
-                    await queryBatteryAndDPI(for: s, devWrapper: attachedDev)
-                }
-            } else {
-                os_log("LogitechCIDActivator: Failed to configure device '%{public}@'.", log: self.logger, type: .error, name)
-                if let attachedDev = DeviceManager.attachedDevice(with: device) {
-                    attachedDev.isLogitechDiverted = false
-                }
-                DispatchQueue.main.async {
-                    self.lastReactivateTime = 0
-                }
-            }
-        }
+        performActivation(for: s, maxRetries: 3, retryDelay: 0.5)
     }
     
     @objc public func handleDeviceRemoved(_ device: IOHIDDevice) {
@@ -1077,33 +1119,12 @@ public class LogitechActivator: NSObject {
         }
         lastReactivateTime = now
         
-        stateLock.withLock { isActivatingOrReactivating = true }
-        
         if let s = self.state(for: device) {
             let name = IOHIDDeviceGetProperty(device, kIOHIDProductKey as CFString) as? String ?? "Mouse"
             os_log("LogitechCIDActivator: Manually triggering activation for device '%{public}@'",
                    log: self.logger, type: .info, name)
-            
-            Task {
-                let activeCount = await activateDevice(s)
-                stateLock.withLock { isActivatingOrReactivating = false }
-                
-                if activeCount >= 0 {
-                    if let attachedDev = DeviceManager.attachedDevice(with: device) {
-                        attachedDev.isLogitechDiverted = (s.featReprogV4 != 0)
-                        await queryBatteryAndDPI(for: s, devWrapper: attachedDev)
-                    }
-                } else {
-                    if let attachedDev = DeviceManager.attachedDevice(with: device) {
-                        attachedDev.isLogitechDiverted = false
-                    }
-                    DispatchQueue.main.async {
-                        self.lastReactivateTime = 0
-                    }
-                }
-            }
+            performActivation(for: s, maxRetries: 3, retryDelay: 0.5)
         } else {
-            stateLock.withLock { isActivatingOrReactivating = false }
             os_log("LogitechCIDActivator: Cannot reactivate device, no state found for this IOHIDDeviceRef. Trying to handle as attached.",
                    log: self.logger, type: .info)
             handleDeviceAttached(device)
@@ -1560,22 +1581,7 @@ public class LogitechActivator: NSObject {
             if s.featReprogV4 != 0 && !attachedDev.isLogitechDiverted {
                 os_log("LogitechCIDActivator: Periodic check detected device '%{public}@' is not diverted. Reactivating...",
                        log: self.logger, type: .info, attachedDev.name())
-                
-                stateLock.withLock { isActivatingOrReactivating = true }
-                Task {
-                    let activeCount = await activateDevice(s)
-                    stateLock.withLock { isActivatingOrReactivating = false }
-                    
-                    if activeCount >= 0 {
-                        attachedDev.isLogitechDiverted = (s.featReprogV4 != 0)
-                        await queryBatteryAndDPI(for: s, devWrapper: attachedDev)
-                    } else {
-                        attachedDev.isLogitechDiverted = false
-                        DispatchQueue.main.async {
-                            self.lastReactivateTime = 0
-                        }
-                    }
-                }
+                performActivation(for: s, maxRetries: 1, retryDelay: 0)
             }
         }
     }
@@ -1594,10 +1600,40 @@ public class LogitechActivator: NSObject {
         
         Task {
             for s in activeStates {
-                _ = await activateDevice(s)
+                var attempt = 0
+                var configured = -1
+                let name = IOHIDDeviceGetProperty(s.device, kIOHIDProductKey as CFString) as? String ?? "Mouse"
+                
+                while attempt < 4 {
+                    attempt += 1
+                    os_log("LogitechCIDActivator: System wake activation for '%{public}@' (attempt %{public}d/4)",
+                           log: self.logger, type: .info, name, attempt)
+                    configured = await activateDevice(s)
+                    if configured >= 0 {
+                        break
+                    }
+                    if attempt < 4 {
+                        try? await Task.sleep(nanoseconds: 800_000_000)
+                    }
+                }
+                
+                if configured >= 0 {
+                    os_log("LogitechCIDActivator: System wake successfully configured %{public}d CID(s) on '%{public}@' after %{public}d attempt(s)",
+                           log: self.logger, type: .info, configured, name, attempt)
+                    if let attachedDev = DeviceManager.attachedDevice(with: s.device) {
+                        attachedDev.isLogitechDiverted = (s.featReprogV4 != 0)
+                        await queryBatteryAndDPI(for: s, devWrapper: attachedDev)
+                    }
+                } else {
+                    os_log("LogitechCIDActivator: System wake failed to configure device '%{public}@' after 4 attempts.",
+                           log: self.logger, type: .error, name)
+                    if let attachedDev = DeviceManager.attachedDevice(with: s.device) {
+                        attachedDev.isLogitechDiverted = false
+                    }
+                }
             }
             stateLock.withLock { isActivatingOrReactivating = false }
-            os_log("LogitechCIDActivator: re-activated %{public}d device(s)", log: self.logger, type: .info, activeStates.count)
+            os_log("LogitechCIDActivator: System wake reactivation completed.", log: self.logger, type: .info)
         }
     }
 }

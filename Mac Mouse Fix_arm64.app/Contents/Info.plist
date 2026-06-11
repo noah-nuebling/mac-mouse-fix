@@ -5,7 +5,7 @@
 	<key>ATSApplicationFontsPath</key>
 	<string>.</string>
 	<key>BuildMachineOSBuild</key>
-	<string>25G5028f</string>
+	<string>26A5353q</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -23,7 +23,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>3.1.4</string>
+	<string>3.1.8</string>
 	<key>CFBundleSupportedPlatforms</key>
 	<array>
 		<string>MacOSX</string>
@@ -42,27 +42,27 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>24845</string>
+	<string>24848</string>
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
-	<string>25C58</string>
+	<string>25F70</string>
 	<key>DTPlatformName</key>
 	<string>macosx</string>
 	<key>DTPlatformVersion</key>
-	<string>26.2</string>
+	<string>26.5</string>
 	<key>DTSDKBuild</key>
-	<string>25C58</string>
+	<string>25F70</string>
 	<key>DTSDKName</key>
-	<string>macosx26.2</string>
+	<string>macosx26.5</string>
 	<key>DTXcode</key>
-	<string>2630</string>
+	<string>2650</string>
 	<key>DTXcodeBuild</key>
-	<string>17C519</string>
+	<string>17F42</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.15.0</string>
+	<string>15.0</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2019-2023 Noah Nuebling (MMF License)</string>
 	<key>NSMainStoryboardFile</key>

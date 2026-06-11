@@ -10,7 +10,7 @@
 		</data>
 		<key>Resources/Assets.car</key>
 		<data>
-		nEOgup88YkykC5XylzcgfmpoTfE=
+		YbRRuliTrAjlt8MC3AHNQNgq+Tk=
 		</data>
 		<key>Resources/Base.lproj/MenuBarItem.nib</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/Info.plist</key>
 		<data>
-		Hz8HRF1IUkqFoXBgc5ugu08W9uE=
+		tbVH10nhkL3oMgBokvu441hyDWs=
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/Resources/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -30,11 +30,11 @@
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeDirectory</key>
 		<data>
-		49ag4WjqpSYuAy24Wl7p89xtMts=
+		M9jlDxi0vtuE9ZcFNItZIpQiTaw=
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeRequirements</key>
 		<data>
-		OnX22wWFKRSOFN1+obRynMCeyXM=
+		4pdCVPusLfVRUGfVLP7sEzO58UY=
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeResources</key>
 		<data>
@@ -42,7 +42,7 @@
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeSignature</key>
 		<data>
-		2jmj7l5rSw0yVb/vlWAYkK/YBwk=
+		p/UrJuRVIjeTmOaC7EU8dQO+slo=
 		</data>
 		<key>Resources/InformationDensity.md</key>
 		<data>
@@ -58,7 +58,7 @@
 		</data>
 		<key>Resources/TrialNotificationController.nib</key>
 		<data>
-		TOymizEX0bJHsADKPAFs5QoCovY=
+		U93BulzWREXf75q+/iiYRxXCNUU=
 		</data>
 		<key>Resources/Universal Back and Forward.md</key>
 		<data>
@@ -453,15 +453,6 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Frameworks/libswift_Concurrency.dylib</key>
-		<dict>
-			<key>cdhash</key>
-			<data>
-			Pr3e+QFHQ3D2oyoywLeBrPU4s88=
-			</data>
-			<key>requirement</key>
-			<string>cdhash H"3ebddef901474370f6a32a32c0b781acf538b3cf" or cdhash H"2df8f77ca131cd10508992f453212709099ea525"</string>
-		</dict>
 		<key>Resources/AppIconRound.icns</key>
 		<dict>
 			<key>hash2</key>
@@ -473,7 +464,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			mEdpPtopdrILFXTUjSW+QkQRtVIcRuQk+TmTMAhPw9M=
+			K4yvchccKeayvQy/LtaSfyS0/czlbsBXfjruQBnY8vI=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/MenuBarItem.nib</key>
@@ -494,7 +485,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			+IrmNfz0GNkTihvA/SUypfgOodWUJps3zMzx1/2k+gM=
+			ioCnaG4vUrE8GPp0jPWktASHUYJ/GoQM+yner0NkawM=
 			</data>
 		</dict>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/Resources/PrivacyInfo.xcprivacy</key>
@@ -508,14 +499,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			rhhJ55wk7Q0o4bIFaLmJsfmSFLnVQgKnBpV4/k+fT7U=
+			grlWhUyaJj/i+ehZQrTHsmf/aTnG9DzY2lGwV/8jYHM=
 			</data>
 		</dict>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeRequirements</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			mHkgkE6rZQ51eIwFSqCwUk5qgL/HGqMt+NI3phdD+YY=
+			EydSeYjC9yJ1eU9xmHaZrQBjhU9IAruH2M9Rnreil9I=
 			</data>
 		</dict>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeResources</key>
@@ -529,7 +520,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
+			UET5Jidg69hhhAfS7LkYS2ojjRaptJT83g2ybU5W1jA=
 			</data>
 		</dict>
 		<key>Resources/InformationDensity.md</key>
@@ -557,7 +548,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			c/Y3MLF/BMjkhC3SIot81SjDpjQY36FGcuJxFzvluaU=
+			SYdWijaujnkt9w2hwMs8W769p36Wh9iTlbQgmsMu/+E=
 			</data>
 		</dict>
 		<key>Resources/Universal Back and Forward.md</key>
