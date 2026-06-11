@@ -3807,85 +3807,169 @@
       "shouldTranslate" : false
     },
     "gK0-1z-Pjv.title" : {
-      "comment" : "Class = \"NSButtonCell\"; title = \"Reverse Direction\"; ObjectID = \"gK0-1z-Pjv\"; Note = \"Scrolling > Reverse Scroll Direction Toggle\";",
+      "comment" : "Class = \"NSButtonCell\"; title = \"Reverse Vertical Scroll Direction\"; ObjectID = \"gK0-1z-Pjv\"; Note = \"Scrolling > Reverse Vertical Scroll Direction Toggle\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Otočit směr scrolování"
+            "value" : "Otočit vertikální směr scrolování"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Richtung umkehren"
+            "value" : "Vertikale Richtung umkehren"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Reverse Direction"
+            "value" : "Reverse Vertical Scroll Direction"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Invertir dirección"
+            "value" : "Invertir dirección vertical"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Défilement naturel"
+            "value" : "Inverser le défilement vertical"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "방향 반전"
+            "value" : "세로 방향 반전"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Direção reversa"
+            "value" : "Direção vertical reversa"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Обратное направление"
+            "value" : "Обратное вертикальное направление"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ters Yöne Kaydırma"
+            "value" : "Dikey Kaydırma Yönünü Tersine Çevir"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Đổi hướng"
+            "value" : "Đổi hướng dọc"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "反转方向"
+            "value" : "反转纵向方向"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "反轉方向"
+            "value" : "反轉縱向方向"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "反轉方向"
+            "value" : "反轉縱向方向"
+          }
+        }
+      }
+    },
+    "mWp-2T-9vK.title" : {
+      "comment" : "Class = \"NSButtonCell\"; title = \"Reverse Horizontal Scroll Direction\"; ObjectID = \"mWp-2T-9vK\"; Note = \"Scrolling > Reverse Horizontal Scroll Direction Toggle\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otočit horizontální směr scrolování"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Horizontale Richtung umkehren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Reverse Horizontal Scroll Direction"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invertir dirección horizontal"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inverser le défilement horizontal"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "가로 방향 반전"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Direção horizontal reversa"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обратное горизонтальное направление"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yatay Kaydırma Yönünü Tersine Çevir"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đổi hướng ngang"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "反转横向方向"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "反轉橫向方向"
+          }
+        },
+        "zh-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "反轉橫向方向"
           }
         }
       }
