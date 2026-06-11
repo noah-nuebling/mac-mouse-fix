@@ -19,6 +19,24 @@ RELEASE_DIR="$PROJECT_DIR/releases"
 APPCAST_FILE="$PROJECT_DIR/appcast.xml"
 DMG_ARM64="$RELEASE_DIR/Mac_Mouse_Fix_${VERSION}_arm64.dmg"
 DMG_X86_64="$RELEASE_DIR/Mac_Mouse_Fix_${VERSION}_x86_64.dmg"
+ZIP_ARM64="$RELEASE_DIR/Mac_Mouse_Fix_${VERSION}_arm64.zip"
+ZIP_X86_64="$RELEASE_DIR/Mac_Mouse_Fix_${VERSION}_x86_64.zip"
+
+APP_ARM64="$PROJECT_DIR/Mac Mouse Fix_arm64.app"
+APP_X86_64="$PROJECT_DIR/Mac Mouse Fix_x86_64.app"
+
+# Automatically create ZIP if the APP bundle exists
+if [ -d "$APP_ARM64" ]; then
+    echo "正在将 arm64 app 打包为 ZIP..."
+    rm -f "$ZIP_ARM64"
+    ditto -c -k --sequesterRsrc --keepParent "$APP_ARM64" "$ZIP_ARM64"
+fi
+
+if [ -d "$APP_X86_64" ]; then
+    echo "正在将 x86_64 app 打包为 ZIP..."
+    rm -f "$ZIP_X86_64"
+    ditto -c -k --sequesterRsrc --keepParent "$APP_X86_64" "$ZIP_X86_64"
+fi
 
 # 定位签名工具。允许通过环境变量覆盖，默认从当前 DerivedData 中查找。
 SIGN_TOOL="${SIGN_TOOL:-}"
@@ -30,14 +48,14 @@ if [ -z "$SIGN_TOOL" ] || [ ! -x "$SIGN_TOOL" ]; then
     exit 1
 fi
 
-# 检查 DMG 是否存在
-if [ ! -f "$DMG_ARM64" ]; then
-    echo "错误: 找不到 arm64 DMG 文件：$DMG_ARM64"
+# 检查 ZIP 是否存在
+if [ ! -f "$ZIP_ARM64" ]; then
+    echo "错误: 找不到 arm64 ZIP 文件：$ZIP_ARM64"
     exit 1
 fi
 
 HAS_X86=0
-if [ -f "$DMG_X86_64" ]; then
+if [ -f "$ZIP_X86_64" ]; then
     HAS_X86=1
 fi
 
@@ -60,10 +78,10 @@ echo "提取到的 Build 号 (sparkle:version): $SPARKLE_VERSION"
 
 # 3. 生成签名与获取大小
 echo "正在为可用架构生成 EdDSA 签名..."
-SIG_ARM64=$($SIGN_TOOL "$DMG_ARM64")
+SIG_ARM64=$($SIGN_TOOL "$ZIP_ARM64")
 SIG_X86_64=""
 if [ "$HAS_X86" -eq 1 ]; then
-    SIG_X86_64=$($SIGN_TOOL "$DMG_X86_64")
+    SIG_X86_64=$($SIGN_TOOL "$ZIP_X86_64")
 fi
 
 if [ -z "$SIG_ARM64" ] || { [ "$HAS_X86" -eq 1 ] && [ -z "$SIG_X86_64" ]; }; then
@@ -71,10 +89,10 @@ if [ -z "$SIG_ARM64" ] || { [ "$HAS_X86" -eq 1 ] && [ -z "$SIG_X86_64" ]; }; the
     exit 1
 fi
 
-SIZE_ARM64=$(stat -f%z "$DMG_ARM64")
+SIZE_ARM64=$(stat -f%z "$ZIP_ARM64")
 SIZE_X86_64=0
 if [ "$HAS_X86" -eq 1 ]; then
-    SIZE_X86_64=$(stat -f%z "$DMG_X86_64")
+    SIZE_X86_64=$(stat -f%z "$ZIP_X86_64")
 fi
 PUB_DATE=$(date -R)
 
@@ -84,12 +102,8 @@ if [ "$HAS_X86" -eq 1 ]; then
 fi
 echo "发布日期: $PUB_DATE"
 
-URL_ARM64="https://github.com/ShawnRn/mac-mouse-fix/releases/download/v$VERSION/Mac_Mouse_Fix_${VERSION}_arm64.dmg"
-URL_X86_64="https://github.com/ShawnRn/mac-mouse-fix/releases/download/v$VERSION/Mac_Mouse_Fix_${VERSION}_x86_64.dmg"
-
-echo "arm64 签名: $SIG_ARM64, 大小: $SIZE_ARM64"
-echo "x86_64 签名: $SIG_X86_64, 大小: $SIZE_X86_64"
-echo "发布日期: $PUB_DATE"
+URL_ARM64="https://github.com/ShawnRn/mac-mouse-fix/releases/download/v$VERSION/Mac_Mouse_Fix_${VERSION}_arm64.zip"
+URL_X86_64="https://github.com/ShawnRn/mac-mouse-fix/releases/download/v$VERSION/Mac_Mouse_Fix_${VERSION}_x86_64.zip"
 
 # 5. 更新 appcast.xml (单 item 多 enclosure)
 echo "正在更新 appcast.xml..."
@@ -125,7 +139,7 @@ echo "--- 准备完成！ ---"
 echo "appcast.xml 已更新。"
 echo "请执行:"
 if [ "$HAS_X86" -eq 1 ]; then
-    echo "gh release create \"v\$VERSION\" \"$DMG_ARM64\" \"$DMG_X86_64\" --title \"Mac Mouse Fix \$VERSION\" --notes \"Sparkle Update Release\""
+    echo "gh release create \"v\$VERSION\" \"$DMG_ARM64\" \"$ZIP_ARM64\" \"$DMG_X86_64\" \"$ZIP_X86_64\" --title \"Mac Mouse Fix \$VERSION\" --notes \"Sparkle Update Release\""
 else
-    echo "gh release create \"v\$VERSION\" \"$DMG_ARM64\" --title \"Mac Mouse Fix \$VERSION\" --notes \"Sparkle Update Release\""
+    echo "gh release create \"v\$VERSION\" \"$DMG_ARM64\" \"$ZIP_ARM64\" --title \"Mac Mouse Fix \$VERSION\" --notes \"Sparkle Update Release\""
 fi

@@ -923,6 +923,13 @@ public class LogitechActivator: NSObject {
                             attachedDev.isLogitechDiverted = (s.featReprogV4 != 0)
                             await this.queryBatteryAndDPI(for: s, devWrapper: attachedDev)
                         }
+                    } else {
+                        if let attachedDev = DeviceManager.attachedDevice(with: s.device) {
+                            attachedDev.isLogitechDiverted = false
+                        }
+                        DispatchQueue.main.async {
+                            this.lastReactivateTime = 0
+                        }
                     }
                 }
             }
@@ -1021,6 +1028,12 @@ public class LogitechActivator: NSObject {
                 }
             } else {
                 os_log("LogitechCIDActivator: Failed to configure device '%{public}@'.", log: self.logger, type: .error, name)
+                if let attachedDev = DeviceManager.attachedDevice(with: device) {
+                    attachedDev.isLogitechDiverted = false
+                }
+                DispatchQueue.main.async {
+                    self.lastReactivateTime = 0
+                }
             }
         }
     }
@@ -1079,6 +1092,13 @@ public class LogitechActivator: NSObject {
                     if let attachedDev = DeviceManager.attachedDevice(with: device) {
                         attachedDev.isLogitechDiverted = (s.featReprogV4 != 0)
                         await queryBatteryAndDPI(for: s, devWrapper: attachedDev)
+                    }
+                } else {
+                    if let attachedDev = DeviceManager.attachedDevice(with: device) {
+                        attachedDev.isLogitechDiverted = false
+                    }
+                    DispatchQueue.main.async {
+                        self.lastReactivateTime = 0
                     }
                 }
             }
@@ -1546,9 +1566,14 @@ public class LogitechActivator: NSObject {
                     let activeCount = await activateDevice(s)
                     stateLock.withLock { isActivatingOrReactivating = false }
                     
-                    if activeCount > 0 {
-                        attachedDev.isLogitechDiverted = true
+                    if activeCount >= 0 {
+                        attachedDev.isLogitechDiverted = (s.featReprogV4 != 0)
                         await queryBatteryAndDPI(for: s, devWrapper: attachedDev)
+                    } else {
+                        attachedDev.isLogitechDiverted = false
+                        DispatchQueue.main.async {
+                            self.lastReactivateTime = 0
+                        }
                     }
                 }
             }

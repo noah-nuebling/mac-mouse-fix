@@ -328,14 +328,12 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     if (usagePage == 9 && (usage == 4 || usage == 5) && integerValue != 0) {
         NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(sendingDev.iohidDevice, CFSTR(kIOHIDVendorIDKey));
         if (vid != nil && vid.intValue == 0x046D) { // Logitech
-            if (sendingDev.isLogitechDiverted) {
-                DDLogInfo(@"Device: Detected native side button press (usage: %u) on diverted Logitech device. Volatile config lost? Triggering immediate reactivation...", usage);
-                sendingDev.isLogitechDiverted = NO;
-                // Dispatch reactivation asynchronously to avoid nesting IO calls
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[LogitechCIDActivator shared] reactivateDeviceWithIOHIDDevice:sendingDev.iohidDevice];
-                });
-            }
+            DDLogInfo(@"Device: Detected native side button press (usage: %u) on Logitech device. Volatile config lost? Triggering immediate reactivation...", usage);
+            sendingDev.isLogitechDiverted = NO;
+            // Dispatch reactivation asynchronously to avoid nesting IO calls
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[LogitechCIDActivator shared] reactivateDeviceWithIOHIDDevice:sendingDev.iohidDevice];
+            });
         }
     }
 
