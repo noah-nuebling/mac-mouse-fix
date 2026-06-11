@@ -176,6 +176,7 @@ class DeviceState {
     
     var featWirelessStatus: UInt8 = 0
     var featReprogV4: UInt8 = 0
+    var isHIDPP20Compatible: Bool = false
     var featSmartShift: UInt8 = 0
     var featAdjustableDpi: UInt8 = 0  // 0x2201
     var featExtendedDpi: UInt8 = 0    // 0x2202
@@ -436,6 +437,14 @@ public class LogitechActivator: NSObject {
     private func activateDevice(_ s: DeviceState) async -> Int {
         let name = IOHIDDeviceGetProperty(s.device, kIOHIDProductKey as CFString) as? String ?? "Mouse"
         
+        // Ensure that both the main device and write device interfaces are open.
+        // On system wake or wake-from-sleep, the HID session/transport can be closed by macOS,
+        // which makes subsequent SetReport calls fail with kIOReturnNotOpen (0xe00002cd).
+        _ = IOHIDDeviceOpen(s.device, IOOptionBits(kIOHIDOptionsTypeNone))
+        if s.writeDevice !== s.device {
+            _ = IOHIDDeviceOpen(s.writeDevice, IOOptionBits(kIOHIDOptionsTypeNone))
+        }
+        
         let indices: [UInt8] = [0xFF, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06]
         var activeIndex: UInt8 = 0
         
@@ -447,6 +456,8 @@ public class LogitechActivator: NSObject {
             
             do {
                 let resp = try await s.messenger.sendAndWait(feature: 0x00, function: 0x00, params: params, timeout: 1.0)
+                // If we get any response, the device supports HID++ 2.0.
+                s.isHIDPP20Compatible = true
                 if resp[2] == 0x00 {
                     activeIndex = testIndex
                     os_log("LogitechCIDActivator: Found active device index 0x%{public}02X on '%{public}@'",
@@ -457,6 +468,11 @@ public class LogitechActivator: NSObject {
                            log: self.logger, type: .error, testIndex, resp[2])
                 }
             } catch {
+                if case HIDPPError.deviceError = error {
+                    // deviceError (like Busy 0x04 or Invalid subdev 0x01) means the hardware receiver
+                    // actively responded to our HID++ command. This proves HID++ 2.0 compatibility!
+                    s.isHIDPP20Compatible = true
+                }
                 os_log("LogitechCIDActivator: Probing index 0x%{public}02X failed with error: %{public}@",
                        log: self.logger, type: .error, testIndex, String(describing: error))
             }
@@ -966,27 +982,45 @@ public class LogitechActivator: NSObject {
         if reportBytes[1] == 0xFF && reportBytes[2] == 0x00 && reportBytes[3] == 0x41 && reportLength >= 6 {
             let devIdx = reportBytes[4]
             let status = reportBytes[5]
-            if devIdx == s.deviceIndex && (status & 0x40) != 0 {
+            let attachedDev = DeviceManager.attachedDevice(with: s.device)
+            let isDiverted = attachedDev?.isLogitechDiverted ?? false
+            
+            // If the device is already successfully activated, match its specific index.
+            // If it's not yet activated (e.g. initial activation failed because mouse was offline),
+            // trigger reconnect reactivation on ANY logical child slot (0x01-0x06) reconnection.
+            let isTargetDevice = (devIdx == s.deviceIndex) || (!isDiverted && devIdx >= 0x01 && devIdx <= 0x06)
+            
+            if isTargetDevice && (status & 0x40) != 0 {
                 os_log("LogitechCIDActivator: Unifying reconnection event detected for deviceIndex 0x%{public}02X",
                        log: this.logger, type: .info, devIdx)
                 reconnectDetected = true
             }
         }
         
-        if !reconnectDetected && reportBytes[0] == 0x11 && (reportBytes[1] == s.deviceIndex || reportBytes[1] == 0xFF) && reportBytes[3] == 0x00 && reportLength >= 5 {
-            if s.featWirelessStatus != 0 && reportBytes[2] == s.featWirelessStatus {
-                let status = reportBytes[4]
-                if status == 0x01 || status == 0x02 {
-                    os_log("LogitechCIDActivator: Wireless reconnection event (StatusBroadcast via feature 0x1D4B) detected for deviceIndex 0x%{public}02X",
-                           log: this.logger, type: .info, s.deviceIndex)
-                    reconnectDetected = true
-                }
-            } else if reportBytes[2] != 0 && reportBytes[2] < 0x10 {
-                let status = reportBytes[4]
-                if status == 0x01 || status == 0x02 {
-                    os_log("LogitechCIDActivator: Generic wireless status event detected for deviceIndex 0x%{public}02X",
-                           log: this.logger, type: .info, s.deviceIndex)
-                    reconnectDetected = true
+        if !reconnectDetected && reportBytes[0] == 0x11 && reportBytes[3] == 0x00 && reportLength >= 5 {
+            let devIdx = reportBytes[1]
+            let attachedDev = DeviceManager.attachedDevice(with: s.device)
+            let isDiverted = attachedDev?.isLogitechDiverted ?? false
+            
+            // If the device is already successfully activated, match its specific index.
+            // If it's not yet activated, trigger reconnect on ANY logical child slot (0x01-0x06) or 0xFF.
+            let isTargetDevice = (devIdx == s.deviceIndex) || (devIdx == 0xFF) || (!isDiverted && devIdx >= 0x01 && devIdx <= 0x06)
+            
+            if isTargetDevice {
+                if s.featWirelessStatus != 0 && reportBytes[2] == s.featWirelessStatus {
+                    let status = reportBytes[4]
+                    if status == 0x01 || status == 0x02 {
+                        os_log("LogitechCIDActivator: Wireless reconnection event (StatusBroadcast via feature 0x1D4B) detected for deviceIndex 0x%{public}02X",
+                               log: this.logger, type: .info, devIdx)
+                        reconnectDetected = true
+                    }
+                } else if reportBytes[2] != 0 && reportBytes[2] < 0x10 {
+                    let status = reportBytes[4]
+                    if status == 0x01 || status == 0x02 {
+                        os_log("LogitechCIDActivator: Generic wireless status event detected for deviceIndex 0x%{public}02X",
+                               log: this.logger, type: .info, devIdx)
+                        reconnectDetected = true
+                    }
                 }
             }
         }
@@ -1578,8 +1612,9 @@ public class LogitechActivator: NSObject {
                 }
             }
             
-            if s.featReprogV4 != 0 && !attachedDev.isLogitechDiverted {
-                os_log("LogitechCIDActivator: Periodic check detected device '%{public}@' is not diverted. Reactivating...",
+            let needsActivation = !attachedDev.isLogitechDiverted && (s.featReprogV4 != 0 || s.isHIDPP20Compatible)
+            if needsActivation {
+                os_log("LogitechCIDActivator: Periodic check detected device '%{public}@' is compatible but not diverted. Reactivating...",
                        log: self.logger, type: .info, attachedDev.name())
                 performActivation(for: s, maxRetries: 1, retryDelay: 0)
             }
