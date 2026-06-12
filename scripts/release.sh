@@ -34,6 +34,8 @@ if [ -d "$APP_ARM64" ]; then
     # so Sparkle extracts it with the correct name and succeeds.
     STAGE_DIR_ARM64=$(mktemp -d "${TMPDIR:-/tmp}/macmousefix-zip-arm64.XXXXXX")
     cp -R "$APP_ARM64" "${STAGE_DIR_ARM64}/Mac Mouse Fix.app"
+    chmod -R u+w "${STAGE_DIR_ARM64}/Mac Mouse Fix.app"
+    xattr -cr "${STAGE_DIR_ARM64}/Mac Mouse Fix.app"
     ditto -c -k --sequesterRsrc --keepParent "${STAGE_DIR_ARM64}/Mac Mouse Fix.app" "$ZIP_ARM64"
     rm -rf "$STAGE_DIR_ARM64"
 fi
@@ -46,6 +48,8 @@ if [ -d "$APP_X86_64" ]; then
     # so Sparkle extracts it with the correct name and succeeds.
     STAGE_DIR_X86_64=$(mktemp -d "${TMPDIR:-/tmp}/macmousefix-zip-x86_64.XXXXXX")
     cp -R "$APP_X86_64" "${STAGE_DIR_X86_64}/Mac Mouse Fix.app"
+    chmod -R u+w "${STAGE_DIR_X86_64}/Mac Mouse Fix.app"
+    xattr -cr "${STAGE_DIR_X86_64}/Mac Mouse Fix.app"
     ditto -c -k --sequesterRsrc --keepParent "${STAGE_DIR_X86_64}/Mac Mouse Fix.app" "$ZIP_X86_64"
     rm -rf "$STAGE_DIR_X86_64"
 fi
