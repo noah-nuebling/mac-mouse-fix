@@ -152,7 +152,14 @@ static BOOL _maxButtonNumberAmongDevices_IsCached = false;
                 _result = b;
             }
         }
-        
+
+        /// When no devices are attached, assume a standard 5-button mouse.
+        /// This enables button remapping for Universal Control and other
+        /// virtual input sources that don't register as IOHIDDevices.
+        if (_attachedDevices.count == 0) {
+            _result = 5;
+        }
+
         _maxButtonNumberAmongDevices_IsCached = true;
         return _result;
     }
