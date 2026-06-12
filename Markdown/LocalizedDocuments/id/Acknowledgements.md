@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **Juni 2026**
 
+- 🇩🇪&nbsp;Sebastian&nbsp;Kraft
 - 🇨🇭&nbsp;Michael
 - 🇮🇱&nbsp;Y&nbsp;Mg - "It is worth more than this amount of money."
 - 🇺🇸&nbsp;Mouseguy - "Awesome piece of software. Invaluable for anyone that has a Logitech mouse and can’t install their crapware on a work laptop"
