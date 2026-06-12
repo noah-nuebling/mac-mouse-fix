@@ -445,36 +445,68 @@ public class LogitechActivator: NSObject {
             _ = IOHIDDeviceOpen(s.writeDevice, IOOptionBits(kIOHIDOptionsTypeNone))
         }
         
-        let indices: [UInt8] = [0xFF, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06]
+        let lastKnownIndex = s.deviceIndex
         var activeIndex: UInt8 = 0
         
-        for testIndex in indices {
-            s.deviceIndex = testIndex
-            await s.messenger.setDeviceIndex(testIndex)
+        // 1. Fast-path: try the last known device index first to bypass expensive full probing
+        if lastKnownIndex != 0xFF && lastKnownIndex != 0 {
+            s.deviceIndex = lastKnownIndex
+            await s.messenger.setDeviceIndex(lastKnownIndex)
             
             let params: [UInt8] = [0x00, 0x01] // Feature Set
-            
             do {
-                let resp = try await s.messenger.sendAndWait(feature: 0x00, function: 0x00, params: params, timeout: 1.0)
-                // If we get any response, the device supports HID++ 2.0.
+                let resp = try await s.messenger.sendAndWait(feature: 0x00, function: 0x00, params: params, timeout: 0.3)
                 s.isHIDPP20Compatible = true
                 if resp[2] == 0x00 {
-                    activeIndex = testIndex
-                    os_log("LogitechCIDActivator: Found active device index 0x%{public}02X on '%{public}@'",
+                    activeIndex = lastKnownIndex
+                    os_log("LogitechCIDActivator: Fast-path index check succeeded on index 0x%{public}02X for '%{public}@'",
                            log: self.logger, type: .info, activeIndex, name)
-                    break
                 } else {
-                    os_log("LogitechCIDActivator: Probing index 0x%{public}02X returned unexpected resp[2]: 0x%{public}02X",
-                           log: self.logger, type: .error, testIndex, resp[2])
+                    os_log("LogitechCIDActivator: Fast-path index check on 0x%{public}02X returned unexpected resp[2]: 0x%{public}02X",
+                           log: self.logger, type: .error, lastKnownIndex, resp[2])
                 }
             } catch {
                 if case HIDPPError.deviceError = error {
-                    // deviceError (like Busy 0x04 or Invalid subdev 0x01) means the hardware receiver
-                    // actively responded to our HID++ command. This proves HID++ 2.0 compatibility!
                     s.isHIDPP20Compatible = true
                 }
-                os_log("LogitechCIDActivator: Probing index 0x%{public}02X failed with error: %{public}@",
-                       log: self.logger, type: .error, testIndex, String(describing: error))
+                os_log("LogitechCIDActivator: Fast-path index check on 0x%{public}02X failed: %{public}@",
+                       log: self.logger, type: .info, lastKnownIndex, String(describing: error))
+            }
+        }
+        
+        // 2. Slow-path: if fast-path failed or we have no last known index, run full probing
+        if activeIndex == 0 {
+            let indices: [UInt8] = [0xFF, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06]
+            let filteredIndices = indices.filter { $0 != lastKnownIndex }
+            
+            for testIndex in filteredIndices {
+                s.deviceIndex = testIndex
+                await s.messenger.setDeviceIndex(testIndex)
+                
+                let params: [UInt8] = [0x00, 0x01] // Feature Set
+                
+                do {
+                    let resp = try await s.messenger.sendAndWait(feature: 0x00, function: 0x00, params: params, timeout: 0.3)
+                    // If we get any response, the device supports HID++ 2.0.
+                    s.isHIDPP20Compatible = true
+                    if resp[2] == 0x00 {
+                        activeIndex = testIndex
+                        os_log("LogitechCIDActivator: Found active device index 0x%{public}02X on '%{public}@'",
+                               log: self.logger, type: .info, activeIndex, name)
+                        break
+                    } else {
+                        os_log("LogitechCIDActivator: Probing index 0x%{public}02X returned unexpected resp[2]: 0x%{public}02X",
+                               log: self.logger, type: .error, testIndex, resp[2])
+                    }
+                } catch {
+                    if case HIDPPError.deviceError = error {
+                        // deviceError (like Busy 0x04 or Invalid subdev 0x01) means the hardware receiver
+                        // actively responded to our HID++ command. This proves HID++ 2.0 compatibility!
+                        s.isHIDPP20Compatible = true
+                    }
+                    os_log("LogitechCIDActivator: Probing index 0x%{public}02X failed with error: %{public}@",
+                           log: self.logger, type: .error, testIndex, String(describing: error))
+                }
             }
         }
         
@@ -727,9 +759,19 @@ public class LogitechActivator: NSObject {
                 }
                 
                 if attempt < maxRetries {
+                    var currentDelay = retryDelay
+                    if attempt == 1 {
+                        currentDelay = 0.15
+                    } else if attempt == 2 {
+                        currentDelay = 0.30
+                    } else if attempt == 3 {
+                        currentDelay = 0.60
+                    } else {
+                        currentDelay = 1.00
+                    }
                     os_log("LogitechCIDActivator: Activation attempt %{public}d failed on '%{public}@'. Retrying in %{public}.2f seconds...",
-                           log: self.logger, type: .error, attempt, name, retryDelay)
-                    try? await Task.sleep(nanoseconds: UInt64(retryDelay * 1_000_000_000))
+                           log: self.logger, type: .error, attempt, name, currentDelay)
+                    try? await Task.sleep(nanoseconds: UInt64(currentDelay * 1_000_000_000))
                 }
             }
             
@@ -1648,7 +1690,15 @@ public class LogitechActivator: NSObject {
                         break
                     }
                     if attempt < 4 {
-                        try? await Task.sleep(nanoseconds: 800_000_000)
+                        var currentDelay = 0.80
+                        if attempt == 1 {
+                            currentDelay = 0.15
+                        } else if attempt == 2 {
+                            currentDelay = 0.30
+                        } else if attempt == 3 {
+                            currentDelay = 0.60
+                        }
+                        try? await Task.sleep(nanoseconds: UInt64(currentDelay * 1_000_000_000))
                     }
                 }
                 

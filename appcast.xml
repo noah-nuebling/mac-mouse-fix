@@ -3,13 +3,13 @@
     <channel>
         <title>Mac Mouse Fix</title>
         <item>
-            <title>3.1.10</title>
-            <pubDate>Fri, 12 Jun 2026 07:34:37 +0800</pubDate>
+            <title>3.1.11</title>
+            <pubDate>Fri, 12 Jun 2026 13:06:14 +0800</pubDate>
             <sparkle:version>24848</sparkle:version>
-            <sparkle:shortVersionString>3.1.10</sparkle:shortVersionString>
+            <sparkle:shortVersionString>3.1.11</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/ShawnRn/mac-mouse-fix/releases/download/v3.1.10/Mac_Mouse_Fix_3.1.10_arm64.zip" type="application/octet-stream" sparkle:os="macos" sparkle:nativeArchitecture="arm64" sparkle:edSignature="zZKjHB0eVDSc5RfrDUuPGQELUbOXshpyAVMj6fq7FsdQSJAhOXrzVoWlv9ZpSbgy3eILmYSmgV8syjXprsPFAw==" length="5011103"/>
-            <enclosure url="https://github.com/ShawnRn/mac-mouse-fix/releases/download/v3.1.10/Mac_Mouse_Fix_3.1.10_x86_64.zip" type="application/octet-stream" sparkle:os="macos" sparkle:nativeArchitecture="x86_64" sparkle:edSignature="goLSQqYo3znDdYgAeXmzRnLIfku/KnQc9N4Rcyu9Sg7IyDKyGnQ1GrFo4Na3/PkfontlWY2P4ghwQ48Cow4tDg==" length="5260838"/>
+            <enclosure url="https://github.com/ShawnRn/mac-mouse-fix/releases/download/v3.1.11/Mac_Mouse_Fix_3.1.11_arm64.zip" type="application/octet-stream" sparkle:os="macos" sparkle:nativeArchitecture="arm64" sparkle:edSignature="Z9CfPRbVHLur9M/bqp0inVHMb/t2325C7ZBvb1AEcuKhcFk72ecbZl3hkIhkqCgkprSqFxDegKVdI+w1eOdEAg==" length="5013267"/>
+            <enclosure url="https://github.com/ShawnRn/mac-mouse-fix/releases/download/v3.1.11/Mac_Mouse_Fix_3.1.11_x86_64.zip" type="application/octet-stream" sparkle:os="macos" sparkle:nativeArchitecture="x86_64" sparkle:edSignature="984C7ugAbGmZ09k3aRyQu4V031HDEyyGlXO924/P8KHEuCvkOchNOqZxv7QJMVT6FgmxogvnASqutNzL27v1Dg==" length="5263502"/>
         </item>
     </channel>
 </rss>
