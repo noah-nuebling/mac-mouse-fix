@@ -500,10 +500,14 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
 
 static NSMenuItem * _Nullable findMenuItemWithEffect(NSMenu *menu, NSDictionary *targetEffect) {
     for (NSMenuItem *item in menu.itemArray) {
+        if (item.isSeparatorItem) continue;
+        if (item.view != nil) continue;
+        if (item.isAlternate && !item.hasSubmenu) continue;
+        
         id repObj = item.representedObject;
         if ([repObj isKindOfClass:[NSDictionary class]]) {
             NSDictionary *effectDict = repObj[@"dict"];
-            if ([effectDict isEqual:targetEffect]) {
+            if (effectDict != nil && [effectDict isEqual:targetEffect]) {
                 return item;
             }
         }
@@ -519,12 +523,23 @@ static NSMenuItem * _Nullable findMenuItemWithEffect(NSMenu *menu, NSDictionary 
 
 + (NSMenuItem * _Nullable)getPopUpButtonItemToSelectBasedOnRowDict:(NSPopUpButton * _Nonnull)button rowDict:(NSDictionary * _Nonnull)rowDict {
     
+    /// Datamodel -> Button state
+    /// Search through the popup button's menu items by comparing each item's
+    /// representedObject[@"dict"] against the target effect from the data model.
+    /// Supports recursive submenu lookup for items like Apple Keys.
+    
     NSDictionary *targetEffect = rowDict[kMFRemapsKeyEffect];
     if (!targetEffect) return nil;
+    
     return findMenuItemWithEffect(button.menu, targetEffect);
 }
 
 + (NSDictionary * _Nullable)getEffectDictBasedOnSelectedItemInButton:(NSPopUpButton * _Nonnull)button rowDict:(NSDictionary * _Nonnull)rowDict {
+    
+    /// Button state -> Datamodel
+    /// Read the selected item's representedObject to get the effect dict.
+    /// If the selected item doesn't carry a valid effect dict (e.g. it's a hidden placeholder
+    /// or separator), fall back to the existing effect in the data model.
     
     NSMenuItem *selectedItem = button.selectedItem;
     if (selectedItem) {

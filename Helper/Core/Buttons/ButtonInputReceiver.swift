@@ -41,13 +41,6 @@ private let eventTapCallback: CGEventTapCallBack = { proxy, type, event, refcon 
         return Unmanaged.passUnretained(event)
     }
     
-    // Pass through left/right click and key events immediately so we don't interfere
-    if type == .leftMouseDown || type == .leftMouseUp ||
-       type == .rightMouseDown || type == .rightMouseUp ||
-       type == .keyDown || type == .keyUp {
-        return Unmanaged.passUnretained(event)
-    }
-    
     // Debug print
     if runningPreRelease() {
         let buttonNumber = event.getIntegerValueField(.mouseEventButtonNumber) + 1
@@ -62,15 +55,15 @@ private let eventTapCallback: CGEventTapCallBack = { proxy, type, event, refcon 
     let buttonNumber = Int(event.getIntegerValueField(.mouseEventButtonNumber) + 1)
     var mouseDown = false
     
-    if type == .otherMouseDown || type == .leftMouseDown || type == .rightMouseDown {
+    if type == .otherMouseDown {
         mouseDown = true
-    } else if type == .otherMouseUp || type == .leftMouseUp || type == .rightMouseUp {
+    } else if type == .otherMouseUp {
         mouseDown = false
     } else {
         mouseDown = event.getIntegerValueField(.mouseEventPressure) != 0
     }
     
-    // Filter buttons (left and right click are ignored)
+    // Filter buttons 1 and 2 (left/right click)
     if buttonNumber == 1 || buttonNumber == 2 {
         return Unmanaged.passUnretained(event)
     }
