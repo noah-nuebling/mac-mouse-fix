@@ -740,8 +740,10 @@ public class LogitechActivator: NSObject {
                 os_log("LogitechCIDActivator: activateDevice applying saved HiRes Scroll setting: %{public}d", log: self.logger, type: .info, hiResEnabled)
                 _ = await setHiResWheelModeAsync(hiResEnabled, forDevice: s.device)
             } else {
-                setConfig("Pointer.logitechHiResWheel", NSNumber(value: false))
-                commitConfig()
+                await MainActor.run {
+                    setConfig("Pointer.logitechHiResWheel", NSNumber(value: false))
+                    commitConfig()
+                }
                 if let shouldInvert = config("Scroll.reverseDirection") as? NSNumber {
                     _ = await setFirmwareScrollDirectionAsync(shouldInvert.boolValue, forDevice: s.device)
                 }

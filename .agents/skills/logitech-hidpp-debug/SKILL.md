@@ -179,3 +179,11 @@ Use this skill to diagnose and fix issues with Logitech mouse integration in Mac
 4. **Never** downgrade `confirmedDPIMode` from `true` to `false` based on a transient IPC failure.
 5. **Always** call `[PointerSpeed setForAllDevices]` after changing `isLogitechDiverted` or `supportsLogitechDPI`.
 6. **Always** re-apply saved config inside `activateDevice()` since Logitech firmware settings are volatile.
+7. **Never** double-scale Quartz timestamps using `machTimeToSeconds` on Apple Silicon. `CGEventGetTimestamp` is already in nanoseconds. Double-scaling Quartz timestamps multiplies measured intervals by `125 / 3 = 41.67`, preventing consecutive tick detection and disabling fast scrolling.
+8. **Always** assign `_scrollConfigRaw = newConfigRaw` before instantiating `shared = ScrollConfig()` in `ScrollConfig.reload()`, otherwise `lazy var` properties (like `u_speed` and `u_precise`) will evaluate against the stale configuration and cache it forever.
+9. **Never** use C-style `config("Scroll")` inside `ScrollConfig.reload()` to load the scroll configuration dictionary, as it queries raw configurations without App Overrides applied. Use `Config.configForKeyPath("Scroll")` instead.
+10. **Always** write back overridden values (`new.u_precise = precise` and `new.u_speed = u_speed`) in `ScrollConfig.scrollConfig(modifiers:inputAxis:display:)`. Since they are `@objc lazy var` properties, copying them via shallow copy retains their evaluated values, and any dynamic overrides won't reflect unless explicitly written back.
+11. **Always** pass `force: true` when calling `loadOverridesForApp(_:force:)` inside `updateDerivedStates()` after configuration changes. Skipping this due to the optimization check (same app identifier) will prevent the overrides from being rebuilt and downstream configurations from being reloaded.
+12. **Always** enforce `u_precise = false` if `u_speed == kMFScrollSpeedSystem` inside `ScrollConfig.swift` to ensure that precise scrolling doesn't conflict with macOS native acceleration.
+
+

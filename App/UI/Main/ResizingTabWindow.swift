@@ -44,7 +44,7 @@ import Cocoa
         
         /// Guard animation
         guard let animation = animation else {
-            setFrame(newFrame, display: false)
+            setFrame(newFrame, display: true)
             return
         }
         

@@ -105,12 +105,6 @@ extension Remap {
     }
 }
 
-extension DeviceManager {
-    
-    static var attachedDevices: NSArray {
-        return __attachedDevices() as! NSArray
-    }
-}
 
 extension Modifiers {
     
@@ -123,45 +117,5 @@ extension Modifiers {
     }
 }
 
-extension ModifiedDrag {
-    
-    static func initializeDrag(withDict dict: NSDictionary) {
-        __initializeDrag(withDict: dict)
-    }
-}
-
-extension Actions {
-
-    static func executeActionArray(_ array: NSArray, phase: MFActionPhase) {
-        __executeActionArray(array, phase: phase)
-    }
-}
-
-extension RemapsAnalyzer {
-    
-    static func modificationsModifyButtons(_ modifications: NSDictionary, maxButton: Int32) -> Bool {
-        return __modificationsModifyButtons(modifications, maxButton: maxButton)
-    }
-    
-    static func modificationsModifyScroll(_ modifications: NSDictionary) -> Bool {
-        return __modificationsModifyScroll(modifications)
-    }
-    static func modificationsModifyPointing(_ modifications: NSDictionary) -> Bool {
-        return __modificationsModifyPointing(modifications)
-    }
-    
-    static func maxLevel(forButton button: NSNumber, remaps: NSDictionary, modificationsActingOnThisButton: NSDictionary) -> NSInteger {
-        return __maxLevel(forButton: button, remaps: remaps, modificationsActingOnThisButton: modificationsActingOnThisButton)
-    }
-    
-    static func effectExists(forButton button: NSNumber, remaps: NSDictionary, modificationsActingOnButton: NSDictionary) -> Bool {
-        return __effectExists(forButton: button, remaps: remaps, modificationsActingOnButton: modificationsActingOnButton)
-    }
-    
-    static func assessMappingLandscape(withButton button: NSNumber, level: NSNumber, modificationsActingOnThisButton: NSDictionary, remaps: NSDictionary, thisClickDoBe: UnsafeMutablePointer<ObjCBool>, thisDownDoBe: UnsafeMutablePointer<ObjCBool>, greaterDoBe: UnsafeMutablePointer<ObjCBool>) {
-        __assessMappingLandscape(withButton: button, level: level, modificationsActingOnThisButton: modificationsActingOnThisButton, remaps: remaps, thisClickDoBe: thisClickDoBe, thisDownDoBe: thisDownDoBe, greaterDoBe: greaterDoBe)
-    }
-    
-}
 
 #endif

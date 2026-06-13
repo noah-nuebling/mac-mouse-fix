@@ -66,7 +66,7 @@ import Cocoa
         self.stopSpeed = stopSpeed
         
         /// Debug
-        DDLogDebug(String(format: "Created BezierHybridCurve with - duration: %.3f, distance: %.3f", baseDuration/duration, baseDistance/distance))
+        DDLogDebug("Created BezierHybridCurve with - duration: \(baseDuration/duration), distance: \(baseDistance/distance)")
     }
     
     /// Init - Helpers

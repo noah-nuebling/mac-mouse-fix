@@ -11,6 +11,7 @@
 #import <signal.h>
 #import "DeviceManager.h"
 #import "MFMessagePort.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation UNIXSignals
 

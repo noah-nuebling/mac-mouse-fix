@@ -8,7 +8,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ButtonInputReceiver.h"
 #import "DisableSwiftBridging.h"
 
 NS_ASSUME_NONNULL_BEGIN

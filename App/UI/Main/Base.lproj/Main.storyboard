@@ -738,7 +738,7 @@ If we ever write an article listing all the possible triggers, we could link it 
                                         <clipView key="contentView" autoresizesSubviews="NO" drawsBackground="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fkp-gm-SVn" customClass="MFClipView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="541" height="187"/>
                                             <subviews>
-                                                <tableView identifier="remapTable" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-5U-AJf" customClass="RemapTableView">
+                                                <tableView identifier="remapTable" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-5U-AJf" customClass="RemapTableView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="541" height="187"/>
                                                     <size key="intercellSpacing" width="17" height="0.0"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -878,7 +878,7 @@ If we ever write an article listing all the possible triggers, we could link it 
                                                                                 <rect key="frame" x="0.0" y="0.0" width="214" height="24"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <subviews>
-                                                                                    <textView identifier="keyCaptureView" focusRingType="exterior" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" spellingCorrection="YES" id="piW-Ox-vLv" customClass="KeyCaptureView">
+                                                                                    <textView identifier="keyCaptureView" focusRingType="exterior" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" spellingCorrection="YES" id="piW-Ox-vLv" customClass="KeyCaptureView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="211" height="23"/>
                                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1043,7 +1043,7 @@ If we ever write an article listing all the possible triggers, we could link it 
                     </connections>
                 </viewController>
                 <customObject id="7uh-Xl-poI" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <customObject id="sHV-yD-oIc" customClass="RemapTableController">
+                <customObject id="sHV-yD-oIc" customClass="RemapTableController" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                     <connections>
                         <outlet property="view" destination="JEf-5U-AJf" id="jQD-XG-Ikk"/>
                     </connections>

@@ -11,6 +11,7 @@
 #import <Cocoa/Cocoa.h>
 #import "ModificationUtility.h"
 #import "MFMessagePort.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "Logging.h"
 
 @implementation KeyCaptureMode

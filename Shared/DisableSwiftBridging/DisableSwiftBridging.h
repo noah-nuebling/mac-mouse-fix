@@ -21,4 +21,16 @@
 #define MF_SWIFT_UNBRIDGED_BASE(__realType, __nonBridgedBaseType) __realType
 #endif
 
+#define kMFEventPassThroughApproval MFEventPassThroughEvaluationApproval
+#define kMFEventPassThroughRefusal MFEventPassThroughEvaluationRefusal
+
+#define kMFButtonInputTypeButtonDown MFButtonInputTypeButtonDown
+#define kMFButtonInputTypeButtonUp MFButtonInputTypeButtonUp
+
+#define kMFActionTriggerTypeNone MFActionTriggerTypeNone
+#define kMFActionTriggerTypeButtonDown MFActionTriggerTypeButtonDown
+#define kMFActionTriggerTypeButtonUp MFActionTriggerTypeButtonUp
+#define kMFActionTriggerTypeHoldTimerExpired MFActionTriggerTypeHoldTimerExpired
+#define kMFActionTriggerTypeLevelTimerExpired MFActionTriggerTypeLevelTimerExpired
+
 #endif /* DisableSwiftBridging_h */

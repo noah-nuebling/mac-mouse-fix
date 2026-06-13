@@ -353,10 +353,12 @@ class TabViewController: NSTabViewController {
         super.viewDidLoad()
         DDLogDebug("TBS tabview didLoad")
         
+        DDLogDebug("TBS DEBUG: BEFORE FOREACH")
         // Force-load child tab views so they are instantiated and accessible
         self.tabViewItems.forEach { item in
             _ = item.viewController?.view
         }
+        DDLogDebug("TBS DEBUG: AFTER FOREACH")
         
         // Dynamically insert the "apps" tab item
         let appTabItem = NSTabViewItem(identifier: "apps")
@@ -371,8 +373,35 @@ class TabViewController: NSTabViewController {
         appVC.mainTabVC = self
         appTabItem.viewController = appVC
         
+        DDLogDebug("TBS DEBUG: before insertTabViewItem")
         // Insert right before the "about" tab (the last item)
         self.insertTabViewItem(appTabItem, at: self.tabViewItems.count - 1)
+        DDLogDebug("TBS DEBUG: after insertTabViewItem")
+        
+        // Setup a fallback trigger to ensure configureTabs is called
+        // even if AppKit bypasses viewWillAppear during initial window presentation.
+        DDLogDebug("TBS DEBUG: viewDidLoad scheduling main async block now")
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {
+                DDLogDebug("TBS DEBUG: self is nil inside async block!")
+                return
+            }
+            DDLogDebug("TBS DEBUG: self.tabsAreConfigured = \(self.tabsAreConfigured)")
+            if !self.tabsAreConfigured {
+                if let win = self.window {
+                    let toolbar = self._getToolbar(win)
+                    DDLogDebug("TBS DEBUG: window is \(win), toolbar is \(String(describing: toolbar))")
+                    if toolbar != nil {
+                        DDLogDebug("TBS DEBUG: calling configureTabs now")
+                        self.configureTabs()
+                    } else {
+                        DDLogDebug("TBS DEBUG: toolbar is nil, skipping")
+                    }
+                } else {
+                    DDLogDebug("TBS DEBUG: window is nil, skipping")
+                }
+            }
+        }
     }
     
     override func viewWillAppear() {
@@ -390,7 +419,9 @@ class TabViewController: NSTabViewController {
             }
             
             /// Configure tabs
-            configureTabs()
+            if !tabsAreConfigured {
+                configureTabs()
+            }
         }
     }
     
@@ -502,7 +533,9 @@ class TabViewController: NSTabViewController {
         
         /// Set alpha on fading in view. Necessary for fadeIn animations to work?
         ///     Doesn't work if you set this in didSelect() for some reason.
-        tabViewItem?.view?.subviews.first?.alphaValue = 0.0
+        if initialTabSwitchWasPerformed {
+            tabViewItem?.view?.subviews.first?.alphaValue = 0.0
+        }
     }
     
     private func installContentViewForSelectedTab(_ tabViewItem: NSTabViewItem) {
@@ -528,14 +561,14 @@ class TabViewController: NSTabViewController {
             } else {
                 Config.setUIAppOverrideBundleID(nil)
             }
-            ReactiveConfig.shared.react(newConfig: Config.shared().config)
+            ReactiveConfig.shared.react(newConfig: Config.shared.config)
         } else {
             // Leaving Apps Tab (or switching between other tabs):
             // Return buttonsVC/scrollingVC views to AppOverrideViewController.containerView cleanup
             // is handled by embedViewForCurrentSegment on next entry.
             // Here we only need to reset global config.
             Config.setUIAppOverrideBundleID(nil)
-            ReactiveConfig.shared.react(newConfig: Config.shared().config)
+            ReactiveConfig.shared.react(newConfig: Config.shared.config)
         }
     }
     
@@ -689,7 +722,15 @@ class TabViewController: NSTabViewController {
             unselectedTabImageView.centerXAnchor.constraint(equalTo: destinationTab.centerXAnchor).isActive = true
         }
         
-        if let fadeInView = tabViewItem.view?.subviews.first {
+        if !initialTabSwitchWasPerformed {
+            if let firstSub = tabViewItem.view?.subviews.first {
+                firstSub.wantsLayer = true
+                firstSub.alphaValue = 1.0
+                firstSub.needsDisplay = true
+            }
+            unselectedTabImageView.removeFromSuperview()
+            unselectedTabImageView.image = nil
+        } else if let fadeInView = tabViewItem.view?.subviews.first {
             
             unselectedTabImageView.wantsLayer = true
             fadeInView.wantsLayer = true
@@ -1018,7 +1059,7 @@ class TabViewController: NSTabViewController {
     @objc func addApplicationOverride(bundleID: String) {
         DDLogInfo("[AppSelectorBar] addApplicationOverride called for: \(bundleID)")
         let appOverridesKey = "AppOverrides"
-        let appOverrides = Config.shared().config.object(forKey: appOverridesKey) as? [String: Any] ?? [String: Any]()
+        let appOverrides = Config.shared.config.object(forKey: appOverridesKey) as? [String: Any] ?? [String: Any]()
         DDLogInfo("[AppSelectorBar] Current AppOverrides keys: \(appOverrides.keys)")
         
         let escapedBundleID = bundleID.replacingOccurrences(of: ".", with: "\\.")
@@ -1045,7 +1086,7 @@ class TabViewController: NSTabViewController {
         
         DDLogInfo("[AppSelectorBar] Config committed. Calling setUIAppOverrideBundleID")
         Config.setUIAppOverrideBundleID(bundleID)
-        ReactiveConfig.shared.react(newConfig: Config.shared().config)
+        ReactiveConfig.shared.react(newConfig: Config.shared.config)
         
         self.appSelectorBar?.selectApp(bundleID: bundleID)
         DDLogInfo("[AppSelectorBar] addApplicationOverride completed successfully")
@@ -1057,7 +1098,7 @@ class TabViewController: NSTabViewController {
         commitConfig()
         
         Config.setUIAppOverrideBundleID(nil)
-        ReactiveConfig.shared.react(newConfig: Config.shared().config)
+        ReactiveConfig.shared.react(newConfig: Config.shared.config)
         
         self.appSelectorBar?.selectApp(bundleID: nil)
     }
@@ -1083,7 +1124,7 @@ class TabViewController: NSTabViewController {
                 let bundleID = Bundle(url: fileURL)?.bundleIdentifier ?? "path:" + (fileURL.path as NSString).standardizingPath
                 if !bundleID.isEmpty {
                     let appOverridesKey = "AppOverrides"
-                    var appOverrides = Config.shared().config.object(forKey: appOverridesKey) as? [String: Any] ?? [String: Any]()
+                    var appOverrides = Config.shared.config.object(forKey: appOverridesKey) as? [String: Any] ?? [String: Any]()
                     
                     let escapedBundleID = bundleID.replacingOccurrences(of: ".", with: "\\.")
                     
@@ -1107,7 +1148,7 @@ class TabViewController: NSTabViewController {
                     commitConfig()
                     
                     Config.setUIAppOverrideBundleID(bundleID)
-                    ReactiveConfig.shared.react(newConfig: Config.shared().config)
+                    ReactiveConfig.shared.react(newConfig: Config.shared.config)
                     
                     self.appSelectorBar?.selectApp(bundleID: bundleID)
                 }
@@ -1125,7 +1166,7 @@ class TabViewController: NSTabViewController {
         commitConfig()
         
         Config.setUIAppOverrideBundleID(nil)
-        ReactiveConfig.shared.react(newConfig: Config.shared().config)
+        ReactiveConfig.shared.react(newConfig: Config.shared.config)
         
         self.appSelectorBar?.selectApp(bundleID: nil)
     }
@@ -1508,7 +1549,7 @@ class AppSelectorBar: NSView {
     func reloadData() {
         DDLogInfo("[AppSelectorBar] reloadData called. selectedBundleID: \(String(describing: selectedBundleID))")
         var sortedKeys: [String] = []
-        let configDict = Config.shared().config
+        let configDict = Config.shared.config
         if let appOverrides = configDict.object(forKey: "AppOverrides") as? NSDictionary {
             sortedKeys = appOverrides.allKeys.compactMap { $0 as? String }.sorted()
             DDLogInfo("[AppSelectorBar] reloadData: Found AppOverrides keys: \(sortedKeys)")
@@ -1607,7 +1648,7 @@ class AppSelectorBar: NSView {
         self.selectedBundleID = bundleID
         
         Config.setUIAppOverrideBundleID(bundleID)
-        ReactiveConfig.shared.react(newConfig: Config.shared().config)
+        ReactiveConfig.shared.react(newConfig: Config.shared.config)
         reloadData()
         
         delegate?.appSelectorChangedExternal()

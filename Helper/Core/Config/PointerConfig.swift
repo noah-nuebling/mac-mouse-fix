@@ -47,7 +47,7 @@ class PointerConfig: NSObject {
     /// Get pointer settings from config
     
     @objc private static var config: NSDictionary {
-        Config.shared().configWithAppOverridesApplied[kMFConfigKeyPointer] as! NSDictionary
+        (Config.shared.configWithAppOverridesApplied ?? Config.shared.config)[kMFConfigKeyPointer] as! NSDictionary
     }
     
     /// User settings

@@ -19,7 +19,6 @@
 #import "NSView+Additions.h"
 #import "AppTranslocationManager.h"
 #import <Sparkle/Sparkle.h>
-#import "SparkleUpdaterController.h"
 #import "NSAttributedString+Additions.h"
 #import "Mac_Mouse_Fix-Swift.h"
 #import "Locator.h"

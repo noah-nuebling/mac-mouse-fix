@@ -14,8 +14,6 @@
 #import "NSAttributedString+Additions.h"
 #import "NSTextField+Additions.h"
 #import "Config.h"
-#import "RemapTableController.h"
-#import "KeyCaptureView.h"
 #import "AppDelegate.h"
 #import "NSView+Additions.h"
 #import "RemapTableUtility.h"
@@ -512,7 +510,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     int uiIndex = 0;
     int modelIndex = 0;
     
-    while (true) {
+    while (modelIndex < effectPickerModel.count) {
         NSDictionary *effect = effectPickerModel[modelIndex];
         if ([effect[@"hideable"] isEqual:@YES]) {
             uiIndex += 1;
@@ -525,8 +523,10 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         modelIndex += 1;
     }
     
-    if (resultUIIndex != -1) {
-        return [button itemAtIndex:resultUIIndex];
+    NSLog(@"DEBUG getPopUpButtonItemToSelectBasedOnRowDict: targetEffect=%@, resultUIIndex=%d, menuNumberOfItems=%ld, buttonNumberOfItems=%ld", targetEffect, resultUIIndex, button.menu.numberOfItems, button.numberOfItems);
+    
+    if (resultUIIndex != -1 && resultUIIndex < button.menu.numberOfItems) {
+        return [button.menu itemAtIndex:resultUIIndex];
     } else {
         return nil;
     }
@@ -542,7 +542,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     int uiIndex = 0;
     int modelIndex = 0;
     
-    while (true) {
+    while (modelIndex < effectsTable.count) {
         
         NSDictionary *effect = effectsTable[modelIndex];
         if ([effect[@"hideable"] isEqual:@YES]) {
@@ -553,7 +553,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             break;
         }
         if (uiIndex > targetUIIndex) {
-            assert(false);
+            NSLog(@"WARNING: uiIndex %d > targetUIIndex %ld in getEffectDictBasedOnSelectedItemInButton", uiIndex, (long)targetUIIndex);
             break;
         }
         
@@ -561,9 +561,9 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
         modelIndex += 1;
     }
     
-    
-    
-    return effectsTable[modelIndex][@"dict"];
+    NSDictionary *res = (modelIndex < effectsTable.count) ? effectsTable[modelIndex][@"dict"] : rowDict[kMFRemapsKeyEffect];
+    NSLog(@"DEBUG getEffectDictBasedOnSelectedItem: targetUIIndex=%ld, modelIndex=%d, result=%@", targetUIIndex, modelIndex, res);
+    return res;
 }
 
 + (NSMenuItem *)menuItemFromDataModel:(NSDictionary *)itemModel enclosingMenu:(NSMenu *)enclosingMenu tableCell:(NSTableCellView *)tableCell {
@@ -579,6 +579,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     } else {
         
         i = [[RemapTableMenuItem alloc] init];
+        i.representedObject = itemModel;
         
         NSString *title = itemModel[@"ui"];
         if (title != nil) {

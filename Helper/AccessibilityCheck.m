@@ -11,12 +11,10 @@
 
 #import <AppKit/AppKit.h>
 #import "MFMessagePort.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "DeviceManager.h"
 #import "Config.h"
-#import "Scroll.h"
-#import "ButtonInputReceiver.h"
 #import "Constants.h"
-#import "ModifiedDrag.h"
 #import "Modifiers.h"
 #import "SharedUtility.h"
 #import "HelperServices.h"

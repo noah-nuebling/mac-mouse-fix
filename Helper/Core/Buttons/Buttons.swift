@@ -36,7 +36,7 @@ import Cocoa
     
     @objc static func handleInput(device: Device, button: NSNumber, downNotUp mouseDown: Bool, event: CGEvent) -> MFEventPassThroughEvaluation {
         
-        let passThroughEvaluation = kMFEventPassThroughRefusal
+        let passThroughEvaluation = MFEventPassThroughEvaluation.refusal
         
         DDLogInfo("[SMARTSHIFT] Buttons.swift handleInput - device: \(device.name()), button: \(button), down: \(mouseDown)")
         
@@ -72,7 +72,7 @@ import Cocoa
         /// Decide passthrough
         if self.maxClickLevel == 0 {
             DDLogInfo("[SMARTSHIFT] Buttons.swift handleInput - passthrough approved (maxClickLevel == 0)")
-            return kMFEventPassThroughApproval
+            return MFEventPassThroughEvaluation.approval
         }
         
         /// Dispatch through clickCycle

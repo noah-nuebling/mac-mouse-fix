@@ -156,7 +156,7 @@ import ReactiveSwift
         
         /// Not sure this is necessary or useful
         ///     Update [Mar 2025] Still not totally sure. But I don't think it's necessary. The managers of all the state we're setting here should give SwitchMaster a callback when the state is initialized or when it changes. If the managers do that, then this shouldn't be necessary.
-        latestDevices = DeviceManager.attachedDevices
+        latestDevices = DeviceManager.attachedDevices() as NSArray
         latestRemaps = Remap.remaps
         latestScrollConfig = ScrollConfig.shared
         latestModifiers = Modifiers.modifiers(with: nil)

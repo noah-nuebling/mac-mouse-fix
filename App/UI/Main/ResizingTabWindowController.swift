@@ -10,7 +10,7 @@ import Cocoa
 class ResizingTabWindowController: NSWindowController, NSWindowDelegate {
 
     // MARK: Vars
-    static var window: ResizingTabWindow? = nil
+    static var sharedWindow: ResizingTabWindow? = nil
     
     // MARK: Lifecycle
 
@@ -30,7 +30,7 @@ class ResizingTabWindowController: NSWindowController, NSWindowDelegate {
         self.windowFrameAutosaveName = "MyWindow"
         
         /// Make globally accessible
-        ResizingTabWindowController.window = thewindow
+        ResizingTabWindowController.sharedWindow = thewindow
     }
     
     // MARK: Custom field editor
