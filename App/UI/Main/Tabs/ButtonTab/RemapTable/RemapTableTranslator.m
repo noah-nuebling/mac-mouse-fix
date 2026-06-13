@@ -498,72 +498,45 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     return name;
 }
 
+static NSMenuItem * _Nullable findMenuItemWithEffect(NSMenu *menu, NSDictionary *targetEffect) {
+    for (NSMenuItem *item in menu.itemArray) {
+        id repObj = item.representedObject;
+        if ([repObj isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *effectDict = repObj[@"dict"];
+            if ([effectDict isEqual:targetEffect]) {
+                return item;
+            }
+        }
+        if (item.hasSubmenu) {
+            NSMenuItem *subMatch = findMenuItemWithEffect(item.submenu, targetEffect);
+            if (subMatch) {
+                return subMatch;
+            }
+        }
+    }
+    return nil;
+}
+
 + (NSMenuItem * _Nullable)getPopUpButtonItemToSelectBasedOnRowDict:(NSPopUpButton * _Nonnull)button rowDict:(NSDictionary * _Nonnull)rowDict {
-        
-    /// Datamodel -> Button state
     
     NSDictionary *targetEffect = rowDict[kMFRemapsKeyEffect];
-    NSArray *effectPickerModel = [RemapTableTranslator getEffectsTableForRemapsTableEntry:rowDict];
-    
-    int resultUIIndex = -1;
-    
-    int uiIndex = 0;
-    int modelIndex = 0;
-    
-    while (modelIndex < effectPickerModel.count) {
-        NSDictionary *effect = effectPickerModel[modelIndex];
-        if ([effect[@"hideable"] isEqual:@YES]) {
-            uiIndex += 1;
-        }
-        if ([effect[@"dict"] isEqual:targetEffect]) {
-            resultUIIndex = uiIndex;
-            break;
-        };
-        uiIndex += 1;
-        modelIndex += 1;
-    }
-    
-    NSLog(@"DEBUG getPopUpButtonItemToSelectBasedOnRowDict: targetEffect=%@, resultUIIndex=%d, menuNumberOfItems=%ld, buttonNumberOfItems=%ld", targetEffect, resultUIIndex, button.menu.numberOfItems, button.numberOfItems);
-    
-    if (resultUIIndex != -1 && resultUIIndex < button.menu.numberOfItems) {
-        return [button.menu itemAtIndex:resultUIIndex];
-    } else {
-        return nil;
-    }
+    if (!targetEffect) return nil;
+    return findMenuItemWithEffect(button.menu, targetEffect);
 }
 
 + (NSDictionary * _Nullable)getEffectDictBasedOnSelectedItemInButton:(NSPopUpButton * _Nonnull)button rowDict:(NSDictionary * _Nonnull)rowDict {
     
-    /// Button state -> Datamodel
-    
-    NSArray *effectsTable = [RemapTableTranslator getEffectsTableForRemapsTableEntry:rowDict];
-    NSInteger targetUIIndex = button.indexOfSelectedItem;
-    
-    int uiIndex = 0;
-    int modelIndex = 0;
-    
-    while (modelIndex < effectsTable.count) {
-        
-        NSDictionary *effect = effectsTable[modelIndex];
-        if ([effect[@"hideable"] isEqual:@YES]) {
-            uiIndex += 1;
+    NSMenuItem *selectedItem = button.selectedItem;
+    if (selectedItem) {
+        id repObj = selectedItem.representedObject;
+        if ([repObj isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *effectDict = repObj[@"dict"];
+            if (effectDict) {
+                return effectDict;
+            }
         }
-         
-        if (uiIndex == targetUIIndex) {
-            break;
-        }
-        if (uiIndex > targetUIIndex) {
-            NSLog(@"WARNING: uiIndex %d > targetUIIndex %ld in getEffectDictBasedOnSelectedItemInButton", uiIndex, (long)targetUIIndex);
-            break;
-        }
-        
-        uiIndex += 1;
-        modelIndex += 1;
     }
-    
-    NSDictionary *res = (modelIndex < effectsTable.count) ? effectsTable[modelIndex][@"dict"] : rowDict[kMFRemapsKeyEffect];
-    NSLog(@"DEBUG getEffectDictBasedOnSelectedItem: targetUIIndex=%ld, modelIndex=%d, result=%@", targetUIIndex, modelIndex, res);
-    return res;
+    return rowDict[kMFRemapsKeyEffect];
 }
 
 + (NSMenuItem *)menuItemFromDataModel:(NSDictionary *)itemModel enclosingMenu:(NSMenu *)enclosingMenu tableCell:(NSTableCellView *)tableCell {

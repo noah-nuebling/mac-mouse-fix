@@ -155,10 +155,7 @@ public class ButtonInputReceiver: NSObject {
     private static func registerInputCallback() {
         var mask: CGEventMask = 0
         let eventTypes: [CGEventType] = [
-            .otherMouseDown, .otherMouseUp,
-            .leftMouseDown, .leftMouseUp,
-            .rightMouseDown, .rightMouseUp,
-            .keyDown, .keyUp
+            .otherMouseDown, .otherMouseUp
         ]
         for type in eventTypes {
             let shift = UInt64(type.rawValue)

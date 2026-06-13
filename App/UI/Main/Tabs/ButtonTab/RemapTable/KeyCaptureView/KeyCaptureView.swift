@@ -20,6 +20,11 @@ public class KeyCaptureView: NSTextView, NSTextViewDelegate {
     private var _cancelHandler: CancelHandler?
     private var _localEventMonitor: Any?
     private var _attributesFromIB: [NSAttributedString.Key: Any]?
+    private var _windowResignObserver: Any?
+    
+    public override var acceptsFirstResponder: Bool {
+        return true
+    }
     
     @objc public func setCoolString(_ string: String) {
         let attrs = _attributesFromIB ?? [:]
@@ -107,20 +112,23 @@ public class KeyCaptureView: NSTextView, NSTextViewDelegate {
     public override func becomeFirstResponder() -> Bool {
         DDLogDebug("BECOME FIRST RESPONDER")
         let superAccepts = super.becomeFirstResponder()
+        DDLogDebug("superAccepts: \(superAccepts)")
         
-        if superAccepts {
-            _isCapturing = true
-            
-            NotificationCenter.default.addObserver(
+        _isCapturing = true
+        
+        if _windowResignObserver == nil {
+            _windowResignObserver = NotificationCenter.default.addObserver(
                 forName: NSWindow.didResignKeyNotification,
                 object: MainAppState.shared.window,
-                queue: nil) { _ in
+                queue: nil) { [weak self] _ in
                     MainAppState.shared.window?.makeFirstResponder(nil)
                 }
-            
-            _ = MFMessagePort.sendMessage("enableKeyCaptureMode", withPayload: "" as NSObject, waitForReply: false)
-            self.drawEmptyAppearance()
-            
+        }
+        
+        _ = MFMessagePort.sendMessage("enableKeyCaptureMode", withPayload: "" as NSObject, waitForReply: false)
+        self.drawEmptyAppearance()
+        
+        if _localEventMonitor == nil {
             _localEventMonitor = NSEvent.addLocalMonitorForEvents(matching: [.flagsChanged, .keyDown, .leftMouseDown]) { [weak self] event in
                 guard let self = self else { return event }
                 guard let e = event.cgEvent else { return event }
@@ -143,22 +151,35 @@ public class KeyCaptureView: NSTextView, NSTextViewDelegate {
             }
         }
         
-        return superAccepts
+        return true
     }
     
     public override func resignFirstResponder() -> Bool {
         DDLogDebug("RESIGN FIRST RESPONDER")
         let superResigns = super.resignFirstResponder()
+        DDLogDebug("superResigns: \(superResigns)")
         
-        if superResigns {
-            _ = MFMessagePort.sendMessage("disableKeyCaptureMode", withPayload: nil, waitForReply: false)
-            if let monitor = _localEventMonitor {
-                NSEvent.removeMonitor(monitor)
-                _localEventMonitor = nil
-            }
-            _cancelHandler?()
+        _ = MFMessagePort.sendMessage("disableKeyCaptureMode", withPayload: nil, waitForReply: false)
+        if let monitor = _localEventMonitor {
+            NSEvent.removeMonitor(monitor)
+            _localEventMonitor = nil
         }
-        return superResigns
+        if let obs = _windowResignObserver {
+            NotificationCenter.default.removeObserver(obs)
+            _windowResignObserver = nil
+        }
+        _cancelHandler?()
+        return true
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        if let obs = _windowResignObserver {
+            NotificationCenter.default.removeObserver(obs)
+        }
+        if let monitor = _localEventMonitor {
+            NSEvent.removeMonitor(monitor)
+        }
     }
     
     public override func mouseDown(with event: NSEvent) {
