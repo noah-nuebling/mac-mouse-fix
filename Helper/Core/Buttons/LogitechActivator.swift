@@ -78,7 +78,21 @@ actor HIDPPMessenger {
     func sendAndWait(feature: UInt8, function: UInt8, params: [UInt8], timeout: TimeInterval = 1.0) async throws -> [UInt8] {
         let task = Task { [currentTask] in
             _ = try? await currentTask?.value
-            return try await self.performSendAndWait(feature: feature, function: function, params: params, timeout: timeout)
+            
+            var attempt = 0
+            while true {
+                attempt += 1
+                do {
+                    return try await self.performSendAndWait(feature: feature, function: function, params: params, timeout: timeout)
+                } catch HIDPPError.deviceError(let code) where code == 0x04 {
+                    if attempt >= 4 {
+                        throw HIDPPError.deviceError(0x04)
+                    }
+                    os_log("LogitechCIDActivator: sendAndWait encountered Busy (0x04). Retrying in 150ms... (attempt %{public}d/4)",
+                           log: OSLog(subsystem: "com.nuebling.mac-mouse-fix.helper", category: "LogitechActivator"), type: .info, attempt)
+                    try? await Task.sleep(nanoseconds: 150 * 1_000_000)
+                }
+            }
         }
         self.currentTask = task
         return try await task.value
@@ -177,6 +191,7 @@ class DeviceState {
     var featWirelessStatus: UInt8 = 0
     var featReprogV4: UInt8 = 0
     var isHIDPP20Compatible: Bool = false
+    var activationFailureCount: Int = 0
     var featSmartShift: UInt8 = 0
     var featAdjustableDpi: UInt8 = 0  // 0x2201
     var featExtendedDpi: UInt8 = 0    // 0x2202
@@ -511,6 +526,9 @@ public class LogitechActivator: NSObject {
         }
         
         if activeIndex == 0 {
+            s.activationFailureCount += 1
+            os_log("LogitechCIDActivator: activateDevice failed: no active index found for '%{public}@'. Failure count: %{public}d",
+                   log: self.logger, type: .error, name, s.activationFailureCount)
             return -1
         }
         
@@ -681,8 +699,9 @@ public class LogitechActivator: NSObject {
                 }
             }
         } catch {
-            os_log("LogitechCIDActivator: Failed to query features or divert CIDs due to communication error on '%{public}@': %{public}@",
-                   log: self.logger, type: .error, name, String(describing: error))
+            s.activationFailureCount += 1
+            os_log("LogitechCIDActivator: Failed to query features or divert CIDs due to communication error on '%{public}@': %{public}@. Failure count: %{public}d",
+                   log: self.logger, type: .error, name, String(describing: error), s.activationFailureCount)
             return -1
         }
         
@@ -737,6 +756,8 @@ public class LogitechActivator: NSObject {
             }
         }
         
+        s.activationFailureCount = 0
+        s.isHIDPP20Compatible = true
         return diverted
     }
     
@@ -1074,6 +1095,24 @@ public class LogitechActivator: NSObject {
                 this.performActivation(for: s, maxRetries: 4, retryDelay: 0.8)
             }
             return
+        }
+        
+        if s.featReprogV4 == 0 && reportBytes[0] == 0x11 && reportBytes[3] == 0x00 && reportLength >= 6 {
+            let cid = (UInt16(reportBytes[4]) << 8) | UInt16(reportBytes[5])
+            if cid == 0x0053 || cid == 0x0056 || cid == 0x00C4 || cid == 0x00D7 {
+                s.featReprogV4 = reportBytes[2]
+                s.isHIDPP20Compatible = true
+                os_log("LogitechCIDActivator: Auto-healed featReprogV4 to 0x%{public}02X based on input report for CID 0x%{public}04X",
+                       log: this.logger, type: .info, s.featReprogV4, cid)
+                if let attachedDev = DeviceManager.attachedDevice(with: s.device) {
+                    attachedDev.isLogitechDiverted = true
+                }
+                // Trigger background reactivation to sync volatile settings (DPI, etc.)
+                let stateToReactivate = s
+                Task {
+                    _ = await this.activateDevice(stateToReactivate)
+                }
+            }
         }
         
         if reportBytes[3] != 0x00 || reportBytes[2] != s.featReprogV4 {
@@ -1654,7 +1693,7 @@ public class LogitechActivator: NSObject {
                 }
             }
             
-            let needsActivation = !attachedDev.isLogitechDiverted && (s.featReprogV4 != 0 || s.isHIDPP20Compatible)
+            let needsActivation = !attachedDev.isLogitechDiverted && (s.featReprogV4 != 0 || s.isHIDPP20Compatible || s.activationFailureCount < 10)
             if needsActivation {
                 os_log("LogitechCIDActivator: Periodic check detected device '%{public}@' is compatible but not diverted. Reactivating...",
                        log: self.logger, type: .info, attachedDev.name())

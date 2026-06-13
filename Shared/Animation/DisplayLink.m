@@ -208,11 +208,14 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
                 return;
             }
             
-            CVDisplayLinkRelease(_displayLink);
-            _displayLink = NULL; /// I'm pretty sure CVDisplayLinkCreateWithActiveCGDisplays() always overrides the `_displayLink` to be either NULL or valid. If it sometimes leaves the value untouched, then we'd have to set it to NULL after releasing to prevent use-after-free.
+            if (_displayLink != NULL) {
+                CVDisplayLinkRelease(_displayLink);
+                _displayLink = NULL; /// I'm pretty sure CVDisplayLinkCreateWithActiveCGDisplays() always overrides the `_displayLink` to be either NULL or valid. If it sometimes leaves the value untouched, then we'd have to set it to NULL after releasing to prevent use-after-free.
+            }
         }
         
-        mfabort(@"DisplayLink.m: (%@) Failed to create CVDisplayLink (%@) after %d tries. Last codes: (%@, %@)", [self identifier], _displayLink, max_tries, MFCVReturn_ToString(ret), MFCVReturn_ToString(ret2));
+        DDLogError(@"DisplayLink.m: (%@) Failed to create CVDisplayLink after %d tries. Last codes: (%@, %@)", [self identifier], max_tries, MFCVReturn_ToString(ret), MFCVReturn_ToString(ret2));
+        _displayLink = NULL;
     }
 }
 
@@ -220,7 +223,9 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 
 - (void)dealloc
 {
-    CVDisplayLinkRelease(_displayLink);
+    if (_displayLink != NULL) {
+        CVDisplayLinkRelease(_displayLink);
+    }
     CGDisplayRemoveReconfigurationCallback(displayReconfigurationCallback, (__bridge void * _Nullable)(self));
     /// ^ The arguments need to match the ones for CGDisplayRegisterReconfigurationCallback() exactly
     free(_previousDisplaysUnderMousePointer);
@@ -267,7 +272,11 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
         CVReturn rt = kCVReturnSuccess;
         
         while (true) {
-            rt = CVDisplayLinkStart(self->_displayLink); /// This locks until the displayLinkCallback is done
+            if (self->_displayLink == NULL) {
+                rt = kCVReturnError;
+            } else {
+                rt = CVDisplayLinkStart(self->_displayLink); /// This locks until the displayLinkCallback is done
+            }
             if (rt == kCVReturnSuccess || rt == kCVReturnDisplayLinkAlreadyRunning) break;
             
             failedAttempts += 1;
@@ -328,7 +337,9 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
         ///     According to https://cpp.hotexamples.com/examples/-/-/CVDisplayLinkStop/cpp-cvdisplaylinkstop-function-examples.html
         
         void (^workload)(void) = ^{
-            CVDisplayLinkStop(self->_displayLink); /// This locks until the displayLinkCallback is done
+            if (self->_displayLink != NULL) {
+                CVDisplayLinkStop(self->_displayLink); /// This locks until the displayLinkCallback is done
+            }
         };
         
         /// Make sure block is running on the main thread
@@ -440,7 +451,9 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
     
     /// This normally returns the actual timeBetweenFrames.
     /// But if the displayLink is not running, yet, then the actual timeBetweenFrames is 0.0, so in that case it returns the nominal timeBetweenFrames.
-    
+    if (_displayLink == NULL) {
+        return 1.0 / 60.0;
+    }
     double t = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink);
     if (t == 0) {
         CVTime tCV = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(_displayLink);
@@ -450,11 +463,17 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 }
 
 - (CFTimeInterval)timeBetweenFrames {
+    if (_displayLink == NULL) {
+        return 1.0 / 60.0;
+    }
     double t = CVDisplayLinkGetActualOutputVideoRefreshPeriod(_displayLink);
     return t;
 }
 
 - (CFTimeInterval)nominalTimeBetweenFrames {
+    if (_displayLink == NULL) {
+        return 1.0 / 60.0;
+    }
     CVTime t = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(_displayLink);
     return (t.timeValue / (double)t.timeScale);
 }
@@ -564,6 +583,10 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
         _displayLinkIsOutdated = NO;
     }
     
+    if (_displayLink == NULL) {
+        return kCVReturnError;
+    }
+    
     /// Set new display
     CVReturn ret = CVDisplayLinkSetCurrentCGDisplay(_displayLink, displayID);
     
@@ -571,7 +594,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
     DDLogDebug(@"DisplayLink.m: (%@) set to display %d. Error: %d", [self identifier], displayID, ret);
     
     if (ret) {
-        assert(false);
+        DDLogError(@"DisplayLink.m: (%@) Failed to set display %d, error: %d", [self identifier], displayID, ret);
         return ret;
     }
     
