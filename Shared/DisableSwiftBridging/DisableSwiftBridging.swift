@@ -92,19 +92,6 @@ extension NSString {
 
 #if IS_HELPER
 
-extension Remap {
-    
-    static var remaps: NSDictionary {
-        return __remaps() as! NSDictionary
-    }
-    static func modifications(withModifiers modifiers: NSDictionary) -> NSDictionary? {
-        return __modifications(withModifiers: modifiers) as! NSDictionary?
-    }
-    static func sendAddModeFeedback(_ payload: NSDictionary) {
-        __sendAddModeFeedback(payload)
-    }
-}
-
 
 extension Modifiers {
     

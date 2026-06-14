@@ -197,7 +197,7 @@ class TabViewController: NSTabViewController {
         toolbar.removeItem(at: itemIndex)
         
         /// Return
-        return
+        return;
         
         ///
         /// Old implementation

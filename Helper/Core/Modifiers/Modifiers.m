@@ -11,7 +11,6 @@
 
 #import "Modifiers.h"
 #import "ButtonTriggerGenerator.h"
-#import "Remap.h"
 // #import "ModifiedDrag.h"
 #import "DeviceManager.h"
 #import "SharedUtility.h"

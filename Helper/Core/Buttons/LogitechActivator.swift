@@ -481,11 +481,17 @@ public class LogitechActivator: NSObject {
                            log: self.logger, type: .error, lastKnownIndex, resp[2])
                 }
             } catch {
-                if case HIDPPError.deviceError = error {
+                if case HIDPPError.deviceError(let code) = error {
                     s.isHIDPP20Compatible = true
+                    if code == 0x04 {
+                        activeIndex = lastKnownIndex
+                        os_log("LogitechCIDActivator: Fast-path index check on 0x%{public}02X found active index via Busy (0x04) response",
+                               log: self.logger, type: .info, lastKnownIndex)
+                    }
+                } else {
+                    os_log("LogitechCIDActivator: Fast-path index check on 0x%{public}02X failed: %{public}@",
+                           log: self.logger, type: .info, lastKnownIndex, String(describing: error))
                 }
-                os_log("LogitechCIDActivator: Fast-path index check on 0x%{public}02X failed: %{public}@",
-                       log: self.logger, type: .info, lastKnownIndex, String(describing: error))
             }
         }
         
@@ -514,10 +520,16 @@ public class LogitechActivator: NSObject {
                                log: self.logger, type: .error, testIndex, resp[2])
                     }
                 } catch {
-                    if case HIDPPError.deviceError = error {
+                    if case HIDPPError.deviceError(let code) = error {
                         // deviceError (like Busy 0x04 or Invalid subdev 0x01) means the hardware receiver
                         // actively responded to our HID++ command. This proves HID++ 2.0 compatibility!
                         s.isHIDPP20Compatible = true
+                        if code == 0x04 {
+                            activeIndex = testIndex
+                            os_log("LogitechCIDActivator: Found active device index 0x%{public}02X on '%{public}@' via Busy (0x04) response",
+                                   log: self.logger, type: .info, activeIndex, name)
+                            break
+                        }
                     }
                     os_log("LogitechCIDActivator: Probing index 0x%{public}02X failed with error: %{public}@",
                            log: self.logger, type: .error, testIndex, String(describing: error))

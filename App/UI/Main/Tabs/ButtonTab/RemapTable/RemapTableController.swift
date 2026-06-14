@@ -233,7 +233,7 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
         var row = 0
         for rowGrouped in 0..<localGroupedModel.count {
             if let dict = localGroupedModel[rowGrouped] as? [AnyHashable: Any],
-               NSDictionary(dictionary: dict).isEqual(to: RemapTableUtility.buttonGroupRowDict) {
+               dict["buttonGroupRow"] != nil {
                 continue
             }
             
@@ -424,7 +424,7 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
         
         let existingIndexes = (self.groupedDataModel as NSArray).indexesOfObjects(passingTest: { (tableEntryObj, idx, stop) -> Bool in
             guard let tableEntry = tableEntryObj as? [AnyHashable: Any] else { return false }
-            if NSDictionary(dictionary: tableEntry).isEqual(to: RemapTableUtility.buttonGroupRowDict) {
+            if tableEntry["buttonGroupRow"] != nil {
                 return false
             }
             
@@ -515,10 +515,13 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
     
     public func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard let rowDict = self.groupedDataModel[row] as? [AnyHashable: Any] else { return nil }
+        DDLogInfo("DEBUG tableView viewFor row: \(row), tableColumn: \(String(describing: tableColumn?.identifier.rawValue)), rawItemType: \(type(of: self.groupedDataModel[row])), rawItemValue: \(rowDict)")
         
-        if NSDictionary(dictionary: rowDict).isEqual(to: RemapTableUtility.buttonGroupRowDict) {
+        if rowDict["buttonGroupRow"] != nil {
             let buttonGroupCell = self.tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("buttonGroupCell"), owner: self)
-            if let groupTextField = (buttonGroupCell?.nextKeyView ?? buttonGroupCell?.subviews.first) as? NSTextField {
+            DDLogInfo("DEBUG buttonGroupCell: \(String(describing: buttonGroupCell)), subviews: \(String(describing: buttonGroupCell?.subviews)), nextKeyView: \(String(describing: buttonGroupCell?.nextKeyView))")
+            let groupTextField = buttonGroupCell?.subviews.first(where: { $0 is NSTextField }) as? NSTextField
+            if let groupTextField = groupTextField {
                 let nextRowDict = self.groupedDataModel[row + 1] as? [AnyHashable: Any] ?? [:]
                 let groupButtonNumber = RemapTableUtility.triggerButton(forRow: nextRowDict)
                 let btnStrOpt = UIStrings.getButtonString(groupButtonNumber, context: kMFButtonStringUsageContextActionTableGroupRow)
@@ -556,14 +559,16 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
     }
     
     public func numberOfRows(in tableView: NSTableView) -> Int {
-        return self.groupedDataModel.count
+        let count = self.groupedDataModel.count
+        DDLogInfo("DEBUG numberOfRows: count=\(count)")
+        return count
     }
     
     public func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
         guard let rowDict = self.groupedDataModel[row] as? [AnyHashable: Any] else { return 38 }
         
         var height: CGFloat = 0
-        if NSDictionary(dictionary: rowDict).isEqual(to: RemapTableUtility.buttonGroupRowDict) {
+        if rowDict["buttonGroupRow"] != nil {
             let buttonGroupCell = self.tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("buttonGroupCell"), owner: self)
             height = buttonGroupCell?.frame.size.height ?? 22
             if height <= 0 {
@@ -571,7 +576,7 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
             }
         } else {
             let colwidth = self.tableView.tableColumns[0].width
-            let deepCopy = SharedUtility.deepCopy(of: rowDict) as? [AnyHashable: Any] ?? rowDict
+            let deepCopy = (SharedUtility.deepCopy(of: rowDict) as? [AnyHashable: Any]) ?? [:]
             let triggerCellView = RemapTableTranslator.getTriggerCell(withRowDict: deepCopy, row: row)
             triggerCellView.setFrameSize(NSSize(width: colwidth, height: triggerCellView.frame.size.height))
             triggerCellView.layoutSubtreeIfNeeded()
@@ -720,7 +725,7 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
                 if !firstHasBeenOmitted {
                     firstHasBeenOmitted = true
                 } else {
-                    groupedDataModel.insert(RemapTableUtility.buttonGroupRowDict, at: r + insertedCount)
+                    groupedDataModel.insert(RemapTableUtility.buttonGroupRowDict(), at: r + insertedCount)
                     insertedCount += 1
                 }
             } else if rowButton < currentButton {
@@ -735,7 +740,7 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
     
     public func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
         guard let rowDict = self.groupedDataModel[row] as? [AnyHashable: Any] else { return nil }
-        if NSDictionary(dictionary: rowDict).isEqual(to: RemapTableUtility.buttonGroupRowDict) {
+        if rowDict["buttonGroupRow"] != nil {
             return ButtonGroupRowView()
         }
         return nil
@@ -743,7 +748,9 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
     
     private func isGroupRow(_ row: Int) -> Bool {
         guard let rowDict = self.groupedDataModel[row] as? [AnyHashable: Any] else { return false }
-        return NSDictionary(dictionary: rowDict).isEqual(to: RemapTableUtility.buttonGroupRowDict)
+        let isGroup = rowDict["buttonGroupRow"] != nil
+        DDLogInfo("DEBUG isGroupRow \(row): result=\(isGroup), dict=\(rowDict)")
+        return isGroup
     }
     
     public func tableView(_ tableView: NSTableView, isGroupRow row: Int) -> Bool {

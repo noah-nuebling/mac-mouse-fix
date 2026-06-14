@@ -10,7 +10,7 @@
 #import "RemapSwizzler.h"
 #import "Modifiers.h"
 #import "DeviceManager.h"
-#import "Remap.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 #import "SharedUtility.h"
 
