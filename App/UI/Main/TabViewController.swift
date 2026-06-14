@@ -118,7 +118,7 @@ class TabViewController: NSTabViewController {
         
         /// Find toolbar item
         guard let toolbar = self._getToolbar(w),
-              let item = _getToolbarItem(NSToolbarItem.Identifier(identifier), toolbar) else {
+              _getToolbarItem(NSToolbarItem.Identifier(identifier), toolbar) != nil else {
             
             assert(false)
             return
@@ -128,50 +128,6 @@ class TabViewController: NSTabViewController {
         toolbar.selectedItemIdentifier = NSToolbarItem.Identifier(identifier)
         self.tabView.selectTabViewItem(withIdentifier: identifier)
         
-        /// Return
-        return;
-        
-        ///
-        /// Old implementation
-        ///
-        
-        /// There's a library method `self.tabView.selectTabViewItem(withIdentifier:)`
-        ///     but it doesn't change the selected toolbar button properly, so we have to use horrible hacks.
-        /// Sometimes you need to pass in window, when you call this right after the window is created.
-        
-        let window = w ?? MainAppState.shared.window
-        
-        guard let window = window, let tb = window.toolbar else { assert(false); return }
-        let tbv = SharedUtility.getPrivateValue(of: tb, forName: "_toolbarView")
-        
-        let lvs: [NSView]?
-        
-        if #available(macOS 11.0, *) {
-            lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_allItemViewers") as? [NSView]
-            /// ^ Might be better to use`_layoutViews` vs `_allItemViewers` here
-        } else {
-            lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_toolbarOrderedItemViewers") as? [NSView]
-            /// ^ Might be better to use `_layoutOrderedItemViewers`vs `_toolbarOrderedItemViewers  here
-        }
-        guard let lvs = lvs else { assert(false); return }
-        assert(lvs.count > 0)
-        
-        var success = false
-        outerLoop: for v in lvs {
-            guard let item = SharedUtility.getPrivateValue(of: v, forName: "_item") as? NSToolbarItem else { assert(false); return }
-            if item.itemIdentifier.rawValue == identifier {
-                for sub in v.subviews {
-                    if let sub = sub as? NSButton {
-                        
-                        sub.performClick(nil)
-                        
-                        success = true
-                        break outerLoop
-                    }
-                }
-            }
-        }
-        assert(success)
     }
     
     @objc public func coolHideTab(identifier: String, window w: NSWindow? = nil) {
@@ -195,66 +151,6 @@ class TabViewController: NSTabViewController {
         
         /// Remove item
         toolbar.removeItem(at: itemIndex)
-        
-        /// Return
-        return;
-        
-        ///
-        /// Old implementation
-        ///
-        
-        /// This is copy pasted from `coolSelectTab()`
-        /// Hides the tab button from the user, but the tab will still be displayed and we can switch from/to it programmatically
-        
-        DDLogDebug("TBS hiding tab \(identifier), windowIsNil: \(w == nil)")
-        
-        let window = w ?? MainAppState.shared.window
-        
-        guard let window = window,
-              let tb = window.toolbar else { assert(false); return }
-        let tbv = SharedUtility.getPrivateValue(of: tb, forName: "_toolbarView")
-        
-        let lvs: NSMutableArray?
-        
-        if #available(macOS 11.0, *) {
-            lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_layoutViews") as? NSMutableArray
-        } else {
-            /// Note: Removing from `_layoutOrderedItemViewers` doesn't seem to do anything. But I feel like we might still want to remove from both `_toolbarOrderedItemViewers` and `_toolbarOrderedItemViewers` (Edit: what?) so the overall state is for sure valid, cause I don't get what the role of each of the two is.
-            lvs = SharedUtility.getPrivateValue(of: tbv, forName: "_toolbarOrderedItemViewers") as? NSMutableArray
-        }
-        
-        guard let lvs = lvs else { assert(false); return }
-        assert(lvs.count > 0)
-        
-        var foundIndex = -1
-        var foundLayoutView: NSView? = nil
-        for (i, v) in lvs.enumerated() {
-            
-            guard let item = SharedUtility.getPrivateValue(of: v, forName: "_item") as? NSToolbarItem else { continue /* assert(false); return <<< With the new Sonoma code this crashed. Should be safe to remove. */ }
-            guard let v = v as? NSView else { assert(false); return }
-            
-            if item.itemIdentifier.rawValue == identifier {
-                foundIndex = i
-                foundLayoutView = v
-            }
-        }
-        assert(foundIndex != -1)
-        
-        if #available(macOS 14.0, *) {
-            /// This would probably also work pre-Sonoma, but no reason to change what works
-            tb.removeItem(at: foundIndex)
-        } else {
-            if let v = foundLayoutView {
-                v.isHidden = true
-                lvs.remove(v) /// Extremely hacky. Broke in macOS 14.0 Sonoma
-            }
-        }
-        
-        /// Layout toolbarView
-        /// - Otherwise the removal of the view from the layoutViews will not be reflected and there will be a blank space where the tab was.
-        ///     - This occured only sometimes in MMF 3 beta 4 and below, but after making EnabledState slower in Beta 5 and with it making TabViewController.toolbarWillAddItem() slower too, this started to always happen (Ventura Beta)
-        guard let tbvv = (tbv as? NSView) else { assert(false); return }
-        tbvv.needsLayout = true
         
     }
     

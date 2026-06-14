@@ -410,13 +410,22 @@ public class LogitechActivator: NSObject {
     private func isButtonRemapped(_ buttonNumber: Int) -> Bool {
         guard let remapsTable = config(kMFConfigKeyRemaps) as? NSArray else { return false }
         for entry in remapsTable {
-            guard let dict = entry as? NSDictionary,
-                  let trigger = dict[kMFRemapsKeyTrigger] as? NSDictionary,
-                  let buttonNum = trigger[kMFButtonTriggerKeyButtonNumber] as? NSNumber else {
-                continue
-            }
-            if buttonNum.intValue == buttonNumber {
-                return true
+            guard let dict = entry as? NSDictionary else { continue }
+            let triggerGeneric = dict[kMFRemapsKeyTrigger]
+            
+            if let triggerDict = triggerGeneric as? NSDictionary {
+                if let buttonNum = triggerDict[kMFButtonTriggerKeyButtonNumber] as? NSNumber,
+                   buttonNum.intValue == buttonNumber {
+                    return true
+                }
+            } else if triggerGeneric is String {
+                if let preconds = dict[kMFRemapsKeyModificationPrecondition] as? NSDictionary,
+                   let buttonSequence = preconds[kMFModificationPreconditionKeyButtons] as? NSArray,
+                   let lastButtonPress = buttonSequence.lastObject as? NSDictionary,
+                   let buttonNum = lastButtonPress[kMFButtonModificationPreconditionKeyButtonNumber] as? NSNumber,
+                   buttonNum.intValue == buttonNumber {
+                    return true
+                }
             }
         }
         return false
@@ -481,17 +490,11 @@ public class LogitechActivator: NSObject {
                            log: self.logger, type: .error, lastKnownIndex, resp[2])
                 }
             } catch {
-                if case HIDPPError.deviceError(let code) = error {
+                if case HIDPPError.deviceError = error {
                     s.isHIDPP20Compatible = true
-                    if code == 0x04 {
-                        activeIndex = lastKnownIndex
-                        os_log("LogitechCIDActivator: Fast-path index check on 0x%{public}02X found active index via Busy (0x04) response",
-                               log: self.logger, type: .info, lastKnownIndex)
-                    }
-                } else {
-                    os_log("LogitechCIDActivator: Fast-path index check on 0x%{public}02X failed: %{public}@",
-                           log: self.logger, type: .info, lastKnownIndex, String(describing: error))
                 }
+                os_log("LogitechCIDActivator: Fast-path index check on 0x%{public}02X failed: %{public}@",
+                       log: self.logger, type: .info, lastKnownIndex, String(describing: error))
             }
         }
         
@@ -520,16 +523,10 @@ public class LogitechActivator: NSObject {
                                log: self.logger, type: .error, testIndex, resp[2])
                     }
                 } catch {
-                    if case HIDPPError.deviceError(let code) = error {
+                    if case HIDPPError.deviceError = error {
                         // deviceError (like Busy 0x04 or Invalid subdev 0x01) means the hardware receiver
                         // actively responded to our HID++ command. This proves HID++ 2.0 compatibility!
                         s.isHIDPP20Compatible = true
-                        if code == 0x04 {
-                            activeIndex = testIndex
-                            os_log("LogitechCIDActivator: Found active device index 0x%{public}02X on '%{public}@' via Busy (0x04) response",
-                                   log: self.logger, type: .info, activeIndex, name)
-                            break
-                        }
                     }
                     os_log("LogitechCIDActivator: Probing index 0x%{public}02X failed with error: %{public}@",
                            log: self.logger, type: .error, testIndex, String(describing: error))

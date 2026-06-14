@@ -17,8 +17,9 @@
 #import "HelperUtility.h"
 #import "CircularBuffer.h"
 #import "Modifiers.h"
+#import "Remap.h"
+#import "PointerSpeed.h"
 #import "PolynomialRegression.h"
-#import "RemapSwizzler.h"
 #import "PolyFitObjC.h"
 #import "IOHIDAccelerationTableBridge.hpp"
 #import "EventUtility.h"
@@ -54,30 +55,5 @@
 
 
 #import "DevToggles.h" /// [May 2025] We don't need this in release builds
-
-#import <IOKit/hid/IOHIDBase.h>
-#import <IOKit/hidsystem/IOHIDEventSystemClient.h>
-#import <IOKit/hidsystem/IOHIDServiceClient.h>
-
-// IOHIDEventSystemClient private API declarations
-typedef NS_ENUM(NSInteger, HIDEventSystemClientType) {
-    HIDEventSystemClientTypeAdmin,
-    HIDEventSystemClientTypeMonitor,
-    HIDEventSystemClientTypePassive,
-    HIDEventSystemClientTypeRateControlled,
-    HIDEventSystemClientTypeSimple
-};
-#ifdef __cplusplus
-extern "C" {
-#endif
-IOHIDEventSystemClientRef _Nullable IOHIDEventSystemClientCreateWithType(CFAllocatorRef _Nullable allocator,
-                                                                      HIDEventSystemClientType clientType,
-                                                                      CFDictionaryRef _Nullable attributes);
-IOHIDServiceClientRef _Nullable IOHIDEventSystemClientCopyServiceForRegistryID(IOHIDEventSystemClientRef _Nullable client, uint64_t entryID);
-CFArrayRef _Nullable IOHIDEventSystemClientCopyServices(IOHIDEventSystemClientRef _Nullable client);
-CFTypeRef _Nullable IOHIDServiceClientCopyProperty(IOHIDServiceClientRef _Nullable service, CFStringRef _Nullable key);
-#ifdef __cplusplus
-}
-#endif
 
 //#import <CocoaLumberjack/CocoaLumberjack.h> /// Importing CocoaLumberjack/Swift with CocoaPods breaks my project. Can't use macros when importing this.

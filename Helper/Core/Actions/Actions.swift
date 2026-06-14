@@ -207,6 +207,7 @@ public class Actions: NSObject {
         
         keyDown.flags = CGEventFlags(rawValue: UInt64(modifierFlags.rawValue))
         keyUp.flags = CGEventFlags(rawValue: UInt64(modifierFlags.rawValue))
+        modEvent.flags = []
         
         let currentLayout = MFKeyboardTypeCurrent()
         keyDown.setIntegerValueField(.keyboardEventKeyboardType, value: Int64(currentLayout.rawValue))

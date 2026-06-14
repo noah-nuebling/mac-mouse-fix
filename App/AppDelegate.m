@@ -38,6 +38,7 @@
 #pragma mark - IBActions
 
 - (IBAction)openAboutTab:(id)sender {
+    [self showMainWindow:self];
     [MainAppState.shared.tabViewController coolSelectTabWithIdentifier:@"about" window:nil];
 }
 
@@ -97,11 +98,13 @@
         
         /// Open the license activation UI
         
+        [self showMainWindow:self];
         [LicenseSheetController add];
         
     } else if ([path isEqual:@"disable"]) {
         
         /// Switch to the general tab and then disable the helper
+        [self showMainWindow:self];
         
         /// Gather info
         NSString *currentTab = MainAppState.shared.tabViewController.identifierOfSelectedTab;
@@ -132,6 +135,27 @@
     } else {
         DDLogWarn(@"Received URL with unknown path: %@", address);
     }
+}
+
+- (void)showMainWindow:(id)sender {
+    
+    NSWindow *window = self.window ?: MainAppState.shared.window;
+    if (window == nil) {
+        for (NSWindow *candidate in NSApp.windows) {
+            if ([candidate isKindOfClass:ResizingTabWindow.class]) {
+                window = candidate;
+                break;
+            }
+        }
+    }
+    
+    if (window == nil) {
+        DDLogError(@"Could not show main window because no ResizingTabWindow exists.");
+        return;
+    }
+    
+    [window makeKeyAndOrderFront:sender];
+    [NSApp activateIgnoringOtherApps:YES];
 }
 
 #pragma mark - Init and Lifecycle
@@ -347,8 +371,13 @@ static NSDictionary *sideButtonActions;
 //    [UpdateWindow.instance close]; Can't find a way to close Sparkle Window
 }
 
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag {
+    [self showMainWindow:sender];
+    return NO;
+}
+
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app {
-    return YES;
+    return NO;
 }
 
 @end

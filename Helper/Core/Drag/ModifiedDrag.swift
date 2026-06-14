@@ -111,10 +111,7 @@ public class ModifiedDrag: NSObject {
                 }
             }
             
-            let type = effectDictSwift[kMFModifiedDragDictKeyType] as? String
-            _drag.type = type
-            _drag.effectDict = effectDictSwift
-            _drag.initTime = CACurrentMediaTime()
+            let type = effectDictSwift[kMFModifiedDragDictKeyType] as? String ?? kMFModifiedDragTypeTwoFingerSwipe
             
             var p: ModifiedDragOutputPlugin?
             if type == kMFModifiedDragTypeThreeFingerSwipe {
@@ -126,9 +123,15 @@ public class ModifiedDrag: NSObject {
             } else if type == kMFModifiedDragTypeAddModeFeedback {
                 p = ModifiedDragOutputAddMode()
             } else {
-                assertionFailure("Unknown modified drag type: \(type ?? "nil")")
+                DDLogError("Ignoring unknown modified drag type: \(type)")
+                return
             }
             
+            _drag.type = type
+            var normalizedEffectDict = effectDictSwift
+            normalizedEffectDict[kMFModifiedDragDictKeyType] = type
+            _drag.effectDict = normalizedEffectDict
+            _drag.initTime = CACurrentMediaTime()
             _drag.outputPlugin = p
             initDragState_Unsafe()
         }

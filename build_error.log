@@ -1,0 +1,12 @@
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:00008132-000A382834F8801C, name:My Mac }
+{ platform:macOS, arch:x86_64, id:00008132-000A382834F8801C, name:My Mac }
+** BUILD FAILED **
+
+
+The following build commands failed:
+	EmitSwiftModule normal arm64 (in target 'Mac Mouse Fix Helper' from project 'Mouse Fix')
+	SwiftCompile normal arm64 Compiling\ Collapse.swift,\ Line.swift,\ GlobalDefaults.swift,\ Replace.swift,\ ScrollConfig.swift,\ NSShadow+Extensions.swift,\ HybridCurves.swift,\ HelperState.swift /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/Shared/UI/UIAnimations/Collapse.swift /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/Shared/Math/Curves/Line.swift /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/Helper/Utility/GlobalDefaults.swift /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/Shared/UI/UIAnimations/Replace.swift /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/Helper/Core/Config/ScrollConfig.swift /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/Shared/UI/NSShadow+Extensions.swift /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/Shared/Math/Curves/HybridCurves.swift /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/Helper/HelperState.swift (in target 'Mac Mouse Fix Helper' from project 'Mouse Fix')
+	SwiftCompile normal arm64 /Users/shawnrain/Library/Mobile\ Documents/com~apple~CloudDocs/Shawn\ Rain/Vibe-Coding/MacMouseFix/Helper/HelperState.swift (in target 'Mac Mouse Fix Helper' from project 'Mouse Fix')
+	Building project Mouse Fix with scheme App and configuration Debug
+(4 failures)

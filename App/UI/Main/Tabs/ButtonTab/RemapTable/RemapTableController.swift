@@ -16,7 +16,7 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
             return _dataModel
         }
         set {
-            _dataModel = newValue
+            _dataModel = sanitizeDataModel(newValue)
         }
     }
     private var _dataModel: [Any] = []
@@ -206,6 +206,99 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
         self.dataModel = store
     }
     
+    private func firstSubview<T: NSView>(ofType type: T.Type, in view: NSView?) -> T? {
+        guard let view = view else { return nil }
+        if let typedView = view as? T {
+            return typedView
+        }
+        for subview in view.subviews {
+            if let found = firstSubview(ofType: type, in: subview) {
+                return found
+            }
+        }
+        return nil
+    }
+    
+    private func rootMenu(for item: NSMenuItem) -> NSMenu? {
+        var rootItem = item
+        while let parent = rootItem.parent {
+            rootItem = parent
+        }
+        return rootItem.menu
+    }
+    
+    private func rowContainingPopupMenu(_ menu: NSMenu?) -> Int {
+        guard let menu = menu else { return -1 }
+        for row in 0..<self.tableView.numberOfRows {
+            guard let effectCell = self.tableView.view(atColumn: 1, row: row, makeIfNecessary: false),
+                  let popupButton = firstSubview(ofType: NSPopUpButton.self, in: effectCell),
+                  popupButton.menu === menu else { continue }
+            return row
+        }
+        return -1
+    }
+    
+    private func row(forMenuItem item: NSMenuItem) -> Int {
+        if let menuItem = item as? RemapTableMenuItem,
+           let host = menuItem.host {
+            let row = RemapTableUtility.row(ofCell: host, in: self.tableView)
+            if row != -1 {
+                return row
+            }
+        }
+        return rowContainingPopupMenu(rootMenu(for: item))
+    }
+    
+    private func row(containing popupButton: NSPopUpButton) -> Int {
+        for row in 0..<self.tableView.numberOfRows {
+            guard let effectCell = self.tableView.view(atColumn: 1, row: row, makeIfNecessary: false),
+                  let rowPopupButton = firstSubview(ofType: NSPopUpButton.self, in: effectCell),
+                  rowPopupButton === popupButton else { continue }
+            return row
+        }
+        return -1
+    }
+    
+    private func writeEffectDict(_ effectDict: [AnyHashable: Any], toGroupedRow rowGrouped: Int) {
+        if rowGrouped == -1 {
+            DDLogError("Couldn't find clickedRow for remap menu item")
+            return
+        }
+        
+        let baseRow = RemapTableUtility.baseDataModelIndex(fromGroupedDataModelIndex: rowGrouped, withGroupedDataModel: self.groupedDataModel)
+        guard baseRow < self.dataModel.count,
+              var baseRowDict = self.dataModel[baseRow] as? [AnyHashable: Any] else { return }
+        
+        baseRowDict[kMFRemapsKeyEffect] = effectDict
+        self.dataModel[baseRow] = baseRowDict
+        self.writeDataModelToConfig()
+        
+        self.tableView.reloadData(forRowIndexes: IndexSet(integer: rowGrouped), columnIndexes: IndexSet(integersIn: 0..<2))
+    }
+    
+    private func sanitizeDataModel(_ dataModel: [Any]) -> [Any] {
+        return dataModel.map { item in
+            guard var rowDict = item as? [AnyHashable: Any],
+                  let trigger = rowDict[kMFRemapsKeyTrigger],
+                  let effect = rowDict[kMFRemapsKeyEffect] as? [AnyHashable: Any] else {
+                return item
+            }
+            
+            if let triggerString = trigger as? String {
+                if triggerString == kMFTriggerDrag,
+                   effect[kMFModifiedDragDictKeyType] == nil {
+                    rowDict[kMFRemapsKeyEffect] = [kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe]
+                } else if triggerString == kMFTriggerScroll,
+                          effect[kMFModifiedScrollDictKeyInputModificationType] == nil,
+                          effect[kMFModifiedScrollDictKeyEffectModificationType] == nil {
+                    rowDict[kMFRemapsKeyEffect] = [kMFModifiedScrollDictKeyEffectModificationType: kMFModifiedScrollEffectModificationTypeThreeFingerSwipeHorizontal]
+                }
+            }
+            
+            return rowDict
+        }
+    }
+    
     @IBAction public func handleKeystrokeMenuItemSelected(_ sender: Any) {
         guard let item = sender as? NSMenuItem, let menu = item.menu else { return }
         var rowOfSender = -1
@@ -243,7 +336,6 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
                        row < localDataModel.count,
                        let rowDict = localDataModel[row] as? [AnyHashable: Any] {
                         let effectDictForSelected = RemapTableTranslator.getEffectDictBasedOnSelectedItem(in: pb, rowDict: rowDict)
-                        print("DEBUG storeEffects: rowGrouped=\(rowGrouped), row=\(row), selectedIndex=\(pb.indexOfSelectedItem), selectedTitle=\(pb.selectedItem?.title ?? "nil"), effectDictForSelected=\(String(describing: effectDictForSelected))")
                         var mutableRowDict = rowDict
                         mutableRowDict[kMFRemapsKeyEffect] = effectDictForSelected
                         localDataModel[row] = mutableRowDict
@@ -260,59 +352,34 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
     }
     
     @objc public func writeToConfig() {
-        self.storeEffectsFromUIInDataModel()
         self.writeDataModelToConfig()
     }
     
     @IBAction public func updateTableAndWriteToConfig(_ sender: Any?) {
         if let menuItem = sender as? RemapTableMenuItem,
            let represented = menuItem.representedObject as? [AnyHashable: Any],
-           let effectDict = represented["dict"] as? [AnyHashable: Any],
-           let host = menuItem.host {
-            let rowGrouped = RemapTableUtility.row(ofCell: host, in: self.tableView)
-            let baseRow = RemapTableUtility.baseDataModelIndex(fromGroupedDataModelIndex: rowGrouped, withGroupedDataModel: self.groupedDataModel)
-            if baseRow < self.dataModel.count,
-               var baseRowDict = self.dataModel[baseRow] as? [AnyHashable: Any] {
-                print("DEBUG: updateTableAndWriteToConfig matching menuItem - baseRow=\(baseRow), effectDict=\(effectDict)")
-                baseRowDict[kMFRemapsKeyEffect] = effectDict
-                self.dataModel[baseRow] = baseRowDict
-                self.writeDataModelToConfig()
-                
-                self.tableView.reloadData(forRowIndexes: IndexSet(integer: rowGrouped), columnIndexes: IndexSet(integersIn: 0..<2))
-                return
+           let effectDict = represented["dict"] as? [AnyHashable: Any] {
+            self.writeEffectDict(effectDict, toGroupedRow: row(forMenuItem: menuItem))
+            return
+        }
+        
+        if let popupButton = sender as? NSPopUpButton {
+            let row = row(containing: popupButton)
+            if row >= 0,
+               row < self.groupedDataModel.count,
+               let rowDict = self.groupedDataModel[row] as? [AnyHashable: Any],
+               let effectDict = RemapTableTranslator.getEffectDictBasedOnSelectedItem(in: popupButton, rowDict: rowDict) {
+                self.writeEffectDict(effectDict, toGroupedRow: row)
             }
+            return
         }
         
         self.writeToConfig()
-        
-        if let menuItem = sender as? RemapTableMenuItem, let host = menuItem.host {
-            let row = RemapTableUtility.row(ofCell: host, in: self.tableView)
-            self.tableView.reloadData(forRowIndexes: IndexSet(integer: row), columnIndexes: IndexSet(integersIn: 0..<2))
-        } else {
-            self.tableView.reloadData()
-        }
+        self.tableView.reloadData()
     }
     
     @IBAction public func submenuItemClicked(_ item: NSMenuItem) {
-        var rootItem = item
-        while true {
-            if let nextRoot = rootItem.parent {
-                rootItem = nextRoot
-            } else {
-                break
-            }
-        }
-        guard let rootMenu = rootItem.menu else { return }
-        
-        var clickedRow = -1
-        for row in 0..<self.tableView.numberOfRows {
-            if let effectCell = self.tableView.view(atColumn: 1, row: row, makeIfNecessary: true),
-               let pb = effectCell.subviews.first as? NSPopUpButton,
-               pb.menu == rootMenu {
-                clickedRow = row
-                break
-            }
-        }
+        let clickedRow = row(forMenuItem: item)
         
         if clickedRow == -1 {
             DDLogError("Couldn't find clickedRow in submenu item IBAction")
@@ -515,17 +582,16 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
     
     public func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard let rowDict = self.groupedDataModel[row] as? [AnyHashable: Any] else { return nil }
-        DDLogInfo("DEBUG tableView viewFor row: \(row), tableColumn: \(String(describing: tableColumn?.identifier.rawValue)), rawItemType: \(type(of: self.groupedDataModel[row])), rawItemValue: \(rowDict)")
         
         if rowDict["buttonGroupRow"] != nil {
             let buttonGroupCell = self.tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier("buttonGroupCell"), owner: self)
-            DDLogInfo("DEBUG buttonGroupCell: \(String(describing: buttonGroupCell)), subviews: \(String(describing: buttonGroupCell?.subviews)), nextKeyView: \(String(describing: buttonGroupCell?.nextKeyView))")
-            let groupTextField = buttonGroupCell?.subviews.first(where: { $0 is NSTextField }) as? NSTextField
-            if let groupTextField = groupTextField {
+            if let groupTextField = firstSubview(ofType: NSTextField.self, in: buttonGroupCell) {
                 let nextRowDict = self.groupedDataModel[row + 1] as? [AnyHashable: Any] ?? [:]
                 let groupButtonNumber = RemapTableUtility.triggerButton(forRow: nextRowDict)
                 let btnStrOpt = UIStrings.getButtonString(groupButtonNumber, context: kMFButtonStringUsageContextActionTableGroupRow)
-                let btnStr = (btnStrOpt as NSString?)?.firstCaptialized() as String? ?? ""
+                let fallback = String(format: "Button %d", groupButtonNumber.rawValue)
+                let btnStrRaw = btnStrOpt.isEmpty ? fallback : btnStrOpt
+                let btnStr = (btnStrRaw as NSString).firstCaptialized() as String
                 groupTextField.stringValue = "  \(btnStr)"
                 
                 if #available(macOS 11.0, *) { } else {
@@ -559,9 +625,7 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
     }
     
     public func numberOfRows(in tableView: NSTableView) -> Int {
-        let count = self.groupedDataModel.count
-        DDLogInfo("DEBUG numberOfRows: count=\(count)")
-        return count
+        return self.groupedDataModel.count
     }
     
     public func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
@@ -576,7 +640,7 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
             }
         } else {
             let colwidth = self.tableView.tableColumns[0].width
-            let deepCopy = (SharedUtility.deepCopy(of: rowDict) as? [AnyHashable: Any]) ?? [:]
+            let deepCopy = SharedUtility.deepCopy(of: rowDict) as? [AnyHashable: Any] ?? rowDict
             let triggerCellView = RemapTableTranslator.getTriggerCell(withRowDict: deepCopy, row: row)
             triggerCellView.setFrameSize(NSSize(width: colwidth, height: triggerCellView.frame.size.height))
             triggerCellView.layoutSubtreeIfNeeded()
@@ -748,9 +812,7 @@ public class RemapTableController: NSViewController, NSTableViewDelegate, NSTabl
     
     private func isGroupRow(_ row: Int) -> Bool {
         guard let rowDict = self.groupedDataModel[row] as? [AnyHashable: Any] else { return false }
-        let isGroup = rowDict["buttonGroupRow"] != nil
-        DDLogInfo("DEBUG isGroupRow \(row): result=\(isGroup), dict=\(rowDict)")
-        return isGroup
+        return rowDict["buttonGroupRow"] != nil
     }
     
     public func tableView(_ tableView: NSTableView, isGroupRow row: Int) -> Bool {

@@ -18,6 +18,7 @@ class ResizingTabWindowController: NSWindowController, NSWindowDelegate {
         
         super.windowDidLoad()
         let thewindow = window as! ResizingTabWindow
+        thewindow.isReleasedWhenClosed = false
                
         /// Make views compact on Tahoe
         if #available(macOS 26.0, *) {

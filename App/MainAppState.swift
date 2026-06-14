@@ -29,12 +29,16 @@ import ReactiveSwift
         ///                 (On LicenseSheetController.add():)          This assert fails sometimes when clicking the Activate License link on Gumroad while having the debugger attached. || [Jun 6 2025] Just saw this assert fail again with debugger attached || [Jun 6 2025] I've heard this breaking for ppl sometimes.
         ///                                              I assumed this was due to the `macmousefix:activate` link breaking due to a bug in Apple's URL handling system but `macmousefix:` links aren't used at all when clicking the 'Activate License' link on the About Tab! (In 3.0.4 src code). That means this bug probably happens for other users as well. ... Investigating the code, it looks like `NSApp.mainWindow` returns nil. So we should choose a better method of getting the main MMF window.
         
-        var result = ResizingTabWindowController.sharedWindow     /// [Jun 6 2025] Could also use `[AppDelegate mainWindow]`. Not sure there's any difference. Should probably unify these accessors.
-        if result == nil {
-            assert(false) /// [Jun 6 2025] Not sure this ever fails. If it does fail, I doubt that NSApp.mainWindow will succeed (but not sure)
-            result = NSApp.mainWindow as? ResizingTabWindow
+        if let result = ResizingTabWindowController.sharedWindow {
+            return result
         }
-        return result
+        if let result = NSApp.mainWindow as? ResizingTabWindow {
+            return result
+        }
+        if let result = NSApp.windows.first(where: { $0 is ResizingTabWindow }) as? ResizingTabWindow {
+            return result
+        }
+        return nil
     }
     
     @objc var frontMostWindowOrSheet: NSWindow? {

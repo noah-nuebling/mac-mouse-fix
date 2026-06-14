@@ -235,6 +235,7 @@
 		4FA773DA2E66FF1B0056E9B4 /* MFPlistEncoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2E8FD62D52877F00689058 /* MFPlistEncoder.m */; };
 		4FA773DB2E66FF3A0056E9B4 /* MFPlistDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FB8B2942CCDB94F00A5A580 /* MFPlistDecoder.m */; };
 		4FA773DC2E66FF510056E9B4 /* NSCoderErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F2E8FD22D52229100689058 /* NSCoderErrors.m */; };
+		4FA83A29268271E200F3A31B /* PointerSpeed.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A28268271E200F3A31B /* PointerSpeed.m */; };
 		4FA83A2E268288D900F3A31B /* PointerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA83A2D268288D900F3A31B /* PointerConfig.swift */; };
 		4FA8A30A28A9508C001E740F /* ButtonOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA8A30828A9508C001E740F /* ButtonOptionsViewController.swift */; };
 		4FA9733B293F7643002B5C24 /* ScrollSpeedupCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA9733A293F7643002B5C24 /* ScrollSpeedupCurve.swift */; };
@@ -370,6 +371,7 @@
 		4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662E25F2C93A00689B77 /* ScrollModifiers_old_.m */; };
 		4FF6669225F2C93A00689B77 /* RoughScroll_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6663025F2C93A00689B77 /* RoughScroll_old_.m */; };
 		4FF6669325F2C93A00689B77 /* TouchSimulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6663325F2C93A00689B77 /* TouchSimulator.m */; };
+		4FF6669725F2C93A00689B77 /* Remap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6663D25F2C93A00689B77 /* Remap.m */; };
 		4FF6669825F2C93A00689B77 /* SubPixelator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664025F2C93A00689B77 /* SubPixelator.m */; };
 		4FF6669925F2C93A00689B77 /* VectorSubPixelator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664125F2C93A00689B77 /* VectorSubPixelator.m */; };
 		4FF6669A25F2C93A00689B77 /* ModificationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6664225F2C93A00689B77 /* ModificationUtility.m */; };
@@ -410,7 +412,6 @@
 		59EB10C0DF145E6DCE3911D1 /* MFMessagePort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5CC6597B75221174EC9DC5 /* MFMessagePort.swift */; };
 		6201825F094C360908B67EE7 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2E8E49586EBDDC80D187A /* Actions.swift */; };
 		6DD5AF5701CC38598D0C9A57 /* Locator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ED4A78EFF0C97D484C08C3E /* Locator.swift */; };
-		6E8C2380FAB38F7B465F28FB /* Remap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59E31D0F6F9A7502E077E71 /* Remap.swift */; };
 		6FAA1EAC5514C7216C929991 /* RemapTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F3F4723CFA1F570B841110 /* RemapTableView.swift */; };
 		85A5DD7146D31A72F6EAD6AE /* ModifiedDragOutputThreeFingerSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56B90F0B892484E08C30DE4 /* ModifiedDragOutputThreeFingerSwipe.swift */; };
 		9495B41C053D81BEFE9B455C /* ModifiedDragOutputFakeDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 149F8DB717A537B7EE98F861 /* ModifiedDragOutputFakeDrag.swift */; };
@@ -425,7 +426,6 @@
 		E568128588F298ECC1F38C36 /* SparkleUpdaterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65CD791ED9AADDCA5AC5D94B /* SparkleUpdaterController.swift */; };
 		EBBD5496CB660879F036DA76 /* ModifiedDragOutputTwoFingerSwipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8365CB44E98D26834C9443FA /* ModifiedDragOutputTwoFingerSwipe.swift */; };
 		EE73F6E3662C8226E7AD05E0 /* KeyCaptureScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0704DB60A4687F44F0E75B5B /* KeyCaptureScrollView.swift */; };
-		F319025DDE337EA51F77A39C /* PointerSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2699BD7A104AA3E74697E2BA /* PointerSpeed.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -482,7 +482,6 @@
 		14F3F4723CFA1F570B841110 /* RemapTableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RemapTableView.swift; sourceTree = "<group>"; };
 		187FF80E60C0E06948C23D9C /* ModifiedDragOutputAddMode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ModifiedDragOutputAddMode.swift; path = Helper/Core/Drag/AddMode/ModifiedDragOutputAddMode.swift; sourceTree = "<group>"; };
 		1A3B6F4C93BC5B2AA330DDEE /* LogitechActivator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = LogitechActivator.h; sourceTree = "<group>"; };
-		2699BD7A104AA3E74697E2BA /* PointerSpeed.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PointerSpeed.swift; path = Helper/Core/PointerSpeed/PointerSpeed.swift; sourceTree = "<group>"; };
 		2ED4A78EFF0C97D484C08C3E /* Locator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Locator.swift; path = Shared/Locator/Locator.swift; sourceTree = "<group>"; };
 		34F00B40EC0DB71DA67C632D /* ButtonInputReceiver.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ButtonInputReceiver.swift; path = Helper/Core/Buttons/ButtonInputReceiver.swift; sourceTree = "<group>"; };
 		3E48FA3B0AFA1DE76F5E3A82 /* DisplayLink.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DisplayLink.swift; path = Shared/Animation/DisplayLink.swift; sourceTree = "<group>"; };
@@ -2287,6 +2286,8 @@
 		4FA40CF528A0CBA600499E53 /* Mac Mouse Fix-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FA5F08C2CE4CEF800ED2354 /* SymbolicHotKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SymbolicHotKeys.h; sourceTree = "<group>"; };
 		4FA5F08D2CE4CEF800ED2354 /* SymbolicHotKeys.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SymbolicHotKeys.m; sourceTree = "<group>"; };
+		4FA83A27268271E200F3A31B /* PointerSpeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerSpeed.h; sourceTree = "<group>"; };
+		4FA83A28268271E200F3A31B /* PointerSpeed.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointerSpeed.m; sourceTree = "<group>"; };
 		4FA83A2D268288D900F3A31B /* PointerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerConfig.swift; sourceTree = "<group>"; };
 		4FA8A30828A9508C001E740F /* ButtonOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonOptionsViewController.swift; sourceTree = "<group>"; };
 		4FA9733A293F7643002B5C24 /* ScrollSpeedupCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollSpeedupCurve.swift; sourceTree = "<group>"; };
@@ -2490,6 +2491,8 @@
 		4FF6663325F2C93A00689B77 /* TouchSimulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchSimulator.m; sourceTree = "<group>"; };
 		4FF6663425F2C93A00689B77 /* GestureScrollSimulator_old_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GestureScrollSimulator_old_.m; sourceTree = "<group>"; };
 		4FF6663525F2C93A00689B77 /* TouchSimulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchSimulator.h; sourceTree = "<group>"; };
+		4FF6663D25F2C93A00689B77 /* Remap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Remap.m; sourceTree = "<group>"; };
+		4FF6663E25F2C93A00689B77 /* Remap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Remap.h; sourceTree = "<group>"; };
 		4FF6664025F2C93A00689B77 /* SubPixelator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubPixelator.m; sourceTree = "<group>"; };
 		4FF6664125F2C93A00689B77 /* VectorSubPixelator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VectorSubPixelator.m; sourceTree = "<group>"; };
 		4FF6664225F2C93A00689B77 /* ModificationUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModificationUtility.m; sourceTree = "<group>"; };
@@ -2557,7 +2560,6 @@
 		8821D7968FC47B5B782E78BF /* GestureScrollSimulator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GestureScrollSimulator.swift; sourceTree = "<group>"; };
 		8F5F88C245D24D4C49632C88 /* Config.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Config.swift; path = Shared/Config/Config.swift; sourceTree = "<group>"; };
 		9514BB9DA0DC3BCBEE71CA38 /* RemapsAnalyzer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RemapsAnalyzer.swift; sourceTree = "<group>"; };
-		A59E31D0F6F9A7502E077E71 /* Remap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Remap.swift; path = Helper/Core/Remap/Remap.swift; sourceTree = "<group>"; };
 		B95400F8D51E8DE94772CCE3 /* ScrollAnalyzer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScrollAnalyzer.swift; path = Helper/Core/Scroll/ScrollAnalyzer.swift; sourceTree = "<group>"; };
 		BBE38BA1B8AD1E2F4F593B93 /* Config_Bridge.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = Config_Bridge.m; path = Shared/Config/Config_Bridge.m; sourceTree = "<group>"; };
 		CC6F89A175881EE11D21354C /* RemapTableController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = RemapTableController.swift; sourceTree = "<group>"; };
@@ -7297,8 +7299,6 @@
 				8365CB44E98D26834C9443FA /* ModifiedDragOutputTwoFingerSwipe.swift */,
 				187FF80E60C0E06948C23D9C /* ModifiedDragOutputAddMode.swift */,
 				149F8DB717A537B7EE98F861 /* ModifiedDragOutputFakeDrag.swift */,
-				2699BD7A104AA3E74697E2BA /* PointerSpeed.swift */,
-				A59E31D0F6F9A7502E077E71 /* Remap.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -7786,6 +7786,8 @@
 		4FF6663C25F2C93A00689B77 /* Remap */ = {
 			isa = PBXGroup;
 			children = (
+				4FF6663E25F2C93A00689B77 /* Remap.h */,
+				4FF6663D25F2C93A00689B77 /* Remap.m */,
 				4FD9820D292A9CB000645FE3 /* ReactiveRemaps.swift */,
 				4F5F3EEF2756DD1200C350C0 /* RemapSwizzler.h */,
 				4F5F3EF02756EC0400C350C0 /* RemapSwizzler.m */,
@@ -7818,6 +7820,8 @@
 		4FF6664725F2C93A00689B77 /* PointerSpeed */ = {
 			isa = PBXGroup;
 			children = (
+				4FA83A27268271E200F3A31B /* PointerSpeed.h */,
+				4FA83A28268271E200F3A31B /* PointerSpeed.m */,
 				4F8A8DB0287EEF9B00786BCC /* IOHIDAccelerationTableBridge.hpp */,
 				4F8A8DAC287EEF6200786BCC /* IOHIDAccelerationTableBridge.mm */,
 				4F8A8DBB287EFB4D00786BCC /* Extern */,
@@ -8558,6 +8562,7 @@
 				4F3A40AB266BBB6200436821 /* AccelerationBezier.swift in Sources */,
 				4F2E8FD82D52877F00689058 /* MFPlistEncoder.m in Sources */,
 				4FE6CBC428987E8B00B3E829 /* DynamicSystemAnimator.swift in Sources */,
+				4FF6669725F2C93A00689B77 /* Remap.m in Sources */,
 				4F8A8DBF287F7BBA00786BCC /* NaturalAccelerationCurve.swift in Sources */,
 				4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */,
 				4F70ECB7267E810900325A76 /* IOUtility.m in Sources */,
@@ -8667,6 +8672,7 @@
 				4F9C9B60268A29FE0083DED0 /* Smoother.swift in Sources */,
 				4FDE759F28B174E700662314 /* TrialCounter.swift in Sources */,
 				4FE479E12933C87A00B75E9B /* ButtonModifiers.m in Sources */,
+				4FA83A29268271E200F3A31B /* PointerSpeed.m in Sources */,
 				4F5971E62901763D00A32656 /* MathObjc.m in Sources */,
 				4FFA4E3828B79D410062A1FE /* NSAttributedString+Additions.m in Sources */,
 				4FFA4E4228B7D2890062A1FE /* FadeAnimations.swift in Sources */,
@@ -8701,8 +8707,6 @@
 				EBBD5496CB660879F036DA76 /* ModifiedDragOutputTwoFingerSwipe.swift in Sources */,
 				11E053053BF9CCEE498DDD58 /* ModifiedDragOutputAddMode.swift in Sources */,
 				9495B41C053D81BEFE9B455C /* ModifiedDragOutputFakeDrag.swift in Sources */,
-				F319025DDE337EA51F77A39C /* PointerSpeed.swift in Sources */,
-				6E8C2380FAB38F7B465F28FB /* Remap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

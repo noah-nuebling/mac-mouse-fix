@@ -136,7 +136,7 @@ private let handleDeviceMatchingCallback: IOHIDDeviceCallback = { context, resul
         
         DDLogDebug("Setting PointerSpeed for device: \(newDevice.description)")
         #if IS_HELPER
-        PointerSpeed.setForDevice(device)
+        PointerSpeed.setFor(device)
         #endif
         
         #if IS_HELPER
