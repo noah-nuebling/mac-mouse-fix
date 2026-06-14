@@ -24,7 +24,7 @@ import ReactiveCocoa
     typealias Value = NSDictionary
     typealias Error = Never
     var producer: ReactiveSwift.SignalProducer<NSDictionary, Never> {
-        let currentConfig = Config.shared().config
+        let currentConfig = Config.shared.config
         return signal.producer.prefix(value: currentConfig)
     }
     
@@ -83,7 +83,7 @@ class ConfigValue<T: Equatable>: NSObject, BindingTargetProvider, BindingSource 
         /// Create signalProducer
         ///     Will send a signal whenever the value at `keyPath` in the config changes
         let p1 = ReactiveConfig.shared.producer.map({ (newConfig: NSDictionary) -> T? in
-            newConfig.object(forCoolKeyPath: configPath) as? T /// Notice that we're using coolKeyPaths
+            config(configPath) as? T
         })
         producer = p1.skipNil().skipRepeats()
         

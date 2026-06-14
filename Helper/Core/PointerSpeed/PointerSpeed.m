@@ -17,6 +17,7 @@
 #import "IOUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "DeviceManager.h"
+#import "Device.h"
 #import "IOHIDAccelerationTableBridge.hpp"
 
 /// Get private Apple stuff
@@ -34,6 +35,8 @@ extern IOHIDEventSystemClientRef IOHIDEventSystemClientCreateWithType(CFAllocato
                                                                       CFDictionaryRef _Nullable attributes);
 
 extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHIDEventSystemClientRef client, uint64_t entryID);
+extern CFArrayRef IOHIDEventSystemClientCopyServices(IOHIDEventSystemClientRef client);
+extern CFTypeRef IOHIDServiceClientCopyProperty(IOHIDServiceClientRef service, CFStringRef key);
 
 /// Implementation
 
@@ -56,45 +59,48 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     /// Sets pointer speed accoring to PointerConfig
     /// This should be called after a new device has been attached.
 
-    assert(false); /// Don't use this, yet, because feature not implemented
+    double multiplier = 1.0;
+    BOOL ignoreSensitivity = NO;
+    Device *attachedDev = [DeviceManager attachedDeviceWithIOHIDDevice:device];
     
+    BOOL isLogitechDPI = NO;
+    if (attachedDev != nil) {
+        NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey));
+        if (vid != nil && vid.intValue == 0x046D) { // Logitech
+            if (attachedDev.supportsLogitechDPI || [PointerConfig hasSavedLogitechDPI]) {
+                isLogitechDPI = YES;
+            }
+        }
+    }
+    
+    if (isLogitechDPI) {
+        // Align driver resolution with physical mouse DPI to keep acceleration curve inputs consistent.
+        // The custom curve output gains will scale linearly by (DPI / 400) in PointerConfig.
+        double dpi = [PointerConfig logitechDPI];
+        if (dpi < 200) { dpi = 1000; } // Sanity check fallback
+        multiplier = 400.0 / dpi;
+        ignoreSensitivity = YES;
+    }
+
     if (PointerConfig.useSystemSpeed) {
         [self deconfigureDevice:device];
     } else if (PointerConfig.useParametricCurve) {
-        [self setForDevice:device sensitivity:PointerConfig.CPIMultiplier parametricCurve:PointerConfig.parametricCurve];
+        [self setForDevice:device sensitivity:(PointerConfig.CPIMultiplier * multiplier) parametricCurve:[PointerConfig parametricCurveWithIgnoreSensitivity:ignoreSensitivity isLogitechDPI:isLogitechDPI]];
     } else {
-        [self setForDevice:device sensitivity:PointerConfig.CPIMultiplier tableBasedCurve:PointerConfig.tableBasedCurve];
+        [self setForDevice:device sensitivity:(PointerConfig.CPIMultiplier * multiplier) tableBasedCurve:[PointerConfig tableBasedCurveWithIgnoreSensitivity:ignoreSensitivity isLogitechDPI:isLogitechDPI]];
     }
-    
-    /// Debug
-    
-//    double accelIndex = 123.0;
-//    int pointCount = 3;
-//    P points[3] = {
-//        (P){.x = 0, .y = 0},
-//        (P){.x = 1, .y = 2},
-//        (P){.x = 2, .y = 4}
-//    };
-//    CFDataRef table = createAccelerationTableWithPoints(points, pointCount, accelIndex);
-    CFDataRef defaultTable = copyDefaultAccelerationTable();
-    printAccelerationTable(defaultTable);
-    
-    CFRelease(defaultTable);
 }
 
 + (void)deconfigureDevice:(IOHIDDeviceRef)device {
-    
-    assert(false); /// Don't use this, yet, because feature not implemented
-    
-    /// Restore the default macOS settigns for `device`
+    /// Restore the default macOS settings for `device`
     [self setForDevice:device sensitivity:PointerConfig.systemSensitivity systemCurveIndex:PointerConfig.systemAccelCurveIndex];
 }
 
 // MARK: - Surface
 
 + (Boolean)setForDevice:(IOHIDDeviceRef)device
-         sensitivity:(double)sensitivity
-     tableBasedCurve:(NSArray *)points {
+          sensitivity:(double)sensitivity
+      tableBasedCurve:(NSArray *)points {
     
     /// Declare stuff
     Boolean success;
@@ -104,14 +110,22 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     IOHIDEventSystemClientRef systemClient;
     copyEventServiceAndSystemClients(device, &serviceClient, &systemClient);
     
+    if (serviceClient == NULL) {
+        if (systemClient != NULL) CFRelease(systemClient);
+        return false;
+    }
+    
     /// Set sensitivity on the driver
     success = setSensitivity(sensitivity, serviceClient);
-    assert(success);
+    if (!success) {
+        CFRelease(serviceClient);
+        CFRelease(systemClient);
+        return false;
+    }
     
     /// Set mouse acceleration on the driver
     /// TODO: This fails sometimes randomly - try again in a loop or sth
-    success = success && setAccelToTableBasedCurve(points, serviceClient);
-    assert(success);
+    success = setAccelToTableBasedCurve(points, serviceClient);
     
     CFRelease(serviceClient);
     CFRelease(systemClient);
@@ -120,8 +134,8 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
 }
 
 + (Boolean)setForDevice:(IOHIDDeviceRef)device
-         sensitivity:(double)sensitivity
-        parametricCurve:(MFAppleAccelerationCurveParams)accelCurve {
+          sensitivity:(double)sensitivity
+         parametricCurve:(MFAppleAccelerationCurveParams)accelCurve {
     
     /// Declare stuff
     Boolean success;
@@ -131,13 +145,21 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     IOHIDEventSystemClientRef systemClient;
     copyEventServiceAndSystemClients(device, &serviceClient, &systemClient);
     
+    if (serviceClient == NULL) {
+        if (systemClient != NULL) CFRelease(systemClient);
+        return false;
+    }
+    
     /// Set sensitivity on the driver
     success = setSensitivity(sensitivity, serviceClient);
-    assert(success);
+    if (!success) {
+        CFRelease(serviceClient);
+        CFRelease(systemClient);
+        return false;
+    }
     
     /// Set mouse acceleration on the driver
-    success = success && setAccelToParametricCurve(accelCurve, serviceClient);
-    assert(success);
+    success = setAccelToParametricCurve(accelCurve, serviceClient);
     
     CFRelease(serviceClient);
     CFRelease(systemClient);
@@ -146,13 +168,15 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
 }
 
 + (void)setForDevice:(IOHIDDeviceRef)device
-         sensitivity:(double)sensitivity
-    systemCurveIndex:(double)curveIndex {
+          sensitivity:(double)sensitivity
+     systemCurveIndex:(double)curveIndex {
     /// Sets pointer  sensitivity and pointer acceleration on a specific IOHIDDevice. Source for this is `PointerSpeedExperiments2.m`
     
     /// Validate
     ///     These are the values settable through System Preferences. Not sure if it makes sense to restrict to these values?
-    assert(0 <= curveIndex && curveIndex <= 3.0);
+    if (curveIndex < -1.0) {
+        curveIndex = -1.0;
+    }
     
     /// Declare stuff
     Boolean success;
@@ -162,16 +186,24 @@ extern IOHIDServiceClientRef IOHIDEventSystemClientCopyServiceForRegistryID(IOHI
     IOHIDEventSystemClientRef systemClient;
     copyEventServiceAndSystemClients(device, &serviceClient, &systemClient);
     
+    if (serviceClient == NULL) {
+        if (systemClient != NULL) CFRelease(systemClient);
+        return;
+    }
+    
     /// Set sensitivity on the driver
     success = setSensitivity(sensitivity, serviceClient);
-    assert(success);
+    if (!success) {
+        CFRelease(serviceClient);
+        CFRelease(systemClient);
+        return;
+    }
     
     /// Delete custom curves
     removeCustomCurves(serviceClient, serviceClient);
     
     /// Set mouse acceleration on the driver
     success = selectAccelCurveWithIndex(curveIndex, serviceClient);
-    assert(success);
     
     /// Release
     CFRelease(serviceClient);
@@ -372,7 +404,9 @@ typedef struct IOHIDServiceFilterPlugInInterface {
 } IOHIDServiceFilterPlugInInterface;
 
 static IOHIDServiceClientRef copyEventServiceClient_WithEventSystem(io_service_t service, IOHIDEventSystemClientRef eventSystemClient) {
-    
+    if (service == 0) {
+        return NULL;
+    }
     uint64_t serviceID;
     kern_return_t kr = IORegistryEntryGetRegistryEntryID(service, &serviceID);
     
@@ -391,14 +425,110 @@ static void copyEventServiceAndSystemClients(IOHIDDeviceRef device, IOHIDService
     /// Caller is responsible for releasing serviceClient and systemClient
     /// Releasing the systemClient will make the serviceClient unusable.
     
+    NSString *product = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
+    DDLogInfo(@"[PointerSpeed] copyEventServiceAndSystemClients starting for device: %@", product);
+    
     /// Get eventSystemClient
     *systemClient = IOHIDEventSystemClientCreateWithType(kCFAllocatorDefault, HIDEventSystemClientTypePassive, NULL);
+    if (*systemClient == NULL) {
+        DDLogWarn(@"[PointerSpeed] Failed to create passive eventSystemClient");
+    }
     
-    /// Get eventServiceClient
+    /// Get eventServiceClient via traditional copyDriverService
     io_service_t driverService = copyDriverService(device);
-    *serviceClient = copyEventServiceClient_WithEventSystem(driverService, *systemClient);
+    if (driverService != 0) {
+        uint64_t entryID = 0;
+        IORegistryEntryGetRegistryEntryID(driverService, &entryID);
+        DDLogInfo(@"[PointerSpeed] driverService registry ID: 0x%llx", entryID);
+        *serviceClient = copyEventServiceClient_WithEventSystem(driverService, *systemClient);
+        IOObjectRelease(driverService);
+    } else {
+        *serviceClient = NULL;
+    }
+    
+    /// Fallback: if serviceClient is NULL, find it by matching properties in the event system client
+    if (*serviceClient == NULL && *systemClient != NULL) {
+        DDLogInfo(@"[PointerSpeed] copyDriverService failed or returned defunct client, attempting fallback property-matching search");
+        NSNumber *deviceVid = (__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey));
+        NSNumber *devicePid = (__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductIDKey));
+        NSNumber *deviceLoc = (__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDLocationIDKey));
+        NSString *deviceUnique = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDUniqueIDKey));
+        
+        DDLogInfo(@"[PointerSpeed] Target device properties: Vid = %@, Pid = %@, Loc = %@, Unique = %@", deviceVid, devicePid, deviceLoc, deviceUnique);
+        
+        CFArrayRef services = IOHIDEventSystemClientCopyServices(*systemClient);
+        if (services != NULL) {
+            DDLogInfo(@"[PointerSpeed] Number of services found: %ld", (long)CFArrayGetCount(services));
+            for (id serviceClientUntyped in (__bridge NSArray *)services) {
+                IOHIDServiceClientRef client = (__bridge IOHIDServiceClientRef)serviceClientUntyped;
+                
+                NSNumber *clientVid = (__bridge_transfer NSNumber *)IOHIDServiceClientCopyProperty(client, CFSTR(kIOHIDVendorIDKey));
+                NSNumber *clientPid = (__bridge_transfer NSNumber *)IOHIDServiceClientCopyProperty(client, CFSTR(kIOHIDProductIDKey));
+                NSNumber *clientLoc = (__bridge_transfer NSNumber *)IOHIDServiceClientCopyProperty(client, CFSTR(kIOHIDLocationIDKey));
+                NSString *clientUnique = (__bridge_transfer NSString *)IOHIDServiceClientCopyProperty(client, CFSTR(kIOHIDUniqueIDKey));
+                NSString *clientProduct = (__bridge_transfer NSString *)IOHIDServiceClientCopyProperty(client, CFSTR(kIOHIDProductKey));
+                
+                DDLogInfo(@"[PointerSpeed] Client product: '%@', properties: Vid = %@, Pid = %@, Loc = %@, Unique = %@", clientProduct, clientVid, clientPid, clientLoc, clientUnique);
+                
+                BOOL match = NO;
+                
+                // Safely convert unique IDs to string representations if present
+                NSString *deviceUniqueStr = deviceUnique ? [NSString stringWithFormat:@"%@", deviceUnique] : nil;
+                NSString *clientUniqueStr = clientUnique ? [NSString stringWithFormat:@"%@", clientUnique] : nil;
+                
+                if (deviceUniqueStr != nil && clientUniqueStr != nil && deviceUniqueStr.length > 0) {
+                    if ([deviceUniqueStr isEqualToString:clientUniqueStr]) {
+                        match = YES;
+                    }
+                }
+                
+                if (!match && deviceVid != nil && clientVid != nil && devicePid != nil && clientPid != nil) {
+                    if ([deviceVid isEqual:clientVid] && [devicePid isEqual:clientPid]) {
+                        // Check if the service client conforms to Mouse or Pointer usage
+                        BOOL conforms = IOHIDServiceClientConformsTo(client, 0x01, 0x02) ||  // kHIDPage_GenericDesktop, kHIDUsage_GD_Mouse
+                                        IOHIDServiceClientConformsTo(client, 0x01, 0x01);    // kHIDPage_GenericDesktop, kHIDUsage_GD_Pointer
+                        
+                        if (conforms) {
+                            NSInteger devLocVal = deviceLoc ? [deviceLoc integerValue] : 0;
+                            NSInteger cliLocVal = clientLoc ? [clientLoc integerValue] : 0;
+                            
+                            if (devLocVal != 0 && cliLocVal != 0) {
+                                if (devLocVal == cliLocVal) {
+                                    match = YES;
+                                }
+                            } else {
+                                // If location ID is 0 or missing on either, match by product name if available
+                                if (product != nil && clientProduct != nil) {
+                                    if ([product.lowercaseString isEqualToString:clientProduct.lowercaseString]) {
+                                        match = YES;
+                                    }
+                                } else {
+                                    // Fallback: if we don't have product names, match by Vid and Pid
+                                    match = YES;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                if (match) {
+                    // Retain the service client as the caller is responsible for releasing it
+                    CFRetain(client);
+                    *serviceClient = client;
+                    DDLogInfo(@"[PointerSpeed] Found matching service client via property matching for device: %@", product);
+                    break;
+                }
+            }
+            CFRelease(services);
+        } else {
+            DDLogWarn(@"[PointerSpeed] IOHIDEventSystemClientCopyServices returned NULL");
+        }
+    }
+    
     if (*serviceClient == NULL) {
-        DDLogWarn(@"Failed to get service client. Can't set PointerSpeed");
+        DDLogWarn(@"Failed to get service client. Can't set PointerSpeed (device: %@)", product);
+    } else {
+        DDLogInfo(@"[PointerSpeed] Successfully got service client for device %@", product);
     }
     
     if (false) {
@@ -487,18 +617,94 @@ static void copyEventServiceAndSystemClients(IOHIDDeviceRef device, IOHIDService
     
     
     /// Release
-    IOObjectRelease(driverService);
+    if (driverService != 0) {
+        IOObjectRelease(driverService);
+    }
+}
+
+static io_registry_entry_t findChildOfRegistryEntryRecursive(io_registry_entry_t entry, NSString *name) {
+    if (entry == 0) return 0;
+    io_iterator_t iterator;
+    kern_return_t kr = IORegistryEntryGetChildIterator(entry, kIOServicePlane, &iterator);
+    if (kr != KERN_SUCCESS) {
+        return 0;
+    }
+    io_registry_entry_t childEntry;
+    BOOL childEntryFound = NO;
+    while ((childEntry = IOIteratorNext(iterator))) {
+        char childName[1000];
+        IORegistryEntryGetNameInPlane(childEntry, kIOServicePlane, childName);
+        if ([name isEqualToString:@(childName)]) {
+            childEntryFound = YES;
+            break;
+        }
+        
+        io_registry_entry_t deepChild = findChildOfRegistryEntryRecursive(childEntry, name);
+        if (deepChild != 0) {
+            childEntryFound = YES;
+            IOObjectRelease(childEntry);
+            childEntry = deepChild;
+            break;
+        }
+        IOObjectRelease(childEntry);
+    }
+    IOObjectRelease(iterator);
+    return childEntryFound ? childEntry : 0;
+}
+
+static void printRegistrySubtree(io_registry_entry_t entry, int indent) {
+    io_name_t name;
+    io_name_t className;
+    IORegistryEntryGetName(entry, name);
+    IOObjectGetClass(entry, className);
+    uint64_t entryID = 0;
+    IORegistryEntryGetRegistryEntryID(entry, &entryID);
+    
+    NSMutableString *indentStr = [NSMutableString string];
+    for (int i = 0; i < indent; i++) [indentStr appendString:@"  "];
+    DDLogInfo(@"[PointerSpeed] Subtree: %@Name: %s, Class: %s, ID: 0x%llx", indentStr, name, className, entryID);
+    
+    io_iterator_t iterator;
+    kern_return_t kr = IORegistryEntryGetChildIterator(entry, kIOServicePlane, &iterator);
+    if (kr == KERN_SUCCESS) {
+        io_registry_entry_t child;
+        while ((child = IOIteratorNext(iterator))) {
+            printRegistrySubtree(child, indent + 1);
+            IOObjectRelease(child);
+        }
+        IOObjectRelease(iterator);
+    }
 }
 
 static io_service_t copyDriverService(IOHIDDeviceRef device) {
-    
+    if (!device) return 0;
     /// Get IOService of the driver driving `dev`
     io_service_t iohidDeviceService = IOHIDDeviceGetService(device);
-    io_service_t interfaceService = [IOUtility createChildOfRegistryEntry:iohidDeviceService withName:@"IOHIDInterface"];
-    io_service_t driverService = [IOUtility createChildOfRegistryEntry:interfaceService withName:@"AppleUserHIDEventDriver"];
+    if (iohidDeviceService == 0) {
+        DDLogWarn(@"[PointerSpeed] IOHIDDeviceGetService returned 0");
+        return 0;
+    }
+    uint64_t parentID = 0;
+    IORegistryEntryGetRegistryEntryID(iohidDeviceService, &parentID);
+    io_name_t parentClassName;
+    IOObjectGetClass(iohidDeviceService, parentClassName);
+    DDLogInfo(@"[PointerSpeed] copyDriverService checking iohidDeviceService ID: 0x%llx, Class: %s", parentID, parentClassName);
+    
+    io_service_t interfaceService = findChildOfRegistryEntryRecursive(iohidDeviceService, @"IOHIDInterface");
+    if (interfaceService == 0) {
+        DDLogWarn(@"[PointerSpeed] failed to find IOHIDInterface under iohidDeviceService (ID: 0x%llx)", parentID);
+        printRegistrySubtree(iohidDeviceService, 0);
+        IOObjectRelease(iohidDeviceService);
+        return 0;
+    }
+    io_service_t driverService = findChildOfRegistryEntryRecursive(interfaceService, @"AppleUserHIDEventDriver");
+    if (driverService == 0) {
+        DDLogWarn(@"[PointerSpeed] failed to find AppleUserHIDEventDriver under IOHIDInterface");
+        printRegistrySubtree(iohidDeviceService, 0);
+    }
     
     /// Release stuff
-    IOObjectRelease(iohidDeviceService); /// Not sure if necessary because of function name used to create it (See CreateRule)
+    IOObjectRelease(iohidDeviceService);
     IOObjectRelease(interfaceService);
     
     /// Return

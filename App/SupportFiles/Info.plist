@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>24830</string>
+	<string>24847</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>NSHumanReadableCopyright</key>
@@ -48,9 +48,9 @@
 	<key>SUEnableJavaScript</key>
 	<string>YES</string>
 	<key>SUFeedURL</key>
-	<string>https://raw.githubusercontent.com/noah-nuebling/mac-mouse-fix/update-feed/appcast.xml</string>
+	<string>https://raw.githubusercontent.com/ShawnRn/mac-mouse-fix/feature/app-specific-logitech-zh-hans/appcast.xml</string>
 	<key>SUPublicEDKey</key>
-	<string>ZC69ciDfGYN4t3kwRiPc2SC7J4hchv9w+FfVv59r4+U=</string>
+	<string>bjptNX8PlJbdwtszqi3/BAHV4TYyZ3UuV1EMANJ+GaY=</string>
 	<key>UIDesignRequiresCompatibility</key>
 	<true/>
 </dict>

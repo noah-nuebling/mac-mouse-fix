@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>Mac Mouse Fix</title>
+        <item>
+            <title>3.1.12</title>
+            <pubDate>Fri, 12 Jun 2026 13:11:25 +0800</pubDate>
+            <sparkle:version>24848</sparkle:version>
+            <sparkle:shortVersionString>3.1.12</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/ShawnRn/mac-mouse-fix/releases/download/v3.1.12/Mac_Mouse_Fix_3.1.12_arm64.zip" type="application/octet-stream" sparkle:os="macos" sparkle:nativeArchitecture="arm64" sparkle:edSignature="I/xg/fYNgBqcsfuXskYeFu9Cm41UnYhB7HZA+7XAmoW7mxfmvbrQshIjhxlJGK9K5cWVFvyvnJkQyJWm298qCw==" length="5012930"/>
+            <enclosure url="https://github.com/ShawnRn/mac-mouse-fix/releases/download/v3.1.12/Mac_Mouse_Fix_3.1.12_x86_64.zip" type="application/octet-stream" sparkle:os="macos" sparkle:nativeArchitecture="x86_64" sparkle:edSignature="CgPPyCtnAKrpX3YfupnlVdiSmSFiOU70QCPbbHJ86E/FOFoI0gFKRDHHmF2AMAQQgbZHHK23e/8bExh7wuwjCA==" length="5263166"/>
+        </item>
+    </channel>
+</rss>

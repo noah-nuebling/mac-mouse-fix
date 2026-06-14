@@ -1,0 +1,182 @@
+/* No comment provided by engineer. */
+"%@ - Checkout" = "%@ - Kassa";
+
+/* No comment provided by engineer. */
+"%@ can send me product updates and offers via email. You can opt-out at any time." = "%@ mag me per e-mail updates en aanbiedingen van producten sturen. Je kunt je uitschrijven wanneer je wilt.";
+
+/* No comment provided by engineer. */
+"%@%% off!" = "%@%% korting!";
+
+/* No comment provided by engineer. */
+"A valid license code is required. Please try again." = "Er is een geldige licentiecode vereist. Probeer het alsjeblieft opnieuw.";
+
+/* No comment provided by engineer. */
+"Activate" = "Activeren";
+
+/* No comment provided by engineer. */
+"Activate License" = "Licentie activeren";
+
+/* No comment provided by engineer. */
+"Already purchased a license? Fill in the form below and activate %@ instantly." = "Heb je al eerder een licentie aangeschaft? Vul het onderstaande formulier dan in en activeer %@ direct.";
+
+/* No comment provided by engineer. */
+"An Error Occurred" = "Er is een fout opgetreden";
+
+/* No comment provided by engineer. */
+"An unexpected error occurred performing this action." = "Er is een onverwachte fout opgetreden tijdens het uitvoeren van deze actie.";
+
+/* No comment provided by engineer. */
+"Buy Now" = "Nu kopen";
+
+/* No comment provided by engineer. */
+"By %@" = "Door %@";
+
+/* No comment provided by engineer. */
+"Cancel" = "Annuleren";
+
+/* No comment provided by engineer. */
+"Close" = "Sluiten";
+
+/* No comment provided by engineer. */
+"Continue Trial" = "Doorgaan met proefperiode";
+
+/* No comment provided by engineer. */
+"Deactivating License" = "Licentie aan het deactiveren";
+
+/* No comment provided by engineer. */
+"Email Address" = "E-mailadres";
+
+/* No comment provided by engineer. */
+"Enter License" = "Voer licentie in";
+
+/* No comment provided by engineer. */
+"Error" = "Fout";
+
+/* No comment provided by engineer. */
+"Forgotten your license key?" = "Je licentiesleutel vergeten?";
+
+/* No comment provided by engineer. */
+"Join" = "Lid worden";
+
+/* No comment provided by engineer. */
+"License Code" = "Licentiecode";
+
+/* No comment provided by engineer. */
+"No Thanks!" = "Nee bedankt!";
+
+/* No comment provided by engineer. */
+"OK" = "Oké";
+
+/* No comment provided by engineer. */
+"Order Complete" = "Bestelling afgerond";
+
+/* No comment provided by engineer. */
+"Order Success" = "Bestelling succesvol";
+
+/* No comment provided by engineer. */
+"Please enter the email address used to purchase your license." = "Voer alsjeblieft het e-mailadres in dat je hebt gebruikt bij het aanschaffen van je licentie.";
+
+/* No comment provided by engineer. */
+"Quit" = "Afsluiten";
+
+/* No comment provided by engineer. */
+"Recover" = "Herstellen";
+
+/* No comment provided by engineer. */
+"Recover your %@ license" = "Herstel je %@-licentie";
+
+/* No comment provided by engineer. */
+"Recovering your %@ license" = "Je %@-licentie wordt hersteld";
+
+/* No comment provided by engineer. */
+"Retry" = "Opnieuw proberen";
+
+/* No comment provided by engineer. */
+"Send anonymous usage information?" = "Anonieme gebruiksstatistieken verzenden?";
+
+/* No comment provided by engineer. */
+"Success" = "Succes";
+
+/* No comment provided by engineer. */
+"Thank you for trying %@" = "Bedankt voor het uitproberen van %@";
+
+/* No comment provided by engineer. */
+"Thank you for your order, you'll receive an email shortly." = "Bedankt voor je bestelling, je ontvangt binnenkort een e-mail.";
+
+/* No comment provided by engineer. */
+"This copy of %@ is registered with the information below." = "Dit exemplaar van %@ is geregistreerd met de onderstaande informatie.";
+
+/* No comment provided by engineer. */
+"Unable to deactivate license. Please try again later." = "Licentie deactiveren niet gelukt. Probeer het later opnieuw.";
+
+/* No comment provided by engineer. */
+"Unspecified error, please contact support." = "Onbekende fout, neem contact op met de ondersteuning.";
+
+/* No comment provided by engineer. */
+"Use a different email address" = "Gebruik een ander e-mailadres";
+
+/* No comment provided by engineer. */
+"We're already checking a license, please wait a moment." = "We zijn al een licentie aan het controleren, een moment geduld alsjeblieft.";
+
+/* No comment provided by engineer. */
+"We're already deactivating a license, please wait a moment." = "We zijn al bezig met het deactiveren van je licentie, een moment geduld alsjeblieft.";
+
+/* No comment provided by engineer. */
+"We've sent details of any licenses for %@ to %@" = "We hebben de details van licenties voor %1$@ naar %2$@ gestuurd.";
+
+/* No comment provided by engineer. */
+"Welcome to %@!" = "Welkom bij %@!";
+
+/* No comment provided by engineer. */
+"Whoops! Something went wrong." = "Oeps! Er is iets fout gegaan.";
+
+/* No comment provided by engineer. */
+"Would you like to send anonymous usage information to the developer of %@ to help improve the application?" = "Wil je anonieme gebruiksstatistieken verzenden naar de ontwikkelaar van %@ om te helpen bij het verbeteren van de applicatie?";
+
+/* No comment provided by engineer. */
+"You have %d day remaining of your trial period." = "Je proefperiode duurt nog %d dag.";
+
+/* No comment provided by engineer. */
+"You have %d days remaining of your trial period." = "Je proefperiode duurt nog %d dagen.";
+
+/* No comment provided by engineer. */
+"Your %@ License" = "Jouw %@-licentie";
+
+/* No comment provided by engineer. */
+"Your order is being processed" = "Je bestelling wordt verwerkt";
+
+/* No comment provided by engineer. */
+"Your order is being processed. You'll receive an email soon." = "Je bestelling wordt verwerkt. Je ontvangt binnenkort een e-mail.";
+
+/* No comment provided by engineer. */
+"Then %@/%ld days" = "Daarna %@/%ld dagen";
+
+/* No comment provided by engineer. */
+"Then %@/%ld months" = "Daarna %@/%ld maanden";
+
+/* No comment provided by engineer. */
+"Then %@/%ld weeks" = "Daarna %@/%ld weken";
+
+/* No comment provided by engineer. */
+"Then %@/%ld years" = "Daarna %@/%ld jaar";
+
+/* No comment provided by engineer. */
+"Then %@/day" = "Daarna %@/dag";
+
+/* No comment provided by engineer. */
+"Then %@/month" = "Daarna %@/maand";
+
+/* No comment provided by engineer. */
+"Then %@/week" = "Daarna %@/week";
+
+/* No comment provided by engineer. */
+"Then %@/year" = "Daarna %@/jaar";
+
+/* No comment provided by engineer. */
+"after %ld days" = "Na %ld dagen";
+
+/* No comment provided by engineer. */
+"after 1 day" = "Na 1 dag";
+
+/* No comment provided by engineer. */
+"License code has already been utilized" = "Licentiecode is al gebruikt";

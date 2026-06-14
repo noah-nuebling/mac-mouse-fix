@@ -1,0 +1,65 @@
+{
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/App/UI/CustomUIElements/PayButton.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/PayButton.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/PayButton.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/PayButton.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/PayButton.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/PayButton.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/Helper/Core/Touch/TouchAnimator.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/TouchAnimator.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/TouchAnimator.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/TouchAnimator.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/TouchAnimator.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/TouchAnimator.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/Shared/License/Retrieve/GetLicenseConfig.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/GetLicenseConfig.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/GetLicenseConfig.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/GetLicenseConfig.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/GetLicenseConfig.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/GetLicenseConfig.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/Shared/Strings/NSAttributedString+Extensions.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/NSAttributedString+Extensions.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/NSAttributedString+Extensions.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/NSAttributedString+Extensions.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/NSAttributedString+Extensions.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/NSAttributedString+Extensions.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/Shared/UI/NSTextField+Extentions.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/NSTextField+Extentions.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/NSTextField+Extentions.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/NSTextField+Extentions.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/NSTextField+Extentions.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/NSTextField+Extentions.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/Shared/UI/UIAnimations/Animate.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/Animate.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/Animate.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/Animate.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/Animate.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/Animate.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/Shared/UI/UIAnimations/ReactiveAnimatorProxy.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/ReactiveAnimatorProxy.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/ReactiveAnimatorProxy.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/ReactiveAnimatorProxy.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/ReactiveAnimatorProxy.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/ReactiveAnimatorProxy.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/Shared/Utility/CoolTimer.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/CoolTimer.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/CoolTimer.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/CoolTimer.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/CoolTimer.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/CoolTimer.swiftdeps"
+  },
+  "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/Shared/Utility/HashablePair.swift" : {
+    "const-values" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/HashablePair.swiftconstvalues",
+    "dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/HashablePair.d",
+    "diagnostics" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/HashablePair.dia",
+    "object" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/HashablePair.o",
+    "swift-dependencies" : "/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/.build/DerivedData/Build/Intermediates.noindex/Mouse Fix.build/Debug/Mac Mouse Fix Helper.build/Objects-normal/arm64/HashablePair.swiftdeps"
+  }
+}

@@ -1,0 +1,201 @@
+/* No comment provided by engineer. */
+"%@ can send me product updates and offers via email. You can opt-out at any time." = "A %@ pode enviar-me ofertas e atualizações sobre produtos por e-mail. Pode cancelar em qualquer altura.";
+
+/* No comment provided by engineer. */
+"%@%% off!" = "%@%% de desconto!";
+
+/* No comment provided by engineer. */
+"A valid license code is required. Please try again." = "É necessário um código de licença válido. Tente novamente.";
+
+/* No comment provided by engineer. */
+"Activate" = "Ativar";
+
+/* No comment provided by engineer. */
+"Activate License" = "Ativar licença";
+
+/* No comment provided by engineer. */
+"Already purchased a license? Fill in the form below and activate %@ instantly." = "Já adquiriu uma licença? Preencha o formulário abaixo e ative o %@ de forma instantânea.";
+
+/* No comment provided by engineer. */
+"Buy Now" = "Adquira já!";
+
+/* No comment provided by engineer. */
+"By %@" = "Por %@";
+
+/* No comment provided by engineer. */
+"Cancel" = "Cancelar";
+
+/* No comment provided by engineer. */
+"Close" = "Fechar";
+
+/* No comment provided by engineer. */
+"Continue Trial" = "Continuar avaliação";
+
+/* No comment provided by engineer. */
+"Deactivating License" = "A desativar licença...";
+
+/* No comment provided by engineer. */
+"Email Address" = "Endereço de e-mail";
+
+/* No comment provided by engineer. */
+"Enter License" = "Introduzir licença";
+
+/* No comment provided by engineer. */
+"Error" = "Erro";
+
+/* No comment provided by engineer. */
+"Join" = "Aderir";
+
+/* No comment provided by engineer. */
+"License Code" = "Código de licença";
+
+/* No comment provided by engineer. */
+"License code has already been used." = "O código de licença já foi utilizado.";
+
+/* No comment provided by engineer. */
+"License code is not active" = "O código de licença não está ativo";
+
+/* No comment provided by engineer. */
+"License does not match product" = "A licença não corresponde ao produto";
+
+/* No comment provided by engineer. */
+"License successfully deactivated" = "Licença desativada com sucesso";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"Order Success" = "Encomenda efetuada com sucesso";
+
+/* No comment provided by engineer. */
+"Please enter the email address used to purchase your license." = "Introduza o endereço de e-mail que usou para adquirir a sua licença.";
+
+/* No comment provided by engineer. */
+"Provided currency is not valid'," = "A moeda fornecida não é válida.";
+
+/* No comment provided by engineer. */
+"Quit" = "Encerrar";
+
+/* No comment provided by engineer. */
+"Recover" = "Recuperar";
+
+/* No comment provided by engineer. */
+"Recover your %@ license" = "Recupere a sua licença do %@";
+
+/* No comment provided by engineer. */
+"Recovering your %@ license" = "A recuperar a sua licença do %@";
+
+/* No comment provided by engineer. */
+"Retry" = "Tente novamente";
+
+/* No comment provided by engineer. */
+"Success" = "Êxito";
+
+/* No comment provided by engineer. */
+"Thank you for trying %@" = "Obrigado por experimentar o %@";
+
+/* No comment provided by engineer. */
+"This copy of %@ is registered with the information below." = "Esta cópia do %@ está registada com a informação abaixo.";
+
+/* No comment provided by engineer. */
+"This license has expired" = "A licença expirou";
+
+/* No comment provided by engineer. */
+"Unable to authenticate, check your SDK API key." = "Não foi possível autenticar. Verifique a sua chave de API do SDK.";
+
+/* No comment provided by engineer. */
+"Unable to find requested activation" = "Não foi possível encontrar a ativação solicitada";
+
+/* No comment provided by engineer. */
+"Unable to find requested product" = "Não foi possível encontrar o produto solicitado";
+
+/* No comment provided by engineer. */
+"Unspecified error, please contact support." = "Erro não especificado. Contacte o serviço de apoio técnico.";
+
+/* No comment provided by engineer. */
+"Use a different email address" = "Usar um endereço de e-mail diferente";
+
+/* No comment provided by engineer. */
+"We were unable to confirm the status of your order" = "Não nos foi possível confirmar o estado da sua encomenda.";
+
+/* No comment provided by engineer. */
+"We were unable to confirm the status of your order. You'll receive an email soon." = "Não nos foi possível confirmar o estado da sua encomenda. Irá receber um e-mail brevemente.";
+
+/* No comment provided by engineer. */
+"We're already checking a license, please wait a moment." = "Já estamos a verificar uma licença. Aguarde um momento...";
+
+/* No comment provided by engineer. */
+"We're already deactivating a license, please wait a moment." = "Já estamos a desativar uma licença. Aguarde um momento...";
+
+/* No comment provided by engineer. */
+"We're unable to find the supplied license key for this product." = "Não nos foi possível encontrar a chave de licença fornecida para este produto.";
+
+/* No comment provided by engineer. */
+"We've sent details of any licenses for %@ to %@" = "Enviámos os detalhes de quaisquer licenças do %@ para %@";
+
+/* No comment provided by engineer. */
+"Welcome to %@!" = "Bem-vindo ao %@!";
+
+/* No comment provided by engineer. */
+"You don't have permission to access this resource" = "Não dispõe de autorização para aceder a este recurso";
+
+/* No comment provided by engineer. */
+"You have %d day remaining of your trial period." = "O seu período de avaliação termina dentro de %d dia.";
+
+/* No comment provided by engineer. */
+"You have %d days remaining of your trial period." = "O seu período de avaliação termina dentro de %d dias.";
+
+/* No comment provided by engineer. */
+"Your %@ License" = "A sua licença do %@";
+
+/* No comment provided by engineer. */
+"Your order is being processed" = "A sua encomenda está a ser processada";
+
+/* No comment provided by engineer. */
+"Your order is being processed. You'll receive an email soon." = "A sua encomenda está a ser processada. Irá receber um e-mail brevemente.";
+
+"Order Complete" = "Pedido Concluído";
+"Thank you for your order, you'll receive an email shortly." = "Obrigado pelo seu pedido. Receberá um email em breve.";
+"Unable to deactivate license. Please try again later." = "Não foi possível desativar a licença. Por favor, tente de novo mais tarde.";
+
+"No Thanks!" = "Não, obrigado!";
+"Send anonymous usage information?" = "Enviar informações de utilização anónima?";
+"Would you like to send anonymous usage information to the developer of %@ to help improve the application?" = "Gostaria de enviar informações de utilização anónimas para o desenvolvedor de %@ para ajudar a melhorar a aplicação?";
+"%@ - Checkout" = "%@ - Pagamento";
+"Forgotten your license key?" = "esqueceu-se da chave da sua licença?";
+"Whoops! Something went wrong." = "Ups! Algo correu mal.";
+"An unexpected error occurred performing this action." = "Ocorreu um erro inesperado ao realizar esta ação.";
+"An Error Occurred" = "Ocorreu um erro";
+
+/* No comment provided by engineer. */
+"Then %@/%ld days" = "Depois, %@/%ld dias";
+
+/* No comment provided by engineer. */
+"Then %@/%ld months" = "Depois, %@/%ld meses";
+
+/* No comment provided by engineer. */
+"Then %@/%ld weeks" = "Depois, %@/%ld semanas";
+
+/* No comment provided by engineer. */
+"Then %@/%ld years" = "Depois, %@/%ld anos";
+
+/* No comment provided by engineer. */
+"Then %@/day" = "Depois, %@/dia";
+
+/* No comment provided by engineer. */
+"Then %@/month" = "Depois, %@/mês";
+
+/* No comment provided by engineer. */
+"Then %@/week" = "Depois, %@/semana";
+
+/* No comment provided by engineer. */
+"Then %@/year" = "Depois, %@/ano";
+
+/* No comment provided by engineer. */
+"after %ld days" = "após %ld dias";
+
+/* No comment provided by engineer. */
+"after 1 day" = "após 1 dia";
+
+/* No comment provided by engineer. */
+"License code has already been utilized" = "O código da licença já foi utilizado";

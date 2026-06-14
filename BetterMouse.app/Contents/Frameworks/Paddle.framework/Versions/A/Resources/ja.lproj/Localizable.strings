@@ -1,0 +1,201 @@
+/* No comment provided by engineer. */
+"%@ can send me product updates and offers via email. You can opt-out at any time." = "%@ から新商品やセールのお知らせのメールを受け取る。これはいつでもお取消しできます。";
+
+/* No comment provided by engineer. */
+"%@%% off!" = "%@%% 割引！";
+
+/* No comment provided by engineer. */
+"A valid license code is required. Please try again." = "有効なライセンスコードが必要です。もう一度トライしてさい。";
+
+/* No comment provided by engineer. */
+"Activate" = "アクティベートする";
+
+/* No comment provided by engineer. */
+"Activate License" = "ライセンスをアクティベートする";
+
+/* No comment provided by engineer. */
+"Already purchased a license? Fill in the form below and activate %@ instantly." = "ライセンスをご購入済みですか？下記のフォームに記入して今すぐ%@を活性化しましょう。";
+
+/* No comment provided by engineer. */
+"Buy Now" = "今すぐ購入する";
+
+/* No comment provided by engineer. */
+"By %@" = "%@ より";
+
+/* No comment provided by engineer. */
+"Cancel" = "キャンセルする";
+
+/* No comment provided by engineer. */
+"Close" = "閉じる";
+
+/* No comment provided by engineer. */
+"Continue Trial" = "お試しを続ける";
+
+/* No comment provided by engineer. */
+"Deactivating License" = "ライセンスをディアクティベート中";
+
+/* No comment provided by engineer. */
+"Email Address" = "メールアドレス";
+
+/* No comment provided by engineer. */
+"Enter License" = "ライセンスを入力";
+
+/* No comment provided by engineer. */
+"Error" = "エラー";
+
+/* No comment provided by engineer. */
+"Join" = "参加する";
+
+/* No comment provided by engineer. */
+"License Code" = "ライセンスコード";
+
+/* No comment provided by engineer. */
+"License code has already been used." = "ライセンスコードは既に使用されています。";
+
+/* No comment provided by engineer. */
+"License code is not active" = "ライセンスコードがアクティベートされていません";
+
+/* No comment provided by engineer. */
+"License does not match product" = "ライセンスに合う商品がありません";
+
+/* No comment provided by engineer. */
+"License successfully deactivated" = "ライセンスはディアクティベートされました";
+
+/* No comment provided by engineer. */
+"OK" = "了解";
+
+/* No comment provided by engineer. */
+"Order Success" = "ご注文が完了しました";
+
+/* No comment provided by engineer. */
+"Please enter the email address used to purchase your license." = "ライセンスご購入時のメールアドレスを入力して下さい。";
+
+/* No comment provided by engineer. */
+"Provided currency is not valid'," = "お使いになった通貨は有効ではありません";
+
+/* No comment provided by engineer. */
+"Quit" = "終了する";
+
+/* No comment provided by engineer. */
+"Recover" = "復元する";
+
+/* No comment provided by engineer. */
+"Recover your %@ license" = "お持ちの %@ のライセンスを復元する";
+
+/* No comment provided by engineer. */
+"Recovering your %@ license" = "お客様の %@ のライセンスを復元中";
+
+/* No comment provided by engineer. */
+"Retry" = "再トライする";
+
+/* No comment provided by engineer. */
+"Success" = "成功しました";
+
+/* No comment provided by engineer. */
+"Thank you for trying %@" = "%@ をお試し頂き、ありがとうございます";
+
+/* No comment provided by engineer. */
+"This copy of %@ is registered with the information below." = "%@ のコピーは、下記の情報をもって登録されています。";
+
+/* No comment provided by engineer. */
+"This license has expired" = "このライセンスは期限切れです";
+
+/* No comment provided by engineer. */
+"Unable to authenticate, check your SDK API key." = "認証できませんでした。お客さまのSDKのAPIキーをご確認下さい。";
+
+/* No comment provided by engineer. */
+"Unable to find requested activation" = "ご要望のアクティベーションが見つかりません";
+
+/* No comment provided by engineer. */
+"Unable to find requested product" = "お探しの商品が見つかりません";
+
+/* No comment provided by engineer. */
+"Unspecified error, please contact support." = "不確定エラー発生のため、サポートにお問い合わせ下さい。";
+
+/* No comment provided by engineer. */
+"Use a different email address" = "別のメールアドレスを使う";
+
+/* No comment provided by engineer. */
+"We were unable to confirm the status of your order" = "ご注文状況が確認できませんでした";
+
+/* No comment provided by engineer. */
+"We were unable to confirm the status of your order. You'll receive an email soon." = "ご注文状況を確認できませんでした。まもなくメールを送信します。";
+
+/* No comment provided by engineer. */
+"We're already checking a license, please wait a moment." = "ライセンスの照合中ですので、少々お待ち下さい。";
+
+/* No comment provided by engineer. */
+"We're already deactivating a license, please wait a moment." = "ライセンスをディアクティベート中ですので、少々お待ち下さい。";
+
+/* No comment provided by engineer. */
+"We're unable to find the supplied license key for this product." = "この商品用に頂いたライセンスキーが見つかりません。";
+
+/* No comment provided by engineer. */
+"We've sent details of any licenses for %@ to %@" = "%@ の全種ライセンスの詳細は %@ に送付しました";
+
+/* No comment provided by engineer. */
+"Welcome to %@!" = "%@ へようこそ！";
+
+/* No comment provided by engineer. */
+"You don't have permission to access this resource" = "このリソースにアクセスする許可をお持ちではありません";
+
+/* No comment provided by engineer. */
+"You have %d day remaining of your trial period." = "お試し期間が終了するまであと %d 日です。";
+
+/* No comment provided by engineer. */
+"You have %d days remaining of your trial period." = "お試し期間が終了するまであと %d 日です。";
+
+/* No comment provided by engineer. */
+"Your %@ License" = "お持ちの %@ のライセンス";
+
+/* No comment provided by engineer. */
+"Your order is being processed" = "ご注文を処理中です";
+
+/* No comment provided by engineer. */
+"Your order is being processed. You'll receive an email soon." = "ご注文を処理中です。まもなくメールを送信します。";
+
+"Order Complete" = "注文完了";
+"Thank you for your order, you'll receive an email shortly." = "ご注文ありがとうございます。まもなくメールが届きます。";
+"Unable to deactivate license. Please try again later." = "ライセンスを非アクティブ化できません。しばらくたってから、再度お試しください。";
+
+"No Thanks!" = "結構です!";
+"Send anonymous usage information?" = "匿名で使用情報を送信しますか？";
+"Would you like to send anonymous usage information to the developer of %@ to help improve the application?" = "本アプリケーションの改善のため、％@の開発者に匿名で使用情報を送信することをご希望ですか？";
+"%@ - Checkout" = "%@ - 精算";
+"Forgotten your license key?" = "ライセンスキーをお忘れの場合";
+"An Error Occurred" = "エラー発生";
+"An unexpected error occurred performing this action." = "この操作の実行中に予期しないエラーが発生しました。";
+"Whoops! Something went wrong." = "エラーが発生しました。";
+
+/* No comment provided by engineer. */
+"Then %@/%ld days" = "その後、%@/%ld日";
+
+/* No comment provided by engineer. */
+"Then %@/%ld months" = "それ以降 %@/%ld ヶ月ごと";
+
+/* No comment provided by engineer. */
+"Then %@/%ld weeks" = "それ以降 %@/%ld 週間ごと";
+
+/* No comment provided by engineer. */
+"Then %@/%ld years" = "それ以降 %@/%ld 年ごと";
+
+/* No comment provided by engineer. */
+"Then %@/day" = "その後 %@/日";
+
+/* No comment provided by engineer. */
+"Then %@/month" = "その後 %@/月";
+
+/* No comment provided by engineer. */
+"Then %@/week" = "その後 %@/週";
+
+/* No comment provided by engineer. */
+"Then %@/year" = "その後 %@/年";
+
+/* No comment provided by engineer. */
+"after %ld days" = "%ld 日後";
+
+/* No comment provided by engineer. */
+"after 1 day" = "1日後";
+
+/* No comment provided by engineer. */
+"License code has already been utilized" = "ライセンスコードはすでに利用されています";

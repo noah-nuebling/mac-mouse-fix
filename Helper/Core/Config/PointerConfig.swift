@@ -41,13 +41,13 @@ class PointerConfig: NSObject {
 
     /// Reload from config dict
     @objc static func reload() {
-        // TODO: Delete caches (if you use any)
+        PointerSpeed.setForAllDevices()
     }
     
     /// Get pointer settings from config
     
     @objc private static var config: NSDictionary {
-        Config.shared().configWithAppOverridesApplied[kMFConfigKeyPointer] as! NSDictionary
+        (Config.shared.configWithAppOverridesApplied ?? Config.shared.config)[kMFConfigKeyPointer] as! NSDictionary
     }
     
     /// User settings
@@ -92,6 +92,26 @@ class PointerConfig: NSObject {
     
     // MARK: Sensitivity
     
+    @objc static var hasSavedLogitechDPI: Bool {
+        if let dpiNum = config["logitechDPI"] as? NSNumber {
+            return dpiNum.intValue > 0
+        }
+        if let dpiInt = config["logitechDPI"] as? Int {
+            return dpiInt > 0
+        }
+        return false
+    }
+    
+    @objc static var logitechDPI: Double {
+        if let dpiNum = config["logitechDPI"] as? NSNumber {
+            return dpiNum.doubleValue
+        }
+        if let dpiInt = config["logitechDPI"] as? Int {
+            return Double(dpiInt)
+        }
+        return 1000.0 // Default fallback
+    }
+    
     @objc static var CPIMultiplier: Double {
         
         let sens = 1.0
@@ -102,20 +122,49 @@ class PointerConfig: NSObject {
     
     // MARK: Speed curve
     
+    private static let sensitivitySliderCurve = CombinedLinearCurve(yValues: [0.5, 0.75, 1.0, 1.5, 2.0])
+    
     /// Constants
-    @objc static var useParametricCurve: Bool = false /// Switch between table-based and parametric curve. Once parametric has been used you can't switch back until you detach the device.
+    @objc static var useParametricCurve: Bool {
+        if #available(macOS 13.0, *) {
+            return true
+        }
+        return false
+    }
     
     /// User defined params
-    @objc static var u_speed: Double = 0.5
-    @objc static var u_complexSettings: Bool = false /// Switch nbetwee using just `u_speed` or the fine-grained params below
-    @objc static var u_minSens: Double = 1.0
-    @objc static var u_maxSens: Double = 0.5
-    @objc static var u_curvature: Double = 0.5
-    @objc static var u_turnOffAcceleration: Bool = false
-    @objc static var u_unacceleratedSens: Double = 1.0
+    @objc static var u_speed: Double {
+        let sens = config["sensitivity"] as? Double ?? 1.0
+        return sensitivitySliderCurve.evaluate(atY: sens)
+    }
+    @objc static var u_complexSettings: Bool {
+        return false
+    }
+    @objc static var u_minSens: Double {
+        return 1.0
+    }
+    @objc static var u_maxSens: Double {
+        return 0.5
+    }
+    @objc static var u_curvature: Double {
+        return 0.5
+    }
+    @objc static var u_turnOffAcceleration: Bool {
+        let acc = config["acceleration"] as? Double ?? 0.6875
+        return acc == 0.0
+    }
+    @objc static var u_unacceleratedSens: Double {
+        let sens = config["sensitivity"] as? Double ?? 1.0
+        return sensitivitySliderCurve.evaluate(atY: sens)
+    }
     
     /// Generate curves
     @objc static var tableBasedCurve: [[Double]] {
+        return tableBasedCurve(ignoreSensitivity: false, isLogitechDPI: false)
+    }
+
+    @objc(tableBasedCurveWithIgnoreSensitivity:isLogitechDPI:)
+    static func tableBasedCurve(ignoreSensitivity: Bool, isLogitechDPI: Bool) -> [[Double]] {
         
         /// Debug - test mouse speed
 //        let testCurve = TestAccelerationCurve(thresholdSpeed: 3.0, firstSens: 0.0, secondSens: 2.0)
@@ -147,6 +196,10 @@ class PointerConfig: NSObject {
         let lowSensMap3 = CombinedLinearCurve(yValues: [2.0, 3.0, 4.0])
         /// Meta map
         
+        let u_sens = ignoreSensitivity ? 1.0 : (config["sensitivity"] as? Double ?? 1.0)
+        let u_speed = sensitivitySliderCurve.evaluate(atY: u_sens)
+        let u_unacceleratedSens = sensitivitySliderCurve.evaluate(atY: u_sens)
+
         /// Get curve params from user params
         if !u_complexSettings { /// Simple settings
             let speed = speedMetaMap.evaluate(atX: u_speed)
@@ -204,82 +257,53 @@ class PointerConfig: NSObject {
         /// Do Polling rate compensation
         trace = trace.map{ p in [p[0], p[1] / pollingRateRatio] }
         
+        if isLogitechDPI {
+            let scale = PointerConfig.logitechDPI / 400.0
+            trace = trace.map { p in [p[0], p[1] * scale] }
+        }
+        
         return trace
     }
     
     @objc static var parametricCurve: MFAppleAccelerationCurveParams {
+        return parametricCurve(ignoreSensitivity: false, isLogitechDPI: false)
+    }
+
+    @objc(parametricCurveWithIgnoreSensitivity:isLogitechDPI:)
+    static func parametricCurve(ignoreSensitivity: Bool, isLogitechDPI: Bool) -> MFAppleAccelerationCurveParams {
         /// See "Gain Curve Math.tex" and PointerSpeed class for context
         
-        let multiplier = 1.0
-        
-        /**
-         Notes on highSpeed and lowSpeed:
-            lowSpeed should be chosen so that lowSens is independent of other params (Not sure that's possible)
-            highSpeed should be chosen so that it's the largest speed you can consiouscly input and differentiate from other speeds.
-                - This seems to be 7.0.
-                - When curvature is 1.0, it also makes sense to lower highSpeed to increase curvature even more. Then you can lower lowSens, while maintaining the same "mediumSens". But I feel that makes the curve less predictable somehow.
-         */
+        let multiplier = ignoreSensitivity ? 1.0 : (config["sensitivity"] as? Double ?? 1.0)
+        let accValue = config["acceleration"] as? Double ?? 0.6875
         
         let lowSpeed = 0.2
         let highSpeed = 7.0
         
-        var lowSens: Double
+        var lowSens = 3.0
         var highSens: Double
 
-        /**
-         Notes on curvature:
-            Larger Curvature:
-                -> Bigger sens at medium speeds -> Less corrections and more comfort while tracking
-                -> Smaller sens at small speeds -> Still able to make micromovements for selecting text
-         */
-        
         let curvature = 1.0
         let useSmoothCurvature = false
         
-        /**
-         Notes on sens:
-            Larger Sens -> Less corrections while tracking
-            4.5 largest sens that still allows comfortably selecting an 'I'
-                (With curvature 1.0. Should be independent but at this point it's not)
-            4.5 is stretching it a little. Even 3.5. is a little finicky.
-         */
-        
-        switch semanticSensitivity {
-        case .test:
-            lowSens = 4.5 /*4.7*/
-        case .low:
-            lowSens = 2.0
-        case .medium:
-            lowSens = 3.0
-        case .high:
-            lowSens = 4.5
-        }
-        
-        /**
-         Notes on acc: (with curvature 1.0 and lowSens 4.5)
-            Smaller Acc -> Less corrections while tracking
-            10 -> Great accuracy, but little tedius
-            13.5 -> Feels great. `3 * lowSens`.
-            20 -> Veryyyy slightly less accuracy. Great comfort
-            30 -> Starting to lose accuracy
-         */
-        
-        switch semanticAcceleration {
-        case .test:
-            highSens = 20.0
-        case .off:
-            lowSens *= 2
+        if accValue == 0.0 { // off
+            lowSens = 6.0
             highSens = lowSens
-        case .low:
-            highSens = 15
-        case .medium:
-            highSens = 18
-        case .high:
-            highSens = 20
+        } else if accValue <= 0.25 { // low
+            highSens = 15.0
+        } else if accValue <= 0.6875 { // medium
+            highSens = 18.0
+        } else { // high
+            highSens = 20.0
         }
         
         lowSens *= multiplier
         highSens *= multiplier
+
+        if isLogitechDPI {
+            let scale = PointerConfig.logitechDPI / 400.0
+            lowSens *= scale
+            highSens *= scale
+        }
 
         return sensitivityBasedAccelCurve(lowSpeed: lowSpeed, lowSens: lowSens, highSpeed: highSpeed, highSens: highSens, curvature: curvature, useSmoothCurvature: useSmoothCurvature)
     }
@@ -375,7 +399,7 @@ class PointerConfig: NSObject {
     // MARK: - Master switch
     
     @objc static var useSystemSpeed: Bool {
-        return false
+        return config["useSystemAcceleration"] as? Bool ?? false
     }
     @objc static var systemSensitivity: Double  = 1.0
     @objc static var systemAccelCurveIndex: Double {

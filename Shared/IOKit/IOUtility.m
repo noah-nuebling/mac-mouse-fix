@@ -12,6 +12,7 @@
 @implementation IOUtility
 
 + (void)iterateParentsOfEntry:(io_registry_entry_t)entry forEach:(Boolean (^)(io_registry_entry_t))workload {
+    if (entry == 0) return;
     
     /// This function calls `workload` with self and every parent, including parents of parents.
     /// The `workload` block can return false to stop iteration, (e.g. when it's found what it's searching for) otherwise it should return true.
@@ -84,6 +85,7 @@ clean_up:
 }
 
 + (io_registry_entry_t)createChildOfRegistryEntry:(io_registry_entry_t)entry withName:(NSString *)name {
+    if (entry == 0) return 0;
     ///
     /// TODO: Don't use IORegistryEntryGetPath(). Use kIORegistryEntryIDKey or IORegistryEntryCopyPath().
     ///
@@ -108,7 +110,9 @@ clean_up:
     }
     IOObjectRelease(iterator);
     
-    assert(childEntryFound);
+    if (!childEntryFound) {
+        return 0;
+    }
     
     return childEntry;
 }

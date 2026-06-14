@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>accessibility.settings-link.pre-ventura</key>
+	<string>Mở thiết lập 'Security &amp; Privacy'</string>
+	<key>already-using-defaults-toast.3</key>
+	<string>Bạn **đã và đang sử dụng** thiết lập mặc định với chuột __3 nút__</string>
+	<key>already-using-defaults-toast.5</key>
+	<string>Bạn **đã và đang sử dụng** thiết lập mặc định với chuột **5+ nút**</string>
+	<key>app-version</key>
+	<string>Phiên bản %@</string>
+	<key>apple-key-fallback.backward</key>
+	<string>&lt;Phím tua ngược&gt;</string>
+	<key>apple-key-fallback.capslock</key>
+	<string>⇪</string>
+	<key>apple-key-fallback.forward</key>
+	<string>&lt;Phím tua nhanh&gt;</string>
+	<key>apple-key-fallback.globe</key>
+	<string>&lt;Phím chọn emoji&gt;</string>
+	<key>apple-key-fallback.light.max</key>
+	<string>&lt;Phím tăng độ sáng bàn phím&gt;</string>
+	<key>apple-key-fallback.light.min</key>
+	<string>&lt;Phím giảm độ sáng bàn phím&gt;</string>
+	<key>apple-key-fallback.magnifyingglass</key>
+	<string>&lt;Phím Spotlight&gt;</string>
+	<key>apple-key-fallback.mic</key>
+	<string>&lt;Phím chính tả&gt;</string>
+	<key>apple-key-fallback.moon</key>
+	<string>&lt;Phím không làm phiền&gt;</string>
+	<key>apple-key-fallback.playpause</key>
+	<string>&lt;Phím phát hoặc dừng&gt;</string>
+	<key>apple-key-fallback.power</key>
+	<string>&lt;Phím nguồn&gt;</string>
+	<key>apple-key-fallback.rectangle.3.group</key>
+	<string>&lt;Phím điều khiển nhiệm vụ&gt;</string>
+	<key>apple-key-fallback.speaker</key>
+	<string>&lt;Phím câm&gt;</string>
+	<key>apple-key-fallback.speaker.wave.1</key>
+	<string>&lt;Phím giảm âm lượng&gt;</string>
+	<key>apple-key-fallback.speaker.wave.3</key>
+	<string>&lt;Phím tăng âm lượng&gt;</string>
+	<key>apple-key-fallback.square.grid.3x2</key>
+	<string>&lt;Phím Launchpad&gt;</string>
+	<key>apple-key-fallback.sun.max</key>
+	<string>&lt;Phím tăng độ sáng&gt;</string>
+	<key>apple-key-fallback.sun.min</key>
+	<string>&lt;Phím giảm độ sáng&gt;</string>
+	<key>apple-key-fallback.unknown-key</key>
+	<string>&lt;Phím không có mô tả&gt;</string>
+	<key>beta-alert.back</key>
+	<string>Hủy</string>
+	<key>beta-alert.body</key>
+	<string>Phiên bản Beta có thể có nhiều lỗi
+Đừng quên báo cáo các sự cố nếu bạn gặp nhé.
+Cảm ơn bạn!</string>
+	<key>beta-alert.confirm</key>
+	<string>Nhận bản Beta</string>
+	<key>beta-alert.title</key>
+	<string>Nhận bản Beta?</string>
+	<key>button-name.tool.numbered</key>
+	<string>Nút chuột %@</string>
+	<key>buy-mouse-alert.body</key>
+	<string>Sắm một con chuột với 5+ nút để khai thác hết tiềm năng của Mac Mouse Fix!</string>
+	<key>buy-mouse-alert.ok</key>
+	<string>Đồng ý</string>
+	<key>buy-mouse-alert.title</key>
+	<string>Chuột của bạn chỉ có 3 nút</string>
+	<key>capture-toast.button-name.middle</key>
+	<string>Nút giữa</string>
+	<key>capture-toast.button-name.numbered</key>
+	<string>Nút %@</string>
+	<key>capture-toast.button-name.primary</key>
+	<string>Nút chính</string>
+	<key>capture-toast.button-name.secondary</key>
+	<string>Nút phụ</string>
+	<key>capture-toast.buttons.link</key>
+	<string>[Đọc thêm](%@)</string>
+	<key>capture-toast.scroll.link</key>
+	<string>[Đọc thêm](%@)</string>
+	<key>drag-effect.dock-swipe</key>
+	<string>Spaces &amp; Mission Control</string>
+	<key>drag-effect.dock-swipe.hint</key>
+	<string>Di chuyển chuột:
+ - Hướng lên để truy cập Mission Control
+ - Hướng xuống để truy cập Application Windows
+ - Qua trái hoặc phải để di chuyển giữa các Spaces
+ 
+Hoạt động như vuốt 3 ngón tay trên Apple Trackpad</string>
+	<key>drag-effect.scroll-swipe</key>
+	<string>Cuộn &amp; Điều hướng</string>
+	<key>drag-effect.scroll-swipe.hint</key>
+	<string>Lăn tự do bằng cách di chuyển chuột theo các hướng bất kỳ
+ 
+Cũng có thể điều hướng giữa các trang trong Safari, xóa các mẫu tin trong Mail và nhiều thứ khác bằng cách di chuyển chuột qua trái hoặc phải. 
+ 
+Hoạt động như vuốt 2 ngón tay trên Apple Trackpad</string>
+	<key>effect.app-expose</key>
+	<string>Duyệt các ứng dụng đang mở</string>
+	<key>effect.app-expose.hint</key>
+	<string>Hiện các cửa sổ của tất cả ứng dụng đang hoạt động</string>
+	<key>effect.apple-keys-submenu</key>
+	<string> Các phím độc quyền</string>
+	<key>effect.apple-keys-submenu.hint</key>
+	<string>Chọn các phím chỉ khả dụng trên Apple keyboard</string>
+	<key>effect.apple-shortcut.hint</key>
+	<string>Hoạt động như nhấn phím '%@' trên Apple keyboard</string>
+	<key>effect.back</key>
+	<string>Quay lại</string>
+	<key>effect.back.hint</key>
+	<string>Quay ngược lại một trang trong Safari hoặc các ứng dụng khác</string>
+	<key>effect.click.middle</key>
+	<string>Kích chuột giữa</string>
+	<key>effect.click.middle.hint</key>
+	<string>Mở liên kết trong thẻ mới, dán chữ vào Terminal, và nhiều hơn.
+ 
+Hoạt động như kích vào nút Nút giữa (còn gọi là Con lăn hoặc Nút số 3) trên chuột.</string>
+	<key>effect.click.primary</key>
+	<string>Kích nút chính</string>
+	<key>effect.click.primary.hint</key>
+	<string>Hoạt động như kích vào nút Nút chính (còn gọi là Nút chuột trái hoặc Nút số 1) trên chuột.</string>
+	<key>effect.click.secondary</key>
+	<string>Kích nút phụ</string>
+	<key>effect.click.secondary.hint</key>
+	<string>Hoạt động như kích vào nút Nút phụ (còn gọi là Nút chuột phải hoặc Nút số 2) trên chuột.</string>
+	<key>effect.desktop</key>
+	<string>Hiện Màn hình nền</string>
+	<key>effect.desktop.hint</key>
+	<string>Hiển thị Màn hình nền</string>
+	<key>effect.forward</key>
+	<string>Tiến tới</string>
+	<key>effect.forward.hint</key>
+	<string>Tiến tới một trang trong Safari và các ứng dụng khác</string>
+	<key>effect.launchpad</key>
+	<string>Launchpad</string>
+	<key>effect.launchpad.hint</key>
+	<string>Duyệt danh sách ứng dụng ở Launchpad</string>
+	<key>effect.left-space</key>
+	<string>Chuyển sang Space bên trái</string>
+	<key>effect.left-space.hint</key>
+	<string>Di chuyển sang Space bên trái</string>
+	<key>effect.look-up</key>
+	<string>Tra cứu &amp; Xem nhanh</string>
+	<key>effect.look-up.hint</key>
+	<string>Tra cứu từ trong Dictionary, xem nhanh tệp trong Finder, và nhiều hơn.
+ 
+Hoạt động như nhấn, kèm lực trên Apple Trackpad.</string>
+	<key>effect.mission-control</key>
+	<string>Mission Control</string>
+	<key>effect.mission-control.hint</key>
+	<string>Quản lý các ứng dụng đang mở bằng Mission Control</string>
+	<key>effect.record-shortcut</key>
+	<string>Tổ hợp phím tắt...</string>
+	<key>effect.record-shortcut.hint</key>
+	<string>Gõ tổ hợp phím tắt trên bàn phím, sau đó sử dụng nó từ chuột</string>
+	<key>effect.right-space</key>
+	<string>Chuyển sang Space bên phải</string>
+	<key>effect.right-space.hint</key>
+	<string>Di chuyển sang Space bên phải</string>
+	<key>effect.shortcut.hint</key>
+	<string>Hoạt động như kích vào phím '%@' trên bàn phím</string>
+	<key>effect.smart-zoom</key>
+	<string>Thu phóng thông minh</string>
+	<key>effect.smart-zoom.hint</key>
+	<string>Phóng to hoặc thu nhỏ trong Safari và các ứng dụng khác.
+ 
+Hoạt động như nhấp bằng hai ngón tay trên Apple Trackpad.</string>
+	<key>forbidden-capture-toast.1</key>
+	<string>**Nút chính** không thể được áp dụng
+Vui lòng chọn một nút khác</string>
+	<key>forbidden-capture-toast.2</key>
+	<string>**Nút phụ** không thể được áp dụng
+Vui lòng chọn một nút khác</string>
+	<key>free-country</key>
+	<string>Mac Mouse Fix đang miễn phí tại quốc gia của bạn (%@)</string>
+	<key>is-disabled-toast</key>
+	<string>Mac Mouse Fix đã **tắt** trong System Settings
+
+Để mở lại Mac Mouse Fix:
+
+1. Đi đến [Login Items Settings](%@)
+2. Bật 'Mac Mouse Fix.app'</string>
+	<key>is-strange-helper-alert.body</key>
+	<string>Mac Mouse Fix bật lên thất bại vì có **một phiên bản khác** của Mac Mouse Fix đang chạy
+
+Để bật Mac Mouse Fix:
+
+1. Xóa [phiên bản khác](%@)
+2. Làm trống thùng rác
+3. Khởi động lại máy Mac
+4. Thử lại!</string>
+	<key>is-strange-helper-alert.title</key>
+	<string>Bật thất bại</string>
+	<key>join-list</key>
+	<string>, </string>
+	<key>join-list.last</key>
+	<string>%1$@ và %2$@</string>
+	<key>license-button.activate</key>
+	<string>Kích hoạt bản quyền</string>
+	<key>license-button.deactivate</key>
+	<string>Bất hoạt bản quyền</string>
+	<key>license-toast.activate</key>
+	<string>Bản quyền của bạn đã được **kích hoạt**! 🎉</string>
+	<key>license-toast.activation-overload</key>
+	<string>Bản quyền này đã được kích hoạt **%2$d** lượt. Số lượt tối đa **%3$d**.
+
+Vì vậy, bản quyền này không hợp lệ để tránh bị lợi dụng. Nếu bạn có lý do về việc kích hoạt quá nhiều lượt, hãy [liên hệ](%1$@), tôi sẽ cung cấp một khóa kích hoạt mới.
+Xin lỗi về sự bất tiện này, mong bạn thông cảm.</string>
+	<key>license-toast.already-active</key>
+	<string>Bản quyền này đã được **kích hoạt từ trước**!</string>
+	<key>license-toast.deactivate</key>
+	<string>Bản quyền của bạn đã **bất hoạt** thành công</string>
+	<key>license-toast.free-country</key>
+	<string>Bản quyền này **không thể được kích hoạt** nhưng Mac Mouse Fix đang **miễn phí tại quốc gia của bạn**!</string>
+	<key>license-toast.gumroad-error</key>
+	<string>**Có lỗi xảy ra với máy chủ quản lý bản quyền**
+
+Nó phản hồi rằng:
+
+%@</string>
+	<key>license-toast.no-internet</key>
+	<string>**Hiện không có kết nối internet**
+
+Thử kích hoạt bản quyền của bạn khi kết nối khả dụng.</string>
+	<key>license-toast.unknown-error</key>
+	<string>**Một lỗi không rõ đã xảy ra:**
+
+%@</string>
+	<key>license-toast.unknown-key</key>
+	<string>Không thể xác định '**%@**' là một khóa kích hoạt
+
+Vui lòng thử một khóa khác</string>
+	<key>license-toast.unknown-reason</key>
+	<string>Kích hoạt thất bạn do một **lỗi không xác định**
+
+Vui lòng gửi một **Báo cáo lỗi** [tại đây](%@)</string>
+	<key>macos-scrolling-hint</key>
+	<string>Thiết lập tốc độ tại 
+[%1$@ &gt; Chuột &gt; Tốc độ di chuyển](%2$@)</string>
+	<key>mail-alert.back</key>
+	<string>Quay lại</string>
+	<key>mail-alert.body</key>
+	<string>Tôi sẽ đọc và trân trọng tất cả các email gửi về, mặc dù có thể tôi sẽ không phản hồi tất cả</string>
+	<key>mail-alert.send</key>
+	<string>Viết Email</string>
+	<key>mail-alert.title</key>
+	<string>Gửi email cho tôi?</string>
+	<key>modifer-key.tool.command</key>
+	<string>Command (⌘)</string>
+	<key>modifer-key.tool.control</key>
+	<string>Control (^)</string>
+	<key>modifer-key.tool.option</key>
+	<string>Option (⌥)</string>
+	<key>modifer-key.tool.shift</key>
+	<string>Shift (⇧)</string>
+	<key>natural-scrolling-hint</key>
+	<string>Nội dung di chuyển theo hướng ngón tay của bạn</string>
+	<key>precise-scrolling-hint</key>
+	<string>Cuộn chính xác, dù không kèm theo một phím bổ sung,
+bằng cách di chuyện con lăn *thật chậm*</string>
+	<key>restore-buttons-alert.back</key>
+	<string>Hủy</string>
+	<key>restore-buttons-alert.commit</key>
+	<string>Khôi phục</string>
+	<key>restore-buttons-alert.hint</key>
+	<string>Chuột **%1$@** của bạn có **%2$d** nút</string>
+	<key>restore-buttons-alert.radio1</key>
+	<string>Chuột với 3 nút</string>
+	<key>restore-buttons-alert.radio2</key>
+	<string>Chuột với 5+ nút</string>
+	<key>restore-buttons-alert.title</key>
+	<string>Khôi phục mặc định cho ...</string>
+	<key>restore-default-buttons-popover.body</key>
+	<string>**Nhấp vào đây** để tải cài đặt khuyến nghị
+cho chuột **%@**</string>
+	<key>revive-toast</key>
+	<string>**Đã kích hoạt** Mac Mouse Fix trong %1$@
+Nó đã bị bất hoạt từ thanh menu %2$@</string>
+	<key>revive-toast.feature-buttons</key>
+	<string>**Nút**</string>
+	<key>revive-toast.feature-scrolling</key>
+	<string>**Cuộn**</string>
+	<key>scroll-effect.4-pinch</key>
+	<string>Desktop &amp; Launchpad</string>
+	<key>scroll-effect.4-pinch.hint</key>
+	<string>Cuộn lên để hiện Launchpad và  xuống để hiện Desktop
+ 
+Hoạt động như chụm bốn ngón tay trên Apple Trackpad</string>
+	<key>scroll-effect.app-switcher</key>
+	<string>Chuyển ứng dụng</string>
+	<key>scroll-effect.app-switcher.hint</key>
+	<string>Nhanh chóng chuyển đổi giữa các ứng dụng đang mở
+ 
+Hoạt động như giữ phím Command (⌘) và nhấn Tab (⇥) trên bàn phím</string>
+	<key>scroll-effect.horizontal</key>
+	<string>Cuộn ngang</string>
+	<key>scroll-effect.horizontal.hint</key>
+	<string>Cuộn trái và phải, điều hướng giữa các trang của Safari, xóa các mẫu tin trong Mail, và nhiều hơn.
+ 
+Hoạt động như vuốt ngang hai ngón tay trên Apple Trackpad</string>
+	<key>scroll-effect.precise</key>
+	<string>Cuộn tỉ mỉ</string>
+	<key>scroll-effect.precise.hint</key>
+	<string>Cho phép thao tác chính xác các thành phần trên các giao diện nhạy cảm bằng cách cuộn với khoảng cách ngắn.</string>
+	<key>scroll-effect.rotate</key>
+	<string>Xoay</string>
+	<key>scroll-effect.rotate.hint</key>
+	<string>Xoay nội dung trên Apple Maps and và các ứng dụng khác
+ 
+Hoạt động như vặn hai ngón tay trên Apple Trackpad</string>
+	<key>scroll-effect.spaces</key>
+	<string>Di chuyển giữa các Spaces</string>
+	<key>scroll-effect.spaces.hint</key>
+	<string>Cuộn lên để di chuyển qua Space bên trái và xuống để di chuyển qua Space bên phải
+ 
+Hoạt động như vuốt ngang ba ngón tay trên Apple Trackpad</string>
+	<key>scroll-effect.swift</key>
+	<string>Cuộn nhanh</string>
+	<key>scroll-effect.swift.hint</key>
+	<string>Cuộn nhanh một khoảng dài lên đầu trang hoặc cuối trang</string>
+	<key>scroll-effect.zoom</key>
+	<string>Phòng to hoặc thu nhỏ</string>
+	<key>scroll-effect.zoom.hint</key>
+	<string>Phóng to hoặc thu nhỏ trên Safari, Maps và các ứng dụng khác
+ 
+Hoạt động như chụm hai ngón tay để phóng to trên Apple trackpad</string>
+	<key>system-settings-name</key>
+	<string>Cài đặt hệ thống</string>
+	<key>system-settings-name.pre-ventura</key>
+	<string>Cài đặt hệ thống</string>
+	<key>thanks.01</key>
+	<string>⭐️ Cảm ơn bạn đã mua Mac Mouse Fix!</string>
+	<key>thanks.02</key>
+	<string>🌟 Cảm ơn bạn đã mua Mac Mouse Fix!</string>
+	<key>thanks.03</key>
+	<string>🚀 Cảm ơn bạn đã ủng hộ Mac Mouse Fix!</string>
+	<key>thanks.04</key>
+	<string>🙌 Cảm ơn bạn đã mua Mac Mouse Fix!</string>
+	<key>thanks.05</key>
+	<string>🧠 Quả là một sự lựa chọn khôn ngoan! ;)</string>
+	<key>thanks.06</key>
+	<string>🔥 Ứng cử viên tuyệt vời trong những phần mềm điều chỉnh chuột! ;)</string>
+	<key>thanks.09</key>
+	<string>👽 Chia sẻ nó với 500 anh em của bạn ngoài kia!</string>
+	<key>thanks.10</key>
+	<string>🏂 Phê chữ ê kéo dàiiiii!!</string>
+	<key>thanks.13</key>
+	<string>🐹 Bé chuột này sẽ cần một chiếc nơ đấy</string>
+	<key>thanks.21</key>
+	<string>🐠 Bạn... là... ai?</string>
+	<key>thanks.25</key>
+	<string>🌏 Sửa xong con chuột, anh sau đi cứu thế giới! &gt;:)</string>
+	<key>trial-counter.active</key>
+	<string>Bạn đang dùng thử miễn phí **%1$d/%2$d** ngày</string>
+	<key>trial-counter.expired</key>
+	<string>Hết hạn dùng thử</string>
+	<key>trial-notif.activate-license-button</key>
+	<string>Kích hoạt bản quyền</string>
+	<key>trial-notif.body</key>
+	<string>Xin chào! Bạn đã sử dụng Mac Mouse Fix được **%1$d ngày**. Mong rằng bạn sẽ thích nó!
+
+Nếu bạn muốn tiếp tục sử dụng Mac Mouse Fix, bạn có thể [mua ngay](%2$@).</string>
+	<key>trigger.substring.button-modifier.1</key>
+	<string>Kích %@ +</string>
+	<key>trigger.substring.button-modifier.2</key>
+	<string>Kích đúp %@ +</string>
+	<key>trigger.substring.button-modifier.3</key>
+	<string>Kích ba lần %@ +</string>
+	<key>trigger.substring.button-name.middle</key>
+	<string>Nút giữa</string>
+	<key>trigger.substring.button-name.numbered</key>
+	<string>Nút %@</string>
+	<key>trigger.substring.button-name.primary</key>
+	<string>Nút chính</string>
+	<key>trigger.substring.button-name.secondary</key>
+	<string>Nút phụ</string>
+	<key>trigger.substring.click.1</key>
+	<string>Kích %@</string>
+	<key>trigger.substring.click.2</key>
+	<string>Kích đôi %@</string>
+	<key>trigger.substring.click.3</key>
+	<string>Kích ba lần %@</string>
+	<key>trigger.substring.drag.1</key>
+	<string>Kích và kéo %@</string>
+	<key>trigger.substring.drag.2</key>
+	<string>Kích đôi và kéo %@</string>
+	<key>trigger.substring.drag.3</key>
+	<string>Kích ba lần và kéo %@</string>
+	<key>trigger.substring.drag.flags</key>
+	<string>và kéo</string>
+	<key>trigger.substring.hold.1</key>
+	<string>Giữ %@</string>
+	<key>trigger.substring.hold.2</key>
+	<string>Kích đôi và giữ %@</string>
+	<key>trigger.substring.hold.3</key>
+	<string>Kích ba lần và giữ %@</string>
+	<key>trigger.substring.scroll.1</key>
+	<string>Kích và cuộn %@</string>
+	<key>trigger.substring.scroll.2</key>
+	<string>Kích đôi và cuộn %@</string>
+	<key>trigger.substring.scroll.3</key>
+	<string>Kích ba lần và cuộn %@</string>
+	<key>trigger.substring.scroll.flags</key>
+	<string>và cuộn</string>
+	<key>trigger.y.group-row.button-name.middle</key>
+	<string>Nút giữa</string>
+	<key>trigger.y.group-row.button-name.numbered</key>
+	<string>Nút %@</string>
+	<key>trigger.y.group-row.button-name.primary</key>
+	<string>Nút chính</string>
+	<key>trigger.y.group-row.button-name.secondary</key>
+	<string>Nút phụ</string>
+	<key>type-shortcut-prompt</key>
+	<string>Gõ một tổ hợp phím tắt</string>
+</dict>
+</plist>

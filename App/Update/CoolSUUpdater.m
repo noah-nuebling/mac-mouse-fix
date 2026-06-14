@@ -8,7 +8,7 @@
 //
 
 #import "CoolSUUpdater.h"
-#import "SparkleUpdaterController.h"
+#import "Mac_Mouse_Fix-Swift.h"
 
 @implementation CoolSUUpdater
 

@@ -351,9 +351,9 @@ We put this NOTE here, because:
                                 <fragment content="Toolbar &gt; Scrolling Tab Button"/>
                             </attributedString>
                         </tabViewItem>
-                        <tabViewItem label="Pointer" identifier="pointer" image="cursorarrow" catalog="system" id="lLu-45-nE3">
+                        <tabViewItem label="Mouse" identifier="pointer" image="cursorarrow" catalog="system" id="lLu-45-nE3">
                             <attributedString key="userComments">
-                                <fragment content="Toolbar &gt; Pointer Tab Button"/>
+                                <fragment content="Toolbar &gt; Mouse Tab Button"/>
                             </attributedString>
                         </tabViewItem>
                         <tabViewItem label="About" identifier="about" image="info.circle" catalog="system" id="wal-3r-ZZs">
@@ -738,7 +738,7 @@ If we ever write an article listing all the possible triggers, we could link it 
                                         <clipView key="contentView" autoresizesSubviews="NO" drawsBackground="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fkp-gm-SVn" customClass="MFClipView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="541" height="187"/>
                                             <subviews>
-                                                <tableView identifier="remapTable" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-5U-AJf" customClass="RemapTableView">
+                                                <tableView identifier="remapTable" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="39" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-5U-AJf" customClass="RemapTableView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="541" height="187"/>
                                                     <size key="intercellSpacing" width="17" height="0.0"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -834,7 +834,7 @@ If we ever write an article listing all the possible triggers, we could link it 
                                                             </textFieldCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView identifier="effectCell" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-SW-Ew3" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                                <tableCellView identifier="effectCell" translatesAutoresizingMaskIntoConstraints="NO" id="Epw-SW-Ew3" customClass="RemapTableCellView">
                                                                     <rect key="frame" x="312" y="0.0" width="238" height="39"/>
                                                                     <subviews>
                                                                         <popUpButton verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Pw9-ZH-Tb7">
@@ -862,7 +862,7 @@ If we ever write an article listing all the possible triggers, we could link it 
                                                                         <constraint firstItem="Pw9-ZH-Tb7" firstAttribute="leading" secondItem="Epw-SW-Ew3" secondAttribute="leading" constant="3" id="wyb-SL-X6X"/>
                                                                     </constraints>
                                                                 </tableCellView>
-                                                                <tableCellView identifier="keyCaptureCell" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-b1-853" customClass="RemapTableCellView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
+                                                                <tableCellView identifier="keyCaptureCell" translatesAutoresizingMaskIntoConstraints="NO" id="MzR-b1-853" customClass="RemapTableCellView">
                                                                     <rect key="frame" x="312" y="39" width="220" height="39"/>
                                                                     <subviews>
                                                                         <button hidden="YES" focusRingType="exterior" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="psy-Jg-KLq">
@@ -878,7 +878,7 @@ If we ever write an article listing all the possible triggers, we could link it 
                                                                                 <rect key="frame" x="0.0" y="0.0" width="214" height="24"/>
                                                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                 <subviews>
-                                                                                    <textView identifier="keyCaptureView" focusRingType="exterior" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" spellingCorrection="YES" id="piW-Ox-vLv" customClass="KeyCaptureView">
+                                                                                    <textView identifier="keyCaptureView" focusRingType="exterior" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="NO" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" spellingCorrection="YES" id="piW-Ox-vLv" customClass="KeyCaptureView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="211" height="23"/>
                                                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -946,7 +946,7 @@ If we ever write an article listing all the possible triggers, we could link it 
                                             <constraint firstItem="Fkp-gm-SVn" firstAttribute="trailing" secondItem="OGV-uF-BjJ" secondAttribute="trailing" id="1Gy-Na-J1I"/>
                                             <constraint firstItem="Fkp-gm-SVn" firstAttribute="top" secondItem="OGV-uF-BjJ" secondAttribute="top" id="3HQ-aH-MNB"/>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="500" id="lgg-Lp-QGT"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="500" id="oIt-mA-DPV"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="999" constant="500" id="oIt-mA-DPV"/>
                                             <constraint firstItem="Fkp-gm-SVn" firstAttribute="leading" secondItem="OGV-uF-BjJ" secondAttribute="trailing" id="uTS-6R-GFk"/>
                                         </constraints>
                                         <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="mCT-ys-LqY">
@@ -1043,7 +1043,7 @@ If we ever write an article listing all the possible triggers, we could link it 
                     </connections>
                 </viewController>
                 <customObject id="7uh-Xl-poI" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <customObject id="sHV-yD-oIc" customClass="RemapTableController">
+                <customObject id="sHV-yD-oIc" customClass="RemapTableController" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                     <connections>
                         <outlet property="view" destination="JEf-5U-AJf" id="jQD-XG-Ikk"/>
                     </connections>
@@ -1709,10 +1709,10 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
             </objects>
             <point key="canvasLocation" x="-363" y="1657.5"/>
         </scene>
-        <!--Pointer View Controller-->
+        <!--Mouse View Controller-->
         <scene sceneID="cBw-Z2-DNT">
             <objects>
-                <viewController title="Pointer" id="1dS-BH-DIv" userLabel="Pointer View Controller" customClass="PointerTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Mouse" id="1dS-BH-DIv" userLabel="Mouse View Controller" customClass="PointerTabController" customModule="Mac_Mouse_Fix" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" horizontalHuggingPriority="1000" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="a43-C7-qxY">
                         <rect key="frame" x="0.0" y="0.0" width="479" height="208"/>
                         <subviews>
@@ -1899,7 +1899,7 @@ System Preferences &gt; Mouse &gt; Tracking speed </string>
                         </constraints>
                     </view>
                     <attributedString key="userComments">
-                        <fragment content="Toolbar &gt; Pointer Tab Title"/>
+                        <fragment content="Toolbar &gt; Mouse Tab Title"/>
                     </attributedString>
                     <connections>
                         <outlet property="accelerationHint" destination="oEH-3x-3LO" id="7jJ-Xo-mfk"/>

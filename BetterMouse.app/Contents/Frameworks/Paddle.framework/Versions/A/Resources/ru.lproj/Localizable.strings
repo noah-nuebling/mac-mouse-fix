@@ -1,0 +1,201 @@
+/* No comment provided by engineer. */
+"%@ can send me product updates and offers via email. You can opt-out at any time." = "%@ может присылать мне информацию об обновлениях продукта и специальные предложения по электронной почте. Вы можете отписаться в любой момент.";
+
+/* No comment provided by engineer. */
+"%@%% off!" = "Скидка %@%%!";
+
+/* No comment provided by engineer. */
+"A valid license code is required. Please try again." = "Требуется действительный лицензионный код. Пожалуйста, повторите попытку.";
+
+/* No comment provided by engineer. */
+"Activate" = "Активировать";
+
+/* No comment provided by engineer. */
+"Activate License" = "Активировать лицензию";
+
+/* No comment provided by engineer. */
+"Already purchased a license? Fill in the form below and activate %@ instantly." = "Уже есть лицензия? Заполните приведенную ниже форму и мгновенно активируйте %@.";
+
+/* No comment provided by engineer. */
+"Buy Now" = "Купить сейчас";
+
+/* No comment provided by engineer. */
+"By %@" = "От %@";
+
+/* No comment provided by engineer. */
+"Cancel" = "Отмена";
+
+/* No comment provided by engineer. */
+"Close" = "Закрыть";
+
+/* No comment provided by engineer. */
+"Continue Trial" = "Продолжить использовать пробную версию";
+
+/* No comment provided by engineer. */
+"Deactivating License" = "Деактивация лицензии";
+
+/* No comment provided by engineer. */
+"Email Address" = "Адрес электронной почты";
+
+/* No comment provided by engineer. */
+"Enter License" = "Ввод лицензионной информации";
+
+/* No comment provided by engineer. */
+"Error" = "Ошибка";
+
+/* No comment provided by engineer. */
+"Join" = "Присоединиться";
+
+/* No comment provided by engineer. */
+"License Code" = "Лицензионный код";
+
+/* No comment provided by engineer. */
+"License code has already been used." = "Лицензионный код уже был использован.";
+
+/* No comment provided by engineer. */
+"License code is not active" = "Лицензионный код неактивен";
+
+/* No comment provided by engineer. */
+"License does not match product" = "Лицензия не соответствует продукту";
+
+/* No comment provided by engineer. */
+"License successfully deactivated" = "Лицензия успешно деактивирована";
+
+/* No comment provided by engineer. */
+"OK" = "ОК";
+
+/* No comment provided by engineer. */
+"Order Success" = "Заказ успешно выполнен";
+
+/* No comment provided by engineer. */
+"Please enter the email address used to purchase your license." = "Введите адрес электронной почты, использованный при покупке лицензии.";
+
+/* No comment provided by engineer. */
+"Provided currency is not valid'," = "Указанная валюта не поддерживается',";
+
+/* No comment provided by engineer. */
+"Quit" = "Выход";
+
+/* No comment provided by engineer. */
+"Recover" = "Восстановить";
+
+/* No comment provided by engineer. */
+"Recover your %@ license" = "Восстановить вашу лицензию на %@";
+
+/* No comment provided by engineer. */
+"Recovering your %@ license" = "Восстановление вашей лицензии на %@";
+
+/* No comment provided by engineer. */
+"Retry" = "Повторить попытку";
+
+/* No comment provided by engineer. */
+"Success" = "Выполнено успешно";
+
+/* No comment provided by engineer. */
+"Thank you for trying %@" = "Спасибо, что попробовали %@";
+
+/* No comment provided by engineer. */
+"This copy of %@ is registered with the information below." = "Данная копия %@ зарегистрирована с указанной информацией.";
+
+/* No comment provided by engineer. */
+"This license has expired" = "Срок действия лицензии истек";
+
+/* No comment provided by engineer. */
+"Unable to authenticate, check your SDK API key." = "Не удалось авторизоваться, проверьте свой ключ API SDK.";
+
+/* No comment provided by engineer. */
+"Unable to find requested activation" = "Не удалось найти запрошенную активацию";
+
+/* No comment provided by engineer. */
+"Unable to find requested product" = "Не удалось найти запрошенный продукт";
+
+/* No comment provided by engineer. */
+"Unspecified error, please contact support." = "Произошла неизвестная ошибка, обратитесь в службу поддержки.";
+
+/* No comment provided by engineer. */
+"Use a different email address" = "Использовать другой адрес электронной почты";
+
+/* No comment provided by engineer. */
+"We were unable to confirm the status of your order" = "Нам не удалось подтвердить статус вашего заказа";
+
+/* No comment provided by engineer. */
+"We were unable to confirm the status of your order. You'll receive an email soon." = "Нам не удалось подтвердить статус вашего заказа. Скоро вы получите письмо.";
+
+/* No comment provided by engineer. */
+"We're already checking a license, please wait a moment." = "Мы уже выполняем проверку лицензии, пожалуйста, подождите.";
+
+/* No comment provided by engineer. */
+"We're already deactivating a license, please wait a moment." = "Мы уже выполняем деактивацию лицензии, пожалуйста, подождите.";
+
+/* No comment provided by engineer. */
+"We're unable to find the supplied license key for this product." = "Нам не удалось найти предоставленный лицензионный ключ для данного продукта.";
+
+/* No comment provided by engineer. */
+"We've sent details of any licenses for %@ to %@" = "Мы отправили подробную информацию о лицензиях для %@ на %@";
+
+/* No comment provided by engineer. */
+"Welcome to %@!" = "Добро пожаловать в %@!";
+
+/* No comment provided by engineer. */
+"You don't have permission to access this resource" = "У вас нет прав на доступ к данному ресурсу";
+
+/* No comment provided by engineer. */
+"You have %d day remaining of your trial period." = "У вас остался %d день пробного периода.";
+
+/* No comment provided by engineer. */
+"You have %d days remaining of your trial period." = "У вас осталось %d дней пробного периода.";
+
+/* No comment provided by engineer. */
+"Your %@ License" = "Ваша лицензия на %@";
+
+/* No comment provided by engineer. */
+"Your order is being processed" = "Ваш заказ обрабатывается";
+
+/* No comment provided by engineer. */
+"Your order is being processed. You'll receive an email soon." = "Ваш заказ обрабатывается. Скоро вы получите письмо.";
+
+"Order Complete" = "Заказ завершен";
+"Thank you for your order, you'll receive an email shortly." = "Спасибо за ваш заказ. В ближайшее время на вашу эл. почту придет письмо.";
+"Unable to deactivate license. Please try again later." = "Не удалось деактивировать лицензию. Пожалуйста, повторите попытку позже.";
+
+"No Thanks!" = "Нет, спасибо!";
+"Send anonymous usage information?" = "Отправлять анонимную информацию об использовании?";
+"Would you like to send anonymous usage information to the developer of %@ to help improve the application?" = "Хотели бы вы отправлять анонимные сведения об использовании разработчику %@, чтобы помочь улучшить приложение?";
+"%@ - Checkout" = "%@ - Расчет";
+"Forgotten your license key?" = "забыли свой лицензионный ключ?";
+"Whoops! Something went wrong." = "Ой! Что-то пошло не так.";
+"An unexpected error occurred performing this action." = "При выполнении этого действия произошла непредвиденная ошибка.";
+"An Error Occurred" = "Произошла ошибка";
+
+/* No comment provided by engineer. */
+"Then %@/%ld days" = "Затем %@ в %ld дней";
+
+/* No comment provided by engineer. */
+"Then %@/%ld months" = "Затем %@ в %ld месяцев";
+
+/* No comment provided by engineer. */
+"Then %@/%ld weeks" = "Затем %@ в %ld недель";
+
+/* No comment provided by engineer. */
+"Then %@/%ld years" = "Затем %@ в %ld лет";
+
+/* No comment provided by engineer. */
+"Then %@/day" = "затем %@/день";
+
+/* No comment provided by engineer. */
+"Then %@/month" = "Затем %@/месяц";
+
+/* No comment provided by engineer. */
+"Then %@/week" = "Затем %@/неделю";
+
+/* No comment provided by engineer. */
+"Then %@/year" = "Затем %@/год";
+
+/* No comment provided by engineer. */
+"after %ld days" = "после %ld дн.";
+
+/* No comment provided by engineer. */
+"after 1 day" = "через 1 день";
+
+/* No comment provided by engineer. */
+"License code has already been utilized" = "Код лицензии уже был использован";

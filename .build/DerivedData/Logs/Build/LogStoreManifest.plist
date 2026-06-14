@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>logFormatVersion</key>
+	<integer>12</integer>
+	<key>logs</key>
+	<dict>
+		<key>5B499E11-54CF-43F7-8B96-2436917AFDA2</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>5B499E11-54CF-43F7-8B96-2436917AFDA2.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>3</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Mouse Fix project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>App</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project Mouse Fix with scheme App and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>801988668.92126298</real>
+			<key>timeStoppedRecording</key>
+			<real>801988672.63507402</real>
+			<key>title</key>
+			<string>Building project Mouse Fix with scheme App and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>5B499E11-54CF-43F7-8B96-2436917AFDA2</string>
+		</dict>
+		<key>6A154336-DA7C-4C54-B0FA-8CB635828B48</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>6A154336-DA7C-4C54-B0FA-8CB635828B48.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>1</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>284</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>Mouse Fix project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>App</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project Mouse Fix with scheme App and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>801988701.67776799</real>
+			<key>timeStoppedRecording</key>
+			<real>801988741.79067504</real>
+			<key>title</key>
+			<string>Building project Mouse Fix with scheme App and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>6A154336-DA7C-4C54-B0FA-8CB635828B48</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

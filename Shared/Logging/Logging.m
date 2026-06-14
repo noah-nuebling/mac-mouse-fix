@@ -52,7 +52,7 @@
         nowarn_pop()
     }
     
-    if ((NO) /*runningPreRelease()*/) {
+    if (YES /*runningPreRelease()*/) {
         
         /// Setup logging  file
         /// Copied this from https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/GettingStarted.md
@@ -60,11 +60,12 @@
         
         DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
         fileLogger.rollingFrequency = 60 * 60 * 24; /// 24 hour rolling
-        fileLogger.logFileManager.maximumNumberOfLogFiles = 2;
+        fileLogger.logFileManager.maximumNumberOfLogFiles = 20;
         
         [DDLog addLogger:fileLogger];
         
         DDLogInfo(@"Logging to directory: \'%@\'", fileLogger.logFileManager.logsDirectory);
+        NSLog(@"[MacMouseFix] FILE LOGGING STARTED. Directory: %@", fileLogger.logFileManager.logsDirectory);
     }
 }
 

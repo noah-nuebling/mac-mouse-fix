@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>accessibility.settings-link.pre-ventura</key>
+	<string>Ouvrir les préférences « Sécurité et confidentialité »</string>
+	<key>already-using-defaults-toast.3</key>
+	<string>Vous **utilisez déjà** le réglage par défaut pour une souris avec **3 boutons**</string>
+	<key>app-version</key>
+	<string>Version %@</string>
+	<key>apple-key-fallback.backward</key>
+	<string>&lt;Rewind key&gt;</string>
+	<key>apple-key-fallback.capslock</key>
+	<string>⇪</string>
+	<key>apple-key-fallback.forward</key>
+	<string>&lt;Fast-Forward key&gt;</string>
+	<key>apple-key-fallback.globe</key>
+	<string>&lt;Emoji Picker key&gt;</string>
+	<key>apple-key-fallback.light.max</key>
+	<string>&lt;Increase Keyboard Brightness key&gt;</string>
+	<key>apple-key-fallback.light.min</key>
+	<string>&lt;Decrease Keyboard Brightness key&gt;</string>
+	<key>apple-key-fallback.magnifyingglass</key>
+	<string>&lt;Spotlight key&gt;</string>
+	<key>apple-key-fallback.mic</key>
+	<string>&lt;Dictation key&gt;</string>
+	<key>apple-key-fallback.moon</key>
+	<string>&lt;Do Not Disturb key&gt;</string>
+	<key>apple-key-fallback.playpause</key>
+	<string>&lt;Play or Pause key&gt;</string>
+	<key>apple-key-fallback.power</key>
+	<string>&lt;Power key&gt;</string>
+	<key>apple-key-fallback.rectangle.3.group</key>
+	<string>&lt;Mission Control key&gt;</string>
+	<key>apple-key-fallback.speaker</key>
+	<string>&lt;Mute key&gt;</string>
+	<key>apple-key-fallback.speaker.wave.1</key>
+	<string>&lt;Decrease Volume key&gt;</string>
+	<key>apple-key-fallback.speaker.wave.3</key>
+	<string>&lt;Increase Volume key&gt;</string>
+	<key>apple-key-fallback.square.grid.3x2</key>
+	<string>&lt;Launchpad key&gt;</string>
+	<key>apple-key-fallback.sun.max</key>
+	<string>&lt;Increase Brightness key&gt;</string>
+	<key>apple-key-fallback.sun.min</key>
+	<string>&lt;Decrease Brightness key&gt;</string>
+	<key>apple-key-fallback.unknown-key</key>
+	<string>&lt;Key without description&gt;</string>
+	<key>beta-alert.back</key>
+	<string>Annuler</string>
+	<key>beta-alert.body</key>
+	<string>Les versions bêta peuvent contenir de nombreux problèmes.
+N'oubliez pas de nous fournir un retour lorsque vous en rencontrez un.
+Merci !</string>
+	<key>beta-alert.confirm</key>
+	<string>Recevoir les versions bêta</string>
+	<key>beta-alert.title</key>
+	<string>Recevoir les versions bêta ?</string>
+	<key>button-name.tool.numbered</key>
+	<string>Bouton de souris %@</string>
+	<key>buy-mouse-alert.body</key>
+	<string>Procurez-vous une souris avec plus de 5 boutons pour débloquer le plein potentiel de Mac Mouse Fix !</string>
+	<key>buy-mouse-alert.ok</key>
+	<string>OK</string>
+	<key>buy-mouse-alert.title</key>
+	<string>Votre souris n'a que 3 boutons</string>
+	<key>capture-toast.button-name.middle</key>
+	<string>Bouton du milieu</string>
+	<key>capture-toast.button-name.numbered</key>
+	<string>Bouton %@</string>
+	<key>capture-toast.button-name.primary</key>
+	<string>Bouton principal</string>
+	<key>capture-toast.button-name.secondary</key>
+	<string>Bouton secondaire</string>
+	<key>capture-toast.buttons.link</key>
+	<string>[En savoir plus](%@)</string>
+	<key>capture-toast.scroll.link</key>
+	<string>[En savoir plus](%@)</string>
+	<key>drag-effect.dock-swipe</key>
+	<string>Espaces &amp; Mission Control</string>
+	<key>drag-effect.dock-swipe.hint</key>
+	<string>Déplacer votre souris :
+ - Vers le haut pour afficher Mission Control
+ - Vers le bas pour afficher Fenêtres de l'application
+ - Vers la gauche ou la droite pour passer d'un espace à un autre
+ 
+Fonctionne comme le balayage à 3 doigts sur un Trackpad Apple</string>
+	<key>drag-effect.scroll-swipe</key>
+	<string>Défiler &amp; naviguer</string>
+	<key>drag-effect.scroll-swipe.hint</key>
+	<string>Défiler librement en déplaçant votre souris dans n'importe quelle direction
+ 
+Peut aussi naviguer entre les pages dans Safari, supprimer les messages dans Mail et bien plus en bougeant votre souris à gauche ou à droite
+ 
+Fonctionne comme le balayage avec 2 doigts sur un Trackpad Apple</string>
+	<key>effect.app-expose</key>
+	<string>Fenêtres de l'application</string>
+	<key>effect.app-expose.hint</key>
+	<string>Afficher toutes les fenêtres de l'application active</string>
+	<key>effect.apple-keys-submenu</key>
+	<string>Touches exclusives </string>
+	<key>effect.apple-keys-submenu.hint</key>
+	<string>Choisir les touches uniquement disponibles sur les claviers Apple</string>
+	<key>effect.apple-shortcut.hint</key>
+	<string>Fonctionne comme en appuyant sur « %@ » sur un clavier Apple</string>
+	<key>effect.back</key>
+	<string>Vers l'arrière</string>
+	<key>effect.back.hint</key>
+	<string>Revenir en arrière d'une page dans Safari et d'autres apps</string>
+	<key>effect.click.middle</key>
+	<string>Clic du milieu</string>
+	<key>effect.click.middle.hint</key>
+	<string>Ouvrir les liens dans un nouvel onglet, coller du texte dans le Terminal et bien plus.
+ 
+Fonctionne comme le clic sur le Bouton central de la souris (aussi appelé bouton de la molette de défilement ou Bouton de souris 3) sur une souris standard.</string>
+	<key>effect.click.primary</key>
+	<string>Clic principal</string>
+	<key>effect.click.primary.hint</key>
+	<string>Fonctionne comme le clic sur le Bouton principal de la souris (aussi appelé bouton de souris gauche ou Bouton de souris 1) sur une souris standard.</string>
+	<key>effect.click.secondary</key>
+	<string>Clic secondaire</string>
+	<key>effect.click.secondary.hint</key>
+	<string>Fonctionne comme le clic sur le Bouton secondaire de la souris (aussi appelé bouton de souris droit ou Bouton de souris 2) sur une souris standard.</string>
+	<key>effect.desktop</key>
+	<string>Afficher le bureau</string>
+	<key>effect.desktop.hint</key>
+	<string>Afficher le bureau</string>
+	<key>effect.forward</key>
+	<string>Vers l'avant</string>
+	<key>effect.forward.hint</key>
+	<string>Avancer d'une page sur Safari et d'autres apps</string>
+	<key>effect.launchpad</key>
+	<string>Launchpad</string>
+	<key>effect.launchpad.hint</key>
+	<string>Ouvrir le Launchpad</string>
+	<key>effect.left-space</key>
+	<string>Déplacer vers le bureau de gauche</string>
+	<key>effect.left-space.hint</key>
+	<string>Se déplacer d'un espace vers la gauche</string>
+	<key>effect.look-up</key>
+	<string>Rechercher &amp; Coup d'œil</string>
+	<key>effect.look-up.hint</key>
+	<string>Rechercher des mots dans le Dictionnaire, Coup d'œil sur les fichiers dans le Finder et bien plus.
+ 
+Fonctionne comme le clic forcé sur un Trackpad Apple.</string>
+	<key>effect.mission-control</key>
+	<string>Mission Control</string>
+	<key>effect.mission-control.hint</key>
+	<string>Afficher Mission Control</string>
+	<key>effect.record-shortcut</key>
+	<string>Raccourci clavier...</string>
+	<key>effect.record-shortcut.hint</key>
+	<string>Tapez un raccourci clavier, puis utilisez-le depuis votre souris</string>
+	<key>effect.right-space</key>
+	<string>Déplacer vers le bureau de droite</string>
+	<key>effect.right-space.hint</key>
+	<string>Se déplacer d'un espace vers la droite</string>
+	<key>effect.shortcut.hint</key>
+	<string>Fonctionne comme en appuyant sur « %@ » sur votre clavier</string>
+	<key>effect.smart-zoom</key>
+	<string>Zoom intelligent</string>
+	<key>effect.smart-zoom.hint</key>
+	<string>Zoom en avant ou en arrière dans Safari et d'autres apps.
+ 
+Fonctionne comme un Toucher deux fois sur un Trackpad Apple.</string>
+	<key>enable-timeout-toast</key>
+	<string>Si vous rencontrez des **problèmes pour activer** l'app, cliquez&amp;nbsp;[ici](%@).</string>
+	<key>forbidden-capture-toast.1</key>
+	<string>Le **bouton principal de la souris** ne peut pas être utilisé
+Veuillez essayer un autre bouton</string>
+	<key>forbidden-capture-toast.2</key>
+	<string>Le **bouton secondaire de la souris** ne peut pas être utilisé
+Veuillez essayer un autre bouton</string>
+	<key>free-country</key>
+	<string>Mac Mouse Fix est actuellement gratuit dans votre pays (%@)</string>
+	<key>is-disabled-toast</key>
+	<string>Mac Mouse Fix a été **désactivé** dans les Réglages Système
+
+Pour activer Mac Mouse Fix :
+
+1. Se rendre dans les [paramètres Ouverture](%@)
+2. Activer « Mac Mouse Fix.app »</string>
+	<key>is-strange-helper-alert.body</key>
+	<string>Mac Mouse Fix ne peut pas être activé car une **autre version** de Mac Mouse Fix est présente sur votre ordinateur
+
+Pour activer Mac Mouse Fix :
+
+1. Supprimer l'[autre version](%@)
+2. Vider la corbeille
+3. Redémarrer votre Mac
+4. Réessayer !</string>
+	<key>is-strange-helper-alert.title</key>
+	<string>L'activation a échoué</string>
+	<key>join-list</key>
+	<string>, </string>
+	<key>join-list.last</key>
+	<string>%1$@ et %2$@</string>
+	<key>license-button.activate</key>
+	<string>Activer la licence</string>
+	<key>license-button.deactivate</key>
+	<string>Désactiver la licence</string>
+	<key>license-toast.activate</key>
+	<string>Votre licence a été **activée** ! 🎉</string>
+	<key>license-toast.activation-overload</key>
+	<string>Cette licence a été activée **%2$d** fois. Le maximum est de **%3$d**.
+
+À cause de cela, la licence a été invalidée. Ceci permet d'éviter le piratage. Si vous avez d'autres raisons d'activer la licence autant de fois, veuillez m'excuser.
+
+Il suffit de [me contacter](%1$@) et je vous fournirai une nouvelle licence ! Merci de votre compréhension.</string>
+	<key>license-toast.already-active</key>
+	<string>Cette licence est **déjà activée** !</string>
+	<key>license-toast.deactivate</key>
+	<string>Votre licence a été **désactivée**</string>
+	<key>license-toast.free-country</key>
+	<string>Cette licence **n'a pas pu être activée** mais Mac Mouse Fix est actuellement **gratuit dans votre pays** !</string>
+	<key>license-toast.gumroad-error</key>
+	<string>**Une erreur avec le serveur de licences s'est produite**
+
+Elle dit :
+
+%@</string>
+	<key>license-toast.no-internet</key>
+	<string>**Il n'y a pas de connexion à Internet**
+
+Réessayer d'activer votre licence quand votre ordinateur sera à nouveau en ligne.</string>
+	<key>license-toast.unknown-error</key>
+	<string>**Une erreur inconnue s'est produite :**
+
+%@</string>
+	<key>license-toast.unknown-key</key>
+	<string>« **%@** » n'est pas une clé de licence connue
+
+Veuillez essayer une clé différente</string>
+	<key>license-toast.unknown-reason</key>
+	<string>L'activation de votre licence a échoué pour des *raisons inconnues**
+
+Veuillez **signaler le bug** [ici](%@)</string>
+	<key>macos-scrolling-hint</key>
+	<string>Définir la vitesse sous
+[%1$@ &gt; Souris &gt; Vitesse de déplacement](%2$@)</string>
+	<key>mail-alert.back</key>
+	<string>Retour</string>
+	<key>mail-alert.body</key>
+	<string>Je lis et j'apprécie tous vos e-mails, même si je ne peux pas répondre à tout le monde</string>
+	<key>mail-alert.send</key>
+	<string>Écrire un e-mail</string>
+	<key>mail-alert.title</key>
+	<string>Écrire un e-mail ?</string>
+	<key>modifer-key.tool.command</key>
+	<string>Commande (⌘)</string>
+	<key>modifer-key.tool.control</key>
+	<string>Contrôle (^)</string>
+	<key>modifer-key.tool.option</key>
+	<string>Option (⌥)</string>
+	<key>modifer-key.tool.shift</key>
+	<string>Maj (⇧)</string>
+	<key>natural-scrolling-hint</key>
+	<string>Le contenu suit le mouvement du doigt</string>
+	<key>precise-scrolling-hint</key>
+	<string>Défiler précisement, même sans un raccourci clavier,
+en bougeant la molette de défilement *doucement*</string>
+	<key>restore-buttons-alert.back</key>
+	<string>Annuler</string>
+	<key>restore-buttons-alert.commit</key>
+	<string>Restaurer</string>
+	<key>restore-buttons-alert.hint</key>
+	<string>Votre souris **%1$@** dit qu'elle a **%2$d** boutons</string>
+	<key>restore-buttons-alert.radio1</key>
+	<string>Une souris avec 3 boutons</string>
+	<key>restore-buttons-alert.radio2</key>
+	<string>Une souris avec plus de 5 boutons</string>
+	<key>restore-buttons-alert.title</key>
+	<string>Restaurer les réglages par défaut pour ...</string>
+	<key>restore-default-buttons-popover.body</key>
+	<string> **Cliquer ici** pour charger les paramètres recommandés
+pour votre souris **%@**</string>
+	<key>revive-toast</key>
+	<string>Mac Mouse Fix **activé** pour %1$@
+Il a été désactivé depuis la barre des menus %2$@</string>
+	<key>revive-toast.feature-buttons</key>
+	<string>**Boutons**</string>
+	<key>revive-toast.feature-scrolling</key>
+	<string>**Défilement**</string>
+	<key>scroll-effect.4-pinch</key>
+	<string>Bureau &amp; Launchpad</string>
+	<key>scroll-effect.4-pinch.hint</key>
+	<string>Défiler vers le haut pour le Launchpad et vers le bas pour afficher le Burean 
+Fonctionne comme le pincement avec 4 doigts sur un Trackpad Apple</string>
+	<key>scroll-effect.app-switcher</key>
+	<string>Basculement entre apps</string>
+	<key>scroll-effect.app-switcher.hint</key>
+	<string>Basculer rapidement entre les apps ouvertes
+ 
+Fonctionne comme en maintenant Commande (⌘) et en appuyant sur Tab (⇥) sur votre clavier</string>
+	<key>scroll-effect.horizontal</key>
+	<string>Défilement horizontal</string>
+	<key>scroll-effect.horizontal.hint</key>
+	<string>Défiler sur la gauche et la droite, naviguer entre les pages sur Safari, supprimer les messages dans Mail et bien plus
+ 
+Fonctionne comme le balayage horizontal avec un Trackpad Apple</string>
+	<key>scroll-effect.precise</key>
+	<string>Défilement précis</string>
+	<key>scroll-effect.precise.hint</key>
+	<string>Défiler de petites distances et utiliser des éléments d'IU sensibles avec précision</string>
+	<key>scroll-effect.rotate</key>
+	<string>Pivoter</string>
+	<key>scroll-effect.rotate.hint</key>
+	<string>Pivoter le contenu dans Apple Plans et d'autres apps
+ 
+Fonctionne comme si l'on tournait avec deux doigts sur un Trackpad Apple</string>
+	<key>scroll-effect.spaces</key>
+	<string>Déplacer entre les espaces</string>
+	<key>scroll-effect.spaces.hint</key>
+	<string>Défiler vers le haut pour se déplacer d'un espace vers la gauche et vers le bas pour se déplacer d'un espace vers la droite
+ 
+Fonctionne comme le balayage horizontal avec 3 doigts sur un Trackpad Apple</string>
+	<key>scroll-effect.swift</key>
+	<string>Défilement rapide</string>
+	<key>scroll-effect.swift.hint</key>
+	<string>Défiler de longues distances avec un effort minimal</string>
+	<key>scroll-effect.zoom</key>
+	<string>Zoom avant ou arrière</string>
+	<key>scroll-effect.zoom.hint</key>
+	<string>Zoomer en avant ou en arrière dans Safari, Plans et d'autres apps
+ 
+Fonctionne comme le pincement pour zoomer sur un Trackpad Apple</string>
+	<key>system-settings-name</key>
+	<string>Réglages Système</string>
+	<key>system-settings-name.pre-ventura</key>
+	<string>Préférences Système</string>
+	<key>thanks.01</key>
+	<string>⭐️ Merci d'avoir acheté Mac Mouse Fix !</string>
+	<key>thanks.02</key>
+	<string>🌟 Merci d'avoir acheté Mac Mouse Fix !</string>
+	<key>thanks.03</key>
+	<string>🚀 Merci de soutenir Mac Mouse Fix !</string>
+	<key>thanks.04</key>
+	<string>🙌 Merci d'avoir acheté Mac Mouse Fix !</string>
+	<key>thanks.05</key>
+	<string>🧠 Une excellente décision d'achat ! ;)</string>
+	<key>thanks.06</key>
+	<string>🔥 Excellent goût dans les logiciels permettant d'améliorer les souris ! ;)</string>
+	<key>thanks.09</key>
+	<string>👽 Partagez-le avec vos amis Spacebook !</string>
+	<key>thanks.10</key>
+	<string>🧼 Se laver les mains en sortant des toilettes n'est pas facultatif :D</string>
+	<key>thanks.13</key>
+	<string>🐹 Nous devrions lui offrir un nœud papillon.</string>
+	<key>thanks.21</key>
+	<string>🐠 Qu'êtes... vous?</string>
+	<key>thanks.25</key>
+	<string>🌏 D'abord la souris, ensuite le monde !! &gt;:)</string>
+	<key>trial-counter.active</key>
+	<string>Jour gratuit **%1$d/%2$d**</string>
+	<key>trial-counter.expired</key>
+	<string>Les jours offerts sont terminés</string>
+	<key>trial-notif.activate-license-button</key>
+	<string>Activer une licence</string>
+	<key>trial-notif.body</key>
+	<string>Bonjour ! Vous avez utilisé Mac Mouse Fix pendant maintenant **%1$d jours**. J'espère que vous l'appréciez !
+
+Si vous voulez continuer d'utiliser Mac Mouse Fix, vous pouvez [l'acheter maintenant](%2$@).</string>
+	<key>trigger.substring.button-modifier.1</key>
+	<string>clic %@ +</string>
+	<key>trigger.substring.button-modifier.2</key>
+	<string>double-clic %@ +</string>
+	<key>trigger.substring.button-modifier.3</key>
+	<string>triple-clic %@ +</string>
+	<key>trigger.substring.button-name.middle</key>
+	<string>Bouton du milieu</string>
+	<key>trigger.substring.button-name.numbered</key>
+	<string>Bouton %@</string>
+	<key>trigger.substring.button-name.primary</key>
+	<string>Bouton principal</string>
+	<key>trigger.substring.button-name.secondary</key>
+	<string>Bouton secondaire</string>
+	<key>trigger.substring.click.1</key>
+	<string>clic %@</string>
+	<key>trigger.substring.click.2</key>
+	<string>double-clic %@</string>
+	<key>trigger.substring.click.3</key>
+	<string>triple-clic %@</string>
+	<key>trigger.substring.drag.1</key>
+	<string>clic et glissement %@</string>
+	<key>trigger.substring.drag.2</key>
+	<string>double-clic et glissement %@</string>
+	<key>trigger.substring.drag.3</key>
+	<string>triple-clic et glissement %@</string>
+	<key>trigger.substring.drag.flags</key>
+	<string>et glissement</string>
+	<key>trigger.substring.hold.1</key>
+	<string>maintien %@</string>
+	<key>trigger.substring.hold.2</key>
+	<string>double-clic et maintien %@</string>
+	<key>trigger.substring.hold.3</key>
+	<string>triple-clic et maintien %@</string>
+	<key>trigger.substring.scroll.1</key>
+	<string>clic et défilement %@</string>
+	<key>trigger.substring.scroll.2</key>
+	<string>double-clic et défilement %@</string>
+	<key>trigger.substring.scroll.3</key>
+	<string>triple-clic et défilement %@</string>
+	<key>trigger.substring.scroll.flags</key>
+	<string>et défilement</string>
+	<key>trigger.y.group-row.button-name.middle</key>
+	<string>Bouton du milieu</string>
+	<key>trigger.y.group-row.button-name.numbered</key>
+	<string>Bouton %@</string>
+	<key>trigger.y.group-row.button-name.primary</key>
+	<string>Bouton principal</string>
+	<key>trigger.y.group-row.button-name.secondary</key>
+	<string>Bouton secondaire</string>
+	<key>type-shortcut-prompt</key>
+	<string>Taper le raccourci clavier</string>
+</dict>
+</plist>

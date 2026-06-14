@@ -10,8 +10,6 @@
 #import <PreferencePanes/PreferencePanes.h>
 //#import "MoreSheet.h"
 #import "OverridePanel.h"
-#import "RemapTableController.h"
-#import "RemapTableView.h"
 #import "AppState.h"
 
 @interface AppDelegate : NSObject<NSApplicationDelegate, NSWindowDelegate>

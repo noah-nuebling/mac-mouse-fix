@@ -10,7 +10,7 @@ import Cocoa
 class ResizingTabWindowController: NSWindowController, NSWindowDelegate {
 
     // MARK: Vars
-    static var window: ResizingTabWindow? = nil
+    static var sharedWindow: ResizingTabWindow? = nil
     
     // MARK: Lifecycle
 
@@ -18,6 +18,7 @@ class ResizingTabWindowController: NSWindowController, NSWindowDelegate {
         
         super.windowDidLoad()
         let thewindow = window as! ResizingTabWindow
+        thewindow.isReleasedWhenClosed = false
                
         /// Make views compact on Tahoe
         if #available(macOS 26.0, *) {
@@ -30,7 +31,7 @@ class ResizingTabWindowController: NSWindowController, NSWindowDelegate {
         self.windowFrameAutosaveName = "MyWindow"
         
         /// Make globally accessible
-        ResizingTabWindowController.window = thewindow
+        ResizingTabWindowController.sharedWindow = thewindow
     }
     
     // MARK: Custom field editor

@@ -1,0 +1,200 @@
+/* No comment provided by engineer. */
+"%@ can send me product updates and offers via email. You can opt-out at any time." = "%@ 可以透過電子郵件向我寄送產品更新及優惠資訊。您可以隨時選擇退出。";
+
+/* No comment provided by engineer. */
+"%@%% off!" = "優惠 %@%%！";
+
+/* No comment provided by engineer. */
+"A valid license code is required. Please try again." = "需要有效的授權碼。請再試一次。";
+
+/* No comment provided by engineer. */
+"Activate" = "啟用";
+
+/* No comment provided by engineer. */
+"Activate License" = "啟用授權";
+
+/* No comment provided by engineer. */
+"Already purchased a license? Fill in the form below and activate %@ instantly." = "已經購買授權了嗎？請填寫下表，立即啟用 %@。";
+
+/* No comment provided by engineer. */
+"Buy Now" = "立即購買";
+
+/* No comment provided by engineer. */
+"By %@" = "由 %@";
+
+/* No comment provided by engineer. */
+"Cancel" = "取消";
+
+/* No comment provided by engineer. */
+"Close" = "關閉";
+
+/* No comment provided by engineer. */
+"Continue Trial" = "繼續試用";
+
+/* No comment provided by engineer. */
+"Deactivating License" = "正在停用授權";
+
+/* No comment provided by engineer. */
+"Email Address" = "電子郵件地址";
+
+/* No comment provided by engineer. */
+"Enter License" = "輸入授權";
+
+/* No comment provided by engineer. */
+"Error" = "錯誤";
+
+/* No comment provided by engineer. */
+"Join" = "加入";
+
+/* No comment provided by engineer. */
+"License Code" = "授權碼";
+
+/* No comment provided by engineer. */
+"License code has already been used." = "授權碼已在使用中。";
+
+/* No comment provided by engineer. */
+"License code is not active" = "授權碼非使用中";
+
+/* No comment provided by engineer. */
+"License does not match product" = "授權與產品不符合";
+
+/* No comment provided by engineer. */
+"License successfully deactivated" = "已成功停用授權";
+
+/* No comment provided by engineer. */
+"OK" = "確定";
+
+/* No comment provided by engineer. */
+"Order Success" = "訂購成功";
+
+/* No comment provided by engineer. */
+"Please enter the email address used to purchase your license." = "請輸入用以購買授權的電子郵件地址。";
+
+/* No comment provided by engineer. */
+"Provided currency is not valid'," = "您提供的貨幣無效。";
+
+/* No comment provided by engineer. */
+"Quit" = "結束";
+
+/* No comment provided by engineer. */
+"Recover" = "復原";
+
+/* No comment provided by engineer. */
+"Recover your %@ license" = "復原您的 %@ 授權";
+
+/* No comment provided by engineer. */
+"Recovering your %@ license" = "正在復原您的 %@ 授權";
+
+/* No comment provided by engineer. */
+"Retry" = "再試一次";
+
+/* No comment provided by engineer. */
+"Success" = "成功";
+
+/* No comment provided by engineer. */
+"Thank you for trying %@" = "謝謝您試用 %@";
+
+/* No comment provided by engineer. */
+"This copy of %@ is registered with the information below." = "此 %@ 複本是以下方的資訊註冊。";
+
+/* No comment provided by engineer. */
+"This license has expired" = "此授權已過期";
+
+/* No comment provided by engineer. */
+"Unable to authenticate, check your SDK API key." = "無法驗證，請檢查您的 SDK API 金鑰";
+
+/* No comment provided by engineer. */
+"Unable to find requested activation" = "找不到要求的啟用";
+
+/* No comment provided by engineer. */
+"Unable to find requested product" = "找不到要求的產品";
+
+/* No comment provided by engineer. */
+"Unspecified error, please contact support." = "未指定的錯誤，請	連絡支援部門。";
+
+/* No comment provided by engineer. */
+"Use a different email address" = "使用不同的電子郵件地址";
+
+/* No comment provided by engineer. */
+"We were unable to confirm the status of your order" = "我們無法確認您的訂單狀態";
+
+/* No comment provided by engineer. */
+"We were unable to confirm the status of your order. You'll receive an email soon." = "我們無法確認您的訂單狀態。您很快會收到一封電子郵件。";
+
+/* No comment provided by engineer. */
+"We're already checking a license, please wait a moment." = "正在檢查授權，請稍候。";
+
+/* No comment provided by engineer. */
+"We're already deactivating a license, please wait a moment." = "正在停用授權，請稍候。";
+
+/* No comment provided by engineer. */
+"We're unable to find the supplied license key for this product." = "找不到此產品的供應授權金鑰。";
+
+/* No comment provided by engineer. */
+"We've sent details of any licenses for %@ to %@" = "我們已寄出 %@ 至 %@ 任何授權的詳細資料";
+
+/* No comment provided by engineer. */
+"Welcome to %@!" = "歡迎使用 %@！";
+
+/* No comment provided by engineer. */
+"You don't have permission to access this resource" = "您沒有存取此資源的權限";
+
+/* No comment provided by engineer. */
+"You have %d day remaining of your trial period." = "您的試用期還有 %d 天。";
+
+/* No comment provided by engineer. */
+"You have %d days remaining of your trial period." = "您的試用期還有 %d 天。";
+
+/* No comment provided by engineer. */
+"Your %@ License" = "您的 %@ 授權";
+
+/* No comment provided by engineer. */
+"Your order is being processed" = "正在處理您的訂單";
+
+/* No comment provided by engineer. */
+"Your order is being processed. You'll receive an email soon." = "正在處理您的訂單。您很快就會收到一封電子郵件。";
+
+"Order Complete" = "訂購完成";
+"Thank you for your order, you'll receive an email shortly." = "感謝您的訂購，您稍後將收到一封確認電郵。";
+"No Thanks!" = "不要，謝謝！";
+"Send anonymous usage information?" = "傳送匿名使用資訊？";
+"Unable to deactivate license. Please try again later." = "無法停用授權。請稍後再試一次。";
+"Would you like to send anonymous usage information to the developer of %@ to help improve the application?" = "您是否要傳送匿名使用資訊給 %@ 的開發者，以協助改善這個應用程式？";
+"%@ - Checkout" = "%@ - 結帳";
+"Forgotten your license key?" = "忘記了你的授權金鑰？";
+"Whoops! Something went wrong." = "糟糕！發生錯誤。";
+"An unexpected error occurred performing this action." = "執行此動作時發生意外的錯誤。";
+"An Error Occurred" = "發生錯誤";
+
+/* No comment provided by engineer. */
+"Then %@/%ld days" = "Then %@/%ld days";
+
+/* No comment provided by engineer. */
+"Then %@/%ld months" = "Then %@/%ld months";
+
+/* No comment provided by engineer. */
+"Then %@/%ld weeks" = "Then %@/%ld weeks";
+
+/* No comment provided by engineer. */
+"Then %@/%ld years" = "Then %@/%ld years";
+
+/* No comment provided by engineer. */
+"Then %@/day" = "Then %@/day";
+
+/* No comment provided by engineer. */
+"Then %@/month" = "Then %@/month";
+
+/* No comment provided by engineer. */
+"Then %@/week" = "Then %@/week";
+
+/* No comment provided by engineer. */
+"Then %@/year" = "Then %@/year";
+
+/* No comment provided by engineer. */
+"after %ld days" = "after %ld days";
+
+/* No comment provided by engineer. */
+"after 1 day" = "after 1 day";
+
+/* No comment provided by engineer. */
+"License code has already been utilized" = "注册码已被使用";

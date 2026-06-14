@@ -8,7 +8,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ButtonInputReceiver.h"
 
 @interface ButtonTriggerGenerator : NSObject
 

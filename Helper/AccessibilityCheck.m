@@ -11,12 +11,10 @@
 
 #import <AppKit/AppKit.h>
 #import "MFMessagePort.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "DeviceManager.h"
 #import "Config.h"
-#import "Scroll.h"
-#import "ButtonInputReceiver.h"
 #import "Constants.h"
-#import "ModifiedDrag.h"
 #import "Modifiers.h"
 #import "SharedUtility.h"
 #import "HelperServices.h"
@@ -228,6 +226,28 @@
         
         [TrialCounter load_Manual];
         [License checkAndReactWithTriggeredByUser:NO];
+        
+        /// Listen to frontmost application changes to apply overrides immediately
+        [NSWorkspace.sharedWorkspace.notificationCenter addObserverForName:NSWorkspaceDidActivateApplicationNotification object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+            NSRunningApplication *app = note.userInfo[NSWorkspaceApplicationKey];
+            NSString *appIdentifier = [Config appOverrideIdentifierForRunningApplication:app];
+            if (appIdentifier.length > 0) {
+                DDLogDebug(@"Helper - Frontmost app did change to: %@", appIdentifier);
+                BOOL didChange = [Config.shared loadOverridesForApp:appIdentifier];
+                if (didChange) {
+                    DDLogDebug(@"Helper - Config overrides changed for app. Updating derived states.");
+                    [Config updateDerivedStates];
+                }
+            }
+        }];
+        
+        /// Apply overrides for the initial frontmost application
+        NSRunningApplication *frontApp = NSWorkspace.sharedWorkspace.frontmostApplication;
+        NSString *frontAppIdentifier = [Config appOverrideIdentifierForRunningApplication:frontApp];
+        if (frontAppIdentifier.length > 0) {
+            [Config.shared loadOverridesForApp:frontAppIdentifier];
+            [Config updateDerivedStates];
+        }
         
         ///
         /// Debug & testing

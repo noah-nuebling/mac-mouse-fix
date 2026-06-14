@@ -97,6 +97,19 @@ class AboutTabController: NSViewController {
         let versionNumbers = "\(Locator.bundleVersionShort()) (\(Locator.bundleVersion()))"
         versionField.stringValue = versionFormatExists ? String(format: versionFormat, versionNumbers) : versionNumbers
         
+        if let subviews = versionField.superview?.subviews {
+            for subview in subviews {
+                if let textField = subview as? NSTextField {
+                    let str = textField.stringValue
+                    if str.contains("Noah N") {
+                        textField.cell?.wraps = true
+                        textField.cell?.isScrollable = false
+                        textField.stringValue = str + "\n✨ Reprised by Shawn Rain"
+                    }
+                }
+            }
+        }
+        
         /// Init trialSectionManager
         ///     The manager swaps out the trialSection and stuff, so always access the trialSection through the manager!
         trialSectionManager = TrialSectionManager(trialCell)

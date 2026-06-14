@@ -9,21 +9,4 @@
 
 #import <Foundation/Foundation.h>
 
-NS_ASSUME_NONNULL_BEGIN
-
-@interface Locator : NSObject
-+ (NSInteger)bundleVersion;
-+ (NSString *)bundleVersionShort;
-//+ (NSString *)currentBundleID;
-+ (NSBundle *)mainAppBundle;
-+ (NSBundle *)helperBundle;
-+ (NSBundle *)mainAppOriginalBundle;
-+ (NSBundle *)helperOriginalBundle;
-+ (NSURL *)currentExecutableURL;
-+ (NSURL *)MFApplicationSupportFolderURL;
-+ (NSURL *)configURL;
-+ (NSURL *_Nullable)launchdPlistURL;
-+ (NSUserDefaults *_Nullable)defaults;
-@end
-
-NS_ASSUME_NONNULL_END
+@class Locator;

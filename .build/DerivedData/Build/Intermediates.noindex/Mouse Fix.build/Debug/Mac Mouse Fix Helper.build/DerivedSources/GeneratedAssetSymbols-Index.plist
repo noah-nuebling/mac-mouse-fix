@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>colors</key>
+	<array/>
+	<key>images</key>
+	<array>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/Shared/Resources/Assets/SharedAssets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameAppIconRoundFromHelperDeleteThis</string>
+			<key>relativePath</key>
+			<string>./AppIconRoundFromHelper-deleteThis.imageset</string>
+			<key>swiftSymbol</key>
+			<string>appIconRoundFromHelperDeleteThis</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/Shared/Resources/Assets/SharedAssets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameApplePay</string>
+			<key>relativePath</key>
+			<string>./ApplePay.imageset</string>
+			<key>swiftSymbol</key>
+			<string>applePay</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/Shared/Resources/Assets/SharedAssets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameCoolMenuBarIcon</string>
+			<key>relativePath</key>
+			<string>./CoolMenuBarIcon.imageset</string>
+			<key>swiftSymbol</key>
+			<string>coolMenuBarIcon</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/Shared/Resources/SFSymbols/SharedSFSymbols.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameBag</string>
+			<key>relativePath</key>
+			<string>./bag.imageset</string>
+			<key>swiftSymbol</key>
+			<string>bag</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/Shared/Resources/SFSymbols/SharedSFSymbols.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameCalendar</string>
+			<key>relativePath</key>
+			<string>./calendar.imageset</string>
+			<key>swiftSymbol</key>
+			<string>calendar</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/Shared/Resources/SFSymbols/SharedSFSymbols.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameHourglassTophalfFilled</string>
+			<key>relativePath</key>
+			<string>./hourglass.tophalf.filled.imageset</string>
+			<key>swiftSymbol</key>
+			<string>hourglassTophalfFilled</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/Shared/Resources/SFSymbols/SharedSFSymbols.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameLock</string>
+			<key>relativePath</key>
+			<string>./lock.imageset</string>
+			<key>swiftSymbol</key>
+			<string>lock</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/shawnrain/Library/Mobile Documents/com~apple~CloudDocs/Shawn Rain/Vibe-Coding/MacMouseFix/Shared/Resources/SFSymbols/SharedSFSymbols.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameLockOpen</string>
+			<key>relativePath</key>
+			<string>./lock.open.imageset</string>
+			<key>swiftSymbol</key>
+			<string>lockOpen</string>
+		</dict>
+	</array>
+	<key>symbols</key>
+	<array/>
+</dict>
+</plist>

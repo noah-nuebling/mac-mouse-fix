@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>accessibility.settings-link.pre-ventura</key>
+	<string>打开“隐私与安全性”偏好设置</string>
+	<key>already-using-defaults-toast.3</key>
+	<string>您**已经在使用**默认的**三鍵**鼠标设置</string>
+	<key>already-using-defaults-toast.5</key>
+	<string>您**已经在使用**默认的**五鍵**鼠标设置</string>
+	<key>app-version</key>
+	<string>版本：%@</string>
+	<key>apple-key-fallback.backward</key>
+	<string>􀊉〔倒回键〕</string>
+	<key>apple-key-fallback.capslock</key>
+	<string>⇪</string>
+	<key>apple-key-fallback.forward</key>
+	<string>􀊋〔快进键〕</string>
+	<key>apple-key-fallback.globe</key>
+	<string>􀆪〔表情挑选器键〕</string>
+	<key>apple-key-fallback.light.max</key>
+	<string>􀇮〔调高键盘亮度键〕</string>
+	<key>apple-key-fallback.light.min</key>
+	<string>􀇭〔调低键盘亮度键〕</string>
+	<key>apple-key-fallback.magnifyingglass</key>
+	<string>􀊫〔聚焦键〕</string>
+	<key>apple-key-fallback.mic</key>
+	<string>􀊰〔听写键〕</string>
+	<key>apple-key-fallback.moon</key>
+	<string>􀆹〔勿扰模式键〕</string>
+	<key>apple-key-fallback.playpause</key>
+	<string>􀊇〔播放／暂停键〕</string>
+	<key>apple-key-fallback.power</key>
+	<string>􀆨〔电源键〕</string>
+	<key>apple-key-fallback.rectangle.3.group</key>
+	<string>􀇴〔调度中心键〕</string>
+	<key>apple-key-fallback.speaker</key>
+	<string>􀊠〔静音键〕</string>
+	<key>apple-key-fallback.speaker.wave.1</key>
+	<string>􀊤〔降低音量键〕</string>
+	<key>apple-key-fallback.speaker.wave.3</key>
+	<string>􀊨〔提高音量键〕</string>
+	<key>apple-key-fallback.square.grid.3x2</key>
+	<string>􀇵〔启动台键〕</string>
+	<key>apple-key-fallback.sun.max</key>
+	<string>􀆭〔调高显示器亮度键〕</string>
+	<key>apple-key-fallback.sun.min</key>
+	<string>􀆫〔调低显示器亮度键〕</string>
+	<key>apple-key-fallback.unknown-key</key>
+	<string>〔没有描述的按键〕</string>
+	<key>beta-alert.back</key>
+	<string>取消</string>
+	<key>beta-alert.body</key>
+	<string>Beta版可能有许多问题。不要忘记提交您遇到的问题。谢谢！</string>
+	<key>beta-alert.confirm</key>
+	<string>获取Beta版</string>
+	<key>beta-alert.title</key>
+	<string>获取Beta版？</string>
+	<key>button-name.tool.numbered</key>
+	<string>鼠标按键%@</string>
+	<key>buy-mouse-alert.body</key>
+	<string>换一个五键或多键鼠标来释放Mac Mouse Fix的所有潜能</string>
+	<key>buy-mouse-alert.ok</key>
+	<string>好</string>
+	<key>buy-mouse-alert.title</key>
+	<string>您的鼠标只有三个按钮</string>
+	<key>capture-toast.button-name.middle</key>
+	<string>中键</string>
+	<key>capture-toast.button-name.numbered</key>
+	<string>按键%@</string>
+	<key>capture-toast.button-name.primary</key>
+	<string>主键</string>
+	<key>capture-toast.button-name.secondary</key>
+	<string>辅键</string>
+	<key>capture-toast.buttons.link</key>
+	<string>[了解更多](%@)</string>
+	<key>capture-toast.scroll.captured.body</key>
+	<string>**滚动**被 Mac Mouse Fix 所捕获</string>
+	<key>capture-toast.scroll.link</key>
+	<string>[了解更多](%@)</string>
+	<key>capture-toast.scroll.uncaptured.body</key>
+	<string>**滚动**不再被 Mac Mouse Fix 所捕获</string>
+	<key>drag-effect.dock-swipe</key>
+	<string>空间与调度中心</string>
+	<key>drag-effect.dock-swipe.hint</key>
+	<string>移动您的鼠标：
+・向上来显示调度中心
+・向下来显示应用程序窗口
+・向左或向右来切换空间
+ 
+作用相当于在Apple触控板上用三指滑动</string>
+	<key>drag-effect.scroll-swipe</key>
+	<string>滚动与导航</string>
+	<key>drag-effect.scroll-swipe.hint</key>
+	<string>向任意方向移动您的鼠标来自由滚动n 
+也可以左右移动来导航Safari页面、删除“邮件”中的邮件等。
+ 
+作用相当于在Apple触控板上用双指轻扫</string>
+	<key>effect.app-expose</key>
+	<string>应用程序窗口</string>
+	<key>effect.app-expose.hint</key>
+	<string>显示所有打开的窗口</string>
+	<key>effect.apple-keys-submenu</key>
+	<string>独有按键</string>
+	<key>effect.apple-keys-submenu.hint</key>
+	<string>选择Apple键盘独有的按键</string>
+	<key>effect.apple-shortcut.hint</key>
+	<string>作用相当于按下Apple键盘上的“%@”</string>
+	<key>effect.back</key>
+	<string>返回</string>
+	<key>effect.back.hint</key>
+	<string>在Safari和其他应用程式中返回上一页</string>
+	<key>effect.click.middle</key>
+	<string>按中键</string>
+	<key>effect.click.middle.hint</key>
+	<string>以新标签页打开链接、在“终端”中粘贴文字等。
+ 
+作用相当于在标准鼠标上点按鼠标中键（又称鼠标滚轮键或鼠标按键３）。</string>
+	<key>effect.click.primary</key>
+	<string>主键</string>
+	<key>effect.click.primary.hint</key>
+	<string>点击鼠标主键（又称鼠标左键或鼠标按键１）</string>
+	<key>effect.click.secondary</key>
+	<string>辅键</string>
+	<key>effect.click.secondary.hint</key>
+	<string>点击鼠标辅键（又称鼠标右键或鼠标按键２）</string>
+	<key>effect.desktop</key>
+	<string>桌面</string>
+	<key>effect.desktop.hint</key>
+	<string>显示桌面</string>
+	<key>effect.forward</key>
+	<string>前进</string>
+	<key>effect.forward.hint</key>
+	<string>在Safari和其他应用程式中前进下一页</string>
+	<key>effect.launchpad</key>
+	<string>启动台</string>
+	<key>effect.launchpad.hint</key>
+	<string>打开“启动台”</string>
+	<key>effect.left-space</key>
+	<string>向左移动一个空间</string>
+	<key>effect.left-space.hint</key>
+	<string>向左移动一个空间</string>
+	<key>effect.look-up</key>
+	<string>查询与快速查看</string>
+	<key>effect.look-up.hint</key>
+	<string>查询与快速查看</string>
+	<key>effect.mission-control</key>
+	<string>调度中心</string>
+	<key>effect.mission-control.hint</key>
+	<string>显示“调度中心”</string>
+	<key>effect.record-shortcut</key>
+	<string>键盘快捷键</string>
+	<key>effect.record-shortcut.hint</key>
+	<string>输入键盘快捷键，然后在您的鼠标上使用此快捷键</string>
+	<key>effect.right-space</key>
+	<string>向右移动一个空间</string>
+	<key>effect.right-space.hint</key>
+	<string>向右移动一个空间</string>
+	<key>effect.shortcut.hint</key>
+	<string>作用相当于在您的键盘上按下“%@”</string>
+	<key>effect.smart-zoom</key>
+	<string>智能缩放</string>
+	<key>effect.smart-zoom.hint</key>
+	<string>在Safari和其他应用程序中放大或缩小。
+ 
+作用相当于在Apple触控板上用双指轻点两下</string>
+	<key>enable-timeout-toast</key>
+	<string>如果您在**启用软件时遇到困难**，点[这里](%@)</string>
+	<key>forbidden-capture-toast.1</key>
+	<string>不能使用**鼠标主键**
+请换一个按键再试</string>
+	<key>forbidden-capture-toast.2</key>
+	<string>不能使用**鼠标辅键**
+请换一个按键再试</string>
+	<key>free-country</key>
+	<string>Mac Mouse Fix目前在您所在的国家或地区（%@）免费</string>
+	<key>is-disabled-toast</key>
+	<string>系统偏好设置中已**禁用**Mac Mouse Fix
+
+若要启用Mac Mouse Fix：
+
+⒈前往[登录时打开](%@)
+⒉开启“Mac Mouse Fix.app”</string>
+	<key>is-strange-helper-alert.body</key>
+	<string>无法启用Mac Mouse Fix，因为您的电脑上已有**另一版本**的Mac Mouse Fix
+
+若要启用Mac Mouse Fix：
+
+⒈删除[其他版本](%@)
+⒉清倒废纸篓
+⒊重新启动您的Mac
+⒋再试一次！</string>
+	<key>is-strange-helper-alert.title</key>
+	<string>启用失败</string>
+	<key>join-list</key>
+	<string>、</string>
+	<key>join-list.last</key>
+	<string>%1$@、%2$@</string>
+	<key>license-button.activate</key>
+	<string>激活许可证</string>
+	<key>license-button.deactivate</key>
+	<string>取消激活许可证</string>
+	<key>license-toast.activate</key>
+	<string>您的许可证已**激活**！🎉</string>
+	<key>license-toast.activation-overload</key>
+	<string>此许可证已被激活**%2$d**次。上限是**%3$d**次。
+
+因而此许可证已失效。这是为了防止盗版。如果您有其他原因需要如此多次激活这个许可证，还望见谅。
+
+与我[联系](%1$@)，我会提供一个新的许可证给您！感谢理解。</string>
+	<key>license-toast.already-active</key>
+	<string>此许可证**已激活**!</string>
+	<key>license-toast.deactivate</key>
+	<string>您的许可证**已取消激活**</string>
+	<key>license-toast.free-country</key>
+	<string>**无法激活**此许可证，但Mac Mouse Fix目前**在您所在的国家或地区免费**！</string>
+	<key>license-toast.gumroad-error</key>
+	<string>**许可证服务器发生错误**
+
+服务器回应：
+
+%@</string>
+	<key>license-toast.no-internet</key>
+	<string>**无法连接网络**
+
+请确保您的电脑可以访问互联网，并且没有防火墙阻止 Mac Mouse Fix 访问网络。
+
+如果这个问题一直出现，[请联系我](%@)</string>
+	<key>license-toast.server-response-invalid</key>
+	<string>**许可证服务器**未响应
+
+请稍后重试
+
+如果这个问题一直出现，[请联系我](%@)</string>
+	<key>license-toast.unknown-error</key>
+	<string>发生了**未知错误**：
+
+%@</string>
+	<key>license-toast.unknown-key</key>
+	<string>“**%@**”并不是有效的许可证。
+请确认您输入的许可证与您收到的一致</string>
+	<key>license-toast.unknown-reason</key>
+	<string>由于**未知的原因**，许可证激活失败。
+
+请到[这里](%@)提交**错误报告**</string>
+	<key>macos-scrolling-hint</key>
+	<string>设置速度：
+[%1$@ &gt; 鼠标 &gt; 滚动速度](%2$@)</string>
+	<key>mail-alert.back</key>
+	<string>返回</string>
+	<key>mail-alert.body</key>
+	<string>我可能无法及时回复邮件，但我会认真阅读所有的意见和建议，感谢您的反馈！</string>
+	<key>mail-alert.send</key>
+	<string>编写邮件</string>
+	<key>mail-alert.title</key>
+	<string>编写邮件？</string>
+	<key>modifer-key.tool.command</key>
+	<string>Command（⌘）</string>
+	<key>modifer-key.tool.control</key>
+	<string>Control（^）</string>
+	<key>modifer-key.tool.option</key>
+	<string>Option（⌥）</string>
+	<key>modifer-key.tool.shift</key>
+	<string>Shift（⇧）</string>
+	<key>natural-scrolling-hint</key>
+	<string>内容随手指移动</string>
+	<key>precise-scrolling-hint</key>
+	<string>*慢慢*滚动滚轮来精准滚动，甚至无需键盘修饰键</string>
+	<key>restore-buttons-alert.back</key>
+	<string>取消</string>
+	<key>restore-buttons-alert.commit</key>
+	<string>恢复</string>
+	<key>restore-buttons-alert.hint</key>
+	<string>您的**%1$@**鼠标回报了**%2$d**个按键</string>
+	<key>restore-buttons-alert.radio1</key>
+	<string>三键鼠标</string>
+	<key>restore-buttons-alert.radio2</key>
+	<string>五键或多键鼠标</string>
+	<key>restore-buttons-alert.title</key>
+	<string>恢复默认…</string>
+	<key>restore-default-buttons-popover.body</key>
+	<string>**点按此处**来载入您的**%@**鼠标的建议设置</string>
+	<key>revive-toast</key>
+	<string>**已启用**Mac Mouse Fix调校：%1$@
+此前由菜单栏%2$@停用</string>
+	<key>revive-toast.feature-buttons</key>
+	<string>**按键**</string>
+	<key>revive-toast.feature-scrolling</key>
+	<string>**滚动**</string>
+	<key>scroll-effect.4-pinch</key>
+	<string>桌面与启动台</string>
+	<key>scroll-effect.4-pinch.hint</key>
+	<string>向上滚动来显示启动台，向下滚动来显示桌面
+ 
+作用相当于在Apple触控板上四指张开或捏拢</string>
+	<key>scroll-effect.app-switcher</key>
+	<string>App切换器</string>
+	<key>scroll-effect.app-switcher.hint</key>
+	<string>在已打开的应用程序之间快速切换
+ 
+作用相当于在您的键盘上按住Command（⌘）然后按下Tab（⇥）</string>
+	<key>scroll-effect.horizontal</key>
+	<string>水平滚动</string>
+	<key>scroll-effect.horizontal.hint</key>
+	<string>向左和向右滚动来导航Safari页面、删除“邮件”中的邮件等
+ 
+作用相当于在Apple触控板上用双指左右轻扫</string>
+	<key>scroll-effect.precise</key>
+	<string>精准滚动</string>
+	<key>scroll-effect.precise.hint</key>
+	<string>精准地滚动小段距离、使用灵敏的用户界面元素</string>
+	<key>scroll-effect.rotate</key>
+	<string>旋转</string>
+	<key>scroll-effect.rotate.hint</key>
+	<string>旋转Apple地图和其他应用程序中的内容
+ 
+作用相当于在Apple触控板上用双指旋转</string>
+	<key>scroll-effect.spaces</key>
+	<string>切换空间</string>
+	<key>scroll-effect.spaces.hint</key>
+	<string>向上滚动来向左移动一个空间，向下滚动来向右移动一个空间
+ 
+作用相当于在Apple触控板上用三指左右滑动</string>
+	<key>scroll-effect.swift</key>
+	<string>快速滚动</string>
+	<key>scroll-effect.swift.hint</key>
+	<string>轻松地滚动大段距离</string>
+	<key>scroll-effect.zoom</key>
+	<string>放大或缩小</string>
+	<key>scroll-effect.zoom.hint</key>
+	<string>在Safari、地图和其他应用程序中放大或缩小
+ 
+效果相当于在Apple触控板上两指张开或捏拢</string>
+	<key>system-settings-name</key>
+	<string>系统设置</string>
+	<key>system-settings-name.pre-ventura</key>
+	<string>系统偏好设置</string>
+	<key>thanks.01</key>
+	<string>⭐️感谢您购买Mac Mouse Fix！</string>
+	<key>thanks.02</key>
+	<string>🙌感谢购买Mac Mouse Fix！</string>
+	<key>thanks.03</key>
+	<string>🚀感谢支持Mac Mouse Fix！</string>
+	<key>thanks.04</key>
+	<string>🌟感谢您购买Mac Mouse Fix！</string>
+	<key>thanks.05</key>
+	<string>🧠很赞的购买决定！ ;)</string>
+	<key>thanks.06</key>
+	<string>🔥在鼠标调校软件上的品味不俗！ ;)</string>
+	<key>thanks.09</key>
+	<string>👽分享给你Spacebook上的朋友们！</string>
+	<key>thanks.10</key>
+	<string>🦆苦日子到头了</string>
+	<key>thanks.13</key>
+	<string>🐹我们应该给他买个领结。</string>
+	<key>thanks.21</key>
+	<string>🐠你...是...谁？</string>
+	<key>thanks.22</key>
+	<string>🐁这是我的宠物！</string>
+	<key>thanks.25</key>
+	<string>🌏先是鼠标，然后是世界！！&gt;:)</string>
+	<key>trial-counter.active</key>
+	<string>免费期第**%1$d／%2$d**天</string>
+	<key>trial-counter.expired</key>
+	<string>免费期已结束</string>
+	<key>trial-notif.activate-license-button</key>
+	<string>激活许可证</string>
+	<key>trial-notif.body</key>
+	<string>您好！您使用Mac Mouse Fix已经有**%1$d天**了。希望您喜欢这个软件！
+
+如果您想要继续使用Mac Mouse Fix，不妨[立即购买](%2$@)。</string>
+	<key>trigger.substring.button-modifier.1</key>
+	<string>点按%@＋</string>
+	<key>trigger.substring.button-modifier.2</key>
+	<string>连按%@＋</string>
+	<key>trigger.substring.button-modifier.3</key>
+	<string>连按三下%@＋</string>
+	<key>trigger.substring.button-name.middle</key>
+	<string>中键</string>
+	<key>trigger.substring.button-name.numbered</key>
+	<string>按键%@</string>
+	<key>trigger.substring.button-name.primary</key>
+	<string>主键</string>
+	<key>trigger.substring.button-name.secondary</key>
+	<string>辅键</string>
+	<key>trigger.substring.click.1</key>
+	<string>点按%@</string>
+	<key>trigger.substring.click.2</key>
+	<string>连按%@</string>
+	<key>trigger.substring.click.3</key>
+	<string>连按三次%@</string>
+	<key>trigger.substring.drag.1</key>
+	<string>点按并拖移%@</string>
+	<key>trigger.substring.drag.2</key>
+	<string>连按并拖移%@</string>
+	<key>trigger.substring.drag.3</key>
+	<string>连按三次并拖移%@</string>
+	<key>trigger.substring.drag.flags</key>
+	<string>并拖移鼠标</string>
+	<key>trigger.substring.hold.1</key>
+	<string>按住%@</string>
+	<key>trigger.substring.hold.2</key>
+	<string>点按两下并按住%@</string>
+	<key>trigger.substring.hold.3</key>
+	<string>点按三下并按住%@</string>
+	<key>trigger.substring.scroll.1</key>
+	<string>点按并滚动%@</string>
+	<key>trigger.substring.scroll.2</key>
+	<string>连按并滚动%@</string>
+	<key>trigger.substring.scroll.3</key>
+	<string>连按三次并滚动%@</string>
+	<key>trigger.substring.scroll.flags</key>
+	<string>并滚动滚轮</string>
+	<key>trigger.y.group-row.button-name.middle</key>
+	<string>中键</string>
+	<key>trigger.y.group-row.button-name.numbered</key>
+	<string>按键%@</string>
+	<key>trigger.y.group-row.button-name.primary</key>
+	<string>主键</string>
+	<key>trigger.y.group-row.button-name.secondary</key>
+	<string>辅键</string>
+	<key>type-shortcut-prompt</key>
+	<string>输入键盘快捷键</string>
+</dict>
+</plist>

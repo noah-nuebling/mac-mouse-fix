@@ -44,24 +44,32 @@ import Cocoa
         
         /// Guard not equal
         
-        let newConfigRaw = config("Scroll") as! NSDictionary?
+        let newConfigRaw = Config.configForKeyPath("Scroll") as! NSDictionary?
         guard !(_scrollConfigRaw?.isEqual(newConfigRaw) ?? false) else {
+            DDLogInfo("[ScrollConfig.reload] SKIPPED reload - config unchanged. precise=\(newConfigRaw?.object(forCoolKeyPath: "precise") ?? "nil"), speed=\(newConfigRaw?.object(forCoolKeyPath: "speed") ?? "nil")")
             return
         }
+        
+        DDLogInfo("[ScrollConfig.reload] APPLYING new config. precise=\(newConfigRaw?.object(forCoolKeyPath: "precise") ?? "nil"), speed=\(newConfigRaw?.object(forCoolKeyPath: "speed") ?? "nil")")
         
         /// Notes:
         /// - This should be called when the underlying config (which mirrors the config file) changes
         /// - All the property values are cached in `currentConfig`, because the properties are lazy. Replacing with a fresh object deletes this implicit cache.
         /// - TODO: Make a copy before storing in `_scrollConfigRaw` just to be sure the equality checks always work
-        shared = ScrollConfig()
         _scrollConfigRaw = newConfigRaw
+        shared = ScrollConfig()
         cache = nil
+        
+        DDLogInfo("[ScrollConfig.reload] New shared created. u_precise=\(shared.u_precise), u_speed=\(shared.u_speed)")
+        
+        Scroll.configChanged()
 //        ReactiveScrollConfig.shared.handleScrollConfigChanged(newValue: shared)
         SwitchMaster.shared.scrollConfigChanged(scrollConfig: shared)
     }
     @objc static func devToggles_deleteCache() { /// [May 2025] Added this function as a hack for DevToggles.m
         shared = ScrollConfig()
         cache = nil
+        Scroll.configChanged()
     }
     private static var cache: [_HT<MFScrollModificationResult, MFAxis, CGDirectDisplayID>: ScrollConfig]? = nil
     
@@ -225,6 +233,9 @@ import Cocoa
                 new.accelerationCurve = getAccelerationCurve(forSpeed: u_speed, precise: precise, smoothness: new.u_smoothness, animationCurve: new.animationCurve, inputAxis: inputAxis, display: display, scaleToDisplay: scaleToDisplay, modifiers: modifiers, useQuickModSpeed: useQuickMod, usePreciseModSpeed: usePreciseMod, consecutiveScrollTickIntervalMax: new.consecutiveScrollTickIntervalMax, consecutiveScrollTickInterval_AccelerationEnd: new.consecutiveScrollTickInterval_AccelerationEnd)
             }
             
+            new.u_precise = precise
+            new.u_speed = u_speed
+            
             /// Cache & return
             cache![key] = new
             return new
@@ -260,12 +271,12 @@ import Cocoa
     
     // MARK: Invert Direction
     
-    @objc lazy var u_invertDirection: MFScrollInversion = {
+    @objc var u_invertDirection: MFScrollInversion {
         /// This can be used as a factor to invert things. kMFScrollInversionInverted is -1.
         
 //        if HelperState.shared.isLockedDown { return kMFScrollInversionNonInverted }
-        return c("reverseDirection") as! Bool ? kMFScrollInversionInverted : kMFScrollInversionNonInverted
-    }()
+        return c("reverseDirection") as? Bool ?? false ? kMFScrollInversionInverted : kMFScrollInversionNonInverted
+    }
     
     // MARK: Old Invert Direction
     /// Rationale: We used to have the user setting be "Natural Direction" but we changed it to being "Reverse Direction". This is so it's more transparent to the user when Mac Mouse Fix is intercepting the scroll input and also to have the SwitchMaster more easily decide when to turn the scrolling tap on or off. Also I think the setting is slightly more intuitive this way.
@@ -475,7 +486,12 @@ import Cocoa
         default: fatalError()
         }
     }()
-    @objc lazy var u_precise: Bool = { c("precise") as! Bool }()
+    @objc lazy var u_precise: Bool = {
+        if u_speed == kMFScrollSpeedSystem {
+            return false
+        }
+        return c("precise") as! Bool
+    }()
     
     /// Stored property
     ///     This is used by Scroll.m to determine how to accelerate
@@ -1030,8 +1046,6 @@ fileprivate func getAccelerationCurve(forSpeed speedArg: MFScrollSpeed, precise:
     let curve = BezierCappedAccelerationCurve(xMin: xMin, xMax: xMax, yMin: yMin, yMax: yMax, curvature: curvature, reduceToCubic: false, defaultEpsilon: 0.05)
     
     /// Debug
-    
-//    DDLogDebug("Recommended epsilon for Acceleration Curve: \(curve.getMinEpsilon(forResolution: 1000, startEpsilon: 0.02/*0.08*/, epsilonEpsilon: 0.001))")
     
     /// Return
     return curve

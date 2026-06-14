@@ -1,0 +1,4 @@
+module ReactiveCocoa {
+header "ReactiveCocoa-Swift.h"
+export *
+}

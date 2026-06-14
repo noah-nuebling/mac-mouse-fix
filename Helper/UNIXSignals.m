@@ -10,6 +10,8 @@
 #import "UNIXSignals.h"
 #import <signal.h>
 #import "DeviceManager.h"
+#import "MFMessagePort.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation UNIXSignals
 
@@ -129,7 +131,7 @@
             /// Validate: no previous signal handler was installed
             ///     Sidenote: In previous notes, we speculated that `NSApplicationMain(argc, argv)` (found in main.m) sets up its own SIGTERM handler which we're overriding here, but this code validates that that's not true.
             ///     Note: We're only let `SIG_DFL` pass through, not `SIG_IGN` since we wanna catch any previous alteration of the default signal handling that we might be overriding here.
-            bool signal_handler_did_exist = (old_action.sa_handler != SIG_DFL);
+            bool signal_handler_did_exist = (old_action.sa_handler != SIG_DFL) && (old_action.sa_handler != SIG_IGN);
             assert(!signal_handler_did_exist);
         }
         
@@ -181,6 +183,7 @@ static void termination_signal_handler(int the_signal) {
     ///         we might wanna - instead of trying to automaticallly deconfigure - make it apparent to MMF users when they are permanently changing the configuration [of their mouse hardware or the IOKit driver (IOKitDriver configuration is not really permanent though - only lasts until computer restart)]
     
     [DeviceManager deconfigureDevices];
+    [MFMessagePort invalidateLocalPort];
     
     ///
     /// Log

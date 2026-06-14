@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>capture-toast.buttons.captured.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%2$@ wird jetzt von Mac Mouse Fix abgefangen</string>
+			<key>other</key>
+			<string>%2$@ werden jetzt von Mac Mouse Fix abgefangen</string>
+		</dict>
+	</dict>
+	<key>capture-toast.buttons.captured.hint</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>Andere Apps können die Taste nicht mehr sehen</string>
+			<key>other</key>
+			<string>Andere Apps können diese Tasten nicht mehr sehen</string>
+		</dict>
+	</dict>
+	<key>capture-toast.buttons.uncaptured.body</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string>%2$@ wird nicht länger von Mac Mouse Fix abgefangen</string>
+			<key>other</key>
+			<string>%2$@ werden nicht länger von Mac Mouse Fix abgefangen</string>
+		</dict>
+	</dict>
+	<key>capture-toast.buttons.uncaptured.hint</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@pluralizable@</string>
+		<key>pluralizable</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>d</string>
+			<key>one</key>
+			<string></string>
+			<key>other</key>
+			<string></string>
+		</dict>
+	</dict>
+</dict>
+</plist>

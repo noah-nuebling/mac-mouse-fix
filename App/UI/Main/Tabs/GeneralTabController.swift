@@ -47,6 +47,8 @@ class GeneralTabController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        betaToggle.isHidden = true
+        
         /// Determine width for this tab
         applyHardcodedTabWidth("general", self, widthControllingTextFields: [enabledHint, updatesHint, menuBarHint]);
         
@@ -92,6 +94,7 @@ class GeneralTabController: NSViewController {
                 let userClickTS = CACurrentMediaTime()
                 
                 EnabledState.shared.enable(onComplete: { error in
+                    DispatchQueue.main.async {
                     
                     if error == nil {
                         
@@ -198,11 +201,10 @@ class GeneralTabController: NSViewController {
                         guard let error = error else { assert(false); return }
                         
                         
-                        if #available(macOS 13.0, *), error.domain == "SMAppServiceErrorDomain", error.code == 1 {
-                            
-                            Toasts.showSimpleToast(name: "k-is-disabled-toast")
-                        }
-                        else { assert(false) }
+                        DDLogError("GeneralTabController - enabling helper failed with error: \(error)")
+                        
+                        Toasts.showSimpleToast(name: "k-is-disabled-toast")
+                    }
                     }
                 })
                 
@@ -223,7 +225,6 @@ class GeneralTabController: NSViewController {
         
         showInMenuBar <~ menuBarToggle.reactive.boolValues
         checkForUpdates <~ updatesToggle.reactive.boolValues
-        getBetaVersions <~ betaToggle.reactive.boolValues
         
         if usingSwitch, #available(macOS 10.15, *) {
             (enableToggle as? NSSwitcherino)?.reactive.boolValue <~ EnabledState.shared
@@ -232,7 +233,6 @@ class GeneralTabController: NSViewController {
         }
         menuBarToggle.reactive.boolValue <~ showInMenuBar
         updatesToggle.reactive.boolValue <~ checkForUpdates
-        betaToggle.reactive.boolValue <~ getBetaVersions
         
         mainHidableSection.reactive.isCollapsed <~ EnabledState.shared.producer.negate()
         updatesExtraSection.reactive.isCollapsed <~ checkForUpdates.producer.negate()
@@ -274,13 +274,6 @@ class GeneralTabController: NSViewController {
         checkForUpdates.producer.skip(first: 1).startWithValues { doCheckUpdates in
             SparkleUpdaterController.resetSkippedVersions()
             if doCheckUpdates {
-                SUUpdater.shared().checkForUpdatesInBackground()
-            }
-        }
-        getBetaVersions.producer.skip(first: 1).startWithValues { doCheckBetas in
-            SparkleUpdaterController.resetSkippedVersions()
-            SparkleUpdaterController.enablePrereleaseChannel(doCheckBetas)
-            if doCheckBetas {
                 SUUpdater.shared().checkForUpdatesInBackground()
             }
         }

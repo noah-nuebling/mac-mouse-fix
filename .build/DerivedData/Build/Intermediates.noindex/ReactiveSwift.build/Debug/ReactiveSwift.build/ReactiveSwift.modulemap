@@ -1,0 +1,4 @@
+module ReactiveSwift {
+header "ReactiveSwift-Swift.h"
+export *
+}

@@ -1,0 +1,12 @@
+
+/* Class = "NSWindow"; title = "Window"; ObjectID = "1"; */
+"1.title" = "Window"; /* Does not need to be translated */
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "14"; */
+"14.title" = "Annulla";
+
+/* Class = "NSButtonCell"; title = "Enter License"; ObjectID = "15"; */
+"15.title" = "Inserisci Licenza";
+
+/* Class = "NSTextFieldCell"; title = "Completing Purchase"; ObjectID = "cSe-YQ-ICA"; */
+"cSe-YQ-ICA.title" = "Stiamo completando il tuo acquisto";

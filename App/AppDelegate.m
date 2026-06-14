@@ -19,7 +19,6 @@
 #import "NSView+Additions.h"
 #import "AppTranslocationManager.h"
 #import <Sparkle/Sparkle.h>
-#import "SparkleUpdaterController.h"
 #import "NSAttributedString+Additions.h"
 #import "Mac_Mouse_Fix-Swift.h"
 #import "Locator.h"
@@ -39,6 +38,7 @@
 #pragma mark - IBActions
 
 - (IBAction)openAboutTab:(id)sender {
+    [self showMainWindow:self];
     [MainAppState.shared.tabViewController coolSelectTabWithIdentifier:@"about" window:nil];
 }
 
@@ -98,11 +98,13 @@
         
         /// Open the license activation UI
         
+        [self showMainWindow:self];
         [LicenseSheetController add];
         
     } else if ([path isEqual:@"disable"]) {
         
         /// Switch to the general tab and then disable the helper
+        [self showMainWindow:self];
         
         /// Gather info
         NSString *currentTab = MainAppState.shared.tabViewController.identifierOfSelectedTab;
@@ -133,6 +135,27 @@
     } else {
         DDLogWarn(@"Received URL with unknown path: %@", address);
     }
+}
+
+- (void)showMainWindow:(id)sender {
+    
+    NSWindow *window = self.window ?: MainAppState.shared.window;
+    if (window == nil) {
+        for (NSWindow *candidate in NSApp.windows) {
+            if ([candidate isKindOfClass:ResizingTabWindow.class]) {
+                window = candidate;
+                break;
+            }
+        }
+    }
+    
+    if (window == nil) {
+        DDLogError(@"Could not show main window because no ResizingTabWindow exists.");
+        return;
+    }
+    
+    [window makeKeyAndOrderFront:sender];
+    [NSApp activateIgnoringOtherApps:YES];
 }
 
 #pragma mark - Init and Lifecycle
@@ -323,32 +346,12 @@ static NSDictionary *sideButtonActions;
     
     BOOL checkForUpdates = [(id)config(@"General.checkForUpdates") boolValue];
     
-    BOOL checkForPrereleases = [(id)config(@"General.checkForPrereleases") boolValue];
-    
-    if (firstVersionLaunch && !appState().updaterDidRelaunchApplication) {
-        /// TODO: Test if updaterDidRelaunchApplication works.
-        ///     It will only work if `SparkleUpdaterDelegate - updaterDidRelaunchApplication:` is called before this
-        /// The app (or this version of it) has probably been downloaded from the internet and is running for the first time.
-        ///  -> Override check-for-prereleases setting
-        if (runningPreRelease()) {
-            /// If this is a pre-release version itself, we activate updates to pre-releases
-            checkForPrereleases = YES;
-        } else {
-            /// If this is not a pre-release, then we'll *deactivate* updates to pre-releases
-//            checkForPrereleases = NO;
-        }
-        setConfig(@"General.checkForPrereleases", @(checkForPrereleases));
-    }
-    
-    /// Write changes to we made to config through setConfig() to file. Also notifies helper app, which is probably unnecessary.
+    /// Write changes we made to config through setConfig() to file. Also notifies helper app, which is probably unnecessary.
     commitConfig();
     
-    /// Check for udates
+    /// Check for updates
     
     if (checkForUpdates) {
-        
-        [SparkleUpdaterController enablePrereleaseChannel:checkForPrereleases];
-        
         [up checkForUpdatesInBackground];
     }
     
@@ -368,8 +371,13 @@ static NSDictionary *sideButtonActions;
 //    [UpdateWindow.instance close]; Can't find a way to close Sparkle Window
 }
 
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag {
+    [self showMainWindow:sender];
+    return NO;
+}
+
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)app {
-    return YES;
+    return NO;
 }
 
 @end

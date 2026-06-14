@@ -12,6 +12,11 @@
 #import "Constants.h"
 #import "ModificationUtility.h"
 #import "Locator.h"
+#if IS_HELPER
+#import "Mac_Mouse_Fix_Helper-Swift.h"
+#else
+#import "Mac_Mouse_Fix-Swift.h"
+#endif
 #import "SharedUtility.h"
 #import "Logging.h"
 

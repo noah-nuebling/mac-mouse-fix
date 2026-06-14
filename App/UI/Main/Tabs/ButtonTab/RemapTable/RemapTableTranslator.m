@@ -14,8 +14,6 @@
 #import "NSAttributedString+Additions.h"
 #import "NSTextField+Additions.h"
 #import "Config.h"
-#import "RemapTableController.h"
-#import "KeyCaptureView.h"
 #import "AppDelegate.h"
 #import "NSView+Additions.h"
 #import "RemapTableUtility.h"
@@ -278,6 +276,15 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
             @"keyCaptureEntry": @YES
         },
     ].mutableCopy;
+
+    [oneShotEffectsTable addObject:separatorEffectsTableEntry()];
+    [oneShotEffectsTable addObject:@{
+        @"ui": MFLocalizedString(@"effect.toggle-smart-shift", @"Toggle Scroll Wheel Mode"),
+        @"tool": MFLocalizedString(@"effect.toggle-smart-shift.hint", @"Toggle the scroll wheel between Ratchet and Free Spin mode."),
+        @"dict": @{
+            kMFActionDictKeyType: kMFActionDictTypeToggleSmartShift,
+        }
+    }];
     
     /// Insert button specific entry
     ///     Disabling this for now because I don't want to translate it and noone uses it.
@@ -491,70 +498,60 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     return name;
 }
 
-+ (NSMenuItem * _Nullable)getPopUpButtonItemToSelectBasedOnRowDict:(NSPopUpButton * _Nonnull)button rowDict:(NSDictionary * _Nonnull)rowDict {
+static NSMenuItem * _Nullable findMenuItemWithEffect(NSMenu *menu, NSDictionary *targetEffect) {
+    for (NSMenuItem *item in menu.itemArray) {
+        if (item.isSeparatorItem) continue;
+        if (item.view != nil) continue;
+        if (item.isAlternate && !item.hasSubmenu) continue;
         
+        id repObj = item.representedObject;
+        if ([repObj isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *effectDict = repObj[@"dict"];
+            if (effectDict != nil && [effectDict isEqual:targetEffect]) {
+                return item;
+            }
+        }
+        if (item.hasSubmenu) {
+            NSMenuItem *subMatch = findMenuItemWithEffect(item.submenu, targetEffect);
+            if (subMatch) {
+                return subMatch;
+            }
+        }
+    }
+    return nil;
+}
+
++ (NSMenuItem * _Nullable)getPopUpButtonItemToSelectBasedOnRowDict:(NSPopUpButton * _Nonnull)button rowDict:(NSDictionary * _Nonnull)rowDict {
+    
     /// Datamodel -> Button state
+    /// Search through the popup button's menu items by comparing each item's
+    /// representedObject[@"dict"] against the target effect from the data model.
+    /// Supports recursive submenu lookup for items like Apple Keys.
     
     NSDictionary *targetEffect = rowDict[kMFRemapsKeyEffect];
-    NSArray *effectPickerModel = [RemapTableTranslator getEffectsTableForRemapsTableEntry:rowDict];
+    if (!targetEffect) return nil;
     
-    int resultUIIndex = -1;
-    
-    int uiIndex = 0;
-    int modelIndex = 0;
-    
-    while (true) {
-        NSDictionary *effect = effectPickerModel[modelIndex];
-        if ([effect[@"hideable"] isEqual:@YES]) {
-            uiIndex += 1;
-        }
-        if ([effect[@"dict"] isEqual:targetEffect]) {
-            resultUIIndex = uiIndex;
-            break;
-        };
-        uiIndex += 1;
-        modelIndex += 1;
-    }
-    
-    if (resultUIIndex != -1) {
-        return [button itemAtIndex:resultUIIndex];
-    } else {
-        return nil;
-    }
+    return findMenuItemWithEffect(button.menu, targetEffect);
 }
 
 + (NSDictionary * _Nullable)getEffectDictBasedOnSelectedItemInButton:(NSPopUpButton * _Nonnull)button rowDict:(NSDictionary * _Nonnull)rowDict {
     
     /// Button state -> Datamodel
+    /// Read the selected item's representedObject to get the effect dict.
+    /// If the selected item doesn't carry a valid effect dict (e.g. it's a hidden placeholder
+    /// or separator), fall back to the existing effect in the data model.
     
-    NSArray *effectsTable = [RemapTableTranslator getEffectsTableForRemapsTableEntry:rowDict];
-    NSInteger targetUIIndex = button.indexOfSelectedItem;
-    
-    int uiIndex = 0;
-    int modelIndex = 0;
-    
-    while (true) {
-        
-        NSDictionary *effect = effectsTable[modelIndex];
-        if ([effect[@"hideable"] isEqual:@YES]) {
-            uiIndex += 1;
+    NSMenuItem *selectedItem = button.selectedItem;
+    if (selectedItem) {
+        id repObj = selectedItem.representedObject;
+        if ([repObj isKindOfClass:[NSDictionary class]]) {
+            NSDictionary *effectDict = repObj[@"dict"];
+            if (effectDict) {
+                return effectDict;
+            }
         }
-         
-        if (uiIndex == targetUIIndex) {
-            break;
-        }
-        if (uiIndex > targetUIIndex) {
-            assert(false);
-            break;
-        }
-        
-        uiIndex += 1;
-        modelIndex += 1;
     }
-    
-    
-    
-    return effectsTable[modelIndex][@"dict"];
+    return rowDict[kMFRemapsKeyEffect];
 }
 
 + (NSMenuItem *)menuItemFromDataModel:(NSDictionary *)itemModel enclosingMenu:(NSMenu *)enclosingMenu tableCell:(NSTableCellView *)tableCell {
@@ -570,6 +567,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
     } else {
         
         i = [[RemapTableMenuItem alloc] init];
+        i.representedObject = itemModel;
         
         NSString *title = itemModel[@"ui"];
         if (title != nil) {

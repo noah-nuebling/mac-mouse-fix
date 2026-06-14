@@ -1,0 +1,39 @@
+
+/* Class = "NSTextFieldCell"; title = "Save 50% today!"; ObjectID = "25"; */
+"25.title" = "Save 50% today!"; /* Does not need to be translated */
+
+/* Class = "NSTextFieldCell"; title = "NOW"; ObjectID = "27"; */
+"27.title" = "JETZT";
+
+/* Class = "NSTextFieldCell"; title = "$10.00"; ObjectID = "28"; */
+"28.title" = "$10.00"; /* Does not need to be translated */
+
+/* Class = "NSTextFieldCell"; title = "$10.00"; ObjectID = "29"; */
+"29.title" = "$10.00"; /* Does not need to be translated */
+
+/* Class = "NSTextFieldCell"; title = "WAS"; ObjectID = "30"; */
+"30.title" = "VORHER";
+
+/* Class = "NSTextFieldCell"; title = "By John Smith"; ObjectID = "31"; */
+"31.title" = "By John Smith"; /* Does not need to be translated */
+
+/* Class = "NSTextFieldCell"; title = "Test Product"; ObjectID = "32"; */
+"32.title" = "Test Product"; /* Does not need to be translated */
+
+/* Class = "NSButtonCell"; title = "Enter License"; ObjectID = "37"; */
+"37.title" = "Lizenz eingeben";
+
+/* Class = "NSButtonCell"; title = "Buy Now"; ObjectID = "38"; */
+"38.title" = "Jetzt kaufen";
+
+/* Class = "NSButtonCell"; title = "Continue Trial"; ObjectID = "39"; */
+"39.title" = "Testzeitraum fortsetzen";
+
+/* Class = "NSTextFieldCell"; title = "Thanks for evaluating this version of Test Product."; ObjectID = "40"; */
+"40.title" = "Thanks for evaluating this version of Test Product."; /* Does not need to be translated */
+
+/* Class = "NSTextFieldCell"; title = "Test Product"; ObjectID = "41"; */
+"41.title" = "Test Product"; /* Does not need to be translated */
+
+/* Class = "NSTextFieldCell"; title = "Thank you for trying"; ObjectID = "42"; */
+"42.title" = "Thank you for trying"; /* Does not need to be translated */

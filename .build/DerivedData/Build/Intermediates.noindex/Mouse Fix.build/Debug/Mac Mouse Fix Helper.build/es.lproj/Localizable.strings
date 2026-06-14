@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>accessibility.settings-link.pre-ventura</key>
+	<string>Abrir las Preferencias 'Seguridad y Privacidad'</string>
+	<key>already-using-defaults-toast.3</key>
+	<string>Ya estás **usando** la configuración predeterminada para ratones con **3 botones**</string>
+	<key>already-using-defaults-toast.5</key>
+	<string>Ya estás **usando** la configuración predeterminada para ratones con **5+ botones**</string>
+	<key>app-version</key>
+	<string>Versión %@</string>
+	<key>button-name.tool.numbered</key>
+	<string>Botón del Ratón %@</string>
+	<key>capture-toast.button-name.middle</key>
+	<string>Botón Central</string>
+	<key>capture-toast.button-name.numbered</key>
+	<string>Botón %@</string>
+	<key>capture-toast.button-name.primary</key>
+	<string>Botón Primario</string>
+	<key>capture-toast.button-name.secondary</key>
+	<string>Botón Secundario</string>
+	<key>capture-toast.buttons.link</key>
+	<string>[Saber más](%@)</string>
+	<key>capture-toast.scroll.captured.body</key>
+	<string>El **desplazamiento** ahora está capturado por Mac Mouse Fix</string>
+	<key>capture-toast.scroll.link</key>
+	<string>[Saber más](%@)</string>
+	<key>capture-toast.scroll.uncaptured.body</key>
+	<string>El **desplazamiento** ya no está capturado por Mac Mouse Fix</string>
+	<key>drag-effect.dock-swipe</key>
+	<string>Espacios y Centro de Control</string>
+	<key>drag-effect.dock-swipe.hint</key>
+	<string>Mueva el ratón:
+ - Hacia arriba para mostrar el Mission Control
+ - Hacia abajo para mostrar Ventanas de Aplicación
+ - Hacia la Izquierda o la Derecha para moverse entre Espacios
+
+Funciona como deslizar con 3 dedos en un Apple Trackpad</string>
+	<key>drag-effect.scroll-swipe</key>
+	<string>Desplazamiento y Navegación</string>
+	<key>drag-effect.scroll-swipe.hint</key>
+	<string>Desplázate libremente moviendo el ratón en cualquier dirección
+
+También navega entre páginas en Safari, elimina mensajes en Mail y más moviendo el ratón hacia la izquierda y la derecha
+
+Funciona como deslizar con 2 dedos en un Apple Trackpad</string>
+	<key>effect.app-expose</key>
+	<string>Application Windows</string>
+	<key>effect.app-expose.hint</key>
+	<string>Mostrar todas las ventanas de la aplicación activa</string>
+	<key>effect.apple-keys-submenu</key>
+	<string> Teclas exclusivas</string>
+	<key>effect.apple-keys-submenu.hint</key>
+	<string>Elige teclas que solo están disponibles en teclados de Apple</string>
+	<key>effect.apple-shortcut.hint</key>
+	<string>Funciona como pulsar '%@' en un teclado de Apple</string>
+	<key>effect.back</key>
+	<string>Atrás</string>
+	<key>effect.back.hint</key>
+	<string>Volver una página en Safari y otras aplicaciones</string>
+	<key>effect.click.middle</key>
+	<string>Clic Central</string>
+	<key>effect.click.middle.hint</key>
+	<string>Abrir enlaces en una pestaña nueva, pegar texto en la Terminal, y más.
+
+Funciona como hacer clic en el botón central del ratón (también llamado botón de la rueda de desplazamiento o botón 3 del ratón) en un ratón estándar.</string>
+	<key>effect.click.primary</key>
+	<string>Clic Principal</string>
+	<key>effect.click.primary.hint</key>
+	<string>Funciona como hacer clic en el botón primario del ratón (también llamado botón izquierdo o botón 1 del ratón) en un ratón estándar.</string>
+	<key>effect.click.secondary</key>
+	<string>Clic Secundario</string>
+	<key>effect.click.secondary.hint</key>
+	<string>Funciona como hacer clic en el botón secundario del ratón (también llamado botón derecho del ratón o botón 2 del ratón) en un ratón estándar.</string>
+	<key>effect.desktop</key>
+	<string>Mostrar Escritorio</string>
+	<key>effect.desktop.hint</key>
+	<string>Mostrar el escritorio</string>
+	<key>effect.forward</key>
+	<string>Adelante</string>
+	<key>effect.forward.hint</key>
+	<string>Avanzar una página en Safari y otras aplicaciones</string>
+	<key>effect.launchpad</key>
+	<string>Launchpad</string>
+	<key>effect.launchpad.hint</key>
+	<string>Abrir Launchpad</string>
+	<key>effect.left-space</key>
+	<string>Moverse un Espacio a la Izquierda</string>
+	<key>effect.left-space.hint</key>
+	<string>Moverse un Espacio a la Izquierda</string>
+	<key>effect.look-up</key>
+	<string>Mira hacia arriba y mira rápido</string>
+	<key>effect.look-up.hint</key>
+	<string>Buscar palabras en el Diccionario, Vista Rápida de archivos en el Finder, y más.
+
+Funciona como un clic forzado en un Apple Trackpad.</string>
+	<key>effect.mission-control</key>
+	<string>Mission Control</string>
+	<key>effect.mission-control.hint</key>
+	<string>Mostrar el Mission Control</string>
+	<key>effect.record-shortcut</key>
+	<string>Atajo de teclado...</string>
+	<key>effect.record-shortcut.hint</key>
+	<string>Escriba un atajo de teclado, luego úselo desde su ratón</string>
+	<key>effect.right-space</key>
+	<string>Moverse un espacio a la derecha</string>
+	<key>effect.right-space.hint</key>
+	<string>Moverse un espacio a la derecha</string>
+	<key>effect.shortcut.hint</key>
+	<string>Funciona como pulsar '%@' en tu teclado</string>
+	<key>effect.smart-zoom</key>
+	<string>Zoom inteligente</string>
+	<key>effect.smart-zoom.hint</key>
+	<string>Acercar o alejar en Safari y otras aplicaciones.
+
+Funciona como un doble toque con dos dedos en un Apple Trackpad.</string>
+	<key>enable-timeout-toast</key>
+	<string>Si tienes **problemas para activar** la aplicación, haz clic [aquí](%@)</string>
+	<key>forbidden-capture-toast.1</key>
+	<string>**El botón primario del ratón** no se puede usar
+Por favor, prueba otro botón</string>
+	<key>forbidden-capture-toast.2</key>
+	<string>**El botón secundario del ratón** no se puede usar
+Por favor, prueba otro botón</string>
+	<key>free-country</key>
+	<string>Mac Mouse Fix es actualmente gratuito en tu país (%@)</string>
+	<key>is-disabled-toast</key>
+	<string>Mac Mouse Fix fue **desactivado** en Ajustes del Sistema
+
+Para activar Mac Mouse Fix:
+
+1.  Ve a [Ajustes de Elementos de Inicio](%@)
+2.  Activa 'Mac Mouse Fix.app'</string>
+	<key>is-strange-helper-alert.body</key>
+	<string>Mac Mouse Fix no puede ser activado porque hay **otra versión** de Mac Mouse Fix presente en tu ordenador
+
+Para activar Mac Mouse Fix:
+
+1.  Elimina la [otra versión](%@)
+2.  Vacía la Papelera
+3.  Reinicia tu Mac
+4.  ¡Inténtalo de nuevo!</string>
+	<key>is-strange-helper-alert.title</key>
+	<string>Activación fallida</string>
+	<key>join-list</key>
+	<string>, </string>
+	<key>join-list.last</key>
+	<string>%1$@ y %2$@</string>
+	<key>license-button.activate</key>
+	<string>Activar Licencia</string>
+	<key>license-button.deactivate</key>
+	<string>Desactivar Licencia</string>
+	<key>license-toast.activate</key>
+	<string>¡Tu licencia ha sido **activada**! 🎉</string>
+	<key>license-toast.activation-overload</key>
+	<string>Esta licencia ha sido activada **%2$d** veces. El máximo es **%3$d**.
+
+Debido a esto, la licencia ha sido invalidada. Esto es para prevenir la piratería. Si tienes otras razones para activar la licencia tantas veces, por favor disculpa las molestias.
+
+Simplemente [ponte en contacto](%1$@) y te proporcionaré una nueva licencia. ¡Gracias por tu comprensión!</string>
+	<key>license-toast.already-active</key>
+	<string>Tu aplicación **ya está licenciada** con esta clave</string>
+	<key>license-toast.deactivate</key>
+	<string>Tu licencia ha sido **desactivada**</string>
+	<key>license-toast.free-country</key>
+	<string>Esta licencia **no pudo ser activada** pero Mac Mouse Fix es actualmente **gratuito en tu país**.</string>
+	<key>license-toast.gumroad-error</key>
+	<string>Ocurrió un **error con el servidor de licencias**
+
+Dice:
+
+%@</string>
+	<key>license-toast.no-internet</key>
+	<string>Hay un **problema con la conexión a internet**
+
+Asegúrate de que tu ordenador esté conectado y de que ningún cortafuegos esté bloqueando la conexión de Mac Mouse Fix a internet.
+
+Si esto no soluciona el problema, contáctame [aquí](%@).</string>
+	<key>license-toast.server-response-invalid</key>
+	<string>Hay un **problema con el servidor de licencias**
+
+Por favor, inténtalo de nuevo más tarde.
+
+Si el problema persiste, contáctame [aquí](%@).</string>
+	<key>license-toast.unknown-error</key>
+	<string>Ocurrió un **error desconocido**:
+
+%@</string>
+	<key>license-toast.unknown-key</key>
+	<string>'**%@**' no es una clave de licencia válida
+
+Asegúrate de ingresar tu clave de Mac Mouse Fix exactamente como la recibiste.</string>
+	<key>license-toast.unknown-reason</key>
+	<string>La activación de tu licencia falló por **razones desconocidas**
+
+Por favor, escribe un **Reporte de error** [aquí](%@)</string>
+	<key>macos-scrolling-hint</key>
+	<string>Configurar la velocidad en
+[%1$@ &gt; Ratón &gt; Velocidad de desplazamiento](%2$@)</string>
+	<key>mail-alert.back</key>
+	<string>Atrás</string>
+	<key>mail-alert.body</key>
+	<string>Solo puedo responder en raras ocasiones, pero leo todos los mensajes y los comentarios me ayudan a mejorar Mac Mouse Fix. ¡Gracias por tus comentarios!</string>
+	<key>mail-alert.send</key>
+	<string>Escribir Correo Electrónico</string>
+	<key>mail-alert.title</key>
+	<string>¿Escribir un Correo Electrónico?</string>
+	<key>modifer-key.tool.command</key>
+	<string>Comando (⌘)</string>
+	<key>modifer-key.tool.control</key>
+	<string>Control (^)</string>
+	<key>modifer-key.tool.option</key>
+	<string>Opción (⌥)</string>
+	<key>modifer-key.tool.shift</key>
+	<string>Mayús (⇧)</string>
+	<key>natural-scrolling-hint</key>
+	<string>El contenido sigue el movimiento del dedo</string>
+	<key>precise-scrolling-hint</key>
+	<string>Desplázate con precisión, incluso sin un modificador de teclado, moviendo la rueda de desplazamiento&amp;nbsp;*lentamente*</string>
+	<key>restore-buttons-alert.back</key>
+	<string>Cancelar</string>
+	<key>restore-buttons-alert.commit</key>
+	<string>Restaurar</string>
+	<key>restore-buttons-alert.hint</key>
+	<string>Tu ratón (**%1$@**) dice que tiene **%2$d** botones</string>
+	<key>restore-buttons-alert.radio1</key>
+	<string>Ratón con 3 botones</string>
+	<key>restore-buttons-alert.radio2</key>
+	<string>Ratón con 5+ botones</string>
+	<key>restore-buttons-alert.title</key>
+	<string>Restaurar valor Predeterminado para ...</string>
+	<key>restore-default-buttons-popover.body</key>
+	<string>**Haz clic aquí** para cargar la configuración recomendada para tu ratón (**%@**)</string>
+	<key>revive-toast</key>
+	<string>**Activado** Mac Mouse Fix para %1$@
+Había sido desactivado desde la Barra&amp;nbsp;de&amp;nbsp;menús&amp;nbsp;%2$@</string>
+	<key>revive-toast.feature-buttons</key>
+	<string>**Botones**</string>
+	<key>revive-toast.feature-scrolling</key>
+	<string>**Desplazamiento**</string>
+	<key>scroll-effect.4-pinch</key>
+	<string>Escritorio y Launchpad</string>
+	<key>scroll-effect.4-pinch.hint</key>
+	<string>Desplázate hacia arriba para Launchpad y hacia abajo para mostrar el Escritorio
+
+Funciona como pellizcar con 4 dedos en un Apple Trackpad</string>
+	<key>scroll-effect.app-switcher</key>
+	<string>Conmutador de Apps</string>
+	<key>scroll-effect.app-switcher.hint</key>
+	<string>Cambia rápidamente entre las aplicaciones abiertas
+
+Funciona como mantener pulsado Comando (⌘) y luego pulsar Tab (⇥) en tu teclado</string>
+	<key>scroll-effect.horizontal</key>
+	<string>Desplazamiento Horizontal</string>
+	<key>scroll-effect.horizontal.hint</key>
+	<string>Desplázate hacia la izquierda y hacia la derecha, navega entre páginas en Safari, elimina mensajes en Mail y más
+
+Funciona como deslizar horizontalmente con 2 dedos en un Apple Trackpad</string>
+	<key>scroll-effect.precise</key>
+	<string>Desplazamiento Preciso</string>
+	<key>scroll-effect.precise.hint</key>
+	<string>Desplázate distancias cortas y utiliza elementos de interfaz de usuario sensibles con precisión</string>
+	<key>scroll-effect.rotate</key>
+	<string>Rotar</string>
+	<key>scroll-effect.rotate.hint</key>
+	<string>Gira contenido en Mapas de Apple y otras aplicaciones
+
+Funciona como girar con 2 dedos en un Apple Trackpad</string>
+	<key>scroll-effect.spaces</key>
+	<string>Moverse Entre Espacios</string>
+	<key>scroll-effect.spaces.hint</key>
+	<string>Desplázate hacia arriba para moverte un Espacio a la izquierda y hacia abajo para moverte un Espacio a la derecha
+
+Funciona como deslizar horizontalmente con 3 dedos en un Apple Trackpad</string>
+	<key>scroll-effect.swift</key>
+	<string>Desplazamiento Rápido</string>
+	<key>scroll-effect.swift.hint</key>
+	<string>Desplázate largas distancias con el mínimo esfuerzo</string>
+	<key>scroll-effect.zoom</key>
+	<string>Acercar o Alejar</string>
+	<key>scroll-effect.zoom.hint</key>
+	<string>Acercar o alejar en Safari, Mapas y otras aplicaciones
+
+Funciona como pellizcar para hacer zoom en un trackpad de Apple</string>
+	<key>system-settings-name</key>
+	<string>Ajustes del Sistema</string>
+	<key>system-settings-name.pre-ventura</key>
+	<string>Preferencias del Sistema</string>
+	<key>thanks.01</key>
+	<string>⭐️ ¡Gracias por comprar Mac Mouse Fix!</string>
+	<key>thanks.02</key>
+	<string>🙌 ¡Gracias por comprar Mac Mouse Fix!</string>
+	<key>thanks.03</key>
+	<string>🚀 ¡Gracias por apoyar Mac Mouse Fix!</string>
+	<key>thanks.04</key>
+	<string>🌟 ¡Gracias por comprar Mac Mouse Fix!</string>
+	<key>thanks.05</key>
+	<string>🧠 ¡Gran decisión de compra! ;)</string>
+	<key>thanks.06</key>
+	<string>🔥 ¡Gusto increíble en software para arreglar ratones! ;)</string>
+	<key>thanks.09</key>
+	<string>👽 ¡Compártelo con tus amigos de Spacebook!</string>
+	<key>thanks.10</key>
+	<string>🦆 Paso de pato para siempre</string>
+	<key>thanks.13</key>
+	<string>🐹 Deberíamos comprarle una pajarita.</string>
+	<key>thanks.21</key>
+	<string>🐠 ¿Qué... Eres... Tú?</string>
+	<key>thanks.22</key>
+	<string>🐁 ¡La mascota personal del comerciante!</string>
+	<key>thanks.25</key>
+	<string>🌏 ¡Primero los ratones, luego el mundo! &gt;:)</string>
+	<key>trial-counter.active</key>
+	<string>Día gratuito **%1$d/%2$d**</string>
+	<key>trial-counter.expired</key>
+	<string>Los días gratuitos han terminado</string>
+	<key>trial-notif.activate-license-button</key>
+	<string>Activar Licencia</string>
+	<key>trial-notif.body</key>
+	<string>¡Hola\! Llevas usando Mac Mouse Fix durante **%1$d días**. ¡Espero que lo estés disfrutando\!
+
+Si quieres seguir usando Mac Mouse Fix, puedes [comprarlo ahora](%2$@).</string>
+	<key>trigger.substring.button-modifier.1</key>
+	<string>Clic %@ +</string>
+	<key>trigger.substring.button-modifier.2</key>
+	<string>Doble Clic %@ +</string>
+	<key>trigger.substring.button-modifier.3</key>
+	<string>Triple Clic %@ +</string>
+	<key>trigger.substring.button-name.middle</key>
+	<string>Botón Central</string>
+	<key>trigger.substring.button-name.numbered</key>
+	<string>Botón %@</string>
+	<key>trigger.substring.button-name.primary</key>
+	<string>Botón Primario</string>
+	<key>trigger.substring.button-name.secondary</key>
+	<string>Botón Secundario</string>
+	<key>trigger.substring.click.1</key>
+	<string>Clic %@</string>
+	<key>trigger.substring.click.2</key>
+	<string>Doble Clic %@</string>
+	<key>trigger.substring.click.3</key>
+	<string>Triple Clic %@</string>
+	<key>trigger.substring.drag.1</key>
+	<string>Clic y *Arrastrar* %@</string>
+	<key>trigger.substring.drag.2</key>
+	<string>Doble Clic y *Arrastrar* %@</string>
+	<key>trigger.substring.drag.3</key>
+	<string>Triple Clic y *Arrastrar* %@</string>
+	<key>trigger.substring.drag.flags</key>
+	<string>y *arrastrar*</string>
+	<key>trigger.substring.hold.1</key>
+	<string>Mantener pulsado %@</string>
+	<key>trigger.substring.hold.2</key>
+	<string>Doble Clic y Mantener Pulsado %@</string>
+	<key>trigger.substring.hold.3</key>
+	<string>Triple Clic y Mantener Pulsado %@</string>
+	<key>trigger.substring.scroll.1</key>
+	<string>Clic y *Desplazar* %@</string>
+	<key>trigger.substring.scroll.2</key>
+	<string>Doble Clic y *Desplazar* %@</string>
+	<key>trigger.substring.scroll.3</key>
+	<string>Triple Clic y *Desplazar* %@</string>
+	<key>trigger.substring.scroll.flags</key>
+	<string>y *desplazar*</string>
+	<key>trigger.y.group-row.button-name.middle</key>
+	<string>Botón central</string>
+	<key>trigger.y.group-row.button-name.numbered</key>
+	<string>Botón %@</string>
+	<key>trigger.y.group-row.button-name.primary</key>
+	<string>Botón Primario</string>
+	<key>trigger.y.group-row.button-name.secondary</key>
+	<string>Botón Secundario</string>
+	<key>type-shortcut-prompt</key>
+	<string>Escribir un Atajo de Teclado</string>
+</dict>
+</plist>

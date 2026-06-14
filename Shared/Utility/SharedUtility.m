@@ -11,6 +11,12 @@
 #import "Locator.h"
 #import "Config.h"
 #import "SharedUtility.h"
+
+#if IS_HELPER
+#import "Mac_Mouse_Fix_Helper-Swift.h"
+#else
+#import "Mac_Mouse_Fix-Swift.h"
+#endif
 @import AppKit.NSScreen;
 #import <objc/runtime.h>
 #import "Logging.h"

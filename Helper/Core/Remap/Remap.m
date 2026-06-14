@@ -11,9 +11,8 @@
 #import "ModificationUtility.h"
 #import "SharedUtility.h"
 #import "ButtonTriggerGenerator.h"
-#import "Actions.h"
 #import "Modifiers.h"
-#import "ModifiedDrag.h"
+// #import "ModifiedDrag.h"
 #import "NSArray+Additions.h"
 #import "NSDictionary+Additions.h"
 #import "Constants.h"
@@ -206,7 +205,7 @@ static NSDictionary *_remaps;
             
         /// Convert remaps table to remaps dict
         
-        NSArray *remapsTable = [Config.shared.config objectForKey:kMFConfigKeyRemaps];
+        NSArray *remapsTable = (NSArray *)config(kMFConfigKeyRemaps);
         
         for (NSDictionary *tableEntry in remapsTable) {
             /// Get modification precondition section of keypath
