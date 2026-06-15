@@ -10,7 +10,7 @@
 		</data>
 		<key>Resources/Assets.car</key>
 		<data>
-		wQqPS7L45cEiU+UW7M4KazuwbC8=
+		60HdH+et+Fp4byYqZzwJHEVaoxE=
 		</data>
 		<key>Resources/Base.lproj/AuthorizeAccessibilityView.nib</key>
 		<data>
@@ -30,15 +30,15 @@
 		</data>
 		<key>Resources/Base.lproj/Main.storyboardc/Info.plist</key>
 		<data>
-		lIUduzsouVliOaeVuYiZBIaqOYA=
+		sJdfpgUT35SeuWt+J260o7r35Nc=
 		</data>
 		<key>Resources/Base.lproj/Main.storyboardc/MainMenu.nib</key>
 		<data>
-		W6UIN6iM5Zusqa7BYzNsPJuXwYs=
+		OmxOdxMxkldX1rHCY28w11hc7ps=
 		</data>
 		<key>Resources/Base.lproj/Main.storyboardc/NSWindowController-B8D-0N-5wS.nib</key>
 		<data>
-		eXirwBVH6Im4MKenbVEjA8JUs0k=
+		4/r7MtaVFGcQWgUlYLkasmtL1Kw=
 		</data>
 		<key>Resources/Base.lproj/Main.storyboardc/bsO-Hw-2ui-view-gPA-kn-mzX.nib</key>
 		<data>
@@ -46,23 +46,23 @@
 		</data>
 		<key>Resources/Base.lproj/Main.storyboardc/buH-zX-xXu-view-ajM-sr-oMv.nib</key>
 		<data>
-		I+dHFs891h4W+PNPnUe7P88w3oU=
+		nFePwJ8dy//WNNh9OQ59glDNEbQ=
 		</data>
 		<key>Resources/Base.lproj/Main.storyboardc/d9S-X9-qM1-view-vcE-RL-ceY.nib</key>
 		<data>
-		MkpBGWKiPlBeojzWjfxSrgoirLU=
+		pi+OHCrjmADlRdXgDw+tfN5AWyc=
 		</data>
 		<key>Resources/Base.lproj/Main.storyboardc/eLS-O0-A1x-view-As8-gY-gcx.nib</key>
 		<data>
-		9kfd4W20+W514gUvZOuJyFU95S0=
+		TQ3LOMpn2tiwvch91zJa6M4Khk0=
 		</data>
 		<key>Resources/Base.lproj/Main.storyboardc/qcW-e9-BqR-view-ApB-fm-Akb.nib</key>
 		<data>
-		IxwzodyE1lcPQSTHzvyRoagBxcI=
+		ZTwMmJo/Rmxyw8GeSZ1juAC9cbY=
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/Info.plist</key>
 		<data>
-		HsfYUZ/svBXg135/BAvMHKG8TWw=
+		GvtuA1u+hm9FOTHaqDNjvwJcAlQ=
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/Resources/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -70,11 +70,11 @@
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeDirectory</key>
 		<data>
-		twMu2aANP8ElLrP547lQH6RLc3g=
+		9/RvPlGmQ04D5BTSkyuOrE56pYQ=
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeRequirements</key>
 		<data>
-		4pdCVPusLfVRUGfVLP7sEzO58UY=
+		OnX22wWFKRSOFN1+obRynMCeyXM=
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeResources</key>
 		<data>
@@ -82,7 +82,7 @@
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeSignature</key>
 		<data>
-		u4aIOT3/PVjZmvXkY5PVC1rkC4I=
+		2jmj7l5rSw0yVb/vlWAYkK/YBwk=
 		</data>
 		<key>Resources/CoolSFSymbols.otf</key>
 		<data>
@@ -833,10 +833,10 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			Oy7gpP0xu1XJHHOfCMQyzdaQ0fY=
+			1mOcqynC++JSQTvFG9j0wSvAAsY=
 			</data>
 			<key>requirement</key>
-			<string>identifier "org.sparkle-project.Sparkle" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: shawnrain@foxmail.com (ZQG28N5AK8)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
+			<string>cdhash H"ed99459eeeb9ae22f2b517210f50c49dde00cf2a" or cdhash H"d6639cab29c2fbe252413bc51bd8f4c12bc002c6" or cdhash H"9cfda912dea6e938f4b72afe5aa6ba8636b61cb4" or cdhash H"35c186e97cceedacb7879ecd46e2c0088421ddf9"</string>
 		</dict>
 		<key>Library/LaunchAgents/sm_launchd.plist</key>
 		<dict>
@@ -849,10 +849,10 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			xC2El23Kdm1EyCVlMMAxBg70n3g=
+			HDpN99RMcVnnI3Wu3hSC/v3ELE8=
 			</data>
 			<key>requirement</key>
-			<string>identifier "com.nuebling.mac-mouse-fix.helper" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: shawnrain@foxmail.com (ZQG28N5AK8)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
+			<string>cdhash H"1c3a4df7d44c7159e72375aede1482fefdc42c4f"</string>
 		</dict>
 		<key>Resources/AppIcon.icns</key>
 		<dict>
@@ -865,7 +865,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			enRhswfsGIRBBWkHIXWJLj5+jNGAzRY7KCp898MZHqs=
+			kHBFrxGFB/JgtIXefRm/+SCbSAgf9+C68L54H1Fostk=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/AuthorizeAccessibilityView.nib</key>
@@ -900,21 +900,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			urdtjVgRYYuv1fPubcn8lan8e9pAhDpypFMHi9Iqg9E=
+			6gelaVnmfkSPoKAapShL91F/AbKWVq5T3TNL56rRTEc=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/Main.storyboardc/MainMenu.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			O2MiZKY6fK6POXWu8yFP/pkut84dsC2aGNLP+zUVybg=
+			5r6rnLCf0uoCm8g6QcMzMt3BYoj30evZM+lq1LJR+T4=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/Main.storyboardc/NSWindowController-B8D-0N-5wS.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			FZtnCoJH2f1LY/8cbM+ekSoeMMDzGw5APQZc4FmtlfY=
+			wBk07yUdLJaY0vHccQfrVJOsUTpIEPAxHo2BF3FN8bo=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/Main.storyboardc/bsO-Hw-2ui-view-gPA-kn-mzX.nib</key>
@@ -928,35 +928,35 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			kdyMZbY+OgNuKf+/TRIhHZ2TfSv4nifeilCsbiz0Bms=
+			ukmAms/PL8C/7TjZqmS0xtapumG4F77uXG+1zaqvn9E=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/Main.storyboardc/d9S-X9-qM1-view-vcE-RL-ceY.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			i9J2mQ3h1pslMomqFdOB97Sn8uBct0Jq+7d6l8JbNAs=
+			Eza59/XydvT23mcZkGAlWWmSnk8O6KFWSjQNRJ5olIQ=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/Main.storyboardc/eLS-O0-A1x-view-As8-gY-gcx.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			x+oORLk/C3BaCxB1oSo8sUvZ7KjNLHP85mO8yjev7CA=
+			Zk1IoKRcWhNDRR5PVEr0gtPOOvwswawWxGq7JZXGniw=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/Main.storyboardc/qcW-e9-BqR-view-ApB-fm-Akb.nib</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			nyxFkfGiLYNAaGY2WD7/l2HB6gTNxOsnE1AqnkPvW8A=
+			iPPWa/QH5vOQV4hxZLHr2r0/ooYwdCaSIfab40rGarg=
 			</data>
 		</dict>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4tMXZ3zArOQ2sfjJw2Yu6l+M13GMIQcOTufsLwTrohk=
+			len7f90HdH0BQHbTK6Tvzceb5hypKU7yDHgKTYvuHlA=
 			</data>
 		</dict>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/Resources/PrivacyInfo.xcprivacy</key>
@@ -970,14 +970,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			dkJls2eO4NxVV6aqxiRBJzgCODhz7rs/QCR40eKZhJY=
+			SIi3XMfTpchQvYyFJEzkFjEk9Yz/HH8SJdG6roe4hRM=
 			</data>
 		</dict>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeRequirements</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			EydSeYjC9yJ1eU9xmHaZrQBjhU9IAruH2M9Rnreil9I=
+			mHkgkE6rZQ51eIwFSqCwUk5qgL/HGqMt+NI3phdD+YY=
 			</data>
 		</dict>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeResources</key>
@@ -991,7 +991,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			UH0qAWl91jKpO8BtDw9USGk54UUCNr5AFDFK/4evBUQ=
+			47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=
 			</data>
 		</dict>
 		<key>Resources/CoolSFSymbols.otf</key>
