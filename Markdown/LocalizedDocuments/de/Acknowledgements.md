@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2026**
 
+- 🇺🇸&nbsp;Taylor&nbsp;Moran
 - 🇩🇪&nbsp;Sebastian&nbsp;Kraft
 - 🇨🇭&nbsp;Michael
 - 🇮🇱&nbsp;Y&nbsp;Mg - "It is worth more than this amount of money."

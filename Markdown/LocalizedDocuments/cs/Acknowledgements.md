@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **červen 2026**
 
+- 🇺🇸&nbsp;Taylor&nbsp;Moran
 - 🇩🇪&nbsp;Sebastian&nbsp;Kraft
 - 🇨🇭&nbsp;Michael
 - 🇮🇱&nbsp;Y&nbsp;Mg - "It is worth more than this amount of money."

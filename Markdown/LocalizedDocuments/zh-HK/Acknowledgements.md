@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **6月 2026**
 
+- 🇺🇸&nbsp;Taylor&nbsp;Moran
 - 🇩🇪&nbsp;Sebastian&nbsp;Kraft
 - 🇨🇭&nbsp;Michael
 - 🇮🇱&nbsp;Y&nbsp;Mg - "It is worth more than this amount of money."

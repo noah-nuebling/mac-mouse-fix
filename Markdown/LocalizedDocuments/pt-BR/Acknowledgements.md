@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **junho 2026**
 
+- 🇺🇸&nbsp;Taylor&nbsp;Moran
 - 🇩🇪&nbsp;Sebastian&nbsp;Kraft
 - 🇨🇭&nbsp;Michael
 - 🇮🇱&nbsp;Y&nbsp;Mg - "It is worth more than this amount of money."

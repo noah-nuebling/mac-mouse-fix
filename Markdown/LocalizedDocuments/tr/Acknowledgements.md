@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Haziran 2026**
 
+- 🇺🇸&nbsp;Taylor&nbsp;Moran
 - 🇩🇪&nbsp;Sebastian&nbsp;Kraft
 - 🇨🇭&nbsp;Michael
 - 🇮🇱&nbsp;Y&nbsp;Mg - "It is worth more than this amount of money."
