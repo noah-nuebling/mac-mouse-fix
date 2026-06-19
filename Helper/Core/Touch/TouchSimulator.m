@@ -27,6 +27,367 @@
 #import "HelperUtility.h"
 #import "Logging.h"
 
+#import <mach/mach_time.h>
+
+#pragma mark - macOS 27 dock-swipe augmentation
+
+/// Background:
+///     Starting with macOS 27 (Tahoe/"Golden Gate" beta), the Dock server no longer acts on the *public* CGEvent gesture
+///     fields for synthetic dock-swipe events. As a result the Mission Control / Spaces / Show-Desktop gestures that
+///     `postDockSwipeEventWithDelta:` produces simply do nothing on the beta. See:
+///         - https://github.com/noah-nuebling/mac-mouse-fix/issues/1892
+///     The fix (first worked out by the InstantSpaceSwitcher / FasterSwiper community) is to embed the *raw IOKit HID
+///     event payload* into the serialized CGEvent (field 4205) so the Dock server has the data it now requires. See:
+///         - https://github.com/jurplel/InstantSpaceSwitcher/issues/72
+///         - https://gist.github.com/mgbowen/5548f18ada2e37b23c9e86a8d80b71dc  (serialization-format notes)
+///
+/// How it works:
+///     `CGEventCreateData()` / `CGEventCreateFromData()` use a private big-endian serialization format. We serialize the
+///     event we already built, parse out its fields, splice in (or replace) field 4205 with a hand-built IOHID payload,
+///     re-serialize, and rebuild the event with `CGEventCreateFromData()`. The numeric values inside the payload are
+///     16.16 fixed-point, so precision is limited (a known consequence of this approach).
+///
+/// Caveats (this is reverse-engineered and could not be verified on-device against the beta here):
+///     - The Dock server's sign convention for `progress`/`velocity` may be inverted on macOS 27 relative to older
+///       versions. If a gesture triggers the *opposite* direction on the beta, flip the sign of field 124 (and/or the
+///       velocity fields 129/130) in `postDockSwipeEventWithDelta:` for the augmented path.
+///     - `gesture_flavor` is hard-coded to the "dock primary" flavor, which is what the space-switching apps use. If
+///       vertical (Mission Control) or pinch (Show Desktop/Launchpad) gestures misbehave, this is the first knob to try.
+
+static const uint8_t kMFCGEventDataTagInt64OrBlob   = 0b00;
+static const uint8_t kMFCGEventDataTagInt32         = 0b01;
+static const uint8_t kMFCGEventDataTagFloatingPoint = 0b11;
+
+static const uint16_t kMFCGEventFieldGestureRawDataPayload = 4205;
+
+typedef struct {
+    uint16_t field_id;
+    uint8_t tag;
+    uint16_t size_words;
+    uint8_t *payload;
+    size_t payload_length;
+} MFCGEventParsedField;
+
+typedef struct {
+    int32_t version;
+    MFCGEventParsedField *fields;
+    size_t field_count;
+    size_t field_capacity;
+} MFCGEventParsedData;
+
+static uint16_t MFReadBE16(const uint8_t *data, size_t offset) {
+    return (uint16_t)((data[offset] << 8) | data[offset + 1]);
+}
+static uint32_t MFReadBE32(const uint8_t *data, size_t offset) {
+    return ((uint32_t)data[offset] << 24) | ((uint32_t)data[offset + 1] << 16) |
+           ((uint32_t)data[offset + 2] << 8) | (uint32_t)data[offset + 3];
+}
+static void MFWriteBE16(uint8_t *out, size_t offset, uint16_t value) {
+    out[offset]     = (uint8_t)((value >> 8) & 0xFF);
+    out[offset + 1] = (uint8_t)(value & 0xFF);
+}
+static void MFWriteBE32(uint8_t *out, size_t offset, uint32_t value) {
+    out[offset]     = (uint8_t)((value >> 24) & 0xFF);
+    out[offset + 1] = (uint8_t)((value >> 16) & 0xFF);
+    out[offset + 2] = (uint8_t)((value >> 8) & 0xFF);
+    out[offset + 3] = (uint8_t)(value & 0xFF);
+}
+
+static void MFParsedEventDataFree(MFCGEventParsedData *parsed) {
+    if (!parsed || !parsed->fields) return;
+    for (size_t i = 0; i < parsed->field_count; i++) {
+        free(parsed->fields[i].payload);
+    }
+    free(parsed->fields);
+    parsed->fields = NULL;
+    parsed->field_count = 0;
+    parsed->field_capacity = 0;
+}
+
+static bool MFParseEventData(const uint8_t *data, size_t length, MFCGEventParsedData *out) {
+    memset(out, 0, sizeof(*out));
+    if (length < 4) return false;
+
+    out->version = (int32_t)MFReadBE32(data, 0);
+    if (out->version != 2) {
+        DDLogWarn(@"TouchSimulator: Unsupported CGEvent data version %d during dock-swipe augmentation", out->version);
+        return false;
+    }
+
+    out->field_capacity = 16;
+    out->fields = (MFCGEventParsedField *)calloc(out->field_capacity, sizeof(MFCGEventParsedField));
+    if (!out->fields) return false;
+
+    size_t offset = 4;
+    while (offset < length) {
+        if (offset + 4 > length) { MFParsedEventDataFree(out); return false; }
+
+        uint16_t size_words = MFReadBE16(data, offset);
+        uint16_t tag_and_field = MFReadBE16(data, offset + 2);
+        uint8_t tag = (uint8_t)((tag_and_field >> 14) & 0x3);
+        uint16_t field_id = (uint16_t)(tag_and_field & 0x3FFF);
+        offset += 4;
+
+        size_t payload_length = 0;
+        switch (tag) {
+            case kMFCGEventDataTagInt64OrBlob:
+                if (size_words == 1)      payload_length = 8;
+                else if (size_words > 1)  payload_length = size_words;
+                else { MFParsedEventDataFree(out); return false; }
+                break;
+            case kMFCGEventDataTagInt32:
+            case kMFCGEventDataTagFloatingPoint:
+                payload_length = (size_t)size_words * 4;
+                break;
+            default:
+                MFParsedEventDataFree(out); return false;
+        }
+
+        if (offset + payload_length > length) { MFParsedEventDataFree(out); return false; }
+
+        if (out->field_count >= out->field_capacity) {
+            size_t new_capacity = out->field_capacity * 2;
+            MFCGEventParsedField *new_fields = (MFCGEventParsedField *)realloc(out->fields, new_capacity * sizeof(MFCGEventParsedField));
+            if (!new_fields) { MFParsedEventDataFree(out); return false; }
+            out->fields = new_fields;
+            out->field_capacity = new_capacity;
+        }
+
+        MFCGEventParsedField *field = &out->fields[out->field_count++];
+        field->field_id = field_id;
+        field->tag = tag;
+        field->size_words = size_words;
+        field->payload_length = payload_length;
+        if (payload_length > 0) {
+            field->payload = (uint8_t *)malloc(payload_length);
+            if (!field->payload) { MFParsedEventDataFree(out); return false; }
+            memcpy(field->payload, data + offset, payload_length);
+        } else {
+            field->payload = NULL;
+        }
+        offset += payload_length;
+    }
+    return true;
+}
+
+static size_t MFComputeSerializedLength(const MFCGEventParsedData *parsed, size_t new_payload_length) {
+    size_t len = 4; /// version
+    bool has4205 = false;
+    for (size_t i = 0; i < parsed->field_count; i++) {
+        if (parsed->fields[i].field_id == kMFCGEventFieldGestureRawDataPayload) {
+            len += 4 + new_payload_length;
+            has4205 = true;
+        } else {
+            len += 4 + parsed->fields[i].payload_length;
+        }
+    }
+    if (!has4205) len += 4 + new_payload_length;
+    return len;
+}
+
+static uint8_t *MFSerializeEventData(const MFCGEventParsedData *parsed, const uint8_t *new_payload, size_t new_payload_length, size_t *out_length) {
+    size_t total_length = MFComputeSerializedLength(parsed, new_payload_length);
+    uint8_t *result = (uint8_t *)malloc(total_length);
+    if (!result) return NULL;
+
+    size_t offset = 0;
+    MFWriteBE32(result, offset, (uint32_t)parsed->version);
+    offset += 4;
+
+    bool added4205 = false;
+    for (size_t i = 0; i < parsed->field_count; i++) {
+        const MFCGEventParsedField *field = &parsed->fields[i];
+        if (field->field_id == kMFCGEventFieldGestureRawDataPayload) {
+            MFWriteBE16(result, offset, (uint16_t)new_payload_length); offset += 2;
+            MFWriteBE16(result, offset, (uint16_t)((kMFCGEventDataTagInt64OrBlob << 14) | kMFCGEventFieldGestureRawDataPayload)); offset += 2;
+            memcpy(result + offset, new_payload, new_payload_length); offset += new_payload_length;
+            added4205 = true;
+        } else {
+            MFWriteBE16(result, offset, field->size_words); offset += 2;
+            MFWriteBE16(result, offset, (uint16_t)((field->tag << 14) | field->field_id)); offset += 2;
+            memcpy(result + offset, field->payload, field->payload_length); offset += field->payload_length;
+        }
+    }
+
+    if (!added4205) {
+        MFWriteBE16(result, offset, (uint16_t)new_payload_length); offset += 2;
+        MFWriteBE16(result, offset, (uint16_t)((kMFCGEventDataTagInt64OrBlob << 14) | kMFCGEventFieldGestureRawDataPayload)); offset += 2;
+        memcpy(result + offset, new_payload, new_payload_length); offset += new_payload_length;
+    }
+
+    *out_length = offset;
+    return result;
+}
+
+#pragma pack(push, 1)
+typedef struct {
+    uint32_t size;
+    uint32_t type;
+    uint32_t options;
+    uint8_t depth;
+    uint8_t reserved[3];
+} MFIOHIDEventBase;
+
+typedef struct {
+    MFIOHIDEventBase base;
+    int32_t position_x;
+    int32_t position_y;
+    int32_t position_z;
+    uint32_t swipe_mask;
+    uint16_t gesture_motion;
+    uint16_t gesture_flavor;
+    int32_t swipe_progress;
+} MFIOHIDFluidTouchGestureData;
+
+typedef struct {
+    MFIOHIDEventBase base;
+    int32_t velocity_x;
+    int32_t velocity_y;
+    int32_t velocity_z;
+} MFIOHIDVelocityEventData;
+
+typedef struct {
+    uint64_t timestamp;
+    uint64_t sender_id;
+    uint32_t options;
+    uint32_t attribute_length;
+    uint32_t event_count;
+} MFIOHIDSystemQueueElementHeader;
+#pragma pack(pop)
+
+static const uint32_t kMFIOHIDEventTypeVelocity          = 9;
+static const uint32_t kMFIOHIDEventTypeFluidTouchGesture = 23;
+static const uint16_t kMFIOHIDGestureFlavorDockPrimary   = 3;
+
+static int32_t MFDoubleToFixed1616(double val) {
+    int32_t fixed = (int32_t)(val * 65536.0);
+    if (fixed == 0 && val != 0.0) {
+        return val > 0.0 ? 1 : -1;
+    }
+    return fixed;
+}
+
+static uint8_t *MFGenerateIOHIDPayload(CGEventRef event, size_t *out_length) {
+
+    /// Read the public gesture fields we already set on `e30` in `postDockSwipeEventWithDelta:`.
+    int64_t phase     = CGEventGetIntegerValueField(event, (CGEventField)132);
+    int64_t motion    = CGEventGetIntegerValueField(event, (CGEventField)123); /// MFDockSwipeType (horizontal/vertical/pinch)
+    double  progress  = CGEventGetDoubleValueField (event, (CGEventField)124); /// origin offset
+    double  pos_x     = CGEventGetDoubleValueField (event, (CGEventField)125);
+    double  pos_y     = CGEventGetDoubleValueField (event, (CGEventField)126);
+    double  vel_x     = CGEventGetDoubleValueField (event, (CGEventField)129); /// exit speed
+    double  vel_y     = CGEventGetDoubleValueField (event, (CGEventField)130);
+    int64_t swipe_mask = CGEventGetIntegerValueField(event, (CGEventField)115);
+
+    bool include_velocity = (vel_x != 0.0 || vel_y != 0.0 || phase == kIOHIDEventPhaseEnded);
+    uint32_t event_count = include_velocity ? 2 : 1;
+    size_t payload_length = sizeof(MFIOHIDSystemQueueElementHeader) + sizeof(MFIOHIDFluidTouchGestureData);
+    if (include_velocity) payload_length += sizeof(MFIOHIDVelocityEventData);
+
+    uint8_t *payload = (uint8_t *)malloc(payload_length);
+    if (!payload) return NULL;
+    memset(payload, 0, payload_length);
+
+    size_t offset = 0;
+
+    MFIOHIDSystemQueueElementHeader *header = (MFIOHIDSystemQueueElementHeader *)(payload + offset);
+    offset += sizeof(MFIOHIDSystemQueueElementHeader);
+    uint64_t timestamp = CGEventGetTimestamp(event);
+    if (timestamp == 0) timestamp = mach_absolute_time();
+    header->timestamp = timestamp;
+    header->sender_id = 0;
+    header->options = 0;
+    header->attribute_length = 0;
+    header->event_count = event_count;
+
+    MFIOHIDFluidTouchGestureData *fluid = (MFIOHIDFluidTouchGestureData *)(payload + offset);
+    offset += sizeof(MFIOHIDFluidTouchGestureData);
+    fluid->base.size = sizeof(MFIOHIDFluidTouchGestureData);
+    fluid->base.type = kMFIOHIDEventTypeFluidTouchGesture;
+    fluid->base.options = (uint32_t)((phase & 0xFF) << 24);
+    fluid->base.depth = 0;
+    fluid->position_x = MFDoubleToFixed1616(pos_x);
+    fluid->position_y = MFDoubleToFixed1616(pos_y);
+    fluid->position_z = 0;
+    fluid->swipe_mask = (uint32_t)swipe_mask;
+    fluid->gesture_motion = (uint16_t)motion;
+    fluid->gesture_flavor = kMFIOHIDGestureFlavorDockPrimary;
+    fluid->swipe_progress = MFDoubleToFixed1616(progress);
+
+    if (include_velocity) {
+        MFIOHIDVelocityEventData *velocity = (MFIOHIDVelocityEventData *)(payload + offset);
+        velocity->base.size = sizeof(MFIOHIDVelocityEventData);
+        velocity->base.type = kMFIOHIDEventTypeVelocity;
+        velocity->base.options = 0;
+        velocity->base.depth = 1;
+        velocity->velocity_x = MFDoubleToFixed1616(vel_x);
+        velocity->velocity_y = MFDoubleToFixed1616(vel_y);
+        velocity->velocity_z = 0;
+    }
+
+    *out_length = payload_length;
+    return payload;
+}
+
+/// Returns a retained, augmented copy of `event` (caller must CFRelease), or NULL on failure.
+static CGEventRef MFCreateAugmentedDockSwipeEvent(CGEventRef event) {
+    if (!event) return NULL;
+
+    CFDataRef data = CGEventCreateData(kCFAllocatorDefault, event);
+    if (!data) {
+        DDLogWarn(@"TouchSimulator: CGEventCreateData failed during dock-swipe augmentation");
+        return NULL;
+    }
+
+    const uint8_t *bytes = CFDataGetBytePtr(data);
+    CFIndex length = CFDataGetLength(data);
+
+    MFCGEventParsedData parsed = {0};
+    if (!MFParseEventData(bytes, (size_t)length, &parsed)) {
+        CFRelease(data);
+        return NULL;
+    }
+
+    size_t payload_length = 0;
+    uint8_t *payload = MFGenerateIOHIDPayload(event, &payload_length);
+    if (!payload) {
+        MFParsedEventDataFree(&parsed);
+        CFRelease(data);
+        return NULL;
+    }
+
+    size_t new_length = 0;
+    uint8_t *new_bytes = MFSerializeEventData(&parsed, payload, payload_length, &new_length);
+    MFParsedEventDataFree(&parsed);
+    free(payload);
+    CFRelease(data);
+    if (!new_bytes) {
+        DDLogWarn(@"TouchSimulator: Failed to serialize augmented dock-swipe CGEvent");
+        return NULL;
+    }
+
+    CFDataRef new_data = CFDataCreate(kCFAllocatorDefault, new_bytes, (CFIndex)new_length);
+    free(new_bytes);
+    if (!new_data) return NULL;
+
+    CGEventRef result = CGEventCreateFromData(kCFAllocatorDefault, new_data);
+    CFRelease(new_data);
+    if (!result) {
+        DDLogWarn(@"TouchSimulator: CGEventCreateFromData failed during dock-swipe augmentation");
+    }
+    return result;
+}
+
+/// Whether the running OS needs the IOHID-payload augmentation (macOS 27+).
+static BOOL MFDockSwipeEventAugmentationRequired(void) {
+    static BOOL required = NO;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        required = [NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){27, 0, 0}];
+    });
+    return required;
+}
+
 @implementation TouchSimulator
 
 static NSArray *_nullArray;
@@ -244,12 +605,30 @@ static NSMutableDictionary *_swipeInfo;
     }
     
     ///
+    /// Augment for macOS 27+
+    ///   On macOS 27 the Dock server ignores the public CGEvent gesture fields for synthetic dock swipes; it requires the
+    ///   raw IOHID payload embedded in the serialized event. We post the augmented copy of `e30` instead of `e30` itself.
+    ///   `e29` (the generic NSEventTypeGesture event) doesn't carry the dock-swipe data, so it's posted unchanged.
+    ///   See the big comment block near the top of this file for background & caveats.
+    ///
+
+    CGEventRef e30ToPost = e30; /// Borrowed reference unless we replace it with an owned augmented copy below.
+    if (MFDockSwipeEventAugmentationRequired()) {
+        CGEventRef augmented = MFCreateAugmentedDockSwipeEvent(e30);
+        if (augmented != NULL) {
+            e30ToPost = augmented; /// Owned (+1); released at the end of this function.
+        } else {
+            DDLogWarn(@"TouchSimulator: Dock-swipe augmentation failed; posting un-augmented event (will likely be ignored on macOS 27+)");
+        }
+    }
+
+    ///
     /// Send events
     ///
-    
-    DDLogDebug(@"TouchSimulator: Sending dockSwipe with phase %d with events: %@ %@", phase, e30, e29);
-    
-    CGEventPost(kCGSessionEventTap, e30); /// Not sure if order matters
+
+    DDLogDebug(@"TouchSimulator: Sending dockSwipe with phase %d with events: %@ %@", phase, e30ToPost, e29);
+
+    CGEventPost(kCGSessionEventTap, e30ToPost); /// Not sure if order matters
     CGEventPost(kCGSessionEventTap, e29);
     
     if (phase == kIOHIDEventPhaseBegan) {
@@ -282,7 +661,7 @@ static NSMutableDictionary *_swipeInfo;
         ///     Edit: We didn't release the events in MMF 3.0.0 Beta 6. I wonder why I didn't notice this? (Should leak a little bit of memory.) We then moved to using `__bridge_transfer`
         ///                 On 28.08.2024 we moved to using `__bridge` and simply calling `CFRelease()` afterwards. (That's the same as using `__bridge_transfer`, which I find confusing.)
 
-        NSDictionary *events = @{@"e30": (__bridge id)e30, @"e29": (__bridge id)e29};
+        NSDictionary *events = @{@"e30": (__bridge id)e30ToPost, @"e29": (__bridge id)e29};
         
         /// Dispatch to main queue
         /// Notes:
@@ -310,9 +689,14 @@ static NSMutableDictionary *_swipeInfo;
     ///
     /// Release events
     ///
-    
+
     CFRelease(e29);
     CFRelease(e30);
+    if (e30ToPost != e30) {
+        /// Release our owned augmented copy. If it was stored in the `events` dict above, that dict holds its own
+        /// retain, so it stays alive until the double/triple-send timers are invalidated.
+        CFRelease(e30ToPost);
+    }
     
     ///
     /// Update state
