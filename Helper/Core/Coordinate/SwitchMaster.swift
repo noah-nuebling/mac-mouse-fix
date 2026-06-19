@@ -478,9 +478,11 @@ import ReactiveSwift
         
         var priority = kMFModifierPriorityUnused
         
-        let someKbModReallyModifiesScroll   = somekbModModifiesScroll             && someDeviceHasScroll          && !scrollKillSwitch
-        let someKbModReallyModifiesPointing = somekbModModifiesPointing           && someDeviceHasPointing        && true
-        let someKbModReallyModifiesButtons  = somekbModModifiesButtonOnSomeDevice && someDeviceHasUsableButtons   && !buttonKillSwitch
+        /// Note: Removed `someDeviceHas*` guards to support Universal Control and other virtual input sources.
+        ///     Event taps that are enabled but receive no events consume zero CPU, so this is safe.
+        let someKbModReallyModifiesScroll   = somekbModModifiesScroll             && !scrollKillSwitch
+        let someKbModReallyModifiesPointing = somekbModModifiesPointing
+        let someKbModReallyModifiesButtons  = somekbModModifiesButtonOnSomeDevice && !buttonKillSwitch
         
         if someKbModReallyModifiesScroll || someKbModReallyModifiesPointing || someKbModReallyModifiesButtons {
             
@@ -505,9 +507,10 @@ import ReactiveSwift
         
         var priority = kMFModifierPriorityUnused
         
-        let someBtnReallyModifiesScroll      = someButtonModifiesScroll             && someDeviceHasScroll        && !scrollKillSwitch      ;
-        let someBtnReallyModifiesPointing    = someButtonModifiesPointing           && someDeviceHasPointing      && true                   ;
-        let someBtnReallyModifiesButtons     = someButtonModifiesButtonOnSomeDevice && someDeviceHasUsableButtons && !buttonKillSwitch      ; /// `!buttonKillSwitch` is redundant here ([Mar 2025]: Why?), but makes it more readable? || [Mar 2025]: someDeviceHasUsableButtons might also be redundant, because someButtonModifiesButtonOnSomeDevice might already capture that.
+        /// Note: Removed `someDeviceHas*` guards to support Universal Control and other virtual input sources.
+        let someBtnReallyModifiesScroll      = someButtonModifiesScroll             && !scrollKillSwitch      ;
+        let someBtnReallyModifiesPointing    = someButtonModifiesPointing                                     ;
+        let someBtnReallyModifiesButtons     = someButtonModifiesButtonOnSomeDevice && !buttonKillSwitch      ;
         
         if someBtnReallyModifiesScroll || someBtnReallyModifiesPointing || someBtnReallyModifiesButtons {
             
@@ -532,7 +535,8 @@ import ReactiveSwift
             return
         }
         
-        if someDeviceHasScroll && (defaultModifiesScroll || currentModificationModifiesScroll) {
+        /// Note: Removed `someDeviceHasScroll` guard to support Universal Control and other virtual input sources.
+        if (defaultModifiesScroll || currentModificationModifiesScroll) {
             Scroll.startReceiving()
         } else {
             Scroll.stopReceiving()
@@ -550,12 +554,13 @@ import ReactiveSwift
         ///     - [Mar 2025] We should perhaps reuse the 'areButtonsModifiers?' logic from toggleBtnModProcessing(), instead of this duplicate (and outdated - we're missing `!scrollKillSwitch`) logic.
         ///         -> TODO: Reuse updated logic from toggleBtnModProcessing()
         ///     - [Mar 2025] We should probably always call toggleButtonTap() after toggleBtnModProcessing() - so the tap is actually toggled in case this switches buttonModProcessing to/away from kMFModifierPriorityActiveListen
+        /// Note: Removed `someDeviceHas*` guards to support Universal Control and other virtual input sources.
         let buttonsAreUsedAsModifiers =
-            (someDeviceHasScroll        && someButtonModifiesScroll)                ||
-            (someDeviceHasPointing      && someButtonModifiesPointing)              ||
-            (someDeviceHasUsableButtons && someButtonModifiesButtonOnSomeDevice)
-        
-        if someDeviceHasUsableButtons && (currentModificationModifiesButtonOnSomeDevice || buttonsAreUsedAsModifiers) {
+            someButtonModifiesScroll                ||
+            someButtonModifiesPointing              ||
+            someButtonModifiesButtonOnSomeDevice
+
+        if (currentModificationModifiesButtonOnSomeDevice || buttonsAreUsedAsModifiers) {
             
             ButtonInputReceiver.start()
         } else {
@@ -571,7 +576,8 @@ import ReactiveSwift
         }
         
         /// Determine enable
-        let enable = someDeviceHasPointing && currentModificationModifiesPointing
+        /// Note: Removed `someDeviceHasPointing` guard to support Universal Control and other virtual input sources.
+        let enable = currentModificationModifiesPointing
         
         if enable {
             
