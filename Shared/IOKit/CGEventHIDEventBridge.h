@@ -56,6 +56,7 @@ void CGEventSetHIDEvent(CGEventRef _Nonnull, HIDEvent * _Nonnull);
 
 /// Unsuccessful, we ended up writing our own function.
 /// Actually in `SkyLight.tbd` there is `_SLEventSetIOHIDEvent`, but I can't find a definition that we can link against.
+///     Update: [Jun 2026] If you just add `SkyLight.framework` to the project, the linker finds it ->  Could replace custom `CGEventSetHIDEvent` with `SLEventSetIOHIDEvent`, but it works fine.
 
 /// Trying to find a function that converts HIDEvent -> CGEvent
 ///     (__bridge doesn't work)
