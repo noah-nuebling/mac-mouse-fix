@@ -198,7 +198,7 @@ void initDragState_Unsafe(void) {
     [_drag.outputPlugin initializeWithDragState:&_drag]; /// We just want to reset the plugin state here. The plugin will already hold ref to `_drag`. So this is not super pretty/semantic
     
     CGEventTapEnable(_drag.eventTap, true);
-    DDLogDebug(@"\nEnabled drag eventTap");
+    DDLogDebug(@"Enabled drag eventTap");
 }
 
 static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void * __nullable userInfo) {
@@ -434,7 +434,7 @@ void deactivate_Unsafe(BOOL cancel) {
     CGEventTapEnable(_drag.eventTap, false);
     
     /// Debug
-    DDLogDebug(@"\nmodifiedDrag disabled drag eventTap. Caller info: %@", [SharedUtility callerInfo]);
+    DDLogDebug(@"modifiedDrag disabled drag eventTap. Caller info: %@", [SharedUtility callerInfo]);
 }
                    
 /// Handle interference with ModifiedScroll

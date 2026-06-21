@@ -423,7 +423,7 @@
                         double dbl = [decodedNum doubleValue];
                         if (floor(dbl) != dbl) {
                             assert(false);
-                            debug_failWithError(NSCoderReadCorruptError, @"Decoded non-whole number %f for property %@.%@ with whole-number type %s", dbl, [self class], key, propertyTypeEncoding);
+                            debug_failWithError(NSCoderReadCorruptError, "Decoded non-whole number %f for property %@.%@ with whole-number type %s", dbl, [self class], key, propertyTypeEncoding);
                         }
                     }
                     
@@ -432,7 +432,7 @@
                         #define xxx(n, fmt, lo, hi) ({                  \
                             if (!( (lo) <= (n) && (n) <= (hi) )) {      \
                                 assert(false);                          \
-                                debug_failWithError(NSCoderReadCorruptError, @"Decoded number " fmt " does not fit into property %@.%@ of type %s", n, [self class], key, propertyTypeEncoding);   \
+                                debug_failWithError(NSCoderReadCorruptError, "Decoded number " fmt " does not fit into property %@.%@ of type %s", n, [self class], key, propertyTypeEncoding);   \
                             }                                           \
                         })
                         
@@ -453,7 +453,7 @@
                                 xxx(n, "%lld", 0, 1);
                             }
                             else if (propIsUnsigned) {
-                                if ([decodedNum doubleValue] < 0) debug_failWithError(NSCoderReadCorruptError, @"Decoded number %@ is negative but property %@.%@ is unsigned", decodedNum, [self class], key); /// [Jun 2025] Unsure about this validation. NSNumber might not preserve signedness.
+                                if ([decodedNum doubleValue] < 0) debug_failWithError(NSCoderReadCorruptError, "Decoded number %@ is negative but property %@.%@ is unsigned", decodedNum, [self class], key); /// [Jun 2025] Unsure about this validation. NSNumber might not preserve signedness.
                                 unsigned long long n = [decodedNum unsignedLongLongValue];
                                 if      (propSize == 1)  xxx(n, "%llu", 0, UINT8_MAX);
                                 else if (propSize == 2)  xxx(n, "%llu", 0, UINT16_MAX);
@@ -475,9 +475,9 @@
                         /// Validate float precision loss / overflow / weirdness
                         if (propIsDecimal) {
                             double n = [decodedNum doubleValue];
-                            if (isnan(n))           debug_failWithError(NSCoderReadCorruptError, @"Decoded value for property %@.%@ is nan", [self class], key);
-                            if (isinf(n))           debug_failWithError(NSCoderReadCorruptError, @"Decoded value for property %@.%@ is inf", [self class], key);
-                            if      (propSize == 4) { if (((float)n) != n) debug_failWithError(NSCoderReadCorruptError, @"Decoded number %f cannot be represented by property %@.%@ of type float", n, [self class], key); }
+                            if (isnan(n))           debug_failWithError(NSCoderReadCorruptError, "Decoded value for property %@.%@ is nan", [self class], key);
+                            if (isinf(n))           debug_failWithError(NSCoderReadCorruptError, "Decoded value for property %@.%@ is inf", [self class], key);
+                            if      (propSize == 4) { if (((float)n) != n) debug_failWithError(NSCoderReadCorruptError, "Decoded number %f cannot be represented by property %@.%@ of type float", n, [self class], key); }
                             else if (propSize == 8) {}
                             else assert(false);
                         }

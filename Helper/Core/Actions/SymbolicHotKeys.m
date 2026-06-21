@@ -734,8 +734,8 @@ MFVKCAndFlags *_Nonnull MFEmulateNSMenuItemRemapping(CGKeyCode vkc, CGEventFlags
         };
         TIKeyboardShortcut *in_keqShortcut  = [TIKeyboardShortcut shortcutWithKeyEquivalent: in_keq modifierFlags: (NSEventModifierFlags)in_vkcShortcut.modifierMask];
         TIKeyboardShortcut *out_keqShortcut = [TIKeyboardShortcut localizedKeyboardShortcut: in_keqShortcut forKeyboardLayout: currentKBLayout_Name withAttributes: attrs];
-        if (!out_keqShortcut)                       fail(@"out_keqShortcut is nil");
-        if (!out_keqShortcut.keyEquivalent.length)  fail(@"out_keqShortcut.keyEquivalent is empty");
+        if (!out_keqShortcut)                       fail("out_keqShortcut is nil");
+        if (!out_keqShortcut.keyEquivalent.length)  fail("out_keqShortcut.keyEquivalent is empty");
         out_keq           = out_keqShortcut.keyEquivalent;
         out_modifierFlags = out_keqShortcut.modifierFlags;
         
@@ -754,7 +754,7 @@ MFVKCAndFlags *_Nonnull MFEmulateNSMenuItemRemapping(CGKeyCode vkc, CGEventFlags
     {
         const UCKeyboardLayout *currentKBLayout_Data = MFTISGetLayoutPointerFromInputSource(currentKBLayout_InputSource);
         CGKeyCode out_vkc = searchVKCForStr(currentKBType_MF, currentKBLayout_Data, in_vkcShortcut.vkc, out_keq, kMFModifierFlagsNull); /// Should we search for shiftKeyEquivalents here? Currently, we only use this for localizing `[`and `]` for the 'Universal Back and Forward' feature – and `kMFModifierFlagsNull` works fine [Aug 2025]
-         if (out_vkc == kMFVK_Null) fail(@"No vkc found for localized keq");
+         if (out_vkc == kMFVK_Null) fail("No vkc found for localized keq");
          out_vkcShortcut = [[MFVKCAndFlags alloc] initWith_vkc: out_vkc modifierMask: (CGEventFlags)out_modifierFlags];
     }
     

@@ -193,7 +193,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
 //        scrollDeltaSummm += fabs(valueDeltaD);
 //        DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
 
-        DDLogDebug(@"\n twoFinger smoothingAnimator callback - delta: (%f, %f), phase: %d, shouldStartMomentumScroll: %d", deltaVec.x, deltaVec.y, animatorPhase, _smoothingAnimatorShouldStartMomentumScroll);
+        DDLogDebug(@" twoFinger smoothingAnimator callback - delta: (%f, %f), phase: %d, shouldStartMomentumScroll: %d", deltaVec.x, deltaVec.y, animatorPhase, _smoothingAnimatorShouldStartMomentumScroll);
         
         if (animatorPhase == kMFAnimationCallbackPhaseEnd) {
 

@@ -93,8 +93,6 @@
 		4F58FE002C56DE9B00926A00 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FDFF2C56DE9B00926A00 /* Logging.swift */; };
 		4F58FE022C56DE9B00926A00 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FDFF2C56DE9B00926A00 /* Logging.swift */; };
 		4F58FE032C56E65900926A00 /* AnnotationUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C73FD2C4FB5D2001D97C3 /* AnnotationUtility.m */; };
-		4F58FE102C571DDD00926A00 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4F58FE0F2C571DDD00926A00 /* CocoaLumberjack */; };
-		4F58FE122C571DE200926A00 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4F58FE112C571DE200926A00 /* CocoaLumberjackSwift */; };
 		4F58FE132C57297400926A00 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F58FDFF2C56DE9B00926A00 /* Logging.swift */; };
 		4F58FE142C57BAFA00926A00 /* NSTextField+Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F12951F28D2D5E1009A49AB /* NSTextField+Extentions.swift */; };
 		4F5971E52901763D00A32656 /* MathObjc.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5971E42901763D00A32656 /* MathObjc.m */; };
@@ -334,8 +332,6 @@
 		4FE78C462C50362800C54103 /* DisableSwiftBridging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE78C392C50177800C54103 /* DisableSwiftBridging.swift */; };
 		4FE78C472C50371200C54103 /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE78C432C502A5F00C54103 /* NSString+Additions.m */; };
 		4FEA63CF2921510F00E464D6 /* NSImage+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEA63CD2921510E00E464D6 /* NSImage+Additions.m */; };
-		4FEB660F2793510300E6A111 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB660E2793510300E6A111 /* CocoaLumberjack */; };
-		4FEB66112793510800E6A111 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FEB66102793510800E6A111 /* CocoaLumberjackSwift */; };
 		4FEBE6622E456DA2005FF70E /* CAAnimationCurveUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEBE6612E456DA2005FF70E /* CAAnimationCurveUtility.m */; };
 		4FEBE6632E456DA2005FF70E /* CAAnimationCurveUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEBE6612E456DA2005FF70E /* CAAnimationCurveUtility.m */; };
 		4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEC9667278BBDC600548604 /* NSColor+Additions.m */; };
@@ -2631,10 +2627,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F262D262C64E06500773789 /* libcmark.a in Frameworks */,
-				4F58FE102C571DDD00926A00 /* CocoaLumberjack in Frameworks */,
 				4F39BC26263AC31600FDF692 /* Sparkle.framework in Frameworks */,
 				4FA40CF228A0CA3900499E53 /* ReactiveCocoa in Frameworks */,
-				4F58FE122C571DE200926A00 /* CocoaLumberjackSwift in Frameworks */,
 				4F28B7F62D49141F006928A6 /* SkyLight.framework in Frameworks */,
 				4FA40CEF28A0CA0A00499E53 /* ReactiveSwift in Frameworks */,
 			);
@@ -2644,12 +2638,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FEB660F2793510300E6A111 /* CocoaLumberjack in Frameworks */,
 				4F262D272C64E06500773789 /* libcmark.a in Frameworks */,
 				4FBD52622E47EFF400C39A44 /* TextInput.framework in Frameworks */,
 				4F7F47D028A5B5F200290BBD /* ReactiveCocoa in Frameworks */,
 				4F7F47CE28A5B5EC00290BBD /* ReactiveSwift in Frameworks */,
-				4FEB66112793510800E6A111 /* CocoaLumberjackSwift in Frameworks */,
 				4F28B7F82D49144E006928A6 /* SkyLight.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8023,8 +8015,6 @@
 			packageProductDependencies = (
 				4FA40CEE28A0CA0A00499E53 /* ReactiveSwift */,
 				4FA40CF128A0CA3900499E53 /* ReactiveCocoa */,
-				4F58FE0F2C571DDD00926A00 /* CocoaLumberjack */,
-				4F58FE112C571DE200926A00 /* CocoaLumberjackSwift */,
 			);
 			productName = "Mac Mouse Fix";
 			productReference = 4F94F5EE25E5EC2500D9F24A /* Mac Mouse Fix.app */;
@@ -8046,8 +8036,6 @@
 			);
 			name = "Mac Mouse Fix Helper";
 			packageProductDependencies = (
-				4FEB660E2793510300E6A111 /* CocoaLumberjack */,
-				4FEB66102793510800E6A111 /* CocoaLumberjackSwift */,
 				4F7F47CD28A5B5EC00290BBD /* ReactiveSwift */,
 				4F7F47CF28A5B5F200290BBD /* ReactiveCocoa */,
 			);
@@ -8145,7 +8133,6 @@
 			);
 			mainGroup = 4FCECD7721092354001F1078;
 			packageReferences = (
-				4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
 				4FA40CED28A0CA0A00499E53 /* XCRemoteSwiftPackageReference "ReactiveSwift" */,
 				4FA40CF028A0CA3900499E53 /* XCRemoteSwiftPackageReference "ReactiveCocoa" */,
 			);
@@ -9426,14 +9413,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.7.2;
-			};
-		};
 		4FA40CED28A0CA0A00499E53 /* XCRemoteSwiftPackageReference "ReactiveSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveCocoa/ReactiveSwift";
@@ -9453,16 +9432,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		4F58FE0F2C571DDD00926A00 /* CocoaLumberjack */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
-			productName = CocoaLumberjack;
-		};
-		4F58FE112C571DE200926A00 /* CocoaLumberjackSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
-			productName = CocoaLumberjackSwift;
-		};
 		4F7F47CD28A5B5EC00290BBD /* ReactiveSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4FA40CED28A0CA0A00499E53 /* XCRemoteSwiftPackageReference "ReactiveSwift" */;
@@ -9482,16 +9451,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4FA40CF028A0CA3900499E53 /* XCRemoteSwiftPackageReference "ReactiveCocoa" */;
 			productName = ReactiveCocoa;
-		};
-		4FEB660E2793510300E6A111 /* CocoaLumberjack */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
-			productName = CocoaLumberjack;
-		};
-		4FEB66102793510800E6A111 /* CocoaLumberjackSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4F1757BB2675955B009FCB47 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
-			productName = CocoaLumberjackSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -34,7 +34,7 @@
     NSDictionary *modificationsForModifiersActingOnThisButton = remaps[modifiersActingOnThisButton];
     NSDictionary *modificationsActingOnThisButton = [Remap modificationsWithModifiers:modifiersActingOnThisButton]
     
-//    DDLogDebug(@"\nActive mods: %@, \nremapsForActiveMods: %@", modifiersActingOnThisButton, remapsForModifiersActingOnThisButton);
+//    DDLogDebug(@"Active mods: %@, \nremapsForActiveMods: %@", modifiersActingOnThisButton, remapsForModifiersActingOnThisButton);
     
     /// If no remaps exist for this button, let the CGEvent which caused this function call pass through (Only if this function was invoked as a direct result of a physical button press)
     if (triggerType == kMFActionTriggerTypeButtonDown || triggerType == kMFActionTriggerTypeButtonUp) {

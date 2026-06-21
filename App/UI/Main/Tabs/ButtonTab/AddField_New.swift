@@ -70,7 +70,6 @@
 ///                 - Also see:  [Jun 2025]  `mfl_dynamiccolor()` wrapper around  `+[NSColor colorWithName:dynamicProvider:]` which we wrote in the `swiftui-test-tahoe-beta` project.
 
 import Cocoa
-import CocoaLumberjackSwift
 
 @objc class AddField: NSBox {
 

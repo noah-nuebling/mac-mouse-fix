@@ -424,7 +424,7 @@ NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __aut
     #else
         NSError *err = nil;
         NSMutableDictionary *config = (id)_readDictPlist(Locator.configURL, true, &err);
-        if (!config || err) mfabort(@"Failed to read config file with error: %@. config: %@", err, config); /// [Aug 2025] Should we retry here before aborting?
+        if (!config || err) mfabort("Failed to read config file with error: %@. config: %@", err, config); /// [Aug 2025] Should we retry here before aborting?
         self->_config = config;
     #endif
     
@@ -466,7 +466,7 @@ NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __aut
         ///         - Keep a copy of the old config file before replacing it. -> Better debugging.
         ///         - Retry instead of crashing (Could build retry directly into `_readDictPlist()`)
         #define fail(format, args...) \
-            mfabort(@"_loadAndRepair: " format, ## args);
+            mfabort("_loadAndRepair: " format, ## args);
         
         #define log(level, format, args...) \
             DDLog ## level (@"_loadAndRepair: " format, ## args)
@@ -481,20 +481,20 @@ NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __aut
     
     /// Load default config
     NSMutableDictionary *defaultConfig = (id)_readDictPlist(defaultConfigURL(), true, &err); /// Read as mutable, since we may assign `self->_config = defaultConfig`
-    if (!defaultConfig || err) fail(@"Loading defaultConfig failed with error: %@", err);
+    if (!defaultConfig || err) fail("Loading defaultConfig failed with error: %@", err);
     
     /// Load `self->_config`
     self->_config = (id)_readDictPlist(Locator.configURL, true, &err);
     if (!self->_config || err) {
         if (err.domain == NSCocoaErrorDomain && err.code == NSFileReadNoSuchFileError) { /// Create config file if none exists
-            log(Info, @"Config file doesn't exist. Creating a new one.");
+            log(Info, "Config file doesn't exist. Creating a new one.");
             err = nil; /// NSFileManager doesn't reset the error
             bool success = [NSFileManager.defaultManager createDirectoryAtURL: Locator.configURL.URLByDeletingLastPathComponent withIntermediateDirectories: YES attributes: nil error: &err]; /// [Aug 2025] Not sure what to choose for the `attributes:`.
-            if (!success || err) fail(@"Creating directory for config failed with error %@", err);
+            if (!success || err) fail("Creating directory for config failed with error %@", err);
             goto replace;
         }
         else
-            fail(@"Loading config failed with error: %@", err);
+            fail("Loading config failed with error: %@", err);
     }
     
     {

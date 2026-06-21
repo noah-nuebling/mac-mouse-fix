@@ -30,7 +30,6 @@
 ///                         - Update: [Sep 2025] Changed my opinions on this. See `swiftui-test-tahoe-beta`.
 
 import Cocoa
-import CocoaLumberjackSwift
 
 class TabViewController: NSTabViewController {
     

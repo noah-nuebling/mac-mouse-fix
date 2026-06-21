@@ -127,7 +127,7 @@ static RoundingFunction getBiasedRoundingFunction(double inpDelta) {
     }
     
     ///  Debug
-    DDLogDebug(@"\nSubpixelator eval with d: %f, oldErr: %f, roundedD: %f, newErr: %f", inpDelta, self.accumulatedRoundingError, outputDelta, preciseDelta - outputDelta);
+    DDLogDebug(@"Subpixelator eval with d: %f, oldErr: %f, roundedD: %f, newErr: %f", inpDelta, self.accumulatedRoundingError, outputDelta, preciseDelta - outputDelta);
     
     /// Update roundingError
     self.accumulatedRoundingError = preciseDelta - outputDelta;
@@ -169,7 +169,7 @@ static RoundingFunction getBiasedRoundingFunction(double inpDelta) {
     }
     
     ///  Debug
-    DDLogDebug(@"\nSubpixelator PEEK with d: %f, oldErr: %f, roundedD: %f", inpDelta, self.accumulatedRoundingError, outputDelta);
+    DDLogDebug(@"Subpixelator PEEK with d: %f, oldErr: %f, roundedD: %f", inpDelta, self.accumulatedRoundingError, outputDelta);
     
     /// Return
     return outputDelta;

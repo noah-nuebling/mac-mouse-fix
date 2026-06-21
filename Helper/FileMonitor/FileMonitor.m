@@ -148,10 +148,12 @@ void removeResidue(void) {
     [NSFileManager.defaultManager trashItemAtURL:Locator.launchdPlistURL resultingItemURL:nil error:nil];
     
     /// Delete logging folder // TODO: Test if this works
-    DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
-    NSString *logsDirectoryPath = fileLogger.logFileManager.logsDirectory;
-    NSURL *logsDirectoryURL = [NSURL fileURLWithPath:logsDirectoryPath isDirectory:YES];
-    [NSFileManager.defaultManager trashItemAtURL:logsDirectoryURL resultingItemURL:nil error:nil];
+    #if 0 /** Removed CocoaLumberjack. Using oslog now. [Jun 2026] */
+        DDFileLogger *fileLogger = [[DDFileLogger alloc] init];
+        NSString *logsDirectoryPath = fileLogger.logFileManager.logsDirectory;
+        NSURL *logsDirectoryURL = [NSURL fileURLWithPath:logsDirectoryPath isDirectory:YES];
+        [NSFileManager.defaultManager trashItemAtURL:logsDirectoryURL resultingItemURL:nil error:nil];
+    #endif
 }
 void disableHelper(void) {
     /// Kill this process

@@ -265,7 +265,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         double normalizedScrolledPixelsTargetLegacy = [_animationCurveLegacy evaluateAt:normalizedTimeSinceAnimationStart];
         CFTimeInterval ts4 = CACurrentMediaTime();
         
-        DDLogDebug(@"\n\
+        DDLogDebug(@"\
 Swift Curve time: %.7fs\n\
 ObjC Curve time:  %.7fs\n\
 Ratio: %f",

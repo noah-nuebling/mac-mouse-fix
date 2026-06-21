@@ -144,13 +144,13 @@ static NSMutableDictionary *_swipeInfo;
         CFTimeInterval ts = CACurrentMediaTime();
         CFTimeInterval timeDiff = ts - _dockSwipeLastTimeStamp;
         _dockSwipeLastTimeStamp = ts;
-        DDLogDebug(@"\nDock Swipe send with "
-                   @"delta: %@, "
-                   //@"lastDelta: %@, "
-                   //@"prevOriginOffset: %@ "
-                   //@"type: %@, "
-                   @"phase: %@, "
-                   @"timeSinceLast: %@"
+        DDLogDebug(@"Dock Swipe send with "
+                   "delta: %@, "
+                   //"lastDelta: %@, "
+                   //"prevOriginOffset: %@ "
+                   //"type: %@, "
+                   "phase: %@, "
+                   "timeSinceLast: %@"
                    ,
                    @(d),
                    //@(_dockSwipeLastDelta),

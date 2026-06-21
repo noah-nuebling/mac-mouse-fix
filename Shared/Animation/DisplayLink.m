@@ -210,7 +210,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
             _displayLink = NULL; /// I'm pretty sure CVDisplayLinkCreateWithActiveCGDisplays() always overrides the `_displayLink` to be either NULL or valid. If it sometimes leaves the value untouched, then we'd have to set it to NULL after releasing to prevent use-after-free.
         }
         
-        mfabort(@"DisplayLink.m: (%@) Failed to create CVDisplayLink (%@) after %d tries. Last codes: (%@, %@)", [self identifier], _displayLink, max_tries, MFCVReturn_ToString(ret), MFCVReturn_ToString(ret2));
+        mfabort("DisplayLink.m: (%@) Failed to create CVDisplayLink (%@) after %d tries. Last codes: (%@, %@)", [self identifier], _displayLink, max_tries, MFCVReturn_ToString(ret), MFCVReturn_ToString(ret2));
     }
 }
 

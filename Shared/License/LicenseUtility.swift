@@ -8,7 +8,6 @@
 //
 
 import Cocoa
-import CocoaLumberjackSwift
 
 func MFCatch<R, E>(_ workload: () throws(E) -> R) -> (R?, E?) {
     

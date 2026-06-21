@@ -7,40 +7,17 @@
 // --------------------------------------------------------------------------
 //
 
-#if !REPLACE_COCOALUMBERJACK
+/// Define DDLogXYZ
+///     This is separate from the C implementation because Swift can't import function-like C macros
+///     This is slow:
+///         Would be more efficient to have `message` be the format string instead of `"%{public}s"`, but that's not possible since this needs to be a drop-in replacement for CocoaLumberjack which uses string interpolation. So we do the @autoclosure stuff to keep it somewhat efficient.
+///             When I did the equivalent for objc, (Calling [NSString stringWithFormat:] and passing the result into oslog) gestures became very unresponsive (On M4) and CPU usage tripled.
+///             I think the only way CocoaLumberjack kept this responsive is by using a background thread.
+///             Doing the inefficient thing in Swift seems ok in practise. I suppose we don't use it much on hot paths.
 
-/// 1. Import CocoaLumberjackSwift across the entire target
 
-@_exported import CocoaLumberjackSwift
-
-/// 2. Set Swift's logLevel (the global variable `dynamicLogLevel`) to the level defined for objc in Logging.h
-///     This method is dynamically looked up and called by -[Logging setUpDDLogging]
-
-@objc private class LoggingSwift: Logging {
-    @objc private class func setUpDDLogSwift() {
-        dynamicLogLevel = ddLogLevel;
-    }
-}
-
-#elseif REPLACE_COCOALUMBERJACK
-
-/// Define replacements for DDLogXYZ
-///     This is separate from the C implementation because Swift can't import varargs properly
-
-func DDLogError(_ format: String, _ args: any CVarArg...) {
-    NSLog("Error: " + format, args)
-}
-func DDLogWarn(_ format: String, _ args: any CVarArg...) {
-    NSLog("Warn: " + format, args)
-}
-func DDLogInfo(_ format: String, _ args: any CVarArg...) {
-    NSLog("Info: " + format, args)
-}
-func DDLogDebug(_ format: String, _ args: any CVarArg...) {
-    NSLog("Debug: " + format, args)
-}
-func DDLogVerbose(_ format: String, _ args: any CVarArg...) {
-    NSLog("Verbose: " + format, args)
-}
-
-#endif
+@inlinable func DDLogError(_ message: @autoclosure () -> String)   { if OSLog.default.isEnabled(type: .fault)     { os_log(.fault,   log: OSLog.default, "%{public}s", message()); } }
+@inlinable func DDLogWarn(_ message: @autoclosure () -> String)    { if OSLog.default.isEnabled(type: .error)     { os_log(.error,   log: OSLog.default, "%{public}s", message()); } }
+@inlinable func DDLogInfo(_ message: @autoclosure () -> String)    { if OSLog.default.isEnabled(type: .info)      { os_log(.info,    log: OSLog.default, "%{public}s", message()); } }
+@inlinable func DDLogDebug(_ message: @autoclosure () -> String)   { if OSLog.default.isEnabled(type: .debug)     { os_log(.debug,   log: OSLog.default, "%{public}s", message()); } }
+@inlinable func DDLogVerbose(_ message: @autoclosure () -> String) { if OSLog.default.isEnabled(type: .default)   { os_log(.default, log: OSLog.default, "%{public}s", message()); } }

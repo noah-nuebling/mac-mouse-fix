@@ -201,7 +201,7 @@ import Cocoa
         let transitionDistance = baseCurve.sampleCurve(onAxis: Bezier.yAxis, atT: transitionPoint) * targetDistance
         
         /// Debug
-        DDLogDebug("\ntransition time: \(transitionTime*1000), dist: \(transitionDistance), dragTime: \((dragCurve?.timeInterval.length ?? 0)*1000)")
+        DDLogDebug("transition time: \(transitionTime*1000), dist: \(transitionDistance), dragTime: \((dragCurve?.timeInterval.length ?? 0)*1000)")
         
         /// Return
         return (transitionTime: transitionTime, transitionDistance: transitionDistance, dragCurve: dragCurve)

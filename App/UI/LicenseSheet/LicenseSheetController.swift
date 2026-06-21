@@ -118,7 +118,7 @@ import Cocoa
             if isActivation && isValidLicense {
                 /// Validate
                 if !MFLicenseTypeRequiresValidLicenseKey(state?.licenseTypeInfo) {
-                    DDLogError("Error: Will store licenseKey but license has type that doesn't appear to require valid license key. (Doesn't make sense) License state: \(state ?? "<nil>")")
+                    DDLogError("Error: Will store licenseKey but license has type that doesn't appear to require valid license key. (Doesn't make sense) License state: \(state.map { String(describing: $0) } ?? "<nil>")")
                     assert(false)
                 }
                 

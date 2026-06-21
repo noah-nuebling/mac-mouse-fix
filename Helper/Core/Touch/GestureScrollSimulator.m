@@ -508,7 +508,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     
     /// Debug
     
-    DDLogDebug(@"\nHNGG Constructed deltas - point: %@ \t line: %@ \t lineInt: %@", vectorDescription(point), vectorDescription(*line), vectorDescription(*lineInt));
+    DDLogDebug(@"HNGG Constructed deltas - point: %@ \t line: %@ \t lineInt: %@", vectorDescription(point), vectorDescription(*line), vectorDescription(*lineInt));
 }
 
 
@@ -548,7 +548,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
         double timeSinceLast = ts - tsLast;
         tsLast = ts;
         
-        DDLogDebug(@"\nHNGG Posting: gesture: %@ \t line: %@, lineInt: %@, point: %@ \t phases: (%d, %d) \t timeSinceLast: %f \n", vectorDescription(vecGesture), vectorDescription(vecScrollLine), vectorDescription(vecScrollLineInt), vectorDescription(vecScrollPoint), phase, momentumPhase, timeSinceLast*1000);
+        DDLogDebug(@"HNGG Posting: gesture: %@ \t line: %@, lineInt: %@, point: %@ \t phases: (%d, %d) \t timeSinceLast: %f \n", vectorDescription(vecGesture), vectorDescription(vecScrollLine), vectorDescription(vecScrollLineInt), vectorDescription(vecScrollPoint), phase, momentumPhase, timeSinceLast*1000);
     }
     
     /// Validate
@@ -598,7 +598,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
 
     /// Debug
     
-    DDLogDebug(@"\nHNGG Sent event: %@", scrollEventDescription(e22));
+    DDLogDebug(@"HNGG Sent event: %@", scrollEventDescription(e22));
     
     /// Post t22s0 event
     ///     Posting after the t29s6 event because I thought that was close to real trackpad events. But in real trackpad events the order is always different it seems.

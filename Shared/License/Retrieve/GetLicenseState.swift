@@ -96,7 +96,7 @@ import CryptoKit
                     /// 3. Ask fallback
                 
                     result = self.licenseStateFromFallback
-                    DDLogInfo("GetLicenseState: Using hardcoded fallback: \(result ?? "<nil>")\n(This is now just a log message. Would formerly return NSError with code: kMFLicenseErrorCodeNoInternetAndNoCache")
+                    DDLogInfo("GetLicenseState: Using hardcoded fallback: \(result.map { String(describing: $0) } ?? "<nil>")\n(This is now just a log message. Would formerly return NSError with code: kMFLicenseErrorCodeNoInternetAndNoCache")
                 }
             
             }
@@ -261,7 +261,7 @@ import CryptoKit
             ///     Note: [Jan 2025] Need to use `.xml` instead of `.binary`. to make the data (and with it the hash) deterministic. Not sure why. We might be relying on an implementation detail here.
             let (dictData, error) = MFCatch { try PropertyListSerialization.data(fromPropertyList: dict, format: .xml, options: 0) }
             guard let dictData else {
-                DDLogError("GetLicenseState: Caching: plist serialization of licenseState dict archive failed with error: \(error ?? "<nil>"). (Don't think this should ever happen.)")
+                DDLogError("GetLicenseState: Caching: plist serialization of licenseState dict archive failed with error: \(error.map { String(describing: $0) } ?? "<nil>"). (Don't think this should ever happen.)")
                 assert(false);
                 return
             }
@@ -301,7 +301,7 @@ import CryptoKit
                     ///     for cached licenseState
                     let (dictData, error) = MFCatch { try PropertyListSerialization.data(fromPropertyList: cachedDict, format: .xml, options: 0) }
                     guard let dictData else {
-                        DDLogError("GetLicenseState: Offline validation failed: plist serialization of dict archive failed. Error: \(error ?? "<nil>")")
+                        DDLogError("GetLicenseState: Offline validation failed: plist serialization of dict archive failed. Error: \(error.map { String(describing: $0) } ?? "<nil>")")
                         success = false
                         break offlineValidation
                     }
