@@ -24,7 +24,7 @@
 
 + (MFEventPassThroughEvaluation)handleButtonTriggerWithButton:(NSNumber *)button triggerType:(MFActionTriggerType)triggerType clickLevel:(NSNumber *)level device:(NSNumber *)devID {
     
-    DDLogDebug(@"HANDLING BUTTON TRIGGER - button: %@, triggerType: %@, level: %@, devID: %@", button, @(triggerType), level, devID);
+    DDLogDebug("HANDLING BUTTON TRIGGER - button: %@, triggerType: %@, level: %@, devID: %@", button, @(triggerType), level, devID);
     
     /// Get remaps and apply modifier overrides
     NSDictionary *remaps = Remap.remaps;
@@ -34,14 +34,14 @@
     NSDictionary *modificationsForModifiersActingOnThisButton = remaps[modifiersActingOnThisButton];
     NSDictionary *modificationsActingOnThisButton = [Remap modificationsWithModifiers:modifiersActingOnThisButton]
     
-//    DDLogDebug(@"Active mods: %@, \nremapsForActiveMods: %@", modifiersActingOnThisButton, remapsForModifiersActingOnThisButton);
+//    DDLogDebug("Active mods: %@, \nremapsForActiveMods: %@", modifiersActingOnThisButton, remapsForModifiersActingOnThisButton);
     
     /// If no remaps exist for this button, let the CGEvent which caused this function call pass through (Only if this function was invoked as a direct result of a physical button press)
     if (triggerType == kMFActionTriggerTypeButtonDown || triggerType == kMFActionTriggerTypeButtonUp) {
         if (![ButtonLandscapeAssessor effectExistsForButton:button
                                                      remaps:remaps
                                 modificationsActingOnButton:modificationsActingOnThisButton]) {
-            DDLogDebug(@"No remaps exist for this button, letting event pass through");
+            DDLogDebug("No remaps exist for this button, letting event pass through");
             return kMFEventPassThroughApproval;
         }
     }
@@ -65,7 +65,7 @@
                                                  thisDownDoBe:&effectForMouseDownStateOfThisLevelExists
                                                   greaterDoBe:&effectOfGreaterLevelExists];
     
-    // DDLogDebug(@"ACTIVE MODIFIERS - %@", activeModifiersUnfiltered);
+    // DDLogDebug("ACTIVE MODIFIERS - %@", activeModifiersUnfiltered);
     
     /// Send trigger (if apropriate)
     

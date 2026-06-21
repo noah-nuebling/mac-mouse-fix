@@ -57,7 +57,7 @@ AuthorizeAccessibilityView *_accViewController;
 //
 //    accView.hidden = YES;
 //
-//    DDLogInfo(@"subviews: %@", prefWindow.contentView.subviews);
+//    DDLogInfo("subviews: %@", prefWindow.contentView.subviews);
 }
 
 - (void)viewDidLoad {
@@ -81,7 +81,7 @@ AuthorizeAccessibilityView *_accViewController;
     
     assert(false);
     
-    DDLogInfo(@"AuthorizeButton clicked");
+    DDLogInfo("AuthorizeButton clicked");
     
     /// Open privacy prefpane
     
@@ -95,7 +95,7 @@ AuthorizeAccessibilityView *_accViewController;
 
 + (void)add {
     
-    DDLogInfo(@"adding AuthorizeAccessibilityView");
+    DDLogInfo("adding AuthorizeAccessibilityView");
   
     ///
     /// New sheet method
@@ -137,7 +137,7 @@ AuthorizeAccessibilityView *_accViewController;
 //        /// Center in superview
 ////        mainView.translatesAutoresizingMaskIntoConstraints = NO;
 //        accView.translatesAutoresizingMaskIntoConstraints = NO;
-//        DDLogInfo(@"mainView frame: %@, accView frame: %@", [NSValue valueWithRect:mainView.frame], [NSValue valueWithRect:accView.frame]);
+//        DDLogInfo("mainView frame: %@, accView frame: %@", [NSValue valueWithRect:mainView.frame], [NSValue valueWithRect:accView.frame]);
 //        [mainView addConstraints:@[
 //            [NSLayoutConstraint constraintWithItem:mainView
 //                                         attribute:NSLayoutAttributeCenterX
@@ -155,7 +155,7 @@ AuthorizeAccessibilityView *_accViewController;
 //                                          constant:0],
 //        ]];
 //        [mainView layout];
-//        DDLogInfo(@"mainView frame: %@, accView frame: %@", [NSValue valueWithRect:mainView.frame], [NSValue valueWithRect:accView.frame]);
+//        DDLogInfo("mainView frame: %@, accView frame: %@", [NSValue valueWithRect:mainView.frame], [NSValue valueWithRect:accView.frame]);
 //    }
 //
 //    [NSAnimationContext beginGrouping];
@@ -169,7 +169,7 @@ AuthorizeAccessibilityView *_accViewController;
 
 + (void)remove {
     
-    DDLogInfo(@"Removing AuthorizeAccessibilityView");
+    DDLogInfo("Removing AuthorizeAccessibilityView");
     
     ///
     /// New sheet method

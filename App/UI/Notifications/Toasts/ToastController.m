@@ -198,7 +198,7 @@ typedef enum {
     [_instance.label.textStorage setAttributedString: message];
 
     /// Debug
-    DDLogDebug(@"Toast has attributed string: %@", message);
+    DDLogDebug("Toast has attributed string: %@", message);
     
     /// Get constants
     
@@ -368,7 +368,7 @@ typedef enum {
         [NSAnimationContext endGrouping];
         
         /// Debug
-        DDLogDebug(@"Toast frames: preAnim=%@, target=%@", @(preAnimFrame), @(targetFrame));
+        DDLogDebug("Toast frames: preAnim=%@, target=%@", @(preAnimFrame), @(targetFrame));
     }
     
     /// Close if user clicks elsewhere
@@ -467,7 +467,7 @@ static BOOL _mouseIsOverToast = NO;
     
     BOOL showDurationIsOver = _showDurationTimer == nil;
     
-    DDLogDebug(@"ToastController - showDurationIsOver: %d, !mouseIsOverToast: %d", showDurationIsOver, !_mouseIsOverToast);
+    DDLogDebug("ToastController - showDurationIsOver: %d, !mouseIsOverToast: %d", showDurationIsOver, !_mouseIsOverToast);
     
     if (showDurationIsOver && !_mouseIsOverToast) {
         

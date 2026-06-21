@@ -102,7 +102,7 @@ void setConfig(NSString *keyPath, NSObject *value) {
     
 #if DEBUG
     if ([Config.shared.config objectForCoolKeyPath:keyPath] == nil) {
-        DDLogDebug(@"Setting value %@ to config at non-existent keyPath %@. The keypath will be created.", value, keyPath);
+        DDLogDebug("Setting value %@ to config at non-existent keyPath %@. The keypath will be created.", value, keyPath);
     }
 #endif
     
@@ -199,7 +199,7 @@ void commitConfig(void) {
     NSString *bundleID = app.bundleIdentifier;
     
     /// Debug
-    DDLogDebug(@"Loading overrides for app %@", bundleID);
+    DDLogDebug("Loading overrides for app %@", bundleID);
     
     /// Set internal state
     if (![_bundleIDOfAppWhichCausesAppOverride isEqual:bundleID]) {
@@ -276,7 +276,7 @@ void commitConfig(void) {
     }
     
     
-    DDLogInfo(@"pathsToWatch : %@", (__bridge NSArray *)pathsToWatch);
+    DDLogInfo("pathsToWatch : %@", (__bridge NSArray *)pathsToWatch);
     
     /// Create eventStream
     /// Notes:
@@ -292,7 +292,7 @@ void commitConfig(void) {
     /// Start eventStream
     FSEventStreamScheduleWithRunLoop(remapsFileEventStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
     BOOL EventStreamStarted = FSEventStreamStart(remapsFileEventStream);
-    DDLogInfo(@"EventStreamStarted: %d", EventStreamStarted);
+    DDLogInfo("EventStreamStarted: %d", EventStreamStarted);
     
     /// Release stuff
     ///     We might be leaking a bunch of things here in this class but it doesn't matter since it's only run once when the app starts up
@@ -319,7 +319,7 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
     
     /// Log
     
-    DDLogInfo(@"FSEvent for config.plist - paths: %@, noInfo: %d, isFromSelf: %d, isModified: %d, isRemoved: %d, isRenamed: %d, isCreated: %d, isFile: %d", paths, noInfo, isFromSelf, isModified, isRemoved, isRenamed, isCreated, isFile);
+    DDLogInfo("FSEvent for config.plist - paths: %@, noInfo: %d, isFromSelf: %d, isModified: %d, isRemoved: %d, isRenamed: %d, isCreated: %d, isFile: %d", paths, noInfo, isFromSelf, isModified, isRemoved, isRenamed, isCreated, isFile);
     
     if (!isFromSelf && isFile) {
         [Config loadFileAndUpdateStates];
@@ -365,14 +365,14 @@ void Handle_FSEventStreamCallback(ConstFSEventStreamRef streamRef, void *clientC
     NSError *serializeErr;
     NSData *configData = [NSPropertyListSerialization dataWithPropertyList:self->_config format:NSPropertyListXMLFormat_v1_0 options:0 error:&serializeErr];
     if (serializeErr) {
-        DDLogInfo(@"ERROR serializing configDictFromFile: %@", serializeErr);
+        DDLogInfo("ERROR serializing configDictFromFile: %@", serializeErr);
     }
     NSError *writeErr;
     [configData writeToURL:Locator.configURL options:NSDataWritingAtomic error:&writeErr];
     if (writeErr) {
-        DDLogInfo(@"ERROR writing configDictFromFile to file: %@", writeErr);
+        DDLogInfo("ERROR writing configDictFromFile to file: %@", writeErr);
     }
-    DDLogInfo(@"Wrote config to file.");
+    DDLogInfo("Wrote config to file.");
 }
 
 NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __autoreleasing _Nullable * _Nullable errPtr) {
@@ -386,7 +386,7 @@ NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __aut
     ///     - Don't think there's a performance benefit to using `NSPropertyListImmutable`. Evidence: Under macOS 26.0 Tahoe Beta, the system always seems to give us `__NSArrayM` `__NSDictionaryM` (mutable variants) even if we use the immutable `[NSDictionary dictionaryWithContentsOfURL:]` API.
 
     #define fail(format, args...) ({                            \
-        DDLogDebug(@"_readDictPlist: " format, ## args);        \
+        DDLogDebug("_readDictPlist: " format, ## args);        \
         return nil;                                             \
     })
 
@@ -428,7 +428,7 @@ NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __aut
         self->_config = config;
     #endif
     
-    DDLogDebug(@"Loaded config from file: %@", self->_config);
+    DDLogDebug("Loaded config from file: %@", self->_config);
     
     if ((0)) /// -> Disabled because callers of this function now send the reactive signal
         [ReactiveConfig.shared reactWithNewConfig: self->_config];
@@ -469,7 +469,7 @@ NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __aut
             mfabort("_loadAndRepair: " format, ## args);
         
         #define log(level, format, args...) \
-            DDLog ## level (@"_loadAndRepair: " format, ## args)
+            DDLog ## level ("_loadAndRepair: " format, ## args)
     }
     
     /// Asserts
@@ -613,7 +613,7 @@ NSDictionary *_Nullable _readDictPlist(NSURL *url, bool mutable, NSError * __aut
     
     assert(false); /// Did some refactors and this is untested and unused at the moment.
     
-    DDLogInfo(@"Repairing incomplete appOverrides...");
+    DDLogInfo("Repairing incomplete appOverrides...");
     
     NSString *bundleIDEscaped = [bundleID stringByReplacingOccurrencesOfString:@"." withString:@"\\."];
     for (NSString *defaultKP in keyPathsToDefaultValues) {

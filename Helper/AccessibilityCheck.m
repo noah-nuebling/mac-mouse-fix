@@ -106,7 +106,7 @@
     
     /// Set up CocoaLumberjack
     [Logging setUpDDLog];
-    DDLogInfo(@"Accessibility Check - Mac Mosue Fix begins logging excessively");
+    DDLogInfo("Accessibility Check - Mac Mosue Fix begins logging excessively");
     
     
     /// Validate asserts working properly
@@ -116,12 +116,12 @@
     /// - I added the NDEBUG flag back to the Clang Preprocessor Macros now. I also added the NDEBUG flag to the Swift Active Compilation Conditions. Not sure what effect that has, but I think the NDEBUG flag is standard for Swift, as well so it should work fine (Not totally sure though)
     
 #if NDEBUG
-    DDLogInfo(@"Accessibility Check - Running a Non-Debug build. Asserts are disabled.");
+    DDLogInfo("Accessibility Check - Running a Non-Debug build. Asserts are disabled.");
     assert(false);
 #endif
     
 #if DEBUG
-    DDLogInfo(@"Accessibility Check - Running a Debug build. Asserts are enabled.");
+    DDLogInfo("Accessibility Check - Running a Debug build. Asserts are enabled.");
 #endif
     
     ///
@@ -137,7 +137,7 @@
     
     if (!isTrusted) {
         
-        DDLogInfo(@"Accessibility Check - Accessibility Access Disabled");
+        DDLogInfo("Accessibility Check - Accessibility Access Disabled");
         
         /// Workaround for macOS bug
         ///     If there's still and old version of the helper in System Settings, the user won't be able to trust the new helper. So we remove the old helper from System Settings and add the new one again.
@@ -173,7 +173,7 @@
         /// Log
         ///
         
-        DDLogInfo(@"Accessibility Check - Helper started with accessibility permissions at: URL %@", Locator.currentExecutableURL);
+        DDLogInfo("Accessibility Check - Helper started with accessibility permissions at: URL %@", Locator.currentExecutableURL);
         
         ///
         /// **Post-check init**
@@ -236,9 +236,9 @@
 //        [SecureStorage set:@"hi.im.groot" value:@"what's your name? Hghhhh?"];
 //        NSString *secure = [SecureStorage get:@"hi.im.groot"];
 //
-//        DDLogDebug(@"Value from secure storage: %@", secure);
+//        DDLogDebug("Value from secure storage: %@", secure);
 //
-//        DDLogDebug(@"Entire secure storage: %@", [SecureStorage getAll]);
+//        DDLogDebug("Entire secure storage: %@", [SecureStorage getAll]);
 //
 //        [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
 //
@@ -253,10 +253,10 @@
         
     //    [Gumroad checkLicense:license email:email completionHandler:^(BOOL isValidKey, NSDictionary<NSString *,id> * _Nullable serverResponse, NSError * _Nullable error, NSURLResponse * _Nullable urlResponse) {
     //
-    //            DDLogDebug(@"License check result - isValidKey: %d, error: %@", isValidKey, error);
+    //            DDLogDebug("License check result - isValidKey: %d, error: %@", isValidKey, error);
     //    }];
 //        [Licensing licensingStateWithCompletionHandler:^(MFLicenseAndTrialState licensing, NSError *error) {
-//            DDLogDebug(@"License check result - state: %d, currentDay: %d, trialDays: %d, error: %@", licensing.state, licensing.daysOfUse, licensing.trialDays, error);
+//            DDLogDebug("License check result - state: %d, currentDay: %d, trialDays: %d, error: %@", licensing.state, licensing.daysOfUse, licensing.trialDays, error);
 //        }];
     }
 }

@@ -28,7 +28,7 @@
 
 + (void)executeActionArray:(NSArray *)actionArray phase:(MFActionPhase)phase {
     
-    DDLogDebug(@"Executing action array: %@, phase: %@", actionArray, @(phase));
+    DDLogDebug("Executing action array: %@, phase: %@", actionArray, @(phase));
     
     if (phase == kMFActionPhaseEnd) {
         return; /// TODO: Actually implement actions with different phases
@@ -117,7 +117,7 @@
                     /// Define the `bfmethods`
                     
                     #define bfmethod(bfmethod_label) \
-                        goto endof_bfmethods; bfmethod_label: {}; DDLogDebug(@"Actions.m: NavigationSwipe: Posting " #bfmethod_label);
+                        goto endof_bfmethods; bfmethod_label: {}; DDLogDebug("Actions.m: NavigationSwipe: Posting " #bfmethod_label);
                     {
                         bfmethod(bfmethod_mouseButton) {
                             if (isleft)     [ModificationUtility postMouseButtonClicks: 4 nOfClicks: 1];
@@ -218,7 +218,7 @@ static void postSystemDefinedEvent(MFSystemDefinedEventType type, NSEventModifie
 
 static void postKeyboardShortcut(CGKeyCode keyCode, CGSModifierFlags modifierFlags) {
     
-    DDLogDebug(@"postKeyboardShortcut: Posting shortcut with %@", vardesc(keyCode, modifierFlags));
+    DDLogDebug("postKeyboardShortcut: Posting shortcut with %@", vardesc(keyCode, modifierFlags));
     
     CGEventTapLocation tapLoc = kCGSessionEventTap;
 

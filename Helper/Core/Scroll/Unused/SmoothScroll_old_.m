@@ -163,7 +163,7 @@ static BOOL _hasStarted;
     } else if (scrollDeltaAxis1 < 0) {
         _pxScrollBuffer -= ScrollConfig.pxPerTickBase * ScrollConfig.scrollInvert;
     } else {
-        DDLogInfo(@"scrollDeltaAxis1 is 0. This shouldn't happen.");
+        DDLogInfo("scrollDeltaAxis1 is 0. This shouldn't happen.");
     }
     
     // Apply acceleration
@@ -185,8 +185,8 @@ static BOOL _hasStarted;
     _animationDuration = ScrollConfig.msPerStep / 1000.0; // Don't need to set this every time
     _animationAlreadyScrolledPixels = 0;
     
-//    DDLogDebug(@"buff: %d", _pxScrollBuffer);
-//    DDLogDebug(@"--------------");
+//    DDLogDebug("buff: %d", _pxScrollBuffer);
+//    DDLogDebug("--------------");
     
     // Start displaylink and stuff
     
@@ -199,7 +199,7 @@ static BOOL _hasStarted;
             @try {
                 setDisplayLinkToDisplayUnderMousePointer(event);
             } @catch (NSException *e) {
-                DDLogInfo(@"Error while trying to set display link to display under mouse pointer: %@", [e reason]);
+                DDLogInfo("Error while trying to set display link to display under mouse pointer: %@", [e reason]);
             }
         }
         while (CVDisplayLinkIsRunning(_displayLink) == NO) {
@@ -215,8 +215,8 @@ static BOOL _hasStarted;
                 
                 CVReturn rt = CVDisplayLinkStart(_displayLink);
                 if (rt != kCVReturnSuccess) {
-                    DDLogInfo(@"Failed to start displayLink. Trying again.");
-                    DDLogInfo(@"Error code: %d", rt);
+                    DDLogInfo("Failed to start displayLink. Trying again.");
+                    DDLogInfo("Error code: %d", rt);
                 }
                 
             });
@@ -232,7 +232,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     //    ( ((double)msBetweenFramesNominal.timeValue) / ((double)msBetweenFramesNominal.timeScale) ) * 1000;
     
 //    if (msSinceLastFrame != 16.674562) {
-//        DDLogDebug(@"frameTimeSpike: %fms", msSinceLastFrame);
+//        DDLogDebug("frameTimeSpike: %fms", msSinceLastFrame);
 //    }
     
     int64_t pxToScrollThisFrame = 0;
@@ -265,7 +265,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
         double normalizedScrolledPixelsTargetLegacy = [_animationCurveLegacy evaluateAt:normalizedTimeSinceAnimationStart];
         CFTimeInterval ts4 = CACurrentMediaTime();
         
-        DDLogDebug(@"\
+        DDLogDebug("\
 Swift Curve time: %.7fs\n\
 ObjC Curve time:  %.7fs\n\
 Ratio: %f",
@@ -288,19 +288,19 @@ Ratio: %f",
         int64_t pxLeftToScroll = _pxScrollBuffer - _animationAlreadyScrolledPixels;
         double msLeftForScroll = (_animationStartTime + _animationDuration) - now;
         
-//        DDLogDebug(@"px left to scroll: %@", @(pxLeftToScroll));
-//        DDLogDebug(@"pxToScrollThisFrame: %@", @(pxToScrollThisFrame));
-//        DDLogDebug(@"pxToScrollThisFrame: %@", @(pxToScrollThisFrame));
-//        DDLogDebug(@"ms left for scroll: %@", @(msLeftForScroll));
-//        DDLogDebug(@"now: %@", @(now));
-//        DDLogDebug(@"anim start time: %@", @(_animationStartTime));
-//        DDLogDebug(@"anim duration: %@", @(_animationDuration));
-//        DDLogDebug(@"normalized time since anim start: %@", @(normalizedTimeSinceAnimationStart));
-//        DDLogDebug(@"normalized scrolled pixels target: %@", @(normalizedScrolledPixelsTarget));
-//        DDLogDebug(@"Already scrolled pixels target: %@", @(scrolledPixelsTarget));
-//        DDLogDebug(@"Already scrolled pixels: %@", @(_animationAlreadyScrolledPixels));
-//        DDLogDebug(@"Scrolled pixels target: %@", @(_pxScrollBuffer));
-//        DDLogDebug(@"---");
+//        DDLogDebug("px left to scroll: %@", @(pxLeftToScroll));
+//        DDLogDebug("pxToScrollThisFrame: %@", @(pxToScrollThisFrame));
+//        DDLogDebug("pxToScrollThisFrame: %@", @(pxToScrollThisFrame));
+//        DDLogDebug("ms left for scroll: %@", @(msLeftForScroll));
+//        DDLogDebug("now: %@", @(now));
+//        DDLogDebug("anim start time: %@", @(_animationStartTime));
+//        DDLogDebug("anim duration: %@", @(_animationDuration));
+//        DDLogDebug("normalized time since anim start: %@", @(normalizedTimeSinceAnimationStart));
+//        DDLogDebug("normalized scrolled pixels target: %@", @(normalizedScrolledPixelsTarget));
+//        DDLogDebug("Already scrolled pixels target: %@", @(scrolledPixelsTarget));
+//        DDLogDebug("Already scrolled pixels: %@", @(_animationAlreadyScrolledPixels));
+//        DDLogDebug("Scrolled pixels target: %@", @(_pxScrollBuffer));
+//        DDLogDebug("---");
         
         // Entering momentum phase
         
@@ -316,7 +316,7 @@ Ratio: %f",
     
     else if (_displayLinkPhase == kMFPhaseMomentum) {
         
-//        DDLogDebug(@"Momentum scrolling with velocity: %f", _pxPerMsVelocity);
+//        DDLogDebug("Momentum scrolling with velocity: %f", _pxPerMsVelocity);
         
         pxToScrollThisFrame = round(_pxPerMsVelocity * msSinceLastFrame);
         double thisVel = _pxPerMsVelocity;
@@ -358,8 +358,8 @@ Ratio: %f",
         
         IOHIDEventPhaseBits phase = IOHIDPhaseFromMFPhase(_displayLinkPhase);
         
-//        DDLogDebug(@"displayLinkPhase: %u", _displayLinkPhase);
-//        DDLogDebug(@"IOHIDEventPhase: %hu \n", phase);
+//        DDLogDebug("displayLinkPhase: %u", _displayLinkPhase);
+//        DDLogDebug("IOHIDEventPhase: %hu \n", phase);
         
         if (phase != kIOHIDEventPhaseEnded) { // TODO: Remove. Sending it again here is a hack to make it stop scrolling.
             [GestureScrollSimulator postGestureScrollEventWithDeltaX:dx deltaY:dy phase:phase isGestureDelta:NO];
@@ -406,7 +406,7 @@ static IOHIDEventPhaseBits IOHIDPhaseFromMFPhase(MFDisplayLinkPhase MFPhase) {
 // TODO: What does this do? Is this necessary?
 static void Handle_displayReconfiguration(CGDirectDisplayID display, CGDisplayChangeSummaryFlags flags, void *userInfo) {
     if ( (flags & kCGDisplayAddFlag) || (flags & kCGDisplayRemoveFlag) ) {
-        DDLogInfo(@"display added / removed");
+        DDLogInfo("display added / removed");
         CVDisplayLinkStop(_displayLink);
         CVDisplayLinkRelease(_displayLink);
         CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
@@ -429,7 +429,7 @@ static void setDisplayLinkToDisplayUnderMousePointer(CGEventRef event) {
             CVDisplayLinkSetCurrentCGDisplay(_displayLink, dsp);
         }
     } else if (matchingDisplayCount > 1) {
-        DDLogInfo(@"more than one display for current mouse position");
+        DDLogInfo("more than one display for current mouse position");
         
     } else if (matchingDisplayCount == 0) {
         NSException *e = [NSException exceptionWithName:NSInternalInconsistencyException reason:@"there are 0 diplays under the mouse pointer" userInfo:NULL];

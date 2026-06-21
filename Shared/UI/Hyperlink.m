@@ -114,8 +114,8 @@ IB_DESIGNABLE
 
 - (void)updateTrackingAreas {
     
-    DDLogDebug(@"Hyperlink updateTrackingAreas");
-//    DDLogDebug(@"Hyperlink updateTrackingAreas caller: %@", SharedUtility.callerInfo);
+    DDLogDebug("Hyperlink updateTrackingAreas");
+//    DDLogDebug("Hyperlink updateTrackingAreas caller: %@", SharedUtility.callerInfo);
     
     [super updateTrackingAreas];
     
@@ -163,7 +163,7 @@ IB_DESIGNABLE
 
 - (void)mouseEntered:(NSEvent *)event {
     
-    DDLogDebug(@"Hyperlink enter");
+    DDLogDebug("Hyperlink enter");
     
     _mouseIsOverSelf = YES;
     
@@ -176,7 +176,7 @@ IB_DESIGNABLE
 }
 - (void)mouseExited:(NSEvent *)event {
     
-    DDLogDebug(@"Hyperlink exit");
+    DDLogDebug("Hyperlink exit");
     
     _mouseIsOverSelf = NO;
     
@@ -190,7 +190,7 @@ IB_DESIGNABLE
 }
 - (void)mouseDown:(NSEvent *)event {
     
-    DDLogDebug(@"Hyperlink mouseDown");
+    DDLogDebug("Hyperlink mouseDown");
     
     if (_mouseIsOverSelf) {
         _mouseDownOverSelf = YES;
@@ -198,7 +198,7 @@ IB_DESIGNABLE
 }
 - (void)mouseUp:(NSEvent *)event {
     
-    DDLogDebug(@"Hyperlink mouseUp");
+    DDLogDebug("Hyperlink mouseUp");
     
     if (_mouseDownOverSelf && _mouseIsOverSelf) {
         [self reactToClick];
@@ -208,7 +208,7 @@ IB_DESIGNABLE
 }
 - (void)reactToClick {
     
-    DDLogDebug(@"Hyperlink acceptClick");
+    DDLogDebug("Hyperlink acceptClick");
     
     /// Get info
     BOOL hasAction = self.action != nil;

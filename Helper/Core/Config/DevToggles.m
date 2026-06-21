@@ -55,7 +55,7 @@ CFMachPortRef _tap = NULL;
             
             #define flg(x) (kCGEventFlagMask ## x)
 
-            #define log(args...) DDLogDebug(@"DevToggles.m: " args);
+            #define log(args...) DDLogDebug("DevToggles.m: " args);
  
             if (type == kCGEventTapDisabledByTimeout)
                 CGEventTapEnable(_tap, true);

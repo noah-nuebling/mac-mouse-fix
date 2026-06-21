@@ -128,7 +128,7 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
         
     if (B) {
         
-        DDLogDebug(@"Hiding pointer");
+        DDLogDebug("Hiding pointer");
         
 //        CGSHideCursor(cid);
         CGDisplayHideCursor(kCGDirectMainDisplay);
@@ -136,13 +136,13 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
         
     } else {
         
-        DDLogDebug(@"UNHiding pointer");
+        DDLogDebug("UNHiding pointer");
         
 //        CGSShowCursor(cid);
         CGDisplayShowCursor(kCGDirectMainDisplay); /// Do it twice for good measure.
         CGError result = CGDisplayShowCursor(kCGDirectMainDisplay);
         if (result != kCGErrorSuccess) {
-            DDLogDebug(@"Unhiding pointer failed. CGError: %d", result);
+            DDLogDebug("Unhiding pointer failed. CGError: %d", result);
         }
 //        [NSCursor unhide];
         
@@ -153,7 +153,7 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
 
 + (void)postMouseButtonClicks:(MFMouseButtonNumber)button nOfClicks:(int64_t)nOfClicks {
     
-    DDLogDebug(@"Posting %lld mouse button %u clicks", nOfClicks, button);
+    DDLogDebug("Posting %lld mouse button %u clicks", nOfClicks, button);
     
     CGEventTapLocation tapLoc = kCGSessionEventTap;
     
@@ -191,7 +191,7 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
     ///     CGWarpMousePointer - I'm using this in version-3 branch and has a delay after it where you can't move the poiner at all. If you turn off the delay it doesn't work anymore.
     ///  If feel like this might be impossible because macOS might need this small delay to move the pointer programmatically.
     
-    DDLogDebug(@"POSTING FAKE MOUSE BUTTON EVENT. btn: %d, down: %d", button, down);
+    DDLogDebug("POSTING FAKE MOUSE BUTTON EVENT. btn: %d, down: %d", button, down);
     
     CGEventTapLocation tapLoc = kCGSessionEventTap;
     

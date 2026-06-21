@@ -119,7 +119,7 @@ static NSDictionary *_Nullable subsetSwizzler(NSDictionary *remaps, NSDictionary
     
     /// Debug
     
-//    DDLogDebug(@"activeFlags in subsetOverride: %@", [SharedUtility binaryRepresentation:(int)activeFlags]);
+//    DDLogDebug("activeFlags in subsetOverride: %@", [SharedUtility binaryRepresentation:(int)activeFlags]);
     
     /// Get preconds that are a subset of activeModifiers
     

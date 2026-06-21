@@ -49,7 +49,7 @@ static NSMutableDictionary *_swizzleCache = nil;
         return cached;
     } else {
         
-        DDLogDebug(@"Recalculating modifications for modifiers: %@", modifiers);
+        DDLogDebug("Recalculating modifications for modifiers: %@", modifiers);
         
         NSDictionary *new = [RemapSwizzler swizzleRemaps:_remaps activeModifiers:modifiers];
         _swizzleCache[modifiers] = new;
@@ -76,7 +76,7 @@ static NSDictionary *_remaps;
     if (isEqual) {
         
         /// Log
-        DDLogDebug(@"Remaps were set to the same value");
+        DDLogDebug("Remaps were set to the same value");
         
     } else {
         
@@ -93,7 +93,7 @@ static NSDictionary *_remaps;
 //        [NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
         
         /// Log
-        DDLogDebug(@"Set remaps to: %@", _remaps);
+        DDLogDebug("Set remaps to: %@", _remaps);
     }
 }
 
@@ -106,7 +106,7 @@ static NSDictionary *_remaps;
     /// The helper was made to handle a dictionary format which should be more effictient among other perks.
     /// This function takes the remaps in table format from config, then converts it to dict format and makes that available to all the other Input modification classes to base their behaviour off of through self.remaps.
     
-    DDLogDebug(@"TRM set remaps to config");
+    DDLogDebug("TRM set remaps to config");
     
     ///
     /// Disable addMode
@@ -277,7 +277,7 @@ BOOL _addModeIsEnabled = NO;
     ///     Edit: The remapSwizzler is actually responsible for this now.
     ///     TODO: Remove addModePayloadIsValid.
     
-    DDLogDebug(@"TRM set remaps to addMode");
+    DDLogDebug("TRM set remaps to addMode");
     
     NSMutableDictionary *triggerToEffectDict = [NSMutableDictionary dictionary];
     
@@ -360,7 +360,7 @@ BOOL _addModeIsEnabled = NO;
 
 + (void)sendAddModeFeedback:(NSDictionary *)payload {
     
-    DDLogDebug(@"Concluding addMode with payload: %@", payload);
+    DDLogDebug("Concluding addMode with payload: %@", payload);
     
     if (![self addModePayloadIsValid:payload]) {
         /// The way things are set up currently, we constantly get invalid payloads. So we just ignore them

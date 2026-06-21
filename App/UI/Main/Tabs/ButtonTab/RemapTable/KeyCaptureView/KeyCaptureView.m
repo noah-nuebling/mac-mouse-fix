@@ -48,7 +48,7 @@
 - (void)setupWithCaptureHandler:(CaptureHandler)captureHandler
                    cancelHandler:(CancelHandler)cancelHandler {
     
-    DDLogDebug(@"Setting up keystroke capture view");
+    DDLogDebug("Setting up keystroke capture view");
     
     self.delegate = self;
     _captureHandler = captureHandler;
@@ -134,7 +134,7 @@
 
 - (BOOL)becomeFirstResponder {
     
-    DDLogDebug(@"BECOME FIRST RESPONDER");
+    DDLogDebug("BECOME FIRST RESPONDER");
     
     BOOL superAccepts = [super becomeFirstResponder];
     
@@ -163,7 +163,7 @@
             if (event.type == NSEventTypeFlagsChanged) {
                 CGEventFlags flags = CGEventGetFlags(e);
                 
-//                DDLogDebug(@"KeyCapureView: modifiers: %@", binarystring(flags));
+//                DDLogDebug("KeyCapureView: modifiers: %@", binarystring(flags));
                 
                 NSString *modString = [UIStrings getKeyboardModifierString:flags];
                 if (modString.length > 0) {
@@ -190,7 +190,7 @@
 }
 - (BOOL)resignFirstResponder {
 
-    DDLogDebug(@"RESIGN FIRST RESPONDER");
+    DDLogDebug("RESIGN FIRST RESPONDER");
     
     BOOL superResigns = [super resignFirstResponder];
 

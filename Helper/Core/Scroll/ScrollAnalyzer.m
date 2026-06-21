@@ -251,7 +251,7 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
     _previousScrollTickTimeStamp = thisScrollTickTimeStamp;
     
     /// Debug
-//    DDLogDebug(@"tickTime: %f, Smoothed tickTime: %f", secondsSinceLastTick, smoothedTimeBetweenTicks);
+//    DDLogDebug("tickTime: %f, Smoothed tickTime: %f", secondsSinceLastTick, smoothedTimeBetweenTicks);
     
     /// Output
     ScrollAnalysisResult result = (ScrollAnalysisResult) {
@@ -276,7 +276,7 @@ static CFTimeInterval _consecutiveSwipeSequenceStartTime;
     /// - For further discussion, see the "Ensure that `tick <= max`" section inside `Scroll.m`
     
     if (result.timeBetweenTicks > scrollConfig.consecutiveScrollTickIntervalMax && result.timeBetweenTicks != DBL_MAX) {
-        DDLogError(@"ScrollAnalyzer - smoothed tickTime is over max. This is a bug but we can recover. Analysis result: %@", [self scrollAnalysisResultDescription:result]);
+        DDLogError("ScrollAnalyzer - smoothed tickTime is over max. This is a bug but we can recover. Analysis result: %@", [self scrollAnalysisResultDescription:result]);
         result.timeBetweenTicks = scrollConfig.consecutiveScrollTickIntervalMax;
         assert(false);
     }

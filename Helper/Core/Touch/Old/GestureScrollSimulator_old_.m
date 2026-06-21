@@ -162,7 +162,7 @@ static VectorSubPixelator *_scrollPixelator;
                                   momentumPhase:(CGMomentumScrollPhase)momentumPhase
                                       locaction:(CGPoint)loc {
     
-//    DDLogDebug(@"Posting: gesture: (%f,%f) --- scroll: (%f, %f) --- scrollPt: (%f, %f) --- phases: %d, %d\n",
+//    DDLogDebug("Posting: gesture: (%f,%f) --- scroll: (%f, %f) --- scrollPt: (%f, %f) --- phases: %d, %d\n",
 //          vecGesture.x, vecGesture.y, vecScroll.x, vecScroll.y, vecScrollPoint.x, vecScrollPoint.y, phase, momentumPhase);
     
     //
@@ -264,7 +264,7 @@ static void startPostingMomentumScrollEventsWithInitialGestureVector(Vector init
     CFTimeInterval prevTs = CACurrentMediaTime();
     while (magPt > thresh) {
         if (_breakMomentumScrollFlag == true) {
-            DDLogInfo(@"BREAKING MOMENTUM SCROLL");
+            DDLogInfo("BREAKING MOMENTUM SCROLL");
             break;
         }
         CGPoint loc = pointerLocation();

@@ -202,7 +202,7 @@ NSData *MFEncode(NSObject<NSCoding> *codable, BOOL requireSecureCoding, MFEncodi
             exception = nil;
         }
         @catch (NSException *exc) {
-            if (exc.name != NSInvalidArchiveOperationException) DDLogInfo(@"MFEncode: Unexpected exception with name: %@", exc.name); /// [Late 2024] For some reason, the NSKeyedArchiver's NSSecureCoding-violation exceptions have the `Invalid*Un*archiveOperation` name even thought we're archiving, not *un*archiving.
+            if (exc.name != NSInvalidArchiveOperationException) DDLogInfo("MFEncode: Unexpected exception with name: %@", exc.name); /// [Late 2024] For some reason, the NSKeyedArchiver's NSSecureCoding-violation exceptions have the `Invalid*Un*archiveOperation` name even thought we're archiving, not *un*archiving.
             result = nil;
             exception = exc;
         }
@@ -213,7 +213,7 @@ NSData *MFEncode(NSObject<NSCoding> *codable, BOOL requireSecureCoding, MFEncodi
     /// Log errors
     ///     Caution: If DDLogError() isn't initialized by the point we call this (e.g. in a +[load] method) then these errors will become invisible.
     if (!result || exception) {
-        DDLogError(@"MFEncode: %@ encoding problem. Exception: %@", encoder.className, exception);
+        DDLogError("MFEncode: %@ encoding problem. Exception: %@", encoder.className, exception);
         assert(false); /// In our app, encoding should only ever fail to due programmer error I think.
     }
     
@@ -263,7 +263,7 @@ id<NSCoding> MFDecode(id archive, BOOL requireSecureCoding, NSSet<Class> *_Nulla
         NSError *error;
         decoder = [((NSKeyedUnarchiver *)decoder) initForReadingFromData: archive error: &error];
         
-        if (!decoder || error) DDLogError(@"MFDecode: NSKeyedUnarchiver initialization error: %@", error);
+        if (!decoder || error) DDLogError("MFDecode: NSKeyedUnarchiver initialization error: %@", error);
         if (!decoder) return nil;
         
         ((NSKeyedUnarchiver *)decoder).requiresSecureCoding  = requireSecureCoding;
@@ -298,7 +298,7 @@ id<NSCoding> MFDecode(id archive, BOOL requireSecureCoding, NSSet<Class> *_Nulla
             exception = nil;
         }
         @catch (NSException *exc) {
-            if (exc.name != NSInvalidUnarchiveOperationException) DDLogInfo(@"MFDecode: Unexpected exception with name: %@", exc.name);
+            if (exc.name != NSInvalidUnarchiveOperationException) DDLogInfo("MFDecode: Unexpected exception with name: %@", exc.name);
             result = nil;
             exception = exc;
         }
@@ -311,7 +311,7 @@ id<NSCoding> MFDecode(id archive, BOOL requireSecureCoding, NSSet<Class> *_Nulla
     
     /// Log failure
     if (!result || exception) {
-        DDLogError(@"MFDecode: %@ decoding problem. Exception: %@", decoder.className, exception);
+        DDLogError("MFDecode: %@ decoding problem. Exception: %@", decoder.className, exception);
         assert(false); /// Get alerted in debug builds
     }
     
@@ -350,11 +350,11 @@ NSDictionary *MFEncodeToArchiveDict(NSObject<NSCoding> *codable, BOOL requireSec
                                                                      options:NSPropertyListImmutable
                                                                       format:nil
                                                                        error:&error];
-    if (!result || error) DDLogError(@"MFEncodeToArchiveDict: Deserialization error: %@", error);
+    if (!result || error) DDLogError("MFEncodeToArchiveDict: Deserialization error: %@", error);
     
     /// Validate
     if (result && ![result isKindOfClass:NSDictionary.class]) {
-        DDLogError(@"MFEncodeToArchiveDict: Plist data did not decode into an NSDictionary. (Decoded %@ instead) Don't think this can ever happen.", result.class);
+        DDLogError("MFEncodeToArchiveDict: Plist data did not decode into an NSDictionary. (Decoded %@ instead) Don't think this can ever happen.", result.class);
         assert(false);
         return nil;
     }
@@ -375,7 +375,7 @@ id<NSCoding> MFDecodeFromArchiveDict(NSDictionary *archiveDict, BOOL requireSecu
                                                               format:NSPropertyListBinaryFormat_v1_0
                                                              options:0
                                                                error:&error];
-    if (!data || error) DDLogError(@"MFDecodeFromArchiveDict: Serialization error: %@", error);
+    if (!data || error) DDLogError("MFDecodeFromArchiveDict: Serialization error: %@", error);
     if (!data) return nil;
     
     /// Data -> Codable

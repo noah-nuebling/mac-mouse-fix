@@ -38,7 +38,7 @@ uint64 mac_address_to_int(NSData *_Nullable mac_address_data) {
     NSUInteger len = [mac_address_data length];
     
     if (len != 6 && len != 8) {
-        DDLogError(@"mac address has unexpected byte count: %lu (Mac addresses normally have 6 bytes, sometimes 8. Anything over 8 won't fit into int64 and will be truncated in our return value.)", (unsigned long)len);
+        DDLogError("mac address has unexpected byte count: %lu (Mac addresses normally have 6 bytes, sometimes 8. Anything over 8 won't fit into int64 and will be truncated in our return value.)", (unsigned long)len);
     }
     
     uint64 result = 0;
@@ -63,7 +63,7 @@ NSString *_Nullable mac_address_to_string(NSData *_Nullable mac_address_data) {
         [mac_address_data getBytes:&buf length:8];
         result = stringf(@"%02hhx:%02hhx:%02hhx:%02hhx:%02hhx:%02hhx:%02hhx:%02hhx", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5], buf[6], buf[7]);
     } else {
-        DDLogError(@"Failed to convert mac address to string. It has neither 6 nor 8 bytes. Has %lu bytes", len);
+        DDLogError("Failed to convert mac address to string. It has neither 6 nor 8 bytes. Has %lu bytes", len);
         result = nil;
     }
     

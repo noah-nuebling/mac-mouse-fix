@@ -410,7 +410,7 @@ NSMutableArray *_tableViewDataModel;
     }
     NSDictionary *overrides = config[kMFConfigKeyAppOverrides];
     if (!overrides) {
-        DDLogInfo(@"No overrides found in config while generating scroll override table data model.");
+        DDLogInfo("No overrides found in config while generating scroll override table data model.");
         return;
     }
     for (NSString *bundleID in overrides.allKeys) { /// Every bundleID corresponds to one app/row

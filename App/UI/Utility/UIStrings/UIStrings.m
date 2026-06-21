@@ -294,7 +294,7 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
             NSString *fallbackUnicode = map[typeNS][0];
             BOOL fallbackCharIsSupported = [CoolSFSymbolsFont symbolCharacterIsDisplayable:fallbackUnicode];
             if (!fallbackCharIsSupported) {
-                DDLogError(@"Error: Fallback character %@ for SFSymbol %@ is not supported by our CoolSFSymbols font. It will not display correctly unless the user has a font installed that can display SF Symbols. To fix this, generate a new font using the createsfsymbols.py script and replace the CoolSFSymbols.otf font included in the Mac Mouse Fix bundle", fallbackUnicode, map[typeNS][1]);
+                DDLogError("Error: Fallback character %@ for SFSymbol %@ is not supported by our CoolSFSymbols font. It will not display correctly unless the user has a font installed that can display SF Symbols. To fix this, generate a new font using the createsfsymbols.py script and replace the CoolSFSymbols.otf font included in the Mac Mouse Fix bundle", fallbackUnicode, map[typeNS][1]);
                 assert(false);
             }
         }
@@ -302,7 +302,7 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
     
     /// Validate
     if ([symbolIdentifier isEqual: @"questionmark.square"]) {
-        DDLogWarn(@"No visualization programmed for system event with type: %d, flags: %llu", type, flags);
+        DDLogWarn("No visualization programmed for system event with type: %d, flags: %llu", type, flags);
         assert(false);
     }
     

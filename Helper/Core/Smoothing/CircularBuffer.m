@@ -71,7 +71,7 @@
     NSMutableArray *result = [NSMutableArray new];
     
     if (_filled == 0) {
-        DDLogDebug(@"Getting content of empty circular buffer.");
+        DDLogDebug("Getting content of empty circular buffer.");
         return result;
     }
     

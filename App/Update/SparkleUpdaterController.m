@@ -160,7 +160,7 @@ int getMajorVersion(NSString *version) {
                              toVersion:version withBuildNumber:@(buildNumber)] != NSOrderedAscending) {
             
             /// Log
-            DDLogDebug(@"UPDATER: Found OUTDATED update: %@ (%ld)", version, buildNumber);
+            DDLogDebug("UPDATER: Found OUTDATED update: %@ (%ld)", version, buildNumber);
             
             /// Skip to next update
             continue;
@@ -171,7 +171,7 @@ int getMajorVersion(NSString *version) {
         if (majorVersion == currentMajorVersion) {
             
             /// Log
-            DDLogDebug(@"UPDATER: Found MINOR update: %@ (%ld)", version, buildNumber);
+            DDLogDebug("UPDATER: Found MINOR update: %@ (%ld)", version, buildNumber);
 
             /// Store update
             [minorUpdates addObject:update];
@@ -179,7 +179,7 @@ int getMajorVersion(NSString *version) {
         } else if (majorVersion > currentMajorVersion) {
             
             /// Log
-            DDLogDebug(@"UPDATER: Found MAJOR update: %@ (%ld)", version, buildNumber);
+            DDLogDebug("UPDATER: Found MAJOR update: %@ (%ld)", version, buildNumber);
             
             /// Store update
             [majorUpdates addObject:update];
@@ -238,7 +238,7 @@ int getMajorVersion(NSString *version) {
     }
     
     /// Log
-    DDLogInfo(@"UPDATER: bestMajorUpdate: %@ (%@), bestMinorUpdate: %@ (%@), latestUnshowableUpdate: %@ (%@),\ncurrentVersion: %@ (%ld),\nskippedMajorUpdate %ld, skippedMinorUpdate %ld", bestMajorUpdate.displayVersionString, bestMajorUpdate.versionString, bestMinorUpdate.displayVersionString, bestMinorUpdate.versionString, latestUnshowableUpdate.displayVersionString, latestUnshowableUpdate.versionString, currentVersion, currentBuildNumber, skippedMajorUpdate, skippedMinorUpdate);
+    DDLogInfo("UPDATER: bestMajorUpdate: %@ (%@), bestMinorUpdate: %@ (%@), latestUnshowableUpdate: %@ (%@),\ncurrentVersion: %@ (%ld),\nskippedMajorUpdate %ld, skippedMinorUpdate %ld", bestMajorUpdate.displayVersionString, bestMajorUpdate.versionString, bestMinorUpdate.displayVersionString, bestMinorUpdate.versionString, latestUnshowableUpdate.displayVersionString, latestUnshowableUpdate.versionString, currentVersion, currentBuildNumber, skippedMajorUpdate, skippedMinorUpdate);
     
     /// Respect skipped versions
     if ([bestMinorUpdate.versionString integerValue] == skippedMinorUpdate) {
@@ -255,25 +255,25 @@ int getMajorVersion(NSString *version) {
     /// Get update
     SUAppcastItem *result = nil;
     if (bestMajorUpdate != nil) {
-        DDLogInfo(@"UPDATER: Choosing to return bestMajorUpdate to Sparkle");
+        DDLogInfo("UPDATER: Choosing to return bestMajorUpdate to Sparkle");
         result = bestMajorUpdate;
         
     } else if (bestMinorUpdate != nil) {
         /// Note that, in case there's a major *and* a minor update, only the major update will be displayed. But if the user skips the major update, the app will immediately check for upates again and then present the minor update.
-        DDLogInfo(@"UPDATER: Choosing to return bestMinorUpdate to Sparkle");
+        DDLogInfo("UPDATER: Choosing to return bestMinorUpdate to Sparkle");
         result = bestMinorUpdate;
         
     } else if (latestUnshowableUpdate != nil) {
-        DDLogInfo(@"UPDATER: Choosing to return latestUnshowableUpdate to Sparkle");
+        DDLogInfo("UPDATER: Choosing to return latestUnshowableUpdate to Sparkle");
         result = latestUnshowableUpdate;  /// Newest update which Sparkle (1.26.0) won't present to the user. Explanation where this variable is filled.
         
     } else {
-        DDLogInfo(@"UPDATER: WARN: Returning empty appcastItem to Sparkle because we couldn't find a latestUnshowableUpdate. This normally shouldn't happen I think, except if the build number of this build is very low.");
+        DDLogInfo("UPDATER: WARN: Returning empty appcastItem to Sparkle because we couldn't find a latestUnshowableUpdate. This normally shouldn't happen I think, except if the build number of this build is very low.");
         result = [[SUAppcastItem alloc] init];    /// If we return nil Sparkle (1.26.0) will just show the latest update to the user which we want to avoid. Note: Why don't we just always do this, (return an empty appcastItem) instead of returning the latestUnshowableUpdate? Won't that have the same effect of Sparkle not showing an update to the user?
     }
     
     /// Log
-    DDLogInfo(@"UPDATER: Returning update to Sparkle: %@ (%@)%@", result.displayVersionString, result.versionString,
+    DDLogInfo("UPDATER: Returning update to Sparkle: %@ (%@)%@", result.displayVersionString, result.versionString,
               ([result.versionString integerValue] > currentBuildNumber) ? @"" :
               stringf(@" - but the build number of the update is not greater than the current build number (%ld) so Sparkle 1.27 won't display it.", (long)currentBuildNumber));
     
@@ -283,7 +283,7 @@ int getMajorVersion(NSString *version) {
 
 - (void)updater:(SUUpdater *)updater userDidSkipThisVersion:(SUAppcastItem *)item {
     
-    DDLogInfo(@"UPDATER: User skipped version %@", item.displayVersionString);
+    DDLogInfo("UPDATER: User skipped version %@", item.displayVersionString);
     
     int skippedMajorVersion = getMajorVersion(item.displayVersionString);
     int currentMajorVersion = getMajorVersion(Locator.bundleVersionShort);
@@ -339,7 +339,7 @@ int getMajorVersion(NSString *version) {
 
 - (void)updater:(SUUpdater *)updater willInstallUpdate:(SUAppcastItem *)update {
 
-    DDLogInfo(@"UPDATER: About to install update");
+    DDLogInfo("UPDATER: About to install update");
     
 //    [MoreSheet.instance end]; // Close more sheet so it doesn't block popup
 
@@ -347,7 +347,7 @@ int getMajorVersion(NSString *version) {
 
 - (void)updaterDidRelaunchApplication:(SUUpdater *)updater {
     
-    DDLogInfo(@"UPDATER: App has been launched by Sparkle Updater");
+    DDLogInfo("UPDATER: App has been launched by Sparkle Updater");
     
     /// Log the fact that updater launched the application in appState()
     ///     We use this from `AppDelegate - applicationDidFinishLaunching`.

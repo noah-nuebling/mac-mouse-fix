@@ -20,7 +20,7 @@
 {
     self = [super init];
     if (self) {
-        DDLogInfo(@"INIT LABEL");
+        DDLogInfo("INIT LABEL");
         if ((0)) [self setSelectable: YES]; /// Need this to make links work /// This doesn't work, need to set this in IB
         if ((0)) self.delegate = self; /// This doesn't work, need to set this in IB
     }

@@ -78,7 +78,7 @@ static NSMutableDictionary *_modifiers;
 //                                                         queue:nil
 //                                                    usingBlock:^(NSNotification * _Nonnull note) {
 //
-//            DDLogDebug(@"Received notification that remaps have changed");
+//            DDLogDebug("Received notification that remaps have changed");
 //            toggleModifierListening(Remap.remaps);
 //        }];
     }
@@ -263,7 +263,7 @@ CGEventRef _Nullable kbModsChanged(CGEventTapProxy proxy, CGEventType type, CGEv
 + (void)buttonModsChangedTo:(ButtonModifierState)newModifiers {
     
     /// Debug
-    DDLogDebug(@"buttonMods changed to: %@", newModifiers);
+    DDLogDebug("buttonMods changed to: %@", newModifiers);
     
     /// Assert change
     if (runningPreRelease()) {
@@ -390,9 +390,9 @@ static NSUInteger flagsFromEvent(CGEventRef _Nullable event) {
 //    
 //    /// Debug
 //    
-//    DDLogDebug(@"MODIFIERS HAVE CHANGED TO - %@", _modifiers);
-////    DDLogDebug(@"...ON DEVICE - %@", device);
-////    DDLogDebug(@"...CALLED BY %@", [SharedUtility getInfoOnCaller]);
+//    DDLogDebug("MODIFIERS HAVE CHANGED TO - %@", _modifiers);
+////    DDLogDebug("...ON DEVICE - %@", device);
+////    DDLogDebug("...CALLED BY %@", [SharedUtility getInfoOnCaller]);
 //    
 //    /// Get activeModifications
 //    NSDictionary *activeModifications = [Remap modificationsWithModifiers:_modifiers];

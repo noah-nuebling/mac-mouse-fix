@@ -286,7 +286,7 @@ static NSInteger maxLevelForButtonInModificationPreconditions(NSNumber *button, 
 ////        @"effectOfGreaterLevelExists": @(effectOfGreaterLevelExists),
 ////        @"remaps": remaps,
 ////    };
-////    DDLogDebug(@"CHECK IF EFFECT OF EQUAL OR GREATER LEVEL EXISTS - Info: %@", info);
+////    DDLogDebug("CHECK IF EFFECT OF EQUAL OR GREATER LEVEL EXISTS - Info: %@", info);
 //
 //    return clickActionOfThisLevelExists || effectForMouseDownStateOfThisLevelExists || effectOfGreaterLevelExists;
 //}

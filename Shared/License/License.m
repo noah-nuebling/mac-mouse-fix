@@ -201,7 +201,7 @@ MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
         
         
         assert(false);
-        DDLogError(@"IsPersonallyPurchased is not defined for licenseType: %@. Defaulting to YES", info.class);
+        DDLogError("IsPersonallyPurchased is not defined for licenseType: %@. Defaulting to YES", info.class);
         return YES;
     }
 
@@ -227,7 +227,7 @@ MFDataClassImplement10(MFDataClassBase, MFLicenseConfig,    readonly, assign,   
         #endif
         
         assert(false);
-        DDLogError(@"RequiresValidLicenseKey is not defined for licenseType: %@. Defaulting to YES (since most licenseTypes will probably require a valid license key.)", info.class);
+        DDLogError("RequiresValidLicenseKey is not defined for licenseType: %@. Defaulting to YES (since most licenseTypes will probably require a valid license key.)", info.class);
         return YES;
     }
 

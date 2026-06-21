@@ -90,7 +90,7 @@ static ModifiedDragState _drag;
                   drag.eventTap, drag.usageThreshold, drag.type, drag.activationState, drag.origin.x, drag.origin.y, drag.originOffset.x, drag.originOffset.y, drag.usageAxis, drag.firstCallback
                   ];
     } @catch (NSException *exception) {
-        DDLogInfo(@"Exception while generating string description of ModifiedDragState: %@", exception);
+        DDLogInfo("Exception while generating string description of ModifiedDragState: %@", exception);
     }
     return output;
 }
@@ -143,7 +143,7 @@ static ModifiedDragState _drag;
     dispatch_async(_drag.queue, ^{
         
         /// Debug
-        DDLogDebug(@"INITIALIZING MODIFIEDDRAG WITH previous type %@ activationState %d, newEffectDict: %@", _drag.type, _drag.activationState, effectDict);
+        DDLogDebug("INITIALIZING MODIFIEDDRAG WITH previous type %@ activationState %d, newEffectDict: %@", _drag.type, _drag.activationState, effectDict);
         
         /// Guard state == inUse
         ///  I think if state == initialized we don't need to do anything special
@@ -198,7 +198,7 @@ void initDragState_Unsafe(void) {
     [_drag.outputPlugin initializeWithDragState:&_drag]; /// We just want to reset the plugin state here. The plugin will already hold ref to `_drag`. So this is not super pretty/semantic
     
     CGEventTapEnable(_drag.eventTap, true);
-    DDLogDebug(@"Enabled drag eventTap");
+    DDLogDebug("Enabled drag eventTap");
 }
 
 static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void * __nullable userInfo) {
@@ -209,7 +209,7 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     /// Catch special events
     if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
         
-        DDLogDebug(@"ModifiedDrag eventTap was disabled by %@", type == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
+        DDLogDebug("ModifiedDrag eventTap was disabled by %@", type == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
         
         if (type == kCGEventTapDisabledByTimeout) {
 //            assert(false); /// Not sure this ever times out
@@ -228,7 +228,7 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     
     /// Debug
     
-//    DDLogDebug(@"modifiedDrag input: %lld %lld", dx, dy);
+//    DDLogDebug("modifiedDrag input: %lld %lld", dx, dy);
     
     /// Ignore event if both deltas are zero
     /// - We do this so the phases for the gesture scroll simulation (aka twoFingerSwipe) make sense. The gesture scroll event with phase kIOHIDEventPhaseBegan should always have a non-zero delta. If we let through zero deltas here it messes those phases up. Now that we're dispatching throuch a TouchAnimator this shouldn't really matter but it doesn't hurt.
@@ -262,7 +262,7 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
             if (_drag.isSuspended) return;
             
             /// Debug
-            DDLogDebug(@"ModifiedDrag handling mouseMoved");
+            DDLogDebug("ModifiedDrag handling mouseMoved");
             
             /// Call further handler functions depending on current state
             
@@ -305,7 +305,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
     if (MAX(fabs(ofs.x), fabs(ofs.y)) > _drag.usageThreshold) {
         
         /// Debug
-        DDLogDebug(@"Modified Drag entered 'in use' state");
+        DDLogDebug("Modified Drag entered 'in use' state");
         
         /// Store state
         _drag.usageOrigin = getRoundedPointerLocationWithEvent(event);
@@ -375,7 +375,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     
     dispatch_sync(_drag.queue, ^{
         if ((*drag).activationState != kMFModifiedInputActivationStateInUse) return;
-        DDLogDebug(@"Suspending ModifiedDrag");
+        DDLogDebug("Suspending ModifiedDrag");
         deactivate_Unsafe(YES);
         (*drag).isSuspended = YES;
         [(*drag).outputPlugin suspend];
@@ -383,7 +383,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         unsuspend = ^{
             dispatch_async((*drag).queue, ^{
                 if (ogTime == (*drag).initTime && (*drag).isSuspended) { /// So we don't unsuspend a different drag than the one we suspended
-                    DDLogDebug(@"UNSuspending ModifiedDrag");
+                    DDLogDebug("UNSuspending ModifiedDrag");
                     (*drag).isSuspended = NO;
                     initDragState_Unsafe();
                     [(*drag).outputPlugin unsuspend];
@@ -397,7 +397,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 
 + (void)deactivate {
     
-//    DDLogDebug(@"Deactivated modifiedDrag. Caller: %@", [SharedUtility callerInfo]);
+//    DDLogDebug("Deactivated modifiedDrag. Caller: %@", [SharedUtility callerInfo]);
     [self deactivateWithCancel:false];
 }
 
@@ -412,7 +412,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
 void deactivate_Unsafe(BOOL cancel) {
     
     /// Debug
-    DDLogDebug(@"modifiedDrag deactivate with state: %@", [ModifiedDrag modifiedDragStateDescription:_drag]);
+    DDLogDebug("modifiedDrag deactivate with state: %@", [ModifiedDrag modifiedDragStateDescription:_drag]);
     
     /// Disable supension
     _drag.isSuspended = NO;
@@ -434,7 +434,7 @@ void deactivate_Unsafe(BOOL cancel) {
     CGEventTapEnable(_drag.eventTap, false);
     
     /// Debug
-    DDLogDebug(@"modifiedDrag disabled drag eventTap. Caller info: %@", [SharedUtility callerInfo]);
+    DDLogDebug("modifiedDrag disabled drag eventTap. Caller info: %@", [SharedUtility callerInfo]);
 }
                    
 /// Handle interference with ModifiedScroll

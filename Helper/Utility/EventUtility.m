@@ -93,7 +93,7 @@ NSString *_Nullable GetPathForPid(pid_t sender_pid) {
     
     /// Handle errors
     if (sender_path_len <= 0) {
-        DDLogError(@"Getting path for event sender pid %u failed with error: %s", sender_pid, strerror(errno));
+        DDLogError("Getting path for event sender pid %u failed with error: %s", sender_pid, strerror(errno));
         return nil;
     }
     
@@ -254,9 +254,9 @@ CFTimeInterval CGEventGetTimestampInSeconds(CGEventRef event) {
         static double pSumCG = 0;
         pSum += tickPeriod;
         pSumCG += tickPeriodCG;
-        DDLogDebug(@"tickPeriod: %.3f, CG: %.3f", tickPeriod*1000, tickPeriodCG*1000);
-        DDLogDebug(@"ticksPerSec: %.3f, CG: %.3f", 1/tickPeriod, 1/tickPeriodCG);
-        DDLogDebug(@"tickPeriodSum: %.0f, CG: %.0f, ratio: %.5f", pSum, pSumCG, pSumCG/pSum);
+        DDLogDebug("tickPeriod: %.3f, CG: %.3f", tickPeriod*1000, tickPeriodCG*1000);
+        DDLogDebug("ticksPerSec: %.3f, CG: %.3f", 1/tickPeriod, 1/tickPeriodCG);
+        DDLogDebug("tickPeriodSum: %.0f, CG: %.0f, ratio: %.5f", pSum, pSumCG, pSumCG/pSum);
     }
 }
 

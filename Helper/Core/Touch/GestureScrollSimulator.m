@@ -83,7 +83,7 @@ static dispatch_queue_t _momentumQueue;
     
     /// Debug
     
-    //    DDLogDebug(@"Request to post Gesture Scroll: (%f, %f), phase: %d", dx, dy, phase);
+    //    DDLogDebug("Request to post Gesture Scroll: (%f, %f), phase: %d", dx, dy, phase);
     
     /// Validate input
     
@@ -96,7 +96,7 @@ static dispatch_queue_t _momentumQueue;
         /// The main practical reason we're emulating this behavour of the trackpad driver because of this: There are certain apps (or views?) which create their own momentum scrolls and ignore the momentum scroll deltas contained in the momentum scroll events we send. E.g. Xcode or the Finder collection view. I think that these views ignore all zero-delta events when they calculate what the initial momentum scroll speed should be. (It's been months since I discovered that though, so maybe I'm rememvering wrong) We want to match these app's momentum scroll algortihm closely to provide a consistent experience. So we're not sending the zero-delta events either and ignoring them for the purposes of our momentum scroll calculation and everything else.
         ///     Update: [Jul 2025] I've added an assert(false) here. It seems our algorithms don't produce those unwanted 0-deltas, which is good.
         
-        DDLogWarn(@"Trying to post gesture scroll with zero deltas while phase is not Ended, MayBegin, or Cancelled - ignoring");
+        DDLogWarn("Trying to post gesture scroll with zero deltas while phase is not Ended, MayBegin, or Cancelled - ignoring");
         assert(false);
         
         return;
@@ -153,7 +153,7 @@ static dispatch_queue_t _momentumQueue;
                                                      invertedFromDevice:invertedFromDevice];
         
         /// Debug
-        //        DDLogInfo(@"timeSinceLast: %f scrollVec: %f %f speed: %f", timeSinceLastInput, vecScrollPoint.x, vecScrollPoint.y, vecScrollPoint.y / timeSinceLastInput);
+        //        DDLogInfo("timeSinceLast: %f scrollVec: %f %f speed: %f", timeSinceLastInput, vecScrollPoint.x, vecScrollPoint.y, vecScrollPoint.y / timeSinceLastInput);
         /// ^ We're trying to analyze what makes a sequence of (modifiedDrag) scrolls produce an absurly fast momentum Scroll in Xcode (Xcode has it's own momentumScroll algorirthm that doesn't just follow our smoothed algorithm)
         ///     I can't see a simple pattern. I don't get it.
         ///     I do see thought that the timeSinceLast fluctuates wildly. This might be part of the issue.
@@ -192,7 +192,7 @@ static dispatch_queue_t _momentumQueue;
         }
         
     } else {
-        DDLogError(@"Trying to send GestureScroll with invalid IOHIDEventPhase: %d", phase);
+        DDLogError("Trying to send GestureScroll with invalid IOHIDEventPhase: %d", phase);
         assert(false);
     }
     
@@ -249,7 +249,7 @@ static void (^_momentumScrollCallback)(void);
         if (_momentumAnimator.isRunning && callback != NULL) {
             /// ^ `&& callback != NULL` is a hack to make ModifiedDragOutputTwoFingerSwipe work properly. I'm not sure what I'm doing.
             
-            DDLogError(@"Trying to set momentumScroll start callback while it's running. This can lead to bad issues and you probably don't want to do it.");
+            DDLogError("Trying to set momentumScroll start callback while it's running. This can lead to bad issues and you probably don't want to do it.");
             assert(false);
         }
         
@@ -267,7 +267,7 @@ static void (^_momentumScrollCallback)(void);
 
 + (void)stopMomentumScroll {
     
-    DDLogDebug(@"momentumScroll stop request. Caller: %@", [SharedUtility callerInfo]);
+    DDLogDebug("momentumScroll stop request. Caller: %@", [SharedUtility callerInfo]);
     
     dispatch_async(_momentumQueue, ^{
         [self stopMomentumScroll_Unsafe];
@@ -290,9 +290,9 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
     
     /// Debug
     
-    DDLogDebug(@"momentumScroll start request");
+    DDLogDebug("momentumScroll start request");
     
-//    DDLogDebug(@"Exit velocity: %f, %f", exitVelocity.x, exitVelocity.y);
+//    DDLogDebug("Exit velocity: %f, %f", exitVelocity.x, exitVelocity.y);
     
     /// Declare constants
     
@@ -301,7 +301,7 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
     /// Stop immediately, if too much time has passed since last event (So if the mouse is stationary)
     if (GeneralConfig.mouseMovingMaxIntervalLarge < timeSinceLastInput
         || timeSinceLastInput == DBL_MAX) { /// This should never be true at this point, because it's only set to DBL_MAX when phase == kIOHIDEventPhaseBegan
-        DDLogDebug(@"Not sending momentum scroll - timeSinceLastInput: %f", timeSinceLastInput);
+        DDLogDebug("Not sending momentum scroll - timeSinceLastInput: %f", timeSinceLastInput);
         if (_momentumScrollCallback != NULL) _momentumScrollCallback();
         [GestureScrollSimulator stopMomentumScroll];
         return;
@@ -335,7 +335,7 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
         
         /// Stop momentumScroll immediately, if the initial Speed is too small
         if (initialSpeed <= stopSpeed) {
-            DDLogDebug(@"Not starting momentum scroll - initialSpeed smaller stopSpeed: i: %f, s: %f", initialSpeed, stopSpeed);
+            DDLogDebug("Not starting momentum scroll - initialSpeed smaller stopSpeed: i: %f, s: %f", initialSpeed, stopSpeed);
             if (_momentumScrollCallback != NULL) _momentumScrollCallback();
             [GestureScrollSimulator stopMomentumScroll];
             p[@"doStart"] = @(NO);
@@ -369,7 +369,7 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
     } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animationPhase, MFMomentumHint subCurve) {
         
         /// Debug
-        DDLogDebug(@"Momentum scrolling - delta: (%f, %f), animationPhase: %d", deltaVec.x, deltaVec.y, animationPhase);
+        DDLogDebug("Momentum scrolling - delta: (%f, %f), animationPhase: %d", deltaVec.x, deltaVec.y, animationPhase);
         
         /// Get delta vectors
         Vector vecScrollLine;
@@ -508,7 +508,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     
     /// Debug
     
-    DDLogDebug(@"HNGG Constructed deltas - point: %@ \t line: %@ \t lineInt: %@", vectorDescription(point), vectorDescription(*line), vectorDescription(*lineInt));
+    DDLogDebug("HNGG Constructed deltas - point: %@ \t line: %@ \t lineInt: %@", vectorDescription(point), vectorDescription(*line), vectorDescription(*lineInt));
 }
 
 
@@ -548,7 +548,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
         double timeSinceLast = ts - tsLast;
         tsLast = ts;
         
-        DDLogDebug(@"HNGG Posting: gesture: %@ \t line: %@, lineInt: %@, point: %@ \t phases: (%d, %d) \t timeSinceLast: %f \n", vectorDescription(vecGesture), vectorDescription(vecScrollLine), vectorDescription(vecScrollLineInt), vectorDescription(vecScrollPoint), phase, momentumPhase, timeSinceLast*1000);
+        DDLogDebug("HNGG Posting: gesture: %@ \t line: %@, lineInt: %@, point: %@ \t phases: (%d, %d) \t timeSinceLast: %f \n", vectorDescription(vecGesture), vectorDescription(vecScrollLine), vectorDescription(vecScrollLineInt), vectorDescription(vecScrollPoint), phase, momentumPhase, timeSinceLast*1000);
     }
     
     /// Validate
@@ -598,7 +598,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
 
     /// Debug
     
-    DDLogDebug(@"HNGG Sent event: %@", scrollEventDescription(e22));
+    DDLogDebug("HNGG Sent event: %@", scrollEventDescription(e22));
     
     /// Post t22s0 event
     ///     Posting after the t29s6 event because I thought that was close to real trackpad events. But in real trackpad events the order is always different it seems.

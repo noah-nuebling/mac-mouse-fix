@@ -686,7 +686,7 @@ static NSString *effectNameForRowDict(NSDictionary * _Nonnull rowDict) {
             @throw [NSException exceptionWithName:@"Unknown string trigger value" reason:@"The value for the string trigger key is unknown" userInfo:@{@"Trigger value": trigger}];
         }
     } else {
-        DDLogInfo(@"Trigger value: %@, class: %@", triggerGeneric, [triggerGeneric class]);
+        DDLogInfo("Trigger value: %@, class: %@", triggerGeneric, [triggerGeneric class]);
         @throw [NSException exceptionWithName:@"Invalid trigger value type" reason:@"The value for the trigger key is not a String and not a dictionary" userInfo:@{@"Trigger value": triggerGeneric}];
     }
     

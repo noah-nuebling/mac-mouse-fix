@@ -66,7 +66,7 @@
 }
 - (void)writeDataModelToConfig {
     
-    DDLogDebug(@"TRM remap table store remaps"); /// Currently looks like this is never called? That can't be true.
+    DDLogDebug("TRM remap table store remaps"); /// Currently looks like this is never called? That can't be true.
     
     setConfig(kMFConfigKeyRemaps, self.dataModel);
     commitConfig();
@@ -212,7 +212,7 @@
     /// Validate
     
     if (clickedRow == -1) {
-        DDLogError(@"Couldn't find clickedRow in submenu item IBAction");
+        DDLogError("Couldn't find clickedRow in submenu item IBAction");
         return;
         /// TODO: Maybe handle this better? Crash the app so it doesn't corrupt data or sth?
     }
@@ -256,7 +256,7 @@
 - (void)viewDidLoad {
     /// Not getting called for some reason -> I had to set the view outlet of the controller object in IB to the tableView.
     
-    DDLogDebug(@"RemapTableView did load.");
+    DDLogDebug("RemapTableView did load.");
     
     /// Set rounded corners and appropriate border
     
@@ -783,7 +783,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
         if (result == templateViewHeight) {
             return result;
         } else {
-            DDLogDebug(@"Height of row %ld is non-standard - Template: %f, Actual: %f", (long)row, templateViewHeight, result);
+            DDLogDebug("Height of row %ld is non-standard - Template: %f, Actual: %f", (long)row, templateViewHeight, result);
             return result;
         }
     }
@@ -861,7 +861,7 @@ static void getTriggerValues(int *btn1, int *lvl1, NSString **dur1, NSString **t
         NSArray *buttonSequence1 = preconds1[kMFModificationPreconditionKeyButtons];
         NSArray *buttonSequence2 = preconds2[kMFModificationPreconditionKeyButtons];
         uint64_t iterMax = MIN(buttonSequence1.count, buttonSequence2.count);
-        DDLogInfo(@"DEBUG - buttonSequence1: %@, buttonSequence2: %@, iterMax: %@", buttonSequence1, buttonSequence2, @(iterMax));
+        DDLogInfo("DEBUG - buttonSequence1: %@, buttonSequence2: %@, iterMax: %@", buttonSequence1, buttonSequence2, @(iterMax));
         
         /// ^ We sometimes get a "index 0 beyond bounds for empty array" error for the `buttonSequence1[i]` instruction. Seemingly at random.
         for (int i = 0; i < iterMax; i++) {

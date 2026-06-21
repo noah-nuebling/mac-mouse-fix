@@ -108,7 +108,7 @@ static int64_t _lastEventDelta;
     dispatch_sync(_queue, ^{
         
         /// Debug
-        DDLogDebug(@"PointerFreeze - freezing");
+        DDLogDebug("PointerFreeze - freezing");
         
         /// Store
         _origin = origin;
@@ -130,7 +130,7 @@ static int64_t _lastEventDelta;
             
             /// Get display under mouse pointer
             CVReturn rt = [HelperUtility display:&_display atPoint:_origin];
-            if (rt != kCVReturnSuccess) DDLogWarn(@"Couldn't get display under mouse pointer in PointerFreeze");
+            if (rt != kCVReturnSuccess) DDLogWarn("Couldn't get display under mouse pointer in PointerFreeze");
             
             /// Draw puppet cursor before hiding
             [PointerFreeze drawPuppetCursor:YES fresh:YES];
@@ -154,7 +154,7 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
     /// Catch special events
     if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
         
-        DDLogInfo(@"PointerFreeze eventTap disabled by %@", type == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
+        DDLogInfo("PointerFreeze eventTap disabled by %@", type == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
         
         if (type == kCGEventTapDisabledByTimeout) {
 //            assert(false); /// Not sure this ever times out
@@ -227,8 +227,8 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         
         /// Debug
         /// Doing this outside the queue led to race conditions (I think?)
-        DDLogDebug(@"PointerFreeze - UNfreezing");
-        DDLogDebug(@"PointerFreeze - pointerIsMoving: %d - time: %f, delta: %lld", pointerIsMoving, timeSinceLastEvent, _lastEventDelta);
+        DDLogDebug("PointerFreeze - UNfreezing");
+        DDLogDebug("PointerFreeze - pointerIsMoving: %d - time: %f, delta: %lld", pointerIsMoving, timeSinceLastEvent, _lastEventDelta);
         
         /// Disable eventTap
         /// Think about the order of getting pos, unfreezing, and disabling event tap. -> I think it doesn't matter since everything is locked.
@@ -324,7 +324,7 @@ void setSuppressionInterval(MFEventSuppressionInterval mfInterval) {
     
     /// Analyze suppresionInterval
     CFTimeInterval intervalResult = CGEventSourceGetLocalEventsSuppressionInterval(src);
-    DDLogDebug(@"PointerFreeze - Event suppression interval: %f", intervalResult);
+    DDLogDebug("PointerFreeze - Event suppression interval: %f", intervalResult);
     
     /// Store previous mfInterval
     _previousMFSuppressionInterval = mfInterval;

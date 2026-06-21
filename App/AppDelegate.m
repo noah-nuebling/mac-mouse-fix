@@ -74,7 +74,7 @@
 - (void)handleURLWithEvent:(NSAppleEventDescriptor *)event reply:(NSAppleEventDescriptor *)reply {
     
     /// Log
-    DDLogDebug(@"Handling URL: %@", event.description);
+    DDLogDebug("Handling URL: %@", event.description);
     
     /// Get URL
     NSString *address = [[event paramDescriptorForKeyword:keyDirectObject] stringValue];
@@ -131,7 +131,7 @@
         [HelperServices restartHelperWithDelay:delay.doubleValue];
         
     } else {
-        DDLogWarn(@"Received URL with unknown path: %@", address);
+        DDLogWarn("Received URL with unknown path: %@", address);
     }
 }
 
@@ -202,7 +202,7 @@ static NSDictionary *sideButtonActions;
         
         /// Setup CocoaLumberjack logging
         [Logging setUpDDLog];
-        DDLogInfo(@"Main App starting up...");
+        DDLogInfo("Main App starting up...");
         
         /// Remove restart the app untranslocated if it's currently translocated
         /// Need to call this before `MessagePort_App` is initialized, otherwise stuff breaks if app is translocated
@@ -240,7 +240,7 @@ static NSDictionary *sideButtonActions;
     
     /// Log
     
-    DDLogInfo(@"Mac Mouse Fix finished launching");
+    DDLogInfo("Mac Mouse Fix finished launching");
     
 #pragma mark Experiments
 
@@ -354,7 +354,7 @@ static NSDictionary *sideButtonActions;
     
 }
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
-    DDLogInfo(@"Mac Mouse Fix should terminate");
+    DDLogInfo("Mac Mouse Fix should terminate");
 
     /// Uninstall fonts
     ///     Perhaps consider using sigaction() to install a SIGTERM handler instead of this. That would also work if the process is killed.

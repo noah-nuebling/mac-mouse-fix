@@ -147,7 +147,7 @@ void swizzleMethodOnClassAndSubclasses(Class baseClass, NSDictionary<MFClassSear
     
     /// Validate
     if (!someClassHasBeenSwizzled) {
-        DDLogWarn(@"Error: Neither %@ nor any of the subclasses we found for it (%@) have been swizzled. This is probably because none of the processed classes implement a method for selector %s. We used the search criteria: %@", baseClass, subclasses, sel_getName(selector), subclassSearchCriteria);
+        DDLogWarn("Error: Neither %@ nor any of the subclasses we found for it (%@) have been swizzled. This is probably because none of the processed classes implement a method for selector %s. We used the search criteria: %@", baseClass, subclasses, sel_getName(selector), subclassSearchCriteria);
         assert(false);
     }
     
@@ -380,7 +380,7 @@ char *_Nonnull copyFrameworkPath(const char *frameworkName) {
             int ret = dlclose(frameworkHandle);
             if (ret) {
                 char *error = dlerror();
-                DDLogError(@"dlclose failed with error %s", error);
+                DDLogError("dlclose failed with error %s", error);
                 assert(false);
             }
         }
@@ -413,7 +413,7 @@ char *_Nonnull copyFrameworkPath(const char *frameworkName) {
     }
     
     if (!result) {
-        DDLogError(@"Error: Couldn't find framework with name %s", frameworkName);
+        DDLogError("Error: Couldn't find framework with name %s", frameworkName);
         assert(false);
         exit(1); /// [Aug 2025] The caller expects a non-null return value (otherwise it will pass NULL to dlopen and open the current image)
     }
@@ -574,7 +574,7 @@ NSRegularExpression *formatSpecifierRegex(void) {
     NSError *error;
     NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:pattern options:options error:&error];
     if (error != nil) {
-        DDLogError(@"Failed to create formatSpeciferRegex. Error: %@", error);
+        DDLogError("Failed to create formatSpeciferRegex. Error: %@", error);
         assert(false);
     }
     
@@ -608,7 +608,7 @@ NSRegularExpression *formatStringRecognizer(NSString *localizedString) {
     NSError *error;
     NSRegularExpression *resultRegex = [NSRegularExpression regularExpressionWithPattern:localizedStringPattern options:regexOptions error:&error];
     if (error != nil) {
-        DDLogError(@"Failed to create recognizer regex for localized string %@. Error: %@", localizedString, error);
+        DDLogError("Failed to create recognizer regex for localized string %@. Error: %@", localizedString, error);
         assert(false);
     }
     

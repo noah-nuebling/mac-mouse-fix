@@ -51,40 +51,40 @@ static void setStreamToCurrentInstallLoc() {
         FSEventStreamScheduleWithRunLoop(_stream, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
         FSEventStreamStart(_stream);
         
-        DDLogInfo(@"Set file monitoring to: %@ App location accoring to NSWorkspace: %@", enclosing.path, [NSWorkspace.sharedWorkspace URLForApplicationWithBundleIdentifier:kMFBundleIDApp].path);
+        DDLogInfo("Set file monitoring to: %@ App location accoring to NSWorkspace: %@", enclosing.path, [NSWorkspace.sharedWorkspace URLForApplicationWithBundleIdentifier:kMFBundleIDApp].path);
     }
 }
 
 void Handle_FSCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags *eventFlags, const FSEventStreamEventId *eventIds) {
     
-    DDLogInfo(@"File system even in Mac Mouse Fix install folder");
+    DDLogInfo("File system even in Mac Mouse Fix install folder");
     
     NSURL *installedBundleURLFromWorkspace = [NSWorkspace.sharedWorkspace URLForApplicationWithBundleIdentifier:kMFBundleIDApp];
     
     if (installedBundleURLFromWorkspace == nil) {
-        DDLogInfo(@"Mac Mouse Fix cannot be found on the system anymore");
+        DDLogInfo("Mac Mouse Fix cannot be found on the system anymore");
         uninstallCompletely();
     } else {
         NSURL *helperURL = Locator.helperBundle.bundleURL;
         NSURL *helperURLOld = NSBundle.mainBundle.bundleURL;
         BOOL isInOldLocation = [helperURL isEqualTo:helperURLOld];
         if (isInOldLocation) {
-            DDLogInfo(@"... Mac Mouse Fix can still be found in its original location. Not doing anything");
+            DDLogInfo("... Mac Mouse Fix can still be found in its original location. Not doing anything");
             return;
         }
-        DDLogInfo(@"Mac Mouse Fix Helper was launched at: %@ but is now at: %@", helperURLOld, helperURL);
+        DDLogInfo("Mac Mouse Fix Helper was launched at: %@ but is now at: %@", helperURLOld, helperURL);
         NSBundle *appBundle = Locator.mainAppBundle;
         BOOL isInTrash = [appBundle.bundleURL.URLByDeletingLastPathComponent.lastPathComponent isEqualToString:trashFolderName()];
         BOOL isRemoved = appBundle == nil;
         BOOL workspaceURLIsInTrash = [installedBundleURLFromWorkspace.URLByDeletingLastPathComponent.lastPathComponent isEqualToString:trashFolderName()];
         if (workspaceURLIsInTrash) {
-            DDLogInfo(@"Workspace found Mac Mouse Fix in the trash. This probably means that Mac Mouse Fix has just been moved to the trash and that this is the only version of Mac Mouse Fix on the system.");
+            DDLogInfo("Workspace found Mac Mouse Fix in the trash. This probably means that Mac Mouse Fix has just been moved to the trash and that this is the only version of Mac Mouse Fix on the system.");
             uninstallCompletely();
         } else if (!workspaceURLIsInTrash && (isInTrash || isRemoved)) {
-            DDLogInfo(@"Mac Mouse Fix has been deleted but is still installed at: %@", installedBundleURLFromWorkspace);
+            DDLogInfo("Mac Mouse Fix has been deleted but is still installed at: %@", installedBundleURLFromWorkspace);
             disableHelper();
         } else {
-            DDLogInfo(@"Mac Mouse Fix has been relocated to %@", appBundle.bundleURL.path);
+            DDLogInfo("Mac Mouse Fix has been relocated to %@", appBundle.bundleURL.path);
             handleRelocation();
         }
     }
@@ -94,7 +94,7 @@ void handleRelocation(void) {
     
     /// Log
     
-    DDLogInfo(@"Handle Mac Mouse Fix relocation...");
+    DDLogInfo("Handle Mac Mouse Fix relocation...");
     
     /// We want to close the helper
     ///  If we let the helper running after relocation:
@@ -107,7 +107,7 @@ void handleRelocation(void) {
     ///     - We might also be able to start the mainApp in some sort of invisible stealth mode and have it restart the helper in the background like the accomplice used to do, but I'm not sure. It would be the optimal UX to restart the Helper
     ///     - Since restarting the Helper was the last thing the Accomplice was used for in MMF 3 (we already moved updating to Sparkle), this change made the Accomplice obsolete. And we deleted it in commit 1eedee69c3e36f0dbbe19480997d98b77668854f
     
-//    DDLogInfo(@"Asking Accomplice to restart Helper ... But accomplice has been removed in MMF 3");
+//    DDLogInfo("Asking Accomplice to restart Helper ... But accomplice has been removed in MMF 3");
 //    NSURL *accompliceURL = [Locator.mainAppBundle.bundleURL URLByAppendingPathComponent:kMFRelativeAccomplicePath];
 //    NSArray *args = @[kMFAccompliceModeReloadHelper];
 //    [SharedUtility launchCLT:accompliceURL withArgs:args];
@@ -132,14 +132,14 @@ void handleRelocation(void) {
 }
 void uninstallCompletely(void) {
     
-    DDLogInfo(@"Uninstalling Mac Mouse Fix completely...");
+    DDLogInfo("Uninstalling Mac Mouse Fix completely...");
     removeResidue();
     disableHelper();
 }
 void removeResidue(void) {
     
     /// Log
-    DDLogInfo(@"Removing Mac Mouse Fix resdiue");
+    DDLogInfo("Removing Mac Mouse Fix resdiue");
     
     /// Delete Application Support Folder
     [NSFileManager.defaultManager trashItemAtURL:Locator.MFApplicationSupportFolderURL resultingItemURL:nil error:nil];
@@ -159,7 +159,7 @@ void disableHelper(void) {
     /// Kill this process
     
     /// Log
-    DDLogInfo(@"Removing helper from launchd (Byeeeee)");
+    DDLogInfo("Removing helper from launchd (Byeeeee)");
     
     /// Remove from launchd
     /// This kills the helper as well

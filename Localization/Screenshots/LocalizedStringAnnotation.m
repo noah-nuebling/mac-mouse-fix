@@ -153,7 +153,7 @@ mfdata_cls_m(StringAnnotation)
         result = annotatedString;
     }
     
-    DDLogDebug(@"LocalizedStringAnnotation: Annotated: \"%@\": \"%@\" (table: %@)", key, result, table);
+    DDLogDebug("LocalizedStringAnnotation: Annotated: \"%@\": \"%@\" (table: %@)", key, result, table);
     
     return result;
 }

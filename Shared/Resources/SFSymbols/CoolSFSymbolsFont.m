@@ -39,7 +39,7 @@
     /// Meant for debugging / validation. Maybe not fast. Don't use in production.
     
     if (!runningPreRelease()) {
-        DDLogWarn(@"symbolCharacterIsSupported called in a release build. I'm not sure how fast it is and it was just created for debugging/validation purposes.");
+        DDLogWarn("symbolCharacterIsSupported called in a release build. I'm not sure how fast it is and it was just created for debugging/validation purposes.");
         return true;
     }
     
@@ -64,7 +64,7 @@
     
     /// Validated
     if (font == nil || characterSet == nil) {
-        DDLogError(@"Could not get a character set for coolFont with postScriptName: %@. URL for coolFont: %@. Make sure the coolFont has the right postScript name. If not, use the python script to generate a new coolFont with the right postscript name.", coolFontPostScriptName, coolFontURL());
+        DDLogError("Could not get a character set for coolFont with postScriptName: %@. URL for coolFont: %@. Make sure the coolFont has the right postScript name. If not, use the python script to generate a new coolFont with the right postscript name.", coolFontPostScriptName, coolFontURL());
         assert(false);
         return false;
     }
@@ -104,7 +104,7 @@ static void installFont(Boolean doInstall) {
         /// Get fontURL
         NSURL *fontURL = coolFontURL();
         if (fontURL == nil) {
-            DDLogWarn(@"CoolSFSymbols font not found at %@", fontURL);
+            DDLogWarn("CoolSFSymbols font not found at %@", fontURL);
             assert(false);
             return;
         }
@@ -112,27 +112,27 @@ static void installFont(Boolean doInstall) {
         if (!doInstall) {
             
             /// Log
-            DDLogInfo(@"UNInstalling CoolSFSymbols font at %@ for scope: %d", fontURL, fontRegistrationScope);
+            DDLogInfo("UNInstalling CoolSFSymbols font at %@ for scope: %d", fontURL, fontRegistrationScope);
             
             /// Unregister font
             CTFontManagerUnregisterFontURLs((__bridge CFArrayRef)@[fontURL], fontRegistrationScope, ^bool (CFArrayRef  _Nonnull errors, bool done) {
-                DDLogInfo(@"CoolSFSymbols font UNregistration callback: errors: %@ done: %d", (CFArrayGetCount(errors) > 0 ? (__bridge id)errors : @""), done); return true;
+                DDLogInfo("CoolSFSymbols font UNregistration callback: errors: %@ done: %d", (CFArrayGetCount(errors) > 0 ? (__bridge id)errors : @""), done); return true;
             });
             
         } else {
             
             /// Log
-            DDLogInfo(@"Installing CoolSFSymbols font at %@ for scope: %d fontDescriptor: %@", fontURL, fontRegistrationScope, CFBridgingRelease(CTFontManagerCreateFontDescriptorsFromURL((__bridge CFURLRef)fontURL)));
+            DDLogInfo("Installing CoolSFSymbols font at %@ for scope: %d fontDescriptor: %@", fontURL, fontRegistrationScope, CFBridgingRelease(CTFontManagerCreateFontDescriptorsFromURL((__bridge CFURLRef)fontURL)));
             
             /// Unregister font
             ///     Not totally sure what we're doing that for. I gues uninstalling the old version if there is one.
             CTFontManagerUnregisterFontURLs((__bridge CFArrayRef)@[fontURL], fontRegistrationScope, ^bool (CFArrayRef  _Nonnull errors, bool done) {
-                DDLogInfo(@"CoolSFSymbols font UNregistration callback: errors: %@ done: %d", (CFArrayGetCount(errors) > 0 ? (__bridge id)errors : @""), done); return true;
+                DDLogInfo("CoolSFSymbols font UNregistration callback: errors: %@ done: %d", (CFArrayGetCount(errors) > 0 ? (__bridge id)errors : @""), done); return true;
             });
             
             /// Register font
             CTFontManagerRegisterFontURLs((__bridge CFArrayRef)@[fontURL], fontRegistrationScope, true, ^bool (CFArrayRef  _Nonnull errors, bool done) {
-                DDLogInfo(@"CoolSFSymbols font registration callback: errors: %@ done: %d", (CFArrayGetCount(errors) > 0 ? (__bridge id)errors : @""), done); return true;
+                DDLogInfo("CoolSFSymbols font registration callback: errors: %@ done: %d", (CFArrayGetCount(errors) > 0 ? (__bridge id)errors : @""), done); return true;
             });
         }
     }

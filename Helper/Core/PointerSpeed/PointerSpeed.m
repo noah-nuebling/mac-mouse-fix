@@ -211,7 +211,7 @@ static Boolean selectAccelCurveWithIndex(double accelerationPresetIndex, IOHIDSe
     /// Debug
     if (runningPreRelease()) {
         NSString *accelType = (__bridge_transfer NSString *)IOHIDServiceClientCopyProperty(eventServiceClient, CFSTR(kIOHIDPointerAccelerationTypeKey));
-        DDLogDebug(@"Setting AccelCurve preset %f for eventServiceClient: %@ with kIOHIDPointerAccelerationTypeKey: %@", accelerationPresetIndex, eventServiceClient, accelType);
+        DDLogDebug("Setting AccelCurve preset %f for eventServiceClient: %@ with kIOHIDPointerAccelerationTypeKey: %@", accelerationPresetIndex, eventServiceClient, accelType);
     }
     
     /// Get accelerationPresetIndex as fixed point CFNumber
@@ -313,7 +313,7 @@ static Boolean setTableCurves(CFDataRef curves, IOHIDServiceClientRef serviceCli
     
     if (parametricCurvesAreSet(serviceClient)) {
         /// TODO: This is always true under Ventura! Change code to make it work anyways (Might not be able use tableBased curves ://///)
-        DDLogError(@"Trying to set tableBasedCurve but parametricCurve is already set. This has no effect.");
+        DDLogError("Trying to set tableBasedCurve but parametricCurve is already set. This has no effect.");
         return false;
     }
     
@@ -398,7 +398,7 @@ static void copyEventServiceAndSystemClients(IOHIDDeviceRef device, IOHIDService
     io_service_t driverService = copyDriverService(device);
     *serviceClient = copyEventServiceClient_WithEventSystem(driverService, *systemClient);
     if (*serviceClient == NULL) {
-        DDLogWarn(@"Failed to get service client. Can't set PointerSpeed");
+        DDLogWarn("Failed to get service client. Can't set PointerSpeed");
     }
     
     if (false) {
@@ -482,7 +482,7 @@ static void copyEventServiceAndSystemClients(IOHIDDeviceRef device, IOHIDService
         CFTypeRef noahsTest = IOHIDServiceClientCopyProperty(*serviceClient, CFSTR("Noah's test"));
         CFTypeRef parametricCurves = IOHIDServiceClientCopyProperty(*serviceClient, CFSTR(kHIDAccelParametricCurvesKey));
         
-        DDLogDebug(@"EventService values – test: %@, parametricCurves: %@", noahsTest, parametricCurves);
+        DDLogDebug("EventService values – test: %@, parametricCurves: %@", noahsTest, parametricCurves);
     }
     
     

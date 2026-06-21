@@ -80,7 +80,7 @@ static NSMutableDictionary *_swipeInfo;
     
     /// Debug
     
-    DDLogDebug(@"Posting magnification event with amount: %f, phase: %d", magnification, phase);
+    DDLogDebug("Posting magnification event with amount: %f, phase: %d", magnification, phase);
     
     /// Create and post event
     
@@ -144,7 +144,7 @@ static NSMutableDictionary *_swipeInfo;
         CFTimeInterval ts = CACurrentMediaTime();
         CFTimeInterval timeDiff = ts - _dockSwipeLastTimeStamp;
         _dockSwipeLastTimeStamp = ts;
-        DDLogDebug(@"Dock Swipe send with "
+        DDLogDebug("Dock Swipe send with "
                    "delta: %@, "
                    //"lastDelta: %@, "
                    //"prevOriginOffset: %@ "
@@ -282,17 +282,17 @@ static NSMutableDictionary *_swipeInfo;
             ///     This makes me think the bug is about timing / how slow the events are sent, and not in which order the events are sent or with on which thread the events are sent as I suspected initially.
             ///     Another hint towards this is, that the stuck-bug seems to occur more, the slower and more stuttery the UI is (the longer the computer has been running)
             /// I fixed the stuck-bug now. (See the comment with "This fixed the stuck-bug!" in ModifiedDrag.m) But I still don't know what caused it exactly.
-            DDLogDebug(@"Dock Swipe exit: %f, originOffset: %f, phase: %hu", _dockSwipeLastDelta*100, _dockSwipeOriginOffset, phase);
+            DDLogDebug("Dock Swipe exit: %f, originOffset: %f, phase: %hu", _dockSwipeLastDelta*100, _dockSwipeOriginOffset, phase);
 
         } else {
-            DDLogDebug(@"Dock Swipe delta: %f originOffset: %f, phase: %hu", d, _dockSwipeOriginOffset, phase);
+            DDLogDebug("Dock Swipe delta: %f originOffset: %f, phase: %hu", d, _dockSwipeOriginOffset, phase);
             
         }
     }
     
     /// Send events
     
-    DDLogDebug(@"TouchSimulator: Sending dockSwipe with phase %d with events: %@ %@", phase, e30, e29);
+    DDLogDebug("TouchSimulator: Sending dockSwipe with phase %d with events: %@ %@", phase, e30, e29);
     
     CGEventPost(kCGSessionEventTap, e30); /// Not sure if order matters
     CGEventPost(kCGSessionEventTap, e29);
@@ -368,7 +368,7 @@ static NSMutableDictionary *_swipeInfo;
     CGEventRef e30 = (__bridge CGEventRef)events[@"e30"];
     CGEventRef e29 = (__bridge CGEventRef)events[@"e29"];
     
-    DDLogDebug(@"TouchSimulator: Sending dockSwipe end (Double/Triple) with events: %@ %@", e30, e29);
+    DDLogDebug("TouchSimulator: Sending dockSwipe end (Double/Triple) with events: %@ %@", e30, e29);
     
     CGEventPost(kCGSessionEventTap, e30);
     CGEventPost(kCGSessionEventTap, e29);

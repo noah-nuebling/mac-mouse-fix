@@ -395,7 +395,7 @@
             if (runningPreRelease()) { /// Disabling all custom NSNumber validation in release builds, cause I feel like the chance of causing problems due to false negatives in the validation is greater than the chance of us preventing issues. –– Just let KVC do its thing. See "On over-validation" above.
                 
                 #define debug_failWithError(code_, messageAndFormatArgs...) ({                  /** Drop-in replacement for failWithError for this code section which only runs in debug/prerelease mode..*/ \
-                    DDLogError(@"Decode failed with code: " #code_ ". Message: " messageAndFormatArgs); \
+                    DDLogError("Decode failed with code: " #code_ ". Message: " messageAndFormatArgs); \
                     exit(1);                                                                    \
                 })
                 

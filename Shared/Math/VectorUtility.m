@@ -45,7 +45,7 @@ double magnitudeOfVector(Vector vec) {
 Vector unitVector(Vector vec) {
     double mag = magnitudeOfVector(vec);
     if (mag == 0) {
-        DDLogWarn(@"Can't calculate unit vector for vector with magnitude 0. Returning zero vector.");
+        DDLogWarn("Can't calculate unit vector for vector with magnitude 0. Returning zero vector.");
         return (Vector){0}; /// To prevent mag == 0 from producing NaN vector. Should we throw error here or sth?
     }
     return scaledVector(vec, 1.0/mag);

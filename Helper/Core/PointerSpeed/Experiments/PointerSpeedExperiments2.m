@@ -158,7 +158,7 @@ void deviceMatchingCallback(void *context, void *refcon, IOHIDServiceClientRef s
     
     [IOUtility afterDelay:0.5 runBlock:^{ /// Post with delay because that's what CursorSense does
     
-        DDLogDebug(@"New matching service client: %@", [IOUtility registryPathForServiceClient:serviceClient]);
+        DDLogDebug("New matching service client: %@", [IOUtility registryPathForServiceClient:serviceClient]);
         
         
         /// Get pointerResolution as CFNumber
@@ -190,7 +190,7 @@ void deviceMatchingCallback(void *context, void *refcon, IOHIDServiceClientRef s
     
     /// Log
     
-    DDLogDebug(@"BEGIN SERVICE LOGGING");
+    DDLogDebug("BEGIN SERVICE LOGGING");
     
     /// Get event system client
     
@@ -500,7 +500,7 @@ void deviceMatchingCallback(void *context, void *refcon, IOHIDServiceClientRef s
         Boolean ret = IOHIDServiceClientSetProperty(serviceClient, CFSTR(kIOHIDPointerResolutionKey), pointerResolution);
         
         /// Debug
-        DDLogDebug(@"Set prop return: %d", ret);
+        DDLogDebug("Set prop return: %d", ret);
         printServiceClientInfo(serviceClient);
         
     }
@@ -577,7 +577,7 @@ void deviceMatchingCallback(void *context, void *refcon, IOHIDServiceClientRef s
         /// Print info on IOHIDDeviceService
         char IOHIDDeviceServicePath[100];
         IORegistryEntryGetPath(IOHIDDeviceService, kIOServicePlane, IOHIDDeviceServicePath);
-        DDLogDebug(@"IOHIDDeviceServicePath: %s", IOHIDDeviceServicePath);
+        DDLogDebug("IOHIDDeviceServicePath: %s", IOHIDDeviceServicePath);
         
         /// Get ID
         uint64_t IOHIDDeviceServiceID;
@@ -621,7 +621,7 @@ void deviceMatchingCallback(void *context, void *refcon, IOHIDServiceClientRef s
         });
     }
     
-    DDLogDebug(@"END SERVICE LOGGING");
+    DDLogDebug("END SERVICE LOGGING");
 
 }
 
@@ -647,8 +647,8 @@ static void printServiceClientInfo(IOHIDServiceClientRef serviceClient) {
     CFMutableDictionaryRef serviceClientProperties = CFDictionaryCreateMutable(kCFAllocatorDefault, 0, NULL, NULL);
     IORegistryEntryCreateCFProperties(serviceClientService, &serviceClientProperties, kCFAllocatorDefault, 0);
     
-    DDLogDebug(@"ServiceClientPath: %s", serviceClientPath);
-    DDLogDebug(@"ServiceClientProperties: \n%@", (__bridge NSDictionary *)serviceClientProperties);
+    DDLogDebug("ServiceClientPath: %s", serviceClientPath);
+    DDLogDebug("ServiceClientProperties: \n%@", (__bridge NSDictionary *)serviceClientProperties);
     
     CFRelease(serviceClientProperties);
 }

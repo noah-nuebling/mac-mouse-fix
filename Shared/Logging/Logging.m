@@ -70,7 +70,7 @@
             
             [DDLog addLogger:fileLogger];
             
-            DDLogInfo(@"Logging to directory: \'%@\'", fileLogger.logFileManager.logsDirectory);
+            DDLogInfo("Logging to directory: \'%@\'", fileLogger.logFileManager.logsDirectory);
         }
     #endif
 }

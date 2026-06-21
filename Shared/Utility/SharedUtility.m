@@ -459,7 +459,7 @@ inline bool runningHelper(void) {
         if (errorPtr != NULL && *errorPtr != nil) {
             errorDesc = (*errorPtr).debugDescription;
         }
-        DDLogDebug(@"Called command line tool at %@ with args: %@ - result: %@, error: %@", executableURL, arguments, result, errorDesc);
+        DDLogDebug("Called command line tool at %@ with args: %@ - result: %@, error: %@", executableURL, arguments, result, errorDesc);
     }
     
     /// Return
@@ -471,7 +471,7 @@ inline bool runningHelper(void) {
         
     /// TODO: Think about when / why we're using this instead of the other launchCTL method. Should we really just ignore errors?
     
-    DDLogDebug(@"Calling command line tool at %@ with args: %@ using async API", commandLineTool, args);
+    DDLogDebug("Calling command line tool at %@ with args: %@ using async API", commandLineTool, args);
     
     [NSTask launchedTaskWithExecutableURL:commandLineTool arguments:args error:NULL terminationHandler:nil];
 }
@@ -588,7 +588,7 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitpos
     return [NSString stringWithFormat:@" - %@", [[NSThread callStackSymbols] objectAtIndex:2]];
 }
 + (void)printStackTrace {
-    DDLogInfo(@"PRINTING STACK TRACE: %@", [NSThread callStackSymbols]);
+    DDLogInfo("PRINTING STACK TRACE: %@", [NSThread callStackSymbols]);
 }
 
 + (NSString *)currentDispatchQueueDescription {
@@ -617,7 +617,7 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitpos
     
     counterForId++;
     
-    DDLogInfo(@"%@: %d", strId, counterForId);
+    DDLogInfo("%@: %d", strId, counterForId);
     
     ids[strId] = @(counterForId);
     

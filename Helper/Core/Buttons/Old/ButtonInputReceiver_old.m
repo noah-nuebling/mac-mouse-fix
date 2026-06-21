@@ -38,10 +38,10 @@ static CFMachPortRef _eventTap;
 
 + (void)decide {
     if ([DeviceManager devicesAreAttached]) {
-        DDLogInfo(@"started ButtonInputReceiver");
+        DDLogInfo("started ButtonInputReceiver");
         [ButtonInputReceiver start];
     } else {
-        DDLogInfo(@"stopped ButtonInputReceiver");
+        DDLogInfo("stopped ButtonInputReceiver");
         [ButtonInputReceiver stop];
     }
 }
@@ -87,7 +87,7 @@ static void registerInputCallback() {
 
 //+ (void)insertFakeEventWithButton:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown {
 //    
-//    DDLogInfo(@"Inserting event");
+//    DDLogInfo("Inserting event");
 //    
 //    /// Create event
 //    CGEventType mouseEventType = [SharedUtility CGEventTypeForButtonNumber:button isMouseDown:isMouseDown];
@@ -129,10 +129,10 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     /// Re-enable on timeout
     /// Maybe it would be better to do the heavy lifting on a background queue, so this never times out, but this is easier, and it times out quite rarely anyways so this should be fine.
     if (type == kCGEventTapDisabledByTimeout) {
-        DDLogDebug(@"ButtonInputReceiver eventTap timed out. Re-enabling.");
+        DDLogDebug("ButtonInputReceiver eventTap timed out. Re-enabling.");
         CGEventTapEnable(_eventTap, true);
     } else if (type == kCGEventTapDisabledByUserInput) {
-        DDLogDebug(@"ButtonInputReceiver eventTap was disabled by user input");
+        DDLogDebug("ButtonInputReceiver eventTap was disabled by user input");
     }
     
     /// Debug
@@ -141,7 +141,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
         if (buttonNumber != 1 && buttonNumber != 2) { /// Don't print left and right click cause that'll clog the logs
             
-            DDLogDebug(@"Received CG Button Input - %@", [NSEvent eventWithCGEvent:event]);
+            DDLogDebug("Received CG Button Input - %@", [NSEvent eventWithCGEvent:event]);
             /// ^ This crashes sometimes.
             /// I think it's because the timeout events can't be translated to NSEvent
             ///  I usually see it crash with the message "Invalid parameter not satisfying: _type > 0 && _type <= kCGSLastEventType", so I it seems there are some events with weird types being passed to this function, I don't know why that would happen though, because it should only receive normal mouse down and mouse up events.
@@ -151,7 +151,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
             /// TODO: Investigate when and why exactly this crashes (when you have time)
         }
     } @catch (NSException *exception) {
-        DDLogDebug(@"Received CG Button Input which can't be printed normally - Exception while printing: %@", exception);
+        DDLogDebug("Received CG Button Input which can't be printed normally - Exception while printing: %@", exception);
     }
     
     ///
@@ -178,7 +178,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     IOHIDDeviceRef iohidDevice = CGEventGetSendingDevice(event);
     Device *device = [DeviceManager attachedDeviceWithIOHIDDevice:iohidDevice];
     
-    DDLogDebug(@"Device for CG Button Input - iohidDevice: %@, device: %@", iohidDevice, device);
+    DDLogDebug("Device for CG Button Input - iohidDevice: %@, device: %@", iohidDevice, device);
     
     if (device == nil) return event;
     
@@ -196,7 +196,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     if (eval == kMFEventPassThroughRefusal) {
         return nil;
     } else {
-        DDLogDebug(@"... letting event pass through");
+        DDLogDebug("... letting event pass through");
         return event;
     }
 

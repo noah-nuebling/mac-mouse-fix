@@ -118,8 +118,8 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 //        retOpen = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeNone);
 //    }
 //    _devicesAreSeized = seize;
-//    DDLogInfo(@"Seize manager close return: %d", retClose);
-//    DDLogInfo(@"Seize manager open return: %d", retOpen);
+//    DDLogInfo("Seize manager close return: %d", retClose);
+//    DDLogInfo("Seize manager open return: %d", retOpen);
 //}
 
 #pragma mark - Device information
@@ -198,7 +198,7 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
     /// Open the HID Manager
 //    IOReturn IOReturn = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeNone);
 //    IOReturn IOReturn = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeSeizeDevice);
-//    if(IOReturn) DDLogInfo(@"IOHIDManagerOpen failed.");  //  Couldn't open the HID manager! TODO: proper error handling
+//    if(IOReturn) DDLogInfo("IOHIDManagerOpen failed.");  //  Couldn't open the HID manager! TODO: proper error handling
 
     /// Register a callback for USB device detection with the HID Manager, this will in turn register an button input callback for all devices that getFilteredDevicesFromManager() returns
     IOHIDManagerRegisterDeviceMatchingCallback(_manager, &handleDeviceMatching, NULL);
@@ -212,7 +212,7 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
 
 static void handleDeviceMatching(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
-    DDLogDebug(@"New matching IOHIDDevice: %@", device);
+    DDLogDebug("New matching IOHIDDevice: %@", device);
     
     if (devicePassesFiltering(device)) {
         
@@ -242,7 +242,7 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         
         /// Set pointer sensitivity and acceleration for device
         ///     Edit: Seems that parametric curves are always set under Ventura, so we can't use tableBased curves :/ And in its current form this code will always crash. See PointerSpeed for more details.
-    //    DDLogDebug(@"Setting PointerSpeed for device: %@", newDevice.description);
+    //    DDLogDebug("Setting PointerSpeed for device: %@", newDevice.description);
     //    [PointerSpeed setForDevice:newDevice.IOHIDDevice];
         
         ///
@@ -257,21 +257,21 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         PollingRateMeasurer *measurer = [[PollingRateMeasurer alloc] init];
         [measurerMap addObject:measurer];
         [measurer measureOnDevice:newDevice numberOfSamples:400 completionCallback:^(double period, NSInteger rate) {
-            DDLogDebug(@"Completed polling rate measurement! Period: %f ms, Rate: %ld Hz", period, rate);
+            DDLogDebug("Completed polling rate measurement! Period: %f ms, Rate: %ld Hz", period, rate);
         } progressCallback:^(double completion, double period, NSInteger rate) {
-            DDLogDebug(@"Polling rate measurement %d\%% completed. Current estimate: %ld", (int)(completion*100), (long)rate);
+            DDLogDebug("Polling rate measurement %d\%% completed. Current estimate: %ld", (int)(completion*100), (long)rate);
         }];
         
     #endif
         
         /// Log
-        DDLogInfo(@"New device added to attached devices:\n%@", newDevice);
+        DDLogInfo("New device added to attached devices:\n%@", newDevice);
         
     } else {
-        DDLogInfo(@"New matching IOHIDDevice device didn't pass filtering");
+        DDLogInfo("New matching IOHIDDevice device didn't pass filtering");
     }
     
-    DDLogDebug(@"%@", debugInfo());
+    DDLogDebug("%@", debugInfo());
     
     return;
     
@@ -283,7 +283,7 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
     
     if (attachedDevice == nil) {
         
-        DDLogDebug(@"Device was removed but it wasn't attached to Mac Mouse Fix: %@", device);
+        DDLogDebug("Device was removed but it wasn't attached to Mac Mouse Fix: %@", device);
         
     } else {
         
@@ -306,8 +306,8 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
         
         /// Log
         
-        DDLogInfo(@"Attached device was removed:\n%@", attachedDevice);
-        DDLogDebug(@"Device Manager state after removal %@", debugInfo());
+        DDLogInfo("Attached device was removed:\n%@", attachedDevice);
+        DDLogDebug("Device Manager state after removal %@", debugInfo());
     }
 }
 

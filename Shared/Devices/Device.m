@@ -104,7 +104,7 @@
         IOReturn ret = IOHIDDeviceOpen(self.iohidDevice, kIOHIDOptionsTypeNone);
         if (ret) {
             assert(false); /// Should we add some error handling or just try to keep proceeding as normal?
-            DDLogError(@"Error opening device. Code: %x", ret);
+            DDLogError("Error opening device. Code: %x", ret);
         }
         
         ///
@@ -163,7 +163,7 @@
 //    IOReturn ret = IOHIDDeviceOpen(self.IOHIDDevice, options);
 ////    IOReturn ret = IOHIDDeviceOpen(self.IOHIDDevice, 0); // Ignoring options for testing purposes
 //    if (ret) {
-//        DDLogInfo(@"Error opening device. Code: %x", ret);
+//        DDLogInfo("Error opening device. Code: %x", ret);
 //    }
 //}
 
@@ -232,7 +232,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     MFMouseButtonNumber button = usage;
 
     /// Debug
-    DDLogDebug(@"Received HID input - usagePage: %d usage: %d value: %ld from device: %@", usagePage, usage, (long)IOHIDValueGetIntegerValue(value), sendingDev.name);
+    DDLogDebug("Received HID input - usagePage: %d usage: %d value: %ld from device: %@", usagePage, usage, (long)IOHIDValueGetIntegerValue(value), sendingDev.name);
 
     /// Notify ButtonInputReceiver
     /// Not needed now since we deactivated AppSwitcher feature. If we do implement it in the future we'll probably take a completely different approach
@@ -353,9 +353,9 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
                                vendorID];
         return outString;
     } @catch (NSException *exception) {
-        DDLogInfo(@"Exception while getting MFDevice description: %@", exception);
+        DDLogInfo("Exception while getting MFDevice description: %@", exception);
         /// After waking computer from sleep I just had a EXC_BAD_ACCESS exception. The debugger says the MFDevice is still allocated in debugger (I can look at all its properties and of the IOHIDDevice as well)) but the "properties" dict of the IOHIDDevice is a NULL pointer for some reason. Really strange. I don't know how to handle this situation, crashing is proabably better than to keep going in this weird state.
-        DDLogInfo(@"Rethrowing exception because crashing the app is probably best in this situation.");
+        DDLogInfo("Rethrowing exception because crashing the app is probably best in this situation.");
         @throw exception;
     }
 }

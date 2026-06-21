@@ -55,7 +55,7 @@
         /// Debug
         if (runningPreRelease()) {
             NSString *description = stateDescription(_state);
-            DDLogDebug(@"buttonModifiers - update - toState: %@", description);
+            DDLogDebug("buttonModifiers - update - toState: %@", description);
         }
         
         /// Notify
@@ -82,7 +82,7 @@
         /// Debug
         if (runningPreRelease()) {
             NSString *description = stateDescription(_state);
-            DDLogDebug(@"buttonModifiers - update - toState: %@", description);
+            DDLogDebug("buttonModifiers - update - toState: %@", description);
         }
         
         /// Notify

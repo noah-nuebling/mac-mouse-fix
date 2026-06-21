@@ -41,7 +41,7 @@ NSString *AXUIElement_Description(AXUIElementRef el_arg) {
     if (!el_arg) return @"(null)";
     AXUIElementRef el = el_arg;
     
-    #define fail(msg...) ({ DDLogDebug(@"Error in AXUIElement_Description: " msg); })
+    #define fail(msg...) ({ DDLogDebug("Error in AXUIElement_Description: " msg); })
     
     AXError err = 0;
         

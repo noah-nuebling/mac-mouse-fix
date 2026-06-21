@@ -596,7 +596,7 @@ static NSRect MFUnionRect(NSRect r, NSRect s) {
     CGFloat result2 = bounds.size.height; //CGRectIntegral(bounds).size.height;
     
     // ---
-    //    DDLogDebug(@"NSAttributedString height for width: %f - layoutManager: %f, boundingRect: %f", width, result1, result2);
+    //    DDLogDebug("NSAttributedString height for width: %f - layoutManager: %f, boundingRect: %f", width, result1, result2);
     return ceil(result2);
     // ^ Using `result1` has multiline NSTextFields clipping their last line. `result2` seems to work perfectly.
     //      > `result1` seems to be slightly too small

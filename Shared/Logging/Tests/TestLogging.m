@@ -15,13 +15,13 @@
 + (void)doTestLogs_objc {
     NSLog(@"Begin doTestLogs_objc");
     NSLog(@"Test DDLogError:");
-    DDLogError(@"DDLogError is logging");
+    DDLogError("DDLogError is logging");
     NSLog(@"Test DDLogWarn:");
-    DDLogWarn(@"DDLogWarn is logging");
+    DDLogWarn("DDLogWarn is logging");
     NSLog(@"Test DDLogInfo:");
-    DDLogInfo(@"DDLogInfo is logging");
+    DDLogInfo("DDLogInfo is logging");
     NSLog(@"Test DDLogDebug:");
-    DDLogDebug(@"DDLogDebug is logging");
+    DDLogDebug("DDLogDebug is logging");
     NSLog(@"End doTestLogs_objc");
 }
 

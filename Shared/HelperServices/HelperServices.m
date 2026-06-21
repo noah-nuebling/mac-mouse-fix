@@ -331,9 +331,9 @@
     // SMAppService *service = [SMAppService agentServiceWithPlistName:@"sm_launchd.plist"];
     // BOOL result = service.status == SMAppServiceStatusEnabled;
     // if (result) {
-    //     DDLogDebug(@"Helper found to be active");
+    //     DDLogDebug("Helper found to be active");
     // } else {
-    //     DDLogDebug(@"Helper found to be inactive. Status: %ld", (long)service.status);
+    //     DDLogDebug("Helper found to be inactive. Status: %ld", (long)service.status);
     // }
     // return result;
 
@@ -345,9 +345,9 @@
         BOOL result = service.status == SMAppServiceStatusEnabled;
         
         if (result) {
-            DDLogDebug(@"Helper found to be active");
+            DDLogDebug("Helper found to be active");
         } else {
-            DDLogDebug(@"Helper found to be inactive. Status: %ld", (long)service.status);
+            DDLogDebug("Helper found to be inactive. Status: %ld", (long)service.status);
         }
         return result;
     } else {
@@ -372,15 +372,15 @@ static BOOL helperIsActive_PList(void) {
     BOOL exitStatusIsZero = [launchctlOutput rangeOfString: @"\"LastExitStatus\" = 0;"].location != NSNotFound;
     
     if ([HelperServices strangeHelperIsRegisteredWithLaunchdIdentifier:kMFLaunchdHelperIdentifier]) {
-        DDLogInfo(@"Found helper running somewhere else.");
+        DDLogInfo("Found helper running somewhere else.");
         return NO;
     }
     
     if (labelFound && exitStatusIsZero) { /// Why check for exit status here?
-        DDLogInfo(@"MOUSE REMAPOR FOUNDD AND ACTIVE");
+        DDLogInfo("MOUSE REMAPOR FOUNDD AND ACTIVE");
         return YES;
     } else {
-        DDLogInfo(@"Helper is not active");
+        DDLogInfo("Helper is not active");
         return NO;
     }
 }
@@ -396,7 +396,7 @@ static BOOL helperIsActive_PList(void) {
         /// Guard running main app
         ///     Before using the SM APIs we could call this from anywhere, but the SM stuff will only work from the mainApp afaik.
         if (runningHelper()) {
-            DDLogWarn(@"Calling enableHelper_SM from Helper under Ventura or later. This is does not work.");
+            DDLogWarn("Calling enableHelper_SM from Helper under Ventura or later. This is does not work.");
             return [NSError errorWithDomain:MFHelperServicesErrorDomain code:kMFHelperServicesErrorEnableFromHelper userInfo:nil];
         }
         
@@ -457,7 +457,7 @@ static void enableHelper_PList(BOOL enable) {
         if (enable == NO) { /// Cleanup (delete launchdPlist) file after were done // We can't clean up immediately cause then launchctl will fail
             removeLaunchdPlist();
         }
-        DDLogInfo(@"launchctl terminated with stdout/stderr: %@, error: %@", [NSString.alloc initWithData:pipe.fileHandleForReading.readDataToEndOfFile encoding:NSUTF8StringEncoding], error);
+        DDLogInfo("launchctl terminated with stdout/stderr: %@, error: %@", [NSString.alloc initWithData:pipe.fileHandleForReading.readDataToEndOfFile encoding:NSUTF8StringEncoding], error);
     };
     [task launchAndReturnError:&error];
 }
@@ -471,13 +471,13 @@ static void removeServiceWithIdentifier(NSString *identifier) {
     /// - From my testing this does the same as the `bootout` command, but it doesn't rely on a valid launchd.plist file to exist in the library, so it should be more robust.
     /// - The removed service will be quit immediately but will be restarted on the next boot. Pre-SMAppService you can prevent start on next boot by deleting the launchd.plist file. Post-SMAppService you need to unregister the service. Not sure if there are other ways.
     
-    DDLogInfo(@"Removing service %@ from launchd", identifier);
+    DDLogInfo("Removing service %@ from launchd", identifier);
     
     NSURL *launchctlURL = [NSURL fileURLWithPath:kMFLaunchctlPath];
     NSError *err;
     [SharedUtility launchCLT:launchctlURL withArguments:@[@"remove", identifier] error:&err];
     if (err != nil) {
-        DDLogError(@"Error removing service %@ from launchd: %@", identifier, err);
+        DDLogError("Error removing service %@ from launchd: %@", identifier, err);
     }
     
     /// Wait until service is actually removed
@@ -546,12 +546,12 @@ NSString *launchctl_print(NSString *identifier) {
         
         if (isStrange) {
             
-            DDLogWarn(@"Strange helper: found at: %@ \nbundleExecutable at: %@", launchdPath, Locator.helperBundle.executablePath);
+            DDLogWarn("Strange helper: found at: %@ \nbundleExecutable at: %@", launchdPath, Locator.helperBundle.executablePath);
             return YES;
         }
     }
     
-    DDLogInfo(@"Strange Helper: not found");
+    DDLogInfo("Strange Helper: not found");
     return NO;
 }
 
@@ -601,11 +601,11 @@ NSString *launchctl_print(NSString *identifier) {
     
     // TODO: This is very similar to `killAllHelpers`. Unify.
     
-    DDLogInfo(@"Terminating other Helper instances");
+    DDLogInfo("Terminating other Helper instances");
     
     NSArray<NSRunningApplication *> *instances = [NSRunningApplication runningApplicationsWithBundleIdentifier:kMFBundleIDHelper];
     
-    DDLogInfo(@"%lu other running Helper instances found", (unsigned long)instances.count);
+    DDLogInfo("%lu other running Helper instances found", (unsigned long)instances.count);
         
     for (NSRunningApplication *instance in instances) {
         [instance terminate]; /// Consider using forceTerminate instead
@@ -619,7 +619,7 @@ static void removeLaunchdPlist(void) {
     NSError *error;
     [NSFileManager.defaultManager removeItemAtURL:Locator.launchdPlistURL error:&error];
     if (error != nil) {
-        DDLogError(@"Failed to delete launchd.plist file. This might be because the file doesn't exist. If the file still exists at \"%@\" the helper might be re-enabled on startup.", Locator.launchdPlistURL.path);
+        DDLogError("Failed to delete launchd.plist file. This might be because the file doesn't exist. If the file still exists at \"%@\" the helper might be re-enabled on startup.", Locator.launchdPlistURL.path);
     }
 }
 
@@ -644,7 +644,7 @@ static void removeLaunchdPlist(void) {
         /// When to use autoreleasepool: https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmAutoreleasePools.html
         /// When autoreleased objects are sent release messages: https://stackoverflow.com/questions/673372/when-does-autorelease-actually-cause-a-release-in-cocoa-touch
         
-        DDLogInfo(@"Repairing User Agent Config File");
+        DDLogInfo("Repairing User Agent Config File");
         
         /// Declare error
         NSError *error;
@@ -682,20 +682,20 @@ static void removeLaunchdPlist(void) {
             }
             
             /// Debug
-//            DDLogDebug(@"objectForKey: %@", OBJForKey);
-//            DDLogDebug(@"helperExecutablePath: %@", helperExecutablePath);
-//            DDLogDebug(@"OBJ == Path: %d", OBJForKey isEqualToString: helperExecutablePath);
+//            DDLogDebug("objectForKey: %@", OBJForKey);
+//            DDLogDebug("helperExecutablePath: %@", helperExecutablePath);
+//            DDLogDebug("OBJ == Path: %d", OBJForKey isEqualToString: helperExecutablePath);
         }
         
         /// Log
         
-        DDLogInfo(@"launchdPlistExists %hhd, launchdPlistIsCorrect: %hhd", launchdPlist_exists,launchdPlist_executablePathIsCorrect);
+        DDLogInfo("launchdPlistExists %hhd, launchdPlistIsCorrect: %hhd", launchdPlist_exists,launchdPlist_executablePathIsCorrect);
         
         if ((launchdPlist_exists == FALSE) || (launchdPlist_executablePathIsCorrect == FALSE)) {
             /// The config file doesn't exist, or the executable path within it is not correct
             ///  -> Acutally repair stuff
             
-            DDLogInfo(@"repairing file...");
+            DDLogInfo("repairing file...");
             
             /// Check if "User/Library/LaunchAgents" folder exists, if not, create it
             
@@ -705,7 +705,7 @@ static void removeLaunchdPlist(void) {
             
             if (launchAgentsFolderExists == NO) {
                 
-                DDLogInfo(@"LaunchAgents folder doesn't exist");
+                DDLogInfo("LaunchAgents folder doesn't exist");
                 NSError *error;
                 
                 /// Create LaunchAgents folder
@@ -713,11 +713,11 @@ static void removeLaunchdPlist(void) {
                 error = nil;
                 [fileManager createDirectoryAtPath:launchAgentsFolderPath withIntermediateDirectories:FALSE attributes:nil error:&error];
                 if (error == nil) {
-                    DDLogInfo(@"LaunchAgents Folder Created");
+                    DDLogInfo("LaunchAgents Folder Created");
                 } else if (error.code == NSFileWriteNoPermissionError) {
-                    DDLogError(@"Lacking permission to create LaunchAgents folder. Error: %@", error);
+                    DDLogError("Lacking permission to create LaunchAgents folder. Error: %@", error);
                 } else {
-                    DDLogError(@"Error creating LaunchAgents Folder: %@", error);
+                    DDLogError("Error creating LaunchAgents Folder: %@", error);
                 }
             }
             
@@ -725,7 +725,7 @@ static void removeLaunchdPlist(void) {
             
             error = makeWritable(launchAgentsFolderPath);
             if (error) {
-                DDLogError(@"Failed to make LaunchAgents folder writable. Error: %@", error);
+                DDLogError("Failed to make LaunchAgents folder writable. Error: %@", error);
             }
             
             /// Repair the contents of the launchdPlist file
@@ -751,10 +751,10 @@ static void removeLaunchdPlist(void) {
             [newLaunchdPlist_data writeToFile:launchdPlist_path options:NSDataWritingAtomic error:&error];
             
             if (error != nil) {
-                DDLogError(@"repairUserAgentConfigFile() -- Data Serialization Error: %@", error);
+                DDLogError("repairUserAgentConfigFile() -- Data Serialization Error: %@", error);
             }
         } else {
-            DDLogInfo(@"Nothing to repair");
+            DDLogInfo("Nothing to repair");
         }
     }
     
@@ -788,7 +788,7 @@ static NSError *makeWritable(NSString *itemPath) {
         
         /// Log
         
-        DDLogWarn(@"File at %@ is not writable. Attempting to change permissions.", itemPath);
+        DDLogWarn("File at %@ is not writable. Attempting to change permissions.", itemPath);
         
         /// Declare error
         
@@ -822,7 +822,7 @@ static NSError *makeWritable(NSString *itemPath) {
         
         /// Debug
         
-        DDLogInfo(@"Changed permissions of %@ from %@ to %@", itemPath, binarystring((int)oldPermissions), binarystring((int)newPermissions));
+        DDLogInfo("Changed permissions of %@ from %@ to %@", itemPath, binarystring((int)oldPermissions), binarystring((int)newPermissions));
         /// ^ Binary representation doesn't really help. This is almost impossible to parse visually.
     }
     
@@ -837,7 +837,7 @@ static void removePrefpaneLaunchdPlist(void) {
     /// Now, with the app version, it's moved to `~/Library/LaunchAgents/com.nuebling.mac-mouse-fix.helper.plist`
     /// Having the old version still can lead to the old helper being started at startup, and I think other conflicts, too.
     
-    DDLogInfo(@"Removing prefpane launchd plist");
+    DDLogInfo("Removing prefpane launchd plist");
     
     /// Find user library
     NSArray<NSString *> *libraryPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
@@ -857,10 +857,10 @@ static void removePrefpaneLaunchdPlist(void) {
             [NSFileManager.defaultManager removeItemAtPath:path error:&err];
             
             if (err) {
-                DDLogError(@"Error while removing prefpane launchd plist file at %@: %@", path, err);
+                DDLogError("Error while removing prefpane launchd plist file at %@: %@", path, err);
             }
         } else  {
-            DDLogDebug(@"No prefpane launchd.plist file found at: %@", path);
+            DDLogDebug("No prefpane launchd.plist file found at: %@", path);
         }
     }
 }

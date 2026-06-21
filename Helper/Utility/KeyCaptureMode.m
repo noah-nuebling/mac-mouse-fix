@@ -24,7 +24,7 @@ CFMachPortRef _keyCaptureEventTap;
 
 + (void)enable {
     
-    DDLogInfo(@"Enabling keyCaptureMode");
+    DDLogInfo("Enabling keyCaptureMode");
     
     if (_keyCaptureEventTap == nil) {
         _keyCaptureEventTap = [ModificationUtility createEventTapWithLocation:kCGHIDEventTap mask:CGEventMaskBit(kCGEventKeyDown) | CGEventMaskBit(NSEventTypeSystemDefined) option:kCGEventTapOptionDefault placement:kCGHeadInsertEventTap callback:keyCaptureModeCallback];
@@ -65,7 +65,7 @@ CGEventRef  _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType 
         
         if (keyCaptureModePayloadIsValidWithEvent(e, flags, type)) {
             
-            DDLogDebug(@"Capturing system event with data1: %ld, data2: %ld", e.data1, e.data2);
+            DDLogDebug("Capturing system event with data1: %ld, data2: %ld", e.data1, e.data2);
             
             payload = @{
                 @"systemEventType": @(type),
@@ -95,7 +95,7 @@ bool keyCaptureModePayloadIsValidWithEvent(NSEvent *e, CGEventFlags flags, MFSys
     BOOL isValid = isSub8 && isKeyDown && secondDataIsNil && !typeIsBlackListed;
     
     if (!isValid) {
-        DDLogDebug(@"KeyCaptureMode received systemDefinedEvent but it is not valid – isSubtype8: %d, isKeyDown: %d, secondDataIsNil: %d, typeIsBlackListed: %d – event: %@, flags: %llu, type: %d", isSub8, isKeyDown, secondDataIsNil, typeIsBlackListed, e, flags, type);
+        DDLogDebug("KeyCaptureMode received systemDefinedEvent but it is not valid – isSubtype8: %d, isKeyDown: %d, secondDataIsNil: %d, typeIsBlackListed: %d – event: %@, flags: %llu, type: %d", isSub8, isKeyDown, secondDataIsNil, typeIsBlackListed, e, flags, type);
     }
     
     return isValid;

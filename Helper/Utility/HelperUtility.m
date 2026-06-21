@@ -35,7 +35,7 @@
     const uint32_t maxDisplays = 1;
     uint32_t matchingDisplayCount; CGDirectDisplayID newDisplaysUnderMousePointer[maxDisplays];
     CGError err = CGGetDisplaysWithPoint(point, maxDisplays, newDisplaysUnderMousePointer, &matchingDisplayCount);
-    if (err != kCGErrorSuccess) DDLogWarn(@"Getting display with point (%@) failed with error: %d",  NSStringFromPoint(point), err);
+    if (err != kCGErrorSuccess) DDLogWarn("Getting display with point (%@) failed with error: %d",  NSStringFromPoint(point), err);
     
     if (matchingDisplayCount == 1) {
         /// Success
@@ -45,7 +45,7 @@
     }
     else if (matchingDisplayCount == 0) {
         /// Failure
-        DDLogWarn(@"There are 0 diplays under the mouse pointer");
+        DDLogWarn("There are 0 diplays under the mouse pointer");
         *dspID = kCGNullDirectDisplay;
         return kCVReturnError; /// Returning 'error' here is stupid. Just seting the result dspID to nil is enough.
     }
@@ -128,12 +128,12 @@ NSString *runningApplicationDescription(NSRunningApplication *app) {
 }
 
 + (void)printEventFieldDifferencesBetween:(CGEventRef)event1 and:(CGEventRef)event2 {
-    DDLogInfo(@"Field differences for event: %@, and event: %@", event1, event2);
+    DDLogInfo("Field differences for event: %@, and event: %@", event1, event2);
     for (int field = 0; field < 256; field++) { /// I think there are only 256 fields, that's what we seem to have assumed in macos-touch-reverse-engineering
         int64_t value1 = CGEventGetIntegerValueField(event1, field);
         int64_t value2 = CGEventGetIntegerValueField(event2, field);
         if (value1 != value2) {
-            DDLogInfo(@"%@: %@ vs %@", @(field), @(value1), @(value2));
+            DDLogInfo("%@: %@ vs %@", @(field), @(value1), @(value2));
         }
     }
 }

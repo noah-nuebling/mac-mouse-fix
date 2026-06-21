@@ -108,7 +108,7 @@
         #undef xxx
     }
     
-    DDLogDebug(@"Links.m: Generated link: %@ -> %@", linkID, result);
+    DDLogDebug("Links.m: Generated link: %@ -> %@", linkID, result);
     
     return result;
 }

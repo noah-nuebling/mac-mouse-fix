@@ -83,22 +83,22 @@
     assert(runningMainApp() || runningHelper());
     
     /// Log
-    DDLogInfo(@"Initializing MessagePort...");
+    DDLogInfo("Initializing MessagePort...");
     
     /// Create port
     CFStringRef messagePortName = (__bridge CFStringRef)(runningMainApp() ? kMFBundleIDApp : kMFBundleIDHelper);
     CFMessagePortRef localPort = CFMessagePortCreateLocal(kCFAllocatorDefault, messagePortName, didReceiveMessage, NULL, NULL);
 
     /// Log
-    DDLogInfo(@"Created localPort: %@", localPort);
+    DDLogInfo("Created localPort: %@", localPort);
     
     /// Validate
     if (localPort == NULL) {
         
         if (runningMainApp()) {
-            DDLogInfo(@"Failed to create a local message port. It will probably work anyway for some reason");
+            DDLogInfo("Failed to create a local message port. It will probably work anyway for some reason");
         } else {
-            DDLogError(@"Failed to create a local message port. This might be because there is another instance of %@ already running. Crashing the app.", kMFHelperName);
+            DDLogError("Failed to create a local message port. This might be because there is another instance of %@ already running. Crashing the app.", kMFHelperName);
             @throw [NSException exceptionWithName:@"NoMessagePortException" reason:@"Couldn't create a local CFMessagePort. Can't function properly without local CFMessagePort" userInfo:nil];
         }
         
@@ -138,7 +138,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     NSObject *payload = messageDict[kMFMessageKeyPayload];
     
     /// Log
-    DDLogInfo(@"Received Message: %@ with payload: %@", message, payload);
+    DDLogInfo("Received Message: %@ with payload: %@", message, payload);
     
     /// Process message
     NSObject *response = nil;
@@ -217,7 +217,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         };
     }
     else {
-        DDLogInfo(@"Unknown message received: %@", message);
+        DDLogInfo("Unknown message received: %@", message);
     }
 
 #elif IS_HELPER
@@ -275,7 +275,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         };
     }
     else {
-        DDLogInfo(@"Unknown message received: %@", message);
+        DDLogInfo("Unknown message received: %@", message);
     }
     
 #else
@@ -302,7 +302,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
 
     /// Validate
     if (remotePort == NULL) {
-        DDLogInfo(@"Can't send message \'%@\', because there is no CFMessagePort", message);
+        DDLogInfo("Can't send message \'%@\', because there is no CFMessagePort", message);
         return nil;
     }
     
@@ -324,7 +324,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     }
     
     /// Log
-    DDLogInfo(@"Sending message: %@ with payload: %@ from bundle: %@ via message port", message, payload, NSBundle.mainBundle.bundleIdentifier);
+    DDLogInfo("Sending message: %@ with payload: %@ from bundle: %@ via message port", message, payload, NSBundle.mainBundle.bundleIdentifier);
     
     /// Send message
     SInt32 messageID = 0x420666; /// Arbitrary
@@ -346,7 +346,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     /// Handle errors
     ///     Should we retry on timeout? [Oct 2025]
     if (status != 0) {
-        DDLogError(@"Non-zero CFMessagePortSendRequest return: %@", CFMessagePortSendRequest_ErrorCode_ToString(status));
+        DDLogError("Non-zero CFMessagePortSendRequest return: %@", CFMessagePortSendRequest_ErrorCode_ToString(status));
         return nil;
     }
     
@@ -384,7 +384,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
 
 void invalidationCallback(CFMessagePortRef ms, void *info) {
     /// Log state
-    DDLogInfo(@"Remote MessagePort invalidated in %@", runningHelper() ? @"Helper" : @"MainApp");
+    DDLogInfo("Remote MessagePort invalidated in %@", runningHelper() ? @"Helper" : @"MainApp");
 }
 
 @end

@@ -174,7 +174,7 @@ void *_Nullable MFLoadSymbol_native(MFFramework framework, NSString *nonUndersco
                           0);
                           
     if (!handle) {
-        DDLogError(@"dlopen failed with error: %s", dlerror());
+        DDLogError("dlopen failed with error: %s", dlerror());
         return NULL;
     }
     
@@ -185,14 +185,14 @@ void *_Nullable MFLoadSymbol_native(MFFramework framework, NSString *nonUndersco
     MFDefer ^{
         if (handle) {
             int rt = dlclose(handle);
-            if (rt != 0) { DDLogError(@"dlclose failed with error: %s", dlerror()); }
+            if (rt != 0) { DDLogError("dlclose failed with error: %s", dlerror()); }
         }
     };
     
     /// Use dlsym
     void *result = dlsym(handle, [nonUnderscoredSymbolName cStringUsingEncoding:NSUTF8StringEncoding]);
     if (!result) {
-        DDLogError(@"dlsym failed to get symbol %@ from framework: %s with error: %s", nonUnderscoredSymbolName, targetframeworkName, dlerror());
+        DDLogError("dlsym failed to get symbol %@ from framework: %s with error: %s", nonUnderscoredSymbolName, targetframeworkName, dlerror());
     }
     
     /// Return
@@ -282,7 +282,7 @@ void *_Nullable mfdlsym(void *mfdlopen_handle, MFSymbolTableSection symtabSectio
     
     /// Tell people to use `extern`
     if ((false) && symtabSection != kMFSymbolTableSectionLocal) {
-        DDLogWarn(@"mfdlsym: The symtabSection for %s is not `local`."
+        DDLogWarn("mfdlsym: The symtabSection for %s is not `local`."
                   "\nIf the symbol is really not in the local section, you could probably link by using C's extern keyword instead of doing it at runtime."
                   "\n(When using extern with a symbol in a PrivateFramework, you might have to add that framework to your Xcode target for the linker to find the symbol.)",
                   name);
@@ -435,7 +435,7 @@ void *_Nullable mfdlsym(void *mfdlopen_handle, MFSymbolTableSection symtabSectio
             const char *symname = (strtab_offset == 0) ? "" : ((char *)strtab + strtab_offset); /// The docs say that the symname is emptyString if the offset is 0. Not sure we need to explicitly implement this.
             
             if ((false) && runningPreRelease()) {
-                DDLogDebug(@"(bisection) sym: %s", symname);
+                DDLogDebug("(bisection) sym: %s", symname);
                 validateSymbol(&symtab[i], symtabSection);
             }
             
@@ -460,7 +460,7 @@ void *_Nullable mfdlsym(void *mfdlopen_handle, MFSymbolTableSection symtabSectio
             const char *symname = (strtab_offset == 0) ? "" : ((char *)strtab + strtab_offset);
             
             if ((false) && runningPreRelease()) {
-                DDLogDebug(@"(linearSearch) sym: %s", symname);
+                DDLogDebug("(linearSearch) sym: %s", symname);
                 validateSymbol(&symtab[i], symtabSection);
             }
             

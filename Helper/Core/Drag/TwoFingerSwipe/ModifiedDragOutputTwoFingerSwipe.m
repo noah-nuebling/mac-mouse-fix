@@ -150,7 +150,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         double tsDiff = ts - lastTs;
         lastTs = ts;
 
-        DDLogDebug(@"twoFinger SmoothingAnimator start - time since last: %f", tsDiff * 1000);
+        DDLogDebug("twoFinger SmoothingAnimator start - time since last: %f", tsDiff * 1000);
 
         /// Get return values
         ///
@@ -164,7 +164,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
         ///     - TODO: Set duration to 3 frames instead of 3.0/60.0 seconds if that doesn't lead to erratic behaviour on 120 hz screens.
         
         if (magnitudeOfVector(combinedVec) == 0.0) {
-            DDLogWarn(@"twoFinger Not starting baseAnimator since combinedMagnitude is 0.0");
+            DDLogWarn("twoFinger Not starting baseAnimator since combinedMagnitude is 0.0");
             p[@"doStart"] = @NO;
         } else {
             p[@"vector"] = nsValueFromVector(combinedVec);
@@ -178,8 +178,8 @@ static dispatch_group_t _momentumScrollWaitGroup;
         static Vector scrollDeltaSum = { .x = 0, .y = 0};
         scrollDeltaSum.x += fabs(currentVec.x);
         scrollDeltaSum.y += fabs(currentVec.y);
-        DDLogDebug(@"twoFinger Delta sum pre-animator: (%f, %f)", scrollDeltaSum.x, scrollDeltaSum.y);
-        DDLogDebug(@"twoFinger Value left pre-animator: (%f, %f)", valueLeft.x, valueLeft.y);
+        DDLogDebug("twoFinger Delta sum pre-animator: (%f, %f)", scrollDeltaSum.x, scrollDeltaSum.y);
+        DDLogDebug("twoFinger Value left pre-animator: (%f, %f)", valueLeft.x, valueLeft.y);
 
         /// Return
 
@@ -191,9 +191,9 @@ static dispatch_group_t _momentumScrollWaitGroup;
 
 //        static double scrollDeltaSummm = 0;
 //        scrollDeltaSummm += fabs(valueDeltaD);
-//        DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
+//        DDLogDebug("Delta sum in-animator: %f", scrollDeltaSummm);
 
-        DDLogDebug(@" twoFinger smoothingAnimator callback - delta: (%f, %f), phase: %d, shouldStartMomentumScroll: %d", deltaVec.x, deltaVec.y, animatorPhase, _smoothingAnimatorShouldStartMomentumScroll);
+        DDLogDebug(" twoFinger smoothingAnimator callback - delta: (%f, %f), phase: %d, shouldStartMomentumScroll: %d", deltaVec.x, deltaVec.y, animatorPhase, _smoothingAnimatorShouldStartMomentumScroll);
         
         if (animatorPhase == kMFAnimationCallbackPhaseEnd) {
 
@@ -233,12 +233,12 @@ static dispatch_group_t _momentumScrollWaitGroup;
     
     /// Setup waiting for momentumScroll
     
-    DDLogDebug(@"twoFinger Entering _momentumScrollWaitGroup");
+    DDLogDebug("twoFinger Entering _momentumScrollWaitGroup");
     dispatch_group_enter(_momentumScrollWaitGroup);
     
     [GestureScrollSimulator afterStartingMomentumScroll:^{
         
-        DDLogDebug(@"twoFinger Leaving _momentumScrollWaitGroup");
+        DDLogDebug("twoFinger Leaving _momentumScrollWaitGroup");
         dispatch_group_leave(_momentumScrollWaitGroup);
         
         /// Delete momentumScroll callback
@@ -250,9 +250,9 @@ static dispatch_group_t _momentumScrollWaitGroup;
     
     if (_smoothingAnimator.isRunning) { /// Let `_smoothingAnimator` start momentumScroll
         _smoothingAnimatorShouldStartMomentumScroll = YES;
-        DDLogDebug(@"twoFinger Set _smoothingAnimatorShouldStartMomentumScroll = YES");
+        DDLogDebug("twoFinger Set _smoothingAnimatorShouldStartMomentumScroll = YES");
     } else { /// Start momentumScroll directly
-        DDLogDebug(@"twoFinger Starting momentumScroll directly");
+        DDLogDebug("twoFinger Starting momentumScroll directly");
         [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES invertedFromDevice:_drag->naturalDirection];
     }
     
@@ -267,13 +267,13 @@ static dispatch_group_t _momentumScrollWaitGroup;
     
     /// Wait for momentumScroll to start
     
-    DDLogDebug(@"twoFinger Waiting for dispatch group");
+    DDLogDebug("twoFinger Waiting for dispatch group");
     intptr_t rt = dispatch_group_wait(_momentumScrollWaitGroup, dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC));
     
     if (rt != 0) {
         
         /// Log error
-        DDLogError(@"twoFinger _momentumScrollWaitGroup timed out. _momentumScrollWaitGroup info: %@. Will crash.", _momentumScrollWaitGroup.debugDescription);
+        DDLogError("twoFinger _momentumScrollWaitGroup timed out. _momentumScrollWaitGroup info: %@. Will crash.", _momentumScrollWaitGroup.debugDescription);
         
         /// Clean up
         ///     Unhide mouse pointer
