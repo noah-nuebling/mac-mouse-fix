@@ -119,7 +119,7 @@ Apple rewrote the 'System Preferences' app for macOS 13 Ventura and renamed it t
 <table align="center">
 <td>
 
-I hope this guide was helpful!</td>
+I hope this guide cleared things up!</td>
 <td>
 
 Still have questions? Click [here](https://redirect.macmousefix.com/?locale=en&target=mmf-support-still-have-questions).</td>

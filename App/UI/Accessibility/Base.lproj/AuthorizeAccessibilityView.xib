@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24412" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24128" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24412"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24128"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,11 +15,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" id="1T3-8f-fdJ">
-            <rect key="frame" x="0.0" y="0.0" width="443" height="300"/>
+            <rect key="frame" x="0.0" y="0.0" width="443" height="304"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="3VE-AW-Zcd">
-                    <rect key="frame" x="77" y="167" width="289" height="16"/>
+                    <rect key="frame" x="77" y="171" width="289" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Grant Accessibility Access to Mac Mouse Fix" id="OSk-Cl-izW">
                         <font key="font" metaFont="systemSemibold" size="13"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -27,7 +27,7 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="999" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" verifyAmbiguity="off" translatesAutoresizingMaskIntoConstraints="NO" id="xUD-oJ-hdN" customClass="Hyperlink">
-                    <rect key="frame" x="114" y="91" width="216" height="16"/>
+                    <rect key="frame" x="114" y="95" width="216" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Open 'Privacy &amp; Security' Settings" id="9qp-gN-SZZ">
                         <font key="font" metaFont="message"/>
                         <color key="textColor" name="linkColor" catalog="System" colorSpace="catalog"/>
@@ -38,7 +38,7 @@
                     </userDefinedRuntimeAttributes>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8eQ-d3-USu">
-                    <rect key="frame" x="100" y="70" width="16" height="16"/>
+                    <rect key="frame" x="100" y="74" width="16" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="2." id="RIR-VN-l6s">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -51,7 +51,7 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="9kK-bF-abK">
-                    <rect key="frame" x="115" y="70" width="213" height="16"/>
+                    <rect key="frame" x="115" y="74" width="213" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Switch on 'Mac Mouse Fix Helper'" id="46z-Nd-nh4">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -59,15 +59,20 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="999" verticalCompressionResistancePriority="1000" verifyAmbiguity="off" translatesAutoresizingMaskIntoConstraints="NO" id="ehG-P7-Fzq" customClass="MarkdownTextField" customModule="Mac_Mouse_Fix" customModuleProvider="target">
-                    <rect key="frame" x="77" y="132" width="289" height="28"/>
-                    <textFieldCell key="cell" alignment="center" title="Accessibility Access allows Mac Mouse Fix to intercept signals from your mouse and keyboard" id="0lz-be-kpl">
+                    <rect key="frame" x="91" y="136" width="261" height="28"/>
+                    <textFieldCell key="cell" alignment="center" id="0lz-be-kpl">
                         <font key="font" metaFont="message" size="11"/>
+                        <string key="title">Accessibility Access allows Mac Mouse Fix to
+intercept signals from your mouse and keyboard</string>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <attributedString key="userComments">
+                        <fragment content="I recommend splitting this string into two lines of roughly the same length, for a nice visual layout."/>
+                    </attributedString>
                 </textField>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6N2-6y-5iB">
-                    <rect key="frame" x="101" y="91" width="14" height="16"/>
+                    <rect key="frame" x="101" y="95" width="14" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="1." id="72q-sS-xMS">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -80,7 +85,7 @@
                     </textFieldCell>
                 </textField>
                 <customView horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="qKg-sx-Ymx">
-                    <rect key="frame" x="60" y="200" width="323" height="80"/>
+                    <rect key="frame" x="60" y="204" width="323" height="80"/>
                     <subviews>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xsP-AA-VHR">
                             <rect key="frame" x="229" y="-20" width="75" height="120"/>
@@ -108,7 +113,7 @@
                     </constraints>
                 </customView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sly-jt-EUp">
-                    <rect key="frame" x="184" y="13" width="76" height="32"/>
+                    <rect key="frame" x="189" y="20" width="66" height="24"/>
                     <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="u9c-up-oQG">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -123,7 +128,7 @@ Gw
             </subviews>
             <constraints>
                 <constraint firstItem="xUD-oJ-hdN" firstAttribute="centerX" secondItem="1T3-8f-fdJ" secondAttribute="centerX" id="02f-EN-eZr"/>
-                <constraint firstItem="8eQ-d3-USu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1T3-8f-fdJ" secondAttribute="leading" constant="20" symbolic="YES" id="2lD-O5-mzS"/>
+                <constraint firstItem="8eQ-d3-USu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1T3-8f-fdJ" secondAttribute="leading" constant="30" id="2lD-O5-mzS"/>
                 <constraint firstItem="ehG-P7-Fzq" firstAttribute="centerX" secondItem="1T3-8f-fdJ" secondAttribute="centerX" id="34y-X1-fyP"/>
                 <constraint firstItem="sly-jt-EUp" firstAttribute="centerX" secondItem="1T3-8f-fdJ" secondAttribute="centerX" id="63S-sj-fVV"/>
                 <constraint firstItem="xUD-oJ-hdN" firstAttribute="leading" secondItem="6N2-6y-5iB" secondAttribute="trailing" constant="3" id="6Xg-gb-qSf"/>
@@ -133,20 +138,19 @@ Gw
                 <constraint firstItem="6N2-6y-5iB" firstAttribute="centerY" secondItem="xUD-oJ-hdN" secondAttribute="centerY" id="SNB-zs-Mpb"/>
                 <constraint firstAttribute="bottom" secondItem="sly-jt-EUp" secondAttribute="bottom" constant="20" symbolic="YES" id="TEE-Qf-WIG"/>
                 <constraint firstItem="xUD-oJ-hdN" firstAttribute="top" secondItem="ehG-P7-Fzq" secondAttribute="bottom" constant="25" id="UGc-w3-AbD"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ehG-P7-Fzq" secondAttribute="trailing" constant="20" symbolic="YES" id="Xsc-qa-EqD"/>
-                <constraint firstItem="3VE-AW-Zcd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1T3-8f-fdJ" secondAttribute="leading" constant="20" symbolic="YES" id="XwD-Iy-g9n"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ehG-P7-Fzq" secondAttribute="trailing" constant="30" id="Xsc-qa-EqD"/>
+                <constraint firstItem="3VE-AW-Zcd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1T3-8f-fdJ" secondAttribute="leading" constant="30" id="XwD-Iy-g9n"/>
                 <constraint firstItem="3VE-AW-Zcd" firstAttribute="centerX" secondItem="1T3-8f-fdJ" secondAttribute="centerX" id="YWo-Ia-gtd"/>
                 <constraint firstItem="9kK-bF-abK" firstAttribute="centerX" secondItem="1T3-8f-fdJ" secondAttribute="centerX" id="ZWZ-m2-LbO"/>
                 <constraint firstItem="qKg-sx-Ymx" firstAttribute="centerX" secondItem="1T3-8f-fdJ" secondAttribute="centerX" id="a8J-W9-1yL"/>
                 <constraint firstItem="sly-jt-EUp" firstAttribute="top" secondItem="9kK-bF-abK" secondAttribute="bottom" constant="30" id="hYa-kb-3FC"/>
                 <constraint firstItem="ehG-P7-Fzq" firstAttribute="top" secondItem="3VE-AW-Zcd" secondAttribute="bottom" constant="7" id="ifh-gG-Lfq"/>
-                <constraint firstItem="ehG-P7-Fzq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1T3-8f-fdJ" secondAttribute="leading" constant="20" symbolic="YES" id="iuK-k1-I2O"/>
-                <constraint firstItem="6N2-6y-5iB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1T3-8f-fdJ" secondAttribute="leading" constant="20" symbolic="YES" id="ivu-VO-jVE"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xUD-oJ-hdN" secondAttribute="trailing" constant="20" symbolic="YES" id="kqH-Ur-na9"/>
+                <constraint firstItem="ehG-P7-Fzq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1T3-8f-fdJ" secondAttribute="leading" constant="30" id="iuK-k1-I2O"/>
+                <constraint firstItem="6N2-6y-5iB" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1T3-8f-fdJ" secondAttribute="leading" constant="30" id="ivu-VO-jVE"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xUD-oJ-hdN" secondAttribute="trailing" constant="30" id="kqH-Ur-na9"/>
                 <constraint firstItem="9kK-bF-abK" firstAttribute="leading" secondItem="8eQ-d3-USu" secondAttribute="trailing" constant="3" id="rLQ-0V-AUP"/>
-                <constraint firstItem="ehG-P7-Fzq" firstAttribute="width" relation="lessThanOrEqual" secondItem="3VE-AW-Zcd" secondAttribute="width" id="tn1-tw-FaM"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9kK-bF-abK" secondAttribute="trailing" constant="20" symbolic="YES" id="uR2-XL-2rB"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3VE-AW-Zcd" secondAttribute="trailing" constant="20" symbolic="YES" id="w7b-xj-Iex"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9kK-bF-abK" secondAttribute="trailing" constant="30" id="uR2-XL-2rB"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3VE-AW-Zcd" secondAttribute="trailing" constant="30" id="w7b-xj-Iex"/>
                 <constraint firstItem="3VE-AW-Zcd" firstAttribute="top" secondItem="qKg-sx-Ymx" secondAttribute="bottom" constant="17" id="wQp-bo-luE"/>
                 <constraint firstItem="8eQ-d3-USu" firstAttribute="centerY" secondItem="9kK-bF-abK" secondAttribute="centerY" id="ynP-Om-JVA"/>
             </constraints>

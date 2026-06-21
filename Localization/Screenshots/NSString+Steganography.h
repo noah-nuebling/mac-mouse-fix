@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN /// [Sep 2025] I haven't checked if these are actually  
     /// Interface
     - (MF_SWIFT_UNBRIDGED(NSAttributedString *))attributedStringByAppendingStringAsSecretMessage:(MF_SWIFT_UNBRIDGED(NSString *))message NS_REFINED_FOR_SWIFT;
     - (MF_SWIFT_UNBRIDGED(NSArray<FoundSecretMessage *> *))_secretMessages NS_REFINED_FOR_SWIFT;
+    - (MF_SWIFT_UNBRIDGED(NSAttributedString *))withoutSecretMessages NS_REFINED_FOR_SWIFT;
 
 @end
 

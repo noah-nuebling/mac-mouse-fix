@@ -70,7 +70,7 @@ Simply [download](http://noah-nuebling.github.io/mac-mouse-fix-website) the late
 <table align="center">
 <td>
 
-I hope this information was useful!</td>
+I hope this guide cleared things up!</td>
 <td>
 
 Still have questions? Click [here](https://redirect.macmousefix.com/?locale=en&target=mmf-support-still-have-questions).</td>

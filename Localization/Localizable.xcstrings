@@ -7,7 +7,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Otevřít nastavení „Zabezpečení a soukromí“"
+            "value" : "Otevřete nastavení 'Soukromí a zabezpečení'"
           }
         },
         "de" : {
@@ -20,6 +20,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Open 'Security & Privacy' Preferences"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir las Preferencias 'Seguridad y Privacidad'"
           }
         },
         "fr" : {
@@ -36,20 +42,20 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Abrir 'Privacidade e Segurança' em Ajustes do Sistema"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Открыть настройки 'Конфиденциальность и безопасность'"
+            "value" : "Открыть настройки «Конфиденциальность и безопасность»"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Open 'Security & Privacy' Preferences"
+            "state" : "translated",
+            "value" : "'Güvenlik ve Gizlilik' Ayarlarını Açın"
           }
         },
         "vi" : {
@@ -79,12 +85,12 @@
       }
     },
     "already-using-defaults-toast.3" : {
-      "comment" : ".",
+      "comment" : "This toast notification appears in response to selecting the 'restore-buttons-alert.radio1' radio button.",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Již používáte výchozí nastavení pro myši se 3 tlačítky."
+            "value" : "**Již používáte** výchozí nastavení pro myš se **3 tlačítky**."
           }
         },
         "de" : {
@@ -97,6 +103,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "You're **already using** the default setting for mice with **3 buttons**"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ya estás **usando** la configuración predeterminada para ratones con **3 botones**"
           }
         },
         "fr" : {
@@ -113,7 +125,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Você **já está usando** a configuração padrão para mouses com **3 botões**"
           }
         },
@@ -125,8 +137,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**3 düğmeli** fareler için zaten varsayılan ayarı **kullanıyorsunuz**"
+            "state" : "translated",
+            "value" : "**Halihazırda** 3 düğmeli fareler için varsayılan ayarı kullanıyorsunuz."
           }
         },
         "vi" : {
@@ -137,7 +149,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "您**已经在使用**默认的**三鍵**鼠标设置"
           }
         },
@@ -156,12 +168,12 @@
       }
     },
     "already-using-defaults-toast.5" : {
-      "comment" : ".",
+      "comment" : "This toast notification appears in response to selecting the 'restore-buttons-alert.radio2' radio button.",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Již používáte výchozí nastavení pro myši s 5+ tlačítky."
+            "value" : "**Již používáte** výchozí nastavení pro myš s **5+ tlačítky**."
           }
         },
         "de" : {
@@ -176,6 +188,12 @@
             "value" : "You're **already using** the default setting for mice with **5+ buttons**"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ya estás **usando** la configuración predeterminada para ratones con **5+ botones**"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -185,7 +203,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Você **já está usando** a configuração padrão para mouses com **5 botões**"
+            "value" : "Você **já está usando** a configuração padrão para mouses com **5 ou mais botões**"
           }
         },
         "ru" : {
@@ -197,18 +215,18 @@
         "tr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "**5+ düğmeli** fareler için zaten varsayılan ayarı **kullanıyorsunuz**"
+            "value" : "**Halihazırda** 5+ düğmeli fareler için varsayılan ayarı kullanıyorsunuz."
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Bạn **đã và đang sử dụng** thiết lập mặc định với chuột **5 nút**"
+            "value" : "Bạn **đã và đang sử dụng** thiết lập mặc định với chuột **5+ nút**"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "您**已经在使用**默认的**五鍵**鼠标设置"
           }
         },
@@ -247,6 +265,12 @@
             "value" : "Version %@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versión %@"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -255,7 +279,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Versão %@"
           }
         },
@@ -267,14 +291,20 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Version %@"
+            "state" : "translated",
+            "value" : "Sürüm %@"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Phiên bản %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本：%@"
           }
         }
       }
@@ -309,8 +339,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "<Retroceder>"
+            "state" : "translated",
+            "value" : "<Tecla de retroceder>"
           }
         },
         "tr" : {
@@ -376,7 +406,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "⇪"
           }
         },
@@ -443,8 +473,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "<Avanço Rápido>"
+            "state" : "translated",
+            "value" : "<Avanço rápido>"
           }
         },
         "tr" : {
@@ -510,8 +540,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "<Seletor de Emoji>"
+            "state" : "translated",
+            "value" : "<Tecla do Seletor de Emoji>"
           }
         },
         "tr" : {
@@ -577,8 +607,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "<Aumentar o Brilho do Teclado>"
+            "state" : "translated",
+            "value" : "<Aumentar brilho do teclado>"
           }
         },
         "tr" : {
@@ -644,8 +674,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "<Diminuir o Brilho do Teclado>"
+            "state" : "translated",
+            "value" : "<Diminuir brilho do teclado>"
           }
         },
         "tr" : {
@@ -711,8 +741,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "<Spotlight>"
+            "state" : "translated",
+            "value" : "<Tecla do Spotlight>"
           }
         },
         "tr" : {
@@ -778,8 +808,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "<Ditado>"
+            "state" : "translated",
+            "value" : "<Tecla de Ditado>"
           }
         },
         "tr" : {
@@ -845,7 +875,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "<Não Perturbe>"
           }
         },
@@ -912,8 +942,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "<Play ou Pausa>"
+            "state" : "translated",
+            "value" : "<Reproduzir ou Pausar>"
           }
         },
         "tr" : {
@@ -979,8 +1009,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "<Botão de Energia>"
+            "state" : "translated",
+            "value" : "<Botão de energia>"
           }
         },
         "tr" : {
@@ -1046,7 +1076,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "<Mission Control>"
           }
         },
@@ -1113,8 +1143,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "<Mudo>"
+            "state" : "translated",
+            "value" : "<Silenciar>"
           }
         },
         "tr" : {
@@ -1180,8 +1210,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "<Diminuir Volume>"
+            "state" : "translated",
+            "value" : "<Diminuir volume>"
           }
         },
         "tr" : {
@@ -1247,8 +1277,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "<Aumentar Volume>"
+            "state" : "translated",
+            "value" : "<Aumentar volume>"
           }
         },
         "tr" : {
@@ -1314,7 +1344,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "<Launchpad>"
           }
         },
@@ -1381,8 +1411,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "<Aumentar o Brilho>"
+            "state" : "translated",
+            "value" : "<Aumentar brilho>"
           }
         },
         "tr" : {
@@ -1448,8 +1478,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "<Diminuir o Brilho>"
+            "state" : "translated",
+            "value" : "<Diminuir brilho>"
           }
         },
         "tr" : {
@@ -1515,8 +1545,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "<Tecla sem Descrição>"
+            "state" : "translated",
+            "value" : "<Tecla sem descrição>"
           }
         },
         "tr" : {
@@ -1581,7 +1611,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Cancelar"
           }
         },
@@ -1647,8 +1677,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "As versões de Testes (também chamadas de Beta) podem apresentar falhas.\nCaso encontre alguma, por favor envie um Feedback.\nObrigado!"
+            "state" : "translated",
+            "value" : "Versões beta podem apresentar vários problemas.\nSe encontrar algum, envie seu feedback.\nObrigado!"
           }
         },
         "tr" : {
@@ -1713,8 +1743,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Obter versões de Teste"
+            "state" : "translated",
+            "value" : "Receber versões beta"
           }
         },
         "tr" : {
@@ -1779,8 +1809,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Deseja obter as versões de Teste?"
+            "state" : "translated",
+            "value" : "Quer receber as versões beta?"
           }
         },
         "tr" : {
@@ -1838,6 +1868,12 @@
             "value" : "Mouse Button %@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón del Ratón %@"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1852,7 +1888,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Botão do Mouse %@"
           }
         },
@@ -1877,7 +1913,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "鼠标按钮%@"
+            "value" : "鼠标按键%@"
           }
         },
         "zh-Hant" : {
@@ -1923,8 +1959,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Obtenha um Mouse com mais de 5 botões para desbloquear todo o potencial do Mac Mouse Fix!"
+            "state" : "translated",
+            "value" : "Use um mouse com 5 ou mais botões para liberar todo o potencial do Mac Mouse Fix!"
           }
         },
         "tr" : {
@@ -1989,7 +2025,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "OK"
           }
         },
@@ -2055,8 +2091,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Seu Mouse tem apenas 3 botões"
+            "state" : "translated",
+            "value" : "Seu mouse tem apenas 3 botões"
           }
         },
         "tr" : {
@@ -2113,6 +2149,12 @@
             "value" : "Middle Button"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón Central"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2127,7 +2169,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Botão do Meio"
           }
         },
@@ -2139,7 +2181,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Orta Düğme"
           }
         },
@@ -2151,7 +2193,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "中键"
           }
         },
@@ -2190,6 +2232,12 @@
             "value" : "Button %@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón %@"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2204,7 +2252,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Botão %@"
           }
         },
@@ -2216,8 +2264,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ Düğmesi"
+            "state" : "translated",
+            "value" : "Düğme %@"
           }
         },
         "vi" : {
@@ -2228,8 +2276,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "按钮%@"
+            "state" : "translated",
+            "value" : "按键%@"
           }
         },
         "zh-Hant" : {
@@ -2267,6 +2315,12 @@
             "value" : "Primary Button"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón Primario"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2281,7 +2335,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Botão Primário"
           }
         },
@@ -2293,7 +2347,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Birincil Düğme"
           }
         },
@@ -2305,7 +2359,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "主键"
           }
         },
@@ -2344,6 +2398,12 @@
             "value" : "Secondary Button"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón Secundario"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2358,7 +2418,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Botão Secundário"
           }
         },
@@ -2370,7 +2430,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "İkincil Düğme"
           }
         },
@@ -2382,7 +2442,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "辅键"
           }
         },
@@ -2496,6 +2556,33 @@
             }
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ ahora está capturado por Mac Mouse Fix"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ ahora están capturados por Mac Mouse Fix"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2546,7 +2633,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -2556,13 +2643,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%2$@ foi capturado pelo Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%2$@ foram capturados pelo Mac Mouse Fix."
                     }
                   }
@@ -2622,14 +2709,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : ""
+                      "state" : "translated",
+                      "value" : "%2$@ şu anda Mac Mouse Fix tarafından yakalandı"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : ""
+                      "state" : "translated",
+                      "value" : "%2$@ şu anda Mac Mouse Fix tarafından yakalandı"
                     }
                   }
                 }
@@ -2660,7 +2747,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -2670,7 +2757,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%2$@被Mac Mouse Fix捕获到。"
                     }
                   }
@@ -2819,6 +2906,33 @@
             }
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Otras aplicaciones ya no pueden ver el botón"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "Otras aplicaciones ya no pueden ver estos botones"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "new",
@@ -2869,7 +2983,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -2879,13 +2993,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "Outros aplicativos não veem mais isso."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "Outros aplicativos não conseguem mais vê-los."
                     }
                   }
@@ -2945,14 +3059,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : ""
+                      "state" : "translated",
+                      "value" : "Diğer uygulamalar şu anda düğmeyi göremezler"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : ""
+                      "state" : "translated",
+                      "value" : "Diğer uygulamalar şu anda düğmeleri göremezler"
                     }
                   }
                 }
@@ -2983,7 +3097,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -2993,8 +3107,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
+                      "state" : "translated",
+                      "value" : "其他app无法再识别这个按键"
                     }
                   }
                 }
@@ -3067,6 +3181,12 @@
             "value" : "[Learn More](%@)"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Saber más](%@)"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3081,8 +3201,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "[Saber mais](%@)"
+            "state" : "translated",
+            "value" : "[Saiba mais](%@)"
           }
         },
         "ru" : {
@@ -3093,7 +3213,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "[Daha Fazla Bilgi Edinin](%@)"
           }
         },
@@ -3105,7 +3225,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "[了解更多](%@)"
           }
         },
@@ -3219,6 +3339,33 @@
             }
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ ya no está capturado por Mac Mouse Fix"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ ya no están capturados por Mac Mouse Fix"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3269,7 +3416,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -3279,13 +3426,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%2$@ não é mais capturado pelo Mac Mouse Fix."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%2$@ não são mais capturados pelo Mac Mouse Fix."
                     }
                   }
@@ -3345,14 +3492,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : ""
+                      "state" : "translated",
+                      "value" : "%2$@ Mac Mouse Fix tarafından yakalanması sona erdi"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : ""
+                      "state" : "translated",
+                      "value" : "%2$@ Mac Mouse Fix tarafından yakalanması sona erdi"
                     }
                   }
                 }
@@ -3383,7 +3530,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -3393,7 +3540,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%2$@不再被Mac Mouse Fix所捕获。"
                     }
                   }
@@ -3542,6 +3689,33 @@
             }
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : ""
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "new",
@@ -3592,7 +3766,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -3602,14 +3776,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : ""
+                      "state" : "translated",
+                      "value" : "Outros aplicativos voltam a ver o botão."
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : ""
+                      "state" : "translated",
+                      "value" : "Outros aplicativos voltam a vê-los."
                     }
                   }
                 }
@@ -3791,10 +3965,34 @@
             "value" : "**Scrolling** is now captured by Mac Mouse Fix"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El **desplazamiento** ahora está capturado por Mac Mouse Fix"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A **rolagem** agora está sendo controlada pelo Mac Mouse Fix"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Прокрутка** теперь перехватывается Mac Mouse Fix"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Kaydırma** hareketi şu anda Mac Mouse Fix tarafından yakalandı"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**滚动**被 Mac Mouse Fix 所捕获"
           }
         }
       }
@@ -3832,6 +4030,12 @@
             "value" : "[Learn More](%@)"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[Saber más](%@)"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3846,8 +4050,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "[Saber mais](%@)"
+            "state" : "translated",
+            "value" : "[Saiba mais](%@)"
           }
         },
         "ru" : {
@@ -3858,7 +4062,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "[Daha Fazla Bilgi Edinin](%@)"
           }
         },
@@ -3870,7 +4074,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "[了解更多](%@)"
           }
         },
@@ -3909,10 +4113,34 @@
             "value" : "**Scrolling** is no longer captured by Mac Mouse Fix"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El **desplazamiento** ya no está capturado por Mac Mouse Fix"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A **rolagem** não está sendo controlada pelo Mac Mouse Fix"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Прокрутка** больше не перехватывается Mac Mouse Fix"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Kaydırma** haraketinin Mac Mouse Fix tarafından yakalanması sona erdi"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**滚动**不再被 Mac Mouse Fix 所捕获"
           }
         }
       }
@@ -3941,9 +4169,15 @@
             "value" : "Spaces & Mission Control"
           }
         },
-        "fr" : {
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Espacios y Centro de Control"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Espaces & Mission Control"
           }
         },
@@ -4018,9 +4252,15 @@
             "value" : "Move your mouse:\n - Up to show Mission Control\n - Down to show Application Windows\n - Left or Right to move between Spaces\n \nWorks like swiping with 3 fingers on an Apple Trackpad"
           }
         },
-        "fr" : {
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Mueva el ratón:\n - Hacia arriba para mostrar el Mission Control\n - Hacia abajo para mostrar Ventanas de Aplicación\n - Hacia la Izquierda o la Derecha para moverse entre Espacios\n\nFunciona como deslizar con 3 dedos en un Apple Trackpad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Déplacer votre souris :\n - Vers le haut pour afficher Mission Control\n - Vers le bas pour afficher Fenêtres de l'application\n - Vers la gauche ou la droite pour passer d'un espace à un autre\n \nFonctionne comme le balayage à 3 doigts sur un Trackpad Apple"
           }
         },
@@ -4045,7 +4285,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Farenizi hareket ettirin:\n - Mission Control'ü göstermek için yukarı\n - Uygulama Pencerelerini göstermek için aşağı\n - Spaces arasında geçiş yapmak için sola veya sağa\n \nApple Trackpad'de 3 parmakla kaydırma gibi çalışır"
+            "value" : "Farenizi:\n- Mission Control'u göstermek için yukarı doğru\n- Uygulama Pencelerini göstermek için aşağıya doğru\n- Space'ler arasında hareket ettirmek için sağa ve sola doğru hareket ettirin\n\nApple İzleme Dörtgeninde üç parmakla sağa ve sola kaydırma hareketi gibi çalışmaktadır"
           }
         },
         "vi" : {
@@ -4095,6 +4335,12 @@
             "value" : "Scroll & Navigate"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desplazamiento y Navegación"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4109,7 +4355,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Role e Navegue"
           }
         },
@@ -4122,7 +4368,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kaydır ve Gezin"
+            "value" : "Kaydırma ve Gezinme"
           }
         },
         "vi" : {
@@ -4172,6 +4418,12 @@
             "value" : "Scroll freely by moving your mouse in any direction\n \nAlso Navigate between pages in Safari, delete messages in Mail and more by moving your mouse left and right\n \nWorks like swiping with 2 fingers on an Apple Trackpad"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desplázate libremente moviendo el ratón en cualquier dirección\n\nTambién navega entre páginas en Safari, elimina mensajes en Mail y más moviendo el ratón hacia la izquierda y la derecha\n\nFunciona como deslizar con 2 dedos en un Apple Trackpad"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4186,7 +4438,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Role livremente movendo o Mouse para qualquer direção\n \nNavegue também entre páginas do Safari, exclua mensagens no Mail e muito mais, movendo o Mouse para a esquerda e para a direita\n \nFunciona como deslizar com dois dedos em um Trackpad da Apple"
           }
         },
@@ -4199,7 +4451,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Farenizi herhangi bir yönde hareket ettirerek serbestçe kaydırın\n \nAyrıca farenizi sola ve sağa hareket ettirerek Safari'de sayfalar arasında gezinin, Mail'deki mesajları silin ve daha fazlasını yapın\n \nApple Trackpad'de 2 parmakla kaydırma gibi çalışır"
+            "value" : "Farenizi herhangi bir yönde hareket ettirerek serbestçe kaydırın\n\nAyrıca farenizi sola ve sağa hareket ettirerek Safari'de sayfalar arasında gezinin, Mail uygulamasında e-postaları silin ve daha fazlasını yapın\n\nApple İzleme Dörtgeninde iki parmakla kaydırmak gibi çalışır"
           }
         },
         "vi" : {
@@ -4229,7 +4481,7 @@
       }
     },
     "effect.app-expose" : {
-      "comment" : "Note: Apple refers to this feature by different names like 'Application Windows' or 'App Exposé'. In English I chose the same name that is used in Keyboard Shortcut settings.\n\nFurther details: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'App Exposé' felt a bit outdated. (Exposé was the predecessor to Mission Control, and the term mostly doesn't occur anymore in macOS now.)",
+      "comment" : "Note: Apple refers to this feature by different names like 'Application Windows' or 'App Exposé'. In English I chose the same name that is used at\nSystem Settings > Keyboard > Keyboard Shortcuts > Mission Control > Application Windows. (Under macOS 26 Tahoe)\n\nFurther details: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'App Exposé' felt a bit outdated. (Exposé was the predecessor to Mission Control, and the term mostly doesn't occur anymore in macOS now.)",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -4249,6 +4501,12 @@
             "value" : "Application Windows"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Application Windows"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4263,7 +4521,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Janelas do Aplicativo"
           }
         },
@@ -4326,6 +4584,12 @@
             "value" : "Show all windows of the active app"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar todas las ventanas de la aplicación activa"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4340,7 +4604,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Exibir todas as Janelas do Aplicativo ativo"
           }
         },
@@ -4403,6 +4667,12 @@
             "value" : " Exclusive Keys"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " Teclas exclusivas"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4417,7 +4687,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : " Teclas Exclusivas"
           }
         },
@@ -4430,7 +4700,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " Özel Tuşlar"
+            "value" : " Özel Tuşları"
           }
         },
         "vi" : {
@@ -4480,6 +4750,12 @@
             "value" : "Choose keys that are only available on Apple keyboards"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige teclas que solo están disponibles en teclados de Apple"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4494,7 +4770,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Escolha teclas que estão disponíveis apenas em teclados Apple"
           }
         },
@@ -4557,6 +4833,12 @@
             "value" : "Works like pressing '%@' on an Apple keyboard"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funciona como pulsar '%@' en un teclado de Apple"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4571,14 +4853,14 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Funciona como pressionar '%@' em um teclado Apple"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Работает как нажатие клавиши '%@' на клавиатуре Apple"
+            "value" : "Работает как нажатие клавиши «%@» на клавиатуре Apple"
           }
         },
         "tr" : {
@@ -4634,6 +4916,12 @@
             "value" : "Back"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atrás"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4648,7 +4936,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Voltar"
           }
         },
@@ -4711,6 +4999,12 @@
             "value" : "Go back one page in Safari and other apps"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Volver una página en Safari y otras aplicaciones"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4725,7 +5019,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Volte uma página no Safari e em outros aplicativos"
           }
         },
@@ -4788,6 +5082,12 @@
             "value" : "Middle Click"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clic Central"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4815,7 +5115,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Orta Tıklama"
+            "value" : "Orta Tık"
           }
         },
         "vi" : {
@@ -4826,7 +5126,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "按中键"
           }
         },
@@ -4865,6 +5165,12 @@
             "value" : "Open links in a new tab, paste text in the Terminal, and more.\n \nWorks like clicking the middle mouse button (also called scroll wheel button or mouse button 3) on a standard mouse."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir enlaces en una pestaña nueva, pegar texto en la Terminal, y más.\n\nFunciona como hacer clic en el botón central del ratón (también llamado botón de la rueda de desplazamiento o botón 3 del ratón) en un ratón estándar."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4879,7 +5185,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Abra links em uma nova aba, cole texto no Terminal e muito mais.\n \nFunciona como clicar Botão do Meio do Mouse (também chamado de Botão da de Rolagem ou 3º Botão do Mouse) em um Mouse padrão."
           }
         },
@@ -4891,8 +5197,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bağlantıları yeni sekmede açın, Terminal'e metin yapıştırın ve daha fazlasını yapın.\n \nStandart bir farede Orta Fare Düğmesi (Kaydırma Tekerleği Düğmesi veya Fare Düğmesi 3 olarak da adlandırılır)'ya tıklamak gibi çalışır."
+            "state" : "translated",
+            "value" : "Bağlantıları yeni sekmede açın, Terminal'e metin yapıştırın ve daha fazlasını yapın.\n \nOrta Fare Düğmesi (Kaydırma Tekerleği Düğmesi veya Fare Düğmesi 3 olarak da adlandırılır)"
           }
         },
         "vi" : {
@@ -4903,8 +5209,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "以新标签页打开链接、在“终端”中粘贴文字等。\n \n作用相当于在标准鼠标上点按鼠标中键（又称鼠标滚轮键或鼠标按钮３）。"
+            "state" : "translated",
+            "value" : "以新标签页打开链接、在“终端”中粘贴文字等。\n \n作用相当于在标准鼠标上点按鼠标中键（又称鼠标滚轮键或鼠标按键３）。"
           }
         },
         "zh-Hant" : {
@@ -4942,6 +5248,12 @@
             "value" : "Primary Click"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clic Principal"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4963,13 +5275,19 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Birincil Tıklama"
+            "value" : "Birincil Tıklama (Sağ Tık)"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kích nút chính"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "主键"
           }
         }
       }
@@ -4995,6 +5313,12 @@
             "value" : "Works like clicking the primary mouse button (also called left button or mouse button 1) on a standard mouse."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funciona como hacer clic en el botón primario del ratón (también llamado botón izquierdo o botón 1 del ratón) en un ratón estándar."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5009,7 +5333,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Funciona como clicar em Botão Primário do Mouse (também chamado de Botão Esquerdo ou 1º Botão do Mouse) em um Mouse padrão."
           }
         },
@@ -5021,8 +5345,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Standart bir farede Birincil Fare Düğmesi (Sol Fare Düğmesi veya Fare Düğmesi 1 olarak da adlandırılır)'ya tıklamak gibi çalışır."
+            "state" : "translated",
+            "value" : "Birincil Fare Düğmesi (Sol Fare Düğmesi veya Birincil Fare Düğmesi olarak da adlandırılır)"
           }
         },
         "vi" : {
@@ -5033,8 +5357,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "… 鼠标主键（又称鼠标左键或鼠标按钮１） …"
+            "state" : "translated",
+            "value" : "点击鼠标主键（又称鼠标左键或鼠标按键１）"
           }
         },
         "zh-Hant" : {
@@ -5072,6 +5396,12 @@
             "value" : "Secondary Click"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clic Secundario"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5093,13 +5423,19 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "İkincil Tıklama"
+            "value" : "İkincil Tıklama (Sol Tık)"
           }
         },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kích nút phụ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "辅键"
           }
         }
       }
@@ -5125,6 +5461,12 @@
             "value" : "Works like clicking the secondary mouse button (also called right mouse button or mouse button 2) on a standard mouse."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funciona como hacer clic en el botón secundario del ratón (también llamado botón derecho del ratón o botón 2 del ratón) en un ratón estándar."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5139,7 +5481,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Funciona como clicar em Botão Secundário do Mouse (também chamado de Botão Direito ou 2º Botão do Mouse) em um Mouse padrão."
           }
         },
@@ -5151,8 +5493,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Standart bir farede İkincil Fare Düğmesi (Sağ Fare Düğmesi veya Fare Düğmesi 2 olarak da adlandırılır)'ya tıklamak gibi çalışır."
+            "state" : "translated",
+            "value" : "İkincil Fare Düğmesi (Sağ Fare Düğmesi veya Fare Düğmesi 2 olarak da adlandırılır)"
           }
         },
         "vi" : {
@@ -5163,8 +5505,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "… 鼠标辅键（又称鼠标右键或鼠标按钮２） …"
+            "state" : "translated",
+            "value" : "点击鼠标辅键（又称鼠标右键或鼠标按键２）"
           }
         },
         "zh-Hant" : {
@@ -5202,6 +5544,12 @@
             "value" : "Show Desktop"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar Escritorio"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5216,7 +5564,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Exibir Mesa"
           }
         },
@@ -5279,6 +5627,12 @@
             "value" : "Show the desktop"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar el escritorio"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5293,7 +5647,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Exibe a Mesa"
           }
         },
@@ -5306,7 +5660,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Masaüstünü göster"
+            "value" : "Masaüstünü Göster"
           }
         },
         "vi" : {
@@ -5356,6 +5710,12 @@
             "value" : "Forward"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Adelante"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5370,7 +5730,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Avançar"
           }
         },
@@ -5433,6 +5793,12 @@
             "value" : "Go forward one page in Safari and other apps"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avanzar una página en Safari y otras aplicaciones"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5447,7 +5813,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Avance uma página no Safari e em outros aplicativos"
           }
         },
@@ -5510,6 +5876,12 @@
             "value" : "Launchpad"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launchpad"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5524,7 +5896,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Launchpad"
           }
         },
@@ -5587,6 +5959,12 @@
             "value" : "Open Launchpad"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir Launchpad"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5601,7 +5979,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Abrir Launchpad"
           }
         },
@@ -5644,7 +6022,7 @@
       }
     },
     "effect.left-space" : {
-      "comment" : "",
+      "comment" : "The English string takes after\nSystem Settings > Keyboard > Keyboard Shortcuts... > Mission Control > Mission Control > Move left a space.\nBut it looks like for some languages, the translation inside macOS is suboptimal, so maybe you can come up with something better.\n[Dec 2025, macOS 26 Tahoe]",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -5664,9 +6042,15 @@
             "value" : "Move Left a Space"
           }
         },
-        "fr" : {
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Moverse un Espacio a la Izquierda"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Déplacer vers le bureau de gauche"
           }
         },
@@ -5685,13 +6069,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Переместить влево на один Spaces"
+            "value" : "Прыжок на один Spaces влево"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bir Space Sola Git"
+            "value" : "Soldaki Space'e git"
           }
         },
         "vi" : {
@@ -5721,7 +6105,7 @@
       }
     },
     "effect.left-space.hint" : {
-      "comment" : "",
+      "comment" : "Try to keep the translations of Space / Spaces consistent.\n\nIf you're using Xcloc Editor.app, you can find all the translations for 'Spaces' like this:\n- Go to 'All Project Files' (Command-J)\n- Select the search-field (Command-F)\n- Enter 'space'\n-> Now you can see all the occurrences and translations for 'space'!\n\nNote to self:\nThis hint is similar to questions.click-delay.body",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -5741,9 +6125,15 @@
             "value" : "Move one Space to the left"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Moverse un Espacio a la Izquierda"
+          }
+        },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Se déplacer d'un espace vers la gauche"
           }
         },
@@ -5762,13 +6152,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Переместиться на один Spaces влево"
+            "value" : "Перемещение на один Spaces влево"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bir Space sola git"
+            "value" : "Soldaki Space'e git"
           }
         },
         "vi" : {
@@ -5798,7 +6188,7 @@
       }
     },
     "effect.look-up" : {
-      "comment" : "",
+      "comment" : "Note: 'Look Up' is a feature for looking up words in the dictionary and other places. It can be triggered by pressing Command-Control-D, or by a 'force click' on a Trackpad. \n\nApple uses the term 'Look Up' at\nSystem Settings > Trackpad > Point & Click > Look up & data detectors (in macOS Tahoe)\nThey also have support website about the feature.",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -5818,6 +6208,12 @@
             "value" : "Look Up & Quick Look"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Mira hacia arriba y mira rápido"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5832,7 +6228,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Pesquisa e Visualização Rápida"
           }
         },
@@ -5845,7 +6241,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ara ve Hızlı Bak"
+            "value" : "Sözlükte Ara ve Hızlı Bak"
           }
         },
         "vi" : {
@@ -5895,6 +6291,12 @@
             "value" : "Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like a Force click on an Apple Trackpad."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Buscar palabras en el Diccionario, Vista Rápida de archivos en el Finder, y más.\n\nFunciona como un clic forzado en un Apple Trackpad."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5909,7 +6311,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Procure palavras no Dicionário, visualize arquivos sem abrir no Finder e muito mais.\n \nFunciona como um Force Touch em um Trackpad da Apple."
           }
         },
@@ -5922,7 +6324,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sözlükte kelimeleri arayın, Finder'da dosyalara Hızlı Bakın ve daha fazlasını yapın.\n \nApple Trackpad'de Force tıklama gibi çalışır."
+            "value" : "Sözlükte kelimeleri arayın, Finder'da dosyalara Hızlı Bakın ve daha fazlasını yapın.\n \nApple İzleme Dörtgeninde Sert Tıklama gibi çalışır."
           }
         },
         "vi" : {
@@ -5934,7 +6336,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "查询词典、在Finder中“快速查看”等。\n \n作用相当于在Apple触控板上用单指用力点按。"
+            "value" : "查询与快速查看"
           }
         },
         "zh-Hant" : {
@@ -5972,6 +6374,12 @@
             "value" : "Mission Control"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mission Control"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5986,7 +6394,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mission Control"
           }
         },
@@ -6049,6 +6457,12 @@
             "value" : "Show Mission Control"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostrar el Mission Control"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6063,7 +6477,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Exibir o Mission Control"
           }
         },
@@ -6126,6 +6540,12 @@
             "value" : "Keyboard Shortcut..."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atajo de teclado..."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6140,7 +6560,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Atalhos de Teclado..."
           }
         },
@@ -6164,19 +6584,19 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "键盘快捷键"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "鍵盤快速鍵"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "鍵盤快捷鍵"
           }
         }
@@ -6203,6 +6623,12 @@
             "value" : "Type a keyboard shortcut, then use it from your mouse"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escriba un atajo de teclado, luego úselo desde su ratón"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6217,7 +6643,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Digite um atalho de teclado e use-o com o Mouse"
           }
         },
@@ -6280,9 +6706,15 @@
             "value" : "Move Right a Space"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Moverse un espacio a la derecha"
+          }
+        },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Déplacer vers le bureau de droite"
           }
         },
@@ -6301,13 +6733,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Переместить вправо на один Spaces"
+            "value" : "Прыжок на один Spaces вправо"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bir Space Sağa Git"
+            "state" : "translated",
+            "value" : "Sağdaki Space'e Git"
           }
         },
         "vi" : {
@@ -6357,9 +6789,15 @@
             "value" : "Move one Space to the right"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Moverse un espacio a la derecha"
+          }
+        },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Se déplacer d'un espace vers la droite"
           }
         },
@@ -6378,13 +6816,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Переместиться на один Spaces вправо"
+            "value" : "Перемещение на один Spaces вправо"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bir Space sağa git"
+            "state" : "translated",
+            "value" : "Sağdaki Space'e Git"
           }
         },
         "vi" : {
@@ -6434,6 +6872,12 @@
             "value" : "Works like pressing '%@' on your keyboard"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funciona como pulsar '%@' en tu teclado"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6448,14 +6892,14 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Funciona como pressionar '%@' no teclado"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Работает как нажатие '%@' на клавиатуре"
+            "value" : "Работает как нажатие «%@» на клавиатуре"
           }
         },
         "tr" : {
@@ -6511,6 +6955,12 @@
             "value" : "Smart Zoom"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoom inteligente"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6525,7 +6975,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Zoom Inteligente"
           }
         },
@@ -6588,6 +7038,12 @@
             "value" : "Zoom in or out in Safari and other apps.\n \nWorks like a two-finger double tap on an Apple Trackpad."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acercar o alejar en Safari y otras aplicaciones.\n\nFunciona como un doble toque con dos dedos en un Apple Trackpad."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6602,7 +7058,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Amplie ou reduza o zoom no Safari e em outros apps.\n \nFunciona como um toque duplo com dois dedos em um Trackpad da Apple."
           }
         },
@@ -6615,7 +7071,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Safari ve diğer uygulamalarda yakınlaştırın veya uzaklaştırın.\n \nApple Trackpad'de iki parmakla çift dokunma gibi çalışır."
+            "value" : "Safari'de ve diğer uygulamalarda yakınlaştırma veya uzaklaştırma yapın.\n\nApple İzleme Dörtgenindede iki parmakla çift dokunma gibi çalışır."
           }
         },
         "vi" : {
@@ -6649,8 +7105,8 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Pokud máte **problémy s aktivací** aplikace, click [sem](%@)"
+            "state" : "translated",
+            "value" : "Pokud máte **problémy s aktivací** aplikace, klikněte [sem](%@)"
           }
         },
         "de" : {
@@ -6665,10 +7121,22 @@
             "value" : "If you have **problems enabling** the app, click [here](%@)"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si tienes **problemas para activar** la aplicación, haz clic [aquí](%@)"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Si vous rencontrez des **problèmes pour activer** l'app, cliquez&nbsp;[ici](%@)."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se você tiver **problemas para ativar** o app, clique [aqui](%@)"
           }
         },
         "ru" : {
@@ -6679,8 +7147,14 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Uygulamayı **etkinleştirme konusunda sorun yaşıyorsanız**, [buraya](%@) tıklayın."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如果您在**启用软件时遇到困难**，点[这里](%@)"
           }
         }
       }
@@ -6691,7 +7165,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Primární tlačítko myši** nemůže být použito. Prosím zvolte jiné tlačítko."
+            "value" : "**Primární tlačítko myši** nemůže být použito\nProsím zvolte jiné tlačítko."
           }
         },
         "de" : {
@@ -6704,6 +7178,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Primary Mouse Button** can't be used\nPlease try another button"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**El botón primario del ratón** no se puede usar\nPor favor, prueba otro botón"
           }
         },
         "fr" : {
@@ -6720,7 +7200,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**O Botão Primário do Mouse** não pode ser utilizado\nTente outro botão"
           }
         },
@@ -6745,7 +7225,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "不能使用**鼠标主键**\n请换一个按钮再试"
+            "value" : "不能使用**鼠标主键**\n请换一个按键再试"
           }
         },
         "zh-Hant" : {
@@ -6768,7 +7248,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Sekundární tlačítko myši** nemůže být použito. Prosím zvolte jiné tlačítko."
+            "value" : "**Sekundární tlačítko myši** nemůže být použito\nProsím zvolte jiné tlačítko."
           }
         },
         "de" : {
@@ -6781,6 +7261,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Secondary Mouse Button** can't be used\nPlease try another button"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**El botón secundario del ratón** no se puede usar\nPor favor, prueba otro botón"
           }
         },
         "fr" : {
@@ -6797,7 +7283,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**O Botão Secundário do Mouse** não pode ser utilizado\nTente outro botão"
           }
         },
@@ -6822,7 +7308,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "不能使用**鼠标辅键**\n请换一个按钮再试"
+            "value" : "不能使用**鼠标辅键**\n请换一个按键再试"
           }
         },
         "zh-Hant" : {
@@ -6860,6 +7346,12 @@
             "value" : "Mac Mouse Fix is currently free in your country (%@)"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix es actualmente gratuito en tu país (%@)"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6874,7 +7366,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Atualmente, o Mac Mouse Fix está gratuito em seu país (%@)"
           }
         },
@@ -6922,7 +7414,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aplikace Mac Mouse Fix byla **zakázána** v Nastavení systému\n\nChcete-li Mac Mouse Fix povolit:\n\n1. Přejděte do [Nastavení položek přihlášení](%@)\n2. Zapněte aplikaci „Mac Mouse Fix.app“"
+            "value" : "Aplikace Mac Mouse Fix byla **zakázána** v Nastavení systému\n\nChcete-li Mac Mouse Fix povolit:\n\n1. Přejděte do [Nastavení položek přihlášení](%@)\n2. Zapněte aplikaci 'Mac Mouse Fix.app'"
           }
         },
         "de" : {
@@ -6935,6 +7427,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix was **disabled** in System Settings\n\nTo enable Mac Mouse Fix:\n\n1. Go to [Login Items Settings](%@)\n2. Switch on 'Mac Mouse Fix.app'"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix fue **desactivado** en Ajustes del Sistema\n\nPara activar Mac Mouse Fix:\n\n1.  Ve a [Ajustes de Elementos de Inicio](%@)\n2.  Activa 'Mac Mouse Fix.app'"
           }
         },
         "fr" : {
@@ -6951,20 +7449,20 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "O Mac Mouse Fix foi **desativado** nos Ajustes do Sistema\n\nPara ativá-lo:\n\n1. Vá para [Itens de Início](%@)\n2. Ative 'Mac Mouse Fix.app'"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mac Mouse Fix был **отключён** в Системных настройках\n\nЧтобы включить Mac Mouse Fix:\n\n1. Перейдите в [Настройки объектов входа](%@)\n2. Включите 'Mac Mouse Fix.app'"
+            "value" : "Mac Mouse Fix был **отключён** в Системных настройках\n\nЧтобы включить Mac Mouse Fix:\n\n1. Перейдите в [Настройки объектов входа](%@)\n2. Включите «Mac Mouse Fix.app»"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Mac Mouse Fix, Sistem Ayarları'nda **devre dışı bırakıldı**\n\nMac Mouse Fix'i etkinleştirmek için:\n\n1. [Giriş Öğeleri Ayarları'na](%@) gidin\n2. 'Mac Mouse Fix.app' seçeneğini açın"
+            "state" : "translated",
+            "value" : "Mac Mouse Fix, Sistem Ayarları'nda  **devre dışı**.\n\nMac Mouse Fix'i devreye almak için:\n\n1. [Oturum Açma'da Açılan Uygulama Ayarları](%@) alanından\n2. Mac Mouse Fix.app'i devreye alın."
           }
         },
         "vi" : {
@@ -6975,8 +7473,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "系统偏好设置中已**禁用**Mac Mouse Fix\n\n若要启用Mac Mouse Fix：\n\n⒈前往[登录项](%@)\n⒉开启“Mac Mouse Fix.app”"
+            "state" : "translated",
+            "value" : "系统偏好设置中已**禁用**Mac Mouse Fix\n\n若要启用Mac Mouse Fix：\n\n⒈前往[登录时打开](%@)\n⒉开启“Mac Mouse Fix.app”"
           }
         },
         "zh-Hant" : {
@@ -7014,6 +7512,12 @@
             "value" : "Mac Mouse Fix can't be enabled because there's **another version** of Mac Mouse Fix present on your computer\n\nTo enable Mac Mouse Fix:\n\n1. Delete the [other version](%@)\n2. Empty the Bin\n3. Restart your Mac\n4. Try again!"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix no puede ser activado porque hay **otra versión** de Mac Mouse Fix presente en tu ordenador\n\nPara activar Mac Mouse Fix:\n\n1.  Elimina la [otra versión](%@)\n2.  Vacía la Papelera\n3.  Reinicia tu Mac\n4.  ¡Inténtalo de nuevo!"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7028,7 +7532,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "O Mac Mouse Fix não pode ser Ativado porque há **outra versão** do Mac Mouse Fix presente em seu computador\n\nPara ativar o Mac Mouse Fix:\n\n1. Exclua a [outra versão](%@)\n2. Esvazie a Lixeira\n3. Reinicie o seu Mac\n4. Tente novamente!"
           }
         },
@@ -7040,8 +7544,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Mac Mouse Fix, bilgisayarınızda **başka bir sürümü** bulunduğundan etkinleştirilemiyor\n\nMac Mouse Fix'i etkinleştirmek için:\n\n1. [Diğer sürümü](%@) silin\n2. Çöp Kutusunu boşaltın\n3. Mac'inizi yeniden başlatın\n4. Tekrar deneyin!"
+            "state" : "translated",
+            "value" : "Mac Mouse Fix etkinleştirilemiyor çünkü bilgisayarınızda Mac Mouse Fix'in **başka bir sürümü** mevcut\n\nMac Mouse Fix'i aktifleştirmek için:\n\n1. [Diğer sürümü](%@)silin\n2. Çöp Kutusunu boşaltın\n3. Mac'inizi yeniden başlatın\n4. Tekrar deneyin!"
           }
         },
         "vi" : {
@@ -7052,7 +7556,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "无法启用Mac Mouse Fix，因为您的电脑上已有**另一版本**的Mac Mouse Fix\n\n若要启用Mac Mouse Fix：\n\n⒈删除[其他版本](%@)\n⒉清倒废纸篓\n⒊重新启动您的Mac\n⒋再试一次！"
           }
         },
@@ -7091,6 +7595,12 @@
             "value" : "Enabling Failed"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activación fallida"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7105,7 +7615,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Falha na Ativação"
           }
         },
@@ -7118,7 +7628,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Etkinleştirme Başarısız Oldu"
+            "value" : "Lisans aktivasyonu başarısız oldu"
           }
         },
         "vi" : {
@@ -7168,6 +7678,12 @@
             "value" : ", "
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ", "
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7182,14 +7698,14 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : ","
+            "state" : "translated",
+            "value" : ", "
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : ","
+            "value" : ", "
           }
         },
         "tr" : {
@@ -7229,7 +7745,7 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "%1$@ and %2$@"
           }
         },
@@ -7243,6 +7759,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ and %2$@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ y %2$@"
           }
         },
         "fr" : {
@@ -7259,7 +7781,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%1$@ e %2$@"
           }
         },
@@ -7271,7 +7793,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%1$@ ve %2$@"
           }
         },
@@ -7283,7 +7805,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%1$@、%2$@"
           }
         },
@@ -7322,6 +7844,12 @@
             "value" : "Activate License"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar Licencia"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7336,7 +7864,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ativar Licença"
           }
         },
@@ -7349,7 +7877,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lisansı Etkinleştir"
+            "value" : "Lisansı Aktifleştir"
           }
         },
         "vi" : {
@@ -7399,6 +7927,12 @@
             "value" : "Deactivate License"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desactivar Licencia"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7413,7 +7947,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Desativar Licença"
           }
         },
@@ -7461,7 +7995,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vaše licence byla **aktivována**!"
+            "value" : "Vaše licence byla **aktivována**! 🎉"
           }
         },
         "de" : {
@@ -7474,6 +8008,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your license has been **activated**! 🎉"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Tu licencia ha sido **activada**! 🎉"
           }
         },
         "fr" : {
@@ -7490,7 +8030,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Sua Licença foi **Ativada**! 🎉"
           }
         },
@@ -7503,7 +8043,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lisansınız **etkinleştirildi**! 🎉"
+            "value" : "Lisansınız **aktifleştirildi**! 🎉"
           }
         },
         "vi" : {
@@ -7538,7 +8078,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tato licence byla aktivována **%2$d**krát. Maximální počet aktivací je **%3$d**.\n\nZ tohoto důvodu byla licence zneplatněna. Důvodem je zabránění pirátství. Pokud máte důvody pro tolik aktivací licence, omluvte prosím nepříjemnosti.\n\nStačí mne [kontaktovat](%1$@) a já vám poskytnu novou licenci! Děkujeme za pochopení."
+            "value" : "Tato licence byla aktivována **%2$d** krát. Maximální počet aktivací je **%3$d**.\n\nZ tohoto důvodu byla licence zneplatněna. Důvodem je zabránění pirátství. Pokud máte důvody pro tolik aktivací licence, omluvte prosím nepříjemnosti.\n\nStačí mne [kontaktovat](%1$@) a já vám poskytnu novou licenci! Děkuji za pochopení."
           }
         },
         "de" : {
@@ -7551,6 +8091,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "This license has been activated **%2$d** times. The maximum is **%3$d**.\n\nBecause of this, the license has been invalidated. This is to prevent piracy. If you have other reasons for activating the license this many times, please excuse the inconvenience.\n\nJust [reach out](%1$@) and I will provide you with a new license! Thanks for understanding."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta licencia ha sido activada **%2$d** veces. El máximo es **%3$d**.\n\nDebido a esto, la licencia ha sido invalidada. Esto es para prevenir la piratería. Si tienes otras razones para activar la licencia tantas veces, por favor disculpa las molestias.\n\nSimplemente [ponte en contacto](%1$@) y te proporcionaré una nueva licencia. ¡Gracias por tu comprensión!"
           }
         },
         "fr" : {
@@ -7567,7 +8113,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Esta licença foi ativada **%2$d** vezes, sendo que o máximo permitido é **%3$d** vezes.\n\nPara evitarmos pirataria, tivemos que invalidar esta licença. Se você tiver outros motivos para ativar a licença várias vezes, pedimos nossas sinceras desculpas e recomendamos que você [entre em contato](%1$@) para receber uma nova licença! Obrigado pela compreensão."
           }
         },
@@ -7579,8 +8125,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bu lisans **%2$d** kez etkinleştirildi. Maksimum **%3$d**.\n\nBu nedenle lisans geçersiz kılındı. Bu, korsanlığı önlemek içindir. Lisansı bu kadar çok kez etkinleştirmeniz için başka nedenleriniz varsa, lütfen rahatsızlıktan dolayı özür dileriz.\n\n[Bizimle iletişime geçin](%1$@) ve size yeni bir lisans sağlayacağım! Anlayışınız için teşekkürler."
+            "state" : "translated",
+            "value" : "Bu lisans halihazırda **%2$d** kez aktifleştirilmiştir. Bir lisans için maksimum aktifleştirme sayısı **%3$d** kadardır\n\nKorsan yazılım kullanımını engellemek için bu lisans artık geçersizdir. Lisansı bu kadar çok kez etkinleştirmek için başka nedenleriniz varsa bu sorun için üzgünüz.\n\n[Buraya tıklayarak](%1$@) bana bir e-posta gönderin, size yeni bir lisans oluşturacağım! Anlayışınız için teşekkürler."
           }
         },
         "vi" : {
@@ -7591,7 +8137,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "此许可证已被激活**%2$d**次。上限是**%3$d**次。\n\n因而此许可证已失效。这是为了防止盗版。如果您有其他原因需要如此多次激活这个许可证，还望见谅。\n\n与我[联系](%1$@)，我会提供一个新的许可证给您！感谢理解。"
           }
         },
@@ -7630,6 +8176,12 @@
             "value" : "Your app is **already licensed** with this key"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu aplicación **ya está licenciada** con esta clave"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7644,7 +8196,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Esta licença **já está ativada**!"
           }
         },
@@ -7656,8 +8208,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bu lisans **zaten etkin**!"
+            "state" : "translated",
+            "value" : "Bu lisans **zaten aktif**!"
           }
         },
         "vi" : {
@@ -7668,7 +8220,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "此许可证**已激活**!"
           }
         },
@@ -7707,6 +8259,12 @@
             "value" : "Your license has been **deactivated**"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu licencia ha sido **desactivada**"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7721,7 +8279,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Sua licença foi **desativada**"
           }
         },
@@ -7784,10 +8342,16 @@
             "value" : "This license **could not be activated** but Mac Mouse Fix is currently **free in your country**."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esta licencia **no pudo ser activada** pero Mac Mouse Fix es actualmente **gratuito en tu país**."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "Cette licence **n’a pas pu être activée** mais Mac Mouse Fix est actuellement **gratuit dans votre pays** !"
+            "value" : "Cette licence **n'a pas pu être activée** mais Mac Mouse Fix est actuellement **gratuit dans votre pays** !"
           }
         },
         "ko" : {
@@ -7798,7 +8362,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Esta licença **não pôde ser ativada**, mas o Mac Mouse Fix está **gratuito em seu país**!"
           }
         },
@@ -7810,8 +8374,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bu lisans **etkinleştirilemedi** ancak Mac Mouse Fix şu anda **ülkenizde ücretsiz**!"
+            "state" : "translated",
+            "value" : "Bu lisans **aktifleştirilemedi** ancak Mac Mouse Fix şu anda **ülkenizde ücretsiz**!"
           }
         },
         "vi" : {
@@ -7822,7 +8386,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**无法激活**此许可证，但Mac Mouse Fix目前**在您所在的国家或地区免费**！"
           }
         },
@@ -7846,7 +8410,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Chyba **licenčního serveru**\n\n%@"
+            "value" : "Chyba **licenčního serveru**\n\nOdpověď:\n\n%@"
           }
         },
         "de" : {
@@ -7859,6 +8423,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "An **error with the licensing server** occurred\n\nIt says:\n\n%@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocurrió un **error con el servidor de licencias**\n\nDice:\n\n%@"
           }
         },
         "fr" : {
@@ -7875,7 +8445,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**Ocorreu um erro com o Servidor de Ativação**\n\nDescrição:\n\n%@"
           }
         },
@@ -7887,8 +8457,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**Lisans sunucusunda bir hata oluştu**\n\nŞöyle diyor:\n\n%@"
+            "state" : "translated",
+            "value" : "**Lisans sunucusunda bir hata oluştu**\n\nGelen hata mesajı:\n\n%@"
           }
         },
         "vi" : {
@@ -7899,7 +8469,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**许可证服务器发生错误**\n\n服务器回应：\n\n%@"
           }
         },
@@ -7923,7 +8493,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nastala **chyba intarnetového připojení**.\nUjistěte se, že váš počítač je online a žádný firewall neblokuje připojení Mac Mouse Fix k serveru.\n\nPokud ani to nepomůže, kontaktujte mě [zde] (%@)"
+            "value" : "Nastala **chyba internetového připojení**\n\nUjistěte se, že váš počítač je online a žádný firewall neblokuje připojení Mac Mouse Fix k serveru.\n\nPokud ani to nepomůže, kontaktujte mě [zde](%@)."
           }
         },
         "de" : {
@@ -7936,6 +8506,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "There is a **problem with the internet connection**\n\nMake sure your computer is online and no firewalls are blocking Mac Mouse Fix from connecting to the internet.\n\nIf this doesn't solve the problem, contact me [here](%@)."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hay un **problema con la conexión a internet**\n\nAsegúrate de que tu ordenador esté conectado y de que ningún cortafuegos esté bloqueando la conexión de Mac Mouse Fix a internet.\n\nSi esto no soluciona el problema, contáctame [aquí](%@)."
           }
         },
         "fr" : {
@@ -7952,8 +8528,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**Não há conexão com a Internet**\n\nTente ativar sua licença novamente quando seu computador estiver online."
+            "state" : "translated",
+            "value" : "**Há um problema com a conexão à internet**\n\nCertifique-se de que seu computador esteja conectado à internet e que nenhum firewall esteja bloqueando o Mac Mouse Fix de se conectar.\n\nSe isso não resolver o problema, entre em contato comigo [aqui](%@)."
           }
         },
         "ru" : {
@@ -7964,8 +8540,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**İnternet bağlantısı yok**\n\nBilgisayarınız çevrimiçi olduğunda lisansınızı tekrar etkinleştirmeyi deneyin."
+            "state" : "translated",
+            "value" : "**İnternet bağlantısı yok**\n\nBilgisayarınız çevrimiçi olduğunda lisansınızı tekrar aktifleştirmeyi deneyin.\n\nEğer bu problemi çözmez ise, bana [buradan](%@) ulaşın."
           }
         },
         "vi" : {
@@ -7976,8 +8552,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**没有接入互联网**\n\n当您的电脑接入互联网时再次尝试激活许可证。"
+            "state" : "translated",
+            "value" : "**无法连接网络**\n\n请确保您的电脑可以访问互联网，并且没有防火墙阻止 Mac Mouse Fix 访问网络。\n\n如果这个问题一直出现，[请联系我](%@)"
           }
         },
         "zh-Hant" : {
@@ -7999,7 +8575,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nastal **problém s licenčním serverem**.\nProsím, zkuste to znovu.\n\nPokud problém přetrvává, kontaktujte mě [zde] (%@)"
+            "value" : "Nastal **problém s licenčním serverem**.\nProsím, zkuste to znovu.\n\nPokud problém přetrvává, kontaktujte mě [zde](%@)"
           }
         },
         "de" : {
@@ -8014,10 +8590,34 @@
             "value" : "There is a **problem with the licensing server**\n\nPlease try again later.\n\nIf the issue persists, contact me [here](%@)."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hay un **problema con el servidor de licencias**\n\nPor favor, inténtalo de nuevo más tarde.\n\nSi el problema persiste, contáctame [aquí](%@)."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Há um problema com o servidor de licenciamento**\n\nTente novamente mais tarde.\n\nSe o problema persistir, entre em contato comigo [aqui](%@)."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Возникла **проблема с сервером лицензирования**\n\nПожалуйста, попробуйте позже.\n\nЕсли проблема сохраняется, свяжитесь со мной [здесь](%@)."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Lisanslama sunucusunda bir hata oluştu.**\n\nLütfen daha sonra tekrar deneyin.\n\nEğer bu problem devam ederse bana [buradan](%@) bir e-posta gönderin."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**许可证服务器**未响应\n\n请稍后重试\n\n如果这个问题一直出现，[请联系我](%@)"
           }
         }
       }
@@ -8043,6 +8643,12 @@
             "value" : "An **unknown error** occurred:\n\n%@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocurrió un **error desconocido**:\n\n%@"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8057,7 +8663,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**Ocorreu um erro desconhecido:**\n\n%@"
           }
         },
@@ -8069,7 +8675,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**Bilinmeyen bir hata oluştu:**\n\n%@"
           }
         },
@@ -8081,8 +8687,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**发生了未知错误：**\n\n%@"
+            "state" : "translated",
+            "value" : "发生了**未知错误**：\n\n%@"
           }
         },
         "zh-Hant" : {
@@ -8120,6 +8726,12 @@
             "value" : "'**%@**' is not a valid license key\n\nMake sure you enter your Mac Mouse Fix key exactly as you received it."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'**%@**' no es una clave de licencia válida\n\nAsegúrate de ingresar tu clave de Mac Mouse Fix exactamente como la recibiste."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8141,13 +8753,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "'**%@**' не является действительным лицензионным ключом\n\nУбедитесь, что вы ввели ключ Mac Mouse Fix точно так, как его получили."
+            "value" : "«**%@**» не является действительным лицензионным ключом\n\nУбедитесь, что вы ввели ключ Mac Mouse Fix точно так, как его получили."
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "'**%@**' bilinen bir lisans anahtarı değil\n\nLütfen farklı bir anahtar deneyin"
+            "state" : "translated",
+            "value" : "*'%@'** geçerli bir lisans anahtarı değildir\n\nLütfen başka bir anahtarı deneyin veya elinize geçen anahtarı olduğu gibi yazın."
           }
         },
         "vi" : {
@@ -8158,8 +8770,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "“**%@**”并不是已知的许可证。\n请换一个许可证再试。"
+            "state" : "translated",
+            "value" : "“**%@**”并不是有效的许可证。\n请确认您输入的许可证与您收到的一致"
           }
         },
         "zh-Hant" : {
@@ -8182,7 +8794,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aktivování vaší licence selhalo z **neznámého důvodu**.\n\nProsím **ohlaste chybu** [zde] (%@)"
+            "value" : "Aktivování vaší licence selhalo z **neznámého důvodu**.\n\nProsím **ohlaste chybu** [zde](%@)"
           }
         },
         "de" : {
@@ -8195,6 +8807,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Activating your license failed for **unknown reasons**\n\nPlease write a **Bug Report** [here](%@)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La activación de tu licencia falló por **razones desconocidas**\n\nPor favor, escribe un **Reporte de error** [aquí](%@)"
           }
         },
         "fr" : {
@@ -8211,7 +8829,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "A ativação da sua Licença falhou por **motivos desconhecidos**\n\nPor favor, envie um **Relatório de Bug** [aqui](%@)"
           }
         },
@@ -8223,8 +8841,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Lisansınızı etkinleştirme işlemi **bilinmeyen nedenlerden dolayı** başarısız oldu\n\nLütfen [buradan](%@) bir **Hata Raporu** yazın"
+            "state" : "translated",
+            "value" : "**Bilinmeyen sebepler nedeniyle** lisans aktivasyonunuz başarısız oldu\n\nLütfen [buradan](%@) bir **hata raporu** oluşturun"
           }
         },
         "vi" : {
@@ -8235,7 +8853,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "由于**未知的原因**，许可证激活失败。\n\n请到[这里](%@)提交**错误报告**"
           }
         },
@@ -8274,6 +8892,12 @@
             "value" : "Set speed under\n[%1$@ > Mouse > Scrolling Speed](%2$@)"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Configurar la velocidad en\n[%1$@ > Ratón > Velocidad de desplazamiento](%2$@)"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8288,7 +8912,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Defina a velocidade em\n[%1$@ > Mouse > Velocidade da Rolagem](%2$@)"
           }
         },
@@ -8300,8 +8924,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hızı şurada ayarlayın\n[%1$@ > Fare > Kaydırma Hızı](%2$@)"
+            "state" : "translated",
+            "value" : "Fare hızını Ayarlarda bu alanda ayarlayın\n[%1$@ > Fare > Kaydırma Hızı](%2$@)"
           }
         },
         "vi" : {
@@ -8312,7 +8936,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "设置速度：\n[%1$@ > 鼠标 > 滚动速度](%2$@)"
           }
         },
@@ -8351,6 +8975,12 @@
             "value" : "Back"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atrás"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8365,7 +8995,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Voltar"
           }
         },
@@ -8428,6 +9058,12 @@
             "value" : "I can only rarely respond, but I read all messages and the feedback helps me improve Mac Mouse Fix. Thank you for your feedback!"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo puedo responder en raras ocasiones, pero leo todos los mensajes y los comentarios me ayudan a mejorar Mac Mouse Fix. ¡Gracias por tus comentarios!"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8442,8 +9078,8 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Leio e aprecio todos os e-mails, faço o possível para responder todos"
+            "state" : "translated",
+            "value" : "Obrigado pelo seu feedback! Leio e aprecio todos os e-mails, faço o possível para responder todos."
           }
         },
         "ru" : {
@@ -8454,8 +9090,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hepsine cevap verebilmesem de tüm e-postaları okuyorum ve değer veriyorum"
+            "state" : "translated",
+            "value" : "Bilginiz olsun, bütün e-postalara geri dönemesem de hepsini okuyorum ve takdir ediyorum"
           }
         },
         "vi" : {
@@ -8466,8 +9102,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "我无法回复所有的邮件，但我会阅读并感谢所有的反馈"
+            "state" : "translated",
+            "value" : "我可能无法及时回复邮件，但我会认真阅读所有的意见和建议，感谢您的反馈！"
           }
         },
         "zh-Hant" : {
@@ -8505,6 +9141,12 @@
             "value" : "Write Email"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escribir Correo Electrónico"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8519,7 +9161,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Escreva um Email"
           }
         },
@@ -8532,7 +9174,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "E-posta Yaz"
+            "value" : "E-Posta Yaz"
           }
         },
         "vi" : {
@@ -8582,6 +9224,12 @@
             "value" : "Write an Email?"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Escribir un Correo Electrónico?"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8596,7 +9244,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Deseja escrever um Email?"
           }
         },
@@ -8609,7 +9257,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "E-posta Yazmak İster misiniz?"
+            "value" : "E-Posta Yaz?"
           }
         },
         "vi" : {
@@ -8659,6 +9307,12 @@
             "value" : "Command (⌘)"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comando (⌘)"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8673,7 +9327,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Command (⌘)"
           }
         },
@@ -8736,6 +9390,12 @@
             "value" : "Control (^)"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Control (^)"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8750,7 +9410,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Control (^)"
           }
         },
@@ -8813,6 +9473,12 @@
             "value" : "Option (⌥)"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opción (⌥)"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8827,7 +9493,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Option (⌥)"
           }
         },
@@ -8890,6 +9556,12 @@
             "value" : "Shift (⇧)"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mayús (⇧)"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8904,7 +9576,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Shift (⇧)"
           }
         },
@@ -8968,6 +9640,12 @@
             "value" : "Content tracks finger movement"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El contenido sigue el movimiento del dedo"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8982,7 +9660,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "O conteúdo rastreia o movimento dos dedos"
           }
         },
@@ -9025,7 +9703,7 @@
       }
     },
     "precise-scrolling-hint" : {
-      "comment" : ".",
+      "comment" : "The mention of keyboard modifiers is meant to draw attention to the keyboard modifers section of the UI which appears right below. (Search for: 'Scrolling > Keyboard Modifiers')",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -9045,6 +9723,12 @@
             "value" : "Scroll precisely, even without a keyboard modifier, by moving the scroll wheel *slowly*"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desplázate con precisión, incluso sin un modificador de teclado, moviendo la rueda de desplazamiento&nbsp;*lentamente*"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9059,20 +9743,20 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Role com precisão, mesmo sem um modificador de teclado,\nmovendo a roda de rolagem *lentamente*"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Прокручивайте точно, даже без модификатора клавиатуры, *медленно* перемещая колесико прокрутки."
+            "value" : "Прокручивайте точно, даже без модификатора клавиатуры, *медленно* перемещая колесико прокрутки"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kaydırma tekerleğini *yavaşça* hareket ettirerek, klavye değiştirici olmadan bile hassas bir şekilde kaydırın"
+            "state" : "translated",
+            "value" : "Kaydırma tekerleğini *yavaşça* hareket ettirerek, klavye değiştiricisi tuşu olmadan bile hassas bir şekilde&nbsp;kaydırın"
           }
         },
         "vi" : {
@@ -9083,7 +9767,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "*慢慢*滚动滚轮来精准滚动，甚至无需键盘修饰键"
           }
         },
@@ -9122,6 +9806,12 @@
             "value" : "Cancel"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9136,7 +9826,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Cancelar"
           }
         },
@@ -9199,6 +9889,12 @@
             "value" : "Restore"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaurar"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9213,7 +9909,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Restaurar"
           }
         },
@@ -9276,6 +9972,12 @@
             "value" : "Your mouse (**%1$@**) says it has **%2$d** buttons"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu ratón (**%1$@**) dice que tiene **%2$d** botones"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9290,7 +9992,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Seu Mouse **%1$@** diz que tem **%2$d** botões"
           }
         },
@@ -9302,7 +10004,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**%1$@** fareniz **%2$d** düğmeye sahip olduğunu söylüyor"
           }
         },
@@ -9314,8 +10016,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "您的**%1$@**鼠标回报了**%2$d**个按钮"
+            "state" : "translated",
+            "value" : "您的**%1$@**鼠标回报了**%2$d**个按键"
           }
         },
         "zh-Hant" : {
@@ -9353,6 +10055,12 @@
             "value" : "Mouse with 3 buttons"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ratón con 3 botones"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9367,7 +10075,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mouse com 3 botões"
           }
         },
@@ -9410,7 +10118,7 @@
       }
     },
     "restore-buttons-alert.radio2" : {
-      "comment" : "",
+      "comment" : "If '5+' seems unnatural in your language, translate it as something like '5 or more'. Don't translate '5+' as 'more than 5' (common mistake)",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -9430,15 +10138,21 @@
             "value" : "Mouse with 5+ buttons"
           }
         },
-        "fr" : {
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Ratón con 5+ botones"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Une souris avec plus de 5 boutons"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "5버튼 이상의 마우스"
           }
         },
@@ -9487,7 +10201,7 @@
       }
     },
     "restore-buttons-alert.title" : {
-      "comment" : "",
+      "comment" : ".",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -9507,6 +10221,12 @@
             "value" : "Restore Default for ..."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restaurar valor Predeterminado para ..."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9521,7 +10241,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Restaurar Padrão para ..."
           }
         },
@@ -9533,8 +10253,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "... İçin Varsayılanı Geri Yükle"
+            "state" : "translated",
+            "value" : "... için varsayılan ayarları geri yükle"
           }
         },
         "vi" : {
@@ -9569,7 +10289,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Klikněte sem** pro načtení doporučeného nastavení pro vaši myš (**%@**)"
+            "value" : "**Klikněte sem** pro načtení doporučeného nastavení\npro vaši myš (**%@**)"
           }
         },
         "de" : {
@@ -9582,6 +10302,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Click here** to load the recommended settings\nfor your mouse (**%@**)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Haz clic aquí** para cargar la configuración recomendada para tu ratón (**%@**)"
           }
         },
         "fr" : {
@@ -9598,7 +10324,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**Clique aqui** para carregar as configurações recomendadas\npara seu Mouse **%@**"
           }
         },
@@ -9610,7 +10336,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : " **%@** fareniz için önerilen ayarları yüklemek için **buraya tıklayın**"
           }
         },
@@ -9622,7 +10348,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**点按此处**来载入您的**%@**鼠标的建议设置"
           }
         },
@@ -9661,6 +10387,12 @@
             "value" : "**Enabled** Mac Mouse Fix for %1$@\nIt had been disabled from the Menu&nbsp;Bar&nbsp;%2$@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Activado** Mac Mouse Fix para %1$@\nHabía sido desactivado desde la Barra&nbsp;de&nbsp;menús&nbsp;%2$@"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9675,7 +10407,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**Habilitado** Mac Mouse Fix para %1$@\nEle foi desabilitado na barra de menu %2$@"
           }
         },
@@ -9687,8 +10419,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%1$@ için Mac Mouse Fix **etkinleştirildi**\nMenü Çubuğu %2$@ tarafından devre dışı bırakılmıştı"
+            "state" : "translated",
+            "value" : "%1$@ için Mac Mouse Fix **etkinleştirildi**\nMenü Bar %2$@ alanından devre dışı bırakılmıştı"
           }
         },
         "vi" : {
@@ -9699,7 +10431,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**已启用**Mac Mouse Fix调校：%1$@\n此前由菜单栏%2$@停用"
           }
         },
@@ -9738,6 +10470,12 @@
             "value" : "**Buttons**"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Botones**"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9752,7 +10490,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**Botões**"
           }
         },
@@ -9764,7 +10502,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**Düğmeler**"
           }
         },
@@ -9776,8 +10514,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**按钮**"
+            "state" : "translated",
+            "value" : "**按键**"
           }
         },
         "zh-Hant" : {
@@ -9815,6 +10553,12 @@
             "value" : "**Scrolling**"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Desplazamiento**"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9829,7 +10573,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**Rolagem**"
           }
         },
@@ -9841,7 +10585,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**Kaydırma**"
           }
         },
@@ -9892,6 +10636,12 @@
             "value" : "Desktop & Launchpad"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escritorio y Launchpad"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9906,7 +10656,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mesa e Launchpad"
           }
         },
@@ -9969,6 +10719,12 @@
             "value" : "Scroll up for Launchpad and down to show the Desktop\n \nWorks like Pinching with 4 fingers on an Apple Trackpad"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desplázate hacia arriba para Launchpad y hacia abajo para mostrar el Escritorio\n\nFunciona como pellizcar con 4 dedos en un Apple Trackpad"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9983,7 +10739,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Role para cima para acessar o Launchpad e para baixo para exibir a Mesa\n \nFunciona como pinçar com quatro dedos em um Trackpad da Apple"
           }
         },
@@ -9996,7 +10752,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Launchpad için yukarı kaydırın ve Masaüstünü göstermek için aşağı kaydırın\n \nApple Trackpad'de 4 parmakla sıkıştırma gibi çalışır"
+            "value" : "Launchpad için yukarı kaydırın ve Masaüstünü göstermek için aşağı kaydırın\n \nApple İzleme Dörtgeninde 4 parmağı birleştirmek gibi çalışır"
           }
         },
         "vi" : {
@@ -10046,6 +10802,12 @@
             "value" : "App Switcher"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conmutador de Apps"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10060,7 +10822,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Alternador de Aplicativos"
           }
         },
@@ -10123,6 +10885,12 @@
             "value" : "Quickly switch between open apps\n \nWorks like holding Command (⌘) and then pressing Tab (⇥) on your keyboard"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cambia rápidamente entre las aplicaciones abiertas\n\nFunciona como mantener pulsado Comando (⌘) y luego pulsar Tab (⇥) en tu teclado"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10137,7 +10905,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Alterne rapidamente entre aplicativos abertosem Funciona como segurar Command (⌘) e pressionar Tab (⇥) no teclado"
           }
         },
@@ -10185,7 +10953,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Horizontální scrolování."
+            "value" : "Horizontální scrolování"
           }
         },
         "de" : {
@@ -10198,6 +10966,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Horizontal Scroll"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desplazamiento Horizontal"
           }
         },
         "fr" : {
@@ -10214,7 +10988,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Rolagem horizontal"
           }
         },
@@ -10277,6 +11051,12 @@
             "value" : "Scroll left and right, navigate between pages in Safari, delete messages in Mail and more\n \nWorks like swiping horizontally with 2 fingers on an Apple Trackpad"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desplázate hacia la izquierda y hacia la derecha, navega entre páginas en Safari, elimina mensajes en Mail y más\n\nFunciona como deslizar horizontalmente con 2 dedos en un Apple Trackpad"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10291,7 +11071,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Role para a esquerda e para a direita, navegue entre páginas no Safari, exclua mensagens no Mail e muito mais\n \nFunciona como deslizar horizontalmente com dois dedos em um Trackpad da Apple"
           }
         },
@@ -10304,7 +11084,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sola ve sağa kaydırın, Safari'de sayfalar arasında gezinin, Mail'deki mesajları silin ve daha fazlasını yapın\n \nApple Trackpad'de 2 parmakla yatay olarak kaydırma gibi çalışır"
+            "value" : "Sola ve sağa kaydırın, Safari'de sayfalar arasında gezinin, Mail'deki mesajları silin ve daha fazlasını yapın\n \nApple İzleme Dörtgeninde 2 parmakla yatay olarak kaydırma gibi çalışır"
           }
         },
         "vi" : {
@@ -10354,6 +11134,12 @@
             "value" : "Precise Scroll"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desplazamiento Preciso"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10368,7 +11154,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Rolagem precisa"
           }
         },
@@ -10431,6 +11217,12 @@
             "value" : "Scroll small distances and use sensitive UI elements with precision"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desplázate distancias cortas y utiliza elementos de interfaz de usuario sensibles con precisión"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10445,7 +11237,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Role pequenas distâncias e use elementos sensíveis da interface do usuário com precisão"
           }
         },
@@ -10458,7 +11250,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Küçük mesafeleri kaydırın ve hassas UI öğelerini hassas bir şekilde kullanın"
+            "value" : "Kısa mesafeleri kaydırın ve hassas arayüz öğelerini incelikle kullanın"
           }
         },
         "vi" : {
@@ -10508,6 +11300,12 @@
             "value" : "Rotate"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rotar"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10522,7 +11320,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Girar"
           }
         },
@@ -10585,6 +11383,12 @@
             "value" : "Rotate content in Apple Maps and other apps\n \nWorks like twisting with 2 fingers on an Apple Trackpad"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gira contenido en Mapas de Apple y otras aplicaciones\n\nFunciona como girar con 2 dedos en un Apple Trackpad"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10599,7 +11403,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Girar conteúdo no Apple Maps e em outros apps\n \nFunciona como girar com dois dedos em um Trackpad da Apple"
           }
         },
@@ -10612,7 +11416,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple Haritalar ve diğer uygulamalarda içeriği döndürün\n \nApple Trackpad'de 2 parmakla döndürme gibi çalışır"
+            "value" : "Apple Haritalar ve diğer uygulamalarda içeriği döndürün\n \nApple İzleme Dörtgeninde 2 parmakla döndürme gibi çalışır"
           }
         },
         "vi" : {
@@ -10662,9 +11466,15 @@
             "value" : "Move Between Spaces"
           }
         },
-        "fr" : {
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Moverse Entre Espacios"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Déplacer entre les espaces"
           }
         },
@@ -10689,7 +11499,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spaces Arasında Geçiş Yap"
+            "value" : "Space'ler Arasında Geçiş Yap"
           }
         },
         "vi" : {
@@ -10739,9 +11549,15 @@
             "value" : "Scroll up to move left a Space and down to move right a Space\n \nWorks like swiping horizontally with 3 fingers on an Apple Trackpad"
           }
         },
-        "fr" : {
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Desplázate hacia arriba para moverte un Espacio a la izquierda y hacia abajo para moverte un Espacio a la derecha\n\nFunciona como deslizar horizontalmente con 3 dedos en un Apple Trackpad"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Défiler vers le haut pour se déplacer d'un espace vers la gauche et vers le bas pour se déplacer d'un espace vers la droite\n \nFonctionne comme le balayage horizontal avec 3 doigts sur un Trackpad Apple"
           }
         },
@@ -10766,7 +11582,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bir Space sola gitmek için yukarı kaydırın ve bir Space sağa gitmek için aşağı kaydırın\n \nApple Trackpad'de 3 parmakla yatay olarak kaydırma gibi çalışır"
+            "value" : "Bir Space sola gitmek için yukarı kaydırın ve bir Space sağa gitmek için aşağı kaydırın\n \nApple İzleme Dörtgeninde 3 parmakla yatay olarak kaydırma gibi çalışır"
           }
         },
         "vi" : {
@@ -10816,6 +11632,12 @@
             "value" : "Swift Scroll"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desplazamiento Rápido"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10830,7 +11652,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Rolagem rápida"
           }
         },
@@ -10893,6 +11715,12 @@
             "value" : "Scroll long distances with minimal effort"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desplázate largas distancias con el mínimo esfuerzo"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10907,7 +11735,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Percorra longas distâncias com o mínimo esforço"
           }
         },
@@ -10920,7 +11748,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Minimum çabayla uzun mesafeleri kaydırın"
+            "value" : "Düşük efor ile uzun mesafe kaydırın"
           }
         },
         "vi" : {
@@ -10970,6 +11798,12 @@
             "value" : "Zoom In or Out"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acercar o Alejar"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10984,7 +11818,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Aumentar ou diminuir zoom"
           }
         },
@@ -10997,7 +11831,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yakınlaştır veya Uzaklaştır"
+            "value" : "Yakınlaştır / Uzaklaştır"
           }
         },
         "vi" : {
@@ -11047,6 +11881,12 @@
             "value" : "Zoom in or out in Safari, Maps and other apps\n \nWorks like pinching to zoom on an Apple trackpad"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acercar o alejar en Safari, Mapas y otras aplicaciones\n\nFunciona como pellizcar para hacer zoom en un trackpad de Apple"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11061,20 +11901,20 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Aumentar ou diminuir o zoom no Safari, no Maps e em outros apps\n \nFunciona como pinçar para ampliar em um Trackpad da Apple"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Увеличивайте или уменьшайте масштаб в Safari, Картах и других программах\n\nРаботает как жест 'щипок для масштабирования' на трекпаде Apple"
+            "value" : "Увеличивайте или уменьшайте масштаб в Safari, Картах и других программах\n\nРаботает как жест «щипок для масштабирования» на трекпаде Apple"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Safari, Haritalar ve diğer uygulamalarda yakınlaştırın veya uzaklaştırın\n \nApple trackpad'de yakınlaştırmak için sıkıştırma gibi çalışır"
+            "value" : "Safari, Maps ve diğer uygulamalarda yakınlaştırın ve uzaklaştırın\n\nApple İzleme Dörtgeninde iki parmakla kıstırma/açma gibi çalışır\n"
           }
         },
         "vi" : {
@@ -11124,6 +11964,12 @@
             "value" : "System Settings"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes del Sistema"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11138,7 +11984,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ajustes Sistema"
           }
         },
@@ -11201,6 +12047,12 @@
             "value" : "System Preferences"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preferencias del Sistema"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11215,7 +12067,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Preferências do Sistema"
           }
         },
@@ -11278,6 +12130,12 @@
             "value" : "⭐️ Thank you for buying Mac Mouse Fix!"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⭐️ ¡Gracias por comprar Mac Mouse Fix!"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11292,7 +12150,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "⭐️ Obrigado por adquirir o Mac Mouse Fix!"
           }
         },
@@ -11304,8 +12162,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "⭐️ Thank you for buying Mac Mouse Fix!"
+            "state" : "translated",
+            "value" : "⭐️ Mac Mouse Fix'i satın aldığınız için teşekkürler!"
           }
         },
         "vi" : {
@@ -11355,6 +12213,12 @@
             "value" : "🙌 Thank you for buying Mac Mouse Fix!"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🙌 ¡Gracias por comprar Mac Mouse Fix!"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11369,7 +12233,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "🌟 Obrigado por adquirir o Mac Mouse Fix!"
           }
         },
@@ -11381,8 +12245,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🌟 Thanks for purchasing Mac Mouse Fix!"
+            "state" : "translated",
+            "value" : "🌟 Mac Mouse Fix'i satın aldığınız için teşekkürler!"
           }
         },
         "vi" : {
@@ -11393,8 +12257,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🌟感谢购买Mac Mouse Fix！"
+            "state" : "translated",
+            "value" : "🙌感谢购买Mac Mouse Fix！"
           }
         },
         "zh-Hant" : {
@@ -11432,6 +12296,12 @@
             "value" : "🚀 Thanks for supporting Mac Mouse Fix!"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚀 ¡Gracias por apoyar Mac Mouse Fix!"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11446,7 +12316,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "🚀 Obrigado por apoiar o Mac Mouse Fix!"
           }
         },
@@ -11458,8 +12328,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🚀 Thanks for supporting Mac Mouse Fix!"
+            "state" : "translated",
+            "value" : "🚀 Mac Mouse Fix'i desteklediğiniz için teşekkürler!"
           }
         },
         "vi" : {
@@ -11509,6 +12379,12 @@
             "value" : "🌟 Thanks for purchasing Mac Mouse Fix!"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌟 ¡Gracias por comprar Mac Mouse Fix!"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11523,7 +12399,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "🙌 Obrigado por adquirir o Mac Mouse Fix!"
           }
         },
@@ -11535,8 +12411,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🙌 Thank you for buying Mac Mouse Fix!"
+            "state" : "translated",
+            "value" : "🙌 Mac Mouse Fix'i satın aldığınız için teşekkürler!"
           }
         },
         "vi" : {
@@ -11547,8 +12423,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🙌感谢您购买Mac Mouse Fix！"
+            "state" : "translated",
+            "value" : "🌟感谢您购买Mac Mouse Fix！"
           }
         },
         "zh-Hant" : {
@@ -11586,6 +12462,12 @@
             "value" : "🧠 Great purchasing decision! ;)"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧠 ¡Gran decisión de compra! ;)"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11600,7 +12482,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "🧠 Ótima decisão de compra! ;)"
           }
         },
@@ -11612,8 +12494,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🧠 Great purchasing decision! ;)"
+            "state" : "translated",
+            "value" : "🧠 Muhteşem bir satın alma seçimi! ;)"
           }
         },
         "vi" : {
@@ -11663,6 +12545,12 @@
             "value" : "🔥 Awesome taste in mouse fixing software! ;)"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔥 ¡Gusto increíble en software para arreglar ratones! ;)"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11677,7 +12565,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "🔥 Gosto incrível em software de Mouse! ;)"
           }
         },
@@ -11689,8 +12577,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🔥 Awesome taste in mouse fixing software! ;)"
+            "state" : "translated",
+            "value" : "🔥 Fare düzeltme uygulamaları arasında müthiş bir seçim! ;)"
           }
         },
         "vi" : {
@@ -11740,6 +12628,12 @@
             "value" : "👽 Share it with your Spacebook friends!"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👽 ¡Compártelo con tus amigos de Spacebook!"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11754,7 +12648,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "👽 Compartilhe com seus amigos do Spacebook!"
           }
         },
@@ -11766,8 +12660,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "👽 Share it with your Spacebook friends!"
+            "state" : "translated",
+            "value" : "♾️ 1881 - ∞ | Gazi Başkomutanımız Mustafa Kemal Atatürk anısına."
           }
         },
         "vi" : {
@@ -11817,6 +12711,12 @@
             "value" : "🦆 Entengang für immer"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🦆 Paso de pato para siempre"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11831,7 +12731,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "🏂 Aproveite a vida!!"
           }
         },
@@ -11843,8 +12743,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🏂 Duckgang for life!!"
+            "state" : "translated",
+            "value" : "🎸 Tebrikler! Ödül olarak kendine bir Kayseri Yağlaması yap!"
           }
         },
         "vi" : {
@@ -11855,8 +12755,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🏂一生不悔低头族！！"
+            "state" : "translated",
+            "value" : "🦆苦日子到头了"
           }
         },
         "zh-Hant" : {
@@ -11894,6 +12794,12 @@
             "value" : "🐹 We should get him a bow tie."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐹 Deberíamos comprarle una pajarita."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11908,7 +12814,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "📚 Não julgue um livro pela capa."
           }
         },
@@ -11920,8 +12826,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🐹 We should get him a bow tie."
+            "state" : "translated",
+            "value" : "🅰️ AAAAAAAAAAAAAAAAA"
           }
         },
         "vi" : {
@@ -11971,6 +12877,12 @@
             "value" : "🐠 What... Are... You?"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐠 ¿Qué... Eres... Tú?"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11985,7 +12897,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "🐠 Que dia, hein!?"
           }
         },
@@ -11997,8 +12909,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🐠 What... are... you?"
+            "state" : "translated",
+            "value" : "⛑️ Kaskını takmadan trafiğe çıkma."
           }
         },
         "vi" : {
@@ -12009,8 +12921,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🐠比死神利维坦可爱。"
+            "state" : "translated",
+            "value" : "🐠你...是...谁？"
           }
         },
         "zh-Hant" : {
@@ -12048,10 +12960,34 @@
             "value" : "🐁 The merchant's personal pet!"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐁 ¡La mascota personal del comerciante!"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐁 O bichinho de estimação do lojista!"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "🐁 Личный питомец торговца!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🏍️ Sence de CBR 1000RR-R'ın isminde çok fazla R yok mu?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐁这是我的宠物！"
           }
         }
       }
@@ -12077,6 +13013,12 @@
             "value" : "🌏 First the mice, then the world!! >:)"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌏 ¡Primero los ratones, luego el mundo! >:)"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12091,7 +13033,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "🌏 Cuide do nosso Planeta!! >:)"
           }
         },
@@ -12103,8 +13045,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🌏 First the mice, then the world!! >:)"
+            "state" : "translated",
+            "value" : "🇹🇷 Çevirmene de teşekkür etmeyi unutma!"
           }
         },
         "vi" : {
@@ -12154,6 +13096,12 @@
             "value" : "Free day **%1$d/%2$d**"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Día gratuito **%1$d/%2$d**"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12168,7 +13116,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Dias restantes **%1$d/%2$d**"
           }
         },
@@ -12180,8 +13128,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Ücretsiz gün **%1$d/%2$d**"
+            "state" : "translated",
+            "value" : "Ücretsiz günü **%1$d/%2$d**"
           }
         },
         "vi" : {
@@ -12192,7 +13140,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "免费期第**%1$d／%2$d**天"
           }
         },
@@ -12231,6 +13179,12 @@
             "value" : "Free days are over"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los días gratuitos han terminado"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12245,7 +13199,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "A versão de testes terminou"
           }
         },
@@ -12258,7 +13212,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ücretsiz günler sona erdi"
+            "value" : "Ücretsiz günleri sona erdi"
           }
         },
         "vi" : {
@@ -12308,6 +13262,12 @@
             "value" : "Activate License"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar Licencia"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12322,7 +13282,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ativar Licença"
           }
         },
@@ -12335,7 +13295,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lisansı Etkinleştir"
+            "value" : "Lisansı Aktifleştir"
           }
         },
         "vi" : {
@@ -12385,6 +13345,12 @@
             "value" : "Hi there! You've been using Mac Mouse Fix for **%1$d days** now. I hope you're enjoying it!\n\nIf you want to keep using Mac Mouse Fix, you can [buy it now](%2$@)."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¡Hola\\! Llevas usando Mac Mouse Fix durante **%1$d días**. ¡Espero que lo estés disfrutando\\!\n\nSi quieres seguir usando Mac Mouse Fix, puedes [comprarlo ahora](%2$@)."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12399,7 +13365,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Olá! Você está usando o Mac Mouse Fix há **%1$d dias**. Espero que você esteja gostando!\n\nSe quiser continuar usando o Mac Mouse Fix, você pode [comprá-lo agora](%2$@)."
           }
         },
@@ -12411,7 +13377,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Merhaba! **%1$d gündür** Mac Mouse Fix kullanıyorsunuz. Umarım keyif alıyorsunuzdur!\n\nMac Mouse Fix'i kullanmaya devam etmek istiyorsanız, [şimdi satın alabilirsiniz](%2$@)."
           }
         },
@@ -12423,7 +13389,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "您好！您使用Mac Mouse Fix已经有**%1$d天**了。希望您喜欢这个软件！\n\n如果您想要继续使用Mac Mouse Fix，不妨[立即购买](%2$@)。"
           }
         },
@@ -12447,7 +13413,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Klik %@ +"
+            "value" : "Kliknutí %@ +"
           }
         },
         "de" : {
@@ -12460,6 +13426,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Click %@ +"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clic %@ +"
           }
         },
         "fr" : {
@@ -12476,20 +13448,20 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Clique %@ +"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Клик %@ +"
+            "value" : "Нажатие %@ +"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@'ya Tıkla +"
+            "state" : "translated",
+            "value" : "%@ Tıkla +"
           }
         },
         "vi" : {
@@ -12539,6 +13511,12 @@
             "value" : "Double Click %@ +"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doble Clic %@ +"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12560,13 +13538,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Двойной клик %@ +"
+            "value" : "Двойное нажатие %@ +"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@'ya Çift Tıkla +"
+            "state" : "translated",
+            "value" : "%@ düğmesine çift tıkla +"
           }
         },
         "vi" : {
@@ -12616,6 +13594,12 @@
             "value" : "Triple Click %@ +"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Triple Clic %@ +"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12637,13 +13621,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Тройной клик %@ +"
+            "value" : "Тройное нажатие %@ +"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@'ya Üç Tıkla +"
+            "state" : "translated",
+            "value" : "%@ Üç Kez Tıkla +"
           }
         },
         "vi" : {
@@ -12693,6 +13677,12 @@
             "value" : "Middle Button"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón Central"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12707,7 +13697,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Botão do Meio"
           }
         },
@@ -12719,8 +13709,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Orta Düğme"
+            "state" : "translated",
+            "value" : "Orta düğme"
           }
         },
         "vi" : {
@@ -12731,7 +13721,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "中键"
           }
         },
@@ -12770,6 +13760,12 @@
             "value" : "Button %@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón %@"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12784,7 +13780,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Botão %@"
           }
         },
@@ -12796,8 +13792,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ Düğmesi"
+            "state" : "translated",
+            "value" : "Düğme %@"
           }
         },
         "vi" : {
@@ -12808,8 +13804,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "按钮%@"
+            "state" : "translated",
+            "value" : "按键%@"
           }
         },
         "zh-Hant" : {
@@ -12847,6 +13843,12 @@
             "value" : "Primary Button"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón Primario"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12861,7 +13863,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Botão Primário"
           }
         },
@@ -12873,7 +13875,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Birincil Düğme"
           }
         },
@@ -12885,7 +13887,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "主键"
           }
         },
@@ -12924,6 +13926,12 @@
             "value" : "Secondary Button"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón Secundario"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12938,7 +13946,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Botão Secundário"
           }
         },
@@ -12950,7 +13958,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "İkincil Düğme"
           }
         },
@@ -12962,7 +13970,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "辅键"
           }
         },
@@ -12986,7 +13994,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Klik %@"
+            "value" : "Kliknutí %@"
           }
         },
         "de" : {
@@ -12999,6 +14007,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Click %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clic %@"
           }
         },
         "fr" : {
@@ -13015,20 +14029,20 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "clique %@"
+            "state" : "translated",
+            "value" : "Clique %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Клик %@"
+            "value" : "Нажатие %@"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@'ya Tıkla"
+            "state" : "translated",
+            "value" : "%@ Tıkla"
           }
         },
         "vi" : {
@@ -13078,6 +14092,12 @@
             "value" : "Double Click %@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doble Clic %@"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13099,13 +14119,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Двойной клик %@"
+            "value" : "Двойное нажатие %@"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@'ya Çift Tıkla"
+            "state" : "translated",
+            "value" : "%@ düğmesine çift tıkla"
           }
         },
         "vi" : {
@@ -13155,6 +14175,12 @@
             "value" : "Triple Click %@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Triple Clic %@"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13176,13 +14202,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Тройной клик %@"
+            "value" : "Тройное нажатие %@"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ Üç Kez Tıklayın"
+            "state" : "translated",
+            "value" : "%@ Üç Kez Tıkla"
           }
         },
         "vi" : {
@@ -13217,7 +14243,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Klik a *táhnutí* %@"
+            "value" : "Kliknutí a *tažení* %@"
           }
         },
         "de" : {
@@ -13230,6 +14256,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Click and *Drag* %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clic y *Arrastrar* %@"
           }
         },
         "fr" : {
@@ -13246,20 +14278,20 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "clique e arraste %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Нажмите и перетащите* %@"
+            "value" : "Нажмите и *перетащите* %@"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ Tıklayın ve Sürükleyin"
+            "state" : "translated",
+            "value" : "%@ Tıkla ve Sürükle"
           }
         },
         "vi" : {
@@ -13270,7 +14302,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "点按并拖移%@"
           }
         },
@@ -13294,7 +14326,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dvojklik a *táhnutí* %@"
+            "value" : "Dvojklik a *tažení* %@"
           }
         },
         "de" : {
@@ -13307,6 +14339,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Double Click and *Drag* %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doble Clic y *Arrastrar* %@"
           }
         },
         "fr" : {
@@ -13330,13 +14368,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Двойной клик и *перетаскивание* %@"
+            "value" : "Двойное нажатие и *перетаскивание* %@"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ Çift Tıklayın ve Sürükleyin"
+            "state" : "translated",
+            "value" : "%@ düğmesine çift tıkla ve sürükle"
           }
         },
         "vi" : {
@@ -13371,7 +14409,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Trojklik a *táhnutí* %@"
+            "value" : "Trojklik a *tažení* %@"
           }
         },
         "de" : {
@@ -13384,6 +14422,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Triple Click and *Drag* %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Triple Clic y *Arrastrar* %@"
           }
         },
         "fr" : {
@@ -13407,13 +14451,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Тройной клик и *перетаскивание* %@"
+            "value" : "Тройное нажатие и *перетаскивание* %@"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ Üç Kez Tıklayın ve Sürükleyin"
+            "state" : "translated",
+            "value" : "%@ Üç Kez Tıkla ve Kaydır"
           }
         },
         "vi" : {
@@ -13424,7 +14468,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "连按三次并拖移%@"
           }
         },
@@ -13448,7 +14492,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "a *táhnutí*"
+            "value" : "a *tažení*"
           }
         },
         "de" : {
@@ -13461,6 +14505,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "and *Drag*"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "y *arrastrar*"
           }
         },
         "fr" : {
@@ -13477,7 +14527,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "e arraste"
           }
         },
@@ -13489,8 +14539,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "ve Sürükleyin"
+            "state" : "translated",
+            "value" : "ve sürükle"
           }
         },
         "vi" : {
@@ -13501,8 +14551,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "并拖移"
+            "state" : "translated",
+            "value" : "并拖移鼠标"
           }
         },
         "zh-Hant" : {
@@ -13540,6 +14590,12 @@
             "value" : "Hold %@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantener pulsado %@"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13554,7 +14610,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "segure %@"
           }
         },
@@ -13566,8 +14622,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ Basılı Tutun"
+            "state" : "translated",
+            "value" : "%@ Tıkla ve Basılı Tut"
           }
         },
         "vi" : {
@@ -13617,6 +14673,12 @@
             "value" : "Double Click and Hold %@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doble Clic y Mantener Pulsado %@"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13638,13 +14700,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Двойной клик и удержание %@"
+            "value" : "Двойное нажатие и удержание %@"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ Çift Tıklayın ve Basılı Tutun"
+            "state" : "translated",
+            "value" : "%@ düğmesine çift tıkla ve basılı tut"
           }
         },
         "vi" : {
@@ -13694,6 +14756,12 @@
             "value" : "Triple Click and Hold %@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Triple Clic y Mantener Pulsado %@"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13715,13 +14783,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Тройной клик и удержание %@"
+            "value" : "Тройное нажатие и удержание %@"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ Üç Kez Tıklayın ve Basılı Tutun"
+            "state" : "translated",
+            "value" : "%@ Üç Kez Tıkla ve Basılı Tut"
           }
         },
         "vi" : {
@@ -13756,7 +14824,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Klik a *scrolování* %@"
+            "value" : "Kliknutí a *scrolování* %@"
           }
         },
         "de" : {
@@ -13769,6 +14837,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Click and *Scroll* %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clic y *Desplazar* %@"
           }
         },
         "fr" : {
@@ -13785,7 +14859,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "clique e role %@"
           }
         },
@@ -13797,8 +14871,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ Tıklayın ve Kaydırın"
+            "state" : "translated",
+            "value" : "%@ Tıkla ve Kaydır"
           }
         },
         "vi" : {
@@ -13809,7 +14883,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "点按并滚动%@"
           }
         },
@@ -13848,6 +14922,12 @@
             "value" : "Double Click and *Scroll* %@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Doble Clic y *Desplazar* %@"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13869,13 +14949,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Двойной клик и *прокрутка* %@"
+            "value" : "Двойное нажатие и *прокрутка* %@"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ Çift Tıklayın ve Kaydırın"
+            "state" : "translated",
+            "value" : "%@ düğmesine çift tıkla ve kaydır"
           }
         },
         "vi" : {
@@ -13925,6 +15005,12 @@
             "value" : "Triple Click and *Scroll* %@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Triple Clic y *Desplazar* %@"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13946,13 +15032,13 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Тройной клик и *прокрутка* %@"
+            "value" : "Тройное нажатие и *прокрутка* %@"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ Üç Kez Tıklayın ve Kaydırın"
+            "state" : "translated",
+            "value" : "%@ Üç Kez Tıkla ve Kaydır"
           }
         },
         "vi" : {
@@ -13963,7 +15049,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "连按三次并滚动%@"
           }
         },
@@ -14002,6 +15088,12 @@
             "value" : "and *Scroll*"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "y *desplazar*"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14016,7 +15108,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "e role"
           }
         },
@@ -14028,8 +15120,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "ve Kaydırın"
+            "state" : "translated",
+            "value" : "ve kaydır"
           }
         },
         "vi" : {
@@ -14040,8 +15132,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "并滚动"
+            "state" : "translated",
+            "value" : "并滚动滚轮"
           }
         },
         "zh-Hant" : {
@@ -14079,6 +15171,12 @@
             "value" : "Middle Button"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón central"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14093,7 +15191,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Botão do Meio"
           }
         },
@@ -14105,7 +15203,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Orta Düğme"
           }
         },
@@ -14117,7 +15215,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "中键"
           }
         },
@@ -14156,6 +15254,12 @@
             "value" : "Button %@"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón %@"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14170,7 +15274,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Botão %@"
           }
         },
@@ -14182,8 +15286,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%@ Düğmesi"
+            "state" : "translated",
+            "value" : "Düğme %@"
           }
         },
         "vi" : {
@@ -14194,8 +15298,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "按钮%@"
+            "state" : "translated",
+            "value" : "按键%@"
           }
         },
         "zh-Hant" : {
@@ -14233,6 +15337,12 @@
             "value" : "Primary Button"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón Primario"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14247,7 +15357,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Botão Primário"
           }
         },
@@ -14259,7 +15369,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Birincil Düğme"
           }
         },
@@ -14271,7 +15381,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "主键"
           }
         },
@@ -14310,6 +15420,12 @@
             "value" : "Secondary Button"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón Secundario"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14324,7 +15440,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Botão Secundário"
           }
         },
@@ -14336,7 +15452,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "İkincil Düğme"
           }
         },
@@ -14348,7 +15464,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "辅键"
           }
         },
@@ -14385,6 +15501,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Type a Keyboard Shortcut"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escribir un Atajo de Teclado"
           }
         },
         "fr" : {

@@ -33,6 +33,10 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
     ///         - Don't forget sections that are hidden by default (macOSHint)
     ///         - Text under 'Scrolling > Keyboard Modifiers:' can't wrap, so make sure it doesn't truncate. [Sep 2025]
     ///     - If there is awkward whitespace, make narrower (so far, we only did that for CJK languages, which makes sense since they have the highest informationDensity)
+    ///
+    ///     History:
+    ///         - [Dec 2025] Change horizontal margins around the labels under `Scrolling > Keyboard Modifiers` from 10 to 5.
+    ///             - [ ] TODO -> This should perhaps make us reconsider some widths like `"pt": 370`
     
     /// Set the window width for this tab
     do {
@@ -49,8 +53,9 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                     "pt": 350,   /// 350 looks great. 370 is closest to the 'vision' of the original translator I think – the 2nd and 3rd hint have the last two words on the 2nd line. But 350 looks better visually I think. [Sep 2025]
                     "vi": 350,   /// 350 looks great and is almost exactly what the original translator did [Sep 2025]
                     "cs": 320,   /// 350 -> 320 minimize gap after short first line of enabledHint "Mac Mouse Fix zůstane zapnutá i po" [Nov 2025]
-                    "tr": 350,   /// TODO: Fill this in when more Turkish strings arrive
+                    "tr": 350,   /// 350 looks great. [Dec 2025]
                     "ru": 370,
+                    "es": 370,   /// 370 fits better than 350 with the other tabs (which are all wider) [Dec 2025]
                 ]
             case "scrolling":
                 map = [
@@ -62,8 +67,9 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                     "pt": 370,  /// 340 -> 370 is narrowest that doesn't truncate modfield title "Aumentar ou diminuir zoom" [Sep 2025]
                     "vi": 340,  /// 340 looks great. [Sep 2025]
                     "cs": 340,  /// 340 looks great [Nov 2025]
-                    "tr": 340,  /// TODO: Fill this in when more Turkish strings arrive
-                    "ru": 500,  /// 400 -> `Прокручивайте точно ...` hint is 2 lines instead of 3 || 500 -> `H4T-Rp-t33.title` is no longer cut off. [Dec 2025] TODO: Make narrow if/when translator provides narrower string.
+                    "tr": 380,  /// 370 -> "Yakınlaştırma veya Uzaklaştırma" (H4T-Rp-t33.title) is no longer cut off [Dec 2025] || 380 -> "Kaydırma tekerleğini ..." (precise-scrolling-hint) is on 2 instead of 3 lines [Dec 2025]
+                    "ru": 350,  /// 350 -> Bit more breathing room than 340. String `Прокручивайте точно...` has orphaned word, but inserting &nbsp; or making the tab wider (min 400) looks worse. [Dec 2025]
+                    "es": 390,  /// 370 -> Stops "Modificadores de teclado:" labels from being cut off.  390 -> "Desplázate con precisión..." is on 2 lines instead of 3. [Dec 2025]
                 ]
             default:
                 fatalError("Calling this from unexpected tab: \(tabController)")

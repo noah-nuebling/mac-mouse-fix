@@ -21,6 +21,7 @@
 #import "RemapTableUtility.h"
 #import "Mac_Mouse_Fix-Swift.h"
 #import "Localization.h"
+#import "RemapTableCellView.h"
 
 @interface RemapTableTranslator ()
 
@@ -109,12 +110,20 @@ static NSArray *getScrollEffectsTable() {
 }
 static NSArray *getDragEffectsTable() {
     NSArray *dragEffectsTable = @[
-        @{@"ui": MFLocalizedString(@"drag-effect.dock-swipe", @""), @"tool": MFLocalizedString(@"drag-effect.dock-swipe.hint", @"") , @"dict": @{
+        @{
+            @"ui": MFLocalizedString(@"drag-effect.dock-swipe", @""),
+            @"tool": MFLocalizedString(@"drag-effect.dock-swipe.hint", @"") ,
+            @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipe,
-        }},
-        @{@"ui": MFLocalizedString(@"drag-effect.scroll-swipe", @""), @"tool": MFLocalizedString(@"drag-effect.scroll-swipe.hint", @"") , @"dict": @{
+            }
+        },
+        @{
+            @"ui": MFLocalizedString(@"drag-effect.scroll-swipe", @""),
+            @"tool": MFLocalizedString(@"drag-effect.scroll-swipe.hint", @"") ,
+            @"dict": @{
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
-        }},
+            }
+        },
 //        separatorEffectsTableEntry(),
 //        @{
 ////          @"ui": [NSString stringWithFormat:@"%@ Click and Drag", [UIStrings getButtonString:3]],
@@ -136,21 +145,41 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     NSDictionary *selectedEffect = rowDict[kMFRemapsKeyEffect];
     
     NSMutableArray *oneShotEffectsTable = @[
-        @{@"ui": MFLocalizedString(@"effect.look-up", @""), @"tool": MFLocalizedString(@"effect.look-up.hint", @"Note: 'Force click' looks a bit weirdly capitalized but it's exactly how Apple spells it on their support website."), @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                  kMFActionDictKeyGenericVariant: @(kMFSHLookUp)
-        }},
-        @{@"ui": MFLocalizedString(@"effect.smart-zoom", @""), @"tool": MFLocalizedString(@"effect.smart-zoom.hint", @""), @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
-        }},
-        @{@"ui": MFLocalizedString(@"effect.click.primary", @""),
-          @"tool": MFLocalizedString(@"effect.click.primary.hint", @""),
-          @"hideable": @YES,
-          @"dict": @{
+        @{
+            @"ui": MFLocalizedString(
+                @"effect.look-up",
+                @""
+                "Note: 'Look Up' is a feature for looking up words in the dictionary and other places. It can be triggered by pressing Command-Control-D, or by a 'force click' on a Trackpad. \n"
+                "\n"
+                "Apple uses the term 'Look Up' at\n"
+                "System Settings > Trackpad > Point & Click > Look up & data detectors (in macOS Tahoe)\n"
+                "They also have support website about the feature."
+            ),
+            @"tool": MFLocalizedString(
+                @"effect.look-up.hint",
+                @"Note: 'Force click' looks a bit weirdly capitalized but it's exactly how Apple spells it on their support website."
+            ),
+            @"dict": @{
+              kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+              kMFActionDictKeyGenericVariant: @(kMFSHLookUp)
+            }
+        },
+        @{
+            @"ui": MFLocalizedString(@"effect.smart-zoom", @""),
+            @"tool": MFLocalizedString(@"effect.smart-zoom.hint", @""),
+            @"dict": @{
+              kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
+            }
+        },
+        @{
+            @"ui": MFLocalizedString(@"effect.click.primary", @""),
+            @"tool": MFLocalizedString(@"effect.click.primary.hint", @""),
+            @"hideable": @YES,
+            @"dict": @{
               kMFActionDictKeyType: kMFActionDictTypeMouseButtonClicks,
               kMFActionDictKeyMouseButtonClicksVariantButtonNumber: @1,
               kMFActionDictKeyMouseButtonClicksVariantNumberOfClicks: @1,
-          }
+            }
         },
         @{@"ui": MFLocalizedString(@"effect.click.secondary", @""),
           @"tool": MFLocalizedString(@"effect.click.secondary.hint", @""),
@@ -186,7 +215,8 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
         @{
             @"ui": MFLocalizedString(
                 @"effect.app-expose",
-                @"Note: Apple refers to this feature by different names like 'Application Windows' or 'App Exposé'. In English I chose the same name that is used in Keyboard Shortcut settings.\n"
+                @"Note: Apple refers to this feature by different names like 'Application Windows' or 'App Exposé'. In English I chose the same name that is used at\n"
+                "System Settings > Keyboard > Keyboard Shortcuts > Mission Control > Application Windows. (Under macOS 26 Tahoe)\n"
                 "\n"
                 "Further details: Under macOS Sonoma, this feature is called 'App Exposé' in Trackpad settings, but 'Application Windows' in Keyboard Shortcut settings, and other places I found. I also saw 'Show all windows of the front app' and 'Show all open windows for the current app' in Apple's documentation. I went with 'Application Windows' because it's short and 'App Exposé' felt a bit outdated. (Exposé was the predecessor to Mission Control, and the term mostly doesn't occur anymore in macOS now.)"),
             @"tool": MFLocalizedString(@"effect.app-expose.hint", @""),
@@ -205,16 +235,48 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
                   kMFActionDictKeyGenericVariant: @(kMFSHLaunchpad)
         }},
         separatorEffectsTableEntry(),
-        @{@"ui": MFLocalizedString(@"effect.left-space", @""), @"tool": MFLocalizedString(@"effect.left-space.hint", @""), @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                  kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
-        }},
-        @{@"ui": MFLocalizedString(@"effect.right-space", @""), @"tool": MFLocalizedString(@"effect.right-space.hint", @""), @"dict": @{
-                  kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
-                  kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
-        }},
+        @{
+            @"ui": MFLocalizedString(
+                @"effect.left-space",
+                @""
+                    "The English string takes after"
+                    "\nSystem Settings > Keyboard > Keyboard Shortcuts... > Mission Control > Mission Control > Move left a space."
+                    "\nBut it looks like for some languages, the translation inside macOS is suboptimal, so maybe you can come up with something better."
+                    "\n[Dec 2025, macOS 26 Tahoe]"
+            ),
+            @"tool": MFLocalizedString(
+                @"effect.left-space.hint",
+                @""
+                         "Try to keep the translations of Space / Spaces consistent."
+                    "\n" ""
+                    "\n" "If you're using Xcloc Editor.app, you can find all the translations for 'Spaces' like this:"
+                    "\n" "- Go to 'All Project Files' (Command-J)"
+                    "\n" "- Select the search-field (Command-F)"
+                    "\n" "- Enter 'space'"
+                    "\n" "-> Now you can see all the occurrences and translations for 'space'!"
+                    "\n" ""
+                    "\n" "Note to self:"
+                    "\n" "This hint is similar to questions.click-delay.body"
+            ),
+            @"dict": @{
+              kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+              kMFActionDictKeyGenericVariant: @(kMFSHMoveLeftASpace)
+            }
+        },
+        @{
+            @"ui": MFLocalizedString(@"effect.right-space", @""),
+            @"tool": MFLocalizedString(@"effect.right-space.hint", @""),
+            @"dict": @{
+              kMFActionDictKeyType: kMFActionDictTypeSymbolicHotkey,
+              kMFActionDictKeyGenericVariant: @(kMFSHMoveRightASpace)
+            }
+        },
         separatorEffectsTableEntry(),
-        @{@"ui": MFLocalizedString(@"effect.record-shortcut", @""), @"tool": MFLocalizedString(@"effect.record-shortcut.hint", @""), @"keyCaptureEntry": @YES},
+        @{
+            @"ui": MFLocalizedString(@"effect.record-shortcut", @""),
+            @"tool": MFLocalizedString(@"effect.record-shortcut.hint", @""),
+            @"keyCaptureEntry": @YES
+        },
     ].mutableCopy;
     
     /// Insert button specific entry

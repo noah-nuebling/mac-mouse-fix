@@ -63,6 +63,9 @@ extension NSAttributedString {
     func _secretMessages() -> NSArray {
         return ___secretMessages() as! NSArray
     }
+    func withoutSecretMessages() -> NSAttributedString {
+        return __withoutSecretMessages() as! NSAttributedString
+    }
 }
 
 extension NSString {

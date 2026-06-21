@@ -192,7 +192,7 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
     /// Register the Matching Dictionary to the HID Manager
     IOHIDManagerSetDeviceMatchingMultiple(_manager, (__bridge CFArrayRef)matchArray);
     
-    /// Register the HID Manager on our app’s run loop
+    /// Register the HID Manager on our app's run loop
     IOHIDManagerScheduleWithRunLoop(_manager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
     
     /// Open the HID Manager

@@ -68,7 +68,7 @@ import Foundation
             "key": "k-already-using-defaults-toast.3",
             "block":
             {
-                let messageRaw = MFLocalizedString("already-using-defaults-toast.3", comment: ".") /// Old note: (Removed because doesn't help localizers I think. We dont' wanna train localizers to ignore comments, so we don't want useless ones.) "Note: This text is displayed in a notification after the user tries to load the default settings for mice with 3 buttons on the Buttons Tab.")
+                let messageRaw = MFLocalizedString("already-using-defaults-toast.3", comment: "This toast notification appears in response to selecting the 'restore-buttons-alert.radio1' radio button.") /// Old note: (Removed because doesn't help localizers I think. We dont' wanna train localizers to ignore comments, so we don't want useless ones.) "Note: This text is displayed in a notification after the user tries to load the default settings for mice with 3 buttons on the Buttons Tab.")
                 let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!
                 DispatchQueue.main.async {
                     ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)
@@ -79,7 +79,7 @@ import Foundation
             "key": "k-already-using-defaults-toast.5",
             "block":
             {
-                let messageRaw = MFLocalizedString("already-using-defaults-toast.5", comment: ".")
+                let messageRaw = MFLocalizedString("already-using-defaults-toast.5", comment: "This toast notification appears in response to selecting the 'restore-buttons-alert.radio2' radio button.")
                 let message = MarkdownParser.attributedString(withCoolMarkdown: messageRaw, fillOutBase: false)!
                 DispatchQueue.main.async {
                     ToastController.attachNotification(withMessage: message, forDuration: kMFToastDurationAutomatic)

@@ -499,9 +499,9 @@ The following key-value-pairs have been changed in the base file without a subse
     on 20.11.2023 in commit [703faa0](https://github.com/noah-nuebling/mac-mouse-fix/commit/703faa07035bc3bc3250ce11fa565b06c4f4f856)
 
 
-"`effect.look-up.hint`" = "`查询词典、在Finder中“快速查看”等。\n \n作用相当于在Apple触控板上用单指用力点按。`";
+"`effect.look-up.hint`" = "`查询词典、在Finder中"快速查看"等。\n \n作用相当于在Apple触控板上用单指用力点按。`";
 - Latest change in translation: 
-    "" -> "`查询词典、在Finder中“快速查看”等。\n \n作用相当于在Apple触控板上用单指用力点按。`"
+    "" -> "`查询词典、在Finder中"快速查看"等。\n \n作用相当于在Apple触控板上用单指用力点按。`"
     on 15.12.2022 in commit [aadba97](https://github.com/noah-nuebling/mac-mouse-fix/commit/aadba972bfccf4f3a12b8717014cb07708b3e2f7)
 - Latest change in base file:
     "`Look up words in the Dictionary, Quick Look files in Finder, and more.\n \nWorks like Force Touch on an Apple Trackpad.`" ->
@@ -548,10 +548,10 @@ The following key-value-pairs have the exact same value in the translation as in
 
 The following key-value-pairs have been changed in the base file without a subsequent change in the translation. Maybe they should be updated in the translation to reflect the change in the base file:
 
-"`N7H-9j-DIr.title`" = "`移动鼠标指针到“+”区域内，然后点按鼠标按钮来指定动作。  您也可以连按、点按并拖移、执行[更多]()操作。`";
+"`N7H-9j-DIr.title`" = "`移动鼠标指针到"+"区域内，然后点按鼠标按钮来指定动作。  您也可以连按、点按并拖移、执行[更多]()操作。`";
 - Latest change in translation: 
     "`Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.  You can also *Double Click*, *Click and Drag* and [more]().`" ->
-    "`移动鼠标指针到“+”区域内，然后点按鼠标按钮来指定动作。  您也可以连按、点按并拖移、执行[更多]()操作。`"
+    "`移动鼠标指针到"+"区域内，然后点按鼠标按钮来指定动作。  您也可以连按、点按并拖移、执行[更多]()操作。`"
     on 03.01.2024 in commit [ceefca3](https://github.com/noah-nuebling/mac-mouse-fix/commit/ceefca38953bf34345940e5f864760691f7b5c63)
 - Latest change in base file:
     "`Move the mouse pointer inside the '+' field, then *Click* a mouse button to assign an action to it.  You can also *Double Click*, *Click and Drag* and [more]().`" ->

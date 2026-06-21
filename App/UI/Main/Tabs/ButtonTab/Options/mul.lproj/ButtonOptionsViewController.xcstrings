@@ -23,6 +23,12 @@
             "value" : "Done"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hecho"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -45,6 +51,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Готово"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tamam"
           }
         },
         "vi" : {
@@ -95,6 +107,12 @@
             "value" : "Recommended for Trackball Mice"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recomendado para ratones Trackball"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -117,6 +135,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Рекомендуется для мышей с трекболом"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trackball Tip fareler için önerilir"
           }
         },
         "vi" : {
@@ -146,19 +170,19 @@
       }
     },
     "Mmp-uv-DmY.title" : {
-      "comment" : "Class = \"NSButtonCell\"; title = \"Lock Mouse Pointer During 'Click and Drag' Gestures\"; ObjectID = \"Mmp-uv-DmY\";",
+      "comment" : "Class = \"NSButtonCell\"; title = \"Lock Mouse Pointer During 'Click and Drag' Gestures\"; ObjectID = \"Mmp-uv-DmY\"; Note = \"'Click and Drag'\\nshould ideally match the text seen in the Action Table (See trigger.substring.drag.1). The 'quotes' in English exist to help the user draw the connection to the Action Table.\\n\\nIf matching trigger.substring.drag.1 exactly isn't grammatically possible in your language, consider removing the 'quotes'.\\n\\nAlso note that the trigger.substring.drag.1 string supports rendering *Markdown emphasis*, but this textfield does not. (As of [Dec 2025]) \\nSo consider removing the *Markdown emphasis* when copying over the text from trigger.substring.drag.1\\n(Example: 'Click and *Drag*' -> 'Click and Drag')\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zamknout ukazatel myši během „kliknutí a tažení“"
+            "value" : "Zamknout ukazatel myši během 'kliknutí a tažení'"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mauszeiger während 'Klicken und Ziehen' Gesten fixieren"
+            "value" : "Mauszeiger während 'klicken und ziehen' Gesten fixieren"
           }
         },
         "en" : {
@@ -167,15 +191,21 @@
             "value" : "Lock Mouse Pointer During 'Click and Drag' Gestures"
           }
         },
-        "fr" : {
+        "es" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Bloquear el Puntero del Ratón Durante los gestos de 'Clic y Arrastrar'"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Verrouiller le pointeur de la souris pendant les gestes « Cliquer et lâcher »"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "'클릭 및 드래그' 제스처 시 마우스 포인터 잠금"
           }
         },
@@ -187,13 +217,19 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Блокировка указателя мыши во время жестов 'клик и перетаскивание'"
+            "state" : "needs_review",
+            "value" : "Блокировка указателя мыши во время жестов «нажатие и перетаскивание»"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "'Tıklama ve Sürükleme' Hareketleri Sırasında Fare İmlecini Kilitle"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Khóa vị trí con trỏ chuột khi nhấp và kéo"
           }
         },
@@ -205,13 +241,13 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "「按下並拖移」手勢過程中鎖定滑鼠指標"
           }
         },
         "zh-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "「按下並拖移」手勢過程中鎖定滑鼠指標"
           }
         }

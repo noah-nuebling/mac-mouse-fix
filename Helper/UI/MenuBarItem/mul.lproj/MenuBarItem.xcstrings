@@ -23,6 +23,12 @@
             "value" : "Buttons"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botones"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -47,6 +53,12 @@
             "value" : "Кнопки"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düğmeler"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -56,7 +68,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "按钮"
+            "value" : "按键"
           }
         },
         "zh-Hant" : {
@@ -156,6 +168,12 @@
             "value" : "Scrolling"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desplazamiento"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -178,6 +196,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Прокрутка"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaydırma"
           }
         },
         "vi" : {
@@ -228,6 +252,12 @@
             "value" : "Open Mac Mouse Fix..."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir Mac Mouse Fix..."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -250,6 +280,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Открыть Mac Mouse Fix..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix'i Aç..."
           }
         },
         "vi" : {

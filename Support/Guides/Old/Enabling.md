@@ -92,7 +92,7 @@ macOS might be trying to enable a different copy of Mac Mouse Fix than the one y
 <table align="center">
 <td>
 
-I hope this guide was helpful!</td>
+I hope this guide cleared things up!</td>
 <td>
 
 Still have questions? Click [here](https://redirect.macmousefix.com/?locale=en&target=mmf-support-still-have-questions).</td>

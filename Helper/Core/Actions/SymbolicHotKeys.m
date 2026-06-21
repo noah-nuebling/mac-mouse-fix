@@ -42,7 +42,7 @@
         Ways to go forward:
         * Try to really understand how other apps do it
         * Use CGSConnection.h to create custom symbolic hotkey, which we then trigger via CGEvent
-            * private API not fully documented, pretty sure that we’d have to overridde existing hotkey, and/or activate it globally
+            * private API not fully documented, pretty sure that we'd have to overridde existing hotkey, and/or activate it globally
         * Find way to make CGSSpace.h work properly
             * feel like I tried everything
         * Try to find, reverse engineer and emulate executable that parses symbolic hotkeys
@@ -63,13 +63,13 @@
         GitHub Projects that can do it:
 
             * [Demo of Spaces API discovered through RE](https://gist.github.com/puffnfresh/4054059) - old, no switching
-            * [Spaces.h](https://github.com/NUIKit/CGSInternal/blob/master/CGSSpace.h) - “header for private Spaces Routines”
+            * [Spaces.h](https://github.com/NUIKit/CGSInternal/blob/master/CGSSpace.h) - "header for private Spaces Routines"
 
             * [hs._asm.undocumented.spaces](https://github.com/asmagill/hs._asm.undocumented.spaces) - Hammerspoon module for Space Switching functionality (built on Spaces.h) - relies on killing Dock, no animtions
-            * [Hammerspoon](https://github.com/Hammerspoon/hammerspoon/tree/0.9.70) - “bridge between macOS and Lua Lang” (built on hs._asm.)
+            * [Hammerspoon](https://github.com/Hammerspoon/hammerspoon/tree/0.9.70) - "bridge between macOS and Lua Lang" (built on hs._asm.)
 
-            * [Silica](https://github.com/ianyh/Silica/blob/master/Silica/CGSSpaces.h) - “window management framework” (interacts with private API but doesn't do space switching I believe)
-            * [Amethyst](https://github.com/ianyh/Amethyst) - “window manager app” - “built on Silica”
+            * [Silica](https://github.com/ianyh/Silica/blob/master/Silica/CGSSpaces.h) - "window management framework" (interacts with private API but doesn't do space switching I believe)
+            * [Amethyst](https://github.com/ianyh/Amethyst) - "window manager app" - "built on Silica"
 
         Steer Mouse Reverse Engineering:
             PS804ActionClass

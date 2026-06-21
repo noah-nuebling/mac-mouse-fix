@@ -15,25 +15,25 @@ Archived forum post
 
 // Tested
 
-@“Mission Control”		        :   @32,
+@"Mission Control"		        :   @32,
 @"Show All Windows"		        :   @33,
 @"Show Desktop"              	:   @36,
 @"Launchpad"                 	:   @160,
 @"Look Up"			            :	@70,
-@“App Switcher”     		    :	@71,
+@"App Switcher"     		    :	@71,
 
-@“Move left a space”         	:   @79,
-@“Move right a space”        	:   @81,
+@"Move left a space"         	:   @79,
+@"Move right a space"        	:   @81,
 	
 @"Cycle through Windows".    	:   @27
 
 
 @"Switch to Desktop {1-16}      :   @{118-133},
 
-@“Spotlight”                    :   @64,
+@"Spotlight"                    :   @64,
 
-@“Siri”                         :   @176,
-@“Show Notification Center”     :   @163,
+@"Siri"                         :   @176,
+@"Show Notification Center"     :   @163,
 @"Turn Do Not Disturb On/Off"   :   @175,
 
 

@@ -106,7 +106,9 @@ enum APIRequests { /// [Jun 2025] Using an enum cause ChatGPT told me. No idea i
         
         /// Guard: JSON serialization error
         ///     Notes:
-        ///     - I've seen this error happen, see [this mail](message:<CAA7L-uPZUyVntBTXTeJJ0SOCpeHNPnEzYo2C3wqtdbFTG0e_7A@mail.gmail.com>)
+        ///     - I've seen this error happen. See:
+        ///         - `message:<CAA7L-uPZUyVntBTXTeJJ0SOCpeHNPnEzYo2C3wqtdbFTG0e_7A@mail.gmail.com>`
+        ///         - `message:<CALHh7mF7X=AsJyJEGoXqu2+4G-CVtXoXXWB8y03LqQzyZh03MQ@mail.gmail.com>` [Jan 2 2026]
         ///     - We thought about using `options: [.fragmentsAllowed]` to prevent the JSONSerialization error in some cases, but then the resulting Swift object wouldn't have the expected structure so we'd get further errors down the line. So it's best to just throw an error ASAP I think.
         ///     - If the `serverData` is not a UTF8 string, then it won't be added to NSError's userInfo here. JSON data could be UTF-8, UTF-16LE, UTF-16BE, UTF-32LE or UTF-32BE - JSONSerialization detects the encoding automatically, but Swift doesn't expose a simple way to do that. So we're just hoping that the string from the server is utf8 (last updated: Oct 2024)
         

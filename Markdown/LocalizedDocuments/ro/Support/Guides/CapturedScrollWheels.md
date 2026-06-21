@@ -11,9 +11,13 @@ This document is `0%` translated into `🇷🇴 Română`
 
   [🇬🇧 English](../../../../../Support/Guides/CapturedScrollWheels.md)\
   [🇩🇪 Deutsch](../../../../../Markdown/LocalizedDocuments/de/Support/Guides/CapturedScrollWheels.md)\
+  [🇪🇸 Español](../../../../../Markdown/LocalizedDocuments/es/Support/Guides/CapturedScrollWheels.md)\
+  [🇧🇷 Português (Brasil)](../../../../../Markdown/LocalizedDocuments/pt-BR/Support/Guides/CapturedScrollWheels.md)\
   **🇷🇴 Română**\
+  [🇹🇷 Türkçe](../../../../../Markdown/LocalizedDocuments/tr/Support/Guides/CapturedScrollWheels.md)\
   [🇨🇿 Čeština](../../../../../Markdown/LocalizedDocuments/cs/Support/Guides/CapturedScrollWheels.md)\
   [🇷🇺 Русский](../../../../../Markdown/LocalizedDocuments/ru/Support/Guides/CapturedScrollWheels.md)\
+  [🇨🇳 中文 (简体)](../../../../../Markdown/LocalizedDocuments/zh-Hans/Support/Guides/CapturedScrollWheels.md)\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=ro&target=mmf-localization-contribution)
 </details>
 
@@ -46,7 +50,7 @@ Mac Mouse Fix will then completely ignore your scroll wheel – it won't use any
 <table align="center">
 <td>
 
-I hope this guide cleared things up!</td>
+I hope this guide was helpful!</td>
 <td>
 
 Still have questions? Click [here](https://redirect.macmousefix.com/?locale=ro&target=mmf-support-still-have-questions).</td>

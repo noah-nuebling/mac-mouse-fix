@@ -362,8 +362,13 @@ static NSAttributedString *attributedStringWithMarkdown(NSString *src, MDStyleOv
                     ///     that was already added to dst by our child nodes.
 
                     NSAttributedString *itemContent = [dst attributedSubstringFromRange: rangeOfExitedNodeInDst];
-                    NSDictionary<NSAttributedStringKey, id> *itemFontAttributes  = [dst fontAttributesInRange:  rangeOfExitedNodeInDst];
-                    NSDictionary<NSAttributedStringKey, id> *itemRulerAttributes = [dst rulerAttributesInRange: rangeOfExitedNodeInDst];
+                    NSMutableDictionary<NSAttributedStringKey, id> *itemFontAttributes  = [dst fontAttributesInRange:  rangeOfExitedNodeInDst].mutableCopy;
+                    NSMutableDictionary<NSAttributedStringKey, id> *itemRulerAttributes = [dst rulerAttributesInRange: rangeOfExitedNodeInDst].mutableCopy;
+                    
+                    /// HACK [Dec 2025]
+                    ///     Prevent prefix from being underlined.
+                    ///     Where does this matter? Any string where a link is at the start of the list item. E.g. the Turkish `is-disabled-toast` [Dec 2025]
+                    itemFontAttributes[NSUnderlineStyleAttributeName] = nil;
                     
                     /// Copy over font- and paragraph-style from listItemContent to the prefix
                     ///     I don't think there are any other attributes which make sense to copy over?
