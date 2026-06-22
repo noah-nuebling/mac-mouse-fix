@@ -297,6 +297,7 @@
 		4FD860CC266EF55A004F76C8 /* ScrollConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD860CB266EF55A004F76C8 /* ScrollConfig.swift */; };
 		4FD9A7D128BA2A810006DF4B /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */; };
 		4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FD9A7D028BA2A810006DF4B /* SecureStorage.swift */; };
+		4FDA9D512FE96D8D00610BEB /* SkyLight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F28B7F52D49141E006928A6 /* SkyLight.framework */; };
 		4FDB5F4A2D4F85A900164F97 /* NSCharacterSet+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB5F492D4F85A900164F97 /* NSCharacterSet+Additions.m */; };
 		4FDB5F4B2D4F85A900164F97 /* NSCharacterSet+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB5F492D4F85A900164F97 /* NSCharacterSet+Additions.m */; };
 		4FDB94392FE75270001E05CB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FDB94362FE75270001E05CB /* MainMenu.xib */; };
@@ -2654,6 +2655,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FDA9D512FE96D8D00610BEB /* SkyLight.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
