@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Haziran 2026**
 
+- 🇩🇪&nbsp;Ayschrens
 - 🇫🇮&nbsp;Martti&nbsp;Kontula - "Thanks for the sanity-enabling fix for Mac."
 - 🇰🇿&nbsp;Maksim&nbsp;Troshin - "Thanks for the great product!"
 - 🇷🇸&nbsp;Vanja&nbsp;Zavišin - "Unlike almost all software today, this one really works. No hussle, no trouble. Set it and forget it."
