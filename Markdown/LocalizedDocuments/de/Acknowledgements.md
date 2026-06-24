@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juni 2026**
 
+- 🇲🇾&nbsp;Benson&nbsp;Chin
 - 🇩🇪&nbsp;Ayschrens
 - 🇫🇮&nbsp;Martti&nbsp;Kontula - "Thanks for the sanity-enabling fix for Mac."
 - 🇰🇿&nbsp;Maksim&nbsp;Troshin - "Thanks for the great product!"

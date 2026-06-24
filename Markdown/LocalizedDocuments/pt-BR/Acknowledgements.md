@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **junho 2026**
 
+- 🇲🇾&nbsp;Benson&nbsp;Chin
 - 🇩🇪&nbsp;Ayschrens
 - 🇫🇮&nbsp;Martti&nbsp;Kontula - "Thanks for the sanity-enabling fix for Mac."
 - 🇰🇿&nbsp;Maksim&nbsp;Troshin - "Thanks for the great product!"

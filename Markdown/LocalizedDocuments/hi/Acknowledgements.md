@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **जून 2026**
 
+- 🇲🇾&nbsp;Benson&nbsp;Chin
 - 🇩🇪&nbsp;Ayschrens
 - 🇫🇮&nbsp;Martti&nbsp;Kontula - "Thanks for the sanity-enabling fix for Mac."
 - 🇰🇿&nbsp;Maksim&nbsp;Troshin - "Thanks for the great product!"
