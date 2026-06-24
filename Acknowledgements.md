@@ -74,6 +74,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **June 2026**
 
+- 🇵🇱&nbsp;Władysław&nbsp;G&nbsp; - "Could you please add a feature to exclude apps?"
 - 🇲🇾&nbsp;Benson&nbsp;Chin
 - 🇩🇪&nbsp;Ayschrens
 - 🇫🇮&nbsp;Martti&nbsp;Kontula - "Thanks for the sanity-enabling fix for Mac."

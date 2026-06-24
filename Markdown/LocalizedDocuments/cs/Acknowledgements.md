@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **červen 2026**
 
+- 🇵🇱&nbsp;Władysław&nbsp;G&nbsp; - "Could you please add a feature to exclude apps?"
 - 🇲🇾&nbsp;Benson&nbsp;Chin
 - 🇩🇪&nbsp;Ayschrens
 - 🇫🇮&nbsp;Martti&nbsp;Kontula - "Thanks for the sanity-enabling fix for Mac."
