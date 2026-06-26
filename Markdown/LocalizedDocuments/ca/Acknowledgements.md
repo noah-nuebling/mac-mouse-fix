@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **juny 2026**
 
+- 🇲🇾&nbsp;M&nbsp;Nazri&nbsp;Nordin&nbsp;(Arie) - "M. Nazri Nordin (Arie)"
 - 🇵🇱&nbsp;Władysław&nbsp;G&nbsp; - "Could you please add a feature to exclude apps?"
 - 🇲🇾&nbsp;Benson&nbsp;Chin
 - 🇩🇪&nbsp;Ayschrens
