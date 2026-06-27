@@ -31,18 +31,16 @@
 #import "ModifiedDragOutputTwoFingerSwipe.h"
 #import "ModifiedDragOutputFakeDrag.h"
 #import "ModifiedDragOutputAddMode.h"
+#import "ModifiedDragOutputVolumeBrightness.h"
+#import "ModifiedDragOutputWindowMove.h"
+#import "ModifiedDragOutputRotateZoom.h"
+#import "ModifiedDragOutputNotificationCenter.h"
 
 #import "GlobalEventTapThread.h"
 
 @implementation ModifiedDrag
 
-/// Notes:
-///     [Jun 2025]
-///         We've planned to add a feature for custom drag gestures at some point,
-///             I thought it should have some custom visual feedback for OneShot actions
-///             - IIRC I made some mockups in the big MMF Sketch project
-///             - "Gaussian Blur + Contrast" trick to simulate surface tension could be interesting. See: https://www.reddit.com/r/iOSProgramming/comments/1l2xxx5/bringing_emoji_reactions_to_life_a_creative_take/
-///     TODO: Rename this to just `Drag`
+/// TODO: Rename this to just `Drag`
 
 /// Vars
 
@@ -138,7 +136,7 @@ static ModifiedDragState _drag;
 //    }
 //}
 
-+ (void)initializeDragWithDict:(NSDictionary *)effectDict {
++ (void)initializeDragWithDict:(NSDictionary *)effectDict MF_SWIFT_HIDDEN {
     
     dispatch_async(_drag.queue, ^{
         
@@ -176,6 +174,24 @@ static ModifiedDragState _drag;
             p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputFakeDrag.class;
         } else if ([type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
             p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputAddMode.class;
+        } else if ([type isEqualToString:kMFModifiedDragTypeVolume]) {
+            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputVolumeBrightness.class;
+        } else if ([type isEqualToString:kMFModifiedDragTypeBrightness]) {
+            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputVolumeBrightness.class;
+        } else if ([type isEqualToString:kMFModifiedDragTypeVolumeHorizontal]) {
+            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputVolumeBrightness.class;
+        } else if ([type isEqualToString:kMFModifiedDragTypeBrightnessHorizontal]) {
+            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputVolumeBrightness.class;
+        } else if ([type isEqualToString:kMFModifiedDragTypeVolumeBrightness]) {
+            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputVolumeBrightness.class;
+        } else if ([type isEqualToString:kMFModifiedDragTypeBrightnessVolume]) {
+            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputVolumeBrightness.class;
+        } else if ([type isEqualToString:kMFModifiedDragTypeWindowMove]) {
+            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputWindowMove.class;
+        } else if ([type isEqualToString:kMFModifiedDragTypeRotateZoom]) {
+            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputRotateZoom.class;
+        } else if ([type isEqualToString:kMFModifiedDragTypeNotificationCenter]) {
+            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputNotificationCenter.class;
         } else {
             assert(false);
         }
@@ -188,6 +204,11 @@ static ModifiedDragState _drag;
         initDragState_Unsafe();
     });
 }
+
++ (void)__SWIFT_UNBRIDGED_initializeDragWithDict:(id)effectDict {
+    [self initializeDragWithDict:effectDict];
+}
+
 void initDragState_Unsafe(void) {
     
     _drag.origin = getRoundedPointerLocation();
@@ -399,6 +420,24 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
     
 //    DDLogDebug(@"Deactivated modifiedDrag. Caller: %@", [SharedUtility callerInfo]);
     [self deactivateWithCancel:false];
+}
+
++ (BOOL)isInUse {
+    /// Lightweight synchronous check — used by Scroll.m to suppress scroll events
+    /// while a modified drag is actively in use (prevents e.g. volume scroll firing
+    /// during RotateZoom drag on the same button).
+    /// Note: This reads _drag.activationState without dispatching to _drag.queue,
+    /// so it's technically a race, but it's only used as a hint to suppress output
+    /// and the worst case is one extra scroll event slipping through.
+    return _drag.activationState == kMFModifiedInputActivationStateInUse;
+}
+
++ (BOOL)isActive {
+    /// True when the drag button is held down (Initialized or InUse).
+    /// Used to suppress scroll while the user may be intending to drag —
+    /// even before the movement threshold has been crossed.
+    return _drag.activationState == kMFModifiedInputActivationStateInitialized
+        || _drag.activationState == kMFModifiedInputActivationStateInUse;
 }
 
 + (void)deactivateWithCancel:(BOOL)cancel {

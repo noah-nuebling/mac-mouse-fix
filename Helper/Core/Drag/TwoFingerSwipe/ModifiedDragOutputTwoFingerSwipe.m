@@ -14,12 +14,7 @@
 #import "CGSConnection.h"
 #import "PointerFreeze.h"
 #import "ScrollUtility.h"
-
-///
-/// - [May 2025] UX Problem: IDA Pro's Graph view is super unresponsive when scrolling it via "Scroll & Navigate".
-///     Observation: When scrolling on the Trackpad *while* moving the mouse a similar effect can be observed.
-///     Hypothesis: Even though MMF is locking the mouse pointer in place, it might still be generating mouse events, which slow down IDA.
-///
+#import "DragInertiaEngine.h"
 
 @implementation ModifiedDragOutputTwoFingerSwipe
 
@@ -28,9 +23,14 @@
 static ModifiedDragState *_drag;
 
 static TouchAnimator *_smoothingAnimator;
-//static DynamicSystemAnimator *_smoothingAnimator;
 static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
 static dispatch_group_t _momentumScrollWaitGroup;
+
+/// Fling engine — tracks real mouse velocity for accurate momentum on release
+static DragInertiaEngine *_swipeInertia;
+/// Most recent raw mouse delta (int64 as received from event tap, for accurate exit velocity)
+static int64_t _lastRawDx;
+static int64_t _lastRawDy;
 
 #pragma mark - Init
 
@@ -54,6 +54,9 @@ static dispatch_group_t _momentumScrollWaitGroup;
     
     /// Make cursor settable
     [ModificationUtility makeCursorSettable];
+    
+    /// Setup fling inertia engine
+    _swipeInertia = [[DragInertiaEngine alloc] init];
 }
 
 #pragma mark - Interface
@@ -70,6 +73,10 @@ static dispatch_group_t _momentumScrollWaitGroup;
     ///     - On the trackpad driver, scrolling seems to stop whenever any clicks or gestures come in. Maybe we should do a similar type of top-down management of when scrolling is stopped, instead of doing it here. Feels sorta hacky to do it here.
 
     [Scroll resetState];
+    
+    /// Cancel any running fling and stop its momentum scroll output
+    [_swipeInertia cancel];
+    [GestureScrollSimulator stopMomentumScroll];
 }
 
 + (void)handleBecameInUse {
@@ -88,81 +95,34 @@ static dispatch_group_t _momentumScrollWaitGroup;
 
 + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event {
     
-    /**
-     scrollSwipe scaling
-     A scale of 1.0 will make the pixel based animations (normal scrolling) follow the mouse pointer.
-     Gesture based animations (swiping between pages in Safari etc.) seem to be scaled separately such that swiping 3/4 (or so) of the way across the Trackpad equals one whole page. No matter how wide the page is.
-     So to scale the gesture deltas such that the page-change-animations follow the mouse pointer exactly, we'd somehow have to get the width of the underlying scrollview. This might be possible using the _systemWideAXUIElement we created in ScrollControl, but it'll probably be really slow.
-     */
     double twoFingerScale = 1.0;
     
-    /// Post event
-    ///     Using animator for smoothing
+    /// Store raw delta and track velocity for fling on release
+    _lastRawDx = (int64_t)deltaX;
+    _lastRawDy = (int64_t)deltaY;
+    double unused1, unused2;
+    [_swipeInertia trackDeltaX:deltaX deltaY:deltaY outDeltaX:&unused1 outDeltaY:&unused2];
     
-    /// Declare static vars for animator
+    /// Post event via smoothingAnimator (correct queue context)
+    
     static IOHIDEventPhaseBits eventPhase = kIOHIDEventPhaseUndefined;
-
-    /// Values that the block should copy instead of reference
     IOHIDEventPhaseBits firstCallback = _drag->firstCallback;
     
-    /// Start cool dynamic system animator
-    
-//    if (firstCallback) {
-//        eventPhase = kIOHIDEventPhaseBegan;
-//    }
-//    [_smoothingAnimator animateWithDistance:(Vector){ .x = deltaX*twoFingerScale, .y = deltaY*twoFingerScale} callback:^(Vector deltaVec, MFAnimationCallbackPhase animatorPhase, MFMomentumHint momentumHint) {
-//
-//        /// Debug
-//
-//
-//        if (animatorPhase == kMFAnimationCallbackPhaseEnd) {
-//
-//             if (_smoothingAnimatorShouldStartMomentumScroll) {
-//                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES];
-//             }
-//
-//            _smoothingAnimatorShouldStartMomentumScroll = false;
-//
-//            return;
-//        }
-//
-//        [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase autoMomentumScroll:YES];
-//
-//        eventPhase = kIOHIDEventPhaseChanged;
-//    }];
-    
-    /// Start animator
     [_smoothingAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, Curve * _Nullable curve, Vector currentSpeed) {
 
         NSMutableDictionary *p = [NSMutableDictionary dictionary];
         
-        /// Get delta
         Vector currentVec = { .x = deltaX*twoFingerScale, .y = deltaY*twoFingerScale };
         Vector combinedVec = addedVectors(currentVec, valueLeft);
 
-        /// Get Phase
         if (firstCallback) eventPhase = kIOHIDEventPhaseBegan;
-        
-        /// Debug
 
         static double lastTs = 0;
         double ts = CACurrentMediaTime();
         double tsDiff = ts - lastTs;
         lastTs = ts;
-
         DDLogDebug(@"twoFinger SmoothingAnimator start - time since last: %f", tsDiff * 1000);
 
-        /// Get return values
-        ///
-        /// Notes:
-        /// - On smoothing duration:
-        ///   - We want the duration as low as possible while still preventing the erratic behaviour.
-        ///     - For 1 frametime we still get erratic behaviour. I'm not sure any smoothing happens there.
-        ///     - For 2 frametimes we still get slightly erratic behaviour.
-        ///     - For 3 frameTimes we get almost no erratic behaviour.
-        ///   - I'm on a 60 hz screen and I don't have a 120 hz screen to test. To make sure we also prevent erratic behaviour on an 120 hz screen, we are setting the duration to 3.0/60.0 seconds instead of 3 frames. 3.0/60.0 also doesn't seem to cause erratic behaviour when setting my monitor to 30hz.
-        ///     - TODO: Set duration to 3 frames instead of 3.0/60.0 seconds if that doesn't lead to erratic behaviour on 120 hz screens.
-        
         if (magnitudeOfVector(combinedVec) == 0.0) {
             DDLogWarn(@"twoFinger Not starting baseAnimator since combinedMagnitude is 0.0");
             p[@"doStart"] = @NO;
@@ -170,10 +130,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
             p[@"vector"] = nsValueFromVector(combinedVec);
             p[@"curve"] = ScrollConfig.linearCurve;
             p[@"duration"] = @(3.0/60.0);
-//            p[@"durationInFrames"] = @3;
         }
-
-        /// Debug
 
         static Vector scrollDeltaSum = { .x = 0, .y = 0};
         scrollDeltaSum.x += fabs(currentVec.x);
@@ -181,114 +138,71 @@ static dispatch_group_t _momentumScrollWaitGroup;
         DDLogDebug(@"twoFinger Delta sum pre-animator: (%f, %f)", scrollDeltaSum.x, scrollDeltaSum.y);
         DDLogDebug(@"twoFinger Value left pre-animator: (%f, %f)", valueLeft.x, valueLeft.y);
 
-        /// Return
-
         return p;
 
     } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animatorPhase, MFMomentumHint subCurve) {
 
-        /// Debug
-
-//        static double scrollDeltaSummm = 0;
-//        scrollDeltaSummm += fabs(valueDeltaD);
-//        DDLogDebug(@"Delta sum in-animator: %f", scrollDeltaSummm);
-
         DDLogDebug(@"\n twoFinger smoothingAnimator callback - delta: (%f, %f), phase: %d, shouldStartMomentumScroll: %d", deltaVec.x, deltaVec.y, animatorPhase, _smoothingAnimatorShouldStartMomentumScroll);
         
         if (animatorPhase == kMFAnimationCallbackPhaseEnd) {
-
              if (_smoothingAnimatorShouldStartMomentumScroll) {
-                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES invertedFromDevice:_drag->naturalDirection];
+                 /// Send Ended without auto-momentum, then drive our own fling (same DragCurve physics as RotateZoom)
+                 [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:NO invertedFromDevice:_drag->naturalDirection];
+                 [self startFling];
+                 _lastRawDx = 0; _lastRawDy = 0;
              }
-
             _smoothingAnimatorShouldStartMomentumScroll = false;
-
             return;
         }
 
         [GestureScrollSimulator postGestureScrollEventWithDeltaX:deltaVec.x deltaY:deltaVec.y phase:eventPhase autoMomentumScroll:YES invertedFromDevice:_drag->naturalDirection];
-
         eventPhase = kIOHIDEventPhaseChanged;
-
     }];
 }
 
 + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancelation {
     
-    /// Handle cancelation
-    
     if (cancelation) {
         if (_smoothingAnimator.isRunning) {
             [_smoothingAnimator cancel];
         }
-        [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES invertedFromDevice:_drag->naturalDirection];
+        [_swipeInertia cancel];
+        [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:NO invertedFromDevice:_drag->naturalDirection];
         [GestureScrollSimulator suspendMomentumScroll];
-        
         [PointerFreeze unfreeze];
-
         return;
     }
     
-    /// Handle non-cancelation
+    /// Normal release: use DragInertiaEngine fling (DragCurve physics, same as RotateZoom)
+    /// for momentum instead of GestureScrollSimulator's built-in weaker auto-momentum.
     
-    /// Setup waiting for momentumScroll
-    
-    DDLogDebug(@"twoFinger Entering _momentumScrollWaitGroup");
-    dispatch_group_enter(_momentumScrollWaitGroup);
-    
-    [GestureScrollSimulator afterStartingMomentumScroll:^{
-        
-        DDLogDebug(@"twoFinger Leaving _momentumScrollWaitGroup");
-        dispatch_group_leave(_momentumScrollWaitGroup);
-        
-        /// Delete momentumScroll callback
-        ///     App will crash if `dispatch_group_leave()` is called again!
-        [GestureScrollSimulator afterStartingMomentumScroll:NULL];
-    }];
-    
-    /// Start momentumScroll
-    
-    if (_smoothingAnimator.isRunning) { /// Let `_smoothingAnimator` start momentumScroll
+    if (_smoothingAnimator.isRunning) {
         _smoothingAnimatorShouldStartMomentumScroll = YES;
-        DDLogDebug(@"twoFinger Set _smoothingAnimatorShouldStartMomentumScroll = YES");
-    } else { /// Start momentumScroll directly
-        DDLogDebug(@"twoFinger Starting momentumScroll directly");
-        [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES invertedFromDevice:_drag->naturalDirection];
+    } else {
+        /// Animator already finished — fire Ended and start fling directly
+        [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:NO invertedFromDevice:_drag->naturalDirection];
+        [self startFling];
+        _lastRawDx = 0; _lastRawDy = 0;
     }
-    
-    /// Wait until momentumScroll has been started
-    ///     We want to wait for momentumScroll so it is started before the warp. That way momentumScroll will work, even if we moved the pointer outside the scrollView that we started scrolling in.
-    ///     Waiting here will also block all other items on `_twoFingerDragQueue`
-    
-    ///     This whole `_momentumScrollWaitGroup` thing is pretty risky, because if there is any race condition and we don't leave the group properly, then we need to crash the app
-    ///     It's really hard to avoid race conditions here though the different  eventTap threads that control ModifiedDrag and all the different nested dispatch queues of ModifiedDrag and its smoothingAnimator and the GestureScrollSimulator queue and it's momentumAnimator's queue and then all those animators have displayLinks with their own queues.... All of these queues call each other in a mix of synchronous and asynchronous, and it all needs to work perfectly without race conditions or deadlocks... Really hard to keep track of.
-    ///     If we manage to figure this out, this will make for a great user experience though.
-    ///         - Update: We mostly made this work after TONS of blood sweat and tears, but there are still very rare crashes from `dispatch_group_wait()` timing out because `dispatch_group_leave()` isn't called while we're waiting. A (pretty hacky) workaround for some of the crashes might be to build a `dispatch_group_reset()` function. To do this we could get the current count of the `dispatch_group` from the debug description, and then reset the count to 0. We could use this to replace `dispatch_group_leave()` which decrements the count by 1. Currently, the problem is that if the count is already 0 then calling `dispatch_group_leave()` causes a crash, so we need to make absolutely sure that our calls to `dispatch_group_enter()` and `dispatch_group_leave()` are balanced, which is super hard due to race conditions. But if we could use a `dispatch_group_reset()` method, then we could possibly recover when the `dispatch_group_wait()` times out instead of crashing.
-    
-    /// Wait for momentumScroll to start
-    
-    DDLogDebug(@"twoFinger Waiting for dispatch group");
-    intptr_t rt = dispatch_group_wait(_momentumScrollWaitGroup, dispatch_time(DISPATCH_TIME_NOW, 2.0 * NSEC_PER_SEC));
-    
-    if (rt != 0) {
-        
-        /// Log error
-        DDLogError(@"twoFinger _momentumScrollWaitGroup timed out. _momentumScrollWaitGroup info: %@. Will crash.", _momentumScrollWaitGroup.debugDescription);
-        
-        /// Clean up
-        ///     Unhide mouse pointer
-        if (!runningPreRelease()) {
-            [PointerFreeze unfreeze]; /// Only in release so the crashes are more noticable in prereleases
-        }
-        
-        /// Crash
-        assert(false);
-        exit(EXIT_FAILURE); /// Make sure it also quits in release builds
-    }
-    
-    /// Unfreeze dispatch point
     
     [PointerFreeze unfreeze];
+}
+
++ (void)startFling {
+    BOOL naturalDirection = _drag->naturalDirection;
+    __block BOOL firstFlingCallback = YES;
+    
+    /// Non-linear velocity scale: hard flings get extra momentum, gentle releases stay gentle.
+    /// _swipeInertia internally tracks EMA velocity — we infer exit speed from last raw deltas.
+    /// A hard flick produces large raw deltas (20-60px/event); gentle stop is 1-3px/event.
+    double rawSpeed = sqrt((double)_lastRawDx * _lastRawDx + (double)_lastRawDy * _lastRawDy);
+    double velocityScale = 1.0 + fmin(rawSpeed / 20.0, 2.0); /// 1x–3x boost at rawSpeed≥40
+    
+    [_swipeInertia startFlingWithVelocityScale:velocityScale callback:^(double dx, double dy) {
+        CGMomentumScrollPhase phase = firstFlingCallback ? kCGMomentumScrollPhaseBegin : kCGMomentumScrollPhaseContinue;
+        firstFlingCallback = NO;
+        [GestureScrollSimulator postMomentumScrollDirectlyWithDeltaX:dx deltaY:dy momentumPhase:phase invertedFromDevice:naturalDirection];
+    }];
 }
 
 + (void)suspend {

@@ -65,12 +65,12 @@ static NSURL *_configURL;
 + (NSURL *)configURL {
     return _configURL;
 }
-+ (NSURL *_Nullable)launchdPlistURL {
++ (NSURL *)launchdPlistURL {
     NSString *launchdPlistRelativePathFromLibrary = [NSString stringWithFormat:@"LaunchAgents/%@.plist", kMFBundleIDHelper];
     NSURL *userLibURL = [NSFileManager.defaultManager URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask][0];
-    return [userLibURL URLByAppendingPathComponent:launchdPlistRelativePathFromLibrary];
+    return  [userLibURL URLByAppendingPathComponent:launchdPlistRelativePathFromLibrary];
 }
-+ (NSUserDefaults *_Nullable)defaults {
++ (NSUserDefaults *)defaults {
     
     /// This allows both the helper and the main app to write into the same user defaults
     
@@ -93,8 +93,35 @@ static NSURL *_configURL;
     
     if (self == Locator.class) {
         /// Get appSupportURL & configURL
-        NSURL *applicationSupportURL = [NSFileManager.defaultManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:NULL create:YES error:NULL];
-        _MFApplicationSupportFolderURL = [applicationSupportURL URLByAppendingPathComponent:kMFBundleIDApp];
+        /// Search multiple candidate App Support folders for an existing config.plist.
+        /// This handles bundle ID changes (e.g. com.nuebling.mac-mouse-fix -> com.virgoh.mac-mouse-fix)
+        /// without losing the user's config.
+        NSURL *applicationSupportURL = [NSFileManager.defaultManager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:NULL create:YES error:nil];
+        
+        NSString *runtimeBundleID = [Locator mainAppBundle].bundleIdentifier ?: kMFBundleIDApp;
+        NSArray<NSString *> *candidates = @[
+            runtimeBundleID,                                                        /// Current bundle ID (com.virgoh.mac-mouse-fix)
+            [runtimeBundleID stringByReplacingOccurrencesOfString:@"-" withString:@""], /// Without dashes (com.virgoh.macmousefix)
+            @"com.nuebling.mac-mouse-fix",                                          /// Legacy bundle ID
+        ];
+        
+        /// Pick whichever folder already has config.plist
+        NSURL *foundURL = nil;
+        for (NSString *folder in candidates) {
+            NSURL *base = [applicationSupportURL URLByAppendingPathComponent:folder];
+            NSURL *configCandidate = [base URLByAppendingPathComponent:@"config.plist"];
+            if ([NSFileManager.defaultManager fileExistsAtPath:configCandidate.path]) {
+                foundURL = base;
+                break;
+            }
+        }
+        
+        /// Fallback: use runtime bundle ID (will create fresh config on first launch)
+        if (!foundURL) {
+            foundURL = [applicationSupportURL URLByAppendingPathComponent:runtimeBundleID];
+        }
+        
+        _MFApplicationSupportFolderURL = foundURL;
         _configURL = [_MFApplicationSupportFolderURL URLByAppendingPathComponent:@"config.plist"];
     }
 }

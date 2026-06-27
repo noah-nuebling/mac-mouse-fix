@@ -8,6 +8,7 @@
 //
 
 import Foundation
+import CocoaLumberjackSwift
 
 @objc class ButtonTabController: NSViewController, NSPopoverDelegate {
     
@@ -44,43 +45,34 @@ import Foundation
         
         let alert = NSAlert()
         alert.alertStyle = .informational
-        alert.messageText = MFLocalizedString("restore-buttons-alert.title", comment: ".")
+        alert.messageText = NSLocalizedString("restore-buttons-alert.title", comment: "First draft: Restore Default for ...")
         alert.informativeText = ""
         
-        let restoreButton = alert.addButton(withTitle: MFLocalizedString("restore-buttons-alert.commit", comment: ""))
-        let cancelButton = alert.addButton(withTitle: MFLocalizedString("restore-buttons-alert.back", comment: ""))
-        restoreButton.keyEquivalent = IBUtility.keyChar(forLiteral: "return")!
-        cancelButton.keyEquivalent = IBUtility.keyChar(forLiteral: "escape")!
+        alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.commit", comment: "First draft: Restore"))
+        alert.addButton(withTitle: NSLocalizedString("restore-buttons-alert.back", comment: "First draft: Cancel"))
         
         ///
         /// Get device info
         ///
         
-        /// Get info
         let (name, nOfButtons, bestPresetMatch) =  MessagePortUtility.shared.getActiveDeviceInfo() ?? (nil, nil, nil)
-        /// Process info
-        ///     Note: Use non-breaking-space for nicer layout for long mouse names. (E.g. my VXE mouse connected over BT has the name "RivieraWaves SAS VXE R1SE+")
-        ///         Update: Actually like the layout less with nbsp.
-//        name = name?.replacingOccurrences(of: " ", with: "&nbsp;") as NSString?
         
         ///
         /// Add accessoryView
         ///
         
-        let radio1 = NSButton(radioButtonWithTitle: MFLocalizedString("restore-buttons-alert.radio1", comment: ""), target: self, action: #selector(nullAction(sender:)))
-        let radio2 = NSButton(radioButtonWithTitle: MFLocalizedString("restore-buttons-alert.radio2", comment: "If '5+' seems unnatural in your language, translate it as something like '5 or more'. Don't translate '5+' as 'more than 5' (common mistake)"), target: self, action: #selector(nullAction(sender:)))
-        radio1.setAccessibilityIdentifier("axRestoreButtons3")
-        radio2.setAccessibilityIdentifier("axRestoreButtons5")
+        let radio1 = NSButton(radioButtonWithTitle: NSLocalizedString("restore-buttons-alert.radio1", comment: "First draft: Mouse with 3 buttons"), target: self, action: #selector(nullAction(sender:)))
+        let radio2 = NSButton(radioButtonWithTitle: NSLocalizedString("restore-buttons-alert.radio2", comment: "First draft: Mouse with 5+ buttons"), target: self, action: #selector(nullAction(sender:)))
         
         let radioStack = NSStackView(views: [radio1, radio2])
         
         var hint: CoolNSTextField? = nil
         if let nOfButtons = nOfButtons {
             
-            let hintStringRaw = String(format: MFLocalizedString("restore-buttons-alert.hint", comment: "Note: '%1$@' will be the name of the mouse, such as 'Logitech M720 Triathlon'"), name!, nOfButtons)
+            let hintStringRaw = String(format: NSLocalizedString("restore-buttons-alert.hint", comment: "First draft: Your __%@__ mouse says it has __%d__ buttons"), name!, nOfButtons)
             
-//            let hintString = MarkdownParser.attributedString(withCoolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
-            let hintString = MarkdownParser.attributedString(withCoolMarkdown: hintStringRaw, fillOutBase: true)?.adding(.secondaryLabelColor, for: nil).settingFontSize(NSFont.smallSystemFontSize).adding(.center, for: nil).trimmingWhitespace()
+//            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.settingSecondaryLabelColor(forSubstring: nil).settingFontSize(NSFont.smallSystemFontSize).aligningSubstring(nil, alignment: .center).trimmingWhitespace()
+            let hintString = NSAttributedString(coolMarkdown: hintStringRaw)?.adding(.secondaryLabelColor, for: nil).settingFontSize(NSFont.smallSystemFontSize).adding(.center, for: nil).trimmingWhitespace()
             
             if let hintString = hintString {
                 hint = CoolNSTextField(labelWithAttributedString: hintString)
@@ -148,11 +140,15 @@ import Foundation
                     
                     /// Display already using notifications
                     
-                    if selectedPreset == 3 {    
-                        Toasts.showSimpleToast(name: "k-already-using-defaults-toast.3")
+                    let messageRaw: String
+                    if selectedPreset == 3 {
+                        messageRaw = NSLocalizedString("already-using-defaults-toast.3", comment: "First draft: You're __already using__ the default setting for mice with __3 buttons__")
                     } else {
-                        
-                        Toasts.showSimpleToast(name: "k-already-using-defaults-toast.5")
+                        messageRaw = NSLocalizedString("already-using-defaults-toast.5", comment: "First draft: You're __already using__ the default setting for mice with __5 buttons__")
+                    }
+                    let message = NSAttributedString(coolMarkdown: messageRaw)!
+                    DispatchQueue.main.async {
+                        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
                     }
                     return
                 }
@@ -240,45 +236,14 @@ import Foundation
     
     // MARK: Did appear
     
-    var _isFirstAppearance = true
-    
-    override func viewWillAppear() {
-        super.viewWillAppear()
-    }
     override func viewDidAppear() {
         super.viewDidAppear()
         
-        defer { self._isFirstAppearance = false }
-        
         /// This is called every time the tab is switched to
         /// This is called twice, awakeFromNib as well. Use init() or viewDidLoad() to do things once
-        ///     Update: [Dec 2025] Or use `self._isFirstAppearance`.
         
-        /// Turn off animations
-        ///     This prevents visible jank in case the `self.tableView.noteHeightOfRows` HACK below actually ends up changing the height of a row. I don't know why animations are enabled by default. [Dec 2025]
-        NSAnimationContext.beginGrouping()
-        NSAnimationContext.current.duration = 0.0
-        do {
-            /// HACK
-            ///     Purpose: Force `-[RemapTableController tableView:heightOfRow:]` to be called with final column widths.
-            ///     Specific bug this prevents: Bug where rows sometimes make vertical space for two lines of text even though the text doesn't wrap – Specifically this currently happens when running `func testTakeScreenshots_Documentation()` in Russian [Dec 2025]
-            ///     All observations made in env: `[Dec 2025, macOS 26 Tahoe, UIDesignRequiresCompatibility]`
-            ///     Performance Note: The first round of size calculations for the RemapTableView seem to be thrown away completely – inefficient (I think - haven't investigated much) [Dec 2025]
-            ///     Order-Of-Operations Note: Important to call this BEFORE the `updateSize(withAnimation:tabContentView:)` call right below, so the table height updates to match the updated row heights.[Dec 2025]
-            ///     Debugging tip: I put a log in `[RemapTableCellView setFrame:]` to observe the changes in the column widths
-            ///     Alternative solution ideas: [Dec 2025]
-            ///         - Somehow update the `RemapTableView` column widths to their final value before the 'natural' invocation of `-[RemapTableController tableView:heightOfRow:]`
-            ///         - Use `tableView.usesAutomaticRowHeights` somehow.
-            ///             - We're using that inside mf-xcloc-editor
-            ///             - Old reference:  https://developer.apple.com/forums/thread/126767
-            if (self._isFirstAppearance) { /// Not sure why we're only using `self._isFirstAppearance` here [Dec 2025] – didn't consider whether it also made sense for the other things when I added this [Dec 2025]
-                self.tableView.noteHeightOfRows(withIndexesChanged: IndexSet(0 ..< self.tableView.numberOfRows))
-            }
-            
-            /// Update tableView size
-            self.tableView.updateSize(withAnimation: false, tabContentView: self.view)
-        }
-        NSAnimationContext.endGrouping()
+        /// Update tableView size
+        self.tableView.updateSize(withAnimation: false, tabContentView: self.view)
         
         /// Display extra UI
         ///     Doing this with a delay because it doesn't work if the tab switch animation is still ongoing
@@ -293,7 +258,7 @@ import Foundation
             guard let (deviceName, nOfButtons, _) = MessagePortUtility.shared.getActiveDeviceInfo() else { return }
             
             /// Get actionTable info
-            let usedButtons = RemapTableUtility.getCapturedButtonsAndExcludeButtonsThatAreOnlyCaptured(byModifier: false)
+            let usedButtons = RemapTableUtility.getCapturedButtons()
 
             ///
             /// Show buyMouseAlert
@@ -309,10 +274,6 @@ import Foundation
             ///     - 1. Make it prettier / more readable by using custom layout and markdown formatting
             ///     - 2. Include links to top 3 recommended mice (and maybe a link to a longer list of recommended mice). Maybe get a brand deal with some good mouse manufacturer for promoting their products.
             ///     - 3. Maybe show a small/unbtrustive toast instead of an alert and have it link to the more complex content / recommendations
-            ///
-            /// Update Summer 2024:
-            /// -  If you implement this don't forget to consider making this escape-dismissable, like most other sheets and alerts in the app.
-            /// - Also probably move this into ToastAndSheetTests if you implement this.
             
             let showBuyMouseAlert = false
             
@@ -322,10 +283,10 @@ import Foundation
                 
                 let alert = NSAlert()
                 alert.alertStyle = .informational
-                alert.messageText = MFLocalizedString("buy-mouse-alert.title", comment: "")
-                alert.informativeText = MFLocalizedString("buy-mouse-alert.body", comment: "")
+                alert.messageText = NSLocalizedString("buy-mouse-alert.title", comment: "First draft: Your mouse only has 3 buttons")
+                alert.informativeText = NSLocalizedString("buy-mouse-alert.body", comment: "First draft: Get a mouse with 5+ buttons to unlock the full potential of Mac Mouse Fix!")
 //                alert.showsSuppressionButton = true
-                alert.addButton(withTitle: MFLocalizedString("buy-mouse-alert.ok", comment: ""))
+                alert.addButton(withTitle: NSLocalizedString("buy-mouse-alert.ok", comment: "First draft: OK"))
                 
                 /// Display alert
                 guard let window = MainAppState.shared.window else { return }
@@ -364,7 +325,7 @@ import Foundation
             commitConfig()
             
             /// Show user feedback
-            Toasts.showReviveToast(showButtons: buttonsAreKilled, showScroll: scrollIsKilled)
+            ToastCreator.showReviveToast(showButtons: buttonsAreKilled, showScroll: scrollIsKilled)
         }
     }
     
@@ -376,29 +337,29 @@ import Foundation
         
         /// This func doesn't clearly belong into `ButtonTabController`
         ///     Is called when the helper is enabled
+        ///
+        /// Only loads default remaps if:
+        ///   1. remapsAreInitialized flag is false (first run), AND
+        ///   2. Remaps array is actually empty
+        /// This prevents wiping user config when the flag gets cleared accidentally.
         
-        let hasBeenInited = config("State.remapsAreInitialized") as! Bool? ?? false
+        let remaps = config("Remaps") as? NSArray
+        let hasRemaps = (remaps != nil && remaps!.count > 0)
         
-        if !hasBeenInited {
-            
-            setConfig("State.remapsAreInitialized", true as NSObject)
-            commitConfig()
+        /// Always mark as initialized to prevent future runs from trying to overwrite
+        setConfig("State.remapsAreInitialized", true as NSObject)
+        commitConfig()
+        
+        /// Only load defaults if there are no remaps at all
+        if !hasRemaps {
             
             let (_, _, bestPresetMatch) = MessagePortUtility.shared.getActiveDeviceInfo() ?? (nil, nil, nil)
-            
-            /// This is copy-pasted from `restoreDefaults()`
-            
-            let currentMap = config("Remaps")
             let defaultMap = config(bestPresetMatch == 3 ? "Constants.defaultRemaps.threeButtons" : "Constants.defaultRemaps.fiveButtons")
             
-            if (currentMap != defaultMap) {
-                
-                /// Set config
-                setConfig("Remaps", defaultMap!)
+            if let map = defaultMap {
+                setConfig("Remaps", map)
                 commitConfig()
                 
-                /// Reload table
-                /// Note: It feels a bit hacky to call `updateColumnWidths()` here. Maybe this should be handled automatically inside the remapTable code.
                 DispatchQueue.main.async {
                     MainAppState.shared.remapTableController?.reloadAll()
                     MainAppState.shared.buttonTabController?.tableView.updateColumnWidths()
@@ -444,7 +405,7 @@ import Foundation
     
     private var restoreDefaultPopover_stringAttributesFromIB: [NSAttributedString.Key : Any]? = nil
     
-    func showRestoreDefaultPopover(deviceName: String, nOfButtons: Int, usedButtons: Set<NSNumber>) {
+    fileprivate func showRestoreDefaultPopover(deviceName: String, nOfButtons: Int, usedButtons: Set<NSNumber>) {
         
         /// This is a helper for `viewDidAppear()`
         
@@ -479,14 +440,12 @@ import Foundation
             
             show5Button = true
         }
-        
         if config("Other.dontRemindToRestoreDefault3") as? Bool ?? false {
             show3Button = false
         }
         if config("Other.dontRemindToRestoreDefault5") as? Bool ?? false {
             show5Button = false
         }
-        
         assert(!(show3Button && show5Button))
         
         ///
@@ -510,21 +469,11 @@ import Foundation
             
             /// Setup body text
             ///     There used to be different text based on whether your were using a 3 button or a 5 button mouse, but we've simplified that now
-            /// I wrote this note: "In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug"
-            ///     -> I think this problem will be resolved by us using `**` instead of `__` for emphasis.
-            /// TODO: The 'Don't remind me again' checkbox at the bottom of the popover is loaded directly from the nib file. So it's localizable string is in a totally different place. This might be confusing for localizers.
-            /// On hardcoding popover width: We considered hardcoding the popover width instead of giving localizers control via the linebreak, just like we did for tabs (See `applyHardcodedTabWidth()`,
-            ///     but decided against because:
-            ///         - The popover looks fine even if the text is super wide – perhaps the main purpose of the linebreak is semantic not for controlling width. [Sep 2025]
-            ///         - All the localizers except Turkish did put a nice-looking linebreak – and even Turkish looks fine.
-            ///         - Chinese and Korean didn't put linebreaks at all and are pretty wide, making them wrap seems awkward.
-            ///         - There's no big layout that depends on this, just the little popover which contains this text and a little checkbox below. So localizers don't control stuff they don't see (which was the case before `applyHardcodedTabWidth()`)
             
-            let message = String(format: MFLocalizedString("restore-default-buttons-popover.body", comment: "Note: There's a linebreak in English so the popover doesn't become too wide and to aid with readability."), deviceName)
+            let message = String(format: NSLocalizedString("restore-default-buttons-popover.body", comment: "First draft:  __Click here__ to load the recommended settings\nfor your __%@__ mouse || Note: The \n linebreak is so the popover doesn't become too wide. You can set it to your taste. || Note: In English, there needs to be a space at the start of this string otherwise the whole string will be bold. This might be a Ventura Bug"), deviceName)
             
-            if let attributes = restoreDefaultPopover_stringAttributesFromIB,
-               let newString = MarkdownParser.attributedString(withCoolMarkdown: message, fillOutBase: false)?.addingAttributes(asBase: attributes)
-           {
+            if let attributes = restoreDefaultPopover_stringAttributesFromIB, let newString = NSAttributedString(coolMarkdown: message, fillOutBase: false)?.addingStringAttributes(asBase: attributes) {
+                
                 self.restoreDefaultPopoverLabel.attributedStringValue = newString
             }
             
@@ -536,34 +485,22 @@ import Foundation
             
             /// Close on click
             ///     By intercepting events
-            self.popoverMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .keyDown]) { event in
-                    
-                var shouldClose: Bool
-                var shouldPassThroughEvent: Bool = true
-                if event.type == .keyDown {
-                    /// Handle keydown
-                    shouldClose = (event.keyCode == kVK_Escape)
-                    shouldPassThroughEvent = false /// Otherwise there's an NSBeep
-                } else {
-                    /// Handle clicks
-                    /// Check click on window
-                    let clickedOnWindow = self.view.hitTest(event.locationInWindow) != nil
-                    
-                    /// Check click on popover
-                    let popupView = self.restoreDefaultPopover.contentViewController?.view
-                    let locInScreen = NSEvent.mouseLocation
-                    let locInPopupWindow = popupView?.window?.convertPoint(fromScreen: locInScreen)
-                    var clickedOnPopover = false
-                    if let loc = locInPopupWindow {
-                        clickedOnPopover = popupView?.hitTest(loc) != nil
-                    }
-                    
-                    /// Set shouldClose
-                    shouldClose = clickedOnWindow && !clickedOnPopover
+            self.popoverMonitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) { event in
+                
+                /// Check click on window
+                let clickedOnWindow = self.view.hitTest(event.locationInWindow) != nil
+                
+                /// Check click on popover
+                let popupView = self.restoreDefaultPopover.contentViewController?.view
+                let locInScreen = NSEvent.mouseLocation
+                let locInPopupWindow = popupView?.window?.convertPoint(fromScreen: locInScreen)
+                var clickedOnPopover = false
+                if let loc = locInPopupWindow {
+                    clickedOnPopover = popupView?.hitTest(loc) != nil
                 }
-
+                
                 /// Close popover
-                if shouldClose {
+                if clickedOnWindow && !clickedOnPopover {
                     
                     /// Store user choice about not being reminded again
                     //  TODO: Now that the UI message doesn't contain info about how many buttons the users mouse has and how that doesn't fit the current settings, it's kind of weird to make the don't remind based on button number. Intuitively it should maybe be based on mouse model? Not sure.
@@ -592,7 +529,7 @@ import Foundation
                 }
                 
                 /// Return intercepted event
-                return shouldPassThroughEvent ? event : nil
+                return event
             }
         }
     }
@@ -669,15 +606,19 @@ import Foundation
     ///     TODO: Use format strings and shared functions from UIStrings.m to obtain button names
 
     override func mouseUp(with event: NSEvent) {
-        
         if !pointerIsInsideAddField { return }
         
-        Toasts.showSimpleToast(name: "k-forbidden-capture-toast.1")
+        let messageRaw = NSLocalizedString("forbidden-capture-toast.1", comment: "First draft: **Primary Mouse Button** can't be used\nPlease try another button")
+        let message = NSAttributedString(coolMarkdown: messageRaw)!;
+        
+        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
     }
     override func rightMouseUp(with event: NSEvent) {
-        
         if !pointerIsInsideAddField { return }
         
-        Toasts.showSimpleToast(name: "k-forbidden-capture-toast.2")
+        let messageRaw = NSLocalizedString("forbidden-capture-toast.2", comment: "First draft: **Secondary Mouse Button** can't be used\nPlease try another button")
+        let message = NSAttributedString(coolMarkdown: messageRaw)!;
+        
+        ToastNotificationController.attachNotification(withMessage: message, to: MainAppState.shared.window!, forDuration: kMFToastDurationAutomatic)
     }
 }

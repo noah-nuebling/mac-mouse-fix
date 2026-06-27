@@ -15,6 +15,7 @@
 #import "ScrollUtility.h"
 #import "VectorUtility.h"
 #import "HelperUtility.h"
+#import "WannabePrefixHeader.h"
 #import "ScrollAnalyzer.h"
 #import "ScrollConfigObjC.h"
 #import <Cocoa/Cocoa.h>
@@ -27,6 +28,9 @@
 #import "Actions.h"
 #import "EventUtility.h"
 #import "MathObjc.h"
+#import "ScrollOutputUtility.h"
+#import "ModifiedDrag.h"
+#import "ContextualScrollActions.h"
 
 @import IOKit;
 #import "MFHIDEventImports.h"
@@ -74,12 +78,12 @@ static CFTimeInterval _lastScrollAnalysisResultTimeStamp;
     /// Create AXUIElement for getting app under mouse pointer
     _systemWideAXUIElement = AXUIElementCreateSystemWide();
     /// Create Event source
-    if (_eventSource == NULL) {
+    if (_eventSource == nil) {
         _eventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
     }
     
     /// Create/enable scrollwheel input callback
-    if (_eventTap == NULL) {
+    if (_eventTap == nil) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
         _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
         DDLogDebug(@"Scroll.m: _eventTap: %@", _eventTap);
@@ -246,7 +250,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         heavyProcessing(eventCopy, scrollDeltaAxis1, scrollDeltaAxis2, tickTime);
     });
     
-    return NULL;
+    return nil;
 }
 
 #pragma mark - Main event processing
@@ -254,7 +258,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t scrollDeltaAxis2, CFTimeInterval tickTS) {
     
     /// Declare stuff for later
-    static DriverUnsuspender unsuspendDrivers = ^{}; /// This is old stuff that should be removed I think [Jun 2 2025]
+    static DriverUnsuspender unsuspendDrivers = ^{};
     
     /// Debug
     if (runningPreRelease()) { /// if-statement because hidEvent.description is very slow
@@ -275,15 +279,6 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
             CFStringRef name = IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDProductKey));
             CFStringRef manufacturer = IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDManufacturerKey));
-            /// ^ [May 2025] Just saw a crash here See `Crash Reports > Mac Mouse Fix Helper-2025-05-29-112149.ips`
-            ///     Location: `Scroll.m:279 [[[CFStringRef manufacturer = IOHIDDeviceGetProperty(sendingDev, CFSTR(kIOHIDManufacturerKey))]]] > IOHIDDeviceGetProperty+120 > _os_unfair_lock_unlock_slow + 92 > ...`:
-            ///     Thread: Thread 3 (Dispatch queue: com.nuebling.mac-mouse-fix.helper.scroll)
-            ///     Message: BUG IN CLIENT OF LIBPLATFORM: Unlock of an `os_unfair_lock` not owned by current thread
-            ///     Possibly related: Thread 1 (Dispatch queue: com.apple.main-thread) was currently at `ButtonInputReceiver.m:142 > DeviceManager.m:71 > Device.m:258 (-[Device wrapsIOHIDDevice:]+0`)
-            ///     Interpretations:
-            ///         - Maybe Thread 1 and 3 tried to access the device at the same time causing issues. However thread 1 wasn't actually inside IOHIDDeviceGetProperty() according to the crash report. It was just at `-[Device wrapsIOHIDDevice:]+0`, which is right *before* accessing the device, but not accessing it, yet I think. Also, the presence of the `os_unfair_lock` suggests that IOHIDDevice *is* supposed to be thread-safe, but just had a bug right there.
-            ///             - After thinking a bit more, this makes no sense, looking at IOHIDDeviceRef.c > IOHIDDeviceGetProperty(), it just locks at the start and unlocks at the end and I have no clue how the unlocking thread can end up being different from the locking one.
-            ///         - Claude suggests that the IOHIDDevice must be memory-corrupted or used-after-free/used-after-close. Seems sorta plausible since CGEventGetSendingDevice() never cleans up its cache and could theoretically return pointer to a IOHIDDeviceRef that has disconnected. ... But it seems sort of unlikely that the device would get disconnected between sending the scroll events and the processing of the scroll events (which we're doing here). Also just because the device is disconnected it shouldn't mean that the whole IOHIDDeviceRef instance becomes memory-corrupted. I think it should still be safe to use, just fail read/write operations and so on (but I haven't tested this). Perhaps it's a thread-safety bug inside IOHIDDevice. When we put all this stuff on one 'IOThread' that should help with this bug. Also see this conversation with Claude: https://claude.ai/share/77e528bf-2908-4fa0-a14c-4a924b0198de
             
             DDLogDebug(@"Scroll.m: Device sending scroll: %@ %@", manufacturer, name);
         }
@@ -390,6 +385,21 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
     } /// End `if (firstConsecutive) {`
     
+    /// Suppress scroll while a modified drag is active (button held down).
+    ///
+    /// Heuristics:
+    /// - If drag is InUse (crossed movement threshold): always suppress — user is definitely dragging.
+    /// - If drag is Initialized (button held, not yet moved enough): also suppress — user is likely
+    ///   intending to drag and the scroll is accidental (e.g. middle button pressed to start a
+    ///   Scroll & Navigate drag, scroll wheel fires immediately from the physical click mechanism).
+    ///
+    /// This prevents the classic middle-button problem where pressing the button triggers both a
+    /// scroll event (from the physical click) and the drag mode simultaneously.
+    if ([ModifiedDrag isActive]) {
+        CFRelease(event);
+        return;
+    }
+    
     ///
     /// Get effective direction
     ///  -> With user settings etc. applied
@@ -491,22 +501,109 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         }
         
         ///
-        /// Make direction change stop scroll animation
+        /// Make direction change / deceleration stop scroll animation
         ///
-        /// Notes:
-        /// - We implemented this here without much consideration to play around with it. I haven't really thought about the control flow and stuff - maybe it's not super clean to just return here? Maybe we should set pxToScrollForThisTick to zero? Idk. But I've been using it for a while and it works well.
-        /// - We used to have a threshold for the currentAnimationSpeed of 200 to actually cancel the animator, but it seems to feel nicer to just set the threshold to 0. At this point it might be simpler or more efficient to not use the `currentAnimationSpeed` here or use something else instead. Buttt the performance impact reallyyy shouldn't be significant and it works fine so it's whatever.
-        /// - Improvement idea: [Aug 2025]
-        ///     - Swallow the first 2 or 3 ticks of the scrollSwipe instead of just the 1st one.
-        ///         - Benefit:                  This would make it physically easier to avoid accidentally scrolling in the opposite direction
-        ///         - Implementation:     Should probably implement this in ScrollAnalyzer.m instead of doing a hack here
-        ///         - Credit for idea:       This email by 'A day of Software Engineer': (message:<510CF7AC-5BE0-4CED-BF9A-A3A3327EE2A5@gmail.com>)
+        /// Three modes controlled by `momentumArrestMode`:
+        ///   - "off"             : Original — cancel on direction change, swallow 1 tick
+        ///   - "directionChange" : Swallow 2 ticks on direction change, then allow reverse
+        ///   - "deceleration"    : Detect wheel stop via timeout (best for free-spinning wheels)
+        ///                         When ticks were fast and then stop arriving, arrest momentum.
+        ///                         Also includes directionChange behavior.
         
-        double currentAnimationSpeed = magnitudeOfVector(_animator.getLastAnimationSpeed);
-        if (_lastScrollAnalysisResult.scrollDirectionDidChange && currentAnimationSpeed > 0) {
-            DDLogDebug(@"Scroll.m: Direction change – cancel scroll.");
-            [_animator cancel];
-            return;
+        static int _directionChangeTicksSwallowed = 0;
+        static BOOL _momentumWasArrestedByDirectionChange = NO;
+        static dispatch_source_t _decelerationTimer = nil;
+        static BOOL _wasScrollingFast = NO;
+        
+        BOOL animatorIsRunning = _animator.isRunning;
+        NSString *arrestMode = (NSString *)_scrollConfig.momentumArrestMode;
+        BOOL useDeceleration = [arrestMode isEqualToString:@"deceleration"];
+        BOOL useDirectionChange = useDeceleration || [arrestMode isEqualToString:@"directionChange"];
+        
+        /// --- Deceleration detection (free-spinning wheel mode) ---
+        /// Detects hard-stop only: wheel spinning very fast then ticks stop completely.
+        /// Natural slowdown (gradual tick spacing increase) does NOT trigger this.
+        
+        if (useDeceleration) {
+            
+            double currentTimeBetweenTicks = scrollAnalysisResult.timeBetweenTicks;
+            BOOL isVeryFast = (currentTimeBetweenTicks != DBL_MAX && currentTimeBetweenTicks < 0.020);
+            
+            /// Cancel any existing timer (we got a new tick, so wheel is still moving)
+            if (_decelerationTimer != nil) {
+                dispatch_source_cancel(_decelerationTimer);
+                _decelerationTimer = nil;
+            }
+            
+            /// Only track "fast" state when ticks are very fast (< 20ms)
+            /// Reset immediately when ticks slow down — this prevents triggering during natural deceleration
+            if (isVeryFast) {
+                _wasScrollingFast = YES;
+            } else {
+                _wasScrollingFast = NO;
+            }
+            
+            /// Arm timer ONLY when wheel is currently spinning very fast.
+            /// If the wheel naturally slows down, _wasScrollingFast becomes NO and timer won't arm.
+            /// Timer only fires if ticks were very fast and then NOTHING arrives for 100ms (hard stop).
+            if (_wasScrollingFast && _animator.isRunning) {
+                _decelerationTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, _scrollQueue);
+                dispatch_source_set_timer(_decelerationTimer, dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), DISPATCH_TIME_FOREVER, 5 * NSEC_PER_MSEC);
+                dispatch_source_set_event_handler(_decelerationTimer, ^{
+                    if (_animator.isRunning) {
+                        DDLogDebug(@"Scroll.m: Hard stop detected – wheel went from fast to zero ticks.");
+                        [_animator cancel];
+                        [GestureScrollSimulator stopMomentumScroll];
+                    }
+                    _wasScrollingFast = NO;
+                    _decelerationTimer = nil;
+                });
+                dispatch_resume(_decelerationTimer);
+            }
+        }
+        
+        /// --- Direction change handling ---
+        
+        if (_lastScrollAnalysisResult.scrollDirectionDidChange) {
+            
+            if (useDirectionChange) {
+                /// Enhanced momentum arrest (trackpad-like)
+                
+                if (animatorIsRunning) {
+                    DDLogDebug(@"Scroll.m: Direction change – arresting momentum.");
+                    [_animator cancel];
+                    [GestureScrollSimulator stopMomentumScroll];
+                    _momentumWasArrestedByDirectionChange = YES;
+                    _directionChangeTicksSwallowed = 0;
+                    _wasScrollingFast = NO;
+                    if (_decelerationTimer != nil) {
+                        dispatch_source_cancel(_decelerationTimer);
+                        _decelerationTimer = nil;
+                    }
+                }
+                
+                if (_momentumWasArrestedByDirectionChange) {
+                    _directionChangeTicksSwallowed += 1;
+                    if (_directionChangeTicksSwallowed <= 2) {
+                        DDLogDebug(@"Scroll.m: Direction change – swallowing tick %d (momentum arrest).", _directionChangeTicksSwallowed);
+                        return;
+                    }
+                }
+                
+            } else {
+                /// "off" mode: cancel and swallow first tick
+                double currentAnimationSpeed = magnitudeOfVector(_animator.getLastAnimationSpeed);
+                if (currentAnimationSpeed > 0) {
+                    DDLogDebug(@"Scroll.m: Direction change – cancel scroll (legacy).");
+                    [_animator cancel];
+                    return;
+                }
+            }
+            
+        } else {
+            /// Direction didn't change — reset arrest state
+            _momentumWasArrestedByDirectionChange = NO;
+            _directionChangeTicksSwallowed = 0;
         }
         
         /// Debug
@@ -779,10 +876,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             ScrollConfig *config = configCopyForBlock;
             
             /// Unsuspend
-            if ((0)) { /// This is old stuff that should be removed I think [Jun 2 2025]
-                if (animationPhase != kMFAnimationCallbackPhaseStart && animationPhase != kMFAnimationCallbackPhaseContinue) {
-                    unsuspendDrivers();
-                }
+            if (animationPhase != kMFAnimationCallbackPhaseStart && animationPhase != kMFAnimationCallbackPhaseContinue) {
+                unsuspendDrivers();
             }
             
             /// Validate
@@ -855,6 +950,20 @@ static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL animated, M
         outputType = kMFScrollOutputTypeCommandTab;
     } else if (_modifications.effectMod == kMFScrollEffectModificationThreeFingerSwipeHorizontal) {
         outputType = kMFScrollOutputTypeThreeFingerSwipeHorizontal;
+    } else if (_modifications.effectMod == kMFScrollEffectModificationVolume) {
+        outputType = kMFScrollOutputTypeVolume;
+    } else if (_modifications.effectMod == kMFScrollEffectModificationBrightness) {
+        outputType = kMFScrollOutputTypeBrightness;
+    } else if (_modifications.effectMod == kMFScrollEffectModificationArrowKeys) {
+        outputType = kMFScrollOutputTypeArrowKeys;
+    } else if (_modifications.effectMod == kMFScrollEffectModificationArrowKeysHorizontal) {
+        outputType = kMFScrollOutputTypeArrowKeysHorizontal;
+    } else if (_modifications.effectMod == kMFScrollEffectModificationWindowResize) {
+        outputType = kMFScrollOutputTypeWindowResize;
+    } else if (_modifications.effectMod == kMFScrollEffectModificationAudioDeviceSwitch) {
+        outputType = kMFScrollOutputTypeAudioDeviceSwitch;
+    } else if (_modifications.effectMod == kMFScrollEffectModificationWindowCycle) {
+        outputType = kMFScrollOutputTypeWindowCycle;
     } /// kMFScrollEffectModificationHorizontalScroll is handled above when determining scroll direction
     
     /// Send event
@@ -873,6 +982,13 @@ typedef enum {
     kMFScrollOutputTypeZoom,
     kMFScrollOutputTypeRotation,
     kMFScrollOutputTypeCommandTab,
+    kMFScrollOutputTypeVolume,
+    kMFScrollOutputTypeBrightness,
+    kMFScrollOutputTypeArrowKeys,
+    kMFScrollOutputTypeArrowKeysHorizontal,
+    kMFScrollOutputTypeWindowResize,
+    kMFScrollOutputTypeAudioDeviceSwitch,
+    kMFScrollOutputTypeWindowCycle,
 } MFScrollOutputType;
 
 /// Output
@@ -1116,8 +1232,8 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         ///     Int deltas are generally truncated but also rounded up to be at least 1 (or -1). This also happens in real events.
         int64_t dyLineInt = (int64_t)dyLine;
         int64_t dxLineInt = (int64_t)dxLine;
-        if (fabs(dyLine) != 0 && llabs(dyLineInt) == 0) dyLineInt = mfsign(dyLine);
-        if (fabs(dxLine) != 0 && llabs(dxLineInt) == 0) dxLineInt = mfsign(dxLine);
+        if (fabs(dyLine) != 0 && llabs(dyLineInt) == 0) dyLineInt = sign(dyLine);
+        if (fabs(dxLine) != 0 && llabs(dxLineInt) == 0) dxLineInt = sign(dxLine);
         
         /// Get line deltas as fixed point number
         int64_t dyLineFixed = fixedScrollDelta(dyLine);
@@ -1175,7 +1291,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                     eventPhase = kIOHIDEventPhaseChanged;
                     
                     assert(eventDelta != 0);
-                    if (mfsign(eventDelta) > 0) {
+                    if (sign(eventDelta) > 0) {
                         eventDelta += 380/800.0;
                     } else {
                         eventDelta -= 250/800.0;
@@ -1254,6 +1370,108 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
                 sendKeyEvent(48, kCGEventFlagMaskCommand | kCGEventFlagMaskShift, false);
             }
         }
+        
+    } else if (outputType == kMFScrollOutputTypeVolume) {
+        
+        /// --- Volume ---
+        double d = dx + dy;
+        if (d == 0) return;
+        float currentVolume = [ScrollOutputUtility getSystemVolume];
+        float delta = (float)(d / 4000.0);
+        [ScrollOutputUtility setSystemVolume:currentVolume + delta];
+        
+    } else if (outputType == kMFScrollOutputTypeBrightness) {
+        
+        /// --- Brightness ---
+        double d = dx + dy;
+        if (d == 0) return;
+        float currentBrightness = [ScrollOutputUtility getDisplayBrightness];
+        float delta = (float)(d / 4000.0);
+        [ScrollOutputUtility setDisplayBrightness:currentBrightness + delta];
+        
+    } else if (outputType == kMFScrollOutputTypeArrowKeys) {
+        
+        /// --- Arrow Keys (Vertical): scroll up → Up arrow, scroll down → Down arrow ---
+        double d = dx + dy;
+        if (d == 0) return;
+        CGKeyCode keyCode = (d > 0) ? 126 : 125;
+        sendKeyEvent(keyCode, 0, true);
+        sendKeyEvent(keyCode, 0, false);
+        
+    } else if (outputType == kMFScrollOutputTypeArrowKeysHorizontal) {
+        
+        /// --- Arrow Keys (Horizontal): scroll up → Right arrow, scroll down → Left arrow ---
+        double d = dx + dy;
+        if (d == 0) return;
+        CGKeyCode keyCode = (d > 0) ? 124 : 123;
+        sendKeyEvent(keyCode, 0, true);
+        sendKeyEvent(keyCode, 0, false);
+        
+    } else if (outputType == kMFScrollOutputTypeWindowResize) {
+        
+        /// --- Window Resize: scroll up = bigger, scroll down = smaller ---
+        double d = dx + dy;
+        if (d == 0) return;
+        double resizeDelta = d * 0.5;
+        
+        AXUIElementRef systemWide = AXUIElementCreateSystemWide();
+        AXUIElementRef element = NULL;
+        NSPoint mouse = [NSEvent mouseLocation];
+        NSScreen *screen = [NSScreen mainScreen];
+        CGFloat screenHeight = screen.frame.size.height;
+        CGPoint point = CGPointMake(mouse.x, screenHeight - mouse.y);
+        AXUIElementCopyElementAtPosition(systemWide, point.x, point.y, &element);
+        CFRelease(systemWide);
+        if (!element) return;
+        
+        AXUIElementRef window = NULL;
+        CFStringRef role = NULL;
+        AXUIElementCopyAttributeValue(element, kAXRoleAttribute, (CFTypeRef *)&role);
+        if (role && CFStringCompare(role, kAXWindowRole, 0) == kCFCompareEqualTo) {
+            window = element; element = NULL;
+        } else {
+            AXUIElementCopyAttributeValue(element, kAXWindowAttribute, (CFTypeRef *)&window);
+        }
+        if (role) CFRelease(role);
+        if (element) CFRelease(element);
+        if (!window) return;
+        
+        CFTypeRef sizeValue = NULL;
+        AXUIElementCopyAttributeValue(window, kAXSizeAttribute, &sizeValue);
+        if (!sizeValue) { CFRelease(window); return; }
+        CGSize size;
+        AXValueGetValue(sizeValue, kAXValueCGSizeType, &size);
+        CFRelease(sizeValue);
+        
+        size.width  = MAX(200, size.width  + resizeDelta);
+        size.height = MAX(100, size.height + resizeDelta * (size.height / size.width));
+        
+        AXValueRef newSize = AXValueCreate(kAXValueCGSizeType, &size);
+        AXUIElementSetAttributeValue(window, kAXSizeAttribute, newSize);
+        CFRelease(newSize);
+        CFRelease(window);
+        
+    } else if (outputType == kMFScrollOutputTypeAudioDeviceSwitch) {
+        
+        /// --- Audio Device Switch: scroll to cycle output devices ---
+        double d = dx + dy;
+        if (d == 0) return;
+        static CFTimeInterval lastSwitchTime = 0;
+        CFTimeInterval now = CACurrentMediaTime();
+        if (now - lastSwitchTime < 0.3) return; /// Throttle to 300ms
+        lastSwitchTime = now;
+        [ContextualScrollActions cycleAudioOutputDevice:(d > 0)];
+        
+    } else if (outputType == kMFScrollOutputTypeWindowCycle) {
+        
+        /// --- Window Cycle: scroll to cycle windows of frontmost app ---
+        double d = dx + dy;
+        if (d == 0) return;
+        static CFTimeInterval lastCycleTime = 0;
+        CFTimeInterval now = CACurrentMediaTime();
+        if (now - lastCycleTime < 0.15) return; /// Throttle to 150ms
+        lastCycleTime = now;
+        [ContextualScrollActions cycleAppWindows:(d > 0)];
         
     } else {
         assert(false);

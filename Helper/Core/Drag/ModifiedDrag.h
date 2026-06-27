@@ -13,7 +13,6 @@
 #import "Constants.h"
 #import "VectorUtility.h"
 #import "IOHIDEventTypes.h"
-#import "DisableSwiftBridging.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -82,7 +81,8 @@ typedef struct {
 
 //+ (NSDictionary *)initialModifiers;
 //+ (CGEventTapProxy)tapProxy;
-+ (void)initializeDragWithDict:(MF_SWIFT_UNBRIDGED(NSDictionary *))effectDict NS_REFINED_FOR_SWIFT;
++ (void)initializeDragWithDict:(NSDictionary *)effectDict;
++ (void)__SWIFT_UNBRIDGED_initializeDragWithDict:(id)effectDict;
 
 //+ (void)modifiedScrollHasBeenUsed;
 
@@ -90,6 +90,9 @@ typedef struct {
 
 + (void)deactivate;
 + (void)deactivateWithCancel:(BOOL)cancel;
+
++ (BOOL)isInUse;
++ (BOOL)isActive;
 
 //+ (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef _Nullable)event;
 
