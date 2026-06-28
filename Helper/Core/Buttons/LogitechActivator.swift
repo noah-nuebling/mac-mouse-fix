@@ -498,7 +498,12 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
         // 2. Slow-path: if fast-path failed or we have no last known index, run full probing
         if activeIndex == 0 {
             let indices: [UInt8] = [0xFF, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06]
-            let filteredIndices = indices.filter { $0 != lastKnownIndex }
+            let filteredIndices: [UInt8]
+            if lastKnownIndex != 0xFF && lastKnownIndex != 0 {
+                filteredIndices = indices.filter { $0 != lastKnownIndex }
+            } else {
+                filteredIndices = indices
+            }
             
             for testIndex in filteredIndices {
                 s.deviceIndex = testIndex
@@ -648,6 +653,12 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
                     let btn = button(for: cid, state: s)
                     
                     if btn >= 6 && !isButtonRemapped(btn) {
+                        if Remap.addModeIsEnabled {
+                            if !todivert.contains(cid) { todivert.append(cid) }
+                            os_log("LogitechCIDActivator: CID 0x%{public}04X maps to Button %{public}d. Under AddMode, forcing divert.",
+                                   log: self.logger, type: .info, cid, btn)
+                            continue
+                        }
                         os_log("LogitechCIDActivator: CID 0x%{public}04X maps to Button %{public}d which is not remapped. Skipping divert to keep native wheel mode switching.",
                                log: self.logger, type: .info, cid, btn)
                         continue
@@ -1717,7 +1728,7 @@ public class LogitechActivator: NSObject, @unchecked Sendable {
         }
     }
     
-    private func reactivateAll() {
+    @objc public func reactivateAll() {
         stateLock.withLock { isActivatingOrReactivating = true }
         let activeStates = stateLock.withLock { Array(states.values) }
         

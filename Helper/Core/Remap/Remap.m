@@ -240,6 +240,8 @@ static NSDictionary *_remaps;
         
         [self setRemaps:remapsDict];
     }
+    
+    [LogitechCIDActivator.shared reactivateAll];
 }
 
 #pragma mark - AddMode
@@ -324,6 +326,8 @@ BOOL _addModeIsEnabled = NO;
     [self setRemaps:@{
         @{}: triggerToEffectDict
     }];
+    
+    [LogitechCIDActivator.shared reactivateAll];
     
     /// Return success
     return YES;
