@@ -240,8 +240,6 @@ static NSDictionary *_remaps;
         
         [self setRemaps:remapsDict];
     }
-    
-    [LogitechCIDActivator.shared reactivateAll];
 }
 
 #pragma mark - AddMode
