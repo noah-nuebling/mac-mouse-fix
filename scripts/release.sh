@@ -243,8 +243,9 @@ EOF
 echo "--- 准备完成！ ---"
 echo "appcast.xml 已更新。"
 echo "请执行:"
+REPO_TARGET=$(git remote get-url origin 2>/dev/null | sed -E 's/.*github.com[:\/]([^\/]+\/[^\.]+).*/\1/' || echo "ShawnRn/mac-mouse-fix")
 if [ "$HAS_X86" -eq 1 ]; then
-    echo "gh release create \"v\$VERSION\" \"$DMG_ARM64\" \"$ZIP_ARM64\" \"$DMG_X86_64\" \"$ZIP_X86_64\" --title \"Mac Mouse Fix \$VERSION\" --notes \"Sparkle Update Release\""
+    echo "gh release create \"v\$VERSION\" \"$DMG_ARM64\" \"$ZIP_ARM64\" \"$DMG_X86_64\" \"$ZIP_X86_64\" --title \"Mac Mouse Fix \$VERSION\" --notes \"Sparkle Update Release\" -R \"$REPO_TARGET\""
 else
-    echo "gh release create \"v\$VERSION\" \"$DMG_ARM64\" \"$ZIP_ARM64\" --title \"Mac Mouse Fix \$VERSION\" --notes \"Sparkle Update Release\""
+    echo "gh release create \"v\$VERSION\" \"$DMG_ARM64\" \"$ZIP_ARM64\" --title \"Mac Mouse Fix \$VERSION\" --notes \"Sparkle Update Release\" -R \"$REPO_TARGET\""
 fi
