@@ -257,3 +257,28 @@ Users want different mouse button and scroll behaviors depending on the active f
 2. Check if `isLogitechDiverted` is correctly set: look for `isLogitechDiverted = YES` after activation.
 3. For side button issues, check if clicks arrive on Page 65347 or Page 9 by watching `handleInput` log output.
 4. For speed issues, check if `isLogitechDPI = YES` and `multiplier = 0.333...` are applied in `setForDevice:`.
+
+---
+
+## 7. Sparkle Release & Code Signing Guide
+
+### Background & Issue
+When the signature specified in `appcast.xml` (`sparkle:edSignature`) does not match the actual update archive when verified against the App's built-in public key (`SUPublicEDKey`), Sparkle will abort the update. On macOS, this failure is presented to the user as a misleading extraction error:
+```text
+更新错误！解压过程中出现错误，请稍后再试。
+```
+
+### Strong Verification Hook
+To prevent releasing broken updates, the `scripts/release.sh` script has been updated to perform a mathematical verification of the signatures before writing them to `appcast.xml`:
+1. It extracts `SUPublicEDKey` dynamically from `App/SupportFiles/Info.plist`.
+2. It uses an inline Swift script via `CryptoKit` to verify the generated `edSignature` against the newly compressed ZIP file.
+3. If verification fails, the release script prints an error banner and exits with a non-zero status code, leaving `appcast.xml` untouched.
+
+### Keychain Mismatch & Conflicts
+The most common cause of mismatched signatures is **Keychain Key Mismatch**.
+- **The Cause**: The `sign_update` tool reads from the Keychain matching service `https://sparkle-project.org` and account `ed25519`. If you develop multiple macOS apps that use Sparkle, you may have multiple `ed25519` private keys stored in your keychain. The system might resolve a private key belonging to another project, producing a signature that is mathematically valid for that key but rejected by Mac Mouse Fix's public key.
+- **How to Resolve**:
+  1. Inspect the comment (`icmt`) field of your Keychain credentials for service `https://sparkle-project.org` to find the one matching Mac Mouse Fix's public key (`bjptNX8PlJbdwtszqi3/BAHV4TYyZ3UuV1EMANJ+GaY=`).
+  2. Clean up or isolate conflicting Sparkle keys.
+  3. Alternatively, you can use Sparkle's `--account` parameter (e.g., storing the private key under account name `mac-mouse-fix`) to target the correct key and modify the `release.sh` variable `SIGN_TOOL` or key flags to pass `--account mac-mouse-fix`.
+

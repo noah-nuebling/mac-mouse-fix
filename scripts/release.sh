@@ -13,6 +13,75 @@ if [ -z "$VERSION" ]; then
     exit 1
 fi
 
+
+# 签名校验函数：确保生成的 EdDSA 签名与 App 内置公钥一致
+verify_signature() {
+    local zip_path="$1"
+    local signature="$2"
+    local pubkey="$3"
+    local arch="$4"
+
+    echo "正在校验 $arch 的签名是否与内置公钥匹配..."
+    
+    local verify_result
+    verify_result=$(swift - "$zip_path" "$signature" "$pubkey" <<'EOF'
+import Foundation
+import CryptoKit
+
+let arguments = CommandLine.arguments
+guard arguments.count >= 4 else {
+    print("Invalid arguments")
+    exit(1)
+}
+
+let zipPath = arguments[1]
+let signatureBase64 = arguments[2]
+let publicKeyBase64 = arguments[3]
+
+guard let pubKeyData = Data(base64Encoded: publicKeyBase64) else {
+    print("Error: Failed to base64 decode public key.")
+    exit(1)
+}
+guard let sigData = Data(base64Encoded: signatureBase64) else {
+    print("Error: Failed to base64 decode signature.")
+    exit(1)
+}
+guard let fileData = try? Data(contentsOf: URL(fileURLWithPath: zipPath)) else {
+    print("Error: Failed to read zip file data.")
+    exit(1)
+}
+
+do {
+    let publicKey = try Curve25519.Signing.PublicKey(rawRepresentation: pubKeyData)
+    if publicKey.isValidSignature(sigData, for: fileData) {
+        print("OK")
+        exit(0)
+    } else {
+        print("FAIL")
+        exit(1)
+    }
+} catch {
+    print("Error: \(error)")
+    exit(1)
+}
+EOF
+)
+
+    if [ "$verify_result" != "OK" ]; then
+        echo "===================================================="
+        echo "错误: $arch 的签名校验失败！"
+        echo "生成的签名与 App 内置的 SUPublicEDKey 不匹配。"
+        echo "内置公钥: $pubkey"
+        echo "这通常是因为您的 Keychain 中存储了其他项目 (如其他使用 Sparkle 的 App) 的私钥，"
+        echo "导致默认的 'ed25519' 账号读取到了错误的私钥。"
+        echo "请在 Keychain 中为 Mac Mouse Fix 使用专有的私钥并清理冲突的记录。"
+        echo "===================================================="
+        exit 1
+    else
+        echo "$arch 签名校验通过！"
+    fi
+}
+
 # 1. 配置路径
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 RELEASE_DIR="$PROJECT_DIR/releases"
@@ -79,9 +148,12 @@ echo "--- 开始为版本 $VERSION 准备发布 ---"
 
 # 2. 从项目设置中获取当前的 Build 号 (sparkle:version)
 echo "正在从项目设置中提取流水号 Build 号..."
-SPARKLE_VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "/tmp/MacMouseFix_build/Mac Mouse Fix_arm64.app/Contents/Info.plist" 2>/dev/null || true)
+SPARKLE_VERSION=""
+if [ -f "/tmp/MacMouseFix_build/Mac Mouse Fix_arm64.app/Contents/Info.plist" ]; then
+    SPARKLE_VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "/tmp/MacMouseFix_build/Mac Mouse Fix_arm64.app/Contents/Info.plist" 2>/dev/null || true)
+fi
 
-if [ -z "$SPARKLE_VERSION" ]; then
+if [ -z "$SPARKLE_VERSION" ] || [[ "$SPARKLE_VERSION" == *"Doesn't Exist"* ]]; then
     SPARKLE_VERSION=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$PROJECT_DIR/App/SupportFiles/Info.plist" 2>/dev/null || true)
 fi
 
@@ -103,6 +175,23 @@ fi
 if [ -z "$SIG_ARM64" ] || { [ "$HAS_X86" -eq 1 ] && [ -z "$SIG_X86_64" ]; }; then
     echo "错误: 签名生成失败，请确保 Sparkle 私钥已配置。"
     exit 1
+fi
+
+# 4. 严格签名强校验
+echo "正在从项目设置中提取 SUPublicEDKey 公钥..."
+PUBLIC_KEY=$(/usr/libexec/PlistBuddy -c "Print :SUPublicEDKey" "$PROJECT_DIR/App/SupportFiles/Info.plist" 2>/dev/null || true)
+if [ -z "$PUBLIC_KEY" ]; then
+    echo "错误: 无法从 $PROJECT_DIR/App/SupportFiles/Info.plist 中提取 SUPublicEDKey。"
+    exit 1
+fi
+echo "项目内置公钥: $PUBLIC_KEY"
+
+ED_SIG_ARM64=$(echo "$SIG_ARM64" | sed -E 's/.*sparkle:edSignature="([^"]+)".*/\1/')
+verify_signature "$ZIP_ARM64" "$ED_SIG_ARM64" "$PUBLIC_KEY" "arm64"
+
+if [ "$HAS_X86" -eq 1 ]; then
+    ED_SIG_X86_64=$(echo "$SIG_X86_64" | sed -E 's/.*sparkle:edSignature="([^"]+)".*/\1/')
+    verify_signature "$ZIP_X86_64" "$ED_SIG_X86_64" "$PUBLIC_KEY" "x86_64"
 fi
 
 SIZE_ARM64=$(stat -f%z "$ZIP_ARM64")

@@ -6,11 +6,11 @@
 	<dict>
 		<key>Resources/AppIconRound.icns</key>
 		<data>
-		qoH0houOdRpqEE1Jpu1SSCPPTf8=
+		vVHxw5LTX1Q89s+kG13ZvN8puDM=
 		</data>
 		<key>Resources/Assets.car</key>
 		<data>
-		EFE6CUTe5RiF0O+YrnP882nzY4c=
+		2JyknegoaN8Fgd3bX3b9XBtbOB4=
 		</data>
 		<key>Resources/Base.lproj/MenuBarItem.nib</key>
 		<data>
@@ -22,7 +22,7 @@
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/Info.plist</key>
 		<data>
-		GvtuA1u+hm9FOTHaqDNjvwJcAlQ=
+		nAnzXmCQv0VxU0YzRCE0MXxP5RA=
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/Resources/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeDirectory</key>
 		<data>
-		9/RvPlGmQ04D5BTSkyuOrE56pYQ=
+		xtbNykwfPyp6vT4tL0hk1gLuOeA=
 		</data>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeRequirements</key>
 		<data>
@@ -457,14 +457,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			0xbasWYQ9kpcwjFBCPpn32MNg2pIiIdHirTcAJtEFvY=
+			PWXSB5SEbWuK7f4mi49BQANc2vvLjXlPI+R8iz7BeVA=
 			</data>
 		</dict>
 		<key>Resources/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CQrOpWa3DPrTLk5q4BNoJg2eiKbOTeAnduJCbiUo2to=
+			C9kRW/xZWFaui/T/Ky6os6jUSRcnx3BCj+aSxV//+Ww=
 			</data>
 		</dict>
 		<key>Resources/Base.lproj/MenuBarItem.nib</key>
@@ -485,7 +485,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			len7f90HdH0BQHbTK6Tvzceb5hypKU7yDHgKTYvuHlA=
+			PK3tiahgLIRlZuxDO5jvUsdNbD8Z3xPXSWoSEC4ks3Q=
 			</data>
 		</dict>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/Resources/PrivacyInfo.xcprivacy</key>
@@ -499,7 +499,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			SIi3XMfTpchQvYyFJEzkFjEk9Yz/HH8SJdG6roe4hRM=
+			vtqhTFHKXdyBLPZy4GTF3jccnbC2znS81h5ZS2JQJa4=
 			</data>
 		</dict>
 		<key>Resources/CocoaLumberjack_CocoaLumberjack.bundle/Contents/_CodeSignature/CodeRequirements</key>
