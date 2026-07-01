@@ -271,11 +271,11 @@ static uint8_t *MFGenerateIOHIDPayload(CGEventRef event, size_t *out_length) {
     /// Read the public gesture fields we already set on `e30` in `postDockSwipeEventWithDelta:`.
     int64_t phase     = CGEventGetIntegerValueField(event, (CGEventField)132);
     int64_t motion    = CGEventGetIntegerValueField(event, (CGEventField)123); /// MFDockSwipeType (horizontal/vertical/pinch)
-    double  progress  = CGEventGetDoubleValueField (event, (CGEventField)124); /// origin offset
+    double  progress  = -CGEventGetDoubleValueField(event, (CGEventField)124); /// origin offset, inverted for macOS 27 HID payload semantics
     double  pos_x     = CGEventGetDoubleValueField (event, (CGEventField)125);
     double  pos_y     = CGEventGetDoubleValueField (event, (CGEventField)126);
-    double  vel_x     = CGEventGetDoubleValueField (event, (CGEventField)129); /// exit speed
-    double  vel_y     = CGEventGetDoubleValueField (event, (CGEventField)130);
+    double  vel_x     = -CGEventGetDoubleValueField(event, (CGEventField)129); /// exit speed, inverted to match progress
+    double  vel_y     = -CGEventGetDoubleValueField(event, (CGEventField)130);
     int64_t swipe_mask = CGEventGetIntegerValueField(event, (CGEventField)115);
 
     bool include_velocity = (vel_x != 0.0 || vel_y != 0.0 || phase == kIOHIDEventPhaseEnded);
@@ -717,4 +717,3 @@ static NSMutableDictionary *_swipeInfo;
 
 
 @end
-
