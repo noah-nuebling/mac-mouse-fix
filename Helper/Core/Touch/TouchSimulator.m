@@ -271,11 +271,11 @@ static uint8_t *MFGenerateIOHIDPayload(CGEventRef event, size_t *out_length) {
     /// Read the public gesture fields we already set on `e30` in `postDockSwipeEventWithDelta:`.
     int64_t phase     = CGEventGetIntegerValueField(event, (CGEventField)132);
     int64_t motion    = CGEventGetIntegerValueField(event, (CGEventField)123); /// MFDockSwipeType (horizontal/vertical/pinch)
-    double  progress  = -CGEventGetDoubleValueField(event, (CGEventField)124); /// origin offset, inverted for macOS 27 HID payload semantics
+    double  progress  = CGEventGetDoubleValueField (event, (CGEventField)124); /// origin offset
     double  pos_x     = CGEventGetDoubleValueField (event, (CGEventField)125);
     double  pos_y     = CGEventGetDoubleValueField (event, (CGEventField)126);
-    double  vel_x     = -CGEventGetDoubleValueField(event, (CGEventField)129); /// exit speed, inverted to match progress
-    double  vel_y     = -CGEventGetDoubleValueField(event, (CGEventField)130);
+    double  vel_x     = CGEventGetDoubleValueField (event, (CGEventField)129); /// exit speed
+    double  vel_y     = CGEventGetDoubleValueField (event, (CGEventField)130);
     int64_t swipe_mask = CGEventGetIntegerValueField(event, (CGEventField)115);
 
     bool include_velocity = (vel_x != 0.0 || vel_y != 0.0 || phase == kIOHIDEventPhaseEnded);
@@ -613,7 +613,22 @@ static NSMutableDictionary *_swipeInfo;
 
     CGEventRef e30ToPost = e30; /// Borrowed reference unless we replace it with an owned augmented copy below.
     if (MFDockSwipeEventAugmentationRequired()) {
-        CGEventRef augmented = MFCreateAugmentedDockSwipeEvent(e30);
+        CGEventRef e30ForAugmentation = CGEventCreateCopy(e30);
+        if (e30ForAugmentation) {
+            /// macOS 27's Dock consumes the raw HID payload, and its sign convention is inverted relative to the
+            /// public CGEvent fields MMF used historically. Keep this isolated to the augmented event path.
+            double progress = -CGEventGetDoubleValueField(e30ForAugmentation, (CGEventField)124);
+            CGEventSetDoubleValueField(e30ForAugmentation, 124, progress);
+            Float32 progressFloat32 = (Float32)progress;
+            uint32_t progressInt32;
+            memcpy(&progressInt32, &progressFloat32, sizeof(progressFloat32));
+            CGEventSetIntegerValueField(e30ForAugmentation, 135, (int64_t)progressInt32);
+            CGEventSetDoubleValueField(e30ForAugmentation, 129, -CGEventGetDoubleValueField(e30ForAugmentation, (CGEventField)129));
+            CGEventSetDoubleValueField(e30ForAugmentation, 130, -CGEventGetDoubleValueField(e30ForAugmentation, (CGEventField)130));
+        }
+        CGEventRef eventForAugmentation = e30ForAugmentation ? e30ForAugmentation : e30;
+        CGEventRef augmented = MFCreateAugmentedDockSwipeEvent(eventForAugmentation);
+        if (e30ForAugmentation) CFRelease(e30ForAugmentation);
         if (augmented != NULL) {
             e30ToPost = augmented; /// Owned (+1); released at the end of this function.
         } else {
