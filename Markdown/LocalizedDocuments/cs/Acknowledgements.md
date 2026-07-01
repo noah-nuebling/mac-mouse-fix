@@ -72,6 +72,10 @@ Děkujeme za vaši podporu! :)
 
 Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neuvěřitelným milkšejkem**. (A někteří mi dokonce zanechali zprávu) Díky za *cukrovou nálož*!
 
+**červenec 2026**
+
+- 🇺🇸&nbsp;Jain&nbsp;Waldrip - "This app is fantastic! Just a really simple, reliable, useful utility like your meemaw used to make for Unix terminals. <3"
+
 **červen 2026**
 
 - 🇺🇸&nbsp;Travis&nbsp;Mehlinger

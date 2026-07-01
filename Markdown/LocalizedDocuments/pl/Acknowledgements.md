@@ -78,6 +78,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!
 
+**lipiec 2026**
+
+- 🇺🇸&nbsp;Jain&nbsp;Waldrip - "This app is fantastic! Just a really simple, reliable, useful utility like your meemaw used to make for Unix terminals. <3"
+
 **czerwiec 2026**
 
 - 🇺🇸&nbsp;Travis&nbsp;Mehlinger
