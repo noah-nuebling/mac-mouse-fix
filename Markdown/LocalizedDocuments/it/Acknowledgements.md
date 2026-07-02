@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **luglio 2026**
 
+- 🇺🇸&nbsp;Jonathan&nbsp;Kauffman
 - 🇺🇸&nbsp;Jain&nbsp;Waldrip - "This app is fantastic! Just a really simple, reliable, useful utility like your meemaw used to make for Unix terminals. <3"
 
 **giugno 2026**
