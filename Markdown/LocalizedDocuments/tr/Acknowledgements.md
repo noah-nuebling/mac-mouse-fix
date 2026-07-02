@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Temmuz 2026**
 
+- 🇩🇪&nbsp;Drive - "Driven"
 - 🇺🇸&nbsp;Jonathan&nbsp;Kauffman
 - 🇺🇸&nbsp;Jain&nbsp;Waldrip - "This app is fantastic! Just a really simple, reliable, useful utility like your meemaw used to make for Unix terminals. <3"
 
