@@ -74,6 +74,8 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **červenec 2026**
 
+- 🇺🇸&nbsp;Ryan&nbsp;Watts
+- 🇭🇰&nbsp;Ronald&nbsp;Yau
 - 🇩🇪&nbsp;Drive - "Driven"
 - 🇺🇸&nbsp;Jonathan&nbsp;Kauffman
 - 🇺🇸&nbsp;Jain&nbsp;Waldrip - "This app is fantastic! Just a really simple, reliable, useful utility like your meemaw used to make for Unix terminals. <3"
