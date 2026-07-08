@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **juli 2026**
 
+- 🇨🇦&nbsp;Stephanie&nbsp;Leung - "Such a great tool - now it's possible to use a vertical mouse and get the default experience!"
 - 🇺🇸&nbsp;Ryan&nbsp;Watts
 - 🇭🇰&nbsp;Ronald&nbsp;Yau
 - 🇩🇪&nbsp;Drive - "Driven"

@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **julho 2026**
 
+- 🇨🇦&nbsp;Stephanie&nbsp;Leung - "Such a great tool - now it's possible to use a vertical mouse and get the default experience!"
 - 🇺🇸&nbsp;Ryan&nbsp;Watts
 - 🇭🇰&nbsp;Ronald&nbsp;Yau
 - 🇩🇪&nbsp;Drive - "Driven"
