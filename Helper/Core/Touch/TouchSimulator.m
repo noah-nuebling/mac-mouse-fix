@@ -37,6 +37,7 @@
 ///         - https://github.com/noah-nuebling/mac-mouse-fix/issues/1892
 ///     The fix (first worked out by the InstantSpaceSwitcher / FasterSwiper community) is to embed the *raw IOKit HID
 ///     event payload* into the serialized CGEvent (field 4205) so the Dock server has the data it now requires. See:
+///         - https://github.com/noah-nuebling/mac-mouse-fix/pull/1895
 ///         - https://github.com/jurplel/InstantSpaceSwitcher/issues/72
 ///         - https://gist.github.com/mgbowen/5548f18ada2e37b23c9e86a8d80b71dc  (serialization-format notes)
 ///
@@ -455,6 +456,15 @@ static NSMutableDictionary *_swipeInfo;
 
 + (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase invertedFromDevice:(BOOL)invertedFromDevice {
 
+    CGEventRef event = CGEventCreate(NULL);
+    CGPoint eventPosition = event ? CGEventGetLocation(event) : CGPointZero;
+    if (event) CFRelease(event);
+
+    [self postDockSwipeEventWithDelta:d type:type phase:phase invertedFromDevice:invertedFromDevice atPosition:eventPosition];
+}
+
++ (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase invertedFromDevice:(BOOL)invertedFromDevice atPosition:(CGPoint)eventPosition {
+
     /// Fix Apple bug
     ///   If we don't do this, the exitSpeed is interpreted in the wrong direction when opening Launchpad, leading to a noticable jitter.
     ///   This also happens on an Apple Trackpad if you turn natural scrolling off.
@@ -576,6 +586,8 @@ static NSMutableDictionary *_swipeInfo;
     
     CGEventSetDoubleValueField(e30, 123, type); /// Horizontal or vertical
     CGEventSetDoubleValueField(e30, 165, type); /// Horizontal or vertical // Probs not necessary
+    CGEventSetDoubleValueField(e30, 125, eventPosition.x);
+    CGEventSetDoubleValueField(e30, 126, eventPosition.y);
     
     CGEventSetIntegerValueField(e30, 136, invertedFromDevice ? 1 : 0);
     
@@ -662,10 +674,12 @@ static NSMutableDictionary *_swipeInfo;
             _tripleSendTimer = nil;
         });
         
-    } else if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
+    } else if ((phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) && !MFDockSwipeEventAugmentationRequired()) {
 
         /// Double-send end-events
         /// Notes:
+        ///     - macOS 27 uses the embedded raw HID payload. The augmented path skips these delayed replays so stale
+        ///       end events cannot poison Dock's multi-display gesture state after a new swipe has started.
         ///     - The inital dockSwipe event we post will be ignored by the system when it is under load (I called this the "stuck bug" in other places). Sending the event again with a delay of 200ms (0.2s) gets it unstuck almost always. Sending the event twice gives us the best of both responsiveness and reliability.
         ///     - In Scroll.m, even with sending the event again after 0.2 seconds, the stuck bug still happens a bunch for some reason. Even though this almost completely eliminates the bug in ModifiedDrag.m . Sending it again after 0.5 seconds works better but still sometimes happens.
         ///         Edit: Doesn't happen anymore on M1. Edit 2: [Feb 2025] The double-sending code used to be broken for a while (fixed in e8f90d2f32829e3e5f1621fa8e4b58634c9ea07b) . Maybe that's why we observed the stuck-bug for Scroll.m here?

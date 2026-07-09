@@ -8,6 +8,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 #import "MFHIDEventImports.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -26,6 +27,7 @@ typedef enum {
 + (void)postRotationEventWithRotation:(double)rotation phase:(IOHIDEventPhaseBits)phase;
 + (void)postMagnificationEventWithMagnification:(double)magnification phase:(IOHIDEventPhaseBits)phase;
 + (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase invertedFromDevice:(BOOL)invertedFromDevice;
++ (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase invertedFromDevice:(BOOL)invertedFromDevice atPosition:(CGPoint)eventPosition;
 
 
 @end

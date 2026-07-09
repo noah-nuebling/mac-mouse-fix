@@ -203,8 +203,24 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
                 return;
             }
             
-            CVDisplayLinkRelease(_displayLink);
+            if (_displayLink != NULL) {
+                CVDisplayLinkRelease(_displayLink);
+            }
             _displayLink = NULL; /// I'm pretty sure CVDisplayLinkCreateWithActiveCGDisplays() always overrides the `_displayLink` to be either NULL or valid. If it sometimes leaves the value untouched, then we'd have to set it to NULL after releasing to prevent use-after-free.
+        }
+
+        CVReturn activeDisplayRet = ret;
+        CVReturn activeDisplayCallbackRet = ret2;
+        CGDirectDisplayID fallbackDisplay = CGMainDisplayID();
+        ret = CVDisplayLinkCreateWithCGDisplay(fallbackDisplay, &_displayLink);
+        ret2 = _displayLink != NULL ? CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, (__bridge void *_Nullable)(self)) : kCVReturnInvalidArgument;
+        if ((ret == kCVReturnSuccess) && (ret2 == kCVReturnSuccess) && (_displayLink != NULL)) {
+            DDLogWarn(@"DisplayLink.m: (%@) Falling back to main-display CVDisplayLink (%@). Active-display codes: (%@, %@)", [self identifier], _displayLink, MFCVReturn_ToString(activeDisplayRet), MFCVReturn_ToString(activeDisplayCallbackRet));
+            return;
+        }
+        if (_displayLink != NULL) {
+            CVDisplayLinkRelease(_displayLink);
+            _displayLink = NULL;
         }
         
         mfabort(@"DisplayLink.m: (%@) Failed to create CVDisplayLink (%@) after %d tries. Last codes: (%@, %@)", [self identifier], _displayLink, max_tries, MFCVReturn_ToString(ret), MFCVReturn_ToString(ret2));
