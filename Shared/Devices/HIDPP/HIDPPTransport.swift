@@ -7,5 +7,11 @@ protocol HIDPPTransport: AnyObject {
     var onReport: ((Data) -> Void)? { get set }
 
     func send(_ report: Data, completion: @escaping (IOReturn) -> Void)
-    func invalidate()
+    func invalidate(completion: @escaping () -> Void)
+}
+
+extension HIDPPTransport {
+    func invalidate() {
+        invalidate(completion: {})
+    }
 }

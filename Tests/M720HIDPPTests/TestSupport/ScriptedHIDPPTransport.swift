@@ -10,14 +10,20 @@ final class ScriptedHIDPPTransport: HIDPPTransport {
     var automaticSendResult = kIOReturnSuccess
     var onSend: ((Data) -> Void)?
     var onInvalidate: (() -> Void)?
+    var automaticallyCompletesInvalidation = true
     private(set) var sent: [Data] = []
     private(set) var invalidateCallCount = 0
     private(set) var maximumSendCallDepth = 0
     private var pendingSendCompletions: [(IOReturn) -> Void] = []
+    private var pendingInvalidationCompletions: [() -> Void] = []
     private var sendCallDepth = 0
 
     var pendingSendCompletionCount: Int {
         pendingSendCompletions.count
+    }
+
+    var pendingInvalidationCompletionCount: Int {
+        pendingInvalidationCompletions.count
     }
 
     func send(_ report: Data, completion: @escaping (IOReturn) -> Void) {
@@ -43,9 +49,19 @@ final class ScriptedHIDPPTransport: HIDPPTransport {
         onReport?(Data(bytes))
     }
 
-    func invalidate() {
+    func invalidate(completion: @escaping () -> Void) {
         invalidateCallCount += 1
         onInvalidate?()
         onReport = nil
+        if automaticallyCompletesInvalidation {
+            completion()
+        } else {
+            pendingInvalidationCompletions.append(completion)
+        }
+    }
+
+    func completeInvalidation() {
+        precondition(!pendingInvalidationCompletions.isEmpty)
+        pendingInvalidationCompletions.removeFirst()()
     }
 }

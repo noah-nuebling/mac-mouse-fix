@@ -134,7 +134,8 @@ final class M720HIDPPSession {
     private let pipeline: HIDPPRequestPipeline
     private let journalRepository: M720JournalCoordinating
     private let deviceKey: M720DeviceKey
-    private let journalIdentityUsable: Bool
+    private var journalIdentityUsable: Bool
+    private var completesInitialGetOnlyDiagnostics: Bool
     private let buttonSink: M720ButtonEventSink
     private let scheduler: HIDPPScheduler
     private let initialOwnershipAgentScan: () -> Bool
@@ -183,7 +184,9 @@ final class M720HIDPPSession {
     private var terminalIntent: TerminalIntent = .none
     private var shutdownWaiters: [() -> Void] = []
     private var removalWaiters: [() -> Void] = []
+    private var terminalFinalizationStarted = false
     private var terminalFinished = false
+    private var terminalShutdownReason: M720StableErrorCode = .cancelled
     private var activeEpoch: UInt64 = 0
     private var verificationCancellations: [UInt64: HIDPPCancellation] = [:]
     private var verificationTimerTokens: Set<UInt64> = []
@@ -214,6 +217,8 @@ final class M720HIDPPSession {
         self.journalRepository = journalRepository
         self.deviceKey = deviceKey
         self.journalIdentityUsable = journalIdentityUsable
+        self.completesInitialGetOnlyDiagnostics =
+            !journalIdentityUsable || deviceKey.serialNumber.isEmpty
         self.buttonSink = buttonSink
         self.scheduler = scheduler
         self.initialOwnershipAgentScan = initialOwnershipAgentScan
@@ -269,55 +274,107 @@ final class M720HIDPPSession {
     }
 
     func setRequiredCIDs(_ cids: Set<UInt16>) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-            guard self.terminalIntent == .none else { return }
-            self.policyGeneration &+= 1
-            self.requiredCIDs = cids
-            guard self.started else { return }
-            if self.sleepSuspended {
-                guard self.wakeRequested, self.state == .active else { return }
-                if !self.requiredPolicyIsSupported {
-                    self.beginRollback(outcome: .invalid(.unsupported))
-                } else if cids != self.appliedCIDs {
-                    self.beginRollbackForPolicyReplacement()
-                }
-                return
+        if Thread.isMainThread {
+            setRequiredCIDsOnMain(cids)
+        } else {
+            DispatchQueue.main.async { [weak self] in
+                self?.setRequiredCIDsOnMain(cids)
             }
-            guard self.requiredPolicyIsSupported else {
-                switch self.state {
-                case .takingOver:
-                    // The in-flight boundary may still durably record ownership.
-                    // Its policy-token continuation will include that CID in rollback.
-                    break
-                case .active:
-                    self.beginRollback(outcome: .invalid(.unsupported))
-                case .restoring:
-                    self.rollbackOutcome = .invalid(.unsupported)
-                    self.refreshRecoveryRollbackPlan()
-                case .discovering, .nativeReady, .conflict, .invalid:
-                    self.enterInvalid(.unsupported)
-                }
-                return
+        }
+    }
+
+    private func setRequiredCIDsOnMain(_ cids: Set<UInt16>) {
+        guard terminalIntent == .none else { return }
+        policyGeneration &+= 1
+        requiredCIDs = cids
+        guard started else { return }
+        if sleepSuspended {
+            guard wakeRequested, state == .active else { return }
+            if !requiredPolicyIsSupported {
+                beginRollback(outcome: .invalid(.unsupported))
+            } else if cids != appliedCIDs {
+                self.beginRollbackForPolicyReplacement()
             }
-            switch self.state {
-            case .nativeReady where !cids.isEmpty:
-                if self.explicitRetryRequired {
-                    self.transition(to: .conflict)
-                } else {
-                    self.beginTakeover()
-                }
-            case .conflict where cids.isEmpty:
-                self.transition(to: .nativeReady)
-            case .active where cids == self.appliedCIDs:
+            return
+        }
+        if state == .discovering, completesInitialGetOnlyDiagnostics {
+            return
+        }
+        guard requiredPolicyIsSupported else {
+            switch state {
+            case .takingOver:
+                // The in-flight boundary may still durably record ownership.
+                // Its policy-token continuation will include that CID in rollback.
                 break
             case .active:
-                self.beginRollbackForPolicyReplacement()
-            case .restoring where self.recoveryRollbackActive:
-                self.refreshRecoveryRollbackPlan()
-            default:
-                break
+                beginRollback(outcome: .invalid(.unsupported))
+            case .restoring:
+                rollbackOutcome = .invalid(.unsupported)
+                refreshRecoveryRollbackPlan()
+            case .discovering, .nativeReady, .conflict, .invalid:
+                enterInvalid(.unsupported)
             }
+            return
+        }
+        switch state {
+        case .nativeReady where !cids.isEmpty:
+            if explicitRetryRequired {
+                transition(to: .conflict)
+            } else {
+                beginTakeover()
+            }
+        case .conflict where cids.isEmpty:
+            transition(to: .nativeReady)
+        case .active where cids == appliedCIDs:
+            break
+        case .active:
+            beginRollbackForPolicyReplacement()
+        case .restoring where recoveryRollbackActive:
+            refreshRecoveryRollbackPlan()
+        default:
+            break
+        }
+    }
+
+    func markJournalIdentityUnusable() {
+        if Thread.isMainThread {
+            markJournalIdentityUnusableOnMain()
+        } else {
+            DispatchQueue.main.async { [weak self] in
+                self?.markJournalIdentityUnusableOnMain()
+            }
+        }
+    }
+
+    private func markJournalIdentityUnusableOnMain() {
+        guard journalIdentityUsable,
+              terminalIntent == .none,
+              !terminalFinished
+        else { return }
+
+        journalIdentityUsable = false
+        policyGeneration &+= 1
+
+        switch state {
+        case .discovering:
+            guard started else {
+                completesInitialGetOnlyDiagnostics = true
+                return
+            }
+            operationGeneration &+= 1
+            pipeline.beginNewLifecycle()
+            enterInvalid(.unsupported)
+        case .active:
+            beginRollback(outcome: .invalid(.unsupported))
+        case .takingOver:
+            // A Set may already be in flight. Its policy-generation guard
+            // classifies the boundary before rolling back every touched CID.
+            break
+        case .restoring:
+            rollbackOutcome = .invalid(.unsupported)
+            refreshRecoveryRollbackPlan()
+        case .nativeReady, .conflict, .invalid:
+            enterInvalid(.unsupported)
         }
     }
 
@@ -416,29 +473,40 @@ final class M720HIDPPSession {
     }
 
     func prepareForSleep(completion: @escaping () -> Void) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else {
-                completion()
-                return
-            }
-            if self.sleepSuspended, self.wakeRequested, self.state == .active {
-                self.beginActiveSleepCycle(completion: completion)
-                return
-            }
-            if self.cancelBatch != nil {
-                self.beginCancelBarrier(completion: completion)
-                return
-            }
-            if self.sleepSuspended {
-                DispatchQueue.main.async(execute: completion)
-                return
-            }
-            guard self.state == .active else {
-                completion()
-                return
-            }
-            self.beginActiveSleepCycle(completion: completion)
+        let deferredCompletion = {
+            DispatchQueue.main.async(execute: completion)
         }
+        if Thread.isMainThread {
+            prepareForSleepOnMain(completion: deferredCompletion)
+        } else {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else {
+                    deferredCompletion()
+                    return
+                }
+                self.prepareForSleepOnMain(completion: deferredCompletion)
+            }
+        }
+    }
+
+    private func prepareForSleepOnMain(completion: @escaping () -> Void) {
+        if sleepSuspended, wakeRequested, state == .active {
+            beginActiveSleepCycle(completion: completion)
+            return
+        }
+        if cancelBatch != nil {
+            beginCancelBarrier(completion: completion)
+            return
+        }
+        if sleepSuspended {
+            completion()
+            return
+        }
+        guard state == .active else {
+            completion()
+            return
+        }
+        beginActiveSleepCycle(completion: completion)
     }
 
     private func beginActiveSleepCycle(completion: @escaping () -> Void) {
@@ -473,65 +541,85 @@ final class M720HIDPPSession {
     }
 
     func shutdown(completion: @escaping () -> Void) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else {
-                completion()
-                return
-            }
-            if self.terminalFinished {
-                DispatchQueue.main.async(execute: completion)
-                return
-            }
-            self.shutdownWaiters.append(completion)
-            guard self.terminalIntent == .none else { return }
-            self.terminalIntent = .shutdown
-            self.requiredCIDs.removeAll()
-            self.policyGeneration &+= 1
-            switch self.state {
-            case .active:
-                self.beginRollback(outcome: .shutdown)
-            case .takingOver:
-                break
-            case .restoring:
-                self.rollbackOutcome = .shutdown
-                self.refreshRecoveryRollbackPlan()
-            case .discovering where self.recoveryInProgress:
-                break
-            case .discovering, .nativeReady:
-                self.finalizeShutdown()
-            case .conflict:
-                self.finalizeShutdown(reason: .conflict)
-            case let .invalid(code):
-                self.finalizeShutdown(reason: code)
+        if Thread.isMainThread {
+            shutdownOnMain(completion: completion)
+        } else {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else {
+                    completion()
+                    return
+                }
+                self.shutdownOnMain(completion: completion)
             }
         }
     }
 
+    private func shutdownOnMain(completion: @escaping () -> Void) {
+        if terminalFinished {
+            DispatchQueue.main.async(execute: completion)
+            return
+        }
+        shutdownWaiters.append(completion)
+        guard terminalIntent == .none else { return }
+        terminalIntent = .shutdown
+        requiredCIDs.removeAll()
+        policyGeneration &+= 1
+        switch state {
+        case .active:
+            beginRollback(outcome: .shutdown)
+        case .takingOver:
+            break
+        case .restoring:
+            rollbackOutcome = .shutdown
+            refreshRecoveryRollbackPlan()
+        case .discovering where recoveryInProgress:
+            break
+        case .discovering, .nativeReady:
+            finalizeShutdown()
+        case .conflict:
+            finalizeShutdown(reason: .conflict)
+        case let .invalid(code):
+            finalizeShutdown(reason: code)
+        }
+    }
+
     func invalidateForRemoval(completion: @escaping () -> Void) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else {
-                completion()
-                return
+        if Thread.isMainThread {
+            invalidateForRemovalOnMain(completion: completion)
+        } else {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else {
+                    completion()
+                    return
+                }
+                self.invalidateForRemovalOnMain(completion: completion)
             }
-            if self.terminalFinished {
+        }
+    }
+
+    private func invalidateForRemovalOnMain(completion: @escaping () -> Void) {
+        if terminalFinished {
+            DispatchQueue.main.async { [weak self] in
+                guard let self else {
+                    completion()
+                    return
+                }
                 if self.terminalIntent == .shutdown {
                     self.terminalIntent = .removal
                     self.transition(to: .invalid(.disconnected))
-                    completion()
-                } else {
-                    DispatchQueue.main.async(execute: completion)
                 }
-                return
+                completion()
             }
-            self.removalWaiters.append(completion)
-            guard self.terminalIntent != .removal else { return }
-            self.terminalIntent = .removal
-            self.closeEventGate()
-            self.lifecycleGeneration &+= 1
-            self.operationGeneration &+= 1
-            self.pipeline.beginNewLifecycle()
-            self.beginCancelBarrier { [weak self] in self?.finalizeRemoval() }
+            return
         }
+        removalWaiters.append(completion)
+        guard terminalIntent != .removal else { return }
+        terminalIntent = .removal
+        closeEventGate()
+        lifecycleGeneration &+= 1
+        operationGeneration &+= 1
+        pipeline.beginNewLifecycle()
+        beginCancelBarrier { [weak self] in self?.finalizeRemoval() }
     }
 
     private func resetOwnershipTransactionForRetry() {
@@ -2453,25 +2541,47 @@ final class M720HIDPPSession {
 
     private func finalizeShutdown(reason: M720StableErrorCode = .cancelled) {
         guard terminalIntent == .shutdown, !terminalFinished else { return }
-        terminalFinished = true
-        pipeline.invalidate()
-        transition(to: .invalid(reason))
-        let waiters = shutdownWaiters
-        shutdownWaiters.removeAll()
-        for waiter in waiters { waiter() }
+        terminalShutdownReason = reason
+        beginTerminalFinalization()
     }
 
     private func finalizeRemoval() {
         guard terminalIntent == .removal, !terminalFinished else { return }
+        beginTerminalFinalization()
+    }
+
+    private func beginTerminalFinalization() {
+        guard !terminalFinalizationStarted else { return }
+        terminalFinalizationStarted = true
+        lifecycleGeneration &+= 1
+        operationGeneration &+= 1
+        pipeline.invalidate { [weak self] in
+            DispatchQueue.main.async { [weak self] in
+                self?.completeTerminalFinalization()
+            }
+        }
+    }
+
+    private func completeTerminalFinalization() {
+        guard terminalFinalizationStarted,
+              !terminalFinished,
+              terminalIntent != .none
+        else { return }
         terminalFinished = true
-        pipeline.invalidate()
-        transition(to: .invalid(.disconnected))
+        switch terminalIntent {
+        case .removal:
+            transition(to: .invalid(.disconnected))
+        case .shutdown:
+            transition(to: .invalid(terminalShutdownReason))
+        case .none:
+            preconditionFailure("Terminal drain completed without an intent")
+        }
         let shutdowns = shutdownWaiters
         let removals = removalWaiters
         shutdownWaiters.removeAll()
         removalWaiters.removeAll()
-        for waiter in shutdowns { waiter() }
         for waiter in removals { waiter() }
+        for waiter in shutdowns { waiter() }
     }
 
     private func resolveTouchedCIDAfterUncertainSet(
@@ -2582,7 +2692,9 @@ final class M720HIDPPSession {
     }
 
     private var requiredPolicyIsSupported: Bool {
-        requiredCIDs.isSubset(of: Set(M720Profile.cidToButton.keys))
+        journalIdentityUsable &&
+            !deviceKey.serialNumber.isEmpty &&
+            requiredCIDs.isSubset(of: Set(M720Profile.cidToButton.keys))
     }
 
     private func handleJournalMutationFailure(

@@ -85,6 +85,8 @@ final class HIDPPRequestPipeline {
     private var nextAttemptToken: UInt64 = 0
     private var nextRetryToken: UInt64 = 0
     private var isInvalidated = false
+    private var invalidationDrainFinished = false
+    private var invalidationWaiters: [() -> Void] = []
     private var isPumpingRequests = false
 
     init(
@@ -149,14 +151,37 @@ final class HIDPPRequestPipeline {
     }
 
     func invalidate() {
+        invalidate(completion: {})
+    }
+
+    func invalidate(completion: @escaping () -> Void) {
         marshalToStateQueue {
+            if self.invalidationDrainFinished {
+                self.stateQueue.async(execute: completion)
+                return
+            }
+            self.invalidationWaiters.append(completion)
             guard !self.isInvalidated else { return }
             self.isInvalidated = true
             self.generation &+= 1
             self.failAllWorkAsInvalidated()
             self.quarantinedSoftwareIDs.removeAll()
             self.transport.onReport = nil
-            self.transport.invalidate()
+            self.transport.invalidate { [self] in
+                marshalToStateQueue { [self] in
+                    finishInvalidationDrain()
+                }
+            }
+        }
+    }
+
+    private func finishInvalidationDrain() {
+        guard !invalidationDrainFinished else { return }
+        invalidationDrainFinished = true
+        let waiters = invalidationWaiters
+        invalidationWaiters.removeAll()
+        for waiter in waiters {
+            waiter()
         }
     }
 

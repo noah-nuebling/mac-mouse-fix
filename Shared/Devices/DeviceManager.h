@@ -30,6 +30,19 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)someDeviceHasUsableButtons;
 + (int)maxButtonNumberAmongDevices;
 
+#if DEBUG
++ (void)unitTestAttachDevice:(Device *)device
+             attachedDevices:(NSMutableArray<Device *> *)attachedDevices
+                      notify:(void (^)(NSArray<Device *> *devices))notify
+            controllerAttach:(void (^)(Device *device))controllerAttach
+    NS_SWIFT_NAME(unitTestAttach(device:attachedDevices:notify:controllerAttach:));
+
++ (void)unitTestRemoveDevice:(Device *)device
+             attachedDevices:(NSMutableArray<Device *> *)attachedDevices
+                     prepare:(void (^)(Device *device, void (^completion)(void)))prepare
+                      notify:(void (^)(NSArray<Device *> *devices))notify
+    NS_SWIFT_NAME(unitTestRemove(device:attachedDevices:prepare:notify:));
+#endif
 
 @end
 

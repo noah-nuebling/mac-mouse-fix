@@ -87,8 +87,10 @@ final class BLEHIDPPTransportTests: XCTestCase {
     func testInvalidationDropsQueuedOldGenerationReportAndReleasesAfterUnregister() {
         let harness = BLETransportHarness(maximumInputReportSize: 32)
         harness.invokeCallback(bytes: makeLongReport())
+        let invalidated = expectation(description: "transport drained")
 
-        harness.transport.invalidate()
+        harness.transport.invalidate { invalidated.fulfill() }
+        wait(for: [invalidated], timeout: 1)
 
         XCTAssertEqual(
             harness.events.snapshot(),
@@ -110,9 +112,12 @@ final class BLEHIDPPTransportTests: XCTestCase {
     func testInvalidationIsIdempotentAndUnregistersTheRegisteredBuffer() {
         let harness = BLETransportHarness(maximumInputReportSize: 31)
         let registeredAddress = harness.io.registeredBufferAddress
+        let invalidated = expectation(description: "both callers observe drain")
+        invalidated.expectedFulfillmentCount = 2
 
-        harness.transport.invalidate()
-        harness.transport.invalidate()
+        harness.transport.invalidate { invalidated.fulfill() }
+        harness.transport.invalidate { invalidated.fulfill() }
+        wait(for: [invalidated], timeout: 1)
 
         XCTAssertEqual(harness.io.unregisterCallCount, 1)
         XCTAssertEqual(harness.io.unregisteredBufferAddress, registeredAddress)
@@ -142,6 +147,57 @@ final class BLEHIDPPTransportTests: XCTestCase {
             ["register", "unregister", "context release", "buffer release"]
         )
         XCTAssertEqual(io.unregisterCallCount, 1)
+    }
+
+    func testDeinitWaitsForAcceptedInFlightWriteBeforeImplicitTeardown() {
+        let trace = ThreadSafeEventRecorder()
+        let io = FakeHIDPPDeviceIO(maximumInputReportSize: 20, events: trace)
+        let setReportEntered = DispatchSemaphore(value: 0)
+        let allowSetReportToReturn = DispatchSemaphore(value: 0)
+        io.outputHandler = { _, _, _ in
+            trace.append("set entered")
+            setReportEntered.signal()
+            _ = allowSetReportToReturn.wait(timeout: .now() + 2)
+            trace.append("set return")
+            return kIOReturnSuccess
+        }
+        var transport: BLEHIDPPTransport? = BLEHIDPPTransport(
+            device: Device.unitTestDevice(),
+            io: io,
+            ioQueue: DispatchQueue(label: "com.nuebling.mac-mouse-fix.tests.m720-ble-io.deinit-drain"),
+            testHooks: BLEHIDPPTransportTestHooks(
+                didReleaseCallbackContext: { trace.append("context release") },
+                didReleaseInputBuffer: { trace.append("buffer release") }
+            )
+        )
+        weak let weakTransport = transport
+        let sendCompletion = expectation(description: "in-flight send completes")
+        transport?.send(Data(makeLongReport())) { result in
+            XCTAssertTrue(Thread.isMainThread)
+            XCTAssertEqual(result, kIOReturnSuccess)
+            trace.append("send")
+            sendCompletion.fulfill()
+        }
+        XCTAssertEqual(setReportEntered.wait(timeout: .now() + 1), .success)
+
+        transport = nil
+
+        XCTAssertNotNil(weakTransport)
+        XCTAssertEqual(io.unregisterCallCount, 0)
+        XCTAssertEqual(trace.snapshot(), ["register", "set entered"])
+        allowSetReportToReturn.signal()
+
+        wait(for: [sendCompletion], timeout: 2)
+        drainMainQueue()
+
+        XCTAssertNil(weakTransport)
+        XCTAssertEqual(
+            trace.snapshot(),
+            [
+                "register", "set entered", "set return", "send", "unregister",
+                "context release", "buffer release",
+            ]
+        )
     }
 
     func testSendUsesSerialIOAndPassesCompleteLongOutputReport() {
@@ -252,6 +308,77 @@ final class BLEHIDPPTransportTests: XCTestCase {
         XCTAssertEqual(io.outputCalls.count, 1)
     }
 
+    func testInvalidateCompletionWaitsForInFlightWriteAndCoalescesCallers() {
+        let trace = ThreadSafeEventRecorder()
+        let io = FakeHIDPPDeviceIO(maximumInputReportSize: 20, events: trace)
+        let setReportEntered = DispatchSemaphore(value: 0)
+        let allowSetReportToReturn = DispatchSemaphore(value: 0)
+        io.outputHandler = { _, _, _ in
+            trace.append("set entered")
+            setReportEntered.signal()
+            _ = allowSetReportToReturn.wait(timeout: .now() + 2)
+            trace.append("set return")
+            return kIOReturnSuccess
+        }
+        let transport = BLEHIDPPTransport(
+            device: Device.unitTestDevice(),
+            io: io,
+            ioQueue: DispatchQueue(label: "com.nuebling.mac-mouse-fix.tests.m720-ble-io.drain"),
+            testHooks: BLEHIDPPTransportTestHooks(
+                didReleaseCallbackContext: { trace.append("context release") },
+                didReleaseInputBuffer: { trace.append("buffer release") }
+            )
+        )
+        let sendCompletion = expectation(description: "in-flight send completes")
+        let drainCompletions = expectation(description: "all invalidate callers complete")
+        drainCompletions.expectedFulfillmentCount = 2
+
+        transport.send(Data(makeLongReport())) { result in
+            XCTAssertTrue(Thread.isMainThread)
+            XCTAssertEqual(result, kIOReturnSuccess)
+            trace.append("send")
+            sendCompletion.fulfill()
+        }
+        XCTAssertEqual(setReportEntered.wait(timeout: .now() + 1), .success)
+
+        transport.invalidate {
+            XCTAssertTrue(Thread.isMainThread)
+            trace.append("drain-1")
+            drainCompletions.fulfill()
+        }
+        transport.invalidate {
+            XCTAssertTrue(Thread.isMainThread)
+            trace.append("drain-2")
+            drainCompletions.fulfill()
+        }
+
+        XCTAssertEqual(io.unregisterCallCount, 0)
+        XCTAssertEqual(trace.snapshot(), ["register", "set entered"])
+        allowSetReportToReturn.signal()
+
+        wait(for: [sendCompletion, drainCompletions], timeout: 2)
+        XCTAssertEqual(
+            trace.snapshot(),
+            [
+                "register", "set entered", "set return", "send", "unregister",
+                "context release", "buffer release", "drain-1", "drain-2",
+            ]
+        )
+        XCTAssertEqual(io.outputCalls.count, 1)
+        XCTAssertEqual(io.unregisterCallCount, 1)
+
+        let lateCompletion = expectation(description: "late invalidation completes asynchronously")
+        var lateDidComplete = false
+        transport.invalidate {
+            XCTAssertTrue(Thread.isMainThread)
+            lateDidComplete = true
+            lateCompletion.fulfill()
+        }
+        XCTAssertFalse(lateDidComplete)
+        wait(for: [lateCompletion], timeout: 1)
+        XCTAssertEqual(io.unregisterCallCount, 1)
+    }
+
     func testSendAfterInvalidationCompletesAbortedAsynchronouslyOnMainWithoutIO() {
         let io = FakeHIDPPDeviceIO(maximumInputReportSize: 20)
         let transport = BLEHIDPPTransport(
@@ -289,8 +416,12 @@ final class BLEHIDPPTransportTests: XCTestCase {
         device = nil
         XCTAssertTrue(weakDevice != nil)
 
-        transport?.invalidate()
+        let invalidated = expectation(description: "transport drained")
+        transport?.invalidate { invalidated.fulfill() }
         transport = nil
+        XCTAssertTrue(weakDevice != nil)
+        wait(for: [invalidated], timeout: 1)
+        drainMainQueue()
         XCTAssertTrue(weakDevice == nil)
     }
 

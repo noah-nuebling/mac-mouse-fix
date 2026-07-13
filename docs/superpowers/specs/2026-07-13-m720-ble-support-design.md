@@ -143,7 +143,7 @@ The transport boundary provides:
 - a device index;
 - asynchronous long-report sending;
 - an input-report handler;
-- cancellation/invalidation; and
+- invalidation with an asynchronous drain completion; and
 - transport metadata used for response validation and diagnostics.
 
 The phase-1 BLE implementation uses the already-open `IOHIDDevice` retained by
@@ -164,11 +164,17 @@ executing code may retain or read the reusable IOHID buffer. It never blocks the
 main queue.
 
 Registration, callback entry, unregistration, and callback-context release are
-serialized on the main queue where the device is scheduled. Teardown first
-increments the lifecycle generation, unregisters the callback, and only then
-releases the buffer/context. Already-copied reports carry the old generation
-and are ignored. Phase 2 can add a receiver transport whose device index is the
-paired slot without changing the codec or session.
+serialized on the main queue where the device is scheduled. Invalidation first
+closes the send gate, increments the callback generation, and clears the report
+handler on main. It then enqueues a fence behind every accepted
+`IOHIDDeviceSetReport` block on the same dedicated serial I/O queue. Only after
+that fence returns to main may teardown unregister the callback, release the
+buffer/context, and complete its coalesced invalidation waiters. A late waiter
+also completes asynchronously. This prevents callback unregistration or a new
+same-device session from racing an old synchronous Set report. Already-copied
+reports carry the old generation and are ignored. Phase 2 can add a receiver
+transport whose device index is the paired slot without changing the codec or
+session.
 
 ### `M720HIDPPSession`
 
@@ -487,13 +493,19 @@ Removal order is deliberate:
    without clearing the held-CID set.
 2. Call the dedicated button cancellation path for every held target using the
    retained original `Device`, and await all button-queue cleanup completions.
-3. Cancel request timeouts and pending policy/Add Mode work. If the transport
-   is already unavailable, retain any applied journal entry for reconnect
-   recovery instead of pretending restoration succeeded.
-4. Unregister only this session's input-report callback and release its buffer
-   and context.
-5. Enter `invalid` and remove the session.
-6. Only then remove `Device` from `attachedDevices` and notify `SwitchMaster`.
+3. Invalidate the request pipeline, fail stale request continuations, close the
+   transport send gate, and enqueue the serial I/O-queue drain fence. If the
+   transport is already unavailable, retain any applied journal entry for
+   reconnect recovery instead of pretending restoration succeeded.
+4. After the fence, unregister only this session's input-report callback and
+   release its buffer and context on main.
+5. Enter `invalid(disconnected)` and complete removal waiters; shutdown waiters
+   joined to the same terminal drain complete only after removal waiters.
+6. Remove the session only after that completion. A reconnect with the same
+   journal identity waits for every invalidating older session token before its
+   factory may create or start the replacement, so no old Set can land after
+   new recovery reads or journal reconciliation.
+7. Only then remove `Device` from `attachedDevices` and notify `SwitchMaster`.
 
 A reconnect creates a fresh generation, rediscovers the feature index, and
 reapplies current policy. No feature index or reporting state survives across

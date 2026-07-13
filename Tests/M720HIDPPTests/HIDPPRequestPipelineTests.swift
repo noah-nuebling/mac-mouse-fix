@@ -864,6 +864,51 @@ final class HIDPPRequestPipelineTests: XCTestCase {
         XCTAssertEqual(harness.transport.invalidateCallCount, 1)
     }
 
+    func testInvalidateCompletionWaitsForTransportDrainAndCoalescesCallers() {
+        let harness = RequestPipelineHarness()
+        harness.transport.automaticallyCompletesInvalidation = false
+        var activeResults: [Result<Data, HIDPPRequestError>] = []
+        var pendingResults: [Result<Data, HIDPPRequestError>] = []
+        var completionOrder: [String] = []
+        harness.pipeline.perform(featureIndex: 0x0B, function: 0x2, parameters: []) {
+            activeResults.append($0)
+        }
+        harness.pipeline.perform(featureIndex: 0x0C, function: 0x3, parameters: []) {
+            pendingResults.append($0)
+        }
+        harness.drain()
+
+        harness.pipeline.invalidate { completionOrder.append("first") }
+        harness.pipeline.invalidate { completionOrder.append("second") }
+        harness.drain()
+
+        XCTAssertEqual(activeResults, [.failure(.invalidated)])
+        XCTAssertEqual(pendingResults, [.failure(.invalidated)])
+        XCTAssertEqual(harness.transport.invalidateCallCount, 1)
+        XCTAssertEqual(harness.transport.pendingInvalidationCompletionCount, 1)
+        XCTAssertTrue(completionOrder.isEmpty)
+
+        harness.transport.completeInvalidation()
+        harness.drain()
+
+        XCTAssertEqual(completionOrder, ["first", "second"])
+        XCTAssertEqual(harness.transport.invalidateCallCount, 1)
+
+        var lateDidComplete = false
+        harness.stateQueue.sync {
+            harness.pipeline.invalidate {
+                lateDidComplete = true
+                completionOrder.append("late")
+            }
+            XCTAssertFalse(lateDidComplete)
+        }
+        XCTAssertFalse(lateDidComplete)
+        harness.drain()
+        XCTAssertTrue(lateDidComplete)
+        XCTAssertEqual(completionOrder, ["first", "second", "late"])
+        XCTAssertEqual(harness.transport.invalidateCallCount, 1)
+    }
+
     func testInvalidateFromCompletionStopsQueuedRequestBeforeItSends() {
         let harness = RequestPipelineHarness()
         var firstResults: [Result<Data, HIDPPRequestError>] = []

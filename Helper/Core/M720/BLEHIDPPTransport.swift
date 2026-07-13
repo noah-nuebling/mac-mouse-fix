@@ -47,6 +47,10 @@ final class BLEHIDPPTransport: HIDPPTransport {
     private var inputBuffer: BLEHIDPPInputBuffer?
     private var callbackContext: BLEHIDPPCallbackContext?
     private var isInvalidated = false
+    private var invalidationDrainStarted = false
+    private var invalidationDrainFinished = false
+    private var ioResourcesReleased = false
+    private var invalidationWaiters: [() -> Void] = []
 
     convenience init?(device: Device) {
         dispatchPrecondition(condition: .onQueue(.main))
@@ -96,7 +100,8 @@ final class BLEHIDPPTransport: HIDPPTransport {
 
     deinit {
         dispatchPrecondition(condition: .onQueue(.main))
-        tearDownIfNeeded()
+        beginInvalidationIfNeeded()
+        releaseIOResourcesIfNeeded()
     }
 
     func send(_ report: Data, completion: @escaping (IOReturn) -> Void) {
@@ -114,22 +119,40 @@ final class BLEHIDPPTransport: HIDPPTransport {
             return
         }
 
-        let io = self.io
-        let sendGate = self.sendGate
-        ioQueue.async {
+        ioQueue.async { [self] in
             guard sendGate.beginWrite(ifCurrent: ticket) else {
-                DispatchQueue.main.async { completion(kIOReturnAborted) }
+                DispatchQueue.main.async { [self] in
+                    withExtendedLifetime(self) {
+                        completion(kIOReturnAborted)
+                    }
+                }
                 return
             }
 
             let result = io.setOutputReport(reportID: 0x11, data: report)
-            DispatchQueue.main.async { completion(result) }
+            DispatchQueue.main.async { [self] in
+                withExtendedLifetime(self) {
+                    completion(result)
+                }
+            }
         }
     }
 
-    func invalidate() {
+    func invalidate(completion: @escaping () -> Void) {
         dispatchPrecondition(condition: .onQueue(.main))
-        tearDownIfNeeded()
+        if invalidationDrainFinished {
+            DispatchQueue.main.async(execute: completion)
+            return
+        }
+        invalidationWaiters.append(completion)
+        guard !invalidationDrainStarted else { return }
+        invalidationDrainStarted = true
+        beginInvalidationIfNeeded()
+        ioQueue.async { [self] in
+            DispatchQueue.main.async { [self] in
+                finishInvalidationDrain()
+            }
+        }
     }
 
     fileprivate func deliver(_ report: Data, generation: UInt64) {
@@ -138,13 +161,17 @@ final class BLEHIDPPTransport: HIDPPTransport {
         onReport?(report)
     }
 
-    private func tearDownIfNeeded() {
+    private func beginInvalidationIfNeeded() {
         guard !isInvalidated else { return }
         isInvalidated = true
         sendGate.invalidate()
         callbackContext?.invalidate()
         onReport = nil
+    }
 
+    private func releaseIOResourcesIfNeeded() {
+        guard !ioResourcesReleased else { return }
+        ioResourcesReleased = true
         if
             let buffer = inputBuffer?.pointer,
             let length = inputBuffer?.capacity
@@ -154,6 +181,18 @@ final class BLEHIDPPTransport: HIDPPTransport {
 
         callbackContext = nil
         inputBuffer = nil
+    }
+
+    private func finishInvalidationDrain() {
+        dispatchPrecondition(condition: .onQueue(.main))
+        guard !invalidationDrainFinished else { return }
+        releaseIOResourcesIfNeeded()
+        invalidationDrainFinished = true
+        let waiters = invalidationWaiters
+        invalidationWaiters.removeAll()
+        for waiter in waiters {
+            waiter()
+        }
     }
 
     private func completeOnMain(

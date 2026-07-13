@@ -2708,6 +2708,63 @@ final class M720HIDPPSessionTests: XCTestCase {
         }
     }
 
+    func testInitiallyDiagnosticIdentityIgnoresMidDiscoveryPolicyUntilAllGetsComplete() {
+        let emptySerialKey = M720DeviceKey(
+            vendorID: M720Profile.vendorID,
+            productID: M720Profile.bluetoothLEProductID,
+            transport: M720Profile.bluetoothLETransport,
+            serialNumber: ""
+        )
+        let origins: [(M720DeviceKey, Bool, Bool)] = [
+            (M720SessionHarness.defaultDeviceKey, false, false),
+            (emptySerialKey, true, false),
+            (M720SessionHarness.defaultDeviceKey, true, true),
+        ]
+        let interruptionStages: [M720TestRequestKind] = [
+            .rootGetFeature,
+            .getCount,
+        ]
+
+        for (deviceKey, journalIdentityUsable, markBeforeStart) in origins {
+            for stage in interruptionStages {
+                let harness = M720SessionHarness(
+                    deviceKey: deviceKey,
+                    journalIdentityUsable: journalIdentityUsable
+                )
+                if markBeforeStart {
+                    harness.session.markJournalIdentityUnusable()
+                }
+                harness.session.start()
+                driveDiscovery(harness, rows: referenceRows, until: stage)
+                let pendingRequestIndex = harness.transport.sent.count - 1
+                XCTAssertEqual(harness.request(at: pendingRequestIndex).kind, stage)
+
+                harness.session.setRequiredCIDs([0x005B])
+
+                XCTAssertEqual(harness.session.state, .discovering)
+                driveDiscovery(
+                    harness,
+                    rows: referenceRows,
+                    startingAt: pendingRequestIndex
+                )
+
+                XCTAssertEqual(harness.session.state, .invalid(.unsupported))
+                XCTAssertEqual(
+                    harness.requestKinds.compactMap { request -> Int? in
+                        if case let .getCidInfo(index) = request { return index }
+                        return nil
+                    },
+                    Array(referenceRows.indices)
+                )
+                for cid in M720Profile.cidToButton.keys {
+                    XCTAssertTrue(harness.requestKinds.contains(.getCidReporting(cid)))
+                }
+                XCTAssertEqual(harness.journal.mutationCallCount, 0)
+                assertNoSet(harness)
+            }
+        }
+    }
+
     func testDiscoveryReloadFailureStopsBeforeHIDAndJournalMutation() {
         let harness = M720SessionHarness(
             reloadResult: .failure(M720JournalStoreError.uncertain)
@@ -4189,6 +4246,216 @@ final class M720HIDPPSessionTests: XCTestCase {
         XCTAssertEqual(harness.transport.invalidateCallCount, 1)
     }
 
+    func testRemovalClosesEventGateSynchronouslyBeforeQueuedOldReport() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B)
+        )
+        harness.sink.resetEmissions()
+        let generationBeforeRemoval = harness.session.eventGeneration
+        var removalCompletions = 0
+
+        DispatchQueue.main.async {
+            harness.injectEvent(featureIndex: 0x2A, event: 0, cids: [0x005B])
+        }
+        harness.session.invalidateForRemoval { removalCompletions += 1 }
+
+        XCTAssertGreaterThan(harness.session.eventGeneration, generationBeforeRemoval)
+        XCTAssertEqual(removalCompletions, 0)
+        drainMainQueue(turns: 6)
+
+        XCTAssertTrue(harness.sink.emissions.isEmpty)
+        XCTAssertTrue(harness.sink.cancellations.isEmpty)
+        XCTAssertEqual(removalCompletions, 1)
+        XCTAssertEqual(harness.session.state, .invalid(.disconnected))
+        XCTAssertEqual(harness.transport.invalidateCallCount, 1)
+    }
+
+    func testShutdownClosesEventGateSynchronouslyBeforeQueuedOldReport() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B)
+        )
+        harness.sink.resetEmissions()
+        let rollbackStart = harness.transport.sent.count
+        let generationBeforeShutdown = harness.session.eventGeneration
+        var shutdownCompletions = 0
+
+        DispatchQueue.main.async {
+            harness.injectEvent(featureIndex: 0x2A, event: 0, cids: [0x005B])
+        }
+        harness.session.shutdown { shutdownCompletions += 1 }
+
+        XCTAssertGreaterThan(harness.session.eventGeneration, generationBeforeShutdown)
+        XCTAssertEqual(shutdownCompletions, 0)
+        drainMainQueue(turns: 6)
+
+        XCTAssertTrue(harness.sink.emissions.isEmpty)
+        XCTAssertTrue(harness.sink.cancellations.isEmpty)
+        driveTakeover(
+            harness,
+            startingAt: rollbackStart,
+            initialStates: divertedStates(0x005B)
+        )
+        drainMainQueue(turns: 6)
+
+        XCTAssertEqual(shutdownCompletions, 1)
+        XCTAssertEqual(harness.session.state, .invalid(.cancelled))
+        XCTAssertEqual(harness.transport.invalidateCallCount, 1)
+    }
+
+    func testShutdownThenRemovalWaitersCompleteOnlyAfterSingleTransportDrain() {
+        let harness = M720SessionHarness()
+        harness.transport.automaticallyCompletesInvalidation = false
+        var events: [String] = []
+        harness.session.onStateChange = { state in
+            if state == .invalid(.disconnected) {
+                events.append("observer")
+            }
+        }
+
+        harness.session.shutdown { events.append("shutdown-1") }
+        harness.session.shutdown { events.append("shutdown-2") }
+        harness.session.invalidateForRemoval { events.append("removal-1") }
+        harness.session.invalidateForRemoval { events.append("removal-2") }
+        drainMainQueue(turns: 6)
+
+        XCTAssertEqual(harness.transport.invalidateCallCount, 1)
+        XCTAssertEqual(harness.transport.pendingInvalidationCompletionCount, 1)
+        XCTAssertTrue(events.isEmpty)
+        XCTAssertNotEqual(harness.session.state, .invalid(.disconnected))
+
+        harness.transport.completeInvalidation()
+        drainMainQueue(turns: 6)
+
+        XCTAssertEqual(harness.session.state, .invalid(.disconnected))
+        XCTAssertEqual(
+            events,
+            ["removal-1", "removal-2", "shutdown-1", "shutdown-2", "observer"]
+        )
+        XCTAssertEqual(harness.transport.invalidateCallCount, 1)
+
+        harness.session.shutdown { events.append("late-shutdown") }
+        harness.session.invalidateForRemoval { events.append("late-removal") }
+        XCTAssertEqual(events.count, 5)
+        drainMainQueue(turns: 6)
+
+        XCTAssertEqual(
+            events,
+            [
+                "removal-1", "removal-2", "shutdown-1", "shutdown-2", "observer",
+                "late-shutdown", "late-removal",
+            ]
+        )
+        XCTAssertEqual(harness.transport.invalidateCallCount, 1)
+    }
+
+    func testRemovalThenShutdownWaitersCompleteOnlyAfterSingleTransportDrain() {
+        let harness = M720SessionHarness()
+        harness.transport.automaticallyCompletesInvalidation = false
+        var events: [String] = []
+        harness.session.onStateChange = { state in
+            if state == .invalid(.disconnected) {
+                events.append("observer")
+            }
+        }
+
+        harness.session.invalidateForRemoval { events.append("removal-1") }
+        harness.session.invalidateForRemoval { events.append("removal-2") }
+        harness.session.shutdown { events.append("shutdown-1") }
+        harness.session.shutdown { events.append("shutdown-2") }
+        drainMainQueue(turns: 6)
+
+        XCTAssertEqual(harness.transport.invalidateCallCount, 1)
+        XCTAssertEqual(harness.transport.pendingInvalidationCompletionCount, 1)
+        XCTAssertTrue(events.isEmpty)
+        XCTAssertNotEqual(harness.session.state, .invalid(.disconnected))
+
+        harness.transport.completeInvalidation()
+        drainMainQueue(turns: 6)
+
+        XCTAssertEqual(harness.session.state, .invalid(.disconnected))
+        XCTAssertEqual(
+            events,
+            ["removal-1", "removal-2", "shutdown-1", "shutdown-2", "observer"]
+        )
+        XCTAssertEqual(harness.transport.invalidateCallCount, 1)
+
+        harness.session.invalidateForRemoval { events.append("late-removal") }
+        harness.session.shutdown { events.append("late-shutdown") }
+        XCTAssertEqual(events.count, 5)
+        drainMainQueue(turns: 6)
+
+        XCTAssertEqual(
+            events,
+            [
+                "removal-1", "removal-2", "shutdown-1", "shutdown-2", "observer",
+                "late-removal", "late-shutdown",
+            ]
+        )
+        XCTAssertEqual(harness.transport.invalidateCallCount, 1)
+    }
+
+    func testTerminalDrainRejectsActiveDiscoveryCompletionBeforePublishingFinalState() {
+        enum Intent {
+            case shutdown
+            case removal
+        }
+
+        for intent in [Intent.shutdown, .removal] {
+            let harness = M720SessionHarness()
+            harness.transport.automaticallyCompletesInvalidation = false
+            var events: [String] = []
+            harness.session.onStateChange = { state in
+                if case .invalid = state {
+                    events.append("observer")
+                }
+            }
+            harness.session.start()
+            drainMainQueue(turns: 3)
+            XCTAssertEqual(harness.session.state, .discovering)
+            XCTAssertEqual(harness.requestKinds, [.rootGetFeature])
+
+            switch intent {
+            case .shutdown:
+                harness.session.shutdown { events.append("waiter") }
+            case .removal:
+                harness.session.invalidateForRemoval { events.append("waiter") }
+            }
+            drainMainQueue(turns: 6)
+
+            XCTAssertEqual(harness.transport.invalidateCallCount, 1)
+            XCTAssertEqual(harness.transport.pendingInvalidationCompletionCount, 1)
+            XCTAssertEqual(harness.session.state, .discovering)
+            XCTAssertTrue(events.isEmpty)
+
+            harness.transport.completeInvalidation()
+            drainMainQueue(turns: 6)
+
+            let expectedState: M720SessionState
+            switch intent {
+            case .shutdown:
+                expectedState = .invalid(.cancelled)
+            case .removal:
+                expectedState = .invalid(.disconnected)
+            }
+            XCTAssertEqual(harness.session.state, expectedState)
+            XCTAssertEqual(events, ["waiter", "observer"])
+        }
+    }
+
     func testRemovalDuringHeldReloadRejectsStaleCompletionAndStartIsIdempotent() {
         let harness = M720SessionHarness(holdsReload: true)
         var completions = 0
@@ -4939,6 +5206,187 @@ final class M720HIDPPSessionTests: XCTestCase {
         XCTAssertEqual(harness.session.state, .invalid(.unsupported))
         XCTAssertEqual(harness.journal.mutationCallCount, 0)
         assertNoSet(harness)
+    }
+
+    func testIdentityDowngradeBeforeStartWaitsForGetOnlyDiagnosticsThenBecomesUnsupported() {
+        let harness = M720SessionHarness()
+
+        harness.session.markJournalIdentityUnusable()
+
+        XCTAssertEqual(harness.session.state, .discovering)
+        XCTAssertTrue(harness.transport.sent.isEmpty)
+
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+
+        XCTAssertEqual(harness.session.state, .invalid(.unsupported))
+        XCTAssertEqual(harness.journal.mutationCallCount, 0)
+        assertNoSet(harness)
+    }
+
+    func testIdentityDowngradeDuringDiscoveryStopsAmbiguousRecoveryAndRejectsLateReply() {
+        let matchingJournal = M720OwnershipJournal(
+            version: M720OwnershipJournal.currentVersion,
+            devices: [
+                M720JournalDevice(
+                    key: M720SessionHarness.defaultDeviceKey,
+                    controls: [journalEntry(cid: 0x005B)]
+                ),
+            ]
+        )
+        let harness = M720SessionHarness(initialJournal: matchingJournal)
+        harness.session.start()
+        drainMainQueue(turns: 4)
+        let staleRootRequest = harness.request(at: 0)
+
+        harness.session.markJournalIdentityUnusable()
+        drainMainQueue(turns: 4)
+
+        XCTAssertEqual(harness.session.state, .invalid(.unsupported))
+        XCTAssertEqual(harness.transport.sent.count, 1)
+        XCTAssertEqual(harness.journal.mutationCallCount, 0)
+
+        harness.respond(
+            to: staleRootRequest,
+            responseFeatureIndex: 0,
+            parameters: [0x2A, 0x00, 0x04]
+        )
+        drainMainQueue(turns: 6)
+
+        XCTAssertEqual(harness.transport.sent.count, 1)
+        XCTAssertEqual(harness.session.state, .invalid(.unsupported))
+        XCTAssertEqual(harness.journal.currentJournal, matchingJournal)
+        assertNoSet(harness)
+    }
+
+    func testIdentityDowngradeWhileActiveCancelsHeldInputAndRestoresBeforeUnsupported() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        var requestIndex = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: requestIndex,
+            initialStates: baselineStates(0x005B)
+        )
+        harness.injectEvent(featureIndex: 0x2A, event: 0, cids: [0x005B])
+        drainMainQueue(turns: 4)
+        harness.sink.automaticallyCompletesCancels = false
+        harness.sink.resetEmissions()
+        requestIndex = harness.transport.sent.count
+        let requiredBeforeDowngrade = harness.session.requiredCIDs
+        let eventGenerationBeforeDowngrade = harness.session.eventGeneration
+
+        DispatchQueue.main.async {
+            harness.injectEvent(featureIndex: 0x2A, event: 0, cids: [])
+        }
+        XCTAssertTrue(Thread.isMainThread)
+
+        harness.session.markJournalIdentityUnusable()
+
+        XCTAssertEqual(harness.session.state, .restoring)
+        XCTAssertEqual(harness.sink.cancellations, [6])
+        XCTAssertEqual(harness.transport.sent.count, requestIndex)
+        XCTAssertTrue(harness.sink.emissions.isEmpty)
+        XCTAssertEqual(harness.session.requiredCIDs, requiredBeforeDowngrade)
+        XCTAssertEqual(harness.session.eventGeneration, eventGenerationBeforeDowngrade + 1)
+
+        let eventGenerationAfterDowngrade = harness.session.eventGeneration
+        harness.session.markJournalIdentityUnusable()
+        XCTAssertEqual(harness.session.state, .restoring)
+        XCTAssertEqual(harness.session.eventGeneration, eventGenerationAfterDowngrade)
+        XCTAssertEqual(harness.sink.cancellations, [6])
+
+        drainMainQueue(turns: 5)
+        XCTAssertTrue(harness.sink.emissions.isEmpty, "queued old-generation reports must see the closed gate")
+
+        harness.sink.completeCancel(button: 6)
+        driveTakeover(
+            harness,
+            startingAt: requestIndex,
+            initialStates: divertedStates(0x005B)
+        )
+
+        XCTAssertEqual(harness.journal.currentJournal, .emptyV1)
+        XCTAssertEqual(harness.session.appliedCIDs, [])
+        XCTAssertEqual(harness.session.state, .invalid(.unsupported))
+    }
+
+    func testActivePolicyReplacementClosesEventGateSynchronouslyOnMainTurn() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B, 0x005D)
+        )
+        harness.sink.resetEmissions()
+        let eventGenerationBeforeReplacement = harness.session.eventGeneration
+
+        DispatchQueue.main.async {
+            harness.injectEvent(featureIndex: 0x2A, event: 0, cids: [0x005B])
+        }
+        XCTAssertTrue(Thread.isMainThread)
+
+        harness.session.setRequiredCIDs([0x005D])
+
+        XCTAssertEqual(harness.session.state, .restoring)
+        XCTAssertEqual(harness.session.requiredCIDs, [0x005D])
+        XCTAssertEqual(
+            harness.session.eventGeneration,
+            eventGenerationBeforeReplacement + 1
+        )
+        XCTAssertTrue(harness.sink.emissions.isEmpty)
+
+        drainMainQueue(turns: 5)
+        XCTAssertTrue(
+            harness.sink.emissions.isEmpty,
+            "queued old-policy reports must observe the synchronously closed gate"
+        )
+    }
+
+    func testIdentityDowngradeDuringTakeoverWaitsForWriteBoundaryThenRollsBackTouchedCID() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let requestIndex = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        drainMainQueue(turns: 4)
+
+        let preflight = harness.request(at: requestIndex)
+        harness.respond(
+            to: preflight,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(baselineStates(0x005B)[0x005B]!)
+        )
+        drainMainQueue(turns: 6)
+        let pendingSet = harness.request(at: requestIndex + 1)
+        XCTAssertEqual(pendingSet.kind, .setCidReporting(0x005B, diverted: true))
+
+        harness.session.markJournalIdentityUnusable()
+        harness.session.markJournalIdentityUnusable()
+        drainMainQueue(turns: 4)
+
+        XCTAssertEqual(harness.session.state, .takingOver)
+
+        harness.respond(
+            to: pendingSet,
+            responseFeatureIndex: 0x2A,
+            parameters: ReprogControlsV4.setReportingParameters(cid: 0x005B, diverted: true)
+        )
+        driveTakeover(
+            harness,
+            startingAt: requestIndex + 2,
+            initialStates: divertedStates(0x005B)
+        )
+
+        XCTAssertEqual(harness.journal.currentJournal, .emptyV1)
+        XCTAssertEqual(harness.session.appliedCIDs, [])
+        XCTAssertEqual(harness.session.state, .invalid(.unsupported))
     }
 
     func testSleepOverlayClosesGateAndCancelsWithoutRestoreOrPublicStateChange() {
