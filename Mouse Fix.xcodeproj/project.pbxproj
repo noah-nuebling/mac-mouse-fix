@@ -425,10 +425,18 @@
 		4FFAEBEA2E74367300832CE2 /* AddField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFAEBE92E74367300832CE2 /* AddField.swift */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
 		4FFE2895291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		F7200000000000000000000C /* M720TestHostSmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7200000000000000000000B /* M720TestHostSmokeTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		4F94F73525E6138800D9F24A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FCECD7821092354001F1078 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4FCECD7F21092354001F1078;
+			remoteInfo = "Mac Mouse Fix Helper";
+		};
+		F72000000000000000000006 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4FCECD7821092354001F1078 /* Project object */;
 			proxyType = 1;
@@ -2398,6 +2406,8 @@
 		4FDB94332FE75270001E05CB /* FixDockSwipes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FixDockSwipes.m; sourceTree = "<group>"; };
 		4FDB94342FE75270001E05CB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4FDB94352FE75270001E05CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		F72000000000000000000002 /* M720 HIDPP Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "M720 HIDPP Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7200000000000000000000B /* M720TestHostSmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720TestHostSmokeTests.swift; path = M720HIDPPTests/M720TestHostSmokeTests.swift; sourceTree = "<group>"; };
 		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
 		4FDE757D28B0E66900662314 /* License.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = License.h; sourceTree = "<group>"; };
 		4FDE759928B1401400662314 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
@@ -2656,6 +2666,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FDA9D512FE96D8D00610BEB /* SkyLight.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F72000000000000000000004 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7261,6 +7278,7 @@
 				4F8B01A92C348A3A00F3AF8D /* Localization Screenshot Taker.xctest */,
 				4F1667C92C6A6717009E4924 /* XCStringsDummyApp.app */,
 				4FDB941A2FE743AA001E05CB /* Tests.app */,
+				F72000000000000000000002 /* M720 HIDPP Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -7358,6 +7376,7 @@
 				4FDB94342FE75270001E05CB /* main.m */,
 				4FDB94332FE75270001E05CB /* FixDockSwipes.m */,
 				4F8605A22FE81F5D00CC1147 /* Other */,
+				F7200000000000000000000B /* M720TestHostSmokeTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -8072,6 +8091,26 @@
 			productReference = 4FDB941A2FE743AA001E05CB /* Tests.app */;
 			productType = "com.apple.product-type.application";
 		};
+		F72000000000000000000001 /* M720 HIDPP Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F7200000000000000000000A /* Build configuration list for PBXNativeTarget "M720 HIDPP Tests" */;
+			buildPhases = (
+				F72000000000000000000003 /* Sources */,
+				F72000000000000000000004 /* Frameworks */,
+				F72000000000000000000005 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F72000000000000000000007 /* PBXTargetDependency */,
+			);
+			name = "M720 HIDPP Tests";
+			packageProductDependencies = (
+			);
+			productName = "M720 HIDPP Tests";
+			productReference = F72000000000000000000002 /* M720 HIDPP Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -8099,6 +8138,9 @@
 					4FCECD7F21092354001F1078 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 1240;
+					};
+					F72000000000000000000001 = {
+						TestTargetID = 4FCECD7F21092354001F1078;
 					};
 					4FDB94192FE743AA001E05CB = {
 						CreatedOnToolsVersion = 27.0;
@@ -8155,6 +8197,7 @@
 				4F8B01A82C348A3A00F3AF8D /* Localization Screenshot Taker */,
 				4F1667C82C6A6717009E4924 /* XCStringsDummyApp */,
 				4FDB94192FE743AA001E05CB /* Tests */,
+				F72000000000000000000001 /* M720 HIDPP Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -8231,6 +8274,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FDB94392FE75270001E05CB /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F72000000000000000000005 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8697,6 +8747,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F72000000000000000000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7200000000000000000000C /* M720TestHostSmokeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -8704,6 +8762,11 @@
 			isa = PBXTargetDependency;
 			target = 4FCECD7F21092354001F1078 /* Mac Mouse Fix Helper */;
 			targetProxy = 4F94F73525E6138800D9F24A /* PBXContainerItemProxy */;
+		};
+		F72000000000000000000007 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4FCECD7F21092354001F1078 /* Mac Mouse Fix Helper */;
+			targetProxy = F72000000000000000000006 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -9363,6 +9426,40 @@
 			};
 			name = Release;
 		};
+		F72000000000000000000008 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LM5Z78756B;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper.m720-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper";
+			};
+			name = Debug;
+		};
+		F72000000000000000000009 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LM5Z78756B;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper.m720-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -9416,6 +9513,15 @@
 			buildConfigurations = (
 				4FDB94272FE743AD001E05CB /* Debug */,
 				4FDB94282FE743AD001E05CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F7200000000000000000000A /* Build configuration list for PBXNativeTarget "M720 HIDPP Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F72000000000000000000008 /* Debug */,
+				F72000000000000000000009 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
