@@ -436,6 +436,10 @@
 		F7210000000000000000000C /* ScriptedHIDPPTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7210000000000000000000D /* ScriptedHIDPPTransport.swift */; };
 		F72200000000000000000001 /* ReprogControlsV4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72200000000000000000002 /* ReprogControlsV4Tests.swift */; };
 		F72200000000000000000003 /* ReprogControlsV4.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72200000000000000000004 /* ReprogControlsV4.swift */; };
+		F72300000000000000000001 /* M720CapturePolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72300000000000000000002 /* M720CapturePolicy.swift */; };
+		F72300000000000000000003 /* M720Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72300000000000000000004 /* M720Types.swift */; };
+		F72300000000000000000005 /* M720PressedSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72300000000000000000006 /* M720PressedSetTests.swift */; };
+		F72300000000000000000007 /* M720PressedSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72300000000000000000008 /* M720PressedSet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2428,6 +2432,10 @@
 		F7210000000000000000000D /* ScriptedHIDPPTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScriptedHIDPPTransport.swift; path = M720HIDPPTests/TestSupport/ScriptedHIDPPTransport.swift; sourceTree = "<group>"; };
 		F72200000000000000000002 /* ReprogControlsV4Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReprogControlsV4Tests.swift; path = M720HIDPPTests/ReprogControlsV4Tests.swift; sourceTree = "<group>"; };
 		F72200000000000000000004 /* ReprogControlsV4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReprogControlsV4.swift; sourceTree = "<group>"; };
+		F72300000000000000000002 /* M720CapturePolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720CapturePolicy.swift; sourceTree = "<group>"; };
+		F72300000000000000000004 /* M720Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720Types.swift; sourceTree = "<group>"; };
+		F72300000000000000000006 /* M720PressedSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720PressedSetTests.swift; path = M720HIDPPTests/M720PressedSetTests.swift; sourceTree = "<group>"; };
+		F72300000000000000000008 /* M720PressedSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720PressedSet.swift; sourceTree = "<group>"; };
 		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
 		4FDE757D28B0E66900662314 /* License.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = License.h; sourceTree = "<group>"; };
 		4FDE759928B1401400662314 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
@@ -7398,6 +7406,7 @@
 				4F8605A22FE81F5D00CC1147 /* Other */,
 				F7200000000000000000000B /* M720TestHostSmokeTests.swift */,
 				F7200000000000000000000D /* M720ProfileAndPolicyTests.swift */,
+				F72300000000000000000006 /* M720PressedSetTests.swift */,
 				F72100000000000000000002 /* HIDPPLongReportTests.swift */,
 				F72200000000000000000002 /* ReprogControlsV4Tests.swift */,
 				F7210000000000000000000B /* ManualScheduler.swift */,
@@ -7936,7 +7945,10 @@
 		F72000000000000000000011 /* M720 */ = {
 			isa = PBXGroup;
 			children = (
+				F72300000000000000000002 /* M720CapturePolicy.swift */,
+				F72300000000000000000008 /* M720PressedSet.swift */,
 				F7200000000000000000000F /* M720Profile.swift */,
+				F72300000000000000000004 /* M720Types.swift */,
 			);
 			path = M720;
 			sourceTree = "<group>";
@@ -8662,7 +8674,10 @@
 				4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */,
 				4FBC829C2DAE93AD00354981 /* MFObserver.m in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
+				F72300000000000000000001 /* M720CapturePolicy.swift in Sources */,
+				F72300000000000000000007 /* M720PressedSet.swift in Sources */,
 				F72000000000000000000010 /* M720Profile.swift in Sources */,
+				F72300000000000000000003 /* M720Types.swift in Sources */,
 				F72100000000000000000003 /* HIDPPLongReport.swift in Sources */,
 				F72200000000000000000003 /* ReprogControlsV4.swift in Sources */,
 				F72100000000000000000006 /* HIDPPTransport.swift in Sources */,
@@ -8804,6 +8819,7 @@
 			files = (
 				F7200000000000000000000C /* M720TestHostSmokeTests.swift in Sources */,
 				F7200000000000000000000E /* M720ProfileAndPolicyTests.swift in Sources */,
+				F72300000000000000000005 /* M720PressedSetTests.swift in Sources */,
 				F72100000000000000000001 /* HIDPPLongReportTests.swift in Sources */,
 				F72200000000000000000001 /* ReprogControlsV4Tests.swift in Sources */,
 				F7210000000000000000000A /* ManualScheduler.swift in Sources */,
