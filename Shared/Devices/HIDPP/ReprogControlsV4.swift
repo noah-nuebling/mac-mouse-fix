@@ -179,9 +179,9 @@ enum ReprogControlsV4 {
         _ parameters: Data,
         matches requestParameters: [UInt8]
     ) throws {
-        precondition(requestParameters.count == 5)
         let responseParameters = try documentedPrefix(parameters, length: 5)
-        guard responseParameters == requestParameters else {
+        let requestPrefix = try documentedPrefix(Data(requestParameters), length: 5)
+        guard responseParameters == requestPrefix else {
             throw ReprogControlsError.setCidReportingEchoMismatch
         }
     }

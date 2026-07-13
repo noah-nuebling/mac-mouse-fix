@@ -201,6 +201,34 @@ final class ReprogControlsV4Tests: XCTestCase {
         XCTAssertTrue(info.isDivertable)
     }
 
+    func testDecodesNonZeroStartIndexDataSlice() throws {
+        let storage = Data([
+            0xFF,
+            0x12, 0x34,
+            0xAB, 0xCD,
+            0x21,
+            0x06,
+            0x07,
+            0x80,
+            0x55,
+        ])
+        let parameters = storage.dropFirst()
+
+        XCTAssertNotEqual(parameters.startIndex, 0)
+        XCTAssertEqual(
+            try ReprogControlsV4.decodeControlInfo(parameters),
+            HIDPPControlInfo(
+                cid: 0x1234,
+                taskID: 0xABCD,
+                flags: 0x21,
+                position: 0x06,
+                group: 0x07,
+                groupMask: 0x80,
+                rawXYFlags: 0x55
+            )
+        )
+    }
+
     func testBitFiveNotBitFourControlsDivertCapability() throws {
         let bitFour = try ReprogControlsV4.decodeControlInfo(Data([
             0, 1, 0, 2, 0x10, 0, 0, 0, 0,
@@ -283,13 +311,14 @@ final class ReprogControlsV4Tests: XCTestCase {
         ))
     }
 
-    func testSetEchoValidatorIgnoresUndefinedPadding() {
-        let expected = ReprogControlsV4.setReportingParameters(cid: 0x005B, diverted: true)
-        let response = Data(expected + [UInt8](repeating: 0xA5, count: 11))
+    func testSetEchoValidatorIgnoresRequestAndResponsePadding() {
+        let documented = ReprogControlsV4.setReportingParameters(cid: 0x005B, diverted: true)
+        let request = documented + [UInt8](repeating: 0xC3, count: 11)
+        let response = Data(documented + [UInt8](repeating: 0xA5, count: 11))
 
         XCTAssertNoThrow(try ReprogControlsV4.validateSetCidReportingEcho(
             response,
-            matches: expected
+            matches: request
         ))
     }
 
@@ -379,6 +408,22 @@ final class ReprogControlsV4Tests: XCTestCase {
             XCTAssertThrowsError(try ReprogControlsV4.validateSetCidReportingEcho(
                 payload(length: length),
                 matches: expected
+            )) { error in
+                XCTAssertEqual(
+                    error as? ReprogControlsError,
+                    .shortPayload(expected: 5, actual: length)
+                )
+            }
+        }
+    }
+
+    func testSetEchoValidatorRejectsEveryShortRequestWithoutTrapping() {
+        let documented = ReprogControlsV4.setReportingParameters(cid: 0x005B, diverted: true)
+
+        for length in 0..<5 {
+            XCTAssertThrowsError(try ReprogControlsV4.validateSetCidReportingEcho(
+                Data(documented),
+                matches: Array(documented.prefix(length))
             )) { error in
                 XCTAssertEqual(
                     error as? ReprogControlsError,
