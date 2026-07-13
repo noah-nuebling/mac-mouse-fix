@@ -428,6 +428,12 @@
 		F7200000000000000000000C /* M720TestHostSmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7200000000000000000000B /* M720TestHostSmokeTests.swift */; };
 		F7200000000000000000000E /* M720ProfileAndPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7200000000000000000000D /* M720ProfileAndPolicyTests.swift */; };
 		F72000000000000000000010 /* M720Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7200000000000000000000F /* M720Profile.swift */; };
+		F72100000000000000000001 /* HIDPPLongReportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72100000000000000000002 /* HIDPPLongReportTests.swift */; };
+		F72100000000000000000003 /* HIDPPLongReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72100000000000000000004 /* HIDPPLongReport.swift */; };
+		F72100000000000000000006 /* HIDPPTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72100000000000000000007 /* HIDPPTransport.swift */; };
+		F72100000000000000000008 /* HIDPPScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72100000000000000000009 /* HIDPPScheduler.swift */; };
+		F7210000000000000000000A /* ManualScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7210000000000000000000B /* ManualScheduler.swift */; };
+		F7210000000000000000000C /* ScriptedHIDPPTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7210000000000000000000D /* ScriptedHIDPPTransport.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2412,6 +2418,12 @@
 		F7200000000000000000000B /* M720TestHostSmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720TestHostSmokeTests.swift; path = M720HIDPPTests/M720TestHostSmokeTests.swift; sourceTree = "<group>"; };
 		F7200000000000000000000D /* M720ProfileAndPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720ProfileAndPolicyTests.swift; path = M720HIDPPTests/M720ProfileAndPolicyTests.swift; sourceTree = "<group>"; };
 		F7200000000000000000000F /* M720Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720Profile.swift; sourceTree = "<group>"; };
+		F72100000000000000000002 /* HIDPPLongReportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HIDPPLongReportTests.swift; path = M720HIDPPTests/HIDPPLongReportTests.swift; sourceTree = "<group>"; };
+		F72100000000000000000004 /* HIDPPLongReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDPPLongReport.swift; sourceTree = "<group>"; };
+		F72100000000000000000007 /* HIDPPTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDPPTransport.swift; sourceTree = "<group>"; };
+		F72100000000000000000009 /* HIDPPScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDPPScheduler.swift; sourceTree = "<group>"; };
+		F7210000000000000000000B /* ManualScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ManualScheduler.swift; path = M720HIDPPTests/TestSupport/ManualScheduler.swift; sourceTree = "<group>"; };
+		F7210000000000000000000D /* ScriptedHIDPPTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScriptedHIDPPTransport.swift; path = M720HIDPPTests/TestSupport/ScriptedHIDPPTransport.swift; sourceTree = "<group>"; };
 		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
 		4FDE757D28B0E66900662314 /* License.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = License.h; sourceTree = "<group>"; };
 		4FDE759928B1401400662314 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
@@ -7382,6 +7394,9 @@
 				4F8605A22FE81F5D00CC1147 /* Other */,
 				F7200000000000000000000B /* M720TestHostSmokeTests.swift */,
 				F7200000000000000000000D /* M720ProfileAndPolicyTests.swift */,
+				F72100000000000000000002 /* HIDPPLongReportTests.swift */,
+				F7210000000000000000000B /* ManualScheduler.swift */,
+				F7210000000000000000000D /* ScriptedHIDPPTransport.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -7891,6 +7906,7 @@
 		4FF6667925F2C93A00689B77 /* Devices */ = {
 			isa = PBXGroup;
 			children = (
+				F72100000000000000000005 /* HIDPP */,
 				F72000000000000000000011 /* M720 */,
 				4FF6667B25F2C93A00689B77 /* DeviceManager.h */,
 				4FF6667D25F2C93A00689B77 /* DeviceManager.m */,
@@ -7899,6 +7915,16 @@
 				4FF6667A25F2C93A00689B77 /* Device.m */,
 			);
 			path = Devices;
+			sourceTree = "<group>";
+		};
+		F72100000000000000000005 /* HIDPP */ = {
+			isa = PBXGroup;
+			children = (
+				F72100000000000000000004 /* HIDPPLongReport.swift */,
+				F72100000000000000000007 /* HIDPPTransport.swift */,
+				F72100000000000000000009 /* HIDPPScheduler.swift */,
+			);
+			path = HIDPP;
 			sourceTree = "<group>";
 		};
 		F72000000000000000000011 /* M720 */ = {
@@ -8631,6 +8657,9 @@
 				4FBC829C2DAE93AD00354981 /* MFObserver.m in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
 				F72000000000000000000010 /* M720Profile.swift in Sources */,
+				F72100000000000000000003 /* HIDPPLongReport.swift in Sources */,
+				F72100000000000000000006 /* HIDPPTransport.swift in Sources */,
+				F72100000000000000000008 /* HIDPPScheduler.swift in Sources */,
 				4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */,
 				4F3A40B1266BBC5000436821 /* Curve.swift in Sources */,
 				4FF27DD82B95B108004744E1 /* Shorthands.swift in Sources */,
@@ -8768,6 +8797,9 @@
 			files = (
 				F7200000000000000000000C /* M720TestHostSmokeTests.swift in Sources */,
 				F7200000000000000000000E /* M720ProfileAndPolicyTests.swift in Sources */,
+				F72100000000000000000001 /* HIDPPLongReportTests.swift in Sources */,
+				F7210000000000000000000A /* ManualScheduler.swift in Sources */,
+				F7210000000000000000000C /* ScriptedHIDPPTransport.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
