@@ -1,7 +1,6 @@
 # Logitech M720 BLE Support Design
 
-Status: detailed design approved in conversation; written specification awaits
-user confirmation
+Status: approved in conversation on 2026-07-13
 
 Implementation phase: 1 of 2 (Bluetooth Low Energy only)
 
