@@ -447,6 +447,8 @@
 		F72800000000000000000003 /* M720OwnershipJournal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72800000000000000000004 /* M720OwnershipJournal.swift */; };
 		F72900000000000000000001 /* M720HIDPPSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72900000000000000000002 /* M720HIDPPSessionTests.swift */; };
 		F72900000000000000000003 /* M720HIDPPSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72900000000000000000004 /* M720HIDPPSession.swift */; };
+		F72B00000000000000000001 /* BLEHIDPPTransportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72B00000000000000000002 /* BLEHIDPPTransportTests.swift */; };
+		F72B00000000000000000003 /* BLEHIDPPTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72B00000000000000000004 /* BLEHIDPPTransport.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2450,6 +2452,8 @@
 		F72800000000000000000004 /* M720OwnershipJournal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720OwnershipJournal.swift; sourceTree = "<group>"; };
 		F72900000000000000000002 /* M720HIDPPSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720HIDPPSessionTests.swift; path = M720HIDPPTests/M720HIDPPSessionTests.swift; sourceTree = "<group>"; };
 		F72900000000000000000004 /* M720HIDPPSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720HIDPPSession.swift; sourceTree = "<group>"; };
+		F72B00000000000000000002 /* BLEHIDPPTransportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BLEHIDPPTransportTests.swift; path = M720HIDPPTests/BLEHIDPPTransportTests.swift; sourceTree = "<group>"; };
+		F72B00000000000000000004 /* BLEHIDPPTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEHIDPPTransport.swift; sourceTree = "<group>"; };
 		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
 		4FDE757D28B0E66900662314 /* License.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = License.h; sourceTree = "<group>"; };
 		4FDE759928B1401400662314 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
@@ -7427,6 +7431,7 @@
 				F72500000000000000000002 /* M720InputRoutingTests.swift */,
 				F72800000000000000000002 /* M720OwnershipJournalTests.swift */,
 				F72900000000000000000002 /* M720HIDPPSessionTests.swift */,
+				F72B00000000000000000002 /* BLEHIDPPTransportTests.swift */,
 				F7210000000000000000000B /* ManualScheduler.swift */,
 				F7210000000000000000000D /* ScriptedHIDPPTransport.swift */,
 			);
@@ -7743,6 +7748,7 @@
 			isa = PBXGroup;
 			children = (
 				F72900000000000000000004 /* M720HIDPPSession.swift */,
+				F72B00000000000000000004 /* BLEHIDPPTransport.swift */,
 			);
 			path = M720;
 			sourceTree = "<group>";
@@ -8708,6 +8714,7 @@
 				F72000000000000000000010 /* M720Profile.swift in Sources */,
 				F72800000000000000000003 /* M720OwnershipJournal.swift in Sources */,
 				F72900000000000000000003 /* M720HIDPPSession.swift in Sources */,
+				F72B00000000000000000003 /* BLEHIDPPTransport.swift in Sources */,
 				F72300000000000000000003 /* M720Types.swift in Sources */,
 				F72100000000000000000003 /* HIDPPLongReport.swift in Sources */,
 				F72200000000000000000003 /* ReprogControlsV4.swift in Sources */,
@@ -8858,6 +8865,7 @@
 				F72500000000000000000001 /* M720InputRoutingTests.swift in Sources */,
 				F72800000000000000000001 /* M720OwnershipJournalTests.swift in Sources */,
 				F72900000000000000000001 /* M720HIDPPSessionTests.swift in Sources */,
+				F72B00000000000000000001 /* BLEHIDPPTransportTests.swift in Sources */,
 				F7210000000000000000000A /* ManualScheduler.swift in Sources */,
 				F7210000000000000000000C /* ScriptedHIDPPTransport.swift in Sources */,
 			);
