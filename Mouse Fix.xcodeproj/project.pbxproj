@@ -426,6 +426,8 @@
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
 		4FFE2895291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		F7200000000000000000000C /* M720TestHostSmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7200000000000000000000B /* M720TestHostSmokeTests.swift */; };
+		F7200000000000000000000E /* M720ProfileAndPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7200000000000000000000D /* M720ProfileAndPolicyTests.swift */; };
+		F72000000000000000000010 /* M720Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7200000000000000000000F /* M720Profile.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2408,6 +2410,8 @@
 		4FDB94352FE75270001E05CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		F72000000000000000000002 /* M720 HIDPP Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "M720 HIDPP Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7200000000000000000000B /* M720TestHostSmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720TestHostSmokeTests.swift; path = M720HIDPPTests/M720TestHostSmokeTests.swift; sourceTree = "<group>"; };
+		F7200000000000000000000D /* M720ProfileAndPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720ProfileAndPolicyTests.swift; path = M720HIDPPTests/M720ProfileAndPolicyTests.swift; sourceTree = "<group>"; };
+		F7200000000000000000000F /* M720Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720Profile.swift; sourceTree = "<group>"; };
 		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
 		4FDE757D28B0E66900662314 /* License.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = License.h; sourceTree = "<group>"; };
 		4FDE759928B1401400662314 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
@@ -7377,6 +7381,7 @@
 				4FDB94332FE75270001E05CB /* FixDockSwipes.m */,
 				4F8605A22FE81F5D00CC1147 /* Other */,
 				F7200000000000000000000B /* M720TestHostSmokeTests.swift */,
+				F7200000000000000000000D /* M720ProfileAndPolicyTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -7886,6 +7891,7 @@
 		4FF6667925F2C93A00689B77 /* Devices */ = {
 			isa = PBXGroup;
 			children = (
+				F72000000000000000000011 /* M720 */,
 				4FF6667B25F2C93A00689B77 /* DeviceManager.h */,
 				4FF6667D25F2C93A00689B77 /* DeviceManager.m */,
 				4FD98209292A8C1700645FE3 /* ReactiveDeviceManager.swift */,
@@ -7893,6 +7899,14 @@
 				4FF6667A25F2C93A00689B77 /* Device.m */,
 			);
 			path = Devices;
+			sourceTree = "<group>";
+		};
+		F72000000000000000000011 /* M720 */ = {
+			isa = PBXGroup;
+			children = (
+				F7200000000000000000000F /* M720Profile.swift */,
+			);
+			path = M720;
 			sourceTree = "<group>";
 		};
 		4FF8C8A428960309007EC31F /* Old */ = {
@@ -8616,6 +8630,7 @@
 				4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */,
 				4FBC829C2DAE93AD00354981 /* MFObserver.m in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
+				F72000000000000000000010 /* M720Profile.swift in Sources */,
 				4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */,
 				4F3A40B1266BBC5000436821 /* Curve.swift in Sources */,
 				4FF27DD82B95B108004744E1 /* Shorthands.swift in Sources */,
@@ -8752,6 +8767,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F7200000000000000000000C /* M720TestHostSmokeTests.swift in Sources */,
+				F7200000000000000000000E /* M720ProfileAndPolicyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

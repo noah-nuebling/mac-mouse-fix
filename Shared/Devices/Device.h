@@ -21,9 +21,15 @@ NS_ASSUME_NONNULL_BEGIN
 + (Device * _Nullable)deviceWithRegistryID:(uint64_t)registryID;
 + (Device *)deviceWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice;
 + (Device *)strangeDevice;
++ (int)effectiveButtonCount:(int)descriptorCount
+                   vendorID:(NSInteger)vendorID
+                  productID:(NSInteger)productID
+                  transport:(NSString *)transport;
 
 - (NSNumber *)uniqueID;
 - (BOOL)wrapsIOHIDDevice:(IOHIDDeviceRef)iohidDevice;
+- (BOOL)isM720BluetoothLowEnergy;
+- (uint64_t)registryEntryID;
 - (NSString *)name;
 - (NSString *)manufacturer;
 - (int)nOfButtons;
