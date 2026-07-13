@@ -442,6 +442,7 @@
 		F72300000000000000000007 /* M720PressedSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72300000000000000000008 /* M720PressedSet.swift */; };
 		F72400000000000000000001 /* HIDPPRequestPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72400000000000000000002 /* HIDPPRequestPipelineTests.swift */; };
 		F72400000000000000000003 /* HIDPPRequestPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72400000000000000000004 /* HIDPPRequestPipeline.swift */; };
+		F72500000000000000000001 /* M720InputRoutingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72500000000000000000002 /* M720InputRoutingTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2440,6 +2441,7 @@
 		F72300000000000000000008 /* M720PressedSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720PressedSet.swift; sourceTree = "<group>"; };
 		F72400000000000000000002 /* HIDPPRequestPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HIDPPRequestPipelineTests.swift; path = M720HIDPPTests/HIDPPRequestPipelineTests.swift; sourceTree = "<group>"; };
 		F72400000000000000000004 /* HIDPPRequestPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDPPRequestPipeline.swift; sourceTree = "<group>"; };
+		F72500000000000000000002 /* M720InputRoutingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720InputRoutingTests.swift; path = M720HIDPPTests/M720InputRoutingTests.swift; sourceTree = "<group>"; };
 		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
 		4FDE757D28B0E66900662314 /* License.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = License.h; sourceTree = "<group>"; };
 		4FDE759928B1401400662314 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
@@ -7414,6 +7416,7 @@
 				F72100000000000000000002 /* HIDPPLongReportTests.swift */,
 				F72200000000000000000002 /* ReprogControlsV4Tests.swift */,
 				F72400000000000000000002 /* HIDPPRequestPipelineTests.swift */,
+				F72500000000000000000002 /* M720InputRoutingTests.swift */,
 				F7210000000000000000000B /* ManualScheduler.swift */,
 				F7210000000000000000000D /* ScriptedHIDPPTransport.swift */,
 			);
@@ -8830,6 +8833,7 @@
 				F72100000000000000000001 /* HIDPPLongReportTests.swift in Sources */,
 				F72200000000000000000001 /* ReprogControlsV4Tests.swift in Sources */,
 				F72400000000000000000001 /* HIDPPRequestPipelineTests.swift in Sources */,
+				F72500000000000000000001 /* M720InputRoutingTests.swift in Sources */,
 				F7210000000000000000000A /* ManualScheduler.swift in Sources */,
 				F7210000000000000000000C /* ScriptedHIDPPTransport.swift in Sources */,
 			);

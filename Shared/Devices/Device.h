@@ -21,6 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (Device * _Nullable)deviceWithRegistryID:(uint64_t)registryID;
 + (Device *)deviceWithIOHIDDevice:(IOHIDDeviceRef)IOHIDDevice;
 + (Device *)strangeDevice;
+#if DEBUG
++ (Device *)unitTestDevice NS_SWIFT_NAME(unitTestDevice());
+#endif
 + (int)effectiveButtonCount:(int)descriptorCount
                    vendorID:(NSInteger)vendorID
                   productID:(NSInteger)productID

@@ -47,6 +47,14 @@
     return [StrangeDevice shared];
 }
 
+#if DEBUG
++ (Device *)unitTestDevice {
+    NSCAssert(NSProcessInfo.processInfo.environment[@"MMF_M720_UNIT_TESTING"] != nil,
+              @"unitTestDevice is only valid in the hosted test process");
+    return [[Device alloc] init];
+}
+#endif
+
 + (int)effectiveButtonCount:(int)descriptorCount
                    vendorID:(NSInteger)vendorID
                   productID:(NSInteger)productID
