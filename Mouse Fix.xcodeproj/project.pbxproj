@@ -434,6 +434,8 @@
 		F72100000000000000000008 /* HIDPPScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72100000000000000000009 /* HIDPPScheduler.swift */; };
 		F7210000000000000000000A /* ManualScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7210000000000000000000B /* ManualScheduler.swift */; };
 		F7210000000000000000000C /* ScriptedHIDPPTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7210000000000000000000D /* ScriptedHIDPPTransport.swift */; };
+		F72200000000000000000001 /* ReprogControlsV4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72200000000000000000002 /* ReprogControlsV4Tests.swift */; };
+		F72200000000000000000003 /* ReprogControlsV4.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72200000000000000000004 /* ReprogControlsV4.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2424,6 +2426,8 @@
 		F72100000000000000000009 /* HIDPPScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDPPScheduler.swift; sourceTree = "<group>"; };
 		F7210000000000000000000B /* ManualScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ManualScheduler.swift; path = M720HIDPPTests/TestSupport/ManualScheduler.swift; sourceTree = "<group>"; };
 		F7210000000000000000000D /* ScriptedHIDPPTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScriptedHIDPPTransport.swift; path = M720HIDPPTests/TestSupport/ScriptedHIDPPTransport.swift; sourceTree = "<group>"; };
+		F72200000000000000000002 /* ReprogControlsV4Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReprogControlsV4Tests.swift; path = M720HIDPPTests/ReprogControlsV4Tests.swift; sourceTree = "<group>"; };
+		F72200000000000000000004 /* ReprogControlsV4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReprogControlsV4.swift; sourceTree = "<group>"; };
 		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
 		4FDE757D28B0E66900662314 /* License.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = License.h; sourceTree = "<group>"; };
 		4FDE759928B1401400662314 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
@@ -7395,6 +7399,7 @@
 				F7200000000000000000000B /* M720TestHostSmokeTests.swift */,
 				F7200000000000000000000D /* M720ProfileAndPolicyTests.swift */,
 				F72100000000000000000002 /* HIDPPLongReportTests.swift */,
+				F72200000000000000000002 /* ReprogControlsV4Tests.swift */,
 				F7210000000000000000000B /* ManualScheduler.swift */,
 				F7210000000000000000000D /* ScriptedHIDPPTransport.swift */,
 			);
@@ -7921,6 +7926,7 @@
 			isa = PBXGroup;
 			children = (
 				F72100000000000000000004 /* HIDPPLongReport.swift */,
+				F72200000000000000000004 /* ReprogControlsV4.swift */,
 				F72100000000000000000007 /* HIDPPTransport.swift */,
 				F72100000000000000000009 /* HIDPPScheduler.swift */,
 			);
@@ -8658,6 +8664,7 @@
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
 				F72000000000000000000010 /* M720Profile.swift in Sources */,
 				F72100000000000000000003 /* HIDPPLongReport.swift in Sources */,
+				F72200000000000000000003 /* ReprogControlsV4.swift in Sources */,
 				F72100000000000000000006 /* HIDPPTransport.swift in Sources */,
 				F72100000000000000000008 /* HIDPPScheduler.swift in Sources */,
 				4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */,
@@ -8798,6 +8805,7 @@
 				F7200000000000000000000C /* M720TestHostSmokeTests.swift in Sources */,
 				F7200000000000000000000E /* M720ProfileAndPolicyTests.swift in Sources */,
 				F72100000000000000000001 /* HIDPPLongReportTests.swift in Sources */,
+				F72200000000000000000001 /* ReprogControlsV4Tests.swift in Sources */,
 				F7210000000000000000000A /* ManualScheduler.swift in Sources */,
 				F7210000000000000000000C /* ScriptedHIDPPTransport.swift in Sources */,
 			);
