@@ -8,6 +8,8 @@ final class ScriptedHIDPPTransport: HIDPPTransport {
     var onReport: ((Data) -> Void)?
     var automaticallyCompletesSends = true
     var automaticSendResult = kIOReturnSuccess
+    var onSend: ((Data) -> Void)?
+    var onInvalidate: (() -> Void)?
     private(set) var sent: [Data] = []
     private(set) var invalidateCallCount = 0
     private(set) var maximumSendCallDepth = 0
@@ -24,6 +26,7 @@ final class ScriptedHIDPPTransport: HIDPPTransport {
         defer { sendCallDepth -= 1 }
 
         sent.append(report)
+        onSend?(report)
         if automaticallyCompletesSends {
             completion(automaticSendResult)
         } else {
@@ -42,6 +45,7 @@ final class ScriptedHIDPPTransport: HIDPPTransport {
 
     func invalidate() {
         invalidateCallCount += 1
+        onInvalidate?()
         onReport = nil
     }
 }

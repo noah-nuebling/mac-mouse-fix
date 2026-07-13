@@ -411,11 +411,17 @@ enum M720JournalRepositoryError: Error, Equatable {
 final class M720OwnershipJournalRepository {
     typealias Completion = (Result<M720OwnershipJournal, Error>) -> Void
 
+    private enum SnapshotState {
+        case neverLoaded
+        case loaded(M720OwnershipJournal)
+        case needsReloadAfterUncertain
+    }
+
     static let shared = M720OwnershipJournalRepository(store: M720OwnershipJournalStore())
 
     private let store: M720JournalStoring
     private let queue: DispatchQueue
-    private var authoritativeSnapshot: M720OwnershipJournal?
+    private var snapshotState: SnapshotState = .neverLoaded
 
     init(
         store: M720JournalStoring,
@@ -427,13 +433,22 @@ final class M720OwnershipJournalRepository {
 
     func reload(completion: @escaping Completion) {
         queue.async {
-            self.authoritativeSnapshot = nil
+            let wasWaitingForUncertainReload: Bool
+            if case .needsReloadAfterUncertain = self.snapshotState {
+                wasWaitingForUncertainReload = true
+            } else {
+                wasWaitingForUncertainReload = false
+            }
             do {
                 let loaded = try self.store.load()
-                self.authoritativeSnapshot = loaded
+                self.snapshotState = .loaded(loaded)
                 completion(.success(loaded))
             } catch {
-                self.invalidateSnapshotIfStorageIsUncertain(error)
+                if wasWaitingForUncertainReload || self.isStorageUncertain(error) {
+                    self.snapshotState = .needsReloadAfterUncertain
+                } else {
+                    self.snapshotState = .neverLoaded
+                }
                 completion(.failure(error))
             }
         }
@@ -441,11 +456,11 @@ final class M720OwnershipJournalRepository {
 
     func snapshot(completion: @escaping Completion) {
         queue.async {
-            guard let snapshot = self.authoritativeSnapshot else {
-                completion(.failure(M720JournalRepositoryError.notLoaded))
-                return
+            do {
+                completion(.success(try self.snapshotLoadingAfterUncertainIfNeeded()))
+            } catch {
+                completion(.failure(error))
             }
-            completion(.success(snapshot))
         }
     }
 
@@ -456,12 +471,8 @@ final class M720OwnershipJournalRepository {
         completion: @escaping Completion
     ) {
         queue.async {
-            guard var candidate = self.authoritativeSnapshot else {
-                completion(.failure(M720JournalRepositoryError.notLoaded))
-                return
-            }
-
             do {
+                var candidate = try self.snapshotLoadingAfterUncertainIfNeeded()
                 let deviceIndex = candidate.devices.firstIndex { $0.key == key }
                 let controlIndex = deviceIndex.flatMap { index in
                     candidate.devices[index].controls.firstIndex { $0.cid == cid }
@@ -493,7 +504,7 @@ final class M720OwnershipJournalRepository {
 
                 let canonical = try candidate.validatedCanonicalized()
                 try self.store.save(canonical)
-                self.authoritativeSnapshot = canonical
+                self.snapshotState = .loaded(canonical)
                 completion(.success(canonical))
             } catch {
                 self.invalidateSnapshotIfStorageIsUncertain(error)
@@ -506,7 +517,7 @@ final class M720OwnershipJournalRepository {
         queue.async {
             do {
                 let acknowledged = try self.store.acknowledgeQuarantineWithFreshEmptyV1()
-                self.authoritativeSnapshot = acknowledged
+                self.snapshotState = .loaded(acknowledged)
                 completion(.success(acknowledged))
             } catch {
                 self.invalidateSnapshotIfStorageIsUncertain(error)
@@ -515,10 +526,32 @@ final class M720OwnershipJournalRepository {
         }
     }
 
-    private func invalidateSnapshotIfStorageIsUncertain(_ error: Error) {
-        if error as? M720JournalStoreError == .uncertain {
-            authoritativeSnapshot = nil
+    private func snapshotLoadingAfterUncertainIfNeeded() throws -> M720OwnershipJournal {
+        switch snapshotState {
+        case .neverLoaded:
+            throw M720JournalRepositoryError.notLoaded
+        case let .loaded(snapshot):
+            return snapshot
+        case .needsReloadAfterUncertain:
+            do {
+                let loaded = try store.load()
+                snapshotState = .loaded(loaded)
+                return loaded
+            } catch {
+                snapshotState = .needsReloadAfterUncertain
+                throw error
+            }
         }
+    }
+
+    private func invalidateSnapshotIfStorageIsUncertain(_ error: Error) {
+        if isStorageUncertain(error) {
+            snapshotState = .needsReloadAfterUncertain
+        }
+    }
+
+    private func isStorageUncertain(_ error: Error) -> Bool {
+        error as? M720JournalStoreError == .uncertain
     }
 }
 

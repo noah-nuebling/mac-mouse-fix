@@ -620,7 +620,7 @@ final class M720OwnershipJournalTests: XCTestCase {
         XCTAssertTrue(store.savedSnapshots.isEmpty)
     }
 
-    func testRepositoryUncertainSaveInvalidatesSnapshotUntilSuccessfulReload() throws {
+    func testRepositoryProductionUncertainSaveAutomaticallyReloadsPersistedSnapshot() throws {
         let (healthyStore, finalURL) = makeStore()
         let key = fixtureKey()
         let initial = journal(key: key, controls: [fixtureEntry(phase: .prepared)])
@@ -642,21 +642,92 @@ final class M720OwnershipJournalTests: XCTestCase {
         XCTAssertThrowsError(try uncertain.get()) { error in
             XCTAssertEqual(error as? M720JournalStoreError, .uncertain)
         }
-        XCTAssertRepositoryNotLoaded(awaitRepositoryResult { repository.snapshot(completion: $0) })
-        XCTAssertRepositoryNotLoaded(awaitRepositoryResult { completion in
-            repository.mutateCID(for: key, cid: 0x005B, mutation: { $0 }, completion: completion)
-        })
 
         let durableAfterUncertain = try healthyStore.load()
         XCTAssertEqual(durableAfterUncertain.devices[0].controls[0].phase, .applied)
         XCTAssertEqual(
-            try awaitRepositoryResult { repository.reload(completion: $0) }.get(),
-            durableAfterUncertain
-        )
-        XCTAssertEqual(
             try awaitRepositoryResult { repository.snapshot(completion: $0) }.get(),
             durableAfterUncertain
         )
+    }
+
+    func testRepositoryReloadsPersistedUncertainSaveBeforeAnotherDeviceMutation() throws {
+        let (diskStore, _) = makeStore()
+        let keyA = fixtureKey(serialNumber: "uncertain-originator")
+        let keyB = fixtureKey(serialNumber: "other-device")
+        let initial = journal(key: keyA, controls: [fixtureEntry(phase: .prepared)])
+        try diskStore.save(initial)
+        let store = PersistThenThrowUncertainOnceM720JournalStore(delegate: diskStore)
+        let repository = M720OwnershipJournalRepository(store: store)
+        _ = try awaitRepositoryResult { repository.reload(completion: $0) }.get()
+
+        let uncertain = awaitRepositoryResult { completion in
+            repository.mutateCID(for: keyA, cid: 0x005B, mutation: { existing in
+                var updated = try XCTUnwrap(existing)
+                updated.phase = .applied
+                return updated
+            }, completion: completion)
+        }
+        XCTAssertThrowsError(try uncertain.get()) { error in
+            XCTAssertEqual(error as? M720JournalStoreError, .uncertain)
+        }
+
+        let final = try awaitRepositoryResult { completion in
+            repository.mutateCID(for: keyB, cid: 0x005D, mutation: { _ in
+                self.fixtureEntry(cid: 0x005D, phase: .prepared)
+            }, completion: completion)
+        }.get()
+        XCTAssertEqual(Set(final.devices.map(\.key)), Set([keyA, keyB]))
+        XCTAssertEqual(
+            final.devices.first(where: { $0.key == keyA })?.controls[0].phase,
+            .applied
+        )
+        XCTAssertEqual(final, try diskStore.load())
+    }
+
+    func testRepositoryAutomaticReloadFailureRemainsRetryable() throws {
+        let initial = journal(
+            key: fixtureKey(serialNumber: "reload-retry"),
+            controls: [fixtureEntry(phase: .applied)]
+        )
+        let store = FakeM720JournalStore(durable: initial)
+        let repository = M720OwnershipJournalRepository(store: store)
+        _ = try awaitRepositoryResult { repository.reload(completion: $0) }.get()
+        store.acknowledgementError = M720JournalStoreError.uncertain
+        XCTAssertThrowsError(
+            try awaitRepositoryResult {
+                repository.acknowledgeQuarantineWithFreshEmptyV1(completion: $0)
+            }.get()
+        )
+
+        store.loadError = FakeM720JournalStore.Failure.load
+        XCTAssertThrowsError(
+            try awaitRepositoryResult { repository.snapshot(completion: $0) }.get()
+        ) { error in
+            guard let failure = error as? FakeM720JournalStore.Failure,
+                  case .load = failure else {
+                return XCTFail("expected automatic load failure, got \(error)")
+            }
+        }
+
+        store.loadError = nil
+        XCTAssertEqual(
+            try awaitRepositoryResult { repository.snapshot(completion: $0) }.get(),
+            initial
+        )
+    }
+
+    func testRepositoryNeverLoadedMutationRemainsNotLoaded() {
+        let key = fixtureKey(serialNumber: "never-loaded")
+        let store = FakeM720JournalStore(durable: journal(
+            key: key,
+            controls: [fixtureEntry(phase: .applied)]
+        ))
+        let repository = M720OwnershipJournalRepository(store: store)
+
+        XCTAssertRepositoryNotLoaded(awaitRepositoryResult { completion in
+            repository.mutateCID(for: key, cid: 0x005B, mutation: { $0 }, completion: completion)
+        })
     }
 
     func testRepositoryFailedReloadInvalidatesPreviouslyLoadedSnapshot() throws {
@@ -730,19 +801,38 @@ final class M720OwnershipJournalTests: XCTestCase {
         XCTAssertEqual(try awaitRepositoryResult { repository.snapshot(completion: $0) }.get(), .emptyV1)
     }
 
-    func testRepositoryUncertainAcknowledgementInvalidatesSnapshot() throws {
-        let initial = journal(key: fixtureKey(), controls: [fixtureEntry(phase: .applied)])
-        let store = FakeM720JournalStore(durable: initial)
-        let repository = M720OwnershipJournalRepository(store: store)
-        _ = try awaitRepositoryResult { repository.reload(completion: $0) }.get()
-        store.acknowledgementError = M720JournalStoreError.uncertain
+    func testRepositoryUncertainAcknowledgementAutomaticallyReloadsDurableEmptySnapshot() throws {
+        let (healthyStore, finalURL) = makeStore(createParent: true)
+        try Data("bad".utf8).write(to: finalURL)
+        XCTAssertThrowsError(try healthyStore.load()) { error in
+            XCTAssertEqual(error as? M720JournalStoreError, .corruptFileQuarantined)
+        }
+        XCTAssertFalse(FileManager.default.fileExists(atPath: finalURL.path))
+        XCTAssertEqual(try corruptSiblings(for: finalURL).count, 1)
+
+        let uncertainStore = M720OwnershipJournalStore(
+            url: finalURL,
+            faults: .init(directorySyncError: .EIO)
+        )
+        let repository = M720OwnershipJournalRepository(store: uncertainStore)
+        XCTAssertThrowsError(
+            try awaitRepositoryResult { repository.reload(completion: $0) }.get()
+        ) { error in
+            XCTAssertEqual(error as? M720JournalStoreError, .quarantined)
+        }
 
         XCTAssertThrowsError(
             try awaitRepositoryResult {
                 repository.acknowledgeQuarantineWithFreshEmptyV1(completion: $0)
             }.get()
+        ) { error in
+            XCTAssertEqual(error as? M720JournalStoreError, .uncertain)
+        }
+        XCTAssertEqual(
+            try awaitRepositoryResult { repository.snapshot(completion: $0) }.get(),
+            .emptyV1
         )
-        XCTAssertRepositoryNotLoaded(awaitRepositoryResult { repository.snapshot(completion: $0) })
+        XCTAssertEqual(try healthyStore.load(), .emptyV1)
     }
 
     func testTwoCIDCrashBoundariesPreserveLastDurableSnapshotAndRecoveryDecision() throws {
@@ -1106,6 +1196,31 @@ final class M720OwnershipJournalTests: XCTestCase {
             intended: original.changingDivert(to: true),
             phase: phase
         )
+    }
+}
+
+private final class PersistThenThrowUncertainOnceM720JournalStore: M720JournalStoring {
+    private let delegate: M720JournalStoring
+    private var shouldThrowAfterSave = true
+
+    init(delegate: M720JournalStoring) {
+        self.delegate = delegate
+    }
+
+    func load() throws -> M720OwnershipJournal {
+        try delegate.load()
+    }
+
+    func save(_ journal: M720OwnershipJournal) throws {
+        try delegate.save(journal)
+        if shouldThrowAfterSave {
+            shouldThrowAfterSave = false
+            throw M720JournalStoreError.uncertain
+        }
+    }
+
+    func acknowledgeQuarantineWithFreshEmptyV1() throws -> M720OwnershipJournal {
+        try delegate.acknowledgeQuarantineWithFreshEmptyV1()
     }
 }
 
