@@ -9,6 +9,9 @@
 
 #import "CGEventHIDEventBridge.h"
 @import CoreGraphics.CGEvent;
+#import <dispatch/dispatch.h>
+#import "Logging.h"
+#import "PrivateFunctions.h"
 
 @implementation CGEventHIDEventBridge
 
@@ -35,7 +38,9 @@ void CGEventSetHIDEvent(CGEventRef cgEvent, HIDEvent *hidEvent) {
     return CGEventSetIOHIDEvent(cgEvent, (__bridge IOHIDEventRef)hidEvent);
 }
 
-/// Defining our own IOHIDEvent -> CGEvent function, because we can't link against `_SLEventSetIOHIDEvent`. (See header)
+/// Update: [Jul 2026] The offset-writer below broke on macOS 27 - hardcoded struct offsets aren't a stable ABI.
+///     We now prefer Apple's own `SLEventSetIOHIDEvent` (via `MFLoadSymbol_native`), and only use the offset-writer
+///     as a fallback pre-macOS-27, where it was previously validated. Fixes #1871 and duplicates.
 void CGEventSetIOHIDEvent(CGEventRef cgEvent, IOHIDEventRef iohidEvent) {
     
     /// Validate
@@ -47,7 +52,32 @@ void CGEventSetIOHIDEvent(CGEventRef cgEvent, IOHIDEventRef iohidEvent) {
         assert(false);
         return;
     }
-    
+
+    /// Preferred path: Apple's own private `SLEventSetIOHIDEvent` (SkyLight)
+    static void (*slEventSetIOHIDEvent)(CGEventRef, IOHIDEventRef) = NULL;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        slEventSetIOHIDEvent = (void (*)(CGEventRef, IOHIDEventRef))MFLoadSymbol_native(kMFFrameworkSkyLight, @"SLEventSetIOHIDEvent");
+    });
+    if (slEventSetIOHIDEvent) {
+        /// Retain
+        ///     CFRelease(cgEvent) also releases the embedded IOHIDEventRef
+        ///     Update: [Apr 2025] ... that means if we're replacing an existing IOHIDEventRef here it might get leaked.
+        ///     Update: [Jul 2026] Also retaining here even though this is Apple's own setter - we don't know its
+        ///         retain contract, and an extra retain is much safer than an under-retain.
+        CFRetain(iohidEvent);
+        slEventSetIOHIDEvent(cgEvent, iohidEvent);
+        return;
+    }
+
+    /// Fallback: hand-rolled offset writer (original implementation)
+    ///     Update: [Jul 2026] These offsets are known-wrong on macOS 27+, so only use them pre-27, where they were
+    ///         previously validated. On 27+, skip instead of writing to a struct offset we already know is unsafe.
+    if (@available(macOS 27.0, *)) {
+        DDLogWarn("CGEventSetIOHIDEvent: couldn't resolve SLEventSetIOHIDEvent on macOS 27+, skipping instead of using the known-broken offset writer.");
+        return;
+    }
+
     /// Retain
     ///     CFRelease(cgEvent) also releases the embedded IOHIDEventRef
     ///     Update: [Apr 2025] ... that means if we're replacing an existing IOHIDEventRef here it might get leaked.
