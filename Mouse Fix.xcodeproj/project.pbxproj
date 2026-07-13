@@ -440,6 +440,8 @@
 		F72300000000000000000003 /* M720Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72300000000000000000004 /* M720Types.swift */; };
 		F72300000000000000000005 /* M720PressedSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72300000000000000000006 /* M720PressedSetTests.swift */; };
 		F72300000000000000000007 /* M720PressedSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72300000000000000000008 /* M720PressedSet.swift */; };
+		F72400000000000000000001 /* HIDPPRequestPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72400000000000000000002 /* HIDPPRequestPipelineTests.swift */; };
+		F72400000000000000000003 /* HIDPPRequestPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72400000000000000000004 /* HIDPPRequestPipeline.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2436,6 +2438,8 @@
 		F72300000000000000000004 /* M720Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720Types.swift; sourceTree = "<group>"; };
 		F72300000000000000000006 /* M720PressedSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720PressedSetTests.swift; path = M720HIDPPTests/M720PressedSetTests.swift; sourceTree = "<group>"; };
 		F72300000000000000000008 /* M720PressedSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720PressedSet.swift; sourceTree = "<group>"; };
+		F72400000000000000000002 /* HIDPPRequestPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HIDPPRequestPipelineTests.swift; path = M720HIDPPTests/HIDPPRequestPipelineTests.swift; sourceTree = "<group>"; };
+		F72400000000000000000004 /* HIDPPRequestPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDPPRequestPipeline.swift; sourceTree = "<group>"; };
 		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
 		4FDE757D28B0E66900662314 /* License.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = License.h; sourceTree = "<group>"; };
 		4FDE759928B1401400662314 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
@@ -7409,6 +7413,7 @@
 				F72300000000000000000006 /* M720PressedSetTests.swift */,
 				F72100000000000000000002 /* HIDPPLongReportTests.swift */,
 				F72200000000000000000002 /* ReprogControlsV4Tests.swift */,
+				F72400000000000000000002 /* HIDPPRequestPipelineTests.swift */,
 				F7210000000000000000000B /* ManualScheduler.swift */,
 				F7210000000000000000000D /* ScriptedHIDPPTransport.swift */,
 			);
@@ -7938,6 +7943,7 @@
 				F72200000000000000000004 /* ReprogControlsV4.swift */,
 				F72100000000000000000007 /* HIDPPTransport.swift */,
 				F72100000000000000000009 /* HIDPPScheduler.swift */,
+				F72400000000000000000004 /* HIDPPRequestPipeline.swift */,
 			);
 			path = HIDPP;
 			sourceTree = "<group>";
@@ -8682,6 +8688,7 @@
 				F72200000000000000000003 /* ReprogControlsV4.swift in Sources */,
 				F72100000000000000000006 /* HIDPPTransport.swift in Sources */,
 				F72100000000000000000008 /* HIDPPScheduler.swift in Sources */,
+				F72400000000000000000003 /* HIDPPRequestPipeline.swift in Sources */,
 				4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */,
 				4F3A40B1266BBC5000436821 /* Curve.swift in Sources */,
 				4FF27DD82B95B108004744E1 /* Shorthands.swift in Sources */,
@@ -8822,6 +8829,7 @@
 				F72300000000000000000005 /* M720PressedSetTests.swift in Sources */,
 				F72100000000000000000001 /* HIDPPLongReportTests.swift in Sources */,
 				F72200000000000000000001 /* ReprogControlsV4Tests.swift in Sources */,
+				F72400000000000000000001 /* HIDPPRequestPipelineTests.swift in Sources */,
 				F7210000000000000000000A /* ManualScheduler.swift in Sources */,
 				F7210000000000000000000C /* ScriptedHIDPPTransport.swift in Sources */,
 			);

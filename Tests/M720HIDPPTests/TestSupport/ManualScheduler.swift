@@ -13,11 +13,21 @@ final class ManualScheduler: HIDPPScheduler {
     private var nextInsertionOrder = 0
     private(set) var now: TimeInterval = 0
 
+    var pendingDeadlines: [TimeInterval] {
+        scheduledBlocks
+            .filter { !$0.cancellation.isCancelled }
+            .sorted { lhs, rhs in
+                (lhs.deadline, lhs.insertionOrder) < (rhs.deadline, rhs.insertionOrder)
+            }
+            .map(\.deadline)
+    }
+
     @discardableResult
     func schedule(
         after delay: TimeInterval,
         _ block: @escaping () -> Void
     ) -> HIDPPCancellation {
+        precondition(delay >= 0)
         let cancellation = ManualHIDPPCancellation()
         scheduledBlocks.append(ScheduledBlock(
             deadline: now + delay,
@@ -30,7 +40,11 @@ final class ManualScheduler: HIDPPScheduler {
     }
 
     func advance(by interval: TimeInterval) {
-        let target = now + interval
+        advance(to: now + interval)
+    }
+
+    func advance(to target: TimeInterval) {
+        precondition(target >= now)
 
         while let nextIndex = scheduledBlocks.indices
             .filter({ scheduledBlocks[$0].deadline <= target })
