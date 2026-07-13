@@ -21,6 +21,12 @@ protocol M720JournalCoordinating: AnyObject {
         mutation: @escaping (M720JournalCIDEntry?) throws -> M720JournalCIDEntry?,
         completion: @escaping Completion
     )
+    func removeDevice(
+        for key: M720DeviceKey,
+        expected: M720JournalDevice?,
+        completion: @escaping Completion
+    )
+    func acknowledgeQuarantineWithFreshEmptyV1(completion: @escaping Completion)
 }
 
 extension M720OwnershipJournalRepository: M720JournalCoordinating {}
@@ -54,8 +60,26 @@ final class M720ButtonsEventSink: M720ButtonEventSink {
 final class M720HIDPPSession {
     private enum RollbackOutcome {
         case reconcilePolicy
+        case finishRecovery(Set<UInt16>)
+        case conflict
         case invalid(M720StableErrorCode)
         case shutdown
+    }
+
+    private struct RecoveryClassification {
+        let entry: M720JournalCIDEntry
+        let current: HIDPPReportingState
+        let decision: M720RecoveryDecision
+    }
+
+    private struct VerificationSnapshot {
+        let lifecycle: UInt64
+        let operation: UInt64
+        let activeEpoch: UInt64
+        let cids: [UInt16]
+        let intended: [UInt16: HIDPPReportingState]
+        let wakeAuthoritative: Bool
+        let sleepCycle: UInt64?
     }
 
     private enum TerminalIntent: Equatable {
@@ -68,6 +92,11 @@ final class M720HIDPPSession {
         case intended
         case original
         case external
+    }
+
+    private enum RetryPath: Equatable {
+        case knownFeature
+        case fullRediscovery
     }
 
     private final class CancelBatch {
@@ -97,7 +126,9 @@ final class M720HIDPPSession {
     private(set) var appliedCIDs: Set<UInt16> = []
     private(set) var lifecycleGeneration: UInt64 = 0
     private(set) var eventGeneration: UInt64 = 0
+    var pendingVerificationTimerCount: Int { verificationTimerTokens.count }
     var onStateChange: ((M720SessionState) -> Void)?
+    var onRetryResult: ((UUID?, M720SessionState) -> Void)?
 
     private let device: Device
     private let pipeline: HIDPPRequestPipeline
@@ -105,6 +136,8 @@ final class M720HIDPPSession {
     private let deviceKey: M720DeviceKey
     private let journalIdentityUsable: Bool
     private let buttonSink: M720ButtonEventSink
+    private let scheduler: HIDPPScheduler
+    private let initialOwnershipAgentScan: () -> Bool
     private var operationGeneration: UInt64 = 0
     private var policyGeneration: UInt64 = 0
     private var started = false
@@ -113,7 +146,19 @@ final class M720HIDPPSession {
     private var discoveredCurrentStates: [UInt16: HIDPPReportingState] = [:]
     private var originalStates: [UInt16: HIDPPReportingState] = [:]
     private var journalSnapshot = M720OwnershipJournal.emptyV1
-    private var startupJournalEntriesPresent = false
+    private var journalTrustQuarantined = false
+    private var explicitRetryRequired = false
+    private var retryInProgress = false
+    private var retryRequestID: UUID?
+    private var retryPath: RetryPath?
+    private var retryBaselineStates: [UInt16: HIDPPReportingState] = [:]
+    private var recoveryEntries: [M720JournalCIDEntry] = []
+    private var recoveryCurrentStates: [UInt16: HIDPPReportingState] = [:]
+    private var recoveryClassifications: [RecoveryClassification] = []
+    private var recoveryOwnedCIDs: Set<UInt16> = []
+    private var recoveryHadConflict = false
+    private var recoveryInProgress = false
+    private var takeoverSeedCIDs: Set<UInt16> = []
     private var frozenRequiredCIDs: [UInt16] = []
     private var takeoverPreflightStates: [UInt16: HIDPPReportingState] = [:]
     private var intendedStates: [UInt16: HIDPPReportingState] = [:]
@@ -131,12 +176,28 @@ final class M720HIDPPSession {
     private var eventEdgeContinuationPending = false
     private var cancelBatch: CancelBatch?
     private var rollbackCIDs: [UInt16] = []
+    private var rollbackResolvedCIDs: Set<UInt16> = []
     private var rollbackHadConflict = false
     private var rollbackOutcome: RollbackOutcome = .reconcilePolicy
+    private var recoveryRollbackActive = false
     private var terminalIntent: TerminalIntent = .none
     private var shutdownWaiters: [() -> Void] = []
     private var removalWaiters: [() -> Void] = []
     private var terminalFinished = false
+    private var activeEpoch: UInt64 = 0
+    private var verificationCancellations: [UInt64: HIDPPCancellation] = [:]
+    private var verificationTimerTokens: Set<UInt64> = []
+    private var nextVerificationTimerToken: UInt64 = 0
+    private var lastVerificationSequenceStart = -Double.infinity
+    private var verificationInFlight = false
+    private var pendingVerification: VerificationSnapshot?
+    private var sleepSuspended = false
+    private var wakeRequested = false
+    private var sleepCancelCompleted = true
+    private var wakeReadbackCompleted = true
+    private var sleepCycleGeneration: UInt64 = 0
+    private var activeSleepCycle: UInt64?
+    private var didScanInitialOwnershipAgents = false
 
     init(
         device: Device,
@@ -144,7 +205,9 @@ final class M720HIDPPSession {
         journalRepository: M720JournalCoordinating,
         deviceKey: M720DeviceKey,
         journalIdentityUsable: Bool,
-        buttonSink: M720ButtonEventSink = M720ButtonsEventSink()
+        buttonSink: M720ButtonEventSink = M720ButtonsEventSink(),
+        scheduler: HIDPPScheduler = DispatchHIDPPScheduler(),
+        initialOwnershipAgentScan: @escaping () -> Bool = { false }
     ) {
         self.device = device
         self.pipeline = pipeline
@@ -152,6 +215,8 @@ final class M720HIDPPSession {
         self.deviceKey = deviceKey
         self.journalIdentityUsable = journalIdentityUsable
         self.buttonSink = buttonSink
+        self.scheduler = scheduler
+        self.initialOwnershipAgentScan = initialOwnershipAgentScan
     }
 
     func start() {
@@ -177,15 +242,26 @@ final class M720HIDPPSession {
                     switch result {
                     case let .success(journal):
                         self.journalSnapshot = journal
-                        self.startupJournalEntriesPresent = journal.devices
+                        self.recoveryInProgress = journal.devices
                             .first { $0.key == self.deviceKey }?
                             .controls.isEmpty == false
                         self.requestRootFeature(
                             lifecycle: lifecycle,
                             operation: operation
                         )
-                    case .failure:
-                        self.enterInvalid(.protocol)
+                    case let .failure(error):
+                        if self.isQuarantinedJournalError(error) {
+                            self.journalTrustQuarantined = true
+                            self.explicitRetryRequired = true
+                            self.journalSnapshot = .emptyV1
+                            self.recoveryInProgress = false
+                            self.requestRootFeature(
+                                lifecycle: lifecycle,
+                                operation: operation
+                            )
+                        } else {
+                            self.enterInvalid(.protocol)
+                        }
                     }
                 }
             }
@@ -199,6 +275,15 @@ final class M720HIDPPSession {
             self.policyGeneration &+= 1
             self.requiredCIDs = cids
             guard self.started else { return }
+            if self.sleepSuspended {
+                guard self.wakeRequested, self.state == .active else { return }
+                if !self.requiredPolicyIsSupported {
+                    self.beginRollback(outcome: .invalid(.unsupported))
+                } else if cids != self.appliedCIDs {
+                    self.beginRollbackForPolicyReplacement()
+                }
+                return
+            }
             guard self.requiredPolicyIsSupported else {
                 switch self.state {
                 case .takingOver:
@@ -209,6 +294,7 @@ final class M720HIDPPSession {
                     self.beginRollback(outcome: .invalid(.unsupported))
                 case .restoring:
                     self.rollbackOutcome = .invalid(.unsupported)
+                    self.refreshRecoveryRollbackPlan()
                 case .discovering, .nativeReady, .conflict, .invalid:
                     self.enterInvalid(.unsupported)
                 }
@@ -216,11 +302,19 @@ final class M720HIDPPSession {
             }
             switch self.state {
             case .nativeReady where !cids.isEmpty:
-                self.beginTakeover()
+                if self.explicitRetryRequired {
+                    self.transition(to: .conflict)
+                } else {
+                    self.beginTakeover()
+                }
+            case .conflict where cids.isEmpty:
+                self.transition(to: .nativeReady)
             case .active where cids == self.appliedCIDs:
                 break
             case .active:
                 self.beginRollbackForPolicyReplacement()
+            case .restoring where self.recoveryRollbackActive:
+                self.refreshRecoveryRollbackPlan()
             default:
                 break
             }
@@ -228,11 +322,97 @@ final class M720HIDPPSession {
     }
 
     func retryAfterConflict(requestID: UUID?) {
-        DispatchQueue.main.async { _ = requestID }
+        DispatchQueue.main.async { [weak self] in
+            guard let self,
+                  self.terminalIntent == .none,
+                  !self.retryInProgress
+            else { return }
+            let path: RetryPath
+            switch self.state {
+            case .conflict:
+                path = self.discoveredFeatureIndex == nil ? .fullRediscovery : .knownFeature
+            case .nativeReady where self.explicitRetryRequired:
+                path = self.discoveredFeatureIndex == nil ? .fullRediscovery : .knownFeature
+            case .invalid:
+                path = .fullRediscovery
+            default:
+                return
+            }
+
+            self.closeEventGate()
+            self.lifecycleGeneration &+= 1
+            self.operationGeneration &+= 1
+            self.pipeline.beginNewLifecycle()
+            self.retryInProgress = true
+            self.retryRequestID = requestID
+            self.retryPath = path
+            self.retryBaselineStates.removeAll(keepingCapacity: true)
+            self.resetOwnershipTransactionForRetry()
+            self.transition(to: .discovering)
+            let lifecycle = self.lifecycleGeneration
+            let operation = self.operationGeneration
+            switch path {
+            case .knownFeature:
+                self.requestRetryBaseline(
+                    index: 0,
+                    targetCIDs: M720Profile.cidToButton.keys.sorted(),
+                    lifecycle: lifecycle,
+                    operation: operation
+                )
+            case .fullRediscovery:
+                self.discoveredFeatureIndex = nil
+                self.discoveredControls.removeAll(keepingCapacity: true)
+                self.discoveredCurrentStates.removeAll(keepingCapacity: true)
+                self.originalStates.removeAll(keepingCapacity: true)
+                self.intendedStates.removeAll(keepingCapacity: true)
+                self.reloadJournalForFullRediscoveryRetry(
+                    lifecycle: lifecycle,
+                    operation: operation
+                )
+            }
+        }
     }
 
     func verifyOwnership() {
-        DispatchQueue.main.async {}
+        DispatchQueue.main.async { [weak self] in
+            self?.enqueueVerificationCheck()
+        }
+    }
+
+    func knownOwnershipAgentDidLaunch() {
+        DispatchQueue.main.async { [weak self] in
+            self?.startVerificationSequence()
+        }
+    }
+
+    func reconcileAfterWake() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self,
+                  self.state == .active,
+                  self.sleepSuspended,
+                  !self.wakeRequested
+            else { return }
+            self.wakeRequested = true
+            self.activeEpoch &+= 1
+            self.cancelScheduledVerifications()
+            self.verificationInFlight = false
+            self.pendingVerification = nil
+            self.lastVerificationSequenceStart = -Double.infinity
+            guard self.requiredPolicyIsSupported else {
+                self.beginRollback(outcome: .invalid(.unsupported))
+                return
+            }
+            guard self.requiredCIDs == self.appliedCIDs else {
+                self.beginRollbackForPolicyReplacement()
+                return
+            }
+            guard !self.requiredCIDs.isEmpty else {
+                self.wakeReadbackCompleted = true
+                self.maybeCompleteWakeOverlay(sleepCycle: self.activeSleepCycle)
+                return
+            }
+            self.startVerificationSequence(allowDuringWake: true)
+        }
     }
 
     func prepareForSleep(completion: @escaping () -> Void) {
@@ -241,16 +421,54 @@ final class M720HIDPPSession {
                 completion()
                 return
             }
+            if self.sleepSuspended, self.wakeRequested, self.state == .active {
+                self.beginActiveSleepCycle(completion: completion)
+                return
+            }
             if self.cancelBatch != nil {
                 self.beginCancelBarrier(completion: completion)
+                return
+            }
+            if self.sleepSuspended {
+                DispatchQueue.main.async(execute: completion)
                 return
             }
             guard self.state == .active else {
                 completion()
                 return
             }
-            self.closeEventGate()
-            self.beginCancelBarrier(completion: completion)
+            self.beginActiveSleepCycle(completion: completion)
+        }
+    }
+
+    private func beginActiveSleepCycle(completion: @escaping () -> Void) {
+        sleepSuspended = true
+        wakeRequested = false
+        sleepCancelCompleted = false
+        wakeReadbackCompleted = false
+        sleepCycleGeneration &+= 1
+        let sleepCycle = sleepCycleGeneration
+        activeSleepCycle = sleepCycle
+        closeEventGate(preservingWakeOverlay: true)
+        operationGeneration &+= 1
+        pipeline.beginNewLifecycle()
+        beginCancelBarrier { [weak self] in
+            guard let self else {
+                completion()
+                return
+            }
+            if self.activeSleepCycle == sleepCycle {
+                self.sleepCancelCompleted = true
+                if self.wakeRequested,
+                   self.wakeReadbackCompleted,
+                   !self.verificationInFlight,
+                   self.pendingVerification == nil {
+                    self.wakeReadbackCompleted = false
+                    self.enqueueVerificationCheck(wakeAuthoritative: true)
+                }
+                self.maybeCompleteWakeOverlay(sleepCycle: sleepCycle)
+            }
+            completion()
         }
     }
 
@@ -276,6 +494,9 @@ final class M720HIDPPSession {
                 break
             case .restoring:
                 self.rollbackOutcome = .shutdown
+                self.refreshRecoveryRollbackPlan()
+            case .discovering where self.recoveryInProgress:
+                break
             case .discovering, .nativeReady:
                 self.finalizeShutdown()
             case .conflict:
@@ -310,6 +531,272 @@ final class M720HIDPPSession {
             self.operationGeneration &+= 1
             self.pipeline.beginNewLifecycle()
             self.beginCancelBarrier { [weak self] in self?.finalizeRemoval() }
+        }
+    }
+
+    private func resetOwnershipTransactionForRetry() {
+        recoveryEntries.removeAll()
+        recoveryCurrentStates.removeAll()
+        recoveryClassifications.removeAll()
+        recoveryOwnedCIDs.removeAll()
+        recoveryHadConflict = false
+        recoveryInProgress = false
+        recoveryRollbackActive = false
+        takeoverSeedCIDs.removeAll()
+        frozenRequiredCIDs.removeAll()
+        takeoverPreflightStates.removeAll()
+        preparedCIDs.removeAll()
+        touchedCIDs.removeAll()
+        knownWrittenCIDs.removeAll()
+        transactionAppliedCIDs.removeAll()
+        appliedCIDs.removeAll()
+        externallyOwnedCIDs.removeAll()
+        confirmedNotOwnedCIDs.removeAll()
+        rollbackCIDs.removeAll()
+        rollbackResolvedCIDs.removeAll()
+        rollbackHadConflict = false
+    }
+
+    private func requestRetryBaseline(
+        index: Int,
+        targetCIDs: [UInt16],
+        lifecycle: UInt64,
+        operation: UInt64
+    ) {
+        guard continuationIsCurrent(
+            lifecycle: lifecycle,
+            operation: operation,
+            state: .discovering
+        ), retryInProgress, retryPath == .knownFeature else { return }
+        guard index < targetCIDs.count else {
+            finishRetryBaseline(
+                retryBaselineStates,
+                lifecycle: lifecycle,
+                operation: operation
+            )
+            return
+        }
+        guard let featureIndex = discoveredFeatureIndex else {
+            enterInvalid(.protocol)
+            return
+        }
+        let cid = targetCIDs[index]
+        pipeline.perform(
+            featureIndex: featureIndex,
+            function: ReprogControlsV4.Function.getCidReporting.rawValue,
+            parameters: bigEndian(cid)
+        ) { [weak self] result in
+            guard let self, self.continuationIsCurrent(
+                lifecycle: lifecycle,
+                operation: operation,
+                state: .discovering
+            ), self.retryInProgress, self.retryPath == .knownFeature else { return }
+            switch result {
+            case let .success(parameters):
+                do {
+                    let current = try ReprogControlsV4.decodeReportingState(parameters)
+                    guard current.cid == cid else {
+                        self.enterInvalid(.protocol)
+                        return
+                    }
+                    self.retryBaselineStates[cid] = current
+                    self.requestRetryBaseline(
+                        index: index + 1,
+                        targetCIDs: targetCIDs,
+                        lifecycle: lifecycle,
+                        operation: operation
+                    )
+                } catch {
+                    self.enterInvalid(.protocol)
+                }
+            case let .failure(error):
+                self.enterInvalid(self.stableCode(for: error))
+            }
+        }
+    }
+
+    private func finishRetryBaseline(
+        _ states: [UInt16: HIDPPReportingState],
+        lifecycle: UInt64,
+        operation: UInt64
+    ) {
+        guard continuationIsCurrent(
+            lifecycle: lifecycle,
+            operation: operation,
+            state: .discovering
+        ), retryInProgress else { return }
+        let targets = Set(M720Profile.cidToButton.keys)
+        guard journalIdentityUsable,
+              !deviceKey.serialNumber.isEmpty,
+              requiredPolicyIsSupported
+        else {
+            enterInvalid(.unsupported)
+            return
+        }
+        guard Set(states.keys) == targets,
+              states.allSatisfy({ element in
+                  element.value.cid == element.key && !element.value.isDiverted
+              })
+        else {
+            explicitRetryRequired = true
+            transition(to: requiredCIDs.isEmpty ? .nativeReady : .conflict)
+            return
+        }
+
+        if journalTrustQuarantined {
+            journalRepository.acknowledgeQuarantineWithFreshEmptyV1 { [weak self] result in
+                self?.handleRetryJournalPreparation(
+                    result,
+                    states: states,
+                    lifecycle: lifecycle,
+                    operation: operation,
+                    canRecoverAmbiguousQuarantineAcknowledgement: true
+                )
+            }
+        } else {
+            let expected = journalSnapshot.devices.first { $0.key == deviceKey }
+            journalRepository.removeDevice(
+                for: deviceKey,
+                expected: expected,
+                completion: { [weak self] result in
+                    self?.handleRetryJournalPreparation(
+                        result,
+                        states: states,
+                        lifecycle: lifecycle,
+                        operation: operation,
+                        canRecoverAmbiguousQuarantineAcknowledgement: false
+                    )
+                }
+            )
+        }
+    }
+
+    private func reloadJournalForFullRediscoveryRetry(
+        lifecycle: UInt64,
+        operation: UInt64
+    ) {
+        journalRepository.reload { [weak self] result in
+            DispatchQueue.main.async { [weak self] in
+                guard let self, self.continuationIsCurrent(
+                    lifecycle: lifecycle,
+                    operation: operation,
+                    state: .discovering
+                ), self.retryInProgress, self.retryPath == .fullRediscovery else { return }
+                switch result {
+                case let .success(journal):
+                    self.journalSnapshot = journal
+                    self.journalTrustQuarantined = false
+                    self.recoveryInProgress = journal.devices
+                        .first { $0.key == self.deviceKey }?
+                        .controls.isEmpty == false
+                    self.requestRootFeature(lifecycle: lifecycle, operation: operation)
+                case let .failure(error) where self.isQuarantinedJournalError(error):
+                    self.journalSnapshot = .emptyV1
+                    self.journalTrustQuarantined = true
+                    self.explicitRetryRequired = true
+                    self.requestRootFeature(lifecycle: lifecycle, operation: operation)
+                case .failure:
+                    self.enterInvalid(.protocol)
+                }
+            }
+        }
+    }
+
+    private func handleRetryJournalPreparation(
+        _ result: Result<M720OwnershipJournal, Error>,
+        states: [UInt16: HIDPPReportingState],
+        lifecycle: UInt64,
+        operation: UInt64,
+        canRecoverAmbiguousQuarantineAcknowledgement: Bool
+    ) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self, self.continuationIsCurrent(
+                lifecycle: lifecycle,
+                operation: operation,
+                state: .discovering
+            ), self.retryInProgress else { return }
+            switch result {
+            case let .success(journal):
+                self.acceptRetryBaseline(
+                    states,
+                    journal: journal,
+                    lifecycle: lifecycle,
+                    operation: operation
+                )
+            case let .failure(error):
+                let storeError = error as? M720JournalStoreError
+                if canRecoverAmbiguousQuarantineAcknowledgement,
+                   (storeError == .notQuarantined || storeError == .uncertain) {
+                    self.recoverAfterAmbiguousQuarantineAcknowledgement(
+                        states: states,
+                        lifecycle: lifecycle,
+                        operation: operation
+                    )
+                } else {
+                    self.enterInvalid(.protocol)
+                }
+            }
+        }
+    }
+
+    private func recoverAfterAmbiguousQuarantineAcknowledgement(
+        states: [UInt16: HIDPPReportingState],
+        lifecycle: UInt64,
+        operation: UInt64
+    ) {
+        journalRepository.reload { [weak self] result in
+            DispatchQueue.main.async { [weak self] in
+                guard let self, self.continuationIsCurrent(
+                    lifecycle: lifecycle,
+                    operation: operation,
+                    state: .discovering
+                ), self.retryInProgress else { return }
+                guard case let .success(journal) = result else {
+                    self.enterInvalid(.protocol)
+                    return
+                }
+                self.journalSnapshot = journal
+                self.journalTrustQuarantined = false
+                guard !journal.devices.contains(where: { $0.key == self.deviceKey }) else {
+                    self.enterInvalid(.protocol)
+                    return
+                }
+                self.journalRepository.removeDevice(
+                    for: self.deviceKey,
+                    expected: nil
+                ) { [weak self] result in
+                    self?.handleRetryJournalPreparation(
+                        result,
+                        states: states,
+                        lifecycle: lifecycle,
+                        operation: operation,
+                        canRecoverAmbiguousQuarantineAcknowledgement: false
+                    )
+                }
+            }
+        }
+    }
+
+    private func acceptRetryBaseline(
+        _ states: [UInt16: HIDPPReportingState],
+        journal: M720OwnershipJournal,
+        lifecycle: UInt64,
+        operation: UInt64
+    ) {
+        guard continuationIsCurrent(
+            lifecycle: lifecycle,
+            operation: operation,
+            state: .discovering
+        ), retryInProgress else { return }
+        journalSnapshot = journal
+        journalTrustQuarantined = false
+        explicitRetryRequired = false
+        originalStates = states
+        discoveredCurrentStates = states
+        intendedStates.removeAll(keepingCapacity: true)
+        transition(to: .nativeReady)
+        if !requiredCIDs.isEmpty {
+            beginTakeover()
         }
     }
 
@@ -509,16 +996,280 @@ final class M720HIDPPSession {
             enterInvalid(.unsupported)
             return
         }
-        guard !startupJournalEntriesPresent else {
-            enterInvalid(.protocol)
-            return
-        }
         guard requiredPolicyIsSupported else {
             enterInvalid(.unsupported)
             return
         }
+        if retryInProgress, retryPath == .fullRediscovery {
+            if !journalTrustQuarantined,
+               !explicitRetryRequired,
+               beginMatchingJournalRecoveryIfNeeded() {
+                return
+            }
+            finishRetryBaseline(
+                discoveredCurrentStates,
+                lifecycle: lifecycleGeneration,
+                operation: operationGeneration
+            )
+            return
+        }
+        if journalTrustQuarantined {
+            recoveryInProgress = false
+            explicitRetryRequired = true
+            transition(to: requiredCIDs.isEmpty ? .nativeReady : .conflict)
+            return
+        }
+        if beginMatchingJournalRecoveryIfNeeded() { return }
+        finishDiscoveryWithoutRecovery()
+    }
+
+    @discardableResult
+    private func beginMatchingJournalRecoveryIfNeeded() -> Bool {
+        let entries = journalEntriesForThisDevice().values.sorted { $0.cid < $1.cid }
+        guard !entries.isEmpty else {
+            recoveryInProgress = false
+            return false
+        }
+        for entry in entries {
+            originalStates[entry.cid] = entry.original
+            intendedStates[entry.cid] = entry.intended
+        }
+        recoveryEntries = entries
+        recoveryInProgress = true
+        recoveryCurrentStates.removeAll(keepingCapacity: true)
+        recoveryClassifications.removeAll(keepingCapacity: true)
+        recoveryOwnedCIDs.removeAll()
+        recoveryHadConflict = false
+        requestRecoveryCurrentState(
+            index: 0,
+            lifecycle: lifecycleGeneration,
+            operation: operationGeneration
+        )
+        return true
+    }
+
+    private func finishDiscoveryWithoutRecovery() {
         transition(to: .nativeReady)
         if !requiredCIDs.isEmpty {
+            beginTakeover()
+        }
+    }
+
+    private func requestRecoveryCurrentState(
+        index: Int,
+        lifecycle: UInt64,
+        operation: UInt64
+    ) {
+        guard continuationIsCurrent(
+            lifecycle: lifecycle,
+            operation: operation,
+            state: .discovering
+        ) else { return }
+        guard index < recoveryEntries.count else {
+            classifyRecoverySnapshot()
+            applyRecoveryMutation(
+                index: 0,
+                lifecycle: lifecycle,
+                operation: operation
+            )
+            return
+        }
+        guard let featureIndex = discoveredFeatureIndex else {
+            enterInvalid(.protocol)
+            return
+        }
+        let entry = recoveryEntries[index]
+        pipeline.perform(
+            featureIndex: featureIndex,
+            function: ReprogControlsV4.Function.getCidReporting.rawValue,
+            parameters: bigEndian(entry.cid)
+        ) { [weak self] result in
+            guard let self, self.continuationIsCurrent(
+                lifecycle: lifecycle,
+                operation: operation,
+                state: .discovering
+            ) else { return }
+            switch result {
+            case let .success(parameters):
+                do {
+                    let current = try ReprogControlsV4.decodeReportingState(parameters)
+                    guard current.cid == entry.cid else {
+                        self.enterInvalid(.protocol)
+                        return
+                    }
+                    self.recoveryCurrentStates[entry.cid] = current
+                    self.requestRecoveryCurrentState(
+                        index: index + 1,
+                        lifecycle: lifecycle,
+                        operation: operation
+                    )
+                } catch {
+                    self.enterInvalid(.protocol)
+                }
+            case let .failure(error):
+                self.enterInvalid(self.stableCode(for: error))
+            }
+        }
+    }
+
+    private func classifyRecoverySnapshot() {
+        recoveryClassifications = recoveryEntries.compactMap { entry in
+            guard let current = recoveryCurrentStates[entry.cid] else { return nil }
+            let decision = M720OwnershipRecovery.decide(
+                entry: entry,
+                current: current,
+                policyRequiresCapture: requiredCIDs.contains(entry.cid)
+            )
+            if current == entry.intended {
+                recoveryOwnedCIDs.insert(entry.cid)
+            }
+            if decision == .conflict {
+                recoveryHadConflict = true
+                externallyOwnedCIDs.insert(entry.cid)
+            }
+            return RecoveryClassification(entry: entry, current: current, decision: decision)
+        }
+        if recoveryClassifications.count != recoveryEntries.count {
+            enterInvalid(.protocol)
+        }
+    }
+
+    private func applyRecoveryMutation(
+        index: Int,
+        lifecycle: UInt64,
+        operation: UInt64
+    ) {
+        guard continuationIsCurrent(
+            lifecycle: lifecycle,
+            operation: operation,
+            state: .discovering
+        ) else { return }
+        guard index < recoveryClassifications.count else {
+            finishRecoveryClassification()
+            return
+        }
+        let classification = recoveryClassifications[index]
+        let mutation: ((M720JournalCIDEntry?) throws -> M720JournalCIDEntry?)?
+        switch classification.decision {
+        case .clearThenReconcile:
+            mutation = { existing in
+                guard existing == classification.entry else {
+                    throw M720JournalRepositoryError.mismatchedCID
+                }
+                return nil
+            }
+        case .setAppliedThenKeep, .setAppliedThenRestore:
+            mutation = { existing in
+                guard var existing, existing == classification.entry else {
+                    throw M720JournalRepositoryError.mismatchedCID
+                }
+                existing.phase = .applied
+                return existing
+            }
+        case .keepApplied, .restore, .conflict:
+            mutation = nil
+        }
+        guard let mutation else {
+            applyRecoveryMutation(
+                index: index + 1,
+                lifecycle: lifecycle,
+                operation: operation
+            )
+            return
+        }
+        journalRepository.mutateCID(
+            for: deviceKey,
+            cid: classification.entry.cid,
+            mutation: mutation
+        ) { [weak self] result in
+            DispatchQueue.main.async { [weak self] in
+                guard let self, self.continuationIsCurrent(
+                    lifecycle: lifecycle,
+                    operation: operation,
+                    state: .discovering
+                ) else { return }
+                switch result {
+                case let .success(journal):
+                    self.journalSnapshot = journal
+                    self.applyRecoveryMutation(
+                        index: index + 1,
+                        lifecycle: lifecycle,
+                        operation: operation
+                    )
+                case let .failure(error):
+                    self.handleJournalMutationFailure(
+                        error,
+                        lifecycle: lifecycle,
+                        operation: operation,
+                        state: .discovering
+                    )
+                }
+            }
+        }
+    }
+
+    private func finishRecoveryClassification() {
+        let kept = recoveryHadConflict
+            ? Set<UInt16>()
+            : recoveryOwnedCIDs.intersection(requiredCIDs)
+        let restore = recoveryHadConflict
+            ? recoveryOwnedCIDs
+            : recoveryOwnedCIDs.subtracting(kept)
+        takeoverSeedCIDs = kept
+        guard !restore.isEmpty else {
+            recoveryInProgress = false
+            if recoveryHadConflict {
+                if terminalIntent == .shutdown {
+                    finalizeShutdown(reason: .conflict)
+                } else {
+                    operationGeneration &+= 1
+                    transition(to: .conflict)
+                }
+            } else if terminalIntent == .shutdown {
+                finalizeShutdown()
+            } else {
+                finishRecoveredOwnership(kept)
+            }
+            return
+        }
+
+        closeEventGate()
+        operationGeneration &+= 1
+        let lifecycle = lifecycleGeneration
+        let operation = operationGeneration
+        appliedCIDs = recoveryOwnedCIDs
+        knownWrittenCIDs = recoveryOwnedCIDs
+        rollbackCIDs = restore.sorted()
+        rollbackResolvedCIDs.removeAll()
+        rollbackHadConflict = recoveryHadConflict
+        rollbackOutcome = terminalIntent == .shutdown ? .shutdown : .finishRecovery(kept)
+        recoveryRollbackActive = true
+        refreshRecoveryRollbackPlan()
+        recoveryInProgress = false
+        transition(to: .restoring)
+        beginCancelBarrier { [weak self] in
+            guard let self, self.continuationIsCurrent(
+                lifecycle: lifecycle,
+                operation: operation,
+                state: .restoring
+            ) else { return }
+            self.requestRollbackCurrentState(
+                index: 0,
+                lifecycle: lifecycle,
+                operation: operation
+            )
+        }
+    }
+
+    private func finishRecoveredOwnership(_ kept: Set<UInt16>) {
+        appliedCIDs = kept
+        takeoverSeedCIDs = kept
+        if requiredCIDs.isEmpty {
+            transition(to: .nativeReady)
+        } else if requiredCIDs == kept {
+            activateOwnership()
+        } else {
+            transition(to: .nativeReady)
             beginTakeover()
         }
     }
@@ -530,17 +1281,21 @@ final class M720HIDPPSession {
         let operation = operationGeneration
         let policy = policyGeneration
         frozenRequiredCIDs = requiredCIDs.sorted()
+        takeoverSeedCIDs = appliedCIDs.intersection(requiredCIDs)
         takeoverPreflightStates.removeAll(keepingCapacity: true)
         intendedStates = Dictionary(uniqueKeysWithValues: frozenRequiredCIDs.compactMap { cid in
-            originalStates[cid].map { (cid, $0.changingDivert(to: true)) }
+            if takeoverSeedCIDs.contains(cid), let intended = journalEntriesForThisDevice()[cid]?.intended {
+                return (cid, intended)
+            }
+            return originalStates[cid].map { (cid, $0.changingDivert(to: true)) }
         })
         preparedCIDs.removeAll()
         touchedCIDs.removeAll()
-        knownWrittenCIDs.removeAll()
-        transactionAppliedCIDs.removeAll()
+        knownWrittenCIDs = takeoverSeedCIDs
+        transactionAppliedCIDs = takeoverSeedCIDs
         externallyOwnedCIDs.removeAll()
         confirmedNotOwnedCIDs.removeAll()
-        appliedCIDs.removeAll()
+        appliedCIDs = takeoverSeedCIDs
         gateOpen = false
         transition(to: .takingOver)
         requestTakeoverPreflight(
@@ -564,8 +1319,13 @@ final class M720HIDPPSession {
         ) else { return }
         guard index < frozenRequiredCIDs.count else {
             guard preflightAllowsTakeover() else {
-                operationGeneration &+= 1
-                transition(to: .conflict)
+                latchPreflightMismatches()
+                if takeoverSeedCIDs.isEmpty {
+                    operationGeneration &+= 1
+                    transition(to: .conflict)
+                } else {
+                    beginRollback(outcome: .conflict)
+                }
                 return
             }
             persistPrepared(
@@ -616,14 +1376,28 @@ final class M720HIDPPSession {
     }
 
     private func preflightAllowsTakeover() -> Bool {
-        let entries = journalEntriesForThisDevice()
         return frozenRequiredCIDs.allSatisfy { cid in
             guard let value = takeoverPreflightStates[cid],
                   let baseline = originalStates[cid]
             else { return false }
+            if takeoverSeedCIDs.contains(cid) {
+                return intendedStates[cid] == value
+            }
             let cleanBaseline = value == baseline && !value.isDiverted
-            let explainedOwnership = entries[cid]?.intended == value
-            return cleanBaseline || explainedOwnership
+            return cleanBaseline
+        }
+    }
+
+    private func latchPreflightMismatches() {
+        for cid in frozenRequiredCIDs {
+            guard let value = takeoverPreflightStates[cid] else { continue }
+            if takeoverSeedCIDs.contains(cid) {
+                if intendedStates[cid] != value {
+                    externallyOwnedCIDs.insert(cid)
+                }
+            } else if value != originalStates[cid] || value.isDiverted {
+                externallyOwnedCIDs.insert(cid)
+            }
         }
     }
 
@@ -643,6 +1417,15 @@ final class M720HIDPPSession {
             return
         }
         let cid = frozenRequiredCIDs[index]
+        if takeoverSeedCIDs.contains(cid) {
+            persistPrepared(
+                index: index + 1,
+                lifecycle: lifecycle,
+                operation: operation,
+                policy: policy
+            )
+            return
+        }
         guard let original = originalStates[cid], let intended = intendedStates[cid] else {
             enterInvalid(.protocol)
             return
@@ -651,8 +1434,7 @@ final class M720HIDPPSession {
             for: deviceKey,
             cid: cid,
             mutation: { existing in
-                if let existing,
-                   (existing.original != original || existing.intended != intended) {
+                guard existing == nil else {
                     throw M720JournalRepositoryError.mismatchedCID
                 }
                 return M720JournalCIDEntry(
@@ -819,12 +1601,18 @@ final class M720HIDPPSession {
         policy: UInt64
     ) {
         let cid = frozenRequiredCIDs[index]
+        guard let expected = journalEntriesForThisDevice()[cid],
+              expected.phase == .prepared
+        else {
+            beginRollbackAfterTakeoverFailure(.protocol)
+            return
+        }
         journalRepository.mutateCID(
             for: deviceKey,
             cid: cid,
             mutation: { existing in
-                guard var existing else {
-                    throw M720JournalRepositoryError.notLoaded
+                guard var existing, existing == expected else {
+                    throw M720JournalRepositoryError.mismatchedCID
                 }
                 existing.phase = .applied
                 return existing
@@ -870,9 +1658,7 @@ final class M720HIDPPSession {
             return
         }
         appliedCIDs = completeSet
-        gateOpen = true
-        transition(to: .active)
-        installEventHandler()
+        activateOwnership()
     }
 
     private func beginRollbackForPolicyReplacement() {
@@ -893,6 +1679,7 @@ final class M720HIDPPSession {
         guard state == .active || state == .takingOver else { return }
         closeEventGate()
         operationGeneration &+= 1
+        pipeline.beginNewLifecycle()
         let lifecycle = lifecycleGeneration
         let operation = operationGeneration
         rollbackCIDs = Set(
@@ -902,8 +1689,10 @@ final class M720HIDPPSession {
                 .union(knownWrittenCIDs)
                 .union(transactionAppliedCIDs)
         ).sorted()
+        rollbackResolvedCIDs.removeAll()
         rollbackHadConflict = false
         rollbackOutcome = outcome
+        recoveryRollbackActive = false
         transition(to: .restoring)
         beginCancelBarrier { [weak self] in
             guard let self, self.continuationIsCurrent(
@@ -979,10 +1768,22 @@ final class M720HIDPPSession {
         }
     }
 
-    private func closeEventGate() {
+    private func closeEventGate(preservingWakeOverlay: Bool = false) {
         gateOpen = false
         eventGeneration &+= 1
+        activeEpoch &+= 1
         pipeline.onEvent = nil
+        pipeline.onForeignResponse = nil
+        cancelScheduledVerifications()
+        verificationInFlight = false
+        pendingVerification = nil
+        if !preservingWakeOverlay {
+            sleepSuspended = false
+            wakeRequested = false
+            sleepCancelCompleted = true
+            wakeReadbackCompleted = true
+            activeSleepCycle = nil
+        }
         activeEventEdgeBatch = nil
         pendingEventEdgeBatches.removeAll()
         eventEdgeContinuationPending = false
@@ -994,6 +1795,252 @@ final class M720HIDPPSession {
         pipeline.onEvent = { [weak self] inbound in
             self?.handlePipelineEvent(inbound, generation: generation)
         }
+    }
+
+    private func activateOwnership() {
+        gateOpen = true
+        sleepSuspended = false
+        wakeRequested = false
+        sleepCancelCompleted = true
+        wakeReadbackCompleted = true
+        activeSleepCycle = nil
+        activeEpoch &+= 1
+        cancelScheduledVerifications()
+        lastVerificationSequenceStart = -Double.infinity
+        verificationInFlight = false
+        pendingVerification = nil
+        transition(to: .active)
+        installEventHandler()
+        installForeignResponseHandler()
+        startVerificationSequence()
+        if !didScanInitialOwnershipAgents {
+            didScanInitialOwnershipAgents = true
+            if initialOwnershipAgentScan() {
+                startVerificationSequence()
+            }
+        }
+    }
+
+    private func installForeignResponseHandler() {
+        let lifecycle = lifecycleGeneration
+        let operation = operationGeneration
+        let epoch = activeEpoch
+        pipeline.onForeignResponse = { [weak self] identity in
+            DispatchQueue.main.async { [weak self] in
+                guard let self,
+                      identity.featureIndex == self.discoveredFeatureIndex,
+                      identity.function == ReprogControlsV4.Function.setCidReporting.rawValue,
+                      self.lifecycleGeneration == lifecycle,
+                      self.operationGeneration == operation,
+                      self.activeEpoch == epoch,
+                      self.state == .active,
+                      !self.sleepSuspended
+                else { return }
+                self.startVerificationSequence()
+            }
+        }
+    }
+
+    private func startVerificationSequence(allowDuringWake: Bool = false) {
+        guard state == .active,
+              terminalIntent == .none,
+              (!sleepSuspended || (allowDuringWake && wakeRequested)),
+              scheduler.now - lastVerificationSequenceStart >= 2.0
+        else { return }
+        lastVerificationSequenceStart = scheduler.now
+        let lifecycle = lifecycleGeneration
+        let operation = operationGeneration
+        let epoch = activeEpoch
+        for delay in [0.0, 0.25, 2.0, 10.0] {
+            let timerToken = nextVerificationTimerToken
+            nextVerificationTimerToken &+= 1
+            verificationTimerTokens.insert(timerToken)
+            let cancellation = scheduler.schedule(after: delay) { [weak self] in
+                DispatchQueue.main.async { [weak self] in
+                    guard let self,
+                          self.verificationTimerTokens.remove(timerToken) != nil
+                    else { return }
+                    self.verificationCancellations.removeValue(forKey: timerToken)
+                    guard
+                          self.lifecycleGeneration == lifecycle,
+                          self.operationGeneration == operation,
+                          self.activeEpoch == epoch,
+                          self.state == .active
+                    else { return }
+                    self.enqueueVerificationCheck(
+                        wakeAuthoritative: self.sleepSuspended && self.wakeRequested
+                    )
+                }
+            }
+            if verificationTimerTokens.contains(timerToken) {
+                verificationCancellations[timerToken] = cancellation
+            } else {
+                cancellation.cancel()
+            }
+        }
+    }
+
+    private func enqueueVerificationCheck(wakeAuthoritative: Bool = false) {
+        guard state == .active,
+              terminalIntent == .none,
+              wakeAuthoritative
+                ? (sleepSuspended && wakeRequested)
+                : !sleepSuspended
+        else { return }
+        if wakeAuthoritative {
+            wakeReadbackCompleted = false
+        }
+        let cids = requiredCIDs.sorted()
+        guard !cids.isEmpty else { return }
+        let intended = Dictionary(uniqueKeysWithValues: cids.compactMap { cid in
+            intendedStates[cid].map { (cid, $0) }
+        })
+        guard intended.count == cids.count else {
+            beginRollback(outcome: .invalid(.protocol))
+            return
+        }
+        let snapshot = VerificationSnapshot(
+            lifecycle: lifecycleGeneration,
+            operation: operationGeneration,
+            activeEpoch: activeEpoch,
+            cids: cids,
+            intended: intended,
+            wakeAuthoritative: wakeAuthoritative,
+            sleepCycle: wakeAuthoritative ? activeSleepCycle : nil
+        )
+        if verificationInFlight {
+            pendingVerification = snapshot
+            return
+        }
+        verificationInFlight = true
+        requestVerificationCurrentState(index: 0, snapshot: snapshot)
+    }
+
+    private func requestVerificationCurrentState(
+        index: Int,
+        snapshot: VerificationSnapshot
+    ) {
+        guard verificationIsCurrent(snapshot) else { return }
+        guard index < snapshot.cids.count else {
+            finishVerificationCheck(snapshot)
+            return
+        }
+        guard let featureIndex = discoveredFeatureIndex else {
+            verificationFailed(.protocol)
+            return
+        }
+        let cid = snapshot.cids[index]
+        pipeline.perform(
+            featureIndex: featureIndex,
+            function: ReprogControlsV4.Function.getCidReporting.rawValue,
+            parameters: bigEndian(cid)
+        ) { [weak self] result in
+            guard let self, self.verificationIsCurrent(snapshot) else { return }
+            switch result {
+            case let .success(parameters):
+                do {
+                    let current = try ReprogControlsV4.decodeReportingState(parameters)
+                    guard current.cid == cid, let intended = snapshot.intended[cid] else {
+                        self.verificationFailed(.protocol)
+                        return
+                    }
+                    guard current == intended else {
+                        self.verificationInFlight = false
+                        self.pendingVerification = nil
+                        if self.originalStates[cid] == current {
+                            self.confirmedNotOwnedCIDs.insert(cid)
+                            if snapshot.wakeAuthoritative {
+                                self.beginRollback(outcome: .reconcilePolicy)
+                                return
+                            }
+                        } else {
+                            self.externallyOwnedCIDs.insert(cid)
+                        }
+                        self.beginRollback(outcome: .conflict)
+                        return
+                    }
+                    self.requestVerificationCurrentState(
+                        index: index + 1,
+                        snapshot: snapshot
+                    )
+                } catch {
+                    self.verificationFailed(.protocol)
+                }
+            case let .failure(error):
+                self.verificationFailed(self.stableCode(for: error))
+            }
+        }
+    }
+
+    private func finishVerificationCheck(_ snapshot: VerificationSnapshot) {
+        guard verificationIsCurrent(snapshot) else { return }
+        verificationInFlight = false
+        if snapshot.wakeAuthoritative {
+            if let pending = pendingVerification,
+               verificationIsCurrent(pending) {
+                pendingVerification = nil
+                verificationInFlight = true
+                requestVerificationCurrentState(index: 0, snapshot: pending)
+                return
+            }
+            pendingVerification = nil
+            wakeReadbackCompleted = true
+            maybeCompleteWakeOverlay(sleepCycle: snapshot.sleepCycle)
+            return
+        }
+        guard let pending = pendingVerification else { return }
+        pendingVerification = nil
+        guard verificationIsCurrent(pending) else { return }
+        verificationInFlight = true
+        requestVerificationCurrentState(index: 0, snapshot: pending)
+    }
+
+    private func verificationFailed(_ code: M720StableErrorCode) {
+        verificationInFlight = false
+        pendingVerification = nil
+        beginRollback(outcome: .invalid(code))
+    }
+
+    private func verificationIsCurrent(_ snapshot: VerificationSnapshot) -> Bool {
+        state == .active &&
+            terminalIntent == .none &&
+            lifecycleGeneration == snapshot.lifecycle &&
+            operationGeneration == snapshot.operation &&
+            activeEpoch == snapshot.activeEpoch &&
+            requiredCIDs == Set(snapshot.cids) &&
+            snapshot.cids.allSatisfy { intendedStates[$0] == snapshot.intended[$0] } &&
+            (snapshot.wakeAuthoritative
+                ? (sleepSuspended &&
+                    wakeRequested &&
+                    snapshot.sleepCycle == activeSleepCycle)
+                : !sleepSuspended)
+    }
+
+    private func maybeCompleteWakeOverlay(sleepCycle: UInt64?) {
+        guard state == .active,
+              terminalIntent == .none,
+              let sleepCycle,
+              activeSleepCycle == sleepCycle,
+              sleepSuspended,
+              wakeRequested,
+              sleepCancelCompleted,
+              wakeReadbackCompleted,
+              requiredCIDs == appliedCIDs
+        else { return }
+        sleepSuspended = false
+        wakeRequested = false
+        activeSleepCycle = nil
+        gateOpen = true
+        installEventHandler()
+        installForeignResponseHandler()
+    }
+
+    private func cancelScheduledVerifications() {
+        for cancellation in verificationCancellations.values {
+            cancellation.cancel()
+        }
+        verificationCancellations.removeAll()
+        verificationTimerTokens.removeAll()
     }
 
     private func beginCancelBarrier(completion: @escaping () -> Void) {
@@ -1050,6 +2097,7 @@ final class M720HIDPPSession {
             operation: operation,
             state: .restoring
         ) else { return }
+        refreshRecoveryRollbackPlan()
         guard index < rollbackCIDs.count else {
             finishRollback()
             return
@@ -1135,12 +2183,16 @@ final class M720HIDPPSession {
         lifecycle: UInt64,
         operation: UInt64
     ) {
+        guard let expected = journalEntriesForThisDevice()[cid] else {
+            enterInvalid(.protocol)
+            return
+        }
         journalRepository.mutateCID(
             for: deviceKey,
             cid: cid,
             mutation: { existing in
-                guard var existing else {
-                    throw M720JournalRepositoryError.notLoaded
+                guard var existing, existing == expected else {
+                    throw M720JournalRepositoryError.mismatchedCID
                 }
                 existing.phase = .restoring
                 return existing
@@ -1299,10 +2351,19 @@ final class M720HIDPPSession {
         lifecycle: UInt64,
         operation: UInt64
     ) {
+        guard let expected = journalEntriesForThisDevice()[cid] else {
+            enterInvalid(.protocol)
+            return
+        }
         journalRepository.mutateCID(
             for: deviceKey,
             cid: cid,
-            mutation: { _ in nil }
+            mutation: { existing in
+                guard existing == expected else {
+                    throw M720JournalRepositoryError.mismatchedCID
+                }
+                return nil
+            }
         ) { [weak self] result in
             DispatchQueue.main.async { [weak self] in
                 guard let self, self.continuationIsCurrent(
@@ -1318,6 +2379,7 @@ final class M720HIDPPSession {
                     self.knownWrittenCIDs.remove(cid)
                     self.transactionAppliedCIDs.remove(cid)
                     self.confirmedNotOwnedCIDs.remove(cid)
+                    self.rollbackResolvedCIDs.insert(cid)
                     self.requestRollbackCurrentState(
                         index: nextIndex,
                         lifecycle: lifecycle,
@@ -1336,8 +2398,9 @@ final class M720HIDPPSession {
     }
 
     private func finishRollback() {
-        appliedCIDs.removeAll()
         if rollbackHadConflict {
+            appliedCIDs.removeAll()
+            recoveryRollbackActive = false
             if terminalIntent == .shutdown {
                 finalizeShutdown(reason: .conflict)
                 return
@@ -1348,16 +2411,44 @@ final class M720HIDPPSession {
         }
         switch rollbackOutcome {
         case .reconcilePolicy:
+            appliedCIDs.removeAll()
             transition(to: .nativeReady)
             if !requiredCIDs.isEmpty {
                 beginTakeover()
             }
+        case .finishRecovery:
+            let latestKept = recoveryOwnedCIDs
+                .intersection(requiredCIDs)
+                .subtracting(rollbackResolvedCIDs)
+            recoveryRollbackActive = false
+            finishRecoveredOwnership(latestKept)
+        case .conflict:
+            appliedCIDs.removeAll()
+            recoveryRollbackActive = false
+            operationGeneration &+= 1
+            transition(to: .conflict)
         case let .invalid(code):
+            appliedCIDs.removeAll()
+            recoveryRollbackActive = false
             operationGeneration &+= 1
             transition(to: .invalid(code))
         case .shutdown:
+            appliedCIDs.removeAll()
+            recoveryRollbackActive = false
             finalizeShutdown(reason: .cancelled)
         }
+    }
+
+    private func refreshRecoveryRollbackPlan() {
+        guard recoveryRollbackActive else { return }
+        let mustRestore: Set<UInt16>
+        if rollbackHadConflict || terminalIntent == .shutdown || !requiredPolicyIsSupported {
+            mustRestore = recoveryOwnedCIDs
+        } else {
+            mustRestore = recoveryOwnedCIDs.subtracting(requiredCIDs)
+        }
+        let alreadyPlanned = Set(rollbackCIDs).union(rollbackResolvedCIDs)
+        rollbackCIDs.append(contentsOf: mustRestore.subtracting(alreadyPlanned).sorted())
     }
 
     private func finalizeShutdown(reason: M720StableErrorCode = .cancelled) {
@@ -1522,8 +2613,35 @@ final class M720HIDPPSession {
                 ) else { return }
                 if case let .success(journal) = result {
                     self.journalSnapshot = journal
+                    if expectedState == .takingOver,
+                       !self.touchedCIDs
+                        .union(self.knownWrittenCIDs)
+                        .union(self.transactionAppliedCIDs)
+                        .isEmpty {
+                        self.reconcilePreparedClaimsAfterUncertainReload()
+                        self.beginRollbackAfterTakeoverFailure(.protocol)
+                        return
+                    }
                 }
                 self.enterInvalid(.protocol)
+            }
+        }
+    }
+
+    private func reconcilePreparedClaimsAfterUncertainReload() {
+        let entries = journalEntriesForThisDevice()
+        for cid in frozenRequiredCIDs where !touchedCIDs.contains(cid) {
+            guard let original = originalStates[cid],
+                  let intended = intendedStates[cid]
+            else { continue }
+            let expected = M720JournalCIDEntry(
+                cid: cid,
+                original: original,
+                intended: intended,
+                phase: .prepared
+            )
+            if entries[cid] == expected {
+                preparedCIDs.insert(cid)
             }
         }
     }
@@ -1555,7 +2673,13 @@ final class M720HIDPPSession {
         }
     }
 
+    private func isQuarantinedJournalError(_ error: Error) -> Bool {
+        guard let error = error as? M720JournalStoreError else { return false }
+        return error == .quarantined || error == .corruptFileQuarantined
+    }
+
     private func enterInvalid(_ code: M720StableErrorCode) {
+        recoveryInProgress = false
         operationGeneration &+= 1
         transition(to: .invalid(code))
         if terminalIntent == .shutdown {
@@ -1566,9 +2690,31 @@ final class M720HIDPPSession {
     private func transition(to newState: M720SessionState) {
         guard state != newState else { return }
         state = newState
+        if newState == .conflict {
+            explicitRetryRequired = true
+        }
         let observer = onStateChange
         if let observer {
             DispatchQueue.main.async { observer(newState) }
+        }
+        guard retryInProgress else { return }
+        let completesRetry: Bool
+        switch newState {
+        case .active, .conflict, .invalid:
+            completesRetry = true
+        case .nativeReady:
+            completesRetry = requiredCIDs.isEmpty
+        case .discovering, .takingOver, .restoring:
+            completesRetry = false
+        }
+        guard completesRetry else { return }
+        retryInProgress = false
+        retryPath = nil
+        let requestID = retryRequestID
+        retryRequestID = nil
+        let retryObserver = onRetryResult
+        if let retryObserver {
+            DispatchQueue.main.async { retryObserver(requestID, newState) }
         }
     }
 }

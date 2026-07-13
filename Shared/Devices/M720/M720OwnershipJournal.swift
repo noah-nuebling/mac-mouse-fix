@@ -406,6 +406,7 @@ final class M720OwnershipJournalStore: M720JournalStoring {
 enum M720JournalRepositoryError: Error, Equatable {
     case notLoaded
     case mismatchedCID
+    case mismatchedDevice
 }
 
 final class M720OwnershipJournalRepository {
@@ -519,6 +520,33 @@ final class M720OwnershipJournalRepository {
                 let acknowledged = try self.store.acknowledgeQuarantineWithFreshEmptyV1()
                 self.snapshotState = .loaded(acknowledged)
                 completion(.success(acknowledged))
+            } catch {
+                self.invalidateSnapshotIfStorageIsUncertain(error)
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func removeDevice(
+        for key: M720DeviceKey,
+        expected: M720JournalDevice?,
+        completion: @escaping Completion
+    ) {
+        queue.async {
+            do {
+                var candidate = try self.snapshotLoadingAfterUncertainIfNeeded()
+                let deviceIndex = candidate.devices.firstIndex { $0.key == key }
+                let existing = deviceIndex.map { candidate.devices[$0] }
+                guard existing == expected else {
+                    throw M720JournalRepositoryError.mismatchedDevice
+                }
+                if let deviceIndex {
+                    candidate.devices.remove(at: deviceIndex)
+                }
+                let canonical = try candidate.validatedCanonicalized()
+                try self.store.save(canonical)
+                self.snapshotState = .loaded(canonical)
+                completion(.success(canonical))
             } catch {
                 self.invalidateSnapshotIfStorageIsUncertain(error)
                 completion(.failure(error))

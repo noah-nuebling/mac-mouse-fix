@@ -781,6 +781,141 @@ final class M720OwnershipJournalTests: XCTestCase {
         XCTAssertTrue(store.savedSnapshots.isEmpty)
     }
 
+    func testRepositoryRemoveDeviceCASPreservesOtherDevice() throws {
+        let keyA = fixtureKey(serialNumber: "remove-a")
+        let keyB = fixtureKey(serialNumber: "remove-b")
+        let deviceA = M720JournalDevice(
+            key: keyA,
+            controls: [fixtureEntry(cid: 0x005B, phase: .prepared)]
+        )
+        let deviceB = M720JournalDevice(
+            key: keyB,
+            controls: [fixtureEntry(cid: 0x005D, phase: .applied)]
+        )
+        let initial = try M720OwnershipJournal(
+            version: M720OwnershipJournal.currentVersion,
+            devices: [deviceA, deviceB]
+        ).validatedCanonicalized()
+        let store = FakeM720JournalStore(durable: initial)
+        let repository = M720OwnershipJournalRepository(store: store)
+        _ = try awaitRepositoryResult { repository.reload(completion: $0) }.get()
+
+        let removed = try awaitRepositoryResult { completion in
+            repository.removeDevice(
+                for: keyA,
+                expected: deviceA,
+                completion: completion
+            )
+        }.get()
+
+        XCTAssertEqual(removed.devices, [deviceB])
+        XCTAssertEqual(store.durable, removed)
+        XCTAssertEqual(store.savedSnapshots, [removed])
+    }
+
+    func testRepositoryRemoveDeviceCASRejectsStaleExpectedAfterNewerMutation() throws {
+        let keyA = fixtureKey(serialNumber: "stale-a")
+        let keyB = fixtureKey(serialNumber: "stale-b")
+        let staleA = M720JournalDevice(
+            key: keyA,
+            controls: [fixtureEntry(cid: 0x005B, phase: .prepared)]
+        )
+        let deviceB = M720JournalDevice(
+            key: keyB,
+            controls: [fixtureEntry(cid: 0x005D, phase: .applied)]
+        )
+        let initial = try M720OwnershipJournal(
+            version: M720OwnershipJournal.currentVersion,
+            devices: [staleA, deviceB]
+        ).validatedCanonicalized()
+        let store = FakeM720JournalStore(durable: initial)
+        let repository = M720OwnershipJournalRepository(store: store)
+        _ = try awaitRepositoryResult { repository.reload(completion: $0) }.get()
+        let newerJournal = try awaitRepositoryResult { completion in
+            repository.mutateCID(for: keyA, cid: 0x005B, mutation: { existing in
+                var updated = try XCTUnwrap(existing)
+                updated.phase = .applied
+                return updated
+            }, completion: completion)
+        }.get()
+
+        let removal = awaitRepositoryResult { completion in
+            repository.removeDevice(
+                for: keyA,
+                expected: staleA,
+                completion: completion
+            )
+        }
+
+        XCTAssertThrowsError(try removal.get()) { error in
+            XCTAssertEqual(error as? M720JournalRepositoryError, .mismatchedDevice)
+        }
+        XCTAssertEqual(store.durable, newerJournal)
+        XCTAssertEqual(
+            try awaitRepositoryResult { repository.snapshot(completion: $0) }.get(),
+            newerJournal
+        )
+        XCTAssertEqual(store.savedSnapshots, [newerJournal])
+    }
+
+    func testRepositoryRemoveDeviceCASReloadsDurableCurrentAfterUncertain() throws {
+        let keyA = fixtureKey(serialNumber: "uncertain-remove-a")
+        let keyB = fixtureKey(serialNumber: "uncertain-remove-b")
+        let staleA = M720JournalDevice(
+            key: keyA,
+            controls: [fixtureEntry(cid: 0x005B, phase: .prepared)]
+        )
+        let deviceB = M720JournalDevice(
+            key: keyB,
+            controls: [fixtureEntry(cid: 0x005D, phase: .applied)]
+        )
+        let initial = try M720OwnershipJournal(
+            version: M720OwnershipJournal.currentVersion,
+            devices: [staleA, deviceB]
+        ).validatedCanonicalized()
+        let durableStore = FakeM720JournalStore(durable: initial)
+        let uncertainStore = PersistThenThrowUncertainOnceM720JournalStore(
+            delegate: durableStore
+        )
+        let repository = M720OwnershipJournalRepository(store: uncertainStore)
+        _ = try awaitRepositoryResult { repository.reload(completion: $0) }.get()
+
+        let mutation = awaitRepositoryResult { completion in
+            repository.mutateCID(for: keyA, cid: 0x005B, mutation: { existing in
+                var updated = try XCTUnwrap(existing)
+                updated.phase = .applied
+                return updated
+            }, completion: completion)
+        }
+        XCTAssertThrowsError(try mutation.get()) { error in
+            XCTAssertEqual(error as? M720JournalStoreError, .uncertain)
+        }
+        let durableCurrent = durableStore.durable
+        let newerA = try XCTUnwrap(durableCurrent.devices.first { $0.key == keyA })
+
+        let staleRemoval = awaitRepositoryResult { completion in
+            repository.removeDevice(
+                for: keyA,
+                expected: staleA,
+                completion: completion
+            )
+        }
+        XCTAssertThrowsError(try staleRemoval.get()) { error in
+            XCTAssertEqual(error as? M720JournalRepositoryError, .mismatchedDevice)
+        }
+        XCTAssertEqual(durableStore.durable, durableCurrent)
+
+        let removed = try awaitRepositoryResult { completion in
+            repository.removeDevice(
+                for: keyA,
+                expected: newerA,
+                completion: completion
+            )
+        }.get()
+        XCTAssertEqual(removed.devices, [deviceB])
+        XCTAssertEqual(durableStore.durable, removed)
+    }
+
     func testRepositoryAcknowledgementPublishesOnlyAfterDurableSuccess() throws {
         let key = fixtureKey()
         let initial = journal(key: key, controls: [fixtureEntry(phase: .applied)])

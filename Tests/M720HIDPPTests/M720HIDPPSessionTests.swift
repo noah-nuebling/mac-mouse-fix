@@ -205,20 +205,2470 @@ final class M720HIDPPSessionTests: XCTestCase {
         XCTAssertEqual(observerWasMain, [true])
     }
 
-    func testDiscoveryFailsClosedForMatchingStartupJournalButIgnoresOtherDeviceEntry() {
+    func testNextLaunchRecoveryCoversEveryPhaseCurrentStateAndPolicyBranch() {
         let matchingKey = M720SessionHarness.defaultDeviceKey
-        let matchingEntry = journalEntry(cid: 0x005B)
-        let matchingJournal = M720OwnershipJournal(
+        let cid: UInt16 = 0x005B
+
+        for phase in [M720JournalPhase.prepared, .applied, .restoring] {
+            let entry = journalEntry(cid: cid, phase: phase)
+            let third = HIDPPReportingState(cid: cid, flags: 0x11, remappedCID: 0x1234)
+            let currentRows: [(String, HIDPPReportingState)] = [
+                ("original", entry.original),
+                ("intended", entry.intended),
+                ("third", third),
+            ]
+            for (currentName, current) in currentRows {
+                for policyRequiresCapture in [false, true] {
+                    let context = "phase=\(phase), current=\(currentName), policy=\(policyRequiresCapture)"
+                    let journal = M720OwnershipJournal(
+                        version: M720OwnershipJournal.currentVersion,
+                        devices: [M720JournalDevice(key: matchingKey, controls: [entry])]
+                    )
+                    let harness = M720SessionHarness(initialJournal: journal)
+                    if policyRequiresCapture {
+                        harness.session.setRequiredCIDs([cid])
+                    }
+                    harness.session.start()
+                    var states = baselineStates(0x005B, 0x005D, 0x00D0)
+                    states[cid] = current
+                    driveDiscovery(
+                        harness,
+                        rows: referenceRows,
+                        reportingOverrides: states,
+                        stopAfterDiscoverySnapshots: true
+                    )
+                    let recoveryStart = 2 + referenceRows.count + M720Profile.cidToButton.count
+                    driveTakeover(
+                        harness,
+                        startingAt: recoveryStart,
+                        initialStates: states
+                    )
+
+                    let setRequests = harness.requestKinds.compactMap { kind -> (UInt16, Bool)? in
+                        guard case let .setCidReporting(setCID, diverted) = kind else { return nil }
+                        return (setCID, diverted)
+                    }
+                    if current == entry.original {
+                        XCTAssertEqual(
+                            harness.session.state,
+                            policyRequiresCapture ? .active : .nativeReady,
+                            context
+                        )
+                        XCTAssertEqual(setRequests.map(\.0), policyRequiresCapture ? [cid] : [], context)
+                        XCTAssertEqual(setRequests.map(\.1), policyRequiresCapture ? [true] : [], context)
+                    } else if current == entry.intended {
+                        XCTAssertEqual(
+                            harness.session.state,
+                            policyRequiresCapture ? .active : .nativeReady,
+                            context
+                        )
+                        XCTAssertEqual(setRequests.map(\.0), policyRequiresCapture ? [] : [cid], context)
+                        XCTAssertEqual(setRequests.map(\.1), policyRequiresCapture ? [] : [false], context)
+                    } else {
+                        XCTAssertEqual(harness.session.state, .conflict, context)
+                        XCTAssertTrue(setRequests.isEmpty, context)
+                    }
+
+                    if harness.session.state == .active {
+                        XCTAssertEqual(
+                            harness.journal.currentJournal.devices.first?.controls,
+                            [journalEntry(cid: cid, phase: .applied)],
+                            context
+                        )
+                    } else if harness.session.state == .conflict {
+                        XCTAssertEqual(harness.journal.currentJournal, journal, context)
+                    } else {
+                        XCTAssertEqual(harness.journal.currentJournal, .emptyV1, context)
+                    }
+                }
+            }
+        }
+    }
+
+    func testRecoveryReadsAndClassifiesWholeJournalBeforeRestoringOwnedSiblingsOnConflict() {
+        let entries = [
+            journalEntry(cid: 0x005B, phase: .applied),
+            journalEntry(cid: 0x005D, phase: .prepared),
+            journalEntry(cid: 0x00D0, phase: .restoring),
+        ]
+        let journal = M720OwnershipJournal(
             version: M720OwnershipJournal.currentVersion,
-            devices: [M720JournalDevice(key: matchingKey, controls: [matchingEntry])]
+            devices: [M720JournalDevice(
+                key: M720SessionHarness.defaultDeviceKey,
+                controls: entries
+            )]
         )
-        let matchingHarness = M720SessionHarness(initialJournal: matchingJournal)
-        matchingHarness.session.start()
-        driveDiscovery(matchingHarness, rows: referenceRows)
-        XCTAssertEqual(matchingHarness.session.state, .invalid(.protocol))
-        XCTAssertEqual(matchingHarness.journal.currentJournal, matchingJournal)
-        XCTAssertEqual(matchingHarness.journal.mutationCallCount, 0)
-        assertNoSet(matchingHarness)
+        let harness = M720SessionHarness(initialJournal: journal)
+        harness.session.setRequiredCIDs(Set(M720Profile.cidToButton.keys))
+        harness.session.start()
+        let external = HIDPPReportingState(cid: 0x00D0, flags: 0x11, remappedCID: 0x4321)
+        let states: [UInt16: HIDPPReportingState] = [
+            0x005B: entries[0].intended,
+            0x005D: entries[1].intended,
+            0x00D0: external,
+        ]
+        driveDiscovery(
+            harness,
+            rows: referenceRows,
+            reportingOverrides: states,
+            stopAfterDiscoverySnapshots: true
+        )
+        let recoveryStart = 2 + referenceRows.count + M720Profile.cidToButton.count
+        driveTakeover(harness, startingAt: recoveryStart, initialStates: states)
+
+        let firstJournalIndex = try? XCTUnwrap(
+            harness.trace.events.firstIndex { event in
+                if case .journal = event { return true }
+                return false
+            }
+        )
+        if let firstJournalIndex {
+            let readsBeforeMutation = harness.trace.events[..<firstJournalIndex].compactMap { event -> UInt16? in
+                guard case let .request(.getCidReporting(cid)) = event else { return nil }
+                return cid
+            }
+            XCTAssertEqual(Array(readsBeforeMutation.suffix(3)), [0x005B, 0x005D, 0x00D0])
+        }
+        XCTAssertEqual(
+            harness.requestKinds.compactMap { kind -> UInt16? in
+                guard case let .setCidReporting(cid, diverted) = kind, !diverted else { return nil }
+                return cid
+            },
+            [0x005B, 0x005D]
+        )
+        XCTAssertEqual(harness.session.state, .conflict)
+        XCTAssertEqual(
+            harness.journal.currentJournal.devices.first?.controls,
+            [entries[2]]
+        )
+    }
+
+    func testPolicyChangeAtHeldRecoveryMutationRestoresOldSeedBeforeReconcilingLatestPolicy() {
+        let entry = journalEntry(cid: 0x005B, phase: .prepared)
+        let journal = M720OwnershipJournal(
+            version: M720OwnershipJournal.currentVersion,
+            devices: [M720JournalDevice(
+                key: M720SessionHarness.defaultDeviceKey,
+                controls: [entry]
+            )]
+        )
+        let harness = M720SessionHarness(initialJournal: journal)
+        harness.session.setRequiredCIDs([entry.cid])
+        harness.session.start()
+        var states = baselineStates(0x005B, 0x005D, 0x00D0)
+        states[entry.cid] = entry.intended
+        driveDiscovery(
+            harness,
+            rows: referenceRows,
+            reportingOverrides: states,
+            stopAfterDiscoverySnapshots: true
+        )
+        let recoveryStart = 2 + referenceRows.count + M720Profile.cidToButton.count
+        harness.journal.holdNextMutationCompletion = M720JournalFailurePoint(
+            cid: entry.cid,
+            phase: .applied
+        )
+        let recoveryRead = harness.request(at: recoveryStart)
+        harness.respond(
+            to: recoveryRead,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(entry.intended)
+        )
+        drainMainQueue(turns: 5)
+        XCTAssertTrue(harness.journal.hasHeldMutationCompletion)
+
+        harness.session.setRequiredCIDs([])
+        drainMainQueue(turns: 3)
+        harness.journal.completeHeldMutation()
+        driveTakeover(
+            harness,
+            startingAt: recoveryStart + 1,
+            initialStates: states
+        )
+
+        XCTAssertEqual(harness.session.state, .nativeReady)
+        XCTAssertEqual(harness.journal.currentJournal, .emptyV1)
+        XCTAssertEqual(
+            harness.requestKinds.compactMap { kind -> (UInt16, Bool)? in
+                guard case let .setCidReporting(cid, diverted) = kind else { return nil }
+                return (cid, diverted)
+            }.map(\.0),
+            [entry.cid]
+        )
+        XCTAssertEqual(
+            harness.requestKinds.compactMap { kind -> Bool? in
+                guard case let .setCidReporting(_, diverted) = kind else { return nil }
+                return diverted
+            },
+            [false]
+        )
+    }
+
+    func testShutdownDuringRecoveryWaitsForVerifiedRestoreBeforeFinalizing() {
+        let entry = journalEntry(cid: 0x005B, phase: .prepared)
+        let journal = M720OwnershipJournal(
+            version: M720OwnershipJournal.currentVersion,
+            devices: [M720JournalDevice(
+                key: M720SessionHarness.defaultDeviceKey,
+                controls: [entry]
+            )]
+        )
+        let harness = M720SessionHarness(initialJournal: journal)
+        harness.session.setRequiredCIDs([entry.cid])
+        harness.session.start()
+        var states = baselineStates(0x005B, 0x005D, 0x00D0)
+        states[entry.cid] = entry.intended
+        driveDiscovery(
+            harness,
+            rows: referenceRows,
+            reportingOverrides: states,
+            stopAfterDiscoverySnapshots: true
+        )
+        let recoveryStart = 2 + referenceRows.count + M720Profile.cidToButton.count
+        harness.journal.holdNextMutationCompletion = M720JournalFailurePoint(
+            cid: entry.cid,
+            phase: .applied
+        )
+        harness.respond(
+            to: harness.request(at: recoveryStart),
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(entry.intended)
+        )
+        drainMainQueue(turns: 5)
+        var shutdownCompletions = 0
+        harness.session.shutdown { shutdownCompletions += 1 }
+        drainMainQueue(turns: 3)
+        XCTAssertEqual(shutdownCompletions, 0)
+
+        harness.journal.completeHeldMutation()
+        driveTakeover(
+            harness,
+            startingAt: recoveryStart + 1,
+            initialStates: states
+        )
+
+        XCTAssertEqual(shutdownCompletions, 1)
+        XCTAssertEqual(harness.session.state, .invalid(.cancelled))
+        XCTAssertEqual(harness.journal.currentJournal, .emptyV1)
+        XCTAssertEqual(
+            harness.requestKinds.compactMap { kind -> Bool? in
+                guard case let .setCidReporting(_, diverted) = kind else { return nil }
+                return diverted
+            },
+            [false]
+        )
+    }
+
+    func testRecoveryMutationCompareFailsClosedInsteadOfDeletingNewerOwnership() {
+        let stale = journalEntry(cid: 0x005B, phase: .prepared)
+        let newerOriginal = HIDPPReportingState(cid: stale.cid, flags: 0x04, remappedCID: stale.cid)
+        let newer = M720JournalCIDEntry(
+            cid: stale.cid,
+            original: newerOriginal,
+            intended: newerOriginal.changingDivert(to: true),
+            phase: .prepared
+        )
+        let journal = M720OwnershipJournal(
+            version: M720OwnershipJournal.currentVersion,
+            devices: [M720JournalDevice(
+                key: M720SessionHarness.defaultDeviceKey,
+                controls: [stale]
+            )]
+        )
+        let harness = M720SessionHarness(initialJournal: journal)
+        harness.journal.replaceEntryBeforeNextMutation = newer
+        harness.session.start()
+        var states = baselineStates(0x005B, 0x005D, 0x00D0)
+        states[stale.cid] = stale.original
+        driveDiscovery(
+            harness,
+            rows: referenceRows,
+            reportingOverrides: states,
+            stopAfterDiscoverySnapshots: true
+        )
+        let recoveryStart = 2 + referenceRows.count + M720Profile.cidToButton.count
+        driveTakeover(harness, startingAt: recoveryStart, initialStates: states)
+
+        XCTAssertEqual(harness.session.state, .invalid(.protocol))
+        XCTAssertEqual(harness.journal.currentJournal.devices.first?.controls, [newer])
+        assertNoSet(harness)
+    }
+
+    func testRecoveredSeedIsRestoredWhenMissingRequiredCIDFailsFreshPreflight() {
+        let seed = journalEntry(cid: 0x005B, phase: .applied)
+        let journal = M720OwnershipJournal(
+            version: M720OwnershipJournal.currentVersion,
+            devices: [M720JournalDevice(
+                key: M720SessionHarness.defaultDeviceKey,
+                controls: [seed]
+            )]
+        )
+        let harness = M720SessionHarness(initialJournal: journal)
+        harness.session.setRequiredCIDs([0x005B, 0x005D])
+        harness.session.start()
+        var discoveryStates = baselineStates(0x005B, 0x005D, 0x00D0)
+        discoveryStates[seed.cid] = seed.intended
+        driveDiscovery(
+            harness,
+            rows: referenceRows,
+            reportingOverrides: discoveryStates,
+            stopAfterDiscoverySnapshots: true
+        )
+        let external5D = HIDPPReportingState(cid: 0x005D, flags: 0x11, remappedCID: 0x2222)
+        var recoveryAndPreflightStates = discoveryStates
+        recoveryAndPreflightStates[0x005D] = external5D
+        let recoveryStart = 2 + referenceRows.count + M720Profile.cidToButton.count
+        driveTakeover(
+            harness,
+            startingAt: recoveryStart,
+            initialStates: recoveryAndPreflightStates
+        )
+
+        XCTAssertEqual(harness.session.state, .conflict)
+        XCTAssertEqual(harness.journal.currentJournal, .emptyV1)
+        XCTAssertEqual(
+            harness.requestKinds.compactMap { kind -> (UInt16, Bool)? in
+                guard case let .setCidReporting(cid, diverted) = kind else { return nil }
+                return (cid, diverted)
+            }.map(\.0),
+            [seed.cid]
+        )
+        XCTAssertEqual(
+            harness.requestKinds.compactMap { kind -> Bool? in
+                guard case let .setCidReporting(_, diverted) = kind else { return nil }
+                return diverted
+            },
+            [false]
+        )
+    }
+
+    func testLateConflictWhileRestoringRecoverySubsetAlsoRestoresKeptSibling() {
+        let kept = journalEntry(cid: 0x005B, phase: .applied)
+        let restoring = journalEntry(cid: 0x005D, phase: .applied)
+        let journal = M720OwnershipJournal(
+            version: M720OwnershipJournal.currentVersion,
+            devices: [M720JournalDevice(
+                key: M720SessionHarness.defaultDeviceKey,
+                controls: [kept, restoring]
+            )]
+        )
+        let harness = M720SessionHarness(initialJournal: journal)
+        harness.session.setRequiredCIDs([kept.cid])
+        harness.session.start()
+        var discoveryStates = baselineStates(0x005B, 0x005D, 0x00D0)
+        discoveryStates[kept.cid] = kept.intended
+        discoveryStates[restoring.cid] = restoring.intended
+        driveDiscovery(
+            harness,
+            rows: referenceRows,
+            reportingOverrides: discoveryStates,
+            stopAfterDiscoverySnapshots: true
+        )
+        let recoveryStart = 2 + referenceRows.count + M720Profile.cidToButton.count
+        for offset in 0..<2 {
+            let request = harness.request(at: recoveryStart + offset)
+            let entry = offset == 0 ? kept : restoring
+            harness.respond(
+                to: request,
+                responseFeatureIndex: 0x2A,
+                parameters: harness.reportingParameters(entry.intended)
+            )
+            drainMainQueue(turns: 5)
+        }
+        let externalRestoring = HIDPPReportingState(
+            cid: restoring.cid,
+            flags: 0x11,
+            remappedCID: 0x3333
+        )
+        var rollbackStates = discoveryStates
+        rollbackStates[restoring.cid] = externalRestoring
+        driveTakeover(
+            harness,
+            startingAt: recoveryStart + 2,
+            initialStates: rollbackStates
+        )
+
+        XCTAssertEqual(harness.session.state, .conflict)
+        XCTAssertEqual(
+            harness.journal.currentJournal.devices.first?.controls,
+            [restoring]
+        )
+        XCTAssertEqual(
+            harness.requestKinds.compactMap { kind -> (UInt16, Bool)? in
+                guard case let .setCidReporting(cid, diverted) = kind else { return nil }
+                return (cid, diverted)
+            }.map(\.0),
+            [kept.cid]
+        )
+    }
+
+    func testRecoveryRemoveUsesCASAndRetainsEntryReplacedAfterRestoreReadback() {
+        let entry = journalEntry(cid: 0x005B, phase: .applied)
+        let newerOriginal = HIDPPReportingState(cid: entry.cid, flags: 0x04, remappedCID: entry.cid)
+        let newer = M720JournalCIDEntry(
+            cid: entry.cid,
+            original: newerOriginal,
+            intended: newerOriginal.changingDivert(to: true),
+            phase: .restoring
+        )
+        let journal = M720OwnershipJournal(
+            version: M720OwnershipJournal.currentVersion,
+            devices: [M720JournalDevice(
+                key: M720SessionHarness.defaultDeviceKey,
+                controls: [entry]
+            )]
+        )
+        let harness = M720SessionHarness(initialJournal: journal)
+        var sawRestoreSet = false
+        harness.onRequestSent = { kind in
+            switch kind {
+            case let .setCidReporting(cid, diverted) where cid == entry.cid && !diverted:
+                sawRestoreSet = true
+            case let .getCidReporting(cid) where cid == entry.cid && sawRestoreSet:
+                harness.journal.replaceEntryBeforeNextMutation = newer
+            default:
+                break
+            }
+        }
+        harness.session.start()
+        var states = baselineStates(0x005B, 0x005D, 0x00D0)
+        states[entry.cid] = entry.intended
+        driveDiscovery(
+            harness,
+            rows: referenceRows,
+            reportingOverrides: states,
+            stopAfterDiscoverySnapshots: true
+        )
+        let recoveryStart = 2 + referenceRows.count + M720Profile.cidToButton.count
+        driveTakeover(harness, startingAt: recoveryStart, initialStates: states)
+
+        XCTAssertEqual(harness.session.state, .invalid(.protocol))
+        XCTAssertEqual(harness.journal.currentJournal.devices.first?.controls, [newer])
+    }
+
+    func testPolicyOrShutdownDuringRecoveryRestoreExpandsRollbackToEveryOwnedCID() {
+        for shutdown in [false, true] {
+            let kept = journalEntry(cid: 0x005B, phase: .applied)
+            let restoring = journalEntry(cid: 0x005D, phase: .applied)
+            let journal = M720OwnershipJournal(
+                version: M720OwnershipJournal.currentVersion,
+                devices: [M720JournalDevice(
+                    key: M720SessionHarness.defaultDeviceKey,
+                    controls: [kept, restoring]
+                )]
+            )
+            let harness = M720SessionHarness(initialJournal: journal)
+            harness.session.setRequiredCIDs([kept.cid])
+            harness.session.start()
+            var states = baselineStates(0x005B, 0x005D, 0x00D0)
+            states[kept.cid] = kept.intended
+            states[restoring.cid] = restoring.intended
+            driveDiscovery(
+                harness,
+                rows: referenceRows,
+                reportingOverrides: states,
+                stopAfterDiscoverySnapshots: true
+            )
+            let recoveryStart = 2 + referenceRows.count + M720Profile.cidToButton.count
+            for offset in 0..<2 {
+                let entry = offset == 0 ? kept : restoring
+                harness.respond(
+                    to: harness.request(at: recoveryStart + offset),
+                    responseFeatureIndex: 0x2A,
+                    parameters: harness.reportingParameters(entry.intended)
+                )
+                drainMainQueue(turns: 5)
+            }
+            XCTAssertEqual(
+                harness.request(at: recoveryStart + 2).kind,
+                .getCidReporting(restoring.cid)
+            )
+            var shutdownCompletions = 0
+            if shutdown {
+                harness.session.shutdown { shutdownCompletions += 1 }
+            } else {
+                harness.session.setRequiredCIDs([])
+            }
+            drainMainQueue(turns: 3)
+            driveTakeover(
+                harness,
+                startingAt: recoveryStart + 2,
+                initialStates: states
+            )
+
+            XCTAssertEqual(harness.journal.currentJournal, .emptyV1, "shutdown=\(shutdown)")
+            XCTAssertEqual(
+                harness.requestKinds.compactMap { kind -> UInt16? in
+                    guard case let .setCidReporting(cid, diverted) = kind, !diverted else { return nil }
+                    return cid
+                },
+                [restoring.cid, kept.cid],
+                "shutdown=\(shutdown)"
+            )
+            XCTAssertEqual(
+                harness.session.state,
+                shutdown ? .invalid(.cancelled) : .nativeReady,
+                "shutdown=\(shutdown)"
+            )
+            XCTAssertEqual(shutdownCompletions, shutdown ? 1 : 0)
+        }
+    }
+
+    func testActiveOwnershipVerificationUsesFourExactFiniteOffsets() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B, 0x005D, 0x00D0)
+        )
+        XCTAssertEqual(harness.session.state, .active)
+
+        let verificationStart = harness.transport.sent.count
+        XCTAssertEqual(harness.scheduler.pendingDeadlines, [0, 0.25, 2, 10])
+        guard harness.scheduler.pendingDeadlines == [0, 0.25, 2, 10] else { return }
+        let intended = divertedStates(0x005B)[0x005B]!
+        for (offset, deadline) in [0.0, 0.25, 2.0, 10.0].enumerated() {
+            harness.scheduler.advance(to: deadline)
+            drainMainQueue(turns: 4)
+            let requestIndex = verificationStart + offset
+            XCTAssertGreaterThan(harness.transport.sent.count, requestIndex)
+            guard harness.transport.sent.count > requestIndex else { return }
+            let request = harness.request(at: requestIndex)
+            XCTAssertEqual(request.kind, .getCidReporting(0x005B))
+            harness.respond(
+                to: request,
+                responseFeatureIndex: 0x2A,
+                parameters: harness.reportingParameters(intended)
+            )
+            drainMainQueue(turns: 4)
+        }
+        XCTAssertEqual(harness.transport.sent.count, verificationStart + 4)
+
+        harness.scheduler.advance(to: 20)
+        drainMainQueue(turns: 4)
+        XCTAssertEqual(harness.transport.sent.count, verificationStart + 4)
+        XCTAssertEqual(harness.session.state, .active)
+    }
+
+    func testVerificationMismatchRollsBackOwnedSiblingAndDeduplicatesConflict() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B, 0x005D])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B, 0x005D, 0x00D0)
+        )
+        XCTAssertEqual(harness.session.state, .active)
+        var conflictTransitions = 0
+        harness.session.onStateChange = { state in
+            if state == .conflict { conflictTransitions += 1 }
+        }
+
+        let verificationStart = harness.transport.sent.count
+        harness.session.verifyOwnership()
+        drainMainQueue(turns: 4)
+        let external5B = HIDPPReportingState(cid: 0x005B, flags: 0x11, remappedCID: 0x4444)
+        driveTakeover(
+            harness,
+            startingAt: verificationStart,
+            initialStates: [
+                0x005B: external5B,
+                0x005D: divertedStates(0x005D)[0x005D]!,
+            ]
+        )
+
+        XCTAssertEqual(harness.session.state, .conflict)
+        XCTAssertEqual(conflictTransitions, 1)
+        XCTAssertEqual(
+            harness.requestKinds[verificationStart...].compactMap { kind -> UInt16? in
+                guard case let .setCidReporting(cid, diverted) = kind, !diverted else { return nil }
+                return cid
+            },
+            [0x005D]
+        )
+        XCTAssertEqual(
+            harness.journal.currentJournal.devices.first?.controls.map(\.cid),
+            [0x005B]
+        )
+
+        let requestCountAtConflict = harness.transport.sent.count
+        harness.session.verifyOwnership()
+        harness.scheduler.advance(to: 20)
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.transport.sent.count, requestCountAtConflict)
+        XCTAssertEqual(conflictTransitions, 1)
+    }
+
+    func testVerificationOriginalThenRollbackIntendedNeverOverwritesNewOwner() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B)
+        )
+        let verificationStart = harness.transport.sent.count
+        harness.session.verifyOwnership()
+        drainMainQueue(turns: 5)
+        harness.respond(
+            to: harness.request(at: verificationStart),
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(baselineStates(0x005B)[0x005B]!)
+        )
+        driveTakeover(
+            harness,
+            startingAt: verificationStart + 1,
+            initialStates: divertedStates(0x005B)
+        )
+
+        XCTAssertEqual(harness.session.state, .conflict)
+        XCTAssertFalse(harness.requestKinds[(verificationStart + 1)...].contains {
+            if case .setCidReporting = $0 { return true }
+            return false
+        })
+        XCTAssertEqual(harness.journal.currentJournal, .emptyV1)
+    }
+
+    func testWakeOriginalThenRollbackIntendedNeverOverwritesNewOwner() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B)
+        )
+        harness.session.prepareForSleep {}
+        drainMainQueue(turns: 5)
+        let wakeStart = harness.transport.sent.count
+        harness.session.reconcileAfterWake()
+        drainMainQueue(turns: 3)
+        harness.scheduler.advance(to: harness.scheduler.now)
+        drainMainQueue(turns: 5)
+        harness.respond(
+            to: harness.request(at: wakeStart),
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(baselineStates(0x005B)[0x005B]!)
+        )
+        driveTakeover(
+            harness,
+            startingAt: wakeStart + 1,
+            initialStates: divertedStates(0x005B)
+        )
+
+        XCTAssertEqual(harness.session.state, .conflict)
+        XCTAssertFalse(harness.requestKinds[(wakeStart + 1)...].contains {
+            if case .setCidReporting = $0 { return true }
+            return false
+        })
+        XCTAssertEqual(harness.journal.currentJournal, .emptyV1)
+    }
+
+    func testTakeoverAppliedMutationUsesCASAndNeverPublishesOverNewerJournalEntry() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        drainMainQueue(turns: 4)
+        let baseline = baselineStates(0x005B)[0x005B]!
+        let intended = baseline.changingDivert(to: true)
+
+        let preflight = harness.request(at: takeoverStart)
+        harness.respond(
+            to: preflight,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(baseline)
+        )
+        drainMainQueue(turns: 5)
+        let set = harness.request(at: takeoverStart + 1)
+        harness.respond(
+            to: set,
+            responseFeatureIndex: 0x2A,
+            parameters: ReprogControlsV4.setReportingParameters(cid: 0x005B, diverted: true)
+        )
+        drainMainQueue(turns: 4)
+
+        let newerOriginal = HIDPPReportingState(cid: 0x005B, flags: 0x04, remappedCID: 0x005B)
+        let newer = M720JournalCIDEntry(
+            cid: 0x005B,
+            original: newerOriginal,
+            intended: newerOriginal.changingDivert(to: true),
+            phase: .prepared
+        )
+        harness.journal.replaceEntryBeforeNextMutation = newer
+        let readback = harness.request(at: takeoverStart + 2)
+        harness.respond(
+            to: readback,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(intended)
+        )
+        drainMainQueue(turns: 5)
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart + 3,
+            initialStates: [0x005B: intended]
+        )
+
+        XCTAssertEqual(harness.session.state, .invalid(.protocol))
+        XCTAssertNotEqual(harness.session.state, .active)
+        XCTAssertEqual(harness.journal.currentJournal.devices.first?.controls, [newer])
+    }
+
+    func testVerificationCoalescesSlowChecksToOnePendingCycle() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B, 0x005D, 0x00D0)
+        )
+        let verificationStart = harness.transport.sent.count
+        harness.session.verifyOwnership()
+        harness.session.verifyOwnership()
+        harness.session.verifyOwnership()
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.transport.sent.count, verificationStart + 1)
+
+        let intended = divertedStates(0x005B)[0x005B]!
+        harness.respond(
+            to: harness.request(at: verificationStart),
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(intended)
+        )
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.transport.sent.count, verificationStart + 2)
+        harness.respond(
+            to: harness.request(at: verificationStart + 1),
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(intended)
+        )
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.transport.sent.count, verificationStart + 2)
+        XCTAssertEqual(harness.session.state, .active)
+    }
+
+    func testCompletedVerificationTimersAreReleasedAcrossRepeatedSequences() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B)
+        )
+        var responseIndex = harness.transport.sent.count
+        let intended = divertedStates(0x005B)[0x005B]!
+
+        for _ in 0..<12 {
+            harness.scheduler.advance(by: 2.01)
+            harness.session.knownOwnershipAgentDidLaunch()
+            drainMainQueue(turns: 5)
+            while responseIndex < harness.transport.sent.count {
+                let request = harness.request(at: responseIndex)
+                XCTAssertEqual(request.kind, .getCidReporting(0x005B))
+                harness.respond(
+                    to: request,
+                    responseFeatureIndex: 0x2A,
+                    parameters: harness.reportingParameters(intended)
+                )
+                responseIndex += 1
+                drainMainQueue(turns: 5)
+            }
+            XCTAssertLessThanOrEqual(harness.session.pendingVerificationTimerCount, 20)
+        }
+
+        harness.scheduler.advance(by: 11)
+        drainMainQueue(turns: 6)
+        while responseIndex < harness.transport.sent.count {
+            let request = harness.request(at: responseIndex)
+            harness.respond(
+                to: request,
+                responseFeatureIndex: 0x2A,
+                parameters: harness.reportingParameters(intended)
+            )
+            responseIndex += 1
+            drainMainQueue(turns: 5)
+        }
+        XCTAssertEqual(harness.session.pendingVerificationTimerCount, 0)
+        XCTAssertEqual(harness.session.state, .active)
+    }
+
+    func testKnownAgentAndForeignSetTriggersAreRateLimitedButForeignGetIsIgnored() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B, 0x005D, 0x00D0)
+        )
+        XCTAssertEqual(harness.scheduler.pendingDeadlines, [0, 0.25, 2, 10])
+
+        harness.session.knownOwnershipAgentDidLaunch()
+        drainMainQueue(turns: 3)
+        XCTAssertEqual(harness.scheduler.pendingDeadlines, [0, 0.25, 2, 10])
+
+        harness.scheduler.advance(to: 2.1)
+        drainMainQueue(turns: 4)
+        let deadlinesBeforeForeign = harness.scheduler.pendingDeadlines
+        harness.injectForeignResponse(
+            featureIndex: 0x2A,
+            function: ReprogControlsV4.Function.getCidReporting.rawValue
+        )
+        drainMainQueue(turns: 3)
+        XCTAssertEqual(harness.scheduler.pendingDeadlines, deadlinesBeforeForeign)
+
+        harness.injectForeignResponse(
+            featureIndex: 0x2A,
+            function: ReprogControlsV4.Function.setCidReporting.rawValue
+        )
+        drainMainQueue(turns: 3)
+        XCTAssertEqual(
+            harness.scheduler.pendingDeadlines.filter { $0 == 2.1 || $0 == 2.35 || $0 == 4.1 || $0 == 12.1 },
+            [2.1, 2.35, 4.1, 12.1]
+        )
+        let deadlinesAfterForeign = harness.scheduler.pendingDeadlines
+        harness.session.knownOwnershipAgentDidLaunch()
+        drainMainQueue(turns: 3)
+        XCTAssertEqual(harness.scheduler.pendingDeadlines, deadlinesAfterForeign)
+    }
+
+    func testWakeKeepsGateClosedUntilFullMatchingReadbackThenReopensIt() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B, 0x005D, 0x00D0)
+        )
+        var sleepCompletions = 0
+        harness.session.prepareForSleep { sleepCompletions += 1 }
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(sleepCompletions, 1)
+
+        harness.session.reconcileAfterWake()
+        drainMainQueue(turns: 3)
+        harness.scheduler.advance(to: harness.scheduler.now)
+        drainMainQueue(turns: 4)
+        let wakeReadback = harness.request(at: harness.transport.sent.count - 1)
+        XCTAssertEqual(wakeReadback.kind, .getCidReporting(0x005B))
+        harness.injectEvent(featureIndex: 0x2A, event: 0, cids: [0x005B])
+        drainMainQueue(turns: 4)
+        XCTAssertTrue(harness.sink.emissions.isEmpty)
+
+        harness.respond(
+            to: wakeReadback,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(divertedStates(0x005B)[0x005B]!)
+        )
+        drainMainQueue(turns: 5)
+        harness.injectEvent(featureIndex: 0x2A, event: 0, cids: [0x005B])
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.sink.emissions, [M720SinkEmission(button: 6, downNotUp: true)])
+    }
+
+    func testWakeResetToOriginalDurablyClearsThenFreshlyReacquiresOwnership() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B)
+        )
+        harness.session.prepareForSleep {}
+        drainMainQueue(turns: 5)
+        harness.trace.removeAll()
+
+        let wakeStart = harness.transport.sent.count
+        harness.session.reconcileAfterWake()
+        drainMainQueue(turns: 3)
+        harness.scheduler.advance(to: harness.scheduler.now)
+        drainMainQueue(turns: 5)
+        let wakeReadback = harness.request(at: wakeStart)
+        XCTAssertEqual(wakeReadback.kind, .getCidReporting(0x005B))
+        let original = baselineStates(0x005B)[0x005B]!
+        harness.respond(
+            to: wakeReadback,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(original)
+        )
+        driveTakeover(
+            harness,
+            startingAt: wakeStart + 1,
+            initialStates: [0x005B: original]
+        )
+
+        XCTAssertEqual(harness.session.state, .active)
+        XCTAssertEqual(harness.session.appliedCIDs, [0x005B])
+        let trace = harness.trace.events
+        guard let clear = trace.firstIndex(of: .journal(cid: 0x005B, phase: nil)),
+              let freshPreflight = trace.indices.first(where: {
+                  $0 > clear && trace[$0] == .request(.getCidReporting(0x005B))
+              }),
+              let prepared = trace.firstIndex(of: .journal(cid: 0x005B, phase: .prepared))
+        else {
+            XCTFail("missing durable clear/fresh-preflight trace: \(trace)")
+            return
+        }
+        XCTAssertLessThan(clear, freshPreflight)
+        XCTAssertLessThan(freshPreflight, prepared)
+        XCTAssertEqual(
+            harness.requestKinds[wakeStart...].filter {
+                $0 == .setCidReporting(0x005B, diverted: true)
+            }.count,
+            1
+        )
+    }
+
+    func testWakeThirdStateConflictsWithoutOverwritingExternalState() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B)
+        )
+        harness.session.prepareForSleep {}
+        drainMainQueue(turns: 5)
+
+        let wakeStart = harness.transport.sent.count
+        harness.session.reconcileAfterWake()
+        drainMainQueue(turns: 3)
+        harness.scheduler.advance(to: harness.scheduler.now)
+        drainMainQueue(turns: 5)
+        let third = HIDPPReportingState(cid: 0x005B, flags: 0x11, remappedCID: 0x4444)
+        harness.respond(
+            to: harness.request(at: wakeStart),
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(third)
+        )
+        driveTakeover(
+            harness,
+            startingAt: wakeStart + 1,
+            initialStates: [0x005B: third]
+        )
+
+        XCTAssertEqual(harness.session.state, .conflict)
+        XCTAssertFalse(harness.requestKinds[wakeStart...].contains {
+            if case .setCidReporting = $0 { return true }
+            return false
+        })
+        XCTAssertEqual(harness.journal.currentJournal.devices.first?.controls.map(\.cid), [0x005B])
+    }
+
+    func testSleepInvalidatesOldVerificationBeforeWakeAuthoritativeRead() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B)
+        )
+
+        let verificationStart = harness.transport.sent.count
+        harness.session.verifyOwnership()
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.transport.sent.count, verificationStart + 1)
+        let staleRead = harness.request(at: verificationStart)
+
+        harness.session.prepareForSleep {}
+        harness.session.reconcileAfterWake()
+        drainMainQueue(turns: 3)
+        harness.scheduler.advance(to: harness.scheduler.now)
+        drainMainQueue(turns: 6)
+
+        XCTAssertEqual(harness.transport.sent.count, verificationStart + 2)
+        XCTAssertEqual(harness.request(at: verificationStart + 1).kind, .getCidReporting(0x005B))
+        let third = HIDPPReportingState(cid: 0x005B, flags: 0x11, remappedCID: 0x7777)
+        harness.respond(
+            to: staleRead,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(third)
+        )
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.session.state, .active)
+    }
+
+    func testWakeReadbackAndSleepCancelMustBothCompleteBeforeGateReopens() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B)
+        )
+        harness.injectEvent(featureIndex: 0x2A, event: 0, cids: [0x005B])
+        drainMainQueue(turns: 5)
+        harness.sink.resetEmissions()
+        harness.sink.automaticallyCompletesCancels = false
+        var sleepCompletions = 0
+
+        harness.session.prepareForSleep { sleepCompletions += 1 }
+        harness.session.reconcileAfterWake()
+        drainMainQueue(turns: 3)
+        harness.scheduler.advance(to: harness.scheduler.now)
+        drainMainQueue(turns: 6)
+        let wakeReadback = harness.request(at: harness.transport.sent.count - 1)
+        XCTAssertEqual(wakeReadback.kind, .getCidReporting(0x005B))
+        harness.respond(
+            to: wakeReadback,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(divertedStates(0x005B)[0x005B]!)
+        )
+        drainMainQueue(turns: 5)
+
+        harness.injectEvent(featureIndex: 0x2A, event: 0, cids: [0x005B])
+        drainMainQueue(turns: 5)
+        XCTAssertTrue(harness.sink.emissions.isEmpty)
+        XCTAssertEqual(sleepCompletions, 0)
+
+        harness.sink.completeCancel(button: 6)
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(sleepCompletions, 1)
+        let finalWakeReadback = harness.request(at: harness.transport.sent.count - 1)
+        XCTAssertEqual(finalWakeReadback.kind, .getCidReporting(0x005B))
+        harness.respond(
+            to: finalWakeReadback,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(divertedStates(0x005B)[0x005B]!)
+        )
+        drainMainQueue(turns: 5)
+        harness.injectEvent(featureIndex: 0x2A, event: 0, cids: [0x005B])
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.sink.emissions, [M720SinkEmission(button: 6, downNotUp: true)])
+    }
+
+    func testDelayedSleepCancelForcesFinalWakeReadBeforeGateCanReopen() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B)
+        )
+        harness.injectEvent(featureIndex: 0x2A, event: 0, cids: [0x005B])
+        drainMainQueue(turns: 5)
+        harness.sink.resetEmissions()
+        harness.sink.automaticallyCompletesCancels = false
+        harness.session.prepareForSleep {}
+        let wakeSequenceStart = harness.scheduler.now
+        harness.session.reconcileAfterWake()
+        drainMainQueue(turns: 3)
+        harness.scheduler.advance(to: harness.scheduler.now)
+        drainMainQueue(turns: 5)
+        let firstWakeRead = harness.request(at: harness.transport.sent.count - 1)
+        harness.respond(
+            to: firstWakeRead,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(divertedStates(0x005B)[0x005B]!)
+        )
+        drainMainQueue(turns: 5)
+
+        for offset in [0.25, 2.0, 10.0] {
+            let sentBeforeCheck = harness.transport.sent.count
+            harness.scheduler.advance(to: wakeSequenceStart + offset)
+            drainMainQueue(turns: 5)
+            XCTAssertEqual(harness.transport.sent.count, sentBeforeCheck + 1)
+            guard harness.transport.sent.count > sentBeforeCheck else { return }
+            let followUp = harness.request(at: sentBeforeCheck)
+            XCTAssertEqual(followUp.kind, .getCidReporting(0x005B))
+            harness.respond(
+                to: followUp,
+                responseFeatureIndex: 0x2A,
+                parameters: harness.reportingParameters(divertedStates(0x005B)[0x005B]!)
+            )
+            drainMainQueue(turns: 5)
+        }
+        let finalReadStart = harness.transport.sent.count
+        harness.sink.completeCancel(button: 6)
+        drainMainQueue(turns: 6)
+
+        XCTAssertEqual(harness.transport.sent.count, finalReadStart + 1)
+        guard harness.transport.sent.count > finalReadStart else { return }
+        let finalWakeRead = harness.request(at: finalReadStart)
+        XCTAssertEqual(finalWakeRead.kind, .getCidReporting(0x005B))
+        harness.injectEvent(featureIndex: 0x2A, event: 0, cids: [0x005B])
+        drainMainQueue(turns: 5)
+        XCTAssertTrue(harness.sink.emissions.isEmpty)
+
+        let third = HIDPPReportingState(cid: 0x005B, flags: 0x11, remappedCID: 0x4444)
+        harness.respond(
+            to: finalWakeRead,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(third)
+        )
+        driveTakeover(
+            harness,
+            startingAt: finalReadStart + 1,
+            initialStates: [0x005B: third]
+        )
+        XCTAssertEqual(harness.session.state, .conflict)
+        XCTAssertTrue(harness.sink.emissions.isEmpty)
+    }
+
+    func testSleepRejectsVerificationTriggersAndCannotReopenGateBeforeWake() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B)
+        )
+        harness.session.prepareForSleep {}
+        drainMainQueue(turns: 5)
+        let sentAtSleep = harness.transport.sent.count
+
+        harness.session.verifyOwnership()
+        harness.session.knownOwnershipAgentDidLaunch()
+        drainMainQueue(turns: 5)
+        harness.scheduler.advance(by: 20)
+        drainMainQueue(turns: 5)
+
+        XCTAssertEqual(harness.transport.sent.count, sentAtSleep)
+        if harness.transport.sent.count > sentAtSleep {
+            harness.respond(
+                to: harness.request(at: sentAtSleep),
+                responseFeatureIndex: 0x2A,
+                parameters: harness.reportingParameters(divertedStates(0x005B)[0x005B]!)
+            )
+            drainMainQueue(turns: 5)
+        }
+        harness.injectEvent(featureIndex: 0x2A, event: 0, cids: [0x005B])
+        drainMainQueue(turns: 5)
+        XCTAssertTrue(harness.sink.emissions.isEmpty)
+    }
+
+    func testSleepDefersPolicyIOUntilWakeThenReconcilesLatestPolicy() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B)
+        )
+        harness.session.prepareForSleep {}
+        drainMainQueue(turns: 5)
+        let sentAtSleep = harness.transport.sent.count
+
+        harness.session.setRequiredCIDs([])
+        drainMainQueue(turns: 6)
+
+        XCTAssertEqual(harness.session.state, .active)
+        XCTAssertEqual(harness.transport.sent.count, sentAtSleep)
+        harness.session.reconcileAfterWake()
+        driveTakeover(
+            harness,
+            startingAt: sentAtSleep,
+            initialStates: divertedStates(0x005B)
+        )
+        XCTAssertEqual(harness.session.state, .nativeReady)
+        XCTAssertEqual(harness.session.appliedCIDs, [])
+        XCTAssertEqual(harness.journal.currentJournal, .emptyV1)
+    }
+
+    func testWakeReconcilesChangedNonemptyPolicyInsteadOfVerifyingOldAppliedSet() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B, 0x005D)
+        )
+        harness.session.prepareForSleep {}
+        drainMainQueue(turns: 5)
+        let sentAtSleep = harness.transport.sent.count
+
+        harness.session.setRequiredCIDs([0x005D])
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.transport.sent.count, sentAtSleep)
+        XCTAssertEqual(harness.session.appliedCIDs, [0x005B])
+
+        harness.session.reconcileAfterWake()
+        driveTakeover(
+            harness,
+            startingAt: sentAtSleep,
+            initialStates: [
+                0x005B: divertedStates(0x005B)[0x005B]!,
+                0x005D: baselineStates(0x005D)[0x005D]!,
+            ]
+        )
+        XCTAssertEqual(harness.session.state, .active)
+        XCTAssertEqual(harness.session.appliedCIDs, [0x005D])
+        XCTAssertEqual(harness.request(at: sentAtSleep).kind, .getCidReporting(0x005B))
+    }
+
+    func testRepeatedWakeNotificationDoesNotRestartVerificationSequence() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B)
+        )
+        harness.session.prepareForSleep {}
+        drainMainQueue(turns: 5)
+
+        harness.session.reconcileAfterWake()
+        drainMainQueue(turns: 3)
+        harness.scheduler.advance(to: harness.scheduler.now)
+        drainMainQueue(turns: 4)
+        let firstWakeRead = harness.request(at: harness.transport.sent.count - 1)
+        harness.respond(
+            to: firstWakeRead,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(divertedStates(0x005B)[0x005B]!)
+        )
+        drainMainQueue(turns: 5)
+        let sentAfterFirstWake = harness.transport.sent.count
+
+        harness.session.reconcileAfterWake()
+        drainMainQueue(turns: 3)
+        harness.scheduler.advance(to: harness.scheduler.now)
+        drainMainQueue(turns: 5)
+
+        XCTAssertEqual(harness.transport.sent.count, sentAfterFirstWake)
+    }
+
+    func testPolicyChangeDuringWakeReadSupersedesStaleVerificationAndReconciles() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B, 0x005D)
+        )
+        harness.session.prepareForSleep {}
+        drainMainQueue(turns: 5)
+
+        let wakeStart = harness.transport.sent.count
+        harness.session.reconcileAfterWake()
+        drainMainQueue(turns: 3)
+        harness.scheduler.advance(to: harness.scheduler.now)
+        drainMainQueue(turns: 5)
+        let staleWakeRead = harness.request(at: wakeStart)
+
+        harness.session.setRequiredCIDs([0x005D])
+        drainMainQueue(turns: 6)
+        XCTAssertEqual(harness.transport.sent.count, wakeStart + 2)
+        XCTAssertEqual(harness.request(at: wakeStart + 1).kind, .getCidReporting(0x005B))
+        harness.respond(
+            to: staleWakeRead,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(divertedStates(0x005B)[0x005B]!)
+        )
+        driveTakeover(
+            harness,
+            startingAt: wakeStart + 1,
+            initialStates: [
+                0x005B: divertedStates(0x005B)[0x005B]!,
+                0x005D: baselineStates(0x005D)[0x005D]!,
+            ]
+        )
+        XCTAssertEqual(harness.session.state, .active)
+        XCTAssertEqual(harness.session.appliedCIDs, [0x005D])
+    }
+
+    func testSecondSleepSupersedesWakeReadAndRequiresASecondWakeCycle() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B)
+        )
+        harness.session.prepareForSleep {}
+        drainMainQueue(turns: 5)
+        harness.session.reconcileAfterWake()
+        drainMainQueue(turns: 3)
+        harness.scheduler.advance(to: harness.scheduler.now)
+        drainMainQueue(turns: 5)
+        let firstWakeRead = harness.request(at: harness.transport.sent.count - 1)
+        let sentAtSecondSleep = harness.transport.sent.count
+
+        var secondSleepCompletions = 0
+        harness.session.prepareForSleep { secondSleepCompletions += 1 }
+        drainMainQueue(turns: 6)
+        XCTAssertEqual(secondSleepCompletions, 1)
+        harness.respond(
+            to: firstWakeRead,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(divertedStates(0x005B)[0x005B]!)
+        )
+        drainMainQueue(turns: 5)
+        harness.injectEvent(featureIndex: 0x2A, event: 0, cids: [0x005B])
+        drainMainQueue(turns: 5)
+        XCTAssertTrue(harness.sink.emissions.isEmpty)
+
+        harness.session.reconcileAfterWake()
+        drainMainQueue(turns: 3)
+        harness.scheduler.advance(to: harness.scheduler.now)
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.transport.sent.count, sentAtSecondSleep + 1)
+        XCTAssertEqual(
+            harness.request(at: sentAtSecondSleep).kind,
+            .getCidReporting(0x005B)
+        )
+    }
+
+    func testWakeMatchCannotReopenGateAfterPolicySupersedesHeldCancel() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B)
+        )
+        harness.injectEvent(featureIndex: 0x2A, event: 0, cids: [0x005B])
+        drainMainQueue(turns: 5)
+        harness.sink.resetEmissions()
+        harness.sink.automaticallyCompletesCancels = false
+        harness.session.prepareForSleep {}
+        harness.session.reconcileAfterWake()
+        drainMainQueue(turns: 3)
+        harness.scheduler.advance(to: harness.scheduler.now)
+        drainMainQueue(turns: 5)
+        let wakeRead = harness.request(at: harness.transport.sent.count - 1)
+        harness.respond(
+            to: wakeRead,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(divertedStates(0x005B)[0x005B]!)
+        )
+        drainMainQueue(turns: 5)
+        let rollbackStart = harness.transport.sent.count
+
+        harness.session.setRequiredCIDs([])
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.session.state, .restoring)
+        harness.sink.completeCancel(button: 6)
+        drainMainQueue(turns: 5)
+        harness.injectEvent(featureIndex: 0x2A, event: 0, cids: [0x005B])
+        drainMainQueue(turns: 5)
+        XCTAssertTrue(harness.sink.emissions.isEmpty)
+        driveTakeover(
+            harness,
+            startingAt: rollbackStart,
+            initialStates: divertedStates(0x005B)
+        )
+        XCTAssertEqual(harness.session.state, .nativeReady)
+    }
+
+    func testInitialOwnershipAgentScanRunsOnlyOnFirstActiveEpoch() {
+        let harness = M720SessionHarness(initialOwnershipAgentIsRunning: true)
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        var nextRequest = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: nextRequest,
+            initialStates: baselineStates(0x005B, 0x005D, 0x00D0)
+        )
+        XCTAssertEqual(harness.ownershipAgentProbe.scanCount, 1)
+
+        nextRequest = harness.transport.sent.count
+        harness.session.setRequiredCIDs([])
+        driveTakeover(
+            harness,
+            startingAt: nextRequest,
+            initialStates: divertedStates(0x005B)
+        )
+        nextRequest = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: nextRequest,
+            initialStates: baselineStates(0x005B, 0x005D, 0x00D0)
+        )
+        XCTAssertEqual(harness.session.state, .active)
+        XCTAssertEqual(harness.ownershipAgentProbe.scanCount, 1)
+    }
+
+    func testQuarantinedJournalAutomaticPathIsReadOnlyForEmptyAndNonemptyPolicy() {
+        for required in [Set<UInt16>(), Set([UInt16(0x005B)])] {
+            let harness = M720SessionHarness(
+                reloadResult: .failure(M720JournalStoreError.corruptFileQuarantined)
+            )
+            harness.session.setRequiredCIDs(required)
+            harness.session.start()
+            driveDiscovery(harness, rows: referenceRows)
+
+            XCTAssertEqual(
+                harness.session.state,
+                required.isEmpty ? .nativeReady : .conflict,
+                "required=\(required)"
+            )
+            XCTAssertEqual(harness.journal.mutationCallCount, 0)
+            XCTAssertEqual(harness.journal.acknowledgementCallCount, 0)
+            assertNoSet(harness)
+        }
+    }
+
+    func testExplicitRetryAcceptsOnlyAllThreeNondivertedAndPublishesCorrelatedResult() {
+        for retryCanAccept in [false, true] {
+            let harness = M720SessionHarness()
+            harness.session.setRequiredCIDs([0x005B])
+            harness.session.start()
+            let unknown = HIDPPReportingState(cid: 0x005B, flags: 0x11, remappedCID: 0x5555)
+            driveDiscovery(
+                harness,
+                rows: referenceRows,
+                reportingOverrides: [0x005B: unknown]
+            )
+            XCTAssertEqual(harness.session.state, .conflict)
+            let retryStart = harness.transport.sent.count
+            let requestID = UUID()
+            var retryResults: [(UUID?, M720SessionState)] = []
+            harness.session.onRetryResult = { retryResults.append(($0, $1)) }
+
+            harness.session.retryAfterConflict(requestID: requestID)
+            drainMainQueue(turns: 5)
+            var retryStates = baselineStates(0x005B, 0x005D, 0x00D0)
+            if !retryCanAccept {
+                retryStates[0x00D0] = HIDPPReportingState(
+                    cid: 0x00D0,
+                    flags: 0x11,
+                    remappedCID: 0x6666
+                )
+            }
+            driveExplicitRetryBaseline(
+                harness,
+                startingAt: retryStart,
+                states: retryStates
+            )
+            XCTAssertEqual(
+                Array(harness.requestKinds[retryStart..<min(
+                    harness.requestKinds.count,
+                    retryStart + M720Profile.cidToButton.count
+                )]),
+                M720Profile.cidToButton.keys.sorted().map(M720TestRequestKind.getCidReporting)
+            )
+            if retryCanAccept {
+                let takeoverStart = retryStart + M720Profile.cidToButton.count
+                driveTakeover(
+                    harness,
+                    startingAt: takeoverStart,
+                    initialStates: retryStates
+                )
+            }
+
+            XCTAssertEqual(
+                harness.session.state,
+                retryCanAccept ? .active : .conflict,
+                "accept=\(retryCanAccept)"
+            )
+            XCTAssertEqual(retryResults.count, 1, "accept=\(retryCanAccept)")
+            XCTAssertEqual(retryResults.first?.0, requestID, "accept=\(retryCanAccept)")
+            XCTAssertEqual(
+                retryResults.first?.1,
+                retryCanAccept ? .active : .conflict,
+                "accept=\(retryCanAccept)"
+            )
+            if !retryCanAccept {
+                XCTAssertFalse(
+                    harness.requestKinds[retryStart...].contains { kind in
+                        if case .setCidReporting = kind { return true }
+                        return false
+                    }
+                )
+            }
+        }
+    }
+
+    func testQuarantinedJournalRetryAcknowledgesOnlyAfterCleanThreeCIDBaseline() {
+        let harness = M720SessionHarness(
+            reloadResult: .failure(M720JournalStoreError.quarantined)
+        )
+        harness.session.setRequiredCIDs([0x005B])
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        XCTAssertEqual(harness.session.state, .conflict)
+        XCTAssertEqual(harness.journal.acknowledgementCallCount, 0)
+
+        let retryStart = harness.transport.sent.count
+        harness.session.retryAfterConflict(requestID: UUID())
+        let clean = baselineStates(0x005B, 0x005D, 0x00D0)
+        driveExplicitRetryBaseline(harness, startingAt: retryStart, states: clean)
+        let takeoverStart = retryStart + M720Profile.cidToButton.count
+        driveTakeover(harness, startingAt: takeoverStart, initialStates: clean)
+
+        XCTAssertEqual(harness.journal.acknowledgementCallCount, 1)
+        XCTAssertEqual(harness.session.state, .active)
+    }
+
+    func testConcurrentQuarantineRetriesPreserveFirstSessionsJournalMutation() {
+        let sharedTrace = M720SessionTraceRecorder()
+        let sharedJournal = M720SessionJournalCoordinator(
+            trace: sharedTrace,
+            initialJournal: .emptyV1,
+            reloadResult: .failure(M720JournalStoreError.quarantined),
+            holdsReload: false
+        )
+        let keyA = M720SessionHarness.defaultDeviceKey
+        let keyB = M720DeviceKey(
+            vendorID: M720Profile.vendorID,
+            productID: M720Profile.bluetoothLEProductID,
+            transport: M720Profile.bluetoothLETransport,
+            serialNumber: "quarantine-session-b"
+        )
+        let sessionA = M720SessionHarness(
+            deviceKey: keyA,
+            journalCoordinator: sharedJournal
+        )
+        let sessionB = M720SessionHarness(
+            deviceKey: keyB,
+            journalCoordinator: sharedJournal
+        )
+        for harness in [sessionA, sessionB] {
+            harness.session.setRequiredCIDs([0x005B])
+            harness.session.start()
+            driveDiscovery(harness, rows: referenceRows)
+            XCTAssertEqual(harness.session.state, .conflict)
+        }
+
+        let clean = baselineStates(0x005B, 0x005D, 0x00D0)
+        let retryA = sessionA.transport.sent.count
+        sessionA.session.retryAfterConflict(requestID: UUID())
+        driveExplicitRetryBaseline(sessionA, startingAt: retryA, states: clean)
+        driveTakeover(
+            sessionA,
+            startingAt: retryA + M720Profile.cidToButton.count,
+            initialStates: clean
+        )
+        XCTAssertEqual(sessionA.session.state, .active)
+
+        let retryB = sessionB.transport.sent.count
+        sessionB.session.retryAfterConflict(requestID: UUID())
+        driveExplicitRetryBaseline(sessionB, startingAt: retryB, states: clean)
+        driveTakeover(
+            sessionB,
+            startingAt: retryB + M720Profile.cidToButton.count,
+            initialStates: clean
+        )
+
+        XCTAssertEqual(sharedJournal.acknowledgementCallCount, 2)
+        XCTAssertEqual(sharedJournal.removeDeviceCallCount, 1)
+        XCTAssertEqual(sessionB.session.state, .active)
+        XCTAssertEqual(
+            Set(sharedJournal.currentJournal.devices.map(\.key)),
+            [keyA, keyB]
+        )
+        XCTAssertEqual(
+            sharedJournal.currentJournal.devices.first { $0.key == keyA }?.controls,
+            [journalEntry(cid: 0x005B)]
+        )
+        XCTAssertEqual(
+            sharedJournal.currentJournal.devices.first { $0.key == keyB }?.controls,
+            [journalEntry(cid: 0x005B)]
+        )
+    }
+
+    func testConcurrentQuarantineRetryExpectedNilCASRejectsNewerMatchingDevice() {
+        let sharedTrace = M720SessionTraceRecorder()
+        let sharedJournal = M720SessionJournalCoordinator(
+            trace: sharedTrace,
+            initialJournal: .emptyV1,
+            reloadResult: .failure(M720JournalStoreError.quarantined),
+            holdsReload: false
+        )
+        let keyA = M720SessionHarness.defaultDeviceKey
+        let keyB = M720DeviceKey(
+            vendorID: M720Profile.vendorID,
+            productID: M720Profile.bluetoothLEProductID,
+            transport: M720Profile.bluetoothLETransport,
+            serialNumber: "quarantine-session-b-cas"
+        )
+        let sessionA = M720SessionHarness(
+            deviceKey: keyA,
+            journalCoordinator: sharedJournal
+        )
+        let sessionB = M720SessionHarness(
+            deviceKey: keyB,
+            journalCoordinator: sharedJournal
+        )
+        for harness in [sessionA, sessionB] {
+            harness.session.setRequiredCIDs([0x005B])
+            harness.session.start()
+            driveDiscovery(harness, rows: referenceRows)
+            XCTAssertEqual(harness.session.state, .conflict)
+        }
+
+        let clean = baselineStates(0x005B, 0x005D, 0x00D0)
+        let retryA = sessionA.transport.sent.count
+        sessionA.session.retryAfterConflict(requestID: UUID())
+        driveExplicitRetryBaseline(sessionA, startingAt: retryA, states: clean)
+        driveTakeover(
+            sessionA,
+            startingAt: retryA + M720Profile.cidToButton.count,
+            initialStates: clean
+        )
+        XCTAssertEqual(sessionA.session.state, .active)
+
+        let newerB = M720JournalDevice(
+            key: keyB,
+            controls: [journalEntry(cid: 0x005D)]
+        )
+        sharedJournal.replaceDeviceBeforeNextRemove = newerB
+        let retryB = sessionB.transport.sent.count
+        sessionB.session.retryAfterConflict(requestID: UUID())
+        driveExplicitRetryBaseline(sessionB, startingAt: retryB, states: clean)
+
+        XCTAssertEqual(sessionB.session.state, .invalid(.protocol))
+        XCTAssertEqual(sharedJournal.removeDeviceCallCount, 1)
+        XCTAssertEqual(
+            sharedJournal.currentJournal.devices.first { $0.key == keyA }?.controls,
+            [journalEntry(cid: 0x005B)]
+        )
+        XCTAssertEqual(
+            sharedJournal.currentJournal.devices.first { $0.key == keyB },
+            newerB
+        )
+        XCTAssertFalse(sessionB.requestKinds[retryB...].contains {
+            if case .setCidReporting = $0 { return true }
+            return false
+        })
+    }
+
+    func testQuarantineAcknowledgementUncertainAfterPersistRecoversCurrentRetry() {
+        let harness = M720SessionHarness(
+            reloadResult: .failure(M720JournalStoreError.quarantined)
+        )
+        harness.session.setRequiredCIDs([0x005B])
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        XCTAssertEqual(harness.session.state, .conflict)
+        harness.journal.acknowledgementError = M720JournalStoreError.uncertain
+        harness.journal.acknowledgementFailurePersistsChange = true
+        let requestID = UUID()
+        var results: [(UUID?, M720SessionState)] = []
+        harness.session.onRetryResult = { results.append(($0, $1)) }
+
+        let retryStart = harness.transport.sent.count
+        harness.session.retryAfterConflict(requestID: requestID)
+        let clean = baselineStates(0x005B, 0x005D, 0x00D0)
+        driveExplicitRetryBaseline(harness, startingAt: retryStart, states: clean)
+        driveTakeover(
+            harness,
+            startingAt: retryStart + M720Profile.cidToButton.count,
+            initialStates: clean
+        )
+
+        XCTAssertEqual(harness.journal.acknowledgementCallCount, 1)
+        XCTAssertEqual(harness.journal.removeDeviceCallCount, 1)
+        XCTAssertEqual(harness.session.state, .active)
+        XCTAssertEqual(results.map(\.0), [requestID])
+        XCTAssertEqual(results.map(\.1), [.active])
+    }
+
+    func testRetryAfterTransientInitialReloadFailureRebuildsBarrierAndIgnoresOldCallback() {
+        let harness = M720SessionHarness(
+            reloadResult: .failure(M720InjectedError.mutation)
+        )
+        harness.session.setRequiredCIDs([0x005B])
+        harness.session.start()
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.session.state, .invalid(.protocol))
+        XCTAssertTrue(harness.transport.sent.isEmpty)
+
+        harness.journal.reloadResult = .success(.emptyV1)
+        harness.session.retryAfterConflict(requestID: UUID())
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(
+            harness.trace.events.filter { $0 == .reloadBegin }.count,
+            2
+        )
+        XCTAssertEqual(harness.request(at: 0).kind, .rootGetFeature)
+        let requestsBeforeStaleCallback = harness.transport.sent.count
+
+        harness.journal.replayReloadCompletion(at: 0)
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.session.state, .discovering)
+        XCTAssertEqual(harness.transport.sent.count, requestsBeforeStaleCallback)
+
+        let clean = baselineStates(0x005B, 0x005D, 0x00D0)
+        driveDiscovery(
+            harness,
+            rows: referenceRows,
+            reportingOverrides: clean,
+            stopAfterDiscoverySnapshots: true,
+            featureIndex: 0x2B
+        )
+        let takeoverStart = 2 + referenceRows.count + M720Profile.cidToButton.count
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: clean,
+            responseFeatureIndex: 0x2B
+        )
+        XCTAssertEqual(harness.session.state, .active)
+    }
+
+    func testRetryAfterDiscoveryInvalidFullyRediscoversAndIgnoresOldWireReply() {
+        let harness = M720SessionHarness()
+        harness.session.setRequiredCIDs([0x005B])
+        harness.session.start()
+        drainMainQueue(turns: 5)
+        let staleRoot = harness.request(at: 0)
+        harness.respond(
+            to: staleRoot,
+            responseFeatureIndex: 0,
+            parameters: [0, 0, 4]
+        )
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.session.state, .invalid(.unsupported))
+        let retryStart = harness.transport.sent.count
+        let requestID = UUID()
+        var retryResults: [(UUID?, M720SessionState)] = []
+        harness.session.onRetryResult = { retryResults.append(($0, $1)) }
+
+        harness.session.retryAfterConflict(requestID: requestID)
+        drainMainQueue(turns: 5)
+        XCTAssertGreaterThan(harness.transport.sent.count, retryStart)
+        guard harness.transport.sent.count > retryStart else { return }
+        XCTAssertEqual(harness.request(at: retryStart).kind, .rootGetFeature)
+        harness.respond(
+            to: staleRoot,
+            responseFeatureIndex: 0,
+            parameters: [0x55, 0, 4]
+        )
+        drainMainQueue(turns: 4)
+        XCTAssertEqual(harness.transport.sent.count, retryStart + 1)
+
+        let clean = baselineStates(0x005B, 0x005D, 0x00D0)
+        driveDiscovery(
+            harness,
+            rows: referenceRows,
+            reportingOverrides: clean,
+            startingAt: retryStart,
+            stopAfterDiscoverySnapshots: true,
+            featureIndex: 0x2B
+        )
+        let takeoverStart = retryStart + 2 + referenceRows.count + M720Profile.cidToButton.count
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: clean,
+            responseFeatureIndex: 0x2B
+        )
+
+        XCTAssertEqual(harness.session.state, .active)
+        XCTAssertEqual(retryResults.count, 1)
+        XCTAssertEqual(retryResults.first?.0, requestID)
+        XCTAssertEqual(retryResults.first?.1, .active)
+        XCTAssertEqual(
+            Set(harness.semanticRequests[retryStart...].dropFirst().map(\.featureIndex)),
+            [0x2B]
+        )
+    }
+
+    func testRetryAfterDiscoveryFailureRecoversValidMatchingJournalBeforeCleanBaselineRule() {
+        let applied = journalEntry(cid: 0x005B)
+        let initialJournal = M720OwnershipJournal(
+            version: M720OwnershipJournal.currentVersion,
+            devices: [M720JournalDevice(
+                key: M720SessionHarness.defaultDeviceKey,
+                controls: [applied]
+            )]
+        )
+        let harness = M720SessionHarness(initialJournal: initialJournal)
+        harness.session.setRequiredCIDs([0x005B])
+        harness.session.start()
+        drainMainQueue(turns: 5)
+        let staleRoot = harness.request(at: 0)
+        harness.respondWithDeviceError(to: staleRoot, code: 0x01)
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.session.state, .invalid(.protocol))
+
+        let retryStart = harness.transport.sent.count
+        let requestID = UUID()
+        var results: [(UUID?, M720SessionState)] = []
+        harness.session.onRetryResult = { results.append(($0, $1)) }
+        harness.session.retryAfterConflict(requestID: requestID)
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.request(at: retryStart).kind, .rootGetFeature)
+        let requestsBeforeStaleReply = harness.transport.sent.count
+        harness.respond(
+            to: staleRoot,
+            responseFeatureIndex: 0,
+            parameters: [0x55, 0, 4]
+        )
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.transport.sent.count, requestsBeforeStaleReply)
+
+        var discoveryStates = baselineStates(0x005B, 0x005D, 0x00D0)
+        discoveryStates[0x005B] = applied.intended
+        driveDiscovery(
+            harness,
+            rows: referenceRows,
+            reportingOverrides: discoveryStates,
+            startingAt: retryStart,
+            stopAfterDiscoverySnapshots: true,
+            featureIndex: 0x2B
+        )
+
+        let recoveryReadIndex = retryStart + 2 + referenceRows.count +
+            M720Profile.cidToButton.count
+        XCTAssertEqual(harness.session.state, .discovering)
+        guard harness.transport.sent.indices.contains(recoveryReadIndex) else {
+            XCTFail("matching journal must start ordinary recovery before retry acceptance")
+            return
+        }
+        let recoveryRead = harness.request(at: recoveryReadIndex)
+        XCTAssertEqual(recoveryRead.kind, .getCidReporting(0x005B))
+        harness.respond(
+            to: recoveryRead,
+            responseFeatureIndex: 0x2B,
+            parameters: harness.reportingParameters(applied.intended)
+        )
+        drainMainQueue(turns: 8)
+
+        XCTAssertEqual(harness.session.state, .active)
+        XCTAssertEqual(harness.session.appliedCIDs, [0x005B])
+        XCTAssertEqual(results.map(\.0), [requestID])
+        XCTAssertEqual(results.map(\.1), [.active])
+        XCTAssertEqual(harness.journal.currentJournal, initialJournal)
+        XCTAssertFalse(harness.requestKinds[retryStart...].contains {
+            if case .setCidReporting = $0 { return true }
+            return false
+        })
+    }
+
+    func testConflictRetryFailureKeepsCleanBaselineGateAcrossFullRediscovery() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        var requestIndex = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: requestIndex,
+            initialStates: baselineStates(0x005B)
+        )
+        XCTAssertEqual(harness.session.state, .active)
+
+        requestIndex = harness.transport.sent.count
+        harness.session.verifyOwnership()
+        drainMainQueue(turns: 5)
+        let external = HIDPPReportingState(
+            cid: 0x005B,
+            flags: 0x11,
+            remappedCID: 0x4444
+        )
+        driveTakeover(
+            harness,
+            startingAt: requestIndex,
+            initialStates: [0x005B: external]
+        )
+        XCTAssertEqual(harness.session.state, .conflict)
+        let journalAtConflict = harness.journal.currentJournal
+
+        var results: [(UUID?, M720SessionState)] = []
+        harness.session.onRetryResult = { results.append(($0, $1)) }
+        let failedRetryID = UUID()
+        let failedRetryStart = harness.transport.sent.count
+        harness.session.retryAfterConflict(requestID: failedRetryID)
+        drainMainQueue(turns: 5)
+        let failedBaselineRead = harness.request(at: failedRetryStart)
+        XCTAssertEqual(failedBaselineRead.kind, .getCidReporting(0x005B))
+        harness.respondWithDeviceError(to: failedBaselineRead, code: 0x01)
+        drainMainQueue(turns: 6)
+        XCTAssertEqual(harness.session.state, .invalid(.protocol))
+
+        let dirtyRetryID = UUID()
+        let dirtyRetryStart = harness.transport.sent.count
+        harness.session.retryAfterConflict(requestID: dirtyRetryID)
+        var dirty = baselineStates(0x005B, 0x005D, 0x00D0)
+        dirty[0x005D] = divertedStates(0x005D)[0x005D]!
+        driveDiscovery(
+            harness,
+            rows: referenceRows,
+            reportingOverrides: dirty,
+            startingAt: dirtyRetryStart,
+            stopAfterDiscoverySnapshots: true,
+            featureIndex: 0x2B
+        )
+
+        XCTAssertEqual(harness.session.state, .conflict)
+        XCTAssertEqual(harness.journal.currentJournal, journalAtConflict)
+        XCTAssertEqual(results.map(\.0), [failedRetryID, dirtyRetryID])
+        XCTAssertEqual(
+            results.map(\.1),
+            [.invalid(.protocol), .conflict]
+        )
+        XCTAssertFalse(harness.requestKinds[dirtyRetryStart...].contains {
+            if case .setCidReporting = $0 { return true }
+            return false
+        })
+        guard harness.session.state == .conflict else { return }
+
+        let cleanRetryID = UUID()
+        let cleanRetryStart = harness.transport.sent.count
+        harness.session.retryAfterConflict(requestID: cleanRetryID)
+        let clean = baselineStates(0x005B, 0x005D, 0x00D0)
+        driveExplicitRetryBaseline(
+            harness,
+            startingAt: cleanRetryStart,
+            states: clean,
+            featureIndex: 0x2B
+        )
+        driveTakeover(
+            harness,
+            startingAt: cleanRetryStart + M720Profile.cidToButton.count,
+            initialStates: clean,
+            responseFeatureIndex: 0x2B
+        )
+
+        XCTAssertEqual(harness.journal.removeDeviceCallCount, 1)
+        XCTAssertEqual(harness.session.state, .active)
+        XCTAssertEqual(results.map(\.0), [failedRetryID, dirtyRetryID, cleanRetryID])
+        XCTAssertEqual(
+            results.map(\.1),
+            [.invalid(.protocol), .conflict, .active]
+        )
+    }
+
+    func testRetryAfterCachedFeatureDiscoveryFailureAlwaysRestartsFromRoot() {
+        let boundaries: [M720TestRequestKind] = [
+            .getCount,
+            .getCidInfo(0),
+            .getCidReporting(0x005B),
+        ]
+        for boundary in boundaries {
+            let harness = M720SessionHarness()
+            harness.session.setRequiredCIDs([0x005B])
+            harness.session.start()
+            driveDiscovery(harness, rows: referenceRows, until: boundary)
+            let failed = harness.request(at: harness.transport.sent.count - 1)
+            XCTAssertEqual(failed.kind, boundary)
+            harness.respondWithDeviceError(to: failed, code: 0x01)
+            drainMainQueue(turns: 6)
+            XCTAssertEqual(harness.session.state, .invalid(.protocol), "\(boundary)")
+
+            let retryStart = harness.transport.sent.count
+            harness.session.retryAfterConflict(requestID: UUID())
+            drainMainQueue(turns: 5)
+            let newRoot = harness.request(at: retryStart)
+            XCTAssertEqual(newRoot.kind, .rootGetFeature, "\(boundary)")
+            harness.respond(
+                to: newRoot,
+                responseFeatureIndex: 0,
+                parameters: [0x2B, 0, 4]
+            )
+            drainMainQueue(turns: 5)
+            let newCount = harness.request(at: retryStart + 1)
+            XCTAssertEqual(newCount.kind, .getCount, "\(boundary)")
+            let sentBeforeOldFeatureReply = harness.transport.sent.count
+            harness.injectForeignResponse(
+                featureIndex: 0x2A,
+                function: ReprogControlsV4.Function.getCount.rawValue,
+                softwareID: newCount.identityByte & 0x0F
+            )
+            drainMainQueue(turns: 5)
+            XCTAssertEqual(
+                harness.transport.sent.count,
+                sentBeforeOldFeatureReply,
+                "\(boundary)"
+            )
+
+            let clean = baselineStates(0x005B, 0x005D, 0x00D0)
+            driveDiscovery(
+                harness,
+                rows: referenceRows,
+                reportingOverrides: clean,
+                startingAt: retryStart,
+                stopAfterDiscoverySnapshots: true,
+                featureIndex: 0x2B
+            )
+            let takeoverStart = retryStart + 2 + referenceRows.count +
+                M720Profile.cidToButton.count
+            driveTakeover(
+                harness,
+                startingAt: takeoverStart,
+                initialStates: clean,
+                responseFeatureIndex: 0x2B
+            )
+            XCTAssertEqual(harness.session.state, .active, "\(boundary)")
+        }
+    }
+
+    func testRetryAtomicallyClearsOnlyMatchingJournalDevice() {
+        let matching = journalEntry(cid: 0x005B)
+        let otherKey = M720DeviceKey(
+            vendorID: M720Profile.vendorID,
+            productID: M720Profile.bluetoothLEProductID,
+            transport: M720Profile.bluetoothLETransport,
+            serialNumber: "other-retry-device"
+        )
+        let otherDevice = M720JournalDevice(
+            key: otherKey,
+            controls: [journalEntry(cid: 0x005D)]
+        )
+        let initial = M720OwnershipJournal(
+            version: M720OwnershipJournal.currentVersion,
+            devices: [
+                M720JournalDevice(
+                    key: M720SessionHarness.defaultDeviceKey,
+                    controls: [matching]
+                ),
+                otherDevice,
+            ]
+        )
+        let harness = M720SessionHarness(initialJournal: initial)
+        harness.session.setRequiredCIDs([0x005B])
+        harness.session.start()
+        let third = HIDPPReportingState(cid: 0x005B, flags: 0x11, remappedCID: 0x7777)
+        driveDiscovery(
+            harness,
+            rows: referenceRows,
+            reportingOverrides: [0x005B: third]
+        )
+        XCTAssertEqual(harness.session.state, .conflict)
+
+        let retryStart = harness.transport.sent.count
+        harness.session.retryAfterConflict(requestID: UUID())
+        let clean = baselineStates(0x005B, 0x005D, 0x00D0)
+        driveExplicitRetryBaseline(harness, startingAt: retryStart, states: clean)
+
+        XCTAssertEqual(harness.journal.removeDeviceCallCount, 1)
+        XCTAssertEqual(harness.journal.currentJournal.devices, [otherDevice])
+        let takeoverStart = retryStart + M720Profile.cidToButton.count
+        driveTakeover(harness, startingAt: takeoverStart, initialStates: clean)
+        XCTAssertEqual(harness.session.state, .active)
+        XCTAssertEqual(
+            harness.journal.currentJournal.devices.first(where: { $0.key == otherKey }),
+            otherDevice
+        )
+    }
+
+    func testRetryAtomicJournalClearFailureNeverStartsTakeover() {
+        let failures: [(String, Error)] = [
+            ("ordinary", M720InjectedError.mutation),
+            ("uncertain", M720JournalStoreError.uncertain),
+        ]
+        for (name, error) in failures {
+            let harness = conflictedHarness()
+            harness.journal.removeDeviceError = error
+            let retryStart = harness.transport.sent.count
+            let requestID = UUID()
+            var results: [(UUID?, M720SessionState)] = []
+            harness.session.onRetryResult = { results.append(($0, $1)) }
+
+            harness.session.retryAfterConflict(requestID: requestID)
+            driveExplicitRetryBaseline(
+                harness,
+                startingAt: retryStart,
+                states: baselineStates(0x005B, 0x005D, 0x00D0)
+            )
+
+            XCTAssertEqual(harness.session.state, .invalid(.protocol), name)
+            XCTAssertEqual(harness.journal.removeDeviceCallCount, 1, name)
+            XCTAssertEqual(harness.journal.mutationCallCount, 0, name)
+            XCTAssertEqual(results.count, 1, name)
+            XCTAssertEqual(results.first?.0, requestID, name)
+            XCTAssertEqual(results.first?.1, .invalid(.protocol), name)
+            XCTAssertFalse(harness.requestKinds[retryStart...].contains {
+                if case .setCidReporting = $0 { return true }
+                return false
+            }, name)
+        }
+    }
+
+    func testRetryJournalClearUsesExpectedDeviceCASAndPreservesNewerEntry() {
+        let harness = conflictedHarness()
+        let newer = M720JournalDevice(
+            key: M720SessionHarness.defaultDeviceKey,
+            controls: [journalEntry(cid: 0x005D)]
+        )
+        harness.journal.replaceDeviceBeforeNextRemove = newer
+        let retryStart = harness.transport.sent.count
+        let requestID = UUID()
+        var results: [(UUID?, M720SessionState)] = []
+        harness.session.onRetryResult = { results.append(($0, $1)) }
+
+        harness.session.retryAfterConflict(requestID: requestID)
+        driveExplicitRetryBaseline(
+            harness,
+            startingAt: retryStart,
+            states: baselineStates(0x005B, 0x005D, 0x00D0)
+        )
+
+        XCTAssertEqual(harness.session.state, .invalid(.protocol))
+        XCTAssertEqual(harness.journal.currentJournal.devices, [newer])
+        XCTAssertEqual(results.map(\.0), [requestID])
+        XCTAssertEqual(results.map(\.1), [.invalid(.protocol)])
+        XCTAssertFalse(harness.requestKinds[retryStart...].contains {
+            if case .setCidReporting = $0 { return true }
+            return false
+        })
+    }
+
+    func testRetryQuarantineAcknowledgementFailureNeverStartsTakeover() {
+        let failures: [(String, Error)] = [
+            ("not-quarantined", M720JournalStoreError.notQuarantined),
+            ("ordinary", M720InjectedError.mutation),
+        ]
+        for (name, error) in failures {
+            let harness = M720SessionHarness(
+                reloadResult: .failure(M720JournalStoreError.quarantined)
+            )
+            harness.session.setRequiredCIDs([0x005B])
+            harness.session.start()
+            driveDiscovery(harness, rows: referenceRows)
+            harness.journal.acknowledgementError = error
+            let retryStart = harness.transport.sent.count
+            let requestID = UUID()
+            var results: [(UUID?, M720SessionState)] = []
+            harness.session.onRetryResult = { results.append(($0, $1)) }
+
+            harness.session.retryAfterConflict(requestID: requestID)
+            driveExplicitRetryBaseline(
+                harness,
+                startingAt: retryStart,
+                states: baselineStates(0x005B, 0x005D, 0x00D0)
+            )
+
+            XCTAssertEqual(harness.session.state, .invalid(.protocol), name)
+            XCTAssertEqual(harness.journal.acknowledgementCallCount, 1, name)
+            XCTAssertEqual(harness.journal.mutationCallCount, 0, name)
+            XCTAssertEqual(results.map(\.0), [requestID], name)
+            XCTAssertEqual(results.map(\.1), [.invalid(.protocol)], name)
+            XCTAssertFalse(harness.requestKinds[retryStart...].contains {
+                if case .setCidReporting = $0 { return true }
+                return false
+            }, name)
+        }
+    }
+
+    func testRejectedDivertedRetryCanBeRetriedAgainCleanly() {
+        let harness = conflictedHarness()
+        var results: [(UUID?, M720SessionState)] = []
+        harness.session.onRetryResult = { results.append(($0, $1)) }
+        let firstID = UUID()
+        let firstStart = harness.transport.sent.count
+        harness.session.retryAfterConflict(requestID: firstID)
+        var diverted = baselineStates(0x005B, 0x005D, 0x00D0)
+        diverted[0x005D] = divertedStates(0x005D)[0x005D]!
+        driveExplicitRetryBaseline(harness, startingAt: firstStart, states: diverted)
+        XCTAssertEqual(harness.session.state, .conflict)
+
+        let secondID = UUID()
+        let secondStart = harness.transport.sent.count
+        harness.session.retryAfterConflict(requestID: secondID)
+        let clean = baselineStates(0x005B, 0x005D, 0x00D0)
+        driveExplicitRetryBaseline(harness, startingAt: secondStart, states: clean)
+        let takeoverStart = secondStart + M720Profile.cidToButton.count
+        driveTakeover(harness, startingAt: takeoverStart, initialStates: clean)
+
+        XCTAssertEqual(harness.session.state, .active)
+        XCTAssertEqual(results.map(\.0), [firstID, secondID])
+        XCTAssertEqual(results.map(\.1), [.conflict, .active])
+        XCTAssertFalse(harness.requestKinds[firstStart..<secondStart].contains {
+            if case .setCidReporting = $0 { return true }
+            return false
+        })
+    }
+
+    func testMalformedCIDAndGetFailureRetryEachCompleteOnceWithoutSet() {
+        for mode in ["wrong-cid", "get-failure"] {
+            let harness = conflictedHarness()
+            let retryStart = harness.transport.sent.count
+            let requestID = UUID()
+            var results: [(UUID?, M720SessionState)] = []
+            harness.session.onRetryResult = { results.append(($0, $1)) }
+            if mode == "get-failure" {
+                harness.sendFailureKind = .getCidReporting(0x005B)
+            }
+
+            harness.session.retryAfterConflict(requestID: requestID)
+            drainMainQueue(turns: 6)
+            if mode == "wrong-cid" {
+                let request = harness.request(at: retryStart)
+                let wrong = HIDPPReportingState(cid: 0x005D, flags: 0, remappedCID: 0x005D)
+                harness.respond(
+                    to: request,
+                    responseFeatureIndex: 0x2A,
+                    parameters: harness.reportingParameters(wrong)
+                )
+                drainMainQueue(turns: 6)
+            }
+
+            XCTAssertEqual(results.count, 1, mode)
+            XCTAssertEqual(results.first?.0, requestID, mode)
+            XCTAssertTrue({
+                guard case .invalid = results.first?.1 else { return false }
+                return true
+            }(), mode)
+            XCTAssertFalse(harness.requestKinds[retryStart...].contains {
+                if case .setCidReporting = $0 { return true }
+                return false
+            }, mode)
+        }
+    }
+
+    func testRetryUsesLatestEmptyPolicyAndIgnoresDuplicateRequest() {
+        let harness = conflictedHarness()
+        let acceptedID = UUID()
+        let ignoredID = UUID()
+        var results: [(UUID?, M720SessionState)] = []
+        harness.session.onRetryResult = { results.append(($0, $1)) }
+        let retryStart = harness.transport.sent.count
+
+        harness.session.retryAfterConflict(requestID: acceptedID)
+        harness.session.retryAfterConflict(requestID: ignoredID)
+        harness.session.setRequiredCIDs([])
+        driveExplicitRetryBaseline(
+            harness,
+            startingAt: retryStart,
+            states: baselineStates(0x005B, 0x005D, 0x00D0)
+        )
+
+        XCTAssertEqual(harness.session.state, .nativeReady)
+        XCTAssertEqual(results.map(\.0), [acceptedID])
+        XCTAssertEqual(results.map(\.1), [.nativeReady])
+        XCTAssertEqual(harness.journal.removeDeviceCallCount, 1)
+        XCTAssertEqual(harness.transport.sent.count, retryStart + 3)
+        XCTAssertFalse(harness.requestKinds[retryStart...].contains {
+            if case .setCidReporting = $0 { return true }
+            return false
+        })
+    }
+
+    func testDirtyRetryWithPolicyClearedFinishesNativeButKeepsRetryLatch() {
+        let harness = conflictedHarness()
+        let retryStart = harness.transport.sent.count
+        let requestID = UUID()
+        var results: [(UUID?, M720SessionState)] = []
+        harness.session.onRetryResult = { results.append(($0, $1)) }
+        harness.session.retryAfterConflict(requestID: requestID)
+        harness.session.setRequiredCIDs([])
+        var dirty = baselineStates(0x005B, 0x005D, 0x00D0)
+        dirty[0x00D0] = divertedStates(0x00D0)[0x00D0]!
+        driveExplicitRetryBaseline(harness, startingAt: retryStart, states: dirty)
+
+        XCTAssertEqual(harness.session.state, .nativeReady)
+        XCTAssertEqual(results.map(\.0), [requestID])
+        XCTAssertEqual(results.map(\.1), [.nativeReady])
+        XCTAssertEqual(harness.journal.removeDeviceCallCount, 0)
+        XCTAssertEqual(harness.journal.mutationCallCount, 0)
+        let requestCount = harness.transport.sent.count
+
+        harness.session.setRequiredCIDs([0x005B])
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(harness.session.state, .conflict)
+        XCTAssertEqual(harness.transport.sent.count, requestCount)
+        XCTAssertFalse(harness.requestKinds[retryStart...].contains {
+            if case .setCidReporting = $0 { return true }
+            return false
+        })
+    }
+
+    func testShutdownWinsRetryAndLateReadCannotMutateOrPublishAgain() {
+        let harness = conflictedHarness()
+        let retryStart = harness.transport.sent.count
+        let requestID = UUID()
+        var results: [(UUID?, M720SessionState)] = []
+        var shutdownCompletions = 0
+        harness.session.onRetryResult = { results.append(($0, $1)) }
+        harness.session.retryAfterConflict(requestID: requestID)
+        drainMainQueue(turns: 5)
+        let staleRead = harness.request(at: retryStart)
+
+        harness.session.shutdown { shutdownCompletions += 1 }
+        drainMainQueue(turns: 6)
+        let mutationsAtShutdown = harness.journal.mutationCallCount
+        harness.respond(
+            to: staleRead,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(baselineStates(0x005B)[0x005B]!)
+        )
+        drainMainQueue(turns: 6)
+
+        XCTAssertEqual(harness.session.state, .invalid(.cancelled))
+        XCTAssertEqual(shutdownCompletions, 1)
+        XCTAssertEqual(results.map(\.0), [requestID])
+        XCTAssertEqual(results.map(\.1), [.invalid(.cancelled)])
+        XCTAssertEqual(harness.journal.mutationCallCount, mutationsAtShutdown)
+        XCTAssertEqual(harness.journal.removeDeviceCallCount, 0)
+    }
+
+    func testRemovalWinsRetryAndLateBaselineReadCannotMutateOrPublishAgain() {
+        let harness = conflictedHarness()
+        let retryStart = harness.transport.sent.count
+        let requestID = UUID()
+        var results: [(UUID?, M720SessionState)] = []
+        var removalCompletions = 0
+        harness.session.onRetryResult = { results.append(($0, $1)) }
+        harness.session.retryAfterConflict(requestID: requestID)
+        drainMainQueue(turns: 5)
+        let staleRead = harness.request(at: retryStart)
+
+        harness.session.invalidateForRemoval { removalCompletions += 1 }
+        drainMainQueue(turns: 6)
+        let mutationsAtRemoval = harness.journal.mutationCallCount
+        let removesAtRemoval = harness.journal.removeDeviceCallCount
+        let requestsAtRemoval = harness.transport.sent.count
+        harness.respond(
+            to: staleRead,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(baselineStates(0x005B)[0x005B]!)
+        )
+        drainMainQueue(turns: 6)
+
+        XCTAssertEqual(harness.session.state, .invalid(.disconnected))
+        XCTAssertEqual(removalCompletions, 1)
+        XCTAssertEqual(results.map(\.0), [requestID])
+        XCTAssertEqual(results.map(\.1), [.invalid(.disconnected)])
+        XCTAssertEqual(harness.journal.mutationCallCount, mutationsAtRemoval)
+        XCTAssertEqual(harness.journal.removeDeviceCallCount, removesAtRemoval)
+        XCTAssertEqual(harness.transport.sent.count, requestsAtRemoval)
+    }
+
+    func testRemovalWinsRetryAndLateJournalClearCannotStartTakeoverOrPublishAgain() {
+        let harness = conflictedHarness()
+        harness.journal.holdNextRemoveCompletion = true
+        let retryStart = harness.transport.sent.count
+        let requestID = UUID()
+        var results: [(UUID?, M720SessionState)] = []
+        var removalCompletions = 0
+        harness.session.onRetryResult = { results.append(($0, $1)) }
+        harness.session.retryAfterConflict(requestID: requestID)
+        driveExplicitRetryBaseline(
+            harness,
+            startingAt: retryStart,
+            states: baselineStates(0x005B, 0x005D, 0x00D0)
+        )
+        XCTAssertTrue(harness.journal.hasHeldRemoveCompletion)
+
+        harness.session.invalidateForRemoval { removalCompletions += 1 }
+        drainMainQueue(turns: 6)
+        let journalAtRemoval = harness.journal.currentJournal
+        let mutationsAtRemoval = harness.journal.mutationCallCount
+        let requestsAtRemoval = harness.transport.sent.count
+        harness.journal.completeHeldRemove()
+        drainMainQueue(turns: 6)
+
+        XCTAssertEqual(harness.session.state, .invalid(.disconnected))
+        XCTAssertEqual(removalCompletions, 1)
+        XCTAssertEqual(results.map(\.0), [requestID])
+        XCTAssertEqual(results.map(\.1), [.invalid(.disconnected)])
+        XCTAssertEqual(harness.journal.currentJournal, journalAtRemoval)
+        XCTAssertEqual(harness.journal.mutationCallCount, mutationsAtRemoval)
+        XCTAssertEqual(harness.transport.sent.count, requestsAtRemoval)
+        XCTAssertFalse(harness.requestKinds[retryStart...].contains {
+            if case .setCidReporting = $0 { return true }
+            return false
+        })
+    }
+
+    func testAcceptedRetryStillFreshPreflightsAndConflictsWithoutTakeoverSet() {
+        let harness = conflictedHarness()
+        let retryStart = harness.transport.sent.count
+        let requestID = UUID()
+        var results: [(UUID?, M720SessionState)] = []
+        harness.session.onRetryResult = { results.append(($0, $1)) }
+        harness.session.retryAfterConflict(requestID: requestID)
+        let clean = baselineStates(0x005B, 0x005D, 0x00D0)
+        driveExplicitRetryBaseline(harness, startingAt: retryStart, states: clean)
+        let takeoverStart = retryStart + M720Profile.cidToButton.count
+        let external = HIDPPReportingState(cid: 0x005B, flags: 0x10, remappedCID: 0x1234)
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: [0x005B: external]
+        )
+
+        XCTAssertEqual(harness.session.state, .conflict)
+        XCTAssertEqual(results.map(\.0), [requestID])
+        XCTAssertEqual(results.map(\.1), [.conflict])
+        XCTAssertFalse(harness.requestKinds[takeoverStart...].contains {
+            if case .setCidReporting = $0 { return true }
+            return false
+        })
+    }
+
+    func testClearingBindingsLeavesExplicitRetryLatchBeforeAnyLaterTakeover() {
+        let harness = M720SessionHarness()
+        harness.session.setRequiredCIDs([0x005B])
+        harness.session.start()
+        let unknown = HIDPPReportingState(cid: 0x005B, flags: 0x11, remappedCID: 0x7777)
+        driveDiscovery(
+            harness,
+            rows: referenceRows,
+            reportingOverrides: [0x005B: unknown]
+        )
+        XCTAssertEqual(harness.session.state, .conflict)
+        let requestCountAtConflict = harness.transport.sent.count
+
+        harness.session.setRequiredCIDs([])
+        drainMainQueue(turns: 4)
+        XCTAssertEqual(harness.session.state, .nativeReady)
+        harness.session.setRequiredCIDs([0x005B])
+        drainMainQueue(turns: 4)
+        XCTAssertEqual(harness.session.state, .conflict)
+        XCTAssertEqual(harness.transport.sent.count, requestCountAtConflict)
+        assertNoSet(harness)
+    }
+
+    func testDiscoveryIgnoresJournalEntriesForDisconnectedOtherDevice() {
+        let matchingEntry = journalEntry(cid: 0x005B)
 
         let otherKey = M720DeviceKey(
             vendorID: M720Profile.vendorID,
@@ -1023,7 +3473,7 @@ final class M720HIDPPSessionTests: XCTestCase {
         XCTAssertEqual(harness.session.state, .nativeReady)
     }
 
-    func testSleepAndPolicyRollbackShareOneHeldCancelBarrierAndDrainAllWaiters() {
+    func testSleepDefersPolicyRollbackUntilWakeAndDrainsAllCancelWaiters() {
         let harness = M720SessionHarness()
         harness.session.start()
         driveDiscovery(harness, rows: referenceRows)
@@ -1048,16 +3498,21 @@ final class M720HIDPPSessionTests: XCTestCase {
         XCTAssertEqual(harness.sink.cancellations, [6])
         XCTAssertEqual(sleepCompletions, 0)
         XCTAssertEqual(harness.transport.sent.count, requestIndex)
-        XCTAssertEqual(harness.session.state, .restoring)
+        XCTAssertEqual(harness.session.state, .active)
 
         harness.sink.completeCancel(button: 6, times: 2)
+        drainMainQueue(turns: 5)
+        XCTAssertEqual(sleepCompletions, 2)
+        XCTAssertEqual(harness.transport.sent.count, requestIndex)
+        XCTAssertEqual(harness.session.state, .active)
+
+        harness.session.reconcileAfterWake()
         driveTakeover(
             harness,
             startingAt: requestIndex,
             initialStates: divertedStates(0x005B)
         )
 
-        XCTAssertEqual(sleepCompletions, 2)
         XCTAssertEqual(harness.sink.cancellations, [6])
         XCTAssertEqual(harness.session.state, .nativeReady)
     }
@@ -1465,6 +3920,103 @@ final class M720HIDPPSessionTests: XCTestCase {
             journalEntry(cid: 0x005B, phase: .prepared),
         ])
         XCTAssertEqual(harness.session.state, .invalid(.protocol))
+    }
+
+    func testUncertainAppliedMutationReloadsThenRestoresKnownWrittenCID() {
+        for durableApplied in [false, true] {
+            let context = "durable phase=\(durableApplied ? "applied" : "prepared")"
+            let harness = M720SessionHarness()
+            harness.session.start()
+            driveDiscovery(harness, rows: referenceRows)
+            let requestIndex = harness.transport.sent.count
+            harness.trace.removeAll()
+            harness.journal.failAfterNextMutation = M720JournalFailurePoint(
+                cid: 0x005B,
+                phase: .applied
+            )
+            harness.journal.failedAfterMutationPersistsChange = durableApplied
+            var invalidTransitions = 0
+            harness.session.onStateChange = { state in
+                if state == .invalid(.protocol) { invalidTransitions += 1 }
+            }
+
+            harness.session.setRequiredCIDs([0x005B])
+            driveTakeover(
+                harness,
+                startingAt: requestIndex,
+                initialStates: baselineStates(0x005B)
+            )
+
+            let events = harness.trace.events
+            let reloadComplete = events.firstIndex(of: .reloadComplete)
+            let restoring = events.firstIndex(of: .journal(cid: 0x005B, phase: .restoring))
+            XCTAssertNotNil(reloadComplete, context)
+            XCTAssertNotNil(restoring, context)
+            if let reloadComplete, let restoring {
+                XCTAssertLessThan(reloadComplete, restoring, context)
+            }
+            XCTAssertTrue(
+                harness.requestKinds.dropFirst(requestIndex).contains(
+                    .setCidReporting(0x005B, diverted: false)
+                ),
+                context
+            )
+            XCTAssertEqual(harness.journal.currentJournal, .emptyV1, context)
+            XCTAssertEqual(harness.session.appliedCIDs, [], context)
+            XCTAssertEqual(harness.session.state, .invalid(.protocol), context)
+            XCTAssertEqual(invalidTransitions, 1, context)
+        }
+    }
+
+    func testLaterUncertainPreparedMutationRestoresEarlierCIDAndClearsDurableClaim() {
+        for failingPreparedPersisted in [false, true] {
+            let context = "failing prepared persisted=\(failingPreparedPersisted)"
+            let harness = M720SessionHarness()
+            harness.session.start()
+            driveDiscovery(harness, rows: referenceRows)
+            let requestIndex = harness.transport.sent.count
+            harness.trace.removeAll()
+            harness.journal.failAfterNextMutation = M720JournalFailurePoint(
+                cid: 0x005D,
+                phase: .prepared
+            )
+            harness.journal.failedAfterMutationPersistsChange = failingPreparedPersisted
+
+            harness.session.setRequiredCIDs([0x005B, 0x005D])
+            driveTakeover(
+                harness,
+                startingAt: requestIndex,
+                initialStates: baselineStates(0x005B, 0x005D)
+            )
+            if harness.session.state == .restoring {
+                driveTakeover(
+                    harness,
+                    startingAt: requestIndex + 4,
+                    initialStates: [
+                        0x005B: divertedStates(0x005B)[0x005B]!,
+                        0x005D: baselineStates(0x005D)[0x005D]!,
+                    ]
+                )
+            }
+
+            let requests = Array(harness.requestKinds.dropFirst(requestIndex))
+            XCTAssertTrue(
+                requests.contains(.setCidReporting(0x005B, diverted: true)),
+                context
+            )
+            XCTAssertTrue(
+                requests.contains(.setCidReporting(0x005B, diverted: false)),
+                context
+            )
+            XCTAssertFalse(
+                requests.contains(.setCidReporting(0x005D, diverted: true)),
+                context
+            )
+            XCTAssertTrue(harness.trace.events.contains(.reloadComplete), context)
+            XCTAssertEqual(harness.journal.currentJournal, .emptyV1, context)
+            XCTAssertEqual(harness.session.appliedCIDs, [], context)
+            XCTAssertEqual(harness.session.state, .invalid(.protocol), context)
+        }
     }
 
     func testPreparedFailureOnSecondAndThirdCIDRestoresAllEarlierOwnedSiblings() {
@@ -2722,6 +5274,20 @@ final class M720HIDPPSessionTests: XCTestCase {
         })
     }
 
+    private func conflictedHarness() -> M720SessionHarness {
+        let harness = M720SessionHarness()
+        harness.session.setRequiredCIDs([0x005B])
+        harness.session.start()
+        let unknown = HIDPPReportingState(cid: 0x005B, flags: 0x11, remappedCID: 0x5555)
+        driveDiscovery(
+            harness,
+            rows: referenceRows,
+            reportingOverrides: [0x005B: unknown]
+        )
+        XCTAssertEqual(harness.session.state, .conflict)
+        return harness
+    }
+
     private func wireParameters(_ documented: [UInt8]) -> [UInt8] {
         documented + [UInt8](repeating: 0, count: 16 - documented.count)
     }
@@ -2744,9 +5310,11 @@ final class M720HIDPPSessionTests: XCTestCase {
         rows: [HIDPPControlInfo],
         reportingOverrides: [UInt16: HIDPPReportingState] = [:],
         until target: M720TestRequestKind? = nil,
-        stopAfterDiscoverySnapshots: Bool = false
+        startingAt startIndex: Int = 0,
+        stopAfterDiscoverySnapshots: Bool = false,
+        featureIndex: UInt8 = 0x2A
     ) {
-        var responseIndex = 0
+        var responseIndex = startIndex
         for _ in 0..<100 {
             drainMainQueue(turns: 3)
             guard responseIndex < harness.transport.sent.count else { break }
@@ -2755,7 +5323,7 @@ final class M720HIDPPSessionTests: XCTestCase {
             let parameters: [UInt8]
             switch request.kind {
             case .rootGetFeature:
-                parameters = [0x2A, 0x00, 0x04]
+                parameters = [featureIndex, 0x00, 0x04]
             case .getCount:
                 parameters = [UInt8(rows.count)]
             case let .getCidInfo(index):
@@ -2776,17 +5344,46 @@ final class M720HIDPPSessionTests: XCTestCase {
             }
             harness.respond(
                 to: request,
-                responseFeatureIndex: request.kind == .rootGetFeature ? 0x00 : 0x2A,
+                responseFeatureIndex: request.kind == .rootGetFeature ? 0x00 : featureIndex,
                 parameters: parameters
             )
             responseIndex += 1
             if stopAfterDiscoverySnapshots,
-               responseIndex == 2 + rows.count + M720Profile.cidToButton.count {
+               responseIndex == startIndex + 2 + rows.count + M720Profile.cidToButton.count {
                 drainMainQueue(turns: 3)
                 return
             }
         }
         drainMainQueue(turns: 3)
+    }
+
+    private func driveExplicitRetryBaseline(
+        _ harness: M720SessionHarness,
+        startingAt startIndex: Int,
+        states: [UInt16: HIDPPReportingState],
+        featureIndex: UInt8 = 0x2A
+    ) {
+        var responseIndex = startIndex
+        for cid in M720Profile.cidToButton.keys.sorted() {
+            drainMainQueue(turns: 4)
+            guard responseIndex < harness.transport.sent.count else {
+                XCTFail("missing explicit retry read for CID \(cid)")
+                return
+            }
+            let request = harness.request(at: responseIndex)
+            XCTAssertEqual(request.kind, .getCidReporting(cid))
+            guard let state = states[cid] else {
+                XCTFail("missing retry state for CID \(cid)")
+                return
+            }
+            harness.respond(
+                to: request,
+                responseFeatureIndex: featureIndex,
+                parameters: harness.reportingParameters(state)
+            )
+            responseIndex += 1
+        }
+        drainMainQueue(turns: 5)
     }
 
     private func exhaustTimeouts(_ harness: M720SessionHarness) {
@@ -2814,7 +5411,8 @@ final class M720HIDPPSessionTests: XCTestCase {
         startingAt startIndex: Int,
         initialStates: [UInt16: HIDPPReportingState],
         injectedFailure: M720TakeoverDriveFailure? = nil,
-        restoreFault: M720RestoreDriveFault? = nil
+        restoreFault: M720RestoreDriveFault? = nil,
+        responseFeatureIndex: UInt8 = 0x2A
     ) {
         var states = initialStates
         var responseIndex = startIndex
@@ -2939,7 +5537,7 @@ final class M720HIDPPSessionTests: XCTestCase {
             }
             harness.respond(
                 to: request,
-                responseFeatureIndex: 0x2A,
+                responseFeatureIndex: responseFeatureIndex,
                 parameters: parameters
             )
             responseIndex += 1
@@ -3036,7 +5634,7 @@ final class M720HIDPPSessionTests: XCTestCase {
             DispatchQueue.main.async { drain(remaining - 1) }
         }
         drain(turns)
-        wait(for: [drained], timeout: 1)
+        wait(for: [drained], timeout: 3)
     }
 }
 
@@ -3228,6 +5826,7 @@ private final class M720SessionHarness {
     let trace = M720SessionTraceRecorder()
     let journal: M720SessionJournalCoordinator
     let sink: M720SessionButtonSink
+    let ownershipAgentProbe: M720OwnershipAgentProbe
     var sendFailureKind: M720TestRequestKind?
     var onRequestSent: ((M720TestRequestKind) -> Void)?
 
@@ -3237,7 +5836,8 @@ private final class M720SessionHarness {
         holdsReload: Bool = false,
         deviceKey: M720DeviceKey = M720SessionHarness.defaultDeviceKey,
         journalIdentityUsable: Bool = true,
-        journalCoordinator: M720SessionJournalCoordinator? = nil
+        journalCoordinator: M720SessionJournalCoordinator? = nil,
+        initialOwnershipAgentIsRunning: Bool = false
     ) {
         journal = journalCoordinator ?? M720SessionJournalCoordinator(
             trace: trace,
@@ -3246,6 +5846,7 @@ private final class M720SessionHarness {
             holdsReload: holdsReload
         )
         sink = M720SessionButtonSink(trace: trace)
+        ownershipAgentProbe = M720OwnershipAgentProbe(isRunning: initialOwnershipAgentIsRunning)
         pipeline = HIDPPRequestPipeline(
             transport: transport,
             scheduler: scheduler,
@@ -3257,7 +5858,12 @@ private final class M720SessionHarness {
             journalRepository: journal,
             deviceKey: deviceKey,
             journalIdentityUsable: journalIdentityUsable,
-            buttonSink: sink
+            buttonSink: sink,
+            scheduler: scheduler,
+            initialOwnershipAgentScan: { [ownershipAgentProbe] in
+                ownershipAgentProbe.scanCount += 1
+                return ownershipAgentProbe.isRunning
+            }
         )
         transport.onSend = { [weak self] data in
             guard let self else { return }
@@ -3333,6 +5939,15 @@ private final class M720SessionHarness {
         transport.inject(bytes)
     }
 
+    func injectForeignResponse(featureIndex: UInt8, function: UInt8, softwareID: UInt8 = 0xF) {
+        var bytes = [UInt8](repeating: 0, count: 20)
+        bytes[0] = 0x11
+        bytes[1] = transport.deviceIndex
+        bytes[2] = featureIndex
+        bytes[3] = function << 4 | softwareID
+        transport.inject(bytes)
+    }
+
     func eventParameters(cids: [UInt16]) -> [UInt8] {
         precondition(cids.count <= 4)
         var parameters = cids.flatMap(bigEndian)
@@ -3392,6 +6007,15 @@ private final class M720SessionHarness {
     }
 }
 
+private final class M720OwnershipAgentProbe {
+    let isRunning: Bool
+    var scanCount = 0
+
+    init(isRunning: Bool) {
+        self.isRunning = isRunning
+    }
+}
+
 private struct M720SinkEmission: Equatable {
     let button: Int
     let downNotUp: Bool
@@ -3440,11 +6064,14 @@ private final class M720SessionButtonSink: M720ButtonEventSink {
 private final class M720SessionJournalCoordinator: M720JournalCoordinating {
     private var journal: M720OwnershipJournal
     private let trace: M720SessionTraceRecorder
-    private let reloadResult: Result<M720OwnershipJournal, Error>?
+    var reloadResult: Result<M720OwnershipJournal, Error>?
     private let holdsReload: Bool
     private var heldReloadCompletion: Completion?
+    private var reloadCompletionHistory: [(Completion, Result<M720OwnershipJournal, Error>)] = []
     var onMutation: ((M720SessionTraceEvent) -> Void)?
     private(set) var mutationCallCount = 0
+    private(set) var acknowledgementCallCount = 0
+    private(set) var removeDeviceCallCount = 0
     var holdNextCompletionForPhase: M720JournalPhase?
     var holdNextMutationCompletion: M720JournalFailurePoint?
     var failAfterNextPhase: M720JournalPhase?
@@ -3452,8 +6079,16 @@ private final class M720SessionJournalCoordinator: M720JournalCoordinating {
     var failAfterNextMutation: M720JournalFailurePoint?
     var failedAfterMutationPersistsChange = true
     var holdFailureBeforeNextMutation: M720JournalFailurePoint?
+    var replaceEntryBeforeNextMutation: M720JournalCIDEntry?
+    var acknowledgementError: Error?
+    var acknowledgementFailurePersistsChange = false
+    var removeDeviceError: Error?
+    var replaceDeviceBeforeNextRemove: M720JournalDevice?
+    var holdNextRemoveCompletion = false
     private var heldMutationCompletion: (() -> Void)?
+    private var heldRemoveCompletion: (() -> Void)?
     private var lastReleasedMutationCompletion: (() -> Void)?
+    private var didAcknowledgeQuarantine = false
 
     init(
         trace: M720SessionTraceRecorder,
@@ -3475,6 +6110,10 @@ private final class M720SessionJournalCoordinator: M720JournalCoordinating {
         heldMutationCompletion != nil
     }
 
+    var hasHeldRemoveCompletion: Bool {
+        heldRemoveCompletion != nil
+    }
+
     func completeHeldMutation(times: Int = 1) {
         guard let completion = heldMutationCompletion else {
             preconditionFailure("no held mutation")
@@ -3489,6 +6128,14 @@ private final class M720SessionJournalCoordinator: M720JournalCoordinating {
             preconditionFailure("no released mutation completion")
         }
         for _ in 0..<times { completion() }
+    }
+
+    func completeHeldRemove() {
+        guard let completion = heldRemoveCompletion else {
+            preconditionFailure("no held remove")
+        }
+        heldRemoveCompletion = nil
+        completion()
     }
 
     func reload(completion: @escaping Completion) {
@@ -3521,11 +6168,79 @@ private final class M720SessionJournalCoordinator: M720JournalCoordinating {
 
     private func complete(_ completion: @escaping Completion) {
         trace.append(.reloadComplete)
-        completion(reloadResult ?? .success(journal))
+        let result = didAcknowledgeQuarantine ? .success(journal) :
+            (reloadResult ?? .success(journal))
+        reloadCompletionHistory.append((completion, result))
+        completion(result)
+    }
+
+    func replayReloadCompletion(at index: Int) {
+        guard reloadCompletionHistory.indices.contains(index) else {
+            preconditionFailure("no reload completion at index \(index)")
+        }
+        let (completion, result) = reloadCompletionHistory[index]
+        completion(result)
     }
 
     func snapshot(completion: @escaping Completion) {
         completion(.success(journal))
+    }
+
+    func acknowledgeQuarantineWithFreshEmptyV1(completion: @escaping Completion) {
+        acknowledgementCallCount += 1
+        if let acknowledgementError {
+            if acknowledgementFailurePersistsChange {
+                didAcknowledgeQuarantine = true
+                journal = .emptyV1
+            }
+            completion(.failure(acknowledgementError))
+            return
+        }
+        if didAcknowledgeQuarantine {
+            completion(.failure(M720JournalStoreError.notQuarantined))
+            return
+        }
+        didAcknowledgeQuarantine = true
+        journal = .emptyV1
+        completion(.success(journal))
+    }
+
+    func removeDevice(
+        for key: M720DeviceKey,
+        expected: M720JournalDevice?,
+        completion: @escaping Completion
+    ) {
+        removeDeviceCallCount += 1
+        if let removeDeviceError {
+            completion(.failure(removeDeviceError))
+            return
+        }
+        if let replacement = replaceDeviceBeforeNextRemove {
+            journal.devices.removeAll { $0.key == replacement.key }
+            journal.devices.append(replacement)
+            replaceDeviceBeforeNextRemove = nil
+        }
+        let deviceIndex = journal.devices.firstIndex { $0.key == key }
+        let existing = deviceIndex.map { journal.devices[$0] }
+        guard existing == expected else {
+            completion(.failure(M720JournalRepositoryError.mismatchedDevice))
+            return
+        }
+        if let deviceIndex {
+            journal.devices.remove(at: deviceIndex)
+        }
+        do {
+            journal = try journal.validatedCanonicalized()
+            let result = journal
+            if holdNextRemoveCompletion {
+                holdNextRemoveCompletion = false
+                heldRemoveCompletion = { completion(.success(result)) }
+            } else {
+                completion(.success(result))
+            }
+        } catch {
+            completion(.failure(error))
+        }
     }
 
     func mutateCID(
@@ -3536,6 +6251,15 @@ private final class M720SessionJournalCoordinator: M720JournalCoordinating {
     ) {
         mutationCallCount += 1
         do {
+            if let replacement = replaceEntryBeforeNextMutation,
+               replacement.cid == cid,
+               let replacementDeviceIndex = journal.devices.firstIndex(where: { $0.key == key }),
+               let replacementControlIndex = journal.devices[replacementDeviceIndex].controls
+                .firstIndex(where: { $0.cid == cid }) {
+                journal.devices[replacementDeviceIndex].controls[replacementControlIndex] = replacement
+                journal = try journal.validatedCanonicalized()
+                replaceEntryBeforeNextMutation = nil
+            }
             let journalBeforeMutation = journal
             let deviceIndex = journal.devices.firstIndex { $0.key == key }
             let controlIndex = deviceIndex.flatMap { deviceIndex in
