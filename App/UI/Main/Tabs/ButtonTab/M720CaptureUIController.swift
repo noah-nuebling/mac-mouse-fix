@@ -48,7 +48,7 @@ final class M720CaptureUIController: NSObject {
     }
 
     @objc(handleCaptureStateChangedWithPayload:)
-    func handleCaptureStateChanged(payload: NSDictionary) {
+    func handleCaptureStateChanged(payload: Any?) {
         guard let state = try? M720CaptureState.decode(payload) else {
             presentFailure(.protocol)
             return
@@ -80,18 +80,13 @@ final class M720CaptureUIController: NSObject {
     }
 
     private func replaceCaptureStates(_ states: [M720CaptureState]) {
-        for state in alertReducer.replaceSnapshot(states) {
-            enqueue(.conflict(state.deviceToken))
-        }
+        alertReducer.replaceSnapshot(states)
         presentNextAlertIfPossible()
     }
 
     private func receiveCaptureState(_ state: M720CaptureState) {
-        if alertReducer.shouldPresent(state) {
-            enqueue(.conflict(state.deviceToken))
-        } else {
-            presentNextAlertIfPossible()
-        }
+        alertReducer.receive(state)
+        presentNextAlertIfPossible()
     }
 
     private func enqueue(_ request: AlertRequest) {
@@ -101,12 +96,18 @@ final class M720CaptureUIController: NSObject {
 
     private func presentNextAlertIfPossible() {
         guard !isPresentingAlert,
-              !pendingAlerts.isEmpty,
               let window = MainAppState.shared.window,
               window.attachedSheet == nil
         else { return }
 
-        let request = pendingAlerts.removeFirst()
+        let request: AlertRequest
+        if !pendingAlerts.isEmpty {
+            request = pendingAlerts.removeFirst()
+        } else if let key = alertReducer.dequeueConflictForPresentation() {
+            request = .conflict(key.deviceToken)
+        } else {
+            return
+        }
         let alert = makeAlert(for: request)
         isPresentingAlert = true
         alert.beginSheetModal(for: window) { [weak self] response in
@@ -163,9 +164,8 @@ final class M720CaptureUIController: NSObject {
                 withPayload: payload,
                 waitForReply: true
             )
-            let acknowledgement = try? M720IPCAcknowledgement.decode(raw)
-            guard acknowledgement?.isAccepted != true else { return }
-            let error = acknowledgement?.error ?? .disconnected
+            guard case let .failed(error) = M720RetryAcknowledgementOutcome.classify(raw)
+            else { return }
             DispatchQueue.main.async {
                 self?.handleRetryRejection(deviceToken: deviceToken, error: error)
             }

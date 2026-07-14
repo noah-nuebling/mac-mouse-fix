@@ -1,9 +1,5 @@
 import Foundation
 
-#if !IS_MAIN_APP
-@testable import Mac_Mouse_Fix_Helper
-#endif
-
 protocol M720AddModeClientTimer: AnyObject {
     func cancel()
 }
@@ -137,7 +133,7 @@ final class M720AddModeClient {
         )
     }
 
-    func handlePreparationResult(_ payload: NSDictionary) {
+    func handlePreparationResult(_ payload: Any?) {
         guard let result = try? M720PreparationResult.decode(payload) else {
             failMalformedMessageIfCurrent(payload)
             return
@@ -168,7 +164,7 @@ final class M720AddModeClient {
         }
     }
 
-    func handleFeedback(_ payload: NSDictionary) {
+    func handleFeedback(_ payload: Any?) {
         guard let feedback = try? M720AddModeFeedback.decode(payload) else {
             failMalformedMessageIfCurrent(payload)
             return
@@ -179,7 +175,7 @@ final class M720AddModeClient {
         onFeedback?(feedback.feedback)
     }
 
-    func handleStateChange(_ payload: NSDictionary) {
+    func handleStateChange(_ payload: Any?) {
         guard let change = try? M720AddModeStateChange.decode(payload) else {
             failMalformedMessageIfCurrent(payload)
             return
@@ -293,13 +289,14 @@ final class M720AddModeClient {
         failCurrent(requestID, error: error)
     }
 
-    private func failMalformedMessageIfCurrent(_ payload: NSDictionary) {
-        guard let requestID = reducer.currentRequestID else { return }
-        if let rawRequestID = payload["requestID"] as? String,
-           let payloadRequestID = UUID(uuidString: rawRequestID),
-           payloadRequestID != requestID {
-            return
-        }
+    private func failMalformedMessageIfCurrent(_ payload: Any?) {
+        guard let requestID = reducer.currentRequestID,
+              let dictionary = payload as? NSDictionary
+        else { return }
+        guard let rawRequestID = dictionary["requestID"] as? String,
+              let payloadRequestID = UUID(uuidString: rawRequestID),
+              payloadRequestID == requestID
+        else { return }
         failCurrent(requestID, error: .protocol)
     }
 

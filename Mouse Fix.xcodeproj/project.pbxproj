@@ -8687,6 +8687,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F72D00000000000000000003 /* M720IPC.swift in Sources */,
+				F72E00000000000000000002 /* M720AddModeClient.swift in Sources */,
 				4FB8B29F2CCEBB1700A5A580 /* GetTrialState.swift in Sources */,
 				4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */,
 				4FFA4E4428B7D28E0062A1FE /* ConstraintUtility.swift in Sources */,
@@ -8899,7 +8900,6 @@
 				F72B00000000000000000001 /* BLEHIDPPTransportTests.swift in Sources */,
 				F72C00000000000000000001 /* M720ControllerLifecycleTests.swift in Sources */,
 				F72D00000000000000000001 /* M720AddModeIPCTests.swift in Sources */,
-				F72E00000000000000000002 /* M720AddModeClient.swift in Sources */,
 				F7210000000000000000000A /* ManualScheduler.swift in Sources */,
 				F7210000000000000000000C /* ScriptedHIDPPTransport.swift in Sources */,
 			);

@@ -639,19 +639,22 @@ import Foundation
         }
     }
 
-    @objc func handleAddModeFeedback(payload: NSDictionary) {
+    @objc(handleAddModeFeedbackWithPayload:)
+    func handleAddModeFeedback(payload: Any?) {
         onMain { [weak self] in
             self?.addModeClient.handleFeedback(payload)
         }
     }
 
-    @objc func handleAddModePreparationResult(payload: NSDictionary) {
+    @objc(handleAddModePreparationResultWithPayload:)
+    func handleAddModePreparationResult(payload: Any?) {
         onMain { [weak self] in
             self?.addModeClient.handlePreparationResult(payload)
         }
     }
 
-    @objc func handleAddModeStateChanged(payload: NSDictionary) {
+    @objc(handleAddModeStateChangedWithPayload:)
+    func handleAddModeStateChanged(payload: Any?) {
         onMain { [weak self] in
             self?.addModeClient.handleStateChange(payload)
         }

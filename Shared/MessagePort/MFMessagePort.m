@@ -168,16 +168,16 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     #if IS_MAIN_APP
         
         xxx(@"addModePreparationResult") {
-            [MainAppState.shared.buttonTabController handleAddModePreparationResultWithPayload:(NSDictionary *)payload];
+            [MainAppState.shared.buttonTabController handleAddModePreparationResultWithPayload:payload];
         }
         xxx(@"addModeStateChanged") {
-            [MainAppState.shared.buttonTabController handleAddModeStateChangedWithPayload:(NSDictionary *)payload];
+            [MainAppState.shared.buttonTabController handleAddModeStateChangedWithPayload:payload];
         }
         xxx(@"addModeFeedback") {
-            [MainAppState.shared.buttonTabController handleAddModeFeedbackWithPayload:(NSDictionary *)payload];
+            [MainAppState.shared.buttonTabController handleAddModeFeedbackWithPayload:payload];
         }
         xxx(@"m720CaptureStateChanged") {
-            [M720CaptureUIController.shared handleCaptureStateChangedWithPayload:(NSDictionary *)payload];
+            [M720CaptureUIController.shared handleCaptureStateChangedWithPayload:payload];
         }
         xxx(@"keyCaptureModeFeedback") {
             [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:NO];

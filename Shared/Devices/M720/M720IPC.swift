@@ -118,6 +118,21 @@ struct M720IPCAcknowledgement: Equatable {
     }
 }
 
+enum M720RetryAcknowledgementOutcome: Equatable {
+    case accepted
+    case failed(M720StableErrorCode)
+
+    static func classify(_ raw: Any?) -> Self {
+        guard let raw else { return .failed(.disconnected) }
+        guard let acknowledgement = try? M720IPCAcknowledgement.decode(raw) else {
+            return .failed(.protocol)
+        }
+        guard !acknowledgement.isAccepted else { return .accepted }
+        guard let error = acknowledgement.error else { return .failed(.protocol) }
+        return .failed(error)
+    }
+}
+
 enum M720PreparationFailure: String, CaseIterable, Equatable {
     case unsupported
     case `protocol`
@@ -561,41 +576,74 @@ struct CaptureAlertKey: Equatable {
 }
 
 struct M720CaptureAlertReducer {
-    private var lastObservedKeyByDevice: [UUID: CaptureAlertKey] = [:]
+    private struct ConflictTicket: Equatable {
+        let key: CaptureAlertKey
+        let generation: UInt64
+    }
 
-    mutating func shouldPresent(_ snapshot: M720CaptureState) -> Bool {
+    private var nextGeneration: UInt64 = 0
+    private var currentTicketByDevice: [UUID: ConflictTicket] = [:]
+    private var pendingConflictTickets: [ConflictTicket] = []
+    private var presentedGenerationByDevice: [UUID: UInt64] = [:]
+    private var lastRetryErrorByDevice: [UUID: M720StableErrorCode] = [:]
+
+    mutating func receive(_ snapshot: M720CaptureState) {
         let key = CaptureAlertKey(
             deviceToken: snapshot.deviceToken,
             state: snapshot.state,
             errorCode: snapshot.error
         )
-        let previous = lastObservedKeyByDevice.updateValue(
-            key,
-            forKey: snapshot.deviceToken
-        )
-        guard snapshot.state == .conflict else { return false }
-        return previous != key
+        guard currentTicketByDevice[snapshot.deviceToken]?.key != key else { return }
+
+        nextGeneration &+= 1
+        let ticket = ConflictTicket(key: key, generation: nextGeneration)
+        currentTicketByDevice[snapshot.deviceToken] = ticket
+        pendingConflictTickets.removeAll { $0.key.deviceToken == snapshot.deviceToken }
+        lastRetryErrorByDevice.removeValue(forKey: snapshot.deviceToken)
+        if snapshot.state == .conflict {
+            pendingConflictTickets.append(ticket)
+        }
+    }
+
+    mutating func dequeueConflictForPresentation() -> CaptureAlertKey? {
+        while !pendingConflictTickets.isEmpty {
+            let ticket = pendingConflictTickets.removeFirst()
+            let token = ticket.key.deviceToken
+            guard ticket.key.state == .conflict,
+                  currentTicketByDevice[token] == ticket,
+                  presentedGenerationByDevice[token] != ticket.generation
+            else { continue }
+            presentedGenerationByDevice[token] = ticket.generation
+            return ticket.key
+        }
+        return nil
     }
 
     mutating func shouldPresentRetryError(
         deviceToken: UUID,
         errorCode: M720StableErrorCode
     ) -> Bool {
-        let key = CaptureAlertKey(
-            deviceToken: deviceToken,
-            state: .invalid,
-            errorCode: errorCode
-        )
-        let previous = lastObservedKeyByDevice.updateValue(key, forKey: deviceToken)
-        return previous != key
+        let previous = lastRetryErrorByDevice.updateValue(errorCode, forKey: deviceToken)
+        return previous != errorCode
     }
 
-    mutating func replaceSnapshot(_ snapshots: [M720CaptureState]) -> [M720CaptureState] {
+    mutating func replaceSnapshot(_ snapshots: [M720CaptureState]) {
         let currentTokens = Set(snapshots.map(\.deviceToken))
-        lastObservedKeyByDevice = lastObservedKeyByDevice.filter {
+        currentTicketByDevice = currentTicketByDevice.filter {
             currentTokens.contains($0.key)
         }
-        return snapshots.filter { shouldPresent($0) }
+        presentedGenerationByDevice = presentedGenerationByDevice.filter {
+            currentTokens.contains($0.key)
+        }
+        lastRetryErrorByDevice = lastRetryErrorByDevice.filter {
+            currentTokens.contains($0.key)
+        }
+        pendingConflictTickets.removeAll {
+            !currentTokens.contains($0.key.deviceToken)
+        }
+        for snapshot in snapshots {
+            receive(snapshot)
+        }
     }
 }
 

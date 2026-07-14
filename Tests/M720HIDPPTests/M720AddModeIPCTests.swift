@@ -663,6 +663,47 @@ extension M720AddModeIPCTests {
         XCTAssertEqual(failures, [.protocol])
     }
 
+    func testAddModeClientIgnoresMalformedEnvelopesWithoutProvableCorrelation() {
+        let requestID = coordinatorRequest(238)
+        let harness = AddModeClientHarness(requestIDs: [requestID])
+        var failures: [M720StableErrorCode] = []
+        harness.client.onFailure = { failures.append($0) }
+        harness.client.begin()
+
+        harness.client.handlePreparationResult([
+            "state": "not-a-state",
+        ])
+        harness.client.handlePreparationResult([
+            "requestID": 238,
+            "state": "not-a-state",
+        ])
+        harness.client.handlePreparationResult([
+            "requestID": "not-a-uuid",
+            "state": "not-a-state",
+        ])
+
+        XCTAssertEqual(harness.client.state, .preparing(requestID))
+        XCTAssertTrue(failures.isEmpty)
+    }
+
+    func testAddModeClientRawPayloadHandlersIgnoreWrongRootTypesWithoutCrashing() {
+        let requestID = coordinatorRequest(239)
+        let harness = AddModeClientHarness(requestIDs: [requestID])
+        var failures: [M720StableErrorCode] = []
+        var feedbacks: [NSDictionary] = []
+        harness.client.onFailure = { failures.append($0) }
+        harness.client.onFeedback = { feedbacks.append($0) }
+        harness.client.begin()
+
+        harness.client.handlePreparationResult(nil)
+        harness.client.handleFeedback("not-a-dictionary")
+        harness.client.handleStateChange(NSNumber(value: 239))
+
+        XCTAssertEqual(harness.client.state, .preparing(requestID))
+        XCTAssertTrue(failures.isEmpty)
+        XCTAssertTrue(feedbacks.isEmpty)
+    }
+
     func testCaptureAlertReducerDedupesConflictUntilStateChanges() {
         let token = coordinatorToken(230)
         let conflict = M720CaptureState(
@@ -679,10 +720,15 @@ extension M720AddModeIPCTests {
         )
         var reducer = M720CaptureAlertReducer()
 
-        XCTAssertTrue(reducer.shouldPresent(conflict))
-        XCTAssertFalse(reducer.shouldPresent(conflict))
-        XCTAssertFalse(reducer.shouldPresent(active))
-        XCTAssertTrue(reducer.shouldPresent(conflict))
+        reducer.receive(conflict)
+        reducer.receive(conflict)
+        XCTAssertEqual(reducer.dequeueConflictForPresentation()?.deviceToken, token)
+        XCTAssertNil(reducer.dequeueConflictForPresentation())
+
+        reducer.receive(active)
+        reducer.receive(conflict)
+        XCTAssertEqual(reducer.dequeueConflictForPresentation()?.deviceToken, token)
+        XCTAssertNil(reducer.dequeueConflictForPresentation())
     }
 
     func testCaptureAlertReducerKeysDedupeByDeviceStateAndError() {
@@ -690,24 +736,28 @@ extension M720AddModeIPCTests {
         let second = coordinatorToken(232)
         var reducer = M720CaptureAlertReducer()
 
-        XCTAssertTrue(reducer.shouldPresent(M720CaptureState(
+        reducer.receive(M720CaptureState(
             deviceToken: first,
             status: .conflict,
             requiredCIDs: [],
             requestID: nil
-        )))
-        XCTAssertTrue(reducer.shouldPresent(M720CaptureState(
+        ))
+        reducer.receive(M720CaptureState(
             deviceToken: second,
             status: .conflict,
             requiredCIDs: [],
             requestID: nil
-        )))
-        XCTAssertFalse(reducer.shouldPresent(M720CaptureState(
+        ))
+        reducer.receive(M720CaptureState(
             deviceToken: first,
             status: .conflict,
             requiredCIDs: [0x00C4],
             requestID: coordinatorRequest(233)
-        )))
+        ))
+
+        XCTAssertEqual(reducer.dequeueConflictForPresentation()?.deviceToken, first)
+        XCTAssertEqual(reducer.dequeueConflictForPresentation()?.deviceToken, second)
+        XCTAssertNil(reducer.dequeueConflictForPresentation())
     }
 
     func testCaptureAlertReducerShowsStaleTokenDisconnectedOnlyOnce() {
@@ -728,6 +778,33 @@ extension M720AddModeIPCTests {
         ))
     }
 
+    func testRetryAcknowledgementClassifiesMalformedReplyAsProtocolFailure() {
+        XCTAssertEqual(
+            M720RetryAcknowledgementOutcome.classify(nil),
+            .failed(.disconnected)
+        )
+        XCTAssertEqual(
+            M720RetryAcknowledgementOutcome.classify(["accepted": false]),
+            .failed(.protocol)
+        )
+        XCTAssertEqual(
+            M720RetryAcknowledgementOutcome.classify(["accepted": "false"]),
+            .failed(.protocol)
+        )
+        XCTAssertEqual(
+            M720RetryAcknowledgementOutcome.classify(
+                M720IPCAcknowledgement.rejected(.disconnected).payload
+            ),
+            .failed(.disconnected)
+        )
+        XCTAssertEqual(
+            M720RetryAcknowledgementOutcome.classify(
+                M720IPCAcknowledgement.accepted.payload
+            ),
+            .accepted
+        )
+    }
+
     func testCaptureAlertReducerSnapshotRemovalAllowsFutureConflict() {
         let token = coordinatorToken(235)
         let conflict = M720CaptureState(
@@ -738,9 +815,56 @@ extension M720AddModeIPCTests {
         )
         var reducer = M720CaptureAlertReducer()
 
-        XCTAssertEqual(reducer.replaceSnapshot([conflict]).map(\.deviceToken), [token])
-        XCTAssertTrue(reducer.replaceSnapshot([]).isEmpty)
-        XCTAssertEqual(reducer.replaceSnapshot([conflict]).map(\.deviceToken), [token])
+        reducer.replaceSnapshot([conflict])
+        XCTAssertEqual(reducer.dequeueConflictForPresentation()?.deviceToken, token)
+        reducer.replaceSnapshot([])
+        XCTAssertNil(reducer.dequeueConflictForPresentation())
+        reducer.replaceSnapshot([conflict])
+        XCTAssertEqual(reducer.dequeueConflictForPresentation()?.deviceToken, token)
+    }
+
+    func testCaptureAlertReducerDropsQueuedConflictAfterStateBecomesActive() {
+        let token = coordinatorToken(240)
+        var reducer = M720CaptureAlertReducer()
+
+        reducer.receive(M720CaptureState(
+            deviceToken: token,
+            status: .conflict,
+            requiredCIDs: [],
+            requestID: nil
+        ))
+        reducer.receive(M720CaptureState(
+            deviceToken: token,
+            status: .active,
+            requiredCIDs: [],
+            requestID: nil
+        ))
+
+        XCTAssertNil(reducer.dequeueConflictForPresentation())
+    }
+
+    func testCaptureAlertReducerPresentsOnlyLatestConflictGeneration() {
+        let token = coordinatorToken(241)
+        let conflict = M720CaptureState(
+            deviceToken: token,
+            status: .conflict,
+            requiredCIDs: [],
+            requestID: nil
+        )
+        let active = M720CaptureState(
+            deviceToken: token,
+            status: .active,
+            requiredCIDs: [],
+            requestID: nil
+        )
+        var reducer = M720CaptureAlertReducer()
+
+        reducer.receive(conflict)
+        reducer.receive(active)
+        reducer.receive(conflict)
+
+        XCTAssertEqual(reducer.dequeueConflictForPresentation()?.deviceToken, token)
+        XCTAssertNil(reducer.dequeueConflictForPresentation())
     }
 
     func testCoordinatorPrepareAcknowledgesBeforeWorkAndAggregatesFrozenParticipants() throws {
