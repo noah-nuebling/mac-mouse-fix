@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2026**
 
+- 🇹🇼&nbsp;Ke☠️
 - 🇳🇱&nbsp;Rick&nbsp;K - "Thanks for the great tool. Makes the experience with my MX Master amazing on Mac."
 - 🇨🇦&nbsp;Stephanie&nbsp;Leung - "Such a great tool - now it's possible to use a vertical mouse and get the default experience!"
 - 🇺🇸&nbsp;Ryan&nbsp;Watts
