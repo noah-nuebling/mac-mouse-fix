@@ -231,6 +231,7 @@ import Foundation
         
         /// Init AddField visuals
         addField.coolInit()
+        configureAddModeClient()
     }
     
     func createTrackingArea() {
@@ -244,6 +245,12 @@ import Foundation
     
     override func viewWillAppear() {
         super.viewWillAppear()
+    }
+    override func viewWillDisappear() {
+        super.viewWillDisappear()
+        pointerIsInsideAddField = false
+        addModeClient.cancel()
+        addField.setAddMode(.idle)
     }
     override func viewDidAppear() {
         super.viewDidAppear()
@@ -605,30 +612,19 @@ import Foundation
     
     var pointerIsInsideAddField: Bool
     var trackingArea: NSTrackingArea
+    private let addModeClient = M720AddModeClient()
     
     /// AddField callbacks
     ///     TODO: Maybe think about race condition for the mouseEntered and mouseExited functions
 
     override func mouseEntered(with event: NSEvent) {
-        DispatchQueue.main.async {
-            
-            /// Not sure it makes sense to dispatch async for mouseEntered and mouseExited. We added that dispatch when addField.hoverEffect was controlled by messages we received instead of being based on response to the the messages we sent.
-            /// Here are some notes we wrote for the old architecture:
-            /// \discussion After addMode refactoring around commit 02c9fcc20d3f03d8b0d2db6e25830276ed937107 I saw a deadlock in the animationCode maybe dispatch to main will prevent it. Edit: Nope still happens. Edit2: Could fix the deadlock by not locking the CATransaction in Animate.swift. So dispatching to main here might be unnecessary.
-            
-            DDLogInfo("trackingg: mouseEntered")
-            
-            self.pointerIsInsideAddField = true
-            let success = MFMessagePort.sendMessage("enableAddMode", withPayload: nil, waitForReply: true)
-            if let success = success as? Bool, success == true {
-                self.addField.hoverEffect(enable: true)
-            }
-        }
+        DDLogInfo("trackingg: mouseEntered")
+        pointerIsInsideAddField = true
+        addField.setAddMode(.preparing)
+        addModeClient.begin()
     }
     override func mouseExited(with event: NSEvent) {
-        DispatchQueue.main.async {
-            self.mouseExited_Internal(dueToAddModeFeeback: false)
-        }
+        mouseExited_Internal(dueToAddModeFeeback: false)
     }
     
     func mouseExited_Internal(dueToAddModeFeeback: Bool) {
@@ -636,32 +632,75 @@ import Foundation
         DDLogInfo("trackingg: mouseExited dueToAddMode: \(dueToAddModeFeeback)")
         
         self.pointerIsInsideAddField = false
-        MFMessagePort.sendMessage("disableAddMode", withPayload: nil, waitForReply: false)
-        self.addField.hoverEffect(enable: false, playAcceptAnimation: dueToAddModeFeeback)
+        addModeClient.cancel()
+        addField.setAddMode(.idle)
+        if dueToAddModeFeeback {
+            addField.hoverEffect(enable: false, playAcceptAnimation: true)
+        }
     }
 
     @objc func handleAddModeFeedback(payload: NSDictionary) {
-        
-        DispatchQueue.main.async {
-            
-            /// Debug
-            DDLogDebug("Received AddMode feedback with payload: \(payload)")
-            
-            /// Send payoad to tableController
-            ///     The payload is an almost finished remapsTable (aka RemapTableController.dataModel) entry with the kMFRemapsKeyEffect key missing
-            self.tableController.addRow(withHelperPayload: payload as! [AnyHashable : Any])
-            
-            /// HACK: Force trackingArea to exit
-            /// - We need to do this because `addRow()` opens an `NSMenu`. And when an NSMenu is open, `NSTrackingArea` doesn't work properly, leading to weird behaviour.
-            ///     (The weird behaviour is that the mouse needs to enter twice before `mouseEntered()` is called again)
-            /// - Not totally sure if the + 0.5 delay is necessary or optimal. But I did some testing and it seems to work really well like this.
-            
-            self.mouseExited_Internal(dueToAddModeFeeback: true)
-            self.addField.removeTrackingArea(self.trackingArea)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                self.createTrackingArea()
-            })
+        onMain { [weak self] in
+            self?.addModeClient.handleFeedback(payload)
+        }
+    }
+
+    @objc func handleAddModePreparationResult(payload: NSDictionary) {
+        onMain { [weak self] in
+            self?.addModeClient.handlePreparationResult(payload)
+        }
+    }
+
+    @objc func handleAddModeStateChanged(payload: NSDictionary) {
+        onMain { [weak self] in
+            self?.addModeClient.handleStateChange(payload)
+        }
+    }
+
+    private func configureAddModeClient() {
+        addModeClient.onStateChange = { [weak self] state in
+            guard let self else { return }
+            switch state {
+            case .idle:
+                self.addField.setAddMode(.idle)
+            case .preparing:
+                self.addField.setAddMode(.preparing)
+            case .recording:
+                guard self.pointerIsInsideAddField else {
+                    self.addModeClient.cancel()
+                    return
+                }
+                self.addField.setAddMode(.recording)
+                self.addField.hoverEffect(enable: true)
+            }
+        }
+        addModeClient.onFailure = { error in
+            M720CaptureUIController.shared.presentFailure(error)
+        }
+        addModeClient.onFeedback = { [weak self] feedback in
+            self?.acceptAddModeFeedback(feedback)
+        }
+    }
+
+    private func acceptAddModeFeedback(_ feedback: NSDictionary) {
+        guard let row = feedback as? [AnyHashable: Any] else { return }
+        DDLogDebug("Received AddMode feedback with payload: \(feedback)")
+        tableController.addRow(withHelperPayload: row)
+        addModeClient.finishAfterSaving()
+        mouseExited_Internal(dueToAddModeFeeback: true)
+
+        /// HACK: Force trackingArea to exit after addRow() opens an NSMenu.
+        addField.removeTrackingArea(trackingArea)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.createTrackingArea()
+        }
+    }
+
+    private func onMain(_ action: @escaping () -> Void) {
+        if Thread.isMainThread {
+            action()
+        } else {
+            DispatchQueue.main.async(execute: action)
         }
     }
     

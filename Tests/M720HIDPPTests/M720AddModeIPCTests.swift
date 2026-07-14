@@ -359,6 +359,390 @@ final class M720AddModeIPCTests: XCTestCase {
 }
 
 extension M720AddModeIPCTests {
+    func testAddModeReducerMovesFromIdleThroughRecordingAndFinishesAfterFeedback() {
+        let requestID = coordinatorRequest(201)
+        var reducer = M720AddModeReducer()
+
+        XCTAssertEqual(reducer.begin(requestID, at: 10), .handled)
+        XCTAssertEqual(reducer.state, .preparing(requestID))
+        XCTAssertEqual(
+            reducer.receivePreparationResult(requestID: requestID, result: .ready),
+            .handled
+        )
+        XCTAssertEqual(reducer.state, .recording(requestID))
+        XCTAssertEqual(reducer.receiveFeedback(requestID: requestID), .handled)
+        XCTAssertEqual(reducer.finishAfterSaving(requestID), .handled)
+        XCTAssertEqual(reducer.state, .idle)
+    }
+
+    func testAddModeReducerCancelsPreparingAndRecordingRequests() {
+        let preparingID = coordinatorRequest(202)
+        var reducer = M720AddModeReducer()
+        reducer.begin(preparingID, at: 0)
+
+        XCTAssertEqual(reducer.cancel(preparingID), .handled)
+        XCTAssertEqual(reducer.state, .idle)
+
+        let recordingID = coordinatorRequest(203)
+        reducer.begin(recordingID, at: 1)
+        reducer.receivePreparationResult(requestID: recordingID, result: .ready)
+
+        XCTAssertEqual(reducer.cancel(recordingID), .handled)
+        XCTAssertEqual(reducer.state, .idle)
+    }
+
+    func testAddModeReducerOverlappingBeginMakesEarlierMessagesStale() {
+        let first = coordinatorRequest(204)
+        let second = coordinatorRequest(205)
+        var reducer = M720AddModeReducer()
+        reducer.begin(first, at: 0)
+
+        XCTAssertEqual(reducer.begin(second, at: 0.5), .handled)
+        XCTAssertEqual(reducer.state, .preparing(second))
+        XCTAssertEqual(
+            reducer.receivePreparationResult(requestID: first, result: .ready),
+            .ignored
+        )
+        XCTAssertEqual(reducer.receiveFeedback(requestID: first), .ignored)
+        XCTAssertEqual(reducer.receiveInactive(requestID: first), .ignored)
+        XCTAssertEqual(reducer.state, .preparing(second))
+    }
+
+    func testLateReadyCannotReopenCancelledRequest() {
+        let first = coordinatorRequest(206)
+        var reducer = M720AddModeReducer()
+        reducer.begin(first, at: 0)
+        reducer.cancel(first)
+
+        XCTAssertEqual(
+            reducer.receivePreparationResult(requestID: first, result: .ready),
+            .ignored
+        )
+        XCTAssertEqual(reducer.state, .idle)
+    }
+
+    func testAddModeReducerIgnoresLateFeedbackAndInactiveAfterFinish() {
+        let requestID = coordinatorRequest(207)
+        var reducer = M720AddModeReducer()
+        reducer.begin(requestID, at: 0)
+        reducer.receivePreparationResult(requestID: requestID, result: .ready)
+        reducer.finishAfterSaving(requestID)
+
+        XCTAssertEqual(reducer.receiveFeedback(requestID: requestID), .ignored)
+        XCTAssertEqual(reducer.receiveInactive(requestID: requestID), .ignored)
+        XCTAssertEqual(reducer.state, .idle)
+    }
+
+    func testAddModeReducerRenewsEveryTwoSeconds() {
+        let requestID = coordinatorRequest(208)
+        var reducer = M720AddModeReducer()
+        reducer.begin(requestID, at: 10)
+
+        XCTAssertEqual(reducer.timerFired(at: 11.999), .none)
+        XCTAssertEqual(reducer.timerFired(at: 12), .renew(requestID))
+        XCTAssertEqual(reducer.timerFired(at: 13.999), .none)
+        XCTAssertEqual(reducer.timerFired(at: 14), .renew(requestID))
+    }
+
+    func testAddModeReducerTimesOutPreparingLocallyAfterFiveSeconds() {
+        let requestID = coordinatorRequest(209)
+        var reducer = M720AddModeReducer()
+        reducer.begin(requestID, at: 20)
+
+        XCTAssertEqual(reducer.timerFired(at: 22), .renew(requestID))
+        XCTAssertEqual(reducer.timerFired(at: 24), .renew(requestID))
+        XCTAssertEqual(reducer.timerFired(at: 24.999), .none)
+        XCTAssertEqual(reducer.timerFired(at: 25), .deadline(requestID))
+        XCTAssertEqual(reducer.state, .idle)
+    }
+
+    func testAddModeReducerReadyClearsLocalDeadlineButKeepsLeaseRenewal() {
+        let requestID = coordinatorRequest(210)
+        var reducer = M720AddModeReducer()
+        reducer.begin(requestID, at: 30)
+        reducer.receivePreparationResult(requestID: requestID, result: .ready)
+
+        XCTAssertEqual(reducer.timerFired(at: 32), .renew(requestID))
+        XCTAssertEqual(reducer.timerFired(at: 34), .renew(requestID))
+        XCTAssertEqual(reducer.timerFired(at: 35), .none)
+        XCTAssertEqual(reducer.state, .recording(requestID))
+    }
+
+    func testAddModeReducerTerminalPreparationResultsReturnToIdle() {
+        let outcomes: [M720PreparationOutcome] = [
+            .failed(.timeout),
+            .conflict,
+            .cancelled,
+        ]
+
+        for (index, outcome) in outcomes.enumerated() {
+            let requestID = coordinatorRequest(211 + index)
+            var reducer = M720AddModeReducer()
+            reducer.begin(requestID, at: 0)
+
+            XCTAssertEqual(
+                reducer.receivePreparationResult(requestID: requestID, result: outcome),
+                .handled
+            )
+            XCTAssertEqual(reducer.state, .idle)
+        }
+    }
+
+    func testAddModeClientBeginIsNonblockingAndUsesTypedPrepareRequest() throws {
+        let harness = AddModeClientHarness(requestIDs: [coordinatorRequest(220)])
+
+        harness.client.begin()
+
+        XCTAssertEqual(harness.client.state, .preparing(coordinatorRequest(220)))
+        XCTAssertTrue(harness.sentMessages.isEmpty)
+        XCTAssertEqual(harness.timers.map(\.delay), [2, 5])
+        XCTAssertEqual(harness.timers.map(\.repeats), [true, false])
+
+        harness.drainIPC()
+
+        let sent = try XCTUnwrap(harness.sentMessages.single)
+        XCTAssertEqual(sent.name, M720IPCMessage.prepareAddMode)
+        XCTAssertTrue(sent.waitForReply)
+        XCTAssertEqual(try M720IPCRequest.decode(sent.payload).requestID, coordinatorRequest(220))
+    }
+
+    func testAddModeClientOverlappingBeginUsesFreshIDAndIgnoresStaleReady() {
+        let first = coordinatorRequest(221)
+        let second = coordinatorRequest(222)
+        let harness = AddModeClientHarness(requestIDs: [first, second])
+
+        harness.client.begin()
+        harness.client.begin()
+        harness.client.handlePreparationResult(
+            M720PreparationResult(requestID: first, outcome: .ready, deviceTokens: []).payload
+        )
+
+        XCTAssertEqual(harness.client.state, .preparing(second))
+        XCTAssertTrue(harness.timers.prefix(2).allSatisfy(\.isCancelled))
+
+        harness.client.handlePreparationResult(
+            M720PreparationResult(requestID: second, outcome: .ready, deviceTokens: []).payload
+        )
+        XCTAssertEqual(harness.client.state, .recording(second))
+    }
+
+    func testAddModeClientCancelStopsTimersBeforeInvalidatingAndSendsCorrelatedCancel() throws {
+        let requestID = coordinatorRequest(223)
+        let harness = AddModeClientHarness(requestIDs: [requestID])
+        var timersWereCancelledAtIdle = false
+        harness.client.onStateChange = { state in
+            if state == .idle {
+                timersWereCancelledAtIdle = harness.timers.allSatisfy(\.isCancelled)
+            }
+        }
+        harness.client.begin()
+        harness.drainIPC()
+
+        harness.client.cancel()
+
+        XCTAssertEqual(harness.client.state, .idle)
+        XCTAssertTrue(timersWereCancelledAtIdle)
+        harness.drainIPC()
+        let sent = try XCTUnwrap(harness.sentMessages.last)
+        XCTAssertEqual(sent.name, M720IPCMessage.cancelPreparation)
+        XCTAssertEqual(try M720IPCRequest.decode(sent.payload).requestID, requestID)
+    }
+
+    func testAddModeClientRoutesOnlyCorrelatedFeedbackAndFinishesAfterSaving() throws {
+        let requestID = coordinatorRequest(224)
+        let staleID = coordinatorRequest(225)
+        let harness = AddModeClientHarness(requestIDs: [requestID])
+        var feedbacks: [NSDictionary] = []
+        harness.client.onFeedback = { feedbacks.append($0) }
+        harness.client.begin()
+        harness.client.handlePreparationResult(
+            M720PreparationResult(requestID: requestID, outcome: .ready, deviceTokens: []).payload
+        )
+
+        harness.client.handleFeedback(M720AddModeFeedback(
+            requestID: staleID,
+            feedback: ["button": 7]
+        ).payload)
+        harness.client.handleFeedback(M720AddModeFeedback(
+            requestID: requestID,
+            feedback: ["button": 8]
+        ).payload)
+
+        XCTAssertEqual(feedbacks.count, 1)
+        XCTAssertEqual(feedbacks.single?["button"] as? Int, 8)
+        harness.client.finishAfterSaving()
+        XCTAssertEqual(harness.client.state, .idle)
+        harness.drainIPC()
+        let sent = try XCTUnwrap(harness.sentMessages.last)
+        XCTAssertEqual(sent.name, M720IPCMessage.finishAddMode)
+        XCTAssertEqual(try M720IPCRequest.decode(sent.payload).requestID, requestID)
+    }
+
+    func testAddModeClientRenewsAtTwoSecondsAndTimesOutPreparingAtFive() throws {
+        let requestID = coordinatorRequest(226)
+        let harness = AddModeClientHarness(requestIDs: [requestID])
+        var failures: [M720StableErrorCode] = []
+        harness.client.onFailure = { failures.append($0) }
+        harness.client.begin()
+        harness.drainIPC()
+
+        harness.now = 2
+        harness.timer(delay: 2).fire()
+        harness.drainIPC()
+        XCTAssertEqual(harness.sentMessages.last?.name, M720IPCMessage.renewLease)
+        XCTAssertEqual(
+            try M720IPCRequest.decode(harness.sentMessages.last?.payload).requestID,
+            requestID
+        )
+
+        harness.now = 5
+        harness.timer(delay: 5).fire()
+        XCTAssertEqual(harness.client.state, .idle)
+        XCTAssertEqual(failures, [.timeout])
+        harness.drainIPC()
+        XCTAssertEqual(harness.sentMessages.last?.name, M720IPCMessage.cancelPreparation)
+    }
+
+    func testAddModeClientRejectedAcknowledgementFailsCurrentRequestOnMain() {
+        let requestID = coordinatorRequest(227)
+        let harness = AddModeClientHarness(requestIDs: [requestID])
+        harness.reply = M720IPCAcknowledgement.rejected(.unsupported).payload
+        var failures: [M720StableErrorCode] = []
+        harness.client.onFailure = { failures.append($0) }
+
+        harness.client.begin()
+        XCTAssertEqual(harness.client.state, .preparing(requestID))
+        harness.drainIPC()
+
+        XCTAssertEqual(harness.client.state, .idle)
+        XCTAssertEqual(failures, [.unsupported])
+    }
+
+    func testAddModeClientCurrentInactiveStopsRecordingAndLateInactiveIsIgnored() {
+        let first = coordinatorRequest(228)
+        let second = coordinatorRequest(229)
+        let harness = AddModeClientHarness(requestIDs: [first, second])
+        harness.client.begin()
+        harness.client.begin()
+        harness.client.handlePreparationResult(
+            M720PreparationResult(requestID: second, outcome: .ready, deviceTokens: []).payload
+        )
+
+        harness.client.handleStateChange(
+            M720AddModeStateChange(requestID: first, reason: .cancelled).payload
+        )
+        XCTAssertEqual(harness.client.state, .recording(second))
+
+        harness.client.handleStateChange(
+            M720AddModeStateChange(requestID: second, reason: .deviceSetChanged).payload
+        )
+        XCTAssertEqual(harness.client.state, .idle)
+    }
+
+    func testAddModeClientIgnoresMalformedStaleEnvelopeButFailsMalformedCurrentEnvelope() {
+        let first = coordinatorRequest(236)
+        let second = coordinatorRequest(237)
+        let harness = AddModeClientHarness(requestIDs: [first, second])
+        var failures: [M720StableErrorCode] = []
+        harness.client.onFailure = { failures.append($0) }
+        harness.client.begin()
+        harness.client.begin()
+
+        harness.client.handlePreparationResult([
+            "requestID": first.uuidString,
+            "state": "not-a-state",
+        ])
+        XCTAssertEqual(harness.client.state, .preparing(second))
+        XCTAssertTrue(failures.isEmpty)
+
+        harness.client.handlePreparationResult([
+            "requestID": second.uuidString,
+            "state": "not-a-state",
+        ])
+        XCTAssertEqual(harness.client.state, .idle)
+        XCTAssertEqual(failures, [.protocol])
+    }
+
+    func testCaptureAlertReducerDedupesConflictUntilStateChanges() {
+        let token = coordinatorToken(230)
+        let conflict = M720CaptureState(
+            deviceToken: token,
+            status: .conflict,
+            requiredCIDs: [0x005B],
+            requestID: nil
+        )
+        let active = M720CaptureState(
+            deviceToken: token,
+            status: .active,
+            requiredCIDs: [0x005B],
+            requestID: nil
+        )
+        var reducer = M720CaptureAlertReducer()
+
+        XCTAssertTrue(reducer.shouldPresent(conflict))
+        XCTAssertFalse(reducer.shouldPresent(conflict))
+        XCTAssertFalse(reducer.shouldPresent(active))
+        XCTAssertTrue(reducer.shouldPresent(conflict))
+    }
+
+    func testCaptureAlertReducerKeysDedupeByDeviceStateAndError() {
+        let first = coordinatorToken(231)
+        let second = coordinatorToken(232)
+        var reducer = M720CaptureAlertReducer()
+
+        XCTAssertTrue(reducer.shouldPresent(M720CaptureState(
+            deviceToken: first,
+            status: .conflict,
+            requiredCIDs: [],
+            requestID: nil
+        )))
+        XCTAssertTrue(reducer.shouldPresent(M720CaptureState(
+            deviceToken: second,
+            status: .conflict,
+            requiredCIDs: [],
+            requestID: nil
+        )))
+        XCTAssertFalse(reducer.shouldPresent(M720CaptureState(
+            deviceToken: first,
+            status: .conflict,
+            requiredCIDs: [0x00C4],
+            requestID: coordinatorRequest(233)
+        )))
+    }
+
+    func testCaptureAlertReducerShowsStaleTokenDisconnectedOnlyOnce() {
+        let token = coordinatorToken(234)
+        var reducer = M720CaptureAlertReducer()
+
+        XCTAssertTrue(reducer.shouldPresentRetryError(
+            deviceToken: token,
+            errorCode: .disconnected
+        ))
+        XCTAssertFalse(reducer.shouldPresentRetryError(
+            deviceToken: token,
+            errorCode: .disconnected
+        ))
+        XCTAssertTrue(reducer.shouldPresentRetryError(
+            deviceToken: token,
+            errorCode: .protocol
+        ))
+    }
+
+    func testCaptureAlertReducerSnapshotRemovalAllowsFutureConflict() {
+        let token = coordinatorToken(235)
+        let conflict = M720CaptureState(
+            deviceToken: token,
+            status: .conflict,
+            requiredCIDs: [],
+            requestID: nil
+        )
+        var reducer = M720CaptureAlertReducer()
+
+        XCTAssertEqual(reducer.replaceSnapshot([conflict]).map(\.deviceToken), [token])
+        XCTAssertTrue(reducer.replaceSnapshot([]).isEmpty)
+        XCTAssertEqual(reducer.replaceSnapshot([conflict]).map(\.deviceToken), [token])
+    }
+
     func testCoordinatorPrepareAcknowledgesBeforeWorkAndAggregatesFrozenParticipants() throws {
         let first = coordinatorToken(1)
         let second = coordinatorToken(2)
@@ -1262,6 +1646,83 @@ private final class CoordinatorHarness {
 private struct CoordinatorSentMessage {
     let name: String
     let payload: NSDictionary
+}
+
+private struct AddModeClientSentMessage {
+    let name: String
+    let payload: NSDictionary?
+    let waitForReply: Bool
+}
+
+private final class AddModeClientManualTimer: M720AddModeClientTimer {
+    let delay: TimeInterval
+    let repeats: Bool
+    let action: () -> Void
+    private(set) var isCancelled = false
+
+    init(delay: TimeInterval, repeats: Bool, action: @escaping () -> Void) {
+        self.delay = delay
+        self.repeats = repeats
+        self.action = action
+    }
+
+    func cancel() { isCancelled = true }
+
+    func fire() {
+        guard !isCancelled else { return }
+        action()
+        if !repeats { isCancelled = true }
+    }
+}
+
+private final class AddModeClientHarness {
+    var now: TimeInterval = 0
+    var reply: Any? = M720IPCAcknowledgement.accepted.payload
+    private var requestIDs: [UUID]
+    private var ipcBlocks: [() -> Void] = []
+    private(set) var sentMessages: [AddModeClientSentMessage] = []
+    private(set) var timers: [AddModeClientManualTimer] = []
+
+    lazy var client = M720AddModeClient(
+        requestIDFactory: { [unowned self] in self.requestIDs.removeFirst() },
+        now: { [unowned self] in self.now },
+        sendMessage: { [unowned self] name, payload, waitForReply in
+            self.sentMessages.append(AddModeClientSentMessage(
+                name: name,
+                payload: payload,
+                waitForReply: waitForReply
+            ))
+            return self.reply
+        },
+        executeIPC: { [unowned self] block in self.ipcBlocks.append(block) },
+        executeMain: { block in block() },
+        makeTimer: { [unowned self] delay, repeats, action in
+            let timer = AddModeClientManualTimer(
+                delay: delay,
+                repeats: repeats,
+                action: action
+            )
+            self.timers.append(timer)
+            return timer
+        }
+    )
+
+    init(requestIDs: [UUID]) {
+        self.requestIDs = requestIDs
+    }
+
+    func drainIPC() {
+        while !ipcBlocks.isEmpty {
+            ipcBlocks.removeFirst()()
+        }
+    }
+
+    func timer(delay: TimeInterval) -> AddModeClientManualTimer {
+        guard let timer = timers.first(where: { $0.delay == delay && !$0.isCancelled }) else {
+            fatalError("Missing active timer at delay \(delay)")
+        }
+        return timer
+    }
 }
 
 private final class CoordinatorFakeController: M720AddModeController {

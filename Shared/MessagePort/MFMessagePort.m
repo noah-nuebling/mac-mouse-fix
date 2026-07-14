@@ -109,6 +109,12 @@
     CFRunLoopSourceRef runLoopSource = CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, localPort, 0);
     CFRunLoopAddSource(CFRunLoopGetMain(), runLoopSource, kCFRunLoopCommonModes);
     CFRelease(runLoopSource);
+
+    #if IS_MAIN_APP
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [M720CaptureUIController.shared refreshCaptureStates];
+        });
+    #endif
 }
 
 NSString *CFMessagePortSendRequest_ErrorCode_ToString(SInt32 errorCode) {
@@ -161,8 +167,17 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     
     #if IS_MAIN_APP
         
+        xxx(@"addModePreparationResult") {
+            [MainAppState.shared.buttonTabController handleAddModePreparationResultWithPayload:(NSDictionary *)payload];
+        }
+        xxx(@"addModeStateChanged") {
+            [MainAppState.shared.buttonTabController handleAddModeStateChangedWithPayload:(NSDictionary *)payload];
+        }
         xxx(@"addModeFeedback") {
             [MainAppState.shared.buttonTabController handleAddModeFeedbackWithPayload:(NSDictionary *)payload];
+        }
+        xxx(@"m720CaptureStateChanged") {
+            [M720CaptureUIController.shared handleCaptureStateChangedWithPayload:(NSDictionary *)payload];
         }
         xxx(@"keyCaptureModeFeedback") {
             [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:NO];
@@ -178,6 +193,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
             BOOL isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload: payload];
             if (!isStrange) {
                 [AuthorizeAccessibilityView add];
+                [M720CaptureUIController.shared refreshCaptureStates];
             }
         }
         
@@ -199,6 +215,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
                 
                 /// Notify rest of the app
                 [EnabledState.shared reactToDidBecomeEnabled];
+                [M720CaptureUIController.shared refreshCaptureStates];
             }
             
         }

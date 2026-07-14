@@ -453,6 +453,152 @@ struct M720AddModeFeedback: Equatable {
     }
 }
 
+struct M720AddModeReducer {
+    enum State: Equatable {
+        case idle
+        case preparing(UUID)
+        case recording(UUID)
+    }
+
+    enum EventResult: Equatable {
+        case handled
+        case ignored
+    }
+
+    enum TimerAction: Equatable {
+        case none
+        case renew(UUID)
+        case deadline(UUID)
+    }
+
+    static let renewalInterval: TimeInterval = 2
+    static let preparationDeadline: TimeInterval = 5
+
+    private(set) var state: State = .idle
+    private var nextRenewalAt: TimeInterval?
+    private var deadlineAt: TimeInterval?
+
+    @discardableResult
+    mutating func begin(_ requestID: UUID, at time: TimeInterval = 0) -> EventResult {
+        state = .preparing(requestID)
+        nextRenewalAt = time + Self.renewalInterval
+        deadlineAt = time + Self.preparationDeadline
+        return .handled
+    }
+
+    @discardableResult
+    mutating func cancel(_ requestID: UUID) -> EventResult {
+        guard currentRequestID == requestID else { return .ignored }
+        transitionToIdle()
+        return .handled
+    }
+
+    @discardableResult
+    mutating func receivePreparationResult(
+        requestID: UUID,
+        result: M720PreparationOutcome
+    ) -> EventResult {
+        guard state == .preparing(requestID) else { return .ignored }
+        switch result {
+        case .ready:
+            state = .recording(requestID)
+            deadlineAt = nil
+        case .failed, .conflict, .cancelled:
+            transitionToIdle()
+        }
+        return .handled
+    }
+
+    func receiveFeedback(requestID: UUID) -> EventResult {
+        state == .recording(requestID) ? .handled : .ignored
+    }
+
+    @discardableResult
+    mutating func receiveInactive(requestID: UUID) -> EventResult {
+        guard currentRequestID == requestID else { return .ignored }
+        transitionToIdle()
+        return .handled
+    }
+
+    @discardableResult
+    mutating func finishAfterSaving(_ requestID: UUID) -> EventResult {
+        guard state == .recording(requestID) else { return .ignored }
+        transitionToIdle()
+        return .handled
+    }
+
+    mutating func timerFired(at time: TimeInterval) -> TimerAction {
+        guard let requestID = currentRequestID else { return .none }
+        if let deadlineAt, time >= deadlineAt {
+            transitionToIdle()
+            return .deadline(requestID)
+        }
+        guard let nextRenewalAt, time >= nextRenewalAt else { return .none }
+        self.nextRenewalAt = time + Self.renewalInterval
+        return .renew(requestID)
+    }
+
+    var currentRequestID: UUID? {
+        switch state {
+        case .idle:
+            return nil
+        case let .preparing(requestID), let .recording(requestID):
+            return requestID
+        }
+    }
+
+    private mutating func transitionToIdle() {
+        state = .idle
+        nextRenewalAt = nil
+        deadlineAt = nil
+    }
+}
+
+struct CaptureAlertKey: Equatable {
+    let deviceToken: UUID
+    let state: M720SessionStateName
+    let errorCode: M720StableErrorCode?
+}
+
+struct M720CaptureAlertReducer {
+    private var lastObservedKeyByDevice: [UUID: CaptureAlertKey] = [:]
+
+    mutating func shouldPresent(_ snapshot: M720CaptureState) -> Bool {
+        let key = CaptureAlertKey(
+            deviceToken: snapshot.deviceToken,
+            state: snapshot.state,
+            errorCode: snapshot.error
+        )
+        let previous = lastObservedKeyByDevice.updateValue(
+            key,
+            forKey: snapshot.deviceToken
+        )
+        guard snapshot.state == .conflict else { return false }
+        return previous != key
+    }
+
+    mutating func shouldPresentRetryError(
+        deviceToken: UUID,
+        errorCode: M720StableErrorCode
+    ) -> Bool {
+        let key = CaptureAlertKey(
+            deviceToken: deviceToken,
+            state: .invalid,
+            errorCode: errorCode
+        )
+        let previous = lastObservedKeyByDevice.updateValue(key, forKey: deviceToken)
+        return previous != key
+    }
+
+    mutating func replaceSnapshot(_ snapshots: [M720CaptureState]) -> [M720CaptureState] {
+        let currentTokens = Set(snapshots.map(\.deviceToken))
+        lastObservedKeyByDevice = lastObservedKeyByDevice.filter {
+            currentTokens.contains($0.key)
+        }
+        return snapshots.filter { shouldPresent($0) }
+    }
+}
+
 struct M720EmptyPayload: Equatable {
     static func decode(_ raw: Any?) throws -> Self {
         guard raw == nil else { throw M720IPCDecodeError.protocolViolation }
