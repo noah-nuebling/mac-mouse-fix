@@ -620,6 +620,99 @@ final class M720OwnershipJournalTests: XCTestCase {
         XCTAssertTrue(store.savedSnapshots.isEmpty)
     }
 
+    func testConditionalMutationCannotCommitAfterDeadlineClosesPermissionAtStoreBoundary() throws {
+        let key = fixtureKey(serialNumber: "deadline-mutation")
+        let original = journal(key: key, controls: [fixtureEntry(phase: .prepared)])
+        let store = FakeM720JournalStore(durable: original)
+        let repository = M720OwnershipJournalRepository(store: store)
+        _ = try awaitRepositoryResult { repository.reload(completion: $0) }.get()
+        let permission = M720JournalCommitPermission()
+        let enteredStore = expectation(description: "mutation reached value commit")
+        let commitGate = ControlledM720StoreCommitGate(entered: enteredStore)
+        store.saveCommitGate = commitGate
+        let completed = expectation(description: "conditional mutation completion")
+        var mutationResult: Result<M720OwnershipJournal, Error>?
+        repository.mutateCID(
+            for: key,
+            cid: 0x005B,
+            mutation: { existing in
+                var updated = try XCTUnwrap(existing)
+                updated.phase = .applied
+                return updated
+            },
+            commitPermission: permission,
+            completion: {
+                mutationResult = $0
+                completed.fulfill()
+            }
+        )
+        wait(for: [enteredStore], timeout: 3)
+
+        let scheduler = ManualScheduler()
+        var shutdownResults: [Bool] = []
+        let coordinator = M720ShutdownCoordinator(
+            scheduler: scheduler,
+            deadlineReached: { permission.close() },
+            cleanup: { _ in }
+        )
+        coordinator.beginShutdown { shutdownResults.append($0) }
+        scheduler.advance(to: 3)
+        XCTAssertEqual(shutdownResults, [false])
+        let journalAtDeadline = store.durable
+
+        commitGate.resume()
+        wait(for: [completed], timeout: 3)
+
+        XCTAssertThrowsError(try XCTUnwrap(mutationResult).get()) { error in
+            XCTAssertEqual(error as? M720JournalRepositoryError, .mutationFenced)
+        }
+        XCTAssertEqual(store.durable, journalAtDeadline)
+    }
+
+    func testConditionalQuarantineAcknowledgementCannotCommitAfterDeadline() throws {
+        let original = journal(
+            key: fixtureKey(serialNumber: "deadline-quarantine"),
+            controls: [fixtureEntry(phase: .applied)]
+        )
+        let store = FakeM720JournalStore(durable: original)
+        let repository = M720OwnershipJournalRepository(store: store)
+        _ = try awaitRepositoryResult { repository.reload(completion: $0) }.get()
+        let permission = M720JournalCommitPermission()
+        let enteredStore = expectation(description: "acknowledgement reached value commit")
+        let commitGate = ControlledM720StoreCommitGate(entered: enteredStore)
+        store.acknowledgementCommitGate = commitGate
+        let completed = expectation(description: "conditional acknowledgement completion")
+        var acknowledgementResult: Result<M720OwnershipJournal, Error>?
+        repository.acknowledgeQuarantineWithFreshEmptyV1(
+            commitPermission: permission,
+            completion: {
+                acknowledgementResult = $0
+                completed.fulfill()
+            }
+        )
+        wait(for: [enteredStore], timeout: 3)
+
+        let scheduler = ManualScheduler()
+        var shutdownResults: [Bool] = []
+        let coordinator = M720ShutdownCoordinator(
+            scheduler: scheduler,
+            deadlineReached: { permission.close() },
+            cleanup: { _ in }
+        )
+        coordinator.beginShutdown { shutdownResults.append($0) }
+        scheduler.advance(to: 3)
+        XCTAssertEqual(shutdownResults, [false])
+        let journalAtDeadline = store.durable
+
+        commitGate.resume()
+        wait(for: [completed], timeout: 3)
+
+        XCTAssertThrowsError(try XCTUnwrap(acknowledgementResult).get()) { error in
+            XCTAssertEqual(error as? M720JournalRepositoryError, .mutationFenced)
+        }
+        XCTAssertEqual(store.durable, journalAtDeadline)
+    }
+
     func testRepositoryProductionUncertainSaveAutomaticallyReloadsPersistedSnapshot() throws {
         let (healthyStore, finalURL) = makeStore()
         let key = fixtureKey()
@@ -1346,16 +1439,23 @@ private final class PersistThenThrowUncertainOnceM720JournalStore: M720JournalSt
         try delegate.load()
     }
 
-    func save(_ journal: M720OwnershipJournal) throws {
-        try delegate.save(journal)
+    func save(
+        _ journal: M720OwnershipJournal,
+        commitPermission: M720JournalCommitPermission
+    ) throws {
+        try delegate.save(journal, commitPermission: commitPermission)
         if shouldThrowAfterSave {
             shouldThrowAfterSave = false
             throw M720JournalStoreError.uncertain
         }
     }
 
-    func acknowledgeQuarantineWithFreshEmptyV1() throws -> M720OwnershipJournal {
-        try delegate.acknowledgeQuarantineWithFreshEmptyV1()
+    func acknowledgeQuarantineWithFreshEmptyV1(
+        commitPermission: M720JournalCommitPermission
+    ) throws -> M720OwnershipJournal {
+        try delegate.acknowledgeQuarantineWithFreshEmptyV1(
+            commitPermission: commitPermission
+        )
     }
 }
 
@@ -1372,6 +1472,8 @@ private final class FakeM720JournalStore: M720JournalStoring {
     var failSaveNumbers: Set<Int> = []
     var loadError: Error?
     var acknowledgementError: Error?
+    var saveCommitGate: ControlledM720StoreCommitGate?
+    var acknowledgementCommitGate: ControlledM720StoreCommitGate?
     var operationWasMainThread: [Bool] = []
     private var saveCallCount = 0
 
@@ -1387,22 +1489,60 @@ private final class FakeM720JournalStore: M720JournalStoring {
         return durable
     }
 
-    func save(_ journal: M720OwnershipJournal) throws {
+    func save(
+        _ journal: M720OwnershipJournal,
+        commitPermission: M720JournalCommitPermission
+    ) throws {
         operationWasMainThread.append(Thread.isMainThread)
         saveCallCount += 1
         if failSaveNumbers.contains(saveCallCount) {
             throw Failure.save(saveCallCount)
         }
-        durable = journal
-        savedSnapshots.append(journal)
+        saveCommitGate?.pause()
+        try commitPermission.performCommit {
+            durable = journal
+            savedSnapshots.append(journal)
+        }
     }
 
-    func acknowledgeQuarantineWithFreshEmptyV1() throws -> M720OwnershipJournal {
+    func acknowledgeQuarantineWithFreshEmptyV1(
+        commitPermission: M720JournalCommitPermission
+    ) throws -> M720OwnershipJournal {
         operationWasMainThread.append(Thread.isMainThread)
         if let acknowledgementError {
             throw acknowledgementError
         }
-        durable = .emptyV1
+        acknowledgementCommitGate?.pause()
+        try commitPermission.performCommit {
+            durable = .emptyV1
+        }
         return .emptyV1
+    }
+}
+
+private final class ControlledM720StoreCommitGate {
+    private let entered: XCTestExpectation
+    private let resumeSemaphore = DispatchSemaphore(value: 0)
+    private let lock = NSLock()
+    private var didResume = false
+
+    init(entered: XCTestExpectation) {
+        self.entered = entered
+    }
+
+    func pause() {
+        entered.fulfill()
+        resumeSemaphore.wait()
+    }
+
+    func resume() {
+        lock.lock()
+        guard !didResume else {
+            lock.unlock()
+            return
+        }
+        didResume = true
+        lock.unlock()
+        resumeSemaphore.signal()
     }
 }

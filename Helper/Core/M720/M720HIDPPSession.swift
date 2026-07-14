@@ -10,23 +10,6 @@ enum M720SessionState: Equatable {
     case invalid(M720StableErrorCode)
 }
 
-private final class M720JournalMutationFence {
-    private let lock = NSLock()
-    private var isOpen = true
-
-    var allowsMutation: Bool {
-        lock.lock()
-        defer { lock.unlock() }
-        return isOpen
-    }
-
-    func close() {
-        lock.lock()
-        isOpen = false
-        lock.unlock()
-    }
-}
-
 protocol M720JournalCoordinating: AnyObject {
     typealias Completion = (Result<M720OwnershipJournal, Error>) -> Void
 
@@ -36,17 +19,17 @@ protocol M720JournalCoordinating: AnyObject {
         for key: M720DeviceKey,
         cid: UInt16,
         mutation: @escaping (M720JournalCIDEntry?) throws -> M720JournalCIDEntry?,
-        ifPermittedBy permission: @escaping () -> Bool,
+        commitPermission: M720JournalCommitPermission,
         completion: @escaping Completion
     )
     func removeDevice(
         for key: M720DeviceKey,
         expected: M720JournalDevice?,
-        ifPermittedBy permission: @escaping () -> Bool,
+        commitPermission: M720JournalCommitPermission,
         completion: @escaping Completion
     )
     func acknowledgeQuarantineWithFreshEmptyV1(
-        ifPermittedBy permission: @escaping () -> Bool,
+        commitPermission: M720JournalCommitPermission,
         completion: @escaping Completion
     )
 }
@@ -207,7 +190,7 @@ final class M720HIDPPSession {
     private var terminalFinalizationStarted = false
     private var terminalFinished = false
     private var terminalShutdownReason: M720StableErrorCode = .cancelled
-    private let shutdownJournalFence = M720JournalMutationFence()
+    private let shutdownJournalCommitPermission = M720JournalCommitPermission()
     private var nextShutdownGeneration: UInt64 = 0
     private var activeShutdownGeneration: UInt64?
     private var fencedShutdownGeneration: UInt64?
@@ -613,7 +596,7 @@ final class M720HIDPPSession {
         let generation = ensureActiveShutdownGeneration()
         guard fencedShutdownGeneration != generation else { return }
         fencedShutdownGeneration = generation
-        shutdownJournalFence.close()
+        shutdownJournalCommitPermission.close()
     }
 
     private func ensureActiveShutdownGeneration() -> UInt64 {
@@ -773,9 +756,7 @@ final class M720HIDPPSession {
 
         if journalTrustQuarantined {
             journalRepository.acknowledgeQuarantineWithFreshEmptyV1(
-                ifPermittedBy: { [shutdownJournalFence] in
-                    shutdownJournalFence.allowsMutation
-                },
+                commitPermission: shutdownJournalCommitPermission,
                 completion: { [weak self] result in
                     self?.handleRetryJournalPreparation(
                         result,
@@ -791,9 +772,7 @@ final class M720HIDPPSession {
             journalRepository.removeDevice(
                 for: deviceKey,
                 expected: expected,
-                ifPermittedBy: { [shutdownJournalFence] in
-                    shutdownJournalFence.allowsMutation
-                },
+                commitPermission: shutdownJournalCommitPermission,
                 completion: { [weak self] result in
                     self?.handleRetryJournalPreparation(
                         result,
@@ -900,9 +879,7 @@ final class M720HIDPPSession {
                 self.journalRepository.removeDevice(
                     for: self.deviceKey,
                     expected: nil,
-                    ifPermittedBy: { [shutdownJournalFence = self.shutdownJournalFence] in
-                        shutdownJournalFence.allowsMutation
-                    },
+                    commitPermission: self.shutdownJournalCommitPermission,
                     completion: { [weak self] result in
                         self?.handleRetryJournalPreparation(
                             result,
@@ -1321,9 +1298,7 @@ final class M720HIDPPSession {
             for: deviceKey,
             cid: classification.entry.cid,
             mutation: mutation,
-            ifPermittedBy: { [shutdownJournalFence] in
-                shutdownJournalFence.allowsMutation
-            }
+            commitPermission: shutdownJournalCommitPermission
         ) { [weak self] result in
             DispatchQueue.main.async { [weak self] in
                 guard let self, self.continuationIsCurrent(
@@ -1587,9 +1562,7 @@ final class M720HIDPPSession {
                     phase: .prepared
                 )
             },
-            ifPermittedBy: { [shutdownJournalFence] in
-                shutdownJournalFence.allowsMutation
-            }
+            commitPermission: shutdownJournalCommitPermission
         ) { [weak self] result in
             DispatchQueue.main.async { [weak self] in
                 guard let self, self.takeoverBaseContinuationIsCurrent(
@@ -1763,9 +1736,7 @@ final class M720HIDPPSession {
                 existing.phase = .applied
                 return existing
             },
-            ifPermittedBy: { [shutdownJournalFence] in
-                shutdownJournalFence.allowsMutation
-            }
+            commitPermission: shutdownJournalCommitPermission
         ) { [weak self] result in
             DispatchQueue.main.async { [weak self] in
                 guard let self, self.takeoverBaseContinuationIsCurrent(
@@ -2346,9 +2317,7 @@ final class M720HIDPPSession {
                 existing.phase = .restoring
                 return existing
             },
-            ifPermittedBy: { [shutdownJournalFence] in
-                shutdownJournalFence.allowsMutation
-            }
+            commitPermission: shutdownJournalCommitPermission
         ) { [weak self] result in
             DispatchQueue.main.async { [weak self] in
                 guard let self, self.continuationIsCurrent(
@@ -2516,9 +2485,7 @@ final class M720HIDPPSession {
                 }
                 return nil
             },
-            ifPermittedBy: { [shutdownJournalFence] in
-                shutdownJournalFence.allowsMutation
-            }
+            commitPermission: shutdownJournalCommitPermission
         ) { [weak self] result in
             DispatchQueue.main.async { [weak self] in
                 guard let self, self.continuationIsCurrent(

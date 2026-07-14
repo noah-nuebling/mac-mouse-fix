@@ -765,7 +765,7 @@ final class M720ControllerLifecycleTests: XCTestCase {
         XCTAssertEqual(completions, 1)
     }
 
-    func testShutdownDeadlineReachesLiveAndJoinedRemovalSessionsOnce() {
+    func testShutdownDeadlineReachesParticipantRemovedAfterJoiningShutdown() {
         let harness = M720ControllerHarness()
         let removing = harness.makeDevice(snapshot: .m720(
             registryEntryID: 925,
@@ -783,6 +783,8 @@ final class M720ControllerLifecycleTests: XCTestCase {
         harness.controller.prepareForDeviceRemoval(removing) {}
 
         harness.controller.shutdown {}
+        removingSession.completeInvalidation()
+        XCTAssertEqual(harness.controller.captureStateSnapshots().count, 1)
         harness.controller.shutdownDeadlineReached()
         harness.controller.shutdownDeadlineReached()
 

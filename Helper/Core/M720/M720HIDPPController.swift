@@ -240,6 +240,7 @@ final class M720HIDPPController: NSObject {
     private var shutdownStarted = false
     private var shutdownFinished = false
     private var shutdownDeadlineWasPropagated = false
+    private var shutdownParticipants: [M720SessionControlling] = []
     private var shutdownWaiters: [() -> Void] = []
 
     @nonobjc var onPreparationContextChange: ((M720PreparationContextChange) -> Void)?
@@ -412,6 +413,13 @@ final class M720HIDPPController: NSObject {
         pendingReplacements.removeAll()
 
         let currentEntries = entries.values.filter { !$0.invalidationFinished }
+        var participantIdentities = Set<ObjectIdentifier>()
+        shutdownParticipants = currentEntries.compactMap { entry in
+            guard participantIdentities.insert(ObjectIdentifier(entry.session)).inserted else {
+                return nil
+            }
+            return entry.session
+        }
         guard !currentEntries.isEmpty else {
             finishShutdown()
             return
@@ -441,6 +449,7 @@ final class M720HIDPPController: NSObject {
     private func finishShutdown() {
         guard shutdownStarted, !shutdownFinished else { return }
         shutdownFinished = true
+        shutdownParticipants.removeAll()
         let completions = shutdownWaiters
         shutdownWaiters.removeAll()
         completions.forEach { $0() }
@@ -450,9 +459,9 @@ final class M720HIDPPController: NSObject {
         requireMainTurn()
         guard shutdownStarted, !shutdownDeadlineWasPropagated else { return }
         shutdownDeadlineWasPropagated = true
-        for entry in entries.values where !entry.invalidationFinished {
-            entry.session.shutdownDeadlineReached()
-        }
+        let participants = shutdownParticipants
+        shutdownParticipants.removeAll()
+        participants.forEach { $0.shutdownDeadlineReached() }
     }
 
     @nonobjc func captureStateSnapshots() -> [M720ControllerSessionSnapshot] {

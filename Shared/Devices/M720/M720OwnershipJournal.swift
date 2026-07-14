@@ -123,11 +123,57 @@ private extension M720DeviceKey {
     }
 }
 
+final class M720JournalCommitPermission {
+    private let lock = NSLock()
+    private var isOpen = true
+
+    func check() throws {
+        lock.lock()
+        defer { lock.unlock() }
+        guard isOpen else {
+            throw M720JournalRepositoryError.mutationFenced
+        }
+    }
+
+    func performCommit<T>(_ commit: () throws -> T) throws -> T {
+        lock.lock()
+        defer { lock.unlock() }
+        guard isOpen else {
+            throw M720JournalRepositoryError.mutationFenced
+        }
+        return try commit()
+    }
+
+    func close() {
+        lock.lock()
+        isOpen = false
+        lock.unlock()
+    }
+}
+
 protocol M720JournalStoring: AnyObject {
     func load() throws -> M720OwnershipJournal
-    func save(_ journal: M720OwnershipJournal) throws
+    func save(
+        _ journal: M720OwnershipJournal,
+        commitPermission: M720JournalCommitPermission
+    ) throws
     @discardableResult
-    func acknowledgeQuarantineWithFreshEmptyV1() throws -> M720OwnershipJournal
+    func acknowledgeQuarantineWithFreshEmptyV1(
+        commitPermission: M720JournalCommitPermission
+    ) throws -> M720OwnershipJournal
+}
+
+extension M720JournalStoring {
+    func save(_ journal: M720OwnershipJournal) throws {
+        try save(journal, commitPermission: M720JournalCommitPermission())
+    }
+
+    @discardableResult
+    func acknowledgeQuarantineWithFreshEmptyV1() throws -> M720OwnershipJournal {
+        try acknowledgeQuarantineWithFreshEmptyV1(
+            commitPermission: M720JournalCommitPermission()
+        )
+    }
 }
 
 enum M720JournalStoreError: Error, Equatable {
@@ -198,23 +244,28 @@ final class M720OwnershipJournalStore: M720JournalStoring {
         }
     }
 
-    func save(_ journal: M720OwnershipJournal) throws {
+    func save(
+        _ journal: M720OwnershipJournal,
+        commitPermission: M720JournalCommitPermission
+    ) throws {
         try withLock {
             let canonical = try journal.validatedCanonicalized()
             if try !nodeExists(at: finalURL), try !matchingCorruptSiblings().isEmpty {
                 throw M720JournalStoreError.quarantined
             }
-            try atomicSave(canonical)
+            try atomicSave(canonical, commitPermission: commitPermission)
         }
     }
 
     @discardableResult
-    func acknowledgeQuarantineWithFreshEmptyV1() throws -> M720OwnershipJournal {
+    func acknowledgeQuarantineWithFreshEmptyV1(
+        commitPermission: M720JournalCommitPermission
+    ) throws -> M720OwnershipJournal {
         try withLock {
             guard try !nodeExists(at: finalURL), try !matchingCorruptSiblings().isEmpty else {
                 throw M720JournalStoreError.notQuarantined
             }
-            try atomicSave(.emptyV1)
+            try atomicSave(.emptyV1, commitPermission: commitPermission)
             return .emptyV1
         }
     }
@@ -262,7 +313,10 @@ final class M720OwnershipJournalStore: M720JournalStoring {
         }
     }
 
-    private func atomicSave(_ journal: M720OwnershipJournal) throws {
+    private func atomicSave(
+        _ journal: M720OwnershipJournal,
+        commitPermission: M720JournalCommitPermission
+    ) throws {
         let encoder = PropertyListEncoder()
         encoder.outputFormat = .xml
         let data = try encoder.encode(journal)
@@ -292,8 +346,10 @@ final class M720OwnershipJournalStore: M720JournalStoring {
         try writeAll(data, to: descriptor)
         try synchronizeFile(descriptor)
         try closeFile(&descriptor)
-        try rename(from: tempURL, to: finalURL)
-        renamed = true
+        try commitPermission.performCommit {
+            try rename(from: tempURL, to: finalURL)
+            renamed = true
+        }
         do {
             try synchronizeDirectory(parentURL)
         } catch {
@@ -476,7 +532,7 @@ final class M720OwnershipJournalRepository {
             for: key,
             cid: cid,
             mutation: mutation,
-            ifPermittedBy: { true },
+            commitPermission: M720JournalCommitPermission(),
             completion: completion
         )
     }
@@ -485,12 +541,12 @@ final class M720OwnershipJournalRepository {
         for key: M720DeviceKey,
         cid: UInt16,
         mutation: @escaping (M720JournalCIDEntry?) throws -> M720JournalCIDEntry?,
-        ifPermittedBy permission: @escaping () -> Bool,
+        commitPermission: M720JournalCommitPermission,
         completion: @escaping Completion
     ) {
         queue.async {
             do {
-                try self.requireMutationPermission(permission)
+                try commitPermission.check()
                 var candidate = try self.snapshotLoadingAfterUncertainIfNeeded()
                 let deviceIndex = candidate.devices.firstIndex { $0.key == key }
                 let controlIndex = deviceIndex.flatMap { index in
@@ -500,7 +556,7 @@ final class M720OwnershipJournalRepository {
                     controlIndex.map { candidate.devices[deviceIndex].controls[$0] }
                 }
                 let updated = try mutation(existing)
-                try self.requireMutationPermission(permission)
+                try commitPermission.check()
 
                 if let updated {
                     guard updated.cid == cid else {
@@ -523,8 +579,7 @@ final class M720OwnershipJournalRepository {
                 }
 
                 let canonical = try candidate.validatedCanonicalized()
-                try self.requireMutationPermission(permission)
-                try self.store.save(canonical)
+                try self.store.save(canonical, commitPermission: commitPermission)
                 self.snapshotState = .loaded(canonical)
                 completion(.success(canonical))
             } catch {
@@ -536,19 +591,21 @@ final class M720OwnershipJournalRepository {
 
     func acknowledgeQuarantineWithFreshEmptyV1(completion: @escaping Completion) {
         acknowledgeQuarantineWithFreshEmptyV1(
-            ifPermittedBy: { true },
+            commitPermission: M720JournalCommitPermission(),
             completion: completion
         )
     }
 
     func acknowledgeQuarantineWithFreshEmptyV1(
-        ifPermittedBy permission: @escaping () -> Bool,
+        commitPermission: M720JournalCommitPermission,
         completion: @escaping Completion
     ) {
         queue.async {
             do {
-                try self.requireMutationPermission(permission)
-                let acknowledged = try self.store.acknowledgeQuarantineWithFreshEmptyV1()
+                try commitPermission.check()
+                let acknowledged = try self.store.acknowledgeQuarantineWithFreshEmptyV1(
+                    commitPermission: commitPermission
+                )
                 self.snapshotState = .loaded(acknowledged)
                 completion(.success(acknowledged))
             } catch {
@@ -566,7 +623,7 @@ final class M720OwnershipJournalRepository {
         removeDevice(
             for: key,
             expected: expected,
-            ifPermittedBy: { true },
+            commitPermission: M720JournalCommitPermission(),
             completion: completion
         )
     }
@@ -574,12 +631,12 @@ final class M720OwnershipJournalRepository {
     func removeDevice(
         for key: M720DeviceKey,
         expected: M720JournalDevice?,
-        ifPermittedBy permission: @escaping () -> Bool,
+        commitPermission: M720JournalCommitPermission,
         completion: @escaping Completion
     ) {
         queue.async {
             do {
-                try self.requireMutationPermission(permission)
+                try commitPermission.check()
                 var candidate = try self.snapshotLoadingAfterUncertainIfNeeded()
                 let deviceIndex = candidate.devices.firstIndex { $0.key == key }
                 let existing = deviceIndex.map { candidate.devices[$0] }
@@ -590,20 +647,13 @@ final class M720OwnershipJournalRepository {
                     candidate.devices.remove(at: deviceIndex)
                 }
                 let canonical = try candidate.validatedCanonicalized()
-                try self.requireMutationPermission(permission)
-                try self.store.save(canonical)
+                try self.store.save(canonical, commitPermission: commitPermission)
                 self.snapshotState = .loaded(canonical)
                 completion(.success(canonical))
             } catch {
                 self.invalidateSnapshotIfStorageIsUncertain(error)
                 completion(.failure(error))
             }
-        }
-    }
-
-    private func requireMutationPermission(_ permission: () -> Bool) throws {
-        guard permission() else {
-            throw M720JournalRepositoryError.mutationFenced
         }
     }
 

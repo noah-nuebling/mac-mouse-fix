@@ -6661,63 +6661,70 @@ private final class M720SessionJournalCoordinator: M720JournalCoordinating {
     }
 
     func acknowledgeQuarantineWithFreshEmptyV1(
-        ifPermittedBy permission: @escaping () -> Bool,
+        commitPermission: M720JournalCommitPermission,
         completion: @escaping Completion
     ) {
         acknowledgementCallCount += 1
-        guard permission() else {
-            completion(.failure(M720JournalRepositoryError.mutationFenced))
-            return
-        }
-        if let acknowledgementError {
-            if acknowledgementFailurePersistsChange {
+        do {
+            try commitPermission.check()
+            if let acknowledgementError {
+                if acknowledgementFailurePersistsChange {
+                    try commitPermission.performCommit {
+                        didAcknowledgeQuarantine = true
+                        journal = .emptyV1
+                    }
+                }
+                completion(.failure(acknowledgementError))
+                return
+            }
+            if didAcknowledgeQuarantine {
+                completion(.failure(M720JournalStoreError.notQuarantined))
+                return
+            }
+            let acknowledged = try commitPermission.performCommit {
                 didAcknowledgeQuarantine = true
                 journal = .emptyV1
+                return journal
             }
-            completion(.failure(acknowledgementError))
-            return
+            completion(.success(acknowledged))
+        } catch {
+            completion(.failure(error))
         }
-        if didAcknowledgeQuarantine {
-            completion(.failure(M720JournalStoreError.notQuarantined))
-            return
-        }
-        didAcknowledgeQuarantine = true
-        journal = .emptyV1
-        completion(.success(journal))
     }
 
     func removeDevice(
         for key: M720DeviceKey,
         expected: M720JournalDevice?,
-        ifPermittedBy permission: @escaping () -> Bool,
+        commitPermission: M720JournalCommitPermission,
         completion: @escaping Completion
     ) {
         removeDeviceCallCount += 1
-        guard permission() else {
-            completion(.failure(M720JournalRepositoryError.mutationFenced))
-            return
-        }
-        if let removeDeviceError {
-            completion(.failure(removeDeviceError))
-            return
-        }
-        if let replacement = replaceDeviceBeforeNextRemove {
-            journal.devices.removeAll { $0.key == replacement.key }
-            journal.devices.append(replacement)
-            replaceDeviceBeforeNextRemove = nil
-        }
-        let deviceIndex = journal.devices.firstIndex { $0.key == key }
-        let existing = deviceIndex.map { journal.devices[$0] }
-        guard existing == expected else {
-            completion(.failure(M720JournalRepositoryError.mismatchedDevice))
-            return
-        }
-        if let deviceIndex {
-            journal.devices.remove(at: deviceIndex)
-        }
         do {
-            journal = try journal.validatedCanonicalized()
-            let result = journal
+            try commitPermission.check()
+            if let removeDeviceError {
+                completion(.failure(removeDeviceError))
+                return
+            }
+            if let replacement = replaceDeviceBeforeNextRemove {
+                journal.devices.removeAll { $0.key == replacement.key }
+                journal.devices.append(replacement)
+                replaceDeviceBeforeNextRemove = nil
+            }
+            var candidate = journal
+            let deviceIndex = candidate.devices.firstIndex { $0.key == key }
+            let existing = deviceIndex.map { candidate.devices[$0] }
+            guard existing == expected else {
+                completion(.failure(M720JournalRepositoryError.mismatchedDevice))
+                return
+            }
+            if let deviceIndex {
+                candidate.devices.remove(at: deviceIndex)
+            }
+            let canonical = try candidate.validatedCanonicalized()
+            let result = try commitPermission.performCommit {
+                journal = canonical
+                return journal
+            }
             if holdNextRemoveCompletion {
                 holdNextRemoveCompletion = false
                 heldRemoveCompletion = { completion(.success(result)) }
@@ -6733,15 +6740,12 @@ private final class M720SessionJournalCoordinator: M720JournalCoordinating {
         for key: M720DeviceKey,
         cid: UInt16,
         mutation: @escaping (M720JournalCIDEntry?) throws -> M720JournalCIDEntry?,
-        ifPermittedBy permission: @escaping () -> Bool,
+        commitPermission: M720JournalCommitPermission,
         completion: @escaping Completion
     ) {
         mutationCallCount += 1
-        guard permission() else {
-            completion(.failure(M720JournalRepositoryError.mutationFenced))
-            return
-        }
         do {
+            try commitPermission.check()
             if let replacement = replaceEntryBeforeNextMutation,
                replacement.cid == cid,
                let replacementDeviceIndex = journal.devices.firstIndex(where: { $0.key == key }),
@@ -6751,19 +6755,15 @@ private final class M720SessionJournalCoordinator: M720JournalCoordinating {
                 journal = try journal.validatedCanonicalized()
                 replaceEntryBeforeNextMutation = nil
             }
-            let journalBeforeMutation = journal
-            let deviceIndex = journal.devices.firstIndex { $0.key == key }
+            var candidate = journal
+            let deviceIndex = candidate.devices.firstIndex { $0.key == key }
             let controlIndex = deviceIndex.flatMap { deviceIndex in
-                journal.devices[deviceIndex].controls.firstIndex { $0.cid == cid }
+                candidate.devices[deviceIndex].controls.firstIndex { $0.cid == cid }
             }
             let existing = deviceIndex.flatMap { deviceIndex in
-                controlIndex.map { journal.devices[deviceIndex].controls[$0] }
+                controlIndex.map { candidate.devices[deviceIndex].controls[$0] }
             }
             let updated = try mutation(existing)
-            guard permission() else {
-                completion(.failure(M720JournalRepositoryError.mutationFenced))
-                return
-            }
             let point = M720JournalFailurePoint(cid: cid, phase: updated?.phase)
             if point == holdFailureBeforeNextMutation {
                 holdFailureBeforeNextMutation = nil
@@ -6780,29 +6780,32 @@ private final class M720SessionJournalCoordinator: M720JournalCoordinating {
             if let updated {
                 if let deviceIndex {
                     if let controlIndex {
-                        journal.devices[deviceIndex].controls[controlIndex] = updated
+                        candidate.devices[deviceIndex].controls[controlIndex] = updated
                     } else {
-                        journal.devices[deviceIndex].controls.append(updated)
+                        candidate.devices[deviceIndex].controls.append(updated)
                     }
                 } else {
-                    journal.devices.append(M720JournalDevice(key: key, controls: [updated]))
+                    candidate.devices.append(M720JournalDevice(key: key, controls: [updated]))
                 }
             } else if let deviceIndex, let controlIndex {
-                journal.devices[deviceIndex].controls.remove(at: controlIndex)
-                if journal.devices[deviceIndex].controls.isEmpty {
-                    journal.devices.remove(at: deviceIndex)
+                candidate.devices[deviceIndex].controls.remove(at: controlIndex)
+                if candidate.devices[deviceIndex].controls.isEmpty {
+                    candidate.devices.remove(at: deviceIndex)
                 }
             }
-            journal = try journal.validatedCanonicalized()
+            let canonical = try candidate.validatedCanonicalized()
+            let shouldPersist = point != failAfterNextMutation || failedAfterMutationPersistsChange
+            if shouldPersist {
+                try commitPermission.performCommit {
+                    journal = canonical
+                }
+            }
             let event = M720SessionTraceEvent.journal(cid: cid, phase: updated?.phase)
             trace.append(event)
             onMutation?(event)
-            let result = Result<M720OwnershipJournal, Error>.success(journal)
+            let result = Result<M720OwnershipJournal, Error>.success(canonical)
             if point == failAfterNextMutation {
                 failAfterNextMutation = nil
-                if !failedAfterMutationPersistsChange {
-                    journal = journalBeforeMutation
-                }
                 completion(.failure(M720JournalStoreError.uncertain))
             } else if let failedPhase = failAfterNextPhase,
                updated?.phase == failedPhase {
