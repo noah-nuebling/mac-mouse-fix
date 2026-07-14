@@ -894,6 +894,41 @@ extension M720AddModeIPCTests {
         XCTAssertEqual(harness.trace, ["controller.begin", "remap.enable", "send.addModePreparationResult"])
     }
 
+    func testCoordinatorShutdownCancelsReservedWorkAndRejectsNewMutations() throws {
+        let token = coordinatorToken(242)
+        let harness = CoordinatorHarness(oneParticipant: token)
+        let activeRequest = coordinatorRequest(242)
+        let lateRequest = coordinatorRequest(243)
+
+        XCTAssertEqual(try harness.prepare(activeRequest), .accepted)
+
+        harness.coordinator.beginShutdown()
+        harness.coordinator.beginShutdown()
+
+        XCTAssertEqual(
+            harness.preparationResults(for: activeRequest).map(\.outcome),
+            [.failed(.appUnavailable)]
+        )
+        XCTAssertEqual(try harness.prepare(lateRequest), .rejected(.appUnavailable))
+        XCTAssertEqual(try harness.cancel(activeRequest), .rejected(.appUnavailable))
+        XCTAssertEqual(try harness.renew(activeRequest), .rejected(.appUnavailable))
+        XCTAssertEqual(try harness.finish(activeRequest), .rejected(.appUnavailable))
+        XCTAssertEqual(
+            try harness.retry(requestID: lateRequest, token: token),
+            .rejected(.appUnavailable)
+        )
+
+        harness.executor.drainAll()
+        harness.scheduler.advance(by: 10)
+
+        XCTAssertTrue(harness.controller.operations.isEmpty)
+        XCTAssertTrue(harness.controller.retryCalls.isEmpty)
+        XCTAssertNil(harness.controller.onPreparationContextChange)
+        XCTAssertNil(harness.controller.onStableStateChange)
+        XCTAssertEqual(harness.trace.filter { $0 == "remap.disable" }.count, 1)
+        XCTAssertEqual(harness.preparationResults(for: activeRequest).count, 1)
+    }
+
     func testCoordinatorNoParticipantPathStillStartsOnlyAfterAcknowledgement() throws {
         let harness = CoordinatorHarness()
         let requestID = coordinatorRequest(2)

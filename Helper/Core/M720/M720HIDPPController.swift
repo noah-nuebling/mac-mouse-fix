@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 import IOKit.hid
 
@@ -78,6 +79,7 @@ protocol M720SessionControlling: AnyObject {
     func markJournalIdentityUnusable()
     func prepareForSleep(completion: @escaping () -> Void)
     func reconcileAfterWake()
+    func knownOwnershipAgentDidLaunch()
     func shutdown(completion: @escaping () -> Void)
     func invalidateForRemoval(completion: @escaping () -> Void)
     @discardableResult
@@ -222,6 +224,8 @@ final class M720HIDPPController: NSObject {
     private let tokenFactory: () -> UUID
     private let enqueueStart: StartExecutor
     private let stableStateObserver: StableStateObserver
+    private let workspaceCenter: NotificationCenter
+    private var workspaceObservers: [NSObjectProtocol] = []
 
     private var entries: [UInt64: Entry] = [:]
     private var pendingReplacements: [UInt64: PendingReplacement] = [:]
@@ -232,6 +236,9 @@ final class M720HIDPPController: NSObject {
     private var temporaryPolicyOperationGeneration: UInt64 = 0
     private var policyContextGeneration: UInt64 = 0
     private var lastPolicyContextError: M720StableErrorCode = .cancelled
+    private var shutdownStarted = false
+    private var shutdownFinished = false
+    private var shutdownWaiters: [() -> Void] = []
 
     @nonobjc var onPreparationContextChange: ((M720PreparationContextChange) -> Void)?
     @nonobjc var onStableStateChange: ((M720ControllerSessionSnapshot) -> Void)?
@@ -242,7 +249,9 @@ final class M720HIDPPController: NSObject {
         tokenFactory = UUID.init
         enqueueStart = { block in DispatchQueue.main.async(execute: block) }
         stableStateObserver = { _ in }
+        workspaceCenter = NSWorkspace.shared.notificationCenter
         super.init()
+        observeWorkspaceLifecycle()
     }
 
     @nonobjc init(
@@ -250,18 +259,26 @@ final class M720HIDPPController: NSObject {
         sessionFactory: @escaping SessionFactory,
         tokenFactory: @escaping () -> UUID,
         enqueueStart: @escaping StartExecutor,
-        stableStateObserver: @escaping StableStateObserver
+        stableStateObserver: @escaping StableStateObserver,
+        workspaceCenter: NotificationCenter
     ) {
         self.identityProvider = identityProvider
         self.sessionFactory = sessionFactory
         self.tokenFactory = tokenFactory
         self.enqueueStart = enqueueStart
         self.stableStateObserver = stableStateObserver
+        self.workspaceCenter = workspaceCenter
         super.init()
+        observeWorkspaceLifecycle()
+    }
+
+    deinit {
+        workspaceObservers.forEach(workspaceCenter.removeObserver)
     }
 
     @objc(deviceDidAttach:)
     func deviceDidAttach(_ device: Device) {
+        guard !shutdownStarted else { return }
         guard !contains(device: device) else { return }
         guard let snapshot = identityProvider(device) else { return }
         guard snapshot.registryEntryID != 0 else { return }
@@ -334,6 +351,7 @@ final class M720HIDPPController: NSObject {
         remapsAreAddMode: Bool
     ) {
         requireMainTurn()
+        guard !shutdownStarted else { return }
         if !remapsAreAddMode {
             savedRequiredCIDs = M720CapturePolicy.requiredCIDs(
                 remaps: remaps,
@@ -357,35 +375,73 @@ final class M720HIDPPController: NSObject {
     }
 
     @objc func prepareForSleep() {
+        requireMainTurn()
+        guard !shutdownStarted else { return }
         for entry in entries.values where !entry.invalidationStarted {
             entry.session.prepareForSleep(completion: {})
         }
     }
 
     @objc func reconcileAfterWake() {
+        requireMainTurn()
+        guard !shutdownStarted else { return }
         for entry in entries.values where !entry.invalidationStarted {
             entry.session.reconcileAfterWake()
         }
     }
 
+    private func knownOwnershipAgentDidLaunch() {
+        requireMainTurn()
+        guard !shutdownStarted else { return }
+        for entry in entries.values where !entry.invalidationStarted {
+            entry.session.knownOwnershipAgentDidLaunch()
+        }
+    }
+
     @objc func shutdown(completion: @escaping () -> Void) {
-        let currentEntries = entries.values.filter { !$0.invalidationStarted }
-        guard !currentEntries.isEmpty else {
+        requireMainTurn()
+        if shutdownFinished {
             completion()
+            return
+        }
+        shutdownWaiters.append(completion)
+        guard !shutdownStarted else { return }
+        shutdownStarted = true
+        pendingReplacements.removeAll()
+
+        let currentEntries = entries.values.filter { !$0.invalidationFinished }
+        guard !currentEntries.isEmpty else {
+            finishShutdown()
             return
         }
 
         let barrier = CompletionBarrier(
             tokens: Set(currentEntries.map(\.token)),
-            completion: completion
+            completion: { [weak self] in self?.finishShutdown() }
         )
         for entry in currentEntries {
+            if entry.invalidationStarted {
+                entry.removalWaiters.append { [weak self] in
+                    self?.performOnMain {
+                        barrier.finish(token: entry.token)
+                    }
+                }
+                continue
+            }
             entry.session.shutdown { [weak self] in
                 self?.performOnMain {
                     barrier.finish(token: entry.token)
                 }
             }
         }
+    }
+
+    private func finishShutdown() {
+        guard shutdownStarted, !shutdownFinished else { return }
+        shutdownFinished = true
+        let completions = shutdownWaiters
+        shutdownWaiters.removeAll()
+        completions.forEach { $0() }
     }
 
     @nonobjc func captureStateSnapshots() -> [M720ControllerSessionSnapshot] {
@@ -399,7 +455,8 @@ final class M720HIDPPController: NSObject {
     @discardableResult
     @nonobjc func retryCapture(deviceToken: UUID, requestID: UUID?) -> Bool {
         requireMainTurn()
-        guard let entry = entries.values.first(where: {
+        guard !shutdownStarted,
+              let entry = entries.values.first(where: {
             $0.token == deviceToken && !$0.invalidationStarted
         }), entry.pendingRetryRequestID == nil else { return false }
         guard entry.session.retryAfterConflict(requestID: requestID) else { return false }
@@ -409,6 +466,13 @@ final class M720HIDPPController: NSObject {
 
     @nonobjc func capturePreparationSnapshot() -> M720PreparationSnapshot {
         requireMainTurn()
+        guard !shutdownStarted else {
+            return M720PreparationSnapshot(
+                deviceSetRevision: deviceSetRevision,
+                environmentEnabled: false,
+                participants: []
+            )
+        }
         let participants = entries.values
             .filter { !$0.invalidationStarted && !$0.invalidationFinished }
             .map {
@@ -433,7 +497,8 @@ final class M720HIDPPController: NSObject {
         completion: @escaping (M720TemporaryPolicyResult) -> Void
     ) -> Bool {
         requireMainTurn()
-        guard temporaryPolicyLease == nil,
+        guard !shutdownStarted,
+              temporaryPolicyLease == nil,
               snapshot == capturePreparationSnapshot()
         else { return false }
         let frozen = Dictionary(uniqueKeysWithValues: snapshot.participants.map {
@@ -463,7 +528,8 @@ final class M720HIDPPController: NSObject {
         completion: @escaping (M720TemporaryPolicyResult) -> Void
     ) -> Bool {
         requireMainTurn()
-        guard let lease = temporaryPolicyLease,
+        guard !shutdownStarted,
+              let lease = temporaryPolicyLease,
               lease.ownerID == ownerID,
               !lease.blocked
         else { return false }
@@ -482,7 +548,8 @@ final class M720HIDPPController: NSObject {
         completion: @escaping (M720TemporaryPolicyResult) -> Void
     ) -> Bool {
         requireMainTurn()
-        guard let lease = temporaryPolicyLease,
+        guard !shutdownStarted,
+              let lease = temporaryPolicyLease,
               lease.ownerID == ownerID,
               !lease.blocked
         else { return false }
@@ -501,7 +568,8 @@ final class M720HIDPPController: NSObject {
     @discardableResult
     @nonobjc func clearTemporaryPolicyLease(ownerID: UUID) -> Bool {
         requireMainTurn()
-        guard let lease = temporaryPolicyLease,
+        guard !shutdownStarted,
+              let lease = temporaryPolicyLease,
               lease.ownerID == ownerID,
               lease.operation == nil,
               !lease.blocked,
@@ -577,7 +645,9 @@ final class M720HIDPPController: NSObject {
         snapshot: M720DeviceSnapshot,
         journalIdentityUsable: Bool
     ) {
-        guard entries[snapshot.registryEntryID] == nil else { return }
+        guard !shutdownStarted,
+              entries[snapshot.registryEntryID] == nil
+        else { return }
         guard let session = sessionFactory(
             device,
             snapshot,
@@ -610,6 +680,7 @@ final class M720HIDPPController: NSObject {
 
         enqueueStart { [weak self] in
             guard let self,
+                  !self.shutdownStarted,
                   let current = self.entries[snapshot.registryEntryID],
                   current === entry,
                   current.token == token,
@@ -964,6 +1035,32 @@ final class M720HIDPPController: NSObject {
         } else {
             DispatchQueue.main.async(execute: block)
         }
+    }
+
+    private func observeWorkspaceLifecycle() {
+        workspaceObservers = [
+            workspaceCenter.addObserver(
+                forName: NSWorkspace.willSleepNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                self?.prepareForSleep()
+            },
+            workspaceCenter.addObserver(
+                forName: NSWorkspace.didWakeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                self?.reconcileAfterWake()
+            },
+            workspaceCenter.addObserver(
+                forName: NSWorkspace.didLaunchApplicationNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                self?.knownOwnershipAgentDidLaunch()
+            },
+        ]
     }
 
     private static func productionSnapshot(_ device: Device) -> M720DeviceSnapshot? {

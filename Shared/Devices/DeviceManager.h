@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (MF_SWIFT_UNBRIDGED(NSArray<Device *> *))attachedDevices NS_REFINED_FOR_SWIFT;
 
 + (void)load_Manual;
-+ (void)deconfigureDevices;
++ (void)deconfigureDevicesWithCompletion:(void (^)(BOOL completedBeforeDeadline))completion;
 
 + (BOOL)devicesAreAttached;
 + (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice;

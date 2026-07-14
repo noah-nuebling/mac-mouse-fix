@@ -110,13 +110,8 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
     setupDeviceMatchingAndRemovalCallbacks();
 }
 
-+ (void)deconfigureDevices {
-    
-    /// Meant to be called when the app closes
-    
-    for (Device *device in _attachedDevices) {
-//        [PointerSpeed deconfigureDevice:device.iohidDevice];
-    }
++ (void)deconfigureDevicesWithCompletion:(void (^)(BOOL completedBeforeDeadline))completion {
+    [M720ShutdownCoordinator.shared beginShutdownWithCompletion:completion];
 }
 
 # pragma mark - Seize devices (Remove this)

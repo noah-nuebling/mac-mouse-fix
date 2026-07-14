@@ -200,6 +200,7 @@ final class M720AddModeCoordinator: NSObject {
     private var active: Preparation?
     private var pending: Preparation?
     private var blockedLeaseError: M720StableErrorCode?
+    private var shutdownStarted = false
 
     private override convenience init() {
         let scheduler = M720AddModeMainScheduler()
@@ -275,6 +276,9 @@ final class M720AddModeCoordinator: NSObject {
         } catch {
             return M720IPCAcknowledgement.rejected(.protocol).payload
         }
+        guard !shutdownStarted else {
+            return M720IPCAcknowledgement.rejected(.appUnavailable).payload
+        }
 
         guard !contains(requestID: request.requestID) else {
             return M720IPCAcknowledgement.rejected(.conflict).payload
@@ -315,6 +319,9 @@ final class M720AddModeCoordinator: NSObject {
         guard let request = try? M720IPCRequest.decode(rawPayload) else {
             return M720IPCAcknowledgement.rejected(.protocol).payload
         }
+        guard !shutdownStarted else {
+            return M720IPCAcknowledgement.rejected(.appUnavailable).payload
+        }
         guard let preparation = preparation(requestID: request.requestID) else {
             return M720IPCAcknowledgement.rejected(.cancelled).payload
         }
@@ -342,6 +349,9 @@ final class M720AddModeCoordinator: NSObject {
         guard let request = try? M720IPCRequest.decode(rawPayload) else {
             return M720IPCAcknowledgement.rejected(.protocol).payload
         }
+        guard !shutdownStarted else {
+            return M720IPCAcknowledgement.rejected(.appUnavailable).payload
+        }
         guard let preparation = preparation(requestID: request.requestID),
               preparation.phase == .reserved ||
                 preparation.phase == .preparing ||
@@ -359,6 +369,9 @@ final class M720AddModeCoordinator: NSObject {
     func finishAddMode(withPayload rawPayload: Any?) -> NSDictionary {
         guard let request = try? M720IPCRequest.decode(rawPayload) else {
             return M720IPCAcknowledgement.rejected(.protocol).payload
+        }
+        guard !shutdownStarted else {
+            return M720IPCAcknowledgement.rejected(.appUnavailable).payload
         }
         guard let preparation = active,
               preparation.requestID == request.requestID,
@@ -386,6 +399,9 @@ final class M720AddModeCoordinator: NSObject {
         guard let request = try? M720RetryCaptureRequest.decode(rawPayload) else {
             return M720IPCAcknowledgement.rejected(.protocol).payload
         }
+        guard !shutdownStarted else {
+            return M720IPCAcknowledgement.rejected(.appUnavailable).payload
+        }
         guard controller.retryCapture(
             deviceToken: request.deviceToken,
             requestID: request.requestID
@@ -406,9 +422,27 @@ final class M720AddModeCoordinator: NSObject {
 
     @objc(submitFeedback:)
     func submitFeedback(_ feedback: NSDictionary) {
+        guard !shutdownStarted else { return }
         let copiedFeedback = feedback.copy() as! NSDictionary
         enqueueStart { [weak self] in
             self?.submitFeedbackOnMain(copiedFeedback)
+        }
+    }
+
+    @objc func beginShutdown() {
+        guard !shutdownStarted else { return }
+        shutdownStarted = true
+        controller.onPreparationContextChange = nil
+        controller.onStableStateChange = nil
+        disableAddMode()
+
+        let preparations = [active, pending].compactMap { $0 }
+        active = nil
+        pending = nil
+        for preparation in preparations {
+            preparation.phase = .terminal
+            preparation.cancelTimers()
+            sendTerminalForActive(preparation, cause: .appUnavailable)
         }
     }
 

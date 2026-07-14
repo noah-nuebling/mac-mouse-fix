@@ -1,3 +1,4 @@
+import AppKit
 import XCTest
 @testable import Mac_Mouse_Fix_Helper
 
@@ -631,6 +632,137 @@ final class M720ControllerLifecycleTests: XCTestCase {
         XCTAssertEqual(shutdownCompletions, 0)
         secondSession.completeShutdown()
         XCTAssertEqual(shutdownCompletions, 1)
+    }
+
+    func testWorkspaceLifecycleNotificationsForwardToLiveSessionsOnMain() {
+        let workspaceCenter = NotificationCenter()
+        let harness = M720ControllerHarness(workspaceCenter: workspaceCenter)
+        let removing = harness.makeDevice(snapshot: .m720(
+            registryEntryID: 911,
+            serialNumber: "lifecycle-removing"
+        ))
+        let live = harness.makeDevice(snapshot: .m720(
+            registryEntryID: 912,
+            serialNumber: "lifecycle-live"
+        ))
+        harness.controller.deviceDidAttach(removing)
+        harness.controller.deviceDidAttach(live)
+        harness.executor.runAll()
+        let removingSession = try! XCTUnwrap(harness.session(for: removing))
+        let liveSession = try! XCTUnwrap(harness.session(for: live))
+        harness.controller.prepareForDeviceRemoval(removing) {}
+
+        workspaceCenter.post(name: NSWorkspace.willSleepNotification, object: nil)
+        workspaceCenter.post(name: NSWorkspace.didWakeNotification, object: nil)
+        workspaceCenter.post(
+            name: NSWorkspace.didLaunchApplicationNotification,
+            object: nil
+        )
+
+        XCTAssertEqual(removingSession.prepareForSleepCallCount, 0)
+        XCTAssertEqual(removingSession.reconcileAfterWakeCallCount, 0)
+        XCTAssertEqual(removingSession.knownOwnershipAgentLaunchCallCount, 0)
+        XCTAssertEqual(liveSession.prepareForSleepCallCount, 1)
+        XCTAssertEqual(liveSession.reconcileAfterWakeCallCount, 1)
+        XCTAssertEqual(liveSession.knownOwnershipAgentLaunchCallCount, 1)
+        XCTAssertEqual(liveSession.lifecycleCallbacksWereOnMain, [true, true, true])
+    }
+
+    func testShutdownImmediatelyRejectsNewControllerWorkAndCoalescesWaiters() {
+        let workspaceCenter = NotificationCenter()
+        let token = UUID(uuidString: "00000000-0000-0000-0000-000000000021")!
+        let harness = M720ControllerHarness(
+            tokens: [token],
+            workspaceCenter: workspaceCenter
+        )
+        let attached = harness.makeDevice(snapshot: .m720(
+            registryEntryID: 921,
+            serialNumber: "shutdown-attached"
+        ))
+        harness.controller.deviceDidAttach(attached)
+        let session = try! XCTUnwrap(harness.session(for: attached))
+        let requiredCIDCallCount = session.requiredCIDCalls.count
+        var completions = 0
+
+        harness.controller.shutdown { completions += 1 }
+        harness.controller.shutdown { completions += 1 }
+
+        XCTAssertEqual(session.shutdownCallCount, 1)
+        XCTAssertEqual(completions, 0)
+
+        harness.executor.runAll()
+        XCTAssertEqual(session.startCallCount, 0)
+
+        harness.controller.reconcile(
+            remaps: makeRemaps(triggerButtons: [6]),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        workspaceCenter.post(name: NSWorkspace.willSleepNotification, object: nil)
+        workspaceCenter.post(name: NSWorkspace.didWakeNotification, object: nil)
+        workspaceCenter.post(
+            name: NSWorkspace.didLaunchApplicationNotification,
+            object: nil
+        )
+        XCTAssertEqual(session.requiredCIDCalls.count, requiredCIDCallCount)
+        XCTAssertTrue(session.lifecycleCallbacksWereOnMain.isEmpty)
+        XCTAssertFalse(harness.controller.retryCapture(
+            deviceToken: token,
+            requestID: UUID()
+        ))
+        XCTAssertFalse(harness.controller.beginTemporaryPolicyLease(
+            ownerID: UUID(),
+            snapshot: harness.controller.capturePreparationSnapshot(),
+            targetCIDs: [0x005B],
+            completion: { _ in XCTFail("shutdown must reject temporary policy work") }
+        ))
+        XCTAssertTrue(
+            harness.controller.capturePreparationSnapshot().participants.isEmpty
+        )
+
+        let lateAttach = harness.makeDevice(snapshot: .m720(
+            registryEntryID: 922,
+            serialNumber: "shutdown-late"
+        ))
+        harness.controller.deviceDidAttach(lateAttach)
+        XCTAssertEqual(harness.factoryCalls.count, 1)
+
+        session.completeShutdown()
+        session.completeShutdown()
+        XCTAssertEqual(completions, 2)
+
+        harness.controller.shutdown { completions += 1 }
+        XCTAssertEqual(completions, 3)
+        XCTAssertEqual(session.shutdownCallCount, 1)
+    }
+
+    func testShutdownWaitsForRemovalCleanupAlreadyInFlight() {
+        let harness = M720ControllerHarness()
+        let removing = harness.makeDevice(snapshot: .m720(
+            registryEntryID: 923,
+            serialNumber: "shutdown-removing"
+        ))
+        let live = harness.makeDevice(snapshot: .m720(
+            registryEntryID: 924,
+            serialNumber: "shutdown-live"
+        ))
+        harness.controller.deviceDidAttach(removing)
+        harness.controller.deviceDidAttach(live)
+        harness.executor.runAll()
+        let removingSession = try! XCTUnwrap(harness.session(for: removing))
+        let liveSession = try! XCTUnwrap(harness.session(for: live))
+        harness.controller.prepareForDeviceRemoval(removing) {}
+        var completions = 0
+
+        harness.controller.shutdown { completions += 1 }
+
+        XCTAssertEqual(removingSession.shutdownCallCount, 0)
+        XCTAssertEqual(liveSession.shutdownCallCount, 1)
+        liveSession.completeShutdown()
+        XCTAssertEqual(completions, 0)
+
+        removingSession.completeInvalidation()
+        XCTAssertEqual(completions, 1)
     }
 
     func testDeviceManagerDebugSeamUsesCallerOwnedArrayAndIdentityRemovalIsIdempotent() {
@@ -1367,6 +1499,7 @@ private final class M720ControllerHarness {
     private var snapshots: [ObjectIdentifier: M720DeviceSnapshot] = [:]
     private var identityReadCounts: [ObjectIdentifier: Int] = [:]
     private var tokens: [UUID]
+    private let workspaceCenter: NotificationCenter
 
     lazy var controller = M720HIDPPController(
         identityProvider: { [unowned self] device in
@@ -1398,11 +1531,16 @@ private final class M720ControllerHarness {
         },
         stableStateObserver: { [unowned self] snapshot in
             self.publishedStates.append(snapshot)
-        }
+        },
+        workspaceCenter: workspaceCenter
     )
 
-    init(tokens: [UUID] = []) {
+    init(
+        tokens: [UUID] = [],
+        workspaceCenter: NotificationCenter = NotificationCenter()
+    ) {
         self.tokens = tokens
+        self.workspaceCenter = workspaceCenter
     }
 
     func makeDevice(snapshot: M720DeviceSnapshot?) -> Device {
@@ -1452,11 +1590,13 @@ private final class FakeM720Session: M720SessionControlling {
     private(set) var markIdentityUnusableCallCount = 0
     private(set) var prepareForSleepCallCount = 0
     private(set) var reconcileAfterWakeCallCount = 0
+    private(set) var knownOwnershipAgentLaunchCallCount = 0
     private(set) var shutdownCallCount = 0
     private(set) var invalidateCallCount = 0
     private(set) var retryRequestIDs: [UUID?] = []
     var retryAccepted = false
     var stateOnNextRequiredCIDSet: M720SessionState?
+    private(set) var lifecycleCallbacksWereOnMain: [Bool] = []
 
     private let trace: M720ControllerTrace
     private var shutdownCompletions: [() -> Void] = []
@@ -1489,11 +1629,18 @@ private final class FakeM720Session: M720SessionControlling {
 
     func prepareForSleep(completion: @escaping () -> Void) {
         prepareForSleepCallCount += 1
+        lifecycleCallbacksWereOnMain.append(Thread.isMainThread)
         completion()
     }
 
     func reconcileAfterWake() {
         reconcileAfterWakeCallCount += 1
+        lifecycleCallbacksWereOnMain.append(Thread.isMainThread)
+    }
+
+    func knownOwnershipAgentDidLaunch() {
+        knownOwnershipAgentLaunchCallCount += 1
+        lifecycleCallbacksWereOnMain.append(Thread.isMainThread)
     }
 
     func shutdown(completion: @escaping () -> Void) {
