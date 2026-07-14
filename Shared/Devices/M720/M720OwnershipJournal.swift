@@ -407,6 +407,7 @@ enum M720JournalRepositoryError: Error, Equatable {
     case notLoaded
     case mismatchedCID
     case mismatchedDevice
+    case mutationFenced
 }
 
 final class M720OwnershipJournalRepository {
@@ -471,8 +472,25 @@ final class M720OwnershipJournalRepository {
         mutation: @escaping (M720JournalCIDEntry?) throws -> M720JournalCIDEntry?,
         completion: @escaping Completion
     ) {
+        mutateCID(
+            for: key,
+            cid: cid,
+            mutation: mutation,
+            ifPermittedBy: { true },
+            completion: completion
+        )
+    }
+
+    func mutateCID(
+        for key: M720DeviceKey,
+        cid: UInt16,
+        mutation: @escaping (M720JournalCIDEntry?) throws -> M720JournalCIDEntry?,
+        ifPermittedBy permission: @escaping () -> Bool,
+        completion: @escaping Completion
+    ) {
         queue.async {
             do {
+                try self.requireMutationPermission(permission)
                 var candidate = try self.snapshotLoadingAfterUncertainIfNeeded()
                 let deviceIndex = candidate.devices.firstIndex { $0.key == key }
                 let controlIndex = deviceIndex.flatMap { index in
@@ -482,6 +500,7 @@ final class M720OwnershipJournalRepository {
                     controlIndex.map { candidate.devices[deviceIndex].controls[$0] }
                 }
                 let updated = try mutation(existing)
+                try self.requireMutationPermission(permission)
 
                 if let updated {
                     guard updated.cid == cid else {
@@ -504,6 +523,7 @@ final class M720OwnershipJournalRepository {
                 }
 
                 let canonical = try candidate.validatedCanonicalized()
+                try self.requireMutationPermission(permission)
                 try self.store.save(canonical)
                 self.snapshotState = .loaded(canonical)
                 completion(.success(canonical))
@@ -515,8 +535,19 @@ final class M720OwnershipJournalRepository {
     }
 
     func acknowledgeQuarantineWithFreshEmptyV1(completion: @escaping Completion) {
+        acknowledgeQuarantineWithFreshEmptyV1(
+            ifPermittedBy: { true },
+            completion: completion
+        )
+    }
+
+    func acknowledgeQuarantineWithFreshEmptyV1(
+        ifPermittedBy permission: @escaping () -> Bool,
+        completion: @escaping Completion
+    ) {
         queue.async {
             do {
+                try self.requireMutationPermission(permission)
                 let acknowledged = try self.store.acknowledgeQuarantineWithFreshEmptyV1()
                 self.snapshotState = .loaded(acknowledged)
                 completion(.success(acknowledged))
@@ -532,8 +563,23 @@ final class M720OwnershipJournalRepository {
         expected: M720JournalDevice?,
         completion: @escaping Completion
     ) {
+        removeDevice(
+            for: key,
+            expected: expected,
+            ifPermittedBy: { true },
+            completion: completion
+        )
+    }
+
+    func removeDevice(
+        for key: M720DeviceKey,
+        expected: M720JournalDevice?,
+        ifPermittedBy permission: @escaping () -> Bool,
+        completion: @escaping Completion
+    ) {
         queue.async {
             do {
+                try self.requireMutationPermission(permission)
                 var candidate = try self.snapshotLoadingAfterUncertainIfNeeded()
                 let deviceIndex = candidate.devices.firstIndex { $0.key == key }
                 let existing = deviceIndex.map { candidate.devices[$0] }
@@ -544,6 +590,7 @@ final class M720OwnershipJournalRepository {
                     candidate.devices.remove(at: deviceIndex)
                 }
                 let canonical = try candidate.validatedCanonicalized()
+                try self.requireMutationPermission(permission)
                 try self.store.save(canonical)
                 self.snapshotState = .loaded(canonical)
                 completion(.success(canonical))
@@ -551,6 +598,12 @@ final class M720OwnershipJournalRepository {
                 self.invalidateSnapshotIfStorageIsUncertain(error)
                 completion(.failure(error))
             }
+        }
+    }
+
+    private func requireMutationPermission(_ permission: () -> Bool) throws {
+        guard permission() else {
+            throw M720JournalRepositoryError.mutationFenced
         }
     }
 

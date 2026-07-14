@@ -61,6 +61,22 @@ final class M720ShutdownTests: XCTestCase {
         XCTAssertEqual(harness.cleanupStarts, 1)
     }
 
+    func testDeadlinePropagatesFenceOnceBeforeFalseCompletion() {
+        let scheduler = ManualScheduler()
+        var events: [String] = []
+        let coordinator = M720ShutdownCoordinator(
+            scheduler: scheduler,
+            deadlineReached: { events.append("deadline") },
+            cleanup: { _ in }
+        )
+
+        coordinator.beginShutdown { events.append("completion:\($0)") }
+        scheduler.advance(to: 3)
+        coordinator.beginShutdown { events.append("late:\($0)") }
+
+        XCTAssertEqual(events, ["deadline", "completion:false", "late:false"])
+    }
+
     func testSignalWaiterStartsCleanupOnMainExecutorAndWaitsAtMostThreeSeconds() {
         var mainBlock: (() -> Void)?
         var observedTimeout: TimeInterval?

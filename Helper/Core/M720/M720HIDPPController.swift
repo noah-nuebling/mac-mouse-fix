@@ -81,6 +81,7 @@ protocol M720SessionControlling: AnyObject {
     func reconcileAfterWake()
     func knownOwnershipAgentDidLaunch()
     func shutdown(completion: @escaping () -> Void)
+    func shutdownDeadlineReached()
     func invalidateForRemoval(completion: @escaping () -> Void)
     @discardableResult
     func retryAfterConflict(requestID: UUID?) -> Bool
@@ -238,6 +239,7 @@ final class M720HIDPPController: NSObject {
     private var lastPolicyContextError: M720StableErrorCode = .cancelled
     private var shutdownStarted = false
     private var shutdownFinished = false
+    private var shutdownDeadlineWasPropagated = false
     private var shutdownWaiters: [() -> Void] = []
 
     @nonobjc var onPreparationContextChange: ((M720PreparationContextChange) -> Void)?
@@ -442,6 +444,15 @@ final class M720HIDPPController: NSObject {
         let completions = shutdownWaiters
         shutdownWaiters.removeAll()
         completions.forEach { $0() }
+    }
+
+    @objc func shutdownDeadlineReached() {
+        requireMainTurn()
+        guard shutdownStarted, !shutdownDeadlineWasPropagated else { return }
+        shutdownDeadlineWasPropagated = true
+        for entry in entries.values where !entry.invalidationFinished {
+            entry.session.shutdownDeadlineReached()
+        }
     }
 
     @nonobjc func captureStateSnapshots() -> [M720ControllerSessionSnapshot] {

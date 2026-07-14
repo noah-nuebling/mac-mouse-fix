@@ -765,6 +765,31 @@ final class M720ControllerLifecycleTests: XCTestCase {
         XCTAssertEqual(completions, 1)
     }
 
+    func testShutdownDeadlineReachesLiveAndJoinedRemovalSessionsOnce() {
+        let harness = M720ControllerHarness()
+        let removing = harness.makeDevice(snapshot: .m720(
+            registryEntryID: 925,
+            serialNumber: "deadline-removing"
+        ))
+        let live = harness.makeDevice(snapshot: .m720(
+            registryEntryID: 926,
+            serialNumber: "deadline-live"
+        ))
+        harness.controller.deviceDidAttach(removing)
+        harness.controller.deviceDidAttach(live)
+        harness.executor.runAll()
+        let removingSession = try! XCTUnwrap(harness.session(for: removing))
+        let liveSession = try! XCTUnwrap(harness.session(for: live))
+        harness.controller.prepareForDeviceRemoval(removing) {}
+
+        harness.controller.shutdown {}
+        harness.controller.shutdownDeadlineReached()
+        harness.controller.shutdownDeadlineReached()
+
+        XCTAssertEqual(removingSession.shutdownDeadlineCallCount, 1)
+        XCTAssertEqual(liveSession.shutdownDeadlineCallCount, 1)
+    }
+
     func testDeviceManagerDebugSeamUsesCallerOwnedArrayAndIdentityRemovalIsIdempotent() {
         let first = Device.unitTestDevice()
         let equalButDifferent = Device.unitTestDevice()
@@ -1592,6 +1617,7 @@ private final class FakeM720Session: M720SessionControlling {
     private(set) var reconcileAfterWakeCallCount = 0
     private(set) var knownOwnershipAgentLaunchCallCount = 0
     private(set) var shutdownCallCount = 0
+    private(set) var shutdownDeadlineCallCount = 0
     private(set) var invalidateCallCount = 0
     private(set) var retryRequestIDs: [UUID?] = []
     var retryAccepted = false
@@ -1646,6 +1672,10 @@ private final class FakeM720Session: M720SessionControlling {
     func shutdown(completion: @escaping () -> Void) {
         shutdownCallCount += 1
         shutdownCompletions.append(completion)
+    }
+
+    func shutdownDeadlineReached() {
+        shutdownDeadlineCallCount += 1
     }
 
     func invalidateForRemoval(completion: @escaping () -> Void) {

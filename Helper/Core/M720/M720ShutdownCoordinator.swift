@@ -3,6 +3,7 @@ import Foundation
 @objcMembers
 final class M720ShutdownCoordinator: NSObject {
     typealias Cleanup = (@escaping () -> Void) -> Void
+    typealias DeadlineReached = () -> Void
 
     enum State: Equatable {
         case idle
@@ -13,6 +14,7 @@ final class M720ShutdownCoordinator: NSObject {
     static let shared = M720ShutdownCoordinator.production()
 
     private let scheduler: HIDPPScheduler
+    private let deadlineReached: DeadlineReached
     private let cleanup: Cleanup
 
     private(set) var state: State = .idle
@@ -22,9 +24,11 @@ final class M720ShutdownCoordinator: NSObject {
     @nonobjc
     init(
         scheduler: HIDPPScheduler,
+        deadlineReached: @escaping DeadlineReached = {},
         cleanup: @escaping Cleanup
     ) {
         self.scheduler = scheduler
+        self.deadlineReached = deadlineReached
         self.cleanup = cleanup
         super.init()
     }
@@ -41,12 +45,18 @@ final class M720ShutdownCoordinator: NSObject {
             state = .running
             completions = [completion]
             deadline = scheduler.schedule(after: 3) { [weak self] in
-                self?.finish(false)
+                self?.deadlineDidFire()
             }
             cleanup { [weak self] in
                 self?.finish(true)
             }
         }
+    }
+
+    private func deadlineDidFire() {
+        guard state == .running else { return }
+        deadlineReached()
+        finish(false)
     }
 
     private func finish(_ result: Bool) {
@@ -63,6 +73,9 @@ final class M720ShutdownCoordinator: NSObject {
     private static func production() -> M720ShutdownCoordinator {
         M720ShutdownCoordinator(
             scheduler: DispatchHIDPPScheduler(),
+            deadlineReached: {
+                M720HIDPPController.shared.shutdownDeadlineReached()
+            },
             cleanup: { completion in
                 M720AddModeCoordinator.shared.beginShutdown()
                 M720HIDPPController.shared.shutdown(completion: completion)

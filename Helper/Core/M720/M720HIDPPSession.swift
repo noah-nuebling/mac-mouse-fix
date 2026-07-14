@@ -10,6 +10,23 @@ enum M720SessionState: Equatable {
     case invalid(M720StableErrorCode)
 }
 
+private final class M720JournalMutationFence {
+    private let lock = NSLock()
+    private var isOpen = true
+
+    var allowsMutation: Bool {
+        lock.lock()
+        defer { lock.unlock() }
+        return isOpen
+    }
+
+    func close() {
+        lock.lock()
+        isOpen = false
+        lock.unlock()
+    }
+}
+
 protocol M720JournalCoordinating: AnyObject {
     typealias Completion = (Result<M720OwnershipJournal, Error>) -> Void
 
@@ -19,14 +36,19 @@ protocol M720JournalCoordinating: AnyObject {
         for key: M720DeviceKey,
         cid: UInt16,
         mutation: @escaping (M720JournalCIDEntry?) throws -> M720JournalCIDEntry?,
+        ifPermittedBy permission: @escaping () -> Bool,
         completion: @escaping Completion
     )
     func removeDevice(
         for key: M720DeviceKey,
         expected: M720JournalDevice?,
+        ifPermittedBy permission: @escaping () -> Bool,
         completion: @escaping Completion
     )
-    func acknowledgeQuarantineWithFreshEmptyV1(completion: @escaping Completion)
+    func acknowledgeQuarantineWithFreshEmptyV1(
+        ifPermittedBy permission: @escaping () -> Bool,
+        completion: @escaping Completion
+    )
 }
 
 extension M720OwnershipJournalRepository: M720JournalCoordinating {}
@@ -185,6 +207,10 @@ final class M720HIDPPSession {
     private var terminalFinalizationStarted = false
     private var terminalFinished = false
     private var terminalShutdownReason: M720StableErrorCode = .cancelled
+    private let shutdownJournalFence = M720JournalMutationFence()
+    private var nextShutdownGeneration: UInt64 = 0
+    private var activeShutdownGeneration: UInt64?
+    private var fencedShutdownGeneration: UInt64?
     private var activeEpoch: UInt64 = 0
     private var verificationCancellations: [UInt64: HIDPPCancellation] = [:]
     private var verificationTimerTokens: Set<UInt64> = []
@@ -556,6 +582,7 @@ final class M720HIDPPSession {
             DispatchQueue.main.async(execute: completion)
             return
         }
+        _ = ensureActiveShutdownGeneration()
         shutdownWaiters.append(completion)
         guard terminalIntent == .none else { return }
         terminalIntent = .shutdown
@@ -578,6 +605,22 @@ final class M720HIDPPSession {
         case let .invalid(code):
             finalizeShutdown(reason: code)
         }
+    }
+
+    func shutdownDeadlineReached() {
+        precondition(Thread.isMainThread, "M720 shutdown deadline must run on the main thread")
+        guard terminalIntent != .none else { return }
+        let generation = ensureActiveShutdownGeneration()
+        guard fencedShutdownGeneration != generation else { return }
+        fencedShutdownGeneration = generation
+        shutdownJournalFence.close()
+    }
+
+    private func ensureActiveShutdownGeneration() -> UInt64 {
+        if let activeShutdownGeneration { return activeShutdownGeneration }
+        nextShutdownGeneration &+= 1
+        activeShutdownGeneration = nextShutdownGeneration
+        return nextShutdownGeneration
     }
 
     func invalidateForRemoval(completion: @escaping () -> Void) {
@@ -729,20 +772,28 @@ final class M720HIDPPSession {
         }
 
         if journalTrustQuarantined {
-            journalRepository.acknowledgeQuarantineWithFreshEmptyV1 { [weak self] result in
-                self?.handleRetryJournalPreparation(
-                    result,
-                    states: states,
-                    lifecycle: lifecycle,
-                    operation: operation,
-                    canRecoverAmbiguousQuarantineAcknowledgement: true
-                )
-            }
+            journalRepository.acknowledgeQuarantineWithFreshEmptyV1(
+                ifPermittedBy: { [shutdownJournalFence] in
+                    shutdownJournalFence.allowsMutation
+                },
+                completion: { [weak self] result in
+                    self?.handleRetryJournalPreparation(
+                        result,
+                        states: states,
+                        lifecycle: lifecycle,
+                        operation: operation,
+                        canRecoverAmbiguousQuarantineAcknowledgement: true
+                    )
+                }
+            )
         } else {
             let expected = journalSnapshot.devices.first { $0.key == deviceKey }
             journalRepository.removeDevice(
                 for: deviceKey,
                 expected: expected,
+                ifPermittedBy: { [shutdownJournalFence] in
+                    shutdownJournalFence.allowsMutation
+                },
                 completion: { [weak self] result in
                     self?.handleRetryJournalPreparation(
                         result,
@@ -848,16 +899,20 @@ final class M720HIDPPSession {
                 }
                 self.journalRepository.removeDevice(
                     for: self.deviceKey,
-                    expected: nil
-                ) { [weak self] result in
-                    self?.handleRetryJournalPreparation(
-                        result,
-                        states: states,
-                        lifecycle: lifecycle,
-                        operation: operation,
-                        canRecoverAmbiguousQuarantineAcknowledgement: false
-                    )
-                }
+                    expected: nil,
+                    ifPermittedBy: { [shutdownJournalFence = self.shutdownJournalFence] in
+                        shutdownJournalFence.allowsMutation
+                    },
+                    completion: { [weak self] result in
+                        self?.handleRetryJournalPreparation(
+                            result,
+                            states: states,
+                            lifecycle: lifecycle,
+                            operation: operation,
+                            canRecoverAmbiguousQuarantineAcknowledgement: false
+                        )
+                    }
+                )
             }
         }
     }
@@ -1265,7 +1320,10 @@ final class M720HIDPPSession {
         journalRepository.mutateCID(
             for: deviceKey,
             cid: classification.entry.cid,
-            mutation: mutation
+            mutation: mutation,
+            ifPermittedBy: { [shutdownJournalFence] in
+                shutdownJournalFence.allowsMutation
+            }
         ) { [weak self] result in
             DispatchQueue.main.async { [weak self] in
                 guard let self, self.continuationIsCurrent(
@@ -1528,6 +1586,9 @@ final class M720HIDPPSession {
                     intended: intended,
                     phase: .prepared
                 )
+            },
+            ifPermittedBy: { [shutdownJournalFence] in
+                shutdownJournalFence.allowsMutation
             }
         ) { [weak self] result in
             DispatchQueue.main.async { [weak self] in
@@ -1701,6 +1762,9 @@ final class M720HIDPPSession {
                 }
                 existing.phase = .applied
                 return existing
+            },
+            ifPermittedBy: { [shutdownJournalFence] in
+                shutdownJournalFence.allowsMutation
             }
         ) { [weak self] result in
             DispatchQueue.main.async { [weak self] in
@@ -2281,6 +2345,9 @@ final class M720HIDPPSession {
                 }
                 existing.phase = .restoring
                 return existing
+            },
+            ifPermittedBy: { [shutdownJournalFence] in
+                shutdownJournalFence.allowsMutation
             }
         ) { [weak self] result in
             DispatchQueue.main.async { [weak self] in
@@ -2448,6 +2515,9 @@ final class M720HIDPPSession {
                     throw M720JournalRepositoryError.mismatchedCID
                 }
                 return nil
+            },
+            ifPermittedBy: { [shutdownJournalFence] in
+                shutdownJournalFence.allowsMutation
             }
         ) { [weak self] result in
             DispatchQueue.main.async { [weak self] in

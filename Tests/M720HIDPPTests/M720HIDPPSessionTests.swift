@@ -4818,6 +4818,79 @@ final class M720HIDPPSessionTests: XCTestCase {
         XCTAssertEqual(harness.transport.invalidateCallCount, 1)
     }
 
+    func testShutdownDeadlinePreservesJournalWhenRestoreReadbackArrivesLate() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B)
+        )
+        let journalAtShutdown = harness.journal.currentJournal
+        XCTAssertEqual(journalAtShutdown.devices.first?.controls.first?.phase, .applied)
+
+        var results: [Bool] = []
+        let coordinator = M720ShutdownCoordinator(
+            scheduler: harness.scheduler,
+            deadlineReached: {
+                harness.session.shutdownDeadlineReached()
+            },
+            cleanup: { completion in
+                harness.session.shutdown(completion: completion)
+            }
+        )
+        coordinator.beginShutdown { results.append($0) }
+        drainMainQueue(turns: 4)
+
+        harness.scheduler.advance(by: 1)
+        drainMainQueue(turns: 3)
+        harness.scheduler.advance(by: 0.2)
+        drainMainQueue(turns: 3)
+        let rollbackRead = harness.request(at: harness.transport.sent.count - 1)
+        XCTAssertEqual(rollbackRead.kind, .getCidReporting(0x005B))
+        harness.respond(
+            to: rollbackRead,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(divertedStates(0x005B)[0x005B]!)
+        )
+        drainMainQueue(turns: 4)
+
+        harness.scheduler.advance(by: 1)
+        drainMainQueue(turns: 3)
+        harness.scheduler.advance(by: 0.2)
+        drainMainQueue(turns: 3)
+        let restoreSet = harness.request(at: harness.transport.sent.count - 1)
+        XCTAssertEqual(restoreSet.kind, .setCidReporting(0x005B, diverted: false))
+        harness.respond(
+            to: restoreSet,
+            responseFeatureIndex: 0x2A,
+            parameters: ReprogControlsV4.setReportingParameters(cid: 0x005B, diverted: false)
+        )
+        drainMainQueue(turns: 4)
+
+        let lateReadback = harness.request(at: harness.transport.sent.count - 1)
+        XCTAssertEqual(lateReadback.kind, .getCidReporting(0x005B))
+        harness.scheduler.advance(to: 3)
+        XCTAssertEqual(results, [false])
+        XCTAssertEqual(coordinator.state, .finished(false))
+        let journalAtDeadline = harness.journal.currentJournal
+        XCTAssertEqual(journalAtDeadline.devices.first?.controls.first?.phase, .restoring)
+
+        harness.respond(
+            to: lateReadback,
+            responseFeatureIndex: 0x2A,
+            parameters: harness.reportingParameters(baselineStates(0x005B)[0x005B]!)
+        )
+        drainMainQueue(turns: 8)
+
+        XCTAssertEqual(harness.journal.currentJournal, journalAtDeadline)
+        XCTAssertEqual(results, [false])
+        XCTAssertEqual(coordinator.state, .finished(false))
+    }
+
     func testShutdownDuringTakeoverJournalFailureStillFinalizesAfterOwnedSiblingRollback() {
         let harness = M720SessionHarness()
         harness.session.start()
@@ -6587,8 +6660,15 @@ private final class M720SessionJournalCoordinator: M720JournalCoordinating {
         completion(.success(journal))
     }
 
-    func acknowledgeQuarantineWithFreshEmptyV1(completion: @escaping Completion) {
+    func acknowledgeQuarantineWithFreshEmptyV1(
+        ifPermittedBy permission: @escaping () -> Bool,
+        completion: @escaping Completion
+    ) {
         acknowledgementCallCount += 1
+        guard permission() else {
+            completion(.failure(M720JournalRepositoryError.mutationFenced))
+            return
+        }
         if let acknowledgementError {
             if acknowledgementFailurePersistsChange {
                 didAcknowledgeQuarantine = true
@@ -6609,9 +6689,14 @@ private final class M720SessionJournalCoordinator: M720JournalCoordinating {
     func removeDevice(
         for key: M720DeviceKey,
         expected: M720JournalDevice?,
+        ifPermittedBy permission: @escaping () -> Bool,
         completion: @escaping Completion
     ) {
         removeDeviceCallCount += 1
+        guard permission() else {
+            completion(.failure(M720JournalRepositoryError.mutationFenced))
+            return
+        }
         if let removeDeviceError {
             completion(.failure(removeDeviceError))
             return
@@ -6648,9 +6733,14 @@ private final class M720SessionJournalCoordinator: M720JournalCoordinating {
         for key: M720DeviceKey,
         cid: UInt16,
         mutation: @escaping (M720JournalCIDEntry?) throws -> M720JournalCIDEntry?,
+        ifPermittedBy permission: @escaping () -> Bool,
         completion: @escaping Completion
     ) {
         mutationCallCount += 1
+        guard permission() else {
+            completion(.failure(M720JournalRepositoryError.mutationFenced))
+            return
+        }
         do {
             if let replacement = replaceEntryBeforeNextMutation,
                replacement.cid == cid,
@@ -6670,6 +6760,10 @@ private final class M720SessionJournalCoordinator: M720JournalCoordinating {
                 controlIndex.map { journal.devices[deviceIndex].controls[$0] }
             }
             let updated = try mutation(existing)
+            guard permission() else {
+                completion(.failure(M720JournalRepositoryError.mutationFenced))
+                return
+            }
             let point = M720JournalFailurePoint(cid: cid, phase: updated?.phase)
             if point == holdFailureBeforeNextMutation {
                 holdFailureBeforeNextMutation = nil
