@@ -319,6 +319,25 @@ session, not to one CID.
 Add Mode uses an asynchronous request-ID handshake over the existing message
 ports; no synchronous port callback waits for HID++:
 
+The Helper has only one HID ownership path. The Add Mode coordinator freezes a
+Controller snapshot containing the monotonic device-set revision, environment
+enablement, and each sorted live `(deviceToken, exactRequiredCIDs)` participant,
+then asks the Controller for its single opaque temporary-policy lease. The
+Controller validates the whole frozen set atomically and applies overrides only
+through each session's ordinary `setRequiredCIDs` transaction. Attach, removal
+start, or pending replacement changes the revision and cancels the operation;
+new participants never inherit a lease. A rollback that cannot be verified
+keeps the lease blocked and journal entries intact, preventing a superseding
+takeover. Readiness remains provisional until its queued delivery turn: the
+Controller rechecks the live token, required-CID, and stable-state predicate at
+delivery, and uses the same predicate before clearing a lease.
+
+Environment disable has priority over both saved policy and the lease: its
+effective target is empty until every remaining participant is stably native.
+The frozen/saved baseline remains cached and is reacquired, with fresh
+preflight, only after a later re-enable. Synthetic Add Mode remaps may update
+environment enablement but never overwrite the saved-policy cache.
+
 | Direction | Message | Contract |
 | --- | --- | --- |
 | App -> Helper | `prepareAddMode` | UUID `requestID`; immediately acknowledges `{accepted}` within the existing one-second message-port limit |
@@ -368,8 +387,13 @@ own terminal failure; no blind write or new takeover occurs.
 
 A late completion is suppressed by request ID and generation, and the app
 ignores a message for a request that is no longer current. On successful save,
-`finishAddMode` disables effective Add Mode and reconciles the newly persisted
-remap instead of the saved baseline.
+`finishAddMode` keeps the temporary lease active while reloading config,
+updating the Controller's saved cache, switching the lease target to that new
+effective policy, and verifying it. Only then does it clear the lease and
+publish inactive(saved). Accepted finish is irreversible: app termination or a
+queued preparation-context notice cannot restore the old baseline. If the
+device/environment context changes during finish verification, the Helper
+retries the current-saved transaction in the new context before clearing.
 
 The request ID is also a lease: the app renews it every 2 seconds and the helper
 cancels after 5 seconds without renewal. An `NSWorkspace` main-app termination
@@ -383,6 +407,19 @@ same lease/finish lifecycle for existing generic Add Mode. A retry with a stale
 or unknown `deviceToken` synchronously returns `{accepted: false,
 error: disconnected}` and emits no async result; every accepted retry emits one
 correlated capture-state result after reaching a stable state.
+
+Retry acceptance is synchronous on the Helper main turn. The session returns a
+Boolean and has no second retry-result observer. The Controller stores at most
+one pending request ID and consumes it on the next token-guarded stable-state
+publication, including a disconnected removal publication. Ordinary stable
+dedupe ignores request ID, while a nonnil accepted retry forces exactly one
+correlated publication even if the stable state key did not otherwise change.
+
+Mutation-route decoders receive the raw nullable payload object so a wrong root
+class is a protocol rejection rather than an Objective-C/Swift bridge trap.
+Callbacks acknowledge before queued takeover work, including the no-M720 path.
+The App typed dispatcher and diagnostic-state receiver are separate follow-up
+work; this phase only shares codecs and implements Helper mutation routes.
 
 ## Input routing
 

@@ -451,6 +451,11 @@
 		F72B00000000000000000003 /* BLEHIDPPTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72B00000000000000000004 /* BLEHIDPPTransport.swift */; };
 		F72C00000000000000000001 /* M720ControllerLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72C00000000000000000002 /* M720ControllerLifecycleTests.swift */; };
 		F72C00000000000000000003 /* M720HIDPPController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72C00000000000000000004 /* M720HIDPPController.swift */; };
+		F72D00000000000000000001 /* M720AddModeIPCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72D00000000000000000002 /* M720AddModeIPCTests.swift */; };
+		F72D00000000000000000003 /* M720IPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72D00000000000000000004 /* M720IPC.swift */; };
+		F72D00000000000000000005 /* M720IPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72D00000000000000000004 /* M720IPC.swift */; };
+		F72D00000000000000000006 /* M720Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72300000000000000000004 /* M720Types.swift */; };
+		F72D00000000000000000007 /* M720AddModeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72D00000000000000000008 /* M720AddModeCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2458,6 +2463,9 @@
 		F72B00000000000000000004 /* BLEHIDPPTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEHIDPPTransport.swift; sourceTree = "<group>"; };
 		F72C00000000000000000002 /* M720ControllerLifecycleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720ControllerLifecycleTests.swift; path = M720HIDPPTests/M720ControllerLifecycleTests.swift; sourceTree = "<group>"; };
 		F72C00000000000000000004 /* M720HIDPPController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720HIDPPController.swift; sourceTree = "<group>"; };
+		F72D00000000000000000002 /* M720AddModeIPCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720AddModeIPCTests.swift; path = M720HIDPPTests/M720AddModeIPCTests.swift; sourceTree = "<group>"; };
+		F72D00000000000000000004 /* M720IPC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720IPC.swift; sourceTree = "<group>"; };
+		F72D00000000000000000008 /* M720AddModeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720AddModeCoordinator.swift; sourceTree = "<group>"; };
 		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
 		4FDE757D28B0E66900662314 /* License.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = License.h; sourceTree = "<group>"; };
 		4FDE759928B1401400662314 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
@@ -7437,6 +7445,7 @@
 				F72900000000000000000002 /* M720HIDPPSessionTests.swift */,
 				F72B00000000000000000002 /* BLEHIDPPTransportTests.swift */,
 				F72C00000000000000000002 /* M720ControllerLifecycleTests.swift */,
+				F72D00000000000000000002 /* M720AddModeIPCTests.swift */,
 				F7210000000000000000000B /* ManualScheduler.swift */,
 				F7210000000000000000000D /* ScriptedHIDPPTransport.swift */,
 			);
@@ -7755,6 +7764,7 @@
 				F72900000000000000000004 /* M720HIDPPSession.swift */,
 				F72B00000000000000000004 /* BLEHIDPPTransport.swift */,
 				F72C00000000000000000004 /* M720HIDPPController.swift */,
+				F72D00000000000000000008 /* M720AddModeCoordinator.swift */,
 			);
 			path = M720;
 			sourceTree = "<group>";
@@ -7990,6 +8000,7 @@
 				F7200000000000000000000F /* M720Profile.swift */,
 				F72800000000000000000004 /* M720OwnershipJournal.swift */,
 				F72300000000000000000004 /* M720Types.swift */,
+				F72D00000000000000000004 /* M720IPC.swift */,
 			);
 			path = M720;
 			sourceTree = "<group>";
@@ -8488,6 +8499,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F72D00000000000000000005 /* M720IPC.swift in Sources */,
+				F72D00000000000000000006 /* M720Types.swift in Sources */,
 				4F909D2828A0C3D2009349A2 /* ResizingTabWindow.swift in Sources */,
 				4FA40CF728A0CCCA00499E53 /* Curve.swift in Sources */,
 				4F1B41A52D4BACBA00026C94 /* NSData+Additions.m in Sources */,
@@ -8664,6 +8677,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F72D00000000000000000003 /* M720IPC.swift in Sources */,
 				4FB8B29F2CCEBB1700A5A580 /* GetTrialState.swift in Sources */,
 				4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */,
 				4FFA4E4428B7D28E0062A1FE /* ConstraintUtility.swift in Sources */,
@@ -8722,6 +8736,7 @@
 				F72900000000000000000003 /* M720HIDPPSession.swift in Sources */,
 				F72B00000000000000000003 /* BLEHIDPPTransport.swift in Sources */,
 				F72C00000000000000000003 /* M720HIDPPController.swift in Sources */,
+				F72D00000000000000000007 /* M720AddModeCoordinator.swift in Sources */,
 				F72300000000000000000003 /* M720Types.swift in Sources */,
 				F72100000000000000000003 /* HIDPPLongReport.swift in Sources */,
 				F72200000000000000000003 /* ReprogControlsV4.swift in Sources */,
@@ -8874,6 +8889,7 @@
 				F72900000000000000000001 /* M720HIDPPSessionTests.swift in Sources */,
 				F72B00000000000000000001 /* BLEHIDPPTransportTests.swift in Sources */,
 				F72C00000000000000000001 /* M720ControllerLifecycleTests.swift in Sources */,
+				F72D00000000000000000001 /* M720AddModeIPCTests.swift in Sources */,
 				F7210000000000000000000A /* ManualScheduler.swift in Sources */,
 				F7210000000000000000000C /* ScriptedHIDPPTransport.swift in Sources */,
 			);

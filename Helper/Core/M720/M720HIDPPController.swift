@@ -25,6 +25,47 @@ struct M720ControllerSessionSnapshot: Equatable {
     let state: M720SessionState
     let errorCode: M720StableErrorCode?
     let requiredCIDs: Set<UInt16>
+    let requestID: UUID?
+
+    init(
+        deviceToken: UUID,
+        state: M720SessionState,
+        errorCode: M720StableErrorCode?,
+        requiredCIDs: Set<UInt16>,
+        requestID: UUID? = nil
+    ) {
+        self.deviceToken = deviceToken
+        self.state = state
+        self.errorCode = errorCode
+        self.requiredCIDs = requiredCIDs
+        self.requestID = requestID
+    }
+}
+
+struct M720PreparationParticipant: Equatable {
+    let deviceToken: UUID
+    let exactRequiredCIDs: Set<UInt16>
+}
+
+struct M720PreparationSnapshot: Equatable {
+    let deviceSetRevision: UInt64
+    let environmentEnabled: Bool
+    let participants: [M720PreparationParticipant]
+}
+
+enum M720TemporaryPolicyResult: Equatable {
+    case ready
+    case failed(M720StableErrorCode)
+}
+
+enum M720PreparationContextChange: Equatable {
+    case deviceSetChanged(revision: UInt64)
+    case environmentChanged(enabled: Bool)
+
+    var isDeviceSetChange: Bool {
+        if case .deviceSetChanged = self { return true }
+        return false
+    }
 }
 
 protocol M720SessionControlling: AnyObject {
@@ -39,7 +80,8 @@ protocol M720SessionControlling: AnyObject {
     func reconcileAfterWake()
     func shutdown(completion: @escaping () -> Void)
     func invalidateForRemoval(completion: @escaping () -> Void)
-    func retryAfterConflict(requestID: UUID?)
+    @discardableResult
+    func retryAfterConflict(requestID: UUID?) -> Bool
 }
 
 extension M720HIDPPSession: M720SessionControlling {}
@@ -63,6 +105,7 @@ final class M720HIDPPController: NSObject {
         var journalIdentityUsable: Bool
         var requiredCIDs: Set<UInt16>
         var lastPublishedSnapshot: M720ControllerSessionSnapshot?
+        var pendingRetryRequestID: UUID?
         var removalWaiters: [() -> Void] = []
         var invalidationStarted = false
         var invalidationFinished = false
@@ -83,6 +126,56 @@ final class M720HIDPPController: NSObject {
             self.journalIdentityUsable = journalIdentityUsable
             self.requiredCIDs = requiredCIDs
         }
+    }
+
+    private final class TemporaryPolicyOperation {
+        let generation: UInt64
+        let contextGeneration: UInt64
+        let targetsByToken: [UUID: Set<UInt16>]
+        let blocksLeaseOnFailure: Bool
+        let completion: (M720TemporaryPolicyResult) -> Void
+        var didComplete = false
+        var readyDeliveryWasEnqueued = false
+
+        init(
+            generation: UInt64,
+            contextGeneration: UInt64,
+            targetsByToken: [UUID: Set<UInt16>],
+            blocksLeaseOnFailure: Bool,
+            completion: @escaping (M720TemporaryPolicyResult) -> Void
+        ) {
+            self.generation = generation
+            self.contextGeneration = contextGeneration
+            self.targetsByToken = targetsByToken
+            self.blocksLeaseOnFailure = blocksLeaseOnFailure
+            self.completion = completion
+        }
+    }
+
+    private final class TemporaryPolicyLease {
+        let ownerID: UUID
+        let frozenSavedTargets: [UUID: Set<UInt16>]
+        var overridesByToken: [UUID: Set<UInt16>]
+        var operation: TemporaryPolicyOperation?
+        var lastVerifiedTargets: [UUID: Set<UInt16>]?
+        var lastVerifiedContextGeneration: UInt64?
+        var blocked = false
+
+        init(
+            ownerID: UUID,
+            frozenSavedTargets: [UUID: Set<UInt16>],
+            overridesByToken: [UUID: Set<UInt16>]
+        ) {
+            self.ownerID = ownerID
+            self.frozenSavedTargets = frozenSavedTargets
+            self.overridesByToken = overridesByToken
+        }
+    }
+
+    private enum TemporaryPolicyEvaluation {
+        case ready
+        case waiting
+        case failed(M720StableErrorCode, shouldBlockLease: Bool?)
     }
 
     private final class PendingReplacement {
@@ -134,6 +227,14 @@ final class M720HIDPPController: NSObject {
     private var pendingReplacements: [UInt64: PendingReplacement] = [:]
     private var savedRequiredCIDs: Set<UInt16> = []
     private var buttonsEnabled = false
+    private var deviceSetRevision: UInt64 = 0
+    private var temporaryPolicyLease: TemporaryPolicyLease?
+    private var temporaryPolicyOperationGeneration: UInt64 = 0
+    private var policyContextGeneration: UInt64 = 0
+    private var lastPolicyContextError: M720StableErrorCode = .cancelled
+
+    @nonobjc var onPreparationContextChange: ((M720PreparationContextChange) -> Void)?
+    @nonobjc var onStableStateChange: ((M720ControllerSessionSnapshot) -> Void)?
 
     private override init() {
         identityProvider = Self.productionSnapshot
@@ -190,6 +291,7 @@ final class M720HIDPPController: NSObject {
                 journalIdentityUsable: journalIdentityUsable,
                 waitingForTokens: waitingForTokens
             )
+            noteDeviceSetChange()
             if let oldEntry {
                 beginInvalidationIfNeeded(oldEntry)
             }
@@ -211,6 +313,7 @@ final class M720HIDPPController: NSObject {
     ) {
         if let pending = pendingReplacements.first(where: { $0.value.device === device }) {
             pendingReplacements.removeValue(forKey: pending.key)
+            noteDeviceSetChange()
             completion()
             return
         }
@@ -230,6 +333,7 @@ final class M720HIDPPController: NSObject {
         buttonsEnabled: Bool,
         remapsAreAddMode: Bool
     ) {
+        requireMainTurn()
         if !remapsAreAddMode {
             savedRequiredCIDs = M720CapturePolicy.requiredCIDs(
                 remaps: remaps,
@@ -237,13 +341,18 @@ final class M720HIDPPController: NSObject {
                 buttonsEnabled: true
             )
         }
+        let environmentChanged = self.buttonsEnabled != buttonsEnabled
         self.buttonsEnabled = buttonsEnabled
+        if environmentChanged {
+            noteEnvironmentChange(enabled: buttonsEnabled)
+        }
 
-        let desired = effectiveRequiredCIDs
         for entry in entries.values where !entry.invalidationFinished {
+            let desired = effectiveRequiredCIDs(for: entry.token)
             entry.requiredCIDs = desired
             entry.session.setRequiredCIDs(desired)
             publishStableState(for: entry, state: entry.session.state)
+            evaluateTemporaryPolicyOperationIfNeeded()
         }
     }
 
@@ -280,7 +389,8 @@ final class M720HIDPPController: NSObject {
     }
 
     @nonobjc func captureStateSnapshots() -> [M720ControllerSessionSnapshot] {
-        entries.values
+        requireMainTurn()
+        return entries.values
             .filter { !$0.invalidationFinished }
             .sorted { $0.registryEntryID < $1.registryEntryID }
             .map { snapshot(for: $0, state: $0.session.state) }
@@ -288,15 +398,128 @@ final class M720HIDPPController: NSObject {
 
     @discardableResult
     @nonobjc func retryCapture(deviceToken: UUID, requestID: UUID?) -> Bool {
+        requireMainTurn()
         guard let entry = entries.values.first(where: {
             $0.token == deviceToken && !$0.invalidationStarted
-        }) else { return false }
-        entry.session.retryAfterConflict(requestID: requestID)
+        }), entry.pendingRetryRequestID == nil else { return false }
+        guard entry.session.retryAfterConflict(requestID: requestID) else { return false }
+        entry.pendingRetryRequestID = requestID
         return true
     }
 
-    private var effectiveRequiredCIDs: Set<UInt16> {
-        buttonsEnabled ? savedRequiredCIDs : []
+    @nonobjc func capturePreparationSnapshot() -> M720PreparationSnapshot {
+        requireMainTurn()
+        let participants = entries.values
+            .filter { !$0.invalidationStarted && !$0.invalidationFinished }
+            .map {
+                M720PreparationParticipant(
+                    deviceToken: $0.token,
+                    exactRequiredCIDs: savedRequiredCIDs
+                )
+            }
+            .sorted { $0.deviceToken.uuidString < $1.deviceToken.uuidString }
+        return M720PreparationSnapshot(
+            deviceSetRevision: deviceSetRevision,
+            environmentEnabled: buttonsEnabled,
+            participants: participants
+        )
+    }
+
+    @discardableResult
+    @nonobjc func beginTemporaryPolicyLease(
+        ownerID: UUID,
+        snapshot: M720PreparationSnapshot,
+        targetCIDs: Set<UInt16>,
+        completion: @escaping (M720TemporaryPolicyResult) -> Void
+    ) -> Bool {
+        requireMainTurn()
+        guard temporaryPolicyLease == nil,
+              snapshot == capturePreparationSnapshot()
+        else { return false }
+        let frozen = Dictionary(uniqueKeysWithValues: snapshot.participants.map {
+            ($0.deviceToken, $0.exactRequiredCIDs)
+        })
+        let overrides = Dictionary(uniqueKeysWithValues: snapshot.participants.map {
+            ($0.deviceToken, targetCIDs)
+        })
+        let lease = TemporaryPolicyLease(
+            ownerID: ownerID,
+            frozenSavedTargets: frozen,
+            overridesByToken: overrides
+        )
+        temporaryPolicyLease = lease
+        startTemporaryPolicyOperation(
+            lease: lease,
+            rawTargetsByToken: overrides,
+            blocksLeaseOnFailure: false,
+            completion: completion
+        )
+        return true
+    }
+
+    @discardableResult
+    @nonobjc func restoreTemporaryPolicyLease(
+        ownerID: UUID,
+        completion: @escaping (M720TemporaryPolicyResult) -> Void
+    ) -> Bool {
+        requireMainTurn()
+        guard let lease = temporaryPolicyLease,
+              lease.ownerID == ownerID,
+              !lease.blocked
+        else { return false }
+        startTemporaryPolicyOperation(
+            lease: lease,
+            rawTargetsByToken: lease.frozenSavedTargets,
+            blocksLeaseOnFailure: true,
+            completion: completion
+        )
+        return true
+    }
+
+    @discardableResult
+    @nonobjc func updateTemporaryPolicyLeaseToCurrentSaved(
+        ownerID: UUID,
+        completion: @escaping (M720TemporaryPolicyResult) -> Void
+    ) -> Bool {
+        requireMainTurn()
+        guard let lease = temporaryPolicyLease,
+              lease.ownerID == ownerID,
+              !lease.blocked
+        else { return false }
+        let current = Dictionary(uniqueKeysWithValues: lease.frozenSavedTargets.keys.map {
+            ($0, savedRequiredCIDs)
+        })
+        startTemporaryPolicyOperation(
+            lease: lease,
+            rawTargetsByToken: current,
+            blocksLeaseOnFailure: true,
+            completion: completion
+        )
+        return true
+    }
+
+    @discardableResult
+    @nonobjc func clearTemporaryPolicyLease(ownerID: UUID) -> Bool {
+        requireMainTurn()
+        guard let lease = temporaryPolicyLease,
+              lease.ownerID == ownerID,
+              lease.operation == nil,
+              !lease.blocked,
+              let verifiedTargets = lease.lastVerifiedTargets,
+              let verifiedContextGeneration = lease.lastVerifiedContextGeneration,
+              verifiedTargets == currentSavedEffectiveTargets(for: lease),
+              case .ready = evaluateTemporaryPolicyTargets(
+                verifiedTargets,
+                contextGeneration: verifiedContextGeneration
+              )
+        else { return false }
+        temporaryPolicyLease = nil
+        return true
+    }
+
+    private func effectiveRequiredCIDs(for token: UUID) -> Set<UInt16> {
+        guard buttonsEnabled else { return [] }
+        return temporaryPolicyLease?.overridesByToken[token] ?? savedRequiredCIDs
     }
 
     private func contains(device: Device) -> Bool {
@@ -362,13 +585,14 @@ final class M720HIDPPController: NSObject {
         ) else { return }
 
         let token = tokenFactory()
+        let requiredCIDs = effectiveRequiredCIDs(for: token)
         let entry = Entry(
             device: device,
             snapshot: snapshot,
             token: token,
             session: session,
             journalIdentityUsable: journalIdentityUsable,
-            requiredCIDs: effectiveRequiredCIDs
+            requiredCIDs: requiredCIDs
         )
         entries[snapshot.registryEntryID] = entry
 
@@ -382,6 +606,7 @@ final class M720HIDPPController: NSObject {
             }
         }
         session.setRequiredCIDs(entry.requiredCIDs)
+        noteDeviceSetChange()
 
         enqueueStart { [weak self] in
             guard let self,
@@ -397,6 +622,7 @@ final class M720HIDPPController: NSObject {
     private func beginInvalidationIfNeeded(_ entry: Entry) {
         guard !entry.invalidationStarted else { return }
         entry.invalidationStarted = true
+        noteDeviceSetChange()
         let registryEntryID = entry.registryEntryID
         let token = entry.token
         entry.session.invalidateForRemoval { [weak self] in
@@ -467,29 +693,269 @@ final class M720HIDPPController: NSObject {
               entry.session.state == state
         else { return }
         publishStableState(for: entry, state: state)
+        evaluateTemporaryPolicyOperationIfNeeded()
     }
 
     private func publishStableState(for entry: Entry, state: M720SessionState) {
         guard state.isStableForController else { return }
-        let next = snapshot(for: entry, state: state)
-        guard !next.requiredCIDs.isEmpty || entry.lastPublishedSnapshot != nil else {
+        let baseline = snapshot(for: entry, state: state, requestID: nil)
+        let requestID = entry.pendingRetryRequestID
+        guard requestID != nil || !baseline.requiredCIDs.isEmpty || entry.lastPublishedSnapshot != nil else {
             return
         }
-        guard entry.lastPublishedSnapshot != next else { return }
-        entry.lastPublishedSnapshot = next
-        stableStateObserver(next)
+        guard requestID != nil || entry.lastPublishedSnapshot != baseline else { return }
+        entry.lastPublishedSnapshot = baseline
+        entry.pendingRetryRequestID = nil
+        let published = snapshot(for: entry, state: state, requestID: requestID)
+        stableStateObserver(published)
+        onStableStateChange?(published)
     }
 
     private func snapshot(
         for entry: Entry,
-        state: M720SessionState
+        state: M720SessionState,
+        requestID: UUID? = nil
     ) -> M720ControllerSessionSnapshot {
         M720ControllerSessionSnapshot(
             deviceToken: entry.token,
             state: state,
             errorCode: state.controllerErrorCode,
-            requiredCIDs: entry.requiredCIDs
+            requiredCIDs: entry.requiredCIDs,
+            requestID: requestID
         )
+    }
+
+    private func startTemporaryPolicyOperation(
+        lease: TemporaryPolicyLease,
+        rawTargetsByToken: [UUID: Set<UInt16>],
+        blocksLeaseOnFailure: Bool,
+        completion: @escaping (M720TemporaryPolicyResult) -> Void
+    ) {
+        guard temporaryPolicyLease === lease, !lease.blocked else { return }
+        if let current = lease.operation {
+            completeSupersededOperation(current, in: lease)
+        }
+
+        lease.overridesByToken = rawTargetsByToken
+        let liveTokens = Set(entries.values
+            .filter { !$0.invalidationStarted && !$0.invalidationFinished }
+            .map(\.token))
+        let effectiveTargets = rawTargetsByToken.reduce(into: [UUID: Set<UInt16>]()) {
+            result, pair in
+            guard liveTokens.contains(pair.key) else { return }
+            result[pair.key] = buttonsEnabled ? pair.value : []
+        }
+        temporaryPolicyOperationGeneration &+= 1
+        let operation = TemporaryPolicyOperation(
+            generation: temporaryPolicyOperationGeneration,
+            contextGeneration: policyContextGeneration,
+            targetsByToken: effectiveTargets,
+            blocksLeaseOnFailure: blocksLeaseOnFailure,
+            completion: completion
+        )
+        lease.operation = operation
+        lease.lastVerifiedTargets = nil
+        lease.lastVerifiedContextGeneration = nil
+
+        for (token, target) in effectiveTargets.sorted(by: {
+            $0.key.uuidString < $1.key.uuidString
+        }) {
+            guard let entry = liveEntry(for: token) else { continue }
+            entry.requiredCIDs = target
+            entry.session.setRequiredCIDs(target)
+        }
+        evaluateTemporaryPolicyOperationIfNeeded()
+    }
+
+    private func evaluateTemporaryPolicyOperationIfNeeded() {
+        guard let lease = temporaryPolicyLease,
+              let operation = lease.operation,
+              !operation.didComplete
+        else { return }
+
+        switch evaluateTemporaryPolicyTargets(
+            operation.targetsByToken,
+            contextGeneration: operation.contextGeneration
+        ) {
+        case .ready:
+            enqueueTemporaryPolicyReadyDelivery(operation, in: lease)
+        case .waiting:
+            return
+        case let .failed(error, shouldBlockLease):
+            completeTemporaryPolicyOperation(
+                operation,
+                in: lease,
+                result: .failed(error),
+                shouldBlockLease: shouldBlockLease
+            )
+        }
+    }
+
+    private func evaluateTemporaryPolicyTargets(
+        _ targetsByToken: [UUID: Set<UInt16>],
+        contextGeneration: UInt64
+    ) -> TemporaryPolicyEvaluation {
+        guard contextGeneration == policyContextGeneration else {
+            return .failed(lastPolicyContextError, shouldBlockLease: false)
+        }
+        for (token, target) in targetsByToken {
+            guard let entry = liveEntry(for: token) else {
+                return .failed(.deviceSetChanged, shouldBlockLease: false)
+            }
+            guard entry.requiredCIDs == target,
+                  entry.session.requiredCIDs == target
+            else { return .waiting }
+            switch (target.isEmpty, entry.session.state) {
+            case (true, .nativeReady), (false, .active):
+                continue
+            case (_, .conflict):
+                return .failed(.conflict, shouldBlockLease: nil)
+            case let (_, .invalid(error)):
+                return .failed(error, shouldBlockLease: nil)
+            case (_, .discovering), (_, .nativeReady), (_, .takingOver),
+                 (_, .active), (_, .restoring):
+                return .waiting
+            }
+        }
+        return .ready
+    }
+
+    private func enqueueTemporaryPolicyReadyDelivery(
+        _ operation: TemporaryPolicyOperation,
+        in lease: TemporaryPolicyLease
+    ) {
+        guard !operation.readyDeliveryWasEnqueued else { return }
+        operation.readyDeliveryWasEnqueued = true
+        enqueueStart { [weak self] in
+            guard let self,
+                  self.temporaryPolicyLease === lease,
+                  lease.operation === operation,
+                  !operation.didComplete
+            else { return }
+            operation.readyDeliveryWasEnqueued = false
+
+            switch self.evaluateTemporaryPolicyTargets(
+                operation.targetsByToken,
+                contextGeneration: operation.contextGeneration
+            ) {
+            case .ready:
+                guard self.finalizeTemporaryPolicyOperation(
+                    operation,
+                    in: lease,
+                    result: .ready
+                ) else { return }
+                operation.completion(.ready)
+            case .waiting:
+                return
+            case let .failed(error, shouldBlockLease):
+                guard self.finalizeTemporaryPolicyOperation(
+                    operation,
+                    in: lease,
+                    result: .failed(error),
+                    shouldBlockLease: shouldBlockLease
+                ) else { return }
+                operation.completion(.failed(error))
+            }
+        }
+    }
+
+    private func completeTemporaryPolicyOperation(
+        _ operation: TemporaryPolicyOperation,
+        in lease: TemporaryPolicyLease,
+        result: M720TemporaryPolicyResult,
+        shouldBlockLease: Bool? = nil
+    ) {
+        guard finalizeTemporaryPolicyOperation(
+            operation,
+            in: lease,
+            result: result,
+            shouldBlockLease: shouldBlockLease
+        ) else { return }
+        enqueueStart { operation.completion(result) }
+    }
+
+    @discardableResult
+    private func finalizeTemporaryPolicyOperation(
+        _ operation: TemporaryPolicyOperation,
+        in lease: TemporaryPolicyLease,
+        result: M720TemporaryPolicyResult,
+        shouldBlockLease: Bool? = nil
+    ) -> Bool {
+        guard temporaryPolicyLease === lease,
+              lease.operation === operation,
+              !operation.didComplete
+        else { return false }
+        operation.didComplete = true
+        lease.operation = nil
+        switch result {
+        case .ready:
+            lease.lastVerifiedTargets = operation.targetsByToken
+            lease.lastVerifiedContextGeneration = operation.contextGeneration
+        case .failed:
+            lease.lastVerifiedTargets = nil
+            lease.lastVerifiedContextGeneration = nil
+            if shouldBlockLease ?? operation.blocksLeaseOnFailure {
+                lease.blocked = true
+            }
+        }
+        return true
+    }
+
+    private func completeSupersededOperation(
+        _ operation: TemporaryPolicyOperation,
+        in lease: TemporaryPolicyLease
+    ) {
+        guard lease.operation === operation, !operation.didComplete else { return }
+        operation.didComplete = true
+        lease.operation = nil
+        lease.lastVerifiedTargets = nil
+        lease.lastVerifiedContextGeneration = nil
+        enqueueStart { operation.completion(.failed(.cancelled)) }
+    }
+
+    private func currentSavedEffectiveTargets(
+        for lease: TemporaryPolicyLease
+    ) -> [UUID: Set<UInt16>] {
+        let liveTokens = Set(entries.values
+            .filter { !$0.invalidationStarted && !$0.invalidationFinished }
+            .map(\.token))
+        return lease.frozenSavedTargets.reduce(into: [UUID: Set<UInt16>]()) {
+            result, pair in
+            guard liveTokens.contains(pair.key) else { return }
+            result[pair.key] = buttonsEnabled ? savedRequiredCIDs : []
+        }
+    }
+
+    private func liveEntry(for token: UUID) -> Entry? {
+        entries.values.first {
+            $0.token == token && !$0.invalidationStarted && !$0.invalidationFinished
+        }
+    }
+
+    private func noteDeviceSetChange() {
+        deviceSetRevision &+= 1
+        policyContextGeneration &+= 1
+        lastPolicyContextError = .deviceSetChanged
+        enqueuePreparationContextChange(.deviceSetChanged(revision: deviceSetRevision))
+        evaluateTemporaryPolicyOperationIfNeeded()
+    }
+
+    private func noteEnvironmentChange(enabled: Bool) {
+        policyContextGeneration &+= 1
+        lastPolicyContextError = .cancelled
+        enqueuePreparationContextChange(.environmentChanged(enabled: enabled))
+        evaluateTemporaryPolicyOperationIfNeeded()
+    }
+
+    private func enqueuePreparationContextChange(_ change: M720PreparationContextChange) {
+        guard onPreparationContextChange != nil else { return }
+        enqueueStart { [weak self] in
+            self?.onPreparationContextChange?(change)
+        }
+    }
+
+    private func requireMainTurn() {
+        precondition(Thread.isMainThread, "M720 controller mutation must run on the main thread")
     }
 
     private func performOnMain(_ block: @escaping () -> Void) {

@@ -607,6 +607,7 @@ final class M720ControllerLifecycleTests: XCTestCase {
         let firstSession = try! XCTUnwrap(harness.session(for: first))
         let secondSession = try! XCTUnwrap(harness.session(for: second))
         let requestID = UUID()
+        firstSession.retryAccepted = true
 
         XCTAssertFalse(harness.controller.retryCapture(deviceToken: UUID(), requestID: requestID))
         XCTAssertTrue(harness.controller.retryCapture(deviceToken: firstToken, requestID: requestID))
@@ -689,6 +690,665 @@ final class M720ControllerLifecycleTests: XCTestCase {
         let remaps = NSMutableDictionary()
         remaps.setObject(modification, forKey: NSDictionary())
         return remaps
+    }
+}
+
+final class M720ControllerTemporaryPolicyTests: XCTestCase {
+    private let allTargets = Set(M720Profile.cidToButton.keys)
+
+    func testPreparationSnapshotContainsRevisionEnvironmentAndSortedExactSavedPolicy() {
+        let highToken = UUID(uuidString: "F0000000-0000-0000-0000-000000000001")!
+        let lowToken = UUID(uuidString: "10000000-0000-0000-0000-000000000002")!
+        let harness = M720ControllerHarness(tokens: [highToken, lowToken])
+        harness.controller.reconcile(
+            remaps: makeControllerRemaps(buttons: [6, 8]),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        let first = harness.makeDevice(snapshot: .m720(registryEntryID: 10, serialNumber: "one"))
+        let second = harness.makeDevice(snapshot: .m720(registryEntryID: 20, serialNumber: "two"))
+        harness.controller.deviceDidAttach(first)
+        harness.controller.deviceDidAttach(second)
+
+        let snapshot = harness.controller.capturePreparationSnapshot()
+
+        XCTAssertEqual(snapshot.deviceSetRevision, 2)
+        XCTAssertTrue(snapshot.environmentEnabled)
+        XCTAssertEqual(snapshot.participants.map(\.deviceToken), [lowToken, highToken])
+        XCTAssertEqual(
+            snapshot.participants.map(\.exactRequiredCIDs),
+            [Set([0x005B, 0x00D0]), Set([0x005B, 0x00D0])]
+        )
+    }
+
+    func testLeaseAtomicallyRejectsStaleRevisionAndIncompleteTokenSetWithoutApplyingTargets() {
+        let harness = M720ControllerHarness()
+        let first = harness.makeDevice(snapshot: .m720(registryEntryID: 30, serialNumber: "one"))
+        harness.controller.deviceDidAttach(first)
+        let stale = harness.controller.capturePreparationSnapshot()
+        let second = harness.makeDevice(snapshot: .m720(registryEntryID: 31, serialNumber: "two"))
+        harness.controller.deviceDidAttach(second)
+        let callsBefore = harness.factoryCalls.map { $0.session.requiredCIDCalls.count }
+
+        XCTAssertFalse(harness.controller.beginTemporaryPolicyLease(
+            ownerID: UUID(),
+            snapshot: stale,
+            targetCIDs: allTargets,
+            completion: { _ in XCTFail("Rejected lease must not complete") }
+        ))
+        XCTAssertEqual(
+            harness.factoryCalls.map { $0.session.requiredCIDCalls.count },
+            callsBefore
+        )
+
+        let current = harness.controller.capturePreparationSnapshot()
+        let incomplete = M720PreparationSnapshot(
+            deviceSetRevision: current.deviceSetRevision,
+            environmentEnabled: current.environmentEnabled,
+            participants: Array(current.participants.dropLast())
+        )
+        XCTAssertFalse(harness.controller.beginTemporaryPolicyLease(
+            ownerID: UUID(),
+            snapshot: incomplete,
+            targetCIDs: allTargets,
+            completion: { _ in XCTFail("Incomplete token set must not complete") }
+        ))
+        XCTAssertEqual(
+            harness.factoryCalls.map { $0.session.requiredCIDCalls.count },
+            callsBefore
+        )
+    }
+
+    func testAlreadyStableParticipantSchedulesCompletionWithoutWaitingForObserver() {
+        let harness = M720ControllerHarness()
+        harness.controller.reconcile(
+            remaps: makeControllerRemaps(buttons: [6, 7, 8]),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        let device = harness.makeDevice(snapshot: .m720(registryEntryID: 40, serialNumber: "stable"))
+        harness.controller.deviceDidAttach(device)
+        let session = try! XCTUnwrap(harness.session(for: device))
+        session.emit(.active)
+        var results: [M720TemporaryPolicyResult] = []
+
+        XCTAssertTrue(harness.controller.beginTemporaryPolicyLease(
+            ownerID: UUID(),
+            snapshot: harness.controller.capturePreparationSnapshot(),
+            targetCIDs: allTargets,
+            completion: { results.append($0) }
+        ))
+        XCTAssertTrue(results.isEmpty)
+        harness.executor.runAll()
+        XCTAssertEqual(results, [.ready])
+
+        session.emit(.active)
+        XCTAssertEqual(results, [.ready])
+    }
+
+    func testQueuedBeginReadyRevalidatesConflictBeforeDelivery() {
+        let harness = M720ControllerHarness()
+        harness.controller.reconcile(
+            remaps: NSDictionary(),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        let device = harness.makeDevice(
+            snapshot: .m720(registryEntryID: 41, serialNumber: "begin-race")
+        )
+        harness.controller.deviceDidAttach(device)
+        let session = try! XCTUnwrap(harness.session(for: device))
+        let owner = UUID()
+        session.stateOnNextRequiredCIDSet = .active
+        var results: [M720TemporaryPolicyResult] = []
+
+        XCTAssertTrue(harness.controller.beginTemporaryPolicyLease(
+            ownerID: owner,
+            snapshot: harness.controller.capturePreparationSnapshot(),
+            targetCIDs: allTargets,
+            completion: { results.append($0) }
+        ))
+        session.emit(.conflict)
+        harness.executor.runAll()
+
+        XCTAssertEqual(results, [.failed(.conflict)])
+        XCTAssertFalse(harness.controller.clearTemporaryPolicyLease(ownerID: owner))
+    }
+
+    func testQueuedBeginReadyWaitsForTransientRegressionToBecomeStableAgain() {
+        let harness = M720ControllerHarness()
+        harness.controller.reconcile(
+            remaps: NSDictionary(),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        let device = harness.makeDevice(
+            snapshot: .m720(registryEntryID: 42, serialNumber: "begin-transient")
+        )
+        harness.controller.deviceDidAttach(device)
+        let session = try! XCTUnwrap(harness.session(for: device))
+        session.stateOnNextRequiredCIDSet = .active
+        var results: [M720TemporaryPolicyResult] = []
+
+        XCTAssertTrue(harness.controller.beginTemporaryPolicyLease(
+            ownerID: UUID(),
+            snapshot: harness.controller.capturePreparationSnapshot(),
+            targetCIDs: allTargets,
+            completion: { results.append($0) }
+        ))
+        session.emit(.restoring)
+        harness.executor.runAll()
+        XCTAssertTrue(results.isEmpty)
+
+        session.emit(.active)
+        harness.executor.runAll()
+        XCTAssertEqual(results, [.ready])
+    }
+
+    func testQueuedRestoreReadyRevalidatesInvalidStateAndBlocksLease() {
+        let harness = M720ControllerHarness()
+        harness.controller.reconcile(
+            remaps: NSDictionary(),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        let device = harness.makeDevice(
+            snapshot: .m720(registryEntryID: 43, serialNumber: "restore-race")
+        )
+        harness.controller.deviceDidAttach(device)
+        let session = try! XCTUnwrap(harness.session(for: device))
+        let owner = UUID()
+        session.stateOnNextRequiredCIDSet = .active
+        XCTAssertTrue(harness.controller.beginTemporaryPolicyLease(
+            ownerID: owner,
+            snapshot: harness.controller.capturePreparationSnapshot(),
+            targetCIDs: allTargets,
+            completion: { XCTAssertEqual($0, .ready) }
+        ))
+        harness.executor.runAll()
+
+        session.stateOnNextRequiredCIDSet = .nativeReady
+        var results: [M720TemporaryPolicyResult] = []
+        XCTAssertTrue(harness.controller.restoreTemporaryPolicyLease(
+            ownerID: owner,
+            completion: { results.append($0) }
+        ))
+        session.emit(.invalid(.disconnected))
+        harness.executor.runAll()
+
+        XCTAssertEqual(results, [.failed(.disconnected)])
+        XCTAssertFalse(harness.controller.restoreTemporaryPolicyLease(
+            ownerID: owner,
+            completion: { _ in XCTFail("Failed rollback must block the lease") }
+        ))
+    }
+
+    func testQueuedUpdateReadyRevalidatesConflictAndBlocksLease() {
+        let harness = M720ControllerHarness()
+        harness.controller.reconcile(
+            remaps: makeControllerRemaps(buttons: [6]),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        let device = harness.makeDevice(
+            snapshot: .m720(registryEntryID: 44, serialNumber: "update-race")
+        )
+        harness.controller.deviceDidAttach(device)
+        let session = try! XCTUnwrap(harness.session(for: device))
+        let owner = UUID()
+        session.stateOnNextRequiredCIDSet = .active
+        XCTAssertTrue(harness.controller.beginTemporaryPolicyLease(
+            ownerID: owner,
+            snapshot: harness.controller.capturePreparationSnapshot(),
+            targetCIDs: allTargets,
+            completion: { XCTAssertEqual($0, .ready) }
+        ))
+        harness.executor.runAll()
+
+        session.stateOnNextRequiredCIDSet = .active
+        harness.controller.reconcile(
+            remaps: makeControllerRemaps(buttons: [8]),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        session.stateOnNextRequiredCIDSet = .active
+        var results: [M720TemporaryPolicyResult] = []
+        XCTAssertTrue(harness.controller.updateTemporaryPolicyLeaseToCurrentSaved(
+            ownerID: owner,
+            completion: { results.append($0) }
+        ))
+        session.emit(.conflict)
+        harness.executor.runAll()
+
+        XCTAssertEqual(results, [.failed(.conflict)])
+        XCTAssertFalse(harness.controller.updateTemporaryPolicyLeaseToCurrentSaved(
+            ownerID: owner,
+            completion: { _ in XCTFail("Failed update must block the lease") }
+        ))
+    }
+
+    func testClearRevalidatesLiveStableStateAfterVerifiedSavedTarget() {
+        let harness = M720ControllerHarness()
+        harness.controller.reconcile(
+            remaps: makeControllerRemaps(buttons: [6]),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        let device = harness.makeDevice(
+            snapshot: .m720(registryEntryID: 45, serialNumber: "clear-race")
+        )
+        harness.controller.deviceDidAttach(device)
+        let session = try! XCTUnwrap(harness.session(for: device))
+        let owner = UUID()
+        session.stateOnNextRequiredCIDSet = .active
+        XCTAssertTrue(harness.controller.beginTemporaryPolicyLease(
+            ownerID: owner,
+            snapshot: harness.controller.capturePreparationSnapshot(),
+            targetCIDs: allTargets,
+            completion: { XCTAssertEqual($0, .ready) }
+        ))
+        harness.executor.runAll()
+
+        session.stateOnNextRequiredCIDSet = .active
+        XCTAssertTrue(harness.controller.updateTemporaryPolicyLeaseToCurrentSaved(
+            ownerID: owner,
+            completion: { XCTAssertEqual($0, .ready) }
+        ))
+        harness.executor.runAll()
+
+        session.emit(.restoring)
+        XCTAssertFalse(harness.controller.clearTemporaryPolicyLease(ownerID: owner))
+        session.emit(.active)
+        XCTAssertTrue(harness.controller.clearTemporaryPolicyLease(ownerID: owner))
+    }
+
+    func testTwoParticipantLeaseAggregatesOneStableResult() {
+        let harness = M720ControllerHarness()
+        harness.controller.reconcile(
+            remaps: NSDictionary(),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        let first = harness.makeDevice(snapshot: .m720(registryEntryID: 50, serialNumber: "one"))
+        let second = harness.makeDevice(snapshot: .m720(registryEntryID: 51, serialNumber: "two"))
+        harness.controller.deviceDidAttach(first)
+        harness.controller.deviceDidAttach(second)
+        let firstSession = try! XCTUnwrap(harness.session(for: first))
+        let secondSession = try! XCTUnwrap(harness.session(for: second))
+        firstSession.stateOnNextRequiredCIDSet = .active
+        secondSession.stateOnNextRequiredCIDSet = .takingOver
+        var results: [M720TemporaryPolicyResult] = []
+
+        XCTAssertTrue(harness.controller.beginTemporaryPolicyLease(
+            ownerID: UUID(),
+            snapshot: harness.controller.capturePreparationSnapshot(),
+            targetCIDs: allTargets,
+            completion: { results.append($0) }
+        ))
+        harness.executor.runAll()
+        XCTAssertTrue(results.isEmpty)
+
+        secondSession.emit(.active)
+        secondSession.emit(.active)
+        harness.executor.runAll()
+        XCTAssertEqual(results, [.ready])
+    }
+
+    func testBlockedRollbackRetainsOwnerAndRejectsNewLease() {
+        let harness = M720ControllerHarness()
+        harness.controller.reconcile(
+            remaps: NSDictionary(),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        let device = harness.makeDevice(snapshot: .m720(registryEntryID: 60, serialNumber: "blocked"))
+        harness.controller.deviceDidAttach(device)
+        let session = try! XCTUnwrap(harness.session(for: device))
+        let owner = UUID()
+        session.stateOnNextRequiredCIDSet = .active
+        XCTAssertTrue(harness.controller.beginTemporaryPolicyLease(
+            ownerID: owner,
+            snapshot: harness.controller.capturePreparationSnapshot(),
+            targetCIDs: allTargets,
+            completion: { XCTAssertEqual($0, .ready) }
+        ))
+        harness.executor.runAll()
+        session.stateOnNextRequiredCIDSet = .conflict
+        var rollbackResults: [M720TemporaryPolicyResult] = []
+
+        XCTAssertTrue(harness.controller.restoreTemporaryPolicyLease(
+            ownerID: owner,
+            completion: { rollbackResults.append($0) }
+        ))
+        harness.executor.runAll()
+        XCTAssertEqual(rollbackResults, [.failed(.conflict)])
+        XCTAssertFalse(harness.controller.clearTemporaryPolicyLease(ownerID: owner))
+        XCTAssertFalse(harness.controller.beginTemporaryPolicyLease(
+            ownerID: UUID(),
+            snapshot: harness.controller.capturePreparationSnapshot(),
+            targetCIDs: allTargets,
+            completion: { _ in XCTFail("Blocked rollback must retain owner") }
+        ))
+    }
+
+    func testSyntheticAddModeReconcileDoesNotOverwriteSavedCacheOrLeaseOverride() {
+        let harness = M720ControllerHarness()
+        harness.controller.reconcile(
+            remaps: makeControllerRemaps(buttons: [6]),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        let device = harness.makeDevice(snapshot: .m720(registryEntryID: 70, serialNumber: "synthetic"))
+        harness.controller.deviceDidAttach(device)
+        let session = try! XCTUnwrap(harness.session(for: device))
+        session.stateOnNextRequiredCIDSet = .active
+        XCTAssertTrue(harness.controller.beginTemporaryPolicyLease(
+            ownerID: UUID(),
+            snapshot: harness.controller.capturePreparationSnapshot(),
+            targetCIDs: allTargets,
+            completion: { XCTAssertEqual($0, .ready) }
+        ))
+        harness.executor.runAll()
+
+        harness.controller.reconcile(
+            remaps: makeControllerRemaps(buttons: [7, 8]),
+            buttonsEnabled: true,
+            remapsAreAddMode: true
+        )
+
+        XCTAssertEqual(session.requiredCIDCalls.last, allTargets)
+        XCTAssertEqual(
+            harness.controller.capturePreparationSnapshot().participants.single?.exactRequiredCIDs,
+            Set([0x005B])
+        )
+    }
+
+    func testEnvironmentDisableSendsOnlyEmptyTargetsPreservesSavedCacheAndReenableStartsBaseline() {
+        let harness = M720ControllerHarness()
+        let saved = Set<UInt16>([0x005B])
+        harness.controller.reconcile(
+            remaps: makeControllerRemaps(buttons: [6]),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        let device = harness.makeDevice(snapshot: .m720(registryEntryID: 80, serialNumber: "gate"))
+        harness.controller.deviceDidAttach(device)
+        let session = try! XCTUnwrap(harness.session(for: device))
+        let owner = UUID()
+        session.stateOnNextRequiredCIDSet = .active
+        XCTAssertTrue(harness.controller.beginTemporaryPolicyLease(
+            ownerID: owner,
+            snapshot: harness.controller.capturePreparationSnapshot(),
+            targetCIDs: allTargets,
+            completion: { XCTAssertEqual($0, .ready) }
+        ))
+        harness.executor.runAll()
+        let callsBeforeDisable = session.requiredCIDCalls.count
+
+        session.stateOnNextRequiredCIDSet = .nativeReady
+        harness.controller.reconcile(
+            remaps: makeControllerRemaps(buttons: [7, 8]),
+            buttonsEnabled: false,
+            remapsAreAddMode: true
+        )
+        XCTAssertTrue(harness.controller.restoreTemporaryPolicyLease(
+            ownerID: owner,
+            completion: { XCTAssertEqual($0, .ready) }
+        ))
+        harness.executor.runAll()
+        XCTAssertTrue(harness.controller.clearTemporaryPolicyLease(ownerID: owner))
+
+        XCTAssertTrue(session.requiredCIDCalls[callsBeforeDisable...].allSatisfy(\.isEmpty))
+        let disabledSnapshot = harness.controller.capturePreparationSnapshot()
+        XCTAssertFalse(disabledSnapshot.environmentEnabled)
+        XCTAssertEqual(disabledSnapshot.participants.single?.exactRequiredCIDs, saved)
+
+        session.stateOnNextRequiredCIDSet = .active
+        harness.controller.reconcile(
+            remaps: makeControllerRemaps(buttons: [6]),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        XCTAssertEqual(session.requiredCIDCalls.last, saved)
+    }
+
+    func testEnvironmentDisableFencesQueuedReadyBeforeApplyingEmptyTarget() {
+        let harness = M720ControllerHarness()
+        harness.controller.reconcile(
+            remaps: NSDictionary(),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        let device = harness.makeDevice(snapshot: .m720(registryEntryID: 85, serialNumber: "disable-race"))
+        harness.controller.deviceDidAttach(device)
+        let session = try! XCTUnwrap(harness.session(for: device))
+        session.stateOnNextRequiredCIDSet = .active
+        var results: [M720TemporaryPolicyResult] = []
+        XCTAssertTrue(harness.controller.beginTemporaryPolicyLease(
+            ownerID: UUID(),
+            snapshot: harness.controller.capturePreparationSnapshot(),
+            targetCIDs: allTargets,
+            completion: { results.append($0) }
+        ))
+        XCTAssertTrue(results.isEmpty)
+
+        session.stateOnNextRequiredCIDSet = .nativeReady
+        harness.controller.reconcile(
+            remaps: NSDictionary(),
+            buttonsEnabled: false,
+            remapsAreAddMode: true
+        )
+        harness.executor.runAll()
+
+        XCTAssertEqual(results, [.failed(.cancelled)])
+        XCTAssertEqual(session.requiredCIDCalls.last, [])
+    }
+
+    func testClearRequiresVerifiedCurrentSavedTargetAfterFrozenRollback() {
+        let harness = M720ControllerHarness()
+        harness.controller.reconcile(
+            remaps: makeControllerRemaps(buttons: [6]),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        let device = harness.makeDevice(snapshot: .m720(registryEntryID: 90, serialNumber: "finish"))
+        harness.controller.deviceDidAttach(device)
+        let session = try! XCTUnwrap(harness.session(for: device))
+        let owner = UUID()
+        session.stateOnNextRequiredCIDSet = .active
+        XCTAssertTrue(harness.controller.beginTemporaryPolicyLease(
+            ownerID: owner,
+            snapshot: harness.controller.capturePreparationSnapshot(),
+            targetCIDs: allTargets,
+            completion: { XCTAssertEqual($0, .ready) }
+        ))
+        harness.executor.runAll()
+        harness.controller.reconcile(
+            remaps: makeControllerRemaps(buttons: [8]),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+
+        session.stateOnNextRequiredCIDSet = .active
+        XCTAssertTrue(harness.controller.restoreTemporaryPolicyLease(
+            ownerID: owner,
+            completion: { XCTAssertEqual($0, .ready) }
+        ))
+        harness.executor.runAll()
+        XCTAssertEqual(session.requiredCIDCalls.last, Set([0x005B]))
+        XCTAssertFalse(harness.controller.clearTemporaryPolicyLease(ownerID: owner))
+
+        session.stateOnNextRequiredCIDSet = .active
+        XCTAssertTrue(harness.controller.updateTemporaryPolicyLeaseToCurrentSaved(
+            ownerID: owner,
+            completion: { XCTAssertEqual($0, .ready) }
+        ))
+        harness.executor.runAll()
+        XCTAssertEqual(session.requiredCIDCalls.last, Set([0x00D0]))
+        XCTAssertTrue(harness.controller.clearTemporaryPolicyLease(ownerID: owner))
+    }
+
+    func testAttachAndRemovalAdvanceRevisionAndNewTokenNeverInheritsLease() {
+        let harness = M720ControllerHarness()
+        harness.controller.reconcile(
+            remaps: makeControllerRemaps(buttons: [6]),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        var changes: [M720PreparationContextChange] = []
+        harness.controller.onPreparationContextChange = { changes.append($0) }
+        let first = harness.makeDevice(snapshot: .m720(registryEntryID: 100, serialNumber: "one"))
+        harness.controller.deviceDidAttach(first)
+        let firstSession = try! XCTUnwrap(harness.session(for: first))
+        firstSession.stateOnNextRequiredCIDSet = .active
+        XCTAssertTrue(harness.controller.beginTemporaryPolicyLease(
+            ownerID: UUID(),
+            snapshot: harness.controller.capturePreparationSnapshot(),
+            targetCIDs: allTargets,
+            completion: { XCTAssertEqual($0, .ready) }
+        ))
+        harness.executor.runAll()
+
+        let second = harness.makeDevice(snapshot: .m720(registryEntryID: 101, serialNumber: "two"))
+        harness.controller.deviceDidAttach(second)
+        let secondSession = try! XCTUnwrap(harness.session(for: second))
+        XCTAssertEqual(secondSession.requiredCIDCalls.first, Set([0x005B]))
+        let afterAttach = harness.controller.capturePreparationSnapshot().deviceSetRevision
+
+        harness.controller.prepareForDeviceRemoval(first) {}
+        harness.executor.runAll()
+        let afterRemovalStart = harness.controller.capturePreparationSnapshot().deviceSetRevision
+        XCTAssertGreaterThan(afterRemovalStart, afterAttach)
+        XCTAssertEqual(changes.filter { $0.isDeviceSetChange }.count, 3)
+    }
+
+    func testDeviceSetChangeFencesQueuedReadyAndLateStableCompletion() {
+        let harness = M720ControllerHarness()
+        harness.controller.reconcile(
+            remaps: NSDictionary(),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        let first = harness.makeDevice(snapshot: .m720(registryEntryID: 105, serialNumber: "old"))
+        harness.controller.deviceDidAttach(first)
+        let session = try! XCTUnwrap(harness.session(for: first))
+        session.stateOnNextRequiredCIDSet = .active
+        var results: [M720TemporaryPolicyResult] = []
+        XCTAssertTrue(harness.controller.beginTemporaryPolicyLease(
+            ownerID: UUID(),
+            snapshot: harness.controller.capturePreparationSnapshot(),
+            targetCIDs: allTargets,
+            completion: { results.append($0) }
+        ))
+
+        let second = harness.makeDevice(snapshot: .m720(registryEntryID: 106, serialNumber: "new"))
+        harness.controller.deviceDidAttach(second)
+        session.emit(.active)
+        harness.executor.runAll()
+
+        XCTAssertEqual(results, [.failed(.deviceSetChanged)])
+    }
+
+    func testRemovalDuringRollbackDoesNotBlockOwnerFromRetryingLiveIntersection() {
+        let harness = M720ControllerHarness()
+        harness.controller.reconcile(
+            remaps: makeControllerRemaps(buttons: [6]),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        let first = harness.makeDevice(snapshot: .m720(registryEntryID: 107, serialNumber: "stay"))
+        let second = harness.makeDevice(snapshot: .m720(registryEntryID: 108, serialNumber: "leave"))
+        harness.controller.deviceDidAttach(first)
+        harness.controller.deviceDidAttach(second)
+        let firstSession = try! XCTUnwrap(harness.session(for: first))
+        let secondSession = try! XCTUnwrap(harness.session(for: second))
+        let owner = UUID()
+        firstSession.stateOnNextRequiredCIDSet = .active
+        secondSession.stateOnNextRequiredCIDSet = .active
+        XCTAssertTrue(harness.controller.beginTemporaryPolicyLease(
+            ownerID: owner,
+            snapshot: harness.controller.capturePreparationSnapshot(),
+            targetCIDs: allTargets,
+            completion: { XCTAssertEqual($0, .ready) }
+        ))
+        harness.executor.runAll()
+
+        firstSession.stateOnNextRequiredCIDSet = .active
+        secondSession.stateOnNextRequiredCIDSet = .takingOver
+        var firstRollbackResults: [M720TemporaryPolicyResult] = []
+        XCTAssertTrue(harness.controller.restoreTemporaryPolicyLease(
+            ownerID: owner,
+            completion: { firstRollbackResults.append($0) }
+        ))
+
+        harness.controller.prepareForDeviceRemoval(second) {}
+        var retriedRollbackResults: [M720TemporaryPolicyResult] = []
+        firstSession.stateOnNextRequiredCIDSet = .active
+        XCTAssertTrue(harness.controller.restoreTemporaryPolicyLease(
+            ownerID: owner,
+            completion: { retriedRollbackResults.append($0) }
+        ))
+        harness.executor.runAll()
+
+        XCTAssertEqual(firstRollbackResults, [.failed(.deviceSetChanged)])
+        XCTAssertEqual(retriedRollbackResults, [.ready])
+        XCTAssertTrue(harness.controller.clearTemporaryPolicyLease(ownerID: owner))
+    }
+
+    func testAcceptedRetryForcesOneCorrelatedStablePublicationDespiteDedupe() {
+        let requestID = UUID()
+        let token = UUID()
+        let harness = M720ControllerHarness(tokens: [token])
+        harness.controller.reconcile(
+            remaps: makeControllerRemaps(buttons: [6]),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        let device = harness.makeDevice(snapshot: .m720(registryEntryID: 110, serialNumber: "retry"))
+        harness.controller.deviceDidAttach(device)
+        let session = try! XCTUnwrap(harness.session(for: device))
+        session.emit(.conflict)
+        session.retryAccepted = true
+
+        XCTAssertTrue(harness.controller.retryCapture(deviceToken: token, requestID: requestID))
+        session.emit(.conflict)
+        session.emit(.conflict)
+
+        XCTAssertEqual(harness.publishedStates.filter { $0.requestID == requestID }.count, 1)
+        XCTAssertEqual(harness.publishedStates.last?.deviceToken, token)
+    }
+
+    func testRejectedRetryPublishesNoCorrelatedState() {
+        let requestID = UUID()
+        let token = UUID()
+        let harness = M720ControllerHarness(tokens: [token])
+        let device = harness.makeDevice(snapshot: .m720(registryEntryID: 120, serialNumber: "reject"))
+        harness.controller.deviceDidAttach(device)
+        let session = try! XCTUnwrap(harness.session(for: device))
+        session.retryAccepted = false
+
+        XCTAssertFalse(harness.controller.retryCapture(deviceToken: token, requestID: requestID))
+        session.emit(.invalid(.protocol))
+        XCTAssertTrue(harness.publishedStates.allSatisfy { $0.requestID == nil })
+    }
+
+    func testRemovalConsumesAcceptedRetryWithOneCorrelatedDisconnectedPublication() {
+        let requestID = UUID()
+        let token = UUID()
+        let harness = M720ControllerHarness(tokens: [token])
+        let device = harness.makeDevice(snapshot: .m720(registryEntryID: 130, serialNumber: "remove"))
+        harness.controller.deviceDidAttach(device)
+        let session = try! XCTUnwrap(harness.session(for: device))
+        session.retryAccepted = true
+        XCTAssertTrue(harness.controller.retryCapture(deviceToken: token, requestID: requestID))
+
+        harness.controller.prepareForDeviceRemoval(device) {}
+        session.completeInvalidation()
+        session.completeInvalidation()
+
+        let correlated = harness.publishedStates.filter { $0.requestID == requestID }
+        XCTAssertEqual(correlated.count, 1)
+        XCTAssertEqual(correlated.single?.state, .invalid(.disconnected))
     }
 }
 
@@ -795,6 +1455,7 @@ private final class FakeM720Session: M720SessionControlling {
     private(set) var shutdownCallCount = 0
     private(set) var invalidateCallCount = 0
     private(set) var retryRequestIDs: [UUID?] = []
+    var retryAccepted = false
     var stateOnNextRequiredCIDSet: M720SessionState?
 
     private let trace: M720ControllerTrace
@@ -845,8 +1506,9 @@ private final class FakeM720Session: M720SessionControlling {
         invalidationCompletions.append(completion)
     }
 
-    func retryAfterConflict(requestID: UUID?) {
+    func retryAfterConflict(requestID: UUID?) -> Bool {
         retryRequestIDs.append(requestID)
+        return retryAccepted
     }
 
     func emit(_ state: M720SessionState) {
@@ -863,6 +1525,22 @@ private final class FakeM720Session: M720SessionControlling {
     func completeInvalidation() {
         invalidationCompletions.forEach { $0() }
     }
+}
+
+private extension Array {
+    var single: Element? {
+        count == 1 ? self[0] : nil
+    }
+}
+
+private func makeControllerRemaps(buttons: [Int]) -> NSDictionary {
+    let modification = NSMutableDictionary()
+    for button in buttons {
+        modification.setObject(NSDictionary(), forKey: NSNumber(value: button))
+    }
+    let remaps = NSMutableDictionary()
+    remaps.setObject(modification, forKey: NSDictionary())
+    return remaps
 }
 
 private final class M720ManualExecutor {

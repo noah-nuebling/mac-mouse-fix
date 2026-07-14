@@ -239,13 +239,23 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
             BOOL isTrusted = [AccessibilityCheck checkAccessibilityAndUpdateSystemSettings];
             response = @(isTrusted);
         }
-        xxx(@"enableAddMode") {
-            BOOL success = [Remap enableAddMode];
-            response = @(success);
+        xxx(@"prepareAddMode") {
+            response = [M720AddModeCoordinator.shared prepareWithPayload:payload];
         }
-        xxx(@"disableAddMode") {
-            BOOL success = [Remap disableAddMode];
-            response = @(success);
+        xxx(@"cancelAddModePreparation") {
+            response = [M720AddModeCoordinator.shared cancelPreparationWithPayload:payload];
+        }
+        xxx(@"renewAddModeLease") {
+            response = [M720AddModeCoordinator.shared renewLeaseWithPayload:payload];
+        }
+        xxx(@"finishAddMode") {
+            response = [M720AddModeCoordinator.shared finishAddModeWithPayload:payload];
+        }
+        xxx(@"retryM720Capture") {
+            response = [M720AddModeCoordinator.shared retryCaptureWithPayload:payload];
+        }
+        xxx(@"getM720CaptureStates") {
+            response = [M720AddModeCoordinator.shared captureStatesWithPayload:payload];
         }
         xxx(@"enableKeyCaptureMode") {
             [KeyCaptureMode enable];
@@ -342,17 +352,20 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     /// Release port
     CFRelease(remotePort);
     
+    /// Decode response
+    NSObject *response = nil;
+    if (status == 0 && responseData != NULL && waitForReply) {
+        response = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)responseData];
+    }
+    if (responseData != NULL) {
+        CFRelease(responseData);
+    }
+
     /// Handle errors
     ///     Should we retry on timeout? [Oct 2025]
     if (status != 0) {
         DDLogError("Non-zero CFMessagePortSendRequest return: %@", CFMessagePortSendRequest_ErrorCode_ToString(status));
         return nil;
-    }
-    
-    /// Decode response
-    NSObject *response = nil;
-    if (responseData != NULL && waitForReply) {
-        response = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)responseData];
     }
     
     /// Return response

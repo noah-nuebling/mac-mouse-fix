@@ -1662,7 +1662,7 @@ final class M720HIDPPSessionTests: XCTestCase {
         }
     }
 
-    func testExplicitRetryAcceptsOnlyAllThreeNondivertedAndPublishesCorrelatedResult() {
+    func testExplicitRetryAcceptsOnlyAllThreeNondivertedAndReachesFinalState() {
         for retryCanAccept in [false, true] {
             let harness = M720SessionHarness()
             harness.session.setRequiredCIDs([0x005B])
@@ -1675,11 +1675,8 @@ final class M720HIDPPSessionTests: XCTestCase {
             )
             XCTAssertEqual(harness.session.state, .conflict)
             let retryStart = harness.transport.sent.count
-            let requestID = UUID()
-            var retryResults: [(UUID?, M720SessionState)] = []
-            harness.session.onRetryResult = { retryResults.append(($0, $1)) }
 
-            harness.session.retryAfterConflict(requestID: requestID)
+            XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
             drainMainQueue(turns: 5)
             var retryStates = baselineStates(0x005B, 0x005D, 0x00D0)
             if !retryCanAccept {
@@ -1715,13 +1712,6 @@ final class M720HIDPPSessionTests: XCTestCase {
                 retryCanAccept ? .active : .conflict,
                 "accept=\(retryCanAccept)"
             )
-            XCTAssertEqual(retryResults.count, 1, "accept=\(retryCanAccept)")
-            XCTAssertEqual(retryResults.first?.0, requestID, "accept=\(retryCanAccept)")
-            XCTAssertEqual(
-                retryResults.first?.1,
-                retryCanAccept ? .active : .conflict,
-                "accept=\(retryCanAccept)"
-            )
             if !retryCanAccept {
                 XCTAssertFalse(
                     harness.requestKinds[retryStart...].contains { kind in
@@ -1744,7 +1734,7 @@ final class M720HIDPPSessionTests: XCTestCase {
         XCTAssertEqual(harness.journal.acknowledgementCallCount, 0)
 
         let retryStart = harness.transport.sent.count
-        harness.session.retryAfterConflict(requestID: UUID())
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         let clean = baselineStates(0x005B, 0x005D, 0x00D0)
         driveExplicitRetryBaseline(harness, startingAt: retryStart, states: clean)
         let takeoverStart = retryStart + M720Profile.cidToButton.count
@@ -1786,7 +1776,7 @@ final class M720HIDPPSessionTests: XCTestCase {
 
         let clean = baselineStates(0x005B, 0x005D, 0x00D0)
         let retryA = sessionA.transport.sent.count
-        sessionA.session.retryAfterConflict(requestID: UUID())
+        XCTAssertTrue(sessionA.session.retryAfterConflict(requestID: UUID()))
         driveExplicitRetryBaseline(sessionA, startingAt: retryA, states: clean)
         driveTakeover(
             sessionA,
@@ -1796,7 +1786,7 @@ final class M720HIDPPSessionTests: XCTestCase {
         XCTAssertEqual(sessionA.session.state, .active)
 
         let retryB = sessionB.transport.sent.count
-        sessionB.session.retryAfterConflict(requestID: UUID())
+        XCTAssertTrue(sessionB.session.retryAfterConflict(requestID: UUID()))
         driveExplicitRetryBaseline(sessionB, startingAt: retryB, states: clean)
         driveTakeover(
             sessionB,
@@ -1853,7 +1843,7 @@ final class M720HIDPPSessionTests: XCTestCase {
 
         let clean = baselineStates(0x005B, 0x005D, 0x00D0)
         let retryA = sessionA.transport.sent.count
-        sessionA.session.retryAfterConflict(requestID: UUID())
+        XCTAssertTrue(sessionA.session.retryAfterConflict(requestID: UUID()))
         driveExplicitRetryBaseline(sessionA, startingAt: retryA, states: clean)
         driveTakeover(
             sessionA,
@@ -1868,7 +1858,7 @@ final class M720HIDPPSessionTests: XCTestCase {
         )
         sharedJournal.replaceDeviceBeforeNextRemove = newerB
         let retryB = sessionB.transport.sent.count
-        sessionB.session.retryAfterConflict(requestID: UUID())
+        XCTAssertTrue(sessionB.session.retryAfterConflict(requestID: UUID()))
         driveExplicitRetryBaseline(sessionB, startingAt: retryB, states: clean)
 
         XCTAssertEqual(sessionB.session.state, .invalid(.protocol))
@@ -1897,12 +1887,8 @@ final class M720HIDPPSessionTests: XCTestCase {
         XCTAssertEqual(harness.session.state, .conflict)
         harness.journal.acknowledgementError = M720JournalStoreError.uncertain
         harness.journal.acknowledgementFailurePersistsChange = true
-        let requestID = UUID()
-        var results: [(UUID?, M720SessionState)] = []
-        harness.session.onRetryResult = { results.append(($0, $1)) }
-
         let retryStart = harness.transport.sent.count
-        harness.session.retryAfterConflict(requestID: requestID)
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         let clean = baselineStates(0x005B, 0x005D, 0x00D0)
         driveExplicitRetryBaseline(harness, startingAt: retryStart, states: clean)
         driveTakeover(
@@ -1914,8 +1900,6 @@ final class M720HIDPPSessionTests: XCTestCase {
         XCTAssertEqual(harness.journal.acknowledgementCallCount, 1)
         XCTAssertEqual(harness.journal.removeDeviceCallCount, 1)
         XCTAssertEqual(harness.session.state, .active)
-        XCTAssertEqual(results.map(\.0), [requestID])
-        XCTAssertEqual(results.map(\.1), [.active])
     }
 
     func testRetryAfterTransientInitialReloadFailureRebuildsBarrierAndIgnoresOldCallback() {
@@ -1929,7 +1913,7 @@ final class M720HIDPPSessionTests: XCTestCase {
         XCTAssertTrue(harness.transport.sent.isEmpty)
 
         harness.journal.reloadResult = .success(.emptyV1)
-        harness.session.retryAfterConflict(requestID: UUID())
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         drainMainQueue(turns: 5)
         XCTAssertEqual(
             harness.trace.events.filter { $0 == .reloadBegin }.count,
@@ -1975,11 +1959,7 @@ final class M720HIDPPSessionTests: XCTestCase {
         drainMainQueue(turns: 5)
         XCTAssertEqual(harness.session.state, .invalid(.unsupported))
         let retryStart = harness.transport.sent.count
-        let requestID = UUID()
-        var retryResults: [(UUID?, M720SessionState)] = []
-        harness.session.onRetryResult = { retryResults.append(($0, $1)) }
-
-        harness.session.retryAfterConflict(requestID: requestID)
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         drainMainQueue(turns: 5)
         XCTAssertGreaterThan(harness.transport.sent.count, retryStart)
         guard harness.transport.sent.count > retryStart else { return }
@@ -2010,9 +1990,6 @@ final class M720HIDPPSessionTests: XCTestCase {
         )
 
         XCTAssertEqual(harness.session.state, .active)
-        XCTAssertEqual(retryResults.count, 1)
-        XCTAssertEqual(retryResults.first?.0, requestID)
-        XCTAssertEqual(retryResults.first?.1, .active)
         XCTAssertEqual(
             Set(harness.semanticRequests[retryStart...].dropFirst().map(\.featureIndex)),
             [0x2B]
@@ -2038,10 +2015,7 @@ final class M720HIDPPSessionTests: XCTestCase {
         XCTAssertEqual(harness.session.state, .invalid(.protocol))
 
         let retryStart = harness.transport.sent.count
-        let requestID = UUID()
-        var results: [(UUID?, M720SessionState)] = []
-        harness.session.onRetryResult = { results.append(($0, $1)) }
-        harness.session.retryAfterConflict(requestID: requestID)
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         drainMainQueue(turns: 5)
         XCTAssertEqual(harness.request(at: retryStart).kind, .rootGetFeature)
         let requestsBeforeStaleReply = harness.transport.sent.count
@@ -2082,8 +2056,6 @@ final class M720HIDPPSessionTests: XCTestCase {
 
         XCTAssertEqual(harness.session.state, .active)
         XCTAssertEqual(harness.session.appliedCIDs, [0x005B])
-        XCTAssertEqual(results.map(\.0), [requestID])
-        XCTAssertEqual(results.map(\.1), [.active])
         XCTAssertEqual(harness.journal.currentJournal, initialJournal)
         XCTAssertFalse(harness.requestKinds[retryStart...].contains {
             if case .setCidReporting = $0 { return true }
@@ -2120,11 +2092,8 @@ final class M720HIDPPSessionTests: XCTestCase {
         XCTAssertEqual(harness.session.state, .conflict)
         let journalAtConflict = harness.journal.currentJournal
 
-        var results: [(UUID?, M720SessionState)] = []
-        harness.session.onRetryResult = { results.append(($0, $1)) }
-        let failedRetryID = UUID()
         let failedRetryStart = harness.transport.sent.count
-        harness.session.retryAfterConflict(requestID: failedRetryID)
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         drainMainQueue(turns: 5)
         let failedBaselineRead = harness.request(at: failedRetryStart)
         XCTAssertEqual(failedBaselineRead.kind, .getCidReporting(0x005B))
@@ -2132,9 +2101,8 @@ final class M720HIDPPSessionTests: XCTestCase {
         drainMainQueue(turns: 6)
         XCTAssertEqual(harness.session.state, .invalid(.protocol))
 
-        let dirtyRetryID = UUID()
         let dirtyRetryStart = harness.transport.sent.count
-        harness.session.retryAfterConflict(requestID: dirtyRetryID)
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         var dirty = baselineStates(0x005B, 0x005D, 0x00D0)
         dirty[0x005D] = divertedStates(0x005D)[0x005D]!
         driveDiscovery(
@@ -2148,20 +2116,14 @@ final class M720HIDPPSessionTests: XCTestCase {
 
         XCTAssertEqual(harness.session.state, .conflict)
         XCTAssertEqual(harness.journal.currentJournal, journalAtConflict)
-        XCTAssertEqual(results.map(\.0), [failedRetryID, dirtyRetryID])
-        XCTAssertEqual(
-            results.map(\.1),
-            [.invalid(.protocol), .conflict]
-        )
         XCTAssertFalse(harness.requestKinds[dirtyRetryStart...].contains {
             if case .setCidReporting = $0 { return true }
             return false
         })
         guard harness.session.state == .conflict else { return }
 
-        let cleanRetryID = UUID()
         let cleanRetryStart = harness.transport.sent.count
-        harness.session.retryAfterConflict(requestID: cleanRetryID)
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         let clean = baselineStates(0x005B, 0x005D, 0x00D0)
         driveExplicitRetryBaseline(
             harness,
@@ -2178,11 +2140,6 @@ final class M720HIDPPSessionTests: XCTestCase {
 
         XCTAssertEqual(harness.journal.removeDeviceCallCount, 1)
         XCTAssertEqual(harness.session.state, .active)
-        XCTAssertEqual(results.map(\.0), [failedRetryID, dirtyRetryID, cleanRetryID])
-        XCTAssertEqual(
-            results.map(\.1),
-            [.invalid(.protocol), .conflict, .active]
-        )
     }
 
     func testRetryAfterCachedFeatureDiscoveryFailureAlwaysRestartsFromRoot() {
@@ -2203,7 +2160,7 @@ final class M720HIDPPSessionTests: XCTestCase {
             XCTAssertEqual(harness.session.state, .invalid(.protocol), "\(boundary)")
 
             let retryStart = harness.transport.sent.count
-            harness.session.retryAfterConflict(requestID: UUID())
+            XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
             drainMainQueue(turns: 5)
             let newRoot = harness.request(at: retryStart)
             XCTAssertEqual(newRoot.kind, .rootGetFeature, "\(boundary)")
@@ -2283,7 +2240,7 @@ final class M720HIDPPSessionTests: XCTestCase {
         XCTAssertEqual(harness.session.state, .conflict)
 
         let retryStart = harness.transport.sent.count
-        harness.session.retryAfterConflict(requestID: UUID())
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         let clean = baselineStates(0x005B, 0x005D, 0x00D0)
         driveExplicitRetryBaseline(harness, startingAt: retryStart, states: clean)
 
@@ -2307,11 +2264,8 @@ final class M720HIDPPSessionTests: XCTestCase {
             let harness = conflictedHarness()
             harness.journal.removeDeviceError = error
             let retryStart = harness.transport.sent.count
-            let requestID = UUID()
-            var results: [(UUID?, M720SessionState)] = []
-            harness.session.onRetryResult = { results.append(($0, $1)) }
 
-            harness.session.retryAfterConflict(requestID: requestID)
+            XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()), name)
             driveExplicitRetryBaseline(
                 harness,
                 startingAt: retryStart,
@@ -2321,9 +2275,6 @@ final class M720HIDPPSessionTests: XCTestCase {
             XCTAssertEqual(harness.session.state, .invalid(.protocol), name)
             XCTAssertEqual(harness.journal.removeDeviceCallCount, 1, name)
             XCTAssertEqual(harness.journal.mutationCallCount, 0, name)
-            XCTAssertEqual(results.count, 1, name)
-            XCTAssertEqual(results.first?.0, requestID, name)
-            XCTAssertEqual(results.first?.1, .invalid(.protocol), name)
             XCTAssertFalse(harness.requestKinds[retryStart...].contains {
                 if case .setCidReporting = $0 { return true }
                 return false
@@ -2339,11 +2290,8 @@ final class M720HIDPPSessionTests: XCTestCase {
         )
         harness.journal.replaceDeviceBeforeNextRemove = newer
         let retryStart = harness.transport.sent.count
-        let requestID = UUID()
-        var results: [(UUID?, M720SessionState)] = []
-        harness.session.onRetryResult = { results.append(($0, $1)) }
 
-        harness.session.retryAfterConflict(requestID: requestID)
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         driveExplicitRetryBaseline(
             harness,
             startingAt: retryStart,
@@ -2352,8 +2300,6 @@ final class M720HIDPPSessionTests: XCTestCase {
 
         XCTAssertEqual(harness.session.state, .invalid(.protocol))
         XCTAssertEqual(harness.journal.currentJournal.devices, [newer])
-        XCTAssertEqual(results.map(\.0), [requestID])
-        XCTAssertEqual(results.map(\.1), [.invalid(.protocol)])
         XCTAssertFalse(harness.requestKinds[retryStart...].contains {
             if case .setCidReporting = $0 { return true }
             return false
@@ -2374,11 +2320,8 @@ final class M720HIDPPSessionTests: XCTestCase {
             driveDiscovery(harness, rows: referenceRows)
             harness.journal.acknowledgementError = error
             let retryStart = harness.transport.sent.count
-            let requestID = UUID()
-            var results: [(UUID?, M720SessionState)] = []
-            harness.session.onRetryResult = { results.append(($0, $1)) }
 
-            harness.session.retryAfterConflict(requestID: requestID)
+            XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()), name)
             driveExplicitRetryBaseline(
                 harness,
                 startingAt: retryStart,
@@ -2388,8 +2331,6 @@ final class M720HIDPPSessionTests: XCTestCase {
             XCTAssertEqual(harness.session.state, .invalid(.protocol), name)
             XCTAssertEqual(harness.journal.acknowledgementCallCount, 1, name)
             XCTAssertEqual(harness.journal.mutationCallCount, 0, name)
-            XCTAssertEqual(results.map(\.0), [requestID], name)
-            XCTAssertEqual(results.map(\.1), [.invalid(.protocol)], name)
             XCTAssertFalse(harness.requestKinds[retryStart...].contains {
                 if case .setCidReporting = $0 { return true }
                 return false
@@ -2399,45 +2340,36 @@ final class M720HIDPPSessionTests: XCTestCase {
 
     func testRejectedDivertedRetryCanBeRetriedAgainCleanly() {
         let harness = conflictedHarness()
-        var results: [(UUID?, M720SessionState)] = []
-        harness.session.onRetryResult = { results.append(($0, $1)) }
-        let firstID = UUID()
         let firstStart = harness.transport.sent.count
-        harness.session.retryAfterConflict(requestID: firstID)
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         var diverted = baselineStates(0x005B, 0x005D, 0x00D0)
         diverted[0x005D] = divertedStates(0x005D)[0x005D]!
         driveExplicitRetryBaseline(harness, startingAt: firstStart, states: diverted)
         XCTAssertEqual(harness.session.state, .conflict)
 
-        let secondID = UUID()
         let secondStart = harness.transport.sent.count
-        harness.session.retryAfterConflict(requestID: secondID)
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         let clean = baselineStates(0x005B, 0x005D, 0x00D0)
         driveExplicitRetryBaseline(harness, startingAt: secondStart, states: clean)
         let takeoverStart = secondStart + M720Profile.cidToButton.count
         driveTakeover(harness, startingAt: takeoverStart, initialStates: clean)
 
         XCTAssertEqual(harness.session.state, .active)
-        XCTAssertEqual(results.map(\.0), [firstID, secondID])
-        XCTAssertEqual(results.map(\.1), [.conflict, .active])
         XCTAssertFalse(harness.requestKinds[firstStart..<secondStart].contains {
             if case .setCidReporting = $0 { return true }
             return false
         })
     }
 
-    func testMalformedCIDAndGetFailureRetryEachCompleteOnceWithoutSet() {
+    func testMalformedCIDAndGetFailureRetryEachReachInvalidWithoutSet() {
         for mode in ["wrong-cid", "get-failure"] {
             let harness = conflictedHarness()
             let retryStart = harness.transport.sent.count
-            let requestID = UUID()
-            var results: [(UUID?, M720SessionState)] = []
-            harness.session.onRetryResult = { results.append(($0, $1)) }
             if mode == "get-failure" {
                 harness.sendFailureKind = .getCidReporting(0x005B)
             }
 
-            harness.session.retryAfterConflict(requestID: requestID)
+            XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()), mode)
             drainMainQueue(turns: 6)
             if mode == "wrong-cid" {
                 let request = harness.request(at: retryStart)
@@ -2450,10 +2382,8 @@ final class M720HIDPPSessionTests: XCTestCase {
                 drainMainQueue(turns: 6)
             }
 
-            XCTAssertEqual(results.count, 1, mode)
-            XCTAssertEqual(results.first?.0, requestID, mode)
             XCTAssertTrue({
-                guard case .invalid = results.first?.1 else { return false }
+                guard case .invalid = harness.session.state else { return false }
                 return true
             }(), mode)
             XCTAssertFalse(harness.requestKinds[retryStart...].contains {
@@ -2465,14 +2395,10 @@ final class M720HIDPPSessionTests: XCTestCase {
 
     func testRetryUsesLatestEmptyPolicyAndIgnoresDuplicateRequest() {
         let harness = conflictedHarness()
-        let acceptedID = UUID()
-        let ignoredID = UUID()
-        var results: [(UUID?, M720SessionState)] = []
-        harness.session.onRetryResult = { results.append(($0, $1)) }
         let retryStart = harness.transport.sent.count
 
-        harness.session.retryAfterConflict(requestID: acceptedID)
-        harness.session.retryAfterConflict(requestID: ignoredID)
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
+        XCTAssertFalse(harness.session.retryAfterConflict(requestID: UUID()))
         harness.session.setRequiredCIDs([])
         driveExplicitRetryBaseline(
             harness,
@@ -2481,8 +2407,6 @@ final class M720HIDPPSessionTests: XCTestCase {
         )
 
         XCTAssertEqual(harness.session.state, .nativeReady)
-        XCTAssertEqual(results.map(\.0), [acceptedID])
-        XCTAssertEqual(results.map(\.1), [.nativeReady])
         XCTAssertEqual(harness.journal.removeDeviceCallCount, 1)
         XCTAssertEqual(harness.transport.sent.count, retryStart + 3)
         XCTAssertFalse(harness.requestKinds[retryStart...].contains {
@@ -2494,18 +2418,13 @@ final class M720HIDPPSessionTests: XCTestCase {
     func testDirtyRetryWithPolicyClearedFinishesNativeButKeepsRetryLatch() {
         let harness = conflictedHarness()
         let retryStart = harness.transport.sent.count
-        let requestID = UUID()
-        var results: [(UUID?, M720SessionState)] = []
-        harness.session.onRetryResult = { results.append(($0, $1)) }
-        harness.session.retryAfterConflict(requestID: requestID)
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         harness.session.setRequiredCIDs([])
         var dirty = baselineStates(0x005B, 0x005D, 0x00D0)
         dirty[0x00D0] = divertedStates(0x00D0)[0x00D0]!
         driveExplicitRetryBaseline(harness, startingAt: retryStart, states: dirty)
 
         XCTAssertEqual(harness.session.state, .nativeReady)
-        XCTAssertEqual(results.map(\.0), [requestID])
-        XCTAssertEqual(results.map(\.1), [.nativeReady])
         XCTAssertEqual(harness.journal.removeDeviceCallCount, 0)
         XCTAssertEqual(harness.journal.mutationCallCount, 0)
         let requestCount = harness.transport.sent.count
@@ -2520,14 +2439,11 @@ final class M720HIDPPSessionTests: XCTestCase {
         })
     }
 
-    func testShutdownWinsRetryAndLateReadCannotMutateOrPublishAgain() {
+    func testShutdownWinsRetryAndLateReadCannotMutateAfterTerminalState() {
         let harness = conflictedHarness()
         let retryStart = harness.transport.sent.count
-        let requestID = UUID()
-        var results: [(UUID?, M720SessionState)] = []
         var shutdownCompletions = 0
-        harness.session.onRetryResult = { results.append(($0, $1)) }
-        harness.session.retryAfterConflict(requestID: requestID)
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         drainMainQueue(turns: 5)
         let staleRead = harness.request(at: retryStart)
 
@@ -2543,20 +2459,15 @@ final class M720HIDPPSessionTests: XCTestCase {
 
         XCTAssertEqual(harness.session.state, .invalid(.cancelled))
         XCTAssertEqual(shutdownCompletions, 1)
-        XCTAssertEqual(results.map(\.0), [requestID])
-        XCTAssertEqual(results.map(\.1), [.invalid(.cancelled)])
         XCTAssertEqual(harness.journal.mutationCallCount, mutationsAtShutdown)
         XCTAssertEqual(harness.journal.removeDeviceCallCount, 0)
     }
 
-    func testRemovalWinsRetryAndLateBaselineReadCannotMutateOrPublishAgain() {
+    func testRemovalWinsRetryAndLateBaselineReadCannotMutateAfterTerminalState() {
         let harness = conflictedHarness()
         let retryStart = harness.transport.sent.count
-        let requestID = UUID()
-        var results: [(UUID?, M720SessionState)] = []
         var removalCompletions = 0
-        harness.session.onRetryResult = { results.append(($0, $1)) }
-        harness.session.retryAfterConflict(requestID: requestID)
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         drainMainQueue(turns: 5)
         let staleRead = harness.request(at: retryStart)
 
@@ -2574,22 +2485,17 @@ final class M720HIDPPSessionTests: XCTestCase {
 
         XCTAssertEqual(harness.session.state, .invalid(.disconnected))
         XCTAssertEqual(removalCompletions, 1)
-        XCTAssertEqual(results.map(\.0), [requestID])
-        XCTAssertEqual(results.map(\.1), [.invalid(.disconnected)])
         XCTAssertEqual(harness.journal.mutationCallCount, mutationsAtRemoval)
         XCTAssertEqual(harness.journal.removeDeviceCallCount, removesAtRemoval)
         XCTAssertEqual(harness.transport.sent.count, requestsAtRemoval)
     }
 
-    func testRemovalWinsRetryAndLateJournalClearCannotStartTakeoverOrPublishAgain() {
+    func testRemovalWinsRetryAndLateJournalClearCannotStartTakeoverAfterTerminalState() {
         let harness = conflictedHarness()
         harness.journal.holdNextRemoveCompletion = true
         let retryStart = harness.transport.sent.count
-        let requestID = UUID()
-        var results: [(UUID?, M720SessionState)] = []
         var removalCompletions = 0
-        harness.session.onRetryResult = { results.append(($0, $1)) }
-        harness.session.retryAfterConflict(requestID: requestID)
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         driveExplicitRetryBaseline(
             harness,
             startingAt: retryStart,
@@ -2607,8 +2513,6 @@ final class M720HIDPPSessionTests: XCTestCase {
 
         XCTAssertEqual(harness.session.state, .invalid(.disconnected))
         XCTAssertEqual(removalCompletions, 1)
-        XCTAssertEqual(results.map(\.0), [requestID])
-        XCTAssertEqual(results.map(\.1), [.invalid(.disconnected)])
         XCTAssertEqual(harness.journal.currentJournal, journalAtRemoval)
         XCTAssertEqual(harness.journal.mutationCallCount, mutationsAtRemoval)
         XCTAssertEqual(harness.transport.sent.count, requestsAtRemoval)
@@ -2621,10 +2525,7 @@ final class M720HIDPPSessionTests: XCTestCase {
     func testAcceptedRetryStillFreshPreflightsAndConflictsWithoutTakeoverSet() {
         let harness = conflictedHarness()
         let retryStart = harness.transport.sent.count
-        let requestID = UUID()
-        var results: [(UUID?, M720SessionState)] = []
-        harness.session.onRetryResult = { results.append(($0, $1)) }
-        harness.session.retryAfterConflict(requestID: requestID)
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         let clean = baselineStates(0x005B, 0x005D, 0x00D0)
         driveExplicitRetryBaseline(harness, startingAt: retryStart, states: clean)
         let takeoverStart = retryStart + M720Profile.cidToButton.count
@@ -2636,8 +2537,6 @@ final class M720HIDPPSessionTests: XCTestCase {
         )
 
         XCTAssertEqual(harness.session.state, .conflict)
-        XCTAssertEqual(results.map(\.0), [requestID])
-        XCTAssertEqual(results.map(\.1), [.conflict])
         XCTAssertFalse(harness.requestKinds[takeoverStart...].contains {
             if case .setCidReporting = $0 { return true }
             return false
@@ -5460,6 +5359,60 @@ final class M720HIDPPSessionTests: XCTestCase {
         ])
         XCTAssertEqual(harness.session.appliedCIDs, [0x005B, 0x005D])
         XCTAssertEqual(harness.session.state, .active)
+    }
+
+    func testAddModeAllTargetPolicyReturnsThroughExistingRollbackForSubsetAndEmpty() {
+        let allTargets = Set(M720Profile.cidToButton.keys)
+        let fixtures: [(saved: Set<UInt16>, state: M720SessionState)] = [
+            ([0x005B], .active),
+            ([], .nativeReady),
+        ]
+
+        for fixture in fixtures {
+            let harness = M720SessionHarness()
+            harness.session.start()
+            driveDiscovery(harness, rows: referenceRows)
+            var requestIndex = harness.transport.sent.count
+            harness.session.setRequiredCIDs(allTargets)
+            driveTakeover(
+                harness,
+                startingAt: requestIndex,
+                initialStates: baselineStates(0x005B, 0x005D, 0x00D0)
+            )
+            XCTAssertEqual(harness.session.appliedCIDs, allTargets)
+            XCTAssertEqual(harness.session.state, .active)
+
+            requestIndex = harness.transport.sent.count
+            harness.trace.removeAll()
+            harness.session.setRequiredCIDs(fixture.saved)
+            driveTakeover(
+                harness,
+                startingAt: requestIndex,
+                initialStates: divertedStates(0x005B, 0x005D, 0x00D0)
+            )
+
+            let setDirections = harness.trace.events.compactMap { event -> Bool? in
+                guard case let .request(.setCidReporting(_, diverted)) = event else {
+                    return nil
+                }
+                return diverted
+            }
+            XCTAssertEqual(
+                setDirections,
+                fixture.saved.isEmpty
+                    ? [false, false, false]
+                    : [false, false, false, true]
+            )
+            XCTAssertEqual(harness.session.requiredCIDs, fixture.saved)
+            XCTAssertEqual(harness.session.appliedCIDs, fixture.saved)
+            XCTAssertEqual(harness.session.state, fixture.state)
+            XCTAssertEqual(
+                Set(harness.journal.currentJournal.devices
+                    .flatMap(\.controls)
+                    .map(\.cid)),
+                fixture.saved
+            )
+        }
     }
 
     func testEveryNonemptyRequiredSubsetPublishesExactlyThatAtomicSet() {

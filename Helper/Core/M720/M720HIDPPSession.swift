@@ -128,7 +128,6 @@ final class M720HIDPPSession {
     private(set) var eventGeneration: UInt64 = 0
     var pendingVerificationTimerCount: Int { verificationTimerTokens.count }
     var onStateChange: ((M720SessionState) -> Void)?
-    var onRetryResult: ((UUID?, M720SessionState) -> Void)?
 
     private let device: Device
     private let pipeline: HIDPPRequestPipeline
@@ -150,7 +149,6 @@ final class M720HIDPPSession {
     private var journalTrustQuarantined = false
     private var explicitRetryRequired = false
     private var retryInProgress = false
-    private var retryRequestID: UUID?
     private var retryPath: RetryPath?
     private var retryBaselineStates: [UInt16: HIDPPReportingState] = [:]
     private var recoveryEntries: [M720JournalCIDEntry] = []
@@ -378,56 +376,55 @@ final class M720HIDPPSession {
         }
     }
 
-    func retryAfterConflict(requestID: UUID?) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self,
-                  self.terminalIntent == .none,
-                  !self.retryInProgress
-            else { return }
-            let path: RetryPath
-            switch self.state {
-            case .conflict:
-                path = self.discoveredFeatureIndex == nil ? .fullRediscovery : .knownFeature
-            case .nativeReady where self.explicitRetryRequired:
-                path = self.discoveredFeatureIndex == nil ? .fullRediscovery : .knownFeature
-            case .invalid:
-                path = .fullRediscovery
-            default:
-                return
-            }
-
-            self.closeEventGate()
-            self.lifecycleGeneration &+= 1
-            self.operationGeneration &+= 1
-            self.pipeline.beginNewLifecycle()
-            self.retryInProgress = true
-            self.retryRequestID = requestID
-            self.retryPath = path
-            self.retryBaselineStates.removeAll(keepingCapacity: true)
-            self.resetOwnershipTransactionForRetry()
-            self.transition(to: .discovering)
-            let lifecycle = self.lifecycleGeneration
-            let operation = self.operationGeneration
-            switch path {
-            case .knownFeature:
-                self.requestRetryBaseline(
-                    index: 0,
-                    targetCIDs: M720Profile.cidToButton.keys.sorted(),
-                    lifecycle: lifecycle,
-                    operation: operation
-                )
-            case .fullRediscovery:
-                self.discoveredFeatureIndex = nil
-                self.discoveredControls.removeAll(keepingCapacity: true)
-                self.discoveredCurrentStates.removeAll(keepingCapacity: true)
-                self.originalStates.removeAll(keepingCapacity: true)
-                self.intendedStates.removeAll(keepingCapacity: true)
-                self.reloadJournalForFullRediscoveryRetry(
-                    lifecycle: lifecycle,
-                    operation: operation
-                )
-            }
+    @discardableResult
+    func retryAfterConflict(requestID _: UUID?) -> Bool {
+        guard Thread.isMainThread,
+              terminalIntent == .none,
+              !retryInProgress
+        else { return false }
+        let path: RetryPath
+        switch state {
+        case .conflict:
+            path = discoveredFeatureIndex == nil ? .fullRediscovery : .knownFeature
+        case .nativeReady where explicitRetryRequired:
+            path = discoveredFeatureIndex == nil ? .fullRediscovery : .knownFeature
+        case .invalid:
+            path = .fullRediscovery
+        default:
+            return false
         }
+
+        closeEventGate()
+        lifecycleGeneration &+= 1
+        operationGeneration &+= 1
+        pipeline.beginNewLifecycle()
+        retryInProgress = true
+        retryPath = path
+        retryBaselineStates.removeAll(keepingCapacity: true)
+        resetOwnershipTransactionForRetry()
+        transition(to: .discovering)
+        let lifecycle = lifecycleGeneration
+        let operation = operationGeneration
+        switch path {
+        case .knownFeature:
+            requestRetryBaseline(
+                index: 0,
+                targetCIDs: M720Profile.cidToButton.keys.sorted(),
+                lifecycle: lifecycle,
+                operation: operation
+            )
+        case .fullRediscovery:
+            discoveredFeatureIndex = nil
+            discoveredControls.removeAll(keepingCapacity: true)
+            discoveredCurrentStates.removeAll(keepingCapacity: true)
+            originalStates.removeAll(keepingCapacity: true)
+            intendedStates.removeAll(keepingCapacity: true)
+            reloadJournalForFullRediscoveryRetry(
+                lifecycle: lifecycle,
+                operation: operation
+            )
+        }
+        return true
     }
 
     func verifyOwnership() {
@@ -2822,11 +2819,5 @@ final class M720HIDPPSession {
         guard completesRetry else { return }
         retryInProgress = false
         retryPath = nil
-        let requestID = retryRequestID
-        retryRequestID = nil
-        let retryObserver = onRetryResult
-        if let retryObserver {
-            DispatchQueue.main.async { retryObserver(requestID, newState) }
-        }
     }
 }
