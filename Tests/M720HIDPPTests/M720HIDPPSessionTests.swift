@@ -2858,6 +2858,33 @@ final class M720HIDPPSessionTests: XCTestCase {
         XCTAssertEqual(harness.session.state, .active)
     }
 
+    func testTakeoverAcceptsM720ZeroAcknowledgementAfterAuthoritativeReadback() {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let firstTakeoverRequest = harness.transport.sent.count
+
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: firstTakeoverRequest,
+            initialStates: baselineStates(0x005B),
+            injectedFailure: .zeroAcknowledgement(cid: 0x005B)
+        )
+
+        XCTAssertEqual(
+            Array(harness.requestKinds.dropFirst(firstTakeoverRequest)),
+            [
+                .getCidReporting(0x005B),
+                .setCidReporting(0x005B, diverted: true),
+                .getCidReporting(0x005B),
+            ]
+        )
+        XCTAssertEqual(harness.session.requiredCIDs, [0x005B])
+        XCTAssertEqual(harness.session.appliedCIDs, [0x005B])
+        XCTAssertEqual(harness.session.state, .active)
+    }
+
     func testPolicyRemovalCompareAndRestoresEveryOwnedCIDBeforeNativeReady() {
         let harness = M720SessionHarness()
         harness.session.start()
@@ -6064,6 +6091,10 @@ final class M720HIDPPSessionTests: XCTestCase {
                     parameters = badEcho
                     compoundBadEchoSent = true
                 } else if !consumedDriveFailure,
+                          injectedFailure == .zeroAcknowledgement(cid: cid) {
+                    parameters = [UInt8](repeating: 0, count: 16)
+                    consumedDriveFailure = true
+                } else if !consumedDriveFailure,
                    injectedFailure == .badEcho(cid: cid) {
                     var badEcho = expectedSet
                     badEcho[4] ^= 0x01
@@ -6195,6 +6226,7 @@ private enum M720DiscoveryFault: CaseIterable {
 }
 
 private enum M720TakeoverDriveFailure: Equatable {
+    case zeroAcknowledgement(cid: UInt16)
     case badEcho(cid: UInt16)
     case readbackOriginal(cid: UInt16)
     case readbackThirdThenRollbackIntended(cid: UInt16, third: HIDPPReportingState)

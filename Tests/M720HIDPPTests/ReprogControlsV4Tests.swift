@@ -668,6 +668,19 @@ final class ReprogControlsV4Tests: XCTestCase {
         ))
     }
 
+    func testSetEchoValidatorAcceptsM720ZeroFilledAcknowledgement() {
+        let request = ReprogControlsV4.setReportingParameters(
+            cid: 0x005B,
+            diverted: true
+        )
+        let response = Data(repeating: 0, count: 16)
+
+        XCTAssertNoThrow(try ReprogControlsV4.validateSetCidReportingEcho(
+            response,
+            matches: request
+        ))
+    }
+
     func testSetEchoValidatorRejectsMismatchInEveryDocumentedByte() {
         let expected = ReprogControlsV4.setReportingParameters(cid: 0x005B, diverted: true)
 

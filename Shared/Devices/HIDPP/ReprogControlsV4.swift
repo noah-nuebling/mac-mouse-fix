@@ -181,7 +181,11 @@ enum ReprogControlsV4 {
     ) throws {
         let responseParameters = try documentedPrefix(parameters, length: 5)
         let requestPrefix = try documentedPrefix(Data(requestParameters), length: 5)
-        guard responseParameters == requestPrefix else {
+        // M720 B015 firmware acknowledges a successful write with five zero bytes
+        // instead of the documented echo. The caller still performs an authoritative
+        // GetCidReporting readback before publishing ownership.
+        let isZeroFilledAcknowledgement = responseParameters.allSatisfy { $0 == 0 }
+        guard responseParameters == requestPrefix || isZeroFilledAcknowledgement else {
             throw ReprogControlsError.setCidReportingEchoMismatch
         }
     }
