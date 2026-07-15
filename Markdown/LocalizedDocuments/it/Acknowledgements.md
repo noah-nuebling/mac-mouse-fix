@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **luglio 2026**
 
+- 🇺🇸&nbsp;Nathaniel&nbsp;Comeaux - "As a software engineer that needed my mouse to do one specific thing, THANK YOU for making the app that does it 😎"
 - 🇹🇼&nbsp;Ke☠️
 - 🇳🇱&nbsp;Rick&nbsp;K - "Thanks for the great tool. Makes the experience with my MX Master amazing on Mac."
 - 🇨🇦&nbsp;Stephanie&nbsp;Leung - "Such a great tool - now it's possible to use a vertical mouse and get the default experience!"
