@@ -18,6 +18,115 @@ final class M720AddModeIPCTests: XCTestCase {
         XCTAssertEqual(M720IPCMessage.getDiagnosticState, "getM720DiagnosticState")
     }
 
+    func testDiagnosticSnapshotSortsStateCapsHistoryAndRoundTripsOnlyAllowedFields() throws {
+        let laterToken = UUID(uuidString: "ffffffff-0000-0000-0000-000000000002")!
+        let requests = (0..<300).map { index in
+            M720DiagnosticRequestIdentity(
+                feature: index.isMultiple(of: 2) ? 0x00 : 0x2A,
+                function: UInt8(index % 4),
+                cid: index.isMultiple(of: 3) ? nil : UInt16(index),
+                generation: UInt64(index)
+            )
+        }
+        let later = M720DiagnosticSessionSnapshot(
+            deviceToken: laterToken,
+            state: .active,
+            generation: 7,
+            requiredCIDs: [0x00D0, 0x005B],
+            appliedCIDs: [0x005B],
+            pressedCIDs: [0x00D0, 0x005B],
+            sentCounts: [
+                M720DiagnosticSentCount(feature: 0x2A, function: 2, count: 9),
+                M720DiagnosticSentCount(feature: 0x00, function: 0, count: 1),
+            ],
+            recentRequests: requests
+        )
+        let earlier = M720DiagnosticSessionSnapshot(
+            deviceToken: deviceToken,
+            state: .nativeReady,
+            generation: 3,
+            requiredCIDs: [],
+            appliedCIDs: [],
+            pressedCIDs: [],
+            sentCounts: [],
+            recentRequests: []
+        )
+
+        let value = M720HelperDiagnosticState(sessions: [later, earlier])
+        let decoded = try M720HelperDiagnosticState.decode(value.payload)
+
+        XCTAssertEqual(decoded.sessions.map(\.deviceToken), [deviceToken, laterToken])
+        XCTAssertEqual(decoded.sessions[1].requiredCIDs, [0x005B, 0x00D0])
+        XCTAssertEqual(decoded.sessions[1].pressedCIDs, [0x005B, 0x00D0])
+        XCTAssertEqual(decoded.sessions[1].sentCounts.map(\.feature), [0x00, 0x2A])
+        XCTAssertEqual(decoded.sessions[1].recentRequests.count, 256)
+        XCTAssertEqual(decoded.sessions[1].recentRequests.first?.generation, 44)
+        XCTAssertEqual(decoded.sessions[1].recentRequests.last?.generation, 299)
+
+        let sessionPayload = try XCTUnwrap(
+            (value.payload["sessions"] as? NSArray)?.lastObject as? NSDictionary
+        )
+        XCTAssertEqual(Set(sessionPayload.allKeys as! [String]), [
+            "deviceToken",
+            "state",
+            "generation",
+            "requiredCIDs",
+            "appliedCIDs",
+            "pressedCIDs",
+            "sentCounts",
+            "recentRequests",
+        ])
+        let rendered = sessionPayload.description.lowercased()
+        XCTAssertFalse(rendered.contains("pointer"))
+        XCTAssertFalse(rendered.contains("keyboard"))
+        XCTAssertFalse(rendered.contains("action"))
+    }
+
+    func testDiagnosticCommandParserAcceptsOnlyExactReadOnlyShapes() throws {
+        XCTAssertEqual(
+            try M720DiagnosticCommand.parse(["helper-snapshot"]),
+            .helperSnapshot
+        )
+        XCTAssertEqual(
+            try M720DiagnosticCommand.parse([
+                "device-snapshot", "--vid", "046d", "--pid", "b015",
+            ]),
+            .deviceSnapshot(
+                vendorID: M720Profile.vendorID,
+                productID: M720Profile.bluetoothLEProductID
+            )
+        )
+
+        let rejected = [
+            [String](),
+            ["helper-snapshot", "extra"],
+            ["device-snapshot"],
+            ["device-snapshot", "--vid", "046d", "--pid"],
+            ["device-snapshot", "--vid", "046d", "--pid", "b015", "extra"],
+            ["device-snapshot", "--pid", "b015", "--vid", "046d"],
+            ["device-snapshot", "--vid", "046e", "--pid", "b015"],
+            ["device-snapshot", "--vid", "046d", "--pid", "b014"],
+            ["device-snapshot", "--vid", "mouse", "--pid", "b015"],
+        ]
+        for arguments in rejected {
+            XCTAssertThrowsError(try M720DiagnosticCommand.parse(arguments), arguments.joined()) {
+                XCTAssertEqual($0 as? M720DiagnosticError, .usage)
+            }
+        }
+    }
+
+    func testDiagnosticJSONUsesSortedKeysAndOneTrailingNewline() throws {
+        let data = try M720DiagnosticJSON.encode([
+            "z": ["b": 2, "a": 1],
+            "a": true,
+        ] as NSDictionary)
+
+        XCTAssertEqual(
+            String(decoding: data, as: UTF8.self),
+            #"{"a":true,"z":{"a":1,"b":2}}"# + "\n"
+        )
+    }
+
     func testRequestIDPayloadRoundTripsAndRejectsMalformedRootFieldAndUUID() throws {
         let value = M720IPCRequest(requestID: requestID)
         XCTAssertEqual(try M720IPCRequest.decode(value.payload), value)
@@ -1668,6 +1777,67 @@ extension M720AddModeIPCTests {
         XCTAssertTrue(harness.trace.isEmpty)
     }
 
+    func testCoordinatorDiagnosticSnapshotRouteIsReadOnlyAndStrict() throws {
+        let token = coordinatorToken(36)
+        let expected = M720HelperDiagnosticState(sessions: [
+            M720DiagnosticSessionSnapshot(
+                deviceToken: token,
+                state: .active,
+                generation: 11,
+                requiredCIDs: [0x005B],
+                appliedCIDs: [0x005B],
+                pressedCIDs: [],
+                sentCounts: [
+                    M720DiagnosticSentCount(feature: 0x2A, function: 2, count: 4),
+                ],
+                recentRequests: [
+                    M720DiagnosticRequestIdentity(
+                        feature: 0x2A,
+                        function: 2,
+                        cid: 0x005B,
+                        generation: 11
+                    ),
+                ]
+            ),
+        ])
+        let harness = CoordinatorHarness()
+        harness.controller.diagnosticState = expected
+
+        let payload = harness.coordinator.diagnosticState(withPayload: nil)
+
+        XCTAssertEqual(try M720HelperDiagnosticState.decode(payload), expected)
+        XCTAssertEqual(harness.controller.diagnosticSnapshotCallCount, 1)
+        XCTAssertEqual(
+            try M720IPCAcknowledgement.decode(
+                harness.coordinator.diagnosticState(withPayload: [:] as NSDictionary)
+            ),
+            .rejected(.protocol)
+        )
+        XCTAssertEqual(harness.controller.diagnosticSnapshotCallCount, 1)
+        XCTAssertTrue(harness.trace.isEmpty)
+    }
+
+    func testMessagePortDiagnosticBranchDispatchesAndArchivesResponse() throws {
+        let request = try NSKeyedArchiver.archivedData(
+            withRootObject: ["message": M720IPCMessage.getDiagnosticState],
+            requiringSecureCoding: false
+        )
+
+        var archivedResponse: Data?
+        let dispatched = expectation(description: "message port callback dispatched on main")
+        DispatchQueue.main.async {
+            archivedResponse = MFMessagePort.dispatchArchivedMessageData(forTesting: request)
+            dispatched.fulfill()
+        }
+        wait(for: [dispatched], timeout: 3)
+        let response = try XCTUnwrap(archivedResponse)
+        let decoded = try XCTUnwrap(
+            NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(response)
+        )
+
+        XCTAssertNoThrow(try M720HelperDiagnosticState.decode(decoded))
+    }
+
     private func coordinatorRequest(_ value: Int) -> UUID {
         UUID(uuidString: String(format: "30000000-0000-0000-0000-%012d", value))!
     }
@@ -1899,6 +2069,8 @@ private final class CoordinatorFakeController: M720AddModeController {
     var onStableStateChange: ((M720ControllerSessionSnapshot) -> Void)?
     var snapshot: M720PreparationSnapshot
     var stateSnapshots: [M720ControllerSessionSnapshot] = []
+    var diagnosticState = M720HelperDiagnosticState(sessions: [])
+    var diagnosticSnapshotCallCount = 0
     var operations: [Operation] = []
     var beginAccepted = true
     var restoreAccepted = true
@@ -1972,6 +2144,11 @@ private final class CoordinatorFakeController: M720AddModeController {
     }
 
     func captureStateSnapshots() -> [M720ControllerSessionSnapshot] { stateSnapshots }
+
+    func diagnosticStateSnapshot() -> M720HelperDiagnosticState {
+        diagnosticSnapshotCallCount += 1
+        return diagnosticState
+    }
 
     func retryCapture(deviceToken: UUID, requestID: UUID?) -> Bool {
         guard let requestID else { return false }

@@ -22,9 +22,16 @@ struct HIDPPRetryPolicy: Equatable {
     )
 }
 
+struct HIDPPSentRequest: Equatable {
+    let identity: HIDPPRequestIdentity
+    let parameters: [UInt8]
+    let generation: UInt64
+}
+
 final class HIDPPRequestPipeline {
     var onEvent: ((HIDPPInbound) -> Void)?
     var onForeignResponse: ((HIDPPRequestIdentity) -> Void)?
+    var onRequestSent: ((HIDPPSentRequest) -> Void)?
 
     private final class Request {
         let generation: UInt64
@@ -103,6 +110,10 @@ final class HIDPPRequestPipeline {
         transport.onReport = { [weak self] data in
             self?.marshalToStateQueue { [weak self] in self?.handleReport(data) }
         }
+    }
+
+    deinit {
+        stateQueue.setSpecific(key: stateQueueKey, value: nil)
     }
 
     func perform(
@@ -246,6 +257,11 @@ final class HIDPPRequestPipeline {
             softwareID: identity.softwareID,
             parameters: request.parameters
         )
+        onRequestSent?(HIDPPSentRequest(
+            identity: identity,
+            parameters: request.parameters,
+            generation: requestGeneration
+        ))
         transport.send(report.data) { [weak self] result in
             self?.marshalToStateQueue { [weak self] in
                 self?.handleSendCompletion(

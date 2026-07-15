@@ -22,6 +22,7 @@ protocol M720AddModeController: AnyObject {
     ) -> Bool
     func clearTemporaryPolicyLease(ownerID: UUID) -> Bool
     func captureStateSnapshots() -> [M720ControllerSessionSnapshot]
+    func diagnosticStateSnapshot() -> M720HelperDiagnosticState
     func retryCapture(deviceToken: UUID, requestID: UUID?) -> Bool
 }
 
@@ -418,6 +419,14 @@ final class M720AddModeCoordinator: NSObject {
         }
         let states = controller.captureStateSnapshots().compactMap(captureState)
         return M720CaptureStates(states: states).payload
+    }
+
+    @objc(diagnosticStateWithPayload:)
+    func diagnosticState(withPayload rawPayload: Any?) -> NSDictionary {
+        guard (try? M720EmptyPayload.decode(rawPayload)) != nil else {
+            return M720IPCAcknowledgement.rejected(.protocol).payload
+        }
+        return controller.diagnosticStateSnapshot().payload
     }
 
     @objc(submitFeedback:)

@@ -208,6 +208,8 @@ final class M720HIDPPSession {
     private var sleepCycleGeneration: UInt64 = 0
     private var activeSleepCycle: UInt64?
     private var didScanInitialOwnershipAgents = false
+    private var diagnosticSentCounts: [UInt16: UInt64] = [:]
+    private var diagnosticRecentRequests: [M720DiagnosticRequestIdentity] = []
 
     init(
         device: Device,
@@ -229,6 +231,67 @@ final class M720HIDPPSession {
         self.buttonSink = buttonSink
         self.scheduler = scheduler
         self.initialOwnershipAgentScan = initialOwnershipAgentScan
+        pipeline.onRequestSent = { [weak self] request in
+            self?.recordDiagnosticRequest(request)
+        }
+    }
+
+    func diagnosticSnapshot(deviceToken: UUID) -> M720DiagnosticSessionSnapshot {
+        precondition(Thread.isMainThread, "M720 session diagnostics must be read on the main thread")
+        let stateName: M720SessionStateName
+        switch state {
+        case .discovering: stateName = .discovering
+        case .nativeReady: stateName = .nativeReady
+        case .takingOver: stateName = .takingOver
+        case .active: stateName = .active
+        case .restoring: stateName = .restoring
+        case .conflict: stateName = .conflict
+        case .invalid: stateName = .invalid
+        }
+        let counts = diagnosticSentCounts.map { key, count in
+            M720DiagnosticSentCount(
+                feature: UInt8(key >> 8),
+                function: UInt8(key & 0xFF),
+                count: count
+            )
+        }
+        return M720DiagnosticSessionSnapshot(
+            deviceToken: deviceToken,
+            state: stateName,
+            generation: lifecycleGeneration,
+            requiredCIDs: requiredCIDs,
+            appliedCIDs: appliedCIDs,
+            pressedCIDs: Set(pressedSet.orderedCIDs),
+            sentCounts: counts,
+            recentRequests: diagnosticRecentRequests
+        )
+    }
+
+    private func recordDiagnosticRequest(_ request: HIDPPSentRequest) {
+        precondition(Thread.isMainThread, "M720 request diagnostics must mutate on the main thread")
+        let key = UInt16(request.identity.featureIndex) << 8 |
+            UInt16(request.identity.function)
+        diagnosticSentCounts[key, default: 0] &+= 1
+
+        let cid: UInt16?
+        switch request.identity.function {
+        case ReprogControlsV4.Function.getCidReporting.rawValue,
+             ReprogControlsV4.Function.setCidReporting.rawValue where request.parameters.count >= 2:
+            cid = UInt16(request.parameters[0]) << 8 | UInt16(request.parameters[1])
+        default:
+            cid = nil
+        }
+        diagnosticRecentRequests.append(M720DiagnosticRequestIdentity(
+            feature: request.identity.featureIndex,
+            function: request.identity.function,
+            cid: cid,
+            generation: request.generation
+        ))
+        let overflow = diagnosticRecentRequests.count -
+            M720DiagnosticSessionSnapshot.maximumRecentRequestCount
+        if overflow > 0 {
+            diagnosticRecentRequests.removeFirst(overflow)
+        }
     }
 
     func start() {

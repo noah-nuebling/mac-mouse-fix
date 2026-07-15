@@ -274,6 +274,9 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         xxx(@"getM720CaptureStates") {
             response = [M720AddModeCoordinator.shared captureStatesWithPayload:payload];
         }
+        xxx(@"getM720DiagnosticState") {
+            response = [M720AddModeCoordinator.shared diagnosticStateWithPayload:payload];
+        }
         xxx(@"enableKeyCaptureMode") {
             [KeyCaptureMode enable];
         }
@@ -317,6 +320,14 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         return NULL;
     }
 }
+
+#if DEBUG
++ (NSData *_Nullable)dispatchArchivedMessageDataForTesting:(NSData *)data {
+    NSParameterAssert(NSThread.isMainThread);
+    CFDataRef response = didReceiveMessage(NULL, 0x420666, (__bridge CFDataRef)data, NULL);
+    return CFBridgingRelease(response);
+}
+#endif
 
 + (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject<NSCoding> * _Nullable)payload toRemotePort:(NSString *)remotePortName waitForReply:(BOOL)waitForReply {
     

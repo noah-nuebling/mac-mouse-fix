@@ -441,6 +441,179 @@ struct M720CaptureStates: Equatable {
     }
 }
 
+struct M720DiagnosticRequestIdentity: Equatable {
+    let feature: UInt8
+    let function: UInt8
+    let cid: UInt16?
+    let generation: UInt64
+
+    fileprivate var payload: NSDictionary {
+        let result = NSMutableDictionary(dictionary: [
+            "feature": NSNumber(value: feature),
+            "function": NSNumber(value: function),
+            "generation": NSNumber(value: generation),
+        ])
+        if let cid {
+            result["cid"] = NSNumber(value: cid)
+        }
+        return result
+    }
+
+    fileprivate static func decode(_ raw: Any?) throws -> Self {
+        let dictionary = try M720IPCDecoder.dictionary(
+            raw,
+            required: ["feature", "function", "generation"],
+            optional: ["cid"]
+        )
+        return Self(
+            feature: try M720IPCDecoder.uint8(dictionary["feature"]),
+            function: try M720IPCDecoder.uint8(dictionary["function"]),
+            cid: try dictionary["cid"].map(M720IPCDecoder.cid),
+            generation: try M720IPCDecoder.uint64(dictionary["generation"])
+        )
+    }
+}
+
+struct M720DiagnosticSentCount: Equatable {
+    let feature: UInt8
+    let function: UInt8
+    let count: UInt64
+
+    fileprivate var payload: NSDictionary {
+        [
+            "feature": NSNumber(value: feature),
+            "function": NSNumber(value: function),
+            "count": NSNumber(value: count),
+        ]
+    }
+
+    fileprivate static func decode(_ raw: Any?) throws -> Self {
+        let dictionary = try M720IPCDecoder.dictionary(
+            raw,
+            required: ["feature", "function", "count"]
+        )
+        return Self(
+            feature: try M720IPCDecoder.uint8(dictionary["feature"]),
+            function: try M720IPCDecoder.uint8(dictionary["function"]),
+            count: try M720IPCDecoder.uint64(dictionary["count"])
+        )
+    }
+}
+
+struct M720DiagnosticSessionSnapshot: Equatable {
+    static let maximumRecentRequestCount = 256
+
+    let deviceToken: UUID
+    let state: M720SessionStateName
+    let generation: UInt64
+    let requiredCIDs: [UInt16]
+    let appliedCIDs: [UInt16]
+    let pressedCIDs: [UInt16]
+    let sentCounts: [M720DiagnosticSentCount]
+    let recentRequests: [M720DiagnosticRequestIdentity]
+
+    init(
+        deviceToken: UUID,
+        state: M720SessionStateName,
+        generation: UInt64,
+        requiredCIDs: Set<UInt16>,
+        appliedCIDs: Set<UInt16>,
+        pressedCIDs: Set<UInt16>,
+        sentCounts: [M720DiagnosticSentCount],
+        recentRequests: [M720DiagnosticRequestIdentity]
+    ) {
+        self.deviceToken = deviceToken
+        self.state = state
+        self.generation = generation
+        self.requiredCIDs = requiredCIDs.sorted()
+        self.appliedCIDs = appliedCIDs.sorted()
+        self.pressedCIDs = pressedCIDs.sorted()
+        self.sentCounts = sentCounts.sorted {
+            ($0.feature, $0.function) < ($1.feature, $1.function)
+        }
+        self.recentRequests = Array(recentRequests.suffix(Self.maximumRecentRequestCount))
+    }
+
+    fileprivate var payload: NSDictionary {
+        [
+            "deviceToken": deviceToken.uuidString,
+            "state": state.rawValue,
+            "generation": NSNumber(value: generation),
+            "requiredCIDs": requiredCIDs.map { NSNumber(value: $0) },
+            "appliedCIDs": appliedCIDs.map { NSNumber(value: $0) },
+            "pressedCIDs": pressedCIDs.map { NSNumber(value: $0) },
+            "sentCounts": sentCounts.map(\.payload),
+            "recentRequests": recentRequests.map(\.payload),
+        ]
+    }
+
+    fileprivate static func decode(_ raw: Any?) throws -> Self {
+        let dictionary = try M720IPCDecoder.dictionary(
+            raw,
+            required: [
+                "deviceToken",
+                "state",
+                "generation",
+                "requiredCIDs",
+                "appliedCIDs",
+                "pressedCIDs",
+                "sentCounts",
+                "recentRequests",
+            ]
+        )
+        let sentCounts = try M720IPCDecoder.array(dictionary["sentCounts"]).map(
+            M720DiagnosticSentCount.decode
+        )
+        guard Set(sentCounts.map {
+            UInt16($0.feature) << 8 | UInt16($0.function)
+        }).count == sentCounts.count else {
+            throw M720IPCDecodeError.protocolViolation
+        }
+        let recentRequests = try M720IPCDecoder.array(dictionary["recentRequests"]).map(
+            M720DiagnosticRequestIdentity.decode
+        )
+        guard recentRequests.count <= maximumRecentRequestCount else {
+            throw M720IPCDecodeError.protocolViolation
+        }
+        return Self(
+            deviceToken: try M720IPCDecoder.uuid(dictionary["deviceToken"]),
+            state: try M720IPCDecoder.stringEnum(
+                dictionary["state"],
+                as: M720SessionStateName.self
+            ),
+            generation: try M720IPCDecoder.uint64(dictionary["generation"]),
+            requiredCIDs: Set(try M720IPCDecoder.cidArray(dictionary["requiredCIDs"])),
+            appliedCIDs: Set(try M720IPCDecoder.cidArray(dictionary["appliedCIDs"])),
+            pressedCIDs: Set(try M720IPCDecoder.cidArray(dictionary["pressedCIDs"])),
+            sentCounts: sentCounts,
+            recentRequests: recentRequests
+        )
+    }
+}
+
+struct M720HelperDiagnosticState: Equatable {
+    let sessions: [M720DiagnosticSessionSnapshot]
+
+    init(sessions: [M720DiagnosticSessionSnapshot]) {
+        self.sessions = sessions.sorted { $0.deviceToken.uuidString < $1.deviceToken.uuidString }
+    }
+
+    var payload: NSDictionary {
+        ["sessions": sessions.map(\.payload)]
+    }
+
+    static func decode(_ raw: Any?) throws -> Self {
+        let dictionary = try M720IPCDecoder.dictionary(raw, required: ["sessions"])
+        let sessions = try M720IPCDecoder.array(dictionary["sessions"]).map(
+            M720DiagnosticSessionSnapshot.decode
+        )
+        guard Set(sessions.map(\.deviceToken)).count == sessions.count else {
+            throw M720IPCDecodeError.protocolViolation
+        }
+        return Self(sessions: sessions)
+    }
+}
+
 struct M720AddModeFeedback: Equatable {
     let requestID: UUID
     let feedback: NSDictionary
@@ -722,6 +895,13 @@ private enum M720IPCDecoder {
         return values.sorted { $0.uuidString < $1.uuidString }
     }
 
+    static func array(_ raw: Any?) throws -> [Any] {
+        guard let array = raw as? NSArray else {
+            throw M720IPCDecodeError.protocolViolation
+        }
+        return array.map { $0 }
+    }
+
     static func cidArray(_ raw: Any?) throws -> [UInt16] {
         guard let array = raw as? NSArray else {
             throw M720IPCDecodeError.protocolViolation
@@ -733,7 +913,23 @@ private enum M720IPCDecoder {
         return values.sorted()
     }
 
-    private static func cid(_ raw: Any) throws -> UInt16 {
+    static func cid(_ raw: Any) throws -> UInt16 {
+        let value = try uint64(raw)
+        guard value <= UInt64(UInt16.max) else {
+            throw M720IPCDecodeError.protocolViolation
+        }
+        return UInt16(value)
+    }
+
+    static func uint8(_ raw: Any?) throws -> UInt8 {
+        let value = try uint64(raw)
+        guard value <= UInt64(UInt8.max) else {
+            throw M720IPCDecodeError.protocolViolation
+        }
+        return UInt8(value)
+    }
+
+    static func uint64(_ raw: Any?) throws -> UInt64 {
         guard let number = raw as? NSNumber,
               CFGetTypeID(number) != CFBooleanGetTypeID()
         else { throw M720IPCDecodeError.protocolViolation }
@@ -744,10 +940,10 @@ private enum M720IPCDecoder {
             break
         }
         let value = number.int64Value
-        guard (0...Int64(UInt16.max)).contains(value) else {
+        guard value >= 0 else {
             throw M720IPCDecodeError.protocolViolation
         }
-        return UInt16(value)
+        return UInt64(value)
     }
 
     static func isPropertyListValue(_ raw: Any) -> Bool {

@@ -4,6 +4,69 @@ import XCTest
 @testable import Mac_Mouse_Fix_Helper
 
 final class HIDPPRequestPipelineTests: XCTestCase {
+    func testDeinitRemovesStateQueueSpecificAssociation() throws {
+        let stateQueue = DispatchQueue(label: "HIDPPRequestPipelineTests.deinit")
+        var pipeline: HIDPPRequestPipeline? = HIDPPRequestPipeline(
+            transport: ScriptedHIDPPTransport(),
+            scheduler: ManualScheduler(),
+            stateQueue: stateQueue
+        )
+        weak var weakPipeline = pipeline
+        let stateQueueKey: DispatchSpecificKey<UInt8> = try {
+            let mirror = Mirror(reflecting: try XCTUnwrap(pipeline))
+            return try XCTUnwrap(
+                mirror.descendant("stateQueueKey") as? DispatchSpecificKey<UInt8>
+            )
+        }()
+
+        XCTAssertEqual(stateQueue.sync {
+            DispatchQueue.getSpecific(key: stateQueueKey)
+        }, 1)
+
+        pipeline = nil
+
+        XCTAssertNil(weakPipeline)
+        XCTAssertNil(stateQueue.sync {
+            DispatchQueue.getSpecific(key: stateQueueKey)
+        })
+    }
+
+    func testSentRequestHookRunsBeforeEveryActualTransportAttemptOnStateQueue() {
+        let harness = RequestPipelineHarness()
+        var observations: [HIDPPSentRequest] = []
+        var transportCountsAtHook: [Int] = []
+        harness.pipeline.onRequestSent = { request in
+            dispatchPrecondition(condition: .onQueue(harness.stateQueue))
+            transportCountsAtHook.append(harness.transport.sent.count)
+            observations.append(request)
+        }
+
+        harness.pipeline.perform(
+            featureIndex: 0x2A,
+            function: 0x2,
+            parameters: [0x00, 0x5B]
+        ) { _ in }
+        harness.drain()
+        harness.advance(by: 1.0)
+        harness.advance(by: 0.2)
+
+        XCTAssertEqual(transportCountsAtHook, [0, 1])
+        XCTAssertEqual(observations.map(\.generation), [0, 0])
+        XCTAssertEqual(observations.map(\.identity.featureIndex), [0x2A, 0x2A])
+        XCTAssertEqual(observations.map(\.identity.function), [0x2, 0x2])
+        XCTAssertEqual(observations.map(\.parameters), [[0x00, 0x5B], [0x00, 0x5B]])
+        XCTAssertNotEqual(observations[0].identity.softwareID, observations[1].identity.softwareID)
+
+        harness.pipeline.beginNewLifecycle()
+        harness.pipeline.perform(featureIndex: 0x00, function: 0x0, parameters: [0x1B, 0x04]) {
+            _ in
+        }
+        harness.drain()
+
+        XCTAssertEqual(observations.last?.generation, 1)
+        XCTAssertEqual(observations.last?.identity.featureIndex, 0x00)
+    }
+
     func testOnlyExactIdentityCompletesInflightRequestAndStartsNextFIFORequest() {
         let harness = RequestPipelineHarness()
         var firstResults: [Result<Data, HIDPPRequestError>] = []

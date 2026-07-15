@@ -4,6 +4,96 @@ import XCTest
 @testable import Mac_Mouse_Fix_Helper
 
 final class HIDPPLongReportTests: XCTestCase {
+    func testReferenceM720FixtureHasFiveReadOnlyTwentyBytePairsAndDecodesAsTable() throws {
+        let url = try XCTUnwrap(Bundle(for: Self.self).url(
+            forResource: "M720-B015-reference",
+            withExtension: "json"
+        ))
+        let fixtures = try JSONDecoder().decode(
+            [M720ReferenceHIDPPFixture].self,
+            from: Data(contentsOf: url)
+        )
+
+        XCTAssertEqual(fixtures.count, 5)
+        XCTAssertEqual(Set(fixtures.map(\.name)), [
+            "Root.GetFeature[1B04]",
+            "ReprogControlsV4.GetCount",
+            "ReprogControlsV4.GetCidInfo[5]",
+            "ReprogControlsV4.GetCidReporting[005B]",
+            "ReprogControlsV4.GetCidInfo[advertisedCount]",
+        ])
+
+        for fixture in fixtures {
+            XCTAssertEqual(fixture.request.count, 20, fixture.name)
+            XCTAssertEqual(fixture.response.count, 20, fixture.name)
+
+            let request = Data(fixture.request)
+            let requestIdentity = try M720ReadOnlyRequestValidator.validate(
+                request,
+                reprogFeatureIndex: fixture.request[2] == 0 ? nil : fixture.request[2]
+            )
+            let inbound = try HIDPPLongReport.decode(
+                Data(fixture.response),
+                acceptedDeviceIndices: [0x00, 0xFF]
+            )
+            switch inbound {
+            case let .response(responseIdentity, _):
+                XCTAssertNotEqual(
+                    fixture.name,
+                    "ReprogControlsV4.GetCidInfo[advertisedCount]",
+                    fixture.name
+                )
+                XCTAssertEqual(responseIdentity, requestIdentity, fixture.name)
+            case let .error(frame):
+                XCTAssertEqual(
+                    fixture.name,
+                    "ReprogControlsV4.GetCidInfo[advertisedCount]",
+                    fixture.name
+                )
+                XCTAssertEqual(frame.code, 0x02, fixture.name)
+                XCTAssertEqual(frame.identity, requestIdentity, fixture.name)
+            case .event:
+                XCTFail("reference request fixture decoded as an event", file: #filePath)
+            }
+        }
+    }
+
+    func testSyntheticFixtureResourceHasTwentyBytePairsAndDecodesAsTable() throws {
+        let url = try XCTUnwrap(Bundle(for: Self.self).url(
+            forResource: "M720-HIDPP-synthetic",
+            withExtension: "json"
+        ))
+        let fixtures = try JSONDecoder().decode(
+            [M720SyntheticHIDPPFixture].self,
+            from: Data(contentsOf: url)
+        )
+
+        XCTAssertFalse(fixtures.isEmpty)
+        for fixture in fixtures {
+            XCTAssertTrue(fixture.name.hasPrefix("synthetic-"), fixture.name)
+            XCTAssertEqual(fixture.request.count, 20, fixture.name)
+            XCTAssertEqual(fixture.response.count, 20, fixture.name)
+
+            let requestIdentity = HIDPPRequestIdentity(
+                featureIndex: fixture.request[2],
+                function: fixture.request[3] >> 4,
+                softwareID: fixture.request[3] & 0x0F
+            )
+            let inbound = try HIDPPLongReport.decode(
+                Data(fixture.response),
+                acceptedDeviceIndices: [0x00, 0xFF]
+            )
+            switch inbound {
+            case let .response(responseIdentity, _):
+                XCTAssertEqual(responseIdentity, requestIdentity, fixture.name)
+            case let .error(frame):
+                XCTAssertEqual(frame.identity, requestIdentity, fixture.name)
+            case .event:
+                XCTFail("synthetic request fixture decoded as an event", file: #filePath)
+            }
+        }
+    }
+
     func testEncodesRootGetFeature() throws {
         let data = HIDPPLongReport.request(
             deviceIndex: 0xFF,
@@ -155,6 +245,18 @@ final class HIDPPLongReportTests: XCTestCase {
         }
         XCTAssertNil(decoded, file: file, line: line)
     }
+}
+
+private struct M720SyntheticHIDPPFixture: Decodable {
+    let name: String
+    let request: [UInt8]
+    let response: [UInt8]
+}
+
+private struct M720ReferenceHIDPPFixture: Decodable {
+    let name: String
+    let request: [UInt8]
+    let response: [UInt8]
 }
 
 final class ManualSchedulerTests: XCTestCase {

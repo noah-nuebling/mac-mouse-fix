@@ -3,6 +3,73 @@ import XCTest
 @testable import Mac_Mouse_Fix_Helper
 
 final class M720HIDPPSessionTests: XCTestCase {
+    func testDiagnosticSnapshotReadsCurrentMainQueueStateWithoutSendingRequests() throws {
+        let harness = M720SessionHarness()
+        harness.session.start()
+        driveDiscovery(harness, rows: referenceRows)
+        let takeoverStart = harness.transport.sent.count
+        harness.session.setRequiredCIDs([0x005B])
+        driveTakeover(
+            harness,
+            startingAt: takeoverStart,
+            initialStates: baselineStates(0x005B)
+        )
+        harness.injectEvent(featureIndex: 0x2A, event: 0, cids: [0x005B])
+        drainMainQueue(turns: 4)
+
+        let sentBeforeSnapshot = harness.transport.sent.count
+        let token = UUID(uuidString: "50000000-0000-0000-0000-000000000016")!
+        var captured: M720DiagnosticSessionSnapshot?
+        let snapshotRead = expectation(description: "diagnostic snapshot read on main queue")
+        DispatchQueue.main.async {
+            captured = harness.session.diagnosticSnapshot(deviceToken: token)
+            snapshotRead.fulfill()
+        }
+        wait(for: [snapshotRead], timeout: 3)
+        let snapshot = try XCTUnwrap(captured)
+
+        XCTAssertEqual(harness.transport.sent.count, sentBeforeSnapshot)
+        XCTAssertEqual(snapshot.deviceToken, token)
+        XCTAssertEqual(snapshot.state, .active)
+        XCTAssertEqual(snapshot.generation, harness.session.lifecycleGeneration)
+        XCTAssertEqual(snapshot.requiredCIDs, [0x005B])
+        XCTAssertEqual(snapshot.appliedCIDs, [0x005B])
+        XCTAssertEqual(snapshot.pressedCIDs, [0x005B])
+
+        var countsByFeatureAndFunction: [UInt16: Int] = [:]
+        for request in harness.semanticRequests {
+            let key = UInt16(request.featureIndex) << 8 | UInt16(request.function)
+            countsByFeatureAndFunction[key, default: 0] += 1
+        }
+        let expectedCounts: [M720DiagnosticSentCount] = countsByFeatureAndFunction.map {
+            key, count in
+            M720DiagnosticSentCount(
+                feature: UInt8(key >> 8),
+                function: UInt8(key & 0xFF),
+                count: UInt64(count)
+            )
+        }.sorted { ($0.feature, $0.function) < ($1.feature, $1.function) }
+        XCTAssertEqual(snapshot.sentCounts, expectedCounts)
+
+        let expectedRequests: [M720DiagnosticRequestIdentity] = harness.semanticRequests.map {
+            request in
+            let cid: UInt16?
+            switch request.function {
+            case 2, 3:
+                cid = UInt16(request.parameters[0]) << 8 | UInt16(request.parameters[1])
+            default:
+                cid = nil
+            }
+            return M720DiagnosticRequestIdentity(
+                feature: request.featureIndex,
+                function: request.function,
+                cid: cid,
+                generation: harness.session.lifecycleGeneration
+            )
+        }
+        XCTAssertEqual(snapshot.recentRequests, expectedRequests)
+    }
+
     func testDiscoveryStartsWithExactRootFeatureRequest() throws {
         let harness = M720SessionHarness()
 

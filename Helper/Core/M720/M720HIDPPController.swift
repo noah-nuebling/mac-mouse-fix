@@ -85,6 +85,32 @@ protocol M720SessionControlling: AnyObject {
     func invalidateForRemoval(completion: @escaping () -> Void)
     @discardableResult
     func retryAfterConflict(requestID: UUID?) -> Bool
+    func diagnosticSnapshot(deviceToken: UUID) -> M720DiagnosticSessionSnapshot
+}
+
+extension M720SessionControlling {
+    func diagnosticSnapshot(deviceToken: UUID) -> M720DiagnosticSessionSnapshot {
+        let stateName: M720SessionStateName
+        switch state {
+        case .discovering: stateName = .discovering
+        case .nativeReady: stateName = .nativeReady
+        case .takingOver: stateName = .takingOver
+        case .active: stateName = .active
+        case .restoring: stateName = .restoring
+        case .conflict: stateName = .conflict
+        case .invalid: stateName = .invalid
+        }
+        return M720DiagnosticSessionSnapshot(
+            deviceToken: deviceToken,
+            state: stateName,
+            generation: 0,
+            requiredCIDs: requiredCIDs,
+            appliedCIDs: [],
+            pressedCIDs: [],
+            sentCounts: [],
+            recentRequests: []
+        )
+    }
 }
 
 extension M720HIDPPSession: M720SessionControlling {}
@@ -470,6 +496,13 @@ final class M720HIDPPController: NSObject {
             .filter { !$0.invalidationFinished }
             .sorted { $0.registryEntryID < $1.registryEntryID }
             .map { snapshot(for: $0, state: $0.session.state) }
+    }
+
+    @nonobjc func diagnosticStateSnapshot() -> M720HelperDiagnosticState {
+        requireMainTurn()
+        return M720HelperDiagnosticState(sessions: entries.values
+            .filter { !$0.invalidationFinished }
+            .map { $0.session.diagnosticSnapshot(deviceToken: $0.token) })
     }
 
     @discardableResult
