@@ -808,12 +808,27 @@ final class M720HIDPPSession {
             return
         }
         guard Set(states.keys) == targets,
-              states.allSatisfy({ element in
-                  element.value.cid == element.key && !element.value.isDiverted
-              })
+              states.allSatisfy({ $0.value.cid == $0.key })
         else {
-            explicitRetryRequired = true
-            transition(to: requiredCIDs.isEmpty ? .nativeReady : .conflict)
+            rejectRetryBaseline()
+            return
+        }
+        if states.contains(where: { $0.value.isDiverted }) {
+            guard canResetStaleDiversions(states),
+                  !initialOwnershipAgentScan()
+            else {
+                rejectRetryBaseline()
+                return
+            }
+            let cleanStates = states.mapValues { $0.changingDivert(to: false) }
+            requestStaleDiversionReset(
+                index: 0,
+                targetCIDs: targets.sorted(),
+                currentStates: states,
+                cleanStates: cleanStates,
+                lifecycle: lifecycle,
+                operation: operation
+            )
             return
         }
 
@@ -847,6 +862,154 @@ final class M720HIDPPSession {
                 }
             )
         }
+    }
+
+    private func canResetStaleDiversions(
+        _ states: [UInt16: HIDPPReportingState]
+    ) -> Bool {
+        guard retryPath == .knownFeature,
+              !requiredCIDs.isEmpty,
+              !journalTrustQuarantined,
+              journalEntriesForThisDevice().isEmpty
+        else { return false }
+        return states.allSatisfy { cid, state in
+            state.remappedCID == cid
+        }
+    }
+
+    private func requestStaleDiversionReset(
+        index: Int,
+        targetCIDs: [UInt16],
+        currentStates: [UInt16: HIDPPReportingState],
+        cleanStates: [UInt16: HIDPPReportingState],
+        lifecycle: UInt64,
+        operation: UInt64
+    ) {
+        guard continuationIsCurrent(
+            lifecycle: lifecycle,
+            operation: operation,
+            state: .discovering
+        ), retryInProgress else { return }
+        guard !requiredCIDs.isEmpty else {
+            rejectRetryBaseline()
+            return
+        }
+        guard index < targetCIDs.count else {
+            guard !initialOwnershipAgentScan() else {
+                rejectRetryBaseline()
+                return
+            }
+            finishRetryBaseline(
+                cleanStates,
+                lifecycle: lifecycle,
+                operation: operation
+            )
+            return
+        }
+        let cid = targetCIDs[index]
+        guard let current = currentStates[cid], current.isDiverted else {
+            requestStaleDiversionReset(
+                index: index + 1,
+                targetCIDs: targetCIDs,
+                currentStates: currentStates,
+                cleanStates: cleanStates,
+                lifecycle: lifecycle,
+                operation: operation
+            )
+            return
+        }
+        guard !initialOwnershipAgentScan(),
+              let featureIndex = discoveredFeatureIndex
+        else {
+            rejectRetryBaseline()
+            return
+        }
+
+        // Retry is an explicit user authorization boundary. A stale diversion can
+        // be cleared without a journal because interruption leaves the control in
+        // its native state; every Set is followed by authoritative readback before
+        // the regular journaled takeover is allowed to begin.
+        let parameters = ReprogControlsV4.setReportingParameters(
+            cid: cid,
+            diverted: false
+        )
+        pipeline.perform(
+            featureIndex: featureIndex,
+            function: ReprogControlsV4.Function.setCidReporting.rawValue,
+            parameters: parameters
+        ) { [weak self] _ in
+            guard let self, self.continuationIsCurrent(
+                lifecycle: lifecycle,
+                operation: operation,
+                state: .discovering
+            ), self.retryInProgress else { return }
+            self.requestStaleDiversionResetReadback(
+                cid: cid,
+                nextIndex: index + 1,
+                targetCIDs: targetCIDs,
+                currentStates: currentStates,
+                cleanStates: cleanStates,
+                lifecycle: lifecycle,
+                operation: operation
+            )
+        }
+    }
+
+    private func requestStaleDiversionResetReadback(
+        cid: UInt16,
+        nextIndex: Int,
+        targetCIDs: [UInt16],
+        currentStates: [UInt16: HIDPPReportingState],
+        cleanStates: [UInt16: HIDPPReportingState],
+        lifecycle: UInt64,
+        operation: UInt64
+    ) {
+        guard let featureIndex = discoveredFeatureIndex else {
+            enterInvalid(.protocol)
+            return
+        }
+        pipeline.perform(
+            featureIndex: featureIndex,
+            function: ReprogControlsV4.Function.getCidReporting.rawValue,
+            parameters: bigEndian(cid)
+        ) { [weak self] result in
+            guard let self, self.continuationIsCurrent(
+                lifecycle: lifecycle,
+                operation: operation,
+                state: .discovering
+            ), self.retryInProgress else { return }
+            switch result {
+            case let .success(parameters):
+                do {
+                    let readback = try ReprogControlsV4.decodeReportingState(parameters)
+                    guard readback.cid == cid else {
+                        self.enterInvalid(.protocol)
+                        return
+                    }
+                    guard readback == cleanStates[cid] else {
+                        self.rejectRetryBaseline()
+                        return
+                    }
+                    self.requestStaleDiversionReset(
+                        index: nextIndex,
+                        targetCIDs: targetCIDs,
+                        currentStates: currentStates,
+                        cleanStates: cleanStates,
+                        lifecycle: lifecycle,
+                        operation: operation
+                    )
+                } catch {
+                    self.enterInvalid(.protocol)
+                }
+            case let .failure(error):
+                self.enterInvalid(self.stableCode(for: error))
+            }
+        }
+    }
+
+    private func rejectRetryBaseline() {
+        explicitRetryRequired = true
+        transition(to: requiredCIDs.isEmpty ? .nativeReady : .conflict)
     }
 
     private func reloadJournalForFullRediscoveryRetry(

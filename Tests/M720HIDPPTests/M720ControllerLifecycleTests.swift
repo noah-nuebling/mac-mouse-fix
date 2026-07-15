@@ -3,6 +3,39 @@ import XCTest
 @testable import Mac_Mouse_Fix_Helper
 
 final class M720ControllerLifecycleTests: XCTestCase {
+    func testKnownOwnershipAgentMatcherRecognizesOptionsAndIgnoresUnrelatedHIDApps() {
+        XCTAssertTrue(M720KnownOwnershipAgent.matches(
+            bundleIdentifier: "com.logi.optionsplus.agent",
+            localizedName: nil,
+            executableName: nil
+        ))
+        XCTAssertTrue(M720KnownOwnershipAgent.matches(
+            bundleIdentifier: nil,
+            localizedName: "Logitech Options Daemon",
+            executableName: nil
+        ))
+        XCTAssertTrue(M720KnownOwnershipAgent.matches(
+            bundleIdentifier: nil,
+            localizedName: nil,
+            executableName: "logioptionsplus_agent"
+        ))
+        XCTAssertTrue(M720KnownOwnershipAgent.matches(
+            bundleIdentifier: "com.logitech.manager.daemon",
+            localizedName: "LogiMgrDaemon",
+            executableName: "LogiMgrDaemon"
+        ))
+        XCTAssertFalse(M720KnownOwnershipAgent.matches(
+            bundleIdentifier: "org.pqrs.Karabiner-Elements",
+            localizedName: "Karabiner-Elements",
+            executableName: "karabiner_grabber"
+        ))
+        XCTAssertFalse(M720KnownOwnershipAgent.matches(
+            bundleIdentifier: "com.tencent.WeType",
+            localizedName: "WeType",
+            executableName: "WeType"
+        ))
+    }
+
     func testCachedPolicyAndDeviceManagerNotificationPrecedeFactoryAndAsyncStart() {
         let harness = M720ControllerHarness()
         let device = harness.makeDevice(snapshot: .m720(registryEntryID: 101, serialNumber: "attach"))
@@ -1509,6 +1542,67 @@ final class M720ControllerTemporaryPolicyTests: XCTestCase {
         XCTAssertEqual(correlated.count, 1)
         XCTAssertEqual(correlated.single?.state, .invalid(.disconnected))
     }
+
+    func testReceiverCandidateJoinsAndLeavesPolicyOnlyWithConfirmedM720() {
+        let token = UUID()
+        let harness = M720ControllerHarness(
+            tokens: [token],
+            initialPolicyParticipant: false
+        )
+        harness.controller.reconcile(
+            remaps: makeControllerRemaps(buttons: [6]),
+            buttonsEnabled: true,
+            remapsAreAddMode: false
+        )
+        let receiver = harness.makeDevice(snapshot: M720DeviceSnapshot(
+            registryEntryID: 140,
+            vendorID: M720Profile.vendorID,
+            productID: M720Profile.unifyingReceiverProductID,
+            transport: M720Profile.unifyingReceiverTransport,
+            serialNumber: nil,
+            physicalDeviceUniqueID: nil
+        ))
+
+        harness.controller.deviceDidAttach(receiver)
+        let session = try! XCTUnwrap(harness.session(for: receiver))
+
+        XCTAssertEqual(session.requiredCIDCalls, [[]])
+        XCTAssertEqual(
+            harness.controller.capturePreparationSnapshot(),
+            M720PreparationSnapshot(
+                deviceSetRevision: 0,
+                environmentEnabled: true,
+                participants: []
+            )
+        )
+        XCTAssertTrue(harness.controller.captureStateSnapshots().isEmpty)
+
+        session.setPolicyParticipant(true)
+
+        XCTAssertEqual(session.requiredCIDCalls, [[], [0x005B]])
+        XCTAssertEqual(
+            harness.controller.capturePreparationSnapshot().participants,
+            [M720PreparationParticipant(
+                deviceToken: token,
+                exactRequiredCIDs: [0x005B]
+            )]
+        )
+        XCTAssertEqual(
+            harness.controller.capturePreparationSnapshot().deviceSetRevision,
+            1
+        )
+
+        session.setPolicyParticipant(false)
+
+        XCTAssertEqual(session.requiredCIDCalls, [[], [0x005B], []])
+        XCTAssertTrue(
+            harness.controller.capturePreparationSnapshot().participants.isEmpty
+        )
+        XCTAssertEqual(
+            harness.controller.capturePreparationSnapshot().deviceSetRevision,
+            2
+        )
+    }
 }
 
 private final class M720ControllerHarness {
@@ -1527,6 +1621,7 @@ private final class M720ControllerHarness {
     private var identityReadCounts: [ObjectIdentifier: Int] = [:]
     private var tokens: [UUID]
     private let workspaceCenter: NotificationCenter
+    private let initialPolicyParticipant: Bool
 
     lazy var controller = M720HIDPPController(
         identityProvider: { [unowned self] device in
@@ -1540,7 +1635,10 @@ private final class M720ControllerHarness {
             return nil
         },
         sessionFactory: { [unowned self] device, snapshot, journalIdentityUsable in
-            let session = FakeM720Session(trace: self.trace)
+            let session = FakeM720Session(
+                trace: self.trace,
+                isPolicyParticipant: self.initialPolicyParticipant
+            )
             self.factoryCalls.append(FactoryCall(
                 device: device,
                 snapshot: snapshot,
@@ -1564,10 +1662,12 @@ private final class M720ControllerHarness {
 
     init(
         tokens: [UUID] = [],
-        workspaceCenter: NotificationCenter = NotificationCenter()
+        workspaceCenter: NotificationCenter = NotificationCenter(),
+        initialPolicyParticipant: Bool = true
     ) {
         self.tokens = tokens
         self.workspaceCenter = workspaceCenter
+        self.initialPolicyParticipant = initialPolicyParticipant
     }
 
     func makeDevice(snapshot: M720DeviceSnapshot?) -> Device {
@@ -1610,6 +1710,7 @@ private extension M720DeviceSnapshot {
 private final class FakeM720Session: M720SessionControlling {
     private(set) var state: M720SessionState = .discovering
     private(set) var requiredCIDs: Set<UInt16> = []
+    private(set) var isPolicyParticipant: Bool
     var onStateChange: ((M720SessionState) -> Void)?
 
     private(set) var requiredCIDCalls: [Set<UInt16>] = []
@@ -1630,8 +1731,9 @@ private final class FakeM720Session: M720SessionControlling {
     private var shutdownCompletions: [() -> Void] = []
     private var invalidationCompletions: [() -> Void] = []
 
-    init(trace: M720ControllerTrace) {
+    init(trace: M720ControllerTrace, isPolicyParticipant: Bool = true) {
         self.trace = trace
+        self.isPolicyParticipant = isPolicyParticipant
     }
 
     func start() {
@@ -1692,6 +1794,11 @@ private final class FakeM720Session: M720SessionControlling {
 
     func emit(_ state: M720SessionState) {
         self.state = state
+        onStateChange?(state)
+    }
+
+    func setPolicyParticipant(_ value: Bool) {
+        isPolicyParticipant = value
         onStateChange?(state)
     }
 

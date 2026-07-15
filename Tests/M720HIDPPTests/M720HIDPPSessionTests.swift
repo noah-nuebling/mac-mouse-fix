@@ -1790,6 +1790,89 @@ final class M720HIDPPSessionTests: XCTestCase {
         }
     }
 
+    func testExplicitRetryReclaimsSafeStaleLogiDiversionsAfterAgentExits() {
+        let harness = M720SessionHarness()
+        let targets = Set(M720Profile.cidToButton.keys)
+        let stale: [UInt16: HIDPPReportingState] = [
+            0x005B: HIDPPReportingState(cid: 0x005B, flags: 0x01, remappedCID: 0x005B),
+            0x005D: HIDPPReportingState(cid: 0x005D, flags: 0x01, remappedCID: 0x005D),
+            0x00D0: HIDPPReportingState(cid: 0x00D0, flags: 0x11, remappedCID: 0x00D0),
+        ]
+        harness.session.setRequiredCIDs(targets)
+        harness.session.start()
+        driveDiscovery(
+            harness,
+            rows: referenceRows,
+            reportingOverrides: stale
+        )
+        XCTAssertEqual(harness.session.state, .conflict)
+        let retryStart = harness.transport.sent.count
+
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
+        driveExplicitRetryBaseline(
+            harness,
+            startingAt: retryStart,
+            states: stale
+        )
+        driveTakeover(
+            harness,
+            startingAt: retryStart + M720Profile.cidToButton.count,
+            initialStates: stale
+        )
+
+        XCTAssertEqual(harness.session.state, .active)
+        XCTAssertEqual(harness.session.appliedCIDs, targets)
+        XCTAssertEqual(
+            harness.requestKinds[retryStart...].compactMap { request -> Bool? in
+                guard case let .setCidReporting(_, diverted) = request else { return nil }
+                return diverted
+            },
+            [false, false, false, true, true, true]
+        )
+        let journalEntries = Dictionary(uniqueKeysWithValues: harness.journal.currentJournal
+            .devices.flatMap(\.controls).map { ($0.cid, $0) })
+        XCTAssertEqual(journalEntries[0x005B]?.original.flags, 0x00)
+        XCTAssertEqual(journalEntries[0x005D]?.original.flags, 0x00)
+        XCTAssertEqual(journalEntries[0x00D0]?.original.flags, 0x10)
+        XCTAssertEqual(journalEntries[0x005B]?.intended.flags, 0x01)
+        XCTAssertEqual(journalEntries[0x005D]?.intended.flags, 0x01)
+        XCTAssertEqual(journalEntries[0x00D0]?.intended.flags, 0x11)
+    }
+
+    func testExplicitRetryNeverClearsStaleDiversionsWhileOwnershipAgentRuns() {
+        let harness = M720SessionHarness(initialOwnershipAgentIsRunning: true)
+        let targets = Set(M720Profile.cidToButton.keys)
+        let stale: [UInt16: HIDPPReportingState] = [
+            0x005B: HIDPPReportingState(cid: 0x005B, flags: 0x01, remappedCID: 0x005B),
+            0x005D: HIDPPReportingState(cid: 0x005D, flags: 0x01, remappedCID: 0x005D),
+            0x00D0: HIDPPReportingState(cid: 0x00D0, flags: 0x11, remappedCID: 0x00D0),
+        ]
+        harness.session.setRequiredCIDs(targets)
+        harness.session.start()
+        driveDiscovery(
+            harness,
+            rows: referenceRows,
+            reportingOverrides: stale
+        )
+        XCTAssertEqual(harness.session.state, .conflict)
+        let retryStart = harness.transport.sent.count
+
+        XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
+        driveExplicitRetryBaseline(
+            harness,
+            startingAt: retryStart,
+            states: stale
+        )
+
+        XCTAssertEqual(harness.session.state, .conflict)
+        XCTAssertEqual(harness.ownershipAgentProbe.scanCount, 1)
+        XCTAssertFalse(harness.requestKinds[retryStart...].contains {
+            if case .setCidReporting = $0 { return true }
+            return false
+        })
+        XCTAssertEqual(harness.journal.mutationCallCount, 0)
+    }
+
     func testQuarantinedJournalRetryAcknowledgesOnlyAfterCleanThreeCIDBaseline() {
         let harness = M720SessionHarness(
             reloadResult: .failure(M720JournalStoreError.quarantined)
@@ -2405,12 +2488,16 @@ final class M720HIDPPSessionTests: XCTestCase {
         }
     }
 
-    func testRejectedDivertedRetryCanBeRetriedAgainCleanly() {
+    func testRejectedUnsafeDivertedRetryCanBeRetriedAgainCleanly() {
         let harness = conflictedHarness()
         let firstStart = harness.transport.sent.count
         XCTAssertTrue(harness.session.retryAfterConflict(requestID: UUID()))
         var diverted = baselineStates(0x005B, 0x005D, 0x00D0)
-        diverted[0x005D] = divertedStates(0x005D)[0x005D]!
+        diverted[0x005D] = HIDPPReportingState(
+            cid: 0x005D,
+            flags: 0x01,
+            remappedCID: 0x1234
+        )
         driveExplicitRetryBaseline(harness, startingAt: firstStart, states: diverted)
         XCTAssertEqual(harness.session.state, .conflict)
 

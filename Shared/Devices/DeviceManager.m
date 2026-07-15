@@ -174,6 +174,15 @@ static void resetAttachedDeviceCaches(void) {
     [_iohidToAttachedCache removeAllObjects];
 }
 
++ (void)deviceMetadataDidChange:(Device *)device {
+    if (_attachedDevices == nil ||
+        [_attachedDevices indexOfObjectIdenticalTo:device] == NSNotFound) {
+        return;
+    }
+    resetAttachedDeviceCaches();
+    [SwitchMaster.shared attachedDevicesChangedWithDevices:_attachedDevices];
+}
+
 static void attachDevice(
     Device *device,
     NSMutableArray<Device *> *attachedDevices,

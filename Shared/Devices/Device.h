@@ -32,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSNumber *)uniqueID;
 - (BOOL)wrapsIOHIDDevice:(IOHIDDeviceRef)iohidDevice;
 - (BOOL)isM720BluetoothLowEnergy;
+- (void)setM720UnifyingIdentityActive:(BOOL)active;
 - (uint64_t)registryEntryID;
 - (NSString *)name;
 - (NSString *)manufacturer;

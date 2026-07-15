@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)someDeviceHasPointing;
 + (BOOL)someDeviceHasUsableButtons;
 + (int)maxButtonNumberAmongDevices;
++ (void)deviceMetadataDidChange:(Device *)device;
 
 #if DEBUG
 + (void)unitTestAttachDevice:(Device *)device

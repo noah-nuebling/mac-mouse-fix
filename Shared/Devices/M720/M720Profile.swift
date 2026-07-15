@@ -4,6 +4,10 @@ enum M720Profile {
     static let vendorID = 0x046D
     static let bluetoothLEProductID = 0xB015
     static let bluetoothLETransport = "Bluetooth Low Energy"
+    static let unifyingReceiverProductID = 0xC52B
+    static let unifyingReceiverTransport = "USB"
+    static let unifyingDeviceTransport = "USB Unifying"
+    static let unifyingWirelessProductID: UInt16 = 0x405E
     static let featureID: UInt16 = 0x1B04
     static let maximumControlCount = 32
 
@@ -16,8 +20,34 @@ enum M720Profile {
     static let nativeCIDs: Set<UInt16> = [0x0052, 0x0053, 0x0056]
 
     static func isEligible(vendorID: Int, productID: Int, transport: String) -> Bool {
+        isBluetoothDevice(
+            vendorID: vendorID,
+            productID: productID,
+            transport: transport
+        ) || isUnifyingReceiverCandidate(
+            vendorID: vendorID,
+            productID: productID,
+            transport: transport
+        )
+    }
+
+    static func isBluetoothDevice(
+        vendorID: Int,
+        productID: Int,
+        transport: String
+    ) -> Bool {
         vendorID == self.vendorID &&
-        productID == bluetoothLEProductID &&
-        transport == bluetoothLETransport
+            productID == bluetoothLEProductID &&
+            transport == bluetoothLETransport
+    }
+
+    static func isUnifyingReceiverCandidate(
+        vendorID: Int,
+        productID: Int,
+        transport: String
+    ) -> Bool {
+        vendorID == self.vendorID &&
+            productID == unifyingReceiverProductID &&
+            transport == unifyingReceiverTransport
     }
 }

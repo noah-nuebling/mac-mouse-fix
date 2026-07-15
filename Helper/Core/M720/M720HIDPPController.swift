@@ -2,6 +2,37 @@ import AppKit
 import Foundation
 import IOKit.hid
 
+enum M720KnownOwnershipAgent {
+    static func matches(
+        bundleIdentifier: String?,
+        localizedName: String?,
+        executableName: String?
+    ) -> Bool {
+        [bundleIdentifier, localizedName, executableName]
+            .compactMap { $0 }
+            .map(normalized)
+            .contains { value in
+                value.contains("logioptions") ||
+                    value.contains("logitechoptions") ||
+                    value.contains("logimgrdaemon")
+            }
+    }
+
+    static func isRunning() -> Bool {
+        NSWorkspace.shared.runningApplications.contains { application in
+            matches(
+                bundleIdentifier: application.bundleIdentifier,
+                localizedName: application.localizedName,
+                executableName: application.executableURL?.lastPathComponent
+            )
+        }
+    }
+
+    private static func normalized(_ value: String) -> String {
+        value.lowercased().filter(\.isLetter)
+    }
+}
+
 struct M720DeviceSnapshot: Equatable {
     let registryEntryID: UInt64
     let vendorID: Int
@@ -72,6 +103,7 @@ enum M720PreparationContextChange: Equatable {
 protocol M720SessionControlling: AnyObject {
     var state: M720SessionState { get }
     var requiredCIDs: Set<UInt16> { get }
+    var isPolicyParticipant: Bool { get }
     var onStateChange: ((M720SessionState) -> Void)? { get set }
 
     func start()
@@ -89,6 +121,8 @@ protocol M720SessionControlling: AnyObject {
 }
 
 extension M720SessionControlling {
+    var isPolicyParticipant: Bool { true }
+
     func diagnosticSnapshot(deviceToken: UUID) -> M720DiagnosticSessionSnapshot {
         let stateName: M720SessionStateName
         switch state {
@@ -133,6 +167,7 @@ final class M720HIDPPController: NSObject {
         let session: M720SessionControlling
         var journalIdentityUsable: Bool
         var requiredCIDs: Set<UInt16>
+        var lastPolicyParticipant: Bool
         var lastPublishedSnapshot: M720ControllerSessionSnapshot?
         var pendingRetryRequestID: UUID?
         var removalWaiters: [() -> Void] = []
@@ -154,6 +189,7 @@ final class M720HIDPPController: NSObject {
             self.session = session
             self.journalIdentityUsable = journalIdentityUsable
             self.requiredCIDs = requiredCIDs
+            lastPolicyParticipant = session.isPolicyParticipant
         }
     }
 
@@ -395,7 +431,9 @@ final class M720HIDPPController: NSObject {
         }
 
         for entry in entries.values where !entry.invalidationFinished {
-            let desired = effectiveRequiredCIDs(for: entry.token)
+            let desired = entry.lastPolicyParticipant
+                ? effectiveRequiredCIDs(for: entry.token)
+                : []
             entry.requiredCIDs = desired
             entry.session.setRequiredCIDs(desired)
             publishStableState(for: entry, state: entry.session.state)
@@ -493,7 +531,7 @@ final class M720HIDPPController: NSObject {
     @nonobjc func captureStateSnapshots() -> [M720ControllerSessionSnapshot] {
         requireMainTurn()
         return entries.values
-            .filter { !$0.invalidationFinished }
+            .filter { !$0.invalidationFinished && $0.lastPolicyParticipant }
             .sorted { $0.registryEntryID < $1.registryEntryID }
             .map { snapshot(for: $0, state: $0.session.state) }
     }
@@ -501,7 +539,7 @@ final class M720HIDPPController: NSObject {
     @nonobjc func diagnosticStateSnapshot() -> M720HelperDiagnosticState {
         requireMainTurn()
         return M720HelperDiagnosticState(sessions: entries.values
-            .filter { !$0.invalidationFinished }
+            .filter { !$0.invalidationFinished && $0.lastPolicyParticipant }
             .map { $0.session.diagnosticSnapshot(deviceToken: $0.token) })
     }
 
@@ -510,7 +548,8 @@ final class M720HIDPPController: NSObject {
         requireMainTurn()
         guard !shutdownStarted,
               let entry = entries.values.first(where: {
-            $0.token == deviceToken && !$0.invalidationStarted
+            $0.token == deviceToken && !$0.invalidationStarted &&
+                $0.lastPolicyParticipant
         }), entry.pendingRetryRequestID == nil else { return false }
         guard entry.session.retryAfterConflict(requestID: requestID) else { return false }
         entry.pendingRetryRequestID = requestID
@@ -527,7 +566,10 @@ final class M720HIDPPController: NSObject {
             )
         }
         let participants = entries.values
-            .filter { !$0.invalidationStarted && !$0.invalidationFinished }
+            .filter {
+                !$0.invalidationStarted && !$0.invalidationFinished &&
+                    $0.lastPolicyParticipant
+            }
             .map {
                 M720PreparationParticipant(
                     deviceToken: $0.token,
@@ -708,7 +750,9 @@ final class M720HIDPPController: NSObject {
         ) else { return }
 
         let token = tokenFactory()
-        let requiredCIDs = effectiveRequiredCIDs(for: token)
+        let requiredCIDs = session.isPolicyParticipant
+            ? effectiveRequiredCIDs(for: token)
+            : []
         let entry = Entry(
             device: device,
             snapshot: snapshot,
@@ -729,7 +773,9 @@ final class M720HIDPPController: NSObject {
             }
         }
         session.setRequiredCIDs(entry.requiredCIDs)
-        noteDeviceSetChange()
+        if entry.lastPolicyParticipant {
+            noteDeviceSetChange()
+        }
 
         enqueueStart { [weak self] in
             guard let self,
@@ -746,7 +792,9 @@ final class M720HIDPPController: NSObject {
     private func beginInvalidationIfNeeded(_ entry: Entry) {
         guard !entry.invalidationStarted else { return }
         entry.invalidationStarted = true
-        noteDeviceSetChange()
+        if entry.lastPolicyParticipant {
+            noteDeviceSetChange()
+        }
         let registryEntryID = entry.registryEntryID
         let token = entry.token
         entry.session.invalidateForRemoval { [weak self] in
@@ -816,11 +864,27 @@ final class M720HIDPPController: NSObject {
               entry.token == token,
               entry.session.state == state
         else { return }
+        reconcilePolicyParticipation(for: entry)
         publishStableState(for: entry, state: state)
         evaluateTemporaryPolicyOperationIfNeeded()
     }
 
+    private func reconcilePolicyParticipation(for entry: Entry) {
+        let current = entry.session.isPolicyParticipant
+        guard current != entry.lastPolicyParticipant,
+              !entry.invalidationStarted,
+              !entry.invalidationFinished
+        else { return }
+
+        entry.lastPolicyParticipant = current
+        let desired = current ? effectiveRequiredCIDs(for: entry.token) : []
+        entry.requiredCIDs = desired
+        entry.session.setRequiredCIDs(desired)
+        noteDeviceSetChange()
+    }
+
     private func publishStableState(for entry: Entry, state: M720SessionState) {
+        guard entry.lastPolicyParticipant else { return }
         guard state.isStableForController else { return }
         let baseline = snapshot(for: entry, state: state, requestID: nil)
         let requestID = entry.pendingRetryRequestID
@@ -862,7 +926,10 @@ final class M720HIDPPController: NSObject {
 
         lease.overridesByToken = rawTargetsByToken
         let liveTokens = Set(entries.values
-            .filter { !$0.invalidationStarted && !$0.invalidationFinished }
+            .filter {
+                !$0.invalidationStarted && !$0.invalidationFinished &&
+                    $0.lastPolicyParticipant
+            }
             .map(\.token))
         let effectiveTargets = rawTargetsByToken.reduce(into: [UUID: Set<UInt16>]()) {
             result, pair in
@@ -1041,7 +1108,10 @@ final class M720HIDPPController: NSObject {
         for lease: TemporaryPolicyLease
     ) -> [UUID: Set<UInt16>] {
         let liveTokens = Set(entries.values
-            .filter { !$0.invalidationStarted && !$0.invalidationFinished }
+            .filter {
+                !$0.invalidationStarted && !$0.invalidationFinished &&
+                    $0.lastPolicyParticipant
+            }
             .map(\.token))
         return lease.frozenSavedTargets.reduce(into: [UUID: Set<UInt16>]()) {
             result, pair in
@@ -1052,7 +1122,8 @@ final class M720HIDPPController: NSObject {
 
     private func liveEntry(for token: UUID) -> Entry? {
         entries.values.first {
-            $0.token == token && !$0.invalidationStarted && !$0.invalidationFinished
+            $0.token == token && !$0.invalidationStarted &&
+                !$0.invalidationFinished && $0.lastPolicyParticipant
         }
     }
 
@@ -1157,6 +1228,58 @@ final class M720HIDPPController: NSObject {
         snapshot: M720DeviceSnapshot,
         journalIdentityUsable: Bool
     ) -> M720SessionControlling? {
+        if M720Profile.isUnifyingReceiverCandidate(
+            vendorID: snapshot.vendorID,
+            productID: snapshot.productID,
+            transport: snapshot.transport
+        ) {
+            guard let io = UnifyingReceiverIOHIDDeviceIO(receiverDevice: device) else {
+                return nil
+            }
+            let channel = UnifyingReceiverChannel(
+                io: io,
+                ioQueue: DispatchQueue(
+                    label: "com.nuebling.mac-mouse-fix.m720.unifying-hidpp-io"
+                )
+            )
+            let scheduler = DispatchHIDPPScheduler()
+            let manager = UnifyingReceiverManager(
+                channel: channel,
+                scheduler: scheduler
+            )
+            return M720UnifyingReceiverSession(
+                receiverDevice: device,
+                manager: manager,
+                childFactory: { receiverDevice, transport in
+                    let childScheduler = DispatchHIDPPScheduler()
+                    let pipeline = HIDPPRequestPipeline(
+                        transport: transport,
+                        scheduler: childScheduler
+                    )
+                    let deviceKey = M720DeviceKey(
+                        vendorID: M720Profile.vendorID,
+                        productID: Int(receiverDevice.wirelessProductID),
+                        transport: M720Profile.unifyingDeviceTransport,
+                        serialNumber: receiverDevice.serialNumber
+                    )
+                    return M720HIDPPSession(
+                        device: device,
+                        pipeline: pipeline,
+                        journalRepository: M720OwnershipJournalRepository.shared,
+                        deviceKey: deviceKey,
+                        journalIdentityUsable: !receiverDevice.serialNumber.isEmpty,
+                        scheduler: childScheduler,
+                        initialOwnershipAgentScan: M720KnownOwnershipAgent.isRunning
+                    )
+                }
+            )
+        }
+
+        guard M720Profile.isBluetoothDevice(
+            vendorID: snapshot.vendorID,
+            productID: snapshot.productID,
+            transport: snapshot.transport
+        ) else { return nil }
         guard let transport = BLEHIDPPTransport(device: device) else { return nil }
         let scheduler = DispatchHIDPPScheduler()
         let pipeline = HIDPPRequestPipeline(
@@ -1175,7 +1298,8 @@ final class M720HIDPPController: NSObject {
             journalRepository: M720OwnershipJournalRepository.shared,
             deviceKey: deviceKey,
             journalIdentityUsable: journalIdentityUsable,
-            scheduler: scheduler
+            scheduler: scheduler,
+            initialOwnershipAgentScan: M720KnownOwnershipAgent.isRunning
         )
     }
 }

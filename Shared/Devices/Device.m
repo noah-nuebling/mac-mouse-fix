@@ -34,6 +34,7 @@
 
 @implementation Device {
     int _nOfButtons;
+    BOOL _m720UnifyingIdentityActive;
 }
 
 #pragma mark - Init
@@ -303,6 +304,14 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
            [transport isEqualToString:@"Bluetooth Low Energy"];
 }
 
+- (void)setM720UnifyingIdentityActive:(BOOL)active {
+    if (_m720UnifyingIdentityActive == active) {
+        return;
+    }
+    _m720UnifyingIdentityActive = active;
+    [DeviceManager deviceMetadataDidChange:self];
+}
+
 - (uint64_t)registryEntryID {
     if (_iohidDevice == NULL) {
         return 0;
@@ -359,6 +368,9 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 }
 
 - (NSString *)name {
+    if (_m720UnifyingIdentityActive) {
+        return @"M720 Triathlon";
+    }
     
     IOHIDDeviceRef device = self.iohidDevice;
     NSString *product = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
@@ -375,7 +387,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 }
 
 - (int)nOfButtons {
-    return self->_nOfButtons;
+    return _m720UnifyingIdentityActive ? 8 : self->_nOfButtons;
 }
 
 - (NSString *)description {
