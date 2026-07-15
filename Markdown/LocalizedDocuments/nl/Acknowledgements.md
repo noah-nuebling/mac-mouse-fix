@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **juli 2026**
 
+- 🇹🇭&nbsp;Roman - "The best combo of options – and all of em out of the box, amazing!"
 - 🇺🇸&nbsp;Nathaniel&nbsp;Comeaux - "As a software engineer that needed my mouse to do one specific thing, THANK YOU for making the app that does it 😎"
 - 🇹🇼&nbsp;Ke☠️
 - 🇳🇱&nbsp;Rick&nbsp;K - "Thanks for the great tool. Makes the experience with my MX Master amazing on Mac."
