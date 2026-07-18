@@ -186,10 +186,16 @@ static NSMutableDictionary *_swipeInfo;
     CGEventRef e30 = NULL;
     if (@available(macOS 27.0, *)) {
         
-        /// Un-flip the delta
+        /// Un-flip progress and velocity
         ///     The `d` input args are already pre-flipped by `ModifiedDrag.m` if `invertedFromDevice == true`. But the macOS 27 path applies the flipping by itself somehow.
-        double __dockSwipeOriginOffset = _dockSwipeOriginOffset;
-        if (invertedFromDevice) __dockSwipeOriginOffset *= -1; /// Could also apply the unflipping to the `d` argument above.
+        ///     Both values need to be in the same coordinate space. If only progress is un-flipped, the release
+        ///     velocity points backwards and causes a visible bounce/stutter at the end of the transition.
+        double unflippedOriginOffset = _dockSwipeOriginOffset;
+        double unflippedExitSpeed = exitSpeed;
+        if (invertedFromDevice) {
+            unflippedOriginOffset *= -1;
+            unflippedExitSpeed *= -1;
+        }
         
         /// Create HIDEvent
         ///     Note: Setting the timestamp to `mach_absolute_time()` here would make some sense but we're not setting timestamps anywhere else when simulating gestures
@@ -200,16 +206,16 @@ static NSMutableDictionary *_swipeInfo;
         [hidEvent setOptions: options];
         [hidEvent setIntegerValue: type                             forField: kIOHIDEventFieldDockSwipeMotion];
         [hidEvent setIntegerValue: kIOHIDGestureFlavorDockPrimary   forField: kIOHIDEventFieldDockSwipeFlavor];
-        [hidEvent setDoubleValue: __dockSwipeOriginOffset           forField: kIOHIDEventFieldDockSwipeProgress];
+        [hidEvent setDoubleValue: unflippedOriginOffset             forField: kIOHIDEventFieldDockSwipeProgress];
         
         /// Attach velocity event on exit
         if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
             
             HIDEvent *childEvent = [[HIDEvent alloc] initWithType: kIOHIDEventTypeVelocity timestamp: 0 senderID: 0];
             
-            [childEvent setDoubleValue: exitSpeed forField: kIOHIDEventFieldVelocityX];
-            [childEvent setDoubleValue: exitSpeed forField: kIOHIDEventFieldVelocityY];
-            [childEvent setDoubleValue: 0.0       forField: kIOHIDEventFieldVelocityZ];
+            [childEvent setDoubleValue: unflippedExitSpeed forField: kIOHIDEventFieldVelocityX];
+            [childEvent setDoubleValue: unflippedExitSpeed forField: kIOHIDEventFieldVelocityY];
+            [childEvent setDoubleValue: 0.0                forField: kIOHIDEventFieldVelocityZ];
             
             [hidEvent appendEvent: childEvent];
         }
@@ -376,4 +382,3 @@ static NSMutableDictionary *_swipeInfo;
 
 
 @end
-

@@ -9,6 +9,9 @@
 
 #import "CGEventHIDEventBridge.h"
 @import CoreGraphics.CGEvent;
+#import <dispatch/dispatch.h>
+#import "Logging.h"
+#import "PrivateFunctions.h"
 
 @implementation CGEventHIDEventBridge
 
@@ -35,7 +38,9 @@ void CGEventSetHIDEvent(CGEventRef cgEvent, HIDEvent *hidEvent) {
     return CGEventSetIOHIDEvent(cgEvent, (__bridge IOHIDEventRef)hidEvent);
 }
 
-/// Defining our own IOHIDEvent -> CGEvent function, because we can't link against `_SLEventSetIOHIDEvent`. (See header)
+/// Attaches an IOHIDEvent to a CGEvent.
+///     The old implementation writes through hard-coded CGEvent struct offsets. Those offsets changed on macOS 27,
+///     so use SkyLight's setter there and keep the old implementation only for older macOS versions.
 void CGEventSetIOHIDEvent(CGEventRef cgEvent, IOHIDEventRef iohidEvent) {
     
     /// Validate
@@ -45,6 +50,27 @@ void CGEventSetIOHIDEvent(CGEventRef cgEvent, IOHIDEventRef iohidEvent) {
     }
     if (!iohidEvent) {
         assert(false);
+        return;
+    }
+
+    /// Use SkyLight's setter on macOS 27
+    ///     `SLEventSetIOHIDEvent` copies the HID payload into the CGEvent. It doesn't take an extra retain on the
+    ///     input object, so retaining here would leak one HIDEvent for every simulated gesture event.
+    if (@available(macOS 27.0, *)) {
+        typedef void (*SLEventSetIOHIDEventFunction)(CGEventRef, IOHIDEventRef);
+        static SLEventSetIOHIDEventFunction slEventSetIOHIDEvent = NULL;
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            slEventSetIOHIDEvent = (SLEventSetIOHIDEventFunction)MFLoadSymbol_native(kMFFrameworkSkyLight, @"SLEventSetIOHIDEvent");
+        });
+
+        if (slEventSetIOHIDEvent) {
+            slEventSetIOHIDEvent(cgEvent, iohidEvent);
+        } else {
+            /// The offsets below are known to be invalid on macOS 27. Failing closed avoids writing through an
+            /// unknown pointer if Apple ever removes or renames the private setter.
+            DDLogError("CGEventSetIOHIDEvent: Couldn't resolve SLEventSetIOHIDEvent on macOS 27. Skipping the known-incompatible offset writer.");
+        }
         return;
     }
     

@@ -56,7 +56,9 @@ void CGEventSetHIDEvent(CGEventRef _Nonnull, HIDEvent * _Nonnull);
 
 /// Unsuccessful, we ended up writing our own function.
 /// Actually in `SkyLight.tbd` there is `_SLEventSetIOHIDEvent`, but I can't find a definition that we can link against.
-///     Update: [Jun 2026] If you just add `SkyLight.framework` to the project, the linker finds it ->  Could replace custom `CGEventSetHIDEvent` with `SLEventSetIOHIDEvent`, but it works fine.
+///     Update: [Jun 2026] If you just add `SkyLight.framework` to the project, the linker finds it.
+///     Update: [Jul 2026] The custom offset writer broke on macOS 27. We now load `SLEventSetIOHIDEvent` dynamically
+///         on macOS 27 and keep the old implementation only for earlier systems, where its offsets are known to work.
 
 /// Trying to find a function that converts HIDEvent -> CGEvent
 ///     (__bridge doesn't work)
