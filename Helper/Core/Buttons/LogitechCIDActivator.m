@@ -176,7 +176,7 @@ static int activateDevice(IOHIDDeviceRef dev, MFCIDDeviceState *s) {
         MFCIDDeviceState *s = (MFCIDDeviceState *)v.pointerValue;
         activateDevice(s->device, s);
     }
-    DDLogDebug(@"LogitechCIDActivator: re-activated %lu device(s)", (unsigned long)_states.count);
+    DDLogDebug("LogitechCIDActivator: re-activated %lu device(s)", (unsigned long)_states.count);
 }
 
 - (void)handleDeviceAttached: (IOHIDDeviceRef)device {
@@ -192,7 +192,7 @@ static int activateDevice(IOHIDDeviceRef dev, MFCIDDeviceState *s) {
     int diverted = activateDevice(device, s);
     if (diverted > 0) {
         NSString *name = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
-        DDLogInfo(@"LogitechCIDActivator: diverted %d CIDs on '%@'", diverted, name);
+        DDLogInfo("LogitechCIDActivator: diverted %d CIDs on '%@'", diverted, name);
         [_states addObject: [NSValue valueWithPointer: s]];
     } else {
         IOHIDDeviceUnscheduleFromRunLoop(device, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
