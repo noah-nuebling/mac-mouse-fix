@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **Juli 2026**
 
+- 🇺🇸&nbsp;Eduard&nbsp;Zhikharev
 - 🇹🇭&nbsp;Roman - "The best combo of options – and all of em out of the box, amazing!"
 - 🇺🇸&nbsp;Nathaniel&nbsp;Comeaux - "As a software engineer that needed my mouse to do one specific thing, THANK YOU for making the app that does it 😎"
 - 🇹🇼&nbsp;Ke☠️
