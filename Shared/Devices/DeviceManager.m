@@ -207,6 +207,10 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
     /// Register a callback for USB device removal with the HID Manager
     IOHIDManagerRegisterDeviceRemovalCallback(_manager, &handleDeviceRemoval, NULL);
 
+    /// HID++ lives on a separate vendor-defined interface, not on the generic
+    /// mouse interface matched by this manager.
+    [[LogitechCIDActivator shared] start];
+
 }
 
 # pragma mark - Handle callbacks

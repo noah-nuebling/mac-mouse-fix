@@ -24,6 +24,9 @@
 
 + (instancetype)shared;
 
+/// Start monitoring Logitech's vendor-defined HID++ interfaces.
+- (void)start;
+
 /// Call when a new device is attached. Activates CID diversion if the device
 /// is a Logitech mouse with ReprogControlsV4 support.
 - (void)handleDeviceAttached: (IOHIDDeviceRef)device;

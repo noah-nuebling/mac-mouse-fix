@@ -2,7 +2,6 @@
 // --------------------------------------------------------------------------
 // LogitechCIDActivator.m
 // Created for Mac Mouse Fix (https://github.com/noah-nuebling/mac-mouse-fix)
-// Created by Miguel Angelo in 2026
 // Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License)
 // --------------------------------------------------------------------------
 
@@ -14,138 +13,273 @@
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "DeviceManager.h"
 
-#define kLogitechVID    0x046D
-#define kHIDPP_Long     0x11
-#define kHIDPP_Device   0xFF
-#define kFeat_ReprogV4  0x1B04
+#define kLogitechVID             0x046D
+#define kBoltReceiverPID         0xC548
+#define kUnifyingReceiverPID1    0xC52B
+#define kUnifyingReceiverPID2    0xC532
+#define kHIDPP_Long              0x11
+#define kHIDPP_DirectDevice      0xFF
+#define kFeat_ReprogV4           0x1B04
+#define kDivertFlags             0x03
+#define kFirstMMFButton          6
+#define kResponseTimeout         0.30
+#define kMaxReceiverSlots        6
 
-/// SetCidReporting flags — Solaar hidpp20.py "valid bit" pattern:
-///   each flag bit has a corresponding valid bit = flag << 1
-///   0x03 = divert=1 (bit0) + divert_valid=1 (bit1)
-#define kDivertFlags    0x03
+/// Logitech's HID++ vendor collections. The ordinary GenericDesktop/Mouse
+/// collection cannot carry HID++ 0x10/0x11 output reports.
+#define kHIDPPUSBUsagePage       0xFF00
+#define kHIDPPUSBUsage           0x0001
+#define kHIDPPBLEUsagePage       0xFF43
+#define kHIDPPBLEUsage           0x0202
 
-/// TIDs of controls that already report natively — must NOT be diverted
-///   0x0038=left, 0x0039=right, 0x003A=middle, 0x003C=back, 0x003E=forward
-static const uint16_t kNativeTIDs[] = { 0x0038, 0x0039, 0x003A, 0x003C, 0x003E };
-
-/// CGEvent button numbers are 0-based. 5 = MMF "button 6" (first above L/R/M/Back/Fwd)
-#define kFirstCGButton  6
+/// Known DPI / ModeShift control IDs from Logitech's 0x1B04 control table.
+static const uint16_t kDPICIDs[] = { 0x00C4, 0x00ED, 0x00FD };
 
 typedef struct {
-    IOHIDDeviceRef  device;
-    uint8_t         reportBuf[64];
-    uint16_t        cidMap[32];
-    int             cidCount;
-    uint16_t        pressedCIDs[32];
-    int             pressedCount;
+    IOHIDDeviceRef hidppDevice;
+    IOHIDDeviceRef mouseDevice;
+    uint8_t reportBuf[64];
+
+    BOOL waitingForResponse;
+    BOOL gotResponse;
+    uint8_t pendingDeviceIndex;
+    uint8_t pendingFeatureIndex;
+    uint8_t pendingFunction;
+    uint8_t response[64];
+    CFIndex responseLength;
+
+    uint8_t deviceIndex;
+    uint8_t reprogFeatureIndex;
+    uint16_t cidMap[8];
+    int cidCount;
+    uint16_t pressedCIDs[8];
+    int pressedCount;
 } MFCIDDeviceState;
 
-static uint8_t sResp[20];
-static BOOL    sGotResp = NO;
+@interface LogitechCIDActivator ()
+@property (nonatomic) NSMutableArray<NSValue *> *states;
+@property (nonatomic) NSTimer *reactivateTimer;
+@property (nonatomic) IOHIDManagerRef hidppManager;
+@property (nonatomic) IOHIDDeviceRef fallbackMouseDevice;
+- (void)handleHIDPPDeviceAttached:(IOHIDDeviceRef)device;
+- (void)handleHIDPPDeviceRemoved:(IOHIDDeviceRef)device;
+@end
 
-static BOOL isNativeTID(uint16_t tid) {
-    for (int i = 0; i < 5; i++) if (kNativeTIDs[i] == tid) return YES;
+static BOOL isReceiverPID(NSInteger pid) {
+    return pid == kBoltReceiverPID || pid == kUnifyingReceiverPID1 || pid == kUnifyingReceiverPID2;
+}
+
+static BOOL isDPICID(uint16_t cid) {
+    for (NSUInteger i = 0; i < sizeof(kDPICIDs) / sizeof(kDPICIDs[0]); i++) {
+        if (kDPICIDs[i] == cid) return YES;
+    }
     return NO;
 }
 
-static int buttonForCID(MFCIDDeviceState *s, uint16_t cid) {
-    for (int i = 0; i < s->cidCount; i++)
-        if (s->cidMap[i] == cid) return kFirstCGButton + i;
-    if (s->cidCount < 32) { s->cidMap[s->cidCount++] = cid; return kFirstCGButton + s->cidCount - 1; }
-    return kFirstCGButton;
+static int buttonForCID(MFCIDDeviceState *state, uint16_t cid) {
+    for (int i = 0; i < state->cidCount; i++) {
+        if (state->cidMap[i] == cid) return kFirstMMFButton + i;
+    }
+    if (state->cidCount < 8) {
+        int index = state->cidCount++;
+        state->cidMap[index] = cid;
+        return kFirstMMFButton + index;
+    }
+    return kFirstMMFButton;
 }
 
-static void injectButton(MFCIDDeviceState *s, uint16_t cid, BOOL down) {
-    int btn = buttonForCID(s, cid);
-    Device *device = [DeviceManager attachedDeviceWithIOHIDDevice: s->device];
+static void injectButton(MFCIDDeviceState *state, uint16_t cid, BOOL down) {
+    Device *device = state->mouseDevice == NULL
+        ? nil
+        : [DeviceManager attachedDeviceWithIOHIDDevice:state->mouseDevice];
     if (!device) device = [Device strangeDevice];
+
     CGEventRef event = CGEventCreate(NULL);
-    [Buttons handleInputWithDevice: device button: @(btn) downNotUp: down event: event];
-    CFRelease(event);
+    (void)[Buttons handleInputWithDevice:device
+                                   button:@(buttonForCID(state, cid))
+                                downNotUp:down
+                                    event:event];
+    if (event) CFRelease(event);
 }
 
-static void inputReportCallback(void *ctx, IOReturn result, void *sender,
+static BOOL containsCID(const uint16_t *cids, int count, uint16_t cid) {
+    for (int i = 0; i < count; i++) if (cids[i] == cid) return YES;
+    return NO;
+}
+
+static void handleDivertedButtonsEvent(MFCIDDeviceState *state, const uint8_t *report, CFIndex len) {
+    uint16_t nextPressed[8] = {0};
+    int nextCount = 0;
+
+    /// divertedButtonsEvent carries up to four currently-held CIDs.
+    for (CFIndex offset = 4; offset + 1 < len && offset <= 10; offset += 2) {
+        uint16_t cid = ((uint16_t)report[offset] << 8) | report[offset + 1];
+        if (cid != 0 && isDPICID(cid) && nextCount < 8) nextPressed[nextCount++] = cid;
+    }
+
+    for (int i = 0; i < state->pressedCount; i++) {
+        uint16_t cid = state->pressedCIDs[i];
+        if (!containsCID(nextPressed, nextCount, cid)) injectButton(state, cid, NO);
+    }
+    for (int i = 0; i < nextCount; i++) {
+        uint16_t cid = nextPressed[i];
+        if (!containsCID(state->pressedCIDs, state->pressedCount, cid)) injectButton(state, cid, YES);
+    }
+
+    memcpy(state->pressedCIDs, nextPressed, sizeof(nextPressed));
+    state->pressedCount = nextCount;
+}
+
+static void inputReportCallback(void *context, IOReturn result, void *sender,
                                 IOHIDReportType type, uint32_t reportID,
                                 uint8_t *report, CFIndex len) {
-    if (len < 5 || report[0] != kHIDPP_Long) return;
-    MFCIDDeviceState *s = (MFCIDDeviceState *)ctx;
-    if (report[3] != 0x00) {
-        memcpy(sResp, report, len < 20 ? (size_t)len : 20);
-        sGotResp = YES;
+    MFCIDDeviceState *state = context;
+    if (result != kIOReturnSuccess || len < 6 || report[0] != kHIDPP_Long) return;
+
+    uint8_t function = report[3] >> 4;
+    BOOL isExpectedResponse = state->waitingForResponse
+        && report[1] == state->pendingDeviceIndex
+        && report[2] == state->pendingFeatureIndex
+        && function == state->pendingFunction;
+    BOOL isExpectedError = state->waitingForResponse
+        && report[1] == state->pendingDeviceIndex
+        && report[2] == 0xFF
+        && report[4] == state->pendingFeatureIndex
+        && (report[5] >> 4) == state->pendingFunction;
+
+    if (isExpectedResponse || isExpectedError) {
+        state->responseLength = MIN(len, (CFIndex)sizeof(state->response));
+        memcpy(state->response, report, (size_t)state->responseLength);
+        state->gotResponse = YES;
         return;
     }
-    uint16_t cid = ((uint16_t)report[4] << 8) | report[5];
-    if (cid == 0) {
-        for (int i = 0; i < s->pressedCount; i++) injectButton(s, s->pressedCIDs[i], NO);
-        s->pressedCount = 0;
-    } else {
-        for (int i = 0; i < s->pressedCount; i++) if (s->pressedCIDs[i] == cid) return;
-        injectButton(s, cid, YES);
-        if (s->pressedCount < 32) s->pressedCIDs[s->pressedCount++] = cid;
+
+    if (state->reprogFeatureIndex != 0
+        && report[1] == state->deviceIndex
+        && report[2] == state->reprogFeatureIndex
+        && function == 0x00) {
+        handleDivertedButtonsEvent(state, report, len);
     }
 }
 
-static IOReturn sendAndWait(IOHIDDeviceRef dev, uint8_t *pkt) {
-    sGotResp = NO;
-    IOReturn r = IOHIDDeviceSetReport(dev, kIOHIDReportTypeOutput, pkt[0], pkt, 20);
-    if (r != kIOReturnSuccess) return r;
-    for (int i = 0; i < 100 && !sGotResp; i++) CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.01, false);
-    if (!sGotResp) return kIOReturnTimeout;
-    if (sResp[2] == 0xFF) return kIOReturnError;
+static IOReturn sendAndWait(MFCIDDeviceState *state, uint8_t packet[20]) {
+    state->gotResponse = NO;
+    state->waitingForResponse = YES;
+    state->pendingDeviceIndex = packet[1];
+    state->pendingFeatureIndex = packet[2];
+    state->pendingFunction = packet[3] >> 4;
+    state->responseLength = 0;
+    memset(state->response, 0, sizeof(state->response));
+
+    IOReturn result = IOHIDDeviceSetReport(state->hidppDevice,
+                                           kIOHIDReportTypeOutput,
+                                           packet[0], packet, 20);
+    if (result != kIOReturnSuccess) {
+        state->waitingForResponse = NO;
+        return result;
+    }
+
+    CFAbsoluteTime deadline = CFAbsoluteTimeGetCurrent() + kResponseTimeout;
+    while (!state->gotResponse && CFAbsoluteTimeGetCurrent() < deadline) {
+        (void)CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.01, false);
+    }
+    state->waitingForResponse = NO;
+
+    if (!state->gotResponse) return kIOReturnTimeout;
+    if (state->response[2] == 0xFF) return kIOReturnError;
     return kIOReturnSuccess;
 }
 
-static int activateDevice(IOHIDDeviceRef dev, MFCIDDeviceState *s) {
-    uint8_t pkt[20];
+static int activateDeviceIndex(MFCIDDeviceState *state, uint8_t deviceIndex) {
+    uint8_t packet[20] = {0};
 
-    /// 1. GetFeature(0x1B04)
-    memset(pkt, 0, 20);
-    pkt[0]=kHIDPP_Long; pkt[1]=kHIDPP_Device; pkt[2]=0x00; pkt[3]=0x0E;
-    pkt[4]=(kFeat_ReprogV4>>8)&0xFF; pkt[5]=kFeat_ReprogV4&0xFF;
-    if (sendAndWait(dev, pkt) != kIOReturnSuccess || sResp[4] == 0) return 0;
-    uint8_t feat = sResp[4];
+    /// Resolve ReprogControlsV4 (0x1B04) on this receiver slot/direct device.
+    packet[0] = kHIDPP_Long;
+    packet[1] = deviceIndex;
+    packet[2] = 0x00;
+    packet[3] = 0x0E;
+    packet[4] = (kFeat_ReprogV4 >> 8) & 0xFF;
+    packet[5] = kFeat_ReprogV4 & 0xFF;
+    if (sendAndWait(state, packet) != kIOReturnSuccess || state->response[4] == 0) return 0;
+    uint8_t featureIndex = state->response[4];
 
-    /// 2. GetCount
-    memset(pkt, 0, 20);
-    pkt[0]=kHIDPP_Long; pkt[1]=kHIDPP_Device; pkt[2]=feat; pkt[3]=0x0E;
-    if (sendAndWait(dev, pkt) != kIOReturnSuccess) return 0;
-    int count = sResp[4];
+    /// Enumerate the control table.
+    memset(packet, 0, sizeof(packet));
+    packet[0] = kHIDPP_Long;
+    packet[1] = deviceIndex;
+    packet[2] = featureIndex;
+    packet[3] = 0x0E;
+    if (sendAndWait(state, packet) != kIOReturnSuccess) return 0;
+    int count = state->response[4];
 
-    /// 3. GetCidInfo — collect divertable CIDs
-    uint16_t todivert[32]; int ndiv = 0;
-    for (int i = 0; i < count && ndiv < 32; i++) {
-        memset(pkt, 0, 20);
-        pkt[0]=kHIDPP_Long; pkt[1]=kHIDPP_Device; pkt[2]=feat; pkt[3]=0x1E; pkt[4]=(uint8_t)i;
-        if (sendAndWait(dev, pkt) != kIOReturnSuccess) continue;
-        uint16_t cid = ((uint16_t)sResp[4]<<8)|sResp[5];
-        uint16_t tid = ((uint16_t)sResp[6]<<8)|sResp[7];
-        uint8_t flags = sResp[8];
-        if ((flags & (1<<4)) && !isNativeTID(tid)) todivert[ndiv++] = cid;
+    uint16_t dpiCIDs[8] = {0};
+    int dpiCount = 0;
+    for (int i = 0; i < count && dpiCount < 8; i++) {
+        memset(packet, 0, sizeof(packet));
+        packet[0] = kHIDPP_Long;
+        packet[1] = deviceIndex;
+        packet[2] = featureIndex;
+        packet[3] = 0x1E;
+        packet[4] = (uint8_t)i;
+        if (sendAndWait(state, packet) != kIOReturnSuccess) continue;
+
+        uint16_t cid = ((uint16_t)state->response[4] << 8) | state->response[5];
+        uint8_t flags = state->response[8];
+        if (isDPICID(cid) && (flags & (1 << 4))) dpiCIDs[dpiCount++] = cid;
     }
 
-    /// 4. Pre-register button mapping for stable numbering
-    for (int i = 0; i < ndiv; i++) buttonForCID(s, todivert[i]);
-
-    /// 5. SetCidReporting — divert
+    /// Divert only known DPI / ModeShift controls.
     int diverted = 0;
-    for (int i = 0; i < ndiv; i++) {
-        memset(pkt, 0, 20);
-        pkt[0]=kHIDPP_Long; pkt[1]=kHIDPP_Device; pkt[2]=feat; pkt[3]=0x3E;
-        pkt[4]=(todivert[i]>>8)&0xFF; pkt[5]=todivert[i]&0xFF; pkt[6]=kDivertFlags;
-        if (sendAndWait(dev, pkt) == kIOReturnSuccess) diverted++;
+    for (int i = 0; i < dpiCount; i++) {
+        uint16_t cid = dpiCIDs[i];
+        memset(packet, 0, sizeof(packet));
+        packet[0] = kHIDPP_Long;
+        packet[1] = deviceIndex;
+        packet[2] = featureIndex;
+        packet[3] = 0x3E;
+        packet[4] = (cid >> 8) & 0xFF;
+        packet[5] = cid & 0xFF;
+        packet[6] = kDivertFlags;
+        if (sendAndWait(state, packet) == kIOReturnSuccess) {
+            buttonForCID(state, cid);
+            diverted++;
+        }
+    }
+
+    if (diverted > 0) {
+        state->deviceIndex = deviceIndex;
+        state->reprogFeatureIndex = featureIndex;
     }
     return diverted;
 }
 
-@interface LogitechCIDActivator ()
-@property (nonatomic) NSMutableArray *states;
-@property (nonatomic) NSTimer *reactivateTimer;
-@end
+static int activateState(MFCIDDeviceState *state) {
+    NSNumber *pid = (__bridge NSNumber *)IOHIDDeviceGetProperty(state->hidppDevice,
+                                                                 CFSTR(kIOHIDProductIDKey));
+    if (isReceiverPID(pid.integerValue)) {
+        for (uint8_t slot = 1; slot <= kMaxReceiverSlots; slot++) {
+            int diverted = activateDeviceIndex(state, slot);
+            if (diverted > 0) return diverted;
+        }
+        return 0;
+    }
+    return activateDeviceIndex(state, kHIDPP_DirectDevice);
+}
+
+static void vendorDeviceMatched(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
+    LogitechCIDActivator *activator = (__bridge LogitechCIDActivator *)context;
+    [activator handleHIDPPDeviceAttached:device];
+}
+
+static void vendorDeviceRemoved(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
+    LogitechCIDActivator *activator = (__bridge LogitechCIDActivator *)context;
+    [activator handleHIDPPDeviceRemoved:device];
+}
 
 @implementation LogitechCIDActivator
 
 + (instancetype)shared {
-    static LogitechCIDActivator *instance = nil;
+    static LogitechCIDActivator *instance;
     static dispatch_once_t once;
     dispatch_once(&once, ^{ instance = [self new]; });
     return instance;
@@ -155,64 +289,131 @@ static int activateDevice(IOHIDDeviceRef dev, MFCIDDeviceState *s) {
     self = [super init];
     if (self) {
         _states = [NSMutableArray array];
-        /// Re-activate on system wake — firmware clears divert state on sleep
         [[[NSWorkspace sharedWorkspace] notificationCenter]
-            addObserver: self
-               selector: @selector(reactivateAll)
-                   name: NSWorkspaceDidWakeNotification
-                 object: nil];
-        /// Periodic safety net — covers firmware timeout without sleep/wake cycle
-        _reactivateTimer = [NSTimer scheduledTimerWithTimeInterval: 60 * 30
-                                                           target: self
-                                                         selector: @selector(reactivateAll)
-                                                         userInfo: nil
-                                                          repeats: YES];
+            addObserver:self
+               selector:@selector(reactivateAll)
+                   name:NSWorkspaceDidWakeNotification
+                 object:nil];
+        _reactivateTimer = [NSTimer scheduledTimerWithTimeInterval:60 * 30
+                                                            target:self
+                                                          selector:@selector(reactivateAll)
+                                                          userInfo:nil
+                                                           repeats:YES];
     }
     return self;
 }
 
-- (void)reactivateAll {
-    for (NSValue *v in _states) {
-        MFCIDDeviceState *s = (MFCIDDeviceState *)v.pointerValue;
-        activateDevice(s->device, s);
-    }
-    DDLogDebug("LogitechCIDActivator: re-activated %lu device(s)", (unsigned long)_states.count);
+- (void)start {
+    [self startHIDPPManagerIfNeeded];
 }
 
-- (void)handleDeviceAttached: (IOHIDDeviceRef)device {
+- (void)startHIDPPManagerIfNeeded {
+    if (_hidppManager) return;
+
+    _hidppManager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDManagerOptionNone);
+    NSArray *matches = @[
+        /// On macOS the combined Bolt receiver IOHIDDevice has short-report
+        /// usage 1 as its primary usage, while still carrying long report 0x11.
+        @{ @kIOHIDVendorIDKey: @(kLogitechVID),
+           @kIOHIDDeviceUsagePageKey: @(kHIDPPUSBUsagePage),
+           @kIOHIDDeviceUsageKey: @(kHIDPPUSBUsage) },
+        @{ @kIOHIDVendorIDKey: @(kLogitechVID),
+           @kIOHIDDeviceUsagePageKey: @(kHIDPPBLEUsagePage),
+           @kIOHIDDeviceUsageKey: @(kHIDPPBLEUsage) },
+    ];
+    DDLogInfo("LogitechCIDActivator: starting HID++ vendor manager");
+    IOHIDManagerSetDeviceMatchingMultiple(_hidppManager, (__bridge CFArrayRef)matches);
+    IOHIDManagerRegisterDeviceMatchingCallback(_hidppManager, vendorDeviceMatched, (__bridge void *)self);
+    IOHIDManagerRegisterDeviceRemovalCallback(_hidppManager, vendorDeviceRemoved, (__bridge void *)self);
+    IOHIDManagerScheduleWithRunLoop(_hidppManager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
+    IOReturn result = IOHIDManagerOpen(_hidppManager, kIOHIDOptionsTypeNone);
+    if (result != kIOReturnSuccess) {
+        DDLogInfo("LogitechCIDActivator: failed to open HID++ manager: 0x%x", result);
+    }
+}
+
+- (void)handleDeviceAttached:(IOHIDDeviceRef)device {
     NSNumber *vid = (__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey));
     if (vid.integerValue != kLogitechVID) return;
-    if (IOHIDDeviceOpen(device, kIOHIDOptionsTypeNone) != kIOReturnSuccess) return;
 
-    MFCIDDeviceState *s = calloc(1, sizeof(MFCIDDeviceState));
-    s->device = device;
-    IOHIDDeviceRegisterInputReportCallback(device, s->reportBuf, sizeof(s->reportBuf), inputReportCallback, s);
-    IOHIDDeviceScheduleWithRunLoop(device, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
+    _fallbackMouseDevice = device;
+    for (NSValue *value in _states) {
+        MFCIDDeviceState *state = value.pointerValue;
+        if (!state->mouseDevice) state->mouseDevice = device;
+    }
+    [self startHIDPPManagerIfNeeded];
+}
 
-    int diverted = activateDevice(device, s);
-    if (diverted > 0) {
-        NSString *name = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
-        DDLogInfo("LogitechCIDActivator: diverted %d CIDs on '%@'", diverted, name);
-        [_states addObject: [NSValue valueWithPointer: s]];
-    } else {
-        IOHIDDeviceUnscheduleFromRunLoop(device, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
-        IOHIDDeviceClose(device, kIOHIDOptionsTypeNone);
-        free(s);
+- (void)handleDeviceRemoved:(IOHIDDeviceRef)device {
+    if (_fallbackMouseDevice == device) _fallbackMouseDevice = NULL;
+    for (NSValue *value in _states) {
+        MFCIDDeviceState *state = value.pointerValue;
+        if (state->mouseDevice == device) state->mouseDevice = NULL;
     }
 }
 
-- (void)handleDeviceRemoved: (IOHIDDeviceRef)device {
-    NSValue *found = nil;
-    for (NSValue *v in _states) {
-        if (((MFCIDDeviceState *)v.pointerValue)->device == device) { found = v; break; }
+- (void)handleHIDPPDeviceAttached:(IOHIDDeviceRef)device {
+    NSString *matchedName = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
+    NSNumber *matchedPID = (__bridge NSNumber *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductIDKey));
+    DDLogInfo("LogitechCIDActivator: matched HID++ node '%@' pid=0x%lx", matchedName, (long)matchedPID.integerValue);
+    for (NSValue *value in _states) {
+        if (((MFCIDDeviceState *)value.pointerValue)->hidppDevice == device) return;
+    }
+
+    if (IOHIDDeviceOpen(device, kIOHIDOptionsTypeNone) != kIOReturnSuccess) return;
+
+    MFCIDDeviceState *state = calloc(1, sizeof(MFCIDDeviceState));
+    state->hidppDevice = device;
+    state->mouseDevice = _fallbackMouseDevice;
+    IOHIDDeviceRegisterInputReportCallback(device, state->reportBuf, sizeof(state->reportBuf),
+                                           inputReportCallback, state);
+    IOHIDDeviceScheduleWithRunLoop(device, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
+
+    int diverted = activateState(state);
+    /// The first probe can wake a sleeping receiver device without getting a
+    /// complete feature-table response. Retry briefly before giving up.
+    for (int attempt = 0; diverted == 0 && attempt < 2; attempt++) {
+        (void)CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.35, false);
+        diverted = activateState(state);
+    }
+    NSString *name = (__bridge NSString *)IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
+    if (diverted > 0) {
+        DDLogInfo("LogitechCIDActivator: diverted %d DPI control(s) on '%@' at index %u",
+                  diverted, name, state->deviceIndex);
+        [_states addObject:[NSValue valueWithPointer:state]];
+    } else {
+        DDLogInfo("LogitechCIDActivator: no divertible DPI controls found on '%@'", name);
+        IOHIDDeviceUnscheduleFromRunLoop(device, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
+        IOHIDDeviceClose(device, kIOHIDOptionsTypeNone);
+        free(state);
+    }
+}
+
+- (void)handleHIDPPDeviceRemoved:(IOHIDDeviceRef)device {
+    NSValue *found;
+    for (NSValue *value in _states) {
+        if (((MFCIDDeviceState *)value.pointerValue)->hidppDevice == device) {
+            found = value;
+            break;
+        }
     }
     if (!found) return;
-    MFCIDDeviceState *s = (MFCIDDeviceState *)found.pointerValue;
-    for (int i = 0; i < s->pressedCount; i++) injectButton(s, s->pressedCIDs[i], NO);
+
+    MFCIDDeviceState *state = found.pointerValue;
+    for (int i = 0; i < state->pressedCount; i++) injectButton(state, state->pressedCIDs[i], NO);
     IOHIDDeviceUnscheduleFromRunLoop(device, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
     IOHIDDeviceClose(device, kIOHIDOptionsTypeNone);
-    free(s);
-    [_states removeObject: found];
+    free(state);
+    [_states removeObject:found];
+}
+
+- (void)reactivateAll {
+    for (NSValue *value in _states) {
+        MFCIDDeviceState *state = value.pointerValue;
+        state->cidCount = 0;
+        state->reprogFeatureIndex = 0;
+        (void)activateState(state);
+    }
 }
 
 @end
