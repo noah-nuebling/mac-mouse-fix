@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **červenec 2026**
 
+- 🇺🇸&nbsp;Scott
 - 🇰🇬&nbsp;左钊 - "加油"
 - 🇺🇸&nbsp;Eduard&nbsp;Zhikharev
 - 🇹🇭&nbsp;Roman - "The best combo of options – and all of em out of the box, amazing!"
