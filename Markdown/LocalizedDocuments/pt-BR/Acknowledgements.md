@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **julho 2026**
 
+- 🇺🇸&nbsp;Yasser&nbsp;Ali - "Randomly found this app and each new feature I tried kept blowing my mind, mostly bc of how well they all worked! Noah is the GOAT."
 - 🇵🇱&nbsp;Artem&nbsp;Lukashenko
 - 🇩🇪&nbsp;Simon&nbsp;Mayerhofer - "Hey Noah, hoffe dir gehts gut! Freut mich zu sehen, dass deine Software so gut ankommt, ist ja ganz schön was los hier im Repo. Habe sie nun auch gebraucht (wurde mir übrigens von Claude vorgeschlagen). Ganz liebe Grüße ✌️"
 - 🇺🇸&nbsp;Scott
