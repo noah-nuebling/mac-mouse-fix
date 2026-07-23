@@ -34,6 +34,7 @@
 
 @implementation Device {
     int _nOfButtons;
+    BOOL _m720UnifyingIdentityActive;
 }
 
 #pragma mark - Init
@@ -45,6 +46,24 @@
 }
 + (Device *)strangeDevice {
     return [StrangeDevice shared];
+}
+
+#if DEBUG
++ (Device *)unitTestDevice {
+    NSCAssert(NSProcessInfo.processInfo.environment[@"MMF_M720_UNIT_TESTING"] != nil,
+              @"unitTestDevice is only valid in the hosted test process");
+    return [[Device alloc] init];
+}
+#endif
+
++ (int)effectiveButtonCount:(int)descriptorCount
+                   vendorID:(NSInteger)vendorID
+                  productID:(NSInteger)productID
+                  transport:(NSString *)transport {
+    BOOL isM720BLE = vendorID == 0x046D &&
+                     productID == 0xB015 &&
+                     [transport isEqualToString:@"Bluetooth Low Energy"];
+    return isM720BLE ? 8 : descriptorCount;
 }
 
 + (Device * _Nullable)deviceWithRegistryID:(uint64_t)registryID {
@@ -132,7 +151,13 @@
         }
         
         /// Store result
-        _nOfButtons = maxButtonNumber;
+        NSNumber *vendorID = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDVendorIDKey));
+        NSNumber *productID = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductIDKey));
+        NSString *transport = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDTransportKey));
+        _nOfButtons = [Device effectiveButtonCount:maxButtonNumber
+                                          vendorID:vendorID.integerValue
+                                         productID:productID.integerValue
+                                         transport:transport];
         
 #if IS_HELPER
         
@@ -266,6 +291,42 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     return [self.uniqueID isEqual:otherID];
 }
 
+- (BOOL)isM720BluetoothLowEnergy {
+    if (_iohidDevice == NULL) {
+        return NO;
+    }
+
+    NSNumber *vendorID = IOHIDDeviceGetProperty(_iohidDevice, CFSTR(kIOHIDVendorIDKey));
+    NSNumber *productID = IOHIDDeviceGetProperty(_iohidDevice, CFSTR(kIOHIDProductIDKey));
+    NSString *transport = IOHIDDeviceGetProperty(_iohidDevice, CFSTR(kIOHIDTransportKey));
+    return vendorID.integerValue == 0x046D &&
+           productID.integerValue == 0xB015 &&
+           [transport isEqualToString:@"Bluetooth Low Energy"];
+}
+
+- (void)setM720UnifyingIdentityActive:(BOOL)active {
+    if (_m720UnifyingIdentityActive == active) {
+        return;
+    }
+    _m720UnifyingIdentityActive = active;
+    [DeviceManager deviceMetadataDidChange:self];
+}
+
+- (uint64_t)registryEntryID {
+    if (_iohidDevice == NULL) {
+        return 0;
+    }
+
+    io_service_t service = IOHIDDeviceGetService(_iohidDevice);
+    if (service == IO_OBJECT_NULL) {
+        return 0;
+    }
+
+    uint64_t registryEntryID = 0;
+    kern_return_t result = IORegistryEntryGetRegistryEntryID(service, &registryEntryID);
+    return result == KERN_SUCCESS ? registryEntryID : 0;
+}
+
 - (BOOL)isEqual:(Device *)other {
     
     /// Notes:
@@ -307,6 +368,9 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 }
 
 - (NSString *)name {
+    if (_m720UnifyingIdentityActive) {
+        return @"M720 Triathlon";
+    }
     
     IOHIDDeviceRef device = self.iohidDevice;
     NSString *product = IOHIDDeviceGetProperty(device, CFSTR(kIOHIDProductKey));
@@ -323,7 +387,7 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
 }
 
 - (int)nOfButtons {
-    return self->_nOfButtons;
+    return _m720UnifyingIdentityActive ? 8 : self->_nOfButtons;
 }
 
 - (NSString *)description {

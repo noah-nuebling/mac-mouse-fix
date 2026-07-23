@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (MF_SWIFT_UNBRIDGED(NSArray<Device *> *))attachedDevices NS_REFINED_FOR_SWIFT;
 
 + (void)load_Manual;
-+ (void)deconfigureDevices;
++ (void)deconfigureDevicesWithCompletion:(void (^)(BOOL completedBeforeDeadline))completion;
 
 + (BOOL)devicesAreAttached;
 + (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice;
@@ -29,7 +29,21 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)someDeviceHasPointing;
 + (BOOL)someDeviceHasUsableButtons;
 + (int)maxButtonNumberAmongDevices;
++ (void)deviceMetadataDidChange:(Device *)device;
 
+#if DEBUG
++ (void)unitTestAttachDevice:(Device *)device
+             attachedDevices:(NSMutableArray<Device *> *)attachedDevices
+                      notify:(void (^)(NSArray<Device *> *devices))notify
+            controllerAttach:(void (^)(Device *device))controllerAttach
+    NS_SWIFT_NAME(unitTestAttach(device:attachedDevices:notify:controllerAttach:));
+
++ (void)unitTestRemoveDevice:(Device *)device
+             attachedDevices:(NSMutableArray<Device *> *)attachedDevices
+                     prepare:(void (^)(Device *device, void (^completion)(void)))prepare
+                      notify:(void (^)(NSArray<Device *> *devices))notify
+    NS_SWIFT_NAME(unitTestRemove(device:attachedDevices:prepare:notify:));
+#endif
 
 @end
 
