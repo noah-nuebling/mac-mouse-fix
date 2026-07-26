@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **julho 2026**
 
+- 🇺🇸&nbsp;Jeff&nbsp;Gao
 - 🇧🇷&nbsp;Bernardo&nbsp;De&nbsp;Sa&nbsp;Mota
 - 🇺🇸&nbsp;Yasser&nbsp;Ali - "Randomly found this app and each new feature I tried kept blowing my mind, mostly bc of how well they all worked! Noah is the GOAT."
 - 🇵🇱&nbsp;Artem&nbsp;Lukashenko
