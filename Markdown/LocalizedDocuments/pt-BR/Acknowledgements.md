@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **julho 2026**
 
+- 🇺🇸&nbsp;Elias&nbsp;Heffan - "This is practically an essential tool for anyone with a Mac! I’ve configured my setup to use the center button on my mouse to launch the App Switcher, and the back and forward buttons on my mouse to switch between full screen apps. Feels so natural that I forget I even have this tool installed."
 - 🇺🇸&nbsp;Esquire&nbsp;Patrick - "The trial lasted so much longer than it probably should have. So the generosity must be returned!"
 - 🇺🇸&nbsp;Jeff&nbsp;Gao
 - 🇧🇷&nbsp;Bernardo&nbsp;De&nbsp;Sa&nbsp;Mota
