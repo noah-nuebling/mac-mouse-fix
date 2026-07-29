@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **julho 2026**
 
+- 🇺🇸&nbsp;Gregg&nbsp;Bishop
 - 🇪🇸&nbsp;Martin&nbsp;Dosil&nbsp;Toja
 - 🇺🇸&nbsp;Dan&nbsp;Rubin - "Thanks for improving my Mac!"
 - 🇺🇸&nbsp;Elias&nbsp;Heffan - "This is practically an essential tool for anyone with a Mac! I’ve configured my setup to use the center button on my mouse to launch the App Switcher, and the back and forward buttons on my mouse to switch between full screen apps. Feels so natural that I forget I even have this tool installed."
