@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **julho 2026**
 
+- 🇬🇧&nbsp;Frank&nbsp;Ding - "Bought the $10 tier to show my appreciation! I’m Chinese, currently based in the UK. I heard about your generous gesture toward users in Mainland China, and it genuinely touched me. Since I’m in a position to easily pay for standard license fees, I wanted to contribute a bit more to support your work. Thank you for your kindness and for creating such a fantastic tool!"
 - 🇺🇸&nbsp;Gregg&nbsp;Bishop
 - 🇪🇸&nbsp;Martin&nbsp;Dosil&nbsp;Toja
 - 🇺🇸&nbsp;Dan&nbsp;Rubin - "Thanks for improving my Mac!"
