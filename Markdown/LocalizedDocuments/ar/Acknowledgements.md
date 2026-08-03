@@ -78,6 +78,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!
 
+**أغسطس 2026**
+
+- 🇨🇳&nbsp;Yu&nbsp;Justin
+
 **يوليو 2026**
 
 - 🇺🇸&nbsp;Vitali&nbsp;Charnahrebel

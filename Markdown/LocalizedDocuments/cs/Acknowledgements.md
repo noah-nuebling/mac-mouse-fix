@@ -72,6 +72,10 @@ Děkujeme za vaši podporu! :)
 
 Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neuvěřitelným milkšejkem**. (A někteří mi dokonce zanechali zprávu) Díky za *cukrovou nálož*!
 
+**srpen 2026**
+
+- 🇨🇳&nbsp;Yu&nbsp;Justin
+
 **červenec 2026**
 
 - 🇺🇸&nbsp;Vitali&nbsp;Charnahrebel

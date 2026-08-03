@@ -72,6 +72,10 @@ Las personas que me apoyaron gastando más del precio estándar en Mac Mouse Fix
 
 Estas personas gastaron mucho más que el precio estándar y me invitaron un **Batido increíble**. (Y algunos incluso dejaron un mensaje) ¡Gracias por el *subidón de azúcar*!
 
+**agosto 2026**
+
+- 🇨🇳&nbsp;Yu&nbsp;Justin
+
 **julio 2026**
 
 - 🇺🇸&nbsp;Vitali&nbsp;Charnahrebel
