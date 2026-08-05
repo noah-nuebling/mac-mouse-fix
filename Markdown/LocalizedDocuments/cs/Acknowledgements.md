@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **srpen 2026**
 
+- 🇭🇺&nbsp;Gábor&nbsp;Orosz
 - 🇬🇧&nbsp;Mark&nbsp;Slater
 - 🇨🇭&nbsp;Hansruedi&nbsp;Menzi - "Good Job!"
 - 🇺🇸&nbsp;Mark
