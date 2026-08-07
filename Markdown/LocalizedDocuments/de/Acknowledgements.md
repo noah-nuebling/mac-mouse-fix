@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2026**
 
+- 🇭🇺&nbsp;Frissember
 - 🇭🇺&nbsp;Gábor&nbsp;Orosz
 - 🇬🇧&nbsp;Mark&nbsp;Slater
 - 🇨🇭&nbsp;Hansruedi&nbsp;Menzi - "Good Job!"
