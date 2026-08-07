@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Ağustos 2026**
 
+- 🇩🇪&nbsp;Thilo&nbsp;Maurer
 - 🇭🇺&nbsp;Frissember
 - 🇭🇺&nbsp;Gábor&nbsp;Orosz
 - 🇬🇧&nbsp;Mark&nbsp;Slater

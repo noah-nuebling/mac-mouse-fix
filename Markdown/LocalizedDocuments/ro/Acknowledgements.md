@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **august 2026**
 
+- 🇩🇪&nbsp;Thilo&nbsp;Maurer
 - 🇭🇺&nbsp;Frissember
 - 🇭🇺&nbsp;Gábor&nbsp;Orosz
 - 🇬🇧&nbsp;Mark&nbsp;Slater

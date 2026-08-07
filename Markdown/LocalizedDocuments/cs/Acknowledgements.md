@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **srpen 2026**
 
+- 🇩🇪&nbsp;Thilo&nbsp;Maurer
 - 🇭🇺&nbsp;Frissember
 - 🇭🇺&nbsp;Gábor&nbsp;Orosz
 - 🇬🇧&nbsp;Mark&nbsp;Slater

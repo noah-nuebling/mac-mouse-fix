@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **agosto 2026**
 
+- 🇩🇪&nbsp;Thilo&nbsp;Maurer
 - 🇭🇺&nbsp;Frissember
 - 🇭🇺&nbsp;Gábor&nbsp;Orosz
 - 🇬🇧&nbsp;Mark&nbsp;Slater
