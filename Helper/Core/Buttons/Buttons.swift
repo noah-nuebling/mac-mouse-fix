@@ -7,151 +7,307 @@
 // --------------------------------------------------------------------------
 //
 
-/// TODO?: Use dispatchQueue.
-///     I'm not sure the DispatchQueue is neccesary, because all the interaction with this class are naturally spaced out in time, so there's a very low chance of race conditions)
-
 import Cocoa
 
+enum ButtonInputSource: Equatable {
+    case coreGraphics
+    case hidpp
+}
+
+struct ButtonInputContext {
+    let device: Device
+    let button: ButtonNumber
+    let downNotUp: Bool
+    let modifiers: NSDictionary
+    let source: ButtonInputSource
+    let systemEvent: CGEvent?
+
+    init(
+        device: Device,
+        button: ButtonNumber,
+        downNotUp: Bool,
+        modifiers: NSDictionary,
+        source: ButtonInputSource,
+        systemEvent: CGEvent?
+    ) {
+        self.device = device
+        self.button = button
+        self.downNotUp = downNotUp
+        self.modifiers = NSDictionary(dictionary: modifiers)
+        self.source = source
+        self.systemEvent = systemEvent
+    }
+}
+
+struct ButtonInputKey: Hashable {
+    let deviceIdentity: ObjectIdentifier
+    let button: ButtonNumber
+
+    init(device: Device, button: ButtonNumber) {
+        deviceIdentity = ObjectIdentifier(device)
+        self.button = button
+    }
+}
+
+private struct ButtonCycleSnapshot {
+    let modifiers: NSDictionary
+    let modifications: NSDictionary
+    let remaps: NSDictionary
+    let maxClickLevel: Int
+    let triggerCallback: ClickCycleTriggerCallback
+}
+
 @objc class Buttons: NSObject {
-    
-    /// Ivars
-    static var queue: DispatchQueue = DispatchQueue(label: "com.nuebling.mac-mouse-fix.buttons", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: nil)
-    static private var clickCycle = ClickCycle(buttonQueue: DispatchQueue(label: "replace this"))
-    static private var buttonModifiers = ButtonModifiers()
-    @objc static var useButtonModifiers = false
-    
-    /// Vars that we only update once per clickCycle
+    private static let queueKey = DispatchSpecificKey<Void>()
+    static let queue: DispatchQueue = {
+        let queue = DispatchQueue(
+            label: "com.nuebling.mac-mouse-fix.buttons",
+            qos: .userInteractive,
+            attributes: [],
+            autoreleaseFrequency: .inherit,
+            target: nil
+        )
+        queue.setSpecific(key: queueKey, value: ())
+        return queue
+    }()
+
+    private static var clickCycle: ClickCycle?
+    private static var buttonModifiers = ButtonModifiers()
+    private static var capturedSnapshots: [ButtonInputKey: ButtonCycleSnapshot] = [:]
+    private static var isInitialized = false
+    private static var _useButtonModifiers = false
+
+    @objc static var useButtonModifiers: Bool {
+        get { onQueue { _useButtonModifiers } }
+        set { onQueue { _useButtonModifiers = newValue } }
+    }
+
     static var modifiers = NSDictionary()
     static var modifications = NSDictionary()
     static var maxClickLevel: Int = -1
-    
-    /// Init
-    private static var isInitialized = false
-    private static func coolInitialize() {
-        isInitialized = true
-        clickCycle = ClickCycle(buttonQueue: queue)
+
+    @objc static func handleInput(
+        device: Device,
+        button: NSNumber,
+        downNotUp: Bool,
+        event: CGEvent
+    ) -> MFEventPassThroughEvaluation {
+        onQueue {
+            let context = ButtonInputContext(
+                device: device,
+                button: ButtonNumber(truncating: button),
+                downNotUp: downNotUp,
+                modifiers: NSDictionary(dictionary: Modifiers.modifiers(with: event)),
+                source: .coreGraphics,
+                systemEvent: event
+            )
+            return handleInputOnQueue(context)
+        }
     }
-    
-    /// Handling input
-    
-    @objc static func handleInput(device: Device, button: NSNumber, downNotUp mouseDown: Bool, event: CGEvent) -> MFEventPassThroughEvaluation {
-        
-        let passThroughEvaluation = kMFEventPassThroughRefusal
-        
-            /// Init
-        if !isInitialized { coolInitialize() }
-        
-        /// Get remaps
-        /// Accessing the dict like this is super slow. Casting to NSDictionary and using NSDictionary API to access it's values might fix that. See https://stackoverflow.com/questions/57555444/accessing-object-c-nsdictionary-values-in-swift-is-slow
-        let remaps = Remap.remaps
-        
-        /// Update stuff when clickCycle starts
-        
-        let clickCycleIsActive = clickCycle.isActiveFor(device: device.uniqueID(), button: button)
-        if mouseDown && !clickCycleIsActive {
-            
-            /// Update active device
-            HelperState.shared.updateActiveDevice(event: event)
-            
-            /// Update modifications
-            let remaps = Remap.remaps /// Why aren't we reusing the remaps from above?
-            self.modifiers = Modifiers.modifiers(with: event)
-            self.modifications = Remap.modifications(withModifiers: modifiers) ?? NSDictionary()
-            
-            /// Get max clickLevel
-            self.maxClickLevel = 0
-            if mouseDown {
-                self.maxClickLevel = RemapsAnalyzer.maxLevel(forButton: button, remaps: remaps, modificationsActingOnThisButton: modifications)
+
+    static func handleInput(_ context: ButtonInputContext) -> MFEventPassThroughEvaluation {
+        onQueue {
+            handleInputOnQueue(context)
+        }
+    }
+
+    @objc static func cancelInput(
+        device: Device,
+        button: NSNumber,
+        completion: @escaping () -> Void
+    ) {
+        onQueue {
+            initializeIfNeeded()
+            let key = ButtonInputKey(
+                device: device,
+                button: ButtonNumber(truncating: button)
+            )
+            capturedSnapshots.removeValue(forKey: key)
+            clickCycle?.cancel(key: key)
+            completion()
+        }
+    }
+
+    @objc static func handleButtonHasHadDirectEffect(device: Device, button: NSNumber) {
+        onQueue {
+            handleButtonHasHadDirectEffectOnQueue(device: device, button: button)
+        }
+    }
+
+    @objc static func handleButtonHasHadDirectEffect_Unsafe(device: Device, button: NSNumber) {
+        onQueue {
+            handleButtonHasHadDirectEffectOnQueue(device: device, button: button)
+        }
+    }
+
+    @objc static func handleButtonHasHadEffectAsModifier(button: NSNumber) {
+        onQueue {
+            handleButtonHasHadEffectAsModifierOnQueue(button: button)
+        }
+    }
+
+    @objc static func handleButtonHasHadEffectAsModifier_Unsafe(button: NSNumber) {
+        onQueue {
+            handleButtonHasHadEffectAsModifierOnQueue(button: button)
+        }
+    }
+
+    private static func handleInputOnQueue(
+        _ context: ButtonInputContext
+    ) -> MFEventPassThroughEvaluation {
+        initializeIfNeeded()
+
+        if context.downNotUp {
+            let snapshot = resolveSnapshot(for: context)
+            return routeResolvedInput(
+                context,
+                snapshot: snapshot,
+                updateActiveDevice: true
+            )
+        }
+
+        return routeResolvedInput(
+            context,
+            snapshot: nil,
+            updateActiveDevice: true
+        )
+    }
+
+    private static func routeResolvedInput(
+        _ context: ButtonInputContext,
+        snapshot candidateSnapshot: ButtonCycleSnapshot?,
+        updateActiveDevice: Bool
+    ) -> MFEventPassThroughEvaluation {
+        let key = ButtonInputKey(device: context.device, button: context.button)
+
+        if context.downNotUp {
+            guard let snapshot = candidateSnapshot, snapshot.maxClickLevel > 0 else {
+                return passThroughEvaluation(for: context.source, captured: false)
             }
-            
+
+            if updateActiveDevice,
+               clickCycle?.isActiveFor(device: context.device, button: context.button) != true {
+                HelperState.shared.activeDevice = context.device
+            }
+
+            capturedSnapshots[key] = snapshot
+            modifiers = snapshot.modifiers
+            modifications = snapshot.modifications
+            maxClickLevel = snapshot.maxClickLevel
+            clickCycle?.handleClick(
+                device: context.device,
+                button: context.button,
+                downNotUp: true,
+                maxClickLevel: snapshot.maxClickLevel,
+                triggerCallback: snapshot.triggerCallback
+            )
+            return passThroughEvaluation(for: context.source, captured: true)
         }
-        
-        /// Decide passthrough
-        if self.maxClickLevel == 0 {
-            return kMFEventPassThroughApproval
+
+        guard let snapshot = capturedSnapshots[key] else {
+            return passThroughEvaluation(for: context.source, captured: false)
         }
-        
-        /// Dispatch through clickCycle
-        clickCycle.handleClick(device: device, button: ButtonNumber(truncating: button), downNotUp: mouseDown, maxClickLevel: maxClickLevel,
-                               triggerCallback: { triggerPhase, clickLevel, device, buttonNumber, onRelease in
-            ///
-            /// Update modifiers
-            ///
-            
-            if useButtonModifiers {
-                
-                if triggerPhase == .press {
-                    self.buttonModifiers.update(withButton: MFMouseButtonNumber(button.uint32Value), clickLevel: clickLevel, downNotUp: true)
-                    onRelease.append {
-                        self.buttonModifiers.update(withButton: MFMouseButtonNumber(button.uint32Value), clickLevel: clickLevel, downNotUp: false)
-                    }
+
+        clickCycle?.handleClick(
+            device: context.device,
+            button: context.button,
+            downNotUp: false,
+            maxClickLevel: snapshot.maxClickLevel,
+            triggerCallback: snapshot.triggerCallback
+        )
+        capturedSnapshots.removeValue(forKey: key)
+        return passThroughEvaluation(for: context.source, captured: true)
+    }
+
+    private static func resolveSnapshot(for context: ButtonInputContext) -> ButtonCycleSnapshot {
+        let button = NSNumber(value: context.button)
+        let resolvedModifiers = NSDictionary(dictionary: context.modifiers)
+        let resolvedRemaps = NSDictionary(dictionary: Remap.remaps)
+        let resolvedModifications = NSDictionary(
+            dictionary: Remap.modifications(withModifiers: resolvedModifiers) ?? NSDictionary()
+        )
+        let resolvedMaxClickLevel = RemapsAnalyzer.maxLevel(
+            forButton: button,
+            remaps: resolvedRemaps,
+            modificationsActingOnThisButton: resolvedModifications
+        )
+
+        return ButtonCycleSnapshot(
+            modifiers: resolvedModifiers,
+            modifications: resolvedModifications,
+            remaps: resolvedRemaps,
+            maxClickLevel: resolvedMaxClickLevel,
+            triggerCallback: productionTriggerCallback(
+                button: button,
+                modifications: resolvedModifications,
+                remaps: resolvedRemaps
+            )
+        )
+    }
+
+    private static func productionTriggerCallback(
+        button: NSNumber,
+        modifications: NSDictionary,
+        remaps: NSDictionary
+    ) -> ClickCycleTriggerCallback {
+        { triggerPhase, clickLevel, device, buttonNumber, onRelease in
+            if useButtonModifiers, triggerPhase == .press {
+                buttonModifiers.update(
+                    withButton: MFMouseButtonNumber(button.uint32Value),
+                    clickLevel: clickLevel,
+                    downNotUp: true
+                )
+                onRelease.append {
+                    buttonModifiers.update(
+                        withButton: MFMouseButtonNumber(button.uint32Value),
+                        clickLevel: clickLevel,
+                        downNotUp: false
+                    )
                 }
             }
-            
-            ///
-            /// Send triggers
-            ///
-            
-            /// Debug
-            DDLogDebug("triggerCallback - lvl: \(clickLevel), phase: \(triggerPhase), btn: \(buttonNumber), dev: \"\(device.name())\"")
-            
-            /// Asses 'mappingLandscape'
-            ///     In theory we only have to do this on mouse down, because on mouse up the clickLevel doesn't change, and so no params for `assessMappingLandscape()` change
-            
+
+            DDLogDebug(
+                "triggerCallback - lvl: \(clickLevel), phase: \(triggerPhase), " +
+                    "btn: \(buttonNumber), dev: \"\(device.name())\""
+            )
+
             var clickActionOfThisLevelExists: ObjCBool = false
             var effectForMouseDownStateOfThisLevelExists: ObjCBool = false
             var effectOfGreaterLevelExists: ObjCBool = false
-            
-            RemapsAnalyzer.assessMappingLandscape(withButton: button as NSNumber, level: clickLevel as NSNumber, modificationsActingOnThisButton: modifications, remaps: remaps, thisClickDoBe: &clickActionOfThisLevelExists, thisDownDoBe: &effectForMouseDownStateOfThisLevelExists, greaterDoBe: &effectOfGreaterLevelExists)
-            
-            /// Create trigger -> action map based on mappingLandscape
-            
-            var map: [ClickCycleTriggerPhase: (String, MFActionPhase)] = Dictionary(minimumCapacity: 3)
-            
-            /// Map for click actions
+            RemapsAnalyzer.assessMappingLandscape(
+                withButton: button,
+                level: clickLevel as NSNumber,
+                modificationsActingOnThisButton: modifications,
+                remaps: remaps,
+                thisClickDoBe: &clickActionOfThisLevelExists,
+                thisDownDoBe: &effectForMouseDownStateOfThisLevelExists,
+                greaterDoBe: &effectOfGreaterLevelExists
+            )
+
+            var map: [ClickCycleTriggerPhase: (String, MFActionPhase)] = [:]
             if clickActionOfThisLevelExists.boolValue {
                 if effectOfGreaterLevelExists.boolValue {
-                    map[.levelExpired]          = ("click", kMFActionPhaseCombined)
+                    map[.levelExpired] = ("click", kMFActionPhaseCombined)
                 } else if effectForMouseDownStateOfThisLevelExists.boolValue {
-                    map[.release]               = ("click", kMFActionPhaseCombined)
-//                    map[.releaseFromHold]       = ("click", kMFActionPhaseCombined)
+                    map[.release] = ("click", kMFActionPhaseCombined)
                 } else {
-                    map[.press]                 = ("click", kMFActionPhaseStart)
+                    map[.press] = ("click", kMFActionPhaseStart)
                 }
             }
-            
-            /// Map for hold actions
             if effectForMouseDownStateOfThisLevelExists.boolValue {
-                map[.hold]                  = ("hold", kMFActionPhaseStart)
+                map[.hold] = ("hold", kMFActionPhaseStart)
             }
-            
-            /// Get action for current trigger
-            ///     This code is horrible to write in Swift. Deal with remapsDict in Objc whenever possible
-            
-            /// Get actionArray
+
             guard
                 let (duration, startOrEnd) = map[triggerPhase],
-//                let m1 = modifications[button] as? [AnyHashable: Any],
-                let m1 = modifications.object(forKey: button) as? NSDictionary,
-//                let m2 = m1[clickLevel as NSNumber] as? [AnyHashable: Any],
-                let m2 = m1.object(forKey: clickLevel) as? NSDictionary,
-//                let m3 = m2[duration],
-                let actionArray = m2.object(forKey: duration) as? NSArray /// Not nil -> a click/hold action does exist for this button + level + duration
-//                let actionArray = m3 as? [[AnyHashable: Any]]
+                let levelMap = modifications.object(forKey: button) as? NSDictionary,
+                let durationMap = levelMap.object(forKey: clickLevel) as? NSDictionary,
+                let actionArray = durationMap.object(forKey: duration) as? NSArray
             else {
-                return /// Return if there's no action array to send
+                return
             }
-            
-            /// Add modifiers to actionArray for addMode. See Remap -> addMode for context
-            ///     Edit: We don't need this anymore now that we're using the addModeSwizzler
-//            if actionArray[0][kMFActionDictKeyType] as! String == kMFActionDictTypeAddModeFeedback {
-//                actionArray[0][kMFRemapsKeyModificationPrecondition] = self.modifiers
-//            }
-            
-            /// Notify TrialCounter.swift
+
             TrialCounter.shared.handleUse()
-            
-            /// Execute actionArray
             if startOrEnd == kMFActionPhaseCombined {
                 Actions.executeActionArray(actionArray, phase: kMFActionPhaseCombined)
             } else if startOrEnd == kMFActionPhaseStart {
@@ -161,60 +317,100 @@ import Cocoa
                     Actions.executeActionArray(actionArray, phase: kMFActionPhaseEnd)
                 }
             }
-            
-            /// Notify triggering button
-            ///     For levelExpired and .releaseFromHold, we know that the clickCycle will be killed right after this callback.
-            ///     In that case it might not be necessary to notify the triggering button.
-            ///     Edit: We also want to kill the triggering button as a modifier though
-            self.handleButtonHasHadDirectEffect_Unsafe(device: device, button: button)
-            
-            /// Notify modifiers
-            ///     (Probably unnecessary, because the only modifiers that can be "deactivated" are buttons. And since there's only one clickCycle, any buttons modifying the current one should already be zombified)
-            ///
+
+            handleButtonHasHadDirectEffect_Unsafe(device: device, button: button)
             Modifiers.handleModificationHasBeenUsed()
-        })
-        
-        return passThroughEvaluation
+        }
     }
-    
-    
-    /// Effect feedback
-    
-    @objc static func handleButtonHasHadDirectEffect(device: Device, button: NSNumber) {
-        handleButtonHasHadDirectEffect_Unsafe(device: device, button: button)
+
+    private static func passThroughEvaluation(
+        for source: ButtonInputSource,
+        captured: Bool
+    ) -> MFEventPassThroughEvaluation {
+        guard !captured, source == .coreGraphics else {
+            return kMFEventPassThroughRefusal
+        }
+        return kMFEventPassThroughApproval
     }
-    
-    @objc static func handleButtonHasHadDirectEffect_Unsafe(device: Device, button: NSNumber) {
-        /// Validate
-        /// Might wanna `assert(clickCycleIsActive)`
+
+    private static func handleButtonHasHadDirectEffectOnQueue(
+        device: Device,
+        button: NSNumber
+    ) {
         assert(isInitialized)
-        /// Do stuff
-        if self.clickCycle.isActiveFor(device: device.uniqueID(), button: button) {
-            self.clickCycle.kill()
+        if clickCycle?.isActiveFor(
+            device: device,
+            button: ButtonNumber(truncating: button)
+        ) == true {
+            clickCycle?.kill()
         }
         if useButtonModifiers {
-            self.buttonModifiers.killButton(MFMouseButtonNumber(rawValue: button.uint32Value)) /// Not sure abt this
+            buttonModifiers.killButton(MFMouseButtonNumber(rawValue: button.uint32Value))
         }
     }
-    
-    @objc static func handleButtonHasHadEffectAsModifier(button: NSNumber) {
-        handleButtonHasHadEffectAsModifier_Unsafe(button: button)
-    }
-    
-    @objc static func handleButtonHasHadEffectAsModifier_Unsafe(button: NSNumber) {
-        /// Validate
-        /// Might wanna `assert(buttonIsHeld)`
+
+    private static func handleButtonHasHadEffectAsModifierOnQueue(button: NSNumber) {
         assert(isInitialized)
-        /// Do stuff
-        if self.clickCycle.isActiveFor(button: button) {
-            self.clickCycle.kill()
+        if clickCycle?.isActiveFor(button: button) == true {
+            clickCycle?.kill()
         }
     }
-    
-    /// Interface for accessing submodules
-    
-//    @objc static func getActiveButtonModifiers_Unsafe(device: Device) -> [[String: Int]] {
-//        return modifierManager.getActiveButtonModifiersForDevice(device: device)
-//    }
-    
+
+    private static func initializeIfNeeded() {
+        guard !isInitialized else { return }
+        clickCycle = ClickCycle(buttonQueue: queue)
+        isInitialized = true
+    }
+
+    private static func onQueue<T>(_ body: () -> T) -> T {
+        if DispatchQueue.getSpecific(key: queueKey) != nil {
+            return body()
+        }
+        return queue.sync(execute: body)
+    }
+
+#if DEBUG
+    static func unitTestReset(scheduler: HIDPPScheduler) {
+        requireUnitTestRuntime()
+        onQueue {
+            clickCycle = ClickCycle(buttonQueue: queue, scheduler: scheduler)
+            capturedSnapshots.removeAll()
+            modifiers = NSDictionary()
+            modifications = NSDictionary()
+            maxClickLevel = -1
+            useButtonModifiers = false
+            isInitialized = true
+        }
+    }
+
+    static func unitTestHandleResolved(
+        _ context: ButtonInputContext,
+        maxClickLevel: Int,
+        triggerCallback: @escaping ClickCycleTriggerCallback
+    ) -> MFEventPassThroughEvaluation {
+        requireUnitTestRuntime()
+        return onQueue {
+            initializeIfNeeded()
+            let snapshot = ButtonCycleSnapshot(
+                modifiers: NSDictionary(dictionary: context.modifiers),
+                modifications: NSDictionary(),
+                remaps: NSDictionary(),
+                maxClickLevel: maxClickLevel,
+                triggerCallback: triggerCallback
+            )
+            return routeResolvedInput(
+                context,
+                snapshot: snapshot,
+                updateActiveDevice: false
+            )
+        }
+    }
+
+    private static func requireUnitTestRuntime() {
+        precondition(
+            ProcessInfo.processInfo.environment["MMF_M720_UNIT_TESTING"] != nil,
+            "Button test seams are only valid in the hosted test process"
+        )
+    }
+#endif
 }

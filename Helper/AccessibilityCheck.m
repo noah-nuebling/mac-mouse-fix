@@ -34,6 +34,9 @@
 /// Load
 
 + (void)load {
+    if (NSProcessInfo.processInfo.environment[@"MMF_M720_UNIT_TESTING"] != nil) {
+        return;
+    }
     
     /// This is the main entry point of the app
     
