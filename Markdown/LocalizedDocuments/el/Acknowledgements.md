@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **Αύγουστος 2026**
 
+- 🇬🇧&nbsp;Shane&nbsp;Mclean
 - 🇩🇪&nbsp;Thilo&nbsp;Maurer
 - 🇭🇺&nbsp;Frissember
 - 🇭🇺&nbsp;Gábor&nbsp;Orosz
