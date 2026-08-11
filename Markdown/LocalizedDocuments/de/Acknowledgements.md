@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2026**
 
+- 🇪🇸&nbsp;Https://Github&nbsp;Com/Dtoniolo - "Awesome app!"
 - 🇺🇸&nbsp;Martin&nbsp;Destagnol
 - 🇺🇸&nbsp;Sean&nbsp;Dunn
 - 🇬🇧&nbsp;Shane&nbsp;Mclean

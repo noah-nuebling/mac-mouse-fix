@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Ağustos 2026**
 
+- 🇪🇸&nbsp;Https://Github&nbsp;Com/Dtoniolo - "Awesome app!"
 - 🇺🇸&nbsp;Martin&nbsp;Destagnol
 - 🇺🇸&nbsp;Sean&nbsp;Dunn
 - 🇬🇧&nbsp;Shane&nbsp;Mclean

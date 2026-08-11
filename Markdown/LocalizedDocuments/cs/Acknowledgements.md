@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **srpen 2026**
 
+- 🇪🇸&nbsp;Https://Github&nbsp;Com/Dtoniolo - "Awesome app!"
 - 🇺🇸&nbsp;Martin&nbsp;Destagnol
 - 🇺🇸&nbsp;Sean&nbsp;Dunn
 - 🇬🇧&nbsp;Shane&nbsp;Mclean

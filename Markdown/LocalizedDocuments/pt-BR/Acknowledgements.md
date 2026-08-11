@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **agosto 2026**
 
+- 🇪🇸&nbsp;Https://Github&nbsp;Com/Dtoniolo - "Awesome app!"
 - 🇺🇸&nbsp;Martin&nbsp;Destagnol
 - 🇺🇸&nbsp;Sean&nbsp;Dunn
 - 🇬🇧&nbsp;Shane&nbsp;Mclean

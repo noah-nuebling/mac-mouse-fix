@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **agosto 2026**
 
+- 🇪🇸&nbsp;Https://Github&nbsp;Com/Dtoniolo - "Awesome app!"
 - 🇺🇸&nbsp;Martin&nbsp;Destagnol
 - 🇺🇸&nbsp;Sean&nbsp;Dunn
 - 🇬🇧&nbsp;Shane&nbsp;Mclean
