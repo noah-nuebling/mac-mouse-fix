@@ -80,6 +80,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Ağustos 2026**
 
+- 🇬🇧&nbsp;Jose&nbsp;Luis&nbsp;Montoro&nbsp;Estevez
 - 🇬🇧&nbsp;Theo&nbsp;B&nbsp;Harvey - "🤍🕊️"
 - 🇺🇸&nbsp;Bill&nbsp;Wolfe
 - 🇺🇸&nbsp;Carlos&nbsp;D

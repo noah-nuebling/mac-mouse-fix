@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **agosto 2026**
 
+- 🇬🇧&nbsp;Jose&nbsp;Luis&nbsp;Montoro&nbsp;Estevez
 - 🇬🇧&nbsp;Theo&nbsp;B&nbsp;Harvey - "🤍🕊️"
 - 🇺🇸&nbsp;Bill&nbsp;Wolfe
 - 🇺🇸&nbsp;Carlos&nbsp;D
