@@ -201,8 +201,17 @@ class GeneralTabController: NSViewController {
                         if #available(macOS 13.0, *), error.domain == "SMAppServiceErrorDomain", error.code == 1 {
                             
                             Toasts.showSimpleToast(name: "k-is-disabled-toast")
+                        } else {
+                            
+                            /// Enabling failed with an unexpected error
+                            /// Notes:
+                            /// - We used to hit an `assert(false)` here. That crashed Debug builds whenever enabling failed in any way other than SMAppServiceErrorDomain code 1. E.g. a Debug build running straight out of DerivedData is ad-hoc signed and SMAppService will refuse to register its helper (likely kSMErrorInvalidSignature). First observed on macOS 27 beta.
+                            /// - Now we log the error and show the same user feedback as for known failures instead of crashing.
+                            DDLogError("GeneralTabController - Failed to enable helper. Error domain: \(error.domain), code: \(error.code), userInfo: \(error.userInfo)")
+                            if #available(macOS 13.0, *) {
+                                Toasts.showSimpleToast(name: "k-is-disabled-toast")
+                            }
                         }
-                        else { assert(false) }
                     }
                 })
                 
