@@ -124,6 +124,13 @@ static NSArray *getDragEffectsTable() {
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
             }
         },
+        @{
+            @"ui": MFLocalizedString(@"drag-effect.media-control", @""),
+            @"tool": MFLocalizedString(@"drag-effect.media-control.hint", @"") ,
+            @"dict": @{
+                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeMediaControl,
+            }
+        },
 //        separatorEffectsTableEntry(),
 //        @{
 ////          @"ui": [NSString stringWithFormat:@"%@ Click and Drag", [UIStrings getButtonString:3]],
