@@ -109,6 +109,12 @@
     CFRunLoopSourceRef runLoopSource = CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, localPort, 0);
     CFRunLoopAddSource(CFRunLoopGetMain(), runLoopSource, kCFRunLoopCommonModes);
     CFRelease(runLoopSource);
+
+    #if IS_MAIN_APP
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [M720CaptureUIController.shared refreshCaptureStates];
+        });
+    #endif
 }
 
 NSString *CFMessagePortSendRequest_ErrorCode_ToString(SInt32 errorCode) {
@@ -161,8 +167,17 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     
     #if IS_MAIN_APP
         
+        xxx(@"addModePreparationResult") {
+            [MainAppState.shared.buttonTabController handleAddModePreparationResultWithPayload:payload];
+        }
+        xxx(@"addModeStateChanged") {
+            [MainAppState.shared.buttonTabController handleAddModeStateChangedWithPayload:payload];
+        }
         xxx(@"addModeFeedback") {
-            [MainAppState.shared.buttonTabController handleAddModeFeedbackWithPayload:(NSDictionary *)payload];
+            [MainAppState.shared.buttonTabController handleAddModeFeedbackWithPayload:payload];
+        }
+        xxx(@"m720CaptureStateChanged") {
+            [M720CaptureUIController.shared handleCaptureStateChangedWithPayload:payload];
         }
         xxx(@"keyCaptureModeFeedback") {
             [KeyCaptureView handleKeyCaptureModeFeedbackWithPayload:(NSDictionary *)payload isSystemDefinedEvent:NO];
@@ -178,6 +193,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
             BOOL isStrange = [MessagePortUtility.shared checkHelperStrangenessReactWithPayload: payload];
             if (!isStrange) {
                 [AuthorizeAccessibilityView add];
+                [M720CaptureUIController.shared refreshCaptureStates];
             }
         }
         
@@ -199,6 +215,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
                 
                 /// Notify rest of the app
                 [EnabledState.shared reactToDidBecomeEnabled];
+                [M720CaptureUIController.shared refreshCaptureStates];
             }
             
         }
@@ -239,13 +256,26 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
             BOOL isTrusted = [AccessibilityCheck checkAccessibilityAndUpdateSystemSettings];
             response = @(isTrusted);
         }
-        xxx(@"enableAddMode") {
-            BOOL success = [Remap enableAddMode];
-            response = @(success);
+        xxx(@"prepareAddMode") {
+            response = [M720AddModeCoordinator.shared prepareWithPayload:payload];
         }
-        xxx(@"disableAddMode") {
-            BOOL success = [Remap disableAddMode];
-            response = @(success);
+        xxx(@"cancelAddModePreparation") {
+            response = [M720AddModeCoordinator.shared cancelPreparationWithPayload:payload];
+        }
+        xxx(@"renewAddModeLease") {
+            response = [M720AddModeCoordinator.shared renewLeaseWithPayload:payload];
+        }
+        xxx(@"finishAddMode") {
+            response = [M720AddModeCoordinator.shared finishAddModeWithPayload:payload];
+        }
+        xxx(@"retryM720Capture") {
+            response = [M720AddModeCoordinator.shared retryCaptureWithPayload:payload];
+        }
+        xxx(@"getM720CaptureStates") {
+            response = [M720AddModeCoordinator.shared captureStatesWithPayload:payload];
+        }
+        xxx(@"getM720DiagnosticState") {
+            response = [M720AddModeCoordinator.shared diagnosticStateWithPayload:payload];
         }
         xxx(@"enableKeyCaptureMode") {
             [KeyCaptureMode enable];
@@ -290,6 +320,14 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         return NULL;
     }
 }
+
+#if DEBUG
++ (NSData *_Nullable)dispatchArchivedMessageDataForTesting:(NSData *)data {
+    NSParameterAssert(NSThread.isMainThread);
+    CFDataRef response = didReceiveMessage(NULL, 0x420666, (__bridge CFDataRef)data, NULL);
+    return CFBridgingRelease(response);
+}
+#endif
 
 + (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject<NSCoding> * _Nullable)payload toRemotePort:(NSString *)remotePortName waitForReply:(BOOL)waitForReply {
     
@@ -342,17 +380,20 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     /// Release port
     CFRelease(remotePort);
     
+    /// Decode response
+    NSObject *response = nil;
+    if (status == 0 && responseData != NULL && waitForReply) {
+        response = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)responseData];
+    }
+    if (responseData != NULL) {
+        CFRelease(responseData);
+    }
+
     /// Handle errors
     ///     Should we retry on timeout? [Oct 2025]
     if (status != 0) {
         DDLogError("Non-zero CFMessagePortSendRequest return: %@", CFMessagePortSendRequest_ErrorCode_ToString(status));
         return nil;
-    }
-    
-    /// Decode response
-    NSObject *response = nil;
-    if (responseData != NULL && waitForReply) {
-        response = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)responseData];
     }
     
     /// Return response

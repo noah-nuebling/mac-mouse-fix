@@ -1,6 +1,116 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "m720.conflict.body" : {
+      "comment" : "Explains how another Logitech utility can prevent Mac Mouse Fix from capturing M720 buttons.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix can’t capture the M720’s extra buttons while Logi Options+ controls them. Quit Logi Options+, then retry."
+          }
+        }
+      }
+    },
+    "m720.conflict.not-now" : {
+      "comment" : "Dismisses the M720 capture-conflict alert without retrying.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not Now"
+          }
+        }
+      }
+    },
+    "m720.conflict.retry" : {
+      "comment" : "Retries taking control of the Logitech M720 extra buttons.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retry"
+          }
+        }
+      }
+    },
+    "m720.conflict.title" : {
+      "comment" : "Title of the alert shown when another application controls the M720 buttons.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logi Options+ Is Blocking Your M720"
+          }
+        }
+      }
+    },
+    "m720.error.disconnected" : {
+      "comment" : "Shown when the M720 disconnected or its previous device token became stale.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The M720 is no longer connected. Reconnect it and try again."
+          }
+        }
+      }
+    },
+    "m720.error.ok" : {
+      "comment" : "Dismisses an M720 capture error alert.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "m720.error.protocol" : {
+      "comment" : "Generic fallback for an unexpected M720 communication protocol failure.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix couldn’t communicate with the M720 because of an unexpected protocol error. Try again."
+          }
+        }
+      }
+    },
+    "m720.error.timeout" : {
+      "comment" : "Shown when preparing M720 button capture times out.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The M720 didn’t respond in time. Try again."
+          }
+        }
+      }
+    },
+    "m720.error.title" : {
+      "comment" : "Title of a non-conflict M720 capture error alert.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn’t Prepare the M720"
+          }
+        }
+      }
+    },
+    "m720.error.unsupported" : {
+      "comment" : "Shown when an M720 does not support the required HID++ controls.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This M720 doesn’t support the controls Mac Mouse Fix needs for its extra buttons."
+          }
+        }
+      }
+    },
     "accessibility.settings-link.pre-ventura" : {
       "comment" : "Will be used in a context like this: \n   1. Open 'Security & Privacy' Preferences\n   2. Switch on 'Mac Mouse Fix Helper'\n\nBackground info: 'System Preferences' were renamed to 'System Settings' in macOS Ventura. The translation for Ventura and later is defined by 46z-Nd-nh4.title and other entries in AuthorizeAccessibilityView. This here is the string for earlier versions.",
       "localizations" : {
