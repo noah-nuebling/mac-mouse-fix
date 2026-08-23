@@ -1119,7 +1119,168 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="999" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N4F-RB-d7a" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                 <rect key="frame" x="30" y="20" width="350" height="439"/>
                                 <subviews>
-                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ew8-Wm-Z08">
+                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="5" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="1000" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Group-001" userLabel="Scroll Wheel Settings">
+                                        <rect key="frame" x="0.0" y="331" width="350" height="84"/>
+                                        <subviews>
+                                            <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Title-001">
+                                                <rect key="frame" x="0.0" y="64" width="350" height="16"/>
+                                                <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Scroll Wheel" id="ScW-Title-Cell-001">
+                                                    <font key="font" metaFont="smallSystem"/>
+                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="10" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Header-001" userLabel="Scroll Wheel Headers">
+                                                <rect key="frame" x="0.0" y="42" width="280" height="16"/>
+                                                <subviews>
+                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Header-Axis-001">
+                                                        <rect key="frame" x="0.0" y="0.0" width="70" height="16"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="70" id="ScW-Header-Axis-Width"/>
+                                                        </constraints>
+                                                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Axis" id="ScW-Header-Axis-Cell-001">
+                                                            <font key="font" metaFont="smallSystem"/>
+                                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Header-Smooth-001">
+                                                        <rect key="frame" x="80" y="0.0" width="94" height="16"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="94" id="ScW-Header-Smooth-Width"/>
+                                                        </constraints>
+                                                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="center" title="Smoothness" id="ScW-Header-Smooth-Cell-001">
+                                                            <font key="font" metaFont="smallSystem"/>
+                                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Header-Speed-001">
+                                                        <rect key="frame" x="184" y="0.0" width="96" height="16"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="96" id="ScW-Header-Speed-Width"/>
+                                                        </constraints>
+                                                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" alignment="center" title="Speed" id="ScW-Header-Speed-Cell-001">
+                                                            <font key="font" metaFont="smallSystem"/>
+                                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="10" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Vertical-001" userLabel="Vertical Scroll Settings">
+                                                <rect key="frame" x="0.0" y="20" width="280" height="24"/>
+                                                <subviews>
+                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Vertical-Label-001">
+                                                        <rect key="frame" x="0.0" y="4" width="70" height="16"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="70" id="ScW-Vertical-Label-Width"/>
+                                                        </constraints>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Vertical" id="ScW-Vertical-Label-Cell-001">
+                                                            <font key="font" usesAppearanceFont="YES"/>
+                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Vertical-Smooth-001">
+                                                        <rect key="frame" x="80" y="0.0" width="94" height="24"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="94" id="ScW-Vertical-Smooth-Width"/>
+                                                        </constraints>
+                                                        <popUpButtonCell key="cell" type="push" title="High" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ScW-Vertical-Smooth-High">
+                                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="message"/>
+                                                            <menu key="menu" id="ScW-Vertical-Smooth-Menu">
+                                                                <items>
+                                                                    <menuItem title="Off" identifier="off" id="ScW-Vertical-Smooth-Off"/>
+                                                                    <menuItem title="Low" identifier="low" id="ScW-Vertical-Smooth-Low"/>
+                                                                    <menuItem title="Regular" identifier="regular" id="ScW-Vertical-Smooth-Regular"/>
+                                                                    <menuItem title="High" state="on" identifier="high" id="ScW-Vertical-Smooth-High"/>
+                                                                </items>
+                                                            </menu>
+                                                        </popUpButtonCell>
+                                                        <accessibility identifier="axScrollingSmoothnessButton"/>
+                                                    </popUpButton>
+                                                    <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Vertical-Speed-001">
+                                                        <rect key="frame" x="184" y="0.0" width="96" height="24"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="96" id="ScW-Vertical-Speed-Width"/>
+                                                        </constraints>
+                                                        <popUpButtonCell key="cell" type="push" title="macOS" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ScW-Vertical-Speed-System">
+                                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="message"/>
+                                                            <menu key="menu" id="ScW-Vertical-Speed-Menu">
+                                                                <items>
+                                                                    <menuItem title="macOS" state="on" identifier="system" id="ScW-Vertical-Speed-System"/>
+                                                                    <menuItem isSeparatorItem="YES" id="ScW-Vertical-Speed-Separator"/>
+                                                                    <menuItem title="Low" identifier="low" id="ScW-Vertical-Speed-Low"/>
+                                                                    <menuItem title="Medium" identifier="medium" id="ScW-Vertical-Speed-Medium"/>
+                                                                    <menuItem title="High" identifier="high" id="ScW-Vertical-Speed-High"/>
+                                                                </items>
+                                                            </menu>
+                                                        </popUpButtonCell>
+                                                        <accessibility identifier="axScrollingSpeedButton"/>
+                                                    </popUpButton>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="10" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Horizontal-001" userLabel="Horizontal Scroll Settings">
+                                                <rect key="frame" x="0.0" y="0.0" width="280" height="24"/>
+                                                <subviews>
+                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Horizontal-Label-001">
+                                                        <rect key="frame" x="0.0" y="4" width="70" height="16"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="70" id="ScW-Horizontal-Label-Width"/>
+                                                        </constraints>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Horizontal" id="ScW-Horizontal-Label-Cell-001">
+                                                            <font key="font" usesAppearanceFont="YES"/>
+                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Horizontal-Smooth-001">
+                                                        <rect key="frame" x="80" y="0.0" width="94" height="24"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="94" id="ScW-Horizontal-Smooth-Width"/>
+                                                        </constraints>
+                                                        <popUpButtonCell key="cell" type="push" title="High" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ScW-Horizontal-Smooth-High">
+                                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="message"/>
+                                                            <menu key="menu" id="ScW-Horizontal-Smooth-Menu">
+                                                                <items>
+                                                                    <menuItem title="Off" identifier="off" id="ScW-Horizontal-Smooth-Off"/>
+                                                                    <menuItem title="Low" identifier="low" id="ScW-Horizontal-Smooth-Low"/>
+                                                                    <menuItem title="Regular" identifier="regular" id="ScW-Horizontal-Smooth-Regular"/>
+                                                                    <menuItem title="High" state="on" identifier="high" id="ScW-Horizontal-Smooth-High"/>
+                                                                </items>
+                                                            </menu>
+                                                        </popUpButtonCell>
+                                                        <accessibility identifier="axScrollingHorizontalSmoothnessButton"/>
+                                                    </popUpButton>
+                                                    <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Horizontal-Speed-001">
+                                                        <rect key="frame" x="184" y="0.0" width="96" height="24"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="96" id="ScW-Horizontal-Speed-Width"/>
+                                                        </constraints>
+                                                        <popUpButtonCell key="cell" type="push" title="macOS" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="ScW-Horizontal-Speed-System">
+                                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="message"/>
+                                                            <menu key="menu" id="ScW-Horizontal-Speed-Menu">
+                                                                <items>
+                                                                    <menuItem title="macOS" state="on" identifier="system" id="ScW-Horizontal-Speed-System"/>
+                                                                    <menuItem isSeparatorItem="YES" id="ScW-Horizontal-Speed-Separator"/>
+                                                                    <menuItem title="Low" identifier="low" id="ScW-Horizontal-Speed-Low"/>
+                                                                    <menuItem title="Medium" identifier="medium" id="ScW-Horizontal-Speed-Medium"/>
+                                                                    <menuItem title="High" identifier="high" id="ScW-Horizontal-Speed-High"/>
+                                                                </items>
+                                                            </menu>
+                                                        </popUpButtonCell>
+                                                        <accessibility identifier="axScrollingHorizontalSpeedButton"/>
+                                                    </popUpButton>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" hidden="YES" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ew8-Wm-Z08">
                                         <rect key="frame" x="0.0" y="415" width="181" height="24"/>
                                         <subviews>
                                             <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="FCc-U0-c29" userLabel="Smoothness:">
@@ -1258,7 +1419,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                             <constraint firstItem="dvw-oy-SUP" firstAttribute="top" secondItem="PDb-87-6bc" secondAttribute="top" constant="8" id="WIT-yM-IZV"/>
                                         </constraints>
                                     </customView>
-                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ajf-ff-OPq">
+                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" hidden="YES" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ajf-ff-OPq">
                                         <rect key="frame" x="0.0" y="257" width="147" height="24"/>
                                         <subviews>
                                             <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="T0R-D1-tZu">
@@ -1315,7 +1476,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
-                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hSm-Stack-001" userLabel="Horizontal Smoothness Row">
+                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" hidden="YES" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hSm-Stack-001" userLabel="Horizontal Smoothness Row">
                                         <rect key="frame" x="0.0" y="203" width="205" height="24"/>
                                         <subviews>
                                             <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="hSm-Label-001">
@@ -1344,7 +1505,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                             </popUpButton>
                                         </subviews>
                                     </stackView>
-                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hSp-Stack-001" userLabel="Horizontal Speed Row">
+                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" hidden="YES" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hSp-Stack-001" userLabel="Horizontal Speed Row">
                                         <rect key="frame" x="0.0" y="177" width="192" height="24"/>
                                         <subviews>
                                             <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="hSp-Label-001">
@@ -1748,8 +1909,8 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                     </attributedString>
                     <connections>
                         <outlet property="horizontalModField" destination="PpE-2r-BrM" id="sxE-uX-0zf"/>
-                        <outlet property="horizontalSmoothPicker" destination="hSm-Picker-001" id="hSm-Outlet-001"/>
-                        <outlet property="horizontalSpeedPicker" destination="hSp-Picker-001" id="hSp-Outlet-001"/>
+                        <outlet property="horizontalSmoothPicker" destination="ScW-Horizontal-Smooth-001" id="ScW-Horizontal-Smooth-Outlet"/>
+                        <outlet property="horizontalSpeedPicker" destination="ScW-Horizontal-Speed-001" id="ScW-Horizontal-Speed-Outlet"/>
                         <outlet property="masterStack" destination="N4F-RB-d7a" id="l0H-83-1J7"/>
                         <outlet property="preciseHint" destination="Yn5-ch-Oxi" id="qNm-Cv-Jsf"/>
                         <outlet property="preciseModField" destination="gqo-T2-Nmz" id="Rts-Lf-EyR"/>
@@ -1757,8 +1918,8 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                         <outlet property="preciseToggle" destination="5rO-m9-I0Q" id="qoO-s1-pXz"/>
                         <outlet property="restoreDefaultModsButton" destination="4ZD-1f-bbe" id="4G3-Tp-sEf"/>
                         <outlet property="reverseDirectionToggle" destination="dtR-AX-YsY" id="P3O-kx-KCg"/>
-                        <outlet property="smoothPicker" destination="saP-aP-bnv" id="Zlr-EF-GAN"/>
-                        <outlet property="speedPicker" destination="AUN-SK-ju7" id="5Qf-b9-Y8X"/>
+                        <outlet property="smoothPicker" destination="ScW-Vertical-Smooth-001" id="ScW-Vertical-Smooth-Outlet"/>
+                        <outlet property="speedPicker" destination="ScW-Vertical-Speed-001" id="ScW-Vertical-Speed-Outlet"/>
                         <outlet property="swiftModField" destination="Abk-fb-uRV" id="kYs-Xn-eTk"/>
                         <outlet property="trackpadHint" destination="ljz-rp-t9J" id="pUy-mv-lBP"/>
                         <outlet property="trackpadSection" destination="TFj-AL-hbW" id="ID7-aO-Rky"/>
