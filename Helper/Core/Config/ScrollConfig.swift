@@ -682,7 +682,21 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
         ///                 - Smooth scrolling not available in Chrome on macOS (?) https://www.reddit.com/r/chrome/comments/153tfev/smooth_scrolling_not_available_on_mac/
         ///         [Jun 4 2025] SmoothFox.js for Firefox – I've seen this recommended. I should try it.
         ///         [Jun 4 2025] I saw some Logitech Mouse have nice scrolling recently and some MMF user asked for less smoothing on GitHub recently after coming from Logitech's Driver. I remember I used to hate Logi Options scrolling but maybe they improved it or my tasted have changed?
-        
+
+        /// The experimental curve below is intentionally disabled, but the
+        /// "Low" smoothness option is exposed by the axis-specific controls.
+        /// Keep that option safe and usable by falling back to the established
+        /// responsive linear curve instead of reaching the old fatalError().
+        return MFScrollAnimationCurveParameters(baseCurve: ScrollConfig.linearCurve,
+                                                speedSmoothing: -1,
+                                                baseMsPerStep: 140,
+                                                baseMsPerStepCurve: nil,
+                                                dragExponent: 1.05,
+                                                dragCoefficient: 15,
+                                                stopSpeed: 30,
+                                                sendGestureScrolls: false,
+                                                sendMomentumScrolls: false)
+
         #if false /// [Jul 2025] Would like to use `MF_TEST 0` here, but not sure how in Swift
         if _1 {
             var baseCurve:          Bezier?          = nil
@@ -780,9 +794,7 @@ fileprivate func animationCurveParamsMap(name: MFScrollAnimationCurveName) -> MF
         }
         
         #endif
-        
-        fatalError()
-        
+
     case kMFScrollAnimationCurveNameLowInertia:
 
         /// Option 5: Higher baseMsPerStep

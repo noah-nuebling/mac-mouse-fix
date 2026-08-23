@@ -1119,12 +1119,12 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="999" verticalStackHuggingPriority="249.99998474121094" horizontalHuggingPriority="999" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N4F-RB-d7a" userLabel="Master Stack" customClass="CollapsingStackView" customModule="Mac_Mouse_Fix" customModuleProvider="target">
                                 <rect key="frame" x="30" y="20" width="350" height="439"/>
                                 <subviews>
-                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="5" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="1000" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Group-001" userLabel="Scroll Wheel Settings">
+                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="5" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="1000" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Group-001" userLabel="Smoothness Settings">
                                         <rect key="frame" x="0.0" y="331" width="350" height="84"/>
                                         <subviews>
                                             <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Title-001">
                                                 <rect key="frame" x="0.0" y="64" width="350" height="16"/>
-                                                <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Scroll Wheel" id="ScW-Title-Cell-001">
+                                                <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Smoothness" id="ScW-Title-Cell-001">
                                                     <font key="font" metaFont="smallSystem"/>
                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1155,7 +1155,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
-                                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Header-Speed-001">
+                                                    <textField focusRingType="none" hidden="YES" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Header-Speed-001">
                                                         <rect key="frame" x="184" y="0.0" width="96" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="96" id="ScW-Header-Speed-Width"/>
@@ -1201,7 +1201,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                         </popUpButtonCell>
                                                         <accessibility identifier="axScrollingSmoothnessButton"/>
                                                     </popUpButton>
-                                                    <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Vertical-Speed-001">
+                                                    <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" hidden="YES" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Vertical-Speed-001">
                                                         <rect key="frame" x="184" y="0.0" width="96" height="24"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="96" id="ScW-Vertical-Speed-Width"/>
@@ -1256,7 +1256,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                                         </popUpButtonCell>
                                                         <accessibility identifier="axScrollingHorizontalSmoothnessButton"/>
                                                     </popUpButton>
-                                                    <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Horizontal-Speed-001">
+                                                    <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" hidden="YES" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Horizontal-Speed-001">
                                                         <rect key="frame" x="184" y="0.0" width="96" height="24"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="96" id="ScW-Horizontal-Speed-Width"/>
@@ -1419,12 +1419,23 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                             <constraint firstItem="dvw-oy-SUP" firstAttribute="top" secondItem="PDb-87-6bc" secondAttribute="top" constant="8" id="WIT-yM-IZV"/>
                                         </constraints>
                                     </customView>
-                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" hidden="YES" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ajf-ff-OPq">
+                                    <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="ScW-Speed-Title-001">
+                                        <rect key="frame" x="0.0" y="270" width="350" height="16"/>
+                                        <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Speed" id="ScW-Speed-Title-Cell-001">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="10" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ajf-ff-OPq">
                                         <rect key="frame" x="0.0" y="257" width="147" height="24"/>
                                         <subviews>
                                             <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="T0R-D1-tZu">
-                                                <rect key="frame" x="-2" y="4" width="47" height="16"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Vertical Speed:" id="l7d-al-Y14">
+                                                <rect key="frame" x="-2" y="4" width="70" height="16"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="70" id="ScW-Vertical-Speed-Label-Width"/>
+                                                </constraints>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Vertical" id="l7d-al-Y14">
                                                     <font key="font" usesAppearanceFont="YES"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1505,12 +1516,15 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                             </popUpButton>
                                         </subviews>
                                     </stackView>
-                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" hidden="YES" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hSp-Stack-001" userLabel="Horizontal Speed Row">
+                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="10" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hSp-Stack-001" userLabel="Horizontal Speed Row">
                                         <rect key="frame" x="0.0" y="177" width="192" height="24"/>
                                         <subviews>
                                             <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="hSp-Label-001">
-                                                <rect key="frame" x="-2" y="4" width="83" height="16"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Horizontal Speed:" id="hSp-Cell-001">
+                                                <rect key="frame" x="-2" y="4" width="70" height="16"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="70" id="ScW-Horizontal-Speed-Label-Width"/>
+                                                </constraints>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Horizontal" id="hSp-Cell-001">
                                                     <font key="font" usesAppearanceFont="YES"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1910,7 +1924,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                     <connections>
                         <outlet property="horizontalModField" destination="PpE-2r-BrM" id="sxE-uX-0zf"/>
                         <outlet property="horizontalSmoothPicker" destination="ScW-Horizontal-Smooth-001" id="ScW-Horizontal-Smooth-Outlet"/>
-                        <outlet property="horizontalSpeedPicker" destination="ScW-Horizontal-Speed-001" id="ScW-Horizontal-Speed-Outlet"/>
+                        <outlet property="horizontalSpeedPicker" destination="hSp-Picker-001" id="hSp-Outlet-001"/>
                         <outlet property="masterStack" destination="N4F-RB-d7a" id="l0H-83-1J7"/>
                         <outlet property="preciseHint" destination="Yn5-ch-Oxi" id="qNm-Cv-Jsf"/>
                         <outlet property="preciseModField" destination="gqo-T2-Nmz" id="Rts-Lf-EyR"/>
@@ -1919,7 +1933,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                         <outlet property="restoreDefaultModsButton" destination="4ZD-1f-bbe" id="4G3-Tp-sEf"/>
                         <outlet property="reverseDirectionToggle" destination="dtR-AX-YsY" id="P3O-kx-KCg"/>
                         <outlet property="smoothPicker" destination="ScW-Vertical-Smooth-001" id="ScW-Vertical-Smooth-Outlet"/>
-                        <outlet property="speedPicker" destination="ScW-Vertical-Speed-001" id="ScW-Vertical-Speed-Outlet"/>
+                        <outlet property="speedPicker" destination="AUN-SK-ju7" id="5Qf-b9-Y8X"/>
                         <outlet property="swiftModField" destination="Abk-fb-uRV" id="kYs-Xn-eTk"/>
                         <outlet property="trackpadHint" destination="ljz-rp-t9J" id="pUy-mv-lBP"/>
                         <outlet property="trackpadSection" destination="TFj-AL-hbW" id="ID7-aO-Rky"/>
