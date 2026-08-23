@@ -267,9 +267,6 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         /// Get sending device
         IOHIDDeviceRef sendingDev = CGEventGetSendingDevice(event);
         
-        /// Debug
-        assert(sendingDev != NULL);
-        
         /// Print info on sendingDev
         if (sendingDev != NULL) {
             

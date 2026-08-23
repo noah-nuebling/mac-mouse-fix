@@ -120,7 +120,10 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     /// Get info from cgEvent
     NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
-    BOOL mouseDown = CGEventGetIntegerValueField(event, kCGMouseEventPressure) != 0;
+    /// The pressure field is not guaranteed to be populated by user-space
+    /// event producers. The tap only receives these two event types, so the
+    /// event type is the reliable source of button state.
+    BOOL mouseDown = type == kCGEventOtherMouseDown;
     
     /// Filter buttons
     if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) return event;

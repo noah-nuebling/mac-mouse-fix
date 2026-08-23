@@ -63,8 +63,8 @@ bool CGEvent_IsWacomEvent(CGEventRef event) {
     if (!sender_pid) return false;
     
     /// Sanity check
-    ///     Presence of `kMFCGEventFieldSenderID` indicates an ioreg sender while `kCGEventSourceUnixProcessID` indicates a userspace sender. I don't expect both to be present
-    assert(CGEventGetIntegerValueField(event, (CGEventField)kMFCGEventFieldSenderID) == 0);
+    ///     Presence of `kMFCGEventFieldSenderID` usually indicates an ioreg sender while `kCGEventSourceUnixProcessID` indicates a userspace sender.
+    ///     Some software KVMs preserve or add both fields, so this is not a process invariant.
     
     /// Calculate
     NSString *senderPath = GetPathForPid((pid_t)sender_pid);
@@ -145,6 +145,10 @@ IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID) {
     ///             But theoretically this should be fine I think? I think IOHIDDeviceRef should still be safe to use after disconnect, just if you try to read/write from it that should fail (I haven't tested this, and it would still be cleaner to return nil here after disconnect)
     ///                 We could either use a weak reference or check if the IOHIDDeviceRef is still physically connected  before returning it. For a weak ref, we could create something like an MFWeakWrapper object or use NSMapTable with weak values. Using NSCache / staticobject() / threadobject() instead of raw static NSDictionary would probably be good. (static NSDictionary is also not thread-safe – as long as we're not using a single 'IOThread', that could be problematic.)
     
+    if (senderID == 0) {
+        return NULL;
+    }
+
     static NSMutableDictionary *_hidDeviceCache = nil;
     if (_hidDeviceCache == nil) {
         _hidDeviceCache = [NSMutableDictionary dictionary];
@@ -152,13 +156,23 @@ IOHIDDeviceRef _Nullable getSendingDeviceWithSenderID(uint64_t senderID) {
     
     id iohidDeviceFromCache = _hidDeviceCache[@(senderID)];
     
+    if (iohidDeviceFromCache == [NSNull null]) {
+        return NULL;
+    }
     if (iohidDeviceFromCache != nil) {
         return (__bridge IOHIDDeviceRef)iohidDeviceFromCache;
     }
     
     IOHIDDeviceRef iohidDevice = copySendingDevice_Reliable(senderID);
     
-    _hidDeviceCache[@(senderID)] = (__bridge_transfer id _Nullable)(iohidDevice); /// Should we do this when the iohidDevice is NULL? || [May 2025] Setting nil to an NSDictionary like this should simply remove the key. Casting to `_Nullable` here makes no sense.
+    /// Cache misses as well. Synthetic events can carry a stable, nonzero sender ID
+    /// without having an IORegistry service; retrying the lookup for every event is
+    /// both expensive and unnecessary.
+    if (iohidDevice != NULL) {
+        _hidDeviceCache[@(senderID)] = (__bridge_transfer id)iohidDevice;
+    } else {
+        _hidDeviceCache[@(senderID)] = [NSNull null];
+    }
     
     return iohidDevice;
 }
@@ -192,22 +206,27 @@ IOHIDDeviceRef _Nullable copySendingDevice_Reliable(uint64_t senderID) {
     
     /// Get IOService
     CFMutableDictionaryRef idMatching = IORegistryEntryIDMatching(senderID);
+    if (idMatching == NULL) {
+        return NULL;
+    }
     io_service_t service = IOServiceGetMatchingService(kIOMasterPortDefault, idMatching);
+    if (service == IO_OBJECT_NULL) {
+        /// User-space input sources such as software KVMs may use a sender ID
+        /// that does not refer to an IORegistry object.
+        return NULL;
+    }
     
     /// Get IOHIDDevice
-    __block IOHIDDeviceRef iohidDevice;
+    __block IOHIDDeviceRef iohidDevice = NULL;
     [IOUtility iterateParentsOfEntry:service forEach:^Boolean(io_registry_entry_t parent) {
         iohidDevice = IOHIDDeviceCreate(kCFAllocatorDefault, parent);
         return (iohidDevice == NULL); /// Keep going while device not found
     }];
+    IOObjectRelease(service);
     
-    /// Validate
-    if (runningPreRelease()) {
-        BOOL isTakingLocalizationScreenshots = [NSProcessInfo.processInfo.arguments containsObject:@"-MF_ANNOTATE_LOCALIZED_STRINGS"];
-        if (!isTakingLocalizationScreenshots) {
-            assert(iohidDevice != NULL); /// NULL for events sent by localizedScreenshot XCUITest runner, otherwise shouldn't be NULL.
-        }
-    }
+    /// A missing IOHID device is valid for synthetic events. Callers use NULL
+    /// to select the generic `StrangeDevice` path when input came from a
+    /// user-space driver.
     
     /// Return
     return iohidDevice;
