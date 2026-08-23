@@ -82,7 +82,7 @@ static CFTimeInterval _lastScrollAnalysisResultTimeStamp;
     if (_eventTap == NULL) {
         CGEventMask mask = CGEventMaskBit(kCGEventScrollWheel);
         _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
-        DDLogDebug("Scroll.m: _eventTap: %@", _eventTap);
+        DDLogInfo("Scroll.m: created scroll event tap: %d", _eventTap != NULL);
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopCommonModes);
         CFRelease(runLoopSource);
@@ -136,12 +136,14 @@ void resetState_Unsafe(void) {
 
     
     /// DEBUG
-    DDLogDebug("Scroll.m: startReceiving. isReceiving: %d", CGEventTapIsEnabled(_eventTap));
+    DDLogInfo("Scroll.m: startReceiving before enable: tap=%d receiving=%d", _eventTap != NULL, CGEventTapIsEnabled(_eventTap));
 
     /// Start event tap
     if (!CGEventTapIsEnabled(_eventTap)) {
         CGEventTapEnable(_eventTap, true);
     }
+
+    DDLogInfo("Scroll.m: startReceiving after enable: receiving=%d", CGEventTapIsEnabled(_eventTap));
     
 }
 
@@ -152,7 +154,7 @@ void resetState_Unsafe(void) {
     /// - Also see notes for `- startReceiving`
     
     /// DEBUG
-    DDLogDebug("Scroll.m: stopReceiving. isReceiving: %d", CGEventTapIsEnabled(_eventTap));
+    DDLogInfo("Scroll.m: stopReceiving: tap=%d receiving=%d", _eventTap != NULL, CGEventTapIsEnabled(_eventTap));
     
     
     /// Stop event tap
@@ -230,6 +232,23 @@ static int64_t scrollPointDeltaForAxis(CGEventRef event,
     return 0;
 }
 
+/// Software KVMs such as Hydra write the signed 16.16 fixed-point fields but
+/// can leave the other axis' integer fields uninitialized. When fixed-point
+/// fields are present, use them for both axes so stale values cannot turn a
+/// one-axis wheel event into a diagonal event.
+static int64_t scrollDeltaForAxis(CGEventRef event,
+                                  CGEventField lineField,
+                                  CGEventField pointField,
+                                  CGEventField fixedPointField,
+                                  bool fixedPointFieldsAreAuthoritative) {
+    if (fixedPointFieldsAreAuthoritative) {
+        double fixedPointDelta = CGEventGetDoubleValueField(event, fixedPointField);
+        return fixedPointDelta == 0.0 ? 0 : llround(fixedPointDelta * 10.0);
+    }
+
+    return scrollPointDeltaForAxis(event, lineField, pointField, fixedPointField);
+}
+
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
     
@@ -251,21 +270,47 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     }
 
     /// Return non-scrollwheel events unaltered
+    int64_t senderID         = CGEventGetIntegerValueField(event, (CGEventField)kMFCGEventFieldSenderID);
+    bool isSyntheticEvent    = senderID == 0;
+    double fixedPointAxis1   = CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1);
+    double fixedPointAxis2   = CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2);
+    bool fixedPointFieldsAreAuthoritative = isSyntheticEvent && (fixedPointAxis1 != 0.0 || fixedPointAxis2 != 0.0);
     int64_t isPixelBased     = CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
     int64_t scrollPhase      = CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
-    int64_t scrollDeltaAxis1 = scrollPointDeltaForAxis(event,
-                                                       kCGScrollWheelEventDeltaAxis1,
-                                                       kCGScrollWheelEventPointDeltaAxis1,
-                                                       kCGScrollWheelEventFixedPtDeltaAxis1);
-    int64_t scrollDeltaAxis2 = scrollPointDeltaForAxis(event,
-                                                       kCGScrollWheelEventDeltaAxis2,
-                                                       kCGScrollWheelEventPointDeltaAxis2,
-                                                       kCGScrollWheelEventFixedPtDeltaAxis2);
+    int64_t scrollDeltaAxis1 = scrollDeltaForAxis(event,
+                                                  kCGScrollWheelEventDeltaAxis1,
+                                                  kCGScrollWheelEventPointDeltaAxis1,
+                                                  kCGScrollWheelEventFixedPtDeltaAxis1,
+                                                  fixedPointFieldsAreAuthoritative);
+    int64_t scrollDeltaAxis2 = scrollDeltaForAxis(event,
+                                                  kCGScrollWheelEventDeltaAxis2,
+                                                  kCGScrollWheelEventPointDeltaAxis2,
+                                                  kCGScrollWheelEventFixedPtDeltaAxis2,
+                                                  fixedPointFieldsAreAuthoritative);
     int64_t drawingTabletID  = CGEventGetIntegerValueField(event, kCGTabletEventDeviceID);
+
+    /// Keep a small sample in the system log while diagnosing synthetic input.
+    /// This is intentionally bounded so a high-resolution wheel cannot flood the log.
+    static int rawEventLogCount = 0;
+    if (rawEventLogCount < 32) {
+        rawEventLogCount += 1;
+        DDLogInfo("Scroll.m: raw event #%d line=(%lld,%lld) point=(%lld,%lld) fixed=(%f,%f) continuous=%lld phase=%lld tablet=%lld synthetic=%d",
+                  rawEventLogCount,
+                  CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis1),
+                  CGEventGetIntegerValueField(event, kCGScrollWheelEventDeltaAxis2),
+                  CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1),
+                  CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2),
+                  CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1),
+                  CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis2),
+                  isPixelBased,
+                  scrollPhase,
+                  drawingTabletID,
+                  isSyntheticEvent);
+    }
     bool isDiagonal = scrollDeltaAxis1 != 0 && scrollDeltaAxis2 != 0;
-    if (isPixelBased != 0
-        || scrollPhase != 0 /// Not entirely sure if testing for 'scrollPhase' here makes sense
-        || drawingTabletID != 0 /// Untested
+    if ((!isSyntheticEvent && (isPixelBased != 0
+                               || scrollPhase != 0 /// Not entirely sure if testing for 'scrollPhase' here makes sense
+                               || drawingTabletID != 0)) /// Untested
         || isDiagonal) {
         
         return event;

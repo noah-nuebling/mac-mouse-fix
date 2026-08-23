@@ -551,6 +551,8 @@ import ReactiveSwift
     }
     
     private func toggleScrollTap() {
+
+        DDLogInfo("SwitchMaster: scroll tap decision active=\(userIsActive ? 1 : 0) locked=\(isLockedDown ? 1 : 0) kill=\(scrollKillSwitch ? 1 : 0) hasSource=\(hasScrollInputSource ? 1 : 0) default=\(defaultModifiesScroll ? 1 : 0) current=\(currentModificationModifiesScroll ? 1 : 0) receiving=\(Scroll.isReceiving() ? 1 : 0)")
         
         if isLockedDown || !userIsActive || scrollKillSwitch {
             Scroll.stopReceiving()
