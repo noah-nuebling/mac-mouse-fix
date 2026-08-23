@@ -60,6 +60,8 @@ static ScrollConfig *_scrollConfig;
 static MFScrollAnimationCurveParameters *_animationParams;
 static ScrollAnalysisResult _lastScrollAnalysisResult;
 static CFTimeInterval _lastScrollAnalysisResultTimeStamp;
+static int _processedScrollLogCount;
+static int _outputScrollLogCount;
 //static BOOL _isSuspended = NO; TODO: Remove suspension stuff (already commented out)
 
 #pragma mark - Public functions
@@ -321,8 +323,15 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
         return event;
     
     /// Get timestamp
-    ///     Get timestamp here instead of _scrollQueue for accurate timing
-    CFTimeInterval tickTime = CGEventGetTimestampInSeconds(event);
+    ///     Get timestamp here instead of _scrollQueue for accurate timing.
+    ///     Software KVMs such as Hydra often leave the CGEvent timestamp at
+    ///     zero or populate it with a value unrelated to the time the event
+    ///     arrived. Using that value makes every synthetic wheel update look
+    ///     like a separate scroll burst, which disables acceleration and
+    ///     repeatedly restarts the slow part of the animation.
+    CFTimeInterval tickTime = isSyntheticEvent
+        ? CACurrentMediaTime()
+        : CGEventGetTimestampInSeconds(event);
     
     /// Create copy of event
     
@@ -593,6 +602,23 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             DDLogDebug("Scroll.m: Direction change – cancel scroll.");
             [_animator cancel];
             return;
+        }
+
+        if (_processedScrollLogCount < 48) {
+            _processedScrollLogCount += 1;
+            DDLogInfo("Scroll.m: processed #%d axis=%d inputDelta=%lld rawInterval=%.6f interval=%.6f speed=%d smoothness=%d smooth=%d curve=%d px=%lld gesture=%d momentum=%d",
+                      _processedScrollLogCount,
+                      inputAxis,
+                      scrollDelta,
+                      scrollAnalysisResult.DEBUG_timeBetweenTicksRaw,
+                      scrollAnalysisResult.timeBetweenTicks,
+                      _scrollConfig.u_speed,
+                      _scrollConfig.u_smoothness,
+                      _scrollConfig.smoothEnabled,
+                      _scrollConfig.animationCurve,
+                      pxToScrollForThisTick,
+                      _scrollConfig.animationCurveParams.sendGestureScrolls,
+                      _scrollConfig.animationCurveParams.sendMomentumScrolls);
         }
         
         /// Debug
@@ -986,6 +1012,18 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
     
     if (dx+dy == 0) {
         assert(eventPhase == kIOHIDEventPhaseEnded || eventPhase == kIOHIDEventPhaseCancelled);
+    }
+
+    if (_outputScrollLogCount < 48) {
+        _outputScrollLogCount += 1;
+        DDLogInfo("Scroll.m: output #%d dx=%lld dy=%lld type=%d animatorPhase=%d eventPhase=%d momentum=%d",
+                  _outputScrollLogCount,
+                  dx,
+                  dy,
+                  outputType,
+                  animatorPhase,
+                  eventPhase,
+                  momentumHint);
     }
     
     /// Send events based on outputType

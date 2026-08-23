@@ -85,6 +85,7 @@ import Cocoa
             
             /// Copy og settings
             let new = shared.copy() as! ScrollConfig
+            new.applyAxisSpecificUserSettings(for: inputAxis)
             
             /// Declare overridables
             var u_speed = new.u_speed
@@ -233,6 +234,83 @@ import Cocoa
     }
     
     // MARK: ???
+
+    /// Read the axis-specific setting when present, while keeping existing
+    /// installations on the original shared setting until the new controls
+    /// have been initialized by the app.
+    private func axisSpecificSetting(_ key: String, for inputAxis: MFAxis) -> String {
+        let axisName = inputAxis == kMFAxisHorizontal ? "horizontal" : "vertical"
+        let axisKey = "\(axisName)\(key.prefix(1).uppercased())\(key.dropFirst())"
+        return (c(axisKey) as? String) ?? (c(key) as! String)
+    }
+
+    /// `shared.copy()` eagerly copies many lazy derived properties. Apply the
+    /// selected axis settings and refresh the derived values that depend on
+    /// the user-facing smoothness choice before the acceleration curve is
+    /// calculated.
+    private func applyAxisSpecificUserSettings(for inputAxis: MFAxis) {
+        let speedString = axisSpecificSetting("speed", for: inputAxis)
+        switch speedString {
+        case "system":  u_speed = kMFScrollSpeedSystem
+        case "low":     u_speed = kMFScrollSpeedLow
+        case "medium":  u_speed = kMFScrollSpeedMedium
+        case "high":    u_speed = kMFScrollSpeedHigh
+        default: fatalError()
+        }
+
+        let smoothString = axisSpecificSetting("smooth", for: inputAxis)
+        switch smoothString {
+        case "off":     u_smoothness = kMFScrollSmoothnessOff
+        case "low":     u_smoothness = kMFScrollSmoothnessLow
+        case "regular": u_smoothness = kMFScrollSmoothnessRegular
+        case "high":    u_smoothness = kMFScrollSmoothnessHigh
+        default: fatalError()
+        }
+
+        let axisAnimationCurve: MFScrollAnimationCurveName
+        switch u_smoothness {
+        case kMFScrollSmoothnessOff:        axisAnimationCurve = kMFScrollAnimationCurveNameNone
+        case kMFScrollSmoothnessLow:        axisAnimationCurve = kMFScrollAnimationCurveNameVeryLowInertia
+        case kMFScrollSmoothnessRegular:    axisAnimationCurve = kMFScrollAnimationCurveNameLowInertia
+        case kMFScrollSmoothnessHigh:       axisAnimationCurve = u_trackpadSimulation ? kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim : kMFScrollAnimationCurveNameHighInertia
+        default: fatalError()
+        }
+
+        animationCurve = axisAnimationCurve
+        fastScrollCurve = axisFastScrollCurve(for: axisAnimationCurve)
+
+        switch axisAnimationCurve {
+        case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim:
+            consecutiveScrollSwipeMaxInterval = 600.0 / 1000.0
+            consecutiveScrollSwipeMinTickSpeed = 12.0
+        case kMFScrollAnimationCurveNameNone:
+            consecutiveScrollSwipeMaxInterval = 325.0 / 1000.0
+            consecutiveScrollSwipeMinTickSpeed = 16.0
+        default:
+            consecutiveScrollSwipeMaxInterval = 375.0 / 1000.0
+            consecutiveScrollSwipeMinTickSpeed = 16.0
+        }
+    }
+
+    private func axisFastScrollCurve(for animationCurve: MFScrollAnimationCurveName) -> ScrollSpeedupCurve? {
+        switch animationCurve {
+        case kMFScrollAnimationCurveNameNone:
+            return ScrollSpeedupCurve(swipeThreshold: 6, initialSpeedup: 1.4, exponentialSpeedup: 3.0)
+        case kMFScrollAnimationCurveNameVeryLowInertia:
+            return ScrollSpeedupCurve(swipeThreshold: 1, initialSpeedup: 1, exponentialSpeedup: 7.5)
+        case kMFScrollAnimationCurveNameLowInertia:
+            return ScrollSpeedupCurve(swipeThreshold: 3, initialSpeedup: 1.33, exponentialSpeedup: 7.5)
+        case kMFScrollAnimationCurveNameHighInertia, kMFScrollAnimationCurveNameHighInertiaPlusTrackpadSim:
+            return ScrollSpeedupCurve(swipeThreshold: 2, initialSpeedup: 1.33, exponentialSpeedup: 7.5)
+        case kMFScrollAnimationCurveNameTouchDriver, kMFScrollAnimationCurveNameTouchDriverLinear:
+            return ScrollSpeedupCurve(swipeThreshold: 3, initialSpeedup: 1.33, exponentialSpeedup: 7.5)
+        case kMFScrollAnimationCurveNamePreciseScroll, kMFScrollAnimationCurveNameQuickScroll:
+            return nil
+        default:
+            assert(false)
+            return nil
+        }
+    }
     
     @objc static var linearCurve: Bezier = { () -> Bezier in
         

@@ -15,10 +15,12 @@ class ScrollTabController: NSViewController {
     
     /// Config
     
-    var smooth = ConfigValue<String>(configPath: "Scroll.smooth")
+    var verticalSmooth = ConfigValue<String>(configPath: "Scroll.verticalSmooth")
+    var horizontalSmooth = ConfigValue<String>(configPath: "Scroll.horizontalSmooth")
     var trackpad = ConfigValue<Bool>(configPath: "Scroll.trackpadSimulation")
     var reverseDirection = ConfigValue<Bool>(configPath: "Scroll.reverseDirection")
-    var scrollSpeed = ConfigValue<String>(configPath: "Scroll.speed")
+    var verticalSpeed = ConfigValue<String>(configPath: "Scroll.verticalSpeed")
+    var horizontalSpeed = ConfigValue<String>(configPath: "Scroll.horizontalSpeed")
     var precise = ConfigValue<Bool>(configPath: "Scroll.precise")
     var horizontalMod = ConfigValue<UInt>(configPath: "Scroll.modifiers.horizontal")
     var zoomMod = ConfigValue<UInt>(configPath: "Scroll.modifiers.zoom")
@@ -45,6 +47,8 @@ class ScrollTabController: NSViewController {
     @IBOutlet weak var reverseDirectionToggle: NSButton!
     
     @IBOutlet weak var speedPicker: NSPopUpButton!
+    @IBOutlet weak var horizontalSmoothPicker: NSPopUpButton!
+    @IBOutlet weak var horizontalSpeedPicker: NSPopUpButton!
     
     @IBOutlet weak var preciseSection: NSStackView!
     @IBOutlet weak var preciseToggle: NSButton!
@@ -56,10 +60,37 @@ class ScrollTabController: NSViewController {
     @IBOutlet weak var preciseModField: ModCaptureTextField!
     @IBOutlet weak var restoreDefaultModsButton: NSButton!
     
+    private func migrateAxisSpecificScrollSettingsIfNeeded() {
+        let legacySmooth = config("Scroll.smooth") as! String
+        let legacySpeed = config("Scroll.speed") as! String
+        var didChange = false
+
+        if config("Scroll.verticalSmooth") == nil {
+            setConfig("Scroll.verticalSmooth", legacySmooth as NSString)
+            didChange = true
+        }
+        if config("Scroll.horizontalSmooth") == nil {
+            setConfig("Scroll.horizontalSmooth", legacySmooth as NSString)
+            didChange = true
+        }
+        if config("Scroll.verticalSpeed") == nil {
+            setConfig("Scroll.verticalSpeed", legacySpeed as NSString)
+            didChange = true
+        }
+        if config("Scroll.horizontalSpeed") == nil {
+            setConfig("Scroll.horizontalSpeed", legacySpeed as NSString)
+            didChange = true
+        }
+
+        if didChange {
+            commitConfig()
+        }
+    }
+
     /// Did appear
     
     override func viewDidAppear() {
-        
+
         /// Remove focus
         ///     Sometimes, one of the modifierCapture fields is randomly selected. This hopefully prevents that.
         ///     Need to do asynAfter 0.0 seconds for it to work (I think - not well tested) that makes it do it on the next runLoop cycle I think.
@@ -87,16 +118,25 @@ class ScrollTabController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        /// Existing installations only have the original shared settings.
+        /// Seed the axis-specific settings from those values once so the new
+        /// controls are immediately usable without changing the user's setup.
+        migrateAxisSpecificScrollSettingsIfNeeded()
         
         /// There was some reason we don't use viewDidLoad here, and instead we use awakeFromNib. I think it had to do with preventing animations from playing when the app starts right into this tab or sth. But maybe it's just unnecessary.
         /// Edit: The replacing between the macOSHint and the preciseSection broke when we used awakeFromNib. Not totally sure why. Let's hope viewDidLoad works after all.
         
         /// Smooth
         
-        smooth.bindingTarget <~ smoothPicker.reactive.selectedIdentifiers.map({ $0!.rawValue })
-        smoothPicker.reactive.selectedIdentifier <~ smooth.producer.map({ NSUserInterfaceItemIdentifier($0) })
-         
-        trackpadSection.reactive.isCollapsed <~ smooth.producer.map({ $0 != "high" })
+        verticalSmooth.bindingTarget <~ smoothPicker.reactive.selectedIdentifiers.map({ $0!.rawValue })
+        smoothPicker.reactive.selectedIdentifier <~ verticalSmooth.producer.map({ NSUserInterfaceItemIdentifier($0) })
+
+        horizontalSmooth.bindingTarget <~ horizontalSmoothPicker.reactive.selectedIdentifiers.map({ $0!.rawValue })
+        horizontalSmoothPicker.reactive.selectedIdentifier <~ horizontalSmooth.producer.map({ NSUserInterfaceItemIdentifier($0) })
+        
+        trackpadSection.reactive.isCollapsed <~ SignalProducer.combineLatest(verticalSmooth.producer, horizontalSmooth.producer)
+            .map({ vertical, horizontal in vertical != "high" && horizontal != "high" })
         
         let MF_TEST = 0
         if MF_TEST == 0 { /// Remove the experimental "low" option in release builds
@@ -112,10 +152,15 @@ class ScrollTabController: NSViewController {
         reverseDirectionToggle.reactive.boolValue <~ reverseDirection.producer
         
         /// Scroll speed
-        scrollSpeed.bindingTarget <~ speedPicker.reactive.selectedIdentifiers.map({ identifier in
+        verticalSpeed.bindingTarget <~ speedPicker.reactive.selectedIdentifiers.map({ identifier in
             identifier!.rawValue
         })
-        speedPicker.reactive.selectedIdentifier <~ scrollSpeed.producer.map({ NSUserInterfaceItemIdentifier($0) })
+        speedPicker.reactive.selectedIdentifier <~ verticalSpeed.producer.map({ NSUserInterfaceItemIdentifier($0) })
+
+        horizontalSpeed.bindingTarget <~ horizontalSpeedPicker.reactive.selectedIdentifiers.map({ identifier in
+            identifier!.rawValue
+        })
+        horizontalSpeedPicker.reactive.selectedIdentifier <~ horizontalSpeed.producer.map({ NSUserInterfaceItemIdentifier($0) })
         
         /// Precise
         /// Notes:
@@ -205,11 +250,12 @@ class ScrollTabController: NSViewController {
                     var macOSHintIsDisplaying = false
                     var isInitialized = false
                     
-                    scrollSpeed.producer.startWithValues { speed in
-                        if speed == "system" && !macOSHintIsDisplaying {
+                    SignalProducer.combineLatest(verticalSpeed.producer, horizontalSpeed.producer).startWithValues { verticalSpeed, horizontalSpeed in
+                        let usesSystemSpeed = verticalSpeed == "system" || horizontalSpeed == "system"
+                        if usesSystemSpeed && !macOSHintIsDisplaying {
                             self.preciseSection.animatedReplace(with: macOSHintIndent, doAnimate: isInitialized)
                             macOSHintIsDisplaying = true
-                        } else if speed != "system" && macOSHintIsDisplaying {
+                        } else if !usesSystemSpeed && macOSHintIsDisplaying {
                             assert(isInitialized)
                             macOSHintIndent.animatedReplace(with: preciseSectionRetained!, doAnimate: isInitialized)
                             macOSHintIsDisplaying = false
@@ -228,7 +274,11 @@ class ScrollTabController: NSViewController {
         ///     - Once we shipped it, we should probably update the Captured Buttons Guide: https://redirect.macmousefix.com/?target=mmf-captured-buttons-guide - or create a new guide.
         
         let modProducer = SignalProducer.combineLatest(horizontalMod.producer, zoomMod.producer, swiftMod.producer, preciseMod.producer) /// We could reuse this down in the Keyboard modifier section, but currently, we're not
-        let captureProducer = SignalProducer.combineLatest(smooth.producer, reverseDirection.producer, scrollSpeed.producer, modProducer).combinePrevious()
+        let axisSettingProducer = SignalProducer.combineLatest(
+            SignalProducer.combineLatest(verticalSmooth.producer, horizontalSmooth.producer),
+            SignalProducer.combineLatest(verticalSpeed.producer, horizontalSpeed.producer)
+        )
+        let captureProducer = SignalProducer.combineLatest(axisSettingProducer, reverseDirection.producer, modProducer).combinePrevious()
             
         captureProducer.startWithValues { (previous, current) in
             
@@ -236,16 +286,18 @@ class ScrollTabController: NSViewController {
             
             if let toastedWindow = NSApp.mainWindow {
                 
-                let (smooth0, reverse0, speed0, mods0) = previous
-                let (smooth1, reverse1, speed1, mods1) = current
+                let (axisSettings0, reverse0, mods0) = previous
+                let (axisSettings1, reverse1, mods1) = current
+                let ((smooth0, horizontalSmooth0), (speed0, horizontalSpeed0)) = axisSettings0
+                let ((smooth1, horizontalSmooth1), (speed1, horizontalSpeed1)) = axisSettings1
                 
                 let (horizontal0, zoom0, swift0, precise0) = mods0
                 let (horizontal1, zoom1, swift1, precise1) = mods1
                 
-                let wasCaptured = smooth0 != "off" || reverse0 || speed0 != "system" || horizontal0 != 0 || zoom0 != 0 || swift0 != 0 || precise0 != 0 /// Including the modifiers here is a little 'semantically incorrect' but we still do it. See `getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:` [Sep 2025]
-                let isCaptured  = smooth1 != "off" || reverse1 || speed1 != "system" || horizontal1 != 0 || zoom1 != 0 || swift1 != 0 || precise1 != 0
+                let wasCaptured = smooth0 != "off" || horizontalSmooth0 != "off" || reverse0 || speed0 != "system" || horizontalSpeed0 != "system" || horizontal0 != 0 || zoom0 != 0 || swift0 != 0 || precise0 != 0 /// Including the modifiers here is a little 'semantically incorrect' but we still do it. See `getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:` [Sep 2025]
+                let isCaptured  = smooth1 != "off" || horizontalSmooth1 != "off" || reverse1 || speed1 != "system" || horizontalSpeed1 != "system" || horizontal1 != 0 || zoom1 != 0 || swift1 != 0 || precise1 != 0
                     
-                DDLogDebug("ScrollTab - smooth: \(smooth0)->\(smooth1) reverse: \(reverse0)->\(reverse1) speed: \(speed0)->\(speed1) horizontal: \(horizontal0)->\(horizontal1) zoom: \(zoom0)->\(zoom1) swift: \(swift0)->\(swift1) precise: \(precise0)->\(precise1)")
+                DDLogDebug("ScrollTab - smooth: \(smooth0)/\(horizontalSmooth0)->\(smooth1)/\(horizontalSmooth1) reverse: \(reverse0)->\(reverse1) speed: \(speed0)/\(horizontalSpeed0)->\(speed1)/\(horizontalSpeed1) horizontal: \(horizontal0)->\(horizontal1) zoom: \(zoom0)->\(zoom1) swift: \(swift0)->\(swift1) precise: \(precise0)->\(precise1)")
                 
                 if wasCaptured && !isCaptured {
                     CaptureToasts.showScrollWheelCaptureToast(false)

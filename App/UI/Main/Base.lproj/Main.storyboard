@@ -1124,7 +1124,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                         <subviews>
                                             <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="FCc-U0-c29" userLabel="Smoothness:">
                                                 <rect key="frame" x="-2" y="4" width="83" height="16"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Smoothness:" id="SjO-Dq-CEX">
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Vertical Smoothness:" id="SjO-Dq-CEX">
                                                     <font key="font" usesAppearanceFont="YES"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1263,7 +1263,7 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                         <subviews>
                                             <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="T0R-D1-tZu">
                                                 <rect key="frame" x="-2" y="4" width="47" height="16"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Speed:" id="l7d-al-Y14">
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Vertical Speed:" id="l7d-al-Y14">
                                                     <font key="font" usesAppearanceFont="YES"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1314,6 +1314,65 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
+                                    </stackView>
+                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hSm-Stack-001" userLabel="Horizontal Smoothness Row">
+                                        <rect key="frame" x="0.0" y="203" width="205" height="24"/>
+                                        <subviews>
+                                            <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="hSm-Label-001">
+                                                <rect key="frame" x="-2" y="4" width="108" height="16"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Horizontal Smoothness:" id="hSm-Cell-001">
+                                                    <font key="font" usesAppearanceFont="YES"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="hSm-Picker-001">
+                                                <rect key="frame" x="112" y="0.0" width="94" height="24"/>
+                                                <popUpButtonCell key="cell" type="push" title="High" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="hSm-Item-High">
+                                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="message"/>
+                                                    <menu key="menu" id="hSm-Menu-001">
+                                                        <items>
+                                                            <menuItem title="Off" identifier="off" id="hSm-Item-Off"/>
+                                                            <menuItem title="Low" identifier="low" id="hSm-Item-Low"/>
+                                                            <menuItem title="Regular" identifier="regular" id="hSm-Item-Regular"/>
+                                                            <menuItem title="High" state="on" identifier="high" id="hSm-Item-High"/>
+                                                        </items>
+                                                    </menu>
+                                                </popUpButtonCell>
+                                                <accessibility identifier="axScrollingHorizontalSmoothnessButton"/>
+                                            </popUpButton>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="1000" verticalStackHuggingPriority="750" horizontalHuggingPriority="1000" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hSp-Stack-001" userLabel="Horizontal Speed Row">
+                                        <rect key="frame" x="0.0" y="177" width="192" height="24"/>
+                                        <subviews>
+                                            <textField focusRingType="none" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="hSp-Label-001">
+                                                <rect key="frame" x="-2" y="4" width="83" height="16"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Horizontal Speed:" id="hSp-Cell-001">
+                                                    <font key="font" usesAppearanceFont="YES"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <popUpButton horizontalHuggingPriority="1000" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="hSp-Picker-001">
+                                                <rect key="frame" x="87" y="0.0" width="96" height="24"/>
+                                                <popUpButtonCell key="cell" type="push" title="macOS" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="hSp-Item-System">
+                                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="message"/>
+                                                    <menu key="menu" id="hSp-Menu-001">
+                                                        <items>
+                                                            <menuItem title="macOS" state="on" identifier="system" id="hSp-Item-System"/>
+                                                            <menuItem isSeparatorItem="YES" id="hSp-Item-Separator"/>
+                                                            <menuItem title="Low" identifier="low" id="hSp-Item-Low"/>
+                                                            <menuItem title="Medium" identifier="medium" id="hSp-Item-Medium"/>
+                                                            <menuItem title="High" identifier="high" id="hSp-Item-High"/>
+                                                        </items>
+                                                    </menu>
+                                                </popUpButtonCell>
+                                                <accessibility identifier="axScrollingHorizontalSpeedButton"/>
+                                            </popUpButton>
+                                        </subviews>
                                     </stackView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WGO-Zc-NYH" userLabel="Precise Section">
                                         <rect key="frame" x="0.0" y="203" width="350" height="46"/>
@@ -1689,6 +1748,8 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                     </attributedString>
                     <connections>
                         <outlet property="horizontalModField" destination="PpE-2r-BrM" id="sxE-uX-0zf"/>
+                        <outlet property="horizontalSmoothPicker" destination="hSm-Picker-001" id="hSm-Outlet-001"/>
+                        <outlet property="horizontalSpeedPicker" destination="hSp-Picker-001" id="hSp-Outlet-001"/>
                         <outlet property="masterStack" destination="N4F-RB-d7a" id="l0H-83-1J7"/>
                         <outlet property="preciseHint" destination="Yn5-ch-Oxi" id="qNm-Cv-Jsf"/>
                         <outlet property="preciseModField" destination="gqo-T2-Nmz" id="Rts-Lf-EyR"/>

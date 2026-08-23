@@ -25,6 +25,14 @@
 		<string>high</string>
 		<key>speed</key>
 		<string>medium</string>
+		<key>verticalSmooth</key>
+		<string>high</string>
+		<key>verticalSpeed</key>
+		<string>medium</string>
+		<key>horizontalSmooth</key>
+		<string>high</string>
+		<key>horizontalSpeed</key>
+		<string>medium</string>
 	</dict>
 	<key>License</key>
 	<dict>
