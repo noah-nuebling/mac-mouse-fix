@@ -192,6 +192,44 @@ static NSString *CGScrollWheelEventDescription(CGEventRef event) {
 
 #pragma clang diagnostic pop
 
+/// Return a scroll delta in the pixel-like units expected by the scroll
+/// processing pipeline.
+///
+/// Real line-scroll events normally provide both a line delta and a pixel
+/// delta. Software KVMs can populate only the line/fixed-point fields, though,
+/// and some event producers have been observed to provide a pixel magnitude
+/// with the wrong sign. Prefer the pixel magnitude for the existing MMF
+/// scaling, but use the signed line/fixed-point fields to recover missing or
+/// incorrect direction information.
+static int64_t scrollPointDeltaForAxis(CGEventRef event,
+                                       CGEventField lineField,
+                                       CGEventField pointField,
+                                       CGEventField fixedPointField) {
+    int64_t lineDelta = CGEventGetIntegerValueField(event, lineField);
+    int64_t pointDelta = CGEventGetIntegerValueField(event, pointField);
+    double fixedPointDelta = CGEventGetDoubleValueField(event, fixedPointField);
+
+    int direction = lineDelta != 0 ? mfsign(lineDelta) : mfsign(fixedPointDelta);
+
+    if (pointDelta != 0) {
+        if (direction != 0 && mfsign(pointDelta) != direction) {
+            return llabs(pointDelta) * direction;
+        }
+        return pointDelta;
+    }
+
+    /// CGEventSource uses ten pixel-like units per line by default. This is
+    /// also the scale used when MMF creates normalized line-scroll events.
+    if (fixedPointDelta != 0.0) {
+        return llround(fixedPointDelta * 10.0);
+    }
+    if (lineDelta != 0) {
+        return lineDelta * 10;
+    }
+
+    return 0;
+}
+
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
     
@@ -215,8 +253,14 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     /// Return non-scrollwheel events unaltered
     int64_t isPixelBased     = CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
     int64_t scrollPhase      = CGEventGetIntegerValueField(event, kCGScrollWheelEventScrollPhase);
-    int64_t scrollDeltaAxis1 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis1);
-    int64_t scrollDeltaAxis2 = CGEventGetIntegerValueField(event, kCGScrollWheelEventPointDeltaAxis2);
+    int64_t scrollDeltaAxis1 = scrollPointDeltaForAxis(event,
+                                                       kCGScrollWheelEventDeltaAxis1,
+                                                       kCGScrollWheelEventPointDeltaAxis1,
+                                                       kCGScrollWheelEventFixedPtDeltaAxis1);
+    int64_t scrollDeltaAxis2 = scrollPointDeltaForAxis(event,
+                                                       kCGScrollWheelEventDeltaAxis2,
+                                                       kCGScrollWheelEventPointDeltaAxis2,
+                                                       kCGScrollWheelEventFixedPtDeltaAxis2);
     int64_t drawingTabletID  = CGEventGetIntegerValueField(event, kCGTabletEventDeviceID);
     bool isDiagonal = scrollDeltaAxis1 != 0 && scrollDeltaAxis2 != 0;
     if (isPixelBased != 0
