@@ -86,6 +86,31 @@ import ReactiveSwift
     var someDeviceHasPointing               = false
     var someDeviceHasUsableButtons          = false
     var maxButtonNumberAmongDevices: Int32  = 0
+
+    /// Software KVMs (for example Hydra, Deskflow, or Barrier) inject CGEvents
+    /// but do not appear in DeviceManager's locally attached HID device list.
+    /// ButtonInputReceiver and Scroll already support these events, so their
+    /// taps must not be disabled just because no physical mouse is attached.
+    private let allowUnattachedInput = true
+
+    private var hasScrollInputSource: Bool {
+        return someDeviceHasScroll || allowUnattachedInput
+    }
+
+    private var hasPointingInputSource: Bool {
+        return someDeviceHasPointing || allowUnattachedInput
+    }
+
+    private var hasButtonInputSource: Bool {
+        return someDeviceHasUsableButtons || allowUnattachedInput
+    }
+
+    /// When input comes from a software KVM there is no local HID device to
+    /// provide a button count. Analyze mappings against MMF's full supported
+    /// range so buttons 3 through 32 can still enable the button tap.
+    private var maxButtonNumberForInputAnalysis: Int32 {
+        return max(maxButtonNumberAmongDevices, Int32(kMFMaxButtonNumber))
+    }
     
     /// Derived from: Various
     
@@ -424,7 +449,7 @@ import ReactiveSwift
         
         /// Note: [Mar 2025] Why not use `self.maxButtonNumberAmongDevices` here instead of calling `DeviceManager.maxButtonNumberAmongDevices()`? Pretty sure that's would be correct.
         ///     TODO: use self.maxButtonNumberAmongDevices here and in all other places where `DeviceManager.maxButtonNumberAmongDevices()` is used (Maybe think it through again before.)
-        let maxButton = DeviceManager.maxButtonNumberAmongDevices()
+        let maxButton = maxButtonNumberForInputAnalysis
         let result = self.modifierUsage_Buttons(remaps, maxButton: maxButton)
         self.somekbModModifiesButtonOnSomeDevice = result.somekbModModifiesButtonOnSomeDevice
         self.someButtonModifiesButtonOnSomeDevice = result.someButtonModifiesButtonOnSomeDevice
@@ -458,7 +483,7 @@ import ReactiveSwift
         
         /// Update state
         if let m = latestModifications {
-            self.currentModificationModifiesButtonOnSomeDevice = RemapsAnalyzer.modificationsModifyButtons(m, maxButton: DeviceManager.maxButtonNumberAmongDevices())
+            self.currentModificationModifiesButtonOnSomeDevice = RemapsAnalyzer.modificationsModifyButtons(m, maxButton: maxButtonNumberForInputAnalysis)
         } else {
             self.currentModificationModifiesButtonOnSomeDevice = false
         }
@@ -478,9 +503,9 @@ import ReactiveSwift
         
         var priority = kMFModifierPriorityUnused
         
-        let someKbModReallyModifiesScroll   = somekbModModifiesScroll             && someDeviceHasScroll          && !scrollKillSwitch
-        let someKbModReallyModifiesPointing = somekbModModifiesPointing           && someDeviceHasPointing        && true
-        let someKbModReallyModifiesButtons  = somekbModModifiesButtonOnSomeDevice && someDeviceHasUsableButtons   && !buttonKillSwitch
+        let someKbModReallyModifiesScroll   = somekbModModifiesScroll             && hasScrollInputSource          && !scrollKillSwitch
+        let someKbModReallyModifiesPointing = somekbModModifiesPointing           && hasPointingInputSource        && true
+        let someKbModReallyModifiesButtons  = somekbModModifiesButtonOnSomeDevice && hasButtonInputSource           && !buttonKillSwitch
         
         if someKbModReallyModifiesScroll || someKbModReallyModifiesPointing || someKbModReallyModifiesButtons {
             
@@ -505,9 +530,9 @@ import ReactiveSwift
         
         var priority = kMFModifierPriorityUnused
         
-        let someBtnReallyModifiesScroll      = someButtonModifiesScroll             && someDeviceHasScroll        && !scrollKillSwitch      ;
-        let someBtnReallyModifiesPointing    = someButtonModifiesPointing           && someDeviceHasPointing      && true                   ;
-        let someBtnReallyModifiesButtons     = someButtonModifiesButtonOnSomeDevice && someDeviceHasUsableButtons && !buttonKillSwitch      ; /// `!buttonKillSwitch` is redundant here ([Mar 2025]: Why?), but makes it more readable? || [Mar 2025]: someDeviceHasUsableButtons might also be redundant, because someButtonModifiesButtonOnSomeDevice might already capture that.
+        let someBtnReallyModifiesScroll      = someButtonModifiesScroll             && hasScrollInputSource       && !scrollKillSwitch      ;
+        let someBtnReallyModifiesPointing    = someButtonModifiesPointing           && hasPointingInputSource     && true                   ;
+        let someBtnReallyModifiesButtons     = someButtonModifiesButtonOnSomeDevice && hasButtonInputSource      && !buttonKillSwitch      ; /// `!buttonKillSwitch` is redundant here ([Mar 2025]: Why?), but makes it more readable? || [Mar 2025]: someDeviceHasUsableButtons might also be redundant, because someButtonModifiesButtonOnSomeDevice might already capture that.
         
         if someBtnReallyModifiesScroll || someBtnReallyModifiesPointing || someBtnReallyModifiesButtons {
             
@@ -532,7 +557,7 @@ import ReactiveSwift
             return
         }
         
-        if someDeviceHasScroll && (defaultModifiesScroll || currentModificationModifiesScroll) {
+        if hasScrollInputSource && (defaultModifiesScroll || currentModificationModifiesScroll) {
             Scroll.startReceiving()
         } else {
             Scroll.stopReceiving()
@@ -551,11 +576,11 @@ import ReactiveSwift
         ///         -> TODO: Reuse updated logic from toggleBtnModProcessing()
         ///     - [Mar 2025] We should probably always call toggleButtonTap() after toggleBtnModProcessing() - so the tap is actually toggled in case this switches buttonModProcessing to/away from kMFModifierPriorityActiveListen
         let buttonsAreUsedAsModifiers =
-            (someDeviceHasScroll        && someButtonModifiesScroll)                ||
-            (someDeviceHasPointing      && someButtonModifiesPointing)              ||
-            (someDeviceHasUsableButtons && someButtonModifiesButtonOnSomeDevice)
+            (hasScrollInputSource   && someButtonModifiesScroll)                ||
+            (hasPointingInputSource && someButtonModifiesPointing)              ||
+            (hasButtonInputSource   && someButtonModifiesButtonOnSomeDevice)
         
-        if someDeviceHasUsableButtons && (currentModificationModifiesButtonOnSomeDevice || buttonsAreUsedAsModifiers) {
+        if hasButtonInputSource && (currentModificationModifiesButtonOnSomeDevice || buttonsAreUsedAsModifiers) {
             
             ButtonInputReceiver.start()
         } else {
@@ -571,7 +596,7 @@ import ReactiveSwift
         }
         
         /// Determine enable
-        let enable = someDeviceHasPointing && currentModificationModifiesPointing
+        let enable = hasPointingInputSource && currentModificationModifiesPointing
         
         if enable {
             
