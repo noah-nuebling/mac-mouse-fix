@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2026**
 
+- 🇩🇪&nbsp;Uwe&nbsp;Härtfelder
 - 🇺🇸&nbsp;Anonymous
 - 🇬🇧&nbsp;Jose&nbsp;Luis&nbsp;Montoro&nbsp;Estevez
 - 🇬🇧&nbsp;Theo&nbsp;B&nbsp;Harvey - "🤍🕊️"
