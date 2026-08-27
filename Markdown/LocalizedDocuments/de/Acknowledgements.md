@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2026**
 
+- 🇮🇪&nbsp;Jim&nbsp;Rutherford
 - 🇩🇪&nbsp;Uwe&nbsp;Härtfelder
 - 🇺🇸&nbsp;Anonymous
 - 🇬🇧&nbsp;Jose&nbsp;Luis&nbsp;Montoro&nbsp;Estevez

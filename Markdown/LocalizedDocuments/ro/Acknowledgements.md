@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **august 2026**
 
+- 🇮🇪&nbsp;Jim&nbsp;Rutherford
 - 🇩🇪&nbsp;Uwe&nbsp;Härtfelder
 - 🇺🇸&nbsp;Anonymous
 - 🇬🇧&nbsp;Jose&nbsp;Luis&nbsp;Montoro&nbsp;Estevez

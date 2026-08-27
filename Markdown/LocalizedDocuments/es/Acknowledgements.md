@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **agosto 2026**
 
+- 🇮🇪&nbsp;Jim&nbsp;Rutherford
 - 🇩🇪&nbsp;Uwe&nbsp;Härtfelder
 - 🇺🇸&nbsp;Anonymous
 - 🇬🇧&nbsp;Jose&nbsp;Luis&nbsp;Montoro&nbsp;Estevez
