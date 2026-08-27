@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **August 2026**
 
+- 🇦🇹&nbsp;Manuel&nbsp;Weitmann - "The "little" golden Mac Mouse Fix-APP make my workspace complete! Great job!"
 - 🇮🇪&nbsp;Jim&nbsp;Rutherford
 - 🇩🇪&nbsp;Uwe&nbsp;Härtfelder
 - 🇺🇸&nbsp;Anonymous
