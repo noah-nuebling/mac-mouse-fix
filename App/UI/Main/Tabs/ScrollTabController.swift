@@ -17,7 +17,8 @@ class ScrollTabController: NSViewController {
     
     var smooth = ConfigValue<String>(configPath: "Scroll.smooth")
     var trackpad = ConfigValue<Bool>(configPath: "Scroll.trackpadSimulation")
-    var reverseDirection = ConfigValue<Bool>(configPath: "Scroll.reverseDirection")
+    var reverseDirectionVertical = ConfigValue<Bool>(configPath: "Scroll.reverseDirectionVertical")
+    var reverseDirectionHorizontal = ConfigValue<Bool>(configPath: "Scroll.reverseDirectionHorizontal")
     var scrollSpeed = ConfigValue<String>(configPath: "Scroll.speed")
     var precise = ConfigValue<Bool>(configPath: "Scroll.precise")
     var horizontalMod = ConfigValue<UInt>(configPath: "Scroll.modifiers.horizontal")
@@ -42,7 +43,8 @@ class ScrollTabController: NSViewController {
     @IBOutlet weak var trackpadToggle: NSButton!
     @IBOutlet weak var trackpadHint: NSTextField!
     
-    @IBOutlet weak var reverseDirectionToggle: NSButton!
+    @IBOutlet weak var reverseDirectionVerticalToggle: NSButton!
+    @IBOutlet weak var reverseDirectionHorizontalToggle: NSButton!
     
     @IBOutlet weak var speedPicker: NSPopUpButton!
     
@@ -107,9 +109,11 @@ class ScrollTabController: NSViewController {
         trackpad.bindingTarget <~ trackpadToggle.reactive.boolValues
         trackpadToggle.reactive.boolValue <~ trackpad.producer
         
-        /// Natural direction
-        reverseDirection.bindingTarget <~ reverseDirectionToggle.reactive.boolValues
-        reverseDirectionToggle.reactive.boolValue <~ reverseDirection.producer
+        /// Reverse direction
+        reverseDirectionVertical.bindingTarget <~ reverseDirectionVerticalToggle.reactive.boolValues
+        reverseDirectionVerticalToggle.reactive.boolValue <~ reverseDirectionVertical.producer
+        reverseDirectionHorizontal.bindingTarget <~ reverseDirectionHorizontalToggle.reactive.boolValues
+        reverseDirectionHorizontalToggle.reactive.boolValue <~ reverseDirectionHorizontal.producer
         
         /// Scroll speed
         scrollSpeed.bindingTarget <~ speedPicker.reactive.selectedIdentifiers.map({ identifier in
@@ -228,7 +232,7 @@ class ScrollTabController: NSViewController {
         ///     - Once we shipped it, we should probably update the Captured Buttons Guide: https://redirect.macmousefix.com/?target=mmf-captured-buttons-guide - or create a new guide.
         
         let modProducer = SignalProducer.combineLatest(horizontalMod.producer, zoomMod.producer, swiftMod.producer, preciseMod.producer) /// We could reuse this down in the Keyboard modifier section, but currently, we're not
-        let captureProducer = SignalProducer.combineLatest(smooth.producer, reverseDirection.producer, scrollSpeed.producer, modProducer).combinePrevious()
+        let captureProducer = SignalProducer.combineLatest(smooth.producer, reverseDirectionVertical.producer, reverseDirectionHorizontal.producer, scrollSpeed.producer, modProducer).combinePrevious()
             
         captureProducer.startWithValues { (previous, current) in
             
@@ -236,16 +240,16 @@ class ScrollTabController: NSViewController {
             
             if let toastedWindow = NSApp.mainWindow {
                 
-                let (smooth0, reverse0, speed0, mods0) = previous
-                let (smooth1, reverse1, speed1, mods1) = current
-                
+                let (smooth0, reverseV0, reverseH0, speed0, mods0) = previous
+                let (smooth1, reverseV1, reverseH1, speed1, mods1) = current
+
                 let (horizontal0, zoom0, swift0, precise0) = mods0
                 let (horizontal1, zoom1, swift1, precise1) = mods1
-                
-                let wasCaptured = smooth0 != "off" || reverse0 || speed0 != "system" || horizontal0 != 0 || zoom0 != 0 || swift0 != 0 || precise0 != 0 /// Including the modifiers here is a little 'semantically incorrect' but we still do it. See `getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:` [Sep 2025]
-                let isCaptured  = smooth1 != "off" || reverse1 || speed1 != "system" || horizontal1 != 0 || zoom1 != 0 || swift1 != 0 || precise1 != 0
-                    
-                DDLogDebug("ScrollTab - smooth: \(smooth0)->\(smooth1) reverse: \(reverse0)->\(reverse1) speed: \(speed0)->\(speed1) horizontal: \(horizontal0)->\(horizontal1) zoom: \(zoom0)->\(zoom1) swift: \(swift0)->\(swift1) precise: \(precise0)->\(precise1)")
+
+                let wasCaptured = smooth0 != "off" || reverseV0 || reverseH0 || speed0 != "system" || horizontal0 != 0 || zoom0 != 0 || swift0 != 0 || precise0 != 0 /// Including the modifiers here is a little 'semantically incorrect' but we still do it. See `getCapturedButtonsAndExcludeButtonsThatAreOnlyCapturedByModifier:` [Sep 2025]
+                let isCaptured  = smooth1 != "off" || reverseV1 || reverseH1 || speed1 != "system" || horizontal1 != 0 || zoom1 != 0 || swift1 != 0 || precise1 != 0
+
+                DDLogDebug("ScrollTab - smooth: \(smooth0)->\(smooth1) reverseV: \(reverseV0)->\(reverseV1) reverseH: \(reverseH0)->\(reverseH1) speed: \(speed0)->\(speed1) horizontal: \(horizontal0)->\(horizontal1) zoom: \(zoom0)->\(zoom1) swift: \(swift0)->\(swift1) precise: \(precise0)->\(precise1)")
                 
                 if wasCaptured && !isCaptured {
                     CaptureToasts.showScrollWheelCaptureToast(false)
