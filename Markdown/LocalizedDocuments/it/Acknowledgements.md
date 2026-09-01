@@ -78,6 +78,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!
 
+**settembre 2026**
+
+- 🇺🇸&nbsp;Clayton&nbsp;Tucker
+
 **agosto 2026**
 
 - 🇺🇸&nbsp;Cm - "Love it"

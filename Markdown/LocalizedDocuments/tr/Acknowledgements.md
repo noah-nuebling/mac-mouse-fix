@@ -78,6 +78,10 @@ Desteğiniz için teşekkürler! :)
 
 Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem bir Milkshake** ısmarladılar. (Hatta bazıları bir mesaj bile gönderdi!) *Ekstra şeker* için teşekkürler!
 
+**Eylül 2026**
+
+- 🇺🇸&nbsp;Clayton&nbsp;Tucker
+
 **Ağustos 2026**
 
 - 🇺🇸&nbsp;Cm - "Love it"
