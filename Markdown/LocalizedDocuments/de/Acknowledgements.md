@@ -74,6 +74,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **September 2026**
 
+- 🇺🇸&nbsp;Brandy&nbsp;Allen - "Very Useful App"
 - 🇺🇸&nbsp;Clayton&nbsp;Tucker
 
 **August 2026**

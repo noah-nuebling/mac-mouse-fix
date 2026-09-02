@@ -74,6 +74,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **září 2026**
 
+- 🇺🇸&nbsp;Brandy&nbsp;Allen - "Very Useful App"
 - 🇺🇸&nbsp;Clayton&nbsp;Tucker
 
 **srpen 2026**

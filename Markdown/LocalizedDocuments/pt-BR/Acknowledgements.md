@@ -76,6 +76,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **setembro 2026**
 
+- 🇺🇸&nbsp;Brandy&nbsp;Allen - "Very Useful App"
 - 🇺🇸&nbsp;Clayton&nbsp;Tucker
 
 **agosto 2026**

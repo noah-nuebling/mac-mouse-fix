@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **septembre 2026**
 
+- 🇺🇸&nbsp;Brandy&nbsp;Allen - "Very Useful App"
 - 🇺🇸&nbsp;Clayton&nbsp;Tucker
 
 **août 2026**

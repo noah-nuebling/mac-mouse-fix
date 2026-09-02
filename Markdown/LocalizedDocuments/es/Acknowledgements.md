@@ -74,6 +74,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **septiembre 2026**
 
+- 🇺🇸&nbsp;Brandy&nbsp;Allen - "Very Useful App"
 - 🇺🇸&nbsp;Clayton&nbsp;Tucker
 
 **agosto 2026**
