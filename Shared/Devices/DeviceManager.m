@@ -32,6 +32,7 @@
 
 #import "SharedUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "LogitechCIDActivator.h"
 
 @implementation DeviceManager
 
@@ -206,6 +207,10 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
     /// Register a callback for USB device removal with the HID Manager
     IOHIDManagerRegisterDeviceRemovalCallback(_manager, &handleDeviceRemoval, NULL);
 
+    /// HID++ lives on a separate vendor-defined interface, not on the generic
+    /// mouse interface matched by this manager.
+    [[LogitechCIDActivator shared] start];
+
 }
 
 # pragma mark - Handle callbacks
@@ -264,6 +269,9 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         
     #endif
         
+        /// Activate Logitech HID++ CID diversion for extra buttons
+        [[LogitechCIDActivator shared] handleDeviceAttached: device];
+
         /// Log
         DDLogInfo("New device added to attached devices:\n%@", newDevice);
         
@@ -304,6 +312,9 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
 //        [Scroll decide];
 //        [ButtonInputReceiver decide];
         
+        /// Clean up Logitech CID diversion
+        [[LogitechCIDActivator shared] handleDeviceRemoved: device];
+
         /// Log
         
         DDLogInfo("Attached device was removed:\n%@", attachedDevice);
