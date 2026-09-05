@@ -143,8 +143,16 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
 //    MFMouseButtonNumber buttonNumber = ((NSNumber *)rowDict[kMFRemapsKeyTrigger][kMFButtonTriggerKeyButtonNumber]).unsignedIntValue;
     
     NSDictionary *selectedEffect = rowDict[kMFRemapsKeyEffect];
-    
+
     NSMutableArray *oneShotEffectsTable = @[
+        @{
+            @"ui": MFLocalizedString(@"effect.none", @""),
+            @"tool": MFLocalizedString(@"effect.none.hint", @""),
+            @"dict": @{
+              kMFActionDictKeyType: kMFActionDictTypeNone,
+            }
+        },
+        separatorEffectsTableEntry(),
         @{
             @"ui": MFLocalizedString(
                 @"effect.look-up",
