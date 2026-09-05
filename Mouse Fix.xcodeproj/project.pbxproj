@@ -425,10 +425,80 @@
 		4FFAEBEA2E74367300832CE2 /* AddField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFAEBE92E74367300832CE2 /* AddField.swift */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
 		4FFE2895291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		F7200000000000000000000C /* M720TestHostSmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7200000000000000000000B /* M720TestHostSmokeTests.swift */; };
+		F7200000000000000000000E /* M720ProfileAndPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7200000000000000000000D /* M720ProfileAndPolicyTests.swift */; };
+		F72000000000000000000010 /* M720Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7200000000000000000000F /* M720Profile.swift */; };
+		F73100000000000000000001 /* HIDPPLongReportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73100000000000000000002 /* HIDPPLongReportTests.swift */; };
+		F73100000000000000000003 /* HIDPPLongReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73100000000000000000004 /* HIDPPLongReport.swift */; };
+		F73100000000000000000006 /* HIDPPTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73100000000000000000007 /* HIDPPTransport.swift */; };
+		F73100000000000000000008 /* HIDPPScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73100000000000000000009 /* HIDPPScheduler.swift */; };
+		F7310000000000000000000A /* ManualScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7310000000000000000000B /* ManualScheduler.swift */; };
+		F7310000000000000000000C /* ScriptedHIDPPTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7310000000000000000000D /* ScriptedHIDPPTransport.swift */; };
+		F72200000000000000000001 /* ReprogControlsV4Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72200000000000000000002 /* ReprogControlsV4Tests.swift */; };
+		F72200000000000000000003 /* ReprogControlsV4.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72200000000000000000004 /* ReprogControlsV4.swift */; };
+		F72300000000000000000001 /* M720CapturePolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72300000000000000000002 /* M720CapturePolicy.swift */; };
+		F72300000000000000000003 /* M720Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72300000000000000000004 /* M720Types.swift */; };
+		F72300000000000000000005 /* M720PressedSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72300000000000000000006 /* M720PressedSetTests.swift */; };
+		F72300000000000000000007 /* M720PressedSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72300000000000000000008 /* M720PressedSet.swift */; };
+		F72400000000000000000001 /* HIDPPRequestPipelineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72400000000000000000002 /* HIDPPRequestPipelineTests.swift */; };
+		F72400000000000000000003 /* HIDPPRequestPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72400000000000000000004 /* HIDPPRequestPipeline.swift */; };
+		F72500000000000000000001 /* M720InputRoutingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72500000000000000000002 /* M720InputRoutingTests.swift */; };
+		F72800000000000000000001 /* M720OwnershipJournalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72800000000000000000002 /* M720OwnershipJournalTests.swift */; };
+		F72800000000000000000003 /* M720OwnershipJournal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72800000000000000000004 /* M720OwnershipJournal.swift */; };
+		F72900000000000000000001 /* M720HIDPPSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72900000000000000000002 /* M720HIDPPSessionTests.swift */; };
+		F72900000000000000000003 /* M720HIDPPSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72900000000000000000004 /* M720HIDPPSession.swift */; };
+		F72B00000000000000000001 /* BLEHIDPPTransportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72B00000000000000000002 /* BLEHIDPPTransportTests.swift */; };
+		F72B00000000000000000003 /* BLEHIDPPTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72B00000000000000000004 /* BLEHIDPPTransport.swift */; };
+		F72C00000000000000000001 /* M720ControllerLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72C00000000000000000002 /* M720ControllerLifecycleTests.swift */; };
+		F72C00000000000000000003 /* M720HIDPPController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72C00000000000000000004 /* M720HIDPPController.swift */; };
+		F72D00000000000000000001 /* M720AddModeIPCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72D00000000000000000002 /* M720AddModeIPCTests.swift */; };
+		F72D00000000000000000003 /* M720IPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72D00000000000000000004 /* M720IPC.swift */; };
+		F73000000000000000000001 /* M720DiagnosticCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73000000000000000000002 /* M720DiagnosticCommand.swift */; };
+		F73000000000000000000003 /* M720DiagnosticJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73000000000000000000004 /* M720DiagnosticJSON.swift */; };
+		F73000000000000000000007 /* M720DiagnosticIOHIDClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73000000000000000000008 /* M720DiagnosticIOHIDClient.swift */; };
+		F73000000000000000000009 /* M720DiagnosticMessagePortClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7300000000000000000000A /* M720DiagnosticMessagePortClient.swift */; };
+		F73200000000000000000001 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7300000000000000000000B /* main.swift */; };
+		F73200000000000000000002 /* M720DiagnosticCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73000000000000000000002 /* M720DiagnosticCommand.swift */; };
+		F73200000000000000000003 /* M720DiagnosticMessagePortClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7300000000000000000000A /* M720DiagnosticMessagePortClient.swift */; };
+		F73200000000000000000004 /* M720DiagnosticIOHIDClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73000000000000000000008 /* M720DiagnosticIOHIDClient.swift */; };
+		F73200000000000000000005 /* M720DiagnosticJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73000000000000000000004 /* M720DiagnosticJSON.swift */; };
+		F73200000000000000000006 /* HIDPPLongReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73100000000000000000004 /* HIDPPLongReport.swift */; };
+		F73200000000000000000007 /* ReprogControlsV4.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72200000000000000000004 /* ReprogControlsV4.swift */; };
+		F73200000000000000000008 /* M720Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7200000000000000000000F /* M720Profile.swift */; };
+		F73200000000000000000009 /* M720IPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72D00000000000000000004 /* M720IPC.swift */; };
+		F7320000000000000000000A /* M720Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72300000000000000000004 /* M720Types.swift */; };
+		F73300000000000000000001 /* M720-HIDPP-synthetic.json in Resources */ = {isa = PBXBuildFile; fileRef = F73300000000000000000002 /* M720-HIDPP-synthetic.json */; };
+		F73400000000000000000001 /* M720-B015-reference.json in Resources */ = {isa = PBXBuildFile; fileRef = F73400000000000000000002 /* M720-B015-reference.json */; };
+		F72D00000000000000000005 /* M720IPC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72D00000000000000000004 /* M720IPC.swift */; };
+		F72D00000000000000000006 /* M720Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72300000000000000000004 /* M720Types.swift */; };
+		F72D00000000000000000007 /* M720AddModeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72D00000000000000000008 /* M720AddModeCoordinator.swift */; };
+		F72E00000000000000000001 /* M720AddModeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72E00000000000000000003 /* M720AddModeClient.swift */; };
+		F72E00000000000000000002 /* M720AddModeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72E00000000000000000003 /* M720AddModeClient.swift */; };
+		F72E00000000000000000004 /* M720CaptureUIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72E00000000000000000005 /* M720CaptureUIController.swift */; };
+		F72F00000000000000000001 /* M720ShutdownTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72F00000000000000000002 /* M720ShutdownTests.swift */; };
+		F72F00000000000000000003 /* M720ShutdownCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F72F00000000000000000004 /* M720ShutdownCoordinator.swift */; };
+		F74000000000000000000001 /* UnifyingReceiverProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74000000000000000000002 /* UnifyingReceiverProtocolTests.swift */; };
+		F74000000000000000000003 /* M720-405E-Unifying-reference.json in Resources */ = {isa = PBXBuildFile; fileRef = F74000000000000000000004 /* M720-405E-Unifying-reference.json */; };
+		F74000000000000000000005 /* UnifyingReceiverProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74000000000000000000006 /* UnifyingReceiverProtocol.swift */; };
+		F74100000000000000000001 /* UnifyingReceiverChannelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74100000000000000000002 /* UnifyingReceiverChannelTests.swift */; };
+		F74100000000000000000003 /* UnifyingReceiverChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74100000000000000000004 /* UnifyingReceiverChannel.swift */; };
+		F74200000000000000000001 /* UnifyingReceiverManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74200000000000000000002 /* UnifyingReceiverManagerTests.swift */; };
+		F74200000000000000000003 /* UnifyingReceiverManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74200000000000000000004 /* UnifyingReceiverManager.swift */; };
+		F74300000000000000000001 /* UnifyingReceiverIOTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74300000000000000000002 /* UnifyingReceiverIOTests.swift */; };
+		F74300000000000000000003 /* UnifyingReceiverIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74300000000000000000004 /* UnifyingReceiverIO.swift */; };
+		F74400000000000000000001 /* M720UnifyingReceiverSessionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74400000000000000000002 /* M720UnifyingReceiverSessionTests.swift */; };
+		F74400000000000000000003 /* M720UnifyingReceiverSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74400000000000000000004 /* M720UnifyingReceiverSession.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		4F94F73525E6138800D9F24A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FCECD7821092354001F1078 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4FCECD7F21092354001F1078;
+			remoteInfo = "Mac Mouse Fix Helper";
+		};
+		F72000000000000000000006 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4FCECD7821092354001F1078 /* Project object */;
 			proxyType = 1;
@@ -2398,6 +2468,57 @@
 		4FDB94332FE75270001E05CB /* FixDockSwipes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FixDockSwipes.m; sourceTree = "<group>"; };
 		4FDB94342FE75270001E05CB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4FDB94352FE75270001E05CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		F72000000000000000000002 /* M720 HIDPP Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "M720 HIDPP Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7200000000000000000000B /* M720TestHostSmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720TestHostSmokeTests.swift; path = M720HIDPPTests/M720TestHostSmokeTests.swift; sourceTree = "<group>"; };
+		F7200000000000000000000D /* M720ProfileAndPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720ProfileAndPolicyTests.swift; path = M720HIDPPTests/M720ProfileAndPolicyTests.swift; sourceTree = "<group>"; };
+		F7200000000000000000000F /* M720Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720Profile.swift; sourceTree = "<group>"; };
+		F73100000000000000000002 /* HIDPPLongReportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HIDPPLongReportTests.swift; path = M720HIDPPTests/HIDPPLongReportTests.swift; sourceTree = "<group>"; };
+		F73100000000000000000004 /* HIDPPLongReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDPPLongReport.swift; sourceTree = "<group>"; };
+		F73100000000000000000007 /* HIDPPTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDPPTransport.swift; sourceTree = "<group>"; };
+		F73100000000000000000009 /* HIDPPScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDPPScheduler.swift; sourceTree = "<group>"; };
+		F7310000000000000000000B /* ManualScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ManualScheduler.swift; path = M720HIDPPTests/TestSupport/ManualScheduler.swift; sourceTree = "<group>"; };
+		F7310000000000000000000D /* ScriptedHIDPPTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScriptedHIDPPTransport.swift; path = M720HIDPPTests/TestSupport/ScriptedHIDPPTransport.swift; sourceTree = "<group>"; };
+		F72200000000000000000002 /* ReprogControlsV4Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReprogControlsV4Tests.swift; path = M720HIDPPTests/ReprogControlsV4Tests.swift; sourceTree = "<group>"; };
+		F72200000000000000000004 /* ReprogControlsV4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReprogControlsV4.swift; sourceTree = "<group>"; };
+		F72300000000000000000002 /* M720CapturePolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720CapturePolicy.swift; sourceTree = "<group>"; };
+		F72300000000000000000004 /* M720Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720Types.swift; sourceTree = "<group>"; };
+		F72300000000000000000006 /* M720PressedSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720PressedSetTests.swift; path = M720HIDPPTests/M720PressedSetTests.swift; sourceTree = "<group>"; };
+		F72300000000000000000008 /* M720PressedSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720PressedSet.swift; sourceTree = "<group>"; };
+		F72400000000000000000002 /* HIDPPRequestPipelineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HIDPPRequestPipelineTests.swift; path = M720HIDPPTests/HIDPPRequestPipelineTests.swift; sourceTree = "<group>"; };
+		F72400000000000000000004 /* HIDPPRequestPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HIDPPRequestPipeline.swift; sourceTree = "<group>"; };
+		F72500000000000000000002 /* M720InputRoutingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720InputRoutingTests.swift; path = M720HIDPPTests/M720InputRoutingTests.swift; sourceTree = "<group>"; };
+		F72800000000000000000002 /* M720OwnershipJournalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720OwnershipJournalTests.swift; path = M720HIDPPTests/M720OwnershipJournalTests.swift; sourceTree = "<group>"; };
+		F72800000000000000000004 /* M720OwnershipJournal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720OwnershipJournal.swift; sourceTree = "<group>"; };
+		F72900000000000000000002 /* M720HIDPPSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720HIDPPSessionTests.swift; path = M720HIDPPTests/M720HIDPPSessionTests.swift; sourceTree = "<group>"; };
+		F72900000000000000000004 /* M720HIDPPSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720HIDPPSession.swift; sourceTree = "<group>"; };
+		F72B00000000000000000002 /* BLEHIDPPTransportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BLEHIDPPTransportTests.swift; path = M720HIDPPTests/BLEHIDPPTransportTests.swift; sourceTree = "<group>"; };
+		F72B00000000000000000004 /* BLEHIDPPTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BLEHIDPPTransport.swift; sourceTree = "<group>"; };
+		F74000000000000000000002 /* UnifyingReceiverProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UnifyingReceiverProtocolTests.swift; path = M720HIDPPTests/UnifyingReceiverProtocolTests.swift; sourceTree = "<group>"; };
+		F74000000000000000000004 /* M720-405E-Unifying-reference.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = "M720-405E-Unifying-reference.json"; path = "M720HIDPPTests/Fixtures/M720-405E-Unifying-reference.json"; sourceTree = "<group>"; };
+		F74000000000000000000006 /* UnifyingReceiverProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifyingReceiverProtocol.swift; sourceTree = "<group>"; };
+		F74100000000000000000002 /* UnifyingReceiverChannelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UnifyingReceiverChannelTests.swift; path = M720HIDPPTests/UnifyingReceiverChannelTests.swift; sourceTree = "<group>"; };
+		F74100000000000000000004 /* UnifyingReceiverChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifyingReceiverChannel.swift; sourceTree = "<group>"; };
+		F74200000000000000000002 /* UnifyingReceiverManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UnifyingReceiverManagerTests.swift; path = M720HIDPPTests/UnifyingReceiverManagerTests.swift; sourceTree = "<group>"; };
+		F74200000000000000000004 /* UnifyingReceiverManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifyingReceiverManager.swift; sourceTree = "<group>"; };
+		F74300000000000000000002 /* UnifyingReceiverIOTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UnifyingReceiverIOTests.swift; path = M720HIDPPTests/UnifyingReceiverIOTests.swift; sourceTree = "<group>"; };
+		F74300000000000000000004 /* UnifyingReceiverIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifyingReceiverIO.swift; sourceTree = "<group>"; };
+		F74400000000000000000002 /* M720UnifyingReceiverSessionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720UnifyingReceiverSessionTests.swift; path = M720HIDPPTests/M720UnifyingReceiverSessionTests.swift; sourceTree = "<group>"; };
+		F74400000000000000000004 /* M720UnifyingReceiverSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720UnifyingReceiverSession.swift; sourceTree = "<group>"; };
+		F72C00000000000000000002 /* M720ControllerLifecycleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720ControllerLifecycleTests.swift; path = M720HIDPPTests/M720ControllerLifecycleTests.swift; sourceTree = "<group>"; };
+		F72C00000000000000000004 /* M720HIDPPController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720HIDPPController.swift; sourceTree = "<group>"; };
+		F72D00000000000000000002 /* M720AddModeIPCTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720AddModeIPCTests.swift; path = M720HIDPPTests/M720AddModeIPCTests.swift; sourceTree = "<group>"; };
+		F72D00000000000000000004 /* M720IPC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720IPC.swift; sourceTree = "<group>"; };
+		F72D00000000000000000008 /* M720AddModeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720AddModeCoordinator.swift; sourceTree = "<group>"; };
+		F72F00000000000000000002 /* M720ShutdownTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = M720ShutdownTests.swift; path = M720HIDPPTests/M720ShutdownTests.swift; sourceTree = "<group>"; };
+		F72F00000000000000000004 /* M720ShutdownCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720ShutdownCoordinator.swift; sourceTree = "<group>"; };
+		F73000000000000000000002 /* M720DiagnosticCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720DiagnosticCommand.swift; sourceTree = "<group>"; };
+		F73000000000000000000004 /* M720DiagnosticJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720DiagnosticJSON.swift; sourceTree = "<group>"; };
+		F73000000000000000000008 /* M720DiagnosticIOHIDClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720DiagnosticIOHIDClient.swift; sourceTree = "<group>"; };
+		F7300000000000000000000A /* M720DiagnosticMessagePortClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720DiagnosticMessagePortClient.swift; sourceTree = "<group>"; };
+		F7300000000000000000000B /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		F72100000000000000000002 /* M720 HIDPP Diagnostic */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "M720 HIDPP Diagnostic"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F73300000000000000000002 /* M720-HIDPP-synthetic.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = "M720-HIDPP-synthetic.json"; path = "M720HIDPPTests/Fixtures/M720-HIDPP-synthetic.json"; sourceTree = "<group>"; };
+		F73400000000000000000002 /* M720-B015-reference.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = "M720-B015-reference.json"; path = "M720HIDPPTests/Fixtures/M720-B015-reference.json"; sourceTree = "<group>"; };
 		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
 		4FDE757D28B0E66900662314 /* License.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = License.h; sourceTree = "<group>"; };
 		4FDE759928B1401400662314 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
@@ -2583,6 +2704,8 @@
 		4FFA97392EC2261600A52849 /* MFSimpleDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFSimpleDataClass.m; sourceTree = "<group>"; };
 		4FFAD8EF28677F94005DD496 /* PointerConfigObjC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PointerConfigObjC.h; sourceTree = "<group>"; };
 		4FFAEBE92E74367300832CE2 /* AddField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddField.swift; sourceTree = "<group>"; };
+		F72E00000000000000000003 /* M720AddModeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720AddModeClient.swift; sourceTree = "<group>"; };
+		F72E00000000000000000005 /* M720CaptureUIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M720CaptureUIController.swift; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2656,6 +2779,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FDA9D512FE96D8D00610BEB /* SkyLight.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F72000000000000000000004 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F72100000000000000000004 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6640,6 +6777,8 @@
 			isa = PBXGroup;
 			children = (
 				4F6F679F28A8141800C6C40F /* ButtonTabController.swift */,
+				F72E00000000000000000003 /* M720AddModeClient.swift */,
+				F72E00000000000000000005 /* M720CaptureUIController.swift */,
 				4F4150652927B6A40040BA7D /* AddField_New.swift */,
 				4FFAEBE92E74367300832CE2 /* AddField.swift */,
 				4FA8A30C28A9509E001E740F /* Options */,
@@ -7240,6 +7379,7 @@
 		4FCECD7721092354001F1078 = {
 			isa = PBXGroup;
 			children = (
+				F73000000000000000000005 /* Diagnostics */,
 				4FF6652B25F2C7B000689B77 /* Shared */,
 				4FF665BE25F2C92700689B77 /* App */,
 				4FF6660725F2C93A00689B77 /* Helper */,
@@ -7253,6 +7393,26 @@
 			);
 			sourceTree = "<group>";
 		};
+		F73000000000000000000005 /* Diagnostics */ = {
+			isa = PBXGroup;
+			children = (
+				F73000000000000000000006 /* M720HIDPPDiagnostic */,
+			);
+			path = Diagnostics;
+			sourceTree = "<group>";
+		};
+		F73000000000000000000006 /* M720HIDPPDiagnostic */ = {
+			isa = PBXGroup;
+			children = (
+				F73000000000000000000002 /* M720DiagnosticCommand.swift */,
+				F73000000000000000000004 /* M720DiagnosticJSON.swift */,
+				F73000000000000000000008 /* M720DiagnosticIOHIDClient.swift */,
+				F7300000000000000000000A /* M720DiagnosticMessagePortClient.swift */,
+				F7300000000000000000000B /* main.swift */,
+			);
+			path = M720HIDPPDiagnostic;
+			sourceTree = "<group>";
+		};
 		4FCECD8121092354001F1078 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -7261,6 +7421,8 @@
 				4F8B01A92C348A3A00F3AF8D /* Localization Screenshot Taker.xctest */,
 				4F1667C92C6A6717009E4924 /* XCStringsDummyApp.app */,
 				4FDB941A2FE743AA001E05CB /* Tests.app */,
+				F72000000000000000000002 /* M720 HIDPP Tests.xctest */,
+				F72100000000000000000002 /* M720 HIDPP Diagnostic */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -7358,6 +7520,29 @@
 				4FDB94342FE75270001E05CB /* main.m */,
 				4FDB94332FE75270001E05CB /* FixDockSwipes.m */,
 				4F8605A22FE81F5D00CC1147 /* Other */,
+				F7200000000000000000000B /* M720TestHostSmokeTests.swift */,
+				F7200000000000000000000D /* M720ProfileAndPolicyTests.swift */,
+				F72300000000000000000006 /* M720PressedSetTests.swift */,
+				F73100000000000000000002 /* HIDPPLongReportTests.swift */,
+				F72200000000000000000002 /* ReprogControlsV4Tests.swift */,
+				F72400000000000000000002 /* HIDPPRequestPipelineTests.swift */,
+				F72500000000000000000002 /* M720InputRoutingTests.swift */,
+				F72800000000000000000002 /* M720OwnershipJournalTests.swift */,
+				F72900000000000000000002 /* M720HIDPPSessionTests.swift */,
+				F72B00000000000000000002 /* BLEHIDPPTransportTests.swift */,
+				F72C00000000000000000002 /* M720ControllerLifecycleTests.swift */,
+				F72D00000000000000000002 /* M720AddModeIPCTests.swift */,
+				F72F00000000000000000002 /* M720ShutdownTests.swift */,
+				F74000000000000000000002 /* UnifyingReceiverProtocolTests.swift */,
+				F74100000000000000000002 /* UnifyingReceiverChannelTests.swift */,
+				F74200000000000000000002 /* UnifyingReceiverManagerTests.swift */,
+				F74300000000000000000002 /* UnifyingReceiverIOTests.swift */,
+				F74400000000000000000002 /* M720UnifyingReceiverSessionTests.swift */,
+				F73300000000000000000002 /* M720-HIDPP-synthetic.json */,
+				F73400000000000000000002 /* M720-B015-reference.json */,
+				F74000000000000000000004 /* M720-405E-Unifying-reference.json */,
+				F7310000000000000000000B /* ManualScheduler.swift */,
+				F7310000000000000000000D /* ScriptedHIDPPTransport.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -7652,6 +7837,7 @@
 		4FF6661425F2C93A00689B77 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				F72900000000000000000005 /* M720 */,
 				4FD9820C292A9BEE00645FE3 /* Coordinate */,
 				4FF6660C25F2C93A00689B77 /* Config */,
 				4FF6663C25F2C93A00689B77 /* Remap */,
@@ -7665,6 +7851,22 @@
 				4FF6664725F2C93A00689B77 /* PointerSpeed */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		F72900000000000000000005 /* M720 */ = {
+			isa = PBXGroup;
+			children = (
+				F72900000000000000000004 /* M720HIDPPSession.swift */,
+				F72B00000000000000000004 /* BLEHIDPPTransport.swift */,
+				F74100000000000000000004 /* UnifyingReceiverChannel.swift */,
+				F74200000000000000000004 /* UnifyingReceiverManager.swift */,
+				F74300000000000000000004 /* UnifyingReceiverIO.swift */,
+				F74400000000000000000004 /* M720UnifyingReceiverSession.swift */,
+				F72C00000000000000000004 /* M720HIDPPController.swift */,
+				F72D00000000000000000008 /* M720AddModeCoordinator.swift */,
+				F72F00000000000000000004 /* M720ShutdownCoordinator.swift */,
+			);
+			path = M720;
 			sourceTree = "<group>";
 		};
 		4FF6661525F2C93A00689B77 /* Modifiers */ = {
@@ -7867,6 +8069,8 @@
 		4FF6667925F2C93A00689B77 /* Devices */ = {
 			isa = PBXGroup;
 			children = (
+				F73100000000000000000005 /* HIDPP */,
+				F72000000000000000000011 /* M720 */,
 				4FF6667B25F2C93A00689B77 /* DeviceManager.h */,
 				4FF6667D25F2C93A00689B77 /* DeviceManager.m */,
 				4FD98209292A8C1700645FE3 /* ReactiveDeviceManager.swift */,
@@ -7874,6 +8078,32 @@
 				4FF6667A25F2C93A00689B77 /* Device.m */,
 			);
 			path = Devices;
+			sourceTree = "<group>";
+		};
+		F73100000000000000000005 /* HIDPP */ = {
+			isa = PBXGroup;
+			children = (
+				F73100000000000000000004 /* HIDPPLongReport.swift */,
+				F72200000000000000000004 /* ReprogControlsV4.swift */,
+				F73100000000000000000007 /* HIDPPTransport.swift */,
+				F73100000000000000000009 /* HIDPPScheduler.swift */,
+				F72400000000000000000004 /* HIDPPRequestPipeline.swift */,
+				F74000000000000000000006 /* UnifyingReceiverProtocol.swift */,
+			);
+			path = HIDPP;
+			sourceTree = "<group>";
+		};
+		F72000000000000000000011 /* M720 */ = {
+			isa = PBXGroup;
+			children = (
+				F72300000000000000000002 /* M720CapturePolicy.swift */,
+				F72300000000000000000008 /* M720PressedSet.swift */,
+				F7200000000000000000000F /* M720Profile.swift */,
+				F72800000000000000000004 /* M720OwnershipJournal.swift */,
+				F72300000000000000000004 /* M720Types.swift */,
+				F72D00000000000000000004 /* M720IPC.swift */,
+			);
+			path = M720;
 			sourceTree = "<group>";
 		};
 		4FF8C8A428960309007EC31F /* Old */ = {
@@ -8072,6 +8302,44 @@
 			productReference = 4FDB941A2FE743AA001E05CB /* Tests.app */;
 			productType = "com.apple.product-type.application";
 		};
+		F72000000000000000000001 /* M720 HIDPP Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F7200000000000000000000A /* Build configuration list for PBXNativeTarget "M720 HIDPP Tests" */;
+			buildPhases = (
+				F72000000000000000000003 /* Sources */,
+				F72000000000000000000004 /* Frameworks */,
+				F72000000000000000000005 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F72000000000000000000007 /* PBXTargetDependency */,
+			);
+			name = "M720 HIDPP Tests";
+			packageProductDependencies = (
+			);
+			productName = "M720 HIDPP Tests";
+			productReference = F72000000000000000000002 /* M720 HIDPP Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		F72100000000000000000001 /* M720 HIDPP Diagnostic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F72100000000000000000007 /* Build configuration list for PBXNativeTarget "M720 HIDPP Diagnostic" */;
+			buildPhases = (
+				F72100000000000000000003 /* Sources */,
+				F72100000000000000000004 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "M720 HIDPP Diagnostic";
+			packageProductDependencies = (
+			);
+			productName = "M720 HIDPP Diagnostic";
+			productReference = F72100000000000000000002 /* M720 HIDPP Diagnostic */;
+			productType = "com.apple.product-type.tool";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -8099,6 +8367,12 @@
 					4FCECD7F21092354001F1078 = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 1240;
+					};
+					F72000000000000000000001 = {
+						TestTargetID = 4FCECD7F21092354001F1078;
+					};
+					F72100000000000000000001 = {
+						CreatedOnToolsVersion = 16.0;
 					};
 					4FDB94192FE743AA001E05CB = {
 						CreatedOnToolsVersion = 27.0;
@@ -8155,6 +8429,8 @@
 				4F8B01A82C348A3A00F3AF8D /* Localization Screenshot Taker */,
 				4F1667C82C6A6717009E4924 /* XCStringsDummyApp */,
 				4FDB94192FE743AA001E05CB /* Tests */,
+				F72000000000000000000001 /* M720 HIDPP Tests */,
+				F72100000000000000000001 /* M720 HIDPP Diagnostic */,
 			);
 		};
 /* End PBXProject section */
@@ -8231,6 +8507,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FDB94392FE75270001E05CB /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F72000000000000000000005 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F73300000000000000000001 /* M720-HIDPP-synthetic.json in Resources */,
+				F73400000000000000000001 /* M720-B015-reference.json in Resources */,
+				F74000000000000000000003 /* M720-405E-Unifying-reference.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8339,6 +8625,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F72D00000000000000000005 /* M720IPC.swift in Sources */,
+				F72D00000000000000000006 /* M720Types.swift in Sources */,
+				F72E00000000000000000001 /* M720AddModeClient.swift in Sources */,
+				F72E00000000000000000004 /* M720CaptureUIController.swift in Sources */,
 				4F909D2828A0C3D2009349A2 /* ResizingTabWindow.swift in Sources */,
 				4FA40CF728A0CCCA00499E53 /* Curve.swift in Sources */,
 				4F1B41A52D4BACBA00026C94 /* NSData+Additions.m in Sources */,
@@ -8515,6 +8805,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F72D00000000000000000003 /* M720IPC.swift in Sources */,
+				F72E00000000000000000002 /* M720AddModeClient.swift in Sources */,
 				4FB8B29F2CCEBB1700A5A580 /* GetTrialState.swift in Sources */,
 				4F9C9B58268A29B70083DED0 /* RollingAverage.swift in Sources */,
 				4FFA4E4428B7D28E0062A1FE /* ConstraintUtility.swift in Sources */,
@@ -8566,6 +8858,26 @@
 				4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */,
 				4FBC829C2DAE93AD00354981 /* MFObserver.m in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
+				F72300000000000000000001 /* M720CapturePolicy.swift in Sources */,
+				F72300000000000000000007 /* M720PressedSet.swift in Sources */,
+				F72000000000000000000010 /* M720Profile.swift in Sources */,
+				F72800000000000000000003 /* M720OwnershipJournal.swift in Sources */,
+				F72900000000000000000003 /* M720HIDPPSession.swift in Sources */,
+				F72B00000000000000000003 /* BLEHIDPPTransport.swift in Sources */,
+				F74100000000000000000003 /* UnifyingReceiverChannel.swift in Sources */,
+				F74200000000000000000003 /* UnifyingReceiverManager.swift in Sources */,
+				F74300000000000000000003 /* UnifyingReceiverIO.swift in Sources */,
+				F74400000000000000000003 /* M720UnifyingReceiverSession.swift in Sources */,
+				F72C00000000000000000003 /* M720HIDPPController.swift in Sources */,
+				F72D00000000000000000007 /* M720AddModeCoordinator.swift in Sources */,
+				F72F00000000000000000003 /* M720ShutdownCoordinator.swift in Sources */,
+				F72300000000000000000003 /* M720Types.swift in Sources */,
+				F73100000000000000000003 /* HIDPPLongReport.swift in Sources */,
+				F72200000000000000000003 /* ReprogControlsV4.swift in Sources */,
+				F73100000000000000000006 /* HIDPPTransport.swift in Sources */,
+				F73100000000000000000008 /* HIDPPScheduler.swift in Sources */,
+				F72400000000000000000003 /* HIDPPRequestPipeline.swift in Sources */,
+				F74000000000000000000005 /* UnifyingReceiverProtocol.swift in Sources */,
 				4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */,
 				4F3A40B1266BBC5000436821 /* Curve.swift in Sources */,
 				4FF27DD82B95B108004744E1 /* Shorthands.swift in Sources */,
@@ -8697,6 +9009,54 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F72000000000000000000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7200000000000000000000C /* M720TestHostSmokeTests.swift in Sources */,
+				F7200000000000000000000E /* M720ProfileAndPolicyTests.swift in Sources */,
+				F72300000000000000000005 /* M720PressedSetTests.swift in Sources */,
+				F73100000000000000000001 /* HIDPPLongReportTests.swift in Sources */,
+				F72200000000000000000001 /* ReprogControlsV4Tests.swift in Sources */,
+				F72400000000000000000001 /* HIDPPRequestPipelineTests.swift in Sources */,
+				F72500000000000000000001 /* M720InputRoutingTests.swift in Sources */,
+				F72800000000000000000001 /* M720OwnershipJournalTests.swift in Sources */,
+				F72900000000000000000001 /* M720HIDPPSessionTests.swift in Sources */,
+				F72B00000000000000000001 /* BLEHIDPPTransportTests.swift in Sources */,
+				F72C00000000000000000001 /* M720ControllerLifecycleTests.swift in Sources */,
+				F72D00000000000000000001 /* M720AddModeIPCTests.swift in Sources */,
+				F72F00000000000000000001 /* M720ShutdownTests.swift in Sources */,
+				F74000000000000000000001 /* UnifyingReceiverProtocolTests.swift in Sources */,
+				F74100000000000000000001 /* UnifyingReceiverChannelTests.swift in Sources */,
+				F74200000000000000000001 /* UnifyingReceiverManagerTests.swift in Sources */,
+				F74300000000000000000001 /* UnifyingReceiverIOTests.swift in Sources */,
+				F74400000000000000000001 /* M720UnifyingReceiverSessionTests.swift in Sources */,
+				F73000000000000000000001 /* M720DiagnosticCommand.swift in Sources */,
+				F73000000000000000000003 /* M720DiagnosticJSON.swift in Sources */,
+				F73000000000000000000007 /* M720DiagnosticIOHIDClient.swift in Sources */,
+				F73000000000000000000009 /* M720DiagnosticMessagePortClient.swift in Sources */,
+				F7310000000000000000000A /* ManualScheduler.swift in Sources */,
+				F7310000000000000000000C /* ScriptedHIDPPTransport.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F72100000000000000000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F73200000000000000000001 /* main.swift in Sources */,
+				F73200000000000000000002 /* M720DiagnosticCommand.swift in Sources */,
+				F73200000000000000000003 /* M720DiagnosticMessagePortClient.swift in Sources */,
+				F73200000000000000000004 /* M720DiagnosticIOHIDClient.swift in Sources */,
+				F73200000000000000000005 /* M720DiagnosticJSON.swift in Sources */,
+				F73200000000000000000006 /* HIDPPLongReport.swift in Sources */,
+				F73200000000000000000007 /* ReprogControlsV4.swift in Sources */,
+				F73200000000000000000008 /* M720Profile.swift in Sources */,
+				F73200000000000000000009 /* M720IPC.swift in Sources */,
+				F7320000000000000000000A /* M720Types.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -8704,6 +9064,11 @@
 			isa = PBXTargetDependency;
 			target = 4FCECD7F21092354001F1078 /* Mac Mouse Fix Helper */;
 			targetProxy = 4F94F73525E6138800D9F24A /* PBXContainerItemProxy */;
+		};
+		F72000000000000000000007 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4FCECD7F21092354001F1078 /* Mac Mouse Fix Helper */;
+			targetProxy = F72000000000000000000006 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -9363,6 +9728,66 @@
 			};
 			name = Release;
 		};
+		F72000000000000000000008 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LM5Z78756B;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper.m720-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper";
+			};
+			name = Debug;
+		};
+		F72000000000000000000009 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LM5Z78756B;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix.helper.m720-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper";
+			};
+			name = Release;
+		};
+		F72100000000000000000005 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LM5Z78756B;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F72100000000000000000006 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LM5Z78756B;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -9416,6 +9841,24 @@
 			buildConfigurations = (
 				4FDB94272FE743AD001E05CB /* Debug */,
 				4FDB94282FE743AD001E05CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F7200000000000000000000A /* Build configuration list for PBXNativeTarget "M720 HIDPP Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F72000000000000000000008 /* Debug */,
+				F72000000000000000000009 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F72100000000000000000007 /* Build configuration list for PBXNativeTarget "M720 HIDPP Diagnostic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F72100000000000000000005 /* Debug */,
+				F72100000000000000000006 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

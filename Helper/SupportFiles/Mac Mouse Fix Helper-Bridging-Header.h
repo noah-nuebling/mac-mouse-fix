@@ -9,6 +9,7 @@
 #import "DisplayLink.h"
 #import "AnimatorDeclarations.h"
 #import "Config.h"
+#import "MFMessagePort.h"
 #import "ScrollConfigObjC.h"
 #import "PointerConfigObjC.h"
 #import "SubPixelator.h"

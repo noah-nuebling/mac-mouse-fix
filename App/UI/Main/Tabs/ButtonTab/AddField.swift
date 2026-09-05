@@ -18,9 +18,27 @@ import Cocoa
 
 @objc class AddField: NSBox {
 
+    enum AddFieldMode: Equatable {
+        case idle
+        case preparing
+        case recording
+    }
+
     /// Storage
     
     @IBOutlet var plusIconView: NSImageView!
+    private(set) var addMode: AddFieldMode = .idle
+    private(set) lazy var progressIndicator: NSProgressIndicator = {
+        let indicator = NSProgressIndicator()
+        indicator.style = .spinning
+        indicator.isIndeterminate = true
+        indicator.isDisplayedWhenStopped = true
+        indicator.controlSize = .small
+        indicator.isHidden = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.setAccessibilityIdentifier("axM720AddModeSpinner")
+        return indicator
+    }()
     
     /// Drawing
     ///     Overriding draw() breaks desktop tinting even if we just call super.draw()
@@ -34,6 +52,14 @@ import Cocoa
     var appearanceObservation: NSKeyValueObservation? = nil
     
     func coolInit() {
+
+        setAccessibilityIdentifier("axM720AddField")
+        let spinnerContainer = contentView ?? self
+        spinnerContainer.addSubview(progressIndicator)
+        NSLayoutConstraint.activate([
+            progressIndicator.centerXAnchor.constraint(equalTo: spinnerContainer.centerXAnchor),
+            progressIndicator.centerYAnchor.constraint(equalTo: spinnerContainer.centerYAnchor),
+        ])
         
         /// Override icon on older macOS
         /// Explanation: We bundle an svg fallback for the SFSymbol that is used by default, but the resolution is wayy to low it's rendered too large. Maybe there's a more elegant solution but this should work.
@@ -58,6 +84,21 @@ import Cocoa
             appearanceObservation = NSApp.observe(\.effectiveAppearance) { nsApp, change in
                 self.updateColors()
             }
+        }
+    }
+
+    func setAddMode(_ mode: AddFieldMode) {
+        guard addMode != mode else { return }
+        addMode = mode
+        plusIconView.isHidden = mode == .preparing
+        progressIndicator.isHidden = mode != .preparing
+        if mode == .preparing {
+            progressIndicator.startAnimation(nil)
+        } else {
+            progressIndicator.stopAnimation(nil)
+        }
+        if mode != .recording {
+            hoverEffect(enable: false)
         }
     }
     
