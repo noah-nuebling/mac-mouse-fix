@@ -96,6 +96,8 @@ static NSMutableDictionary *_swipeInfo;
 + (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase invertedFromDevice:(BOOL)invertedFromDevice {
     
     /// macOS 27 fix notes: (CGEventFields are now ignored, instead it relies on an IOHIDEvent) (See exploration in FixDockSwipes.m)
+    ///     Update: [Jul 2026] Attaching the IOHIDEvent must go through `SLEventSetIOHIDEvent` – the hardcoded CGEvent
+    ///         offsets in `CGEventSetIOHIDEvent` broke when the struct layout shifted. See CGEventHIDEventBridge.m.
     ///     Problems/TODOs: (macOS 27 Beta 2)
     ///         - Dock swipe transitions sometimes get stuck and you can't unstick it with the same dock-swipe – this is pretty bad! macOS should fix this but it doesn't happen with a Trackpad.
     ///         - (Translation issue) `scroll-effect.4-pinch.hint` confuses scrolling up and scrolling down. (At least under the default `naturalScrolling = 1` setting) (Putting this note into TouchSimulator.m because we made so many changes to translations on non-master branch.)
@@ -186,10 +188,16 @@ static NSMutableDictionary *_swipeInfo;
     CGEventRef e30 = NULL;
     if (@available(macOS 27.0, *)) {
         
-        /// Un-flip the delta
+        /// Un-flip progress and velocity
         ///     The `d` input args are already pre-flipped by `ModifiedDrag.m` if `invertedFromDevice == true`. But the macOS 27 path applies the flipping by itself somehow.
-        double __dockSwipeOriginOffset = _dockSwipeOriginOffset;
-        if (invertedFromDevice) __dockSwipeOriginOffset *= -1; /// Could also apply the unflipping to the `d` argument above.
+        ///     Both values need to be in the same coordinate space. If only progress is un-flipped, the release
+        ///     velocity points backwards and causes a visible bounce/stutter at the end of the transition.
+        double unflippedOriginOffset = _dockSwipeOriginOffset;
+        double unflippedExitSpeed = exitSpeed;
+        if (invertedFromDevice) {
+            unflippedOriginOffset *= -1;
+            unflippedExitSpeed *= -1;
+        }
         
         /// Create HIDEvent
         ///     Note: Setting the timestamp to `mach_absolute_time()` here would make some sense but we're not setting timestamps anywhere else when simulating gestures
@@ -200,16 +208,16 @@ static NSMutableDictionary *_swipeInfo;
         [hidEvent setOptions: options];
         [hidEvent setIntegerValue: type                             forField: kIOHIDEventFieldDockSwipeMotion];
         [hidEvent setIntegerValue: kIOHIDGestureFlavorDockPrimary   forField: kIOHIDEventFieldDockSwipeFlavor];
-        [hidEvent setDoubleValue: __dockSwipeOriginOffset           forField: kIOHIDEventFieldDockSwipeProgress];
+        [hidEvent setDoubleValue: unflippedOriginOffset             forField: kIOHIDEventFieldDockSwipeProgress];
         
         /// Attach velocity event on exit
         if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
             
             HIDEvent *childEvent = [[HIDEvent alloc] initWithType: kIOHIDEventTypeVelocity timestamp: 0 senderID: 0];
             
-            [childEvent setDoubleValue: exitSpeed forField: kIOHIDEventFieldVelocityX];
-            [childEvent setDoubleValue: exitSpeed forField: kIOHIDEventFieldVelocityY];
-            [childEvent setDoubleValue: 0.0       forField: kIOHIDEventFieldVelocityZ];
+            [childEvent setDoubleValue: unflippedExitSpeed forField: kIOHIDEventFieldVelocityX];
+            [childEvent setDoubleValue: unflippedExitSpeed forField: kIOHIDEventFieldVelocityY];
+            [childEvent setDoubleValue: 0.0                forField: kIOHIDEventFieldVelocityZ];
             
             [hidEvent appendEvent: childEvent];
         }
