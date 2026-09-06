@@ -186,6 +186,8 @@ typedef NSString*                                                       MFString
 #define kMFActionDictTypeSystemDefinedEvent                             @"systemDefinedEvent"
 #define kMFActionDictTypeMouseButtonClicks                              @"mouseButton"
 #define kMFActionDictTypeAddModeFeedback                                @"addModeAction"
+// `none` - Captures/consumes the button trigger (so the OS/app never sees the click) but performs no effect. Lets users "disable" a button/click-level instead of leaving it unmapped (unmapped triggers are passed through untouched, see `Buttons.handleInput()`).
+#define kMFActionDictTypeNone                                           @"none"
 
 // Variant keys
 
