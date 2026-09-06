@@ -146,14 +146,6 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
 
     NSMutableArray *oneShotEffectsTable = @[
         @{
-            @"ui": MFLocalizedString(@"effect.none", @""),
-            @"tool": MFLocalizedString(@"effect.none.hint", @""),
-            @"dict": @{
-              kMFActionDictKeyType: kMFActionDictTypeNone,
-            }
-        },
-        separatorEffectsTableEntry(),
-        @{
             @"ui": MFLocalizedString(
                 @"effect.look-up",
                 @""
@@ -177,6 +169,14 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
             @"tool": MFLocalizedString(@"effect.smart-zoom.hint", @""),
             @"dict": @{
               kMFActionDictKeyType: kMFActionDictTypeSmartZoom,
+            }
+        },
+        @{
+            @"ui": MFLocalizedString(@"effect.none", @""),
+            @"tool": MFLocalizedString(@"effect.none.hint", @""),
+            @"hideable": @YES,
+            @"dict": @{
+              kMFActionDictKeyType: kMFActionDictTypeNone,
             }
         },
         @{
