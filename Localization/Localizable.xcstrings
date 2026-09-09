@@ -6934,6 +6934,28 @@
         }
       }
     },
+    "effect.none" : {
+      "comment" : "Name of a Button action that captures/consumes the button click (so the OS or the frontmost app never sees it) but otherwise does nothing. Useful for disabling an unwanted button.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "None"
+          }
+        }
+      }
+    },
+    "effect.none.hint" : {
+      "comment" : "",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disables the button.\n \nThe click is captured so nothing happens - it won't be passed through to the app you're using."
+          }
+        }
+      }
+    },
     "effect.smart-zoom" : {
       "comment" : "",
       "localizations" : {
