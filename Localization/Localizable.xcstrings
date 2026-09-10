@@ -1584,6 +1584,7 @@
     },
     "beta-alert.back" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1650,6 +1651,7 @@
     },
     "beta-alert.body" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1716,6 +1718,7 @@
     },
     "beta-alert.confirm" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1782,6 +1785,7 @@
     },
     "beta-alert.title" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -10783,6 +10787,7 @@
     },
     "scroll-effect.app-switcher" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -10866,6 +10871,7 @@
     },
     "scroll-effect.app-switcher.hint" : {
       "comment" : "",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
