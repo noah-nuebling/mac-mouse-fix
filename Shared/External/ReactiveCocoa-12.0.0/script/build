@@ -1,0 +1,48 @@
+#!/bin/bash
+
+BUILD_DIRECTORY="build"
+CONFIGURATION=Release
+XCODE_WORKSPACE=ReactiveCocoa.xcworkspace
+
+if [[ -z $XCODE_SCHEME ]]; then
+    echo "Error: \$XCODE_SCHEME is not set!"
+    exit 1
+fi
+
+if [[ -z $XCODE_ACTION ]]; then
+    echo "Error: \$XCODE_ACTION is not set!"
+    exit 1
+fi
+
+if [[ -z $XCODE_SDK ]]; then
+    echo "Error: \$XCODE_SDK is not set!"
+    exit 1
+fi
+
+if [[ -z $XCODE_DESTINATION ]]; then
+    echo "Error: \$XCODE_DESTINATION is not set!"
+    exit 1
+fi
+
+set -o pipefail
+xcodebuild $XCODE_ACTION \
+    -workspace "$XCODE_WORKSPACE" \
+    -scheme "$XCODE_SCHEME" \
+    -sdk "$XCODE_SDK" \
+    -destination "$XCODE_DESTINATION" \
+    -derivedDataPath "${BUILD_DIRECTORY}" \
+    -configuration $CONFIGURATION \
+    ENABLE_TESTABILITY=YES \
+    GCC_GENERATE_DEBUGGING_SYMBOLS=NO \
+    RUN_CLANG_STATIC_ANALYZER=NO | xcpretty
+result=$?
+
+if [ "$result" -ne 0 ]; then
+    exit $result
+fi
+
+# Compile code in playgrounds
+if [[ "$XCODE_PLAYGROUND_TARGET" ]]; then
+    echo "Validating playground..."
+    . script/validate-playground.sh
+fi
