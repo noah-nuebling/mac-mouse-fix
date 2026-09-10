@@ -1,0 +1,87 @@
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - '[0-9]+\.[0-9]+\.[0-9]+(-rc\.[0-9]+)*'
+  pull_request:
+    types: [labeled]
+    branches:
+      - master
+
+env:
+  # Keep using Xcode 13 until CP releases the fix for watchOS verification on Xcode 14
+  # https://github.com/CocoaPods/CocoaPods/issues/11558
+  # https://github.com/CocoaPods/CocoaPods/pull/11660
+  DEVELOPER_DIR: /Applications/Xcode_13.4.1.app/Contents/Developer
+
+name: Verification | Release
+jobs:
+  carthage:
+    if: ${{ github.event_name == 'push' || ( github.event_name == 'pull_request' && github.event.label.name == 'ci:verify' ) }}
+    name: Carthage Verification
+    runs-on: macos-12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Recover cached dependencies
+        uses: actions/cache@v1
+        id: dependency-cache
+        with:
+          path: ~/Library/Caches/org.carthage.CarthageKit
+          key: 4-carthage-verification-${{ runner.os }}-${{ hashFiles('Cartfile.resolved') }}
+      - name: Carthage verification
+        run: |
+          ./script/carthage checkout
+          ./script/carthage build --cache-builds --no-skip-current
+
+  swiftpm-macos:
+    if: ${{ github.event_name == 'push' || ( github.event_name == 'pull_request' && github.event.label.name == 'ci:verify' ) }}
+    name: SwiftPM macOS Verification
+    runs-on: macos-12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Pull dependencies
+        run: |
+          swift package resolve
+      - name: Test via SwiftPM
+        run: |
+          swift --version
+          swift build
+
+  cocoapods:
+    if: ${{ github.event_name == 'push' || ( github.event_name == 'pull_request' && github.event.label.name == 'ci:verify' ) }}
+    name: CocoaPods Verification
+    runs-on: macos-12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: CocoaPods verification
+        run: |
+          pod repo update
+          pod lib lint --use-libraries
+
+  release-github:
+    if: startsWith(github.ref, 'refs/tags/')
+    name: GitHub Release
+    runs-on: macos-12
+    needs: [swiftpm-macos, cocoapods, carthage]
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v2
+      - name: create release
+        uses: softprops/action-gh-release@v1
+
+  release-cocoapods:
+    if: startsWith(github.ref, 'refs/tags/')
+    name: CocoaPods Release
+    runs-on: macos-12
+    needs: [swiftpm-macos, cocoapods, carthage]
+    steps:
+      - name: git checkout
+        uses: actions/checkout@v2
+      - name: pod trunk push
+        env:
+          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+        run: pod trunk push
