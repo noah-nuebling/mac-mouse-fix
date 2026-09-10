@@ -5,7 +5,7 @@ Naming scheme explanation:
 
 [10 Sep 2026]
 ReactiveCocoa and ReactiveSwift
-    Explanation:
+    Background:
         macOS 27 forced raising deployment target from 10.15 -> 12.0
         To avoid this, you have to use build setting `__DIAGNOSE_INVALID_DEPLOYMENT_TARGET_AS_ERROR`, 
         which I don't know how to apply to SPM packages -> Therefore I remove all SPM packages. 
@@ -16,4 +16,10 @@ ReactiveCocoa and ReactiveSwift
         ReactiveCocoa 12.0.0 and ReactiveSwift 7.1.1 were what SPM pulled in with dependency 
         rules "Up to next major version" 12.0.0 and 7.0.0 respectively on [10 Sep 2026]|
         (Not quite sure I understand because ReactiveSwift is on 7.2.1, currently – whatever)
+    Vendoring steps:
+        - Copy ReactiveCocoa 12.0.0 and ReactiveSwift 7.1.1 from GitHub and add them to the project
+        - Go to their .xcodeproj's and add __DIAGNOSE_INVALID_DEPLOYMENT_TARGET_AS_ERROR build setting
+        - Increase ReactiveCocoa minimum deployment target from 10.9 -> 10.12 to match ReactiveSwift (otherwise I can't get Xcode to build)
+        - Add the two frameworks as dependencies to Mac Mouse Fix and Mac Mouse Fix Helper targets
         
+

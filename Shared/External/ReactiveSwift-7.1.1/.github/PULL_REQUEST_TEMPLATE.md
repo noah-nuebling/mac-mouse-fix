@@ -1,3 +1,0 @@
-
-#### Checklist
-- [ ] Updated CHANGELOG.md.
