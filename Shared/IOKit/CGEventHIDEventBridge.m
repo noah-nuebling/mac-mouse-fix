@@ -36,6 +36,10 @@ void CGEventSetHIDEvent(CGEventRef cgEvent, HIDEvent *hidEvent) {
 }
 
 /// Defining our own IOHIDEvent -> CGEvent function, because we can't link against `_SLEventSetIOHIDEvent`. (See header)
+/// Using SLEventSetIOHIDEvent from SkyLight.framework instead of the custom pointer-offset hack,
+/// which broke in macOS 27 due to CGEvent internal layout changes.
+extern void SLEventSetIOHIDEvent(CGEventRef cgEvent, IOHIDEventRef iohidEvent);
+
 void CGEventSetIOHIDEvent(CGEventRef cgEvent, IOHIDEventRef iohidEvent) {
     
     /// Validate
@@ -53,14 +57,7 @@ void CGEventSetIOHIDEvent(CGEventRef cgEvent, IOHIDEventRef iohidEvent) {
     ///     Update: [Apr 2025] ... that means if we're replacing an existing IOHIDEventRef here it might get leaked.
     CFRetain(iohidEvent);
     
-    /// Get ptr
-    void *resultHIDPtr = (void *)cgEvent;
-    applyOffset(&resultHIDPtr, 0x18); /// Shift || Update: [Apr 2025] SLSIsEventMatchingSymbolicHotKey() disassembly might suggest that 0x18 points to a CGSEventRecord
-    resultHIDPtr = *(void **)resultHIDPtr; /// Dereference
-    applyOffset(&resultHIDPtr, 0xd0); /// Shift
-    
-    /// Store IOHIDEvent
-    *(IOHIDEventRef *)resultHIDPtr = iohidEvent; /// Store pointer to iohidEvent
+    SLEventSetIOHIDEvent(cgEvent, iohidEvent);
 }
 
 /// MARK: Helper
