@@ -20,6 +20,9 @@
 @implementation FileMonitor
 
 + (void)load {
+    if (NSProcessInfo.processInfo.environment[@"MMF_M720_UNIT_TESTING"] != nil) {
+        return;
+    }
     [self setupFSMonitor];
 }
 

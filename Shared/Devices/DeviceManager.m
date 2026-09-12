@@ -40,6 +40,17 @@
 static IOHIDManagerRef _manager;
 static NSMutableArray<Device *> *_attachedDevices;
 
+/// Removal callbacks carry the exact IOHIDDeviceRef retained by Device. Logical
+/// identifiers are deliberately excluded here because they may be absent or collide.
+static Device * _Nullable attachedDeviceWithExactIOHIDDevice(IOHIDDeviceRef iohidDevice) {
+    for (Device *device in _attachedDevices) {
+        if (device.iohidDevice == iohidDevice) {
+            return device;
+        }
+    }
+    return nil;
+}
+
 + (BOOL)devicesAreAttached {
     return _attachedDevices.count > 0;
 }
@@ -65,8 +76,13 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 //        return fromCache;
 //    } else {
 //
-        Device *result = nil;
-        
+        /// EventUtility may recreate a handle for the same logical device, so public
+        /// event routing keeps the legacy fallback after preferring pointer identity.
+        Device *result = attachedDeviceWithExactIOHIDDevice(iohidDevice);
+        if (result != nil) {
+            return result;
+        }
+
         for (Device *device in _attachedDevices) {
             if ([device wrapsIOHIDDevice:iohidDevice]) {
                 result = device;
@@ -90,17 +106,12 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
  Edit Really?
  */
 + (void)load_Manual {
-    setupDeviceMatchingAndRemovalCallbacks();
     _attachedDevices = [NSMutableArray array];
+    setupDeviceMatchingAndRemovalCallbacks();
 }
 
-+ (void)deconfigureDevices {
-    
-    /// Meant to be called when the app closes
-    
-    for (Device *device in _attachedDevices) {
-//        [PointerSpeed deconfigureDevice:device.iohidDevice];
-    }
++ (void)deconfigureDevicesWithCompletion:(void (^)(BOOL completedBeforeDeadline))completion {
+    [M720ShutdownCoordinator.shared beginShutdownWithCompletion:completion];
 }
 
 # pragma mark - Seize devices (Remove this)
@@ -157,6 +168,77 @@ static BOOL _maxButtonNumberAmongDevices_IsCached = false;
         return _result;
     }
 }
+
+static void resetAttachedDeviceCaches(void) {
+    _maxButtonNumberAmongDevices_IsCached = false;
+    [_iohidToAttachedCache removeAllObjects];
+}
+
++ (void)deviceMetadataDidChange:(Device *)device {
+    if (_attachedDevices == nil ||
+        [_attachedDevices indexOfObjectIdenticalTo:device] == NSNotFound) {
+        return;
+    }
+    resetAttachedDeviceCaches();
+    [SwitchMaster.shared attachedDevicesChangedWithDevices:_attachedDevices];
+}
+
+static void attachDevice(
+    Device *device,
+    NSMutableArray<Device *> *attachedDevices,
+    BOOL resetsGlobalCaches,
+    void (^notify)(NSArray<Device *> *devices),
+    void (^controllerAttach)(Device *device)
+) {
+    [attachedDevices addObject:device];
+    if (resetsGlobalCaches) {
+        resetAttachedDeviceCaches();
+    }
+    notify(attachedDevices);
+    controllerAttach(device);
+}
+
+static void prepareDeviceRemoval(
+    Device *device,
+    NSMutableArray<Device *> *attachedDevices,
+    BOOL resetsGlobalCaches,
+    void (^prepare)(Device *device, void (^completion)(void)),
+    void (^notify)(NSArray<Device *> *devices)
+) {
+    __block BOOL didFinish = false;
+    prepare(device, ^{
+        if (didFinish) {
+            return;
+        }
+        didFinish = true;
+
+        NSUInteger index = [attachedDevices indexOfObjectIdenticalTo:device];
+        if (index == NSNotFound) {
+            return;
+        }
+        [attachedDevices removeObjectAtIndex:index];
+        if (resetsGlobalCaches) {
+            resetAttachedDeviceCaches();
+        }
+        notify(attachedDevices);
+    });
+}
+
+#if DEBUG
++ (void)unitTestAttachDevice:(Device *)device
+             attachedDevices:(NSMutableArray<Device *> *)attachedDevices
+                      notify:(void (^)(NSArray<Device *> *devices))notify
+            controllerAttach:(void (^)(Device *device))controllerAttach {
+    attachDevice(device, attachedDevices, false, notify, controllerAttach);
+}
+
++ (void)unitTestRemoveDevice:(Device *)device
+             attachedDevices:(NSMutableArray<Device *> *)attachedDevices
+                     prepare:(void (^)(Device *device, void (^completion)(void)))prepare
+                      notify:(void (^)(NSArray<Device *> *devices))notify {
+    prepareDeviceRemoval(device, attachedDevices, false, prepare, notify);
+}
+#endif
 
 # pragma mark - Setup callbacks
 
@@ -220,17 +302,18 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         
         /// Create Device instance
         Device *newDevice = [Device deviceWithIOHIDDevice:device];
-        
-        /// Add to attachedDevices list
-        [_attachedDevices addObject:newDevice];
-//        [_iohidToAttachedCache removeAllObjects];
-        
-        /// Reset cache
-        _maxButtonNumberAmongDevices_IsCached = false;
-        
-        /// Notify
-//        [ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
-        [SwitchMaster.shared attachedDevicesChangedWithDevices:_attachedDevices];
+
+        attachDevice(
+            newDevice,
+            _attachedDevices,
+            true,
+            ^(NSArray<Device *> *devices) {
+                [SwitchMaster.shared attachedDevicesChangedWithDevices:devices];
+            },
+            ^(Device *attachedDevice) {
+                [M720HIDPPController.shared deviceDidAttach:attachedDevice];
+            }
+        );
         
         ///  Notify other objects
 //        [Scroll decide];
@@ -279,35 +362,29 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
 
 static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
     
-    Device *attachedDevice = [DeviceManager attachedDeviceWithIOHIDDevice:device];
+    Device *attachedDevice = attachedDeviceWithExactIOHIDDevice(device);
     
     if (attachedDevice == nil) {
         
         DDLogDebug("Device was removed but it wasn't attached to Mac Mouse Fix: %@", device);
         
     } else {
-        
-        /// Remove
-        [_attachedDevices removeObject:attachedDevice];
-        
-        /// Reset cache
-        
-        _maxButtonNumberAmongDevices_IsCached = false;
-        [_iohidToAttachedCache removeAllObjects];
-        
-        /// Notify
-//        [ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
-        [SwitchMaster.shared attachedDevicesChangedWithDevices:_attachedDevices];
-        
-        /// Notifiy other objects
-        ///     If there aren't any relevant devices attached, then we might want to turn off some parts of the program.
-//        [Scroll decide];
-//        [ButtonInputReceiver decide];
-        
-        /// Log
-        
-        DDLogInfo("Attached device was removed:\n%@", attachedDevice);
-        DDLogDebug("Device Manager state after removal %@", debugInfo());
+
+        prepareDeviceRemoval(
+            attachedDevice,
+            _attachedDevices,
+            true,
+            ^(Device *removingDevice, void (^completion)(void)) {
+                [M720HIDPPController.shared
+                    prepareForDeviceRemoval:removingDevice
+                    completion:completion];
+            },
+            ^(NSArray<Device *> *devices) {
+                [SwitchMaster.shared attachedDevicesChangedWithDevices:devices];
+                DDLogInfo("Attached device was removed:\n%@", attachedDevice);
+                DDLogDebug("Device Manager state after removal %@", debugInfo());
+            }
+        );
     }
 }
 

@@ -34,6 +34,11 @@ import Foundation
             { CaptureToasts.showButtonCaptureToastWith(before: [5], after: []) },
             { () -> () in MainAppState.shared.buttonTabController?.showRestoreDefaultPopover(deviceName: "Tecknet 2.4G Wireless", nOfButtons: 3, usedButtons: Set([4, 5])); return },
             { () -> () in MainAppState.shared.buttonTabController?.showRestoreDefaultPopover(deviceName: "Dierya Falcon M1SE Honeycomb", nOfButtons: 5, usedButtons: Set([3])); return },
+            { M720CaptureUIController.shared.presentConflictSample() },
+            { M720CaptureUIController.shared.presentFailureSample(.timeout) },
+            { M720CaptureUIController.shared.presentFailureSample(.unsupported) },
+            { M720CaptureUIController.shared.presentFailureSample(.disconnected) },
+            { M720CaptureUIController.shared.presentFailureSample(.protocol) },
         ],
         "scrolling": Toasts.simpleToastMap_Scrolling.map { $0["block"] as! () -> () } + [
             

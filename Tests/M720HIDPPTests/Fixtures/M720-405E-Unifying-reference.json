@@ -1,0 +1,12 @@
+{
+  "receiverProductID": 50475,
+  "wirelessProductID": 16478,
+  "slot": 1,
+  "serialNumber": "9965E67C",
+  "pairingRequest": [16, 255, 131, 181, 32, 0, 0],
+  "pairingResponse": [17, 255, 131, 181, 32, 8, 8, 64, 94, 4, 3, 2, 7, 0, 0, 0, 0, 0, 0, 0],
+  "extendedPairingRequest": [16, 255, 131, 181, 48, 0, 0],
+  "extendedPairingResponse": [17, 255, 131, 181, 48, 153, 101, 230, 124, 30, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+  "emptySlotRequest": [16, 255, 131, 181, 33, 0, 0],
+  "emptySlotResponse": [16, 255, 143, 131, 181, 3, 0]
+}

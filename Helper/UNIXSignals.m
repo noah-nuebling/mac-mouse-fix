@@ -10,10 +10,17 @@
 #import "UNIXSignals.h"
 #import <signal.h>
 #import "DeviceManager.h"
+#import "Mac_Mouse_Fix_Helper-Swift.h"
+
+static void termination_signal_handler(int theSignal);
+static void restore_default_signal_action(int theSignal);
 
 @implementation UNIXSignals
 
 + (void)load_Manual {
+    if (NSProcessInfo.processInfo.environment[@"MMF_M720_UNIT_TESTING"] != nil) {
+        return;
+    }
     
     ///
     ///  Overview:
@@ -77,97 +84,55 @@
     ///     - The signal-handling-callback is scheduled on a `dispatch_queue`, meaning that that code will never run in parallel.
     ///     - Those two functions are the only entry points to this file -> So I think overall, there's is no parallel code execution and therefore no race-conditions.
     
-    /// Define list of signals we want to intercept.
-    ///     See the discussion of "Termination Signals" above.
-    int signals[] = {
-        SIGTERM,
-        SIGINT,
-        SIGHUP,
-    };
-    
-    /// Create dispatchSources array.
-    ///     We use this to retain the sources so they don't get dealloc'ed. (ChatGPT told me to do this, and made up some documentation to support it, but it seems to work.)
     static NSMutableArray *dispatchSources;
-    static dispatch_once_t onceToken; dispatch_once(&onceToken, ^{
+    static dispatch_queue_t signalHandlingQueue;
+    static dispatch_once_t installOnce;
+    dispatch_once(&installOnce, ^{
+        int signals[] = { SIGTERM, SIGINT, SIGHUP };
         dispatchSources = [NSMutableArray array];
-    });
-    
-    for (int i = 0; i < (sizeof signals / sizeof signals[0]); i++) {
-        
-        /// Extract the signal
-        ///     from the array
-        int the_signal = signals[i];
-        
-        if ((false)) {
-            
-            /// Simple way to ignore signal
-            signal(the_signal, SIG_IGN);
-            
-        } else {
-            
-            /// Elaborate way to ignore signal
-            ///     (More safe I think?)
-            
-            /// Construct args for sigaction
-            struct sigaction old_action;
-            struct sigaction new_action = {
-                .sa_handler = SIG_IGN, /// Disable default handling of the signal. (We could also install a custom signal handler here, but the code inside that handler must be async-signal-safe, which is really hard to deal with.)
+        signalHandlingQueue = dispatch_queue_create(
+            "com.nuebling.mac-mouse-fix.termination-signals",
+            DISPATCH_QUEUE_SERIAL
+        );
+
+        for (NSUInteger i = 0; i < sizeof(signals) / sizeof(signals[0]); i++) {
+            int theSignal = signals[i];
+            struct sigaction oldAction;
+            struct sigaction ignoredAction = {
+                .sa_handler = SIG_IGN,
                 .sa_flags = 0,
                 .sa_mask = 0,
             };
-            
-            /// Init the blocked-signal-mask
-            ///     This mask specifies signals to be blocked while the signal handler is running. Since we just disable the default handling, instead of installing a handler, I'm not sure this makes any difference.
-            sigemptyset(&new_action.sa_mask);
-            
-            /// Install the new action for the signal
-            int rt = sigaction(the_signal, &new_action, &old_action);
-            if (rt == -1) {
-                perror("Accessibility Check - Error setting up sigterm handler. "); /// perror prints out the `errno` global var, which sigaction sets to the error code. || Can't use CocoaLumberjack here, since it's not set up, yet, when we load UNIXSignals.m (as of Sep 2024)
+            sigemptyset(&ignoredAction.sa_mask);
+            int result = sigaction(theSignal, &ignoredAction, &oldAction);
+            if (result == -1) {
+                perror("UNIXSignals: failed to install termination signal handler");
                 assert(false);
+                continue;
             }
-            /// Validate: no previous signal handler was installed
-            ///     Sidenote: In previous notes, we speculated that `NSApplicationMain(argc, argv)` (found in main.m) sets up its own SIGTERM handler which we're overriding here, but this code validates that that's not true.
-            ///     Note: We're only let `SIG_DFL` pass through, not `SIG_IGN` since we wanna catch any previous alteration of the default signal handling that we might be overriding here.
-            bool signal_handler_did_exist = (old_action.sa_handler != SIG_DFL);
-            assert(!signal_handler_did_exist);
-        }
-        
-        /// Get dispatch queue
-        ///     to run the Dispatch Source on
-        /// Notes:
-        /// - Not sure why we're not just using the main queue. This is based off of a code snippet from the Apple "GCDWorkQueues" docs: https://developer.apple.com/library/archive/documentation/General/Conceptual/ConcurrencyProgrammingGuide/GCDWorkQueues/GCDWorkQueues.html
-        
-        dispatch_queue_t signal_handling_queue = dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0);
-        
-        /// Create the signal-catching Dispatch Source
-        dispatch_source_t dispatch_source = dispatch_source_create(DISPATCH_SOURCE_TYPE_SIGNAL, the_signal, 0, signal_handling_queue);
-        
-        if (!dispatch_source) {
-            
-            /// Guard errors
-            ///     Note: Not sure it makes sense to use   perror() here. I don't think the `dispatch` APIs write to `errno`, which perror prints out.
-            perror("dispatch_source_create() failed to create source for handling UNIX termination signals. The process might not be able to restore mouse behaviour to default before it quits.");
-            assert(false);
-            
-        } else {
-            
-            /// Store the dispatch source
-            ///     So it doesn't get deallocated
-            [dispatchSources addObject:dispatch_source];
-            
-            /// Set event handler on the Dispatch Source
-            dispatch_source_set_event_handler(dispatch_source, ^{
-                termination_signal_handler(the_signal);
+            assert(oldAction.sa_handler == SIG_DFL);
+
+            dispatch_source_t source = dispatch_source_create(
+                DISPATCH_SOURCE_TYPE_SIGNAL,
+                (uintptr_t)theSignal,
+                0,
+                signalHandlingQueue
+            );
+            if (source == nil) {
+                perror("UNIXSignals: failed to create termination signal source");
+                assert(false);
+                continue;
+            }
+            [dispatchSources addObject:source];
+            dispatch_source_set_event_handler(source, ^{
+                termination_signal_handler(theSignal);
             });
-            
-            /// Start the Dispatch Source
-            dispatch_activate(dispatch_source); /// `_activate()` replaced `_resume()` which can still be seen in the example from Apple that this is based on.
+            dispatch_activate(source);
         }
-    }
+    });
 }
 
-static void termination_signal_handler(int the_signal) {
+static void termination_signal_handler(int theSignal) {
     
     ///
     /// Do cleanup
@@ -180,12 +145,17 @@ static void termination_signal_handler(int the_signal) {
     ///     - If we can't reliably "deconfigure" before exiting (e.g. because we sometimes receive SIGKILL and SIGSTOP, which we can't catch),
     ///         we might wanna - instead of trying to automaticallly deconfigure - make it apparent to MMF users when they are permanently changing the configuration [of their mouse hardware or the IOKit driver (IOKitDriver configuration is not really permanent though - only lasts until computer restart)]
     
-    [DeviceManager deconfigureDevices];
+    BOOL completedBeforeWaitDeadline = [M720SignalShutdownWaiter waitForCleanup:^(void (^completion)(BOOL)) {
+        [DeviceManager deconfigureDevicesWithCompletion:completion];
+    }];
     
     ///
     /// Log
     ///
-    NSLog(@"UNIXSignals.m: Did clean up. About to exit.");
+    NSLog(
+        @"UNIXSignals.m: Cleanup wait finished (completed=%@). About to exit.",
+        completedBeforeWaitDeadline ? @"YES" : @"NO"
+    );
     
     ///
     /// Trigger default action of signal.
@@ -195,43 +165,31 @@ static void termination_signal_handler(int the_signal) {
     /// - We could also simply call `exit(0)`  to terminate the process. But that might not behave exactly like the default action, e.g. SIGSEGV creates a 'core image' (debug crash report stuff afaik.)
     ///     (Update 30.09.2024: Since we're only handling simple termination signals now (SIGTERM, SIGINT, SIGHUP), exit(0) might be enough now - But triggering the default action of the signal feels more robust I guess.
     
-    /// Declare return code var
-    int ret;
-    
-    /// Restore default action of the signal
-    if ((false)) {
-        
-        /// Simple way
-        ///     to restore the signal
-        signal(the_signal, SIG_DFL);
-        
-    } else {
-        
-        /// Elaborate way
-        ///     to restore the signal
-        
-        struct sigaction action = {
-            .sa_handler = SIG_DFL,
-            .sa_flags = 0,
-            .sa_mask = 0,
-        };
-        sigemptyset(&action.sa_mask);
-        ret = sigaction(the_signal, &action, NULL);
-        if (ret == -1) {
-            perror("sigaction() returned error while trying to restore default action inside the termination_signal_handler.");
-            assert(false);
-            exit(0); /// Just terminate directly, in case our attempt to terminate through the UNIX signals fails
-        }
-    }
+    restore_default_signal_action(theSignal);
     
     /// Re-send the signal to invoke the default action
     ///     (... which is terminating the process and stuff.)
     ///     Notes:
     ///     - We could also use `kill(getpid(), signal_number)` to send the signal - not sure which is better.
     ///     - `raise()` sends the signal to the current thread IIRC.
-    ret = raise(the_signal);
+    int ret = raise(theSignal);
     if (ret == -1) {
         perror("raise() returned an error inside the termination_signal_handler.");
+        assert(false);
+        exit(0);
+    }
+}
+
+static void restore_default_signal_action(int theSignal) {
+    struct sigaction action = {
+        .sa_handler = SIG_DFL,
+        .sa_flags = 0,
+        .sa_mask = 0,
+    };
+    sigemptyset(&action.sa_mask);
+    int result = sigaction(theSignal, &action, NULL);
+    if (result == -1) {
+        perror("UNIXSignals: failed to restore default signal action");
         assert(false);
         exit(0);
     }

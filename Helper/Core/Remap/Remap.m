@@ -374,7 +374,7 @@ BOOL _addModeIsEnabled = NO;
     
     
     
-    [MFMessagePort sendMessage:@"addModeFeedback" withPayload:payload waitForReply:NO];
+    [M720AddModeCoordinator.shared submitFeedback:payload];
     ///    [Remap performSelector:@selector(disableAddMode) withObject:nil afterDelay:0.5];
     /// ^ We did this to keep the remapping disabled for a little while after adding a new row, but it leads to adding several entries at once when trying to input button modification precondition, if you're not fast enough.
 

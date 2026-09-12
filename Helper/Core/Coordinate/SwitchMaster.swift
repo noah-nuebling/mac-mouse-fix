@@ -160,6 +160,7 @@ import ReactiveSwift
         latestRemaps = Remap.remaps
         latestScrollConfig = ScrollConfig.shared
         latestModifiers = Modifiers.modifiers(with: nil)
+        reconcileM720Capture()
         
         /// Debug
         logWithState("Initialized.")
@@ -174,6 +175,7 @@ import ReactiveSwift
         
         /// Update state
         isLockedDown = true
+        reconcileM720Capture()
         
         /// Call togglers
         /// Notes:
@@ -209,6 +211,7 @@ import ReactiveSwift
             
             /// Update State
             userIsActive = userIsActiveNew
+            reconcileM720Capture()
             
             /// Call togglers
             
@@ -256,6 +259,7 @@ import ReactiveSwift
         }
         
         if didChange {
+            reconcileM720Capture()
             
             /// Call togglers
             
@@ -293,6 +297,7 @@ import ReactiveSwift
         
         /// Store latest
         latestDevices = devices
+        reconcileM720Capture()
         
         /// Call togglers
         
@@ -330,6 +335,7 @@ import ReactiveSwift
         
         /// Store latest
         latestRemaps = remaps
+        reconcileM720Capture()
         
         /// Call togglers
         /// Notes:
@@ -357,6 +363,15 @@ import ReactiveSwift
             Toggled due to remaps change.
             New remaps: \(remaps)
             """)
+    }
+
+    private func reconcileM720Capture() {
+        let enabled = !isLockedDown && userIsActive && !buttonKillSwitch
+        M720HIDPPController.shared.reconcile(
+            remaps: latestRemaps,
+            buttonsEnabled: enabled,
+            remapsAreAddMode: Remap.addModeIsEnabled
+        )
     }
     
     private var latestScrollConfig = ScrollConfig.shared /// Not sure if this is a good initialization value
