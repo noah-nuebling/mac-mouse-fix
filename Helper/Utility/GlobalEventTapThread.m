@@ -27,6 +27,9 @@
 ///             micropython GH Issue about improving timers: https://github.com/micropython/micropython/issues/8621
 ///                 Sidenote: They say 'nice' does nothing on macOS. We're setting that in our launchd config.
 ///                 SideSideNote: Is there a way to have _launchd_ start the MMF Helper faster after boot? Helper gets started *after* all the windowed apps, with all the background apps.
+///     Update: [Jun 2026]
+///         NSActivityLatencyCritical – says it makes timers and IO more precise, not sure if applicable here.
+///         'Mach Scheduling and Thread Interfaces': https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/KernelProgramming/scheduler/scheduler.html
 
 #import "GlobalEventTapThread.h"
 

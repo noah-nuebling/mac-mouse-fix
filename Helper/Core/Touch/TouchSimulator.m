@@ -294,8 +294,8 @@ static NSMutableDictionary *_swipeInfo;
     
     DDLogDebug("TouchSimulator: Sending dockSwipe with phase %d with events: %@ %@", phase, e30, e29);
     
-    CGEventPost(kCGSessionEventTap, e30); /// Not sure if order matters
-    CGEventPost(kCGSessionEventTap, e29);
+    if (e30) CGEventPost(kCGSessionEventTap, e30); /// Not sure if order matters
+    if (e29) CGEventPost(kCGSessionEventTap, e29); /// This is NULL on macOS 27. Doesn't cause issues but logs `invalid CGEvent: 0x0` error.
     
     if (phase == kIOHIDEventPhaseBegan) {
         
@@ -370,8 +370,8 @@ static NSMutableDictionary *_swipeInfo;
     
     DDLogDebug("TouchSimulator: Sending dockSwipe end (Double/Triple) with events: %@ %@", e30, e29);
     
-    CGEventPost(kCGSessionEventTap, e30);
-    CGEventPost(kCGSessionEventTap, e29);
+    if (e30) CGEventPost(kCGSessionEventTap, e30);
+    if (e29) CGEventPost(kCGSessionEventTap, e29);
 }
 
 
