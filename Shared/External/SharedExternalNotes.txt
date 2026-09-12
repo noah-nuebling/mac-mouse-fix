@@ -21,10 +21,25 @@ About ReactiveCocoa and ReactiveSwift (Vendored projects in this folder)
         1. Copy ReactiveCocoa 12.0.0 and ReactiveSwift 7.1.1 from GitHub and add them to the project
             (Have to copy them via Finder first, not directly via Xcode otherwise it does weird stuff and activates SPM or something.)
         2. Download the Carthage/Checkout/xcconfigs submodule and copy into ReactiveCocoa and ReactiveSwift folders
-        3. Go to their .xcodeproj's and add __DIAGNOSE_INVALID_DEPLOYMENT_TARGET_AS_ERROR=NO build setting
-        4. Increase ReactiveCocoa minimum deployment target from 10.9 -> 10.12 to match ReactiveSwift (otherwise I can't get Xcode to build)
-        5. Add the two frameworks as dependencies to Mac Mouse Fix and Mac Mouse Fix Helper targets
+        3. Go to their .xcodeproj's and ...
+            3.1 Add __DIAGNOSE_INVALID_DEPLOYMENT_TARGET_AS_ERROR=NO build setting
+            3.2 Change MACH_O_TYPE to 'Static Library' (size optimization)
+                Alternative tested: Add ReactiveSwift and ReactiveCocoa as Dynamic Framework and share between main app and helper -> 16MB (0.2MB larger)
+                    I guess the stripping Xcode does for static linking outweighs the duplication
+            3.3 Increase ReactiveCocoa minimum deployment target from 10.9 -> 10.12 to match ReactiveSwift (otherwise I can't get Xcode to build)
+        4. Add the two frameworks as dependencies to Mac Mouse Fix and Mac Mouse Fix Helper targets.
+            Choose 'Do not embed' (Embedding unnecessary since it's a 'Static Library')
 
     Other notes:
         Maybe ReactiveSwift and ReactiveCocoa projects should be in ./Frameworks with Sparkle?
             The 'External' folders are more for files we're using directly in our code but haven't written ourselves.
+
+    On size optimization:
+        (Discovered this after noticing size increase after vendoring ReactiveCocoa and ReactiveSwift, but not inherently related)
+            (TODO: Move to different doc)
+
+        - ENABLE_TESTABILITY=YES prevented symbol stripping and caused size bloat, I think especially after vendoring ReactiveSwift and ReactiveCocoa (Or maybe I just noticed it then)
+            - Had enabled this in `9e6af66bb5cf9fcc45bc18e6d6a48b1ce68b746d`. I don't remember why.
+        - Setting DEPLOYMENT_POSTPROCESSING=YES for Release makes executables even smaller (strips symbols, even better than -Wl,-s)
+        - Also see:
+            SO question about static frameworks not being stripped which I though I was encountering: https://stackoverflow.com/questions/75917818/xcode-doesnt-strip-unused-symbol-for-static-framework
