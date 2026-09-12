@@ -289,7 +289,6 @@
 		4FDA9D512FE96D8D00610BEB /* SkyLight.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F28B7F52D49141E006928A6 /* SkyLight.framework */; };
 		4FDB5F4A2D4F85A900164F97 /* NSCharacterSet+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB5F492D4F85A900164F97 /* NSCharacterSet+Additions.m */; };
 		4FDB5F4B2D4F85A900164F97 /* NSCharacterSet+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB5F492D4F85A900164F97 /* NSCharacterSet+Additions.m */; };
-		4FDB94392FE75270001E05CB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FDB94362FE75270001E05CB /* MainMenu.xib */; };
 		4FDB943A2FE75270001E05CB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB942F2FE75270001E05CB /* AppDelegate.m */; };
 		4FDB943B2FE75270001E05CB /* FixDockSwipes.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB94332FE75270001E05CB /* FixDockSwipes.m */; };
 		4FDB943C2FE75270001E05CB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FDB94342FE75270001E05CB /* main.m */; };
@@ -313,6 +312,7 @@
 		4FE069723055457600B2FDF9 /* ReactiveCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4FE069393055449500B2FDF9 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4FE069743055457700B2FDF9 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FE0695A3055449500B2FDF9 /* ReactiveSwift.framework */; };
 		4FE069753055457700B2FDF9 /* ReactiveSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4FE0695A3055449500B2FDF9 /* ReactiveSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4FE06977305546C300B2FDF9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FE06976305546C300B2FDF9 /* MainMenu.xib */; };
 		4FE1A1B92C56A50100CE3347 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE1A1B82C56A50100CE3347 /* Logging.m */; };
 		4FE1A1BA2C56A50100CE3347 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE1A1B82C56A50100CE3347 /* Logging.m */; };
 		4FE1A1BB2C56A50100CE3347 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE1A1B82C56A50100CE3347 /* Logging.m */; };
@@ -2688,7 +2688,6 @@
 		4FDB942F2FE75270001E05CB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4FDB94332FE75270001E05CB /* FixDockSwipes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FixDockSwipes.m; sourceTree = "<group>"; };
 		4FDB94342FE75270001E05CB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		4FDB94352FE75270001E05CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		4FDC127528A2C6160076972E /* ReactiveConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveConfig.swift; sourceTree = "<group>"; };
 		4FDE757D28B0E66900662314 /* License.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = License.h; sourceTree = "<group>"; };
 		4FDE759928B1401400662314 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
@@ -2710,6 +2709,7 @@
 		4FE0618730530AFF00B2FDF9 /* ReactiveSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ReactiveSwift.xcodeproj; sourceTree = "<group>"; };
 		4FE066E63055448C00B2FDF9 /* ReactiveCocoa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ReactiveCocoa.xcodeproj; sourceTree = "<group>"; };
 		4FE067A93055448C00B2FDF9 /* ReactiveSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ReactiveSwift.xcodeproj; sourceTree = "<group>"; };
+		4FE06976305546C300B2FDF9 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
 		4FE1A1B72C56A50100CE3347 /* Logging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Logging.h; sourceTree = "<group>"; };
 		4FE1A1B82C56A50100CE3347 /* Logging.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Logging.m; sourceTree = "<group>"; };
 		4FE40B95283A49DD00880BEF /* SharedUtilitySwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedUtilitySwift.swift; sourceTree = "<group>"; };
@@ -7061,7 +7061,7 @@
 			children = (
 				4FDB942E2FE75270001E05CB /* AppDelegate.h */,
 				4FDB942F2FE75270001E05CB /* AppDelegate.m */,
-				4FDB94362FE75270001E05CB /* MainMenu.xib */,
+				4FE06976305546C300B2FDF9 /* MainMenu.xib */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -8898,7 +8898,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FDB94392FE75270001E05CB /* MainMenu.xib in Resources */,
+				4FE06977305546C300B2FDF9 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9419,14 +9419,6 @@
 				4FA2F13F2C2B0932000C5535 /* mul */,
 			);
 			name = ButtonOptionsViewController.xib;
-			sourceTree = "<group>";
-		};
-		4FDB94362FE75270001E05CB /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4FDB94352FE75270001E05CB /* Base */,
-			);
-			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
