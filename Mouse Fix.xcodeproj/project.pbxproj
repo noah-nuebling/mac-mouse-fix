@@ -8615,7 +8615,6 @@
 				4FDB94372FE75270001E05CB /* Tests */,
 				4FCECD8121092354001F1078 /* Products */,
 				4FDECCD528A3A37800DDEE91 /* Frameworks */,
-				4FE065D63055448C00B2FDF9 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -8787,27 +8786,6 @@
 				4FE061CB30530B0000B2FDF9 /* ReactiveSwiftTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		4FE065D63055448C00B2FDF9 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				4FE0618730530AFF00B2FDF9 /* ReactiveSwift.xcodeproj */,
-				4FE060F130530AFF00B2FDF9 /* ReactiveCocoa.xcodeproj */,
-				4FE066E63055448C00B2FDF9 /* ReactiveCocoa.xcodeproj */,
-				4FE067A93055448C00B2FDF9 /* ReactiveSwift.xcodeproj */,
-				4FE0BB593055786E00B2FDF9 /* ReactiveSwift.xcodeproj */,
-				4FE0BA923055786E00B2FDF9 /* ReactiveCocoa.xcodeproj */,
-				4FE0C8CE305587B800B2FDF9 /* ReactiveSwift.xcodeproj */,
-				4FE0C807305587B800B2FDF9 /* ReactiveCocoa.xcodeproj */,
-				4FFACABA30558C0400102AD8 /* ReactiveCocoa.xcodeproj */,
-				4FFACB8130558C0400102AD8 /* ReactiveSwift.xcodeproj */,
-				4F3E04E630558C4000273555 /* ReactiveCocoa.xcodeproj */,
-				4F3E05AD30558C4000273555 /* ReactiveSwift.xcodeproj */,
-				4FAAFF193055940200E42628 /* ReactiveSwift.xcodeproj */,
-				4FAAFE523055940200E42628 /* ReactiveCocoa.xcodeproj */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		4FE066ED3055448C00B2FDF9 /* Products */ = {
