@@ -25,4 +25,6 @@ About ReactiveCocoa and ReactiveSwift (Vendored projects in this folder)
         4. Increase ReactiveCocoa minimum deployment target from 10.9 -> 10.12 to match ReactiveSwift (otherwise I can't get Xcode to build)
         5. Add the two frameworks as dependencies to Mac Mouse Fix and Mac Mouse Fix Helper targets
 
-
+    Other notes:
+        Maybe ReactiveSwift and ReactiveCocoa projects should be in ./Frameworks with Sparkle?
+            The 'External' folders are more for files we're using directly in our code but haven't written ourselves.
