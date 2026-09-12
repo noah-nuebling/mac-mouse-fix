@@ -137,6 +137,26 @@ static NSMutableDictionary *_swipeInfo;
         _dockSwipeOriginOffset += d;
     }
     
+    /// Throttle `changed` events
+    ///     Notes: [Sep 2026]
+    ///     - High-polling-rate mice (e.g. Keychron Ultra-Link 8K at 8000 Hz) make ModifiedDrag call this once per mouse report. Posting a DockSwipe event per report made Spaces & Mission Control lag far behind the pointer on macOS 27 (26A5425a). Real trackpads report at 125 Hz, so we mirror that (8ms). We also tried 4ms: the input from the event tap arrives in bursts of several reports roughly every 8-12ms anyway, so 4ms produced the same ~80 events/s as 8ms and felt slightly worse.
+    ///     - `_dockSwipeOriginOffset` accumulates above, so skipped events lose nothing – the next posted event carries the full progress. We also accumulate `d`, so that `_dockSwipeLastDelta` (used for the exitSpeed and the end/cancel decision) reflects the movement since the last posted event.
+    ///     - Began/Ended/Cancelled are never throttled.
+    ///     - Applies on all macOS versions. Only tested on macOS 27, but posting hundreds of events per second at the Dock was never useful on older versions either.
+    static CFTimeInterval _dockSwipeLastPostTime = 0.0;
+    static double _dockSwipeThrottledDelta = 0.0;
+    if (phase == kIOHIDEventPhaseChanged) {
+        _dockSwipeThrottledDelta += d;
+        CFTimeInterval now = CACurrentMediaTime();
+        if (now - _dockSwipeLastPostTime < (1.0/125.0)) return;
+        _dockSwipeLastPostTime = now;
+        d = _dockSwipeThrottledDelta;
+        _dockSwipeThrottledDelta = 0.0;
+    } else {
+        _dockSwipeLastPostTime = (phase == kIOHIDEventPhaseBegan) ? CACurrentMediaTime() : 0.0;
+        _dockSwipeThrottledDelta = 0.0;
+    }
+    
     /// Debug
     
     if (runningPreRelease()) {
@@ -192,8 +212,8 @@ static NSMutableDictionary *_swipeInfo;
         if (invertedFromDevice) __dockSwipeOriginOffset *= -1; /// Could also apply the unflipping to the `d` argument above.
         
         /// Create HIDEvent
-        ///     Note: Setting the timestamp to `mach_absolute_time()` here would make some sense but we're not setting timestamps anywhere else when simulating gestures
-        HIDEvent *hidEvent = [[HIDEvent alloc] initWithType: kIOHIDEventTypeDockSwipe timestamp: 0 senderID: 0];
+        ///     Note: [Sep 2026] We set the timestamp to `mach_absolute_time()`. With timestamp 0 the IOHIDEvent reports ~uptime of latency, and the gestures felt very laggy on macOS 27 (26A5425a).
+        HIDEvent *hidEvent = [[HIDEvent alloc] initWithType: kIOHIDEventTypeDockSwipe timestamp: mach_absolute_time() senderID: 0];
         
         IOHIDEventOptionBits options = (phase << kIOHIDEventEventOptionPhaseShift);
         
@@ -205,7 +225,7 @@ static NSMutableDictionary *_swipeInfo;
         /// Attach velocity event on exit
         if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
             
-            HIDEvent *childEvent = [[HIDEvent alloc] initWithType: kIOHIDEventTypeVelocity timestamp: 0 senderID: 0];
+            HIDEvent *childEvent = [[HIDEvent alloc] initWithType: kIOHIDEventTypeVelocity timestamp: mach_absolute_time() senderID: 0];
             
             [childEvent setDoubleValue: exitSpeed forField: kIOHIDEventFieldVelocityX];
             [childEvent setDoubleValue: exitSpeed forField: kIOHIDEventFieldVelocityY];
