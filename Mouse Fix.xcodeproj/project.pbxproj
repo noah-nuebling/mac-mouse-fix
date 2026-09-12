@@ -2565,6 +2565,7 @@
 		4FEAA96C3055D91300455F82 /* SharedExternalNotes.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = SharedExternalNotes.txt; sourceTree = "<group>"; };
 		4FEAA9703055D99200455F82 /* ReactiveCocoa.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ReactiveCocoa.xcodeproj; sourceTree = "<group>"; };
 		4FEAA99A3055D9A500455F82 /* ReactiveSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ReactiveSwift.xcodeproj; sourceTree = "<group>"; };
+		4FEAAB6B3055F5A800455F82 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FEB6617279376C200E6A111 /* SymbolicHotKeys Reference.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "SymbolicHotKeys Reference.txt"; sourceTree = "<group>"; };
 		4FEB6618279376C200E6A111 /* notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = notes.md; sourceTree = "<group>"; };
 		4FEBE6602E456DA2005FF70E /* CAAnimationCurveUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CAAnimationCurveUtility.h; sourceTree = "<group>"; };
@@ -6897,6 +6898,7 @@
 		4F8605A22FE81F5D00CC1147 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				4FEAAB6B3055F5A800455F82 /* Info.plist */,
 				4FDB942E2FE75270001E05CB /* AppDelegate.h */,
 				4FDB942F2FE75270001E05CB /* AppDelegate.m */,
 				4F33A5273055D6CC001F9EFE /* MainMenu.xib */,
@@ -9620,7 +9622,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "${SRCROOT}/Tests/Other/Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Noah Nuebling. All rights reserved.";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -9662,7 +9665,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "${SRCROOT}/Tests/Other/Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Noah Nuebling. All rights reserved.";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
