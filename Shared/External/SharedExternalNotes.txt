@@ -33,29 +33,6 @@ About ReactiveCocoa and ReactiveSwift (Vendored projects in this folder)
     Other notes:
         Maybe ReactiveSwift and ReactiveCocoa projects should be in ./Frameworks with Sparkle?
             The 'External' folders are more for files we're using directly in our code but haven't written ourselves.
-        Have to use groups not folders for the vendored projects,
-            otherwise build breaks and you have to re-add frameworks to Mac Mouse Fix and Mac Mouse Fix Helper targets
-            after every time the project is loaded.
-            Fable 5.1 diagnosed this:
-                ```
-                Cause visible in the .pbxproj: the PBXFileReference for the .xcodeproj [of the subproject]
-                is written with path = "ReactiveSwift.xcodeproj", sourceTree = "<group>", and is not
-                a child of any PBXGroup (synchronized folders cannot hold it). On reload it is
-                moved into "Recovered References" at the project root, where that relative path
-                no longer resolves. Giving the reference a correct path and a real parent group
-                by hand fixes the build (verified with xcodebuild).
-                ```
-            -> Maybe file feedback report with Apple
-                Asked Fable 5.1 to find related reports:
-                    ```
-                    I found no report matching this specific combination (sub-project inside a synchronized folder, reference orphaned, recovered to the wrong path). Related
-                    material:
-                    - "Recovered References" is Xcode's long-standing handling of file references with no parent group, and it is known to appear silently on every open: [Apple
-                      forums thread 88300](https://developer.apple.com/forums/thread/88300), [XcodeGen #674](https://github.com/yonaskolb/XcodeGen/issues/674).
-                    - Synchronized groups have no children array, which is the structural reason the reference can't be attached: [Pedro Piñera's write-up of the pbxproj format](https://pepicrft.me/blog/2024/07/20/how-synchronized-groups-work-at-the-pbxproj-level).
-                    - Similar shape of bug for Swift packages inside sub-folders of a synchronized folder being forgotten on restart: [Apple forums thread 775630](https://developer.apple.com/forums/thread/775630).
-                    ```
-
 
     On general size optimization:
         (Discovered this after noticing size increase after vendoring ReactiveCocoa and ReactiveSwift, but not inherently related)
@@ -67,3 +44,34 @@ About ReactiveCocoa and ReactiveSwift (Vendored projects in this folder)
         - Also set COPY_PHASE_STRIP=YES for Release in hopes of shrinking Sparkle.framework, but didn't make a difference.
         - Also see:
             SO question about static frameworks not being stripped which I though I was encountering: https://stackoverflow.com/questions/75917818/xcode-doesnt-strip-unused-symbol-for-static-framework
+
+        Investigated further size optimizations:
+            Can get ~13MB (currently at ~15 MB) by stopping Xcode from including libswift_Concurrency.dylib. (I believe by increasing min deployment target from 10.15 -> 12.0)
+                Xcode even includes libswift_Concurrency.dylib 2x for main app and helper (each ~1MB) – sharing them would also help.
+                -> Haven't found a way to do any of this. (Xcode includes the Swift support libs
+                automatically somehow, don't know how to control this)
+
+    Xcode bug: Have to use groups not folders for the container of the .xcodeproj of the vendored Xcode projects
+        (Doesn't really belong here)
+        (TODO: Delete, shrink (after reporting to Apple), or move to different doc)
+        If you use folder (instead of groups), build breaks and you have to re-add frameworks to Mac Mouse Fix and Mac Mouse Fix Helper targets
+        after every time the project is loaded.
+        Fable 5.1 diagnosed this:
+            ```
+            Cause visible in the .pbxproj: the PBXFileReference for the .xcodeproj [of the subproject]
+            is written with path = "ReactiveSwift.xcodeproj", sourceTree = "<group>", and is not
+            a child of any PBXGroup (synchronized folders cannot hold it). On reload it is
+            moved into "Recovered References" at the project root, where that relative path
+            no longer resolves. Giving the reference a correct path and a real parent group
+            by hand fixes the build (verified with xcodebuild).
+            ```
+        -> Maybe file feedback report with Apple
+            Asked Fable 5.1 to find related reports:
+                ```
+                I found no report matching this specific combination (sub-project inside a synchronized folder, reference orphaned, recovered to the wrong path). Related
+                material:
+                - "Recovered References" is Xcode's long-standing handling of file references with no parent group, and it is known to appear silently on every open: [Apple
+                  forums thread 88300](https://developer.apple.com/forums/thread/88300), [XcodeGen #674](https://github.com/yonaskolb/XcodeGen/issues/674).
+                - Synchronized groups have no children array, which is the structural reason the reference can't be attached: [Pedro Piñera's write-up of the pbxproj format](https://pepicrft.me/blog/2024/07/20/how-synchronized-groups-work-at-the-pbxproj-level).
+                - Similar shape of bug for Swift packages inside sub-folders of a synchronized folder being forgotten on restart: [Apple forums thread 775630](https://developer.apple.com/forums/thread/775630).
+                ```
