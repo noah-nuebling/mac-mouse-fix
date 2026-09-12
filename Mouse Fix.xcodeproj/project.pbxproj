@@ -309,10 +309,11 @@
 		4FE0622630530C7100B2FDF9 /* ReactiveCocoa.framework in Embed Sparkle (Redundant with Link Binary Phase?) */ = {isa = PBXBuildFile; fileRef = 4FE0619E30530B0000B2FDF9 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4FE0622730530C7C00B2FDF9 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FE061BF30530B0000B2FDF9 /* ReactiveSwift.framework */; };
 		4FE0622830530C7C00B2FDF9 /* ReactiveSwift.framework in Embed Sparkle (Redundant with Link Binary Phase?) */ = {isa = PBXBuildFile; fileRef = 4FE061BF30530B0000B2FDF9 /* ReactiveSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		4FE0622930530C8500B2FDF9 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FE0619E30530B0000B2FDF9 /* ReactiveCocoa.framework */; };
-		4FE0622A30530C8500B2FDF9 /* ReactiveCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4FE0619E30530B0000B2FDF9 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4FE0622B30530C8B00B2FDF9 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FE061BF30530B0000B2FDF9 /* ReactiveSwift.framework */; };
 		4FE0622C30530C8B00B2FDF9 /* ReactiveSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4FE061BF30530B0000B2FDF9 /* ReactiveSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4FE0622D3053116C00B2FDF9 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FE061BF30530B0000B2FDF9 /* ReactiveSwift.framework */; };
+		4FE0622E3053117500B2FDF9 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FE0619E30530B0000B2FDF9 /* ReactiveCocoa.framework */; };
+		4FE0622F3053117500B2FDF9 /* ReactiveCocoa.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4FE0619E30530B0000B2FDF9 /* ReactiveCocoa.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4FE1A1B92C56A50100CE3347 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE1A1B82C56A50100CE3347 /* Logging.m */; };
 		4FE1A1BA2C56A50100CE3347 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE1A1B82C56A50100CE3347 /* Logging.m */; };
 		4FE1A1BB2C56A50100CE3347 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FE1A1B82C56A50100CE3347 /* Logging.m */; };
@@ -616,8 +617,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				4FE0622A30530C8500B2FDF9 /* ReactiveCocoa.framework in Embed Frameworks */,
 				4FE0622C30530C8B00B2FDF9 /* ReactiveSwift.framework in Embed Frameworks */,
+				4FE0622F3053117500B2FDF9 /* ReactiveCocoa.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2800,10 +2801,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4F262D272C64E06500773789 /* libcmark.a in Frameworks */,
+				4FE0622E3053117500B2FDF9 /* ReactiveCocoa.framework in Frameworks */,
 				4FBD52622E47EFF400C39A44 /* TextInput.framework in Frameworks */,
+				4FE0622D3053116C00B2FDF9 /* ReactiveSwift.framework in Frameworks */,
 				4FE0622B30530C8B00B2FDF9 /* ReactiveSwift.framework in Frameworks */,
 				4F28B7F82D49144E006928A6 /* SkyLight.framework in Frameworks */,
-				4FE0622930530C8500B2FDF9 /* ReactiveCocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9272,7 +9274,7 @@
 					"$(PROJECT_DIR)/Frameworks/**",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15.0;
-				MARKETING_VERSION = "3.1.0 Beta 2 (Test)";
+				MARKETING_VERSION = "3.1.0 (Test 2)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
@@ -9315,7 +9317,7 @@
 					"$(PROJECT_DIR)/Frameworks/**",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15.0;
-				MARKETING_VERSION = "3.1.0 Beta 2 (Test)";
+				MARKETING_VERSION = "3.1.0 (Test 2)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
 				PRODUCT_NAME = "$(TARGET_NAME)";
