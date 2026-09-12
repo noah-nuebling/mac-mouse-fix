@@ -375,6 +375,7 @@
 		4FF6668325F2C93A00689B77 /* HelperAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6661025F2C93A00689B77 /* HelperAssets.xcassets */; };
 		4FF6668525F2C93A00689B77 /* Modifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661725F2C93A00689B77 /* Modifiers.m */; };
 		4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */; };
+		A18480010000000000000001 /* LogitechCIDActivator.m in Sources */ = {isa = PBXBuildFile; fileRef = A18480010000000000000003 /* LogitechCIDActivator.m */; };
 		4FF6668925F2C93A00689B77 /* Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662125F2C93A00689B77 /* Scroll.m */; };
 		4FF6668B25F2C93A00689B77 /* CubicUnitBezier.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662425F2C93A00689B77 /* CubicUnitBezier.m */; };
 		4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662D25F2C93A00689B77 /* SmoothScroll_old_.m */; };
@@ -2497,6 +2498,8 @@
 		4FF6661C25F2C93A00689B77 /* ButtonTriggerGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonTriggerGenerator.h; sourceTree = "<group>"; };
 		4FF6661D25F2C93A00689B77 /* ButtonTriggerHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonTriggerHandler.h; sourceTree = "<group>"; };
 		4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonInputReceiver.m; sourceTree = "<group>"; };
+		A18480010000000000000002 /* LogitechCIDActivator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LogitechCIDActivator.h; sourceTree = "<group>"; };
+		A18480010000000000000003 /* LogitechCIDActivator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LogitechCIDActivator.m; sourceTree = "<group>"; };
 		4FF6662025F2C93A00689B77 /* SmoothScroll_old_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmoothScroll_old_.h; sourceTree = "<group>"; };
 		4FF6662125F2C93A00689B77 /* Scroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scroll.m; sourceTree = "<group>"; };
 		4FF6662325F2C93A00689B77 /* SmoothScroll.m (old) */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SmoothScroll.m (old)"; sourceTree = "<group>"; };
@@ -7682,6 +7685,8 @@
 			children = (
 				4FF6661B25F2C93A00689B77 /* ButtonInputReceiver.h */,
 				4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */,
+				A18480010000000000000002 /* LogitechCIDActivator.h */,
+				A18480010000000000000003 /* LogitechCIDActivator.m */,
 				4FF8C8A22895AACB007EC31F /* Buttons.swift */,
 				4FF8C89928955490007EC31F /* ClickCycle.swift */,
 				4FE479DF2933C87A00B75E9B /* ButtonModifiers.h */,
@@ -8596,6 +8601,7 @@
 				4F4C737D2C4FB06E001D97C3 /* NSString+Steganography.m in Sources */,
 				4FFA4E4628B7D2960062A1FE /* Replace.swift in Sources */,
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,
+				A18480010000000000000001 /* LogitechCIDActivator.m in Sources */,
 				4FBC83432DAFB28B00354981 /* MFBenchmark.m in Sources */,
 				4FBC83452DAFB28B00354981 /* MFLoop.m in Sources */,
 				4FBC83462DAFB28B00354981 /* PrivateFunctions.m in Sources */,
