@@ -411,6 +411,12 @@
             "value" : "Orijinal Aksiyonu"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chức năng gốc"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -469,6 +475,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix üzerindeki aksiyonu"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hành động trong Mac Mouse Fix"
           }
         },
         "zh-Hans" : {
@@ -530,6 +542,12 @@
             "value" : "Orta Düğme"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nút chuột giữa"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -587,6 +605,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tarayıcınızda bağlantıları yeni bir sekmede açar"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mở đường dẫn trên trình duyệt"
           }
         },
         "zh-Hans" : {
@@ -649,6 +673,12 @@
             "value" : "'Orta tık'<br>(Herhangi bir düğmeye **tıklanarak** eklenebilir)"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Nhấn nút giữa'<br>(có thể được gán cho **đang nhấn** nút)"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -708,6 +738,12 @@
             "value" : "Orta Düğme"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nút chuột giữa"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -765,6 +801,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Terminal'e yazı yapıştır"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dán văn bản trong terminal"
           }
         },
         "zh-Hans" : {
@@ -827,6 +869,12 @@
             "value" : "'Orta tık'<br>(Herhangi bir düğmeye **tıklanarak** eklenebilir)"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Nhấn nút giữa'<br>(có thể được gán cho **đang nhấn** nút)"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -884,6 +932,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fare Düğmesi 4 / Fare Düğmesi 5"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nút thứ 4 / nút thứ 5"
           }
         },
         "zh-Hans" : {
@@ -946,6 +1000,12 @@
             "value" : "Geri git / Chrome ve diğer uygulamalarda ileri git"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quay về / đi tới trong Chrome và những ứng dụng khác"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1006,6 +1066,12 @@
             "value" : "'Geri' / 'İleri'<br>(Herhangi bir düğmeye **tıklayarak** eklenebilir)"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Quay về' / 'Đi tới' <br>(có thể được gán cho **đang nhấn** nút)"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1063,6 +1129,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Orta Düğme"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nút chuột giữa"
           }
         },
         "zh-Hans" : {

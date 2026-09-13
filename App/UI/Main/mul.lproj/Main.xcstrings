@@ -761,8 +761,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Đề xuất tính năng mới"
+            "state" : "translated",
+            "value" : "Trợ giúp dịch"
           }
         },
         "zh-Hans" : {
@@ -1632,7 +1632,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Cho phép bạn tắt hoặc bật nhanh các tính năng như\ncuộn mượt mà"
           }
         },
@@ -1902,7 +1902,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mac Mouse Fix vẫn được bật khi bạn đóng nó"
           }
         },
@@ -2413,8 +2413,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Gửi báo cáo lỗi"
+            "state" : "translated",
+            "value" : "Gửi ý kiến"
           }
         },
         "zh-Hans" : {
@@ -5766,8 +5766,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hold Command (⌘) and Shift (⇧), then click this icon to reveal the Mac Mouse Fix configuration file in Finder"
+            "state" : "translated",
+            "value" : "Giữ phím Command (⌘) và phím Shift (⇧), sau đó nhấn vào biểu tượng để mở cài đặt Mac Mouse Fix trong Finder"
           }
         },
         "zh-Hans" : {
@@ -5856,8 +5856,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Di chuyển con trỏ chuột vào trong ô '+', sau đó *kích* một nút của chuột để gáng một hành động cho nó.  Bạn cũng có thể *kích đôi*, *kích và kéo* và nhiều hành động khác. Đừng ngại khám phá nhé."
+            "state" : "translated",
+            "value" : "Di chuyển con trỏ chuột vào trong ô '+', sau đó *nhấn* nút của chuột để gán một hành động cho nó.  Bạn cũng có thể *nhấn đôi*, *nhấn và kéo* và nhiều hành động khác nữa."
           }
         },
         "zh-Hans" : {
@@ -7421,7 +7421,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Bạn sẽ được thông báo về các cập nhật khi bạn mở\ncửa sổ này"
           }
         },

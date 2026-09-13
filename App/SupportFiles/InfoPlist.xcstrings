@@ -35,6 +35,12 @@
             "value" : "Mac Mouse Fix"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",

@@ -247,8 +247,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Khóa vị trí con trỏ chuột khi nhấp và kéo"
+            "state" : "translated",
+            "value" : "Khoá con trỏ chuột trong suốt 'Nhấn và Kéo' cử chỉ"
           }
         },
         "zh-Hans" : {

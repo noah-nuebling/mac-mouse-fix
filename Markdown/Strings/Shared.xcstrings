@@ -52,6 +52,12 @@
             "value" : "Teşekkürler"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Công nhận"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -109,6 +115,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yakalanan Fare Düğmeleri"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đã bắt được nút nhấn"
           }
         },
         "zh-Hans" : {
@@ -170,6 +182,12 @@
             "value" : "Yakalanan Kaydırma Düğmeleri"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Đã bắt được nút cuộn lăn"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -227,6 +245,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beni Oku"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Readme"
           }
         },
         "zh-Hans" : {
@@ -288,6 +312,12 @@
             "value" : "Destek"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trợ giúp"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -345,6 +375,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Umuyorum ki bu destek dokümanı yardımcı olmuştur!"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tôi mong hướng dẫn này có ích!"
           }
         },
         "zh-Hans" : {
@@ -406,6 +442,12 @@
             "value" : "Umarım bu bilgiler yararlı olmuştur."
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tôi mong thông tin này có ích!"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -465,6 +507,12 @@
             "value" : "Umarım bu doküman kafanızdaki soru işaretlerini kaldırmıştır."
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tôi mong hướng dẫn có mọi thứ bạn cần!"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -522,6 +570,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hâlâ sorularınız mı mevcut? [Buraya tıklayın]({url})."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bạn vẫn có câu hỏi? Nhấn [tại đây]({url})."
           }
         },
         "zh-Hans" : {
@@ -584,6 +638,12 @@
             "value" : "`{localization_progress}` adındaki doküman `{current_language}` diline çevrilmiştir.\n[Çeviri için yardımcı olun]({url})"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tài liệu này đã được dịch `{localization_progress}` sang `{current_language}`\n[Bạn muốn giúp tôi dịch]({url})"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -642,6 +702,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "[🌎 Çeviri için yardımcı olun!]({url})"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[🌎 Bạn dịch giúp tôi nhé!]({url})"
           }
         },
         "zh-Hans" : {

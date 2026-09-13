@@ -155,8 +155,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bạn **đã và đang sử dụng** thiết lập mặc định với chuột __3 nút__"
+            "state" : "translated",
+            "value" : "Bạn **đang sử dụng** thiết lập mặc định cho chuột với **nút thứ 3**"
           }
         },
         "zh-Hans" : {
@@ -238,8 +238,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bạn **đã và đang sử dụng** thiết lập mặc định với chuột **5+ nút**"
+            "state" : "translated",
+            "value" : "Bạn **đang sử dụng** thiết lập mặc định cho chuột với **nút thứ 5+**"
           }
         },
         "zh-Hans" : {
@@ -2227,7 +2227,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nút giữa"
           }
         },
@@ -2316,7 +2316,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nút %@"
           }
         },
@@ -2405,7 +2405,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nút chính"
           }
         },
@@ -2494,7 +2494,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nút phụ"
           }
         },
@@ -2815,7 +2815,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%2$@ đã được ghi nhận bởi Mac Mouse Fix."
                     }
                   }
@@ -3186,8 +3186,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : ""
+                      "state" : "translated",
+                      "value" : "Ứng dụng khác không thể xem nút này nữa"
                     }
                   }
                 }
@@ -3325,7 +3325,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "[Đọc thêm](%@)"
           }
         },
@@ -3646,8 +3646,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%2$@ không còn ghi nhận bởi Mac Mouse Fix."
+                      "state" : "translated",
+                      "value" : "%2$@ không còn được ghi nhận bởi Mac Mouse Fix"
                     }
                   }
                 }
@@ -4143,6 +4143,12 @@
             "value" : "**Kaydırma** hareketi şu anda Mac Mouse Fix tarafından yakalandı"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Cuộn** đã được ghi nhận bởi Mac Mouse Fix"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4228,7 +4234,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "[Đọc thêm](%@)"
           }
         },
@@ -4301,6 +4307,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Kaydırma** haraketinin Mac Mouse Fix tarafından yakalanması sona erdi"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Cuộn** không còn được ghi nhận bởi Mac Mouse Fix"
           }
         },
         "zh-Hans" : {
@@ -5359,7 +5371,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kích chuột giữa"
+            "value" : "Bấm chuột giữa"
           }
         },
         "zh-Hans" : {
@@ -5447,8 +5459,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Mở liên kết trong thẻ mới, dán chữ vào Terminal, và nhiều hơn.\n \nHoạt động như kích vào nút Nút giữa (còn gọi là Con lăn hoặc Nút số 3) trên chuột."
+            "state" : "translated",
+            "value" : "Mở liên kết trong thẻ mới, dán chữ vào Terminal, và nhiều hơn.\n \nHoạt động như kích vào nút Nút giữa (còn gọi là con lăn hoặc nút số 3) trên chuột thông thường."
           }
         },
         "zh-Hans" : {
@@ -5531,7 +5543,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kích nút chính"
+            "value" : "Bấm nút chính"
           }
         },
         "zh-Hans" : {
@@ -5607,8 +5619,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hoạt động như kích vào nút Nút chính (còn gọi là Nút chuột trái hoặc Nút số 1) trên chuột."
+            "state" : "translated",
+            "value" : "Hoạt động như bấm vào nút Nút chính (còn gọi là nút chuột trái hoặc nút số 1) trên chuột thông thường."
           }
         },
         "zh-Hans" : {
@@ -5691,7 +5703,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kích nút phụ"
+            "value" : "Bấm nút phụ"
           }
         },
         "zh-Hans" : {
@@ -5767,8 +5779,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Hoạt động như kích vào nút Nút phụ (còn gọi là Nút chuột phải hoặc Nút số 2) trên chuột."
+            "state" : "translated",
+            "value" : "Hoạt động như bấm vào nút nút phụ (còn gọi là nút chuột phải hoặc nút số 2) trên chuột thông thường."
           }
         },
         "zh-Hans" : {
@@ -7539,6 +7551,12 @@
             "value" : "Uygulamayı **etkinleştirme konusunda sorun yaşıyorsanız**, [buraya](%@) tıklayın."
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nếu bạn có **vấn đề bật** ứng dụng, bấm vào [đây](%@)"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7879,7 +7897,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mac Mouse Fix đã **tắt** trong System Settings\n\nĐể mở lại Mac Mouse Fix:\n\n1. Đi đến [Login Items Settings](%@)\n2. Bật 'Mac Mouse Fix.app'"
           }
         },
@@ -7968,8 +7986,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Mac Mouse Fix bật lên thất bại vì có **một phiên bản khác** của Mac Mouse Fix đang chạy\n\nĐể bật Mac Mouse Fix:\n\n1. Xóa [phiên bản khác](%@)\n2. Làm trống thùng rác\n3. Khởi động lại máy Mac\n4. Thử lại!"
+            "state" : "translated",
+            "value" : "Mac Mouse Fix không thể bật được vì có **một phiên bản khác** của Mac Mouse Fix đang chạy\n\nĐể bật Mac Mouse Fix:\n\n1. Xóa [phiên bản khác](%@)\n2. Làm trống thùng rác\n3. Khởi động lại máy Mac\n4. Thử lại!"
           }
         },
         "zh-Hans" : {
@@ -8235,7 +8253,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%1$@ và %2$@"
           }
         },
@@ -8414,7 +8432,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bất hoạt bản quyền"
+            "value" : "Xoá bản quyền"
           }
         },
         "zh-Hans" : {
@@ -8591,8 +8609,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bản quyền này đã được kích hoạt **%2$d** lượt. Số lượt tối đa **%3$d**.\n\nVì vậy, bản quyền này không hợp lệ để tránh bị lợi dụng. Nếu bạn có lý do về việc kích hoạt quá nhiều lượt, hãy [liên hệ](%1$@), tôi sẽ cung cấp một khóa kích hoạt mới.\nXin lỗi về sự bất tiện này, mong bạn thông cảm."
+            "state" : "translated",
+            "value" : "Bản quyền này đã được kích hoạt **%2$d** lần. Số lần tối đa là **%3$d**.\n\nDo đó, bản quyền này không hợp lệ để tránh bị lợi dụng. Nếu bạn có lý do về việc kích hoạt quá nhiều lần, xin lỗi về sự bất tiện này\nHãy [liên hệ](%1$@), tôi sẽ cung cấp một khóa kích hoạt mới. Cám ơn bạn vì đã hiểu cho chúng tôi. "
           }
         },
         "zh-Hans" : {
@@ -8680,8 +8698,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bản quyền này đã được **kích hoạt từ trước**!"
+            "state" : "translated",
+            "value" : "Ứng dụng đã được **kích hoạt** với khoá này"
           }
         },
         "zh-Hans" : {
@@ -8770,7 +8788,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bản quyền của bạn đã **bất hoạt** thành công"
+            "value" : "Bản quyền của bạn đã được **xoá** thành công"
           }
         },
         "zh-Hans" : {
@@ -8858,7 +8876,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Bản quyền này **không thể được kích hoạt** nhưng Mac Mouse Fix đang **miễn phí tại quốc gia của bạn**!"
           }
         },
@@ -8947,7 +8965,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**Có lỗi xảy ra với máy chủ quản lý bản quyền**\n\nNó phản hồi rằng:\n\n%@"
           }
         },
@@ -9036,8 +9054,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**Hiện không có kết nối internet**\n\nThử kích hoạt bản quyền của bạn khi kết nối khả dụng."
+            "state" : "translated",
+            "value" : "Có **lỗi kết nối internet**\n\nHãy chắc chắn bạn đang kết nối internet và không có tường lửa nào chặn kết nối của Mac Mouse Fix.\n\nNếu bạn không thể xử lý lỗi này, liên hệ cho tôi [tại đây](%@)."
           }
         },
         "zh-Hans" : {
@@ -9108,6 +9126,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Lisanslama sunucusunda bir hata oluştu.**\n\nLütfen daha sonra tekrar deneyin.\n\nEğer bu problem devam ederse bana [buradan](%@) bir e-posta gönderin."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Có lỗi xảy ra với máy chủ quản lý bản quyền**\n\nHãy thử lại sau.\n\nNếu lỗi xảy ra liên tục, liên hệ cho tôi [tại đây](%@).\n"
           }
         },
         "zh-Hans" : {
@@ -9183,7 +9207,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**Một lỗi không rõ đã xảy ra:**\n\n%@"
           }
         },
@@ -9272,8 +9296,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Không thể xác định '**%@**' là một khóa kích hoạt\n\nVui lòng thử một khóa khác"
+            "state" : "translated",
+            "value" : "'**%@**' không phải là khoá kích hoạt đúng.\n\nHãy chắc chắn bạn dùng đúng mã Mac Mouse Fix mà bạn đã nhận."
           }
         },
         "zh-Hans" : {
@@ -9361,8 +9385,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích hoạt thất bạn do một **lỗi không xác định**\n\nVui lòng gửi một **Báo cáo lỗi** [tại đây](%@)"
+            "state" : "translated",
+            "value" : "Kích hoạt thất bạn do **lỗi không xác định**\n\nVui lòng gửi một **Báo cáo lỗi** [tại đây](%@)"
           }
         },
         "zh-Hans" : {
@@ -9450,7 +9474,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Thiết lập tốc độ tại \n[%1$@ > Chuột > Tốc độ di chuyển](%2$@)"
           }
         },
@@ -9628,8 +9652,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tôi sẽ đọc và trân trọng tất cả các email gửi về, mặc dù có thể tôi sẽ không phản hồi tất cả"
+            "state" : "translated",
+            "value" : "Tôi có thể hiếm khi phản hồi, nhưng Tôi đọc tất cả tin nhắn và thông tin phản hồi giúp tôi cải thiện Mac Mouse Fix. \nCảm ơn thông tin phản hồi của bạn! "
           }
         },
         "zh-Hans" : {
@@ -9718,7 +9742,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Viết Email"
+            "value" : "Gửi cho tôi"
           }
         },
         "zh-Hans" : {
@@ -10341,8 +10365,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Cuộn chính xác, dù không kèm theo một phím bổ sung,\nbằng cách di chuyện con lăn *thật chậm*"
+            "state" : "translated",
+            "value" : "Cuộn chính xác, dù không kèm theo một phím bổ sung, bằng cách di chuyện con lăn *thật chậm*"
           }
         },
         "zh-Hans" : {
@@ -10608,7 +10632,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Chuột **%1$@** của bạn có **%2$d** nút"
           }
         },
@@ -10964,7 +10988,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**Nhấp vào đây** để tải cài đặt khuyến nghị\ncho chuột **%@**"
           }
         },
@@ -11053,8 +11077,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**Đã kích hoạt** Mac Mouse Fix trong %1$@\nNó đã bị bất hoạt từ thanh menu %2$@"
+            "state" : "translated",
+            "value" : "**Đã kích hoạt** Mac Mouse Fix cho %1$@\nNó đã bị tắt từ thanh menu %2$@"
           }
         },
         "zh-Hans" : {
@@ -11142,7 +11166,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**Nút**"
           }
         },
@@ -11231,7 +11255,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "**Cuộn**"
           }
         },
@@ -13013,8 +13037,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🌟 Cảm ơn bạn đã mua Mac Mouse Fix!"
+            "state" : "translated",
+            "value" : "🙌 Cảm ơn bạn đã mua Mac Mouse Fix!"
           }
         },
         "zh-Hans" : {
@@ -13191,8 +13215,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "🙌 Cảm ơn bạn đã mua Mac Mouse Fix!"
+            "state" : "translated",
+            "value" : "🌟 Cảm ơn bạn đã mua Mac Mouse Fix!"
           }
         },
         "zh-Hans" : {
@@ -13547,7 +13571,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "🏂 Phê chữ ê kéo dàiiiii!!"
           }
         },
@@ -13725,7 +13749,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "🐠 Bạn... là... ai?"
           }
         },
@@ -13798,6 +13822,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🏍️ Sence de CBR 1000RR-R'ın isminde çok fazla R yok mu?"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐁 Thú cưng của con buôn!"
           }
         },
         "zh-Hans" : {
@@ -13874,7 +13904,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "🌏 Sửa xong con chuột, anh sau đi cứu thế giới! >:)"
+            "value" : "🌏 Sửa xong con chuột rồi anh đi cứu thế giới! >:)"
           }
         },
         "zh-Hans" : {
@@ -13962,7 +13992,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Bạn đang dùng thử miễn phí **%1$d/%2$d** ngày"
           }
         },
@@ -14229,7 +14259,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Xin chào! Bạn đã sử dụng Mac Mouse Fix được **%1$d ngày**. Mong rằng bạn sẽ thích nó!\n\nNếu bạn muốn tiếp tục sử dụng Mac Mouse Fix, bạn có thể [mua ngay](%2$@)."
           }
         },
@@ -14318,8 +14348,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích %@ +"
+            "state" : "translated",
+            "value" : "Nhấn %@ +"
           }
         },
         "zh-Hans" : {
@@ -14407,8 +14437,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích đúp %@ +"
+            "state" : "translated",
+            "value" : "Nhấn đúp %@ +"
           }
         },
         "zh-Hans" : {
@@ -14496,8 +14526,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích ba lần %@ +"
+            "state" : "translated",
+            "value" : "Nhấn ba lần %@ +"
           }
         },
         "zh-Hans" : {
@@ -14585,7 +14615,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nút giữa"
           }
         },
@@ -14674,7 +14704,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nút %@"
           }
         },
@@ -14763,7 +14793,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nút chính"
           }
         },
@@ -14852,7 +14882,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nút phụ"
           }
         },
@@ -14941,8 +14971,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích %@"
+            "state" : "translated",
+            "value" : "Nhấn %@"
           }
         },
         "zh-Hans" : {
@@ -15030,8 +15060,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích đôi %@"
+            "state" : "translated",
+            "value" : "Nhấn đúp %@"
           }
         },
         "zh-Hans" : {
@@ -15119,8 +15149,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích ba lần %@"
+            "state" : "translated",
+            "value" : "Nhấn ba lần %@"
           }
         },
         "zh-Hans" : {
@@ -15208,8 +15238,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích và kéo %@"
+            "state" : "translated",
+            "value" : "Nhấn và kéo %@"
           }
         },
         "zh-Hans" : {
@@ -15297,8 +15327,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích đôi và kéo %@"
+            "state" : "translated",
+            "value" : "Nhấn đúp và kéo %@"
           }
         },
         "zh-Hans" : {
@@ -15386,8 +15416,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích ba lần và kéo %@"
+            "state" : "translated",
+            "value" : "Nhấn ba lần và kéo %@"
           }
         },
         "zh-Hans" : {
@@ -15475,7 +15505,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "và kéo"
           }
         },
@@ -15564,7 +15594,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Giữ %@"
           }
         },
@@ -15653,8 +15683,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích đôi và giữ %@"
+            "state" : "translated",
+            "value" : "Nhấn đúp và giữ %@"
           }
         },
         "zh-Hans" : {
@@ -15742,8 +15772,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích ba lần và giữ %@"
+            "state" : "translated",
+            "value" : "Nhấn ba lần và giữ %@"
           }
         },
         "zh-Hans" : {
@@ -15831,8 +15861,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích và cuộn %@"
+            "state" : "translated",
+            "value" : "Nhấn và cuộn %@"
           }
         },
         "zh-Hans" : {
@@ -15920,8 +15950,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích đôi và cuộn %@"
+            "state" : "translated",
+            "value" : "Nhấn đúp và cuộn %@"
           }
         },
         "zh-Hans" : {
@@ -16009,8 +16039,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Kích ba lần và cuộn %@"
+            "state" : "translated",
+            "value" : "Nhấn ba lần và cuộn %@"
           }
         },
         "zh-Hans" : {
@@ -16098,7 +16128,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "và cuộn"
           }
         },
@@ -16187,7 +16217,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nút giữa"
           }
         },
@@ -16276,7 +16306,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nút %@"
           }
         },
@@ -16365,7 +16395,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nút chính"
           }
         },
@@ -16454,7 +16484,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nút phụ"
           }
         },

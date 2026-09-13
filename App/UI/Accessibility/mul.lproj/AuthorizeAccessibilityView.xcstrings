@@ -67,8 +67,8 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Nhận quyền truy cập Trợ năng cho phép Mac Mouse Fix \ncan thiệp vào tín hiệu từ chuột và bàn phím"
+            "state" : "translated",
+            "value" : "Mở quyền truy cập Trợ năng cho phép Mac Mouse Fix \ncan thiệp vào tín hiệu từ chuột và bàn phím"
           }
         },
         "zh-Hans" : {
@@ -248,7 +248,7 @@
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mở cài đặt 'Riêng tư & Bảo Mật' Settings"
+            "value" : "Mở cài đặt 'Riêng tư & Bảo Mật' ở Cài đặt"
           }
         },
         "zh-Hans" : {

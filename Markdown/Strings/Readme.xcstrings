@@ -52,6 +52,12 @@
             "value" : "Mac Mouse Fix"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -111,6 +117,12 @@
             "value" : "10 Dolarlık Farenizi Apple İzleme Dörtgeninden Daha İyi Bir Hale Getirin!"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Biến chuột $10 của bạn tốt hơn Apple Trackpad"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -168,6 +180,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "İnternet Sitesi&nbsp;"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Website&nbsp;↗"
           }
         },
         "zh-Hans" : {
@@ -230,6 +248,12 @@
             "value" : "Yardım&nbsp;&amp;&nbsp;Geribildirim"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hỗ trợ&nbsp;&amp;&nbsp;Phản hồi"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -289,6 +313,12 @@
             "value" : "Sürümler"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phát hành"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -346,6 +376,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Teşekkürler"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Công nhận"
           }
         },
         "zh-Hans" : {
@@ -408,6 +444,12 @@
             "value" : "İndirme"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tải xuống"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -465,6 +507,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix, farenizi daha iyi hale getiren bir uygulamadır.\n\nMac Mouse Fix'i *tüm zamanların* en iyi fare sürücüsüne dönüştürmek istiyorum! Bazı özellikler şu anda eksik ama şimdiden **normal fareleri Mac'ler için en iyi farelere** dönüştürebiliyor. Bir Apple Trackpad veya Logitech MX Master fareyle aynı seviyede, hatta daha da iyi.\n\nMac Mouse Fix'in farenizi tam olarak nasıl geliştirdiği hakkında daha fazla bilgi için [internet sitesini]({url}) ziyaret edin."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix là ứng dụng làm cho chuột của bạn xịn hơn.\n\nTôi muốn Mac Mouse Fix thành trình điều khiển chuột tốt nhất *mọi thời đại*! Một số tính năng vẫn còn thiếu lúc này, nhưng tôi nghĩ nó đã **biến chuột thông thường thành thiết bị đầu vào tốt nhất cho Macs** theo cách nào đó. Ở cùng mức hoặc thậm chí hay hơn Apple Trackpad hoặc chuột Logitech MX Master. \n\nNếu bạn cần nhiều thông tin hơn về Mac Mouse Fix đã nâng cấp chuột của bạn, truy cập [website]({url})."
           }
         },
         "zh-Hans" : {
@@ -526,6 +574,12 @@
             "value" : "## Özellikler\n\nMac Mouse Fix'in özelliklerine gözatmak ve video örnekleri için [internet sitesine]({url_1}) bakın!\n\nDaha fazla bilgi için [Sürümlere]({url_2}) bakın."
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Tính năng\n\nXem [website]({url_1}) về tổng quan những tính năng của Mac Mouse Fix, bao gồm cả video demo!\n\nCụ thể hơn nữa, xem tại [Phát hành]({url_2})."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -583,6 +637,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Kurulum\n\nMac Mouse Fix'in en son sürümünü [internet sitesinden]({url_1}) indirin.\n\nMac Mouse Fix'i [Homebrew]({url_2}) ile de kurabilirsiniz. Sadece şu komutları Terminal'de kullanın.\n\n```bash\nbrew install mac-mouse-fix\n```\n\nMac Mouse Fix'in daha eski sürümlerini de [sürümler]({url_3}) kısmından indirebilirsiniz."
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Cách cài đặt\n\nTải phiên bản mới nhất của Mac Mouse Fix tại [website]({url_1}).\n\nBạn cũng có thể cài thông qua [Homebrew]({url_2})! Chỉ cần gõ lệnh sau vào terminal:\n\n```bash\nbrew install mac-mouse-fix\n```\n\nBạn có thể tải phiên bản cũ hơn của Mac Mouse Fix tại [Phát hành]({url_3}).\n"
           }
         },
         "zh-Hans" : {
@@ -644,6 +704,12 @@
             "value" : "## macOS Uyumluluğu\n\nMac Mouse Fix'in en son sürümü **mac OS 11 Big Sur** ve sonrası için tasarlandı.\n\nEğer **macOS 10.15 Catalina**, **macOS 10.14 Mojave** veya **macOS 10.13 High Sierra** kullanıyorsanız [Mac Mouse Fix 2'nin son sürümünü]({url_1}) kullanabilirsiniz. Mac Mouse Fix 3.0.0 ve sonrası aygıtınızda çalışabilir fakat görüntü hataları ve beklenmedik program hataları ile karşılaşabilirsiniz.\n\nEğer **macOS 10.12 Sierra** veya **macOS 10.11 El Capitan** kullanıyorsanız [Mac Mouse Fix 2.2.0]({url_2}) veya altını kullanabilirsiniz."
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Tương thích macOS\n\nPhiên bản mới nhất của Mac Mouse Fix dùng cho các phiên bản **macOS 11 Big Sur** và sau đó.\n\nNếu bạn đang sử dụng macOS **10.15 Catalina**, macOS **10.14 Mojave**, hoặc macOS **10.13 High Sierra**, bạn có thể dùng[bản mới nhất của Mac Mouse Fix 2]({url_1}). Mac Mouse Fix 3.0.0 và sau đó có thể hoạt động nhưng sẽ có vài lỗi về hiển thị hoặc một số tính năng hoạt động không đúng.\n    \nNếu bạn đang sử dụng macOS **10.12 Sierra**, hoặc **10.11 El Capitan**, bạn có thể dùng Mac Mouse Fix [2.2.0]({url_2}) hoặc thấp hơn."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -701,6 +767,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Ücretlendirme\n\n[İnternet sitesine]({url}) göz atarak Mac Mouse Fix 3'ün fiyatlandırmasına bakabilirsiniz.<br>\n\nMac Mouse Fix 2 ve altı sonsuza dek ücretsiz kalacaktır.\n"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Giá\n\nCoi taij [website]({url}) để biết tổng quan giá cho Mac Mouse Fix 3.<br>\n\nMac Mouse Fix 2 và thấp hơn sẽ được miễn phí mãi mãi."
           }
         },
         "zh-Hans" : {
@@ -762,6 +834,12 @@
             "value" : "## Uygulamayı Kaldırma\n\nMac Mouse Fix uygulamasını çöp kutusuna taşıyarak kaldırın.\n\nFakat, bu yöntem ile sisteminizde birkaç dosya kalacaktır. Bunları da kaldırmak için [FreeMacSoft tarafından geliştirilen AppCleaner]({url}) uygulamasını kullanabillirsiniz.\n\nmacOS bazında uygulamalar kaldırıldığında bu dosyaların silinmesi pek mümkün değildir. Bu yüzden AppCleaner kullanmanızı tavsiye ederim."
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Gỡ cài đặt\n\nGỡ cài đặt Mac Mouse Fix bằng cách đơn giản là chuyển ứng dụng vô trong thùng rác.\n\nTuy nhiên, sẽ có nhiều tệp tin vẫn còn ở trong hệ thống. Để xoá bỏ chúng, tôi đề xuất bạn xài ứng dụng tuyệt vời này [AppCleaner by FreeMacSoft]({url}).\n\nỞ macOS, bạn không thể tự tay xoá hết những tệp tin đó. Đó là lý do tôi xuyên bạn nên xài những ứng dụng khư AppCleaner."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -821,6 +899,12 @@
             "value" : "## Yorumlar\n\nMac Mouse Fix'e olan heyecanı paylaşan herkese çok teşekkür ederim. [İnternet sitesinde]({url}) insanların yorumlarını gösteren bir koleksiyonu inceleyebilirsiniz."
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Điều mọi người nói\n\nCám ơn rất nhiều tới mọi người đã chia sẻ về niềm vui của họ về Mac Mouse Fix!<br>\nTrên [website]({url}) bạn có thể tìm thấy rất nhiều người nói tốt về ứng dụng."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -878,6 +962,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Öneriler"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Mẹo"
           }
         },
         "zh-Hans" : {

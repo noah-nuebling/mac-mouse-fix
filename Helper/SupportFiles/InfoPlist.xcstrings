@@ -35,6 +35,12 @@
             "value" : "Assistente do Mac Mouse Fix"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Người giúp đỡ Mac Mouse Fix"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",

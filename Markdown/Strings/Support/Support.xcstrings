@@ -288,6 +288,12 @@
             "value" : "## Bana ulaşın\n\nHala sorularınız mı var? [Buraya]({url}) tıklayın!"
           }
         },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Liên hệ\n\nBạn vẫn có câu hỏi? Nhấn [tại đây]({url})."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
