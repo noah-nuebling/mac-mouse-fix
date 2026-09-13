@@ -80,6 +80,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **wrzesień 2026**
 
+- 🇺🇸&nbsp;Kirk&nbsp;Laninga
 - 🇨🇦&nbsp;Bruno&nbsp;Fernandes
 - 🇨🇿&nbsp;Tomáš&nbsp;Rábl
 - 🇺🇸&nbsp;Brandy&nbsp;Allen - "Very Useful App"
