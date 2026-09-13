@@ -49,6 +49,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                     "zh": 320,   /// 350 -> 320 looks nicer than 350 (even though it wraps the enabledHint) [Sep 2025]
                     "fr": 370,   /// 350 -> 370 is narrowest that doesn't wrap the pretty-short first enabledHint [Sep 2025]
                     "de": 350,   /// 350 looks great. [Sep 2025]
+                    "ja": 320,   /// 350 -> 320 to have more semantic information on second line instead of just particles. Looks good. [Sep 2026]
                     "ko": 320,   /// 350 -> 320 minimize gap after short enabledHint "Mac Mouse Fix는 창을 닫아도 동작합니다." [Sep 2025]
                     "pt": 350,   /// 350 looks great. 370 is closest to the 'vision' of the original translator I think – the 2nd and 3rd hint have the last two words on the 2nd line. But 350 looks better visually I think. [Sep 2025]
                     "vi": 350,   /// 350 looks great and is almost exactly what the original translator did [Sep 2025]
@@ -63,6 +64,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                     "zh": 330,  /// Everything's 1 line in Chinese, so we just let it be sized naturally [Sep 2025]
                     "fr": 360,  /// 340 -> 360 is the narrowest, that doesn't wrap the precisionHint onto 3 lines. [Sep 2025]
                     "de": 340,  /// 340 looks great [Sep 2025]
+                    "ja": 340,  /// 340 looks great [Sep 2026]
                     "ko": 330,  /// 340 -> 330 looks better. Not sure why. [Sep 2025]
                     "pt": 370,  /// 340 -> 370 is narrowest that doesn't truncate modfield title "Aumentar ou diminuir zoom" [Sep 2025]
                     "vi": 340,  /// 340 looks great. [Sep 2025]
@@ -75,18 +77,18 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                 fatalError("Calling this from unexpected tab: \(tabController)")
         }
         
-        var windowWidth = map[LocalizationUtility.currentLanguageCode() ?? ""]
-        if (windowWidth == nil) {
+        var hardcodedWindowWidth = map[LocalizationUtility.currentLanguageCode() ?? ""]
+        if (hardcodedWindowWidth == nil) {
             assert(false)
-            windowWidth = map["en"]! /// Fallback in case I forget to update the map for a new language [Sep 2025]
+            hardcodedWindowWidth = map["en"]! /// Fallback in case I forget to update the map for a new language [Sep 2025]
         }
         
-        if (windowWidth! >= 0) {
+        if (hardcodedWindowWidth! >= 0) {
             
             /// Set window width
             ///     Before, I used `lessThanOrEqualToConstant:` instead of `equalToConstant:` to make things more robust in case the layout naturally wants to be narrower.
             ///         But allowing textWrapping without specifying tabWidth leads to these weird ambiguities in the layout system I think. Wrote more about this elsewhere where we mentioned `applyHardcodedTabWidth` [Sep 2025]
-            tabController.view.widthAnchor.constraint(equalToConstant: windowWidth!).isActive = true;
+            tabController.view.widthAnchor.constraint(equalToConstant: hardcodedWindowWidth!).isActive = true;
             
             /// Enable text wrapping
             for t in widthControllingTextFields {
@@ -112,7 +114,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
             }
         }
         
-        print("TBS set windowWidth \(windowWidth!) for tab '\(tabName)' (\(tabController.view))")
+        print("TBS set windowWidth \(hardcodedWindowWidth!) for tab '\(tabName)' (\(tabController.view))")
         
     }
 }
