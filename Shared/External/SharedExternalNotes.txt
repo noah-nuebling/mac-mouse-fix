@@ -27,6 +27,7 @@ About ReactiveCocoa and ReactiveSwift (Vendored projects in this folder)
             3.3 Change MACH_O_TYPE to 'Static Library' (size optimization)
                 Alternative tested: Add ReactiveSwift and ReactiveCocoa as Dynamic Framework and share between main app and helper -> 16MB (0.2MB larger)
                     I guess the stripping Xcode does for static linking outweighs the duplication
+            3.4 Set LOCALIZATION_EXPORT_SUPPORTED=NO to avoid the Info.plist from being exported by `xcodebuild -exportLocalizations` and stuff
         4. Add the two frameworks as dependencies to Mac Mouse Fix and Mac Mouse Fix Helper targets.
             Choose 'Do not embed' (Embedding unnecessary since it's a 'Static Library')
 
