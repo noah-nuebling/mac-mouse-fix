@@ -28,6 +28,12 @@
             "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **captura la rueda de desplazamiento de tu ratón por defecto**, de forma similar a cómo [captura los botones del ratón](<{url}>)."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "#{docname_captured_scroll_wheels}\n\nMac Mouse Fix は、[マウスボタンをキャプチャ](<{url}>)するのと同様に、**デフォルトでマウスのスクロールホイールをキャプチャします**。"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -80,6 +86,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Para evitar la captura de la rueda de desplazamiento:**\n\n1. Ve a la pestaña 'Desplazamiento' en Mac Mouse Fix\n2. Desactiva **todas** las opciones\n    - En el caso de la opción 'Velocidad', configúrala en 'macOS'\n    - Elimina todas las entradas en 'Modificadores de teclado' haciendo clic en el botón 'x' junto a cada modificador\n\nDespués de esto, deberías ver un mensaje que indica que la rueda de desplazamiento ya no se está capturando."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**スクロールホイールの制御（キャプチャ）を停止するには：**\n\n1.Mac Mouse Fix の'スクロール'タブを開きます\n2.**すべて**のオプションをオフにします\n   -'速度'オプションについては、'macOS'で設定してください\n   -'キーボード修飾キー'の下にあるすべての項目を、各項目の横にある'x'ボタンをクリックして削除します\n\n完了すると、スクロールホイールの制御が解除されたことを知らせるメッセージが表示されます。"
           }
         },
         "pt-BR" : {
@@ -135,6 +147,12 @@
             "value" : "**¿Qué pasa cuando la rueda de desplazamiento *ya no* está siendo capturada?**\n\nMac Mouse Fix ignorará por completo la rueda de desplazamiento de tu ratón; no utilizará potencia del procesador ni carga de batería durante el desplazamiento, ni interferirá de ninguna manera. Esto te da total libertad para usar otras aplicaciones como [MOS]({url}) para manejar tu rueda de desplazamiento."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**スクロールホイールの制御を*解除する*とどうなりますか？**\n\nMac Mouse Fixはスクロールホイールの動作を完全に無視するようになります。スクロール中にCPUリソースやバッテリーを消費することはなく、いかなる干渉も行いません。これにより、[MOS]({url})などの他のアプリを使ってスクロールホイールを自由に制御できるようになります。"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -186,6 +204,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Ver también\n\n  - [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Editado con la excelente asistencia de Claude 3.5 Sonnet)*"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "##関連情報\n[{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Claude 3.5 Sonnetの多大なる協力により編集されました)*"
           }
         },
         "pt-BR" : {

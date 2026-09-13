@@ -35,6 +35,12 @@
             "value" : "Terminé"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完了"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -119,6 +125,12 @@
             "value" : "Recommandé pour les souris « Trackball »"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "トラックボールマウスにおすすめ"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -201,6 +213,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Verrouiller le pointeur de la souris pendant les gestes « Cliquer et lâcher »"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'クリックしてドラッグ'ジェスチャ中はマウスポインタを固定"
           }
         },
         "ko" : {

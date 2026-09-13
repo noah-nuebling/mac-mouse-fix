@@ -23,6 +23,12 @@
             "value" : "Mac Mouse Fix"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",

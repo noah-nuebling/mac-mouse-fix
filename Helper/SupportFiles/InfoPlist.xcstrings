@@ -23,6 +23,12 @@
             "value" : "Mac Mouse Fix Helper"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix Helper"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",

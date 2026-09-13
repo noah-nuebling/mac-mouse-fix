@@ -157,6 +157,12 @@
             "value" : "Annuler"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -239,6 +245,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Consulter les guides ou demander à la communauté..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ガイドを見る／コミュニティに相談…"
           }
         },
         "ko" : {
@@ -386,6 +398,12 @@
             "value" : "Vérifier les mises à jour..."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新を確認…"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -531,6 +549,12 @@
             "value" : "Désactivée"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オフ"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -613,6 +637,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Précision"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "精密さ"
           }
         },
         "ko" : {
@@ -699,6 +729,12 @@
             "value" : "Demander une nouvelle fonctionnalité"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻訳に協力する"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -781,6 +817,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Supprimer"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "削除"
           }
         },
         "ko" : {
@@ -867,6 +909,12 @@
             "value" : "Défiler à l'horizontal"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "横スクロール"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -949,6 +997,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Modifier"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "編集"
           }
         },
         "ko" : {
@@ -1035,6 +1089,12 @@
             "value" : "Remerciements"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "謝辞"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1117,6 +1177,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Normale"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "普通"
           }
         },
         "ko" : {
@@ -1264,6 +1330,12 @@
             "value" : "Importante"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1346,6 +1418,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Défiler avec précision"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "精密スクロール"
           }
         },
         "ko" : {
@@ -1432,6 +1510,12 @@
             "value" : "Déplacez-vous entre les pages dans Safari en défilant horizontalement, et bien plus"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Safariでの横スクロールによるページ移動などに対応"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1514,6 +1598,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Permet d'activer ou de désactiver rapidement\nles fonctionnalités comme le défilement doux"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スムーズスクロールなどの機能をすばやくオン/オフできます"
           }
         },
         "ko" : {
@@ -1600,6 +1690,12 @@
             "value" : "Main Menu"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メインメニュー"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1682,6 +1778,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tout ramener au premier plan"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべてを手前に移動"
           }
         },
         "ko" : {
@@ -1768,6 +1870,12 @@
             "value" : "Mac Mouse Fix restera activé après l'avoir fermé"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリを終了した後も、Mac Mouse Fixは有効なままです"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -1847,6 +1955,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -1936,6 +2050,12 @@
             "value" : "Ne plus me le rappeler"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今後表示しない"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2018,6 +2138,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rapide"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "速い"
           }
         },
         "ko" : {
@@ -2165,6 +2291,12 @@
             "value" : "Masquer Mac Mouse Fix"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixを非表示"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2247,6 +2379,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Signaler un bug"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "フィードバックを送信"
           }
         },
         "ko" : {
@@ -2392,6 +2530,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "À propos"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このアプリについて"
           }
         },
         "ko" : {
@@ -2606,6 +2750,12 @@
             "value" : "Acheter Mac Mouse Fix..."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixを購入…"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2688,6 +2838,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Boutons"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボタン"
           }
         },
         "ko" : {
@@ -2890,6 +3046,12 @@
             "value" : "Aide"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ヘルプ"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2972,6 +3134,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Modérée"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "普通"
           }
         },
         "ko" : {
@@ -3058,6 +3226,12 @@
             "value" : "Général"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一般"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3140,6 +3314,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Défiler rapidement"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "軽快にスクロール"
           }
         },
         "ko" : {
@@ -3226,6 +3406,12 @@
             "value" : "Obtenir de l'aide"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ヘルプを表示"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3308,6 +3494,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tout afficher"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべて見る"
           }
         },
         "ko" : {
@@ -3394,6 +3586,12 @@
             "value" : "Fenêtre"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ウインドウ"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3476,6 +3674,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aide"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ヘルプ"
           }
         },
         "ko" : {
@@ -3562,6 +3766,12 @@
             "value" : "Lente"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "遅い"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3641,6 +3851,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "macOS"
@@ -3840,6 +4056,12 @@
             "value" : "Défilement naturel"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スクロール方向を反転"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3985,6 +4207,12 @@
             "value" : "Services"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サービス"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4067,6 +4295,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zoomer ou dézoomer"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拡大・縮小"
           }
         },
         "ko" : {
@@ -4214,6 +4448,12 @@
             "value" : "Mac Mouse Fix"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4296,6 +4536,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Options..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オプション…"
           }
         },
         "ko" : {
@@ -4382,6 +4628,12 @@
             "value" : "Copier"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コピー"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4464,6 +4716,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Annuler"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
           }
         },
         "ko" : {
@@ -4550,6 +4808,12 @@
             "value" : "Afficher dans la barre des menus"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メニューバーに表示"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4634,6 +4898,12 @@
             "value" : "Fenêtre"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ウインドウ"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4713,6 +4983,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -4800,6 +5076,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Défilement"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スクロール"
           }
         },
         "ko" : {
@@ -4947,6 +5229,12 @@
             "value" : "Vitesse :"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "速度"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5092,6 +5380,12 @@
             "value" : "Restaurer les paramètres par défaut..."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "初期設定に戻す…"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5174,6 +5468,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Édition"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "編集"
           }
         },
         "ko" : {
@@ -5260,6 +5560,12 @@
             "value" : "Recevoir les versions bêta"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ベータ版を入手する"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5344,6 +5650,12 @@
             "value" : "Boutons"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボタン"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5420,6 +5732,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mantén pulsadas Comando (⌘) y Mayús (⇧), luego haz clic en este icono para mostrar el archivo de configuración de Mac Mouse Fix en el Finder."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Command (⌘)とShift (⇧)を押しながらこのアイコンをクリックすると、Mac Mouse Fixの設定ファイルをFinderで表示します。"
           }
         },
         "ko" : {
@@ -5506,6 +5824,12 @@
             "value" : "Déplacez le pointeur de la souris à l'intérieur du champ « + », puis *cliquez* sur un bouton de la souris pour lui affecter une action.\nVous pouvez aussi utiliser le *double-clic*, le *clic et déplacement* et bien d'autres."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「＋」の枠内にマウスポインターを移動させ、マウスボタンを*クリック*してアクションを割り当てます。\n*ダブルクリック*や*クリックとドラッグ*なども設定可能です。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5590,6 +5914,12 @@
             "value" : "Simulation du trackpad"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "トラックパッドをシミュレーション"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5672,6 +6002,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Minimiser"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "しまう"
           }
         },
         "ko" : {
@@ -5819,6 +6155,12 @@
             "value" : "Tout sélectionner"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全てを選択"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5901,6 +6243,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Visiter le site web"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ウェブサイトを表示"
           }
         },
         "ko" : {
@@ -6048,6 +6396,12 @@
             "value" : "Créé par Noah Nuebling"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Created by Noah Nuebling"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6193,6 +6547,12 @@
             "value" : "M'envoyer un e-mail"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メールを送信"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6275,6 +6635,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Défilement"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スクロール"
           }
         },
         "ko" : {
@@ -6422,6 +6788,12 @@
             "value" : "Couper"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "切り取り"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6504,6 +6876,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Général"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一般"
           }
         },
         "ko" : {
@@ -6590,6 +6968,12 @@
             "value" : "Masquer les autres"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "他を非表示"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6672,6 +7056,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Activer Mac Mouse Fix"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixを有効化"
           }
         },
         "ko" : {
@@ -6758,6 +7148,12 @@
             "value" : "Fermer"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "閉じる"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6840,6 +7236,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Coller"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "貼り付け"
           }
         },
         "ko" : {
@@ -6987,6 +7389,12 @@
             "value" : "Vous serez prévenu d'une nouvelle mise à jour\n lorsque vous ouvrirez cette fenêtre"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このウィンドウを開くと、更新通知が表示されます。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7132,6 +7540,12 @@
             "value" : "Douceur :"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "滑らかさ："
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7214,6 +7628,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vérifier les mises à jour"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新を確認"
           }
         },
         "ko" : {
@@ -7300,6 +7720,12 @@
             "value" : "Achetez-moi un milkshake :)"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ミルクシェイクをご馳走する(^^)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7384,6 +7810,12 @@
             "value" : "À propos de Mac Mouse Fix"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixについて"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7466,6 +7898,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Quitter Mac Mouse Fix"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixを終了"
           }
         },
         "ko" : {
@@ -7565,6 +8003,12 @@
             "value" : "Raccourcis clavier :"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修飾キー："
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7647,6 +8091,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "À propos"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
           }
         },
         "ko" : {
@@ -7855,6 +8305,12 @@
             "value" : "Services"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サービス"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7998,6 +8454,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Activer une licence..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンスを有効にする…"
           }
         },
         "ko" : {
@@ -8145,6 +8607,12 @@
             "value" : "Mac Mouse Fix"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8229,6 +8697,12 @@
             "value" : "Réduire/agrandir"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拡大"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8311,6 +8785,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Voir sur GitHub"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHubで確認"
           }
         },
         "ko" : {

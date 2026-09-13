@@ -34,6 +34,12 @@
             "value" : "Ouvrir les préférences « Sécurité et confidentialité »"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'プライバシーとセキュリティ'設定を開く"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -117,6 +123,12 @@
             "value" : "Vous **utilisez déjà** le réglage par défaut pour une souris avec **3 boutons**"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**3ボタン**マウス向けのデフォルト設定は、すでに**適用されています**"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -192,6 +204,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ya estás **usando** la configuración predeterminada para ratones con **5+ botones**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**5ボタン以上**マウス向けのデフォルト設定は、すでに**適用されています**"
           }
         },
         "ko" : {
@@ -275,6 +293,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Version %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バージョン %@"
           }
         },
         "pt-BR" : {
@@ -1884,6 +1908,12 @@
             "value" : "Bouton de souris %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "マウスのボタン %@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2165,6 +2195,12 @@
             "value" : "Bouton du milieu"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ホイールボタン"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2246,6 +2282,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bouton %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボタン %@"
           }
         },
         "ko" : {
@@ -2331,6 +2373,12 @@
             "value" : "Bouton principal"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主ボタン"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2412,6 +2460,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bouton secondaire"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "副ボタン"
           }
         },
         "ko" : {
@@ -2607,6 +2661,27 @@
                     "stringUnit" : {
                       "state" : "needs_review",
                       "value" : "%2$@ ont été capturés par Mac Mouse Fix."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ はMac Mouse Fixで制御されるようになりました"
                     }
                   }
                 }
@@ -2964,6 +3039,27 @@
             }
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "他のアプリからは、これらのボタンが検出されなくなります。"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3197,6 +3293,12 @@
             "value" : "[En savoir plus](%@)"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[もっと詳しく](%@)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3390,6 +3492,27 @@
                     "stringUnit" : {
                       "state" : "needs_review",
                       "value" : "%2$@ ne sont plus capturés par Mac Mouse Fix."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ はMac Mouse Fixで制御されなくなりました"
                     }
                   }
                 }
@@ -3747,6 +3870,27 @@
             }
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3975,6 +4119,12 @@
             "value" : "El **desplazamiento** ahora está capturado por Mac Mouse Fix"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**スクロール**はMac Mouse Fixで制御されるようになりました"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4044,6 +4194,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "[En savoir plus](%@)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[もっと詳しく](%@)"
           }
         },
         "ko" : {
@@ -4123,6 +4279,12 @@
             "value" : "El **desplazamiento** ya no está capturado por Mac Mouse Fix"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**スクロール**はMac Mouse Fixで制御されなくなりました"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4183,6 +4345,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Espaces & Mission Control"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スペースとMission Control"
           }
         },
         "ko" : {
@@ -4268,6 +4436,12 @@
             "value" : "Déplacer votre souris :\n - Vers le haut pour afficher Mission Control\n - Vers le bas pour afficher Fenêtres de l'application\n - Vers la gauche ou la droite pour passer d'un espace à un autre\n \nFonctionne comme le balayage à 3 doigts sur un Trackpad Apple"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "マウスを動かす：\n-上に動かしてMission Controlを表示\n-下に動かしてアプリケーションウィンドウを表示\n-左右に動かしてスペース間を移動\n\nAppleトラックパッドの「3本指でスワイプ」と同じように動作します。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4349,6 +4523,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Défiler & naviguer"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スクロールとナビゲート"
           }
         },
         "ko" : {
@@ -4434,6 +4614,12 @@
             "value" : "Défiler librement en déplaçant votre souris dans n'importe quelle direction\n \nPeut aussi naviguer entre les pages dans Safari, supprimer les messages dans Mail et bien plus en bougeant votre souris à gauche ou à droite\n \nFonctionne comme le balayage avec 2 doigts sur un Trackpad Apple"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "マウスを好きな方向に動かして、自由にスクロール\n \nさらに、左右の動きでSafariのページ移動やメールの削除など、さまざまな操作が可能です。\n \nAppleトラックパッドの「2本指でスワイプ」と同じように動作します。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4515,6 +4701,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fenêtres de l'application"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリケーションウィンドウ"
           }
         },
         "ko" : {
@@ -4600,6 +4792,12 @@
             "value" : "Afficher toutes les fenêtres de l'application active"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用中のアプリのすべてのウィンドウを表示"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4681,6 +4879,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Touches exclusives "
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " 専用キー"
           }
         },
         "ko" : {
@@ -4766,6 +4970,12 @@
             "value" : "Choisir les touches uniquement disponibles sur les claviers Apple"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple純正キーボードにのみ搭載されているキーを選択できます"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4847,6 +5057,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fonctionne comme en appuyant sur « %@ » sur un clavier Apple"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple純正キーボードで'%@'キーを押したときと同じように動作します"
           }
         },
         "ko" : {
@@ -4932,6 +5148,12 @@
             "value" : "Vers l'arrière"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "戻る"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5013,6 +5235,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Revenir en arrière d'une page dans Safari et d'autres apps"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Safariやその他のアプリで前のページに戻る"
           }
         },
         "ko" : {
@@ -5098,6 +5326,12 @@
             "value" : "Clic du milieu"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ミドルクリック"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5179,6 +5413,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Ouvrir les liens dans un nouvel onglet, coller du texte dans le Terminal et bien plus.\n \nFonctionne comme le clic sur le Bouton central de la souris (aussi appelé bouton de la molette de défilement ou Bouton de souris 3) sur une souris standard."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リンクを新しいタブで開く、ターミナルにテキストを貼り付けるなど、さまざまな操作が可能です。\n \n一般的なマウスの中央ボタン（ホイールボタンやマウスボタン3とも呼ばれます）をクリックしたときと同じように動作します。"
           }
         },
         "ko" : {
@@ -5264,6 +5504,12 @@
             "value" : "Clic principal"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主ボタンのクリック"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5327,6 +5573,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Fonctionne comme le clic sur le Bouton principal de la souris (aussi appelé bouton de souris gauche ou Bouton de souris 1) sur une souris standard."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一般的なマウスの主ボタン（左ボタンやマウスボタン1とも呼ばれます）をクリックしたときと同じように動作します。"
           }
         },
         "ko" : {
@@ -5412,6 +5664,12 @@
             "value" : "Clic secondaire"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "副ボタンのクリック"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -5475,6 +5733,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Fonctionne comme le clic sur le Bouton secondaire de la souris (aussi appelé bouton de souris droit ou Bouton de souris 2) sur une souris standard."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一般的なマウスの副ボタン（右ボタンやマウスボタン2とも呼ばれます）をクリックしたときと同じように動作します。"
           }
         },
         "ko" : {
@@ -5560,6 +5824,12 @@
             "value" : "Afficher le bureau"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "デスクトップを表示"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5641,6 +5911,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Afficher le bureau"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "デスクトップを表示する"
           }
         },
         "ko" : {
@@ -5726,6 +6002,12 @@
             "value" : "Vers l'avant"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "進む"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5809,6 +6091,12 @@
             "value" : "Avancer d'une page sur Safari et d'autres apps"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Safarやその他のアプリで1ページ進む"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5887,6 +6175,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launchpad"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Launchpad"
@@ -5975,6 +6269,12 @@
             "value" : "Ouvrir le Launchpad"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Launchpadを開く"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6056,6 +6356,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Déplacer vers le bureau de gauche"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "左の操作スペースに移動"
           }
         },
         "ko" : {
@@ -6141,6 +6447,12 @@
             "value" : "Se déplacer d'un espace vers la gauche"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "左の操作スペースに移動する"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6222,6 +6534,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rechercher & Coup d'œil"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「調べる」とクイックルック"
           }
         },
         "ko" : {
@@ -6307,6 +6625,12 @@
             "value" : "Rechercher des mots dans le Dictionnaire, Coup d'œil sur les fichiers dans le Finder et bien plus.\n \nFonctionne comme le clic forcé sur un Trackpad Apple."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "辞書で単語を調べたり、Finderでファイルをクイックルックしたり、他にも様々なことができます。\n\nAppleトラックパッドの強めのクリックと同じように動作します。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6385,6 +6709,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mission Control"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mission Control"
@@ -6473,6 +6803,12 @@
             "value" : "Afficher Mission Control"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mission Controlを表示する"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6554,6 +6890,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Raccourci clavier..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キーボードショートカット…"
           }
         },
         "ko" : {
@@ -6639,6 +6981,12 @@
             "value" : "Tapez un raccourci clavier, puis utilisez-le depuis votre souris"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キーボードショートカットを割り当てて、マウスでそれを実行します。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6720,6 +7068,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Déplacer vers le bureau de droite"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "右の操作スペースに移動"
           }
         },
         "ko" : {
@@ -6805,6 +7159,12 @@
             "value" : "Se déplacer d'un espace vers la droite"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "右の操作スペースに移動する"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6886,6 +7246,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fonctionne comme en appuyant sur « %@ » sur votre clavier"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キーボードで'%@'を押すのと全く同じように動作します。"
           }
         },
         "ko" : {
@@ -6971,6 +7337,12 @@
             "value" : "Zoom intelligent"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スマートズーム"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7052,6 +7424,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zoom en avant ou en arrière dans Safari et d'autres apps.\n \nFonctionne comme un Toucher deux fois sur un Trackpad Apple."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Safariやその他の対応アプリで拡大・縮小します。Appleトラックパッドの2本指ダブルタップ操作を再現します。"
           }
         },
         "ko" : {
@@ -7137,6 +7515,12 @@
             "value" : "Si vous rencontrez des **problèmes pour activer** l'app, cliquez&nbsp;[ici](%@)."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アプリを有効にする際にお困りですか？[こちら](%@)をクリックしてください"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7194,6 +7578,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Le **bouton principal de la souris** ne peut pas être utilisé\nVeuillez essayer un autre bouton"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メインのマウスボタンは割り当てを変更できません。別のボタンを試してください。"
           }
         },
         "ko" : {
@@ -7279,6 +7669,12 @@
             "value" : "Le **bouton secondaire de la souris** ne peut pas être utilisé\nVeuillez essayer un autre bouton"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "副ボタンは割り当てを変更できません。別のボタンを試してください。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7360,6 +7756,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix est actuellement gratuit dans votre pays (%@)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixは現在、お客様の地域(%@)で無料です。"
           }
         },
         "ko" : {
@@ -7445,6 +7847,12 @@
             "value" : "Mac Mouse Fix a été **désactivé** dans les Réglages Système\n\nPour activer Mac Mouse Fix :\n\n1. Se rendre dans les [paramètres Ouverture](%@)\n2. Activer « Mac Mouse Fix.app »"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "システム設定で Mac Mouse Fixが**無効**になっています\n\nMac Mouse Fix を有効にするには：\n\n1.[ログイン項目の設定](%@)を開く\n2.'Mac Mouse Fix'をオンにする"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7526,6 +7934,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Mac Mouse Fix ne peut pas être activé car une **autre version** de Mac Mouse Fix est présente sur votre ordinateur\n\nPour activer Mac Mouse Fix :\n\n1. Supprimer l'[autre version](%@)\n2. Vider la corbeille\n3. Redémarrer votre Mac\n4. Réessayer !"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お使いのMacに**別のバージョン**のMac Mouse Fixがあるため、有効にできません。\n\nMac Mouse Fixを有効にする手順：\n\n1.[別のバージョン](%@)を削除する\n2.ゴミ箱を空にする\n3.Macを再起動する\n4.もう一度お試しください！"
           }
         },
         "ko" : {
@@ -7611,6 +8025,12 @@
             "value" : "L'activation a échoué"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有効化できませんでした"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7692,6 +8112,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : ", "
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "、"
           }
         },
         "ko" : {
@@ -7777,6 +8203,12 @@
             "value" : "%1$@ et %2$@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@と%2$@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7858,6 +8290,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Activer la licence"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンスを有効にする…"
           }
         },
         "ko" : {
@@ -7943,6 +8381,12 @@
             "value" : "Désactiver la licence"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンスを解除"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8024,6 +8468,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Votre licence a été **activée** ! 🎉"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンスが**有効化**されました！ 🎉"
           }
         },
         "ko" : {
@@ -8109,6 +8559,12 @@
             "value" : "Cette licence a été activée **%2$d** fois. Le maximum est de **%3$d**.\n\nÀ cause de cela, la licence a été invalidée. Ceci permet d'éviter le piratage. Si vous avez d'autres raisons d'activer la licence autant de fois, veuillez m'excuser.\n\nIl suffit de [me contacter](%1$@) et je vous fournirai une nouvelle licence ! Merci de votre compréhension."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このライセンスは**%2$d回**有効化されています。上限は**%3$d回**です。\n\nそのため、不正利用防止の観点からこのライセンスは無効化されました。もし、特別な事情でこれほど多くの有効化が必要であった場合は、ご不便をおかけして申し訳ありません。\n\n[こちらまでご連絡](%1$@)いただければ、新しいライセンスを発行いたします。ご理解のほど、よろしくお願いいたします。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8190,6 +8646,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Cette licence est **déjà activée** !"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このキーはすでに**ライセンス認証**されています"
           }
         },
         "ko" : {
@@ -8275,6 +8737,12 @@
             "value" : "Votre licence a été **désactivée**"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンスが**無効化**されました"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8356,6 +8824,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Cette licence **n'a pas pu être activée** mais Mac Mouse Fix est actuellement **gratuit dans votre pays** !"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このライセンスは有効化できませんでしたが、現在お住まいの国では Mac Mouse Fix を無料でご利用いただけます。"
           }
         },
         "ko" : {
@@ -8441,6 +8915,12 @@
             "value" : "**Une erreur avec le serveur de licences s'est produite**\n\nElle dit :\n\n%@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**ライセンスサーバー**でエラーが発生しました\n\nエラー内容：\n\n%@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8524,6 +9004,12 @@
             "value" : "**Il n'y a pas de connexion à Internet**\n\nRéessayer d'activer votre licence quand votre ordinateur sera à nouveau en ligne."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**インターネット接続に問題**があります\n\nお使いのMacがインターネットに接続されていること、およびファイアウォールによってMac Mouse Fixの通信が遮断されていないことを確認してください。\n\n解決しない場合は、[こちら](%@)からお問い合わせください。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8600,6 +9086,12 @@
             "value" : "Hay un **problema con el servidor de licencias**\n\nPor favor, inténtalo de nuevo más tarde.\n\nSi el problema persiste, contáctame [aquí](%@)."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**ライセンスサーバー**に問題が発生しています\n\nしばらくしてからもう一度お試しください。\n\n問題が解決しない場合は、[こちら](%@)からお問い合わせください。"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8657,6 +9149,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "**Une erreur inconnue s'est produite :**\n\n%@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**不明なエラー**が発生しました：\n\n%@"
           }
         },
         "ko" : {
@@ -8742,6 +9240,12 @@
             "value" : "« **%@** » n'est pas une clé de licence connue\n\nVeuillez essayer une clé différente"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'**%@**'は有効なライセンスキーではありません\n\nMac Mouse Fixのライセンスキーを、受け取った通りに正確に入力してください。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8823,6 +9327,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "L'activation de votre licence a échoué pour des *raisons inconnues**\n\nVeuillez **signaler le bug** [ici](%@)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**原因不明のエラー**により、ライセンスの有効化に失敗しました\n\n[こちら](%@)から**バグ報告**をお願いいたします"
           }
         },
         "ko" : {
@@ -8908,6 +9418,12 @@
             "value" : "Définir la vitesse sous\n[%1$@ > Souris > Vitesse de déplacement](%2$@)"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[%1$@ > マウス > スクロール速度](%2$@) から設定できます"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8989,6 +9505,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Retour"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "戻る"
           }
         },
         "ko" : {
@@ -9074,6 +9596,12 @@
             "value" : "Je lis et j'apprécie tous vos e-mails, même si je ne peux pas répondre à tout le monde"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "個別にお返事することは稀ですが、お送りいただいたメッセージはすべて拝見しております。皆様からのフィードバックはMac Mouse Fixの改善に非常に役立っております。貴重なご意見をありがとうございます！"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9155,6 +9683,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Écrire un e-mail"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新規メールを作成"
           }
         },
         "ko" : {
@@ -9240,6 +9774,12 @@
             "value" : "Écrire un e-mail ?"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "メールを作成しますか？"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9321,6 +9861,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Commande (⌘)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Command (⌘)"
           }
         },
         "ko" : {
@@ -9406,6 +9952,12 @@
             "value" : "Contrôle (^)"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Control (^)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9484,6 +10036,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Option (⌥)"
+          }
+        },
+        "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Option (⌥)"
@@ -9572,6 +10130,12 @@
             "value" : "Maj (⇧)"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shift (⇧)"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9654,6 +10218,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Le contenu suit le mouvement du doigt"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コンテンツが指の動きに追従します"
           }
         },
         "ko" : {
@@ -9739,6 +10309,12 @@
             "value" : "Défiler précisement, même sans un raccourci clavier,\nen bougeant la molette de défilement *doucement*"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スクロールホイールを*ゆっくり*回すことで、修飾キーを使わずに精密なスクロールが可能です。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9820,6 +10396,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Annuler"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセル"
           }
         },
         "ko" : {
@@ -9905,6 +10487,12 @@
             "value" : "Restaurer"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "戻す"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9986,6 +10574,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Votre souris **%1$@** dit qu'elle a **%2$d** boutons"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お使いのマウス（**%1$@**）には、**%2$d*個**のボタンがあると認識されています"
           }
         },
         "ko" : {
@@ -10071,6 +10665,12 @@
             "value" : "Une souris avec 3 boutons"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "3ボタンマウス"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10152,6 +10752,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Une souris avec plus de 5 boutons"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "5ボタン以上のマウス"
           }
         },
         "ko" : {
@@ -10237,6 +10843,12 @@
             "value" : "Restaurer les réglages par défaut pour ..."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "初期設定に戻す…"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10318,6 +10930,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : " **Cliquer ici** pour charger les paramètres recommandés\npour votre souris **%@**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お使いのマウス（**%@**）の推奨設定を読み込むには、**こちらをクリック**してください"
           }
         },
         "ko" : {
@@ -10403,6 +11021,12 @@
             "value" : "Mac Mouse Fix **activé** pour %1$@\nIl a été désactivé depuis la barre des menus %2$@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@でMac Mouse Fixを**有効**にしました\nメニューバー%2$@から無効に設定されていました"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -10484,6 +11108,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "**Boutons**"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**ボタン**"
           }
         },
         "ko" : {
@@ -10569,6 +11199,12 @@
             "value" : "**Défilement**"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**スクロール**"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10652,6 +11288,12 @@
             "value" : "Bureau & Launchpad"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "デスクトップとLaunchpad"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10733,6 +11375,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Défiler vers le haut pour le Launchpad et vers le bas pour afficher le Burean \nFonctionne comme le pincement avec 4 doigts sur un Trackpad Apple"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上にスクロールしてLaunchpadを表示、下にスクロールしてデスクトップを表示\n\nAppleトラックパッドの「4本指でピンチ」と同じように動作します"
           }
         },
         "ko" : {
@@ -10819,6 +11467,12 @@
             "value" : "Basculement entre apps"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appスイッチャー"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10901,6 +11555,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Basculer rapidement entre les apps ouvertes\n \nFonctionne comme en maintenant Commande (⌘) et en appuyant sur Tab (⇥) sur votre clavier"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開いているアプリをすばやく切り替える\n\nキーボードでCommand(⌘)を押しながらTab(⇥)を押すのと同じように動作します"
           }
         },
         "ko" : {
@@ -10986,6 +11646,12 @@
             "value" : "Défilement horizontal"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "横スクロール"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11067,6 +11733,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Défiler sur la gauche et la droite, naviguer entre les pages sur Safari, supprimer les messages dans Mail et bien plus\n \nFonctionne comme le balayage horizontal avec un Trackpad Apple"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "左右にスクロール、Safariでのページ間移動、メールでのメッセージ削除などが可能です。\n\nAppleトラックパッドでの「2本指で左右にスワイプ」と同じように動作します。"
           }
         },
         "ko" : {
@@ -11152,6 +11824,12 @@
             "value" : "Défilement précis"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "精密なスクロール"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11233,6 +11911,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Défiler de petites distances et utiliser des éléments d'IU sensibles avec précision"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "わずかな距離のスクロールや、繊細なUI要素の操作を精密に行うことができます。"
           }
         },
         "ko" : {
@@ -11318,6 +12002,12 @@
             "value" : "Pivoter"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回転"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11399,6 +12089,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pivoter le contenu dans Apple Plans et d'autres apps\n \nFonctionne comme si l'on tournait avec deux doigts sur un Trackpad Apple"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appleマップやその他のアプリで表示内容を回転\n\nAppleトラックパッドでの「2本指で回転」と同じように動作します"
           }
         },
         "ko" : {
@@ -11484,6 +12180,12 @@
             "value" : "Déplacer entre les espaces"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スペース間を移動"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11565,6 +12267,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Défiler vers le haut pour se déplacer d'un espace vers la gauche et vers le bas pour se déplacer d'un espace vers la droite\n \nFonctionne comme le balayage horizontal avec 3 doigts sur un Trackpad Apple"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上にスクロールして左のスペースへ移動、下にスクロールして右のスペースへ移動\n\nAppleトラックパッドでの「3本指で左右にスワイプ」と同じように動作します"
           }
         },
         "ko" : {
@@ -11650,6 +12358,12 @@
             "value" : "Défilement rapide"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高速スクロール"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11731,6 +12445,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Défiler de longues distances avec un effort minimal"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "少ない操作で長い距離をスクロール"
           }
         },
         "ko" : {
@@ -11816,6 +12536,12 @@
             "value" : "Zoom avant ou arrière"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拡大・縮小"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11897,6 +12623,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zoomer en avant ou en arrière dans Safari, Plans et d'autres apps\n \nFonctionne comme le pincement pour zoomer sur un Trackpad Apple"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Safari、マップ、その他のアプリで拡大・縮小\n\nAppleトラックパッドでの「ピンチしてズーム」と同じように動作します"
           }
         },
         "ko" : {
@@ -11982,6 +12714,12 @@
             "value" : "Réglages Système"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "システム設定"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12063,6 +12801,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Préférences Système"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "システム環境設定"
           }
         },
         "ko" : {
@@ -12148,6 +12892,12 @@
             "value" : "⭐️ Merci d'avoir acheté Mac Mouse Fix !"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⭐️ Mac Mouse Fixをご購入いただき、ありがとうございます！"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12229,6 +12979,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "🌟 Merci d'avoir acheté Mac Mouse Fix !"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🙌 Mac Mouse Fixをご購入いただき、ありがとうございます！"
           }
         },
         "ko" : {
@@ -12314,6 +13070,12 @@
             "value" : "🚀 Merci de soutenir Mac Mouse Fix !"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🚀 Mac Mouse Fixを応援していただき、ありがとうございます！"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12395,6 +13157,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "🙌 Merci d'avoir acheté Mac Mouse Fix !"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌟 Mac Mouse Fixをご購入いただき、ありがとうございます！"
           }
         },
         "ko" : {
@@ -12480,6 +13248,12 @@
             "value" : "🧠 Une excellente décision d'achat ! ;)"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🧠 賢い選択ですね！(^_<)〜☆"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12561,6 +13335,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🔥 Excellent goût dans les logiciels permettant d'améliorer les souris ! ;)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔥 マウス最適化ソフトのセンスが抜群ですね！(^_<)〜☆"
           }
         },
         "ko" : {
@@ -12646,6 +13426,12 @@
             "value" : "👽 Partagez-le avec vos amis Spacebook !"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👽 Spacebookの友達にシェアしよう！"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12727,6 +13513,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "🧼 Se laver les mains en sortant des toilettes n'est pas facultatif :D"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🦆 アヒルの水かきは永遠に"
           }
         },
         "ko" : {
@@ -12812,6 +13604,12 @@
             "value" : "🐹 Nous devrions lui offrir un nœud papillon."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐹 彼に蝶ネクタイをプレゼントしてあげたいですね。"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12895,6 +13693,12 @@
             "value" : "🐠 Qu'êtes... vous?"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐠 君は... 一体... 何者なんだ...？"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -12972,6 +13776,12 @@
             "value" : "🐁 ¡La mascota personal del comerciante!"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🐁 商人のお気に入りのペットなんです！"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13029,6 +13839,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "🌏 D'abord la souris, ensuite le monde !! >:)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🌏 まずはマウス、そして次は世界だ！！(｀∀´)"
           }
         },
         "ko" : {
@@ -13114,6 +13930,12 @@
             "value" : "Jour gratuit **%1$d/%2$d**"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お試し期間 **%1$d/%2$d**"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13195,6 +14017,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Les jours offerts sont terminés"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "お試し期間は終了しました"
           }
         },
         "ko" : {
@@ -13280,6 +14108,12 @@
             "value" : "Activer une licence"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンスを有効にする…"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13361,6 +14195,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bonjour ! Vous avez utilisé Mac Mouse Fix pendant maintenant **%1$d jours**. J'espère que vous l'appréciez !\n\nSi vous voulez continuer d'utiliser Mac Mouse Fix, vous pouvez [l'acheter maintenant](%2$@)."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "こんにちは！Mac Mouse Fixを使い始めて、今日で**%1$d日**になりますね。快適にお使いいただけていますか？\n\n引き続きMac Mouse Fixをご利用いただくには、[こちらからご購入](%2$@)いただけます"
           }
         },
         "ko" : {
@@ -13446,6 +14286,12 @@
             "value" : "clic %@ +"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クリック%@ +"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13527,6 +14373,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "double-clic %@ +"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ダブルクリック%@ +"
           }
         },
         "ko" : {
@@ -13612,6 +14464,12 @@
             "value" : "triple-clic %@ +"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "トリプルクリック%@ +"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13693,6 +14551,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bouton du milieu"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ホイールボタン"
           }
         },
         "ko" : {
@@ -13778,6 +14642,12 @@
             "value" : "Bouton %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボタン%@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -13859,6 +14729,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bouton principal"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主ボタン"
           }
         },
         "ko" : {
@@ -13944,6 +14820,12 @@
             "value" : "Bouton secondaire"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "副ボタン"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14025,6 +14907,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "clic %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クリック%@"
           }
         },
         "ko" : {
@@ -14110,6 +14998,12 @@
             "value" : "double-clic %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ダブルクリック%@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14191,6 +15085,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "triple-clic %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "トリプルクリック%@"
           }
         },
         "ko" : {
@@ -14276,6 +15176,12 @@
             "value" : "clic et glissement %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クリックと*ドラッグ*%@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14357,6 +15263,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "double-clic et glissement %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ダブルクリックと*ドラッグ*%@"
           }
         },
         "ko" : {
@@ -14442,6 +15354,12 @@
             "value" : "triple-clic et glissement %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "トリプルクリックと*ドラッグ*%@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -14523,6 +15441,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "et glissement"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "と*ドラッグ*"
           }
         },
         "ko" : {
@@ -14608,6 +15532,12 @@
             "value" : "maintien %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ホールド%@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14689,6 +15619,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "double-clic et maintien %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ダブルクリックとホールド%@"
           }
         },
         "ko" : {
@@ -14774,6 +15710,12 @@
             "value" : "triple-clic et maintien %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "トリプルクリックとホールド%@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14855,6 +15797,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "clic et défilement %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "クリックと*スクロール*%@"
           }
         },
         "ko" : {
@@ -14940,6 +15888,12 @@
             "value" : "double-clic et défilement %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ダブルクリックと*スクロール*%@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -15021,6 +15975,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "triple-clic et défilement %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "トリプルクリックと*スクロール*%@"
           }
         },
         "ko" : {
@@ -15106,6 +16066,12 @@
             "value" : "et défilement"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "と*スクロール*"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -15187,6 +16153,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bouton du milieu"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ホイールボタン"
           }
         },
         "ko" : {
@@ -15272,6 +16244,12 @@
             "value" : "Bouton %@"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボタン%@"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -15353,6 +16331,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Bouton principal"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主ボタン"
           }
         },
         "ko" : {
@@ -15438,6 +16422,12 @@
             "value" : "Bouton secondaire"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "副ボタン"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -15519,6 +16509,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Taper le raccourci clavier"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キーボードショートカットを入力してください"
           }
         },
         "ko" : {

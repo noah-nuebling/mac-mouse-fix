@@ -28,6 +28,12 @@
             "value" : "Agradecimientos"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "謝辞"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -79,6 +85,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Botones del Ratón Capturados"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャプチャされたマウスボタン"
           }
         },
         "pt-BR" : {
@@ -134,6 +146,12 @@
             "value" : "Ruedas de desplazamiento capturadas"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャプチャされたスクロールホイール"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -185,6 +203,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Léame"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Readme"
           }
         },
         "pt-BR" : {
@@ -240,6 +264,12 @@
             "value" : "Soporte"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サポート"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -291,6 +321,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "¡Espero que esta guía haya sido útil!"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このガイドがお役に立てば幸いです！"
           }
         },
         "pt-BR" : {
@@ -346,6 +382,12 @@
             "value" : "¡Espero que esta información haya sido útil!"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "これらの内容が、皆さまのご参考になれば幸いです！"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -399,6 +441,12 @@
             "value" : "¡Espero que esta guía haya aclarado las cosas!"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このガイドで不明な点が解消されれば幸いです！"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -450,6 +498,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "¿Aún tiene preguntas? Haga clic [aquí]({url})."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "まだご不明な点がありますか？ [こちら]({url})をクリックしてください。"
           }
         },
         "pt-BR" : {
@@ -506,6 +560,12 @@
             "value" : "Este documento está traducido `{localization_progress}` al `{current_language}` [Ayudar a traducir]({url})"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この文章は `{localization_progress}` `{current_language}`に翻訳されました\n[翻訳を手伝う]({url})"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -558,6 +618,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "[🌎 ¡Ayudar a traducir!]({url})"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[🌎 翻訳を手伝ってください！]({url})"
           }
         },
         "pt-BR" : {

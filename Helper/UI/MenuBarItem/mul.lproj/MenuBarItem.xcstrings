@@ -35,6 +35,12 @@
             "value" : "Boutons"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボタン"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -180,6 +186,12 @@
             "value" : "Défilement"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "スクロール"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -262,6 +274,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ouvrir Mac Mouse Fix..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fixを開く…"
           }
         },
         "ko" : {

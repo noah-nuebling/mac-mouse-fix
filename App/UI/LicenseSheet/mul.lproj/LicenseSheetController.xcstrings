@@ -35,6 +35,12 @@
             "value" : "Back"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "戻る"
+          }
+        },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
@@ -178,6 +184,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Saisir votre clé de licence"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライセンスキーを入力"
           }
         },
         "ko" : {
