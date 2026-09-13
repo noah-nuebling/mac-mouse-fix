@@ -3272,6 +3272,12 @@
             "state" : "translated",
             "value" : "**Geribildirim**"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**提交反馈**"
+          }
         }
       }
     },

@@ -5376,8 +5376,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "按中键"
+            "state" : "translated",
+            "value" : "点击中键"
           }
         },
         "zh-Hant" : {
@@ -5548,8 +5548,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "主键"
+            "state" : "translated",
+            "value" : "点击主键"
           }
         }
       }
@@ -5708,8 +5708,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "辅键"
+            "state" : "translated",
+            "value" : "点击辅键"
           }
         }
       }
@@ -6675,8 +6675,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "查询与快速查看"
+            "state" : "translated",
+            "value" : "在词典中查询单词，在方达中快速预览文件等\n\n类似于妙控板的用力点击"
           }
         },
         "zh-Hant" : {
@@ -6942,8 +6942,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "键盘快捷键"
+            "state" : "translated",
+            "value" : "键盘快捷键..."
           }
         },
         "zh-Hant" : {
@@ -15339,7 +15339,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "连按并拖移%@"
           }
         },
@@ -15962,7 +15962,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "连按并滚动%@"
           }
         },
