@@ -4705,8 +4705,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Application Windows"
+            "state" : "translated",
+            "value" : "Ventanas de la app"
           }
         },
         "fr" : {
@@ -6361,7 +6361,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Moverse un Espacio a la Izquierda"
+            "value" : "Mover a la Izquierda un Espacio"
           }
         },
         "fr" : {
@@ -6449,8 +6449,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Moverse un Espacio a la Izquierda"
+            "state" : "translated",
+            "value" : "Moverse un Espacio a la izquierda"
           }
         },
         "fr" : {
@@ -6538,8 +6538,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Mira hacia arriba y mira rápido"
+            "state" : "translated",
+            "value" : "Mira Hacia Arriba y Vista Rápida"
           }
         },
         "fr" : {
@@ -6627,8 +6627,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Buscar palabras en el Diccionario, Vista Rápida de archivos en el Finder, y más.\n\nFunciona como un clic forzado en un Apple Trackpad."
+            "state" : "translated",
+            "value" : "Buscar palabras en el Diccionario, Vista Rápida de archivos en el Finder, y más.\n\nFunciona como un clic Forzado en un Apple Trackpad."
           }
         },
         "fr" : {
@@ -7072,8 +7072,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Moverse un espacio a la derecha"
+            "state" : "translated",
+            "value" : "Mover a la Derecha un Espacio"
           }
         },
         "fr" : {
@@ -7161,8 +7161,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Moverse un espacio a la derecha"
+            "state" : "translated",
+            "value" : "Mover un Espacio a la derecha"
           }
         },
         "fr" : {

@@ -1591,7 +1591,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Permite activar o desactivar rápidamente funciones como el desplazamiento suave"
+            "value" : "Permite activar o desactivar rápidamente funciones como el desplazamiento suave."
           }
         },
         "fr" : {
@@ -3307,7 +3307,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Desplazarse rápidamente"
+            "value" : "Desplazarse Rápidamente"
           }
         },
         "fr" : {

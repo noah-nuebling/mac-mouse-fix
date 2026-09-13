@@ -2655,8 +2655,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Tu licencia funciona en **todos tus Mac**.<br>\nEl objetivo es que simplemente puedas comprar una licencia, activarla y no tener que preocuparte por ella nunca más.<br>\nSi inicias sesión con la misma cuenta de Apple, ¡la licencia incluso se sincronizará automáticamente con tus otros dispositivos a través de iCloud!\n\nSi tienes problemas para activar tu licencia, puedes [enviarme un correo electrónico]({url}).<br>\nA veces tardo un poco en responder. Pido disculpas por esto. ¡Pero me pondré en contacto contigo!\n\nHay una restricción:<br>\nLas licencias no están destinadas a ser compartidas públicamente. Una licencia está destinada a una persona. Las licencias compartidas públicamente pueden ser invalidadas. (¡Tu madre no es 'el público' y compartirla con ella está bien!)"
+            "state" : "translated",
+            "value" : "Tu licencia funciona en **todos tus Mac**. <br>\nEl objetivo es que simplemente puedas comprar una licencia, activarla y no tener que preocuparte por ella nunca más. <br>\nSi inicias sesión con la misma cuenta de Apple, ¡la licencia incluso se sincronizará automáticamente con tus otros dispositivos a través de iCloud!\n\nSi tienes problemas para activar tu licencia, puedes [enviarme un correo electrónico]({url}). <br>\nA veces tardo un poco en responder. Pido disculpas por esto. ¡Pero me pondré en contacto contigo!\n\nHay una restricción: <br>\nLas licencias no están destinadas a ser compartidas públicamente. Una licencia está destinada a una persona. Las licencias compartidas públicamente pueden ser invalidadas. (Compartirla con tu mamá está bien.)"
           }
         },
         "ja" : {
