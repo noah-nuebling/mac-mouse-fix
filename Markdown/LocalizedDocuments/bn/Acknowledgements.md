@@ -18,6 +18,7 @@ This document is `0%` translated into `🇧🇩 বাংলা`
   [🇷🇺 Русский](../../../Markdown/LocalizedDocuments/ru/Acknowledgements.md)\
   **🇧🇩 বাংলা**\
   [🇨🇳 中文 (简体)](../../../Markdown/LocalizedDocuments/zh-Hans/Acknowledgements.md)\
+  [🇯🇵 日本語](../../../Markdown/LocalizedDocuments/ja/Acknowledgements.md)\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=bn&target=mmf-localization-contribution)
 </details>
 

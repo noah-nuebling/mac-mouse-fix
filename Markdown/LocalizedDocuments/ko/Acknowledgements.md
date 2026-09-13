@@ -17,6 +17,7 @@ This document is `0%` translated into `🇰🇷 한국어`
   [🇨🇿 Čeština](../../../Markdown/LocalizedDocuments/cs/Acknowledgements.md)\
   [🇷🇺 Русский](../../../Markdown/LocalizedDocuments/ru/Acknowledgements.md)\
   [🇨🇳 中文 (简体)](../../../Markdown/LocalizedDocuments/zh-Hans/Acknowledgements.md)\
+  [🇯🇵 日本語](../../../Markdown/LocalizedDocuments/ja/Acknowledgements.md)\
   **🇰🇷 한국어**\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=ko&target=mmf-localization-contribution)
 </details>
