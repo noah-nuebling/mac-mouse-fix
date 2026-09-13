@@ -18,6 +18,7 @@ This document is `0%` translated into `🇸🇪 Svenska`
   [🇨🇿 Čeština](../../../../../Markdown/LocalizedDocuments/cs/Support/Guides/CapturedScrollWheels.md)\
   [🇷🇺 Русский](../../../../../Markdown/LocalizedDocuments/ru/Support/Guides/CapturedScrollWheels.md)\
   [🇨🇳 中文 (简体)](../../../../../Markdown/LocalizedDocuments/zh-Hans/Support/Guides/CapturedScrollWheels.md)\
+  [🇯🇵 日本語](../../../../../Markdown/LocalizedDocuments/ja/Support/Guides/CapturedScrollWheels.md)\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=sv&target=mmf-localization-contribution)
 </details>
 

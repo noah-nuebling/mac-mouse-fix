@@ -18,6 +18,7 @@ This document is `0%` translated into `🇭🇰 中文（香港)`
   [🇷🇺 Русский](../../../Markdown/LocalizedDocuments/ru/Readme.md)\
   [🇨🇳 中文 (简体)](../../../Markdown/LocalizedDocuments/zh-Hans/Readme.md)\
   **🇭🇰 中文（香港)**\
+  [🇯🇵 日本語](../../../Markdown/LocalizedDocuments/ja/Readme.md)\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=zh-HK&target=mmf-localization-contribution)
 </details>
 

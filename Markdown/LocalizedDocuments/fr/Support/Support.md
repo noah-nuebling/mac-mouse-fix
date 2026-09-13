@@ -18,6 +18,7 @@ This document is `0%` translated into `🇫🇷 Français`
   [🇨🇿 Čeština](../../../../Markdown/LocalizedDocuments/cs/Support/Support.md)\
   [🇷🇺 Русский](../../../../Markdown/LocalizedDocuments/ru/Support/Support.md)\
   [🇨🇳 中文 (简体)](../../../../Markdown/LocalizedDocuments/zh-Hans/Support/Support.md)\
+  [🇯🇵 日本語](../../../../Markdown/LocalizedDocuments/ja/Support/Support.md)\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=fr&target=mmf-localization-contribution)
 </details>
 

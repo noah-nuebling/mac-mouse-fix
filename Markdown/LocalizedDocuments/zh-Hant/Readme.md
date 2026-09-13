@@ -18,6 +18,7 @@ This document is `0%` translated into `🇨🇳 中文 (繁體)`
   [🇷🇺 Русский](../../../Markdown/LocalizedDocuments/ru/Readme.md)\
   [🇨🇳 中文 (简体)](../../../Markdown/LocalizedDocuments/zh-Hans/Readme.md)\
   **🇨🇳 中文 (繁體)**\
+  [🇯🇵 日本語](../../../Markdown/LocalizedDocuments/ja/Readme.md)\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=zh-Hant&target=mmf-localization-contribution)
 </details>
 

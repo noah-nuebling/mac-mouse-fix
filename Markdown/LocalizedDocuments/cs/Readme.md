@@ -17,6 +17,7 @@ Tento dokument je přeložen do jazyka `98%`
   **🇨🇿 Čeština**\
   [🇷🇺 Русский](../../../Markdown/LocalizedDocuments/ru/Readme.md)\
   [🇨🇳 中文 (简体)](../../../Markdown/LocalizedDocuments/zh-Hans/Readme.md)\
+  [🇯🇵 日本語](../../../Markdown/LocalizedDocuments/ja/Readme.md)\
   [🌎 Pomozte s překladem!](https://redirect.macmousefix.com/?locale=cs&target=mmf-localization-contribution)
 </details>
 

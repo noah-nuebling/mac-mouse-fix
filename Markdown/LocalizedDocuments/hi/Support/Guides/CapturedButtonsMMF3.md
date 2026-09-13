@@ -18,6 +18,7 @@ This document is `0%` translated into `🇮🇳 हिन्दी`
   [🇷🇺 Русский](../../../../../Markdown/LocalizedDocuments/ru/Support/Guides/CapturedButtonsMMF3.md)\
   **🇮🇳 हिन्दी**\
   [🇨🇳 中文 (简体)](../../../../../Markdown/LocalizedDocuments/zh-Hans/Support/Guides/CapturedButtonsMMF3.md)\
+  [🇯🇵 日本語](../../../../../Markdown/LocalizedDocuments/ja/Support/Guides/CapturedButtonsMMF3.md)\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=hi&target=mmf-localization-contribution)
 </details>
 

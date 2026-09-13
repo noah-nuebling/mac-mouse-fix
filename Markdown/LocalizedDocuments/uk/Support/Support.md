@@ -18,6 +18,7 @@ This document is `0%` translated into `🇺🇦 Українська`
   [🇷🇺 Русский](../../../../Markdown/LocalizedDocuments/ru/Support/Support.md)\
   **🇺🇦 Українська**\
   [🇨🇳 中文 (简体)](../../../../Markdown/LocalizedDocuments/zh-Hans/Support/Support.md)\
+  [🇯🇵 日本語](../../../../Markdown/LocalizedDocuments/ja/Support/Support.md)\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=uk&target=mmf-localization-contribution)
 </details>
 
