@@ -32,7 +32,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Back"
+            "value" : "Retour"
           }
         },
         "ja" : {
@@ -183,7 +183,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Saisir votre clé de licence"
+            "value" : "Veuillez saisir votre clé de licence"
           }
         },
         "ja" : {

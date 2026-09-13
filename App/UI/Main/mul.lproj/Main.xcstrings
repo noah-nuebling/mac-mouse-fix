@@ -725,8 +725,8 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Demander une nouvelle fonctionnalité"
+            "state" : "translated",
+            "value" : "Proposer une nouvelle fonctionnalité"
           }
         },
         "ja" : {
@@ -1327,7 +1327,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Importante"
+            "value" : "Haute"
           }
         },
         "ja" : {
@@ -7537,7 +7537,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Douceur :"
+            "value" : "Fluidité :"
           }
         },
         "ja" : {

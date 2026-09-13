@@ -1692,7 +1692,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Les versions bêta peuvent contenir de nombreux problèmes.\nN'oubliez pas de nous fournir un retour lorsque vous en rencontrez un.\nMerci !"
+            "value" : "Les versions bêta peuvent contenir de nombreux problèmes.\nN'oubliez pas de nous fournir un retour lorsque vous en rencontrez un. Merci !"
           }
         },
         "ko" : {
@@ -9104,6 +9104,12 @@
             "value" : "Hay un **problema con el servidor de licencias**\n\nPor favor, inténtalo de nuevo más tarde.\n\nSi el problema persiste, contáctame [aquí](%@)."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il y a un problème avec le serveur de licence.\nVeuillez réessayer ultérieurement.\n\nSi le problème persiste, contactez-moi (%@)."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9616,8 +9622,8 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Je lis et j'apprécie tous vos e-mails, même si je ne peux pas répondre à tout le monde"
+            "state" : "translated",
+            "value" : "Je lis et j'apprécie tous vos e-mails, bien que je ne puisse pas répondre à tout le monde"
           }
         },
         "ja" : {
