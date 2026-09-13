@@ -1998,8 +1998,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Mac Mouse Fix kapatıldığında aktif kalacaktır"
+            "state" : "translated",
+            "value" : "Mac Mouse Fix, uygulama kapatıldığında aktif kalacaktır"
           }
         },
         "uk" : {
@@ -4552,7 +4552,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yakınlaştır / Uzaklaştır"
+            "value" : "Yakınlaştırma veya Uzaklaştırma"
           }
         },
         "uk" : {
@@ -6168,8 +6168,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bir düğmeye aksiyon ataması yapmak için fare imlecinizi '+' alanına getirin ve bir düğmeye tıklayın.\nDilerseniz *Çift Tıklama*, *Tıklama ve Kaydırma* ve daha fazlasını yapabilirsiniz."
+            "state" : "translated",
+            "value" : "Bir düğmeye eylem ataması yapmak için fare imlecinizi '+' alanına getirin ve bir düğmeye tıklayın.\nDilerseniz *Çift Tıklama*, *Tıklama ve Kaydırma* ve daha fazlasını yapabilirsiniz."
           }
         },
         "uk" : {

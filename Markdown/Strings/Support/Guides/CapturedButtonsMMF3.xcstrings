@@ -115,7 +115,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "## Bir fare düğmesini 'yakalamak' ne anlama geliyor?\n\nBir fare düğmesinin Mac Mouse Fix tarafından yakalanması artık macOS'in veya diğer uygulamaların o düğmeyi artık göremiyor olması anlamına gelir. Bu düğmenin normalde yapacağı aksiyonlar yakalanmış haldeyken çalışmayacaktır.\n\n**Örnek**: Normalde, farenizin yan tarafında bulunan düğmeler ile Chrome tarayıcıda geri veya ileri gidebilirsiniz. (Düğme 4 ve 5) Bu düğmeler Mac Mouse Fix ile yakalandığında önceki özellik yerine sizin tarafınızdan atanmış olan aksiyonların çalışması sağlanacaktır.\n\n**Mac Mouse Fix neden bunu yapıyor?**: Mac Mouse Fix düğmeleri diğer uygulamalardan gizleyerek atadığınız aksiyonlar dışında uygulamaların yanlışlıkla başka aksiyonlar gerçekleştirmesini engeller.\nÖrnek olarak, Düğme 4'ü masaüstülerinizin arasında geçiş yapmak için kullanıyorken istemsizce **aynı anda** Chrome tarayıcı üzerinden geri dönebilirsiniz."
+            "value" : "## Bir fare düğmesini 'yakalamak' ne anlama geliyor?\n\nBir fare düğmesinin Mac Mouse Fix tarafından yakalanması artık macOS'in veya diğer uygulamaların o düğmeyi artık göremiyor olması anlamına gelir. Bu düğmenin normalde yapacağı eylemler yakalanmış haldeyken çalışmayacaktır.\n\n**Örnek**: Normalde, farenizin yan tarafında bulunan düğmeler ile Chrome tarayıcıda geri veya ileri gidebilirsiniz. (Düğme 4 ve 5) Bu düğmeler Mac Mouse Fix ile yakalandığında önceki özellik yerine sizin tarafınızdan atanmış olan eylemlerin çalışması sağlanacaktır.\n\n**Mac Mouse Fix neden bunu yapıyor?**: Mac Mouse Fix düğmeleri diğer uygulamalardan gizleyerek atadığınız eylemler dışında uygulamaların yanlışlıkla başka eylemler gerçekleştirmesini engeller.\nÖrnek olarak, Düğme 4'ü masaüstülerinizin arasında geçiş yapmak için kullanıyorken istemsizce **aynı anda** Chrome tarayıcı üzerinden geri dönebilirsiniz."
           }
         },
         "uk" : {
@@ -247,7 +247,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "## Mac Mouse Fix'in bir düğmeyi yakalamasını nasıl engellerim?\n\nMac Mouse Fix'in bir düğmeyi yakalamasını engellemek için 'Düğmeler' sekmesinde o butona atanmış tüm aksiyonları kaldırın.\n'Düğmeler' sekmesindeki bir aksiyonu, yanındaki '-' düğmesine basarak kaldırabilirsiniz.\n\nÖrneğin, bir sonraki resimde, 'Düğme 4'ün' yakalanmasını engellemek için belirtilmiş olan iki **'-'** düğmesine tıklayabilirsiniz.\n\n{screenshot_2}"
+            "value" : "## Mac Mouse Fix'in bir düğmeyi yakalamasını nasıl engellerim?\n\nMac Mouse Fix'in bir düğmeyi yakalamasını engellemek için 'Düğmeler' sekmesinde o butona atanmış tüm eylemleri kaldırın.\n'Düğmeler' sekmesindeki bir eylemi, yanındaki '-' düğmesine basarak kaldırabilirsiniz.\n\nÖrneğin, bir sonraki resimde, 'Düğme 4'ün' yakalanmasını engellemek için belirtilmiş olan iki **'-'** düğmesine tıklayabilirsiniz.\n\n{screenshot_2}"
           }
         },
         "uk" : {
@@ -312,7 +312,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "## Bir düğmenin orijinal fonksiyonunu nasıl geri getirebilirim?\n\nBir düğmenin Mac Mouse Fix yüklemeden önceki haline getirmek için aşağıdakileri yapabilirsiniz:\n\n1. Yukarıda belirtildiği üzere düğmenin **yakalanmasını kapatabilirsiniz**.\n\n2. Direkt **Mac Mouse Fix'i** kapatabilirsiniz. Böylece hiçbir düğme yakalanmayacaktır.\n\n3. **Mac Mouse Fix'te belirli aksiyonları düğmeye atayabilirsiniz** - böylece atama yapmış olsanız dahi belirli özellikleri geri getirmiş olursunuz."
+            "value" : "## Bir düğmenin orijinal fonksiyonunu nasıl geri getirebilirim?\n\nBir düğmenin Mac Mouse Fix yüklemeden önceki haline getirmek için aşağıdakileri yapabilirsiniz:\n\n1. Yukarıda belirtildiği üzere düğmenin **yakalanmasını kapatabilirsiniz**.\n\n2. Direkt **Mac Mouse Fix'i** kapatabilirsiniz. Böylece hiçbir düğme yakalanmayacaktır.\n\n3. **Mac Mouse Fix'te belirli eylemleri düğmeye atayabilirsiniz** - böylece atama yapmış olsanız dahi belirli özellikleri geri getirmiş olursunuz."
           }
         },
         "uk" : {
@@ -444,7 +444,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Orijinal Aksiyonu"
+            "value" : "Orijinal Fonksiyon"
           }
         },
         "uk" : {
@@ -516,7 +516,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mac Mouse Fix üzerindeki aksiyonu"
+            "value" : "Mac Mouse Fix üzerindeki Eylem"
           }
         },
         "uk" : {
@@ -1367,7 +1367,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "'Kaydır ve Yönlendir'<br> (Herhangi bir düğmeye **tıkla ve kaydır** aksiyonu ile eklenebilir)"
+            "value" : "'Kaydır ve Yönlendir'<br> (Herhangi bir düğmeye **tıkla ve kaydır** eylemi ile eklenebilir)"
           }
         },
         "uk" : {

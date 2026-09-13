@@ -1181,7 +1181,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[Swish]({url}) uygulaması, macOS üstünde pencere yönetimi sağlayan favori uygulamamdır. İzleme dörtgeni üzerinde yapılan basit bir kaydırma ile bir pencerenin pozisyonunu yarım, çeyrek veya tam ekran olarak pozisyonlandırabiliyorsunuz.\n\nFakat, Swish sadece İzleme Dörtgeni ile beraber çalışabiliyor. Mac Mouse Fix'i bütün üçüncü parti fareler ile kullanabilirsiniz. Herhangi bir \"Tıkla ve Sürükle\" aksiyonu ile \"Kaydır ve Yönlendir\" ataması yaparak siz de pencelererinizi basit bir tık ve kaydırma ile pozisyonlandırabilirsiniz.\n\nBir izleme dörtgeninde yapacağınız iki parmakla kaydırma aksiyonu Mac Mouse Fix'deki \"Kaydır ve Yönlendir\" aksiyonu ile başarılı bir şekilde çalışmaktadır."
+            "value" : "[Swish]({url}) uygulaması, macOS üstünde pencere yönetimi sağlayan favori uygulamamdır. İzleme dörtgeni üzerinde yapılan basit bir kaydırma ile bir pencerenin pozisyonunu yarım, çeyrek veya tam ekran olarak pozisyonlandırabiliyorsunuz.\n\nFakat, Swish sadece İzleme Dörtgeni ile beraber çalışabiliyor. Mac Mouse Fix'i bütün üçüncü parti fareler ile kullanabilirsiniz. Herhangi bir \"Tıkla ve Sürükle\" eylemi ile \"Kaydır ve Yönlendir\" ataması yaparak siz de pencelererinizi basit bir tık ve kaydırma ile pozisyonlandırabilirsiniz.\n\nBir izleme dörtgeninde yapacağınız iki parmakla kaydırma aksiyonu Mac Mouse Fix'deki \"Kaydır ve Yönlendir\" eylemi ile başarılı bir şekilde çalışmaktadır."
           }
         },
         "uk" : {
@@ -1636,8 +1636,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Bir tıklama yaptığınızda, Mac Mouse Fix acaba çift tık mı gerçekleştirilecek diye kontrol edecektir.<br>\nBir butonda bu gecikmeyi kaldırmak için o butona atanmış herhangi bir  \"Çift Tık\" aksiyonunu kaldırın."
+            "state" : "translated",
+            "value" : "Bir tıklama yaptığınızda, Mac Mouse Fix acaba çift tık mı gerçekleştirilecek diye kontrol edecektir.<br>\nBir butonda bu gecikmeyi kaldırmak için o butona atanmış herhangi bir  \"Çift Tık\" eylemini kaldırın."
           }
         },
         "uk" : {
@@ -1702,7 +1702,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Tıkla ve Sürükle aksiyonu ile Exposé'yi açabilir miyim?**"
+            "value" : "**Tıkla ve Sürükle eylemi ile Exposé'yi açabilir miyim?**"
           }
         },
         "uk" : {
@@ -1767,7 +1767,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Evet! Sadece aksiyon olarak \"Spaces ve Mission Control\"'ü seçin ve tıkayıp aşağıya kaydırın.\n\nEğer bu çalışmaz ise Mac'inizde Exposé hareketi kapalı olabilir.<br>\nBu hareketi Sistem Ayarları üzerinden veya aşağıdaki komutu Terminal'e yapıştırarak açabilirsiniz.\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```\n"
+            "value" : "Evet! Sadece eylem olarak \"Spaces ve Mission Control\"'ü seçin ve tıkayıp aşağıya kaydırın.\n\nEğer bu çalışmaz ise Mac'inizde Exposé hareketi kapalı olabilir.<br>\nBu hareketi Sistem Ayarları üzerinden veya aşağıdaki komutu Terminal'e yapıştırarak açabilirsiniz.\n\n```\ndefaults write com.apple.Dock showAppExposeGestureEnabled -bool TRUE; killall Dock\n```\n"
           }
         },
         "uk" : {
@@ -2418,7 +2418,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bazı fareler kaydırma tekerleklerini sağa veya sola eğmenize olanak sağlar. Mac Mouse Fix bunu daha kolay ve doğal olarak kontrol etmenizi sağlar. Fakat, şu anda bu butonlar ile diğer aksiyonları aktifleştiremezsiniz.\n\nTabii ki bunlar için de tam uyumluluk eklemeyi isterim ama bu çok büyük bir iş ve yakın bir zamanda gelmeyecektir."
+            "value" : "Bazı fareler kaydırma tekerleklerini sağa veya sola eğmenize olanak sağlar. Mac Mouse Fix bunu daha kolay ve doğal olarak kontrol etmenizi sağlar. Fakat, şu anda bu butonlar ile diğer eylemleri aktifleştiremezsiniz.\n\nTabii ki bunlar için de tam uyumluluk eklemeyi isterim ama bu çok büyük bir iş ve yakın bir zamanda gelmeyecektir."
           }
         },
         "uk" : {
@@ -2937,8 +2937,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Lisansınız **size ait bütün Mac'lerde** çalışır.<br>\nBuradaki amaç sizin sadece bir lisans satın aldıktan ve aktifleştirdikten sonra tekrar derdine düşmemenizdir.<br>\nEğer diğer Mac'lerde aynı Apple hesabı ile giriş yaparsanız iCloud sayesinde lisansınız diğer cihazlara da aktarılacaktır!\n\nEğer lisans aktivasyonunda problem yaşıyorsanız [bana bir E-Posta gönderin]({url}).<br>\nBazen dönütlerim gecikebiliyor, bunun için üzgünüm; ama geri dönüş yapacağım!\n\nAma bu konuda sadece bir engel bulunuyor:<br>\nLisanslar herkesle paylaşmak için değil, bir lisans bir kişi için geçerlidir. Herkese açık olarak paylaşılmış lisanslar geçersiz kılınacaktır. (Buradaki herkes örneğin anneniz değil, onunla paylaşmanız tabii ki bir sorun değildir!)"
+            "state" : "translated",
+            "value" : "Lisansınız **size ait bütün Mac'lerde** çalışır.<br>\nBuradaki amaç sizin sadece bir lisans satın aldıktan ve aktifleştirdikten sonra tekrar derdine düşmemenizdir.<br>\nEğer diğer Mac'lerde aynı Apple hesabı ile giriş yaparsanız iCloud sayesinde lisansınız diğer cihazlara da aktarılacaktır!\n\nEğer lisans aktivasyonunda problem yaşıyorsanız [bana bir E-Posta gönderin]({url}).<br>\nBazen cevaplarım gecikebiliyor, bunun için üzgünüm; ama geri dönüş yapacağım!\n\nAma bu konuda sadece bir engel bulunuyor:<br>\nLisanslar herkesle paylaşmak için değil, bir lisans bir kişi için geçerlidir. Herkese açık olarak paylaşılmış lisanslar geçersiz kılınacaktır. (Buradaki herkes örneğin anneniz değil, onunla paylaşmanız tabii ki bir sorun değildir!)"
           }
         },
         "uk" : {
@@ -4238,7 +4238,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Blender gibi 3D uygulamalarında normalde orta düğme ile Tıkla ve Sürükle aksiyonuyla yörüngede hareket edebilirsiniz.<br>\nFakat, Mac Mouse Fix üzerinde orta tuşa bir aksiyon ayarlarsanız bu çalışmayacaktır.\n\nBunu çözmek için 2 yol billiyorum:\n1. Tıkla ve Sürükle komutunu farenizin herhangi bir düğmesine atayın. Bu özellik İzleme Dörtgeninde 2 parmakla kaydırma özelliğini simüle eder. Bu 3D uygulamalarda yörüngede dönme özelliğini sağlar.\n2. Orta düğmenin *yakalanmasını* tüm aksiyonları Mac Mouse Fix üzerinden silerek kaldırın. [Buradan]({url}) daha fazla bilgi sahibi olun."
+            "value" : "Blender gibi 3D uygulamalarında normalde orta düğme ile Tıkla ve Sürükle eylemiyle yörüngede hareket edebilirsiniz.<br>\nFakat, Mac Mouse Fix üzerinde orta tuşa bir eylem ayarlarsanız bu çalışmayacaktır.\n\nBunu çözmek için 2 yol billiyorum:\n1. Tıkla ve Sürükle komutunu farenizin herhangi bir düğmesine atayın. Bu özellik İzleme Dörtgeninde 2 parmakla kaydırma özelliğini simüle eder. Bu 3D uygulamalarda yörüngede dönme özelliğini sağlar.\n2. Orta düğmenin *yakalanmasını* tüm eylemleri Mac Mouse Fix üzerinden silerek kaldırın. [Buradan]({url}) daha fazla bilgi sahibi olun."
           }
         },
         "uk" : {

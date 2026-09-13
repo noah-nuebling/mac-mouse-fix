@@ -253,7 +253,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "'Tıklama ve Sürükleme' Hareketleri Sırasında Fare İmlecini Kilitle"
           }
         },

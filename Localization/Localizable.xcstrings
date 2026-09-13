@@ -244,8 +244,8 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "**Halihazırda** 5+ düğmeli fareler için varsayılan ayarı kullanıyorsunuz."
+            "state" : "translated",
+            "value" : "**Zaten** 5+ düğmeli fareler için varsayılan ayarı kullanıyorsunuz."
           }
         },
         "uk" : {
@@ -2497,7 +2497,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Düğme %@"
+            "value" : "%@. Fare Düğmesi"
           }
         },
         "uk" : {
@@ -2993,13 +2993,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2$@ şu anda Mac Mouse Fix tarafından yakalandı"
+                      "value" : "%2$@ düğmesi şu anda Mac Mouse Fix tarafından yakalandı"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2$@ şu anda Mac Mouse Fix tarafından yakalandı"
+                      "value" : "%2$@ düğmeleri şu anda Mac Mouse Fix tarafından yakalandı"
                     }
                   }
                 }
@@ -3908,13 +3908,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2$@ Mac Mouse Fix tarafından yakalanması sona erdi"
+                      "value" : "%2$@ düğmesinin Mac Mouse Fix tarafından yakalanması sona erdi"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2$@ Mac Mouse Fix tarafından yakalanması sona erdi"
+                      "value" : "%2$@ düğmelerinin Mac Mouse Fix tarafından yakalanması sona erdi"
                     }
                   }
                 }
@@ -9276,7 +9276,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bu lisans halihazırda **%2$d** kez aktifleştirilmiştir. Bir lisans için maksimum aktifleştirme sayısı **%3$d** kadardır\n\nKorsan yazılım kullanımını engellemek için bu lisans artık geçersizdir. Lisansı bu kadar çok kez etkinleştirmek için başka nedenleriniz varsa bu sorun için üzgünüz.\n\n[Buraya tıklayarak](%1$@) bana bir e-posta gönderin, size yeni bir lisans oluşturacağım! Anlayışınız için teşekkürler."
+            "value" : "Bu lisans halihazırda **%2$d** kez aktifleştirilmiştir. Bir lisans için maksimum aktifleştirme sayısı **%3$d** kadardır\n\nKorsan yazılım kullanımını engellemek için bu lisans artık geçersizdir. Lisansı bu kadar çok kez etkinleştirmek için başka nedenleriniz varsa bu sorun için üzgünüz.\n\n[Buraya tıklayarak](%1$@) bana bir e-posta gönderin, size yeni bir lisans oluşturacağım! Anlayışınız için teşekkürler.\";"
           }
         },
         "uk" : {
@@ -9371,7 +9371,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bu lisans **zaten aktif**!"
+            "value" : "Uygulamanız **zaten** bu lisans ile **aktif**"
           }
         },
         "uk" : {
@@ -9751,7 +9751,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**İnternet bağlantısı yok**\n\nBilgisayarınız çevrimiçi olduğunda lisansınızı tekrar aktifleştirmeyi deneyin.\n\nEğer bu problemi çözmez ise, bana [buradan](%@) ulaşın."
+            "value" : "**İnternet bağlantısı yok**\n\nBilgisayarınızın çevrimiçi olduğuna ve herhangi bir güvenlik duvarının Mac Mouse Fix'in internete bağlanmasına engel olmadığından emin olun.\n\nEğer bu sorununuzu çözmez ise, bana [buradan](%@) ulaşın."
           }
         },
         "uk" : {
@@ -10017,7 +10017,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "*'%@'** geçerli bir lisans anahtarı değildir\n\nLütfen başka bir anahtarı deneyin veya elinize geçen anahtarı olduğu gibi yazın."
+            "value" : "*'%@'** geçerli bir lisans anahtarı değildir\n\nMac Mouse Fix anahtarınızı aldığınız gibi yazdığınızdan emin olun."
           }
         },
         "uk" : {
@@ -10397,7 +10397,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bilginiz olsun, bütün e-postalara geri dönemesem de hepsini okuyorum ve takdir ediyorum"
+            "value" : "ütün e-postalara geri dönemesem de hepsini okuyorum ve takdir ediyorum"
           }
         },
         "uk" : {
@@ -13535,7 +13535,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Yakınlaştır / Uzaklaştır"
+            "value" : "Yakınlaştır veya Uzaklaştır"
           }
         },
         "uk" : {
@@ -15411,7 +15411,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ Tıkla +"
+            "value" : "%@ düğmesine tıkla +"
           }
         },
         "uk" : {
@@ -15601,7 +15601,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ Üç Kez Tıkla +"
+            "value" : "%@ düğmesine üç kez tıkla +"
           }
         },
         "uk" : {
@@ -15791,7 +15791,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Düğme %@"
+            "value" : "%@ Düğmesi"
           }
         },
         "uk" : {
@@ -16076,7 +16076,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ Tıkla"
+            "value" : "%@ düğmesine tıkla"
           }
         },
         "uk" : {
@@ -16266,7 +16266,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ Üç Kez Tıkla"
+            "value" : "%@ düğmesine üç kez tıkla"
           }
         },
         "uk" : {
@@ -16361,7 +16361,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ Tıkla ve Sürükle"
+            "value" : "%@ düğmesine tıkla ve *Sürükle*"
           }
         },
         "uk" : {
@@ -16456,7 +16456,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ düğmesine çift tıkla ve sürükle"
+            "value" : "%@ düğmesine çift tıkla ve *Sürükle*"
           }
         },
         "uk" : {
@@ -16551,7 +16551,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ Üç Kez Tıkla ve Kaydır"
+            "value" : "%@ düğmesine üç kez tıkla ve *Sürükle*"
           }
         },
         "uk" : {
@@ -16646,7 +16646,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ve sürükle"
+            "value" : "ve *Sürükle*"
           }
         },
         "uk" : {
@@ -16741,7 +16741,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ Tıkla ve Basılı Tut"
+            "value" : "%@ düğmesine tıkla ve basılı tut"
           }
         },
         "uk" : {
@@ -16931,7 +16931,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ Üç Kez Tıkla ve Basılı Tut"
+            "value" : "%@ düğmesine üç kez tıkla ve basılı tut"
           }
         },
         "uk" : {
@@ -17026,7 +17026,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ Tıkla ve Kaydır"
+            "value" : "%@ düğmesine tıkla ve *Kaydır*"
           }
         },
         "uk" : {
@@ -17121,7 +17121,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ düğmesine çift tıkla ve kaydır"
+            "value" : "%@ düğmesine çift tıkla ve *Kaydır*"
           }
         },
         "uk" : {
@@ -17216,7 +17216,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ Üç Kez Tıkla ve Kaydır"
+            "value" : "%@ düğmesine üç kez tıkla ve *Kaydır*"
           }
         },
         "uk" : {
@@ -17311,7 +17311,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ve kaydır"
+            "value" : "ve *Kaydır*"
           }
         },
         "uk" : {
@@ -17501,7 +17501,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Düğme %@"
+            "value" : "%@ Düğmesi"
           }
         },
         "uk" : {

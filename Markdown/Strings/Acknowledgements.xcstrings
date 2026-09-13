@@ -120,7 +120,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "## 🌏 Çeviriler\n\nMac Mouse Fix'i dünyadaki herkesin erişimine açtığınız için çok teşekkürler!\n\n- 🇨🇳 Chinese translations by \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n    - [@xianyu-wang]({url_4})\n- 🇰🇷 Korece çeviri [@jeongtae]({url_5})\n- 🇻🇳 Vietnamca çeviri [@nghlt]({url_6})\n- 🇧🇷 Brazilian Portuguese translations by \n    - **Eduardo Rodrigues**\n    - [@denini08]({url_7})\n- 🇫🇷 Fransızca çeviri [@DimitriDR]({url_8})\n- 🇹🇷 Turkish translations by \n    - [@hasanbeder]({url_9})\n    - [@erentomurcuk]({url_10})\n- 🇨🇿 Lehçe çeviri [Petr Pavlík]({url_11})\n- 🇷🇺 Russian translations by [ETMH]({url_12})\n- 🇪🇸 Spanish translations by [@manghidev]({url_13})\n- 🇵🇱 Polish translations by **Jakub** (Website translation)"
           }
         },

@@ -41,6 +41,12 @@
             "value" : "Assistente do Mac Mouse Fix"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix Yardımcısı"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
