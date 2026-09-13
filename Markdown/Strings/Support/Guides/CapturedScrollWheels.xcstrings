@@ -52,6 +52,12 @@
             "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix farenizin **kaydırma tekerleğini de varsayılan olarak** [fare düğmelerini yakaladığı gibi](<{url}>) yakalar."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **захоплює коліщатко за замовчуванням**, подібно до [захоплення кнопок миші](<{url}>)."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -110,6 +116,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Kaydırma tekerleğinin yakalanmasını engellemek istiyorsanız**\n\n1. Mac Mouse Fix üzerinde 'Kaydırma' sekmesine gidin.\n2. **Bütün** ayarları devre dışı bırakın.\n\t- Hız ayarını 'macOS' olarak ayarlayın.\n\t- Klavye değiştiricileri maddelerini de yanlarındaki 'x' düğmesini kullanarak kaldırın.\n\nBundan sonra kaydırma tekerleğinin yakalandığına dair mesajları görmeyeceksiniz."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Щоб запобігти захопленню коліщатка:**\n\n1. Перейдіть до вкладки 'Прокрутка' в Mac Mouse Fix\n2. Вимкніть **усі** параметри\n    - Для параметра 'Швидкість', виберіть 'macOS'\n    - Видаліть усі записи 'Клавіш-Модифікаторів' клацнивши кнопку 'x' поруч із кожним модифікатором\n\nПісля цього, ви повинні побачити повідомлення, яке натякає на зупинку захоплення коліщатка"
           }
         },
         "zh-Hans" : {
@@ -171,6 +183,12 @@
             "value" : "**Kaydırma tekerleği yakalanmadığında ne olacak?**\n\nMac Mouse Fix kaydırma tekerleğini tamamen yok sayacaktır - bu esnada kaydırma yaparken herhangi bir işlem gücü veya enerji kullanımı olmayacaktır. Bu, [MOS]({url}) gibi kaydırma tekerleği modifikasyon uygulamalarını dilediğiniz gibi kullanmanızı sağlar."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Що відбувається, коли коліщатко прокручування більше не захоплюється?**\n\nMac Mouse Fix повністю ігноруватиме ваше коліщатко — програма не використовуватиме ресурси процесора чи заряд акумулятора під час прокручування та жодним чином не втручатиметься в роботу. Це дає вам повну свободу використовувати інші програми, як-от [MOS]({url}), для керування коліщатком прокручування."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -228,6 +246,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "##Ayrıca bakınız\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Claude 3.5 Sonnet'in muhteşem yardımı ile düzenlendi)*\n\nNot: Birebir çeviri olup çeviride yapay zekâ kullanılmamıştır.\n"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Також дивіться\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Відредаговано з чудовою допомогою Claude 3.5 Sonnet)*"
           }
         },
         "zh-Hans" : {

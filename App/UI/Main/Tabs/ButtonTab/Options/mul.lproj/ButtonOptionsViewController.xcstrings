@@ -65,6 +65,12 @@
             "value" : "Tamam"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Готово"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -155,6 +161,12 @@
             "value" : "Trackball Tip fareler için önerilir"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Рекомендовано для Трекболів"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -243,6 +255,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "'Tıklama ve Sürükleme' Hareketleri Sırasında Fare İmlecini Kilitle"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Блокувати вказівник миші під час жестів 'Клацання та Перетягування'"
           }
         },
         "vi" : {

@@ -52,6 +52,12 @@
             "value" : "Teşekkürler"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подяки"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -115,6 +121,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yakalanan Fare Düğmeleri"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопки миші захоплені"
           }
         },
         "vi" : {
@@ -182,6 +194,12 @@
             "value" : "Yakalanan Kaydırma Düğmeleri"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Коліщатко захоплене"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -245,6 +263,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beni Oku"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прочитай мене"
           }
         },
         "vi" : {
@@ -312,6 +336,12 @@
             "value" : "Destek"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Підтримка"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -375,6 +405,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Umuyorum ki bu destek dokümanı yardımcı olmuştur!"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Надіюсь цей посібник став вам у нагоді!"
           }
         },
         "vi" : {
@@ -442,6 +478,12 @@
             "value" : "Umarım bu bilgiler yararlı olmuştur."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Надіюсь ця інформація вам була корисною!"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -507,6 +549,12 @@
             "value" : "Umarım bu doküman kafanızdaki soru işaretlerini kaldırmıştır."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Надіюсь цей посібник розклав все по поличкам!"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -570,6 +618,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hâlâ sorularınız mı mevcut? [Buraya tıklayın]({url})."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Досі є запитання? Клацніть [тут]({url})."
           }
         },
         "vi" : {
@@ -638,6 +692,12 @@
             "value" : "`{localization_progress}` adındaki doküman `{current_language}` diline çevrilmiştir.\n[Çeviri için yardımcı olun]({url})"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Документ перекладено на `{localization_progress}` мовою `{current_language}`\n[Долучайтеся до перекладу]({url})"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -702,6 +762,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "[🌎 Çeviri için yardımcı olun!]({url})"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[🌎 Долучайтеся до перекладу :)]({url})"
           }
         },
         "vi" : {

@@ -65,6 +65,12 @@
             "value" : "Geri"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назад"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -214,6 +220,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisans Anahtarını Girin"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введіть ваш ліцензійний ключ"
           }
         },
         "vi" : {

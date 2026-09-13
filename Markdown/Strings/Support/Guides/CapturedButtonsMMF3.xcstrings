@@ -53,6 +53,12 @@
             "value" : "# {docname_captured_buttons_mmf3}\n\nMac Mouse Fix kullanırken bir düğmenin 'yakalandığını' söyleyen bir kutucuk görmüş olabilirsiniz.\n\n{screenshot_0}\n\nBu dokümanda bunun ne anlama geldiğini, nasıl sorunlar oluşturabileceğini ve bunların çözümlerini göreceksiniz."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_buttons_mmf3}\n\nПід час використання Mac Mouse Fix ви могли бачити повідомлення про те, що кнопка на вашій миші тепер 'захоплена' Mac Mouse Fix.\n\n{screenshot_0}\n\nУ цій статті ви дізнаєтеся, що це означає, які проблеми це може спричинити та як їх вирішити."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -110,6 +116,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Bir fare düğmesini 'yakalamak' ne anlama geliyor?\n\nBir fare düğmesinin Mac Mouse Fix tarafından yakalanması artık macOS'in veya diğer uygulamaların o düğmeyi artık göremiyor olması anlamına gelir. Bu düğmenin normalde yapacağı aksiyonlar yakalanmış haldeyken çalışmayacaktır.\n\n**Örnek**: Normalde, farenizin yan tarafında bulunan düğmeler ile Chrome tarayıcıda geri veya ileri gidebilirsiniz. (Düğme 4 ve 5) Bu düğmeler Mac Mouse Fix ile yakalandığında önceki özellik yerine sizin tarafınızdan atanmış olan aksiyonların çalışması sağlanacaktır.\n\n**Mac Mouse Fix neden bunu yapıyor?**: Mac Mouse Fix düğmeleri diğer uygulamalardan gizleyerek atadığınız aksiyonlar dışında uygulamaların yanlışlıkla başka aksiyonlar gerçekleştirmesini engeller.\nÖrnek olarak, Düğme 4'ü masaüstülerinizin arasında geçiş yapmak için kullanıyorken istemsizce **aynı anda** Chrome tarayıcı üzerinden geri dönebilirsiniz."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Що означає 'захоплення' кнопки миші?\n\nКнопка миші, захоплена Mac Mouse Fix, більше не бачиться іншими програмами або macOS.\nФункції, які ця кнопка зазвичай виконує, не працюватимуть, поки вона захоплена.\n\n**Приклад**: зазвичай ви можете переходити назад і вперед у Chrome, клацаючи бічні кнопки (кнопки 4 і 5) миші.\nАле коли бічні кнопки захоплені Mac Mouse Fix, це більше не працює. Замість цього бічні кнопки активуватимуть лише ті дії, які ви призначили їм у Mac Mouse Fix.\n\n**Чому Mac Mouse Fix це робить?** Mac Mouse Fix приховує кнопки від інших програм, щоб запобігти випадковому спрацьовуванню інших функцій під час використання жестів Mac Mouse Fix.\nНаприклад, якби ви Клацнули та Перетягнули кнопку 4 для перемикання між робочими столами, ви б **водночас** завжди поверталися на сторінку назад у Chrome."
           }
         },
         "zh-Hans" : {
@@ -172,6 +184,12 @@
             "value" : "## Fare düğmelerimin hangilerinin Mac Mouse Fix tarafından yakalanmış olduğunu nasıl bileceğim?\n\nMac Mouse Fix'in sol tarafında, 'Düğmeler' sekmesinin altında görülen tüm düğmeler yakalanmaktadır.\n\nBundan sonra göreceğiniz resimde 'Orta Düğme', 'Düğme 5' ve 'Düğme 4' yakalanmıştır.<br>\n\n{screenshot_1}"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Як дізнатися, які кнопки захоплюються Mac Mouse Fix?\n\nБудь-яка кнопка, яка відображається в лівій частині вкладки 'Кнопки', захоплюється Mac Mouse Fix.\n\nНа наступному зображенні захоплюються **'Середня кнопка'**, **'Кнопка 5'** і **'Кнопка 4'**: <br>\n\n{screenshot_1}"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -232,6 +250,12 @@
             "value" : "## Mac Mouse Fix'in bir düğmeyi yakalamasını nasıl engellerim?\n\nMac Mouse Fix'in bir düğmeyi yakalamasını engellemek için 'Düğmeler' sekmesinde o butona atanmış tüm aksiyonları kaldırın.\n'Düğmeler' sekmesindeki bir aksiyonu, yanındaki '-' düğmesine basarak kaldırabilirsiniz.\n\nÖrneğin, bir sonraki resimde, 'Düğme 4'ün' yakalanmasını engellemek için belirtilmiş olan iki **'-'** düğmesine tıklayabilirsiniz.\n\n{screenshot_2}"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Як запобігти захопленню кнопки миші Mac Mouse Fix?\n\nЩоб запобігти захопленню кнопки миші Mac Mouse Fix, видаліть усі записи для цієї кнопки миші на вкладці 'Кнопки'.\nВи можете видалити запис на вкладці 'Кнопки', клацнувши кнопку '-' ліворуч.\n\nНаприклад, на наступному зображенні ви можете запобігти захопленню **'Кнопки 4'**, клацнувши дві виділені кнопки **'-'**:\n\n{screenshot_2}"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -289,6 +313,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Bir düğmenin orijinal fonksiyonunu nasıl geri getirebilirim?\n\nBir düğmenin Mac Mouse Fix yüklemeden önceki haline getirmek için aşağıdakileri yapabilirsiniz:\n\n1. Yukarıda belirtildiği üzere düğmenin **yakalanmasını kapatabilirsiniz**.\n\n2. Direkt **Mac Mouse Fix'i** kapatabilirsiniz. Böylece hiçbir düğme yakalanmayacaktır.\n\n3. **Mac Mouse Fix'te belirli aksiyonları düğmeye atayabilirsiniz** - böylece atama yapmış olsanız dahi belirli özellikleri geri getirmiş olursunuz."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Як відновити початкову функціональність кнопки?\n\nЩоб змусити кнопку поводитися так само, як до встановлення Mac Mouse Fix, ви можете зробити наступне:\n\n1. Ви можете **запобігти захопленню кнопки** — як описано вище.\n\n2. Ви можете просто **вимкнути Mac Mouse Fix** — тоді жодна кнопка не буде захоплена.\n\n3. Ви можете **призначити специфічні дії для кнопки в Mac Mouse Fix** — таким чином ви можете відновити певні функції, *навіть коли кнопка захоплена*:"
           }
         },
         "zh-Hans" : {
@@ -351,6 +381,12 @@
             "value" : "Düğme"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопка"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -409,6 +445,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Orijinal Aksiyonu"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Початкова функція"
           }
         },
         "vi" : {
@@ -477,6 +519,12 @@
             "value" : "Mac Mouse Fix üzerindeki aksiyonu"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дія в Mac Mouse Fix"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -542,6 +590,12 @@
             "value" : "Orta Düğme"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Середня кнопка"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -605,6 +659,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tarayıcınızda bağlantıları yeni bir sekmede açar"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відкрити посилання в новій вкладці браузера"
           }
         },
         "vi" : {
@@ -673,6 +733,12 @@
             "value" : "'Orta tık'<br>(Herhangi bir düğmeye **tıklanarak** eklenebilir)"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Середнє клацання'<br>(Можна призначити на **клацання** кнопки)"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -738,6 +804,12 @@
             "value" : "Orta Düğme"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Середня кнопка"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -801,6 +873,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Terminal'e yazı yapıştır"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вставити текст у термінал"
           }
         },
         "vi" : {
@@ -869,6 +947,12 @@
             "value" : "'Orta tık'<br>(Herhangi bir düğmeye **tıklanarak** eklenebilir)"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Середнє клацання'<br>(Можна призначити на **клацання** кнопки)"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -932,6 +1016,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fare Düğmesi 4 / Fare Düğmesi 5"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопка 4 / Кнопка 5"
           }
         },
         "vi" : {
@@ -1000,6 +1090,12 @@
             "value" : "Geri git / Chrome ve diğer uygulamalarda ileri git"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Перехід назад / вперед у Chrome та інших програмах"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1064,6 +1160,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "'Geri' / 'İleri'<br>(Herhangi bir düğmeye **tıklayarak** eklenebilir)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Назад' / 'Уперед'<br>(Можна призначити на **клацання** кнопки)"
           }
         },
         "vi" : {
@@ -1131,6 +1233,12 @@
             "value" : "Orta Düğme"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Середня кнопка"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1196,6 +1304,12 @@
             "value" : "Blender ve diğer 3D uygulamalarda yörüngede dönme"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обертання навколо об'єктів у Blender (та інших 3D-програмах)"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1254,6 +1368,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "'Kaydır ve Yönlendir'<br> (Herhangi bir düğmeye **tıkla ve kaydır** aksiyonu ile eklenebilir)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Прокрутка та навігація'<br>(Можна призначити на **клацання та перетягування** кнопки)"
           }
         },
         "zh-Hans" : {
@@ -1315,6 +1435,12 @@
             "value" : "Böylece düğmenin orijinal özelliğini de kullanıyorken Mac Mouse Fix ile ekstra özellikler de ekleyebilirsiniz."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Таким чином, ви можете продовжувати використовувати звичайну функціональність кнопки, а також призначати їй *додаткові* функції в Mac Mouse Fix."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1372,6 +1498,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Ayrıca bakınız\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Також дивіться\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
           }
         },
         "zh-Hans" : {

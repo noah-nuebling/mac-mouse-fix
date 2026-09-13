@@ -41,6 +41,12 @@
             "value" : "Assistente do Mac Mouse Fix"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix Helper"
+          }
+        },
         "vi" : {
           "stringUnit" : {
             "state" : "translated",
