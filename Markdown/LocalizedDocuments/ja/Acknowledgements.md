@@ -49,14 +49,14 @@ Mac Mouse Fixを世界中の人々に届けていただき、ありがとうご�
 <!-- 
   Old stuff from Money section:
 
-  Thanks so much to everyone who bought me a milkshake and to all 47900+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
+  Thanks so much to everyone who bought me a milkshake and to all 48000+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
   You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. 
 -->
 
 <a name="money"></a> 
 ## 💰 支援
 
-ミルクシェイクをご馳走してくださった皆さん、そしてMac Mouse Fixを購入してくださった**47900+**名の方々に、心より感謝申し上げます。皆さんのおかげで、私は大好きなことに多くの時間を費やすことができています。
+ミルクシェイクをご馳走してくださった皆さん、そしてMac Mouse Fixを購入してくださった**48000+**名の方々に、心より感謝申し上げます。皆さんのおかげで、私は大好きなことに多くの時間を費やすことができています。
 
 標準価格以上の金額でMac Mouse Fixをサポートしてくださった方々を、こちらで特別にご紹介させていただきます：
 
