@@ -9396,6 +9396,7 @@
 					MFLocalizedString,
 					NSLocalizedString,
 					CFCopyLocalizedString,
+					MFLocalizedStringOrEmptyString,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -9490,6 +9491,7 @@
 					MFLocalizedString,
 					NSLocalizedString,
 					CFCopyLocalizedString,
+					MFLocalizedStringOrEmptyString,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

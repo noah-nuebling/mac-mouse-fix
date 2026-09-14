@@ -11,6 +11,7 @@
 #import "UIStrings.h"
 #import "NSArray+Additions.h"
 #import "NSAttributedString+Additions.h"
+#import "LocalizedStringAnnotation.h"
 #import "ToastController.h"
 #import "AppDelegate.h"
 #import "SharedUtility.h"
@@ -164,10 +165,10 @@ static NSAttributedString *createButtonsNotificationBody(NSArray<NSString *> *ca
     
     /// Handle hint being @"(null)"
     ///     Explanation: If we try to format an NSLocalizedString with an integer that is not defined in the .xcstrings file, then the result is @"(null)". We sometimes want to do this for testing purposes.
-    if ([capturedHintRaw.withoutSecretMessages isEqual:@"(null)"]) {
+    if ([capturedHintRaw.withoutAnnotations isEqual:@"(null)"]) {
         capturedHintRaw = @"";
     }
-    if ([uncapturedHintRaw.withoutSecretMessages isEqual:@"(null)"]) {
+    if ([uncapturedHintRaw.withoutAnnotations isEqual:@"(null)"]) {
         uncapturedHintRaw = @"";
     }
     

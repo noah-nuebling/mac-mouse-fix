@@ -130,7 +130,9 @@ int steg_charToBit(unichar c) {
     return result;
 }
 
-- (NSString *)withoutSecretMessages { /// Also see `-[NSAttributedString withoutSecretMessages]` above
+- (NSString *)withoutSecretMessages {
+    /// Use -withoutAnnotations instead.
+    /// Also see `-[NSAttributedString withoutSecretMessages]` above
     return [self stringByReplacingOccurrencesOfString: secretMessageRegexString() withString: @"" options: NSRegularExpressionSearch range: NSMakeRange(0, self.length)];
 }
 

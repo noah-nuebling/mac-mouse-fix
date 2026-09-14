@@ -294,37 +294,38 @@ class AboutTabController: NSViewController {
                 
                 */
                 
-                var thankYouMessages = [
-                    
+                let thankYouMessages = [
+
                     /// Common
-                    (MFLocalizedString("thanks.01", comment: "Note: The weird thank-you messages are rare. Feel free to change them if you'd like to leave an easter egg. You can also leave them blank (insert a space character), just make sure to fill out thanks.01 - thanks.03"), weight: 1),
-                    (MFLocalizedString("thanks.02", comment: ""), weight: 1),
-                    (MFLocalizedString("thanks.03", comment: ""), weight: 1),
-                    (MFLocalizedString("thanks.04", comment: ""), weight: 1),
-                    
+                    ((key: "thanks.01", val: MFLocalizedStringOrEmptyString("thanks.01", comment: "Note: The weird thank-you messages are rare. Feel free to change them if you'd like to leave an easter egg. You can also leave them blank (insert a space character), just make sure to fill out thanks.01 - thanks.03")), weight: 1.0),
+                    ((key: "thanks.02", val: MFLocalizedStringOrEmptyString("thanks.02", comment: "")), weight: 1.0),
+                    ((key: "thanks.03", val: MFLocalizedStringOrEmptyString("thanks.03", comment: "")), weight: 1.0),
+                    ((key: "thanks.04", val: MFLocalizedStringOrEmptyString("thanks.04", comment: "")), weight: 1.0),
+
                     /// Rare
-                    (MFLocalizedString("thanks.05", comment: ""), weight: 0.1),
-                    (MFLocalizedString("thanks.06", comment: ""), weight: 0.1),
-                    
+                    ((key: "thanks.05", val: MFLocalizedStringOrEmptyString("thanks.05", comment: "")), weight: 0.1),
+                    ((key: "thanks.06", val: MFLocalizedStringOrEmptyString("thanks.06", comment: "")), weight: 0.1),
+
                     /// Very rare
-                    (MFLocalizedString("thanks.09", comment: ""), weight: 0.05),
-                    
+                    ((key: "thanks.09", val: MFLocalizedStringOrEmptyString("thanks.09", comment: "")), weight: 0.05),
+
                     /// Extremely rare
-                    (MFLocalizedString("thanks.10", comment: "."), weight: 0.01),
-                    
-                    (MFLocalizedString("thanks.13", comment: ""), weight: 0.01),
-                    (MFLocalizedString("thanks.21", comment: ""), weight: 0.01),
-                    (MFLocalizedString("thanks.22", comment: ""), weight: 0.01),
-                    (MFLocalizedString("thanks.25", comment: ""), weight: 0.01),
+                    ((key: "thanks.10", val: MFLocalizedStringOrEmptyString("thanks.10", comment: ".")), weight: 0.01),
+                    ((key: "thanks.13", val: MFLocalizedStringOrEmptyString("thanks.13", comment: "")), weight: 0.01),
+                    ((key: "thanks.21", val: MFLocalizedStringOrEmptyString("thanks.21", comment: "")), weight: 0.01),
+                    ((key: "thanks.22", val: MFLocalizedStringOrEmptyString("thanks.22", comment: "")), weight: 0.01),
+                    ((key: "thanks.25", val: MFLocalizedStringOrEmptyString("thanks.25", comment: "")), weight: 0.01),
                 ]
-                thankYouMessages = thankYouMessages.filter { /// Allow localizers to leave the strings empty, just filter out the empty strings.
-                    $0.0.range(of: kMFThanksPattern, options: .regularExpression) == nil && /// Strings left empy by localizers fall lback to their key. E.g. `thanks.17` || Can't use .hasPrefix due to invisible characters (See `NSString+Steganography.m`) [Oct 2025]
-                    $0.0.withoutSecretMessages().trimmingCharacters(in: .whitespacesAndNewlines) != "" ///  Subtle: Have to call `.withoutSecretMessages()` *before* trimming whitespace since the zero-width annotations surround the content they're annotating now. [Oct 2025] Could instead use `removingAllWhitespace`.
+
+                let filteredThankYouMessages = thankYouMessages.filter { /// Allow localizers to leave the strings empty, just filter out the empty strings.
+                    $0.0.val.withoutAnnotations().trimmingCharacters(in: .whitespacesAndNewlines) != "" /// Strings left empy by localizers also fallback to emptystring (See MFLocalizedStringOrEmptyString)
+                                                                                                           ///  Subtle: Have to call `.withoutAnnotations()` *before* trimming whitespace since the zero-width annotations surround the content they're annotating now. [Oct 2025] Could instead use `removingAllWhitespace`.
                 }
-                if (thankYouMessages.count > 0) {
-                    message = Randomizer.select(from: thankYouMessages)
+                if (filteredThankYouMessages.count > 0) {
+                    message = Randomizer.select(from: filteredThankYouMessages).val
                 } else {
-                    assert(false) /// If none of the thanks messages are available, it falls back to the "You shouldn't be seeing this" message [Oct 2025]
+                    /// If none of the thanks messages are available translated, we fall back to using an English string instead
+                    message = _MFLocalizedString(Randomizer.select(from: thankYouMessages).key, /*fallBackToEmptyString*/false)
                 }
             }
             

@@ -49,6 +49,7 @@
 #import "NSScreen+Additions.h"
 #import "CaptureToasts.h"
 #import "NSString+Steganography.h"
+#import "LocalizedStringAnnotation.h"
 #import "NSString+Additions.h"
 #import "IBUtility.h"
 #import "Links.h"

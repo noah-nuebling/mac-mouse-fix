@@ -15,8 +15,8 @@
 #import "LocalizedStringAnnotation.h"
 #import "Constants.h"
 
-NSString *_MFLocalizedString(NSString *key) {
-    
+NSString *_MFLocalizedString(NSString *key, bool fallBackToEmptyString) {
+
     /// `annotation-discussion`
     ///     We override the default swizzling-based annotation (See `enableAutomaticAnnotation`) and then do the annotation manually, (using `temporarilyDisableAutomaticAnnotation:` and `stringByAnnotatingString:` – see below) because the annotation needs to happen *after* the `english_string` fallback logic.
     ///     Simplification ideas:
@@ -47,12 +47,10 @@ NSString *_MFLocalizedString(NSString *key) {
             result = result ?: @"<missing string>"; /** Just to be safe – don't think this can ever happen [Oct 2025] */
             return result;
         };
-        
-        if ([result rangeOfString: kMFThanksPattern options: NSRegularExpressionSearch].location != NSNotFound)
-            goto endof_fallbacks; /// Don't fall back for `thanks.[...]` strings cause when localizers leave those blank, we simply wanna omit those from the randomizer (See AboutTabController.swift) [Oct 2025]
-        
+
         if ([result isEqual: key]) {
-            result = english_string();
+            if (fallBackToEmptyString) result = @""; /// Should we also do this in the `__NSLocalizedString` case? Don't need it for now [Sep 2026]
+            else                       result = english_string();
         }
         else if ([result isKindOfClass: NSClassFromString(@"__NSLocalizedString")]) {
             
@@ -73,7 +71,6 @@ NSString *_MFLocalizedString(NSString *key) {
             }
         }
     }
-    endof_fallbacks: {}
     
     /// Manually annotate the string – see `annotation-discussion` above
     if ([NSProcessInfo.processInfo.arguments containsObject: @"-MF_ANNOTATE_LOCALIZED_STRINGS"]) {

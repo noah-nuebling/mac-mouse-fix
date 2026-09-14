@@ -26,6 +26,14 @@ mfdata_cls_m(StringAnnotation)
     - (NSRange)     rangeInString { return self->rangeInString; }
 @end
 
+@implementation NSString (MFLocalizedStringAnnotation)
+    - (NSString *) withoutAnnotations {
+        NSString *result = [self withoutSecretMessages];
+        result = [result stringByReplacingOccurrencesOfString: kannotationSuffix withString: @""];
+        return result;
+    }
+@end
+
 @implementation LocalizedStringAnnotation
 
 

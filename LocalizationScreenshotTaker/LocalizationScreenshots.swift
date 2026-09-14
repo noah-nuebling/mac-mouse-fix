@@ -509,7 +509,7 @@ final class LocalizationScreenshotClass: XCTestCase {
             var allFilePaths: [String]
         }
         var args = Args(
-            onlyUpdateLocales: ["ja"],      /// Only update screenshots for these locales. (leave empty to update all)
+            onlyUpdateLocales: ["uk", "nb", "pt-BR"], /// Only update screenshots for these locales. (leave empty to update all)
             continueFromLocale: nil,    /// Set in case of interruption, to avoid redoing already-completed localizations. Restart from this locale
             killApp: true,              /// Set false to leave app running for faster iterations.
             allFilePaths: [
