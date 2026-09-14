@@ -179,7 +179,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "## Veiledninger\n\nDer det er mulig, prøver Mac Mouse Fix å være selvforklarende. Men for noen ting er en mer detaljert forklaring nyttig:\n\n- [{docname_captured_scroll_wheels}](<{url_1}>)\n- [{docname_captured_buttons_mmf3}](<{url_2}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_3}>) (Mac Mouse Fix 2) {Bare Engelsk}"
+            "value" : "## Veiledninger\n\nDer det er mulig, prøver Mac Mouse Fix å være selvforklarende. Men for noen ting er en mer detaljert forklaring nyttig:\n\n- [{docname_captured_scroll_wheels}](<{url_1}>)\n- [{docname_captured_buttons_mmf3}](<{url_2}>) (Mac Mouse Fix 3)\n- [{docname_captured_buttons_mmf2}](<{url_3}>) (Mac Mouse Fix 2) {only_in_english}"
           }
         },
         "pt-BR" : {
@@ -250,7 +250,7 @@
         "nb" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "### Eldre veiledninger\n\nVeiledninger for eldre versjoner av Mac Mouse Fix eller macOS.\n\n- [{docname_enabling}](<{url_1}>) {Bare engelsk}\n- For **macOS 13 Ventura** og **macOS 14 Sonoma**.\n- [{docname_ax_access}](<{url_2}>) {only_in_english}\n- For brukere av **Mac Mouse Fix 2.2.1** og eldre, eller **macOS 10.14 Mojave** og eldre.\n- [{docname_opening}](<{url_3}>) {Bare engelsk}\n- For **Mac Mouse Fix 2.2.3** og eldre."
+            "value" : "### Eldre veiledninger\n\nVeiledninger for eldre versjoner av Mac Mouse Fix eller macOS.\n\n- [{docname_enabling}](<{url_1}>) {only_in_english}\n- For **macOS 13 Ventura** og **macOS 14 Sonoma**.\n- [{docname_ax_access}](<{url_2}>) {only_in_english}\n- For brukere av **Mac Mouse Fix 2.2.1** og eldre, eller **macOS 10.14 Mojave** og eldre.\n- [{docname_opening}](<{url_3}>) {only_in_english}\n- For **Mac Mouse Fix 2.2.3** og eldre."
           }
         },
         "pt-BR" : {
