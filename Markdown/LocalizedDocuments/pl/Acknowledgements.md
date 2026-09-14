@@ -12,11 +12,14 @@ This document is `0%` translated into `🇵🇱 Polski`
   [🇬🇧 English](../../../Acknowledgements.md)\
   [🇩🇪 Deutsch](../../../Markdown/LocalizedDocuments/de/Acknowledgements.md)\
   [🇪🇸 Español](../../../Markdown/LocalizedDocuments/es/Acknowledgements.md)\
+  [🇳🇴 Norsk bokmål](../../../Markdown/LocalizedDocuments/nb/Acknowledgements.md)\
   **🇵🇱 Polski**\
   [🇧🇷 Português (Brasil)](../../../Markdown/LocalizedDocuments/pt-BR/Acknowledgements.md)\
+  [🇻🇳 Tiếng Việt](../../../Markdown/LocalizedDocuments/vi/Acknowledgements.md)\
   [🇹🇷 Türkçe](../../../Markdown/LocalizedDocuments/tr/Acknowledgements.md)\
   [🇨🇿 Čeština](../../../Markdown/LocalizedDocuments/cs/Acknowledgements.md)\
   [🇷🇺 Русский](../../../Markdown/LocalizedDocuments/ru/Acknowledgements.md)\
+  [🇺🇦 Українська](../../../Markdown/LocalizedDocuments/uk/Acknowledgements.md)\
   [🇨🇳 中文 (简体)](../../../Markdown/LocalizedDocuments/zh-Hans/Acknowledgements.md)\
   [🇯🇵 日本語](../../../Markdown/LocalizedDocuments/ja/Acknowledgements.md)\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=pl&target=mmf-localization-contribution)
@@ -81,6 +84,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **wrzesień 2026**
 
+- 🇺🇸&nbsp;Chris&nbsp;Fitkin - "Thanks! Used by the whole team at Metacto.com"
 - 🇺🇸&nbsp;Kirk&nbsp;Laninga
 - 🇨🇦&nbsp;Bruno&nbsp;Fernandes
 - 🇨🇿&nbsp;Tomáš&nbsp;Rábl
