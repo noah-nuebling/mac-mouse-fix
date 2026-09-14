@@ -79,6 +79,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Eylül 2026**
 
+- 🇺🇸&nbsp;Chris&nbsp;Fitkin - "Thanks! Used by the whole team at Metacto.com"
 - 🇺🇸&nbsp;Kirk&nbsp;Laninga
 - 🇨🇦&nbsp;Bruno&nbsp;Fernandes
 - 🇨🇿&nbsp;Tomáš&nbsp;Rábl

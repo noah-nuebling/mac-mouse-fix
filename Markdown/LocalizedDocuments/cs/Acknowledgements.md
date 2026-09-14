@@ -78,6 +78,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **září 2026**
 
+- 🇺🇸&nbsp;Chris&nbsp;Fitkin - "Thanks! Used by the whole team at Metacto.com"
 - 🇺🇸&nbsp;Kirk&nbsp;Laninga
 - 🇨🇦&nbsp;Bruno&nbsp;Fernandes
 - 🇨🇿&nbsp;Tomáš&nbsp;Rábl

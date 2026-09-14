@@ -78,6 +78,7 @@ Disse menneskene brukte mye mer enn standardprisen og spanderte en **fantastisk 
 
 **september 2026**
 
+- 🇺🇸&nbsp;Chris&nbsp;Fitkin - "Thanks! Used by the whole team at Metacto.com"
 - 🇺🇸&nbsp;Kirk&nbsp;Laninga
 - 🇨🇦&nbsp;Bruno&nbsp;Fernandes
 - 🇨🇿&nbsp;Tomáš&nbsp;Rábl
