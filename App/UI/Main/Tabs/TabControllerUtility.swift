@@ -58,6 +58,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                     "es": 370,   /// 370 fits better than 350 with the other tabs (which are all wider) [Dec 2025]
                     "ja": 320,   /// 350 -> 320 to have more semantic information on second line instead of just particles. Looks good. [Sep 2026]
                     "uk": 330,   /// 350 -> 330 Way the lines wrap feels more aesthetically pleasing and lines up with commas [Sep 2026]
+                    "nb": 350,   /// 350 looks great [Sep 2026]
                 ]
             case "scrolling":
                 map = [
@@ -74,6 +75,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                     "es": 390,  /// 370 -> Stops "Modificadores de teclado:" labels from being cut off.  390 -> "Desplázate con precisión..." is on 2 lines instead of 3. [Dec 2025]
                     "ja": 340,  /// 340 looks great [Sep 2026]
                     "uk": 330,  /// 340 -> 330 Fits the words exactly/reduce unnecessary whitespace (long words, have to make it much wider to get different wrapping) [Sep 2026]
+                    "nb": 340,  /// 340 looks great [Sep 2026]
                 ]
             default:
                 fatalError("Calling this from unexpected tab: \(tabController)")
