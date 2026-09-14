@@ -13,10 +13,12 @@ Este documento está `98%` traduzido para `🇧🇷 Português (Brasil)`
   [🇬🇧 English](../../../Readme.md)\
   [🇩🇪 Deutsch](../../../Markdown/LocalizedDocuments/de/Readme.md)\
   [🇪🇸 Español](../../../Markdown/LocalizedDocuments/es/Readme.md)\
+  [🇳🇴 Norsk bokmål](../../../Markdown/LocalizedDocuments/nb/Readme.md)\
   **🇧🇷 Português (Brasil)**\
   [🇹🇷 Türkçe](../../../Markdown/LocalizedDocuments/tr/Readme.md)\
   [🇨🇿 Čeština](../../../Markdown/LocalizedDocuments/cs/Readme.md)\
   [🇷🇺 Русский](../../../Markdown/LocalizedDocuments/ru/Readme.md)\
+  [🇺🇦 Українська](../../../Markdown/LocalizedDocuments/uk/Readme.md)\
   [🇨🇳 中文 (简体)](../../../Markdown/LocalizedDocuments/zh-Hans/Readme.md)\
   [🇯🇵 日本語](../../../Markdown/LocalizedDocuments/ja/Readme.md)\
   [🌎 Ajude a traduzir!](https://redirect.macmousefix.com/?locale=pt-BR&target=mmf-localization-contribution)

@@ -12,11 +12,14 @@ This document is `0%` translated into `🇵🇹 Português (Portugal)`
   [🇬🇧 English](../../../../../Support/Guides/CapturedScrollWheels.md)\
   [🇩🇪 Deutsch](../../../../../Markdown/LocalizedDocuments/de/Support/Guides/CapturedScrollWheels.md)\
   [🇪🇸 Español](../../../../../Markdown/LocalizedDocuments/es/Support/Guides/CapturedScrollWheels.md)\
+  [🇳🇴 Norsk bokmål](../../../../../Markdown/LocalizedDocuments/nb/Support/Guides/CapturedScrollWheels.md)\
   [🇧🇷 Português (Brasil)](../../../../../Markdown/LocalizedDocuments/pt-BR/Support/Guides/CapturedScrollWheels.md)\
   **🇵🇹 Português (Portugal)**\
+  [🇻🇳 Tiếng Việt](../../../../../Markdown/LocalizedDocuments/vi/Support/Guides/CapturedScrollWheels.md)\
   [🇹🇷 Türkçe](../../../../../Markdown/LocalizedDocuments/tr/Support/Guides/CapturedScrollWheels.md)\
   [🇨🇿 Čeština](../../../../../Markdown/LocalizedDocuments/cs/Support/Guides/CapturedScrollWheels.md)\
   [🇷🇺 Русский](../../../../../Markdown/LocalizedDocuments/ru/Support/Guides/CapturedScrollWheels.md)\
+  [🇺🇦 Українська](../../../../../Markdown/LocalizedDocuments/uk/Support/Guides/CapturedScrollWheels.md)\
   [🇨🇳 中文 (简体)](../../../../../Markdown/LocalizedDocuments/zh-Hans/Support/Guides/CapturedScrollWheels.md)\
   [🇯🇵 日本語](../../../../../Markdown/LocalizedDocuments/ja/Support/Guides/CapturedScrollWheels.md)\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=pt-PT&target=mmf-localization-contribution)

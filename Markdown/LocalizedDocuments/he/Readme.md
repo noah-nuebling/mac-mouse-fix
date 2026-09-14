@@ -12,10 +12,12 @@ This document is `0%` translated into `🇮🇱 עברית`
   [🇬🇧 English](../../../Readme.md)\
   [🇩🇪 Deutsch](../../../Markdown/LocalizedDocuments/de/Readme.md)\
   [🇪🇸 Español](../../../Markdown/LocalizedDocuments/es/Readme.md)\
+  [🇳🇴 Norsk bokmål](../../../Markdown/LocalizedDocuments/nb/Readme.md)\
   [🇧🇷 Português (Brasil)](../../../Markdown/LocalizedDocuments/pt-BR/Readme.md)\
   [🇹🇷 Türkçe](../../../Markdown/LocalizedDocuments/tr/Readme.md)\
   [🇨🇿 Čeština](../../../Markdown/LocalizedDocuments/cs/Readme.md)\
   [🇷🇺 Русский](../../../Markdown/LocalizedDocuments/ru/Readme.md)\
+  [🇺🇦 Українська](../../../Markdown/LocalizedDocuments/uk/Readme.md)\
   **🇮🇱 עברית**\
   [🇨🇳 中文 (简体)](../../../Markdown/LocalizedDocuments/zh-Hans/Readme.md)\
   [🇯🇵 日本語](../../../Markdown/LocalizedDocuments/ja/Readme.md)\

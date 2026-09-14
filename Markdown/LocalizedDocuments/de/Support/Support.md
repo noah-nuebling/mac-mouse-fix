@@ -12,10 +12,13 @@ Dieses Dokument ist zu `87%` übersetzt auf `🇩🇪 Deutsch`
   [🇬🇧 English](../../../../Support/Support.md)\
   **🇩🇪 Deutsch**\
   [🇪🇸 Español](../../../../Markdown/LocalizedDocuments/es/Support/Support.md)\
+  [🇳🇴 Norsk bokmål](../../../../Markdown/LocalizedDocuments/nb/Support/Support.md)\
   [🇧🇷 Português (Brasil)](../../../../Markdown/LocalizedDocuments/pt-BR/Support/Support.md)\
+  [🇻🇳 Tiếng Việt](../../../../Markdown/LocalizedDocuments/vi/Support/Support.md)\
   [🇹🇷 Türkçe](../../../../Markdown/LocalizedDocuments/tr/Support/Support.md)\
   [🇨🇿 Čeština](../../../../Markdown/LocalizedDocuments/cs/Support/Support.md)\
   [🇷🇺 Русский](../../../../Markdown/LocalizedDocuments/ru/Support/Support.md)\
+  [🇺🇦 Українська](../../../../Markdown/LocalizedDocuments/uk/Support/Support.md)\
   [🇨🇳 中文 (简体)](../../../../Markdown/LocalizedDocuments/zh-Hans/Support/Support.md)\
   [🇯🇵 日本語](../../../../Markdown/LocalizedDocuments/ja/Support/Support.md)\
   [🌎 Beim Übersetzen helfen!](https://redirect.macmousefix.com/?locale=de&target=mmf-localization-contribution)

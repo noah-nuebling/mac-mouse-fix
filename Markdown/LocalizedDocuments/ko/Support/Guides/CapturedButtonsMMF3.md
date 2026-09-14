@@ -12,10 +12,13 @@ This document is `0%` translated into `🇰🇷 한국어`
   [🇬🇧 English](../../../../../Support/Guides/CapturedButtonsMMF3.md)\
   [🇩🇪 Deutsch](../../../../../Markdown/LocalizedDocuments/de/Support/Guides/CapturedButtonsMMF3.md)\
   [🇪🇸 Español](../../../../../Markdown/LocalizedDocuments/es/Support/Guides/CapturedButtonsMMF3.md)\
+  [🇳🇴 Norsk bokmål](../../../../../Markdown/LocalizedDocuments/nb/Support/Guides/CapturedButtonsMMF3.md)\
   [🇧🇷 Português (Brasil)](../../../../../Markdown/LocalizedDocuments/pt-BR/Support/Guides/CapturedButtonsMMF3.md)\
+  [🇻🇳 Tiếng Việt](../../../../../Markdown/LocalizedDocuments/vi/Support/Guides/CapturedButtonsMMF3.md)\
   [🇹🇷 Türkçe](../../../../../Markdown/LocalizedDocuments/tr/Support/Guides/CapturedButtonsMMF3.md)\
   [🇨🇿 Čeština](../../../../../Markdown/LocalizedDocuments/cs/Support/Guides/CapturedButtonsMMF3.md)\
   [🇷🇺 Русский](../../../../../Markdown/LocalizedDocuments/ru/Support/Guides/CapturedButtonsMMF3.md)\
+  [🇺🇦 Українська](../../../../../Markdown/LocalizedDocuments/uk/Support/Guides/CapturedButtonsMMF3.md)\
   [🇨🇳 中文 (简体)](../../../../../Markdown/LocalizedDocuments/zh-Hans/Support/Guides/CapturedButtonsMMF3.md)\
   [🇯🇵 日本語](../../../../../Markdown/LocalizedDocuments/ja/Support/Guides/CapturedButtonsMMF3.md)\
   **🇰🇷 한국어**\

@@ -13,10 +13,13 @@ This document is `0%` translated into `🇮🇩 Indonesia`
   [🇩🇪 Deutsch](../../../../../Markdown/LocalizedDocuments/de/Support/Guides/CapturedScrollWheels.md)\
   [🇪🇸 Español](../../../../../Markdown/LocalizedDocuments/es/Support/Guides/CapturedScrollWheels.md)\
   **🇮🇩 Indonesia**\
+  [🇳🇴 Norsk bokmål](../../../../../Markdown/LocalizedDocuments/nb/Support/Guides/CapturedScrollWheels.md)\
   [🇧🇷 Português (Brasil)](../../../../../Markdown/LocalizedDocuments/pt-BR/Support/Guides/CapturedScrollWheels.md)\
+  [🇻🇳 Tiếng Việt](../../../../../Markdown/LocalizedDocuments/vi/Support/Guides/CapturedScrollWheels.md)\
   [🇹🇷 Türkçe](../../../../../Markdown/LocalizedDocuments/tr/Support/Guides/CapturedScrollWheels.md)\
   [🇨🇿 Čeština](../../../../../Markdown/LocalizedDocuments/cs/Support/Guides/CapturedScrollWheels.md)\
   [🇷🇺 Русский](../../../../../Markdown/LocalizedDocuments/ru/Support/Guides/CapturedScrollWheels.md)\
+  [🇺🇦 Українська](../../../../../Markdown/LocalizedDocuments/uk/Support/Guides/CapturedScrollWheels.md)\
   [🇨🇳 中文 (简体)](../../../../../Markdown/LocalizedDocuments/zh-Hans/Support/Guides/CapturedScrollWheels.md)\
   [🇯🇵 日本語](../../../../../Markdown/LocalizedDocuments/ja/Support/Guides/CapturedScrollWheels.md)\
   [🌎 Help translate!](https://redirect.macmousefix.com/?locale=id&target=mmf-localization-contribution)
