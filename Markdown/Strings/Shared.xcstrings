@@ -34,6 +34,12 @@
             "value" : "謝辞"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Takk"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -103,6 +109,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "キャプチャされたマウスボタン"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fanget museknapper"
           }
         },
         "pt-BR" : {
@@ -176,6 +188,12 @@
             "value" : "キャプチャされたスクロールホイール"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fanget rullehjul"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -245,6 +263,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Readme"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les meg"
           }
         },
         "pt-BR" : {
@@ -318,6 +342,12 @@
             "value" : "サポート"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Støtte"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -387,6 +417,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "このガイドがお役に立てば幸いです！"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeg håper denne veiledningen var nyttig!"
           }
         },
         "pt-BR" : {
@@ -460,6 +496,12 @@
             "value" : "これらの内容が、皆さまのご参考になれば幸いです！"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeg håper denne informasjonen var nyttig!"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -531,6 +573,12 @@
             "value" : "このガイドで不明な点が解消されれば幸いです！"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jeg håper denne guiden oppklarte ting!"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -600,6 +648,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "まだご不明な点がありますか？ [こちら]({url})をクリックしてください。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Har du fortsatt spørsmål? Klikk [her]({url})."
           }
         },
         "pt-BR" : {
@@ -674,6 +728,12 @@
             "value" : "この文章は `{localization_progress}` `{current_language}`に翻訳されました\n[翻訳を手伝う]({url})"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dette dokumentet er `{localization_progress}` oversatt til `{current_language}`\n[Hjelp med å oversette]({url})"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -744,6 +804,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "[🌎 翻訳を手伝ってください！]({url})"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[🌎 Hjelp med å oversette!]({url})"
           }
         },
         "pt-BR" : {

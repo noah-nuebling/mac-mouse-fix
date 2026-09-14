@@ -35,6 +35,12 @@
             "value" : "Mac Mouse Fix Helper"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac mouse Fix Helper"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",

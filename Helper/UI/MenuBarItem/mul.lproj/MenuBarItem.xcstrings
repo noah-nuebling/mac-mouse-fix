@@ -47,6 +47,12 @@
             "value" : "버튼"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Knapper"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -204,6 +210,12 @@
             "value" : "스크롤"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rulling"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -298,6 +310,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix 열기..."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åpne Mac mouse fix..."
           }
         },
         "pt-BR" : {

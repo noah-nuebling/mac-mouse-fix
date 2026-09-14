@@ -34,6 +34,12 @@
             "value" : "#{docname_captured_scroll_wheels}\n\nMac Mouse Fix は、[マウスボタンをキャプチャ](<{url}>)するのと同様に、**デフォルトでマウスのスクロールホイールをキャプチャします**。"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **fanger opp musens skrollehjul som standard**, på samme måte som det [fanger opp museknapper](<{url}>)."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -98,6 +104,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**スクロールホイールの制御（キャプチャ）を停止するには：**\n\n1.Mac Mouse Fix の'スクロール'タブを開きます\n2.**すべて**のオプションをオフにします\n   -'速度'オプションについては、'macOS'で設定してください\n   -'キーボード修飾キー'の下にあるすべての項目を、各項目の横にある'x'ボタンをクリックして削除します\n\n完了すると、スクロールホイールの制御が解除されたことを知らせるメッセージが表示されます。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**For å forhindre at rullehjulet fanger opp:**\n\n1. Gå til fanen «Rulling» i Mac Mouse Fix\n2. Slå av **alle** alternativer\n- Hvis alternativet «Hastighet» er valgt, sett det til «macOS»\n- Fjern alle oppføringer under «Tastaturmodifikatorer» ved å klikke på «x»-knappen ved siden av hver modifikator\n\nEtter dette skal du se en melding som indikerer at skrollehjulet ikke lenger fanges opp."
           }
         },
         "pt-BR" : {
@@ -165,6 +177,12 @@
             "value" : "**スクロールホイールの制御を*解除する*とどうなりますか？**\n\nMac Mouse Fixはスクロールホイールの動作を完全に無視するようになります。スクロール中にCPUリソースやバッテリーを消費することはなく、いかなる干渉も行いません。これにより、[MOS]({url})などの他のアプリを使ってスクロールホイールを自由に制御できるようになります。"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Hva skjer når rullehjulet *ikke lenger* blir fanget opp?**\n\nMac Mouse Fix vil da ignorere rullehjulet ditt fullstendig – det vil ikke bruke prosessorkraft eller batterilading under rulling, eller forstyrre på noen måte. Dette gir deg full frihet til å bruke andre apper som [MOS]({url}) til å håndtere rullehjulet ditt."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -228,6 +246,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "##関連情報\n[{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Claude 3.5 Sonnetの多大なる協力により編集されました)*"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Se også\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Redigert med utmerket hjelp av Claude 3.5 Sonnet)*"
           }
         },
         "pt-BR" : {

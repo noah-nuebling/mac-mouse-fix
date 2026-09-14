@@ -47,6 +47,12 @@
             "value" : "완료"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ferdig"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -143,6 +149,12 @@
             "value" : "트랙볼 마우스에 적합한 옵션입니다."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anbefales for styrekulemus"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -237,6 +249,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "'클릭 및 드래그' 제스처 시 마우스 포인터 잠금"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lås musepekeren under klikk-og-dra-bevegelser"
           }
         },
         "pt-BR" : {

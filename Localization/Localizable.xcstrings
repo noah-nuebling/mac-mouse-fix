@@ -46,6 +46,12 @@
             "value" : "'보안 및 개인 정보 보호' 설정 열기"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åpne \"Sikkerhet og personvern\"-innstillinger"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -141,6 +147,12 @@
             "value" : "이미 **3개 버튼**의 마우스에 해당하는 기본 설정을 사용 중입니다."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du **bruker allerede** standardinnstillingen for mus med **3 knapper**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -230,6 +242,12 @@
             "value" : "이미 **5개 버튼**의 마우스에 해당하는 기본 설정을 사용 중입니다."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du **bruker allerede** standardinnstillingen for mus med **5+ knapper**"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -317,6 +335,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "バージョン %@"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versjon %@"
           }
         },
         "pt-BR" : {
@@ -2076,6 +2100,12 @@
             "value" : "마우스 %@번 버튼"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Museknapp %@"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2387,6 +2417,12 @@
             "value" : "가운데 버튼"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Midtre knapp"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2480,6 +2516,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%@번 버튼"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Knapp %@"
           }
         },
         "pt-BR" : {
@@ -2577,6 +2619,12 @@
             "value" : "주 버튼"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Primærknapp"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2670,6 +2718,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "보조 버튼"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sekundær knapp"
           }
         },
         "pt-BR" : {
@@ -2907,6 +2961,33 @@
                     "stringUnit" : {
                       "state" : "needs_review",
                       "value" : "%2$@ 은 이제 Mac Mouse Fix에서 캡처합니다."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ er nå fanget opp av Mac Mouse Fix"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "translated",
+                      "value" : "%2$@ er nå fanget opp av Mac Mouse Fix"
                     }
                   }
                 }
@@ -3317,6 +3398,33 @@
                     "stringUnit" : {
                       "state" : "needs_review",
                       "value" : "다른 앱에서는 더 이상 캡처하지 못합니다."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "Other apps can't see the button anymore"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "Other apps can't see these buttons anymore"
                     }
                   }
                 }
@@ -3829,6 +3937,33 @@
             }
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%2$@ is no longer captured by Mac Mouse Fix"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%2$@ are no longer captured by Mac Mouse Fix"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4231,6 +4366,33 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "needs_review",
+                      "value" : ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@pluralizable@"
+          },
+          "substitutions" : {
+            "pluralizable" : {
+              "formatSpecifier" : "d",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : ""
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
                       "value" : ""
                     }
                   }
@@ -11048,6 +11210,12 @@
             "value" : "손가락이 움직임이는 방향에 따라 콘텐츠가 이동됩니다."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Innhold sporer fingerbevegelser"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11141,6 +11309,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "스크롤을 *천천히* 움직이는 경우, 보조 키를 사용하지 않더라도\n정밀하게 스크롤합니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rull presist, selv uten tastaturmodifikator, ved å bevege rullehjulet *sakte*"
           }
         },
         "pt-BR" : {
@@ -11901,6 +12075,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "%1$@에 대한 Mac Mouse Fix 동작이 **다시 활성화**되었습니다.\n이는 사용자에 의해 메뉴 막대 %2$@ 에서 수동으로 비활성화되어있었습니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Aktivert** Mac Mouse Fix for %1$@\nDen hadde blitt deaktivert fra Menu&nbsp;Bar&nbsp;%2$@"
           }
         },
         "pt-BR" : {
@@ -15681,6 +15861,12 @@
             "value" : "가운데 버튼"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Midtre knapp"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15871,6 +16057,12 @@
             "value" : "주 버튼"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Primærknapp"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15964,6 +16156,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "보조 버튼"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sekundær knapp"
           }
         },
         "pt-BR" : {
@@ -17391,6 +17589,12 @@
             "value" : "가운데 버튼"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Midtre knapp"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17581,6 +17785,12 @@
             "value" : "주 버튼"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Primærknapp"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17674,6 +17884,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "보조 버튼"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sekundær knapp"
           }
         },
         "pt-BR" : {

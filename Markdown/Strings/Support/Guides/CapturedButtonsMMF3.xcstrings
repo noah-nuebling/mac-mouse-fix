@@ -35,6 +35,12 @@
             "value" : "#{docname_captured_buttons_mmf3}\n\nMac Mouse Fixを使用時、マウスのボタンが Mac Mouse Fixによって'キャプチャ'されているというメッセージが表示されることがあります。\n\n{screenshot_0}\n\nこの記事では、この'キャプチャ'が何を意味するのか、どのような問題が起こる可能性があるのか、そしてそれらにどのように対処すればよいかを解説します。"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_buttons_mmf3}\n\nMens du brukte Mac Mouse Fix, kan det hende du har fått en melding om at en knapp på musen din nå blir «fanget» av Mac Mouse Fix.\n\n{screenshot_0}\n\nI denne artikkelen lærer du hva dette betyr, hvilke problemer det kan forårsake og hvordan du kan omgå dem."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -98,6 +104,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "##マウスボタンを'キャプチャ'するとはどういう意味ですか？\n\nMac Mouse Fixによってキャプチャされたマウスボタンは、他のアプリやmacOS自体から認識されなくなります。\nボタンがキャプチャされている間、そのボタンが通常行っていた機能は動作しなくなります。\n\n**例**：通常、マウスのサイドボタン（ボタン4と5）をクリックすると、Chrome で「戻る」や「進む」の操作ができます。\nしかし、サイドボタンがMac Mouse Fixによってキャプチャされると、この操作は機能しなくなります。その代わりに、サイドボタンはMac Mouse Fixで割り当てたアクションのみを実行するようになります。\n\n**なぜMac Mouse Fixはこのようなことをするのですか？**Mac Mouse Fixが他のアプリからボタンを隠すのは、ジェスチャを使用している最中に、誤って他の機能をトリガーしてしまうのを防ぐためです。\n例えば、もしキャプチャをしていなければ、ボタン4をクリックしてドラッグし、デスクトップを切り替えようとするたびに、Chrome でページを戻る操作も**同時に**実行されてしまうことになります。\n"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Hva betyr det å «fange» en museknapp?\n\nEn museknapp som fanges opp av Mac Mouse Fix kan ikke lenger sees av andre apper eller av macOS.\nFunksjonene som denne knappen normalt ville utført, vil ikke fungere mens den fanges opp.\n\n**Eksempel**: Normalt kan du gå bakover og fremover i Chrome ved å klikke på sideknappene (knapp 4 og 5) på musen.\nMen når sideknappene fanges opp av Mac Mouse Fix, fungerer ikke dette lenger. I stedet vil sideknappene bare utløse handlingene du har tilordnet dem i Mac Mouse Fix.\n\n**Hvorfor gjør Mac Mouse Fix dette?** Mac Mouse Fix skjuler knapper fra andre apper for å forhindre at du ved et uhell utløser andre funksjoner mens du bruker Mac Mouse Fix-bevegelser.\n\nFor eksempel, hvis du klikker og drar knapp 4 for å bytte mellom skrivebord, vil du alltid **samtidig** gå tilbake en side i Chrome."
           }
         },
         "pt-BR" : {
@@ -166,6 +178,12 @@
             "value" : "##どのボタンが Mac Mouse Fixにキャプチャされているかを確認するには？\n\n'ボタン'タブの左側に表示されているボタンは、すべて Mac Mouse Fixによってキャプチャされています。\n\n以下の画像では、'**中央ボタン**'、'**ボタン5**'、および'**ボタン4**'がキャプチャされています： <br>\n\n{screenshot_1}"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Hvordan vet jeg hvilke knapper som blir fanget opp av Mac Mouse Fix?\n\nAlle knapper som vises på venstre side av «Knapper»-fanen blir fanget opp av Mac Mouse Fix.\n\nI det følgende bildet blir **«Midterste knapp»**, **«Knapp 5»** og **«Knapp 4»** fanget opp: <br>\n\n{screenshot_1}"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -232,6 +250,12 @@
             "value" : "##特定のボタンが Mac Mouse Fixに'キャプチャ'されないようにするには？\n\nマウスボタンがキャプチャされないようにするには、'ボタン'タブからそのボタンに関連するすべてのエントリを削除してください。\n'ボタン'タブのエントリは、左側にある'-'ボタンをクリックすることで削除できます。\n\n例えば、以下の画像では、強調表示されている2つの**'-'**ボタンをクリックすることで、**'ボタン 4'**がキャプチャされないように設定できます。\n\n{screenshot_2}"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Hvordan forhindrer jeg at Mac Mouse Fix fanger opp en museknapp?\n\nFor å forhindre at Mac Mouse Fix fanger opp en museknapp, sletter du alle oppføringer for den museknappen fra fanen «Knapper».\nDu kan slette en oppføring i fanen «Knapper» ved å klikke på «-»-knappen til venstre.\n\nFor eksempel, i det følgende bildet, kan du forhindre at **'Knapp 4'** blir fanget opp ved å klikke på de to uthevede **'-'**-knappene:\n\n{screenshot_2}"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -295,6 +319,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "##ボタンの元の機能を戻すにはどうすればよいですか？\n\nボタンの動作をMac Mouse Fixをインストールする前と同じ状態に戻したい場合は、以下のいずれかの方法で行えます。\n\n1.**ボタンがキャプチャされないようにする**\n  -前述した手順で、そのボタンの設定を削除します。\n\n2.**Mac Mouse Fix自体をオフにする**\n  -スイッチをオフにすれば、すべてのボタンのキャプチャが解除されます。\n\n3.**Mac Mouse Fix内でボタンに特定のアクションを割り当てる**\n   -この方法を使えば、*ボタンがキャプチャされている状態のままでも*、特定の機能を再現させることができます。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Hvordan kan jeg gjenopprette den opprinnelige funksjonaliteten til en knapp?\n\nFor å få en knapp til å oppføre seg slik den gjorde før du installerte Mac Mouse Fix, kan du gjøre følgende:\n\n1. Du kan **forhindre at knappen blir fanget** – som beskrevet ovenfor.\n\n2. Du kan ganske enkelt **slå av Mac Mouse Fix** – da vil ingen knapper bli fanget.\n\n3. Du kan **tilordne bestemte handlinger til knappen i Mac Mouse Fix** – på denne måten kan du gjenopprette bestemte funksjoner, *selv mens knappen blir fanget*:"
           }
         },
         "pt-BR" : {
@@ -363,6 +393,12 @@
             "value" : "ボタン"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Knapp"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -427,6 +463,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "元の機能"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opprinnelig funksjon"
           }
         },
         "pt-BR" : {
@@ -501,6 +543,12 @@
             "value" : "Mac Mouse Fix内の動作"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handling i Mac Mouse fix"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -572,6 +620,12 @@
             "value" : "ホイールボタン"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Midtre museknapp"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -641,6 +695,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "リンクを新しいタブで開く"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åpne lenker i nettleseren i en ny fane"
           }
         },
         "pt-BR" : {
@@ -715,6 +775,12 @@
             "value" : "'ミドルクリック'<br>（ボタンの**クリック**に割り当て可能）"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Midtklikk'<br>(Kan tilordnes til å **klikke** på en knapp)"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -786,6 +852,12 @@
             "value" : "ホイールボタン"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Midtre museknapp"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -855,6 +927,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ターミナルにテキストを貼り付ける"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lim inn tekst i terminalen"
           }
         },
         "pt-BR" : {
@@ -929,6 +1007,12 @@
             "value" : "'ミドルクリック'<br>（ボタンの**クリック**に割り当て可能）"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Midtklikk'<br>(Kan tilordnes til å **klikke** på en knapp)"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -998,6 +1082,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "マウスボタン 4 / マウスボタン 5"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Museknapp 4 / Museknapp 5"
           }
         },
         "pt-BR" : {
@@ -1072,6 +1162,12 @@
             "value" : "Chromeやその他のアプリで「戻る・進む」"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gå tilbake/frem i Chrome og andre apper"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1142,6 +1238,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "'戻る・進む'<br>（ボタンの**クリック**に割り当て可能）"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Tilbake' / 'Frem'<br>(Kan tilordnes til å **klikke** på en knapp)"
           }
         },
         "pt-BR" : {
@@ -1215,6 +1317,12 @@
             "value" : "ホイールボタン"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Midtre museknapp"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1286,6 +1394,12 @@
             "value" : "Blender（およびその他の 3D アプリ）でオブジェクトの周囲を回転"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gå i bane rundt objekter i Blender (og andre 3D-apper)"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1350,6 +1464,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "'スクロールとナビゲート'<br>（ボタンの**クリックしてドラッグ**に割り当て可能）"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Bla og naviger'<br>(Kan tilordnes til å **klikke og dra** en knapp)"
           }
         },
         "pt-BR" : {
@@ -1417,6 +1537,12 @@
             "value" : "これにより、ボタン本来の機能を使い続けながら、Mac Mouse Fixで*さらに*追加の機能を割り当てることも可能になります。"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "På denne måten kan du fortsette å bruke knappens vanlige funksjonalitet, samtidig som du tilordner *ekstra* funksjoner til den i Mac Mouse Fix."
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1480,6 +1606,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "##関連項目\n\n -[{docname_captured_scroll_wheels}](<{url}>)\n"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Se også\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
           }
         },
         "pt-BR" : {

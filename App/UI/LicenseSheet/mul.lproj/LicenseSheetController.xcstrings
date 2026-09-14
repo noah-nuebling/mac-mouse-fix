@@ -47,6 +47,12 @@
             "value" : "뒤로"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilbake"
+          }
+        },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
@@ -202,6 +208,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "라이센스 키를 입력하세요."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skriv inn lisensnøkkelen din"
           }
         },
         "pt-BR" : {
