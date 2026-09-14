@@ -2970,7 +2970,7 @@
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -3024,7 +3024,7 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -3063,7 +3063,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -3129,7 +3129,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -3461,7 +3461,7 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -3500,7 +3500,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -3566,7 +3566,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -3993,7 +3993,7 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -4032,7 +4032,7 @@
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
@@ -4098,7 +4098,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@pluralizable@"
           },
           "substitutions" : {
