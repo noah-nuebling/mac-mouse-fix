@@ -828,3 +828,63 @@ Safari और अन्य ऐप्स में एक पृष्ठ पी�
 
 COUNT: 740
 DENSITY: 663/740  = 0.89595 = 0.9
+
+## Bangla (Bengali)
+
+("""
+স্পেসেও Mission Control
+
+আপনার মাউস সরান:
+- Mission Control দেখাউপরে
+- অ্যাপ্লিকেউইন্ডোজ দেখাতে নিচে
+- স্পেসেসের মধ্যে বামে বা ডানে
+
+Apple Trackpad-এ ৩ আঙুল দিয়সোয়াইকরারমতোকাজকরে
+
+স্ক্রল ও নেভিগেট
+
+আপনারমাউসযেকোদিকসরিয়অবাধস্ক্রল করুন
+
+এছাড়াSafari-তেপৃষ্ঠাগুলোমধ্যেনেভিগকরুন, Mail-এ বার্তমুছুন এবংআরও অনেককিছুকরুন আপনারমাউসবামও ডানসরিয়ে
+
+Apple Trackpad-এ ২ আঙুল দিয়সোয়াইকরারমতোকাজকরে
+
+Safari ও অন্যান্যঅ্যাপএক পৃষ্ঠাপেছনযান
+
+নতুন ট্যাবলিংখুলুন, Terminal-এ টেক্সটপেস্টকরুন, এবংআরও অনেককিছু।
+
+স্ট্যন্ডার্ডমাউসমাঝেমাউসবাটন(যাকস্ক্রল হুইল বাটনবামাউসবাটন৩-ও বলাহয়) ক্লিককরারমতোকাজকরে।
+""" as NSString).length
+
+COUNT: 534
+DENSITY: 663/534  = 1.2415730337 = 1.2
+
+## Norwegian Bokmål
+
+("""
+Spaces og Mission Control
+
+Flytt musen:
+- Opp for å vise Mission Control
+- Ned for å vise Programvinduer
+- Venstre eller høyre for å flytte mellom Spaces
+
+Fungerer som å sveipe med 3 fingre på en Apple-styreflate
+
+Rull og naviger
+
+Rull fritt ved å flytte musen i en hvilken som helst retning
+
+Naviger også mellom sider i Safari, slett meldinger i Mail og mer ved å flytte musen til venstre og høyre
+
+Fungerer som å sveipe med 2 fingre på en Apple-styreflate
+
+Gå tilbake én side i Safari og andre apper
+
+Åpne lenker i en ny fane, lim inn tekst i Terminal og mer.
+
+Fungerer som å klikke på midtre museknapp (også kalt rullehjulknapp eller museknapp 3) på en standard mus.
+""" as NSString).length
+
+COUNT: 669
+DENSITY: 663/669 = 0.9910313901 = 1.0

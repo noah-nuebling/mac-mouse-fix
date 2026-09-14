@@ -60,6 +60,8 @@
         @"th": @1.2,   // Thai
         @"id": @0.9,   // Indonesian
         @"hi": @0.9,   // Hindi
+        @"bn": @1.2,   // Bangla
+        @"nb": @1.0,   // Norwegian Bokmål
     };
     
     NSNumber *resultNS = map[languageCode];
