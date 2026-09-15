@@ -137,6 +137,25 @@ static NSMutableDictionary *_swipeInfo;
         _dockSwipeOriginOffset += d;
     }
     
+    /// Coalesce `changed` events down to the rate a Trackpad produces them (~8ms)
+    ///     Notes:
+    ///     - Measured with a mouse on macOS 27: up to 19 dockSwipe events inside a single 8ms frame (avg 6.2), with
+    ///       gaps swinging between 0.06ms and 30ms. macOS' gesture animation gets visibly stuttery at that rate -
+    ///       the Mission Control / Spaces transitions stop feeling smooth. A Trackpad sends exactly one event per ~8ms.
+    ///     - Skipped events lose no motion: the progress keeps accumulating in `_dockSwipeOriginOffset` above, so the
+    ///       next sent event (or the end event) carries the accumulated offset.
+    ///     - `began` / `ended` / `cancelled` are never throttled.
+    ///     - If a display ever needs a different granularity: derive the interval from `NSScreen.maximumFramesPerSecond`.
+    
+    static CFTimeInterval _lastSendTime = 0.0;
+    if (phase == kIOHIDEventPhaseChanged) {
+        CFTimeInterval now = CACurrentMediaTime();
+        if (now - _lastSendTime < 0.008) return;
+        _lastSendTime = now;
+    } else {
+        _lastSendTime = CACurrentMediaTime();
+    }
+    
     /// Debug
     
     if (runningPreRelease()) {
