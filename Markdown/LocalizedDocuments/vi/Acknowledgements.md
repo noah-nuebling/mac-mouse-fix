@@ -71,14 +71,14 @@ Cám ơn bạn đã mang Mac Mouse Fix đến với mọi người trên thế g
 <!-- 
   Old stuff from Money section:
 
-  Thanks so much to everyone who bought me a milkshake and to all 48100 people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
+  Thanks so much to everyone who bought me a milkshake and to all 48100+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
   You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. 
 -->
 
 <a name="money"></a> 
 ## 💰 Tiền
 
-Cám ơn mọi người đã ủng hộ tôi ly sữa lắc và tất cả **48100** người đã mua Mac Mouse Fix.
+Cám ơn mọi người đã ủng hộ tôi ly sữa lắc và tất cả **48100+** người đã mua Mac Mouse Fix.
 Nhờ có bạn mà tôi có thể dành nhiều thời gian để làm thứ tôi yêu thích.
 
 Những người đã hỗ trợ tôi bằng cách tiêu nhiều hơn giá thông thường cho Mac Mouse Fix sẽ được đặc biệt nhắc đến tại đây:
