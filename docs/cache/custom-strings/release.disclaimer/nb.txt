@@ -1,0 +1,3 @@
+<b>ℹ️ Oversatt av AI</b><br>
+Denne GitHub Release er oversatt av Claude AI. Den kan inneholde feil.<br>
+For den originale engelske versjonen, <a href="{gh_releases_url}">klikk her</a>.

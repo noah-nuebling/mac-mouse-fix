@@ -6,7 +6,7 @@
 
   <meta charset="utf-8" />
 
-  <meta name="generator" content="pandoc" />
+  <meta name="generator" content="pandoc 3.11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 
@@ -14,13 +14,25 @@
 
   <style>
 
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+
+    */
 
     span.smallcaps{font-variant: small-caps;}
 
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.columns{display: flex; gap: 1.5em;}
 
-    div.column{flex: auto; overflow-x: auto;}
+    div.column{flex: auto;}
+
+    @media screen {
+
+    div.columns{gap: min(4vw, 1.5em);}
+
+    div.column{overflow-x: auto;}
+
+    }
 
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 
@@ -41,8 +53,6 @@
       vertical-align: middle;
 
     }
-
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
 
   </style>
 
@@ -68,23 +78,23 @@ tıklayın</a>.</p>
 
 <hr />
 
-<p>Mac Mouse Fix <strong>3.0.1 Beta 1</strong>, bir süredir üzerinde
+<p>Mac Mouse Fix <strong>3.1.0 Beta 1</strong>, bir süredir üzerinde
 
-çalışılan harika yeni bir çeviri sistemi getiriyor.<br />
+çalışılan harika bir yeni çeviri sistemi getiriyor.<br />
 
-Ayrıca bazı kullanıcı arayüzü iyileştirmeleri de var.</p>
+Ayrıca bazı arayüz iyileştirmeleri de var.</p>
 
 <h3 id="yeni-yerelleştirme-sistemi">Yeni yerelleştirme sistemi!</h3>
 
 <ul>
 
-<li>Artık Mac Mouse Fix’e yüksek kaliteli çeviriler katkıda bulunmak çok
+<li>Artık Mac Mouse Fix’e yüksek kaliteli çevirilerle katkıda bulunmak
 
-kolay, hiçbir teknik bilgi gerekmiyor.</li>
+çok kolay, hiçbir teknik bilgi gerekmiyor.</li>
 
 <li>Birçok açıklamalı ekran görüntüsü ve yorum ile harika bir arama
 
-işlevi var, böylece çevirmenler çevirilerinin uygulamada tam olarak
+fonksiyonu var, böylece çevirmenler çevirilerinin uygulamada tam olarak
 
 nasıl göründüğünü kolayca anlayabilir.
 
@@ -92,119 +102,159 @@ nasıl göründüğünü kolayca anlayabilir.
 
 <li>Ekran görüntülerinin ve çeviri arayüzünün (<code>Xcloc Editor</code>
 
-uygulaması) piyasadaki en kaliteli olduğunu düşünüyorum ve harika
+uygulaması) piyasadaki en kaliteli olanlar olduğunu düşünüyorum ve
 
-çeviriler yapmanıza yardımcı olacağını umuyorum!</li>
+harika çeviriler yapmanıza yardımcı olacağını umuyorum!</li>
 
 </ul></li>
 
-<li>Artık projenin neredeyse tüm bölümleri çevrilebilir, ‘Yakalanan
+<li>Artık projenin neredeyse tüm bölümleri çevrilebilir durumda;
 
-Düğmeler Kılavuzu’, GitHub Readme, Web Sitesi ve daha fazlası dahil.
+‘Yakalanan Düğmeler Kılavuzu’, GitHub Readme, Web Sitesi ve daha fazlası
+
+dahil.
 
 <ul>
 
-<li>Projenin tüm bu bölümleri, <code>Xcloc Editor</code> uygulamasını
+<li>Projenin tüm bu bölümleri, <code>Xcloc Editor</code> uygulaması
 
-kullanarak kolay çapraz referanslama ile tek bir merkezi yerden
+kullanılarak kolay çapraz referanslama ile tek bir merkezi yerden
 
-çevrilebilir, böylece çevirmenlerin her şeyi tutarlı tutması kolay.</li>
+çevrilebilir, böylece çevirmenler her şeyi tutarlı tutabilir.</li>
 
 </ul></li>
 
-<li>Sistem çok kolay bakım yapılabilecek şekilde kuruldu, böylece Mac
+<li>Sistem bakımı çok kolay olacak şekilde kuruldu, böylece Mac Mouse
 
-Mouse Fix geliştikçe ve yeni ekranlar veya metinler eklendikçe her şey
+Fix geliştikçe ve yeni ekranlar veya metinler eklendikçe her şey
 
 otomatik olarak güncellenecek.</li>
 
-<li>Sorumluluk reddi: ‘Kolay’ kelimesini çok kullanıyorum. İş akışları
+<li>Uyarı: ‘Kolay’ kelimesini çok kullanıyorum. İş akışları kolay, ancak
 
-kolay, ancak harika çeviriler düşünmek elbette hala çok zor ve
+harika çeviriler düşünmek elbette hâlâ çok zor ve saygıdeğer bir iş!
 
-saygıdeğer bir iş! Artık önünüzde daha az engel var.</li>
+Sadece artık daha az engel var.</li>
 
 </ul>
 
-<p>Yeni çeviriler aşağıdaki kişiler tarafından cömertçe
+<p>Yeni çeviriler zaten aşağıdaki kişiler tarafından cömertçe
 
-sağlanmıştır:</p>
+sağlandı:</p>
 
 <ul>
 
-<li><strong>Eduardo Rodrigues</strong> ve <a
+<li>🇧🇷 Brezilya Portekizcesi çevirileri
 
-href="https://github.com/denini08"><span class="citation"
+<ul>
 
-data-cites="denini08">@denini08</span></a>: 🇧🇷 Brezilya Portekizcesi
+<li><strong>Eduardo Rodrigues</strong></li>
 
-çevirileri</li>
+<li><a href="https://github.com/denini08"><span class="citation"
+
+data-cites="denini08">@denini08</span></a></li>
+
+</ul></li>
+
+<li>🇫🇷 Fransızca çevirileri
+
+<ul>
 
 <li><a href="https://github.com/DimitriDR"><span class="citation"
 
-data-cites="DimitriDR">@DimitriDR</span></a>: 🇫🇷 Fransızca
+data-cites="DimitriDR">@DimitriDR</span></a></li>
 
-çeviriler</li>
+</ul></li>
+
+<li>🇹🇷 Türkçe çevirileri
+
+<ul>
 
 <li><a href="https://github.com/hasanbeder"><span class="citation"
 
-data-cites="hasanbeder">@hasanbeder</span></a> ve <a
+data-cites="hasanbeder">@hasanbeder</span></a></li>
 
-href="https://github.com/erentomurcuk"><span class="citation"
+<li><a href="https://github.com/erentomurcuk"><span class="citation"
 
-data-cites="erentomurcuk">@erentomurcuk</span></a>: 🇹🇷 Türkçe
+data-cites="erentomurcuk">@erentomurcuk</span></a></li>
 
-çeviriler</li>
+</ul></li>
 
-<li><a href="http://www.petrpavlik.com">Petr Pavlík</a>: 🇨🇿 Çekçe
+<li>🇨🇿 Çekçe çevirileri
 
-çeviriler</li>
+<ul>
+
+<li><a href="http://www.petrpavlik.com">Petr Pavlík</a></li>
+
+</ul></li>
+
+<li>🇨🇳 Basitleştirilmiş Çince çevirileri
+
+<ul>
 
 <li><a href="https://github.com/Dro9an"><span class="citation"
 
-data-cites="Dro9an">@Dro9an</span></a> ve <a
+data-cites="Dro9an">@Dro9an</span></a> (<a
 
-href="https://github.com/jihao"><span class="citation"
+href="https://macmousefix.com/zh-Hans">web sitesi</a>)</li>
 
-data-cites="jihao">@jihao</span></a>: 🇨🇳 <a
+<li><a href="https://github.com/jihao"><span class="citation"
 
-href="https://macmousefix.com/zh-Hans">Web sitesinin</a>
+data-cites="jihao">@jihao</span></a> (<a
 
-Basitleştirilmiş Çince çevirisi</li>
+href="https://macmousefix.com/zh-Hans">web sitesi</a>)</li>
 
 <li><a href="https://github.com/xianyu-wang"><span class="citation"
 
-data-cites="xianyu-wang">@xianyu-wang</span></a>: 🇨🇳 Basitleştirilmiş
+data-cites="xianyu-wang">@xianyu-wang</span></a></li>
 
-Çince çeviriler</li>
+</ul></li>
+
+<li>🇪🇸 İspanyolca çevirileri
+
+<ul>
 
 <li><a href="https://github.com/manghidev"><span class="citation"
 
-data-cites="manghidev">@manghidev</span></a>: 🇪🇸 İspanyolca
+data-cites="manghidev">@manghidev</span></a></li>
 
-çeviriler</li>
+</ul></li>
 
-<li><strong>Jakub</strong>: 🇵🇱 <a href="https://macmousefix.com/pl">Web
+<li>🇵🇱 Lehçe çevirileri
 
-sitesinin</a> Lehçe çevirileri</li>
+<ul>
 
-<li><a href="https://t.me/sos_soon_ok">ETMH</a>: 🇷🇺 Rusça çeviriler</li>
+<li><strong>Jakub</strong> (<a href="https://macmousefix.com/pl">web
+
+sitesi</a>)</li>
+
+</ul></li>
+
+<li>🇷🇺 Rusça çevirileri
+
+<ul>
+
+<li><strong>Vyacheslav</strong></li>
+
+<li><a href="https://t.me/sos_soon_ok">ETMH</a></li>
+
+</ul></li>
 
 </ul>
 
-<p>Çalışmanız için teşekkürler!</p>
+<p>Çalışmalarınız için teşekkürler!</p>
 
-<p>Ancak, <strong>tüm diller hala çalışma gerektiriyor</strong>, çünkü
+<p>Ancak, birçok yeni şey çevrilebilir hale getirildiğinden <strong>tüm
 
-çok sayıda yeni şey çevrilebilir hale getirildi.</p>
+diller hâlâ çalışma gerektiriyor</strong>.</p>
 
 <p>Bu nedenle:</p>
 
 <blockquote>
 
-<p>[!TIP] Dünyanın dört bir yanındaki Mac Mouse Fix kullanıcılarına
+<p>[!TIP] Dünya genelindeki Mac Mouse Fix kullanıcılarına harika
 
-harika çeviriler getirmeye yardımcı olmak istiyorsan yeni <a
+çeviriler sunmaya yardımcı olmak istersen yeni <a
 
 href="https://redirect.macmousefix.com/?target=mmf-localization-contribution&amp;locale=tr">Çeviri
 
@@ -214,31 +264,31 @@ Kılavuzu</a>’na göz at! 🌎</p>
 
 <h3 id="diğer-değişiklikler">Diğer değişiklikler</h3>
 
-<p>Mac Mouse Fix’i İngilizce kullanırken pek bir şey değişmedi, ancak
+<p>Mac Mouse Fix’i İngilizce kullanırken çok fazla şey değişmedi, ancak
 
-kullanıcı arayüzünde birkaç şey güncellendi ve çevirileri daha iyi hale
+arayüzde birkaç şey güncellendi ve çevirileri daha iyi hale getirmek
 
-getirmek için perde arkasında çok şey değişti:</p>
+için perde arkasında çok şey değişti:</p>
 
 <ul>
 
-<li>Küçük açılır bildirimler için geliştirilmiş görünüm.</li>
+<li>Küçük açılır bildirimler için iyileştirilmiş görünüm.</li>
 
-<li>Çeşitli yerlerde daha net araç ipuçları ve hatalar.</li>
+<li>Çeşitli yerlerde daha net araç ipuçları ve hata mesajları.</li>
 
 <li>Escape tuşu artık bildirimleri, sayfaları ve açılır pencereleri
 
 kapatmak için her yerde kullanılabilir.</li>
 
-<li>Hakkında Sekmesine ‘Çeviriye Yardım Et’ bağlantısı eklendi.</li>
+<li>Hakkında sekmesine ‘Çeviriye Yardım Et’ bağlantısı eklendi.</li>
 
 <li>Görünümlerin ve açılır pencerelerin genişliği çeşitli dillerde
 
-harika görünmesi için ayarlandı.</li>
+harika görünecek şekilde ayarlandı.</li>
 
-<li>Bazı küçük açılır bildirimlerde metin kaydırma sorunları olan Çince
+<li>Bazı küçük açılır bildirimlerde metin kaydırma sorunları yaşayan
 
-ve Korece için daha iyi metin düzeni.</li>
+Çince ve Korece için daha iyi metin düzeni.</li>
 
 <li>Çince ve Korece’deki bazı biçimlendirme hatalarını düzeltmek için
 
@@ -250,151 +300,9 @@ Markdown ayrıştırma kütüphanesi değiştirildi.</li>
 
 <hr />
 
-<p>Mac Mouse Fix’in önceki sürümünü buradan bulabilirsin: <a
+<p>Mac Mouse Fix’in önceki sürümünü burada bulabilirsin: <a
 
 href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.8&amp;locale=tr">3.0.8</a></p>
-
-<hr />
-
-<p>Güncellemeler: (Her seferinde yeni bir GitHub Sürümü oluşturmadan
-
-çevirileri güncelliyorum.)</p>
-
-<ol type="1">
-
-<li>Güncelleme:
-
-<ul>
-
-<li>MacMouseFixApp.zip dosyasının yapı numarası: 24814</li>
-
-<li>Tarih: [8 Aralık 2025]</li>
-
-<li>Değişiklik: Vyacheslav tarafından Rusça çeviriler eklendi</li>
-
-</ul></li>
-
-<li>Güncelleme:
-
-<ul>
-
-<li>MacMouseFixApp.zip dosyasının yapı numarası: 24815</li>
-
-<li>Tarih: [15 Aralık 2025]</li>
-
-<li>Değişiklik: Petr tarafından Çekçe çeviriler güncellendi</li>
-
-</ul></li>
-
-<li>Güncelleme:
-
-<ul>
-
-<li>MacMouseFixApp.zip dosyasının yapı numarası: 24822</li>
-
-<li>Tarih: [15 Aralık 2025]</li>
-
-<li>Değişiklikler:
-
-<ul>
-
-<li>Eren tarafından Türkçe çeviriler eklendi.</li>
-
-<li>Bazı daha geniş Türkçe arayüz dizileriyle daha iyi çalışması için
-
-Kaydırma sekmesindeki yatay kenar boşlukları biraz daraltıldı.</li>
-
-<li>Listeden sonraki ilk şey bir bağlantı olduğunda liste işaretlerinin
-
-altı çizili olacağı Markdown oluşturma sorunu düzeltildi. Bu birkaç
-
-yerde Türkçe’yi etkiledi.</li>
-
-</ul></li>
-
-</ul></li>
-
-<li>Güncelleme
-
-<ul>
-
-<li>MacMouseFixApp.zip dosyasının yapı numarası: 24827</li>
-
-<li>Tarih [21 Aralık 2025]</li>
-
-<li>Değişiklik: <span class="citation"
-
-data-cites="manghidev">@manghidev</span> tarafından İspanyolca çeviriler
-
-eklendi</li>
-
-</ul></li>
-
-<li>Güncelleme
-
-<ul>
-
-<li>MacMouseFixApp.zip dosyasının yapı numarası: 24828</li>
-
-<li>Tarih [27 Aralık 2025]</li>
-
-<li>Değişiklikler:
-
-<ul>
-
-<li>ETMH tarafından sağlanan Rusça çeviriler güncellendi</li>
-
-<li>Rusça çevirilerle ortaya çıkan Düğmeler sekmesindeki bir düzen
-
-hatası düzeltildi.</li>
-
-</ul></li>
-
-</ul></li>
-
-<li>Güncelleme
-
-<ul>
-
-<li>MacMouseFixApp.zip dosyasının yapı numarası: 24829</li>
-
-<li>Tarih [29 Aralık 2025]</li>
-
-<li>Değişiklikler:
-
-<ul>
-
-<li><span class="citation" data-cites="xianyu-wang">@xianyu-wang</span>
-
-tarafından Basitleştirilmiş Çince çeviriler güncellendi</li>
-
-</ul></li>
-
-</ul></li>
-
-<li>Güncelleme
-
-<ul>
-
-<li>MacMouseFixApp.zip dosyasının yapı numarası: 24830</li>
-
-<li>Tarih [1 Ocak 2026]</li>
-
-<li>Değişiklikler:
-
-<ul>
-
-<li><a href="https://github.com/denini08"><span class="citation"
-
-data-cites="denini08">@denini08</span></a> tarafından Brezilya
-
-Portekizcesi çevirileri güncellendi</li>
-
-</ul></li>
-
-</ul></li>
-
-</ol>
 
 </body>
 

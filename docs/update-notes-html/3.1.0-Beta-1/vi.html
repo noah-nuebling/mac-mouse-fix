@@ -6,7 +6,7 @@
 
   <meta charset="utf-8" />
 
-  <meta name="generator" content="pandoc" />
+  <meta name="generator" content="pandoc 3.11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 
@@ -14,13 +14,25 @@
 
   <style>
 
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+
+    */
 
     span.smallcaps{font-variant: small-caps;}
 
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.columns{display: flex; gap: 1.5em;}
 
-    div.column{flex: auto; overflow-x: auto;}
+    div.column{flex: auto;}
+
+    @media screen {
+
+    div.columns{gap: min(4vw, 1.5em);}
+
+    div.column{overflow-x: auto;}
+
+    }
 
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 
@@ -41,8 +53,6 @@
       vertical-align: middle;
 
     }
-
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
 
   </style>
 
@@ -70,9 +80,9 @@ vào đây</a>.</p>
 
 <p>Mac Mouse Fix <strong>3.1.0 Beta 1</strong> mang đến hệ thống dịch
 
-thuật mới tuyệt vời, đã được phát triển trong một thời gian dài.<br />
+thuật mới tuyệt vời, đã được phát triển trong một thời gian.<br />
 
-Ngoài ra còn có một số cải tiến giao diện người dùng.</p>
+Ngoài ra còn có một số cải tiến giao diện.</p>
 
 <h3 id="hệ-thống-bản-địa-hóa-mới">Hệ thống bản địa hóa mới!</h3>
 
@@ -80,9 +90,9 @@ Ngoài ra còn có một số cải tiến giao diện người dùng.</p>
 
 <li>Giờ đây việc đóng góp bản dịch chất lượng cao cho Mac Mouse Fix trở
 
-nên cực kỳ dễ dàng, không cần bất kỳ kiến thức kỹ thuật nào.</li>
+nên siêu dễ dàng, không cần kiến thức kỹ thuật.</li>
 
-<li>Có rất nhiều ảnh chụp màn hình có chú thích và bình luận, cùng với
+<li>Có rất nhiều ảnh chụp màn hình được chú thích và bình luận, cùng với
 
 chức năng tìm kiếm tuyệt vời, giúp người dịch dễ dàng hiểu chính xác bản
 
@@ -90,17 +100,19 @@ dịch của họ xuất hiện như thế nào trong ứng dụng.
 
 <ul>
 
-<li>Tôi nghĩ rằng các ảnh chụp màn hình và giao diện dịch thuật (ứng
+<li>Mình nghĩ ảnh chụp màn hình và giao diện dịch thuật (ứng dụng
 
-dụng <code>Xcloc Editor</code>) có chất lượng cao nhất trên thị trường,
+<code>Xcloc Editor</code>) có chất lượng cao nhất trên thị trường, và
 
-và tôi hy vọng chúng sẽ giúp bạn cung cấp những bản dịch tuyệt vời!</li>
+mình hy vọng chúng sẽ giúp bạn cung cấp những bản dịch tuyệt vời!</li>
 
 </ul></li>
 
-<li>Hầu hết các phần của dự án giờ đây đều có thể dịch được, bao gồm
+<li>Hầu hết tất cả các phần của dự án giờ đây đều có thể dịch được, bao
 
-‘Hướng dẫn Nút Bắt’, GitHub Readme, Website và nhiều hơn nữa.
+gồm ‘Hướng dẫn Nút được Ghi nhận’, Readme trên GitHub, Trang web, và
+
+nhiều hơn nữa.
 
 <ul>
 
@@ -116,93 +128,125 @@ quán.</li>
 
 <li>Hệ thống được thiết lập để rất dễ bảo trì, vì vậy khi Mac Mouse Fix
 
-phát triển và các màn hình hoặc văn bản mới được thêm vào, mọi thứ sẽ tự
+phát triển và thêm màn hình hoặc văn bản mới, mọi thứ sẽ tự động cập
 
-động cập nhật.</li>
+nhật.</li>
 
-<li>Lưu ý: Tôi dùng từ ‘dễ dàng’ rất nhiều. Quy trình làm việc thì dễ
+<li>Lưu ý: Mình dùng từ ‘dễ dàng’ rất nhiều. Quy trình làm việc thì dễ,
 
-dàng, nhưng việc nghĩ ra những bản dịch tuyệt vời tất nhiên vẫn là công
+nhưng việc nghĩ ra những bản dịch tuyệt vời tất nhiên vẫn là công việc
 
-việc khó khăn và đáng trân trọng! Chỉ là giờ đây có ít rào cản hơn mà
-
-thôi.</li>
+khó khăn và đáng trân trọng! Chỉ là giờ đây có ít rào cản hơn thôi.</li>
 
 </ul>
 
-<p>Các bản dịch mới đã được cung cấp một cách hào phóng bởi những người
-
-sau:</p>
+<p>Các bản dịch mới đã được đóng góp hào phóng bởi những người sau:</p>
 
 <ul>
 
-<li><strong>Eduardo Rodrigues</strong> và <a
+<li>🇧🇷 Bản dịch tiếng Bồ Đào Nha Brazil bởi
 
-href="https://github.com/denini08"><span class="citation"
+<ul>
 
-data-cites="denini08">@denini08</span></a>: 🇧🇷 Bản dịch tiếng Bồ Đào Nha
+<li><strong>Eduardo Rodrigues</strong></li>
 
-(Brazil)</li>
+<li><a href="https://github.com/denini08"><span class="citation"
+
+data-cites="denini08">@denini08</span></a></li>
+
+</ul></li>
+
+<li>🇫🇷 Bản dịch tiếng Pháp bởi
+
+<ul>
 
 <li><a href="https://github.com/DimitriDR"><span class="citation"
 
-data-cites="DimitriDR">@DimitriDR</span></a>: 🇫🇷 Bản dịch tiếng
+data-cites="DimitriDR">@DimitriDR</span></a></li>
 
-Pháp</li>
+</ul></li>
+
+<li>🇹🇷 Bản dịch tiếng Thổ Nhĩ Kỳ bởi
+
+<ul>
 
 <li><a href="https://github.com/hasanbeder"><span class="citation"
 
-data-cites="hasanbeder">@hasanbeder</span></a> và <a
+data-cites="hasanbeder">@hasanbeder</span></a></li>
 
-href="https://github.com/erentomurcuk"><span class="citation"
+<li><a href="https://github.com/erentomurcuk"><span class="citation"
 
-data-cites="erentomurcuk">@erentomurcuk</span></a>: 🇹🇷 Bản dịch tiếng
+data-cites="erentomurcuk">@erentomurcuk</span></a></li>
 
-Thổ Nhĩ Kỳ</li>
+</ul></li>
 
-<li><a href="http://www.petrpavlik.com">Petr Pavlík</a>: 🇨🇿 Bản dịch
+<li>🇨🇿 Bản dịch tiếng Séc bởi
 
-tiếng Séc</li>
+<ul>
+
+<li><a href="http://www.petrpavlik.com">Petr Pavlík</a></li>
+
+</ul></li>
+
+<li>🇨🇳 Bản dịch tiếng Trung Giản thể bởi
+
+<ul>
 
 <li><a href="https://github.com/Dro9an"><span class="citation"
 
-data-cites="Dro9an">@Dro9an</span></a> và <a
+data-cites="Dro9an">@Dro9an</span></a> (<a
 
-href="https://github.com/jihao"><span class="citation"
+href="https://macmousefix.com/zh-Hans">trang web</a>)</li>
 
-data-cites="jihao">@jihao</span></a>: 🇨🇳 Bản dịch tiếng Trung giản thể
+<li><a href="https://github.com/jihao"><span class="citation"
 
-cho <a href="https://macmousefix.com/zh-Hans">website</a></li>
+data-cites="jihao">@jihao</span></a> (<a
+
+href="https://macmousefix.com/zh-Hans">trang web</a>)</li>
 
 <li><a href="https://github.com/xianyu-wang"><span class="citation"
 
-data-cites="xianyu-wang">@xianyu-wang</span></a>: 🇨🇳 Bản dịch tiếng
+data-cites="xianyu-wang">@xianyu-wang</span></a></li>
 
-Trung giản thể</li>
+</ul></li>
+
+<li>🇪🇸 Bản dịch tiếng Tây Ban Nha bởi
+
+<ul>
 
 <li><a href="https://github.com/manghidev"><span class="citation"
 
-data-cites="manghidev">@manghidev</span></a>: 🇪🇸 Bản dịch tiếng Tây Ban
+data-cites="manghidev">@manghidev</span></a></li>
 
-Nha</li>
+</ul></li>
 
-<li><strong>Jakub</strong>: 🇵🇱 Bản dịch tiếng Ba Lan cho <a
+<li>🇵🇱 Bản dịch tiếng Ba Lan bởi
 
-href="https://macmousefix.com/pl">website</a></li>
+<ul>
 
-<li><a href="https://t.me/sos_soon_ok">ETMH</a>: 🇷🇺 Bản dịch tiếng
+<li><strong>Jakub</strong> (<a href="https://macmousefix.com/pl">trang
 
-Nga</li>
+web</a>)</li>
+
+</ul></li>
+
+<li>🇷🇺 Bản dịch tiếng Nga bởi
+
+<ul>
+
+<li><strong>Vyacheslav</strong></li>
+
+<li><a href="https://t.me/sos_soon_ok">ETMH</a></li>
+
+</ul></li>
 
 </ul>
 
-<p>Cảm ơn vì công việc của các bạn!</p>
+<p>Cảm ơn công sức của các bạn!</p>
 
 <p>Tuy nhiên, <strong>tất cả các ngôn ngữ vẫn cần được hoàn
 
-thiện</strong>, vì nhiều nội dung mới đã được làm cho có thể dịch
-
-được.</p>
+thiện</strong>, vì có nhiều nội dung mới đã được thêm vào để dịch.</p>
 
 <p>Do đó:</p>
 
@@ -212,9 +256,9 @@ thiện</strong>, vì nhiều nội dung mới đã được làm cho có thể 
 
 href="https://redirect.macmousefix.com/?target=mmf-localization-contribution&amp;locale=vi">Hướng
 
-dẫn Dịch thuật</a> mới nếu bạn muốn giúp mang đến những bản dịch tuyệt
+dẫn Dịch thuật</a> mới nếu bạn muốn giúp mang những bản dịch tuyệt vời
 
-vời cho người dùng Mac Mouse Fix trên toàn thế giới! 🌎</p>
+đến người dùng Mac Mouse Fix trên toàn thế giới! 🌎</p>
 
 </blockquote>
 
@@ -222,185 +266,43 @@ vời cho người dùng Mac Mouse Fix trên toàn thế giới! 🌎</p>
 
 <p>Khi sử dụng Mac Mouse Fix bằng tiếng Anh, không có nhiều thay đổi,
 
-nhưng một số thứ đã được cập nhật trong giao diện người dùng, và rất
+nhưng một số thứ đã được cập nhật trong giao diện, và rất nhiều thứ đã
 
-nhiều thứ đã thay đổi bên dưới, để giúp cải thiện bản dịch:</p>
+thay đổi bên trong để giúp bản dịch tốt hơn:</p>
 
 <ul>
 
 <li>Giao diện tinh tế hơn cho các thông báo popup nhỏ.</li>
 
-<li>Chú giải công cụ và thông báo lỗi rõ ràng hơn ở nhiều nơi.</li>
+<li>Tooltip và thông báo lỗi rõ ràng hơn ở nhiều nơi.</li>
 
-<li>Phím escape giờ đây có thể được sử dụng ở mọi nơi để đóng thông báo,
+<li>Phím escape giờ có thể được sử dụng ở mọi nơi để đóng thông báo,
 
 sheet và popup.</li>
 
-<li>Liên kết ‘Giúp Dịch’ đã được thêm vào Tab Giới thiệu.</li>
+<li>Đã thêm liên kết ‘Giúp Dịch thuật’ vào Tab Giới thiệu.</li>
 
-<li>Độ rộng của các khung nhìn và popup đã được điều chỉnh để trông đẹp
+<li>Chiều rộng của các view và popup đã được điều chỉnh để trông đẹp
 
-mắt trong nhiều ngôn ngữ khác nhau.</li>
+trong nhiều ngôn ngữ khác nhau.</li>
 
 <li>Bố cục văn bản tốt hơn cho tiếng Trung và tiếng Hàn, vốn gặp vấn đề
 
-về ngắt dòng trong một số thông báo popup nhỏ.</li>
+xuống dòng trong một số thông báo popup nhỏ.</li>
 
 <li>Thay thế thư viện phân tích Markdown để sửa một số lỗi định dạng
 
 trong tiếng Trung và tiếng Hàn.</li>
 
-<li>Nhiều thay đổi và cải tiến bên dưới khác.</li>
+<li>Nhiều thay đổi và cải tiến bên trong khác.</li>
 
 </ul>
 
 <hr />
 
-<p>Bạn có thể tìm phiên bản phát hành trước của Mac Mouse Fix tại đây:
-
-<a
+<p>Bạn có thể tìm phiên bản trước của Mac Mouse Fix tại đây: <a
 
 href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.8&amp;locale=vi">3.0.8</a></p>
-
-<hr />
-
-<p>Cập nhật: (Tôi đang cập nhật các bản dịch mà không tạo GitHub Release
-
-mới mỗi lần.)</p>
-
-<ol type="1">
-
-<li>Cập nhật:
-
-<ul>
-
-<li>Số build của tài nguyên MacMouseFixApp.zip: 24814</li>
-
-<li>Ngày: [8 tháng 12 năm 2025]</li>
-
-<li>Thay đổi: Đã thêm bản dịch tiếng Nga bởi Vyacheslav</li>
-
-</ul></li>
-
-<li>Cập nhật:
-
-<ul>
-
-<li>Số build của tài nguyên MacMouseFixApp.zip: 24815</li>
-
-<li>Ngày: [15 tháng 12 năm 2025]</li>
-
-<li>Thay đổi: Đã cập nhật bản dịch tiếng Séc bởi Petr</li>
-
-</ul></li>
-
-<li>Cập nhật:
-
-<ul>
-
-<li>Số build của tài nguyên MacMouseFixApp.zip: 24822</li>
-
-<li>Ngày: [15 tháng 12 năm 2025]</li>
-
-<li>Thay đổi:
-
-<ul>
-
-<li>Đã thêm bản dịch tiếng Thổ Nhĩ Kỳ bởi Eren.</li>
-
-<li>Làm cho lề ngang trên tab Cuộn hẹp hơn một chút để hoạt động tốt hơn
-
-với một số chuỗi giao diện tiếng Thổ Nhĩ Kỳ dài hơn.</li>
-
-<li>Sửa lỗi hiển thị Markdown khi dấu đầu dòng danh sách có gạch chân
-
-nếu thứ đầu tiên sau danh sách là một liên kết. Điều này ảnh hưởng đến
-
-tiếng Thổ Nhĩ Kỳ ở một số nơi.</li>
-
-</ul></li>
-
-</ul></li>
-
-<li>Cập nhật
-
-<ul>
-
-<li>Số build của tài nguyên MacMouseFixApp.zip: 24827</li>
-
-<li>Ngày [21 tháng 12 năm 2025]</li>
-
-<li>Thay đổi: Đã thêm bản dịch tiếng Tây Ban Nha bởi <span
-
-class="citation" data-cites="manghidev">@manghidev</span></li>
-
-</ul></li>
-
-<li>Cập nhật
-
-<ul>
-
-<li>Số build của tài nguyên MacMouseFixApp.zip: 24828</li>
-
-<li>Ngày [27 tháng 12 năm 2025]</li>
-
-<li>Thay đổi:
-
-<ul>
-
-<li>Đã cập nhật bản dịch tiếng Nga được cung cấp bởi ETMH</li>
-
-<li>Đã sửa lỗi bố cục trên tab Nút xuất hiện với bản dịch tiếng
-
-Nga.</li>
-
-</ul></li>
-
-</ul></li>
-
-<li>Cập nhật
-
-<ul>
-
-<li>Số build của tài nguyên MacMouseFixApp.zip: 24829</li>
-
-<li>Ngày [29 tháng 12 năm 2025]</li>
-
-<li>Thay đổi:
-
-<ul>
-
-<li>Đã cập nhật bản dịch tiếng Trung giản thể bởi <span class="citation"
-
-data-cites="xianyu-wang">@xianyu-wang</span></li>
-
-</ul></li>
-
-</ul></li>
-
-<li>Cập nhật
-
-<ul>
-
-<li>Số build của tài nguyên MacMouseFixApp.zip: 24830</li>
-
-<li>Ngày [1 tháng 1 năm 2026]</li>
-
-<li>Thay đổi:
-
-<ul>
-
-<li>Đã cập nhật bản dịch tiếng Bồ Đào Nha (Brazil) bởi <a
-
-href="https://github.com/denini08"><span class="citation"
-
-data-cites="denini08">@denini08</span></a></li>
-
-</ul></li>
-
-</ul></li>
-
-</ol>
 
 </body>
 

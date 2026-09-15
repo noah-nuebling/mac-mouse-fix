@@ -16,15 +16,27 @@ There are also some UI improvements.
 
 New translations have already been generously provided by the following people:
 
-- **Eduardo Rodrigues** and [@denini08](https://github.com/denini08): 🇧🇷 Brazilian Portuguese translations
-- [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 French translations
-- [@hasanbeder](https://github.com/hasanbeder) and [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 Turkish translations
-- [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Czech translations
-- [@Dro9an](https://github.com/Dro9an) and [@jihao](https://github.com/jihao): 🇨🇳 Simplified Chinese translation of [the website](https://macmousefix.com/zh-Hans)
-- [@xianyu-wang](https://github.com/xianyu-wang): 🇨🇳 Simplified Chinese translations
-- [@manghidev](https://github.com/manghidev): 🇪🇸 Spanish translations
-- **Jakub**: 🇵🇱 Polish translations of [the website](https://macmousefix.com/pl)
-- [ETMH](https://t.me/sos_soon_ok): 🇷🇺 Russian translations
+  - 🇧🇷 Brazilian Portuguese translations by
+      - **Eduardo Rodrigues**
+      - [@denini08](https://github.com/denini08)
+  - 🇫🇷 French translations by
+      - [@DimitriDR](https://github.com/DimitriDR)
+  - 🇹🇷 Turkish translations by
+      - [@hasanbeder](https://github.com/hasanbeder)
+      - [@erentomurcuk](https://github.com/erentomurcuk)
+  - 🇨🇿 Czech translations by
+      - [Petr Pavlík](http://www.petrpavlik.com)
+  - 🇨🇳 Simplified Chinese translations by
+      - [@Dro9an](https://github.com/Dro9an) ([website](https://macmousefix.com/zh-Hans))
+      - [@jihao](https://github.com/jihao) ([website](https://macmousefix.com/zh-Hans))
+      - [@xianyu-wang](https://github.com/xianyu-wang)
+  - 🇪🇸 Spanish translations by
+      - [@manghidev](https://github.com/manghidev)
+  - 🇵🇱 Polish translations by
+      - **Jakub** ([website](https://macmousefix.com/pl))
+  - 🇷🇺 Russian translations by
+      - **Vyacheslav**
+      - [ETMH](https://t.me/sos_soon_ok)
 
 Thanks for your work!
 
@@ -54,49 +66,5 @@ When using Mac Mouse Fix in English, not much has changed, but a few things have
 
 You can find the previous release of Mac Mouse Fix here: [3.0.8](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8)
 
----
 
-Updates:
-(I'm updating the translations without creating a new GitHub Release every time.)
 
-1. Update:
-    - Build number of MacMouseFixApp.zip asset: 24814
-    - Date: [Dec 8 2025]
-    - Change: Added Russian translations by Vyacheslav
-
-2. Update:
-    - Build number of MacMouseFixApp.zip asset: 24815
-    - Date: [Dec 15 2025]
-    - Change: Updated Czech translations by Petr
-
-3. Update:
-    - Build number of MacMouseFixApp.zip asset: 24822
-    - Date: [Dec 15 2025]
-    - Changes: 
-        - Added Turkish translations by Eren.
-        - Make horizontal margins on Scrolling tab slightly narrower to work better with some wider Turkish UI strings. 
-        - Fix Markdown rendering issue where list-bullets would have underline if the first thing after the list was a link. This affected Turkish in a few places.
-
-4. Update
-    - Build number of MacMouseFixApp.zip asset: 24827
-    - Date [Dec 21 2025]
-    - Change: Added Spanish translations by @manghidev
-    
-5. Update
-    - Build number of MacMouseFixApp.zip asset: 24828
-    - Date [Dec 27 2025]
-    - Changes:
-        - Updated Russian translations provided by ETMH
-        - Fixed a layout bug on the Buttons tab that surfaced with the Russian translations.
-
-6. Update
-    - Build number of MacMouseFixApp.zip asset: 24829
-    - Date [Dec 29 2025]
-    - Changes:
-        - Updated Simplified Chinese translations by @xianyu-wang
-
-7. Update 
-    - Build number of MacMouseFixApp.zip asset: 24830
-    - Date [Jan 1 2026]
-    - Changes:
-        - Updated Brazilian Portuguese translations by [@denini08](https://github.com/denini08)

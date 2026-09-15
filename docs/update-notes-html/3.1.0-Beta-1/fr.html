@@ -6,7 +6,7 @@
 
   <meta charset="utf-8" />
 
-  <meta name="generator" content="pandoc" />
+  <meta name="generator" content="pandoc 3.11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 
@@ -14,13 +14,25 @@
 
   <style>
 
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+
+    */
 
     span.smallcaps{font-variant: small-caps;}
 
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.columns{display: flex; gap: 1.5em;}
 
-    div.column{flex: auto; overflow-x: auto;}
+    div.column{flex: auto;}
+
+    @media screen {
+
+    div.columns{gap: min(4vw, 1.5em);}
+
+    div.column{overflow-x: auto;}
+
+    }
 
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 
@@ -41,8 +53,6 @@
       vertical-align: middle;
 
     }
-
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
 
   </style>
 
@@ -68,13 +78,13 @@ ici</a>.</p>
 
 <hr />
 
-<p>Mac Mouse Fix <strong>3.1.0 Beta 1</strong> apporte un nouveau
+<p>Mac Mouse Fix <strong>3.1.0 Beta 1</strong> apporte un excellent
 
-système de traduction génial, qui était en préparation depuis un
+nouveau système de traduction, qui était en préparation depuis un
 
 moment.<br />
 
-Il y a aussi quelques améliorations de l’interface utilisateur.</p>
+Il y a également quelques améliorations de l’interface.</p>
 
 <h3 id="nouveau-système-de-localisation">Nouveau système de localisation
 
@@ -84,13 +94,13 @@ Il y a aussi quelques améliorations de l’interface utilisateur.</p>
 
 <li>Il est maintenant super facile de contribuer des traductions de
 
-haute qualité à Mac Mouse Fix, sans aucune compétence technique
+haute qualité à Mac Mouse Fix, sans aucune connaissance technique
 
 requise.</li>
 
-<li>Il y a plein de captures d’écran annotées et de commentaires, ainsi
+<li>Il y a de nombreuses captures d’écran annotées et commentaires,
 
-qu’une excellente fonction de recherche, pour que les traducteurs
+ainsi qu’une excellente fonction de recherche, pour que les traducteurs
 
 puissent facilement comprendre exactement comment leurs traductions
 
@@ -100,7 +110,7 @@ apparaissent dans l’application.
 
 <li>Je pense que les captures d’écran et l’interface de traduction
 
-(l’application <code>Xcloc Editor</code>) sont de la meilleure qualité
+(l’application <code>Xcloc Editor</code>) sont de la plus haute qualité
 
 sur le marché, et j’espère qu’elles t’aideront à fournir d’excellentes
 
@@ -116,13 +126,13 @@ web, et plus encore.
 
 <ul>
 
-<li>Toutes ces parties du projet peuvent être traduites depuis un seul
+<li>Toutes ces parties du projet peuvent être traduites depuis un
 
-endroit centralisé avec des références croisées faciles en utilisant
+endroit centralisé avec des références croisées faciles grâce à
 
-l’application <code>Xcloc Editor</code>, ce qui facilite la cohérence
+l’application <code>Xcloc Editor</code>, ce qui permet aux traducteurs
 
-pour les traducteurs.</li>
+de garder tout cohérent facilement.</li>
 
 </ul></li>
 
@@ -132,13 +142,13 @@ et à mesure que Mac Mouse Fix évolue et que de nouveaux écrans ou textes
 
 sont ajoutés, tout se mettra à jour automatiquement.</li>
 
-<li>Avertissement : J’utilise beaucoup le mot « facile ». Les processus
+<li>Avertissement : j’utilise beaucoup le mot « facile ». Les processus
 
-sont faciles, mais trouver d’excellentes traductions reste bien sûr
+sont faciles, mais trouver d’excellentes traductions reste bien sûr un
 
-beaucoup de travail difficile et respectable ! Il y a juste moins
+travail difficile et respectable ! Il y a simplement moins d’obstacles
 
-d’obstacles maintenant.</li>
+maintenant.</li>
 
 </ul>
 
@@ -148,71 +158,109 @@ personnes suivantes :</p>
 
 <ul>
 
-<li><strong>Eduardo Rodrigues</strong> et <a
+<li>🇧🇷 Traductions en portugais brésilien par
 
-href="https://github.com/denini08"><span class="citation"
+<ul>
 
-data-cites="denini08">@denini08</span></a> : 🇧🇷 Traductions en portugais
+<li><strong>Eduardo Rodrigues</strong></li>
 
-brésilien</li>
+<li><a href="https://github.com/denini08"><span class="citation"
+
+data-cites="denini08">@denini08</span></a></li>
+
+</ul></li>
+
+<li>🇫🇷 Traductions en français par
+
+<ul>
 
 <li><a href="https://github.com/DimitriDR"><span class="citation"
 
-data-cites="DimitriDR">@DimitriDR</span></a> : 🇫🇷 Traductions
+data-cites="DimitriDR">@DimitriDR</span></a></li>
 
-françaises</li>
+</ul></li>
+
+<li>🇹🇷 Traductions en turc par
+
+<ul>
 
 <li><a href="https://github.com/hasanbeder"><span class="citation"
 
-data-cites="hasanbeder">@hasanbeder</span></a> et <a
+data-cites="hasanbeder">@hasanbeder</span></a></li>
 
-href="https://github.com/erentomurcuk"><span class="citation"
+<li><a href="https://github.com/erentomurcuk"><span class="citation"
 
-data-cites="erentomurcuk">@erentomurcuk</span></a> : 🇹🇷 Traductions
+data-cites="erentomurcuk">@erentomurcuk</span></a></li>
 
-turques</li>
+</ul></li>
 
-<li><a href="http://www.petrpavlik.com">Petr Pavlík</a> : 🇨🇿 Traductions
+<li>🇨🇿 Traductions en tchèque par
 
-tchèques</li>
+<ul>
+
+<li><a href="http://www.petrpavlik.com">Petr Pavlík</a></li>
+
+</ul></li>
+
+<li>🇨🇳 Traductions en chinois simplifié par
+
+<ul>
 
 <li><a href="https://github.com/Dro9an"><span class="citation"
 
-data-cites="Dro9an">@Dro9an</span></a> et <a
+data-cites="Dro9an">@Dro9an</span></a> (<a
 
-href="https://github.com/jihao"><span class="citation"
+href="https://macmousefix.com/zh-Hans">site web</a>)</li>
 
-data-cites="jihao">@jihao</span></a> : 🇨🇳 Traduction en chinois
+<li><a href="https://github.com/jihao"><span class="citation"
 
-simplifié <a href="https://macmousefix.com/zh-Hans">du site web</a></li>
+data-cites="jihao">@jihao</span></a> (<a
+
+href="https://macmousefix.com/zh-Hans">site web</a>)</li>
 
 <li><a href="https://github.com/xianyu-wang"><span class="citation"
 
-data-cites="xianyu-wang">@xianyu-wang</span></a> : 🇨🇳 Traductions en
+data-cites="xianyu-wang">@xianyu-wang</span></a></li>
 
-chinois simplifié</li>
+</ul></li>
+
+<li>🇪🇸 Traductions en espagnol par
+
+<ul>
 
 <li><a href="https://github.com/manghidev"><span class="citation"
 
-data-cites="manghidev">@manghidev</span></a> : 🇪🇸 Traductions
+data-cites="manghidev">@manghidev</span></a></li>
 
-espagnoles</li>
+</ul></li>
 
-<li><strong>Jakub</strong> : 🇵🇱 Traductions polonaises <a
+<li>🇵🇱 Traductions en polonais par
 
-href="https://macmousefix.com/pl">du site web</a></li>
+<ul>
 
-<li><a href="https://t.me/sos_soon_ok">ETMH</a> : 🇷🇺 Traductions
+<li><strong>Jakub</strong> (<a href="https://macmousefix.com/pl">site
 
-russes</li>
+web</a>)</li>
+
+</ul></li>
+
+<li>🇷🇺 Traductions en russe par
+
+<ul>
+
+<li><strong>Vyacheslav</strong></li>
+
+<li><a href="https://t.me/sos_soon_ok">ETMH</a></li>
+
+</ul></li>
 
 </ul>
 
 <p>Merci pour votre travail !</p>
 
-<p>Cependant, <strong>toutes les langues nécessitent encore du
+<p>Cependant, <strong>toutes les langues ont encore besoin de
 
-travail</strong>, car beaucoup de nouveaux éléments ont été rendus
+travail</strong>, car beaucoup de nouveaux éléments sont maintenant
 
 traduisibles.</p>
 
@@ -234,19 +282,19 @@ traductions aux utilisateurs de Mac Mouse Fix à travers le monde !
 
 <h3 id="autres-changements">Autres changements</h3>
 
-<p>Lors de l’utilisation de Mac Mouse Fix en anglais, peu de choses ont
+<p>En utilisant Mac Mouse Fix en anglais, peu de choses ont changé, mais
 
-changé, mais quelques éléments ont été mis à jour dans l’interface
+quelques éléments ont été mis à jour dans l’interface, et beaucoup de
 
-utilisateur, et beaucoup de choses ont évolué en coulisses, pour
+choses ont été modifiées en coulisses pour améliorer les traductions
 
-améliorer les traductions :</p>
+:</p>
 
 <ul>
 
-<li>Apparence raffinée pour les petites notifications popup.</li>
+<li>Apparence affinée pour les petites notifications popup.</li>
 
-<li>Info-bulles et messages d’erreur plus clairs à divers endroits.</li>
+<li>Infobulles et erreurs plus claires à divers endroits.</li>
 
 <li>La touche Échap peut maintenant être utilisée partout pour fermer
 
@@ -266,9 +314,11 @@ notifications popup.</li>
 
 <li>Remplacement de la bibliothèque d’analyse Markdown pour corriger
 
-certains bugs de formatage en chinois et en coréen.</li>
+certains bugs de formatage en chinois et coréen.</li>
 
-<li>Beaucoup d’autres changements et améliorations en coulisses.</li>
+<li>De nombreuses autres modifications et améliorations en
+
+coulisses.</li>
 
 </ul>
 
@@ -277,148 +327,6 @@ certains bugs de formatage en chinois et en coréen.</li>
 <p>Tu peux trouver la version précédente de Mac Mouse Fix ici : <a
 
 href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.8&amp;locale=fr">3.0.8</a></p>
-
-<hr />
-
-<p>Mises à jour : (Je mets à jour les traductions sans créer une
-
-nouvelle version GitHub à chaque fois.)</p>
-
-<ol type="1">
-
-<li>Mise à jour :
-
-<ul>
-
-<li>Numéro de build de l’asset MacMouseFixApp.zip : 24814</li>
-
-<li>Date : [8 déc. 2025]</li>
-
-<li>Changement : Ajout des traductions russes par Vyacheslav</li>
-
-</ul></li>
-
-<li>Mise à jour :
-
-<ul>
-
-<li>Numéro de build de l’asset MacMouseFixApp.zip : 24815</li>
-
-<li>Date : [15 déc. 2025]</li>
-
-<li>Changement : Mise à jour des traductions tchèques par Petr</li>
-
-</ul></li>
-
-<li>Mise à jour :
-
-<ul>
-
-<li>Numéro de build de l’asset MacMouseFixApp.zip : 24822</li>
-
-<li>Date : [15 déc. 2025]</li>
-
-<li>Changements :
-
-<ul>
-
-<li>Ajout des traductions turques par Eren.</li>
-
-<li>Marges horizontales légèrement réduites sur l’onglet Défilement pour
-
-mieux fonctionner avec certaines chaînes d’interface turques plus
-
-larges.</li>
-
-<li>Correction d’un problème de rendu Markdown où les puces de liste
-
-étaient soulignées si le premier élément après la liste était un lien.
-
-Cela affectait le turc à plusieurs endroits.</li>
-
-</ul></li>
-
-</ul></li>
-
-<li>Mise à jour
-
-<ul>
-
-<li>Numéro de build de l’asset MacMouseFixApp.zip : 24827</li>
-
-<li>Date [21 déc. 2025]</li>
-
-<li>Changement : Ajout des traductions espagnoles par <span
-
-class="citation" data-cites="manghidev">@manghidev</span></li>
-
-</ul></li>
-
-<li>Mise à jour
-
-<ul>
-
-<li>Numéro de build de l’asset MacMouseFixApp.zip : 24828</li>
-
-<li>Date [27 déc. 2025]</li>
-
-<li>Changements :
-
-<ul>
-
-<li>Mise à jour des traductions russes fournies par ETMH</li>
-
-<li>Correction d’un bug de mise en page sur l’onglet Boutons qui
-
-apparaissait avec les traductions russes.</li>
-
-</ul></li>
-
-</ul></li>
-
-<li>Mise à jour
-
-<ul>
-
-<li>Numéro de build de l’asset MacMouseFixApp.zip : 24829</li>
-
-<li>Date [29 déc. 2025]</li>
-
-<li>Changements :
-
-<ul>
-
-<li>Mise à jour des traductions en chinois simplifié par <span
-
-class="citation" data-cites="xianyu-wang">@xianyu-wang</span></li>
-
-</ul></li>
-
-</ul></li>
-
-<li>Mise à jour
-
-<ul>
-
-<li>Numéro de build de l’asset MacMouseFixApp.zip : 24830</li>
-
-<li>Date [1er janv. 2026]</li>
-
-<li>Changements :
-
-<ul>
-
-<li>Mise à jour des traductions en portugais brésilien par <a
-
-href="https://github.com/denini08"><span class="citation"
-
-data-cites="denini08">@denini08</span></a></li>
-
-</ul></li>
-
-</ul></li>
-
-</ol>
 
 </body>
 

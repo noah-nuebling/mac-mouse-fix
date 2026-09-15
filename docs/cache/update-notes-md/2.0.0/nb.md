@@ -1,0 +1,76 @@
+Merk: Mac Mouse Fix 2 er **utdatert** nå. [Få den nyeste versjonen](https://github.com/noah-nuebling/mac-mouse-fix/releases)!
+
+# Mac Mouse Fix 2 er her! 🎉
+
+Mac Mouse Fix 2 gjør musen din enda bedre.
+
+## Musebevegelser gjort riktig.
+
+**Klikk** på en museknapp **og dra** i forskjellige retninger for å åpne **Mission Control**, **flytte mellom Spaces**, eller se **alle vinduer fra den aktive appen** - alt med bare én knapp!
+
+Mac Mouse Fix-bevegelser føles mye mer **flytende og responsive** enn noen annen driver på markedet.
+Dette er mulig fordi Mac Mouse Fix kan presist emulere utdataene fra Apples styreflatedriver.
+
+<img width=500px src="https://user-images.githubusercontent.com/40808343/149643011-cc3311f1-af5c-453a-8206-2c6496d73d61.gif">
+
+## Med stor kraft kommer stor ... brukervennlighet!
+
+Med den nye **handlingstabellen** kan du sette opp musen akkurat slik du vil - på sekunder.
+
+Flytt pekeren inn i "+"-feltet, og vis Mac Mouse Fix klikkene og dragene du vil tilordne en ny handling til.
+
+
+
+<img width=500px src="https://user-images.githubusercontent.com/40808343/149642392-d0e25cf9-b49b-4398-b2e9-af2e810c8594.gif">
+
+
+Å legge til en handling for dobbeltklikk på midtre museknapp er superenkelt. ^
+
+## Et stort løft for produktiviteten din.
+
+Musebevegelser, sammen med den nye handlingstabellen, lar deg få **7 ganger mer funksjonalitet ut av én enkelt knapp** sammenlignet med konvensjonelle musedrivere. Alt mens det er så enkelt og intuitivt at du faktisk vil bruke alle disse funksjonene.
+
+På denne måten kan alle dra nytte av de praktiske navigasjonsmulighetene som gjør macOS så kraftig - fra hvilken som helst mus. Selv de enkleste.
+
+
+
+For eksempel, med standardkonfigurasjonen, kan du bruke alle disse handlingene med **bare midtre museknapp**:
+
+- Mission Control
+- Flytt ett Space til venstre
+- Flytt ett Space til høyre
+- App Exposé
+- Vis skrivebord
+- Launchpad
+- Slå opp
+
+Og dette er rett ut av boksen. Uten å engang ta i bruk de uendelige, men brukervennlige tilpasningsmulighetene.
+
+## ... Og mye mer
+
+### Smarte funksjoner
+
+- **Tastatursnarveier** rett fra musen gir deg enda mer fleksibilitet i arbeidsflyten din.
+- **Smart zoom** lar deg få bedre oversikt på nettet og andre steder.
+
+### Grensesnittforbedringer
+
+- Nye **Hjelp og tilbakemelding**-alternativer er nå lett tilgjengelige i appen der du trenger dem.
+- **Oppsett** er enklere og mer strømlinjeformet.
+
+### Forbedret oppdateringsopplevelse
+
+Den nye og forbedrede **oppdateringsmekanismen** ...
+
+- er sikker mot man-in-the-middle-angrep.
+- lar deg teste den nyeste betaversjonen - uten problemer!
+- har et forbedret grensesnitt.
+- lar meg telle nedlastinger uten å være avhengig av Google Analytics eller andre rammeverk som kan kompromittere personvernet ditt.
+
+### Pålitelighetsforbedringer
+
+- Diverse feilrettinger og stabilitetsforbedringer.
+
+---
+
+Mac Mouse Fix startet som et lite hobbyprosjekt for å lære meg selv programmering. Men takket være din støtte og oppmuntring er målet mitt nå å lage den **beste musedriveren noensinne**. I dag kom vi et godt stykke nærmere det målet. Takk! 🚀🚀🚀 :)

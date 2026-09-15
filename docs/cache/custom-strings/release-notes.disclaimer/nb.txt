@@ -1,0 +1,4 @@
+**ℹ️ Oversatt av AI**
+
+Denne utgivelsesnotisen har blitt oversatt av Claude AI. Den kan inneholde feil.\
+For den originale engelske versjonen, [klikk her]({gh_releases_url}).

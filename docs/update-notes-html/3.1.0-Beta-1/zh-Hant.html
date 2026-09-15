@@ -6,7 +6,7 @@
 
   <meta charset="utf-8" />
 
-  <meta name="generator" content="pandoc" />
+  <meta name="generator" content="pandoc 3.11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 
@@ -14,13 +14,25 @@
 
   <style>
 
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+
+    */
 
     span.smallcaps{font-variant: small-caps;}
 
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.columns{display: flex; gap: 1.5em;}
 
-    div.column{flex: auto; overflow-x: auto;}
+    div.column{flex: auto;}
+
+    @media screen {
+
+    div.columns{gap: min(4vw, 1.5em);}
+
+    div.column{overflow-x: auto;}
+
+    }
 
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 
@@ -41,8 +53,6 @@
       vertical-align: middle;
 
     }
-
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
 
   </style>
 
@@ -66,279 +76,197 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.1.0-Beta-1">
 
 <p>Mac Mouse Fix <strong>3.1.0 Beta 1</strong>
 
-帶來了一個全新的翻譯系統,這已經籌備了一段時間。<br />
+帶來了全新的翻譯系統，這個系統已經開發了一段時間。<br />
 
-同時也有一些使用者介面的改進。</p>
+同時也有一些介面改進。</p>
 
-<h3 id="全新的本地化系統">全新的本地化系統!</h3>
+<h3 id="全新本地化系統">全新本地化系統！</h3>
 
 <ul>
 
 <li>現在為 Mac Mouse Fix
 
-貢獻高品質翻譯變得超級簡單,完全不需要任何技術背景。</li>
+貢獻高品質翻譯變得超級簡單，完全不需要技術背景。</li>
 
-<li>有大量附註的螢幕截圖和註解,以及強大的搜尋功能,讓譯者能輕鬆理解他們的翻譯在應用程式中的確切呈現方式。
+<li>有大量附註的截圖和說明，以及強大的搜尋功能，讓翻譯者可以輕鬆了解他們的翻譯在應用程式中的呈現方式。
 
 <ul>
 
-<li>我認為這些螢幕截圖和翻譯介面(<code>Xcloc Editor</code>
+<li>我認為這些截圖和翻譯介面（<code>Xcloc Editor</code>
 
-應用程式)是市場上品質最高的,希望它們能幫助你提供優質的翻譯!</li>
+應用程式）是市面上品質最高的，希望它們能幫助你提供出色的翻譯！</li>
 
 </ul></li>
 
-<li>現在專案的幾乎所有部分都可以翻譯了,包括「已捕捉按鈕指南」、GitHub
+<li>現在幾乎所有專案部分都可以翻譯，包括「已捕捉按鈕指南」、GitHub
 
 Readme、網站等等。
 
 <ul>
 
-<li>專案的所有這些部分都可以在一個集中的地方使用
+<li>所有這些專案部分都可以透過 <code>Xcloc Editor</code>
 
-<code>Xcloc Editor</code>
-
-應用程式進行翻譯,並輕鬆交叉參照,讓譯者能輕鬆保持一切的一致性。</li>
+應用程式在一個集中的地方進行翻譯，並且可以輕鬆交叉參照，讓翻譯者能夠保持一致性。</li>
 
 </ul></li>
 
-<li>這個系統設計得非常容易維護,所以隨著 Mac Mouse Fix
+<li>這個系統設計得非常容易維護，所以當 Mac Mouse Fix
 
-的演進和新畫面或文字的加入,一切都會自動更新。</li>
+發展並新增新畫面或文字時，一切都會自動更新。</li>
 
-<li>免責聲明:我用了很多次「簡單」這個詞。工作流程是簡單的,但想出優質的翻譯當然仍然是大量艱辛且值得尊敬的工作!只是現在障礙變少了。</li>
+<li>免責聲明：我經常使用「簡單」這個詞。工作流程是簡單的，但想出優秀的翻譯當然仍然是一項艱辛且值得尊敬的工作！只是現在障礙變少了。</li>
 
 </ul>
 
-<p>以下人士已慷慨提供了新的翻譯:</p>
+<p>以下人員已慷慨提供了新的翻譯：</p>
 
 <ul>
 
-<li><strong>Eduardo Rodrigues</strong> 和 <a
+<li>🇧🇷 巴西葡萄牙語翻譯由
 
-href="https://github.com/denini08"><span class="citation"
+<ul>
 
-data-cites="denini08">@denini08</span></a>:🇧🇷 巴西葡萄牙文翻譯</li>
+<li><strong>Eduardo Rodrigues</strong></li>
+
+<li><a href="https://github.com/denini08"><span class="citation"
+
+data-cites="denini08">@denini08</span></a></li>
+
+</ul></li>
+
+<li>🇫🇷 法語翻譯由
+
+<ul>
 
 <li><a href="https://github.com/DimitriDR"><span class="citation"
 
-data-cites="DimitriDR">@DimitriDR</span></a>:🇫🇷 法文翻譯</li>
+data-cites="DimitriDR">@DimitriDR</span></a></li>
+
+</ul></li>
+
+<li>🇹🇷 土耳其語翻譯由
+
+<ul>
 
 <li><a href="https://github.com/hasanbeder"><span class="citation"
 
-data-cites="hasanbeder">@hasanbeder</span></a> 和 <a
+data-cites="hasanbeder">@hasanbeder</span></a></li>
 
-href="https://github.com/erentomurcuk"><span class="citation"
+<li><a href="https://github.com/erentomurcuk"><span class="citation"
 
-data-cites="erentomurcuk">@erentomurcuk</span></a>:🇹🇷 土耳其文翻譯</li>
+data-cites="erentomurcuk">@erentomurcuk</span></a></li>
 
-<li><a href="http://www.petrpavlik.com">Petr Pavlík</a>:🇨🇿
+</ul></li>
 
-捷克文翻譯</li>
+<li>🇨🇿 捷克語翻譯由
+
+<ul>
+
+<li><a href="http://www.petrpavlik.com">Petr Pavlík</a></li>
+
+</ul></li>
+
+<li>🇨🇳 簡體中文翻譯由
+
+<ul>
 
 <li><a href="https://github.com/Dro9an"><span class="citation"
 
-data-cites="Dro9an">@Dro9an</span></a> 和 <a
+data-cites="Dro9an">@Dro9an</span></a>（<a
 
-href="https://github.com/jihao"><span class="citation"
+href="https://macmousefix.com/zh-Hans">網站</a>）</li>
 
-data-cites="jihao">@jihao</span></a>:🇨🇳 <a
+<li><a href="https://github.com/jihao"><span class="citation"
 
-href="https://macmousefix.com/zh-Hans">網站</a>的簡體中文翻譯</li>
+data-cites="jihao">@jihao</span></a>（<a
+
+href="https://macmousefix.com/zh-Hans">網站</a>）</li>
 
 <li><a href="https://github.com/xianyu-wang"><span class="citation"
 
-data-cites="xianyu-wang">@xianyu-wang</span></a>:🇨🇳 簡體中文翻譯</li>
+data-cites="xianyu-wang">@xianyu-wang</span></a></li>
+
+</ul></li>
+
+<li>🇪🇸 西班牙語翻譯由
+
+<ul>
 
 <li><a href="https://github.com/manghidev"><span class="citation"
 
-data-cites="manghidev">@manghidev</span></a>:🇪🇸 西班牙文翻譯</li>
+data-cites="manghidev">@manghidev</span></a></li>
 
-<li><strong>Jakub</strong>:🇵🇱 <a
+</ul></li>
 
-href="https://macmousefix.com/pl">網站</a>的波蘭文翻譯</li>
+<li>🇵🇱 波蘭語翻譯由
 
-<li><a href="https://t.me/sos_soon_ok">ETMH</a>:🇷🇺 俄文翻譯</li>
+<ul>
+
+<li><strong>Jakub</strong>（<a
+
+href="https://macmousefix.com/pl">網站</a>）</li>
+
+</ul></li>
+
+<li>🇷🇺 俄語翻譯由
+
+<ul>
+
+<li><strong>Vyacheslav</strong></li>
+
+<li><a href="https://t.me/sos_soon_ok">ETMH</a></li>
+
+</ul></li>
 
 </ul>
 
-<p>感謝你們的付出!</p>
+<p>感謝你們的付出！</p>
 
-<p>然而,<strong>所有語言仍需要改進</strong>,因為有許多新內容已經可以翻譯了。</p>
+<p>然而，<strong>所有語言仍需要完善</strong>，因為有許多新內容已可供翻譯。</p>
 
-<p>因此:</p>
+<p>因此：</p>
 
 <blockquote>
 
-<p>[!TIP] 如果你想幫助為全世界的 Mac Mouse Fix
+<p>[!TIP] 如果你想幫助為全球 Mac Mouse Fix
 
-使用者帶來優質翻譯,請查看全新的<a
+使用者帶來優質翻譯，請查看新的<a
 
-href="https://redirect.macmousefix.com/?target=mmf-localization-contribution&amp;locale=zh-Hant">翻譯指南</a>!🌎</p>
+href="https://redirect.macmousefix.com/?target=mmf-localization-contribution&amp;locale=zh-Hant">翻譯指南</a>！🌎</p>
 
 </blockquote>
 
 <h3 id="其他變更">其他變更</h3>
 
-<p>在英文環境下使用 Mac Mouse Fix
+<p>使用英文版 Mac Mouse Fix
 
-時,變化不大,但使用者介面有一些更新,而且底層有很多改動,以幫助改善翻譯:</p>
+時，變化不大，但介面有一些更新，底層也有許多調整，以幫助改善翻譯：</p>
 
 <ul>
 
-<li>改進了小型彈出通知的外觀。</li>
+<li>小型彈出通知的外觀更加精緻。</li>
 
-<li>在各處提供了更清晰的工具提示和錯誤訊息。</li>
+<li>各處的工具提示和錯誤訊息更加清晰。</li>
 
 <li>現在可以在任何地方使用 Escape 鍵來關閉通知、工作表和彈出視窗。</li>
 
 <li>在「關於」標籤頁中新增了「協助翻譯」連結。</li>
 
-<li>調整了視圖和彈出視窗的寬度,以在各種語言中呈現最佳效果。</li>
+<li>調整了視圖和彈出視窗的寬度，使其在各種語言中都能呈現良好效果。</li>
 
-<li>改善了中文和韓文的文字排版,這些語言在某些小型彈出通知中有文字換行問題。</li>
+<li>改善了中文和韓文的文字排版，這些語言在某些小型彈出通知中存在換行問題。</li>
 
-<li>更換了 Markdown 解析函式庫,以修復中文和韓文的一些格式錯誤。</li>
+<li>更換了 Markdown 解析函式庫，以修復中文和韓文的一些格式錯誤。</li>
 
-<li>更多底層的變更和改進。</li>
+<li>還有更多底層變更和改進。</li>
 
 </ul>
 
 <hr />
 
-<p>你可以在這裡找到 Mac Mouse Fix 的上一個版本:<a
+<p>你可以在這裡找到 Mac Mouse Fix 的上一個版本：<a
 
 href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.8&amp;locale=zh-Hant">3.0.8</a></p>
-
-<hr />
-
-<p>更新: (我會更新翻譯,但不會每次都建立新的 GitHub Release。)</p>
-
-<ol type="1">
-
-<li>更新:
-
-<ul>
-
-<li>MacMouseFixApp.zip 資源的建置編號:24814</li>
-
-<li>日期:[2025 年 12 月 8 日]</li>
-
-<li>變更:新增 Vyacheslav 提供的俄文翻譯</li>
-
-</ul></li>
-
-<li>更新:
-
-<ul>
-
-<li>MacMouseFixApp.zip 資源的建置編號:24815</li>
-
-<li>日期:[2025 年 12 月 15 日]</li>
-
-<li>變更:更新 Petr 提供的捷克文翻譯</li>
-
-</ul></li>
-
-<li>更新:
-
-<ul>
-
-<li>MacMouseFixApp.zip 資源的建置編號:24822</li>
-
-<li>日期:[2025 年 12 月 15 日]</li>
-
-<li>變更:
-
-<ul>
-
-<li>新增 Eren 提供的土耳其文翻譯。</li>
-
-<li>將「捲動」標籤頁的水平邊距稍微縮小,以更好地適應一些較寬的土耳其文介面字串。</li>
-
-<li>修復 Markdown
-
-渲染問題,該問題會導致如果列表後的第一個元素是連結,列表項目符號會有底線。這在土耳其文的幾個地方有影響。</li>
-
-</ul></li>
-
-</ul></li>
-
-<li>更新
-
-<ul>
-
-<li>MacMouseFixApp.zip 資源的建置編號:24827</li>
-
-<li>日期 [2025 年 12 月 21 日]</li>
-
-<li>變更:新增 <span class="citation"
-
-data-cites="manghidev">@manghidev</span> 提供的西班牙文翻譯</li>
-
-</ul></li>
-
-<li>更新
-
-<ul>
-
-<li>MacMouseFixApp.zip 資源的建置編號:24828</li>
-
-<li>日期 [2025 年 12 月 27 日]</li>
-
-<li>變更:
-
-<ul>
-
-<li>更新 ETMH 提供的俄文翻譯</li>
-
-<li>修復「按鈕」標籤頁上的排版錯誤,該錯誤在俄文翻譯中出現。</li>
-
-</ul></li>
-
-</ul></li>
-
-<li>更新
-
-<ul>
-
-<li>MacMouseFixApp.zip 資源的建置編號:24829</li>
-
-<li>日期 [2025 年 12 月 29 日]</li>
-
-<li>變更:
-
-<ul>
-
-<li>更新 <span class="citation"
-
-data-cites="xianyu-wang">@xianyu-wang</span> 提供的簡體中文翻譯</li>
-
-</ul></li>
-
-</ul></li>
-
-<li>更新
-
-<ul>
-
-<li>MacMouseFixApp.zip 資源的建置編號:24830</li>
-
-<li>日期 [2026 年 1 月 1 日]</li>
-
-<li>變更:
-
-<ul>
-
-<li>更新 <a href="https://github.com/denini08"><span class="citation"
-
-data-cites="denini08">@denini08</span></a> 提供的巴西葡萄牙文翻譯</li>
-
-</ul></li>
-
-</ul></li>
-
-</ol>
 
 </body>
 

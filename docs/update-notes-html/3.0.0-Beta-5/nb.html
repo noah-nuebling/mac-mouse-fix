@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb" xml:lang="nb">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc 3.11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.0 Beta 5</title>
+
+  <style>
+
+    /* Default styles provided by pandoc.
+
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+
+    */
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: 1.5em;}
+
+    div.column{flex: auto;}
+
+    @media screen {
+
+    div.columns{gap: min(4vw, 1.5em);}
+
+    div.column{overflow-x: auto;}
+
+    }
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Oversatt av AI</strong></p>
+
+<p>Denne utgivelsesnotisen har blitt oversatt av Claude AI. Den kan
+
+inneholde feil.<br />
+
+For den originale engelske versjonen, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-5">klikk
+
+her</a>.</p>
+
+<hr />
+
+<p>Sjekk også ut de <strong>kule endringene</strong> introdusert i <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-4&amp;locale=nb">3.0.0
+
+Beta 4</a>!</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 5</strong> gjenoppretter
+
+<strong>kompatibilitet</strong> med noen <strong>mus</strong> under
+
+macOS 13 Ventura og <strong>fikser rulling</strong> i mange apper. Den
+
+inneholder også flere andre små fikser og livskvalitetsforbedringer.</p>
+
+<p>Her er <strong>alt som er nytt</strong>:</p>
+
+<h3 id="mus">Mus</h3>
+
+<ul>
+
+<li>Fikset rulling i Terminal og andre apper! Se GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/413">#413</a>.</li>
+
+<li>Fikset inkompatibilitet med noen mus under macOS 13 Ventura ved å gå
+
+bort fra upålitelige Apple API-er til fordel for lavnivå-hacks. Håper
+
+dette ikke introduserer nye problemer - gi meg beskjed hvis det gjør
+
+det! Spesiell takk til Maria og GitHub-bruker <a
+
+href="https://github.com/samiulhsnt">samiulhsnt</a> for hjelpen med å
+
+finne ut av dette! Se GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/424">#424</a>
+
+for mer info.</li>
+
+<li>Vil ikke bruke noe CPU når du klikker museknapp 1 eller 2 lenger.
+
+Litt redusert CPU-bruk når du klikker andre knapper.
+
+<ul>
+
+<li>Dette er en “Debug Build” så CPU-bruken kan være rundt 10 ganger
+
+høyere når du klikker knapper i denne betaen vs. den endelige
+
+utgivelsen</li>
+
+</ul></li>
+
+<li>Styreflate-rullesimuleringen som brukes for Mac Mouse Fix’ “Jevn
+
+rulling” og “Rull og naviger”-funksjoner er nå enda mer nøyaktig. Dette
+
+kan føre til bedre oppførsel i noen situasjoner.</li>
+
+</ul>
+
+<h3 id="brukergrensesnitt">Brukergrensesnitt</h3>
+
+<ul>
+
+<li>Fikser automatisk problemer med å gi tilgangstillatelser etter
+
+oppdatering fra en eldre versjon av Mac Mouse Fix. Tar i bruk endringene
+
+beskrevet i <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.2&amp;locale=nb">2.2.2
+
+utgivelsesnotatene</a>.</li>
+
+<li>Lagt til en “Avbryt”-knapp på “Gi tilgangstillatelse”-skjermen</li>
+
+<li>Fikset et problem der konfigurering av Mac Mouse Fix ikke ville
+
+fungere ordentlig etter installering av en ny versjon av Mac Mouse Fix,
+
+fordi den nye versjonen ville koble til den gamle versjonen av “Mac
+
+Mouse Fix Helper”. Nå vil Mac Mouse Fix ikke koble til den gamle “Mac
+
+Mouse Fix Helper” lenger og deaktivere den gamle versjonen automatisk
+
+når det er passende.</li>
+
+<li>Gir brukeren instruksjoner om hvordan man fikser et problem der Mac
+
+Mouse Fix ikke kan aktiveres ordentlig på grunn av en annen versjon av
+
+Mac Mouse Fix som er til stede på systemet. Dette problemet oppstår kun
+
+under macOS Ventura.</li>
+
+<li>Forbedret oppførsel og animasjoner på “Gi
+
+tilgangstillatelse”-skjermen</li>
+
+<li>Mac Mouse Fix vil bli brakt til forgrunnen når den aktiveres. Dette
+
+forbedrer brukergrensesnittinteraksjonene i noen situasjoner som når du
+
+aktiverer Mac Mouse Fix etter at den har blitt deaktivert under
+
+Systeminnstillinger &gt; Generelt &gt; Påloggingsobjekter.</li>
+
+<li>Forbedret tekst på “Gi tilgangstillatelse”-skjermen</li>
+
+<li>Forbedret tekst som vises når du prøver å aktivere Mac Mouse Fix
+
+mens den er deaktivert i Systeminnstillinger</li>
+
+<li>Fikset en tysk tekst</li>
+
+</ul>
+
+<h3 id="under-panseret">Under panseret</h3>
+
+<ul>
+
+<li>Byggnummeret til “Mac Mouse Fix” og den innebygde “Mac Mouse Fix
+
+Helper” er nå synkronisert. Dette brukes for å forhindre at “Mac Mouse
+
+Fix” ved et uhell kobler til gamle versjoner av “Mac Mouse Fix
+
+Helper”.</li>
+
+<li>Fikset problem der noen data rundt lisensen din og prøveperioden
+
+noen ganger ville vises feil når appen startes for første gang ved å
+
+fjerne hurtigbufferdata fra den opprinnelige konfigurasjonen</li>
+
+<li>Mye opprydding av prosjektstrukturen og kildekoden</li>
+
+<li>Forbedrede feilsøkingsmeldinger</li>
+
+</ul>
+
+<hr />
+
+<h3 id="hvordan-du-kan-hjelpe">Hvordan du kan hjelpe</h3>
+
+<p>Du kan hjelpe ved å dele dine <strong>ideer</strong>,
+
+<strong>problemer</strong> og <strong>tilbakemeldinger</strong>!</p>
+
+<p>Det beste stedet å dele dine <strong>ideer</strong> og
+
+<strong>problemer</strong> er <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Tilbakemeldingsassistenten</a>.
+
+Det beste stedet å gi <strong>rask</strong> ustrukturert tilbakemelding
+
+er <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Tilbakemeldingsdiskusjonen</a>.</p>
+
+<p>Du kan også få tilgang til disse stedene fra appen på “<strong>ⓘ
+
+Om</strong>”-fanen.</p>
+
+<p><strong>Takk</strong> for at du hjelper med å gjøre Mac Mouse Fix
+
+bedre! 💙💛❤️</p>
+
+</body>
+
+</html>

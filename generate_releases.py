@@ -28,6 +28,8 @@ from dataclasses import dataclass
 from babel import dates as bdates
 import datetime
 
+import traceback
+
 """
 [Mar 2025] Downloads MMF Releases from GitHub, and based on those:
     1. Generates 2 appcast rss feed files for Sparkle
@@ -506,7 +508,7 @@ def generate():
                     assert shutil.which("pandoc") is not None, "Error: Pandoc is not installed. Install via `brew install pandoc`."
 
                     # Convert combined md release notes to HTML 
-                    release_notes_html = mfutils.runclt(
+                    release_notes_html, _, _ = mfutils.runclt(
                         "pandoc"
                        f" {md_path_temp}"
                         " --from markdown --to html"
@@ -515,8 +517,7 @@ def generate():
                        f" --variable lang={locale}"                 # Sets the `lang` and `xml:lang` attributes on the outermost <html> element || I observed [Mar 2025] that this fixes comma (，) and period (。) alignment when Safari/Sparkle renders the Chinese docs
                        f" --variable pagetitle='{short_version}'"   # [Mar 2025] Source: https://stackoverflow.com/questions/20059445/prevent-pandoc-from-adding-a-title-when-adding-css-to-html-using-h-option || Man pandoc is a pain. || History: We used to set `--metadata title=''` but that sorta broke after passing the input file as an arg instead of cat-piping its contents into pandoc, because pandoc then just used the input-file's name as the title.
                         " --metadata document-css=false"            # Stops pandoc from adding some of its default inline css, but can't manage to turn that off entirely.
-                        ,
-                        fail_on_stderr=False
+                        ,manually_handle_errors=True
                     )
 
                     # Write result to file
@@ -927,7 +928,8 @@ def generate():
         exit(0)
 
     except Exception as e: # Exit immediately if anything goes wrong
-        print(e)
+        print("Immediately quitting due to exception:", e)
+        traceback.print_exc() # Claude told me to use this to get the exception's trace
         clean_up(folder_downloads)
         exit(1)
 

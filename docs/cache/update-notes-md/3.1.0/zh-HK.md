@@ -1,0 +1,55 @@
+Mac Mouse Fix **3.1.0** 修復咗 macOS 27 嘅支援同埋新增咗翻譯。
+
+### 支援 macOS 27 Golden Gate
+
+依賴模擬三指觸控板滑動嘅手勢，例如「空間同 Mission Control」，喺 macOS 27 Golden Gate 上面又可以正常運作喇。
+
+### 翻譯
+
+- 而家幾乎所有項目部分都可以翻譯。
+- 而家貢獻翻譯變得更加容易。
+- 喺「關於」分頁新增咗「幫助翻譯」按鈕。
+- 為咗配合呢啲改動，介面同後台都做咗好多更改。
+- 想了解更多，請睇 [翻譯指南](https://redirect.macmousefix.com/?target=mmf-localization-contribution)。
+
+新增咗以下翻譯：
+
+- 🇨🇳 中文翻譯更新，由以下人士提供
+    - [@Dro9an](https://github.com/Dro9an)（網站翻譯）
+    - [@jihao](https://github.com/jihao)（網站翻譯）
+    - [@xianyu-wang](https://github.com/xianyu-wang)
+    - [@djzhao627](https://github.com/djzhao627)
+    - [@JunhangWu](https://github.com/JunhangWu)
+- 🇻🇳 越南文翻譯更新，由 [@quocthangit247](https://github.com/quocthangit247) 提供
+- 新增 🇧🇷 巴西葡萄牙文翻譯，由以下人士提供
+    - **Eduardo Rodrigues**
+    - [@denini08](https://github.com/denini08)
+- 新增 🇫🇷 法文翻譯，由以下人士提供
+    - [@DimitriDR](https://github.com/DimitriDR)
+    - [@UYTR5](https://github.com/UYTR5)
+    - [@Clementabcd](https://github.com/Clementabcd)（網站翻譯）
+- 新增 🇹🇷 土耳其文翻譯，由以下人士提供
+    - [@hasanbeder](https://github.com/hasanbeder)
+    - [@erentomurcuk](https://github.com/erentomurcuk)
+    - [@mstersnd](https://github.com/mstersnd)
+    - [@mls0x1](https://github.com/mls0x1)
+- 新增 🇨🇿 捷克文翻譯，由 [Petr Pavlík](http://www.petrpavlik.com) 提供
+- 新增 🇷🇺 俄文翻譯，由 [ETMH](https://t.me/sos_soon_ok) 提供
+- 新增 🇪🇸 西班牙文翻譯，由 [@manghidev](https://github.com/manghidev) 提供
+- 新增 🇵🇱 波蘭文翻譯，由 **Jakub** 提供（網站翻譯）
+- 新增 🇯🇵 日文翻譯，由以下人士提供
+    - [@y-128](https://github.com/y-128)
+    - [@mei28](https://github.com/mei28)
+- 新增 🇺🇦 烏克蘭文翻譯，由 [@denysocheck](https://github.com/denysocheck) 提供
+- 新增 🇳🇴 挪威書面語翻譯，由 [@Bertil78](https://github.com/Bertil78) 提供
+
+多謝所有翻譯者！
+
+### 其他
+
+- 冇放棄任何 macOS 版本。即使 macOS 27 開發者工具唔再正式支援，呢個 app 仍然繼續支援 macOS 10.15 Catalina。
+- Mac Mouse Fix 3.1.0 而家只佔 15.4 MB，由之前嘅 19.6 MB 減少咗。
+
+---
+
+亦可以睇睇之前嘅版本 [3.0.8](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8)。

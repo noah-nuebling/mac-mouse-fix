@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb" xml:lang="nb">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc 3.11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.8</title>
+
+  <style>
+
+    /* Default styles provided by pandoc.
+
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+
+    */
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: 1.5em;}
+
+    div.column{flex: auto;}
+
+    @media screen {
+
+    div.columns{gap: min(4vw, 1.5em);}
+
+    div.column{overflow-x: auto;}
+
+    }
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Oversatt av AI</strong></p>
+
+<p>Denne utgivelsesnotisen har blitt oversatt av Claude AI. Den kan
+
+inneholde feil.<br />
+
+For den originale engelske versjonen, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8">klikk
+
+her</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.8</strong> løser UI-problemer og mer.</p>
+
+<h3 id="ui-problemer"><strong>UI-problemer</strong></h3>
+
+<ul>
+
+<li>Deaktiverte det nye designet på macOS 26 Tahoe. Nå vil appen se ut
+
+og fungere som den gjorde på macOS 15 Sequoia.
+
+<ul>
+
+<li>Jeg gjorde dette fordi noen av Apples redesignede UI-elementer
+
+fortsatt har problemer. For eksempel var ‘-’-knappene på ‘Knapper’-fanen
+
+ikke alltid klikkbare.</li>
+
+<li>Brukergrensesnittet kan se litt utdatert ut på macOS 26 Tahoe nå.
+
+Men det skal være fullt funksjonelt og polert akkurat som før.</li>
+
+</ul></li>
+
+<li>Fikset en feil der ‘Gratisdagene er over’-varslingen ble sittende
+
+fast i øvre høyre hjørne av skjermen.
+
+<ul>
+
+<li>Takk til <a href="https://github.com/Sashpuri">Sashpuri</a> og andre
+
+for å ha rapportert det!</li>
+
+</ul></li>
+
+</ul>
+
+<h3 id="ui-polering"><strong>UI-polering</strong></h3>
+
+<ul>
+
+<li>Deaktiverte den grønne trafikklysknappen i hovedvinduet til Mac
+
+Mouse Fix.
+
+<ul>
+
+<li>Knappen gjorde ingenting, siden vinduet ikke kan endres
+
+manuelt.</li>
+
+</ul></li>
+
+<li>Fikset et problem der noen av de horisontale linjene i tabellen på
+
+‘Knapper’-fanen var for mørke under macOS 26 Tahoe.</li>
+
+<li>Fikset en feil der meldingen “Primær museknapp kan ikke brukes” på
+
+‘Knapper’-fanen noen ganger ble kuttet av under macOS 26 Tahoe.</li>
+
+<li>Fikset en skrivefeil i det tyske grensesnittet. Med tillatelse fra
+
+GitHub-bruker <a
+
+href="https://github.com/i-am-the-slime">i-am-the-slime</a>. Takk!</li>
+
+<li>Løste et problem der MMF-vinduet noen ganger blinket kort i feil
+
+størrelse når vinduet ble åpnet på macOS 26 Tahoe.</li>
+
+</ul>
+
+<h3 id="andre-endringer"><strong>Andre endringer</strong></h3>
+
+<ul>
+
+<li>Forbedret oppførsel når man prøver å aktivere Mac Mouse Fix mens
+
+flere instanser av Mac Mouse Fix kjører på datamaskinen.
+
+<ul>
+
+<li>Mac Mouse Fix vil nå prøve å deaktivere den andre instansen av Mac
+
+Mouse Fix mer grundig.</li>
+
+<li>Dette kan forbedre spesialtilfeller der Mac Mouse Fix ikke kunne
+
+aktiveres.</li>
+
+</ul></li>
+
+<li>Under-panseret-endringer og opprydding.</li>
+
+</ul>
+
+<hr />
+
+<p>Sjekk også ut hva som er nytt i forrige versjon <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.7&amp;locale=nb">3.0.7</a>.</p>
+
+</body>
+
+</html>

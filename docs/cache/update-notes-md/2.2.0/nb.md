@@ -1,0 +1,42 @@
+Sjekk også ut de **kule tingene** introdusert i [Mac Mouse Fix 2](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.0.0)!
+
+---
+
+Mac Mouse Fix **2.2.0** inneholder diverse brukervennlighetsforbedringer og feilrettinger!
+
+### Omtildeling til Apple-eksklusive funksjonstaster er bedre nå
+
+Den forrige oppdateringen, 2.1.0, introduserte en kul ny funksjon som lar deg omtildele museknappene dine til hvilken som helst tast på tastaturet - selv funksjonstaster som bare finnes på Apple-tastaturer. 2.2.0 inneholder ytterligere forbedringer og finjusteringer av denne funksjonen:
+
+- Du kan nå holde inne Option (⌥) for å omtildele til taster som bare finnes på Apple-tastaturer - selv om du ikke har et Apple-tastatur tilgjengelig.
+- Funksjonstastsymbolene har fått et forbedret utseende, slik at de passer bedre inn med annen tekst.
+- Muligheten til å omtildele til Caps Lock har blitt deaktivert. Den fungerte ikke som forventet.
+
+### Legg til / fjern handlinger enklere
+
+Noen brukere hadde problemer med å finne ut at du kan legge til og fjerne handlinger fra handlingstabellen. For å gjøre ting lettere å forstå, inneholder 2.2.0 følgende endringer og nye funksjoner:
+
+- Du kan nå slette handlinger ved å høyreklikke på dem. 
+  - Dette bør gjøre det lettere å oppdage muligheten til å slette handlinger.
+  - Høyreklikkmenyen har et symbol av '-'-knappen. Dette bør bidra til å trekke oppmerksomhet mot '-'-_knappen_, som igjen bør trekke oppmerksomhet mot '+'-knappen. Dette gjør forhåpentligvis muligheten til å **legge til** handlinger lettere å oppdage også.
+- Du kan nå legge til handlinger i handlingstabellen ved å høyreklikke på en tom rad.
+- '-'-knappen er nå bare aktiv når en handling er valgt. Dette bør gjøre det tydeligere at '-'-knappen sletter den valgte handlingen.
+- Standard vinduehøyde har blitt økt slik at det er en synlig tom rad som kan høyreklikkes for å legge til en handling.
+- '+' og '-'-knappene har verktøytips nå.
+
+### Forbedringer av klikk og dra
+
+Terskelen for å aktivere klikk og dra har blitt økt fra 5 piksler til 7 piksler. Dette gjør det vanskeligere å aktivere klikk og dra ved et uhell, samtidig som brukere fortsatt kan bytte skrivebord osv. ved å bruke små, komfortable bevegelser.
+
+
+### Andre UI-endringer
+
+- Utseendet til handlingstabellen har blitt forbedret.
+- Diverse andre UI-forbedringer.
+
+
+### Feilrettinger
+
+- Fikset et problem der brukergrensesnittet ikke ble nedtonet når MMF ble startet mens den var deaktivert.
+- Fjernet skjult «Knapp 3 klikk og dra»-alternativ. 
+  - Når du valgte det, ville appen krasje. Jeg bygde dette alternativet for å gjøre Mac Mouse Fix bedre kompatibel med Blender. Men i sin nåværende form er det ikke veldig nyttig for Blender-brukere fordi du ikke kan kombinere det med tastaturmodifikatorer. Jeg planlegger å forbedre Blender-kompatibilitet i en fremtidig utgivelse.

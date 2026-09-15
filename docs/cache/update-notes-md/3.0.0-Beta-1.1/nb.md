@@ -1,0 +1,159 @@
+**3.0.0** blir den **største oppdateringen** til Mac Mouse Fix så langt!
+
+Den samler mange funksjoner jeg har jobbet med lenge for endelig å levere dette fantastiske **verdiforslaget**:
+
+**Gjør din $10-mus bedre enn en Apple Trackpad!**
+
+Og du kan **teste det nå**! Jeg er veldig spent på å høre tilbakemeldingene deres!
+
+Her er **alt som er nytt**:
+
+## 1. Klikk og dra for å rulle
+
+Du kan nå **klikke og dra for å rulle** fritt i alle retninger!
+
+Det lar deg også gå frem og tilbake i **Safari**, markere meldinger som lest i **Mail**, og **gjøre alt annet** du kan gjøre med et **tosveip** på en **Apple Trackpad**!
+
+Jeg jobbet hardt for å implementere funksjonen til denne kvalitetsstandarden. Men som et resultat, tror jeg du vil oppdage at det virkelig "**bare fungerer**" når du prøver det!
+
+## 2. Rullebevegelser
+
+Mac Mouse Fix støtter nå **Rullebevegelser**!
+Det betyr at du kan **utløse handlinger** ved å **rulle** mens du holder nede en museknapp!
+
+Rullebevegelser lar deg få enda **mer funksjonalitet** ut av en enkelt museknapp på en super **intuitiv** måte.
+
+I denne betaen finnes det **følgende** Rullebevegelser:
+
+  - **Skrivebord og Launchpad** lar deg vise skrivebordet eller åpne Launchpad ved å rulle opp eller ned. Dette føles superflytende og intuitivt fordi det simulerer å knipe med 4 fingre på en Apple Trackpad.
+  - **Flytt mellom Spaces** lar deg bytte mellom Spaces ved å rulle opp eller ned. Dette føles også superflytende siden det simulerer å sveipe på en Apple Trackpad med 3 fingre. Jeg er imidlertid ikke sikker på om dette er overflødig siden du allerede kan klikke og dra for å flytte mellom Spaces. Gi meg beskjed om hva du synes!
+  - **Zoom inn eller ut** lar deg se nærmere på nettet eller andre steder. Dette var allerede tilgjengelig i Mac Mouse Fix 2 ved å holde Command-tasten (⌘) mens du rullet, men nå kan du gjøre det enklere med bare én hånd!
+  - **Horisontal rulling** lar deg rulle til venstre og høyre. Du kan også bruke det til å navigere mellom sider i Safari og andre apper fordi det simulerer å sveipe med 2 fingre på en Apple Trackpad.
+  - **Rask rulling** lar deg rulle lange avstander med minimal innsats.
+  - **Presis rulling** lar deg rulle korte avstander og bruke sensitive UI-elementer som volumglidere med presisjon.
+  - **Appbytter** lar deg bytte mellom nylige apper, akkurat som å trykke Command-Tab (⌘ + ↹) på tastaturet. Denne funksjonen har noen feil og jeg er ikke sikker på om den er veldig nyttig, siden du allerede enkelt kan få tilgang til Tab-bytteren fra tastaturet, så jeg vil sannsynligvis fjerne den senere. Gi meg beskjed om hva du synes, likevel.
+
+## 3. Treghetsrulling
+
+**Treghetsrulling** gjør at rulling på musen din føles like **rask** og **flytende** som en Apple Trackpad.
+
+Treghetsrulling skaper **lange** og veldig **jevne animasjoner**. På et rullehjul kommer lange animasjoner generelt med avveiningen av mindre kontroll.
+
+Men Mac Mouse Fix 3 implementerer noen **smarte algoritmer** for å gi deg en **flott treghetsfølelse** samtidig som du fortsatt har mye **kontroll**.
+
+Forresten, hvis du laster ned denne betaen, tror jeg du vil være **en av de første** menneskene som bruker **rullesprett** fra en mus! (annet enn Magic Mouse) Jeg synes det er ganske kult.
+
+
+## 4. Andre rulleforbedringer
+
+Jeg **skrev om** mesteparten av rullekoden for MMF 3. Dette tillot meg å implementere mange **andre små funksjoner** og forbedringer:
+
+1. Det er nå **2 ekstra tastaturmodifikatorer** slik at du ikke bare kan **zoome inn eller ut** med Command (⌘), og **rulle horisontalt** med Shift (⇧), men også **rulle raskt** med Control (^) og **rulle presist** med Option (⌥).
+2. Du kan nå se og **tilpasse alle 4 tastaturmodifikatorene** ved hjelp av et vakkert og intuitivt nytt brukergrensesnitt.
+3. **Alltid-på presis rulling** lar deg rulle presist selv uten å holde nede en modifikatortast ved å bevege rullehjulet sakte.
+4. **Horisontal rulleinngang** fra musen din blir ikke lenger ignorert, men i stedet jevnes den ut og inverteres akkurat som vanlig vertikal rulleinngang. Hvis musen din har et **vippehjul** eller et **horisontalt rullehjul** bør det føles mye bedre nå.
+5. **Innstillingene for å invertere rulleretning** er nå uavhengige av Systeminnstillingene, noe som gir et mindre komplisert brukergrensesnitt.
+6. **Rulleinnstillinger** kan nå **kombineres** mer fritt. For eksempel kan du bruke **Mac Mouse Fix sin** rullehastighet selv når jevn rulling er **deaktivert**. Eller du kan bruke **macOS sin** rullehastighet når jevn rulling er **aktivert**. (Merk: Jeg personlig liker ikke macOS sin rullehastighet i det hele tatt og jeg kan ikke tenke meg grunner til at noen ville foretrekke den. Så hvis du foretrekker den, ville jeg være veldig interessert i å lære mer om din opplevelse! Du kan ta kontakt via "**ⓘ Om**"-fanen.)
+
+## 5. Menylinjeelement
+
+Mac Mouse Fix har nå et **menylinjeelement** slik at du alltid kan se når det er aktivert!
+
+Menylinjeelementet har et **vakkert ikon**, og det lar deg også **raskt deaktivere** visse funksjoner i Mac Mouse Fix slik at du kan spille et spill eller bruke en app uten at Mac Mouse Fix forstyrrer.
+
+Selvfølgelig kan du også fortsatt **deaktivere** det for en renere menylinje.
+
+## 6. App-spesifikke innstillinger er fjernet
+
+**App-spesifikke innstillinger** er borte for nå. Jeg planlegger imidlertid å **bringe dem tilbake** i en mye mer robust og kraftig form i fremtiden.
+
+For nå tror jeg hurtiginnstillingene i **menylinjeelementet** er en **bedre**, om enn mindre praktisk, løsning.
+
+De **løser** de **viktigste problemene** med de gamle app-spesifikke innstillingene:
+
+- App-spesifikke innstillinger fungerte ikke med noen programmer som **kommandolinje-kjørbare filer**. Dette inkluderte populære apper som **Minecraft**.
+- App-spesifikke innstillinger hadde mange begrensninger, som at de ikke tillot deg å **slå av knapper** helt, noe som var et problem for mange spillere.
+
+En annen ting å vurdere er at de gamle app-spesifikke innstillingene opprinnelig ble **designet som en midlertidig løsning** for at noen apper var inkompatible med det gamle rullesystemet. Men nå, med det nye rullesystemet som presist emulerer berøringsrulling fra en Apple Trackpad, bør de fleste av disse inkompatibilitetene være **fikset uansett**! Så det burde være mindre behov for det de gamle app-spesifikke innstillingene var best på.
+
+Jeg håper alle er ok med det! Gi meg beskjed om dine **tanker**!
+
+## 7. Brukergrensesnitt-overhaling
+
+Jeg har fullstendig **skrevet om brukergrensesnittet** for å være mer **vakkert** og **kraftig** samtidig som det beholder **enkelheten** og **brukervennligheten** som folk elsker ved Mac Mouse Fix.
+
+Her er hva som er nytt:
+
+- Brukergrensesnittet er nå delt opp i forskjellige **faner**. Dette rydder opp og lar Mac Mouse Fix tilby ekstra innstillinger som er viktige for folk uten at brukergrensesnittet blir for komplisert eller overveldende. Dette vil også la meg utvide Mac Mouse Fix med nye funksjoner i fremtiden.
+- Jeg la til subtile og herlige små **animasjoner** over hele det nye brukergrensesnittet som gjør det lettere å navigere og gir en følelse av polering.
+- Alternativer som avhenger av andre alternativer vil bli **skjult** og oppsettet vil justere seg med vakre subtile animasjoner. Dette holder ting så enkelt og strømlinjeformet som mulig. Så du trenger ikke kaste bort tid og hjernekraft på å se på alternativer du ikke trenger å tenke på.
+- Det nye brukergrensesnittet har små **hint** for alternativer som ellers kan være forvirrende.
+- Det **nye handlingstabelldesignet** gjør det mye klarere hvordan man legger til og fjerner handlinger, noe mange var forvirret over. Den krymper og vokser også for å passe antall handlinger slik at du ikke trenger å endre størrelsen manuelt.
+- Den nye **Om-fanen** har et vakkert oppsett, og gir deg rask tilgang til ekstra alternativer for støtte, tilbakemelding og mer.
+- Noen **eksisterende brukergrensesnitt-tekster** er forbedret.
+- Det er nå et **nytt alternativ** for å låse musepekeren under klikk-og-dra-bevegelser. Jeg har ikke en å teste, men dette bør være veldig fint for Trackball-mus!
+
+
+## 8. Inntektsgenerering
+
+Mac Mouse Fix 3 vil være **gratis i 30 dager** og deretter koste **$1.99** å eie.
+
+Jeg vet at å betale for noe som pleide å være gratis ikke er den beste følelsen, men jeg håper jeg kan overbevise deg om at det er en virkelig **god ting for prosjektet**!
+
+Som for alle andre aspekter av Mac Mouse Fix, la jeg stor vekt på å gjøre **brukeropplevelsen** så **enkel** og **behagelig** som mulig:
+
+1. De **30 gratis dagene** er smart implementert. Mac Mouse Fix **teller bare dagene** du **faktisk bruker det**. Så det er **ingen press** for å bruke appen før tiden er ute, og du kan ta en informert beslutning om du vil kjøpe appen eller ikke uten stress.
+2. Etter at de 30 gratis dagene er over, er det ekstremt **enkelt** og **raskt** å **betale** for appen. Du kan bruke alle betalingsmetodene du elsker som **Apple Pay** og **PayPal**, og det tar bare **2 klikk** å betale fra innsiden av appen via Apple Pay!
+3. Etter at du har kjøpt appen for $1.99, er det også ekstremt **enkelt** å **aktivere lisensen din**. Jeg la faktisk en **lenke** på **betalingsskjermen** i nettleseren som tar deg **direkte** inn i appen og åpner **skjermen for å skrive inn lisensen** for deg!
+4. Etter at du **aktiverer lisensen din**, er det en søt tilfeldig **takkemelding** på om-fanen. (Jeg hørte at det til og med er noen superhemmelige sjeldne...)
+5. Lisensen din **synkroniseres via iCloud** slik at den automatisk vil være tilgjengelig på alle datamaskinene dine!
+
+Ved å hjelpe Mac Mouse Fix økonomisk, kan du også hjelpe meg å **bruke mye mer tid** på det og gjøre det til den **beste musedriveren NOENSINNE**.
+Jeg _elsker_ også å bruke tid på Mac Mouse Fix, så det ville også gjøre meg **glad** :)
+
+**Vil Mac Mouse Fix fortsatt være åpen kildekode?**
+
+Ja. Mac Mouse Fix vil fortsatt være åpen kildekode, og jeg planlegger ikke å endre det på noe tidspunkt.
+
+Dette betyr også at du *kan* bruke Mac Mouse Fix gratis ved å bygge det fra kildekoden og deaktivere lisenssjekker. Det er helt greit, jeg fraråder bare å dele disse crackede versjonene på nettet.
+Og selvfølgelig, ved neste oppdatering, vil du få en ikke-cracket versjon, noe som betyr at du må gjøre dette igjen for hver oppdatering. (Eller bare betal $1.99 for den beste musedriveren noensinne! :)
+
+Alle vil også fortsatt kunne bruke kildekode fra Mac Mouse Fix i sine gratis og kommersielle produkter så lenge de ikke bare selger en kopi av Mac Mouse Fix uten å legge til sitt eget bidrag.
+
+Lær om detaljene i den nye [MMF-lisensen](https://github.com/noah-nuebling/mac-mouse-fix/blob/version-3/LICENSE) som MMF 3 vil være lisensiert under.
+
+**Må jeg betale for å bruke Mac Mouse Fix 3 Beta?**
+
+Nei. Du kan bare bruke dine 30 gratis dager. Telleren for gratis dager vil sannsynligvis ikke nullstilles når den stabile versjonen av Mac Mouse Fix 3 slippes, siden det ville være ekstra ting å designe og implementere og jeg tror ikke noen vil bry seg så mye. (Gi meg beskjed hvis du gjør det). Men jeg vil utvide antall gratis dager hvis betaen varer mer enn 30 dager.
+
+**Kan jeg få Mac Mouse Fix gratis hvis jeg allerede har donert?**
+
+Ja! Hvis du kjøpte meg en milkshake før 10. september 2022, kan du skrive en e-post til noah.n.public@gmail.com med "Milkshake Karma" i emnefeltet og et skjermbilde som bevis, så sender jeg deg en 100% rabattkode eller noe!
+
+## 9. Internasjonalisering
+
+Med omskrivingen av brukergrensesnittet er det nå mulig å **oversette** Mac Mouse Fix til forskjellige språk!
+
+Jeg har allerede oversatt det til **tysk**, mitt morsmål, og du kan oversette det til **ditt språk** også!
+
+Jeg planlegger å skrive en mer **detaljert guide** om dette i fremtiden, men hvis du vil prøve, her er en liten oversikt over **trinnene**:
+
+- **Last ned** kildekoden og Xcode
+- **[Legg til språket ditt](https://developer.apple.com/documentation/xcode/adding-support-for-languages-and-regions)** i prosjektet
+- Legg oversettelsene dine i **`.strings`**- og **`.stringsdict`**-filene gjennom prosjektet
+- **Commit** endringene dine og opprett en **pull request**
+
+Hvis oversettelsen din legges til i prosjektet, får du **10 MMF-kopier gratis**, og selvfølgelig vil du bli **kreditert som bidragsyter**. Jeg hørte at du også kan legge igjen din **personlige melding** ved å endre noen av (hemmelige sjeldne takkemeldingene) på Om-fanen.
+
+Kanskje jeg legger til **flere fordeler** i fremtiden. Gi meg beskjed hvis du har noen **ideer** til det!
+
+## 10. Hvordan du kan hjelpe
+
+Du kan hjelpe ved å dele dine **ideer**, **problemer** og **tilbakemeldinger**!
+
+Det beste stedet å dele dine **ideer** og **problemer** er [Tilbakemeldingsassistenten](https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report).
+Det beste stedet å gi **rask** ustrukturert tilbakemelding er [Tilbakemeldingsdiskusjonen](https://github.com/noah-nuebling/mac-mouse-fix/discussions/366).
+
+Du kan også få tilgang til begge disse stedene fra innsiden av appen på "**ⓘ Om**"-fanen.
+
+**Takk** for at du hjelper til med å gjøre Mac Mouse Fix bedre! 🚀

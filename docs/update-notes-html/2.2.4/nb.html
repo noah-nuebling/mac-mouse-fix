@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb" xml:lang="nb">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc 3.11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>2.2.4</title>
+
+  <style>
+
+    /* Default styles provided by pandoc.
+
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+
+    */
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: 1.5em;}
+
+    div.column{flex: auto;}
+
+    @media screen {
+
+    div.columns{gap: min(4vw, 1.5em);}
+
+    div.column{overflow-x: auto;}
+
+    }
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Oversatt av AI</strong></p>
+
+<p>Denne utgivelsesnotisen har blitt oversatt av Claude AI. Den kan
+
+inneholde feil.<br />
+
+For den originale engelske versjonen, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.4">klikk
+
+her</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>2.2.4</strong> er nå notarisert! Den inkluderer
+
+også noen små feilrettinger og andre forbedringer.</p>
+
+<h3 id="notarisering"><strong>Notarisering</strong></h3>
+
+<p>Mac Mouse Fix 2.2.4 er nå ‘notarisert’ av Apple. Det betyr at du ikke
+
+lenger får meldinger om at Mac Mouse Fix potensielt er ‘skadelig
+
+programvare’ når du åpner appen for første gang.</p>
+
+<h4 id="bakgrunn">Bakgrunn</h4>
+
+<p>Å notarisere appen din koster $100 per år. Jeg var alltid imot dette,
+
+siden det føltes fiendtlig mot gratis og åpen kildekode-programvare som
+
+Mac Mouse Fix, og det føltes også som et farlig skritt mot at Apple
+
+kontrollerer og låser ned Mac-en slik de gjør med iPhones eller iPads.
+
+Men mangel på notarisering førte til forskjellige problemer, inkludert
+
+<a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/114">vanskeligheter
+
+med å åpne appen</a> og til og med <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/95">flere
+
+situasjoner</a> der ingen kunne bruke appen før jeg slapp en ny
+
+versjon.</p>
+
+<p>For Mac Mouse Fix 3 tenkte jeg at det endelig var passende å betale
+
+$100 per år for å notarisere appen, siden Mac Mouse Fix 3 er monetisert.
+
+(<a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0&amp;locale=nb">Les
+
+mer</a>)<br />
+
+Nå får Mac Mouse Fix 2 også notarisering, noe som burde føre til en
+
+enklere og mer stabil brukeropplevelse.</p>
+
+<h3 id="feilrettinger"><strong>Feilrettinger</strong></h3>
+
+<ul>
+
+<li>Fikset et problem der markøren ville forsvinne og deretter dukke opp
+
+på et annet sted når du brukte en ‘Klikk og dra’-handling under et
+
+skjermopptak eller mens du brukte <a
+
+href="https://www.synaptics.com/products/displaylink-graphics">DisplayLink</a>-programvaren.<br />
+
+</li>
+
+<li>Fikset et problem med å aktivere Mac Mouse Fix under macOS 10.14
+
+Mojave og muligens eldre macOS-versjoner også.<br />
+
+</li>
+
+<li>Forbedret minnehåndtering, som potensielt fikser en krasj av ‘Mac
+
+Mouse Fix Helper’-appen som oppstod når du koblet fra en mus fra
+
+datamaskinen. Se diskusjon <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/771">#771</a>.</li>
+
+</ul>
+
+<h3 id="andre-forbedringer"><strong>Andre forbedringer</strong></h3>
+
+<ul>
+
+<li>Vinduet som appen viser for å informere deg om at en ny versjon av
+
+Mac Mouse Fix er tilgjengelig, støtter nå JavaScript. Dette gjør at
+
+oppdateringsnotatene kan være penere og lettere å lese. For eksempel kan
+
+oppdateringsnotatene nå vise <a
+
+href="https://github.com/orgs/community/discussions/16925">Markdown-varsler</a>
+
+og mer.</li>
+
+<li>Fjernet en lenke til https://macmousefix.com/about/-siden fra «Gi
+
+tilgangstillatelse til Mac Mouse Fix Helper»-skjermen. Dette er fordi
+
+Om-siden ikke lenger eksisterer og har blitt erstattet av <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix">GitHub Readme</a>
+
+for nå.</li>
+
+<li>Denne utgivelsen inkluderer nå dSYM-filer som kan brukes av hvem som
+
+helst til å dekode krasjrapporter fra Mac Mouse Fix 2.2.4.</li>
+
+<li>Noe opprydding og forbedringer under panseret.</li>
+
+</ul>
+
+<hr />
+
+<p>Sjekk også ut forrige utgivelse <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.3&amp;locale=nb"><strong>2.2.3</strong></a>.</p>
+
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+Mac Mouse Fix **3.1.0** sửa lỗi hỗ trợ cho macOS 27 và thêm các bản dịch.
+
+### Hỗ trợ macOS 27 Golden Gate
+
+Các cử chỉ như 'Spaces & Mission Control' dựa vào việc mô phỏng vuốt 3 ngón trên trackpad đã hoạt động trở lại trên macOS 27 Golden Gate.
+
+### Bản dịch
+
+- Hầu hết tất cả các phần của dự án giờ đây đều có thể dịch được.
+- Việc đóng góp bản dịch giờ đây dễ dàng hơn nhiều.
+- Có nút 'Giúp Dịch' mới trong tab Giới thiệu.
+- Nhiều thay đổi giao diện và nền tảng để hỗ trợ điều này.
+- Để tìm hiểu thêm, xem [Hướng dẫn Dịch thuật](https://redirect.macmousefix.com/?target=mmf-localization-contribution).
+
+Các bản dịch mới đã được thêm:
+
+- Cập nhật bản dịch 🇨🇳 tiếng Trung bởi
+    - [@Dro9an](https://github.com/Dro9an) (Dịch trang web)
+    - [@jihao](https://github.com/jihao) (Dịch trang web)
+    - [@xianyu-wang](https://github.com/xianyu-wang)
+    - [@djzhao627](https://github.com/djzhao627)
+    - [@JunhangWu](https://github.com/JunhangWu)
+- Cập nhật bản dịch 🇻🇳 tiếng Việt bởi [@quocthangit247](https://github.com/quocthangit247)
+- Thêm bản dịch 🇧🇷 tiếng Bồ Đào Nha Brazil bởi
+    - **Eduardo Rodrigues**
+    - [@denini08](https://github.com/denini08)
+- Thêm bản dịch 🇫🇷 tiếng Pháp bởi
+    - [@DimitriDR](https://github.com/DimitriDR)
+    - [@UYTR5](https://github.com/UYTR5)
+    - [@Clementabcd](https://github.com/Clementabcd) (Dịch trang web)
+- Thêm bản dịch 🇹🇷 tiếng Thổ Nhĩ Kỳ bởi
+    - [@hasanbeder](https://github.com/hasanbeder)
+    - [@erentomurcuk](https://github.com/erentomurcuk)
+    - [@mstersnd](https://github.com/mstersnd)
+    - [@mls0x1](https://github.com/mls0x1)
+- Thêm bản dịch 🇨🇿 tiếng Séc bởi [Petr Pavlík](http://www.petrpavlik.com)
+- Thêm bản dịch 🇷🇺 tiếng Nga bởi [ETMH](https://t.me/sos_soon_ok)
+- Thêm bản dịch 🇪🇸 tiếng Tây Ban Nha bởi [@manghidev](https://github.com/manghidev)
+- Thêm bản dịch 🇵🇱 tiếng Ba Lan bởi **Jakub** (Dịch trang web)
+- Thêm bản dịch 🇯🇵 tiếng Nhật bởi
+    - [@y-128](https://github.com/y-128)
+    - [@mei28](https://github.com/mei28)
+- Thêm bản dịch 🇺🇦 tiếng Ukraine bởi [@denysocheck](https://github.com/denysocheck)
+- Thêm bản dịch 🇳🇴 tiếng Na Uy Bokmål bởi [@Bertil78](https://github.com/Bertil78)
+
+Cảm ơn tất cả các dịch giả!
+
+### Khác
+
+- Không bỏ hỗ trợ phiên bản macOS nào. Ứng dụng tiếp tục hỗ trợ macOS 10.15 Catalina, mặc dù công cụ phát triển macOS 27 không chính thức hỗ trợ điều này.
+- Mac Mouse Fix 3.1.0 giờ chỉ chiếm 15.4 MB, giảm từ 19.6 MB.
+
+---
+
+Xem thêm bản phát hành trước [3.0.8](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8).

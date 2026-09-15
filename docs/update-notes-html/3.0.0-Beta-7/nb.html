@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb" xml:lang="nb">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc 3.11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.0 Beta 7</title>
+
+  <style>
+
+    /* Default styles provided by pandoc.
+
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+
+    */
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: 1.5em;}
+
+    div.column{flex: auto;}
+
+    @media screen {
+
+    div.columns{gap: min(4vw, 1.5em);}
+
+    div.column{overflow-x: auto;}
+
+    }
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Oversatt av AI</strong></p>
+
+<p>Denne utgivelsesnotisen har blitt oversatt av Claude AI. Den kan
+
+inneholde feil.<br />
+
+For den originale engelske versjonen, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-7">klikk
+
+her</a>.</p>
+
+<hr />
+
+<p>Sjekk også ut de <strong>flotte forbedringene</strong> introdusert i
+
+<a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.0-Beta-6&amp;locale=nb">3.0.0
+
+Beta 6</a>!</p>
+
+<hr />
+
+<p><strong>3.0.0 Beta 7</strong> bringer flere små forbedringer og
+
+feilrettinger.</p>
+
+<p>Her er alt som er nytt:</p>
+
+<p><strong>Forbedringer</strong></p>
+
+<ul>
+
+<li>Lagt til <strong>koreanske oversettelser</strong>. Stor takk til
+
+<span class="citation" data-cites="jeongtae">@jeongtae</span>! (Finn ham
+
+på <a href="https://github.com/jeongtae">GitHub</a>)</li>
+
+<li>Gjort <strong>rulling</strong> med alternativet ‘Glathet: Høy’
+
+<strong>enda glattere</strong>, ved å bare endre hastigheten gradvis, i
+
+stedet for å ha plutselige hopp i rullehastigheten når du beveger
+
+rullehjulet. Dette burde gjøre rulling litt glattere og lettere å følge
+
+med øynene uten å gjøre ting mindre responsivt. Rulling med ‘Glathet:
+
+Høy’ bruker nå rundt 30% mer CPU, på min datamaskin gikk det fra 1,2%
+
+CPU-bruk ved kontinuerlig rulling til 1,6%. Så rulling er fortsatt svært
+
+effektivt og jeg håper dette ikke vil utgjøre noen forskjell for noen.
+
+Stor takk til <a href="https://mos.caldis.me/">MOS</a>, som inspirerte
+
+denne funksjonen og hvis ‘Scroll Monitor’ jeg brukte for å hjelpe med å
+
+implementere funksjonen.</li>
+
+<li>Mac Mouse Fix <strong>håndterer nå knappeinput fra alle
+
+kilder</strong>. Tidligere ville Mac Mouse Fix bare håndtere input fra
+
+mus den gjenkjente. Jeg tror dette kan hjelpe kompatibilitet med visse
+
+mus i spesielle tilfeller, som når du bruker en Hackintosh, men det vil
+
+også føre til at Mac Mouse Fix fanger opp kunstig genererte knappeinput
+
+fra andre apper, noe som kan føre til problemer i andre spesielle
+
+tilfeller. Gi meg beskjed hvis dette fører til problemer for deg, så vil
+
+jeg ta tak i det i fremtidige oppdateringer.</li>
+
+<li>Forbedret følelsen og finishen av ‘Klikk og rull’ for ‘Skrivebord og
+
+Launchpad’ og ‘Klikk og rull’ for ‘Flytt mellom Spaces’-bevegelser.</li>
+
+<li>Tar nå hensyn til informasjonstettheten i et språk når <strong>tiden
+
+varsler vises</strong> beregnes. Før dette ville varsler bare være
+
+synlige i veldig kort tid på språk med høy informasjonstetthet som
+
+kinesisk eller koreansk.</li>
+
+<li>Aktivert <strong>forskjellige bevegelser</strong> for å flytte
+
+mellom <strong>Spaces</strong>, åpne <strong>Mission Control</strong>,
+
+eller åpne <strong>App Exposé</strong>. I Beta 6 gjorde jeg det slik at
+
+disse handlingene bare var tilgjengelige gjennom ‘Klikk og
+
+dra’-bevegelsen - som et eksperiment for å se hvor mange som faktisk
+
+brydde seg om å kunne få tilgang til disse handlingene på andre måter.
+
+Det ser ut til at noen gjør det, så nå har jeg gjort det mulig igjen å
+
+få tilgang til disse handlingene gjennom et enkelt ‘Klikk’ på en knapp
+
+eller gjennom ‘Klikk og rull’.</li>
+
+<li>Gjort det mulig å <strong>rotere</strong> gjennom en <strong>Klikk
+
+og rull</strong>-bevegelse.</li>
+
+<li><strong>Forbedret</strong> måten
+
+<strong>Styreflate-simulering</strong>-alternativet fungerer på i noen
+
+scenarioer. For eksempel når du ruller horisontalt for å slette en
+
+melding i Mail, er retningen meldingen beveger seg nå invertert, noe jeg
+
+håper føles litt mer naturlig og konsistent for de fleste.</li>
+
+<li>Lagt til en funksjon for å <strong>tilordne</strong> til
+
+<strong>Primærklikk</strong> eller <strong>Sekundærklikk</strong>. Jeg
+
+implementerte dette fordi høyre museknapp på favorittmusen min gikk i
+
+stykker. Disse alternativene er skjult som standard. Du kan se dem ved å
+
+holde nede Tilvalg-tasten mens du velger en handling.
+
+<ul>
+
+<li>Dette mangler for øyeblikket oversettelser for kinesisk og koreansk,
+
+så hvis du vil bidra med oversettelser for disse funksjonene, ville det
+
+vært veldig satt pris på!</li>
+
+</ul></li>
+
+</ul>
+
+<p><strong>Feilrettinger</strong></p>
+
+<ul>
+
+<li>Fikset en feil der <strong>retningen på ‘Klikk og dra’</strong> for
+
+‘Mission Control og Spaces’ var <strong>invertert</strong> for folk som
+
+aldri har byttet alternativet ‘Naturlig rulling’ i Systeminnstillinger.
+
+Nå skal retningen på ‘Klikk og dra’-bevegelser i Mac Mouse Fix alltid
+
+matche retningen på bevegelser på styreflaten eller Magic Mouse. Hvis du
+
+vil ha et separat alternativ for å invertere ‘Klikk og dra’-retningen, i
+
+stedet for å la den følge Systeminnstillingene, gi meg beskjed.</li>
+
+<li>Fikset en feil der <strong>gratisdagene</strong> ville
+
+<strong>telles opp for raskt</strong> for noen brukere. Hvis du ble
+
+påvirket av dette, gi meg beskjed så skal jeg se hva jeg kan gjøre.</li>
+
+<li>Fikset et problem under macOS Sonoma der fanelinjen ikke ville vises
+
+riktig.</li>
+
+<li>Fikset hakkete oppførsel når du bruker ‘macOS’ rullehastighet mens
+
+du bruker ‘Klikk og rull’ for å åpne Launchpad.</li>
+
+<li>Fikset krasj der ‘Mac Mouse Fix Helper’-appen (som kjører i
+
+bakgrunnen når Mac Mouse Fix er aktivert) noen ganger ville krasje når
+
+du tok opp en hurtigtast.</li>
+
+<li>Fikset en feil der Mac Mouse Fix ville krasje når den prøvde å fange
+
+opp kunstige hendelser generert av <a
+
+href="https://github.com/artginzburg/MiddleClick-Sonoma">MiddleClick-Sonoma</a></li>
+
+<li>Fikset et problem der navnet på noen mus som vises i ‘Gjenopprett
+
+standarder…’-dialogen ville inneholde produsenten to ganger.</li>
+
+<li>Gjort det mindre sannsynlig at ‘Klikk og dra’ for ‘Mission Control
+
+og Spaces’ henger seg opp når datamaskinen er treg.</li>
+
+<li>Rettet bruk av ‘Force Touch’ i UI-strenger der det skulle være
+
+‘Kraftklikk’.</li>
+
+<li>Fikset en feil som ville oppstå for visse konfigurasjoner, der
+
+åpning av Launchpad eller visning av skrivebordet gjennom ‘Klikk og
+
+rull’ ikke ville fungere hvis du slapp knappen mens overgangsanimasjonen
+
+fortsatt pågikk.</li>
+
+</ul>
+
+<p><strong>Mer</strong></p>
+
+<ul>
+
+<li>Flere forbedringer under panseret, stabilitetsforbedringer,
+
+opprydding under panseret, og mer.</li>
+
+</ul>
+
+<h2 id="hvordan-du-kan-hjelpe">Hvordan du kan hjelpe</h2>
+
+<p>Du kan hjelpe ved å dele dine <strong>ideer</strong>,
+
+<strong>problemer</strong> og <strong>tilbakemeldinger</strong>!</p>
+
+<p>Det beste stedet å dele dine <strong>ideer</strong> og
+
+<strong>problemer</strong> er <a
+
+href="https://noah-nuebling.github.io/mac-mouse-fix-feedback-assistant/?type=bug-report">Tilbakemeldingsassistenten</a>.
+
+Det beste stedet å gi <strong>rask</strong> ustrukturert tilbakemelding
+
+er <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/discussions/366">Tilbakemeldingsdiskusjonen</a>.</p>
+
+<p>Du kan også få tilgang til disse stedene fra appen på ‘<strong>ⓘ
+
+Om</strong>’-fanen.</p>
+
+<p><strong>Takk</strong> for at du hjelper til med å gjøre Mac Mouse Fix
+
+bedre! 😎:)</p>
+
+</body>
+
+</html>

@@ -1,50 +1,62 @@
-Mac Mouse Fix **3.0.1 Beta 1**, bir süredir üzerinde çalışılan harika yeni bir çeviri sistemi getiriyor.\
-Ayrıca bazı kullanıcı arayüzü iyileştirmeleri de var.
+Mac Mouse Fix **3.1.0 Beta 1**, bir süredir üzerinde çalışılan harika bir yeni çeviri sistemi getiriyor.\
+Ayrıca bazı arayüz iyileştirmeleri de var.
 
-### Yeni yerelleştirme sistemi!
+### Yeni yerelleştirme sistemi! 
 
-- Artık Mac Mouse Fix'e yüksek kaliteli çeviriler katkıda bulunmak çok kolay, hiçbir teknik bilgi gerekmiyor.
-- Birçok açıklamalı ekran görüntüsü ve yorum ile harika bir arama işlevi var, böylece çevirmenler çevirilerinin uygulamada tam olarak nasıl göründüğünü kolayca anlayabilir.
-    - Ekran görüntülerinin ve çeviri arayüzünün (`Xcloc Editor` uygulaması) piyasadaki en kaliteli olduğunu düşünüyorum ve harika çeviriler yapmanıza yardımcı olacağını umuyorum!
-- Artık projenin neredeyse tüm bölümleri çevrilebilir, 'Yakalanan Düğmeler Kılavuzu', GitHub Readme, Web Sitesi ve daha fazlası dahil.
-    - Projenin tüm bu bölümleri, `Xcloc Editor` uygulamasını kullanarak kolay çapraz referanslama ile tek bir merkezi yerden çevrilebilir, böylece çevirmenlerin her şeyi tutarlı tutması kolay.
-- Sistem çok kolay bakım yapılabilecek şekilde kuruldu, böylece Mac Mouse Fix geliştikçe ve yeni ekranlar veya metinler eklendikçe her şey otomatik olarak güncellenecek.
-- Sorumluluk reddi: 'Kolay' kelimesini çok kullanıyorum. İş akışları kolay, ancak harika çeviriler düşünmek elbette hala çok zor ve saygıdeğer bir iş! Artık önünüzde daha az engel var.
-
-
+- Artık Mac Mouse Fix'e yüksek kaliteli çevirilerle katkıda bulunmak çok kolay, hiçbir teknik bilgi gerekmiyor.
+- Birçok açıklamalı ekran görüntüsü ve yorum ile harika bir arama fonksiyonu var, böylece çevirmenler çevirilerinin uygulamada tam olarak nasıl göründüğünü kolayca anlayabilir.
+    - Ekran görüntülerinin ve çeviri arayüzünün (`Xcloc Editor` uygulaması) piyasadaki en kaliteli olanlar olduğunu düşünüyorum ve harika çeviriler yapmanıza yardımcı olacağını umuyorum!
+- Artık projenin neredeyse tüm bölümleri çevrilebilir durumda; 'Yakalanan Düğmeler Kılavuzu', GitHub Readme, Web Sitesi ve daha fazlası dahil.
+    - Projenin tüm bu bölümleri, `Xcloc Editor` uygulaması kullanılarak kolay çapraz referanslama ile tek bir merkezi yerden çevrilebilir, böylece çevirmenler her şeyi tutarlı tutabilir.
+- Sistem bakımı çok kolay olacak şekilde kuruldu, böylece Mac Mouse Fix geliştikçe ve yeni ekranlar veya metinler eklendikçe her şey otomatik olarak güncellenecek.
+- Uyarı: 'Kolay' kelimesini çok kullanıyorum. İş akışları kolay, ancak harika çeviriler düşünmek elbette hâlâ çok zor ve saygıdeğer bir iş! Sadece artık daha az engel var.
 
 
-Yeni çeviriler aşağıdaki kişiler tarafından cömertçe sağlanmıştır:
 
-- **Eduardo Rodrigues** ve [@denini08](https://github.com/denini08): 🇧🇷 Brezilya Portekizcesi çevirileri
-- [@DimitriDR](https://github.com/DimitriDR): 🇫🇷 Fransızca çeviriler
-- [@hasanbeder](https://github.com/hasanbeder) ve [@erentomurcuk](https://github.com/erentomurcuk): 🇹🇷 Türkçe çeviriler
-- [Petr Pavlík](http://www.petrpavlik.com): 🇨🇿 Çekçe çeviriler
-- [@Dro9an](https://github.com/Dro9an) ve [@jihao](https://github.com/jihao): 🇨🇳 [Web sitesinin](https://macmousefix.com/zh-Hans) Basitleştirilmiş Çince çevirisi
-- [@xianyu-wang](https://github.com/xianyu-wang): 🇨🇳 Basitleştirilmiş Çince çeviriler
-- [@manghidev](https://github.com/manghidev): 🇪🇸 İspanyolca çeviriler
-- **Jakub**: 🇵🇱 [Web sitesinin](https://macmousefix.com/pl) Lehçe çevirileri
-- [ETMH](https://t.me/sos_soon_ok): 🇷🇺 Rusça çeviriler
 
-Çalışmanız için teşekkürler!
+Yeni çeviriler zaten aşağıdaki kişiler tarafından cömertçe sağlandı:
 
-Ancak, **tüm diller hala çalışma gerektiriyor**, çünkü çok sayıda yeni şey çevrilebilir hale getirildi.
+  - 🇧🇷 Brezilya Portekizcesi çevirileri
+      - **Eduardo Rodrigues**
+      - [@denini08](https://github.com/denini08)
+  - 🇫🇷 Fransızca çevirileri
+      - [@DimitriDR](https://github.com/DimitriDR)
+  - 🇹🇷 Türkçe çevirileri
+      - [@hasanbeder](https://github.com/hasanbeder)
+      - [@erentomurcuk](https://github.com/erentomurcuk)
+  - 🇨🇿 Çekçe çevirileri
+      - [Petr Pavlík](http://www.petrpavlik.com)
+  - 🇨🇳 Basitleştirilmiş Çince çevirileri
+      - [@Dro9an](https://github.com/Dro9an) ([web sitesi](https://macmousefix.com/zh-Hans))
+      - [@jihao](https://github.com/jihao) ([web sitesi](https://macmousefix.com/zh-Hans))
+      - [@xianyu-wang](https://github.com/xianyu-wang)
+  - 🇪🇸 İspanyolca çevirileri
+      - [@manghidev](https://github.com/manghidev)
+  - 🇵🇱 Lehçe çevirileri
+      - **Jakub** ([web sitesi](https://macmousefix.com/pl))
+  - 🇷🇺 Rusça çevirileri
+      - **Vyacheslav**
+      - [ETMH](https://t.me/sos_soon_ok)
+
+Çalışmalarınız için teşekkürler!
+
+Ancak, birçok yeni şey çevrilebilir hale getirildiğinden **tüm diller hâlâ çalışma gerektiriyor**. 
 
 Bu nedenle:
 
 > [!TIP]
-> Dünyanın dört bir yanındaki Mac Mouse Fix kullanıcılarına harika çeviriler getirmeye yardımcı olmak istiyorsan yeni [Çeviri Kılavuzu](https://redirect.macmousefix.com/?target=mmf-localization-contribution)'na göz at! 🌎
+> Dünya genelindeki Mac Mouse Fix kullanıcılarına harika çeviriler sunmaya yardımcı olmak istersen yeni [Çeviri Kılavuzu](https://redirect.macmousefix.com/?target=mmf-localization-contribution)'na göz at! 🌎
 
-### Diğer değişiklikler
+### Diğer değişiklikler 
 
-Mac Mouse Fix'i İngilizce kullanırken pek bir şey değişmedi, ancak kullanıcı arayüzünde birkaç şey güncellendi ve çevirileri daha iyi hale getirmek için perde arkasında çok şey değişti:
+Mac Mouse Fix'i İngilizce kullanırken çok fazla şey değişmedi, ancak arayüzde birkaç şey güncellendi ve çevirileri daha iyi hale getirmek için perde arkasında çok şey değişti:
 
-- Küçük açılır bildirimler için geliştirilmiş görünüm.
-- Çeşitli yerlerde daha net araç ipuçları ve hatalar.
+- Küçük açılır bildirimler için iyileştirilmiş görünüm.
+- Çeşitli yerlerde daha net araç ipuçları ve hata mesajları.
 - Escape tuşu artık bildirimleri, sayfaları ve açılır pencereleri kapatmak için her yerde kullanılabilir.
-- Hakkında Sekmesine 'Çeviriye Yardım Et' bağlantısı eklendi.
-- Görünümlerin ve açılır pencerelerin genişliği çeşitli dillerde harika görünmesi için ayarlandı.
-- Bazı küçük açılır bildirimlerde metin kaydırma sorunları olan Çince ve Korece için daha iyi metin düzeni.
+- Hakkında sekmesine 'Çeviriye Yardım Et' bağlantısı eklendi.
+- Görünümlerin ve açılır pencerelerin genişliği çeşitli dillerde harika görünecek şekilde ayarlandı.
+- Bazı küçük açılır bildirimlerde metin kaydırma sorunları yaşayan Çince ve Korece için daha iyi metin düzeni.
 - Çince ve Korece'deki bazı biçimlendirme hatalarını düzeltmek için Markdown ayrıştırma kütüphanesi değiştirildi.
 - Perde arkasında çok daha fazla değişiklik ve iyileştirme.
 
@@ -52,51 +64,4 @@ Mac Mouse Fix'i İngilizce kullanırken pek bir şey değişmedi, ancak kullanı
 
 ---
 
-Mac Mouse Fix'in önceki sürümünü buradan bulabilirsin: [3.0.8](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8)
-
----
-
-Güncellemeler:
-(Her seferinde yeni bir GitHub Sürümü oluşturmadan çevirileri güncelliyorum.)
-
-1. Güncelleme:
-    - MacMouseFixApp.zip dosyasının yapı numarası: 24814
-    - Tarih: [8 Aralık 2025]
-    - Değişiklik: Vyacheslav tarafından Rusça çeviriler eklendi
-
-2. Güncelleme:
-    - MacMouseFixApp.zip dosyasının yapı numarası: 24815
-    - Tarih: [15 Aralık 2025]
-    - Değişiklik: Petr tarafından Çekçe çeviriler güncellendi
-
-3. Güncelleme:
-    - MacMouseFixApp.zip dosyasının yapı numarası: 24822
-    - Tarih: [15 Aralık 2025]
-    - Değişiklikler:
-        - Eren tarafından Türkçe çeviriler eklendi.
-        - Bazı daha geniş Türkçe arayüz dizileriyle daha iyi çalışması için Kaydırma sekmesindeki yatay kenar boşlukları biraz daraltıldı.
-        - Listeden sonraki ilk şey bir bağlantı olduğunda liste işaretlerinin altı çizili olacağı Markdown oluşturma sorunu düzeltildi. Bu birkaç yerde Türkçe'yi etkiledi.
-
-4. Güncelleme
-    - MacMouseFixApp.zip dosyasının yapı numarası: 24827
-    - Tarih [21 Aralık 2025]
-    - Değişiklik: @manghidev tarafından İspanyolca çeviriler eklendi
-    
-5. Güncelleme
-    - MacMouseFixApp.zip dosyasının yapı numarası: 24828
-    - Tarih [27 Aralık 2025]
-    - Değişiklikler:
-        - ETMH tarafından sağlanan Rusça çeviriler güncellendi
-        - Rusça çevirilerle ortaya çıkan Düğmeler sekmesindeki bir düzen hatası düzeltildi.
-
-6. Güncelleme
-    - MacMouseFixApp.zip dosyasının yapı numarası: 24829
-    - Tarih [29 Aralık 2025]
-    - Değişiklikler:
-        - @xianyu-wang tarafından Basitleştirilmiş Çince çeviriler güncellendi
-
-7. Güncelleme
-    - MacMouseFixApp.zip dosyasının yapı numarası: 24830
-    - Tarih [1 Ocak 2026]
-    - Değişiklikler:
-        - [@denini08](https://github.com/denini08) tarafından Brezilya Portekizcesi çevirileri güncellendi
+Mac Mouse Fix'in önceki sürümünü burada bulabilirsin: [3.0.8](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.8)

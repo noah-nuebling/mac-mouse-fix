@@ -6,7 +6,7 @@
 
   <meta charset="utf-8" />
 
-  <meta name="generator" content="pandoc" />
+  <meta name="generator" content="pandoc 3.11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
 
@@ -14,13 +14,25 @@
 
   <style>
 
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+
+    */
 
     span.smallcaps{font-variant: small-caps;}
 
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.columns{display: flex; gap: 1.5em;}
 
-    div.column{flex: auto; overflow-x: auto;}
+    div.column{flex: auto;}
+
+    @media screen {
+
+    div.columns{gap: min(4vw, 1.5em);}
+
+    div.column{overflow-x: auto;}
+
+    }
 
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 
@@ -41,8 +53,6 @@
       vertical-align: middle;
 
     }
-
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
 
   </style>
 
@@ -66,97 +76,157 @@ href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.1.0-Beta-1">
 
 <hr />
 
-<p>Mac Mouse Fix <strong>3.0.0 Beta 1</strong>
+<p>Mac Mouse Fix <strong>3.1.0 Beta 1</strong>
 
-は、しばらく開発を進めてきた素晴らしい新しい翻訳システムを導入します。<br />
+では、しばらく開発を進めてきた素晴らしい新しい翻訳システムが導入されました。<br />
 
-また、いくつかのUI改善も含まれています。</p>
+また、UIの改善もいくつか行われています。</p>
 
 <h3
 
-id="新しいローカライゼーションシステム">新しいローカライゼーションシステム!</h3>
+id="新しいローカライゼーションシステム">新しいローカライゼーションシステム！</h3>
 
 <ul>
 
-<li>技術的な知識が一切不要で、Mac Mouse
+<li>技術的な知識がなくても、Mac Mouse
 
-Fixに高品質な翻訳を提供することが非常に簡単になりました。</li>
+Fixの高品質な翻訳に簡単に貢献できるようになりました。</li>
 
-<li>注釈付きのスクリーンショットやコメント、優れた検索機能が豊富に用意されているため、翻訳者は自分の翻訳がアプリ内でどのように表示されるかを正確に理解できます。
+<li>注釈付きのスクリーンショットやコメントが豊富にあり、優れた検索機能も備わっているため、翻訳者は自分の翻訳がアプリ内でどのように表示されるかを正確に理解できます。
 
 <ul>
 
-<li>スクリーンショットと翻訳UI(<code>Xcloc Editor</code>アプリ)は市場で最高品質だと思っており、素晴らしい翻訳の提供に役立つことを願っています!</li>
+<li>スクリーンショットと翻訳UI（<code>Xcloc Editor</code>アプリ）は市場で最高品質だと思っており、素晴らしい翻訳の提供に役立つことを願っています！</li>
 
 </ul></li>
 
-<li>「キャプチャされたボタンガイド」、GitHubのReadme、ウェブサイトなど、プロジェクトのほぼすべての部分が翻訳可能になりました。
+<li>「キャプチャされたボタンガイド」、GitHub
+
+Readme、ウェブサイトなど、プロジェクトのほぼすべての部分が翻訳可能になりました。
 
 <ul>
 
-<li>これらすべてのプロジェクト部分は、<code>Xcloc Editor</code>アプリを使用して一元化された場所から簡単に相互参照しながら翻訳できるため、翻訳者がすべてを一貫性を保つことが容易です。</li>
+<li>これらすべての部分は、<code>Xcloc Editor</code>アプリを使用して一元化された場所から翻訳でき、簡単に相互参照できるため、翻訳者は一貫性を保ちやすくなっています。</li>
 
 </ul></li>
 
-<li>このシステムは非常にメンテナンスしやすいように設計されているため、Mac
+<li>このシステムはメンテナンスが非常に簡単になるように設計されているため、Mac
 
 Mouse
 
 Fixが進化し、新しい画面やテキストが追加されても、すべてが自動的に更新されます。</li>
 
-<li>免責事項:「簡単」という言葉をよく使っていますが、ワークフローは簡単でも、素晴らしい翻訳を考えることはもちろん大変で尊敬すべき作業です!ただ、今は障壁が少なくなっただけです。</li>
+<li>注意：「簡単」という言葉をよく使っていますが、ワークフローは簡単でも、素晴らしい翻訳を考えることはもちろん大変で尊敬に値する作業です！ただ、障壁が少なくなっただけです。</li>
 
 </ul>
 
-<p>以下の方々が既に新しい翻訳を寛大に提供してくださいました:</p>
+<p>以下の方々から新しい翻訳が寛大に提供されました：</p>
 
 <ul>
 
-<li><strong>Eduardo Rodrigues</strong>: 🇧🇷 ブラジルポルトガル語翻訳</li>
+<li>🇧🇷 ブラジルポルトガル語翻訳
+
+<ul>
+
+<li><strong>Eduardo Rodrigues</strong></li>
+
+<li><a href="https://github.com/denini08"><span class="citation"
+
+data-cites="denini08">@denini08</span></a></li>
+
+</ul></li>
+
+<li>🇫🇷 フランス語翻訳
+
+<ul>
 
 <li><a href="https://github.com/DimitriDR"><span class="citation"
 
-data-cites="DimitriDR">@DimitriDR</span></a>: 🇫🇷 フランス語翻訳</li>
+data-cites="DimitriDR">@DimitriDR</span></a></li>
+
+</ul></li>
+
+<li>🇹🇷 トルコ語翻訳
+
+<ul>
 
 <li><a href="https://github.com/hasanbeder"><span class="citation"
 
-data-cites="hasanbeder">@hasanbeder</span></a> および <a
+data-cites="hasanbeder">@hasanbeder</span></a></li>
 
-href="https://github.com/erentomurcuk"><span class="citation"
+<li><a href="https://github.com/erentomurcuk"><span class="citation"
 
-data-cites="erentomurcuk">@erentomurcuk</span></a>: 🇹🇷 トルコ語翻訳</li>
+data-cites="erentomurcuk">@erentomurcuk</span></a></li>
 
-<li><a href="http://www.petrpavlik.com">Petr Pavlík</a>: 🇨🇿
+</ul></li>
 
-チェコ語翻訳</li>
+<li>🇨🇿 チェコ語翻訳
+
+<ul>
+
+<li><a href="http://www.petrpavlik.com">Petr Pavlík</a></li>
+
+</ul></li>
+
+<li>🇨🇳 簡体字中国語翻訳
+
+<ul>
 
 <li><a href="https://github.com/Dro9an"><span class="citation"
 
-data-cites="Dro9an">@Dro9an</span></a> および <a
+data-cites="Dro9an">@Dro9an</span></a> (<a
 
-href="https://github.com/jihao"><span class="citation"
+href="https://macmousefix.com/zh-Hans">ウェブサイト</a>)</li>
 
-data-cites="jihao">@jihao</span></a>: 🇨🇳 <a
+<li><a href="https://github.com/jihao"><span class="citation"
 
-href="https://macmousefix.com/zh-Hans">ウェブサイト</a>の中国語翻訳</li>
+data-cites="jihao">@jihao</span></a> (<a
+
+href="https://macmousefix.com/zh-Hans">ウェブサイト</a>)</li>
+
+<li><a href="https://github.com/xianyu-wang"><span class="citation"
+
+data-cites="xianyu-wang">@xianyu-wang</span></a></li>
+
+</ul></li>
+
+<li>🇪🇸 スペイン語翻訳
+
+<ul>
 
 <li><a href="https://github.com/manghidev"><span class="citation"
 
-data-cites="manghidev">@manghidev</span></a>: 🇪🇸 スペイン語翻訳</li>
+data-cites="manghidev">@manghidev</span></a></li>
 
-<li><strong>Jakub</strong>: 🇵🇱 <a
+</ul></li>
 
-href="https://macmousefix.com/pl">ウェブサイト</a>のポーランド語翻訳</li>
+<li>🇵🇱 ポーランド語翻訳
 
-<li><a href="https://t.me/sos_soon_ok">ETMH</a>: 🇷🇺 ロシア語翻訳</li>
+<ul>
+
+<li><strong>Jakub</strong> (<a
+
+href="https://macmousefix.com/pl">ウェブサイト</a>)</li>
+
+</ul></li>
+
+<li>🇷🇺 ロシア語翻訳
+
+<ul>
+
+<li><strong>Vyacheslav</strong></li>
+
+<li><a href="https://t.me/sos_soon_ok">ETMH</a></li>
+
+</ul></li>
 
 </ul>
 
-<p>ご協力ありがとうございます!</p>
+<p>ご協力ありがとうございます！</p>
 
-<p>ただし、多くの新しい項目が翻訳可能になったため、<strong>すべての言語でまだ作業が必要です</strong>。</p>
+<p>ただし、翻訳可能な新しいコンテンツが多く追加されたため、<strong>すべての言語でまだ作業が必要です</strong>。</p>
 
-<p>そのため:</p>
+<p>そのため：</p>
 
 <blockquote>
 
@@ -164,9 +234,7 @@ href="https://macmousefix.com/pl">ウェブサイト</a>のポーランド語翻
 
 Fixユーザーに素晴らしい翻訳を届けるお手伝いをしたい方は、新しい<a
 
-href="https://redirect.macmousefix.com/?target=mmf-localization-contribution&amp;locale=ja">翻訳ガイド</a>をチェックしてください!
-
-🌎</p>
+href="https://redirect.macmousefix.com/?target=mmf-localization-contribution&amp;locale=ja">翻訳ガイド</a>をチェックしてください！🌎</p>
 
 </blockquote>
 
@@ -174,123 +242,33 @@ href="https://redirect.macmousefix.com/?target=mmf-localization-contribution&amp
 
 <p>Mac Mouse
 
-Fixを英語で使用する場合、大きな変更はありませんが、UIのいくつかが更新され、翻訳をより良くするために内部で多くの変更が行われました:</p>
+Fixを英語で使用している場合、大きな変更はありませんが、UIでいくつかの更新があり、翻訳をより良くするために内部で多くの変更が行われました：</p>
 
 <ul>
 
-<li>小さなポップアップ通知の外観を洗練しました。</li>
+<li>小さなポップアップ通知の外観を改良しました。</li>
 
-<li>様々な場所でツールチップとエラーをより明確にしました。</li>
+<li>様々な場所でツールチップとエラーメッセージをより明確にしました。</li>
 
-<li>Escapeキーで通知、シート、ポップアップを閉じることができるようになりました。</li>
+<li>エスケープキーを使用して、通知、シート、ポップアップをどこでも閉じられるようになりました。</li>
 
-<li>「翻訳を手伝う」リンクが「について」タブに追加されました。</li>
+<li>「翻訳を手伝う」リンクが「情報」タブに追加されました。</li>
 
-<li>様々な言語で美しく表示されるように、ビューとポップアップの幅を調整しました。</li>
+<li>ビューとポップアップの幅が、様々な言語で美しく表示されるように調整されました。</li>
 
 <li>一部の小さなポップアップ通知でテキストの折り返しに問題があった中国語と韓国語のテキストレイアウトを改善しました。</li>
 
-<li>中国語と韓国語のフォーマットバグを修正するため、Markdown解析ライブラリを置き換えました。</li>
+<li>中国語と韓国語での一部のフォーマットバグを修正するため、Markdownパースライブラリを置き換えました。</li>
 
-<li>その他多くの内部的な変更と改善。</li>
+<li>その他多くの内部変更と改善。</li>
 
 </ul>
 
 <hr />
 
-<p>Mac Mouse Fixの前回のリリースはこちらで確認できます: <a
+<p>Mac Mouse Fixの以前のリリースはこちら：<a
 
 href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.8&amp;locale=ja">3.0.8</a></p>
-
-<hr />
-
-<p>更新情報:
-
-(毎回新しいGitHubリリースを作成せずに翻訳を更新しています。)</p>
-
-<ol type="1">
-
-<li>更新:
-
-<ul>
-
-<li>MacMouseFixApp.zipアセットのビルド番号: 24814</li>
-
-<li>日付: [2025年12月8日]</li>
-
-<li>変更: Vyacheslavによるロシア語翻訳を追加</li>
-
-</ul></li>
-
-<li>更新:
-
-<ul>
-
-<li>MacMouseFixApp.zipアセットのビルド番号: 24815</li>
-
-<li>日付: [2025年12月15日]</li>
-
-<li>変更: Petrによるチェコ語翻訳を更新</li>
-
-</ul></li>
-
-<li>更新:
-
-<ul>
-
-<li>MacMouseFixApp.zipアセットのビルド番号: 24822</li>
-
-<li>日付: [2025年12月15日]</li>
-
-<li>変更:
-
-<ul>
-
-<li>Erenによるトルコ語翻訳を追加。</li>
-
-<li>一部の長いトルコ語UI文字列でより良く機能するように、スクロールタブの水平マージンをわずかに狭くしました。</li>
-
-<li>リストの後の最初の要素がリンクの場合、リストの箇条書きに下線が表示されるMarkdownレンダリングの問題を修正しました。これはいくつかの場所でトルコ語に影響していました。</li>
-
-</ul></li>
-
-</ul></li>
-
-<li>更新
-
-<ul>
-
-<li>MacMouseFixApp.zipアセットのビルド番号: 24827</li>
-
-<li>日付 [2025年12月21日]</li>
-
-<li>変更: <span class="citation"
-
-data-cites="manghidevによるスペイン語翻訳を追加">@manghidevによるスペイン語翻訳を追加</span></li>
-
-</ul></li>
-
-<li>更新
-
-<ul>
-
-<li>MacMouseFixApp.zipアセットのビルド番号: 24828</li>
-
-<li>日付 [2025年12月27日]</li>
-
-<li>変更:
-
-<ul>
-
-<li>ETMHによるロシア語翻訳を更新</li>
-
-<li>ロシア語翻訳で表面化したボタンタブのレイアウトバグを修正。</li>
-
-</ul></li>
-
-</ul></li>
-
-</ol>
 
 </body>
 

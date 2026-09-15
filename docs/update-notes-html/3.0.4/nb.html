@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb" xml:lang="nb">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc 3.11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.4</title>
+
+  <style>
+
+    /* Default styles provided by pandoc.
+
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+
+    */
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: 1.5em;}
+
+    div.column{flex: auto;}
+
+    @media screen {
+
+    div.columns{gap: min(4vw, 1.5em);}
+
+    div.column{overflow-x: auto;}
+
+    }
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Oversatt av AI</strong></p>
+
+<p>Denne utgivelsesnotisen har blitt oversatt av Claude AI. Den kan
+
+inneholde feil.<br />
+
+For den originale engelske versjonen, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.4">klikk
+
+her</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.4</strong> forbedrer personvern,
+
+effektivitet og pålitelighet.<br />
+
+Den introduserer et nytt offline-lisensieringssystem og fikser flere
+
+viktige feil.</p>
+
+<h3 id="forbedret-personvern-og-effektivitet">Forbedret personvern og
+
+effektivitet</h3>
+
+<p>3.0.4 introduserer et nytt offline-lisensvalideringssystem som
+
+minimerer internettforbindelser så mye som mulig.<br />
+
+Dette forbedrer personvernet og sparer datamaskinens
+
+systemressurser.<br />
+
+Når appen er lisensiert, fungerer den nå 100 % offline!</p>
+
+<details>
+
+<summary>
+
+<b>Klikk her for flere detaljer</b>
+
+</summary>
+
+<p>Tidligere versjoner validerte lisenser online ved hver oppstart, noe
+
+som potensielt tillot at tilkoblingslogger ble lagret av
+
+tredjepartsservere (GitHub og Gumroad). Det nye systemet eliminerer
+
+unødvendige tilkoblinger – etter den første lisensaktiveringen kobler
+
+det seg bare til internett hvis lokale lisensdata er ødelagt. <br><br>
+
+Selv om ingen brukeratferd noensinne ble registrert av meg personlig,
+
+tillot det forrige systemet teoretisk at tredjepartsservere kunne logge
+
+IP-adresser og tilkoblingstider. Gumroad kunne også logge lisensnøkkelen
+
+din og potensielt korrelere den med personlig informasjon de registrerte
+
+om deg da du kjøpte Mac Mouse Fix. <br><br> Jeg tenkte ikke på disse
+
+subtile personvernproblemene da jeg bygde det opprinnelige
+
+lisensieringssystemet, men nå er Mac Mouse Fix så privat og internettfri
+
+som mulig! <br><br> Se også <a href=https://gumroad.com/privacy>Gumroads
+
+personvernregler</a> og denne
+
+<a href=https://github.com/noah-nuebling/mac-mouse-fix/issues/976#issuecomment-2140955801>GitHub-kommentaren</a>
+
+min.</p>
+
+</details>
+
+<h3 id="feilrettinger">Feilrettinger</h3>
+
+<ul>
+
+<li>Fikset en feil der macOS noen ganger kunne henge seg opp ved bruk av
+
+«Klikk og dra» for «Skrivebord og Mission Control».</li>
+
+<li>Fikset en feil der tastatursnarveier i Systeminnstillinger noen
+
+ganger ble slettet ved bruk av Mac Mouse Fix «Klikk»-handlinger som
+
+«Mission Control».</li>
+
+<li>Fikset <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues?q=state%3Aopen%20label%3A%22%27Free%20days%20are%20over%27%20bug%22">en
+
+feil</a> der appen noen ganger sluttet å fungere og viste en varsling om
+
+at «Gratisdagene er over» til brukere som allerede hadde kjøpt appen.
+
+<ul>
+
+<li>Hvis du opplevde denne feilen, beklager jeg virkelig ulempene. Du
+
+kan søke om <a
+
+href="https://redirect.macmousefix.com/?message=&amp;target=mmf-apply-for-refund&amp;locale=nb">refusjon
+
+her</a>.</li>
+
+</ul></li>
+
+<li>Forbedret måten applikasjonen henter hovedvinduet sitt på, noe som
+
+kan ha fikset en feil der «Aktiver lisens»-skjermen noen ganger ikke
+
+vises.</li>
+
+</ul>
+
+<h3
+
+id="brukervennlighetsforbedringer">Brukervennlighetsforbedringer</h3>
+
+<ul>
+
+<li>Gjort det umulig å skrive inn mellomrom og linjeskift i tekstfeltet
+
+på «Aktiver lisens»-skjermen.
+
+<ul>
+
+<li>Dette var et vanlig forvirringspunkt, fordi det er veldig lett å ved
+
+et uhell velge et skjult linjeskift når du kopierer lisensnøkkelen din
+
+fra Gumroads e-poster.</li>
+
+</ul></li>
+
+<li>Disse oppdateringsnotatene oversettes automatisk for
+
+ikke-engelskspråklige brukere (drevet av Claude). Jeg håper dette er
+
+nyttig! Hvis du opplever problemer med det, gi meg beskjed. Dette er et
+
+første glimt av et nytt oversettelsessystem jeg har utviklet det siste
+
+året.</li>
+
+</ul>
+
+<h3 id="fjernet-uoffisiell-støtte-for-macos-10.14-mojave">Fjernet
+
+(uoffisiell) støtte for macOS 10.14 Mojave</h3>
+
+<p>Mac Mouse Fix 3 støtter offisielt macOS 11 Big Sur og nyere. For
+
+brukere som var villige til å akseptere noen feil og grafiske problemer,
+
+kunne Mac Mouse Fix 3.0.3 og tidligere fortsatt brukes på macOS 10.14.4
+
+Mojave.</p>
+
+<p>Mac Mouse Fix 3.0.4 fjerner denne støtten og <strong>krever nå macOS
+
+10.15 Catalina</strong>.<br />
+
+Jeg beklager eventuelle ulemper dette medfører. Denne endringen tillot
+
+meg å implementere det forbedrede lisensieringssystemet ved hjelp av
+
+moderne Swift-funksjoner. Mojave-brukere kan fortsette å bruke Mac Mouse
+
+Fix <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.3&amp;locale=nb">3.0.3</a>
+
+eller <a
+
+href="https://redirect.macmousefix.com/?target=mmf2-latest&amp;locale=nb">nyeste
+
+versjon av Mac Mouse Fix 2</a>. Jeg håper det er en god løsning for
+
+alle.</p>
+
+<h3 id="forbedringer-under-panseret">Forbedringer under panseret</h3>
+
+<ul>
+
+<li>Implementert et nytt «MFDataClass»-system som tillater kraftigere
+
+datamodellering samtidig som Mac Mouse Fix sin konfigurasjonsfil forblir
+
+lesbar og redigerbar for mennesker.</li>
+
+<li>Bygget støtte for å legge til betalingsplattformer utover Gumroad.
+
+Så i fremtiden kan det bli lokaliserte betalingsløsninger, og appen kan
+
+selges til forskjellige land.</li>
+
+<li>Forbedret logging som lar meg lage mer effektive «Debug Builds» for
+
+brukere som opplever feil som er vanskelige å reprodusere.</li>
+
+<li>Mange andre små forbedringer og oppryddingsarbeid.</li>
+
+</ul>
+
+<p><em>Redigert med utmerket hjelp fra Claude.</em></p>
+
+<hr />
+
+<p>Sjekk også ut forrige utgivelse <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.3&amp;locale=nb"><strong>3.0.3</strong></a>.</p>
+
+</body>
+
+</html>

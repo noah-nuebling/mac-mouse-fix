@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="nb" xml:lang="nb">
+
+<head>
+
+  <meta charset="utf-8" />
+
+  <meta name="generator" content="pandoc 3.11" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+
+  <title>3.0.3</title>
+
+  <style>
+
+    /* Default styles provided by pandoc.
+
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+
+    */
+
+    span.smallcaps{font-variant: small-caps;}
+
+    div.columns{display: flex; gap: 1.5em;}
+
+    div.column{flex: auto;}
+
+    @media screen {
+
+    div.columns{gap: min(4vw, 1.5em);}
+
+    div.column{overflow-x: auto;}
+
+    }
+
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+    /* The extra [class] is a hack that increases specificity enough to
+
+       override a similar rule in reveal.js */
+
+    ul.task-list[class]{list-style: none;}
+
+    ul.task-list li input[type="checkbox"] {
+
+      font-size: inherit;
+
+      width: 0.8em;
+
+      margin: 0 0.8em 0.2em -1.6em;
+
+      vertical-align: middle;
+
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/style.css"/>
+
+  <script src="https://raw.githack.com/noah-nuebling/mac-mouse-fix/update-feed/html-assets/script.js"></script>
+
+</head>
+
+<body>
+
+<p><strong>ℹ️ Oversatt av AI</strong></p>
+
+<p>Denne utgivelsesnotisen har blitt oversatt av Claude AI. Den kan
+
+inneholde feil.<br />
+
+For den originale engelske versjonen, <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.3">klikk
+
+her</a>.</p>
+
+<hr />
+
+<p>Mac Mouse Fix <strong>3.0.3</strong> er klar for macOS 15 Sequoia.
+
+Den fikser også noen stabilitetsproblemer og gir flere små
+
+forbedringer.</p>
+
+<h3 id="macos-15-sequoia-støtte">macOS 15 Sequoia-støtte</h3>
+
+<p>Appen fungerer nå ordentlig under macOS 15 Sequoia!</p>
+
+<ul>
+
+<li>De fleste UI-animasjoner var ødelagt under macOS 15 Sequoia. Nå
+
+fungerer alt ordentlig igjen!</li>
+
+<li>Kildekoden kan nå bygges under macOS 15 Sequoia. Tidligere var det
+
+problemer med Swift-kompilatoren som forhindret appen fra å bygges.</li>
+
+</ul>
+
+<h3 id="løser-rullekrasj">Løser rullekrasj</h3>
+
+<p>Siden Mac Mouse Fix 3.0.2 har det vært <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">flere
+
+rapporter</a> om at Mac Mouse Fix periodisk deaktiverer og reaktiverer
+
+seg selv under rulling. Dette ble forårsaket av krasj i bakgrunnsappen
+
+‘Mac Mouse Fix Helper’. Denne oppdateringen forsøker å fikse disse
+
+krasjene, med følgende endringer:</p>
+
+<ul>
+
+<li><p>Rullemekanismen vil prøve å gjenopprette og fortsette å kjøre i
+
+stedet for å krasje, når den støter på grensetilfeller som ser ut til å
+
+ha ført til disse krasjene.</p></li>
+
+<li><p>Jeg endret måten uventede tilstander håndteres i appen mer
+
+generelt: I stedet for å alltid krasje umiddelbart, vil appen nå prøve å
+
+gjenopprette fra uventede tilstander i mange tilfeller.</p>
+
+<ul>
+
+<li>Denne endringen bidrar til fiksene for rullekrasjene beskrevet
+
+ovenfor. Den kan også forhindre andre krasj.</li>
+
+</ul></li>
+
+</ul>
+
+<p>Sidenotat: Jeg kunne aldri reprodusere disse krasjene på min maskin,
+
+og jeg er fortsatt ikke sikker på hva som forårsaket dem, men basert på
+
+rapportene jeg mottok, bør denne oppdateringen forhindre eventuelle
+
+krasj. Hvis du fortsatt opplever krasj under rulling eller hvis du
+
+<em>opplevde</em> krasj under 3.0.2, ville det være verdifullt om du
+
+delte din erfaring og diagnostiske data i GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/988">#988</a>.
+
+Dette ville hjelpe meg å forstå problemet og forbedre Mac Mouse Fix.
+
+Takk!</p>
+
+<h3 id="løser-rullehakking">Løser rullehakking</h3>
+
+<p>I 3.0.2 gjorde jeg endringer i hvordan Mac Mouse Fix sender
+
+rullehendelser til systemet i et forsøk på å redusere rullehakking som
+
+sannsynligvis er forårsaket av problemer med Apples VSync-APIer.</p>
+
+<p>Etter mer omfattende testing og tilbakemeldinger ser det imidlertid
+
+ut til at den nye mekanismen i 3.0.2 gjør rulling jevnere i noen
+
+scenarioer, men mer hakkete i andre. Spesielt i Firefox så det ut til å
+
+være merkbart verre.<br />
+
+Totalt sett var det ikke klart at den nye mekanismen faktisk forbedret
+
+rullehakking generelt. Den kan også ha bidratt til rullekrasjene
+
+beskrevet ovenfor.</p>
+
+<p>Derfor deaktiverte jeg den nye mekanismen og tilbakestilte
+
+VSync-mekanismen for rullehendelser til slik den var i Mac Mouse Fix
+
+3.0.0 og 3.0.1.</p>
+
+<p>Se GitHub Issue <a
+
+href="https://github.com/noah-nuebling/mac-mouse-fix/issues/875">#875</a>
+
+for mer info.</p>
+
+<h3 id="refusjon">Refusjon</h3>
+
+<p>Jeg beklager problemene relatert til rulleendringene i 3.0.1 og
+
+3.0.2. Jeg undervurderte kraftig problemene som ville komme med det, og
+
+jeg var treg med å løse disse problemene. Jeg skal gjøre mitt beste for
+
+å lære av denne erfaringen og være mer forsiktig med slike endringer i
+
+fremtiden. Jeg vil også tilby alle berørte en refusjon. Bare klikk <a
+
+href="https://redirect.macmousefix.com/?target=mmf-apply-for-refund&amp;locale=nb">her</a>
+
+hvis du er interessert.</p>
+
+<h3 id="smartere-oppdateringsmekanisme">Smartere
+
+oppdateringsmekanisme</h3>
+
+<p>Disse endringene ble hentet fra Mac Mouse Fix <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.4&amp;locale=nb">2.2.4</a>
+
+og <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=2.2.5&amp;locale=nb">2.2.5</a>.
+
+Sjekk ut deres utgivelsesnotater for å lære mer om detaljene. Her er et
+
+sammendrag:</p>
+
+<ul>
+
+<li>Det er en ny, smartere mekanisme som bestemmer hvilken oppdatering
+
+som skal vises til brukeren.</li>
+
+<li>Byttet fra å bruke Sparkle 1.26.0 oppdateringsrammeverket til den
+
+nyeste Sparkle <a
+
+href="https://github.com/sparkle-project/Sparkle/releases/tag/1.27.3">1.27.3</a>.</li>
+
+<li>Vinduet som appen viser for å informere deg om at en ny versjon av
+
+Mac Mouse Fix er tilgjengelig, støtter nå JavaScript, som tillater
+
+penere formatering av oppdateringsnotatene.</li>
+
+</ul>
+
+<h3 id="andre-forbedringer-og-feilrettinger">Andre forbedringer og
+
+feilrettinger</h3>
+
+<ul>
+
+<li>Fikset et problem der appprisen og relatert info ble vist feil i
+
+‘Om’-fanen i noen tilfeller.</li>
+
+<li>Fikset et problem der mekanismen for synkronisering av jevn rulling
+
+med skjermens oppdateringsfrekvens ikke fungerte ordentlig ved bruk av
+
+flere skjermer.</li>
+
+<li>Mange mindre oppryddinger og forbedringer under panseret.</li>
+
+</ul>
+
+<hr />
+
+<p>Sjekk også ut forrige utgivelse <a
+
+href="https://redirect.macmousefix.com/?target=mmf-release&amp;tag=3.0.2&amp;locale=nb"><strong>3.0.2</strong></a>.</p>
+
+</body>
+
+</html>

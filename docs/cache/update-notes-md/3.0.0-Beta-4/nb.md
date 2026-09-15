@@ -1,0 +1,104 @@
+Sjekk også **hva som var nytt** i [3.0.0 Beta 3](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-3)!
+
+---
+
+**3.0.0 Beta 4** bringer et nytt **"Gjenopprett standardinnstillinger..."-alternativ** samt mange **livskvalitets**-forbedringer og **feilrettinger**!
+
+Her er **alt** som er **nytt**:
+
+## 1. "Gjenopprett standardinnstillinger..."-alternativ
+
+Det er nå en "**Gjenopprett standardinnstillinger...**"-knapp på "Knapper"-fanen. 
+Dette lar deg føle deg enda mer **komfortabel** mens du **eksperimenterer** med innstillinger.
+
+Det er **2 standardinnstillinger** tilgjengelig: 
+
+1. "Standardinnstilling for mus med **5+ knapper**" er superkraftig og komfortabel. Den lar deg faktisk gjøre **alt** du gjør på en **styreflate**. Alt ved hjelp av de 2 **sideknappene** som er rett der **tommelen** din hviler! Men selvfølgelig er den bare tilgjengelig på mus med 5 eller flere knapper.
+2. "Standardinnstilling for mus med **3 knapper**" lar deg fortsatt gjøre de **viktigste** tingene du gjør på en styreflate - selv på en mus som bare har 3 knapper.
+
+Jeg jobbet hardt for å gjøre denne funksjonen **smart**:
+
+- Når du starter MMF for første gang, vil den **automatisk velge** forhåndsinnstillingen som **passer best til musen din**.
+- Når du skal gjenopprette standardinnstillinger, vil Mac Mouse Fix **vise deg** hvilken **musemodell** du bruker og dens **antall knapper**, slik at du enkelt kan velge hvilken av de to forhåndsinnstillingene du vil bruke. Den vil også **forhåndsvelge** forhåndsinnstillingen som **passer best til musen din**.
+- Når du bytter til en **ny mus** som ikke passer til dine nåværende innstillinger, vil en popup på Knapper-fanen **minne deg på** hvordan du **laster** de anbefalte innstillingene for musen din!
+- All **brukergrensesnittet** rundt dette er veldig **enkelt**, **vakkert** og det **animerer** fint.
+
+Jeg håper du finner denne funksjonen **nyttig** og **enkel å bruke**! Men gi meg beskjed hvis du har noen problemer. 
+Er noe **rart** eller **uintuitivt**? Dukker **popupene** opp **for ofte** eller i **upassende situasjoner**? **Gi meg beskjed** om opplevelsen din!
+
+## 2. Mac Mouse Fix midlertidig gratis i noen land 
+
+Det er noen **land** hvor Mac Mouse Fix sin **betalingsleverandør** Gumroad **ikke fungerer** for øyeblikket. 
+Mac Mouse Fix er nå **gratis** i **disse landene** til jeg kan tilby en alternativ betalingsmetode!
+
+Hvis du er i et av de gratis landene, vil informasjon om dette bli **vist** på **Om-fanen** og når du **skriver inn en lisensnøkkel**
+
+Hvis det er **umulig å kjøpe** Mac Mouse Fix i landet ditt, men det heller **ikke er gratis** i landet ditt ennå - gi meg beskjed så gjør jeg Mac Mouse Fix gratis i landet ditt også!
+
+## 3. Et godt tidspunkt å begynne å oversette!
+
+Med Beta 4 har jeg **implementert alle UI-endringene** som jeg har planlagt for Mac Mouse Fix 3. Så jeg forventer at det ikke blir flere store endringer i brukergrensesnittet før Mac Mouse Fix 3 slippes.
+
+Hvis du har ventet fordi du forventet at brukergrensesnittet fortsatt ville endre seg, så er **dette et godt tidspunkt** å begynne å **oversette** appen til ditt språk!
+
+For **mer info** om å oversette appen, se **[3.0.0 Beta 1 Utgivelsesnotater](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/3.0.0-Beta-1.1) > 9. Internasjonalisering**
+
+## 4. Alt annet
+
+I tillegg til endringene nevnt ovenfor, har Beta 4 mange flere små **feilrettinger**, **justeringer** og **livskvalitets**-forbedringer:
+
+### Brukergrensesnitt
+
+#### Feilrettinger
+
+- Fikset feil der lenker fra Om-fanen ville åpne om og om igjen når du klikket hvor som helst i vinduet. Takk til GitHub-bruker [DingoBits](https://github.com/DingoBits) som fikset dette!
+- Fikset at noen symboler i appen ikke ble vist riktig på eldre macOS-versjoner
+- Skjulte rullefelt i handlingstabellen. Takk til GitHub-bruker [marianmelinte93](https://github.com/marianmelinte93) som gjorde meg oppmerksom på dette problemet i [denne kommentaren](https://github.com/noah-nuebling/mac-mouse-fix/discussions/366#discussioncomment-3728994)!
+- Fikset problem der tilbakemelding om funksjoner som blir automatisk reaktivert når du åpner den respektive fanen for den funksjonen i brukergrensesnittet (etter at du deaktiverte den respektive funksjonen fra menylinjen) ikke ble vist på macOS Monterey og eldre. Takk igjen til [marianmelinte93](https://github.com/marianmelinte93) for å gjøre meg oppmerksom på problemet.
+- La til manglende lokaliserbarhet og tyske oversettelser for "Klikk for å rulle for å flytte mellom skrivebord"-alternativet
+- Fikset flere små lokaliseringsproblemer
+- La til flere manglende tyske oversettelser
+- Varsler som vises når en knapp er fanget / ikke lenger fanget fungerer nå riktig når noen knapper har blitt fanget og andre har blitt sluppet samtidig.
+
+#### Forbedringer
+
+- Fjernet "Klikk og rull for appbytter"-alternativet. Det var litt buggy og jeg tror ikke det var veldig nyttig.
+- La til "Klikk og rull for å rotere"-alternativet.
+- Justerte oppsettet av "Mac Mouse Fix"-menyen i menylinjen. 
+- La til "Kjøp Mac Mouse Fix"-knapp i "Mac Mouse Fix"-menyen i menylinjen.
+- La til en hinttekst under "Vis i menylinje"-alternativet. Målet er å gjøre det lettere å oppdage at menylinje-elementet kan brukes til å raskt slå av eller på funksjoner
+- "Takk for at du kjøpte Mac Mouse Fix"-meldingene på om-skjermen kan nå tilpasses fullstendig av oversettere.
+- Forbedrede hint for oversettere
+- Forbedrede UI-tekster rundt prøveperiodens utløp
+- Forbedrede UI-tekster på Om-fanen
+- La til fete markeringer på noen UI-tekster for å forbedre lesbarheten
+- La til varsel når du klikker på "Send meg en e-post"-lenken på Om-fanen.
+- Endret sorteringsrekkefølgen i handlingstabellen. Klikk og rull-handlinger vil nå vises før klikk og dra-handlinger. Dette føles mer naturlig for meg fordi radene i tabellen nå er sortert etter hvor kraftige utløserne deres er (Klikk < Rull < Dra).
+- Appen vil nå oppdatere den aktivt brukte enheten når du samhandler med brukergrensesnittet. Dette er nyttig fordi noe av brukergrensesnittet nå er basert på enheten du bruker. (Se den nye "Gjenopprett standardinnstillinger..."-funksjonen.)
+- Et varsel som viser hvilke knapper som har blitt fanget / ikke lenger er fanget vises nå når du starter appen for første gang. 
+- Flere forbedringer av varsler som vises når en knapp har blitt fanget / ikke lenger er fanget
+- Gjorde det umulig å ved et uhell skrive inn ekstra mellomrom når du aktiverer en lisensnøkkel
+
+### Mus
+
+#### Feilrettinger
+
+- Forbedret rullesimulering for å sende "fixed point deltas" riktig. Dette løser et problem der rullehastigheten var for treg i noen apper som Safari med jevn rulling slått av.
+- Fikset problem der "Klikk og dra for Mission Control & Skrivebord"-funksjonen noen ganger ville henge seg opp når datamaskinen var treg
+- Fikset et problem der CPU-en alltid ville bli brukt av Mac Mouse Fix når du flyttet musen etter å ha brukt "Klikk og dra for å rulle og navigere"-funksjonen
+
+#### Forbedringer
+
+- Kraftig forbedret responsivitet for rull-for-å-zoome i Chromium-baserte nettlesere som Chrome, Brave eller Edge
+
+### Under panseret 
+
+#### Feilrettinger
+
+- Fikset et problem der Mac Mouse Fix ikke ville fungere riktig etter å ha flyttet den til en annen mappe mens den var aktivert
+- Fikset noen problemer med å aktivere Mac Mouse Fix mens en annen instans av Mac Mouse Fix fortsatt var aktivert. (Dette er fordi Apple lot meg endre bundle-ID-en fra "com.nuebling.mac-mouse-fixxx" som ble brukt i Beta 3 tilbake til den originale "com.nuebling.mac-mouse-fix". Ikke sikker på hvorfor.)
+
+#### Forbedringer
+
+- Denne og fremtidige betaer vil gi mer detaljert feilsøkingsinformasjon
+- Opprydding og forbedringer under panseret. Fjernet gammel pre-10.13-kode. Ryddet opp i rammeverk og avhengigheter. Kildekoden er nå enklere å jobbe med og mer fremtidssikker.
