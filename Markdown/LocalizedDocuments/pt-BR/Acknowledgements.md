@@ -100,6 +100,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **setembro 2026**
 
+- 🇺🇸&nbsp;Jeff&nbsp;Mcglynn
 - 🇺🇸&nbsp;Chris&nbsp;Fitkin - "Thanks! Used by the whole team at Metacto.com"
 - 🇺🇸&nbsp;Kirk&nbsp;Laninga
 - 🇨🇦&nbsp;Bruno&nbsp;Fernandes

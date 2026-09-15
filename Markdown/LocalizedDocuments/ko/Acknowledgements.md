@@ -98,6 +98,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **9월 2026**
 
+- 🇺🇸&nbsp;Jeff&nbsp;Mcglynn
 - 🇺🇸&nbsp;Chris&nbsp;Fitkin - "Thanks! Used by the whole team at Metacto.com"
 - 🇺🇸&nbsp;Kirk&nbsp;Laninga
 - 🇨🇦&nbsp;Bruno&nbsp;Fernandes

@@ -96,6 +96,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **septiembre 2026**
 
+- 🇺🇸&nbsp;Jeff&nbsp;Mcglynn
 - 🇺🇸&nbsp;Chris&nbsp;Fitkin - "Thanks! Used by the whole team at Metacto.com"
 - 🇺🇸&nbsp;Kirk&nbsp;Laninga
 - 🇨🇦&nbsp;Bruno&nbsp;Fernandes

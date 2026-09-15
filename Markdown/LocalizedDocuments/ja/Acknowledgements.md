@@ -97,6 +97,7 @@ Mac Mouse Fixを世界中の人々に届けていただき、ありがとうご�
 
 **9月 2026**
 
+- 🇺🇸&nbsp;Jeff&nbsp;Mcglynn
 - 🇺🇸&nbsp;Chris&nbsp;Fitkin - "Thanks! Used by the whole team at Metacto.com"
 - 🇺🇸&nbsp;Kirk&nbsp;Laninga
 - 🇨🇦&nbsp;Bruno&nbsp;Fernandes
