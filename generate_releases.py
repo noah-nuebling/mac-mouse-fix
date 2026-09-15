@@ -297,10 +297,13 @@ locales = [
     "vi",
     "cs",
     "fr",
+    "ja",
     "pt-BR",
     "ru",
     "es",
-    "tr"
+    "tr",
+    "uk",
+    "nb"
 ]
 
 # Validate locales
