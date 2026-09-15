@@ -41,31 +41,45 @@ Thanks for bringing Mac Mouse Fix to people around the globe!
     - [@Dro9an](https://github.com/Dro9an) (Website translation)
     - [@jihao](https://github.com/jihao) (Website translation)
     - [@xianyu-wang](https://github.com/xianyu-wang)
+    - [@djzhao627](https://github.com/djzhao627)
+    - [@JunhangWu](https://github.com/JunhangWu)
 - 🇰🇷 Korean translations by [@jeongtae](https://github.com/jeongtae)
-- 🇻🇳 Vietnamese translations by [@nghlt](https://github.com/nghlt)
+- 🇻🇳 Vietnamese translations by 
+    - [@nghlt](https://github.com/nghlt)
+    - [@quocthangit247](https://github.com/quocthangit247)
 - 🇧🇷 Brazilian Portuguese translations by 
     - **Eduardo Rodrigues**
     - [@denini08](https://github.com/denini08)
-- 🇫🇷 French translations by [@DimitriDR](https://github.com/DimitriDR)
+- 🇫🇷 French translations by 
+    - [@DimitriDR](https://github.com/DimitriDR)
+    - [@UYTR5](https://github.com/UYTR5)
+    - [@Clementabcd](https://github.com/Clementabcd) (Website translation)
 - 🇹🇷 Turkish translations by 
     - [@hasanbeder](https://github.com/hasanbeder)
     - [@erentomurcuk](https://github.com/erentomurcuk)
+    - [@mstersnd](https://github.com/mstersnd)
+    - [@mls0x1](https://github.com/mls0x1)
 - 🇨🇿 Czech translations by [Petr Pavlík](http://www.petrpavlik.com)
 - 🇷🇺 Russian translations by [ETMH](https://t.me/sos_soon_ok)
 - 🇪🇸 Spanish translations by [@manghidev](https://github.com/manghidev)
 - 🇵🇱 Polish translations by **Jakub** (Website translation)
+- 🇯🇵 Japanese translations by 
+    - [@y-128](https://github.com/y-128)
+    - [@mei28](https://github.com/mei28)
+- 🇺🇦 Ukrainian translations by [@denysocheck](https://github.com/denysocheck)
+- 🇳🇴 Norwegian Bokmål translations by [@Bertil78](https://github.com/Bertil78)
 
 <!-- 
   Old stuff from Money section:
 
-  Thanks so much to everyone who bought me a milkshake and to all 48000+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
+  Thanks so much to everyone who bought me a milkshake and to all 48100+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
   You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. 
 -->
 
 <a name="money"></a> 
 ## 💰 Money
 
-Thanks so much to everyone who treated me to a milkshake and to all **48000+** people who bought Mac Mouse Fix.
+Thanks so much to everyone who treated me to a milkshake and to all **48100+** people who bought Mac Mouse Fix.
 Thanks to you, I can spend lots of time doing something I love. 
 
 People who supported me by spending more than the standard price on Mac Mouse Fix receive a special mention here:
@@ -84,6 +98,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **september 2026**
 
+- 🇺🇸&nbsp;Jeff&nbsp;Mcglynn
 - 🇺🇸&nbsp;Chris&nbsp;Fitkin - "Thanks! Used by the whole team at Metacto.com"
 - 🇺🇸&nbsp;Kirk&nbsp;Laninga
 - 🇨🇦&nbsp;Bruno&nbsp;Fernandes
