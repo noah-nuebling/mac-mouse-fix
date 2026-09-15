@@ -98,6 +98,7 @@ Những người đã đóng góp nhiều hơn cả giá thông thường và �
 
 **Tháng 9 2026**
 
+- 🇳🇿&nbsp;Tom&nbsp;Fitzgerald&nbsp;Loe - "Keep up the great work!"
 - 🇺🇸&nbsp;Jeff&nbsp;Mcglynn
 - 🇺🇸&nbsp;Chris&nbsp;Fitkin - "Thanks! Used by the whole team at Metacto.com"
 - 🇺🇸&nbsp;Kirk&nbsp;Laninga
