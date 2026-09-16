@@ -32,6 +32,7 @@
 
 #import "SharedUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "LogitechButtonDiverter.h"
 
 @implementation DeviceManager
 
@@ -92,6 +93,9 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 + (void)load_Manual {
     setupDeviceMatchingAndRemovalCallbacks();
     _attachedDevices = [NSMutableArray array];
+    
+    /// Make the side buttons of newer Logitech mice usable (they need HID++ diversion, see LogitechButtonDiverter.m)
+    [LogitechButtonDiverter load_Manual];
 }
 
 + (void)deconfigureDevices {
@@ -101,6 +105,9 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
     for (Device *device in _attachedDevices) {
 //        [PointerSpeed deconfigureDevice:device.iohidDevice];
     }
+    
+    /// Hand diverted Logitech buttons back to the mouse firmware
+    [LogitechButtonDiverter restoreNativeBehavior];
 }
 
 # pragma mark - Seize devices (Remove this)
