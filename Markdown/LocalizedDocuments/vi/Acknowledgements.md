@@ -98,6 +98,7 @@ Những người đã đóng góp nhiều hơn cả giá thông thường và �
 
 **Tháng 9 2026**
 
+- 🇺🇸&nbsp;Ethan&nbsp;Neidhart
 - 🇮🇱&nbsp;Mor&nbsp;Jacobi - "Awesome tool, Thanks for bringing macOS 27 support so quickly!"
 - 🇩🇰&nbsp;Yuraimashev@Gmail&nbsp;Com
 - 🇳🇿&nbsp;Tom&nbsp;Fitzgerald&nbsp;Loe - "Keep up the great work!"
