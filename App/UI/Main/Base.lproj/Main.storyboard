@@ -1234,13 +1234,23 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                                             <constraint firstAttribute="height" id="Dh0-br-i3S"/>
                                         </constraints>
                                     </customView>
-                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dtR-AX-YsY" userLabel="Reverse Direction Toggle">
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dtR-AX-YsY" userLabel="Reverse Vertical Direction Toggle">
                                         <rect key="frame" x="0.0" y="315" width="350" height="16"/>
-                                        <buttonCell key="cell" type="check" title="Reverse Direction" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gK0-1z-Pjv">
+                                        <buttonCell key="cell" type="check" title="Reverse Vertical Scroll Direction" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gK0-1z-Pjv">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                             <attributedString key="userComments">
-                                                <fragment content="Scrolling &gt; Reverse Scroll Direction Toggle"/>
+                                                <fragment content="Scrolling &gt; Reverse Vertical Scroll Direction Toggle"/>
+                                            </attributedString>
+                                        </buttonCell>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hRz-Qx-7bN" userLabel="Reverse Horizontal Direction Toggle">
+                                        <rect key="frame" x="0.0" y="295" width="350" height="16"/>
+                                        <buttonCell key="cell" type="check" title="Reverse Horizontal Scroll Direction" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="mWp-2T-9vK">
+                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <attributedString key="userComments">
+                                                <fragment content="Scrolling &gt; Reverse Horizontal Scroll Direction Toggle"/>
                                             </attributedString>
                                         </buttonCell>
                                     </button>
@@ -1695,7 +1705,8 @@ your mouse. (**Logitech M720 Triathlon**)&gt;</string>
                         <outlet property="preciseSection" destination="WGO-Zc-NYH" id="3ee-ik-5UL"/>
                         <outlet property="preciseToggle" destination="5rO-m9-I0Q" id="qoO-s1-pXz"/>
                         <outlet property="restoreDefaultModsButton" destination="4ZD-1f-bbe" id="4G3-Tp-sEf"/>
-                        <outlet property="reverseDirectionToggle" destination="dtR-AX-YsY" id="P3O-kx-KCg"/>
+                        <outlet property="reverseDirectionVerticalToggle" destination="dtR-AX-YsY" id="P3O-kx-KCg"/>
+                        <outlet property="reverseDirectionHorizontalToggle" destination="hRz-Qx-7bN" id="QwR-xT-uYz"/>
                         <outlet property="smoothPicker" destination="saP-aP-bnv" id="Zlr-EF-GAN"/>
                         <outlet property="speedPicker" destination="AUN-SK-ju7" id="5Qf-b9-Y8X"/>
                         <outlet property="swiftModField" destination="Abk-fb-uRV" id="kYs-Xn-eTk"/>
