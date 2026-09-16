@@ -98,6 +98,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **setembre 2026**
 
+- 🇮🇱&nbsp;Mor&nbsp;Jacobi - "Awesome tool, Thanks for bringing macOS 27 support so quickly!"
 - 🇩🇰&nbsp;Yuraimashev@Gmail&nbsp;Com
 - 🇳🇿&nbsp;Tom&nbsp;Fitzgerald&nbsp;Loe - "Keep up the great work!"
 - 🇺🇸&nbsp;Jeff&nbsp;Mcglynn
