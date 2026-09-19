@@ -37,7 +37,11 @@
             postSymbolicHotkey((CGSSymbolicHotKey) shk);
             
         } else if ([actionType isEqualToString:kMFActionDictTypeNavigationSwipe]) {
-            
+
+            /// [Sep 2026] Should we port over the universal back/forward from MMF 3?
+            ///     Not sure. It's causing some issues since it simulates button 4/5 press in some apps which some ppl have remapped.
+            ///     Maybe just leave MMF 2 features as is except for bug fixes.
+
             NSString *dirString = actionDict[kMFActionDictKeyGenericVariant];
             
             if ([dirString isEqualToString:kMFNavigationSwipeVariantLeft]) {
