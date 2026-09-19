@@ -32,6 +32,13 @@
 static NSArray *_nullArray;
 static NSMutableDictionary *_swipeInfo;
 
+/// How many of the last posted dockSwipe deltas we average to get the exitSpeed.
+#define kMFDockSwipeVelocityRingSize 3
+
+/// How many times per second we throttle or report the movement of the mouse.
+/// Default to 125 Hz to match the built-in trackpad.
+#define kMFDockSwipeReportRate 125.0
+
 /// This function allows you to go back and forward in apps like Safari.
 ///
 /// Navigation swipe events are actually quite complex and seem to be similar to dock swipes internally (They seem to also have an origin offset and other similar fields from what i've seen)
@@ -128,6 +135,16 @@ static NSMutableDictionary *_swipeInfo;
     static NSTimer *_doubleSendTimer;
     static NSTimer *_tripleSendTimer;
     
+    /// Throttle state
+    static CFTimeInterval _dockSwipeLastPostTime = 0.0;
+    static double _dockSwipeThrottledDelta = 0.0;
+
+    /// Exit-velocity state
+    static double _dockSwipeVelocityRingDelta[kMFDockSwipeVelocityRingSize] = {0};
+    static double _dockSwipeVelocityRingDt[kMFDockSwipeVelocityRingSize] = {0};
+    static int _dockSwipeVelocityRingCount = 0;
+    static int _dockSwipeVelocityRingNext = 0;
+
     /// Update originOffset
     
     if (phase == kIOHIDEventPhaseBegan) {
@@ -135,6 +152,54 @@ static NSMutableDictionary *_swipeInfo;
     } else if (phase == kIOHIDEventPhaseChanged) {
         if (d == 0) return;
         _dockSwipeOriginOffset += d;
+    }
+
+    /// Throttle "changed" events
+    /// Notes:
+    /// - Mechanism and 8ms interval are inspired by PR #1988.
+    /// - `ModifiedDrag.m` calls once per mouse report. On a high polling rate mouse, that's thousands of calls and on MacOS 27, the animation frametime jumps and causes that choppiness. A mac trackpad reports at 125 Hz,
+    ///      so we post at 125 Hz as a sane throttle. This is configurable via kMFDockSwipeReportRate.
+    /// - `began`, `ended` and `cancelled` are not throttled and are not the hot path anyway.
+    /// - Skipping an event is safe here. `_dockSwipeOriginOffset` already accumulated above and we accumulate `d` here, so the next post picks up all accumulated delta and movement without dropping any progress.
+    /// - We apply this on all macOS versions. Only tested this on macOS 27 though, but posting hundreds of events per second (and we do want to emulate trackpad gesture) is a waste of resource on older version anyway.
+
+    double pendingDelta = 0.0;
+    double pendingDt = 0.0;
+
+    if (phase == kIOHIDEventPhaseChanged) {
+
+        _dockSwipeThrottledDelta += d;
+
+        CFTimeInterval now = CACurrentMediaTime();
+        CFTimeInterval dt = now - _dockSwipeLastPostTime;
+        if (dt < (1.0/kMFDockSwipeReportRate)) return;
+
+        _dockSwipeLastPostTime = now;
+        d = _dockSwipeThrottledDelta;
+        _dockSwipeThrottledDelta = 0.0;
+
+        /// Remember what we're about to post, for the exitSpeed
+        /// RingSize is tunable on the constant defined above
+        _dockSwipeVelocityRingDelta[_dockSwipeVelocityRingNext] = d;
+        _dockSwipeVelocityRingDt[_dockSwipeVelocityRingNext] = dt;
+        _dockSwipeVelocityRingNext = (_dockSwipeVelocityRingNext + 1) % kMFDockSwipeVelocityRingSize;
+        if (_dockSwipeVelocityRingCount < kMFDockSwipeVelocityRingSize) _dockSwipeVelocityRingCount++;
+
+    } else if (phase == kIOHIDEventPhaseBegan) {
+
+        _dockSwipeLastPostTime = CACurrentMediaTime();
+        _dockSwipeThrottledDelta = 0.0;
+        _dockSwipeVelocityRingCount = 0;
+        _dockSwipeVelocityRingNext = 0;
+
+    } else { /// ended or cancelled
+
+        /// Hand the not-yet-posted delta to the exitSpeed, so we don't throw away the last bit of movement.
+        pendingDelta = _dockSwipeThrottledDelta;
+        pendingDt = CACurrentMediaTime() - _dockSwipeLastPostTime;
+
+        _dockSwipeLastPostTime = 0.0;
+        _dockSwipeThrottledDelta = 0.0;
     }
     
     /// Debug
@@ -165,9 +230,19 @@ static NSMutableDictionary *_swipeInfo;
     /// - This only seems to affect the pinch dockSwipes. Doesn't seem to affect horiztonal or vertical.
     /// - `*100` is a rough approximation of how the real values look. `*50` also seemed to work well.
     /// - Update: on macOS 27 I just observed `*300`. I'm not 100% sure whether the `velocity` value on macOS 27 is the same as the old `exitSpeed`.
+    /// - Update: This used to be `_dockSwipeLastDelta*100`, but a delta isn't necessarily the velocity.
+    ///      Once we throttle the report and it stopped posting one event per mouse report, `_dockSwipeLastDelta` became however much movement happened to land in the last bin, so a slow drag could exit faster than a quick flick.
+    ///      Now we divide the last few posted deltas by the time they actually took.
     double exitSpeed = 0;
     if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
-        exitSpeed = _dockSwipeLastDelta*100;
+        double deltaSum = pendingDelta;
+        double dtSum = pendingDt;
+        for (int i = 0; i < _dockSwipeVelocityRingCount; i++) {
+            deltaSum += _dockSwipeVelocityRingDelta[i];
+            dtSum += _dockSwipeVelocityRingDt[i];
+        }
+        /// With kMFDockSwipeReportRate at the default rate of 125 Hz, a steady delta arriving on 8ms bins still works out to `delta*100`
+        if (dtSum > 0.0) exitSpeed = (deltaSum / dtSum) * (100.0 / kMFDockSwipeReportRate);
     }
     
     /// Override end phase with canceled phase
@@ -193,7 +268,8 @@ static NSMutableDictionary *_swipeInfo;
         
         /// Create HIDEvent
         ///     Note: Setting the timestamp to `mach_absolute_time()` here would make some sense but we're not setting timestamps anywhere else when simulating gestures
-        HIDEvent *hidEvent = [[HIDEvent alloc] initWithType: kIOHIDEventTypeDockSwipe timestamp: 0 senderID: 0];
+        ///     Edit: We do set it now following PR #1988. The PR says that with a timestamp of 0 the dockSwipes felt noticeably choppy on macOS 27.
+        HIDEvent *hidEvent = [[HIDEvent alloc] initWithType: kIOHIDEventTypeDockSwipe timestamp: mach_absolute_time() senderID: 0];
         
         IOHIDEventOptionBits options = (phase << kIOHIDEventEventOptionPhaseShift);
         
@@ -205,11 +281,15 @@ static NSMutableDictionary *_swipeInfo;
         /// Attach velocity event on exit
         if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
             
-            HIDEvent *childEvent = [[HIDEvent alloc] initWithType: kIOHIDEventTypeVelocity timestamp: 0 senderID: 0];
-            
-            [childEvent setDoubleValue: exitSpeed forField: kIOHIDEventFieldVelocityX];
-            [childEvent setDoubleValue: exitSpeed forField: kIOHIDEventFieldVelocityY];
-            [childEvent setDoubleValue: 0.0       forField: kIOHIDEventFieldVelocityZ];
+            HIDEvent *childEvent = [[HIDEvent alloc] initWithType: kIOHIDEventTypeVelocity timestamp: mach_absolute_time() senderID: 0];
+
+            /// We negate the progress a few lines up when `invertedFromDevice`, so we have to negate the speed too,
+            /// or the velocity points against the progress at the end of every natural direction gesture.
+            double velocity = invertedFromDevice ? -exitSpeed : exitSpeed;
+
+            [childEvent setDoubleValue: velocity forField: kIOHIDEventFieldVelocityX];
+            [childEvent setDoubleValue: velocity forField: kIOHIDEventFieldVelocityY];
+            [childEvent setDoubleValue: 0.0      forField: kIOHIDEventFieldVelocityZ];
             
             [hidEvent appendEvent: childEvent];
         }
