@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F166944305EB322008C95D2 /* CGEventHIDEventBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F166939305EB10F008C95D2 /* CGEventHIDEventBridge.m */; };
 		4F1793A925EEC92000E8309B /* ZipArchive.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; };
 		4F1793AA25EEC92000E8309B /* ZipArchive.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4F1793A825EEC90900E8309B /* ZipArchive.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4F1B83062606E68300AEAF37 /* ButtonLandscapeAssessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B83052606E68300AEAF37 /* ButtonLandscapeAssessor.m */; };
@@ -214,6 +215,30 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4F166929305EB10F008C95D2 /* HIDBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDBase.h; sourceTree = "<group>"; };
+		4F16692A305EB10F008C95D2 /* HIDEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEvent.h; sourceTree = "<group>"; };
+		4F16692B305EB10F008C95D2 /* HIDEvent+HIDEventFields.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HIDEvent+HIDEventFields.h"; sourceTree = "<group>"; };
+		4F16692C305EB10F008C95D2 /* HIDEventAccessors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEventAccessors.h; sourceTree = "<group>"; };
+		4F16692D305EB10F008C95D2 /* HIDEventAccessors_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEventAccessors_Private.h; sourceTree = "<group>"; };
+		4F16692E305EB10F008C95D2 /* HIDEventBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEventBase.h; sourceTree = "<group>"; };
+		4F16692F305EB10F008C95D2 /* HIDEventFields.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEventFields.h; sourceTree = "<group>"; };
+		4F166930305EB10F008C95D2 /* HIDEventIvar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEventIvar.h; sourceTree = "<group>"; };
+		4F166931305EB10F008C95D2 /* hidobjcbase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hidobjcbase.h; sourceTree = "<group>"; };
+		4F166932305EB10F008C95D2 /* IOHIDEventFieldDefs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDEventFieldDefs.h; sourceTree = "<group>"; };
+		4F166933305EB10F008C95D2 /* IOHIDEventTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDEventTypes.h; sourceTree = "<group>"; };
+		4F166934305EB10F008C95D2 /* IOHIDLibPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDLibPrivate.h; sourceTree = "<group>"; };
+		4F166935305EB10F008C95D2 /* IOHIDLibUserClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDLibUserClient.h; sourceTree = "<group>"; };
+		4F166936305EB10F008C95D2 /* IOHIDPrivateKeys.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOHIDPrivateKeys.h; sourceTree = "<group>"; };
+		4F166938305EB10F008C95D2 /* CGEventHIDEventBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CGEventHIDEventBridge.h; sourceTree = "<group>"; };
+		4F166939305EB10F008C95D2 /* CGEventHIDEventBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CGEventHIDEventBridge.m; sourceTree = "<group>"; };
+		4F16693A305EB10F008C95D2 /* IOHIDEvent-Reconstructed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOHIDEvent-Reconstructed.h"; sourceTree = "<group>"; };
+		4F16693B305EB10F008C95D2 /* IOUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOUtility.h; sourceTree = "<group>"; };
+		4F16693C305EB10F008C95D2 /* IOUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOUtility.m; sourceTree = "<group>"; };
+		4F16693D305EB10F008C95D2 /* MacAddress.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MacAddress.h; sourceTree = "<group>"; };
+		4F16693E305EB10F008C95D2 /* MacAddress.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacAddress.m; sourceTree = "<group>"; };
+		4F16693F305EB10F008C95D2 /* MFHIDEventImports.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFHIDEventImports.h; sourceTree = "<group>"; };
+		4F166941305EB2B8008C95D2 /* SkyLight.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SkyLight.framework; path = ../../../../../System/Library/PrivateFrameworks/SkyLight.framework; sourceTree = "<group>"; };
+		4F166945305EB3DC008C95D2 /* MMF2Readme.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = MMF2Readme.txt; sourceTree = "<group>"; };
 		4F1793A825EEC90900E8309B /* ZipArchive.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ZipArchive.framework; sourceTree = "<group>"; };
 		4F1B83042606E68300AEAF37 /* ButtonLandscapeAssessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonLandscapeAssessor.h; sourceTree = "<group>"; };
 		4F1B83052606E68300AEAF37 /* ButtonLandscapeAssessor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ButtonLandscapeAssessor.m; sourceTree = "<group>"; };
@@ -486,9 +511,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4F166937305EB10F008C95D2 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				4F166929305EB10F008C95D2 /* HIDBase.h */,
+				4F16692A305EB10F008C95D2 /* HIDEvent.h */,
+				4F16692B305EB10F008C95D2 /* HIDEvent+HIDEventFields.h */,
+				4F16692C305EB10F008C95D2 /* HIDEventAccessors.h */,
+				4F16692D305EB10F008C95D2 /* HIDEventAccessors_Private.h */,
+				4F16692E305EB10F008C95D2 /* HIDEventBase.h */,
+				4F16692F305EB10F008C95D2 /* HIDEventFields.h */,
+				4F166930305EB10F008C95D2 /* HIDEventIvar.h */,
+				4F166931305EB10F008C95D2 /* hidobjcbase.h */,
+				4F166932305EB10F008C95D2 /* IOHIDEventFieldDefs.h */,
+				4F166933305EB10F008C95D2 /* IOHIDEventTypes.h */,
+				4F166934305EB10F008C95D2 /* IOHIDLibPrivate.h */,
+				4F166935305EB10F008C95D2 /* IOHIDLibUserClient.h */,
+				4F166936305EB10F008C95D2 /* IOHIDPrivateKeys.h */,
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
+		4F166940305EB10F008C95D2 /* IOKit */ = {
+			isa = PBXGroup;
+			children = (
+				4F166945305EB3DC008C95D2 /* MMF2Readme.txt */,
+				4F166937305EB10F008C95D2 /* External */,
+				4F166938305EB10F008C95D2 /* CGEventHIDEventBridge.h */,
+				4F166939305EB10F008C95D2 /* CGEventHIDEventBridge.m */,
+				4F16693A305EB10F008C95D2 /* IOHIDEvent-Reconstructed.h */,
+				4F16693B305EB10F008C95D2 /* IOUtility.h */,
+				4F16693C305EB10F008C95D2 /* IOUtility.m */,
+				4F16693D305EB10F008C95D2 /* MacAddress.h */,
+				4F16693E305EB10F008C95D2 /* MacAddress.m */,
+				4F16693F305EB10F008C95D2 /* MFHIDEventImports.h */,
+			);
+			path = IOKit;
+			sourceTree = "<group>";
+		};
 		4F1793A725EEC8E500E8309B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F166941305EB2B8008C95D2 /* SkyLight.framework */,
 				4F1793A825EEC90900E8309B /* ZipArchive.framework */,
 				4FE443AF2BFCADAD00C021D0 /* Sparkle.framework */,
 				4F39BCE8263B7B1500FDF692 /* README.md */,
@@ -718,6 +782,7 @@
 				4FF6652C25F2C7B000689B77 /* HelperServices */,
 				4FF6653025F2C7B000689B77 /* Objects */,
 				4FF6653625F2C7B000689B77 /* Utility */,
+				4F166940305EB10F008C95D2 /* IOKit */,
 				4F9912772788FB8E008DBE9F /* External */,
 			);
 			path = Shared;
@@ -1541,6 +1606,7 @@
 				4FF6669F25F2C93A00689B77 /* main.m in Sources */,
 				4FF6668925F2C93A00689B77 /* ScrollControl.m in Sources */,
 				4FF6669525F2C93A00689B77 /* ModifiedDrag.m in Sources */,
+				4F166944305EB322008C95D2 /* CGEventHIDEventBridge.m in Sources */,
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,
 				4FF6669025F2C93A00689B77 /* ScrollModifiers.m in Sources */,
 				4F8F10D0289D6C7B00743B8F /* Device.m in Sources */,
@@ -1682,6 +1748,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
 			};
 			name = Debug;
 		};
@@ -1715,6 +1785,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nuebling.mac-mouse-fix";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+				);
 			};
 			name = Release;
 		};
