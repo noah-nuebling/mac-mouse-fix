@@ -43,8 +43,9 @@ typedef enum {
 
 /// Wrapper object for CVDisplayLink that uses blocks
 /// Didn't write this in Swift, because CVDisplayLink is clearly a C API that's been machine-translated to Swift. So it should be easier to deal with from ObjC
-@implementation DisplayLink {
-    
+@implementation DisplayLink
+{
+
     CVDisplayLinkRef _displayLink;
     CGDirectDisplayID *_previousDisplaysUnderMousePointer; /// Old and unused, use `_previousDisplayUnderMousePointer` instead
     CGDirectDisplayID _previousDisplayUnderMousePointer;
@@ -52,6 +53,8 @@ typedef enum {
     dispatch_queue_t _displayLinkQueue;
     MFDisplayLinkRequestedState _requestedState;
     MFDisplayLinkWorkType _optimizedWorkType;
+
+    NSString *_identifier;
 }
 
 @synthesize dispatchQueue=_displayLinkQueue;
@@ -246,7 +249,6 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 
 - (void)start_UnsafeWithCallback:(DisplayLinkCallback _Nullable)callback {
 
-    
     /// Debug
     DDLogDebug("DisplayLink.m: (%@) starting", [self identifier]);
     
@@ -254,36 +256,46 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
     if (callback) /// Set to nil to preserve existing callback
         self.callback = callback;
 
+    /// Early return
+    if ((1)) /// [Sep 2026] Added this as optimization, not being totally it's correct
+    if (_requestedState == kMFDisplayLinkRequestedStateRunning) {
+        if ((0)) DDLogDebug("DisplayLink.m: (%@) already starting/started", [self identifier]);
+        return;
+    }
+
     /// Start the displayLink
     ///     If something goes wrong see notes in old SmoothScroll.m > handleInput: method
     
     /// Starting the displayLink often fails with error code `-6660` for some reason.
     ///     Running on the main queue seems to fix that. (See SmoothScroll_old_).
     ///     We don't wanna use `dispatch_sync(dispatch_get_main_queue())` here because if were already running on the main thread(/queue?) then that'll crash
-    
-    /// Define block that starts displayLink
-    
-    void (^startDisplayLinkBlock)(void) = ^{
-        
-        int64_t failedAttempts = 0;
-        int64_t maxAttempts = 100;
-        
-        while (true) {
-            CVReturn rt = CVDisplayLinkStart(self->_displayLink); /// This locks until the displayLinkCallback is done
-            if (rt == kCVReturnSuccess) break;
-            
-            failedAttempts += 1;
-            if (failedAttempts >= maxAttempts) {
-                DDLogInfo("DisplayLink.m: (%@) Failed to start CVDisplayLink after %lld tries. Last error code: %d", [self identifier], failedAttempts, rt);
-                break;
+
+    void (^startDisplayLinkBlock)(void) = nil;
+    {
+
+        /// Set requestedState
+        ///     before async dispatching to main -> so that isRunning() works properly
+        _requestedState = kMFDisplayLinkRequestedStateRunning;
+
+        /// Define block that starts displayLink
+        startDisplayLinkBlock = ^{
+
+            int64_t failedAttempts = 0;
+            int64_t maxAttempts = 100;
+
+            while (true) {
+                CVReturn rt = CVDisplayLinkStart(self->_displayLink); /// This locks until the displayLinkCallback is done
+                if (rt == kCVReturnSuccess) break;
+
+                failedAttempts += 1;
+                if (failedAttempts >= maxAttempts) {
+                    DDLogInfo("DisplayLink.m: (%@) Failed to start CVDisplayLink after %lld tries. Last error code: %d", [self identifier], failedAttempts, rt);
+                    break;
+                }
             }
-        }
-    };
-    
-    /// Set requestedState
-    ///     before async dispatching to main -> so that isRunning() works properly
-    _requestedState = kMFDisplayLinkRequestedStateRunning;
-    
+        };
+    }
+
     /// Make sure block is running on the main thread
     
     if ((0)) {
@@ -425,10 +437,11 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 
 + (NSString *)identifierForDisplayLink:(CVDisplayLinkRef)dl { /// This id stuff is for debugging
     int64_t pointerNumber = (int64_t)(void *)dl;
-    return [NSString stringWithFormat:@"%lld", pointerNumber];
+    return [NSString stringWithFormat: @"%lld", pointerNumber];
 }
-- (NSString *)identifier { /// [Apr 2025] for debugging it would be handy to give the displayLink a 'name' based on where it's used
-    return [DisplayLink identifierForDisplayLink:_displayLink];
+- (NSString *) identifier { /// [Apr 2025] for debugging it would be handy to give the displayLink a 'name' based on where it's used
+    if (!_identifier) _identifier = [DisplayLink identifierForDisplayLink: _displayLink];
+    return _identifier;
 }
 
 - (CFTimeInterval)bestTimeBetweenFramesEstimate {
