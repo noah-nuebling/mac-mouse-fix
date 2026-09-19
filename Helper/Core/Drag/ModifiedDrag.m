@@ -136,47 +136,6 @@ static ModifiedDragState _drag;
     }
 }
 
-void coalescingDisplayLinkCallback(DisplayLinkCallbackTimeInfo timeInfo) {
-
-    if (!_drag.coalescableEventQueue.count) return;
-
-    double deltaXSum = 0;
-    double deltaYSum = 0;
-
-    CoalescableEvent_Deactivation *deactivationEvent = nil;
-
-    for (CoalescableEvent *event in _drag.coalescableEventQueue) {
-        if (isclass(event, CoalescableEvent_Deactivation)) {
-            deactivationEvent = (id)event;
-            break;
-        }
-        else if (isclass(event, CoalescableEvent_Delta)) {
-            CoalescableEvent_Delta *event_ = (id)event;
-            deltaXSum += event_.deltaX;
-            deltaYSum += event_.deltaY;
-        }
-        else mfassert(false, @"Unknown ModifiedDrag_Event: %@", event);
-    }
-
-    /// Call outputPlugin
-    {
-        [_drag.outputPlugin handleMouseInputWhileInUseWithDeltaX: deltaXSum deltaY: deltaYSum];
-
-        /// Update phase
-        ///
-        /// - firstCallback is used in `handleMouseInputWhileInUseWithDeltaX:...` (called above)
-        /// - The first time we call `handleMouseInputWhileInUseWithDeltaX:...` during a drag, the `firstCallback` will be true. On subsequent calls, the `firstCallback` will be false.
-        ///     - Indirectly communicating with the plugin through _drag is a little confusing, we might want to consider removing _drag from the plugins and sending the relevant data as arguments instead.
-        _drag.firstCallback = false;
-
-        if (deactivationEvent) [_drag.outputPlugin handleDeactivationWhileInUseWithCancel: deactivationEvent.cancelled];
-    }
-
-    [_drag.coalescableEventQueue removeAllObjects];
-
-    [_drag.coalescingDisplayLink stop_Unsafe];
-}
-
 /// Interface - start
 
 //+ (NSDictionary *)initialModifiers {
@@ -287,56 +246,35 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     /// - I think for all other types of modified drag (aside from the gesture scroll simulation discussed above) this shouldn't break anything, either.
     
     if (dx != 0 || dy != 0) {
-        
+
         /// Make copy of event for _drag.queue
         
         CGEventRef eventCopy = CGEventCreateCopy(event);
-        
-        /// Do main processing on _drag.queue
-        
+
         dispatch_async(_drag.queue, ^{
-            
+
             /// Interrupt
-            ///     This handles race condition where _drag.eventTap is disabled right after eventTapCallBack() is called
-            ///     We implemented the same idea in PointerFreeze.
-            ///     Actually, the check for kMFModifiedInputActivationStateNone below has the same effect, but I think but this makes it clearer?
-            
+            ///     [Sep 2026] Update: Old comment from before `coalescingDisplayLink` refactor, not sure if/how it still applies:
+            ///         This handles race condition where _drag.eventTap is disabled right after eventTapCallBack() is called
+            ///         We implemented the same idea in PointerFreeze.
+            ///         Actually, the check for kMFModifiedInputActivationStateNone below (Update: [Sep 2026] Now in `coalescingDisplayLinkCallback`) has the same effect, but I think but this makes it clearer?
             if (!CGEventTapIsEnabled(_drag.eventTap)) {
                 return;
             }
-            
-            /// Update originOffset
-            
-            _drag.originOffset.x += dx;
-            _drag.originOffset.y += dy;
-            
-            /// Suspension
-            if (_drag.isSuspended) return;
-            
-            /// Debug
-            DDLogDebug("ModifiedDrag handling mouseMoved");
-            
-            /// Call further handler functions depending on current state
-            
-            MFModifiedInputActivationState st = _drag.activationState;
-            
-            if (st == kMFModifiedInputActivationStateNone) {
-                
-                /// Disabling the callback triggers this function one more time apparently
-                ///     That's the only case I know where I expect this. Maybe we should log this to see what's going on.
-                
-            } else if (st == kMFModifiedInputActivationStateInitialized) {
-                
-                handleMouseInputWhileInitialized(dx, dy, eventCopy);
-                
-            } else if (st == kMFModifiedInputActivationStateInUse) {
-                
-                handleMouseInputWhileInUse(dx, dy, eventCopy);
-            }
-            
+
+            /// Append to coalescableEventQueue
+            CoalescableEvent_Delta *deltaEvent = [CoalescableEvent_Delta new];
+            deltaEvent.deltaX = dx;
+            deltaEvent.deltaY = dy;
+            deltaEvent.pointerLocation = CGEventGetLocation(eventCopy);
+            [_drag.coalescableEventQueue addObject: deltaEvent];
+
+            /// Start the coalescingDisplayLink
+            [_drag.coalescingDisplayLink start_UnsafeWithCallback: nil];
+
         });
     }
-        
+
     /// Return mouseMoved event
     /// Notes:
     /// - Sending NULL here almost works perfectly, but in screenRecordings it will make the cursor jump. That's especially annoying for DisplayLink users
@@ -349,8 +287,81 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     return event;
 }
 
-static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGEventRef event) {
-    
+void coalescingDisplayLinkCallback(DisplayLinkCallbackTimeInfo timeInfo) {
+
+    /// Early return
+    if (!_drag.coalescableEventQueue.count) return;
+
+    /// Gather/coalesce data from queue
+    double deltaXSum = 0;
+    double deltaYSum = 0;
+    CoalescableEvent_Delta *lastDeltaEvent = nil;
+    CoalescableEvent_Deactivation *deactivationEvent = nil;
+    {
+        for (CoalescableEvent *event in _drag.coalescableEventQueue) {
+            if (isclass(event, CoalescableEvent_Deactivation)) {
+                deactivationEvent = (id)event;
+                break;
+            }
+            else if (isclass(event, CoalescableEvent_Delta)) {
+                CoalescableEvent_Delta *event_ = (id)event;
+                deltaXSum += event_.deltaX;
+                deltaYSum += event_.deltaY;
+                lastDeltaEvent = event_;
+            }
+            else mfassert(false, @"Unknown ModifiedDrag_Event: %@", event);
+        }
+    }
+    CGPoint lastPointerLocation = getRoundedPointerLocationWithPointerLocation(lastDeltaEvent.pointerLocation);
+
+    /// Clear queue
+    [_drag.coalescableEventQueue removeAllObjects];
+
+    /// Stop coalescingDisplayLink
+    ///     (It just aggregates everything for the next frame, and then stops)
+    [_drag.coalescingDisplayLink stop_Unsafe];
+
+    /// Process coalesced delta event(s)
+    if (deltaXSum || deltaYSum)
+    {
+        /// Update originOffset
+        _drag.originOffset.x += deltaXSum;
+        _drag.originOffset.y += deltaYSum;
+
+        /// Suspension
+        if (_drag.isSuspended) return;
+
+        /// Debug
+        DDLogDebug("ModifiedDrag handling coalesced mouseMoved");
+
+        /// Call further handler functions depending on current state
+        MFModifiedInputActivationState st = _drag.activationState;
+
+        if (st == kMFModifiedInputActivationStateNone) {
+
+            /// [Sep 2026] Old comment from before coalescingDisplayLink refactor:
+            ///     Disabling the callback triggers this function one more time apparently
+            ///         That's the only case I know where I expect this. Maybe we should log this to see what's going on.
+
+        } else if (st == kMFModifiedInputActivationStateInitialized) {
+
+            handleMouseInputWhileInitialized(deltaXSum, deltaYSum, lastPointerLocation);
+
+        } else if (st == kMFModifiedInputActivationStateInUse) {
+
+            handleMouseInputWhileInUse(deltaXSum, deltaYSum);
+        }
+
+    }
+
+    /// Process deactivationEvent
+    if (deactivationEvent)
+        [_drag.outputPlugin handleDeactivationWhileInUseWithCancel: deactivationEvent.cancelled];
+
+}
+
+static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGPoint pointerLocation) {
+
     /// Activate the modified drag if the mouse has been moved far enough from the point where the drag started
     
     Vector ofs = _drag.originOffset;
@@ -360,8 +371,8 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         DDLogDebug("Modified Drag entered 'in use' state");
         
         /// Store state
-        _drag.usageOrigin = getRoundedPointerLocationWithEvent(event);
-        
+        _drag.usageOrigin = pointerLocation;
+
         if (fabs(ofs.x) < fabs(ofs.y)) {
             _drag.usageAxis = kMFAxisVertical;
         } else {
@@ -399,7 +410,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
     }
 }
 /// Only passing in event to obtain event location to get slightly better behaviour for fakeDrag
-void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event) {
+void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
     
     /// Invert direction
     if (!_drag.naturalDirection) {
@@ -407,14 +418,16 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         deltaY = -deltaY;
     }
 
-    /// Add event to coalescableEventQueue
-    CoalescableEvent_Delta *coalescableEvent = [CoalescableEvent_Delta new];
-    coalescableEvent.deltaX = deltaX;
-    coalescableEvent.deltaY = deltaY;
-    [_drag.coalescableEventQueue addObject: coalescableEvent];
-
-    /// Start coalescingDisplayLink
-    [_drag.coalescingDisplayLink start_UnsafeWithCallback: nil];
+    /// Notifiy plugin
+    [_drag.outputPlugin handleMouseInputWhileInUseWithDeltaX:deltaX deltaY:deltaY];
+    
+    /// Update phase
+    ///
+    /// - firstCallback is used in `handleMouseInputWhileInUseWithDeltaX:...` (called above)
+    /// - The first time we call `handleMouseInputWhileInUseWithDeltaX:...` during a drag, the `firstCallback` will be true. On subsequent calls, the `firstCallback` will be false.
+    ///     - Indirectly communicating with the plugin through _drag is a little confusing, we might want to consider removing _drag from the plugins and sending the relevant data as arguments instead.
+    
+    _drag.firstCallback = false;
 }
 
 + (void (^ _Nullable)(void))suspend {
@@ -528,11 +541,14 @@ CGPoint getRoundedPointerLocation(void) {
     return location;
 }
 static CGPoint getRoundedPointerLocationWithEvent(CGEventRef event) {
+    return getRoundedPointerLocationWithPointerLocation(CGEventGetLocation(event));
+}
+
+static CGPoint getRoundedPointerLocationWithPointerLocation(CGPoint pointerLocation) {
     /// I thought it was necessary to use this on _drag.origin to calculate the _drag.usageOrigin properly.
     /// To get the _drag.usageOrigin, I used to take the _drag.origin (which is float) and add the kCGMouseEventDeltaX and DeltaY (which are ints)
     ///     But even with rounding it didn't work properly so we went over to getting usageOrigin directly from a CGEvent. I think with this new setup there might not be a  reason to use the getRoundedPointerLocation functions anymore. But I'll just leave them in because they don't break anything.
-    
-    CGPoint pointerLocation = CGEventGetLocation(event);
+
     CGPoint pointerLocationRounded = (CGPoint){ .x = floor(pointerLocation.x), .y = floor(pointerLocation.y) };
     return pointerLocationRounded;
 }

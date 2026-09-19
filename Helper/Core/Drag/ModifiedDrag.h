@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
     @interface CoalescableEvent_Delta : CoalescableEvent
         @property (nonatomic) double deltaX;
         @property (nonatomic) double deltaY;
+        @property (nonatomic) CGPoint pointerLocation;
     @end
 
     @interface CoalescableEvent_Deactivation : CoalescableEvent
