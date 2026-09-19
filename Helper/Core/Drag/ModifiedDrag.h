@@ -14,12 +14,26 @@
 #import "VectorUtility.h"
 #import "IOHIDEventTypes.h"
 #import "DisableSwiftBridging.h"
+//#import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "DisplayLink.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// Forward declaration
 ///     So that typedef works
 @protocol ModifiedDragOutputPlugin;
+
+/// Coalescable event declaration
+@interface CoalescableEvent : NSObject @end
+    @interface CoalescableEvent_Delta : CoalescableEvent
+        @property (nonatomic) double deltaX;
+        @property (nonatomic) double deltaY;
+    @end
+
+    @interface CoalescableEvent_Deactivation : CoalescableEvent
+        @property (nonatomic) bool cancelled;
+    @end
 
 /// Typedefs
 
@@ -55,21 +69,21 @@ typedef struct {
     bool firstCallback;
     
     dispatch_queue_t queue;
-    
-} ModifiedDragState;
 
+    DisplayLink *coalescingDisplayLink; /// DisplayLink for coalescing high polling rate mouse events, since 1000 Hz mouse produces lag under macOS 27 (TODO: Link to the pull requests here)
+    NSMutableArray<CoalescableEvent *> *coalescableEventQueue;
+
+} ModifiedDragState;
 
 /// Plugin Declaration
 
 @protocol ModifiedDragOutputPlugin <NSObject>
-
-+ (void)initializeWithDragState:(ModifiedDragState *)dragStateRef;
-+ (void)handleBecameInUse;
-+ (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event;
-+ (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancel;
-+ (void)suspend; /// See OutputCoordinator
-+ (void)unsuspend;
-
+    + (void)initializeWithDragState:(ModifiedDragState *)dragStateRef;
+    + (void)handleBecameInUse;
+    + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY;
+    + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancel;
+    + (void)suspend; /// See OutputCoordinator
+    + (void)unsuspend;
 @end
 
 /// Modified Drag Declaration

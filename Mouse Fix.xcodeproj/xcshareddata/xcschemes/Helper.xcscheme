@@ -54,7 +54,8 @@
       </PreActions>
       <PathRunnable
          runnableDebuggingMode = "0"
-         FilePath = "/Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix-fwelarwfpfozahfcolviciwtqcst/Build/Products/Debug/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app/Contents/MacOS/Mac Mouse Fix Helper">
+         BundleIdentifier = "com.nuebling.mac-mouse-fix.helper"
+         FilePath = "/Users/Noah/Library/Developer/Xcode/DerivedData/Mouse_Fix-fwelarwfpfozahfcolviciwtqcst/Build/Products/Debug/Mac Mouse Fix.app/Contents/Library/LoginItems/Mac Mouse Fix Helper.app">
       </PathRunnable>
    </LaunchAction>
    <ProfileAction

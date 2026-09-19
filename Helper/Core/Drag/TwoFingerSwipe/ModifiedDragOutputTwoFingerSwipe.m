@@ -86,7 +86,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
     [_smoothingAnimator linkToMainScreen];
 }
 
-+ (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event {
++ (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY {
     
     /**
      scrollSwipe scaling

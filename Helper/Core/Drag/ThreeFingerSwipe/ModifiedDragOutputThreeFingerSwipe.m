@@ -44,7 +44,7 @@ static int16_t _nOfSpaces = 1;
     }
 }
 
-+ (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event {
++ (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY {
     
     /**
      Horizontal dockSwipe scaling

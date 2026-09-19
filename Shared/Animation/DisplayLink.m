@@ -116,27 +116,35 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 
 /// Convenience init
 
+
 + (instancetype)displayLinkOptimizedForWorkType:(MFDisplayLinkWorkType)workType {
-    return [[DisplayLink alloc] initOptimizedForWorkType:workType];
+
+    /// Setup default queue
+    dispatch_queue_attr_t attrs = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
+    dispatch_queue_t displayLinkQueue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.display-link", attrs); /// TODO: Remove .helper from the queue name. This is used in the mainApp, too.
+
+    /// Call main init
+    return [self displayLinkOptimizedForWorkType: workType displayLinkQueue: displayLinkQueue];
+}
++ (instancetype) displayLinkOptimizedForWorkType:(MFDisplayLinkWorkType)workType displayLinkQueue:(dispatch_queue_t)displayLinkQueue {
+    return [[self alloc] initOptimizedForWorkType: workType displayLinkQueue: displayLinkQueue];
 }
 
 /// Init
+- (instancetype)initOptimizedForWorkType:(MFDisplayLinkWorkType)workType displayLinkQueue: (dispatch_queue_t)displayLinkQueue {
 
-- (instancetype)initOptimizedForWorkType:(MFDisplayLinkWorkType)workType {
-    
     self = [super init];
     if (self) {
         
         /// Store type of work for which to optimize
         self->_optimizedWorkType = workType;
         
-        /// Setup queue
-        dispatch_queue_attr_t attrs = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
-        _displayLinkQueue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.display-link", attrs); /// TODO: Remove .helper from the queue name. This is used in the mainApp, too.
-        
         /// Setup internal CVDisplayLink
         [self setUpNewDisplayLinkWithActiveDisplays];
-        
+
+        /// Store displayLinkQueue
+        _displayLinkQueue = displayLinkQueue;
+
         /// Init displaysUnderMousePointer cache
         _previousDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 2);
         /// ^ Why 2? - see `setDisplayToDisplayUnderMousePointerWithEvent:`
@@ -236,16 +244,16 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
     });
 }
 
-- (void)start_UnsafeWithCallback:(DisplayLinkCallback _Nonnull)callback {
+- (void)start_UnsafeWithCallback:(DisplayLinkCallback _Nullable)callback {
 
     
     /// Debug
     DDLogDebug("DisplayLink.m: (%@) starting", [self identifier]);
     
     /// Store callback
-    
-    self.callback = callback;
-    
+    if (callback) /// Set to nil to preserve existing callback
+        self.callback = callback;
+
     /// Start the displayLink
     ///     If something goes wrong see notes in old SmoothScroll.m > handleInput: method
     
@@ -278,8 +286,8 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
     
     /// Make sure block is running on the main thread
     
-    if ((NO)) {
-        
+    if ((0)) {
+
         /// Dispatch to main synchronously
         
         if (NSThread.isMainThread) {
@@ -471,7 +479,8 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
     ///     - TODO: actually use this instead of `linkToMainScreen` and test if this new version works.
     /// - I think this would be appropriate to use for event sending, not for animation, since it's based on a CGEvent) - For animation we need another approach.
     ///     - (But I think if we move over from the deprecated CVDisplayLink to the new CADisplayLink, we'll have to use a different approach anyways.)
-    
+    /// - Update: [Sep 2026] I think `-linkToMainScreen` is wrong everywhere we use it – should replace with `-linkToDisplayUnderMousePointerWithEvent:` or equivalent.
+
 #if IS_HELPER
     
     __block CVReturn result;

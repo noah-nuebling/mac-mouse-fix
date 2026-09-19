@@ -33,12 +33,15 @@ static MFMouseButtonNumber _fakeDragButtonNumber; /// Button number. Only used w
     [ModificationUtility postMouseButton:_fakeDragButtonNumber down:YES];
 }
 
-+ (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY event:(CGEventRef)event {
++ (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY {
     
     CGPoint location;
+    #if 0 /** [Sep 2026] Remove event param since we now use `coalescingDisplayLink` to optimize for high-polling-rate mice. If we activate this code again: Could just pass in location of last event? */
     if (event) {
         location = CGEventGetLocation(event); // I feel using `event` passed in from eventTap here makes things slighly more responsive that using `getPointerLocation()`
-    } else {
+    } else
+    #endif
+    {
         location = getPointerLocation();
     }
     CGMouseButton button = [SharedUtility CGMouseButtonFromMFMouseButtonNumber:_fakeDragButtonNumber];

@@ -47,12 +47,13 @@ typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
 /// ^ I think setting copy on this prevented some mean bug, but I forgot the details.
 
 + (instancetype)displayLinkOptimizedForWorkType:(MFDisplayLinkWorkType)workType;
++ (instancetype)displayLinkOptimizedForWorkType:(MFDisplayLinkWorkType)workType displayLinkQueue: (dispatch_queue_t)displayLinkQueue;
 - (instancetype)init NS_UNAVAILABLE;
 
 //- (void)startWithCallback:(DisplayLinkCallback)callback;
 //- (void)stop;
 
-- (void)start_UnsafeWithCallback:(DisplayLinkCallback)callback;
+- (void)start_UnsafeWithCallback:(DisplayLinkCallback _Nullable)callback;
 - (void)stop_Unsafe;
 - (BOOL)isRunning;
 - (BOOL)isRunning_Unsafe;

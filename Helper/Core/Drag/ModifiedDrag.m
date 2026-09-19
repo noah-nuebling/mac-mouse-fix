@@ -34,6 +34,10 @@
 
 #import "GlobalEventTapThread.h"
 
+@implementation CoalescableEvent @end
+@implementation CoalescableEvent_Delta @end
+@implementation CoalescableEvent_Deactivation @end
+
 @implementation ModifiedDrag
 
 /// Notes:
@@ -105,13 +109,20 @@ static ModifiedDragState _drag;
     ///     When the eventTap and the deactivate function are driven by different threads or whatever then the deactivation can happen before we've processed all the events. This allows us to avoid that issue
     dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
     _drag.queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.modified-drag", attr);
-    
+
+    /// Setup coalescingDisplayLink
+    _drag.coalescingDisplayLink = [DisplayLink displayLinkOptimizedForWorkType: kMFDisplayLinkWorkTypeEventSending displayLinkQueue: _drag.queue];
+    [_drag.coalescingDisplayLink setCallback:^(DisplayLinkCallbackTimeInfo timeInfo) { coalescingDisplayLinkCallback(timeInfo); }];
+
+    /// Setup coalescableEventQueue
+    _drag.coalescableEventQueue = [NSMutableArray new];
+
     /// Set usage threshold
     _drag.usageThreshold = 7; // 20, 5
     
     /// Create mouse moved callback
-    if (_drag.eventTap == nil) {
-        
+    if (!_drag.eventTap) {
+
         CGEventTapLocation location = kCGHIDEventTap;
         CGEventTapPlacement placement = kCGHeadInsertEventTap;
         CGEventTapOptions option = /*kCGEventTapOptionListenOnly*/ kCGEventTapOptionDefault;
@@ -123,6 +134,47 @@ static ModifiedDragState _drag;
         
         _drag.eventTap = eventTap;
     }
+}
+
+void coalescingDisplayLinkCallback(DisplayLinkCallbackTimeInfo timeInfo) {
+
+    if (!_drag.coalescableEventQueue.count) return;
+
+    double deltaXSum = 0;
+    double deltaYSum = 0;
+
+    CoalescableEvent_Deactivation *deactivationEvent = nil;
+
+    for (CoalescableEvent *event in _drag.coalescableEventQueue) {
+        if (isclass(event, CoalescableEvent_Deactivation)) {
+            deactivationEvent = (id)event;
+            break;
+        }
+        else if (isclass(event, CoalescableEvent_Delta)) {
+            CoalescableEvent_Delta *event_ = (id)event;
+            deltaXSum += event_.deltaX;
+            deltaYSum += event_.deltaY;
+        }
+        else mfassert(false, @"Unknown ModifiedDrag_Event: %@", event);
+    }
+
+    /// Call outputPlugin
+    {
+        [_drag.outputPlugin handleMouseInputWhileInUseWithDeltaX: deltaXSum deltaY: deltaYSum];
+
+        /// Update phase
+        ///
+        /// - firstCallback is used in `handleMouseInputWhileInUseWithDeltaX:...` (called above)
+        /// - The first time we call `handleMouseInputWhileInUseWithDeltaX:...` during a drag, the `firstCallback` will be true. On subsequent calls, the `firstCallback` will be false.
+        ///     - Indirectly communicating with the plugin through _drag is a little confusing, we might want to consider removing _drag from the plugins and sending the relevant data as arguments instead.
+        _drag.firstCallback = false;
+
+        if (deactivationEvent) [_drag.outputPlugin handleDeactivationWhileInUseWithCancel: deactivationEvent.cancelled];
+    }
+
+    [_drag.coalescableEventQueue removeAllObjects];
+
+    [_drag.coalescingDisplayLink stop_Unsafe];
 }
 
 /// Interface - start
@@ -319,7 +371,10 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGE
         /// Update state
         _drag.activationState = kMFModifiedInputActivationStateInUse;
         _drag.firstCallback = true;
-        
+
+        /// Init coalescingDisplayLink
+        [_drag.coalescingDisplayLink linkToMainScreen_Unsafe];
+
         /// Do deferred init
         /// Could also do this in normal init `initializeDragWithDict`, but here is more effiicient (`initializeDragWithDict` is called on every mouse click if it's set up for that button)
         /// -> Don't use `naturalDirection` before state switches to `kMFModifiedInputActivationStateInUse`!
@@ -351,17 +406,15 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY, CGEventRef event
         deltaX = -deltaX;
         deltaY = -deltaY;
     }
-    
-    /// Notifiy plugin
-    [_drag.outputPlugin handleMouseInputWhileInUseWithDeltaX:deltaX deltaY:deltaY event:event];
-    
-    /// Update phase
-    ///
-    /// - firstCallback is used in `handleMouseInputWhileInUseWithDeltaX:...` (called above)
-    /// - The first time we call `handleMouseInputWhileInUseWithDeltaX:...` during a drag, the `firstCallback` will be true. On subsequent calls, the `firstCallback` will be false.
-    ///     - Indirectly communicating with the plugin through _drag is a little confusing, we might want to consider removing _drag from the plugins and sending the relevant data as arguments instead.
-    
-    _drag.firstCallback = false;
+
+    /// Add event to coalescableEventQueue
+    CoalescableEvent_Delta *coalescableEvent = [CoalescableEvent_Delta new];
+    coalescableEvent.deltaX = deltaX;
+    coalescableEvent.deltaY = deltaY;
+    [_drag.coalescableEventQueue addObject: coalescableEvent];
+
+    /// Start coalescingDisplayLink
+    [_drag.coalescingDisplayLink start_UnsafeWithCallback: nil];
 }
 
 + (void (^ _Nullable)(void))suspend {
@@ -424,7 +477,12 @@ void deactivate_Unsafe(BOOL cancel) {
     /// Handle state == In use
     ///     Notify plugin
     if (_drag.activationState == kMFModifiedInputActivationStateInUse) {
-        [_drag.outputPlugin handleDeactivationWhileInUseWithCancel:cancel];
+
+        CoalescableEvent_Deactivation *coalescableEvent = [CoalescableEvent_Deactivation new];
+        coalescableEvent.cancelled = cancel;
+        [_drag.coalescableEventQueue addObject: coalescableEvent];
+
+        [_drag.coalescingDisplayLink start_UnsafeWithCallback: nil];
     }
     
     /// Set state == none

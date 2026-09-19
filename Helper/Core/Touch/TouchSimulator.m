@@ -150,14 +150,14 @@ static NSMutableDictionary *_swipeInfo;
                    //"prevOriginOffset: %@ "
                    //"type: %@, "
                    "phase: %@, "
-                   "timeSinceLast: %@"
+                   "timeSinceLast: %.2f"
                    ,
                    @(d),
                    //@(_dockSwipeLastDelta),
                    //@(_dockSwipeOriginOffset),
                    //@(type),
                    @(phase),
-                   @(timeDiff));
+                   timeDiff * 1000);
     }
     
     /// Determine exitSpeed
