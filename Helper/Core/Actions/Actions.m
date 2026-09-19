@@ -178,7 +178,15 @@
             /// All that the main app has to do with the payload in order to make it a valid entry of the remap table's
             ///  dataModel is to add the kMFRemapsKeyEffect key and corresponding values
             [Remap sendAddModeFeedback:payload];
-            
+
+        } else if ([actionType isEqualToString:kMFActionDictTypeNone]) {
+
+            /// Intentionally do nothing.
+            ///     The button trigger still got captured (that's decided upstream in `Buttons.handleInput()`,
+            ///     based on whether *any* actionDict - including this one - exists for the button+level+duration,
+            ///     not on whether that actionDict does anything) - this branch just makes sure we don't accidentally
+            ///     fall into some other branch/behavior for the `none` type as the code evolves.
+
         }
     }
 }
