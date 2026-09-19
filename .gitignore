@@ -26,3 +26,7 @@ __pycache__
 # Sensitive
 gumroad_sales_cache.json
 sudopass.sh
+
+# Ignore MMF 3 stuff (this is MMF 2 branch)
+mac-mouse-fix-scripts/
+Shared/External/ReactiveCocoa-12.0.0/
