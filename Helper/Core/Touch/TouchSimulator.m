@@ -192,8 +192,8 @@ static NSMutableDictionary *_swipeInfo;
         if (invertedFromDevice) __dockSwipeOriginOffset *= -1; /// Could also apply the unflipping to the `d` argument above.
         
         /// Create HIDEvent
-        ///     Note: Setting the timestamp to `mach_absolute_time()` here would make some sense but we're not setting timestamps anywhere else when simulating gestures
-        HIDEvent *hidEvent = [[HIDEvent alloc] initWithType: kIOHIDEventTypeDockSwipe timestamp: 0 senderID: 0];
+        uint64_t timestamp = mach_absolute_time();
+        HIDEvent *hidEvent = [[HIDEvent alloc] initWithType: kIOHIDEventTypeDockSwipe timestamp: timestamp senderID: 0xDEADF4C3];
         
         IOHIDEventOptionBits options = (phase << kIOHIDEventEventOptionPhaseShift);
         
@@ -205,7 +205,7 @@ static NSMutableDictionary *_swipeInfo;
         /// Attach velocity event on exit
         if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
             
-            HIDEvent *childEvent = [[HIDEvent alloc] initWithType: kIOHIDEventTypeVelocity timestamp: 0 senderID: 0];
+            HIDEvent *childEvent = [[HIDEvent alloc] initWithType: kIOHIDEventTypeVelocity timestamp: timestamp senderID: 0xDEADF4C3];
             
             [childEvent setDoubleValue: exitSpeed forField: kIOHIDEventFieldVelocityX];
             [childEvent setDoubleValue: exitSpeed forField: kIOHIDEventFieldVelocityY];
