@@ -13,6 +13,7 @@
 @import Cocoa;
 #import "PointerFreeze.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "CGSDisplays.h"
 
 @implementation ModifiedDragOutputThreeFingerSwipe
 
@@ -21,6 +22,7 @@
 static ModifiedDragState *_drag;
 
 static int16_t _nOfSpaces = 1;
+static NSScreen *_screen = nil;
 
 /// Interface funcs
 
@@ -29,15 +31,38 @@ static int16_t _nOfSpaces = 1;
 }
 
 + (void)handleBecameInUse {
-    /// Get number of spaces
+
+    /// Get the screen
+    _screen = [NSScreen mainScreen];
+
+    /// Get number of spaces (`_nOfSpaces`)
     ///     for use in `handleMouseInputWhileInUse()`. Getting it here for performance reasons. Not sure if significant.
-    CFArrayRef spaces = CGSCopySpaces(CGSMainConnectionID(), CGSSpaceIncludesUser | CGSSpaceIncludesOthers | CGSSpaceIncludesCurrent);
-    /// Full screen spaces appear twice for some reason so we need to filter duplicates
-    NSSet *uniqueSpaces = [NSSet setWithArray:(__bridge NSArray *)spaces];
-    _nOfSpaces = uniqueSpaces.count;
-    
-    CFRelease(spaces);
-    
+    if ((0)) {
+        /// Strategy 1 - Count all spaces using CGSCopySpaces
+        ///     (doesn't work righ with multiple displays)
+        CFArrayRef spaces = CGSCopySpaces(CGSMainConnectionID(), CGSSpaceIncludesUser | CGSSpaceIncludesOthers | CGSSpaceIncludesCurrent);
+        /// Full screen spaces appear twice for some reason so we need to filter duplicates
+        NSSet *uniqueSpaces = [NSSet setWithArray:(__bridge NSArray *)spaces];
+        _nOfSpaces = uniqueSpaces.count;
+        CFRelease(spaces);
+
+    } else {
+        /// Strategy 2 [Sep 2026] Support multiple displays
+        ///     Haven't measured how fast this is. Probably fast. Alternative: Iterate each space and ask CGS which display it belongs to.
+
+        NSArray *spacesInfo = CFBridgingRelease(CGSCopyManagedDisplaySpaces(CGSMainConnectionID()));
+        NSString *screenUUID = [_screen mf_UUIDString];
+
+        /// Find the entry in spacesInfo info for `_screen`
+        NSDictionary *entry = nil;
+        for (NSDictionary *screenDict in spacesInfo)
+            if ([[screenDict objectForKey: @"Display Identifier"] isEqual: screenUUID])
+                { entry = screenDict; break; }
+
+        /// Count the spaces for `_screen`
+        _nOfSpaces = [[entry objectForKey: @"Spaces"] count];
+    }
+
     /// Freeze pointer
     if (GeneralConfig.freezePointerDuringModifiedDrag) {
         [PointerFreeze freezePointerAtPosition:_drag->usageOrigin];
@@ -52,8 +77,8 @@ static int16_t _nOfSpaces = 1;
      I arrived at these value through testing documented in the NotePlan note "MMF - Scraps - Testing DockSwipe scaling"
      TODO: Test this on a vertical screen
      */
-    CGSize screenSize = NSScreen.mainScreen.frame.size;
-    double originOffsetForOneSpace = _nOfSpaces == 1 ? 2.0 : 1.0 + (1.0 / (_nOfSpaces-1));
+    CGSize screenSize = _screen.frame.size;
+    double originOffsetForOneSpace = _nOfSpaces <= 1 ? 2.0 : 1.0 + (1.0 / (_nOfSpaces-1));
     double spaceSeparatorWidth = 63;
     double threeFingerScaleH = originOffsetForOneSpace / (screenSize.width + spaceSeparatorWidth);
     

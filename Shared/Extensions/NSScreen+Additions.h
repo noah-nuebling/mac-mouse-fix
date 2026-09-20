@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSScreen * _Nullable)screenUnderMousePointerWithEvent:(CGEventRef _Nullable)event;
 + (NSScreen * _Nullable)screenWithDisplayID:(CGDirectDisplayID)displayID;
 - (CGDirectDisplayID)displayID;
+- (NSString *_Nullable)mf_UUIDString;
 
 @end
 
