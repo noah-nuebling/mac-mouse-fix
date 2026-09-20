@@ -37,18 +37,9 @@ static NSScreen *_screen = nil;
 
     /// Get number of spaces (`_nOfSpaces`)
     ///     for use in `handleMouseInputWhileInUse()`. Getting it here for performance reasons. Not sure if significant.
-    if ((0)) {
-        /// Strategy 1 - Count all spaces using CGSCopySpaces
-        ///     (doesn't work righ with multiple displays)
-        CFArrayRef spaces = CGSCopySpaces(CGSMainConnectionID(), CGSSpaceIncludesUser | CGSSpaceIncludesOthers | CGSSpaceIncludesCurrent);
-        /// Full screen spaces appear twice for some reason so we need to filter duplicates
-        NSSet *uniqueSpaces = [NSSet setWithArray:(__bridge NSArray *)spaces];
-        _nOfSpaces = uniqueSpaces.count;
-        CFRelease(spaces);
-
-    } else {
-        /// Strategy 2 [Sep 2026] Support multiple displays
-        ///     Haven't measured how fast this is. Probably fast. Alternative: Iterate each space and ask CGS which display it belongs to.
+    {
+        /// Update [Sep 2026] Support multiple displays
+        ///     Haven't measured how fast this is. Probably fast. Alternative: Iterate each space (CGSCopySpaces) and ask CGS which display it belongs to.
 
         NSArray *spacesInfo = CFBridgingRelease(CGSCopyManagedDisplaySpaces(CGSMainConnectionID()));
         NSString *screenUUID = [_screen mf_UUIDString];
