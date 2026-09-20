@@ -112,6 +112,8 @@ static ModifiedDragState _drag;
 
     /// Setup coalescingDisplayLink
     _drag.coalescingDisplayLink = [DisplayLink displayLinkOptimizedForWorkType: kMFDisplayLinkWorkTypeEventSending displayLinkQueue: _drag.queue];
+    _drag.coalescingDisplayLink.dispatchCallbacksAsynchronously = YES;
+
     [_drag.coalescingDisplayLink setCallback:^(DisplayLinkCallbackTimeInfo timeInfo) { coalescingDisplayLinkCallback(timeInfo); }];
 
     /// Setup coalescableEventQueue
@@ -289,14 +291,27 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
 
 void coalescingDisplayLinkCallback(DisplayLinkCallbackTimeInfo timeInfo) {
 
-    /// Move this code off of the displayLink thread to solve deadlock, where [Sep 2026]
-    ///         displayLinkThread -> main (This code -> twoFingerDrag -> PointerFreeze -> `dispatch_sync(main)` (Not sure if this has to be `dispatch_sync`))
-    ///         main -> displayLinkThread (This code (I think) -> `-[DisplayLink stop_Unsafe]` -> `dispatch_async(main)` -> `CVDisplayLinkStop()` (Requires the private mutex that the displayLinkThread holds, I think))
-    ///     Drawback: Not running on displayLinkThread makes this code lower priority, might affect responsiveness.
-    ///     Alternatives:
-    ///         - Drive mainThread PointerFreeze stuff asynchronously (Not sure there's any reason not to do that) [Sep 2026]
-    ///         - Try not calling `CVDisplayLinkStop` from main. (But old notes suggest main was necessary to prevent mysterious errors) [Sep 2026]
-    dispatch_async(_drag.queue, ^{
+    /// On using `dispatch_async(_drag.queue, ...)` here:
+    ///     Do this to move this code off of the displayLink thread to solve deadlock, where [Sep 2026]
+    ///             ```
+    ///             displayLinkThread -> main (This code -> twoFingerDrag -> PointerFreeze -> `dispatch_sync(main)` (Not sure if this has to be `dispatch_sync`))
+    ///             main -> displayLinkThread (This code (I think) -> `-[DisplayLink stop_Unsafe]` -> `dispatch_async(main)` -> `CVDisplayLinkStop()` (Requires the private mutex that the displayLinkThread holds, I think))
+    ///             ```
+    ///         Drawback: Not running on displayLinkThread makes this code lower priority, might affect responsiveness.
+    ///         Alternatives:
+    ///             - Drive mainThread PointerFreeze stuff asynchronously (Not sure there's any reason not to do that) [Sep 2026]
+    ///             - Try not calling `CVDisplayLinkStop` from main. (But old notes suggest main was necessary to prevent mysterious errors) [Sep 2026]
+    ///     Update: [Sep 2026]
+    ///         Instead of this, we're using `-[DisplayLink setDispatchCallbacksAsynchronously: YES];` now. It takes effect in `DisplayLink.m > displayLinkCallback` – basically does the same thing at an earlier level in the processing chain (which could still deadlock.)
+    ///         Deadlock I saw which this prevents:
+    ///             ```
+    ///             main -> displayLinkThread               (-[DisplayLink stop_Unsafe] -> dispatch_async(main) -> CVDisplayLinkStop())
+    ///             displayLinkThread -> displayLinkQueue   (displayLinkCallback -> dispatch_sync(self.dispatchQueue, ...))
+    ///             displayLinkQueue -> main                (coalescingDisplayLinkCallback -> dispatch_async(_drag.queue, ...) -> twoFingerSwipe -> PointerFreeze -> dispatch_sync(dispatch_get_main_queue(), ...))
+    ///             ```
+    ///             Alternatives:
+    ///                 Break sync dispatch `displayLinkQueue -> main`. But this would be more complicated refactor, might break something about PointerFreeze (can't find comments about why we're doing sync dispatch), and`coalescingDisplayLinkCallback` doesn't have any drawbacks over previous `dispatch_async(_drag.queue, ...)` in this function that I can think of.
+    //dispatch_async(_drag.queue, ^{
 
     /// Early return
     if (!_drag.coalescableEventQueue.count) return;
@@ -336,7 +351,7 @@ void coalescingDisplayLinkCallback(DisplayLinkCallbackTimeInfo timeInfo) {
     /// Process deactivationEvent
     processCoalescedDeactivationEvent(deactivationEvent);
 
-    });
+    //});
 }
 
 void processCoalescedDeltaEvent(double deltaXSum, double deltaYSum, CGPoint lastPointerLocation) {
