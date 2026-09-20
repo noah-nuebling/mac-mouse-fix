@@ -493,6 +493,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
     /// - I think this would be appropriate to use for event sending, not for animation, since it's based on a CGEvent) - For animation we need another approach.
     ///     - (But I think if we move over from the deprecated CVDisplayLink to the new CADisplayLink, we'll have to use a different approach anyways.)
     /// - Update: [Sep 2026] I think `-linkToMainScreen` is wrong everywhere we use it – should replace with `-linkToDisplayUnderMousePointerWithEvent:` or equivalent.
+    ///     Don't forget to update other hardcoded mainScreen references (`NSScreen.mainScreen`). Maybe other stuff.
 
 #if IS_HELPER
     
