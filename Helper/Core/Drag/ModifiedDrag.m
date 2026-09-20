@@ -289,6 +289,15 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
 
 void coalescingDisplayLinkCallback(DisplayLinkCallbackTimeInfo timeInfo) {
 
+    /// Move this code off of the displayLink thread to solve deadlock, where [Sep 2026]
+    ///         displayLinkThread -> main (This code -> twoFingerDrag -> PointerFreeze -> `dispatch_sync(main)` (Not sure if this has to be `dispatch_sync`))
+    ///         main -> displayLinkThread (This code (I think) -> `-[DisplayLink stop_Unsafe]` -> `dispatch_async(main)` -> `CVDisplayLinkStop()` (Requires the private mutex that the displayLinkThread holds, I think))
+    ///     Drawback: Not running on displayLinkThread makes this code lower priority, might affect responsiveness.
+    ///     Alternatives:
+    ///         - Drive mainThread PointerFreeze stuff asynchronously (Not sure there's any reason not to do that) [Sep 2026]
+    ///         - Try not calling `CVDisplayLinkStop` from main. (But old notes suggest main was necessary to prevent mysterious errors) [Sep 2026]
+    dispatch_async(_drag.queue, ^{
+
     /// Early return
     if (!_drag.coalescableEventQueue.count) return;
 
@@ -357,7 +366,7 @@ void coalescingDisplayLinkCallback(DisplayLinkCallbackTimeInfo timeInfo) {
     /// Process deactivationEvent
     if (deactivationEvent)
         [_drag.outputPlugin handleDeactivationWhileInUseWithCancel: deactivationEvent.cancelled];
-
+    });
 }
 
 static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGPoint pointerLocation) {
