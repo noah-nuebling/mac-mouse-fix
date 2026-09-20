@@ -46,6 +46,8 @@ typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
 @property (atomic, readwrite, copy) DisplayLinkCallback callback;
 /// ^ I think setting copy on this prevented some mean bug, but I forgot the details.
 
+@property (atomic) BOOL dispatchCallbacksAsynchronously;
+
 + (instancetype)displayLinkOptimizedForWorkType:(MFDisplayLinkWorkType)workType;
 + (instancetype)displayLinkOptimizedForWorkType:(MFDisplayLinkWorkType)workType displayLinkQueue: (dispatch_queue_t)displayLinkQueue;
 - (instancetype)init NS_UNAVAILABLE;

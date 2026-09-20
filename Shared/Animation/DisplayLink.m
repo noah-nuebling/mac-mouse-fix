@@ -640,21 +640,26 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     ///     - [Aug 2025] Eventually, we may want to move to CADisplayLink and async-dispatch to the "IOThread" we're planning. This would resolve the deadlock, too (See `Old MFDisplayLinkWorkType stuff.md`)
     
     DisplayLink *self = (__bridge DisplayLink *)displayLinkContext; /// [Aug 2025] Why are we getting this outside `dispatch_sync()`? Spending time outside `dispatch_sync()` increases chances of deadlock.
-    
-    dispatch_sync(self.dispatchQueue, ^{ /// [Aug 2025] Recovered notes from 3.0.0: Use sync so this is actually executed on the high-priority display-linked thread // Why are we using self.dispatchQueue instead of `self->_displayLinkQueue`? I think self.dispatchQueue might cause some weird timing stuff since objc props are often atomic and stuff..
-            
+
+    __block DisplayLinkCallbackTimeInfo timeInfo;
+
+    auto workload = ^{ /// [Aug 2025] Recovered notes from 3.0.0: Use sync so this is actually executed on the high-priority display-linked thread // Why are we using self.dispatchQueue instead of `self->_displayLinkQueue`? I think self.dispatchQueue might cause some weird timing stuff since objc props are often atomic and stuff..
+
         DDLogDebug("DisplayLink.m: (%@) Callback", [self identifier]);
-         
-        DisplayLinkCallbackTimeInfo timeInfo = parseTimeStamps(inNow, inOutputTime);
-         
+
+        if (!self->_dispatchCallbacksAsynchronously) timeInfo = parseTimeStamps(inNow, inOutputTime);
+
         if (self->_requestedState == kMFDisplayLinkRequestedStateStopped) {
             DDLogDebug("DisplayLink.m: (%@) callback called after requested stop. Returning", [self identifier]);
             return;
         }
-        
+
         self.callback(timeInfo);
-    });
-    
+    };
+    if (self->_dispatchCallbacksAsynchronously) timeInfo = parseTimeStamps(inNow, inOutputTime); /// [Sep 2026] Get timeInfo before `dispatch_async`, since it looked like capturing the input values (the CVTimeStamps) in the block was very slow (didn't really test). In the `dispatch_sync` case we want to dispatch as early as possible to lower chance of deadlocks (Explained in comments above as of [Sep 2026])
+    if (self->_dispatchCallbacksAsynchronously) dispatch_async(self.dispatchQueue, workload);
+    else                                        dispatch_sync(self.dispatchQueue, workload);
+
     return kCVReturnSuccess;
 }
 
