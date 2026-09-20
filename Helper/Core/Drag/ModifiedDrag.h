@@ -71,6 +71,7 @@ typedef struct {
     
     dispatch_queue_t queue;
 
+    bool coalesceEvents;
     DisplayLink *coalescingDisplayLink; /// DisplayLink for coalescing high polling rate mouse events, since 1000 Hz mouse produces lag under macOS 27 (TODO: Link to the pull requests here)
     NSMutableArray<CoalescableEvent *> *coalescableEventQueue;
 

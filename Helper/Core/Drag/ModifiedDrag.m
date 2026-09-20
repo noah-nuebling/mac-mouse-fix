@@ -185,6 +185,9 @@ static ModifiedDragState _drag;
         else if ([type isEqualToString:kMFModifiedDragTypeAddModeFeedback])  p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputAddMode.class;
         else                                                                 assert(false);
 
+        _drag.coalesceEvents = true;
+        if (1) if (isclass(p, ModifiedDragOutputTwoFingerSwipe)) _drag.coalesceEvents = false; /// `ModifiedDragOutputTwoFingerSwipe` already has its own `TouchAnimator` which effectively coalesces output events, we think coalescing again here might responsiveness (Didn't really test) [Sep 2026]
+
         /// Link with plugin
         //[p initializeWithDragState:&_drag];
         _drag.outputPlugin = p;
@@ -256,16 +259,19 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
                 return;
             }
 
-            /// Append to coalescableEventQueue
-            CoalescableEvent_Delta *deltaEvent = [CoalescableEvent_Delta new];
-            deltaEvent.deltaX = dx;
-            deltaEvent.deltaY = dy;
-            deltaEvent.pointerLocation = CGEventGetLocation(eventCopy);
-            [_drag.coalescableEventQueue addObject: deltaEvent];
+            if (!_drag.coalesceEvents) {
+                processCoalescedDeltaEvent(dx, dy, CGEventGetLocation(eventCopy));
+            } else {
+                /// Append to coalescableEventQueue
+                CoalescableEvent_Delta *deltaEvent = [CoalescableEvent_Delta new];
+                deltaEvent.deltaX = dx;
+                deltaEvent.deltaY = dy;
+                deltaEvent.pointerLocation = CGEventGetLocation(eventCopy);
+                [_drag.coalescableEventQueue addObject: deltaEvent];
 
-            /// Start the coalescingDisplayLink
-            [_drag.coalescingDisplayLink start_UnsafeWithCallback: nil];
-
+                /// Start the coalescingDisplayLink
+                [_drag.coalescingDisplayLink start_UnsafeWithCallback: nil];
+            }
         });
     }
 
@@ -325,6 +331,15 @@ void coalescingDisplayLinkCallback(DisplayLinkCallbackTimeInfo timeInfo) {
     [_drag.coalescingDisplayLink stop_Unsafe];
 
     /// Process coalesced delta event(s)
+    processCoalescedDeltaEvent(deltaXSum, deltaYSum, lastPointerLocation);
+
+    /// Process deactivationEvent
+    processCoalescedDeactivationEvent(deactivationEvent);
+
+    });
+}
+
+void processCoalescedDeltaEvent(double deltaXSum, double deltaYSum, CGPoint lastPointerLocation) {
     if (deltaXSum || deltaYSum)
     {
         /// Update originOffset
@@ -354,13 +369,12 @@ void coalescingDisplayLinkCallback(DisplayLinkCallbackTimeInfo timeInfo) {
 
             handleMouseInputWhileInUse(deltaXSum, deltaYSum);
         }
-
     }
+}
 
-    /// Process deactivationEvent
+void processCoalescedDeactivationEvent(CoalescableEvent_Deactivation *deactivationEvent) {
     if (deactivationEvent)
         [_drag.outputPlugin handleDeactivationWhileInUseWithCancel: deactivationEvent.cancelled];
-    });
 }
 
 static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGPoint pointerLocation) {
@@ -496,9 +510,13 @@ void deactivate_Unsafe(BOOL cancel) {
 
         CoalescableEvent_Deactivation *coalescableEvent = [CoalescableEvent_Deactivation new];
         coalescableEvent.cancelled = cancel;
-        [_drag.coalescableEventQueue addObject: coalescableEvent];
 
-        [_drag.coalescingDisplayLink start_UnsafeWithCallback: nil];
+        if (!_drag.coalesceEvents) {
+            processCoalescedDeactivationEvent(coalescableEvent);
+        } else {
+            [_drag.coalescableEventQueue addObject: coalescableEvent];
+            [_drag.coalescingDisplayLink start_UnsafeWithCallback: nil];
+        }
     }
     
     /// Set state == none
