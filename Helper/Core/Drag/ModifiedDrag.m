@@ -162,7 +162,7 @@ static ModifiedDragState _drag;
             BOOL isSame = [effectDict isEqualToDictionary:_drag.effectDict];
             BOOL isAddMode = [_drag.effectDict[kMFModifiedDragDictKeyType] isEqual:kMFModifiedDragTypeAddModeFeedback];
             if (!isSame && !isAddMode) {
-//                deactivate_Unsafe(YES);
+                //deactivate_Unsafe(YES);
                 return;
             } else {
                 return;
@@ -175,24 +175,18 @@ static ModifiedDragState _drag;
         /// Init static parts of `_drag`
         _drag.type = type;
         _drag.effectDict = effectDict;
-//        _drag.initialModifiers = modifiers;
+        //_drag.initialModifiers = modifiers;
         _drag.initTime = CACurrentMediaTime();
         
         id<ModifiedDragOutputPlugin> p;
-        if ([type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) {
-            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputThreeFingerSwipe.class;
-        } else if ([type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe]) {
-            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputTwoFingerSwipe.class;
-        } else if ([type isEqualToString:kMFModifiedDragTypeFakeDrag]) {
-            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputFakeDrag.class;
-        } else if ([type isEqualToString:kMFModifiedDragTypeAddModeFeedback]) {
-            p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputAddMode.class;
-        } else {
-            assert(false);
-        }
-        
+        if      ([type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputThreeFingerSwipe.class;
+        else if ([type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe])   p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputTwoFingerSwipe.class;
+        else if ([type isEqualToString:kMFModifiedDragTypeFakeDrag])         p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputFakeDrag.class;
+        else if ([type isEqualToString:kMFModifiedDragTypeAddModeFeedback])  p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputAddMode.class;
+        else                                                                 assert(false);
+
         /// Link with plugin
-//        [p initializeWithDragState:&_drag];
+        //[p initializeWithDragState:&_drag];
         _drag.outputPlugin = p;
         
         /// Init dynamic parts of _drag
@@ -327,7 +321,7 @@ void coalescingDisplayLinkCallback(DisplayLinkCallbackTimeInfo timeInfo) {
     [_drag.coalescableEventQueue removeAllObjects];
 
     /// Stop coalescingDisplayLink
-    ///     (It just aggregates everything for the next frame, and then stops)
+    ///     (We just aggregate everything for the next frame, and then stop)
     [_drag.coalescingDisplayLink stop_Unsafe];
 
     /// Process coalesced delta event(s)
