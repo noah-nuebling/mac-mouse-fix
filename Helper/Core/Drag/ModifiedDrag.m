@@ -248,10 +248,10 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
             ///     This handles race condition where _drag.eventTap is disabled right after eventTapCallBack() is called
             ///     We implemented the same idea in PointerFreeze.
             ///     Actually, the check for kMFModifiedInputActivationStateNone below has the same effect, but I think but this makes it clearer?
-            
-            if (!CGEventTapIsEnabled(_drag.eventTap)) {
-                return;
-            }
+
+            /// Removed the `CGEventTapIsEnabled(_drag.eventTap)` call that used to be here.
+            /// It's a synchronous calls to the WindowServer and it takes tens of milliseconds while Mission Control is animating.
+            /// the kMFModifiedInputActivationStateNone check below covers the same race anyway.
             
             /// Update originOffset
             
