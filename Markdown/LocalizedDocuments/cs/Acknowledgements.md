@@ -97,6 +97,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **září 2026**
 
+- 🇺🇸&nbsp;Jon97X - "Mouse Savior"
 - 🇵🇱&nbsp;Long&nbsp;Crew2674 - "castus"
 - 🇺🇸&nbsp;Song&nbsp;Yang
 - 🇺🇸&nbsp;Ethan&nbsp;Neidhart

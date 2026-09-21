@@ -98,6 +98,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Eylül 2026**
 
+- 🇺🇸&nbsp;Jon97X - "Mouse Savior"
 - 🇵🇱&nbsp;Long&nbsp;Crew2674 - "castus"
 - 🇺🇸&nbsp;Song&nbsp;Yang
 - 🇺🇸&nbsp;Ethan&nbsp;Neidhart
