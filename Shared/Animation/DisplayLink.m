@@ -35,8 +35,8 @@
 @interface DisplayLink ()
 
 typedef enum {
-    kMFDisplayLinkRequestedStateStopped = 0,
-    kMFDisplayLinkRequestedStateRunning,
+    kMFDisplayLinkRequestedState_Stopped = 0,
+    kMFDisplayLinkRequestedState_Running,
 } MFDisplayLinkRequestedState;
 
 @end
@@ -156,7 +156,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
         _displayLinkIsOutdated = NO;
         
         /// Init `_requestedState`
-        _requestedState = kMFDisplayLinkRequestedStateStopped;
+        _requestedState = kMFDisplayLinkRequestedState_Stopped;
         
         /// Setup display reconfiguration callback
         CGDisplayRegisterReconfigurationCallback(displayReconfigurationCallback, (__bridge void * _Nullable)(self));
@@ -258,7 +258,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 
     /// Early return
     if ((1)) /// [Sep 2026] Added this as optimization, not being totally it's correct
-    if (_requestedState == kMFDisplayLinkRequestedStateRunning) {
+    if (_requestedState == kMFDisplayLinkRequestedState_Running) {
         if ((0)) DDLogDebug("DisplayLink.m: (%@) already starting/started", [self identifier]);
         return;
     }
@@ -275,7 +275,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 
         /// Set requestedState
         ///     before async dispatching to main -> so that isRunning() works properly
-        _requestedState = kMFDisplayLinkRequestedStateRunning;
+        _requestedState = kMFDisplayLinkRequestedState_Running;
 
         /// Define block that starts displayLink
         startDisplayLinkBlock = ^{
@@ -373,7 +373,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
         /// Set requestedState
         ///     before async dispatching to main -> so that isRunning() works properly
         
-        _requestedState = kMFDisplayLinkRequestedStateStopped;
+        _requestedState = kMFDisplayLinkRequestedState_Stopped;
         
         if ((NO)) {
             
@@ -650,7 +650,7 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 
         if (!self->_dispatchCallbacksAsynchronously) timeInfo = parseTimeStamps(inNow, inOutputTime);
 
-        if (self->_requestedState == kMFDisplayLinkRequestedStateStopped) {
+        if (self->_requestedState == kMFDisplayLinkRequestedState_Stopped) {
             DDLogDebug("DisplayLink.m: (%@) callback called after requested stop. Returning", [self identifier]);
             return;
         }

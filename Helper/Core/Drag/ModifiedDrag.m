@@ -113,6 +113,7 @@ static ModifiedDragState _drag;
     /// Setup coalescingDisplayLink
     _drag.coalescingDisplayLink = [DisplayLink displayLinkOptimizedForWorkType: kMFDisplayLinkWorkTypeEventSending displayLinkQueue: _drag.queue];
     _drag.coalescingDisplayLink.dispatchCallbacksAsynchronously = YES;
+    _drag.coalescingDisplayLink.delayStopToNextFrame = YES;
 
     [_drag.coalescingDisplayLink setCallback:^(DisplayLinkCallbackTimeInfo timeInfo) { coalescingDisplayLinkCallback(timeInfo); }];
 
