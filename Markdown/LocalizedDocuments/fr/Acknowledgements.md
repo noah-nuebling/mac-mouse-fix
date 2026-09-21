@@ -98,6 +98,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **septembre 2026**
 
+- 🇵🇱&nbsp;Long&nbsp;Crew2674 - "castus"
 - 🇺🇸&nbsp;Song&nbsp;Yang
 - 🇺🇸&nbsp;Ethan&nbsp;Neidhart
 - 🇮🇱&nbsp;Mor&nbsp;Jacobi - "Awesome tool, Thanks for bringing macOS 27 support so quickly!"

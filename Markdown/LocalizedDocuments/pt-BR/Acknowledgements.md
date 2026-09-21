@@ -100,6 +100,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **setembro 2026**
 
+- 🇵🇱&nbsp;Long&nbsp;Crew2674 - "castus"
 - 🇺🇸&nbsp;Song&nbsp;Yang
 - 🇺🇸&nbsp;Ethan&nbsp;Neidhart
 - 🇮🇱&nbsp;Mor&nbsp;Jacobi - "Awesome tool, Thanks for bringing macOS 27 support so quickly!"

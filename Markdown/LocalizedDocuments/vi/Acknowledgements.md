@@ -98,6 +98,7 @@ Những người đã đóng góp nhiều hơn cả giá thông thường và �
 
 **Tháng 9 2026**
 
+- 🇵🇱&nbsp;Long&nbsp;Crew2674 - "castus"
 - 🇺🇸&nbsp;Song&nbsp;Yang
 - 🇺🇸&nbsp;Ethan&nbsp;Neidhart
 - 🇮🇱&nbsp;Mor&nbsp;Jacobi - "Awesome tool, Thanks for bringing macOS 27 support so quickly!"
