@@ -344,6 +344,13 @@ void coalescingDisplayLinkCallback(DisplayLinkCallbackTimeInfo timeInfo) {
 
     /// Stop coalescingDisplayLink
     ///     (We just aggregate everything for the next frame, and then stop)
+    ///     Performance note: [Sep 2026] This makes CVDisplayLink stop its thread every frame, and then create/configure a new thread for the next frame, I think.
+    ///         However, the overhead of this is dwarfed by CGEvent tapping and sending.
+    ///         Avoiding this would lower CPU usage by `<~3%` on my Logitech gaming mouse (1000 Hz) and lower by `<~7%` on Logitech lift (not sure exactly its polling rate, I think low.)
+    ///             (Measured on M4 MBA, wiggling the DockSwipe, using 'processor trace' in instruments, 120 Hz display I think, might have accidentally used 60 Hz for some tests.)
+    ///             (Percentages are relative to current CPU usage, which is `~3%` on Lift and `~7%` on the gaming mouse IIRC, so in absolute terms, this should lower CPU usage by `<~0.2%`)
+    ///         -> Since I plan on eventually using CADisplayLink for newer macOS (instead of CVDisplayLink), I won't bother optimizing this.
+
     [_drag.coalescingDisplayLink stop_Unsafe];
 
     /// Process coalesced delta event(s)
