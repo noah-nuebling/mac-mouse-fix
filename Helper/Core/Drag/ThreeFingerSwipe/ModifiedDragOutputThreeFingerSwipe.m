@@ -22,7 +22,7 @@
 static ModifiedDragState *_drag;
 
 static int16_t _nOfSpaces = 1;
-static NSScreen *_screen = nil;
+static NSSize _screenSize = {};
 
 /// Interface funcs
 
@@ -32,17 +32,20 @@ static NSScreen *_screen = nil;
 
 + (void)handleBecameInUse {
 
-    /// Get the screen
-    _screen = [NSScreen mainScreen];
+    NSScreen *screen = [NSScreen mainScreen];
 
-    /// Get number of spaces (`_nOfSpaces`)
-    ///     for use in `handleMouseInputWhileInUse()`. Getting it here for performance reasons. Not sure if significant.
+    /// Get `_screenSize`
+    ///     For use in `handleMouseInputWhileInUse`. Getting it here in case screen is detached mid-gesture, I guess? Didn't test [Sep 2026]
+    _screenSize = [screen frame].size;
+
+    /// Get `_nOfSpaces`
+    ///     For use in `handleMouseInputWhileInUse`. Getting it here for performance reasons. Not sure if significant.
     {
         /// Update [Sep 2026] Support multiple displays
         ///     Haven't measured how fast this is. Probably fast. Alternative: Iterate each space (CGSCopySpaces) and ask CGS which display it belongs to.
 
         NSArray *spacesInfo = CFBridgingRelease(CGSCopyManagedDisplaySpaces(CGSMainConnectionID()));
-        NSString *screenUUID = [_screen mf_UUIDString];
+        NSString *screenUUID = [screen mf_UUIDString];
 
         /// Find the entry in spacesInfo info for `_screen`
         NSDictionary *entry = nil;
@@ -68,15 +71,14 @@ static NSScreen *_screen = nil;
      I arrived at these value through testing documented in the NotePlan note "MMF - Scraps - Testing DockSwipe scaling"
      TODO: Test this on a vertical screen
      */
-    CGSize screenSize = _screen.frame.size;
     double originOffsetForOneSpace = _nOfSpaces <= 1 ? 2.0 : 1.0 + (1.0 / (_nOfSpaces-1));
     double spaceSeparatorWidth = 63;
-    double threeFingerScaleH = originOffsetForOneSpace / (screenSize.width + spaceSeparatorWidth);
-    
+    double threeFingerScaleH = originOffsetForOneSpace / (_screenSize.width + spaceSeparatorWidth);
+
     /// Vertical dockSwipe scaling
     ///     Not sure if it makes sense to scale this with screen height
-    double threeFingerScaleV = 1.0 / screenSize.height;
-    
+    double threeFingerScaleV = 1.0 / _screenSize.height;
+
     /// Get phase
     
     IOHIDEventPhaseBits eventPhase = _drag->firstCallback ? kIOHIDEventPhaseBegan : kIOHIDEventPhaseChanged;
@@ -97,13 +99,9 @@ static NSScreen *_screen = nil;
     MFDockSwipeType type;
     IOHIDEventPhaseBits phase;
     
-    if (_drag->usageAxis == kMFAxisHorizontal) {
-        type = kMFDockSwipeTypeHorizontal;
-    } else if (_drag->usageAxis == kMFAxisVertical) {
-        type = kMFDockSwipeTypeVertical;
-    } else {
-        assert(false);
-    }
+    if      (_drag->usageAxis == kMFAxisHorizontal) type = kMFDockSwipeTypeHorizontal;
+    else if (_drag->usageAxis == kMFAxisVertical)   type = kMFDockSwipeTypeVertical;
+    else                                            assert(false);
     
     phase = cancel ? kIOHIDEventPhaseCancelled : kIOHIDEventPhaseEnded;
     
