@@ -30,6 +30,10 @@
 ///     Update: [Jun 2026]
 ///         NSActivityLatencyCritical – says it makes timers and IO more precise, not sure if applicable here.
 ///         'Mach Scheduling and Thread Interfaces': https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/KernelProgramming/scheduler/scheduler.html
+///     Update: [Sep 2026]
+///         Did more digging (asking Claude) - `thread_policy_set` is the core API for doing this. (Also described in 'Mach Scheduling and Thread Interfaces')
+///         `thread_policy_get` says that the CVDisplayLink 'high priority' thread uses timeshare=NO (doesn't get deprioritized when running more) and importance=23 (moderately elevated) IIRC.
+///             The next step up from that would be raising importance to max and if that is not enough, going to real-time scheduling.
 
 #import "GlobalEventTapThread.h"
 
