@@ -45,7 +45,6 @@ typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
 
 @property (atomic, readwrite, copy) DisplayLinkCallback callback;
 /// ^ I think setting copy on this prevented some mean bug, but I forgot the details.
-
 @property (atomic) BOOL dispatchCallbacksAsynchronously;
 @property (atomic) BOOL delayStopToNextFrame;
 
@@ -61,8 +60,8 @@ typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
 - (BOOL)isRunning;
 - (BOOL)isRunning_Unsafe;
 
-- (CFTimeInterval)bestTimeBetweenFramesEstimate;
-- (CFTimeInterval)timeBetweenFrames;
+//- (CFTimeInterval)bestTimeBetweenFramesEstimate;
+//- (CFTimeInterval)timeBetweenFrames;
 - (CFTimeInterval)nominalTimeBetweenFrames;
 
 - (void)linkToMainScreen;

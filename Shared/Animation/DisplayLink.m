@@ -57,8 +57,6 @@ typedef enum {
     NSString *_identifier;
 }
 
-@synthesize dispatchQueue=_displayLinkQueue;
-
 #pragma mark - Debug
 
 NSString *MFCVReturn_ToString(CVReturn ret) { /// [Aug 2025] Added for debugging. Not sure this is a great place for it.
