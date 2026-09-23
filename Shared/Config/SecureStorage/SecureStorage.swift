@@ -80,11 +80,19 @@ import Foundation
                 set(keyPath, value: value)
                 
             } catch {
-                assert(false)
+#if DEBUG
+                DDLogError("Secure storage is unavailable in this development-signed build: \(error)")
+#else
+                assertionFailure("Failed to create secure storage item: \(error)")
+#endif
             }
             
         } catch {
-            assert(false)
+#if DEBUG
+            DDLogError("Secure storage is unavailable in this development-signed build: \(error)")
+#else
+            assertionFailure("Failed to update secure storage item: \(error)")
+#endif
         }
     }
     
