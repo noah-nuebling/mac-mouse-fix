@@ -85,7 +85,7 @@ bool MFCFRunLoopPerform_sync(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_
     
     MFSemaphore *semaphore = [[MFSemaphore alloc] initWithUnits: 0];
     MFCFRunLoopPerform(rl, modes, ^{
-        workload();
+        workload(); /// TODO: Fix: This can still fire after timeout.
         [semaphore releaseUnit];
     });
     didTimeOut = [semaphore acquireUnit: timeoutDate]; /// We completely block the current thread/runloop. Do the waiting `-[NSObject performSelector:onThread:...]` APIs do that, too?

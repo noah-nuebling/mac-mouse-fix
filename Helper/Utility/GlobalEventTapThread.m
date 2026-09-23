@@ -55,7 +55,8 @@ static NSCondition *_threadIsInitializedSignal;
     /// We can't use +initialize because
     ///     In +initialize we call [NSThread -start] and then wait for it to do stuff
     ///     But for some reason [NSThread -start] waits for any +initialize functions to finish, which leads to deadlock.
-    
+    ///     Update: [Sep 2026] Claude says this is called by PointerFreeze's `+[initialize]` which can deadlock. Not sure that makes sense
+
     if (self == GlobalEventTapThread.class) {
         
         /// Setup signal
