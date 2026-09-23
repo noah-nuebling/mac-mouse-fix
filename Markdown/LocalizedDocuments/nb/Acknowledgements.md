@@ -97,6 +97,7 @@ Disse menneskene brukte mye mer enn standardprisen og spanderte en **fantastisk 
 
 **september 2026**
 
+- 🇺🇸&nbsp;Zeb&nbsp;Evans
 - 🇺🇸&nbsp;Jon97X - "Mouse Savior"
 - 🇵🇱&nbsp;Long&nbsp;Crew2674 - "castus"
 - 🇺🇸&nbsp;Song&nbsp;Yang
