@@ -100,6 +100,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **setembro 2026**
 
+- 🇬🇧&nbsp;Andy&nbsp;Blackman - "MMF is awesome"
 - 🇨🇭&nbsp;Frédéric&nbsp;Chopard
 - 🇺🇸&nbsp;Zeb&nbsp;Evans
 - 🇺🇸&nbsp;Jon97X - "Mouse Savior"

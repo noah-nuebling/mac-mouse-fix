@@ -97,6 +97,7 @@ Diese Leute haben viel mehr als den Standardpreis ausgegeben und mir einen **ung
 
 **September 2026**
 
+- 🇬🇧&nbsp;Andy&nbsp;Blackman - "MMF is awesome"
 - 🇨🇭&nbsp;Frédéric&nbsp;Chopard
 - 🇺🇸&nbsp;Zeb&nbsp;Evans
 - 🇺🇸&nbsp;Jon97X - "Mouse Savior"

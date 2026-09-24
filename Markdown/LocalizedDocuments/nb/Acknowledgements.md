@@ -97,6 +97,7 @@ Disse menneskene brukte mye mer enn standardprisen og spanderte en **fantastisk 
 
 **september 2026**
 
+- 🇬🇧&nbsp;Andy&nbsp;Blackman - "MMF is awesome"
 - 🇨🇭&nbsp;Frédéric&nbsp;Chopard
 - 🇺🇸&nbsp;Zeb&nbsp;Evans
 - 🇺🇸&nbsp;Jon97X - "Mouse Savior"

@@ -97,6 +97,7 @@ Mac Mouse Fixを世界中の人々に届けていただき、ありがとうご�
 
 **9月 2026**
 
+- 🇬🇧&nbsp;Andy&nbsp;Blackman - "MMF is awesome"
 - 🇨🇭&nbsp;Frédéric&nbsp;Chopard
 - 🇺🇸&nbsp;Zeb&nbsp;Evans
 - 🇺🇸&nbsp;Jon97X - "Mouse Savior"
