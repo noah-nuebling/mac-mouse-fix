@@ -18,4 +18,8 @@
 
 + (AppDelegate *)instance;
 
+/// Import and export user-configurable settings. License, state, and internal constants are never transferred.
+- (IBAction)importSettings:(nullable id)sender;
+- (IBAction)exportSettings:(nullable id)sender;
+
 @end
