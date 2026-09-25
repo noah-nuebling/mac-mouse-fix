@@ -97,6 +97,7 @@ Mac Mouse Fixを世界中の人々に届けていただき、ありがとうご�
 
 **9月 2026**
 
+- 🇩🇪&nbsp;Teng - "Gute Arbeit :-)"
 - 🇨🇿&nbsp;Samuel&nbsp;Stolarik
 - 🇺🇸&nbsp;Anon - "NICE!!"
 - 🇺🇸&nbsp;Drummond&nbsp;Reed - "A programmable 3rd button with no hassle!"

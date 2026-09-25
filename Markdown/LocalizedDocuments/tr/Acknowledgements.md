@@ -98,6 +98,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Eylül 2026**
 
+- 🇩🇪&nbsp;Teng - "Gute Arbeit :-)"
 - 🇨🇿&nbsp;Samuel&nbsp;Stolarik
 - 🇺🇸&nbsp;Anon - "NICE!!"
 - 🇺🇸&nbsp;Drummond&nbsp;Reed - "A programmable 3rd button with no hassle!"
