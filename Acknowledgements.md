@@ -92,6 +92,8 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2026**
 
+- 🇺🇸&nbsp;Drummond&nbsp;Reed - "A programmable 3rd button with no hassle!"
+- 🇺🇸&nbsp;Grant&nbsp;Meyer
 - 🇬🇧&nbsp;Andy&nbsp;Blackman - "MMF is awesome"
 - 🇨🇭&nbsp;Frédéric&nbsp;Chopard
 - 🇺🇸&nbsp;Zeb&nbsp;Evans
