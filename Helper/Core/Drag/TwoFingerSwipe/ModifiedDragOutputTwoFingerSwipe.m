@@ -44,8 +44,8 @@ static dispatch_group_t _momentumScrollWaitGroup;
     ///
     /// - Using a TouchAnimator here might not be the best choice. We made the TouchAnimator primarily for scrollwheel input. But then we started using it here too. In both situations we needed pretty different functionality so now it's this weird swiss army knife hybrid. For example it supports Vectors which we don't need for scroll wheel input and it supports generating touchPhases which we don't need for click and drag. The reason we did this is we had so much trouble getting the TouchAnimator to be free of multithreading bugs so we thought there was less potential for error if we only implement that stuff once. But we might get some performance improvements and simpler code if we make a separate animator for the dragSmoothing.
     
-    _smoothingAnimator = [[TouchAnimator alloc] init];
-//    _smoothingAnimator = [[DynamicSystemAnimator alloc] initWithSpeed:3 damping:1.0 initialResponser:1.0 stopTolerance:1.0];
+    _smoothingAnimator = [[TouchAnimator alloc] initWithRunLoop: GlobalEventTapThread.runLoop name: @"TwoFingerSwipeSmoothing"];
+    //_smoothingAnimator = [[DynamicSystemAnimator alloc] initWithSpeed:3 damping:1.0 initialResponser:1.0 stopTolerance:1.0];
     
     /// Setup smoothingGroup
     ///     It allows us to wait until the _smoothingAnimator is done.
@@ -218,7 +218,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
     /// Handle cancelation
     
     if (cancelation) {
-        if (_smoothingAnimator.isRunning) {
+        if (_smoothingAnimator.isRunning_Unsafe) {
             [_smoothingAnimator cancel];
         }
         [GestureScrollSimulator postGestureScrollEventWithDeltaX:0 deltaY:0 phase:kIOHIDEventPhaseEnded autoMomentumScroll:YES invertedFromDevice:_drag->naturalDirection];
@@ -248,7 +248,7 @@ static dispatch_group_t _momentumScrollWaitGroup;
     
     /// Start momentumScroll
     
-    if (_smoothingAnimator.isRunning) { /// Let `_smoothingAnimator` start momentumScroll
+    if (_smoothingAnimator.isRunning_Unsafe) { /// Let `_smoothingAnimator` start momentumScroll
         _smoothingAnimatorShouldStartMomentumScroll = YES;
         DDLogDebug("twoFinger Set _smoothingAnimatorShouldStartMomentumScroll = YES");
     } else { /// Start momentumScroll directly

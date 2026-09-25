@@ -7,6 +7,13 @@
 // --------------------------------------------------------------------------
 //
 
+/// @noGCDCleanup
+///
+///     Changes introduced in the first commit introducing @noGCDCleanup notes (which also added this note)
+///     made broken changes to ModifiedDrag.m and ModifiedDragOutputTwoFingerSwipe.m and GestureScrollSimulator.m
+///     -> These just served to make the program compile again.
+///         (This commit cared about switching stack between DisplayLink.m ... Scroll.m to runLoops and then making it compile again)
+
 #import "Constants.h"
 
 #import "ModifiedDrag.h"
@@ -111,8 +118,7 @@ static ModifiedDragState _drag;
     _drag.queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.modified-drag", attr);
 
     /// Setup coalescingDisplayLink
-    _drag.coalescingDisplayLink = [DisplayLink displayLinkOptimizedForWorkType: kMFDisplayLinkWorkTypeEventSending displayLinkQueue: _drag.queue];
-    _drag.coalescingDisplayLink.dispatchCallbacksAsynchronously = YES;
+    _drag.coalescingDisplayLink = [DisplayLink displayLinkOptimizedForWorkType: kMFDisplayLinkWorkTypeEventSending runLoop: GlobalEventTapThread.runLoop name: @"ModifiedDragCoalescing"];
     _drag.coalescingDisplayLink.delayStopToNextFrame = YES;
 
     [_drag.coalescingDisplayLink setCallback:^(DisplayLinkCallbackTimeInfo timeInfo) { coalescingDisplayLinkCallback(timeInfo); }];
@@ -424,7 +430,7 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGP
         _drag.firstCallback = true;
 
         /// Init coalescingDisplayLink
-        [_drag.coalescingDisplayLink linkToMainScreen_Unsafe];
+        [_drag.coalescingDisplayLink linkToMainScreen];
 
         /// Do deferred init
         /// Could also do this in normal init `initializeDragWithDict`, but here is more effiicient (`initializeDragWithDict` is called on every mouse click if it's set up for that button)

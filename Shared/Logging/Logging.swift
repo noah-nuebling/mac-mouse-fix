@@ -21,3 +21,9 @@
 @inlinable func DDLogInfo(_ message: @autoclosure () -> String)    { if OSLog.default.isEnabled(type: .info)      { os_log(.info,    log: OSLog.default, "%{public}s", message()); } }
 @inlinable func DDLogDebug(_ message: @autoclosure () -> String)   { if OSLog.default.isEnabled(type: .debug)     { os_log(.debug,   log: OSLog.default, "%{public}s", message()); } }
 @inlinable func DDLogVerbose(_ message: @autoclosure () -> String) { if OSLog.default.isEnabled(type: .default)   { os_log(.default, log: OSLog.default, "%{public}s", message()); } }
+
+/// Define mfassert for Swift
+///     @noGCDCleanup Flesh this out a little bit
+@inlinable func mfassert(_ condition: @autoclosure () -> Bool, _ message: @autoclosure () -> String = String(), file: StaticString = #file, line: UInt = #line) {
+    assert(condition(), message(), file: file, line: line)
+}

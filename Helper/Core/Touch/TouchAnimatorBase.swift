@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
+/// @noGCDCleanup delete the (#if false) dead code
+
 /// Don't use this directly. Use the subclass `TouchAnimator` For discussion see `TouchAnimator`.
 
 import Foundation
@@ -73,20 +75,20 @@ import QuartzCore
     
     @objc var animationCurve: Curve? /// This class assumes that `animationCurve` passes through `(0, 0)` and `(1, 1)
     
-//    let threadLock = DispatchSemaphore.init(value: 1)
+    //let threadLock = DispatchSemaphore.init(value: 1)
     /// ^ Using a queue instead of a lock to avoid deadlocks. Always use queues for mutual exclusion except if you know exactly what you're doing!
-//    let animatorQueue: DispatchQueue /// Use the displayLink's queue instead to avoid deadlocks and such
-    
+    //let animatorQueue: DispatchQueue /// Use the displayLink's queue instead to avoid deadlocks and such
+
     /// Init
-    
-    @objc override init() {
-        
-        self.displayLink = DisplayLink(optimizedFor: kMFDisplayLinkWorkTypeEventSending /*kMFDisplayLinkWorkTypeGraphicsRendering*/)
-//        self.animatorQueue = DispatchQueue(label: "com.nuebling.mac-mouse-fix.animator", qos: .userInteractive , attributes: [], autoreleaseFrequency: .inherit, target: nil)
-        
+
+    @available(*, unavailable)
+    @objc override init() { fatalError("init() unavailable") }
+
+    @objc init(runLoop: CFRunLoop, name: String) {
+        self.displayLink = DisplayLink(optimizedFor: kMFDisplayLinkWorkTypeEventSending /*kMFDisplayLinkWorkTypeGraphicsRendering*/, runLoop: runLoop, name: name)
         super.init()
     }
-    
+
     /// Vars - Start & stop
     
     var animationDurationRaw: CFTimeInterval? = 0
@@ -103,11 +105,7 @@ import QuartzCore
     var animationValueIntervalX: Interval { Interval(start: 0, end: animationValueTotal.x) }
     var animationValueIntervalY: Interval { Interval(start: 0, end: animationValueTotal.y) }
     
-    @objc var isRunning: Bool {
-        return displayLink.isRunning()
-    }
     @objc var isRunning_Unsafe: Bool {
-        /// ! Not Thread Safe. Use this if you're already executing on displayLink.dispatchQueue
         return displayLink.isRunning_Unsafe()
     }
     
@@ -136,50 +134,34 @@ import QuartzCore
         /// - We're passing lastAnimationSpeed into the StartParamCalculationCallback. It might point to an architectural error and slow things down if we need this separate getter.
         /// - The naming with `get` at the start is weird. We don't use that anywhere else.
         /// - TODO: Think about where this should be, if it should exist, and what it should be named. This is all kinda hacky and not-thought-through at this point.
-        var result = Vector(x: 0, y: 0)
-        displayLink.dispatchQueue.sync(flags: defaultDFs) {
-            result = lastAnimationSpeed
-        }
-        return result
+        assertRunLoop(displayLink.runLoop)
+        return lastAnimationSpeed
     }
     
     @objc var animationTimeLeft: Double {
-        var result: Double = -1
-        displayLink.dispatchQueue.sync(flags: defaultDFs) {
-            result = animationTimeLeft_Unsafe
-        }
-        return result
+        assertRunLoop(displayLink.runLoop)
+        return animationTimeLeft_Unsafe
     }
     @objc var animationValueLeft: Vector {
-        var result = Vector(x:-1, y:-1)
-        displayLink.dispatchQueue.sync(flags: defaultDFs) {
-            result = animationValueLeft_Unsafe
-        }
-        return result
+        assertRunLoop(displayLink.runLoop)
+        return animationValueLeft_Unsafe
     }
     
     @objc var animationValueLeft_Unsafe: Vector {
-        /// Only call this when you're already on the animatorQueue
-        
-        let result = subtractedVectors(animationValueTotal, lastAnimationValue)
-        return result
+        assertRunLoop(displayLink.runLoop)
+        return subtractedVectors(animationValueTotal, lastAnimationValue)
     }
     
     @objc var animationTimeLeft_Unsafe: Double {
-        /// Only call this when you're already on the animatorQueue
-        
-        let result = animationEndTime - lastFrameTime
-        return result
+        assertRunLoop(displayLink.runLoop)
+        return animationEndTime - lastFrameTime
     }
     
     /// Other Interface
     
     @objc func linkToMainScreen() {
-        displayLink.linkToMainScreen()
-    }
-    @objc func linkToMainScreen_Unsafe() {
         /// Exposing this as a function and not just doing it automatically when the animation starts because I assume it's slow. Not sure where this assumption comes from.
-        displayLink.linkToMainScreen_Unsafe()
+        displayLink.linkToMainScreen()
     }
     
     /// Start
@@ -189,42 +171,44 @@ import QuartzCore
         
         /// Use the override of this function in TouchAnimator instead. We spent a lot of time updating the TouchAnimatorBase so that it 'should' work, even thought it's unused, but now we're stopping that and letting it become outdated compared to the start() method in TouchAnimator.
         fatalError()
-        
-        /// Lock
-        ///     Otherwise there will be race conditions with this function and the displayLinkCallback() both manipulating the animationPhase (and I think other values, too) at the same time.
-        ///     Generally queues are advised over locks, but since the docs of CVDisplayLink say the displayLinkCallback is executed on a special high-priority thread, I thought it might be better to use a thread lock instead of a dispatchQueue,
-        ///         so we ensure that the displayLinkCallback really is executing on that high-priority thread.
-        ///     To be exact, we're using a semaphore not a thread lock but it works the exact same
-        /// Edit: We've since moved to using a dispatchQueue instead of a muctex lock. This should prevent many potential deadlock issues and be faster and the function is also asynchronous now, which I hope is a good thing
-        
-        /// Dispatch to queue
-        ///     Dispatching sync, so that calling self.start() and then right after calling self.isRunning()  actually works....
-        ///         Orrr we can also have self.isRunning() execute on self.queue. - we did that. Should be most robust solution
-        ///         But actually, maybe it's faster to make start() use queue.sync after all. Because isRunning() is probably called a lot more.
-        
-        displayLink.dispatchQueue.async(flags: defaultDFs) {
-            
-            /// Reset lastAnimationValue
-            ///     So we don't give the `params` callback old invalid animationValueLeft.
-            ///     I think this is sort of redundant, because we're resetting animationValueLeft in `startWithUntypedCallback_Unsafe()` as well?
-            
-            let p: MFAnimatorStartParams = params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve, self.lastAnimationSpeed)
-            
-            self.lastAnimationValue = Vector(x: 0, y: 0)
-            
-            if let doStart = p.object(forKey: "doStart") as? Bool {
-                if doStart == false {
-                    return;
+
+        #if false
+            /// Lock
+            ///     Otherwise there will be race conditions with this function and the displayLinkCallback() both manipulating the animationPhase (and I think other values, too) at the same time.
+            ///     Generally queues are advised over locks, but since the docs of CVDisplayLink say the displayLinkCallback is executed on a special high-priority thread, I thought it might be better to use a thread lock instead of a dispatchQueue,
+            ///         so we ensure that the displayLinkCallback really is executing on that high-priority thread.
+            ///     To be exact, we're using a semaphore not a thread lock but it works the exact same
+            /// Edit: We've since moved to using a dispatchQueue instead of a muctex lock. This should prevent many potential deadlock issues and be faster and the function is also asynchronous now, which I hope is a good thing
+
+            /// Dispatch to queue
+            ///     Dispatching sync, so that calling self.start() and then right after calling self.isRunning()  actually works....
+            ///         Orrr we can also have self.isRunning() execute on self.queue. - we did that. Should be most robust solution
+            ///         But actually, maybe it's faster to make start() use queue.sync after all. Because isRunning() is probably called a lot more.
+
+            displayLink.dispatchQueue.async(flags: defaultDFs) {
+
+                /// Reset lastAnimationValue
+                ///     So we don't give the `params` callback old invalid animationValueLeft.
+                ///     I think this is sort of redundant, because we're resetting animationValueLeft in `startWithUntypedCallback_Unsafe()` as well?
+
+                let p: MFAnimatorStartParams = params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve, self.lastAnimationSpeed)
+
+                self.lastAnimationValue = Vector(x: 0, y: 0)
+
+                if let doStart = p.object(forKey: "doStart") as? Bool {
+                    if doStart == false {
+                        return;
+                    }
                 }
+
+                let durationRaw = p.object(forKey: "duration") as! Double?
+                let durationRawInFrames = p.object(forKey: "durationInFrames") as! Int?
+                let vector = vectorFromNSValue(p.object(forKey: "vector") as! NSValue) as Vector
+                let curve = p.object(forKey: "curve") as! Curve
+
+                self.startWithUntypedCallback_Unsafe(durationRaw: durationRaw, durationRawInFrames: durationRawInFrames, value: vector, animationCurve: curve, callback: callback);
             }
-            
-            let durationRaw = p.object(forKey: "duration") as! Double?
-            let durationRawInFrames = p.object(forKey: "durationInFrames") as! Int?
-            let vector = vectorFromNSValue(p.object(forKey: "vector") as! NSValue) as Vector
-            let curve = p.object(forKey: "curve") as! Curve
-            
-            self.startWithUntypedCallback_Unsafe(durationRaw: durationRaw, durationRawInFrames: durationRawInFrames, value: vector, animationCurve: curve, callback: callback);
-        }
+        #endif
     }
     
     internal func startWithUntypedCallback_Unsafe(durationRaw: CFTimeInterval?,
@@ -232,7 +216,8 @@ import QuartzCore
                                                   value: Vector,
                                                   animationCurve: Curve,
                                                   callback: UntypedAnimatorCallback) {
-        
+
+
         /// Notes:
         /// - This function has `_Unsafe` in it's name because it doesn't execute on self.animatorQueue. Only call it form self.animatorQueue
         /// - Should only be called by this and subclasses
@@ -240,9 +225,10 @@ import QuartzCore
         /// - Animator will be restarted if it's already running. No need to call stop before calling this.
         /// - It's kind of unnecessary to be passing this a value interval, because we only use the length of it. Since the AnimatorCallback only receives valueDeltas each frame and no absolute values,  the location of the value interval doesn't matter.
         /// - We need to make `callback` and UntypedAnimatorCallback instead of a normal AnimatorCallback, so we can change the type of `callback` to TouchAnimatorCallback in the subclass TouchAnimator. That's because Swift is stinky. UntypedAnimatorCallback is @escaping
-        
+
+
         /// Validate
-        
+        assertRunLoop(displayLink.runLoop)
         assert((durationRaw == nil) != (durationRawInFrames == nil))
         if let durationRaw = durationRaw {
             assert(!durationRaw.isNaN && durationRaw.isFinite && durationRaw > 0)
@@ -329,9 +315,10 @@ import QuartzCore
     
     @objc(cancel_forAutoMomentumScroll:) func cancel(forAutoMomentumScroll: Bool) {
         
-        /// We're using the async call with flags because creating the dispatchworkitemflags for the normal one is somehow pretty slow.
-        displayLink.dispatchQueue.async(flags: defaultDFs) {
-            
+        assertRunLoop(displayLink.runLoop);
+
+        do { /// @noGCDCleanup remove this scope
+
             /// Get info
             /// Notes:
             ///   - Checking for isRunning would be obsolete if we just set `self.thisAnimationHasProducedDeltas = false` when stopping. But maybe that has other side effects that we don't want? Edit: Don't think this is true anymore
@@ -369,14 +356,14 @@ import QuartzCore
                         ///     Edit3: [Jul 2025] This code is disabled and also this approach is wrong. We're now instead sending a kIOHIDEventPhaseMayBegin followed by a kIOHIDEventPhaseMayCanceled event. This is implemented in Scroll.m (for Scrollwheel) and GestureScrollSimulator.m (for Click and Drag)
                         
                         assert(false) /// This is not called anymore according to comment above.
-                        
+
                         DDLogDebug("TouchAnimator: Sending extra momentum cancel events even though momentumScrolling hasn't started")
                         
                         callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseStart, self.lastMomentumHint)
                         let delay = 8.0/1000.0 /// self.displayLink.nominalTimeBetweenFrames() / 2.0
-                        DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + delay, flags: defaultDFs, execute: { /// Why aren't we just using our queue here?
+                        MFCFRunLoopPerform_delay(self.displayLink.runLoop, nil, delay) { /// [Sep 2026] Used to use a Global dispatch queue here (not the displayLinkQueue) (Before the 'No more dispatch queues' refactor). No clue why.
                             callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseCanceled, self.lastMomentumHint)
-                        })
+                        }
                     }
                 }
             }
@@ -384,18 +371,22 @@ import QuartzCore
     }
     
     /// Stop
-    
+
+    #if false
     private func stop_FromDisplayLinkedThread() {
         /// Trying to stop from displayLinkThread causes deadlock. So we need to wait until the displayLinkThread has finished its iteration and then stop ASAP.
         ///     The best way we found to stop ASAP is to simply enqueu async on the displayLink's dispatchQueue
-        
-        displayLink.dispatchQueue.async(flags: defaultDFs) {
+
+        MFCFRunLoopPerform(displayLink.runLoop, nil) { /// [Sep 2026] Not sure this should still be deferred after 'No more dispatch queues' refactor
             self.stop_Unsafe()
         }
     }
-    
+    #endif
+
     private func stop_Unsafe() {
-        
+
+        assertRunLoop(displayLink.runLoop)
+
         /// Debug
         DDLogDebug("AnimationCallback STOP")
         
@@ -410,50 +401,53 @@ import QuartzCore
         isFirstDisplayLinkCallback_AfterRunningStart = false
         isLastDisplayLinkCallback = false
         
-//        if self.onStopCallback != nil {
-//            self.onStopCallback!()
-//            self.onStopCallback = nil
-//
-//        }
+        //if self.onStopCallback != nil {
+        //    self.onStopCallback!()
+        //    self.onStopCallback = nil
+        //}
     }
 
     /// TODO: Delete the onStopCallback stuff
-    
-//    @objc func onStop_SynchronouslyFromAnimationQueue(callback: @escaping () -> ()) {
-//        /// The default `onStop(callback:)` dispatches to self.queue asynchronously.
-//        /// It can be used from self.queue, but, if used from self.queue, the callback will only become active after all the other items in the queue are finished, which is not always what we want.
-//        /// Use this function to synchronously install the onStop callback.
-//        /// This function should only be called from self.queue
-//
-//        assert(self.isRunning_Unsafe)
-//
-//        onStop_Unsafe(callback: callback, doImmediatelyIfNotRunning: false)
-//    }
-//
-//    @objc func onStop(callback: @escaping () -> ()) {
-//
-//        displayLink.dispatchQueue.async {
-//            self.onStop_Unsafe(callback: callback, doImmediatelyIfNotRunning: false)
-//        }
-//    }
-//
-//    fileprivate func onStop_Unsafe(callback: @escaping () -> (), doImmediatelyIfNotRunning: Bool) {
-//        /// Not thread safe. Use `onStop` unless you're already running on displayLink.dispatchQueue
-//        /// Do `callback` once the Animator stops or immediately if the animator isn't running and `waitTillNextStop` is false
-//
-//        if (doImmediatelyIfNotRunning && !self.isRunning_Unsafe) {
-//            callback()
-//        } else {
-//            self.onStopCallback = callback
-//        }
-//    }
-    
+
+    #if false
+        @objc func onStop_SynchronouslyFromAnimationQueue(callback: @escaping () -> ()) {
+            /// The default `onStop(callback:)` dispatches to self.queue asynchronously.
+            /// It can be used from self.queue, but, if used from self.queue, the callback will only become active after all the other items in the queue are finished, which is not always what we want.
+            /// Use this function to synchronously install the onStop callback.
+            /// This function should only be called from self.queue
+
+            assert(self.isRunning_Unsafe)
+
+            onStop_Unsafe(callback: callback, doImmediatelyIfNotRunning: false)
+        }
+
+        @objc func onStop(callback: @escaping () -> ()) {
+
+            displayLink.dispatchQueue.async {
+                self.onStop_Unsafe(callback: callback, doImmediatelyIfNotRunning: false)
+            }
+        }
+
+        fileprivate func onStop_Unsafe(callback: @escaping () -> (), doImmediatelyIfNotRunning: Bool) {
+            /// Not thread safe. Use `onStop` unless you're already running on displayLink.dispatchQueue
+            /// Do `callback` once the Animator stops or immediately if the animator isn't running and `waitTillNextStop` is false
+
+            if (doImmediatelyIfNotRunning && !self.isRunning_Unsafe) {
+                callback()
+            } else {
+                self.onStopCallback = callback
+            }
+        }
+    #endif
+
     /// DisplayLink callback
     /// This will be called whenever the display refreshes while the displayLink is running
     /// Its purpose is calling self.callback. Everything else it does is to figure out arguments for self.callback
     
     @objc func displayLinkCallback(_ timeInfo: DisplayLinkCallbackTimeInfo) {
-            
+
+        assertRunLoop(displayLink.runLoop); /// Guaranteed, just a sanitfy check/documentation, I guess [Sep 2026]
+
         /// Race conditions
         ///     We're trying to prevent callback calls after stopping in displayLink, but somehow this still happens. Edit: Might have fixed it by moving the queue dispatch into displayLink
         if !self.isRunning_Unsafe {
@@ -510,9 +504,9 @@ import QuartzCore
             ///     Doing this in start() would be easier but leads to deadlocks
             
             if let animationDurationRaw = animationDurationRaw {
-                self.animationDuration = ModificationUtility.roundUp(animationDurationRaw, toMultiple: displayLink.nominalTimeBetweenFrames())
+                self.animationDuration = ModificationUtility.roundUp(animationDurationRaw, toMultiple: timeInfo.nominalTimeBetweenFrames)
             } else if let animationDurationRawInFrames = animationDurationRawInFrames {
-                self.animationDuration = Double(animationDurationRawInFrames) * displayLink.nominalTimeBetweenFrames()
+                self.animationDuration = Double(animationDurationRawInFrames) * timeInfo.nominalTimeBetweenFrames
             } else {
                 assert(false)
             }
@@ -575,8 +569,8 @@ import QuartzCore
             let minBaseCurveTime = ScrollConfig().consecutiveScrollTickIntervalMax
             
             /// DEBUG
-//            minBaseCurveTime = 0.0
-            
+            //minBaseCurveTime = 0.0
+
             
             if timeSinceAnimationStart < minBaseCurveTime {
                 
@@ -636,7 +630,7 @@ import QuartzCore
         
         /// Stop animation if phase is  `end`
         if isLastDisplayLinkCallback {
-            stop_FromDisplayLinkedThread()
+            stop_Unsafe()
             return
         }
         
@@ -651,36 +645,36 @@ import QuartzCore
     func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ momentumHint: MFMomentumHint) {
         
         /// This is unused. Probably doesn't work properly. The override in `TouchAnimator` is the relevant thing.
-        
-        /// Guard callback type
-        
-        guard let callback = untypedCallback as? AnimatorCallback else {
-            fatalError("Invalid state - callback is not type AnimatorCallback")
-        }
-        
-        /// Guard simulataneously start and end
-        ///     There is similar code in subclass. Update that it when you change this.
-        
-        let isEndAndNoPrecedingDeltas =
-            isLastDisplayLinkCallback
-            && !thisAnimationHasProducedDeltas
+        fatalError();
 
-        assert(!isEndAndNoPrecedingDeltas)
-        
-        /// Call the callback
-        let phase = TouchAnimatorBase.callbackPhase(hasProducedDeltas: thisAnimationHasProducedDeltas, isLastCallback: isLastDisplayLinkCallback)
-        callback(animationValueDelta, phase, momentumHint)
-        
-        /// Debug
-        
-        DDLogDebug("BaseAnimator callback - delta: \(animationValueDelta)")
-        
-        /// Update hasProducedDeltas
-        
-        thisAnimationHasProducedDeltas = true
+        #if false
+            /// Guard callback type
+
+            guard let callback = untypedCallback as? AnimatorCallback else {
+                fatalError("Invalid state - callback is not type AnimatorCallback")
+            }
+
+            /// Guard simulataneously start and end
+            ///     There is similar code in subclass. Update that it when you change this.
+
+            let isEndAndNoPrecedingDeltas =
+                isLastDisplayLinkCallback
+                && !thisAnimationHasProducedDeltas
+
+            assert(!isEndAndNoPrecedingDeltas)
+
+            /// Call the callback
+            let phase = TouchAnimatorBase.callbackPhase(hasProducedDeltas: thisAnimationHasProducedDeltas, isLastCallback: isLastDisplayLinkCallback)
+            callback(animationValueDelta, phase, momentumHint)
+
+            /// Debug
+
+            DDLogDebug("BaseAnimator callback - delta: \(animationValueDelta)")
+
+            /// Update hasProducedDeltas
+
+            thisAnimationHasProducedDeltas = true
+        #endif
     }
-    
-    /// Helper functions
-        
 }
 

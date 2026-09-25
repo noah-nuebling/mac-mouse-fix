@@ -50,7 +50,7 @@ import Cocoa
         
         /// Create animator
         if (self.windowFrameAnimator == nil) {
-            windowFrameAnimator = DynamicSystemAnimator(fromAnimation: animation, stopTolerance: 0.003, optimizedWorkType: kMFDisplayLinkWorkTypeGraphicsRendering);
+            windowFrameAnimator = DynamicSystemAnimator(fromAnimation: animation, stopTolerance: 0.003, optimizedWorkType: kMFDisplayLinkWorkTypeGraphicsRendering, runLoop: CFRunLoopGetMain(), name: "ResizingTabWindow");
         }
         
         /// Debug
@@ -72,10 +72,9 @@ import Cocoa
             let result = SharedUtilitySwift.interpolateRects(value, ogFrame, newFrame);
             
             /// Set frame (on main thread)
-            DispatchQueue.main.async {
-                assert(self != nil)
-                self?.setValue(result, forKey: "frame") /// This seems faster than `self.setFrame(display:animate:)`
-            }
+            assert(self != nil)
+            self?.setValue(result, forKey: "frame") /// This seems faster than `self.setFrame(display:animate:)`
+
         }, onComplete: {
             stopCallback()
         })

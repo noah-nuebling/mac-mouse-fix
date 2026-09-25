@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GlobalEventTapThread : NSObject
 
-+ (CFRunLoopRef)runLoop;
++ (CFRunLoopRef)runLoop CF_RETURNS_NOT_RETAINED;
 
 @end
 

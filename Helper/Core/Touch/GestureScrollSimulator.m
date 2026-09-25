@@ -55,7 +55,7 @@ static dispatch_queue_t _momentumQueue;
         
         /// Momentum scroll
         
-        _momentumAnimator = [[TouchAnimator alloc] init];
+        _momentumAnimator = [[TouchAnimator alloc] initWithRunLoop: GlobalEventTapThread.runLoop name: @"GestureScrollSimulatorMomentum"];
         
     }
 }
@@ -246,7 +246,7 @@ static void (^_momentumScrollCallback)(void);
     
     dispatch_async(_momentumQueue, ^{
         
-        if (_momentumAnimator.isRunning && callback != NULL) {
+        if (_momentumAnimator.isRunning_Unsafe && callback != NULL) {
             /// ^ `&& callback != NULL` is a hack to make ModifiedDragOutputTwoFingerSwipe work properly. I'm not sure what I'm doing.
             
             DDLogError("Trying to set momentumScroll start callback while it's running. This can lead to bad issues and you probably don't want to do it.");
@@ -389,7 +389,7 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
         } else if (animationPhase == kMFAnimationCallbackPhaseCanceled) {
             momentumPhase = kCGMomentumScrollPhaseEnd;
         } else {
-            assert(false);
+            mfrequire(false);
         }
         
         /// Validate

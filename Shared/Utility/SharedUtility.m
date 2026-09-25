@@ -21,8 +21,20 @@
 
 #pragma mark - runLoops
 
+static NSArray<NSRunLoopMode> *_resolveModes(CFRunLoopRef rl, NSArray<NSRunLoopMode> *_Nullable modes) {
+    if (modes && modes.count == 0) {
+        assert(false && "modes should not be an empty array. Pass nil for the default value.");
+        modes = nil;
+    }
+    if (!modes) {
+        if ((1))    modes = (id)NSRunLoopCommonModes;                       /// Using CommonModes should grant our workload pretty high priorty || Note that we're passing the mode directly (instead of passing an array of modes) – that also works.
+        else        modes = CFBridgingRelease(CFRunLoopCopyAllModes(rl));   /// Passing all modes should grant our workload very high priority. Could this lead to unforseen problems? ... Not using this for now out of fear and terror. Ahhhhh.
+    }
+
+    return modes;
+}
+
 void MFCFRunLoopPerform(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, void (^_Nonnull workload)(void)) {
-    
     /// Usage:
     ///     `modes` arg:
     ///     - Pass nil to fall back to the default value.
@@ -51,17 +63,29 @@ void MFCFRunLoopPerform(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nulla
     /// Future plans:
     ///     TODO: (Over time) Replace uses of `dispatch_async()` with MFCFRunLoopPerform().
     ///     (Also (over time): remove DispatchQueues in favour of NSThread and NSRunLoop – so we can reduce thread count and gain more control over threading behavior.)
-    
-    if (modes && modes.count == 0) {
-        assert(false && "modes should not be an empty array. Pass nil for the default value.");
-        modes = nil;
-    }
-    if (!modes) {
-        if ((1))    modes = (id)NSRunLoopCommonModes;                       /// Using CommonModes should grant our workload pretty high priorty || Note that we're passing the mode directly (instead of passing an array of modes) – that also works.
-        else        modes = CFBridgingRelease(CFRunLoopCopyAllModes(rl));   /// Passing all modes should grant our workload very high priority. Could this lead to unforseen problems? ... Not using this for now out of fear and terror. Ahhhhh.
-    }
+    /// @noGCDCleanup
+    ///     Update this comment, maybe simplify code (we'll never use the `modes` arg, probably)
+
+    modes = _resolveModes(rl, modes);
     CFRunLoopPerformBlock(rl, (__bridge void *)modes, workload);
     CFRunLoopWakeUp(rl);
+}
+
+static void _cfRunLoopTimerCallback(CFRunLoopTimerRef timer, void *info) {
+    void (^workload)(void) = (__bridge id)info;
+    workload();
+}
+void MFCFRunLoopPerform_delay(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, double delayInSeconds, void (^_Nonnull workload)(void)) {
+    if (delayInSeconds <= 0) return MFCFRunLoopPerform(rl, modes, workload);
+    CFRunLoopTimerContext ctx = {
+        .info = (__bridge void *)workload,
+        .release = CFRelease, .retain = CFRetain, .copyDescription = CFCopyDescription,
+    };
+    CFRunLoopTimerRef timer = CFRunLoopTimerCreate(kCFAllocatorDefault, /*fireDate*/CFAbsoluteTimeGetCurrent() + delayInSeconds, /*interval*/0, /*flags*/0, /*order*/0, _cfRunLoopTimerCallback, &ctx);
+    modes = _resolveModes(rl, modes);
+    if (!isclass(modes, NSArray)) modes = @[modes];
+    for (NSRunLoopMode mode in modes) CFRunLoopAddTimer(rl, timer, (void *)mode);
+    CFRelease(timer);
 }
 
 bool MFCFRunLoopPerform_sync(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, NSTimeInterval timeout, void (^_Nonnull workload)(void)) {
@@ -85,7 +109,7 @@ bool MFCFRunLoopPerform_sync(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_
     
     MFSemaphore *semaphore = [[MFSemaphore alloc] initWithUnits: 0];
     MFCFRunLoopPerform(rl, modes, ^{
-        workload(); /// TODO: Fix: This can still fire after timeout.
+        workload(); /// TODO: Fix: This can still fire after timeout. (@noGCDCleanup)
         [semaphore releaseUnit];
     });
     didTimeOut = [semaphore acquireUnit: timeoutDate]; /// We completely block the current thread/runloop. Do the waiting `-[NSObject performSelector:onThread:...]` APIs do that, too?

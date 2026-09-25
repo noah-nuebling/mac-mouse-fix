@@ -38,6 +38,8 @@
 		4F1D58192881D880002EB119 /* CombinedLinearCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D58182881D880002EB119 /* CombinedLinearCurve.swift */; };
 		4F1D7F4728A4639800253407 /* MenuBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1D7F4628A4639800253407 /* MenuBarItem.swift */; };
 		4F2281112C62A36300B9FFEC /* SFSymbolStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A44512925311B00361EFF /* SFSymbolStrings.m */; };
+		4F25078E30658CF4007B537E /* Threads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F25078D30658CF2007B537E /* Threads.swift */; };
+		4F25078F30658CF4007B537E /* Threads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F25078D30658CF2007B537E /* Threads.swift */; };
 		4F262CF22C64B6E000773789 /* MarkdownParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F262CF02C64B6DF00773789 /* MarkdownParser.m */; };
 		4F262CF32C64B6E000773789 /* MarkdownParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F262CF02C64B6DF00773789 /* MarkdownParser.m */; };
 		4F262D262C64E06500773789 /* libcmark.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F262D222C64E05A00773789 /* libcmark.a */; };
@@ -2190,6 +2192,8 @@
 		4F2153262B2E145500DD3957 /* config.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = config.yml; sourceTree = "<group>"; };
 		4F2153272B2E150800DD3957 /* Acknowledgements.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Acknowledgements.md; sourceTree = "<group>"; };
 		4F2153282B2E155300DD3957 /* update-acknowledgements.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "update-acknowledgements.yml"; sourceTree = "<group>"; };
+		4F2507893064712D007B537E /* Threads.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Threads.h; sourceTree = "<group>"; };
+		4F25078D30658CF2007B537E /* Threads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Threads.swift; sourceTree = "<group>"; };
 		4F262CEF2C64B6DF00773789 /* MarkdownParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarkdownParser.h; sourceTree = "<group>"; };
 		4F262CF02C64B6DF00773789 /* MarkdownParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MarkdownParser.m; sourceTree = "<group>"; };
 		4F262D102C64E05A00773789 /* cmark_export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cmark_export.h; sourceTree = "<group>"; };
@@ -7645,6 +7649,8 @@
 			children = (
 				4FF6653325F2C7B000689B77 /* Constants.h */,
 				4FCEDC91292D765600E7DA2A /* Constants.swift */,
+				4F2507893064712D007B537E /* Threads.h */,
+				4F25078D30658CF2007B537E /* Threads.swift */,
 				4FFBC56E2667DC76001D389B /* Logging */,
 				4FE78C412C5027A800C54103 /* DisableSwiftBridging */,
 				4F44FF012606D6FD00926A5E /* MessagePort */,
@@ -8779,6 +8785,7 @@
 				4FA40D0E28A0D87200499E53 /* DynamicSystemAnimator.swift in Sources */,
 				4FB4FA202611DD6000806DDD /* KeyCaptureScrollView.m in Sources */,
 				4F909D4728A0C4C2009349A2 /* Collection+Extensions.swift in Sources */,
+				4F25078F30658CF4007B537E /* Threads.swift in Sources */,
 				4F2E8FD42D52229100689058 /* NSCoderErrors.m in Sources */,
 				4FC4A2512EA4587F003566D8 /* Localization.swift in Sources */,
 				4FC8A7D528ABDEFE007DB982 /* MFClipView.swift in Sources */,
@@ -8955,6 +8962,7 @@
 				4F12525C2CAA88A400A079BD /* UNIXSignals.m in Sources */,
 				4FFA4E3B28B79D980062A1FE /* String+Extensions.swift in Sources */,
 				4FF0BD4B266A8B7E003935EA /* Bezier.swift in Sources */,
+				4F25078E30658CF4007B537E /* Threads.swift in Sources */,
 				4F428D032CD80462006322AB /* MFCoding.m in Sources */,
 				4FA13FC228B3A2D3005C68FC /* TrialNotificationWindow.swift in Sources */,
 				4FAA3DA82C55DF4F00CBA413 /* InvisibleKeyResponder.m in Sources */,

@@ -61,52 +61,55 @@ class TouchAnimator: TouchAnimatorBase {
         self.subPixelator.reset()
     }
     @objc func resetSubPixelator() {
-        displayLink.dispatchQueue.async(flags: defaultDFs) {
-            self.resetSubPixelator_Unsafe()
-        }
+        assertRunLoop(displayLink.runLoop);
+        self.resetSubPixelator_Unsafe()
     }
     
     // MARK: Declare new start function
     
     @objc func start(params: @escaping StartParamCalculationCallback,
                      integerCallback: @escaping TouchAnimatorCallback) {
-        
-        displayLink.dispatchQueue.async(flags: defaultDFs) {
-            
+
+        /// @noGCDCleanup
+        ///     `StartParamCalculationCallback` no longer needed! - simplify
+
+        assertRunLoop(displayLink.runLoop);
+
+        do { /// @noGCDCleanup  Remove this scope
+
             /// Get startParams
-            
+
             let p = params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve, self.lastAnimationSpeed)
-            
+
             /// Reset animationValueLeft
             /// Notes:
             /// - Do this here since `animationValueLeft` is `animationValueTotal - lastAnimationValue`. A new `animationValueTotal` is contained in `p`, and we need to reset `lastAnimationValue` to make it usable. Edit: What? ... I think this is talking about why this is reset here and not inside startWithUntypedCallback() or the displayLinkCallback, where most other things are reset.
             /// - Why is this reset before the doStart check?
-            
+
             self.lastAnimationValue = Vector(x: 0, y: 0)
-            
+
             /// Do nothing if doStart == false
             if let doStart = p["doStart"] as? Bool {
                 if doStart == false {
                     return
                 }
             }
-            
+
             /// Validate
             assert(p["vector"] is NSValue)
             /// ^ This is always true for some reason. Make sure to actually pass a Vector in an NSValue! Edit: Randomly, this starting working on 29.05.22
-            
+
             /// Start animator
-            
+
             super.startWithUntypedCallback_Unsafe(durationRaw: p["duration"] as! Double?, durationRawInFrames: p["durationInFrames"] as! Int?, value: vectorFromNSValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! Curve, callback: integerCallback)
-            
+
             /// Debug
-            
+
             let deltaLeftBefore = self.animationValueLeft_Unsafe;
             DDLogDebug("Started TouchAnimator with deltaLeftDiff: \(subtractedVectors(self.animationValueLeft_Unsafe, deltaLeftBefore)), oldDeltaLeft: \(deltaLeftBefore), newDeltaLeft: \(self.animationValueLeft_Unsafe)")
-            
         }
     }
-    
+
     /// Debug vars
     
     internal var summedIntegerAnimationValueDelta: Vector = Vector(x: 0, y: 0);
@@ -114,7 +117,7 @@ class TouchAnimator: TouchAnimatorBase {
     // MARK: Hook into superclasses' displayLinkCallback()
     
     override func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ momentumHint: MFMomentumHint) {
-        /// This hooks into displayLinkCallback() in Animator.swift. Look at that for context.
+        /// This hooks into displayLinkCallback() in the superclass. Look at that for context.
         
         /// Guard callback type
         

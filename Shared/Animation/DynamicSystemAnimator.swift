@@ -48,7 +48,6 @@ import Foundation
     /// Storage
     
     let displayLink: DisplayLink
-    let queue: DispatchQueue
     private var stopCallback: (() -> ())?
     
     /// Params
@@ -79,17 +78,17 @@ import Foundation
     
     /// Initializers
     
-    @objc convenience init(fromAnimation animation: CASpringAnimation, stopTolerance: Double, optimizedWorkType: MFDisplayLinkWorkType) {
-        
+    @objc convenience init(fromAnimation animation: CASpringAnimation, stopTolerance: Double, optimizedWorkType: MFDisplayLinkWorkType, runLoop: CFRunLoop, name: String) {
+
         let k = animation.stiffness
         let c = animation.damping
         let m = animation.mass
         
-        self.init(stiffness: k, damping: c, mass: m, stopTolerance: stopTolerance, optimizedWorkType: optimizedWorkType)
+        self.init(stiffness: k, damping: c, mass: m, stopTolerance: stopTolerance, optimizedWorkType: optimizedWorkType, runLoop: runLoop, name: name)
     }
     
-    @objc required init(stiffness k: Double, damping c: Double, mass m: Double = 1.0, stopTolerance: Double, optimizedWorkType: MFDisplayLinkWorkType) {
-        
+    @objc required init(stiffness k: Double, damping c: Double, mass m: Double = 1.0, stopTolerance: Double, optimizedWorkType: MFDisplayLinkWorkType, runLoop: CFRunLoop, name: String) {
+
         /// Validate
         assert(stopTolerance > 0, "Will never stop if stopTolerance <= 0")
         
@@ -98,16 +97,15 @@ import Foundation
         self.c = c
         self.m = m
         epsilon = stopTolerance
-        displayLink = DisplayLink(optimizedFor: optimizedWorkType)
-        queue = displayLink.dispatchQueue
+        displayLink = DisplayLink(optimizedFor: optimizedWorkType, runLoop: runLoop, name: name)
         pixelator = VectorSubPixelator.biased()
         stopCallback = nil
-        
+
         /// State
         anchor = 0
         x0 = 0
         x0_ = 0
-//        x0__ = 0
+        //x0__ = 0
         t0 = 0
         isFirstCallback = false
         pixelator.reset()
@@ -121,54 +119,56 @@ import Foundation
     
     /// Main interface
     
-    @objc func resetState() {
-        queue.async {
-            self.anchor = 0
-            self.x0 = 0
-            self.x0_ = 0
-//            self.x0__ = 0
-            self.t0 = 0
-            self.isFirstCallback = false
-            self.pixelator.reset()
-        }
+    @objc private func resetState() {
+        assertRunLoop(displayLink.runLoop);
+
+        self.anchor = 0
+        self.x0 = 0
+        self.x0_ = 0
+        //self.x0__ = 0
+        self.t0 = 0
+        self.isFirstCallback = false
+        self.pixelator.reset()
     }
     
     @objc func start(distance: Double, callback: @escaping UIAnimatorCallback, onComplete: (() -> ())? = nil) {
-        
-        queue.async {
-            
-            /// Store stopCallback
-            self.stopCallback = onComplete
-            
-            /// Init position (x0) and anchor
-            ///     Normalize displacement
-            ///     So the values don't grow to infinity and overflow
-            self.x0 += distance
-            self.anchor = self.x0 /// x0 will go from anchor to 0
-            
-            /// Reset velocity (x0_)
-            self.x0_ = 0.0
-            
-            /// Update state
-            self.isFirstCallback = true
-            
-            /// Configure displayLink
-            ///
-            /// Notes:
-            /// - I feel like this somehow makes the animation more stuttery? Turning this off.
-            /// - (Sep 2024) We're not linking the displayLink to a specific display at all. Won't this cause problems especially with 120Hz or Pro Motion displays?
-//            self.displayLink.linkToMainScreen_Unsafe()
-            
-            /// Start displayLink
-            self.displayLink.start_Unsafe { [weak self] timeInfo in
-                assert(self != nil)
-                self?.update(timeInfo, callback)
-            }
+        assertRunLoop(displayLink.runLoop);
+
+        /// Store stopCallback
+        self.stopCallback = onComplete
+
+        /// Init position (x0) and anchor
+        ///     Normalize displacement
+        ///     So the values don't grow to infinity and overflow
+        self.x0 += distance
+        self.anchor = self.x0 /// x0 will go from anchor to 0
+
+        /// Reset velocity (x0_)
+        self.x0_ = 0.0
+
+        /// Update state
+        self.isFirstCallback = true
+
+        /// Configure displayLink
+        ///
+        /// Notes:
+        /// - I feel like this somehow makes the animation more stuttery? Turning this off.
+        /// - (Sep 2024) We're not linking the displayLink to a specific display at all. Won't this cause problems especially with 120Hz or Pro Motion displays?
+        /// @noGCDCleanup Gotta fix this
+        //self.displayLink.linkToMainScreen_Unsafe()
+
+        /// Start displayLink
+        ///  @noGCDCleanup Understand/fix the `[weak self]` warning
+        self.displayLink.start_Unsafe { [weak self] timeInfo in
+            assert(self != nil)
+            self?.update(timeInfo, callback)
         }
     }
     
     private func update(_ timeInfo: DisplayLinkCallbackTimeInfo, _ callback: UIAnimatorCallback) {
-        
+
+        assertRunLoop(displayLink.runLoop)
+
         /// Get current step time
         let t = timeInfo.outFrame
         /// Get previous step time
@@ -181,17 +181,17 @@ import Foundation
         /// Euler
         ///     Formula from https://en.wikipedia.org/wiki/Semi-implicit_Euler_method, expanded a little so we can use `x_` instead of `x0_`when calculating x
         ///     This feels weird and too slow. Definitely incorrect
-//        let x__ =   -(c*x0_ + k*x0)/m
-//        let x_  =   x0_ + dt * x__
-//        let x   =   x0 + dt * (c*x_ + k*x0 + m*x0__ + c*x_)/c
-        
+        //let x__ =   -(c*x0_ + k*x0)/m
+        //let x_  =   x0_ + dt * x__
+        //let x   =   x0 + dt * (c*x_ + k*x0 + m*x0__ + c*x_)/c
+
         /// Heuristic
         ///     Feels fine but too damped compared to normal CASpringAnimation
         ///     I think this might be normal Euler method
-//        let x__ =   -(c*x0_ + k*x0)/m
-//        let x_  =   x0_ + dt * x__
-//        let x   =   x0 + dt * x_
-        
+        //let x__ =   -(c*x0_ + k*x0)/m
+        //let x_  =   x0_ + dt * x__
+        //let x   =   x0 + dt * x_
+
         /// Inverted Euler
         ///     Inspired by t3sselr video
         ///     This plus superSampling did the trick!
@@ -214,9 +214,9 @@ import Foundation
         let isEnd = abs(x) <= epsilon && abs(x_) <= epsilon
         
         /// Debug
-//        DDLogDebug("SpringAnimation state: \(x), \(x_), \(x__), samples: \(samples)")
-//        DDLogDebug("SpringAnimation isEnding.")
-        
+        //DDLogDebug("SpringAnimation state: \(x), \(x_), \(x__), samples: \(samples)")
+        //DDLogDebug("SpringAnimation isEnding.")
+
         /// Call callback
         callback(anchor - x) /// Because x actually goes from anchor to 0
         
@@ -224,7 +224,7 @@ import Foundation
         t0 = t
         x0 = x
         x0_ = x_
-//        x0__ = x__
+        //x0__ = x__
         isFirstCallback = false
         
         /// Stop
@@ -239,22 +239,23 @@ import Foundation
         resetState()
     }
     
-    @objc func stop() {
-        queue.sync {
-            stop_Unsafe()
-        }
-    }
-    
+    //@objc func stop() {
+    //    queue.sync {
+    //        stop_Unsafe()
+    //    }
+    //}
+
     @objc func resetSubPixelator() {
+        assertRunLoop(displayLink.runLoop)
         self.pixelator.reset()
     }
     @objc func linkToMainScreen() {
         self.displayLink.linkToMainScreen()
     }
-    @objc func isRunning() -> Bool {
-        return self.displayLink.isRunning()
-    }
-    
+    //@objc func isRunning() -> Bool {
+    //    return self.displayLink.isRunning()
+    //}
+
     //  MARK: Old stuff
     
 //    @objc convenience init(speed f: Double, damping z: Double, initialResponser r: Double, stopTolerance: Double) {
