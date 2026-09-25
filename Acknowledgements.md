@@ -92,6 +92,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2026**
 
+- 🇨🇿&nbsp;Samuel&nbsp;Stolarik
 - 🇺🇸&nbsp;Anon - "NICE!!"
 - 🇺🇸&nbsp;Drummond&nbsp;Reed - "A programmable 3rd button with no hassle!"
 - 🇺🇸&nbsp;Grant&nbsp;Meyer
