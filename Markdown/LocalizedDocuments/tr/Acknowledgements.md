@@ -98,6 +98,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Eylül 2026**
 
+- 🇨🇿&nbsp;Matej&nbsp;Veselovsky
 - 🇦🇲&nbsp;Kotan - "Thank you so much for this great app!"
 - 🇩🇪&nbsp;Teng - "Gute Arbeit :-)"
 - 🇨🇿&nbsp;Samuel&nbsp;Stolarik

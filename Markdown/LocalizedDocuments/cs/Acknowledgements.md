@@ -97,6 +97,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **září 2026**
 
+- 🇨🇿&nbsp;Matej&nbsp;Veselovsky
 - 🇦🇲&nbsp;Kotan - "Thank you so much for this great app!"
 - 🇩🇪&nbsp;Teng - "Gute Arbeit :-)"
 - 🇨🇿&nbsp;Samuel&nbsp;Stolarik

@@ -98,6 +98,7 @@ Những người đã đóng góp nhiều hơn cả giá thông thường và �
 
 **Tháng 9 2026**
 
+- 🇨🇿&nbsp;Matej&nbsp;Veselovsky
 - 🇦🇲&nbsp;Kotan - "Thank you so much for this great app!"
 - 🇩🇪&nbsp;Teng - "Gute Arbeit :-)"
 - 🇨🇿&nbsp;Samuel&nbsp;Stolarik
