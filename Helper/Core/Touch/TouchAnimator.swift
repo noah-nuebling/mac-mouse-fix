@@ -55,14 +55,11 @@ class TouchAnimator: TouchAnimatorBase {
     
     /// SubPixelator reset
     ///     You usually want to call this where you call linkToMainScreen()
-    
-    @objc func resetSubPixelator_Unsafe() {
-        DDLogDebug("HNGG Resetting subpixelator")
-        self.subPixelator.reset()
-    }
     @objc func resetSubPixelator() {
         assertRunLoop(displayLink.runLoop);
-        self.resetSubPixelator_Unsafe()
+        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
+        DDLogDebug("HNGG Resetting subpixelator")
+        self.subPixelator.reset()
     }
     
     // MARK: Declare new start function
@@ -75,11 +72,11 @@ class TouchAnimator: TouchAnimatorBase {
 
         assertRunLoop(displayLink.runLoop);
 
-        do { /// @noGCDCleanup  Remove this scope
+        /// Get startParams
+        let p = params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve, self.lastAnimationSpeed)
 
-            /// Get startParams
-
-            let p = params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve, self.lastAnimationSpeed)
+        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) } /// @noGCDCleanup - move to start of function after removing `StartParamCalculationCallback`
+        do { /// @noGCDCleanup - remove scope
 
             /// Reset animationValueLeft
             /// Notes:
@@ -100,7 +97,6 @@ class TouchAnimator: TouchAnimatorBase {
             /// ^ This is always true for some reason. Make sure to actually pass a Vector in an NSValue! Edit: Randomly, this starting working on 29.05.22
 
             /// Start animator
-
             super.startWithUntypedCallback_Unsafe(durationRaw: p["duration"] as! Double?, durationRawInFrames: p["durationInFrames"] as! Int?, value: vectorFromNSValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! Curve, callback: integerCallback)
 
             /// Debug
@@ -116,9 +112,10 @@ class TouchAnimator: TouchAnimatorBase {
     
     // MARK: Hook into superclasses' displayLinkCallback()
     
-    override func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ momentumHint: MFMomentumHint) {
+    override internal func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ momentumHint: MFMomentumHint) {
         /// This hooks into displayLinkCallback() in the superclass. Look at that for context.
-        
+        ///     [Sep 2026] `assertNoNestedUpdate` and `assertRunLoop` not needed since this is effectively a private helper, and all callsites are already protected
+
         /// Guard callback type
         
         guard let callback = untypedCallback as? TouchAnimatorCallback else {
@@ -168,7 +165,6 @@ class TouchAnimator: TouchAnimatorBase {
             DDLogDebug("TouchAnimator callback with delta: \(integerAnimationValueDelta), phase: \(phase), momentumHint: \(momentumHint)")
             
             /// Update hasProducedDeltas
-            /// 
             self.thisAnimationHasProducedDeltas = true
             
         } /// End `if (isZeroVector...`

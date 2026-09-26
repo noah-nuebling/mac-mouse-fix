@@ -49,7 +49,10 @@ import Foundation
     
     let displayLink: DisplayLink
     private var stopCallback: (() -> ())?
-    
+
+    /// Debug
+    let updateDepth = UpdateDepth()
+
     /// Params
     
     let k: Double
@@ -120,8 +123,7 @@ import Foundation
     /// Main interface
     
     @objc private func resetState() {
-        assertRunLoop(displayLink.runLoop);
-
+        /// `assertNoNestedUpdate` and `assertRunLoop(displayLink.runLoop)` not necessary since this is a private leaf helper [Sep 2026]
         self.anchor = 0
         self.x0 = 0
         self.x0_ = 0
@@ -133,6 +135,7 @@ import Foundation
     
     @objc func start(distance: Double, callback: @escaping UIAnimatorCallback, onComplete: (() -> ())? = nil) {
         assertRunLoop(displayLink.runLoop);
+        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
 
         /// Store stopCallback
         self.stopCallback = onComplete
@@ -168,6 +171,7 @@ import Foundation
     private func update(_ timeInfo: DisplayLinkCallbackTimeInfo, _ callback: UIAnimatorCallback) {
 
         assertRunLoop(displayLink.runLoop)
+        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
 
         /// Get current step time
         let t = timeInfo.outFrame
@@ -229,12 +233,16 @@ import Foundation
         
         /// Stop
         if isEnd {
+            allowNestedUpdate_Begin(updateDepth) /// Allow these since they happen at the end of `update()` [Sep 2026]
             stop_Unsafe()
             stopCallback?()
+            allowNestedUpdate_End(updateDepth)
         }
     }
     
     @objc func stop_Unsafe() {
+        assertRunLoop(displayLink.runLoop)
+        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
         displayLink.stop_Unsafe()
         resetState()
     }
@@ -247,9 +255,13 @@ import Foundation
 
     @objc func resetSubPixelator() {
         assertRunLoop(displayLink.runLoop)
+        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
         self.pixelator.reset()
     }
     @objc func linkToMainScreen() {
+        assertRunLoop(displayLink.runLoop)
+        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) } /// Seems like `assertNoNestedUpdate` is probably unnecessary since changing the linked display in a nested update doesn't matter to the correctness of any parent updates? Not sure [Sep 2026]
+                                                                                                 /// Keep consistent with other animator's `linkToMainScreen` or equivalent [Sep 2026]
         self.displayLink.linkToMainScreen()
     }
     //@objc func isRunning() -> Bool {

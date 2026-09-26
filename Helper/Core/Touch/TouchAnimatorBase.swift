@@ -67,7 +67,8 @@ import QuartzCore
     let maxAnimationDuration = 1.5 /*5.0*/ /// Explanation below. TODO: Move this into ScrollConfig.
     
     /// Vars - Init
-    
+
+
     @objc let displayLink: DisplayLink
     /*@Atomic*/ var clientCallback: UntypedAnimatorCallback?
     /// ^ This is constantly accessed by subclassHook() and constantly written to by startWithUntypedCallback(). Becuase Swift is stinky and not thread safe, the app will sometimes crash, when this property is read from and written to at the same time. So we're using @Atomic propery wrapper
@@ -78,6 +79,8 @@ import QuartzCore
     //let threadLock = DispatchSemaphore.init(value: 1)
     /// ^ Using a queue instead of a lock to avoid deadlocks. Always use queues for mutual exclusion except if you know exactly what you're doing!
     //let animatorQueue: DispatchQueue /// Use the displayLink's queue instead to avoid deadlocks and such
+
+    let updateDepth = UpdateDepth()
 
     /// Init
 
@@ -161,6 +164,9 @@ import QuartzCore
     
     @objc func linkToMainScreen() {
         /// Exposing this as a function and not just doing it automatically when the animation starts because I assume it's slow. Not sure where this assumption comes from.
+
+        assertRunLoop(displayLink.runLoop)
+        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) } /// Not sure if necessary. See/keep consistent with other animator's `linkToMainScreen` or equivalent [Sep 2026]
         displayLink.linkToMainScreen()
     }
     
@@ -217,6 +223,7 @@ import QuartzCore
                                                   animationCurve: Curve,
                                                   callback: UntypedAnimatorCallback) {
 
+        /// No need for `assertRunLoop` and `assertNoNestedUpdate_Begin` since this is effectively a private helper [Sep 2026]
 
         /// Notes:
         /// - This function has `_Unsafe` in it's name because it doesn't execute on self.animatorQueue. Only call it form self.animatorQueue
@@ -226,9 +233,8 @@ import QuartzCore
         /// - It's kind of unnecessary to be passing this a value interval, because we only use the length of it. Since the AnimatorCallback only receives valueDeltas each frame and no absolute values,  the location of the value interval doesn't matter.
         /// - We need to make `callback` and UntypedAnimatorCallback instead of a normal AnimatorCallback, so we can change the type of `callback` to TouchAnimatorCallback in the subclass TouchAnimator. That's because Swift is stinky. UntypedAnimatorCallback is @escaping
 
-
         /// Validate
-        assertRunLoop(displayLink.runLoop)
+
         assert((durationRaw == nil) != (durationRawInFrames == nil))
         if let durationRaw = durationRaw {
             assert(!durationRaw.isNaN && durationRaw.isFinite && durationRaw > 0)
@@ -316,8 +322,8 @@ import QuartzCore
     @objc(cancel_forAutoMomentumScroll:) func cancel(forAutoMomentumScroll: Bool) {
         
         assertRunLoop(displayLink.runLoop);
-
-        do { /// @noGCDCleanup remove this scope
+        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
+        do {
 
             /// Get info
             /// Notes:
@@ -331,15 +337,16 @@ import QuartzCore
             
             /// Stop displayLink
             self.stop_Unsafe()
-            
+
             /// Call callback
-            
             assert(!wasRunning || self.clientCallback is AnimatorCallback) /// Why did we use ? intead of ! in`self.clientCallback as? AnimatorCallback` below? Asserting here because I think that might have been a mistake, but I don't wanna cause crashes in production.
             if wasRunning, let callback = self.clientCallback as? AnimatorCallback {
                 
                 if hadProducedDeltas {
                     DDLogDebug("TouchAnimator: Sending cancel events")
+                    allowNestedUpdate_Begin(updateDepth) /// [Sep 2026] Allow this since it happens at the end of `cancel()`
                     callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseCanceled, self.lastMomentumHint)
+                    allowNestedUpdate_End(updateDepth)
                 } else {
                     if forAutoMomentumScroll {
                         
@@ -358,8 +365,9 @@ import QuartzCore
                         assert(false) /// This is not called anymore according to comment above.
 
                         DDLogDebug("TouchAnimator: Sending extra momentum cancel events even though momentumScrolling hasn't started")
-                        
+                        allowNestedUpdate_Begin(updateDepth)
                         callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseStart, self.lastMomentumHint)
+                        allowNestedUpdate_End(updateDepth)
                         let delay = 8.0/1000.0 /// self.displayLink.nominalTimeBetweenFrames() / 2.0
                         MFCFRunLoopPerform_delay(self.displayLink.runLoop, nil, delay) { /// [Sep 2026] Used to use a Global dispatch queue here (not the displayLinkQueue) (Before the 'No more dispatch queues' refactor). No clue why.
                             callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseCanceled, self.lastMomentumHint)
@@ -385,7 +393,7 @@ import QuartzCore
 
     private func stop_Unsafe() {
 
-        assertRunLoop(displayLink.runLoop)
+        /// [Sep 2026] `assertNoNestedUpdate` and `assertRunLoop` not needed since this is private helper, and all callers are already protected
 
         /// Debug
         DDLogDebug("AnimationCallback STOP")
@@ -405,6 +413,7 @@ import QuartzCore
         //    self.onStopCallback!()
         //    self.onStopCallback = nil
         //}
+
     }
 
     /// TODO: Delete the onStopCallback stuff
@@ -447,6 +456,7 @@ import QuartzCore
     @objc func displayLinkCallback(_ timeInfo: DisplayLinkCallbackTimeInfo) {
 
         assertRunLoop(displayLink.runLoop); /// Guaranteed, just a sanitfy check/documentation, I guess [Sep 2026]
+        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
 
         /// Race conditions
         ///     We're trying to prevent callback calls after stopping in displayLink, but somehow this still happens. Edit: Might have fixed it by moving the queue dispatch into displayLink
@@ -638,11 +648,12 @@ import QuartzCore
         ///     Why do we do this after stopping animation, and the update to `last` values before?
         isFirstDisplayLinkCallback_AfterColdStart = false
         isFirstDisplayLinkCallback_AfterRunningStart = false
+
     }
     
     /// Subclass overridable
     
-    func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ momentumHint: MFMomentumHint) {
+    internal func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ momentumHint: MFMomentumHint) {
         
         /// This is unused. Probably doesn't work properly. The override in `TouchAnimator` is the relevant thing.
         fatalError();

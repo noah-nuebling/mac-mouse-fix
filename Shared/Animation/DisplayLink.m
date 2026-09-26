@@ -54,6 +54,8 @@ typedef enum {
 
     NSString *_name;
 
+    int _updateDepth;
+
 }
 
 /** Force CVDisplayLink interactions onto the mainThread
@@ -135,6 +137,11 @@ typedef enum {
     if (CFRunLoopGetCurrent() == [self cvDisplayLinkInteractionRunLoop]) workload();
     else                                                                 MFCFRunLoopPerform([self cvDisplayLinkInteractionRunLoop], nil, workload); /// [Sep 2026] `_requestedState` allows us to make all interaction with CVDisplayLink non-blocking
 }
+
+/// [Sep 2026] Disable `_assertNoNestedUpdate`
+///     since self.callback is called at the end of `displayLinkCallback()` after that function's update of `DisplayLink's` state is already finished. (Actually, that function doesn't update any of DisplayLink's state at all!) Since we're also not calling out to any other code that could recurse back anywhere into this file `_assertNoNestedUpdate` is unnecessary in DisplayLink.m. (Don't think this will ever change since DisplayLink.m is simple and sort of a 'leaf node' in the layers of the program)
+//#define _assertNoNestedUpdate(updateDepthPtr) assertNoNestedUpdate(updateDepthPtr)
+#define _assertNoNestedUpdate(updateDepthPtr)
 
 
 #pragma mark - Debug
@@ -226,6 +233,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 - (void)setUpNewCVDisplayLinkWithActiveDisplays {
     assertRunLoop([self cvDisplayLinkInteractionRunLoop]);
 
+
     /// Discussion
     ///     - MOS doesn't recreate the displaylink every time a new display is connected, so it's probably unnecessary. Why did we do all this elaborate stuff without testing? Should've at least left a comment that we haven't confirmed it to be necessary. [Oct 2025]
     ///         @noGCDCleanup - actually test this now that I have a second display and stufff
@@ -298,6 +306,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 - (void)start_UnsafeWithCallback:(DisplayLinkCallback _Nullable)callback {
 
     assertRunLoop(_runLoop);
+    _assertNoNestedUpdate(&_updateDepth);
 
     DDLogDebug("DisplayLink.m: (%@) starting", _name);
 
@@ -331,7 +340,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
             failedAttempts += 1;
             if (failedAttempts >= maxAttempts) {
                 DDLogInfo("DisplayLink.m: (%@) Failed to start CVDisplayLink after %lld tries. Last error code: %d", self->_name, failedAttempts, rt);
-                _requestedState = kMFDisplayLinkRequestedState_Stopped; /// [Sep 2026] Stop the early return from blocking future start attempts. This is feels a bit hacky.
+                self->_requestedState = kMFDisplayLinkRequestedState_Stopped; /// [Sep 2026] Stop the early return from blocking future start attempts. This is feels a bit hacky. ... also a race since `cvDisplayLinkInteractionRunLoop` doesn't own `_requestedState` @noGCDCleanup
                 break;
             }
         }
@@ -350,11 +359,14 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 - (void)stop_Unsafe {
 
     assertRunLoop(_runLoop);
+    _assertNoNestedUpdate(&_updateDepth);
 
     /// Debug
     DDLogDebug("DisplayLink.m: (%@) stopping", _name);
 
     if ([self isRunning_Unsafe]) {
+
+        /// @noGCDCleanup why have the early return in -start but not -stop? ... `isRunning_Unsafe` is early return, duh
 
         /// Set requestedState
         ///     before async dispatching to main -> so that isRunning() works properly
@@ -464,6 +476,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
     ///     (Maybe keep comment since I was confused, but seems obvious now.)
 
     assertRunLoop(_runLoop);
+    _assertNoNestedUpdate(&_updateDepth);
 
     [self interactWithCVDisplayLink: ^{
         [self setDisplay: NSScreen.mainScreen.displayID];
@@ -610,6 +623,7 @@ void displayReconfigurationCallback(CGDirectDisplayID display, CGDisplayChangeSu
 #pragma mark - Frame Callback
 
 static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp *inNow, const CVTimeStamp *inOutputTime, CVOptionFlags flagsIn, CVOptionFlags *flagsOut, void *displayLinkContext) {
+
     DisplayLink *self = (__bridge DisplayLink *)displayLinkContext;
 
     /// @noGCDCleanup Use runLoopSource instead of MFCFRunLoopPerform to get frame dropping
@@ -617,6 +631,9 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
     DisplayLinkCallbackTimeInfo timeInfo = parseTimeStamps(inNow, inOutputTime); /// [Sep 2026] Fine to do this outside block since it's a pure function, capturing `timeInfo` in block should be a bit faster than copying the input values.
 
     MFCFRunLoopPerform(self->_runLoop, nil, ^{
+        assertRunLoop(self->_runLoop);
+        _assertNoNestedUpdate(&self->_updateDepth);
+
         DDLogDebug("DisplayLink.m: (%@) Callback", self->_name);
         if (self->_requestedState == kMFDisplayLinkRequestedState_Stopped) {
             DDLogDebug("DisplayLink.m: (%@) callback called after requested stop. Returning", self->_name);
