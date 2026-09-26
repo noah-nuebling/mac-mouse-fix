@@ -122,8 +122,8 @@ static void resetState_Unsafe(void) { /// @noGCDCleanup remove/unify regular and
     ///     @noGCDCleanup - Put this though in high level explanation / discussion
 
     DDLogDebug("Scroll.m: reset-animator");
-    allowNestedUpdate(&_updateDepth) /// [Sep 2026]  `-cancel` can call back into our `_animator` callback
-        [_animator cancel];
+    allowNestedUpdate(&_updateDepth) /// [Sep 2026]  `-cancel` can call back into our `_animator` callback (See `kMFAnimationCallbackPhaseCanceled`)
+    [_animator cancel];
     [GestureScrollSimulator stopMomentumScroll]; /// Not sure if appropriate
     [ScrollAnalyzer resetState];
 }

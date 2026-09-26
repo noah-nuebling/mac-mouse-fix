@@ -369,7 +369,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
         /// @noGCDCleanup why have the early return in -start but not -stop? ... `isRunning_Unsafe` is early return, duh
 
         /// Set requestedState
-        ///     before async dispatching to main -> so that isRunning() works properly
+        ///     before deferring to main -> so that isRunning() works properly
         _requestedState = kMFDisplayLinkRequestedState_Stopped;
 
         [self interactWithCVDisplayLink: ^{

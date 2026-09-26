@@ -92,7 +92,7 @@ bool MFCFRunLoopPerform_sync(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_
     
     /// Variant of MFCFRunLoopPerform which waits for the workload to complete (or does the workload immediately if `rl` is the current runLoop.)
     ///     Sort of an analog to `dispatch_sync()` (if `MFCFRunLoopPerform()` was `dispatch_async()`)
-    ///     Returns `true` if waiting timed out. `false` otherwise.
+    ///     Returns `1` if waiting timed out. `0` otherwise.
     ///     Pass `timeout <= 0` to disable the timeout.
     ///
     /// Caution: If you don't pass a timeout, this can lead to deadlocks!
@@ -113,7 +113,7 @@ bool MFCFRunLoopPerform_sync(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_
         [semaphore releaseUnit];
     });
     didTimeOut = [semaphore acquireUnit: timeoutDate]; /// We completely block the current thread/runloop. Do the waiting `-[NSObject performSelector:onThread:...]` APIs do that, too?
-    
+
     return didTimeOut;
 }
 
