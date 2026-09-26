@@ -98,6 +98,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2026**
 
+- 🇦🇲&nbsp;Kotan - "Thank you so much for this great app!"
 - 🇩🇪&nbsp;Teng - "Gute Arbeit :-)"
 - 🇨🇿&nbsp;Samuel&nbsp;Stolarik
 - 🇺🇸&nbsp;Anon - "NICE!!"
