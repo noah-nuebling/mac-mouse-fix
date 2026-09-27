@@ -13,14 +13,35 @@
     }
 }
 
-final class UpdateDepth { var updateDepth: Int = 0 } /// [Sep 2026] Use wrapper class around state since Swift can't do pointers. (& won't work says Opus 5.5)
-@_transparent func assertNoNestedUpdate_Begin(_ updateDepth: UpdateDepth, file: StaticString = #file, line: UInt = #line) {
-    mfassert(updateDepth.updateDepth == 0, "assertNoNestedUpdate failure.", file: file, line: line)
-    updateDepth.updateDepth += 1;
-}
-@_transparent func assertNoNestedUpdate_End(_ updateDepth: UpdateDepth) {
-    updateDepth.updateDepth -= 1;
-}
+/// Nested read/write protection
+///     Swift version of the macros in Threads.h (See there for explanation) [Sep 2026]
+///     Usage example:
+///         ```
+///         readsState_Begin(tracker); defer { readsState_End(tracker) }
+///         ...
+///         allowNestedReadOrWrite_Begin(from: .readsState, tracker); do {
+///             callback()
+///         }; allowNestedReadOrWrite_End(from: .readsState, tracker)
+///         ```
 
-@_transparent func allowNestedUpdate_Begin(_ updateDepth: UpdateDepth) { updateDepth.updateDepth -= 1; }
-@_transparent func allowNestedUpdate_End(_ updateDepth: UpdateDepth) { updateDepth.updateDepth += 1; }
+final class MFReadWriteTracker { var readerCount: Int = 0; var writerCount: Int = 0 }
+enum MFReadWriteAccessType { case readsState; case readsAndWritesState }
+
+@_transparent func readsState_Begin(_ tracker: MFReadWriteTracker, file: StaticString = #file, line: UInt = #line) {
+    mfassert(tracker.writerCount == 0, "Nested read while state is being written.", file: file, line: line)
+    tracker.readerCount += 1
+}
+@_transparent func readsState_End(_ tracker: MFReadWriteTracker) { tracker.readerCount -= 1 }
+
+@_transparent func readsAndWritesState_Begin(_ tracker: MFReadWriteTracker, file: StaticString = #file, line: UInt = #line) {
+    mfassert(tracker.readerCount == 0 && tracker.writerCount == 0, "Nested write while state is being read or written.", file: file, line: line)
+    tracker.writerCount += 1
+}
+@_transparent func readsAndWritesState_End(_ tracker: MFReadWriteTracker) { tracker.writerCount -= 1 }
+
+@_transparent func allowNestedReadOrWrite_Begin(from: MFReadWriteAccessType, _ tracker: MFReadWriteTracker) {
+    if from == .readsState { tracker.readerCount -= 1 } else { tracker.writerCount -= 1 }
+}
+@_transparent func allowNestedReadOrWrite_End(from: MFReadWriteAccessType, _ tracker: MFReadWriteTracker) {
+    if from == .readsState { tracker.readerCount += 1 } else { tracker.writerCount += 1 }
+}
