@@ -39,6 +39,7 @@ Old logLevel logic (When we were still using CocoaLumberjack)
 
 #import <Foundation/Foundation.h>
 #import <os/log.h>
+#import "SharedMacros.h"
 
 @interface Logging : NSObject
     + (void)setUpDDLog;
@@ -122,5 +123,5 @@ Old logLevel logic (When we were still using CocoaLumberjack)
 
 /// @noGCDCleanup think about/flesh out implementation of this a bit
 #define mfrequire(condition, formatAndArgs...) ({ \
-    if (mfunlikely(!(condition))) { mfassert(condition, @"(mfrequire) " ##formatAndArgs); abort(); } \
+    if (mfunlikely(!(condition))) { mfassert(condition, @"(mfrequire) " formatAndArgs); abort(); } \
 })

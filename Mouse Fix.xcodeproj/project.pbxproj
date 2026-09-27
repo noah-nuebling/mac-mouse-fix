@@ -25,11 +25,11 @@
 		4F1667E92C6A679F009E4924 /* Readme.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F1667E82C6A679F009E4924 /* Readme.md */; };
 		4F1667EB2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4F1667EA2C6A6C5E009E4924 /* XCStringsDummyApp-Info.plist */; };
 		4F1667EF2C6A6EA0009E4924 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F1667EE2C6A6EA0009E4924 /* MainMenu.xib */; };
-		4F1708BE2E51D60400945CF3 /* MFSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFSemaphore.m */; };
+		4F1708BE2E51D60400945CF3 /* MFGate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFGate.m */; };
 		4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17D2E0292A635200EB07CA /* SwitchMaster.swift */; };
 		4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AFE962670EBA900ECA424 /* DragCurve.swift */; };
-		4F1B418F2D49960E00026C94 /* MFSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFSemaphore.m */; };
-		4F1B41902D49960E00026C94 /* MFSemaphore.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFSemaphore.m */; };
+		4F1B418F2D49960E00026C94 /* MFGate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFGate.m */; };
+		4F1B41902D49960E00026C94 /* MFGate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFGate.m */; };
 		4F1B41A52D4BACBA00026C94 /* NSData+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B41A42D4BACBA00026C94 /* NSData+Additions.m */; };
 		4F1B41A62D4BACBA00026C94 /* NSData+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B41A42D4BACBA00026C94 /* NSData+Additions.m */; };
 		4F1B83062606E68300AEAF37 /* RemapsAnalyzer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B83052606E68300AEAF37 /* RemapsAnalyzer.m */; };
@@ -654,8 +654,8 @@
 		4F18A85727BF6E0200A5703B /* IOHIDEvent-Reconstructed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOHIDEvent-Reconstructed.h"; sourceTree = "<group>"; };
 		4F19F65E2906BB98007DE4CD /* ConfigReadme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ConfigReadme.md; sourceTree = "<group>"; };
 		4F1AFE962670EBA900ECA424 /* DragCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragCurve.swift; sourceTree = "<group>"; };
-		4F1B418D2D49960E00026C94 /* MFSemaphore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFSemaphore.h; sourceTree = "<group>"; };
-		4F1B418E2D49960E00026C94 /* MFSemaphore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFSemaphore.m; sourceTree = "<group>"; };
+		4F1B418D2D49960E00026C94 /* MFGate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFGate.h; sourceTree = "<group>"; };
+		4F1B418E2D49960E00026C94 /* MFGate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFGate.m; sourceTree = "<group>"; };
 		4F1B41A32D4BACBA00026C94 /* NSData+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Additions.h"; sourceTree = "<group>"; };
 		4F1B41A42D4BACBA00026C94 /* NSData+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Additions.m"; sourceTree = "<group>"; };
 		4F1B41A72D4C06AC00026C94 /* CodeStyle.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CodeStyle.md; sourceTree = "<group>"; };
@@ -7714,8 +7714,8 @@
 				4F8A8DC0287F885D00786BCC /* Shorthands.h */,
 				4FA06818291B2C4C00949B5F /* Shorthands.m */,
 				4FF27DD62B95B108004744E1 /* Shorthands.swift */,
-				4F1B418D2D49960E00026C94 /* MFSemaphore.h */,
-				4F1B418E2D49960E00026C94 /* MFSemaphore.m */,
+				4F1B418D2D49960E00026C94 /* MFGate.h */,
+				4F1B418E2D49960E00026C94 /* MFGate.m */,
 				4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */,
 				4FBC83392DAFB28B00354981 /* Macros */,
 				4FBC832E2DAFB28B00354981 /* PrivateFunctions */,
@@ -8651,7 +8651,7 @@
 			files = (
 				4F3A10E92C5ED9E50054B89E /* SharedUtility.m in Sources */,
 				4FE1A1BB2C56A50100CE3347 /* Logging.m in Sources */,
-				4F1708BE2E51D60400945CF3 /* MFSemaphore.m in Sources */,
+				4F1708BE2E51D60400945CF3 /* MFGate.m in Sources */,
 				4FFA973D2EC2579200A52849 /* MFSimpleDataClass.m in Sources */,
 				4FA773DB2E66FF3A0056E9B4 /* MFPlistDecoder.m in Sources */,
 				4FA773DA2E66FF1B0056E9B4 /* MFPlistEncoder.m in Sources */,
@@ -8810,7 +8810,7 @@
 				4F85C05028BBDBDC00E96E9C /* NSImageView+Extensions.swift in Sources */,
 				4F37FAD825FDFDC5004C34C4 /* MFScrollView.m in Sources */,
 				4F428D082CD8C688006322AB /* MFCoding.swift in Sources */,
-				4F1B418F2D49960E00026C94 /* MFSemaphore.m in Sources */,
+				4F1B418F2D49960E00026C94 /* MFGate.m in Sources */,
 				4FAA5601293A41AF00BA782C /* BezierCappedAccelerationCurve.swift in Sources */,
 				4FA40D1028A0D8F100499E53 /* VectorSubPixelator.m in Sources */,
 				4FA40D0228A0CE5B00499E53 /* VectorUtility.m in Sources */,
@@ -8973,7 +8973,7 @@
 				4FE78C442C502A5F00C54103 /* NSString+Additions.m in Sources */,
 				4F58FE142C57BAFA00926A00 /* NSTextField+Extentions.swift in Sources */,
 				4FB8B29B2CCEBAEB00A5A580 /* GetLicenseConfig.swift in Sources */,
-				4F1B41902D49960E00026C94 /* MFSemaphore.m in Sources */,
+				4F1B41902D49960E00026C94 /* MFGate.m in Sources */,
 				4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */,
 				4FF8C89F28955DC4007EC31F /* CoolTimer.swift in Sources */,
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,

@@ -123,20 +123,19 @@
 #if DEBUG
     DDLogInfo("Accessibility Check - Running a Debug build. Asserts are enabled.");
 #endif
-    
-    ///
-    /// __Pre-check init__
-    ///
-    
+
+    /// Load (but don't yet +start) `GlobalEventTapThread` before anything else (So that other `load_Manual` methods can schedule things on `GlobalEventTapThread.runLoop`) [Sep 2026]
+    ///     Also see `[GlobalEventTapThread start];` at the end
+    ///     [Sep 2026] Claude Opus 5.5 deadlock note: `MFCFRunLoopPerform_sync` onto `GlobalEventTapThread.runLoop` before `+[GlobalEventTapThread start]` would deadlock – but we probably will barely use `MFCFRunLoopPerform_sync` and would probably quickly catch anyways.
+    [GlobalEventTapThread load_Manual];
+
+    /// Pre-accessibility-check init
     [MFMessagePort load_Manual];
-    
-    ///
+
     /// Do the accessibility check
-    ///
     Boolean isTrusted = [self checkAccessibilityAndUpdateSystemSettings];
-    
     if (!isTrusted) {
-        
+
         DDLogInfo("Accessibility Check - Accessibility Access Disabled");
         
         /// Workaround for macOS bug
@@ -168,97 +167,96 @@
     } else {
         
         /// Accessibility is enabled -> Start normally!
-        
-        ///
-        /// Log
-        ///
-        
-        DDLogInfo("Accessibility Check - Helper started with accessibility permissions at: URL %@", Locator.currentExecutableURL);
-        
-        ///
-        /// **Post-check init**
-        ///
 
-        /// Annotate localized strings
-        ///     The swizzle should happen before the system loads any of our localized nib files, or localizedStrings are loaded from the NSBundle in another way. Otherwise we miss some strings in the localizationScreenshots.
-        if ([NSProcessInfo.processInfo.arguments containsObject:@"-MF_ANNOTATE_LOCALIZED_STRINGS"]) {
-            [LocalizedStringAnnotation enableAutomaticAnnotation];
+        /// Log
+        DDLogInfo("Accessibility Check - Helper started with accessibility permissions at: URL %@", Locator.currentExecutableURL);
+
+        /// **Post-accessibility-check init**
+        {
+
+            /// Annotate localized strings
+            ///     The swizzle should happen before the system loads any of our localized nib files, or localizedStrings are loaded from the NSBundle in another way. Otherwise we miss some strings in the localizationScreenshots.
+            if ([NSProcessInfo.processInfo.arguments containsObject:@"-MF_ANNOTATE_LOCALIZED_STRINGS"]) {
+                [LocalizedStringAnnotation enableAutomaticAnnotation];
+            }
+
+            /// Using `load_Manual` instead of normal load, because creating an eventTap crashes the program, if we don't have accessibilty access (I think - I don't really remember)
+            /// TODO: Look into using `+ initialize` instead of `+ load`. The way we have things set up there are like a bajillion entry points to the program (one for every `+ load` function) which is kinda sucky. Might be better to have just one entry point to the program and then start everything that needs to be started with `+ start` functions and let `+ initialize` do the rest
+
+            [ButtonInputReceiver load_Manual];
+            [DeviceManager load_Manual];
+            [Scroll load_Manual];
+
+            /// NOTE: v Moved these 2 down, to prevent crashes introduced by moving SwitchMaster away from ReactiveSwift to simple callbacks.
+            //[Config load_Manual];
+            //[ModifiedDrag load_Manual];
+            [Modifiers load_Manual];
+            [ModifiedDrag load_Manual];
+            [Config load_Manual];
+
+            [SwitchMaster.shared load_Manual];
+
+            [ScreenDrawer.shared load_Manual];
+            [PointerFreeze load_Manual];
+
+            [MenuBarItem load_Manual];
+
+            /// Send 'started' message to mainApp
+            /// Notes:
+            /// - We could improve responsivity of the enableToggle in mainApp by sending the message before doing all the initialization. But only slightly.
+            /// - Why are we doing the license init after this? Little weird
+
+            NSDictionary *payload = @{
+                @"bundleVersion": @(Locator.bundleVersion),
+                @"mainAppURL": Locator.mainAppBundle.bundleURL
+            };
+            [MFMessagePort sendMessage:@"helperEnabled" withPayload:payload waitForReply:NO];
+
+            ///
+            /// License init
+            ///
+            /// Note:
+            /// - It would make sense to do this before the accessibility check, but calling this before the Post-check init crashes because of some stupid stuff. The stupid stuff is I I think the [Trial load_Manual] calls some other stuff that writes the isLicensed state to config and then when the config is commited that tries to updates the scroll module but it isn't initialized, yet so it crashes. If we structured things better we could do this before Post-check init but it's not important enough.
+            /// - If the helper is started because the user flipped the switch (not because the computer just started or something), then `triggeredByUser` should probably be `YES`.
+            ///     - Update: (Oct 2024) right now, we're using `triggeredByUser:NO` here, which makes it so the async tasks (loading the licenseConfig from the internet and talking to the Gumroad API) are performed with `priority: .background`.
+            ///         This leads to some delay between when the Helper is started and when it is locked down. If that delay is too long it could make for a weird experience. But right now it only seems to take a fraction of a second.
+
+            [TrialCounter load_Manual];
+            [License checkAndReactWithTriggeredByUser:NO];
         }
-        
-        /// Using `load_Manual` instead of normal load, because creating an eventTap crashes the program, if we don't have accessibilty access (I think - I don't really remember)
-        /// TODO: Look into using `+ initialize` instead of `+ load`. The way we have things set up there are like a bajillion entry points to the program (one for every `+ load` function) which is kinda sucky. Might be better to have just one entry point to the program and then start everything that needs to be started with `+ start` functions and let `+ initialize` do the rest
-        
-        [ButtonInputReceiver load_Manual];
-        [DeviceManager load_Manual];
-        [Scroll load_Manual];
-        
-        /// NOTE: v Moved these 2 down, to prevent crashes introduced by moving SwitchMaster away from ReactiveSwift to simple callbacks.
-//        [Config load_Manual];
-//        [ModifiedDrag load_Manual];
-        [Modifiers load_Manual];
-        [ModifiedDrag load_Manual];
-        [Config load_Manual];
-        
-        [SwitchMaster.shared load_Manual];
-        
-        [ScreenDrawer.shared load_Manual];
-        [PointerFreeze load_Manual];
-        
-        [MenuBarItem load_Manual];
-        
-        /// Send 'started' message to mainApp
-        /// Notes:
-        /// - We could improve responsivity of the enableToggle in mainApp by sending the message before doing all the initialization. But only slightly.
-        /// - Why are we doing the license init after this? Little weird
-        
-        NSDictionary *payload = @{
-            @"bundleVersion": @(Locator.bundleVersion),
-            @"mainAppURL": Locator.mainAppBundle.bundleURL
-        };
-        [MFMessagePort sendMessage:@"helperEnabled" withPayload:payload waitForReply:NO];
-        
-        ///
-        /// License init
-        ///
-        /// Note:
-        /// - It would make sense to do this before the accessibility check, but calling this before the Post-check init crashes because of some stupid stuff. The stupid stuff is I I think the [Trial load_Manual] calls some other stuff that writes the isLicensed state to config and then when the config is commited that tries to updates the scroll module but it isn't initialized, yet so it crashes. If we structured things better we could do this before Post-check init but it's not important enough.
-        /// - If the helper is started because the user flipped the switch (not because the computer just started or something), then `triggeredByUser` should probably be `YES`.
-        ///     - Update: (Oct 2024) right now, we're using `triggeredByUser:NO` here, which makes it so the async tasks (loading the licenseConfig from the internet and talking to the Gumroad API) are performed with `priority: .background`.
-        ///         This leads to some delay between when the Helper is started and when it is locked down. If that delay is too long it could make for a weird experience. But right now it only seems to take a fraction of a second.
-        
-        [TrialCounter load_Manual];
-        [License checkAndReactWithTriggeredByUser:NO];
-        
-        ///
         /// Debug & testing
-        ///
-//
-//        [SecureStorage set:@"hi.im.groot" value:@"what's your name? Hghhhh?"];
-//        NSString *secure = [SecureStorage get:@"hi.im.groot"];
-//
-//        DDLogDebug("Value from secure storage: %@", secure);
-//
-//        DDLogDebug("Entire secure storage: %@", [SecureStorage getAll]);
-//
-//        [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
-//
-//            [License licenseStateWithLicenseConfig:licenseConfig completionHandler:^(MFLicenseAndTrialState license, NSError * _Nullable error) {
-//
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//
-//                    [TrialNotificationController.shared openWithLicenseConfig:licenseConfig license:license triggeredByUser:NO];
-//                });
-//            }];
-//        }];
-        
-    //    [Gumroad checkLicense:license email:email completionHandler:^(BOOL isValidKey, NSDictionary<NSString *,id> * _Nullable serverResponse, NSError * _Nullable error, NSURLResponse * _Nullable urlResponse) {
-    //
-    //            DDLogDebug("License check result - isValidKey: %d, error: %@", isValidKey, error);
-    //    }];
-//        [Licensing licensingStateWithCompletionHandler:^(MFLicenseAndTrialState licensing, NSError *error) {
-//            DDLogDebug("License check result - state: %d, currentDay: %d, trialDays: %d, error: %@", licensing.state, licensing.daysOfUse, licensing.trialDays, error);
-//        }];
+        #if 0
+            [SecureStorage set:@"hi.im.groot" value:@"what's your name? Hghhhh?"];
+            NSString *secure = [SecureStorage get:@"hi.im.groot"];
+
+            DDLogDebug("Value from secure storage: %@", secure);
+
+            DDLogDebug("Entire secure storage: %@", [SecureStorage getAll]);
+
+            [LicenseConfig getOnComplete:^(LicenseConfig * _Nonnull licenseConfig) {
+
+                [License licenseStateWithLicenseConfig:licenseConfig completionHandler:^(MFLicenseAndTrialState license, NSError * _Nullable error) {
+
+                    dispatch_async(dispatch_get_main_queue(), ^{
+
+                        [TrialNotificationController.shared openWithLicenseConfig:licenseConfig license:license triggeredByUser:NO];
+                    });
+                }];
+            }];
+
+            [Gumroad checkLicense:license email:email completionHandler:^(BOOL isValidKey, NSDictionary<NSString *,id> * _Nullable serverResponse, NSError * _Nullable error, NSURLResponse * _Nullable urlResponse) {
+
+                    DDLogDebug("License check result - isValidKey: %d, error: %@", isValidKey, error);
+            }];
+            [Licensing licensingStateWithCompletionHandler:^(MFLicenseAndTrialState licensing, NSError *error) {
+                DDLogDebug("License check result - state: %d, currentDay: %d, trialDays: %d, error: %@", licensing.state, licensing.daysOfUse, licensing.trialDays, error);
+            }];
+        #endif
     }
+
+    /// Start the GlobalEventTapThread after everything else (That way, eventTaps and stuff we moved from mainThread to GlobalEventTapThread in 'No more dispatch queues' refactor still only start after everything is loaded and don't race with `load_Manual` init) [Sep 2026]
+    ///     -> This makes the whole `+load_Manual` sequence thread-safe (As long as we only use mainThread and GlobalEventTapThread) [Sep 2026]
+    [GlobalEventTapThread start];
 }
 
 + (Boolean)checkAccessibilityAndUpdateSystemSettings {

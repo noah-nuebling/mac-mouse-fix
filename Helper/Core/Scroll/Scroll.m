@@ -50,7 +50,7 @@ static CGEventSourceRef _eventSource;
 static TouchAnimator *_animator;
 
 static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this to Config or some sort of OverrideManager class
-+ (AXUIElementRef) systemWideAXUIElement {
++ (AXUIElementRef) systemWideAXUIElement { /// [Sep 2026] Currently unused - due to slowness IIRC
     return _systemWideAXUIElement;
 }
 
@@ -67,12 +67,10 @@ static int _updateDepth;
 
 #pragma mark - Public functions
 
-+ (void)load_Manual {
++ (void) load_Manual {
 
-    //assertRunLoop(GlobalEventTapThread.runLoop); /// [Sep 2026] Actually called from mainThread.
-                                                   ///      I think ok as long as nothing else calls Scroll.m and eventTapCallback is not called before we finish this update?
-    //assertNoNestedUpdate(&_updateDepth); /// @noGCDCleanup - not sure this is necessary - what are the rules?
-                                            /// Re-enable this and fix `eventTapCallback` being called before this is done when scheduled on `GlobalEventTapThread.runLoop`
+    assertRunLoop(CFRunLoopGetMain()); /// [Sep 2026] `load_Manual` called from main instead of GlobalEventTapThread - still thread safe - see caller.
+    assertNoNestedUpdate(&_updateDepth);
 
     /// Create AXUIElement for getting app under mouse pointer
     _systemWideAXUIElement = AXUIElementCreateSystemWide();
@@ -87,7 +85,7 @@ static int _updateDepth;
         _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
         DDLogDebug("Scroll.m: _eventTap: %@", _eventTap);
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
-        CFRunLoopAddSource(/*GlobalEventTapThread.runLoop*/CFRunLoopGetMain(), runLoopSource, kCFRunLoopCommonModes); /// @noGCDCleanup move to GlobalEventTapThread.runLoop and make it work
+        CFRunLoopAddSource(GlobalEventTapThread.runLoop, runLoopSource, kCFRunLoopCommonModes);
         CFRelease(runLoopSource);
         CGEventTapEnable(_eventTap, false); // Not sure if this does anything
     }
@@ -119,7 +117,7 @@ static void resetState_Unsafe(void) { /// @noGCDCleanup remove/unify regular and
     assertNoNestedUpdate(&_updateDepth);
     /// [Sep 2026] `assertNoNestedUpdate(&_updateDepth)` needed even though this doesn't touch any vars controlled by `Scroll.m`
     ///     (Don't fully understand, but somehow I think starting `_animator` and then having it unexpectedly gets cancelled by this is kinda the same problem)
-    ///     @noGCDCleanup - Put this though in high level explanation / discussion
+    ///     @noGCDCleanup - Put this thought in high level explanation / discussion
 
     DDLogDebug("Scroll.m: reset-animator");
     allowNestedUpdate(&_updateDepth) /// [Sep 2026]  `-cancel` can call back into our `_animator` callback (See `kMFAnimationCallbackPhaseCanceled`)
@@ -212,8 +210,8 @@ static NSString *CGScrollWheelEventDescription(CGEventRef event) {
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
-    //assertRunLoop(GlobalEventTapThread.runLoop); /// @noGCDCleanup re-enable this (currently runs on mainThread [Sep 2026])
-    //assertNoNestedUpdate(&_updateDepth); /// @noGCDCleanup re-enable this
+    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertNoNestedUpdate(&_updateDepth);
 
     /// Debug
     

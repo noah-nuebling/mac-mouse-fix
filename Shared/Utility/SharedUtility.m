@@ -14,7 +14,7 @@
 @import AppKit.NSScreen;
 #import <objc/runtime.h>
 #import "Logging.h"
-#import "MFSemaphore.h"
+#import "MFGate.h"
 #import "SharedMacros.h"
 
 @implementation SharedUtility
@@ -88,34 +88,33 @@ void MFCFRunLoopPerform_delay(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *
     CFRelease(timer);
 }
 
-bool MFCFRunLoopPerform_sync(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, NSTimeInterval timeout, void (^_Nonnull workload)(void)) {
-    
-    /// Variant of MFCFRunLoopPerform which waits for the workload to complete (or does the workload immediately if `rl` is the current runLoop.)
-    ///     Sort of an analog to `dispatch_sync()` (if `MFCFRunLoopPerform()` was `dispatch_async()`)
-    ///     Returns `1` if waiting timed out. `0` otherwise.
-    ///     Pass `timeout <= 0` to disable the timeout.
-    ///
-    /// Caution: If you don't pass a timeout, this can lead to deadlocks!
-    ///     (Deadlocks can happen if you're waiting for a thread which (indirectly) waits for you. As long as `workload` doesn't wait for anything/acquire any locks, there can't be deadlocks.)
-    
-    bool didTimeOut = false;
-    
-    if (CFEqual(rl, CFRunLoopGetCurrent())) {
-        workload();
+#if 0 /** [Sep 2026] Unused. */
+    bool MFCFRunLoopPerform_sync(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, NSTimeInterval timeout, void (^_Nonnull workload)(void)) {
+
+        /// Variant of MFCFRunLoopPerform which waits for the workload to complete (or does the workload immediately if `rl` is the current runLoop.)
+        ///     Sort of an analog to `dispatch_sync()` (if `MFCFRunLoopPerform()` was `dispatch_async()`)
+        ///     Returns `1` if waiting timed out. `0` otherwise.
+        ///     Pass `timeout <= 0` to disable the timeout.
+        ///
+        /// Caution: If you don't pass a timeout, this can lead to deadlocks!
+        ///     (Deadlocks can happen if you're waiting for a thread which (indirectly) waits for you. As long as `workload` doesn't wait for anything/acquire any locks, there can't be deadlocks.)
+
+        bool didTimeOut = false;
+
+        if (CFEqual(rl, CFRunLoopGetCurrent())) {
+            workload();
+            return didTimeOut;
+        }
+
+        NSDate *timeoutDate = (timeout <= 0) ? nil : [NSDate dateWithTimeIntervalSinceNow: timeout]; /// We calculate the timeoutDate early in the function, so that it's accurate. Not sure if that's silly.
+
+        MFGate *gate = [MFGate new];
+        MFCFRunLoopPerform(rl, modes, ^{ [gate doWork: workload]; });
+        didTimeOut = [gate waitForWorkUntilDate: timeoutDate]; /// We completely block the current thread/runloop. Do the waiting `-[NSObject performSelector:onThread:...]` APIs do that, too?
+
         return didTimeOut;
     }
-    
-    NSDate *timeoutDate = (timeout <= 0) ? nil : [NSDate dateWithTimeIntervalSinceNow: timeout]; /// We calculate the timeoutDate early in the function, so that it's accurate. Not sure if that's silly.
-    
-    MFSemaphore *semaphore = [[MFSemaphore alloc] initWithUnits: 0];
-    MFCFRunLoopPerform(rl, modes, ^{
-        workload(); /// TODO: Fix: This can still fire after timeout. (@noGCDCleanup)
-        [semaphore releaseUnit];
-    });
-    didTimeOut = [semaphore acquireUnit: timeoutDate]; /// We completely block the current thread/runloop. Do the waiting `-[NSObject performSelector:onThread:...]` APIs do that, too?
-
-    return didTimeOut;
-}
+#endif
 
 #pragma mark - Time
 

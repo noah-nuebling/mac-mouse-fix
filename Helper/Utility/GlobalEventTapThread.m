@@ -36,6 +36,8 @@
 ///             The next step up from that would be raising importance to max and if that is not enough, going to real-time scheduling.
 
 #import "GlobalEventTapThread.h"
+#import "MFGate.h"
+#import "Logging.h"
 
 @implementation GlobalEventTapThread
 
@@ -46,86 +48,60 @@ static CFRunLoopRef _runLoop;
 static NSThread *_thread;
 /// ^ I usually use dispatch queue but it doesn't let you guarantee that you're not on the main thread. So we're using threads directly.
 
-static BOOL _threadIsInitialized;
-static NSCondition *_threadIsInitializedSignal;
+static MFGate *_runLoopGate;
+static MFGate *_startGate;
 
 /// Init
 
-+ (void)coolInitialize {
-    /// We can't use +initialize because
-    ///     In +initialize we call [NSThread -start] and then wait for it to do stuff
-    ///     But for some reason [NSThread -start] waits for any +initialize functions to finish, which leads to deadlock.
-    ///     Update: [Sep 2026] Claude says this is called by PointerFreeze's `+[initialize]` which can deadlock. Not sure that makes sense
++ (void)load_Manual {
 
-    if (self == GlobalEventTapThread.class) {
-        
-        /// Setup signal
-        _threadIsInitialized = NO;
-        _threadIsInitializedSignal = [[NSCondition alloc] init];
-        [_threadIsInitializedSignal lock];
-        
-        /// Setup thread
-        _thread = [[NSThread alloc] initWithTarget:self selector:@selector(threadWorkload) object:nil];
-        _thread.name = @"com.nuebling.mac-mouse-fix.global-event-tap";
-        _thread.qualityOfService = NSQualityOfServiceUserInteractive;
-        _thread.threadPriority = 1.0;
-        [_thread start];
-        
-        /// Wait unil thread is initialized
-        while (!_threadIsInitialized) {
-            [_threadIsInitializedSignal waitUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.1]]; /// I saw this deadlock once (which is strange, since POSIX condition vars never do that I think, and I'm using this just the way I would use POSIX vars). The `waitUntilDate:` should work as a fallback if that happens.
-        }
-        
-    }
+    /// [Sep 2026] `+load_Manual`and `+start` are only called from the Helper's entry point/start sequence in `AccessibilityCheck.m`
+    ///     see there to convince yourself that this is thread safe and stuff.
+
+    /// Setup gates
+    _runLoopGate = [MFGate new];
+    _startGate = [MFGate new];
+
+    /// Setup thread
+    _thread = [[NSThread alloc] initWithTarget:self selector:@selector(threadWorkload) object:nil];
+    _thread.name = @"com.nuebling.mac-mouse-fix.global-event-tap";
+    _thread.qualityOfService = NSQualityOfServiceUserInteractive;
+    _thread.threadPriority = 1.0;
+    [_thread start];
+
+    /// Wait unil runLoop is available
+    [_runLoopGate waitForWork];
+}
+
++ (void)start {
+    [_startGate signalWorkCompleted];
 }
 
 /// Thread workload
-
 + (void)threadWorkload {
     
     /// Store runLoop of new thread
     _runLoop = CFRunLoopGetCurrent();
-    
+    [_runLoopGate signalWorkCompleted];
+
+    /// Wait for +start
+    [_startGate waitForWork];
+
     /// Add empty source so the runLoop doesn't exit immediately
-    CFRunLoopSourceContext ctx = {
-        .cancel = NULL,
-        .copyDescription = NULL,
-        .equal = NULL,
-        .hash = NULL,
-        .info = NULL,
-        .perform = NULL,
-        .release = NULL,
-        .retain = NULL,
-        .schedule = NULL,
-        .version = 0,
-    };
-    CFRunLoopSourceRef emptySource = CFRunLoopSourceCreate(kCFAllocatorDefault, 0, &ctx);
+    CFRunLoopSourceRef emptySource = CFRunLoopSourceCreate(kCFAllocatorDefault, 0, &(CFRunLoopSourceContext){0});
     CFRunLoopAddSource(_runLoop, emptySource, kCFRunLoopCommonModes);
-    
-    /// Notify initialize function that we're done
-    _threadIsInitialized = YES;
-    [_threadIsInitializedSignal signal];
-    
+
     /// Run the runLoop
     ///     This thread is blocked by the runLoop now
     ///     TODO: Add an autoreleasepool to this runLoop to prevent abandoned memory. See:
     ///         - Example implementation: https://stackoverflow.com/questions/11436826/how-to-manage-the-autorelease-pool-of-a-nsrunloop-running-in-a-secondary-thread
     ///         - Quinn eskimo on abandoned memory: https://developer.apple.com/forums/thread/716261
-    while (true) {
-        CFRunLoopRun();
-    }
+    while (true) CFRunLoopRun();
 }
 
-/// Interface
-
+/// Getter / main interface
 + (CFRunLoopRef)runLoop {
-    /// Init
-    if (!_threadIsInitialized) {
-        [self coolInitialize];
-    }
-    /// Validate
-    assert(_runLoop != NULL);
-    /// Return runLoop
+    mfassert(_runLoop);
     return _runLoop;
 }
 
