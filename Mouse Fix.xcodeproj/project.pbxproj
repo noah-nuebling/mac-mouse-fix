@@ -40,6 +40,8 @@
 		4F2281112C62A36300B9FFEC /* SFSymbolStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F8A44512925311B00361EFF /* SFSymbolStrings.m */; };
 		4F25078E30658CF4007B537E /* Threads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F25078D30658CF2007B537E /* Threads.swift */; };
 		4F25078F30658CF4007B537E /* Threads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F25078D30658CF2007B537E /* Threads.swift */; };
+		4F25079230693264007B537E /* Threads.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25079130693260007B537E /* Threads.m */; };
+		4F25079330693264007B537E /* Threads.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F25079130693260007B537E /* Threads.m */; };
 		4F262CF22C64B6E000773789 /* MarkdownParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F262CF02C64B6DF00773789 /* MarkdownParser.m */; };
 		4F262CF32C64B6E000773789 /* MarkdownParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F262CF02C64B6DF00773789 /* MarkdownParser.m */; };
 		4F262D262C64E06500773789 /* libcmark.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F262D222C64E05A00773789 /* libcmark.a */; };
@@ -2194,6 +2196,7 @@
 		4F2153282B2E155300DD3957 /* update-acknowledgements.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = "update-acknowledgements.yml"; sourceTree = "<group>"; };
 		4F2507893064712D007B537E /* Threads.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Threads.h; sourceTree = "<group>"; };
 		4F25078D30658CF2007B537E /* Threads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Threads.swift; sourceTree = "<group>"; };
+		4F25079130693260007B537E /* Threads.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Threads.m; sourceTree = "<group>"; };
 		4F262CEF2C64B6DF00773789 /* MarkdownParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MarkdownParser.h; sourceTree = "<group>"; };
 		4F262CF02C64B6DF00773789 /* MarkdownParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MarkdownParser.m; sourceTree = "<group>"; };
 		4F262D102C64E05A00773789 /* cmark_export.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cmark_export.h; sourceTree = "<group>"; };
@@ -7650,6 +7653,7 @@
 				4FF6653325F2C7B000689B77 /* Constants.h */,
 				4FCEDC91292D765600E7DA2A /* Constants.swift */,
 				4F2507893064712D007B537E /* Threads.h */,
+				4F25079130693260007B537E /* Threads.m */,
 				4F25078D30658CF2007B537E /* Threads.swift */,
 				4FFBC56E2667DC76001D389B /* Logging */,
 				4FE78C412C5027A800C54103 /* DisableSwiftBridging */,
@@ -8765,6 +8769,7 @@
 				4F1C51DA260543DD007F4930 /* NSTextField+Additions.m in Sources */,
 				4F09283F28B8101600BDC2FF /* TrialSection.swift in Sources */,
 				4F909D3128A0C3D2009349A2 /* CAAnimation+Extensions.swift in Sources */,
+				4F25079330693264007B537E /* Threads.m in Sources */,
 				4FA40CFB28A0CCCB00499E53 /* Line.swift in Sources */,
 				4FE40B96283A49DD00880BEF /* SharedUtilitySwift.swift in Sources */,
 				4F909D3828A0C3D2009349A2 /* ReactiveFlags.swift in Sources */,
@@ -8942,6 +8947,7 @@
 				4FBC83482DAFB28B00354981 /* ListOperations.m in Sources */,
 				4FBC83492DAFB28B00354981 /* SharedMacros.m in Sources */,
 				4F2E8FD32D52229100689058 /* NSCoderErrors.m in Sources */,
+				4F25079230693264007B537E /* Threads.m in Sources */,
 				4FF6669025F2C93A00689B77 /* ScrollModifiers_old_.m in Sources */,
 				4FAA3DAD2C55E94600CBA413 /* IBUtility.m in Sources */,
 				4FF6655125F2C7B000689B77 /* NSDictionary+Additions.m in Sources */,

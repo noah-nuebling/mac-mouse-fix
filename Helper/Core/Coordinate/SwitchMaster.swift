@@ -122,8 +122,10 @@ import ReactiveSwift
     //
     // MARK: Debug
     //
-    
+
+    let updateDepth = UpdateDepth()
     @inline(__always) private func logWithState(_ message: @autoclosure () -> String) {
+        /// @noGCDCleanup Simplify this after removing/simplifying `ModifiedDrag.activationState`
         
         /// Note: [Mar 2025] This only has to be so complicated because our threading architecture is really bad. Once we move all input and SwitchMaster to GlobalEventTapThread.m, this won't be necessary.
         if (runningPreRelease()) {
@@ -171,7 +173,10 @@ import ReactiveSwift
     
 
     @objc func lockDown() {
-        
+
+        assertRunLoop(GlobalEventTapThread.runLoop())
+        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
+
         /// Update state
         isLockedDown = true
         
@@ -198,7 +203,10 @@ import ReactiveSwift
     //
     
     @objc func helperStateChanged() {
-        
+
+        assertRunLoop(GlobalEventTapThread.runLoop())
+        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
+
         /// NOTES:
         /// - On listening to activeDevice
         ///     - This would let us turn off buttonTap / scrollTap for mice that don't support buttons / don't support scrolling. However then we couldn't update the active device when another mouse sends scroll or button input because we wouldn't be listening to that input. So it's better to just listen to all attachedDevices.
@@ -237,7 +245,10 @@ import ReactiveSwift
     //
     
     @objc func generalConfigChanged(generalConfig: NSDictionary) {
-        
+
+        assertRunLoop(GlobalEventTapThread.runLoop())
+        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
+
         /// Get raw
         let btn = generalConfig.object(forKey: "buttonKillSwitch") as! Bool
         let scrl = generalConfig.object(forKey: "scrollKillSwitch") as! Bool
@@ -280,7 +291,10 @@ import ReactiveSwift
     
     private var latestDevices = NSArray()
     @objc func attachedDevicesChanged(devices: NSArray) {
-        
+
+        assertRunLoop(GlobalEventTapThread.runLoop())
+        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
+
         /// Update state
         self.someDeviceHasScroll = DeviceManager.someDeviceHasScrollWheel()
         self.someDeviceHasPointing = DeviceManager.someDeviceHasPointing()
@@ -315,7 +329,10 @@ import ReactiveSwift
     
     private var latestRemaps = NSDictionary()
     @objc func remapsChanged(remaps: NSDictionary) {
-        
+
+        assertRunLoop(GlobalEventTapThread.runLoop())
+        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
+
         /// Update state
         let result = self.modifierUsage_Point_Scroll(remaps)
         self.somekbModModifiesPointing = result.someKbModModifiesPointing
@@ -361,7 +378,10 @@ import ReactiveSwift
     
     private var latestScrollConfig = ScrollConfig.shared /// Not sure if this is a good initialization value
     @objc func scrollConfigChanged(scrollConfig: ScrollConfig) {
-        
+
+        assertRunLoop(GlobalEventTapThread.runLoop())
+        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
+
         /// Update state
         if Remap.addModeIsEnabled {
             /// This doesn't work because scrollConfig doesn't change for addMode, so we don't get a callback. We instead solved this in `concludeAddModeWithPayload:`
@@ -394,7 +414,10 @@ import ReactiveSwift
     
     private var latestModifiers = NSDictionary()
     @objc func modifiersChanged(modifiers: NSDictionary) {
-        
+
+        assertRunLoop(GlobalEventTapThread.runLoop())
+        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
+
         /// Call combined state updaters
         remapsOrModifiersChanged(remaps: latestRemaps, modifiers: modifiers)
         remapsOrModifiersOrAttachedDevicesChanged(remaps: latestRemaps, modifiers: modifiers, attachedDevices: latestDevices)

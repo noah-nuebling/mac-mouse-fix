@@ -69,8 +69,7 @@ static int _updateDepth;
 
 + (void) load_Manual {
 
-    assertRunLoop(CFRunLoopGetMain()); /// [Sep 2026] `load_Manual` called from main instead of GlobalEventTapThread - still thread safe - see caller.
-    assertNoNestedUpdate(&_updateDepth);
+    assertNoNestedUpdate(&_updateDepth); /// [Sep 2026] Probably unnecessary
 
     /// Create AXUIElement for getting app under mouse pointer
     _systemWideAXUIElement = AXUIElementCreateSystemWide();
@@ -143,9 +142,11 @@ static void resetState_Unsafe(void) { /// @noGCDCleanup remove/unify regular and
     /// - We used to call `resetState` when starting/stopping, but this doesn't makes sense I think. Because we don't want to reset/cancel animations just because the interception of scrollwheel events stopped. Those things are logically separate.
     /// - We used to `dispatch_async` here because `resetState` should be synchronized on the scrollQueue (as evidenced by its base implementation being suffixed with `_Unsafe`). But since we're not calling `resetState` anymore, I don't think there's a reason to dispatch to the scrollQueue.
     /// - I did some rudimentary performance testing here (when we were still calling `resetState`) and it seems that `[Scroll startReceiving]` and `[Scroll stopReceiving]` have practically no impact on CPU usage even when spamming a button with such settings that SwitchMaster calls start/stop on each button press and release.
+    /// @noGCDCleanup update/review these comments.
+    ///     Maybe mention that `_eventTap` is only touched from few places and used to be managed from separate thread (main)?(?)
 
-    assertRunLoop(GlobalEventTapThread.runLoop); /// @noGCDCleanup - re-enable this once we moved SwitchMaster from where this is called on main) to GlobalEventTapThread
-    //assertNoNestedUpdate(&_updateDepth); /// @noGCDCleanup - not sure this is necessary - what are the rules?
+    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertNoNestedUpdate(&_updateDepth);
 
     /// DEBUG
     DDLogDebug("Scroll.m: startReceiving. isReceiving: %d", CGEventTapIsEnabled(_eventTap));
@@ -163,8 +164,8 @@ static void resetState_Unsafe(void) { /// @noGCDCleanup remove/unify regular and
     /// - Are there other things we should enable/disable here? ScrollModifiers.reactToModiferChange() comes to mind
     /// - Also see notes for `- startReceiving`
 
-    assertRunLoop(GlobalEventTapThread.runLoop); /// @noGCDCleanup - re-enable this once we moved SwitchMaster from where this is called on main) to GlobalEventTapThread
-    //assertNoNestedUpdate(&_updateDepth);
+    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertNoNestedUpdate(&_updateDepth);
 
     /// DEBUG
     DDLogDebug("Scroll.m: stopReceiving. isReceiving: %d", CGEventTapIsEnabled(_eventTap));

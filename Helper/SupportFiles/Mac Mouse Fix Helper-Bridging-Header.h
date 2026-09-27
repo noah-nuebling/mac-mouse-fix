@@ -50,6 +50,7 @@
 #import "MFCoding.h"
 #import "NSData+Additions.h"
 #import "Localization.h"
+#import "Threads.h"
 
 #import "DevToggles.h" /// [May 2025] We don't need this in release builds
 

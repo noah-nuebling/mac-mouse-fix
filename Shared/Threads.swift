@@ -8,7 +8,9 @@
 //
 
 @_transparent func assertRunLoop(_ runLoop: CFRunLoop) {
-    mfassert(CFRunLoopGetCurrent() == (runLoop), "assertRunLoop failure.");
+    if (_enableRunLoopAsserts != 0) {
+        mfassert(CFRunLoopGetCurrent() == (runLoop), "assertRunLoop failure.");
+    }
 }
 
 final class UpdateDepth { var updateDepth: Int = 0 } /// [Sep 2026] Use wrapper class around state since Swift can't do pointers. (& won't work says Opus 5.5)

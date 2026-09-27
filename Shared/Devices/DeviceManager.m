@@ -30,10 +30,14 @@
 #import <IOKit/hidsystem/IOHIDServiceClient.h>
 #import <IOKit/hidsystem/IOHIDEventSystemClient.h>
 
+#import "Threads.h"
+
 #import "SharedUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation DeviceManager
+
+static int _updateDepth = 0;
 
 # pragma mark - Accessing attached devices
 
@@ -41,30 +45,37 @@ static IOHIDManagerRef _manager;
 static NSMutableArray<Device *> *_attachedDevices;
 
 + (BOOL)devicesAreAttached {
+    assertRunLoop(GlobalEventTapThread.runLoop);
     return _attachedDevices.count > 0;
 }
 + (NSArray<Device *> *)attachedDevices {
+    assertRunLoop(GlobalEventTapThread.runLoop);
     return _attachedDevices;
 }
 
 static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 + (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice {
-    
+
+    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertNoNestedUpdate(&_updateDepth);
+
     /// NOTE: Tried caching here using `_iohidToAttachedCache`, but it actually makes things slower.
     /// TODO: Remove caching
-    
-//    if (_iohidToAttachedCache == nil) {
-//        _iohidToAttachedCache = [NSMutableDictionary dictionary];
-//    }
-//
-//    NSNumber *key = (__bridge NSNumber *)IOHIDDeviceGetProperty(iohidDevice, CFSTR(kIOHIDUniqueIDKey));
-//
-//    Device *fromCache = _iohidToAttachedCache[key];
-//
-//    if (fromCache != nil) {
-//        return fromCache;
-//    } else {
-//
+
+    #if 0
+        if (_iohidToAttachedCache == nil) {
+            _iohidToAttachedCache = [NSMutableDictionary dictionary];
+        }
+
+        NSNumber *key = (__bridge NSNumber *)IOHIDDeviceGetProperty(iohidDevice, CFSTR(kIOHIDUniqueIDKey));
+
+        Device *fromCache = _iohidToAttachedCache[key];
+
+        if (fromCache != nil) {
+            return fromCache;
+        } else
+    #endif
+    {
         Device *result = nil;
         
         for (Device *device in _attachedDevices) {
@@ -74,11 +85,11 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
             }
         }
         
-//        if (result != nil && key != nil) {
-//            [_iohidToAttachedCache setObject:result forKey:key];
-//        }
+        //if (result != nil && key != nil) {
+        //    [_iohidToAttachedCache setObject:result forKey:key];
+        //}
         return result;
-//    }
+    }
     
 
 }
@@ -95,7 +106,10 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 }
 
 + (void)deconfigureDevices {
-    
+
+    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertNoNestedUpdate(&_updateDepth);
+
     /// Meant to be called when the app closes
     
     for (Device *device in _attachedDevices) {
@@ -125,20 +139,26 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 #pragma mark - Device information
 
 + (BOOL)someDeviceHasScrollWheel {
+    assertRunLoop(GlobalEventTapThread.runLoop);
     return _attachedDevices.count > 0;
 }
 
 + (BOOL)someDeviceHasPointing {
+    assertRunLoop(GlobalEventTapThread.runLoop);
     return _attachedDevices.count > 0;
 }
 + (BOOL)someDeviceHasUsableButtons {
     /// We ignore MB 1 and MB 2. That's also why it's called "deviceHas**Usable**Buttons", and not just "deviceHasButtons"
+    assertRunLoop(GlobalEventTapThread.runLoop);
     return self.maxButtonNumberAmongDevices > 2;
 }
 
 static BOOL _maxButtonNumberAmongDevices_IsCached = false;
+
 + (int)maxButtonNumberAmongDevices {
-    
+    assertRunLoop(GlobalEventTapThread.runLoop);
+    //assertNoNestedUpdate(&_updateDepth); /// [Sep 2026] Turn off protection, cache flag is kinda part of protected state? But 99% sure this can't corrupt anything
+
     static MFMouseButtonNumber _result = 0;
     
     if (_maxButtonNumberAmongDevices_IsCached) {
@@ -161,7 +181,10 @@ static BOOL _maxButtonNumberAmongDevices_IsCached = false;
 # pragma mark - Setup callbacks
 
 static void setupDeviceMatchingAndRemovalCallbacks() {
-    
+
+    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertNoNestedUpdate(&_updateDepth);
+
     /// Create HID Manager
     
     _manager = IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDManagerOptionNone); // TODO: kIOHIDManagerOptionIndependentDevices -> This might be worth a try for independent seizing of devices.
@@ -193,12 +216,12 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
     IOHIDManagerSetDeviceMatchingMultiple(_manager, (__bridge CFArrayRef)matchArray);
     
     /// Register the HID Manager on our app's run loop
-    IOHIDManagerScheduleWithRunLoop(_manager, CFRunLoopGetMain(), kCFRunLoopDefaultMode);
-    
+    IOHIDManagerScheduleWithRunLoop(_manager, GlobalEventTapThread.runLoop, kCFRunLoopCommonModes);
+
     /// Open the HID Manager
-//    IOReturn IOReturn = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeNone);
-//    IOReturn IOReturn = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeSeizeDevice);
-//    if(IOReturn) DDLogInfo("IOHIDManagerOpen failed.");  //  Couldn't open the HID manager! TODO: proper error handling
+    //IOReturn IOReturn = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeNone);
+    //IOReturn IOReturn = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeSeizeDevice);
+    //if(IOReturn) DDLogInfo("IOHIDManagerOpen failed.");  //  Couldn't open the HID manager! TODO: proper error handling
 
     /// Register a callback for USB device detection with the HID Manager, this will in turn register an button input callback for all devices that getFilteredDevicesFromManager() returns
     IOHIDManagerRegisterDeviceMatchingCallback(_manager, &handleDeviceMatching, NULL);
@@ -211,7 +234,10 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
 # pragma mark - Handle callbacks
 
 static void handleDeviceMatching(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
-    
+
+    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertNoNestedUpdate(&_updateDepth);
+
     DDLogDebug("New matching IOHIDDevice: %@", device);
     
     if (devicePassesFiltering(device)) {
@@ -223,46 +249,46 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         
         /// Add to attachedDevices list
         [_attachedDevices addObject:newDevice];
-//        [_iohidToAttachedCache removeAllObjects];
-        
+        //[_iohidToAttachedCache removeAllObjects];
+
         /// Reset cache
         _maxButtonNumberAmongDevices_IsCached = false;
         
         /// Notify
-//        [ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
+        //[ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
         [SwitchMaster.shared attachedDevicesChangedWithDevices:_attachedDevices];
         
         ///  Notify other objects
-//        [Scroll decide];
-//        [ButtonInputReceiver decide];
-        
+        //[Scroll decide];
+        //[ButtonInputReceiver decide];
+
         ///
         /// Testing
         ///
         
         /// Set pointer sensitivity and acceleration for device
         ///     Edit: Seems that parametric curves are always set under Ventura, so we can't use tableBased curves :/ And in its current form this code will always crash. See PointerSpeed for more details.
-    //    DDLogDebug("Setting PointerSpeed for device: %@", newDevice.description);
-    //    [PointerSpeed setForDevice:newDevice.IOHIDDevice];
-        
+        //DDLogDebug("Setting PointerSpeed for device: %@", newDevice.description);
+        //[PointerSpeed setForDevice:newDevice.IOHIDDevice];
+
         ///
         
-    #if 0 /// Polling rate measurer is unused so far and has a strange bug where it sometimes receives an event long after it's disabled and then crashes.
-        
-        /// Measure Polling Rate of new device
-        static NSMutableArray *measurerMap = nil;
-        if (measurerMap == nil) {
-            measurerMap = [NSMutableArray array];
-        }
-        PollingRateMeasurer *measurer = [[PollingRateMeasurer alloc] init];
-        [measurerMap addObject:measurer];
-        [measurer measureOnDevice:newDevice numberOfSamples:400 completionCallback:^(double period, NSInteger rate) {
-            DDLogDebug("Completed polling rate measurement! Period: %f ms, Rate: %ld Hz", period, rate);
-        } progressCallback:^(double completion, double period, NSInteger rate) {
-            DDLogDebug("Polling rate measurement %d\%% completed. Current estimate: %ld", (int)(completion*100), (long)rate);
-        }];
-        
-    #endif
+        #if 0 /// Polling rate measurer is unused so far and has a strange bug where it sometimes receives an event long after it's disabled and then crashes.
+
+            /// Measure Polling Rate of new device
+            static NSMutableArray *measurerMap = nil;
+            if (measurerMap == nil) {
+                measurerMap = [NSMutableArray array];
+            }
+            PollingRateMeasurer *measurer = [[PollingRateMeasurer alloc] init];
+            [measurerMap addObject:measurer];
+            [measurer measureOnDevice:newDevice numberOfSamples:400 completionCallback:^(double period, NSInteger rate) {
+                DDLogDebug("Completed polling rate measurement! Period: %f ms, Rate: %ld Hz", period, rate);
+            } progressCallback:^(double completion, double period, NSInteger rate) {
+                DDLogDebug("Polling rate measurement %d\%% completed. Current estimate: %ld", (int)(completion*100), (long)rate);
+            }];
+
+        #endif
         
         /// Log
         DDLogInfo("New device added to attached devices:\n%@", newDevice);
@@ -278,7 +304,10 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
 }
 
 static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
-    
+
+    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertNoNestedUpdate(&_updateDepth);
+
     Device *attachedDevice = [DeviceManager attachedDeviceWithIOHIDDevice:device];
     
     if (attachedDevice == nil) {
@@ -296,14 +325,14 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
         [_iohidToAttachedCache removeAllObjects];
         
         /// Notify
-//        [ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
+        //[ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
         [SwitchMaster.shared attachedDevicesChangedWithDevices:_attachedDevices];
         
         /// Notifiy other objects
         ///     If there aren't any relevant devices attached, then we might want to turn off some parts of the program.
-//        [Scroll decide];
-//        [ButtonInputReceiver decide];
-        
+        //[Scroll decide];
+        //[ButtonInputReceiver decide];
+
         /// Log
         
         DDLogInfo("Attached device was removed:\n%@", attachedDevice);
@@ -311,7 +340,7 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
     }
 }
 
-# pragma mark - Helper Functions
+#pragma mark - Helper Functions
 
 static BOOL devicePassesFiltering(IOHIDDeviceRef device) {
     /// Helper function for handleDeviceMatching()
@@ -330,8 +359,8 @@ static BOOL devicePassesFiltering(IOHIDDeviceRef device) {
 
 }
 
-static NSString *debugInfo() {
-    
+static NSString *debugInfo(void) {
+
     NSString *relevantDevices = stringf(@"Relevant devices:\n%@", _attachedDevices); /// Relevant devices are those that are matching the match dicts defined in setupDeviceMatchingAndRemovalCallbacks() and which also pass the filtering in handleDeviceMatching()
     CFSetRef devices = IOHIDManagerCopyDevices(_manager);
     NSString *matchingDevices = stringf(@"Matching devices: %@", devices);

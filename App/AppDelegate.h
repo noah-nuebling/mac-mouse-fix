@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
+/// Contains entry point of the mainApp [Sep 2026]
+
 #import <PreferencePanes/PreferencePanes.h>
 //#import "MoreSheet.h"
 #import "OverridePanel.h"
@@ -15,7 +17,5 @@
 #import "AppState.h"
 
 @interface AppDelegate : NSObject<NSApplicationDelegate, NSWindowDelegate>
-
-+ (AppDelegate *)instance;
-
+    + (AppDelegate *)instance;
 @end

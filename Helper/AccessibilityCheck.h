@@ -7,12 +7,14 @@
 // --------------------------------------------------------------------------
 //
 
+/// Contains entry point of the Helper [Sep 2026]
+
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface AccessibilityCheck : NSObject
-+ (Boolean)checkAccessibilityAndUpdateSystemSettings;
+    + (Boolean)checkAccessibilityAndUpdateSystemSettings;
 @end
 
 NS_ASSUME_NONNULL_END

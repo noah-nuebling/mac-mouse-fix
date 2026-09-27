@@ -28,6 +28,7 @@
 
 #import "UNIXSignals.h"
 
+#import "Threads.h"
 
 @implementation AccessibilityCheck
 
@@ -115,14 +116,14 @@
     /// - It seems the NDEBUG flag is necessary to disable asserts. We hadn't had the NDEBUG flag set in 3.0.2 which contributed to a crashing issue issue where an assert was false (See: https://github.com/noah-nuebling/mac-mouse-fix/issues/988) I'm not sure when we removed the NDEBUG flag.
     /// - I added the NDEBUG flag back to the Clang Preprocessor Macros now. I also added the NDEBUG flag to the Swift Active Compilation Conditions. Not sure what effect that has, but I think the NDEBUG flag is standard for Swift, as well so it should work fine (Not totally sure though)
     
-#if NDEBUG
-    DDLogInfo("Accessibility Check - Running a Non-Debug build. Asserts are disabled.");
-    assert(false);
-#endif
-    
-#if DEBUG
-    DDLogInfo("Accessibility Check - Running a Debug build. Asserts are enabled.");
-#endif
+    #if NDEBUG
+        DDLogInfo("Accessibility Check - Running a Non-Debug build. Asserts are disabled.");
+        assert(false);
+    #endif
+
+    #if DEBUG
+        DDLogInfo("Accessibility Check - Running a Debug build. Asserts are enabled.");
+    #endif
 
     /// Load (but don't yet +start) `GlobalEventTapThread` before anything else (So that other `load_Manual` methods can schedule things on `GlobalEventTapThread.runLoop`) [Sep 2026]
     ///     Also see `[GlobalEventTapThread start];` at the end
@@ -256,6 +257,7 @@
 
     /// Start the GlobalEventTapThread after everything else (That way, eventTaps and stuff we moved from mainThread to GlobalEventTapThread in 'No more dispatch queues' refactor still only start after everything is loaded and don't race with `load_Manual` init) [Sep 2026]
     ///     -> This makes the whole `+load_Manual` sequence thread-safe (As long as we only use mainThread and GlobalEventTapThread) [Sep 2026]
+    _enableRunLoopAsserts = 1; /** During the Helper's `load_Manual` startup sequence there's only one thread running (mainThread) and we allow it to touch all the state - here, where we start the `GlobalEventTapThread`. [Sep 2026] */
     [GlobalEventTapThread start];
 }
 
