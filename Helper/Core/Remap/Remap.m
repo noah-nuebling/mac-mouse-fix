@@ -87,10 +87,10 @@ static NSDictionary *_remaps;
         [_swizzleCache removeAllObjects];
         
         /// Notify
-//        [ReactiveRemaps.shared handleRemapsDidChange];
+        //[ReactiveRemaps.shared handleRemapsDidChange];
         [SwitchMaster.shared remapsChangedWithRemaps:_remaps];
         [RemapsAnalyzer reload];
-//        [NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
+        //[NSNotificationCenter.defaultCenter postNotificationName:kMFNotifCenterNotificationNameRemapsChanged object:self];
         
         /// Log
         DDLogDebug("Set remaps to: %@", _remaps);
