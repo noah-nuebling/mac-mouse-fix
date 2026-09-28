@@ -98,6 +98,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **September 2026**
 
+- 🇳🇿&nbsp;Harris&nbsp;Gu
 - 🇺🇸&nbsp;Albert&nbsp;C&nbsp;Lee
 - 🇬🇧&nbsp;Torin&nbsp;Cooper&nbsp;Bennun - "3 years (and counting) of minimal mouse frustration! Thank you."
 - 🇨🇿&nbsp;Matej&nbsp;Veselovsky

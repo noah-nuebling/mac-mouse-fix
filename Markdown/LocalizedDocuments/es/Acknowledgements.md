@@ -96,6 +96,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **septiembre 2026**
 
+- 🇳🇿&nbsp;Harris&nbsp;Gu
 - 🇺🇸&nbsp;Albert&nbsp;C&nbsp;Lee
 - 🇬🇧&nbsp;Torin&nbsp;Cooper&nbsp;Bennun - "3 years (and counting) of minimal mouse frustration! Thank you."
 - 🇨🇿&nbsp;Matej&nbsp;Veselovsky

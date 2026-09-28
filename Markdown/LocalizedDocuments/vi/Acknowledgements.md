@@ -98,6 +98,7 @@ Những người đã đóng góp nhiều hơn cả giá thông thường và �
 
 **Tháng 9 2026**
 
+- 🇳🇿&nbsp;Harris&nbsp;Gu
 - 🇺🇸&nbsp;Albert&nbsp;C&nbsp;Lee
 - 🇬🇧&nbsp;Torin&nbsp;Cooper&nbsp;Bennun - "3 years (and counting) of minimal mouse frustration! Thank you."
 - 🇨🇿&nbsp;Matej&nbsp;Veselovsky
