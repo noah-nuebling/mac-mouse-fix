@@ -71,14 +71,14 @@ Mac Mouse Fix'i dünyadaki herkesin erişimine açtığınız için çok teşekk
 <!-- 
   Old stuff from Money section:
 
-  Thanks so much to everyone who bought me a milkshake and to all 48700+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
+  Thanks so much to everyone who bought me a milkshake and to all 48800 people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
   You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. 
 -->
 
 <a name="money"></a> 
 ## 💰 Para
 
-Bana bir milkshake ısmarlayan herkese ve Mac Mouse Fix satın alan **48700+** herkese çok teşekkürler.
+Bana bir milkshake ısmarlayan herkese ve Mac Mouse Fix satın alan **48800** herkese çok teşekkürler.
 
 Sayenizde yapmayı sevdiğim bir şeye bolca zaman ayırabiliyorum.
 
@@ -98,6 +98,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Eylül 2026**
 
+- 🇬🇧&nbsp;Torin&nbsp;Cooper&nbsp;Bennun - "3 years (and counting) of minimal mouse frustration! Thank you."
 - 🇨🇿&nbsp;Matej&nbsp;Veselovsky
 - 🇦🇲&nbsp;Kotan - "Thank you so much for this great app!"
 - 🇩🇪&nbsp;Teng - "Gute Arbeit :-)"
