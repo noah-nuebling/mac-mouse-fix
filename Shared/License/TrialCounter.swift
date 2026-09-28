@@ -143,12 +143,12 @@ import Cocoa
     @objc static var lastUseDate: Date? {
         get {
             SecureStorage.get("License.trial.lastUseDate") as? Date
-//            config("License.trial.lastUseDate") as? Date
+            //config("License.trial.lastUseDate") as? Date
         }
         set {
             SecureStorage.set("License.trial.lastUseDate", value: newValue! as NSObject)
-//            setConfig("License.trial.lastUseDate", newValue! as NSObject)
-//            commitConfig()
+            //setConfig("License.trial.lastUseDate", newValue! as NSObject)
+            //commitConfig()
         }
     }
     

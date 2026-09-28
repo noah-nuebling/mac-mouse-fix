@@ -35,15 +35,25 @@
 
 import Foundation
 
+func _secureStorageRunLoop() -> CFRunLoop {
+    #if IS_HELPER
+        return GlobalEventTapThread.runLoop()
+    #elseif IS_MAIN_APP
+        return CFRunLoopGetMain();
+    #endif
+}
+
 @objc class SecureStorage: NSObject {
     
     /// Surface lvl 2
     
     @objc static func delete(_ keyPath: String){
+        assertRunLoop(_secureStorageRunLoop())
         set(keyPath, value: nil)
     }
     
     @objc static func getAll() -> NSDictionary? {
+        assertRunLoop(_secureStorageRunLoop())
         do {
             let dict = try readDict()
             return dict
@@ -55,7 +65,7 @@ import Foundation
     /// Surface
     
     @objc static func get(_ keyPath: String) -> Any? {
-        
+        assertRunLoop(_secureStorageRunLoop())
         do {
             let dict = try readDict()
             return dict.object(forCoolKeyPath: keyPath)
@@ -66,7 +76,8 @@ import Foundation
     }
     
     @objc static func set(_ keyPath: String, value: Any?) {
-        
+        assertRunLoop(_secureStorageRunLoop())
+
         do {
             let dict = try readDict().mutableCopy() as! NSMutableDictionary
             dict.setObject((value as! NSObject?), forCoolKeyPath: keyPath)

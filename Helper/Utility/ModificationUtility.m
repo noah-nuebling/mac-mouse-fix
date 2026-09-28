@@ -78,16 +78,6 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
                                        mask:(CGEventMask)mask
                                      option:(CGEventTapOptions)option
                                   placement:(CGEventTapPlacement)placement
-                                   callback:(CGEventTapCallBack)callback {
-    
-    CFRunLoopRef rl = CFRunLoopGetMain();
-    return [self createEventTapWithLocation:location mask:mask option:option placement:placement callback:callback runLoop:rl];
-}
-
-+ (CFMachPortRef)createEventTapWithLocation:(CGEventTapLocation)location
-                                       mask:(CGEventMask)mask
-                                     option:(CGEventTapOptions)option
-                                  placement:(CGEventTapPlacement)placement
                                    callback:(CGEventTapCallBack)callback
                                     runLoop:(CFRunLoopRef)runLoop {
     CFMachPortRef eventTap = CGEventTapCreate(location, placement, option, mask, callback, NULL);

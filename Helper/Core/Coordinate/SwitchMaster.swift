@@ -126,7 +126,8 @@ import ReactiveSwift
     let readWriteTracker = MFReadWriteTracker()
     @inline(__always) private func logWithState(_ message: @autoclosure () -> String) {
         /// @noGCDCleanup Simplify this after removing/simplifying `ModifiedDrag.activationState`
-        
+
+        #if false /// @noGCDCleanup re-enable
         /// Note: [Mar 2025] This only has to be so complicated because our threading architecture is really bad. Once we move all input and SwitchMaster to GlobalEventTapThread.m, this won't be necessary.
         if (runningPreRelease()) {
             let invocationId = Int.random(in: 0...99999);
@@ -137,6 +138,7 @@ import ReactiveSwift
                 DDLogDebug("[\(invocationId)] SwitchMaster: Internal state -\n\(SharedUtilitySwift.dumpSwiftIvars(self))");
             }
         }
+        #endif
     }
     
     //
@@ -627,10 +629,14 @@ import ReactiveSwift
         
         /// Note: [Mar 2025] We're never disabling the items (I think) – so why enable them here instead of just returning?
         /// Note: [Mar 2025] If we ever enable this code again, we should perhaps add a `if isLockedDown || !userIsActive` guard here like for all the other togglers.
-        
-        MenuBarItem.enableScrollItem(true)
-        MenuBarItem.enableButtonsItem(true)
-        
+
+        return;
+
+        if ((false)) { /// [Sep 2026] Disabled now. Still now clue why we ever did this.
+            MenuBarItem.enableScrollItem(true)
+            MenuBarItem.enableButtonsItem(true)
+        }
+
         if ((false)) {
             
             let scrollCanBeToggled =

@@ -54,9 +54,12 @@ import CryptoKit
             
             /// Get key
             ///     from secure storage
-            
-            guard let key = SecureStorage.get("License.key") as? String else {
-                    
+
+            let key: String? = await MFCFRunLoopPerform_awaitable(_secureStorageRunLoop()) {
+                return SecureStorage.get("License.key") as? String
+            }
+            guard let key else {
+
                 /// No key found in secure storage
                 
                 /// Delete cache
@@ -72,10 +75,12 @@ import CryptoKit
             /// 1. Ask cache
             let deviceUID = get_mac_address()
             if deviceUID == nil { DDLogWarn("GetLicenseState: Failed to get deviceUID for offline validation. (Offline validation should still work normally as long as we *always consistently* fail to retrieve the deviceUID on this device. (Because then we'll always consistently pass nil))") }
-            result = self.licenseStateFromCache(licenseKey: key,
-                                                deviceUID: deviceUID,
-                                                enableOfflineValidation: true)
-            
+            result = await MFCFRunLoopPerform_awaitable(configRunLoop(), {
+                self.licenseStateFromCache(licenseKey: key,
+                                           deviceUID: deviceUID,
+                                           enableOfflineValidation: true)
+            })
+
             if (result == nil) {
                 
                 /// 2. Ask server
@@ -274,7 +279,8 @@ import CryptoKit
     }
     
     private static func licenseStateFromCache(licenseKey: String, deviceUID: Data?, enableOfflineValidation: Bool) -> MFLicenseState? {
-            
+            assertRunLoop(configRunLoop())
+
             /// Note: If the argument `enableOfflineValidation` is set to `false`, then all the other arguments are ignored - they only exist for the offlineValidation
             
             /// Get cached MFLicenseState archive

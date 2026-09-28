@@ -114,8 +114,8 @@ NSString *runningApplicationDescription(NSRunningApplication *app) {
 + (void)openMainApp {
     
     NSURL *bundleURL = Locator.mainAppBundle.bundleURL;
-    [NSWorkspace.sharedWorkspace openURL:bundleURL];
-    
+    [NSWorkspace.sharedWorkspace openURL: bundleURL]; /// [Sep 2026] Documented to be thread safe.
+
     return;
     
     /// Old method from `AccessiblityCheck.m`

@@ -129,7 +129,7 @@ typedef enum {
 
 */
 
-#define _interactWithCVDisplayLinkFromMainThread 1 /** Use mainThread to start/stop/... the CVDisplaylink, instead of `_runLoop`. Might prevent reliability issues. See all the comments below [Sep 2026] */
+#define _interactWithCVDisplayLinkFromMainThread 1 /** Use mainThread to start/stop/... the CVDisplaylink, instead of `_runLoop`. Might prevent reliability issues. See all the comments above [Sep 2026] */
 - (CFRunLoopRef) cvDisplayLinkInteractionRunLoop {
     return _interactWithCVDisplayLinkFromMainThread ? CFRunLoopGetMain() : self->_runLoop;
 }

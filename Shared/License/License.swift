@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
+/// @noGCDCleanup Review licensing module and fully transition over to thread asserts and thread hops where necessary. 
+
 /// This is supposed to be a thin wrapper  around `GetLicenseState.swift`, `GetLicenseConfig.swift` and `GetTrialState.swift`.
 
 /// There are some Swift __Active Compilation Conditions__ you can set in the build settings for testing:
@@ -99,7 +101,7 @@ import Cocoa
     }
     
     static func checkLicenseAndTrial_Preliminary() -> (licenseConfig: MFLicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState) {
-        
+
         /// This gets *preliminary* values for the 3 pieces of license-related data we want to share throughout the app:
         ///     `MFLicenseConfig` `MFLicenseState`, and `MFTrialState`
         ///

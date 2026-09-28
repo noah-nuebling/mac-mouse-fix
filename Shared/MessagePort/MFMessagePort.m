@@ -71,6 +71,12 @@
 ///         I think the reason for this message is that the existing instance would already 'occupy' the kMFBundleIDHelper name.
 ///         Checking if `localPort != nil` should detect this case
 
+#if IS_HELPER
+    #define messagePortRunLoop() GlobalEventTapThread.runLoop
+#elif IS_MAIN_APP
+    #define messagePortRunLoop() CFRunLoopGetMain()
+#endif
+
 @implementation MFMessagePort
 
 + (void)load_Manual {
@@ -107,7 +113,7 @@
         
     /// Add message port to main runLoop
     CFRunLoopSourceRef runLoopSource = CFMessagePortCreateRunLoopSource(kCFAllocatorDefault, localPort, 0);
-    CFRunLoopAddSource(CFRunLoopGetMain(), runLoopSource, kCFRunLoopCommonModes);
+    CFRunLoopAddSource(messagePortRunLoop(), runLoopSource, kCFRunLoopCommonModes);
     CFRelease(runLoopSource);
 }
 
@@ -232,8 +238,11 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
             [Config loadFileAndUpdateStates];
         }
         xxx(@"terminate") {
-    //            [NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]]; /// This creates an infinite loop or something? The statement below is never executed.
-            [NSApp terminate:NULL];
+            MFCFRunLoopPerform(CFRunLoopGetMain(), nil, ^{
+                [NSApp terminate: NULL];
+                //[NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]]; /// This creates an infinite loop or something? The statement below is never executed.
+            });
+
         }
         xxx(@"checkAccessibility") {
             BOOL isTrusted = [AccessibilityCheck checkAccessibilityAndUpdateSystemSettings];
@@ -285,7 +294,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     
     /// Return response
     if (response != nil) {
-         return (__bridge_retained CFDataRef)[NSKeyedArchiver archivedDataWithRootObject:response];
+         return (__bridge_retained CFDataRef)[NSKeyedArchiver archivedDataWithRootObject: response];
     } else {
         return NULL;
     }

@@ -358,8 +358,6 @@
 		4FF6655125F2C7B000689B77 /* NSDictionary+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6654025F2C7B000689B77 /* NSDictionary+Additions.m */; };
 		4FF6655225F2C7B000689B77 /* NSDictionary+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6654025F2C7B000689B77 /* NSDictionary+Additions.m */; };
 		4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665C125F2C92700689B77 /* MFSegmentedControl.m */; };
-		4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665C225F2C92700689B77 /* OverridePanel.m */; };
-		4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665C325F2C92700689B77 /* ScrollOverridePanel.xib */; };
 		4FF665F725F2C92700689B77 /* MainAppAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FF665D525F2C92700689B77 /* MainAppAssets.xcassets */; };
 		4FF665FA25F2C92700689B77 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665DB25F2C92700689B77 /* AppDelegate.m */; };
 		4FF665FD25F2C92700689B77 /* AuthorizeAccessibilityView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF665E025F2C92700689B77 /* AuthorizeAccessibilityView.m */; };
@@ -8547,7 +8545,6 @@
 				4F4B5FFA2C67D1BF004051D3 /* InfoPlist.xcstrings in Resources */,
 				4F79A7EF26042E2E00076A7E /* Toast.xib in Resources */,
 				4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */,
-				4FF665EF25F2C92700689B77 /* ScrollOverridePanel.xib in Resources */,
 				4FD148D128AA428000FE688C /* ButtonOptionsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8703,7 +8700,6 @@
 				4FF6654625F2C7B000689B77 /* Locator.m in Sources */,
 				4F909D2A28A0C3D2009349A2 /* ResizingTabWindowController.swift in Sources */,
 				4FA06819291B2C4C00949B5F /* Shorthands.m in Sources */,
-				4FF665EE25F2C92700689B77 /* OverridePanel.m in Sources */,
 				4F909D2228A0C3D2009349A2 /* ScrollTabController.swift in Sources */,
 				4F6F67A028A8141800C6C40F /* ButtonTabController.swift in Sources */,
 				4FF6654E25F2C7B000689B77 /* SharedUtility.m in Sources */,
