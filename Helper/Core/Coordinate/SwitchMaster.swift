@@ -84,30 +84,28 @@ import ReactiveSwift
     
     var someDeviceHasScroll                 = false
     var someDeviceHasPointing               = false
-    var someDeviceHasUsableButtons          = false
-    var maxButtonNumberAmongDevices: Int32  = 0
     
     /// Derived from: Various
     
     var defaultModifiesScroll               = false /// Derives from: Scroll Config
     let defaultModifiesPointing             = false /// Always false
-    var defaultModifiesButtonOnSomeDevice   = false /// Derives from: Remaps & Attached Devices
+    var defaultModifiesButtons              = false /// Derives from: Remaps
     
     /// Derived from: Remaps
     
     var somekbModModifiesScroll             = false
     var somekbModModifiesPointing           = false
-    var somekbModModifiesButtonOnSomeDevice = false /// & derives from: Attached Devices
+    var somekbModModifiesButtons            = false
     
     var someButtonModifiesScroll                = false
     var someButtonModifiesPointing              = false
-    var someButtonModifiesButtonOnSomeDevice    = false /// & derives from: Attached Devices
+    var someButtonModifiesButtons               = false
     
     /// Derived from: Modifiers & Remaps
     
     var currentModificationModifiesScroll               = false
     var currentModificationModifiesPointing             = false
-    var currentModificationModifiesButtonOnSomeDevice   = false /// & derives from: Attached Devices
+    var currentModificationModifiesButtons              = false
     
     /// Derived from: Lockdown
     var isLockedDown = false
@@ -156,7 +154,6 @@ import ReactiveSwift
         
         /// Not sure this is necessary or useful
         ///     Update [Mar 2025] Still not totally sure. But I don't think it's necessary. The managers of all the state we're setting here should give SwitchMaster a callback when the state is initialized or when it changes. If the managers do that, then this shouldn't be necessary.
-        latestDevices = DeviceManager.attachedDevices
         latestRemaps = Remap.remaps
         latestScrollConfig = ScrollConfig.shared
         latestModifiers = Modifiers.modifiers(with: nil)
@@ -278,21 +275,12 @@ import ReactiveSwift
     // MARK: Base callbacks
     //
     
-    private var latestDevices = NSArray()
     @objc func attachedDevicesChanged(devices: NSArray) {
         
         /// Update state
+        ///     Only physical hardware facts are derived from the attached devices. Button mappings are analyzed from the remaps alone (see `updateButtonModifierUsage`), so that they keep working without a matching physical device.
         self.someDeviceHasScroll = DeviceManager.someDeviceHasScrollWheel()
         self.someDeviceHasPointing = DeviceManager.someDeviceHasPointing()
-        self.someDeviceHasUsableButtons = DeviceManager.someDeviceHasUsableButtons()
-        self.maxButtonNumberAmongDevices = DeviceManager.maxButtonNumberAmongDevices()
-        
-        /// Call combined state updaters
-        remapsOrAttachedDevicesChanged(remaps: latestRemaps, devices: devices)
-        remapsOrModifiersOrAttachedDevicesChanged(remaps: latestRemaps, modifiers: latestModifiers, attachedDevices: devices)
-        
-        /// Store latest
-        latestDevices = devices
         
         /// Call togglers
         
@@ -324,9 +312,9 @@ import ReactiveSwift
         self.someButtonModifiesScroll = result.someButtonModifiesScroll
         
         /// Call combined state updaters
-        remapsOrAttachedDevicesChanged(remaps: remaps, devices: latestDevices)
+        updateButtonModifierUsage(remaps: remaps)
         remapsOrModifiersChanged(remaps: remaps, modifiers: latestModifiers)
-        remapsOrModifiersOrAttachedDevicesChanged(remaps: remaps, modifiers: latestModifiers, attachedDevices: latestDevices)
+        updateCurrentModificationModifiesButtons()
         
         /// Store latest
         latestRemaps = remaps
@@ -397,7 +385,7 @@ import ReactiveSwift
         
         /// Call combined state updaters
         remapsOrModifiersChanged(remaps: latestRemaps, modifiers: modifiers)
-        remapsOrModifiersOrAttachedDevicesChanged(remaps: latestRemaps, modifiers: modifiers, attachedDevices: latestDevices)
+        updateCurrentModificationModifiesButtons()
         
         /// Store latest
         latestModifiers = modifiers
@@ -420,16 +408,16 @@ import ReactiveSwift
     // MARK: Combined state updaters
     //
     
-    private func remapsOrAttachedDevicesChanged(remaps: NSDictionary, devices: NSArray) {
+    private func updateButtonModifierUsage(remaps: NSDictionary) {
         
-        /// Note: [Mar 2025] Why not use `self.maxButtonNumberAmongDevices` here instead of calling `DeviceManager.maxButtonNumberAmongDevices()`? Pretty sure that's would be correct.
-        ///     TODO: use self.maxButtonNumberAmongDevices here and in all other places where `DeviceManager.maxButtonNumberAmongDevices()` is used (Maybe think it through again before.)
-        let maxButton = DeviceManager.maxButtonNumberAmongDevices()
+        /// Analyze the button mappings up to the maximum button number MMF supports, instead of the buttons of the attached devices.
+        ///     Button mappings must be usable without a matching physical device (e.g. no mouse is enumerated on this Mac, but the remote input forwards Button 4/5), and a button mapping that is not represented by the local hardware must not be dropped.
+        let maxButton = kMFMaxButtonNumber
         let result = self.modifierUsage_Buttons(remaps, maxButton: maxButton)
-        self.somekbModModifiesButtonOnSomeDevice = result.somekbModModifiesButtonOnSomeDevice
-        self.someButtonModifiesButtonOnSomeDevice = result.someButtonModifiesButtonOnSomeDevice
+        self.somekbModModifiesButtons = result.somekbModModifiesButtons
+        self.someButtonModifiesButtons = result.someButtonModifiesButtons
         
-        self.defaultModifiesButtonOnSomeDevice = self.defaultModifiesButtonOnSomeDevice(remaps, maxButton: maxButton)
+        self.defaultModifiesButtons = self.defaultModifiesButtons(remaps, maxButton: maxButton)
     }
     
     private var latestModifications: NSDictionary? = nil
@@ -451,16 +439,16 @@ import ReactiveSwift
         latestModifications = modifications
     }
     
-    private func remapsOrModifiersOrAttachedDevicesChanged(remaps: NSDictionary, modifiers: NSDictionary, attachedDevices: NSArray) {
+    private func updateCurrentModificationModifiesButtons() {
         
         /// NOTE: Not totally sure using `latestModifications` always works here. Make sure you call `remapsOrModifiersChanged` before this so `latestModifications` is updated first
-        ///     Update: [Mar 2025] Current understanding: When attached devices change, this is called without first calling remapsOrModifiersChanged() (and therefore, without updating latestModifications). But I think that's ok since attached devices really don't affect latestModifications. (This would no longer be true if we introduce device-specific settings.)
+        ///     Button mappings don't depend on the attached devices anymore, so this only needs to run when the remaps or the modifiers change.
         
         /// Update state
         if let m = latestModifications {
-            self.currentModificationModifiesButtonOnSomeDevice = RemapsAnalyzer.modificationsModifyButtons(m, maxButton: DeviceManager.maxButtonNumberAmongDevices())
+            self.currentModificationModifiesButtons = RemapsAnalyzer.modificationsModifyButtons(m, maxButton: kMFMaxButtonNumber)
         } else {
-            self.currentModificationModifiesButtonOnSomeDevice = false
+            self.currentModificationModifiesButtons = false
         }
 
     }
@@ -480,13 +468,13 @@ import ReactiveSwift
         
         let someKbModReallyModifiesScroll   = somekbModModifiesScroll             && someDeviceHasScroll          && !scrollKillSwitch
         let someKbModReallyModifiesPointing = somekbModModifiesPointing           && someDeviceHasPointing        && true
-        let someKbModReallyModifiesButtons  = somekbModModifiesButtonOnSomeDevice && someDeviceHasUsableButtons   && !buttonKillSwitch
+        let someKbModReallyModifiesButtons  = somekbModModifiesButtons            && !buttonKillSwitch
         
         if someKbModReallyModifiesScroll || someKbModReallyModifiesPointing || someKbModReallyModifiesButtons {
             
             let someKbModsToggleScroll      = someKbModReallyModifiesScroll     && !defaultModifiesScroll               ;
             let someKbModsTogglePointing    = someKbModReallyModifiesPointing   && !defaultModifiesPointing             ;
-            let someKbModsToggleButtons     = someKbModReallyModifiesButtons    && !defaultModifiesButtonOnSomeDevice   ;
+            let someKbModsToggleButtons     = someKbModReallyModifiesButtons    && !defaultModifiesButtons              ;
             
             if someKbModsToggleScroll || someKbModsTogglePointing || someKbModsToggleButtons {
                 priority = kMFModifierPriorityActiveListen
@@ -507,13 +495,13 @@ import ReactiveSwift
         
         let someBtnReallyModifiesScroll      = someButtonModifiesScroll             && someDeviceHasScroll        && !scrollKillSwitch      ;
         let someBtnReallyModifiesPointing    = someButtonModifiesPointing           && someDeviceHasPointing      && true                   ;
-        let someBtnReallyModifiesButtons     = someButtonModifiesButtonOnSomeDevice && someDeviceHasUsableButtons && !buttonKillSwitch      ; /// `!buttonKillSwitch` is redundant here ([Mar 2025]: Why?), but makes it more readable? || [Mar 2025]: someDeviceHasUsableButtons might also be redundant, because someButtonModifiesButtonOnSomeDevice might already capture that.
+        let someBtnReallyModifiesButtons     = someButtonModifiesButtons            && !buttonKillSwitch      ; /// `!buttonKillSwitch` is redundant here ([Mar 2025]: Why?), but makes it more readable?
         
         if someBtnReallyModifiesScroll || someBtnReallyModifiesPointing || someBtnReallyModifiesButtons {
             
             let someBtnModsToggleScroll     = someBtnReallyModifiesScroll   && !defaultModifiesScroll            ;
             let someBtnModsTogglePointing   = someBtnReallyModifiesPointing && !defaultModifiesPointing          ;
-            let someBtnModsToggleButtons    = someBtnReallyModifiesButtons  && !defaultModifiesButtonOnSomeDevice;
+            let someBtnModsToggleButtons    = someBtnReallyModifiesButtons  && !defaultModifiesButtons;
             
             if someBtnModsToggleScroll || someBtnModsTogglePointing || someBtnModsToggleButtons {
                 priority = kMFModifierPriorityActiveListen
@@ -550,12 +538,13 @@ import ReactiveSwift
         ///     - [Mar 2025] We should perhaps reuse the 'areButtonsModifiers?' logic from toggleBtnModProcessing(), instead of this duplicate (and outdated - we're missing `!scrollKillSwitch`) logic.
         ///         -> TODO: Reuse updated logic from toggleBtnModProcessing()
         ///     - [Mar 2025] We should probably always call toggleButtonTap() after toggleBtnModProcessing() - so the tap is actually toggled in case this switches buttonModProcessing to/away from kMFModifierPriorityActiveListen
+        ///     - Button mappings don't depend on a matching physical device: a configured button must enable the tap even if no mouse exposing that button is enumerated (e.g. the button input is forwarded).
         let buttonsAreUsedAsModifiers =
             (someDeviceHasScroll        && someButtonModifiesScroll)                ||
             (someDeviceHasPointing      && someButtonModifiesPointing)              ||
-            (someDeviceHasUsableButtons && someButtonModifiesButtonOnSomeDevice)
+            someButtonModifiesButtons
         
-        if someDeviceHasUsableButtons && (currentModificationModifiesButtonOnSomeDevice || buttonsAreUsedAsModifiers) {
+        if currentModificationModifiesButtons || buttonsAreUsedAsModifiers {
             
             ButtonInputReceiver.start()
         } else {
@@ -616,7 +605,7 @@ import ReactiveSwift
             
             let buttonsCanBeToggled =
             !isLockedDown &&
-            (defaultModifiesButtonOnSomeDevice || somekbModModifiesButtonOnSomeDevice || someButtonModifiesButtonOnSomeDevice)
+            (defaultModifiesButtons || somekbModModifiesButtons || someButtonModifiesButtons)
             
             MenuBarItem.enableScrollItem(scrollCanBeToggled)
             MenuBarItem.enableButtonsItem(buttonsCanBeToggled)
@@ -667,8 +656,8 @@ import ReactiveSwift
     
     /// Remaps analysis
     
-    fileprivate func modifierUsage_Buttons(_ remaps: NSDictionary?, maxButton: Int32) -> (somekbModModifiesButtonOnSomeDevice: Bool,
-                                                                                          someButtonModifiesButtonOnSomeDevice: Bool) {
+    fileprivate func modifierUsage_Buttons(_ remaps: NSDictionary?, maxButton: Int32) -> (somekbModModifiesButtons: Bool,
+                                                                                          someButtonModifiesButtons: Bool) {
         
         var kbModSways = false
         var btnSways = false
@@ -710,10 +699,10 @@ import ReactiveSwift
             }
         }
         
-        return (somekbModModifiesButtonOnSomeDevice: kbModSways, someButtonModifiesButtonOnSomeDevice: btnSways)
+        return (somekbModModifiesButtons: kbModSways, someButtonModifiesButtons: btnSways)
     }
     
-    fileprivate func defaultModifiesButtonOnSomeDevice(_ remaps: NSDictionary, maxButton: Int32) -> Bool {
+    fileprivate func defaultModifiesButtons(_ remaps: NSDictionary, maxButton: Int32) -> Bool {
         
         var defaultSways = false
         

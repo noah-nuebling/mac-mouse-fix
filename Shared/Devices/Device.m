@@ -266,44 +266,47 @@ static void handleInput(void *context, IOReturn result, void *sender, IOHIDValue
     return [self.uniqueID isEqual:otherID];
 }
 
-- (BOOL)isEqual:(Device *)other {
-    
+- (BOOL)isEqual:(id)other {
+
     /// Notes:
     ///     - In the template where we copied this from, they also used ![super isEqual:other] but that didn't work for us.
-    
-    if (other == nil) { /// Check nil
-        assert(false);
-        return NO;
-    } else if (other == self) { /// Check for pointer equality
+    ///     - `StrangeDevice` has no `.iohidDevice`, so it is only equal to itself (the shared singleton). A physical device and the strange device must answer NO in both directions.
+    ///     - Non-`Device` objects (including plain `NSObject`, `NSNumber`, ...) are unequal, without casting them to `Device`.
+
+    if (other == self) { /// Check for pointer equality (also covers the `StrangeDevice` singleton)
         return YES;
-    } else if (![other isKindOfClass:self.class]) { ///  Check for class equality
-        return NO;
-    } else { /// Custom equality logic
-        
-        /// Guard NULL
-        ///     (28.08.2024 on macOS Sequoia Beta) I've just seen a crash where IIRC the .iohidDevice was NULL. I saw that happen where this was called from the Button-input handling code. It happened around the time of connecting/disconnecting a device IIRC.
-        ///         I don't know why this could happen, since a `device` instance retains its `.iohidDevice` instance, so it should never become NULL. Maybe there was a race condition?
-        
-        if (other.iohidDevice == NULL) {
-            assert(false); /// Should never happen since Device instances retain their .iohidDevice's || Update: [Jul 2025] I think this is expected for StrangeDevice (at least on master branch, writing this on feature-strings-catalog). I actually wonder why we haven't seen this crash more often. We should replace all the CF functions with NULL-safe alternatives such as MFCFEqual!
-            return NO;
-        }
-        if (self.iohidDevice == NULL) {
-            assert(false);
-            return NO;
-        }
-        
-        /// Use CFEqual
-        BOOL result = CFEqual(self.iohidDevice, other.iohidDevice);
-        
-        /// Return
-        return result;
     }
+    if (other == nil) { /// Check nil
+        return NO;
+    }
+    if (![other isKindOfClass:Device.class]) { /// Check for class equality
+        return NO;
+    }
+
+    Device *otherDevice = (Device *)other;
+
+    /// Guard NULL
+    ///     `StrangeDevice` intentionally has no `.iohidDevice`, so a NULL doesn't necessarily mean an error; it just means the devices have no shared HID identity and are therefore unequal.
+
+    if (self.iohidDevice == NULL || otherDevice.iohidDevice == NULL) {
+        return NO;
+    }
+
+    /// Use CFEqual
+    BOOL result = CFEqual(self.iohidDevice, otherDevice.iohidDevice);
+
+    /// Return
+    return result;
 }
 
 - (NSUInteger)hash {
-//    return CFHash(_IOHIDDevice) << 1;
-    return (NSUInteger)self; /// TODO: Are we sure just using the self pointer as hash is a good idea? Maybe use uniqueID instead? Why don't we use CFHash() anymore?
+    /// The hash has to agree with `isEqual:`. Physical devices compare via `CFEqual` on their `.iohidDevice`, so hash that HID identity.
+    ///     A device without an `.iohidDevice` (the `StrangeDevice` singleton) is only equal to itself, so its pointer is the consistent hash.
+    IOHIDDeviceRef device = self.iohidDevice;
+    if (device == NULL) {
+        return (NSUInteger)self;
+    }
+    return CFHash(device);
 }
 
 - (NSString *)name {
@@ -439,11 +442,8 @@ static uint64_t IOHIDDeviceGetRegistryID(IOHIDDeviceRef  _Nonnull device) {
 }
 
 - (NSNumber *)uniqueID {
-    return 0;
-}
-
-- (BOOL)isEqualToDevice:(Device *)device {
-    return NO;
+    /// Return a boxed number: the API is `nonnull NSNumber *`, so an unboxed `0` would be `nil`, and the strange device must still have a usable identity.
+    return @0;
 }
 
 - (NSString *)name {

@@ -120,7 +120,8 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     /// Get info from cgEvent
     NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
-    BOOL mouseDown = CGEventGetIntegerValueField(event, kCGMouseEventPressure) != 0;
+    /// Derive the button edge from the event type: this tap is registered for `kCGEventOtherMouseDown` / `kCGEventOtherMouseUp`, so the event type is the authoritative edge. The pressure field is not part of that event contract.
+    BOOL mouseDown = (type == kCGEventOtherMouseDown);
     
     /// Filter buttons
     if ([_buttonParseBlacklist containsObject:@(buttonNumber)]) return event;
