@@ -33,6 +33,7 @@ import Cocoa
     
     private static var _scrollConfigRaw: NSDictionary? = nil /// This needs to be static, not an instance var. Otherwise there are weird crashes in Scroll.m. Not sure why.
     private func c(_ keyPath: String) -> NSObject? {
+        /// @noGCDCleanup forCoolKeyPath is pretty slow while scrolling [Sep 2026]
         return ScrollConfig._scrollConfigRaw?.object(forCoolKeyPath: keyPath) /// Not sure whether to use coolKeyPath here?
     }
     

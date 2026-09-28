@@ -120,12 +120,14 @@ void removeFromConfig(NSString *keyPath) {
     [Config.shared.config removeObjectForCoolKeyPath:keyPath];
 }
 
+#if IS_MAIN_APP
 static NSURL *defaultConfigURL(void) {
     /// `default_config` used to be known as `backup_config`
     ///     We used to get this only once on init, but that breaks after the user moves the app while it's open
     NSString *defaultConfigPathRelative = @"Contents/Resources/default_config.plist";
     return [Locator.mainAppBundle.bundleURL URLByAppendingPathComponent:defaultConfigPathRelative];
 }
+#endif
 
 void commitConfig(void) {
     /// Convenience function for notifying other modules of the changed config (and writing to file)

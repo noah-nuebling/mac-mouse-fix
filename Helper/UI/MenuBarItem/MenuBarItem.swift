@@ -147,8 +147,9 @@ import Foundation
         /// Toggle
         sender.state = sender.state == .on ? .off : .on
         /// Set to config
+        let killed = sender.state != .on
         MFCFRunLoopPerform(GlobalEventTapThread.runLoop(), nil) {
-            setConfig("General.scrollKillSwitch", !(sender.state == .on) as NSObject)
+            setConfig("General.scrollKillSwitch", killed as NSObject)
             commitConfig()
         }
     }
@@ -158,8 +159,9 @@ import Foundation
         /// Toggle
         sender.state = sender.state == .on ? .off : .on
         /// Set to config
+        let killed = sender.state != .on
         MFCFRunLoopPerform(GlobalEventTapThread.runLoop(), nil) {
-            setConfig("General.buttonKillSwitch", !(sender.state == .on) as NSObject)
+            setConfig("General.buttonKillSwitch", killed as NSObject)
             commitConfig()
         }
     }
