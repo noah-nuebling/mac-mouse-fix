@@ -54,7 +54,7 @@ typedef enum {
 
     NSString *_name;
 
-    int _updateDepth;
+    MFReadWriteTracker _readWriteTracker;
 
 }
 
@@ -138,10 +138,14 @@ typedef enum {
     else                                                                 MFCFRunLoopPerform([self cvDisplayLinkInteractionRunLoop], nil, workload); /// [Sep 2026] `_requestedState` allows us to make all interaction with CVDisplayLink non-blocking
 }
 
-/// [Sep 2026] Disable `_assertNoNestedUpdate`
-///     since self.callback is called at the end of `displayLinkCallback()` after that function's update of `DisplayLink's` state is already finished. (Actually, that function doesn't update any of DisplayLink's state at all!) Since we're also not calling out to any other code that could recurse back anywhere into this file `_assertNoNestedUpdate` is unnecessary in DisplayLink.m. (Don't think this will ever change since DisplayLink.m is simple and sort of a 'leaf node' in the layers of the program)
-//#define _assertNoNestedUpdate(updateDepthPtr) assertNoNestedUpdate(updateDepthPtr)
-#define _assertNoNestedUpdate(updateDepthPtr)
+/// [Sep 2026] Disable `readsState()` / `readsAndWritesState()` in DisplayLink.m
+///     since the only callout is `self.callback` at the very end of `displayLinkCallback()`. (Don't think this will ever change since DisplayLink.m is simple and sort of a 'leaf node' in the layers of the program)
+//#define _readsState(tracker)          readsState(tracker)
+//#define _readsAndWritesState(tracker) readsAndWritesState(tracker)
+//#define _allowNestedReadOrWrite()     allowNestedReadOrWrite()
+#define _readsState(tracker)
+#define _readsAndWritesState(tracker)
+#define _allowNestedReadOrWrite()
 
 
 #pragma mark - Debug
@@ -306,7 +310,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 - (void)start_UnsafeWithCallback:(DisplayLinkCallback _Nullable)callback {
 
     assertRunLoop(_runLoop);
-    _assertNoNestedUpdate(&_updateDepth);
+    _readsAndWritesState(&_readWriteTracker);
 
     DDLogDebug("DisplayLink.m: (%@) starting", _name);
 
@@ -314,8 +318,9 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
     self.callback = callback;
 
     /// Early return
+    BOOL isRunning = NO; _allowNestedReadOrWrite() isRunning = [self isRunning_Unsafe];
     if ((1)) /// [Sep 2026] Added this as optimization, not totally sure it's correct | @noGCDCleanup: Think this through.
-    if ([self isRunning_Unsafe]) {
+    if (isRunning) {
         if ((0)) DDLogDebug("DisplayLink.m: (%@) already starting/started", _name);
         return;
     }
@@ -359,12 +364,13 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 - (void)stop_Unsafe {
 
     assertRunLoop(_runLoop);
-    _assertNoNestedUpdate(&_updateDepth);
+    _readsAndWritesState(&_readWriteTracker);
 
     /// Debug
     DDLogDebug("DisplayLink.m: (%@) stopping", _name);
 
-    if ([self isRunning_Unsafe]) {
+    BOOL isRunning = NO; _allowNestedReadOrWrite() isRunning = [self isRunning_Unsafe];
+    if (isRunning) {
 
         /// @noGCDCleanup why have the early return in -start but not -stop? ... `isRunning_Unsafe` is early return, duh
 
@@ -407,6 +413,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 - (BOOL)isRunning_Unsafe {
 
     assertRunLoop(_runLoop); /// [Sep 2026] `_requestedState` is owned by `_runLoop` (`self->_displayLink` in the dead code below is owned by [self cvDisplayLinkInteractionRunLoop])
+    _readsState(&_readWriteTracker);
     return _requestedState;
 
     #if 0
@@ -476,7 +483,7 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
     ///     (Maybe keep comment since I was confused, but seems obvious now.)
 
     assertRunLoop(_runLoop);
-    _assertNoNestedUpdate(&_updateDepth);
+    _readsAndWritesState(&_readWriteTracker);
 
     [self interactWithCVDisplayLink: ^{
         [self setDisplay: NSScreen.mainScreen.displayID];
@@ -632,13 +639,14 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 
     MFCFRunLoopPerform(self->_runLoop, nil, ^{
         assertRunLoop(self->_runLoop);
-        _assertNoNestedUpdate(&self->_updateDepth);
+        _readsState(&self->_readWriteTracker);
 
         DDLogDebug("DisplayLink.m: (%@) Callback", self->_name);
         if (self->_requestedState == kMFDisplayLinkRequestedState_Stopped) {
             DDLogDebug("DisplayLink.m: (%@) callback called after requested stop. Returning", self->_name);
             return;
         }
+        _allowNestedReadOrWrite() /// [Sep 2026] Animators call back into us from their callback (`-stop_Unsafe` when their animation ends)
         self.callback(timeInfo);
     });
 

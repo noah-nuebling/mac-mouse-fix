@@ -57,7 +57,7 @@ class TouchAnimator: TouchAnimatorBase {
     ///     You usually want to call this where you call linkToMainScreen()
     @objc func resetSubPixelator() {
         assertRunLoop(displayLink.runLoop);
-        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
+        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
         DDLogDebug("HNGG Resetting subpixelator")
         self.subPixelator.reset()
     }
@@ -75,7 +75,7 @@ class TouchAnimator: TouchAnimatorBase {
         /// Get startParams
         let p = params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve, self.lastAnimationSpeed)
 
-        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) } /// @noGCDCleanup - move to start of function after removing `StartParamCalculationCallback`
+        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) } /// @noGCDCleanup - move to start of function after removing `StartParamCalculationCallback`
         do { /// @noGCDCleanup - remove scope
 
             /// Reset animationValueLeft
@@ -101,8 +101,10 @@ class TouchAnimator: TouchAnimatorBase {
 
             /// Debug
 
+            allowNestedReadOrWrite_Begin(from: .readsAndWritesState, readWriteTracker)
             let deltaLeftBefore = self.animationValueLeft_Unsafe;
             DDLogDebug("Started TouchAnimator with deltaLeftDiff: \(subtractedVectors(self.animationValueLeft_Unsafe, deltaLeftBefore)), oldDeltaLeft: \(deltaLeftBefore), newDeltaLeft: \(self.animationValueLeft_Unsafe)")
+            allowNestedReadOrWrite_End(from: .readsAndWritesState, readWriteTracker)
         }
     }
 
@@ -114,7 +116,6 @@ class TouchAnimator: TouchAnimatorBase {
     
     override internal func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ momentumHint: MFMomentumHint) {
         /// This hooks into displayLinkCallback() in the superclass. Look at that for context.
-        ///     [Sep 2026] `assertNoNestedUpdate` and `assertRunLoop` not needed since this is effectively a private helper, and all callsites are already protected
 
         /// Guard callback type
         
@@ -124,7 +125,10 @@ class TouchAnimator: TouchAnimatorBase {
         
         /// Update phase to `end` if all valueLeft won't lead to another non-zero delta
         
+        allowNestedReadOrWrite_Begin(from: .readsAndWritesState, readWriteTracker)
         let currentAnimationValueLeft = animationValueLeft_Unsafe
+        allowNestedReadOrWrite_End(from: .readsAndWritesState, readWriteTracker)
+        
         let intAnimationValueLeft = subPixelator.peekIntVector(withDoubleVector: currentAnimationValueLeft);
         if isZeroVector(intAnimationValueLeft) {
             isLastDisplayLinkCallback = true /// After this we know the delta will be zero, so most of the work we do below is unnecessary

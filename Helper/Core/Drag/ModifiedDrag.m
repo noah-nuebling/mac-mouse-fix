@@ -15,7 +15,7 @@
 ///         (This commit cared about switching stack between DisplayLink.m ... Scroll.m to runLoops and then making it compile again)
 
 /// @noGCDCleanup
-///     Add `assertNoNestedUpdate` checks to `ModifiedDrag.m and ModifiedDragOutputTwoFingerSwipe.m and GestureScrollSimulator.m`
+///     Add `readsState()` / `readsAndWritesState()` checks to `ModifiedDrag.m and ModifiedDragOutputTwoFingerSwipe.m and GestureScrollSimulator.m`
 
 #import "Constants.h"
 

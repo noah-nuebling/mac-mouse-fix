@@ -9,6 +9,10 @@
 
 /// This class holds global state. Use sparingly!
 
+/// [Sep 2026] `readsAndWritesState()` checks not necessary since
+///     - State is too simple to corrupt (only one var per thing, nothing has invariants)
+///     - We're also calling out at the end of updates and stuff [Sep 2026]
+
 import Foundation
 import CoreGraphics
 
@@ -74,7 +78,7 @@ import CoreGraphics
         set {
             assertRunLoop(GlobalEventTapThread.runLoop())
             _activeDevice = newValue
-            SwitchMaster.shared.helperStateChanged() /// [Sep 2026] `assertNoNestedUpdate` not necessary since callout is at end and there's only one var in our 'update' so nothing to corrupt.
+            SwitchMaster.shared.helperStateChanged()
         }
         get {
             assertRunLoop(GlobalEventTapThread.runLoop())

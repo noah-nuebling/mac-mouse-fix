@@ -123,7 +123,7 @@ import ReactiveSwift
     // MARK: Debug
     //
 
-    let updateDepth = UpdateDepth()
+    let readWriteTracker = MFReadWriteTracker()
     @inline(__always) private func logWithState(_ message: @autoclosure () -> String) {
         /// @noGCDCleanup Simplify this after removing/simplifying `ModifiedDrag.activationState`
         
@@ -175,7 +175,7 @@ import ReactiveSwift
     @objc func lockDown() {
 
         assertRunLoop(GlobalEventTapThread.runLoop())
-        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
+        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
 
         /// Update state
         isLockedDown = true
@@ -205,7 +205,7 @@ import ReactiveSwift
     @objc func helperStateChanged() {
 
         assertRunLoop(GlobalEventTapThread.runLoop())
-        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
+        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
 
         /// NOTES:
         /// - On listening to activeDevice
@@ -247,7 +247,7 @@ import ReactiveSwift
     @objc func generalConfigChanged(generalConfig: NSDictionary) {
 
         assertRunLoop(GlobalEventTapThread.runLoop())
-        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
+        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
 
         /// Get raw
         let btn = generalConfig.object(forKey: "buttonKillSwitch") as! Bool
@@ -293,7 +293,7 @@ import ReactiveSwift
     @objc func attachedDevicesChanged(devices: NSArray) {
 
         assertRunLoop(GlobalEventTapThread.runLoop())
-        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
+        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
 
         /// Update state
         self.someDeviceHasScroll = DeviceManager.someDeviceHasScrollWheel()
@@ -331,7 +331,7 @@ import ReactiveSwift
     @objc func remapsChanged(remaps: NSDictionary) {
 
         assertRunLoop(GlobalEventTapThread.runLoop())
-        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
+        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
 
         /// Update state
         let result = self.modifierUsage_Point_Scroll(remaps)
@@ -380,7 +380,7 @@ import ReactiveSwift
     @objc func scrollConfigChanged(scrollConfig: ScrollConfig) {
 
         assertRunLoop(GlobalEventTapThread.runLoop())
-        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
+        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
 
         /// Update state
         if Remap.addModeIsEnabled {
@@ -416,7 +416,7 @@ import ReactiveSwift
     @objc func modifiersChanged(modifiers: NSDictionary) {
 
         assertRunLoop(GlobalEventTapThread.runLoop())
-        assertNoNestedUpdate_Begin(updateDepth); defer { assertNoNestedUpdate_End(updateDepth) }
+        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
 
         /// Call combined state updaters
         remapsOrModifiersChanged(remaps: latestRemaps, modifiers: modifiers)

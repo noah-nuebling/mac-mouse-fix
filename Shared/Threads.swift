@@ -19,9 +19,9 @@
 ///         ```
 ///         readsState_Begin(tracker); defer { readsState_End(tracker) }
 ///         ...
-///         allowNestedReadOrWrite_Begin(from: .readsState, tracker); do {
-///             callback()
-///         }; allowNestedReadOrWrite_End(from: .readsState, tracker)
+///         allowNestedReadOrWrite_Begin(from: .readsState, tracker)
+///         callback()
+///         allowNestedReadOrWrite_End(from: .readsState, tracker)
 ///         ```
 
 final class MFReadWriteTracker { var readerCount: Int = 0; var writerCount: Int = 0 }

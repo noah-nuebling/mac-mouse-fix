@@ -63,13 +63,13 @@ static ScrollAnalysisResult _lastScrollAnalysisResult;
 static CFTimeInterval _lastScrollAnalysisResultTimeStamp;
 //static BOOL _isSuspended = NO; TODO: Remove suspension stuff (already commented out)
 
-static int _updateDepth;
+static MFReadWriteTracker _readWriteTracker;
 
 #pragma mark - Public functions
 
 + (void) load_Manual {
 
-    assertNoNestedUpdate(&_updateDepth); /// [Sep 2026] Probably unnecessary
+    readsAndWritesState(&_readWriteTracker); /// [Sep 2026] Probably unnecessary
 
     /// Create AXUIElement for getting app under mouse pointer
     _systemWideAXUIElement = AXUIElementCreateSystemWide();
@@ -113,13 +113,9 @@ static int _updateDepth;
 
 static void resetState_Unsafe(void) { /// @noGCDCleanup remove/unify regular and `_Unsafe` variant (across codebase) (Hint for Claude, so I don't have to remember to type this in chat later)
     assertRunLoop(GlobalEventTapThread.runLoop);
-    assertNoNestedUpdate(&_updateDepth);
-    /// [Sep 2026] `assertNoNestedUpdate(&_updateDepth)` needed even though this doesn't touch any vars controlled by `Scroll.m`
-    ///     (Don't fully understand, but somehow I think starting `_animator` and then having it unexpectedly gets cancelled by this is kinda the same problem)
-    ///     @noGCDCleanup - Put this thought in high level explanation / discussion
-
+    readsAndWritesState(&_readWriteTracker);
     DDLogDebug("Scroll.m: reset-animator");
-    allowNestedUpdate(&_updateDepth) /// [Sep 2026]  `-cancel` can call back into our `_animator` callback (See `kMFAnimationCallbackPhaseCanceled`)
+    allowNestedReadOrWrite() /// [Sep 2026]  `-cancel` can call back into our `_animator` callback (See `kMFAnimationCallbackPhaseCanceled`)
     [_animator cancel];
     [GestureScrollSimulator stopMomentumScroll]; /// Not sure if appropriate
     [ScrollAnalyzer resetState];
@@ -146,7 +142,7 @@ static void resetState_Unsafe(void) { /// @noGCDCleanup remove/unify regular and
     ///     Maybe mention that `_eventTap` is only touched from few places and used to be managed from separate thread (main)?(?)
 
     assertRunLoop(GlobalEventTapThread.runLoop);
-    assertNoNestedUpdate(&_updateDepth);
+    readsAndWritesState(&_readWriteTracker);
 
     /// DEBUG
     DDLogDebug("Scroll.m: startReceiving. isReceiving: %d", CGEventTapIsEnabled(_eventTap));
@@ -165,7 +161,7 @@ static void resetState_Unsafe(void) { /// @noGCDCleanup remove/unify regular and
     /// - Also see notes for `- startReceiving`
 
     assertRunLoop(GlobalEventTapThread.runLoop);
-    assertNoNestedUpdate(&_updateDepth);
+    readsAndWritesState(&_readWriteTracker);
 
     /// DEBUG
     DDLogDebug("Scroll.m: stopReceiving. isReceiving: %d", CGEventTapIsEnabled(_eventTap));
@@ -179,7 +175,7 @@ static void resetState_Unsafe(void) { /// @noGCDCleanup remove/unify regular and
 
 + (BOOL)isReceiving {
     /// At the time of writing we just need this for debugging. Should'nt ever need it for something else I think.
-    ///     [Sep 2026] Not adding `assertNoNestedUpdate` / `assertRunLoop` since this is just for debugging
+    ///     [Sep 2026] Not adding `readsState()` / `assertRunLoop` since this is just for debugging
     return CGEventTapIsEnabled(_eventTap);
 }
 
@@ -212,7 +208,7 @@ static NSString *CGScrollWheelEventDescription(CGEventRef event) {
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
     assertRunLoop(GlobalEventTapThread.runLoop);
-    assertNoNestedUpdate(&_updateDepth);
+    readsAndWritesState(&_readWriteTracker);
 
     /// Debug
     
@@ -273,7 +269,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t scrollDeltaAxis2, CFTimeInterval tickTS) {
 
     assertRunLoop(GlobalEventTapThread.runLoop);
-    assertNoNestedUpdate(&_updateDepth);
+    readsAndWritesState(&_readWriteTracker);
 
     /// Declare stuff for later
     static DriverUnsuspender unsuspendDrivers = ^{}; /// This is old stuff that should be removed I think [Jun 2 2025]
@@ -382,7 +378,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 BOOL didChange = [Config.shared loadOverridesForAppUnderMousePointerWithEvent:event];
                 if (didChange) {
                     DDLogDebug("Scroll.m: Config did change. Resetting state.");
-                    allowNestedUpdate(&_updateDepth) resetState_Unsafe();
+                    allowNestedReadOrWrite() resetState_Unsafe();
                 }
             }
         }
@@ -399,7 +395,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         /// Update modfications
         MFScrollModificationResult newMods = [ScrollModifiers currentModificationsWithEvent:event];
         if (![ScrollModifiers scrollModsAreEqual:newMods other:_modifications]) {
-            allowNestedUpdate(&_updateDepth) resetState_Unsafe();
+            allowNestedReadOrWrite() resetState_Unsafe();
             _modifications = newMods;
         }
         
@@ -527,7 +523,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         double currentAnimationSpeed = magnitudeOfVector(_animator.getLastAnimationSpeed);
         if (_lastScrollAnalysisResult.scrollDirectionDidChange && currentAnimationSpeed > 0) {
             DDLogDebug("Scroll.m: Direction change – cancel scroll.");
-            allowNestedUpdate(&_updateDepth) [_animator cancel];
+            allowNestedReadOrWrite() /// [Sep 2026] `-cancel` can call back into our `_animator` callback (See `kMFAnimationCallbackPhaseCanceled`)
+            [_animator cancel];
             return;
         }
         
@@ -563,7 +560,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         
         [_animator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeftVec, BOOL isRunning, Curve *animationCurve, Vector currentSpeed) {
 
-            /// [Sep 2026] Not using `assertNoNestedUpdate` and `assertRunLoop` inside `_animator startWithParams:` since the callsite already holds those assertions.
+            /// [Sep 2026] Not using `readsAndWritesState()` and `assertRunLoop` inside `_animator startWithParams:` since the callsite already holds those assertions.
 
             /// Validate
             assert(valueLeftVec.x == 0 || valueLeftVec.y == 0);
@@ -791,7 +788,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         } integerCallback:^(Vector distanceDeltaVec, MFAnimationCallbackPhase animationPhase, MFMomentumHint momentumHint) {
 
             assertRunLoop(GlobalEventTapThread.runLoop);
-            assertNoNestedUpdate(&_updateDepth);
+            readsAndWritesState(&_readWriteTracker);
 
             /// This will be called each frame
             
@@ -839,7 +836,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
 
 static void sendScroll(int64_t px, MFDirection scrollDirection, BOOL animated, MFAnimationCallbackPhase animationPhase, MFMomentumHint momentumHint, ScrollConfig *config) {
 
-    /// [Sep 2026] Not using `assertNoNestedUpdate` and `assertRunLoop` since both callsites already hold those assertions.
+    /// [Sep 2026] Not using `readsAndWritesState()` and `assertRunLoop` since both callsites already hold those assertions.
 
     /// Get x and y deltas
     
@@ -908,7 +905,7 @@ typedef enum {
 
 static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputType, MFAnimationCallbackPhase animatorPhase, MFMomentumHint momentumHint, ScrollConfig *config) {
 
-    /// [Sep 2026] Not using `assertNoNestedUpdate` and `assertRunLoop` since this is only called by `sendScroll`, where these assertions are already held
+    /// [Sep 2026] Not using `readsAndWritesState()` and `assertRunLoop` since this is only called by `sendScroll`, where these assertions are already held
 
     /// Init eventPhase
     IOHIDEventPhaseBits eventPhase = kIOHIDEventPhaseUndefined;
@@ -1297,7 +1294,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
 static BOOL _appSwitcherIsOpen = NO;
 
 + (void)appSwitcherModificationHasBeenDeactivated {
-    /// [Sep 2026] If we use this code, think about `assertNoNestedUpdate` and `assertRunLoop`
+    /// [Sep 2026] If we use this code, think about `readsAndWritesState()` and `assertRunLoop`
 
     if (_appSwitcherIsOpen) { /// Not sure if this check is necessary. Should only be called when the appSwitcher is open.
         sendKeyEvent(55, 0, false);

@@ -37,7 +37,7 @@
 
 @implementation DeviceManager
 
-static int _updateDepth = 0;
+static MFReadWriteTracker _readWriteTracker;
 
 # pragma mark - Accessing attached devices
 
@@ -46,10 +46,12 @@ static NSMutableArray<Device *> *_attachedDevices;
 
 + (BOOL)devicesAreAttached {
     assertRunLoop(GlobalEventTapThread.runLoop);
+    readsState(&_readWriteTracker);
     return _attachedDevices.count > 0;
 }
 + (NSArray<Device *> *)attachedDevices {
     assertRunLoop(GlobalEventTapThread.runLoop);
+    readsState(&_readWriteTracker);
     return _attachedDevices;
 }
 
@@ -57,7 +59,7 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 + (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice {
 
     assertRunLoop(GlobalEventTapThread.runLoop);
-    assertNoNestedUpdate(&_updateDepth);
+    readsState(&_readWriteTracker); /// [Sep 2026] Only callout `wrapsIOHIDDevice:` only reads things.
 
     /// NOTE: Tried caching here using `_iohidToAttachedCache`, but it actually makes things slower.
     /// TODO: Remove caching
@@ -90,8 +92,6 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
         //}
         return result;
     }
-    
-
 }
 
 # pragma mark - Lifecycle
@@ -107,14 +107,15 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 
 + (void)deconfigureDevices {
 
-    assertRunLoop(GlobalEventTapThread.runLoop);
-    assertNoNestedUpdate(&_updateDepth);
-
     /// Meant to be called when the app closes
-    
-    for (Device *device in _attachedDevices) {
-//        [PointerSpeed deconfigureDevice:device.iohidDevice];
-    }
+
+    #if 0 /// [Sep 2026] Activate when adding PointerSpeed features
+        assertRunLoop(GlobalEventTapThread.runLoop);
+        readsAndWritesState(&_readWriteTracker);
+        for (Device *device in _attachedDevices) {
+            [PointerSpeed deconfigureDevice:device.iohidDevice];
+        }
+    #endif
 }
 
 # pragma mark - Seize devices (Remove this)
@@ -140,24 +141,26 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 
 + (BOOL)someDeviceHasScrollWheel {
     assertRunLoop(GlobalEventTapThread.runLoop);
+    readsState(&_readWriteTracker);
     return _attachedDevices.count > 0;
 }
 
 + (BOOL)someDeviceHasPointing {
     assertRunLoop(GlobalEventTapThread.runLoop);
+    readsState(&_readWriteTracker);
     return _attachedDevices.count > 0;
 }
 + (BOOL)someDeviceHasUsableButtons {
     /// We ignore MB 1 and MB 2. That's also why it's called "deviceHas**Usable**Buttons", and not just "deviceHasButtons"
     assertRunLoop(GlobalEventTapThread.runLoop);
-    return self.maxButtonNumberAmongDevices > 2;
+    return self.maxButtonNumberAmongDevices > 2; /// [Sep 2026] No `readsState()` etc. since this just forwards to `maxButtonNumberAmongDevices`
 }
 
 static BOOL _maxButtonNumberAmongDevices_IsCached = false;
 
 + (int)maxButtonNumberAmongDevices {
     assertRunLoop(GlobalEventTapThread.runLoop);
-    //assertNoNestedUpdate(&_updateDepth); /// [Sep 2026] Turn off protection, cache flag is kinda part of protected state? But 99% sure this can't corrupt anything
+    readsAndWritesState(&_readWriteTracker);
 
     static MFMouseButtonNumber _result = 0;
     
@@ -183,7 +186,7 @@ static BOOL _maxButtonNumberAmongDevices_IsCached = false;
 static void setupDeviceMatchingAndRemovalCallbacks() {
 
     assertRunLoop(GlobalEventTapThread.runLoop);
-    assertNoNestedUpdate(&_updateDepth);
+    readsAndWritesState(&_readWriteTracker);
 
     /// Create HID Manager
     
@@ -236,7 +239,7 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
 static void handleDeviceMatching(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
 
     assertRunLoop(GlobalEventTapThread.runLoop);
-    assertNoNestedUpdate(&_updateDepth);
+    readsAndWritesState(&_readWriteTracker);
 
     DDLogDebug("New matching IOHIDDevice: %@", device);
     
@@ -256,8 +259,9 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         
         /// Notify
         //[ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
+        allowNestedReadOrWrite() /// [Sep 2026] SwitchMaster reads our state back (`someDeviceHasScrollWheel`, `maxButtonNumberAmongDevices`, etc.)
         [SwitchMaster.shared attachedDevicesChangedWithDevices:_attachedDevices];
-        
+
         ///  Notify other objects
         //[Scroll decide];
         //[ButtonInputReceiver decide];
@@ -306,9 +310,10 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
 static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
 
     assertRunLoop(GlobalEventTapThread.runLoop);
-    assertNoNestedUpdate(&_updateDepth);
+    readsAndWritesState(&_readWriteTracker);
 
-    Device *attachedDevice = [DeviceManager attachedDeviceWithIOHIDDevice:device];
+    Device *attachedDevice;
+    allowNestedReadOrWrite() attachedDevice = [DeviceManager attachedDeviceWithIOHIDDevice:device];
     
     if (attachedDevice == nil) {
         
@@ -326,6 +331,7 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
         
         /// Notify
         //[ReactiveDeviceManager.shared handleAttachedDevicesDidChange];
+        allowNestedReadOrWrite() /// [Sep 2026] SwitchMaster reads our state back (`someDeviceHasScrollWheel`, `maxButtonNumberAmongDevices`, etc.)
         [SwitchMaster.shared attachedDevicesChangedWithDevices:_attachedDevices];
         
         /// Notifiy other objects
