@@ -9,10 +9,11 @@
 
 import Foundation
 
-@MainActor /// [Jun 2025] Don't think this has to be @MainActor but it's easier to just make all the licensing stuff main.
 enum APIRequests { /// [Jun 2025] Using an enum cause ChatGPT told me. No idea if this makes sense.
-    static func sendDictionaryBasedAPIRequest(requestURL: String, args: [String: Any]) async -> (serverResponseDict: [String: Any]?, communicationError: NSError?, urlResponse: URLResponse?) { assert(Thread.isMainThread)
-        
+
+    @LicensingActor static func sendDictionaryBasedAPIRequest(requestURL: String, args: [String: Any]) async -> (serverResponseDict: [String: Any]?, communicationError: NSError?, urlResponse: URLResponse?) {
+        assertRunLoop(licensingRunLoop())
+
         /// Overview:
         ///     Essentially, we send a json dict to a URL, and get a json dict back
         ///         (We also get a `communicationError` back, if the request times out, or the servers response is in an invalid format or something)

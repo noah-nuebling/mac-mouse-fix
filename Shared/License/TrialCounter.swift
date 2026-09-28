@@ -27,26 +27,28 @@
 
 import Cocoa
 
-
-@objc class TrialCounter: NSObject { /// Not annotated with @MainActor since we want `handleUse` to be callable from different threads without overhead, and this doesn't have any `async` functions. (See discussion in `License/README.md`)
+@objc class TrialCounter: NSObject {
     
+    #if IS_HELPER
+
     /// Singleton
     @objc static let shared = TrialCounter()
     
     /// Vars
     private var daily: Timer
-    @Atomic private var hasBeenUsedToday: Bool
+    private var hasBeenUsedToday: Bool
     private var trialIsActive: Bool
     
     /// Init
-    
     @objc static func load_Manual() {
-        /// Need to use loadManual() because the initialization does network calls and is async. So we need initialization to be done way before handleUse() is called for the first time, because otherwise the trialIsActive and hasBeenUsedToday flags will be wrong.
-        ///     -> Don't think this is a watertight protection against this race-condition. TODO: Think about: 1. How to prevent the race cond. 2. Whether the race cond is acceptable.
+        /// [Sep 2026] Old note:
+        ///     Need to use loadManual() because the initialization does network calls and is async. So we need initialization to be done way before handleUse() is called for the first time, because otherwise the trialIsActive and hasBeenUsedToday flags will be wrong.
+        ///         -> Don't think this is a watertight protection against this race-condition. TODO: Think about: 1. How to prevent the race cond. 2. Whether the race cond is acceptable.
         let _ = TrialCounter.shared
     }
     @objc override init() {
-        
+        assertRunLoop(licensingRunLoop())
+
         /// Garbage init
         daily = Timer()
         hasBeenUsedToday = false
@@ -55,20 +57,12 @@ import Cocoa
         /// Init super
         super.init()
         
-        /// Guard not running helper
-        ///     We only want to run the daily timer once, not in both apps
-        ///     But we still might want to use this class in main app to access `lastUseDate` and `daysOfUse`.
-        ///     Feel like it might be problematic to expose this to mainApp.
-        if !runningHelper() { return }
-        
         /// Real init
             
         /// Start an async-context
-        ///     Notes:
-        ///     - Using priority .background because it makes sense?
-        ///     - @MainActor so all Licensing code runs on the main-thread
-        Task.init(priority: .background, operation: { @MainActor in assert(Thread.isMainThread)
-            
+        Task.init(priority: .background, operation: { @LicensingActor in
+            assertRunLoop(licensingRunLoop())
+
             /// Check licensing state
             let licenseState = await GetLicenseState.get()
             
@@ -114,18 +108,21 @@ import Cocoa
                 let nextDay = Date(timeIntervalSinceNow: TimeInterval(secondsPerDay))
                 let nextDayBreak = Calendar.current.startOfDay(for: nextDay)
                 self.daily = Timer(fire: nextDayBreak, interval: TimeInterval(secondsPerDay), repeats: true) { timer in
+                    assertRunLoop(licensingRunLoop())
                     DDLogInfo("Daily trial timer fired")
                     self.hasBeenUsedToday = false
                 }
                 
                 /// Schedule daily timer
                 ///     Not sure if .default or .common is better here. Default might be a little more efficicent but maybe it doesn't work in some cases?
-                RunLoop.main.add(self.daily, forMode: .common)
+                CFRunLoopAddTimer(licensingRunLoop(), self.daily as CFRunLoopTimer, .commonModes)
                 }
             }
         })
     }
-    
+
+    #endif
+
     /// Vars
     /// Notes:
     /// - Storing the daysOfUse in SecureStorage so it doesn't get reset on uninstall by apps like AppCleaner by Freemacsoft.
@@ -140,6 +137,7 @@ import Cocoa
             SecureStorage.set("License.trial.daysOfUse", value: newValue)
         }
     }
+    #if IS_HELPER
     @objc static var lastUseDate: Date? {
         get {
             SecureStorage.get("License.trial.lastUseDate") as? Date
@@ -151,41 +149,35 @@ import Cocoa
             //commitConfig()
         }
     }
+    #endif
     
     /// Interface for Helper
+    #if IS_HELPER
     @objc func handleUse() {
-        
-        /// Debug
+        assertRunLoop(licensingRunLoop())
+
+        /// Log
         DDLogDebug("TrialCounter.handleUse() called. trialIsActive: \(trialIsActive) | hasBeenUsedToday: \(hasBeenUsedToday) | lastUseDate: \(TrialCounter.lastUseDate.map { String(describing: $0) } ?? "<nil>") | daysOfUse: \(TrialCounter.daysOfUse)")
-        
-        /// Guard not running helper
-        assert(runningHelper())
         
         /// Only react if trial is active
         if !trialIsActive { return }
         
         /// Only react to use once a day
         if hasBeenUsedToday { return }
-        
-        /// Start an async context
+
+        /// Update state
         /// Notes:
-        /// - Old note: Dispatching to another queue here because there was an obscure concurrency crash when trying to debug something. This is not necessary for normal operation but it shouldn't hurt.
-        ///     Update: (Oct 2024) now using `Task` instead of dispatch queue so we can use async/await
-        /// - Update: Now using @MainActor so all licensing code runs on the mainthread. (Hope that won't bring back the 'obscure concurrency crash'?)
-        
-        Task.init(priority: .background, operation: { @MainActor in assert(Thread.isMainThread)
-            
-            /// Update state
-            ///     Notes:
-            ///     - Should we validate that the date has actually changed?
-            ///     - (Oct 2024) This is shared mutable state. Can there be race conditions? How bad would their effect be? I saw we are already wrapping  self.hasBeenUsedToday with @Atomic, so we seem to have given this some thought, but it's not documented.
-            self.hasBeenUsedToday = true
-            TrialCounter.lastUseDate = Date(timeIntervalSinceNow: 0.0)
-            TrialCounter.daysOfUse += 1
+        ///     - Should we validate that the date has actually changed?
+        ///     - Claude's fix: [Sep 2026] "Used to be set inside deferred Task. (No longer necessary with `assertRunLoop(licensingRunLoop())` above) But then a second `handleUse()` call before the Task ran would also pass the check above, and the day would be counted twice."
+        TrialCounter.lastUseDate = Date(timeIntervalSinceNow: 0.0)
+        TrialCounter.daysOfUse += 1
+        self.hasBeenUsedToday = true
+
                 
-            /// Display UI & lock down helper if necessary
-            ///     Note: In this code branch, we already know that the app is not licensed, that the trial is active, and that, therefore, we'll need to load the licenseConfig to obtain the trialDuration -> Perhaps we should pass this information into the called function? As it is, the called function has to re-gather this info independently.
-            License.checkAndReact(triggeredByUser: false)
-        })
+        /// Display UI & lock down helper if necessary
+        ///     Note: In this code branch, we already know that the app is not licensed, that the trial is active, and that, therefore, we'll need to load the licenseConfig to obtain the trialDuration -> Perhaps we should pass this information into the called function? As it is, the called function has to re-gather this info independently.
+        License.checkAndReact(triggeredByUser: false)
+        
     }
+    #endif
 }

@@ -9,19 +9,21 @@
 
 import CryptoKit
 
-@MainActor
 @objc class GetLicenseState : NSObject {
 
     /// -> This class retrieves instances of the `MFLicenseState` dataclass
-    
+
+    #if IS_MAIN_APP
     static func get_Preliminary(_callingFunc: String = #function) -> MFLicenseState {
-        
+
         /// This is a quick, preliminary way to get the licenseState, that's intended to render the UI immediately upon app-startup with probably-correct data.
         /// Note:
         ///     We set `enableOfflineValidation: false`when getting the cached licenseState so we don't have to retrieve the actual `licenseKey` and `deviceUID` here. I guess as an optimization? Or minimization of shared state to avoid race conditions? Not totally sure this makes sense.
         ///         This could lead to UI weirdness if we end up in a situation where the preliminary cache access always says the app .isLicensed but the subsequent validated cache access always says that  .isLicensed == false. We are trying to avoid this by deleting the cache after the offline validation fails. [Feb 2025]
         ///         To avoid such UI weirdness, the goal should be to keep the result of `get_Preliminary()` in sync with `get()` as much as feasible.
-        
+
+        assertRunLoop(licensingRunLoop())
+
         let result = self.licenseStateFromCache(licenseKey: "", deviceUID: nil, enableOfflineValidation: false) ??
                      self.licenseStateFromFallback
         
@@ -29,9 +31,10 @@ import CryptoKit
         
         return result
     }
-    
-    public static func get(_callingFunc: String = #function) async -> MFLicenseState { assert(Thread.isMainThread)
-        
+    #endif
+
+    @LicensingActor public static func get(_callingFunc: String = #function) async -> MFLicenseState {
+
         /// This function determines the current licenseState of the application.
         ///     To do this, it checks the `licenseServer`, `cache`, `fallback` values, and `special conditions`
         ///
@@ -39,13 +42,9 @@ import CryptoKit
         ///     On offline validation:
         ///         This function supports offline validation! It will first try to retrieve the `MFLicenseState` from a cache - validating it against the licenseKey using a hash. Only if that fails will it make an internet connection to validate the license. (As of Oct 2024)
         ///         For a basic explanation of our offline-validation architecture, read `GetLicenseConfig.licenseConfigFromServer()`
-    
-        ///     On thread safety: [Oct 2024]
-        ///         This function accesses the following shared state: 1. `SecureStorage` values 2. cached values (which are stored in `config.plist`).
-        ///             > As long as `Config` and `SecureStorage` accesses are thread safe, I thinkk this function should be relatively thread-safe, too?  In that case, the only race-condition I can see is that we might unnecessarily hit the server multiple times if this function is called multiple times before the cache can be filled. But that wouldn't be catastrophic.
-        ///          > Otherwise we might want to ensure that all this code is always running on the same thread/queue, (probably main thread would be fine) or if that's not possible - use locks. (Update: Locks can't be used in async contexts in Swift, but the Swift package `groue/Semaphore` - which we discussed elsewhere - might fix this.)
-        ///          Update: [Feb 2025] We're now using @MainActor to run all the licensing code on the main thread. Why? – I think this might help prevent race conditions. However, while this code `await`s, the shared state could still change under us, so not sure how much it helps.
         
+        assertRunLoop(licensingRunLoop())
+
         var result: MFLicenseState?
         
         /// Check if the license key is valid
@@ -55,10 +54,7 @@ import CryptoKit
             /// Get key
             ///     from secure storage
 
-            let key: String? = await MFCFRunLoopPerform_awaitable(_secureStorageRunLoop()) {
-                return SecureStorage.get("License.key") as? String
-            }
-            guard let key else {
+            guard let key = SecureStorage.get("License.key") as? String else {
 
                 /// No key found in secure storage
                 
@@ -75,11 +71,9 @@ import CryptoKit
             /// 1. Ask cache
             let deviceUID = get_mac_address()
             if deviceUID == nil { DDLogWarn("GetLicenseState: Failed to get deviceUID for offline validation. (Offline validation should still work normally as long as we *always consistently* fail to retrieve the deviceUID on this device. (Because then we'll always consistently pass nil))") }
-            result = await MFCFRunLoopPerform_awaitable(configRunLoop(), {
-                self.licenseStateFromCache(licenseKey: key,
-                                           deviceUID: deviceUID,
-                                           enableOfflineValidation: true)
-            })
+            result = self.licenseStateFromCache(licenseKey: key,
+                                                deviceUID: deviceUID,
+                                                enableOfflineValidation: true)
 
             if (result == nil) {
                 
@@ -134,24 +128,26 @@ import CryptoKit
         /// Return result
         return result
     }
-    
+
     /// Server/cache/fallback/overrides interfaces
     
-    public static func licenseStateFromOverrides() async -> MFLicenseState? { assert(Thread.isMainThread)
-        
+    @LicensingActor public static func licenseStateFromOverrides() async -> MFLicenseState? {
+
         /// Old notes:
         ///     - (This note is totally outdated as of Oct 2024 ->) Instead of using a licenseReason, we could also pass that info through the error. That might be better since we'd have one less argument and the the errors can also contain dicts with custom info. Maybe you could think about the error as it's used currently as the "unlicensed reason" (Update: LicenseReason has been removed and merged into MFLicenseTypeInfo. Current system is nice. No need to merge everything into errors I think.)
         
         /// Implement `FORCE_LICENSED` flag
         ///     See License.swift comments for more info on compilation flags.
-        
+
+        assertRunLoop(licensingRunLoop())
+
         #if FORCE_LICENSED
         return MFLicenseState(isLicensed: true, freshness: kMFValueFreshnessFresh, licenseTypeInfo: MFLicenseTypeInfoForce())
         #endif
         
         /// Implement freeCountries
         
-        if let regionCode = LicenseUtility.currentRegionCode() { /// ChatGPT said currentRegionCode() might not be thread safe? I don't think we should worry about that, but not entirelyyy sure.
+        if let regionCode = LicenseUtility.currentRegionCode() {
             let config = await GetLicenseConfig.get() /// This makes an internet connection - therefore we should probably check this 'override' after the others - to avoid any non-essential internet connections.
             let isFreeCountry = config.freeCountries.contains(regionCode)
             if isFreeCountry {
@@ -279,7 +275,7 @@ import CryptoKit
     }
     
     private static func licenseStateFromCache(licenseKey: String, deviceUID: Data?, enableOfflineValidation: Bool) -> MFLicenseState? {
-            assertRunLoop(configRunLoop())
+            assertRunLoop(licensingRunLoop())
 
             /// Note: If the argument `enableOfflineValidation` is set to `false`, then all the other arguments are ignored - they only exist for the offlineValidation
             
@@ -359,8 +355,9 @@ import CryptoKit
             return result
     }
 
-    public static func licenseStateFromServer(key: String, incrementActivationCount: Bool, licenseConfig: MFLicenseConfig) async -> (licenseState: MFLicenseState?, error: NSError?) { assert(Thread.isMainThread)
-    
+    @LicensingActor public static func licenseStateFromServer(key: String, incrementActivationCount: Bool, licenseConfig: MFLicenseConfig) async -> (licenseState: MFLicenseState?, error: NSError?) {
+        assertRunLoop(licensingRunLoop())
+
         /// This function tries to retrieve the MFLicenseState from the known licenseServers.
         ///     If we don't receive clear information from any of the licenseServers about whether the license is valid or not, we return `nil`
         ///
@@ -387,11 +384,9 @@ import CryptoKit
         
         /// Make sure we're only incrementing activation count from the main app
         ///     It's really bad if we accidentally increase it during normal use.
-        if !runningMainApp() &&
-            incrementActivationCount
-        {
-            fatalError();
-        }
+        #if IS_HELPER
+            if incrementActivationCount { fatalError(); }
+        #endif
         
         enum LicenseValidityFromServer {
             case valid   ///  The server said that the license is valid

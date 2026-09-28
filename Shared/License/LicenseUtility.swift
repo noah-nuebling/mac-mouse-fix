@@ -9,14 +9,14 @@
 
 import Cocoa
 
-func MFCFRunLoopPerform_awaitable<T>(_ runLoop: CFRunLoop, _ body: @escaping () -> T) async -> T {
-
-    /// Run a block on `runLoop` and `await` it from an `async` Swift function [Sep 2026]
-
-    await withCheckedContinuation { continuation in
-        MFCFRunLoopPerform(runLoop, nil) { continuation.resume(returning: body()) }
-    }
-}
+//func MFCFRunLoopPerform_awaitable<T>(_ runLoop: CFRunLoop, _ body: @escaping () -> T) async -> T { @noGCDCleanup remove this
+//
+//    /// Run a block on `runLoop` and `await` it from an `async` Swift function [Sep 2026]
+//
+//    await withCheckedContinuation { continuation in
+//        MFCFRunLoopPerform(runLoop, nil) { continuation.resume(returning: body()) }
+//    }
+//}
 
 func MFCatch<R, E>(_ workload: () throws(E) -> R) -> (R?, E?) {
     
@@ -62,7 +62,7 @@ func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
     return (result, error)
 }
 
-@objc class LicenseUtility: NSObject { /// [Jun 2025] Not annotating with @MainActor since all the functions here are stateless, 'pure' functions, and annotating with @MainActor makes Swift compiler force us to also annotate other stuff. (See discussion in License/README.md)
+@objc class LicenseUtility: NSObject { /// [Sep 2026] Omitting `assertRunLoop(licensingRunLoop())` annotations since all functions in here are pure.
     
     @objc static func buyMMF(licenseConfig: MFLicenseConfig, locale: Locale, useQuickLink: Bool) {
         
@@ -162,7 +162,9 @@ func MFCatch<R, E>(_ workload: () async throws(E) -> R) async -> (R?, E?) {
         ///     - I just found the private `NSLocale.preferredLocale`. I think it that's what actually returns the locale set in System settings, while `NSLocale.currentLocale` (Aka `Locale.current`) only returns locales supported by the currently running app (I think)
         ///         (Idea: Maybe `NSLocale.currentLocale` contains some 'frankenstein' locale that the current app can support?
         ///         > TODO: Consider updating uses of `NSLocale.preferredLocale`. (But I think `Locale.current.region?.identifier` has been working fine here?)
-        
+
+        assertRunLoop(licensingRunLoop()) /// [Sep 2026] Check based on old note: ChatGPT said currentRegionCode() might not be thread safe? I don't think we should worry about that, but not entirelyyy sure.
+
         let result: String?
         if #available(macOS 13, *) {
             result = Locale.current.region?.identifier

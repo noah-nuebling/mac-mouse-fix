@@ -11,15 +11,14 @@
 /// Meta: [Apr 9 2025] While resolving conflict from merging master into feature-strings-catalog branch, it looks like at some point this file was renamed from `Shared/License/LicenseConfig.swift` to `Shared/License/Retrieve/GetLicenseConfig.swift` but git doesn't understand it's the same file.
 ///
 
-@MainActor
 @objc class GetLicenseConfig : NSObject {
     
     /// -> This class retrieves instances of the `MFLicenseConfig` dataclass
     
     /// Main interface
-    
-    @objc static func get(_callingFunc: String = #function) async -> MFLicenseConfig { assert(Thread.isMainThread)
-    
+    @LicensingActor @objc static func get(_callingFunc: String = #function) async -> MFLicenseConfig {
+        assertRunLoop(licensingRunLoop())
+
         /// Remember:
         ///     For offline validation to work - only call this function on code-paths where it's absolutely necessary.
         ///     (More below in our explanation of the *offline validation strategy*)
@@ -30,21 +29,26 @@
         
         return result
     }
-    
+
+    #if IS_MAIN_APP
     @objc static func get_Preliminary(_callingFunc: String = #function) -> MFLicenseConfig {
-    
+        assertRunLoop(licensingRunLoop())
+
         let result = licenseConfigCached() ?? licenseConfigFallback()
         
         DDLogInfo("GetLicenseConfig.get_Preliminary(): \(result)\ncaller: \(_callingFunc)")
         
         return result
     }
-    
+    #endif
+
     /// Server/cache/fallback interfaces
-    
+
     @Atomic private static var inMemoryCache: MFLicenseConfig? = nil /// We should really be using a semaphore or mutex, but Swift async doesn't allow that (bc Swift is stinky). Using atomic should be ok. More on this below. (Oct 2024)
-    private static func licenseConfigFromServer() async -> MFLicenseConfig? { assert(Thread.isMainThread)
-    
+    @LicensingActor private static func licenseConfigFromServer() async -> MFLicenseConfig? {
+        assertRunLoop(licensingRunLoop())
+
+        /// @noGCDCleanup reasses/delete the @Atomic above and the notes about thread safety now that we have `assertRunLoop(licensingRunLoop())`
         ///     Explanation of our offline validation strategy: [Nov 2024]
         ///         We wanna do offline validation. That means we want to avoid internet connections in our licensing code unless absolutely necessary.
         ///             We do this to protect user's privacy.
@@ -139,9 +143,10 @@
         /// Return
         return result
     }
-    
+
     private static func licenseConfigCached() -> MFLicenseConfig? {
-        
+        assertRunLoop(licensingRunLoop())
+
         /// Get underlying cache dict
         guard let cachedDict = self._licenseConfigDictCache, cachedDict.count > 0 else {
             DDLogError("GetLicenseConfig: Failed to get MFLicenseConfig dict from cache. (Probably because there is no cache entry or it's empty or it has the wrong type.)")
@@ -160,9 +165,10 @@
         /// Return
         return instance
     }
-    
+
     private static func licenseConfigFallback() -> MFLicenseConfig {
-        
+        assertRunLoop(licensingRunLoop())
+
         do {
             let url = Bundle.main.url(forResource: "fallback_licenseinfo_config", withExtension: "json")! /// Do forced cast here because we need some fallback. If this fails somethings totally wrong, so we should crash
             let data = try Data(contentsOf: url, options: [])
@@ -174,21 +180,17 @@
             fatalError("Loading licenseConfig from fallback failed (this should never happen). Error:\n\(error).")
         }
     }
-    
+
     /// Underlying on-disk cache
     
     private static var _licenseConfigDictCache: NSDictionary? {
-        
+
         /// Cache for the JSON config file we download from the website
         ///     We could store this as JSON bytes, JSON text or `encodeWithCoder:` bits. But storing it as a dict makes the config.plist the most readable, which is nicer for debuggability.
         ///         Howeverrrr, when storing it in a readable manner, that might make hacks really easy when we do offline validation, because you could just increase the trialDays to 999? Should keep this in mind and make sure it's not super easy to hack.
         
-        /// On thread safety:
-        ///     The config cache is shared mutable state, which might lead to a race condition!
-        ///     I think if `config()` `setConfig()` and `commitConfig()` are threadsafe then this should be threadsafe as well?
-        
         set {
-            
+            assertRunLoop(licensingRunLoop())
             DDLogDebug("GetLicenseConfig: Storing underlying cache")
             
             guard let newValue = newValue else {
@@ -201,7 +203,7 @@
             commitConfig()
         }
         get {
-            
+            assertRunLoop(licensingRunLoop())
             DDLogDebug("GetLicenseConfig: Retrieving underlying cache")
             
             let cached = config("License.configCache")

@@ -7,20 +7,20 @@
 // --------------------------------------------------------------------------
 //
 
-@MainActor
 @objc class GetTrialState : NSObject {
     
     /// -> This class retrieves instances of the `MFTrialState` dataclass
 
     @objc static func get(_ licenseConfig: MFLicenseConfig) -> MFTrialState {
-        
-#if FORCE_EXPIRED
-        let daysOfUse = licenseConfig.trialDays + 1
-#elseif FORCE_NOT_EXPIRED
-        let daysOfUse = 0
-#else
-        let daysOfUse = TrialCounter.daysOfUse /// [Jun 2025] This complains about MainActor isolation if we don't make the enclosing function @MainActor.
-#endif
+        assertRunLoop(licensingRunLoop())
+
+        #if FORCE_EXPIRED
+            let daysOfUse = licenseConfig.trialDays + 1
+        #elseif FORCE_NOT_EXPIRED
+            let daysOfUse = 0
+        #else
+            let daysOfUse = TrialCounter.daysOfUse
+        #endif
         
         let trialDays = licenseConfig.trialDays
         let trialIsActive = daysOfUse <= trialDays

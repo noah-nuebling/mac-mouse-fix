@@ -7,7 +7,9 @@
 // --------------------------------------------------------------------------
 //
 
-/// @noGCDCleanup Review licensing module and fully transition over to thread asserts and thread hops where necessary. 
+/// @noGCDCleanup Test licensing module now that it's on `licensingRunLoop()`
+/// @noGCDCleanup Test on macOS 10.15 (Opus 5.5 isn't sure about SerialExecutor back deployment - but another instance did seem sure - will test anyways before release)
+/// @noGCDCleanup All the `await`s can lead to reentrancy bugs. Maybe audit for that.
 
 /// This is supposed to be a thin wrapper  around `GetLicenseState.swift`, `GetLicenseConfig.swift` and `GetTrialState.swift`.
 
@@ -25,24 +27,66 @@
 
 import Cocoa
 
+// MARK: - LicensingActor
+
+/// LicensingActor - Swift Concurrency global actor which the Licensing code runs on
+///
+///     Written by Opus 5.5 [Sep 2026]
+///
+///     Usage: [Sep 2026] (By Opus 5.5)
+///         Only annotate `async` functions and `Task`s with `@LicensingActor` – that's what makes them run on `licensingRunLoop()`, including after each `await`. (Without it, Swift runs `async` functions on its background thread pool.)
+///         Don't annotate whole classes or sync functions – sync functions run on their caller's thread anyways, and annotating them makes Swift warn about every caller that's not on LicensingActor (-> `nonisolated` everywhere). We check sync functions with `assertRunLoop()` instead.
+///
+///     On `priority:`:
+///         `priority:` param passed to Task.init() on this Actor is ignored - keeping the params in case we ever re-enable [Sep 2026]
+
+func licensingRunLoop() -> CFRunLoop {
+    #if IS_MAIN_APP
+        return CFRunLoopGetMain();
+    #elseif IS_HELPER
+        return GlobalEventTapThread.runLoop();
+    #endif
+}
+
+@globalActor actor LicensingActor {
+    static let shared = LicensingActor()
+    private static let executor = _LicensingExecutor()
+    nonisolated var unownedExecutor: UnownedSerialExecutor { Self.executor.asUnownedSerialExecutor() }
+}
+
+final class _LicensingExecutor: SerialExecutor {
+    func enqueue(_ job: UnownedJob) {
+        let executor = asUnownedSerialExecutor()
+        MFCFRunLoopPerform(licensingRunLoop(), nil) { job.runSynchronously(on: executor) }
+    }
+    func asUnownedSerialExecutor() -> UnownedSerialExecutor {
+        UnownedSerialExecutor(ordinary: self)
+    }
+}
+
+/// Opus 5.5: [Sep 2026] The licensing dataclasses are immutable (all properties are `readonly`), so they're safe to pass between threads.
+///     (Needed since the LicensingActor hands them to the mainThread for UI – e.g. `TrialNotificationController`)
+extension MFLicenseConfig:  @unchecked Sendable {}
+extension MFLicenseState:   @unchecked Sendable {}
+extension MFTrialState:     @unchecked Sendable {}
+
 // MARK: - Main class
 
-@MainActor
 @objc class License: NSObject {
-    
+
     // MARK: Lvl 3
-    
+
+    #if IS_HELPER
     @objc static func checkAndReact(triggeredByUser: Bool) {
-        
+
         /// This runs a check and then if necessary it:
         /// - ... shows some feedback about the licensing state to the user
         /// - ... locks down the helper
         
         /// Start an async-context
-        ///     Notes:
-        ///     - @MainActor so all licensing code runs on the main thread.
-        Task.init(priority: (triggeredByUser ? .userInitiated : .background), operation: { @MainActor in assert(Thread.isMainThread)
-            
+        Task.init(priority: (triggeredByUser ? .userInitiated : .background), operation: { @LicensingActor in
+            assertRunLoop(licensingRunLoop())
+
             /// Get licensing state
             let licenseState = await GetLicenseState.get()
             
@@ -71,19 +115,12 @@ import Cocoa
                         
                         /// Display more complex UI
                         ///     This is unused so far
-                        
-                        /// Validate
-                        assert(runningMainApp())
+                        ///     Opus 5.5: [Sep 2026] Was meant for the mainApp (used to `assert(runningMainApp())` here), but this function is Helper-only now.
+                        assert(false)
                         
                     } else {
                         
                         /// Not triggered by user -> the users workflow is disruped -> make it as short as possible
-                        
-                        /// Validate
-                        assert(runningHelper())
-                        
-                        /// Only compile if helper (Otherwise there are linker errors)
-                        #if IS_HELPER
                         
                         /// Show trialNotification
                         DispatchQueue.main.async {
@@ -92,14 +129,15 @@ import Cocoa
                         
                         /// Lock helper
                         SwitchMaster.shared.lockDown()
-                        #endif
                         
                     }
                 }
             }
         })
     }
-    
+    #endif
+
+    #if IS_MAIN_APP
     static func checkLicenseAndTrial_Preliminary() -> (licenseConfig: MFLicenseConfig, licenseState: MFLicenseState, trialState: MFTrialState) {
 
         /// This gets *preliminary* values for the 3 pieces of license-related data we want to share throughout the app:
@@ -116,8 +154,8 @@ import Cocoa
         /// Sidenote:
         ///     - The preliminary values are obtained and returned from this function all-at-once. For the proper values, they should be obtained only as needed in order to avoid unnecessary internet connections.
         
-        assert(Thread.isMainThread)
-        
+        assertRunLoop(licensingRunLoop())
+
         let licenseState = GetLicenseState.get_Preliminary()
         let licenseConfig = GetLicenseConfig.get_Preliminary()
         let trialState = GetTrialState.get(licenseConfig)
@@ -125,7 +163,9 @@ import Cocoa
         return (licenseConfig, licenseState, trialState)
         
     }
-    
+    #endif
+
+    #if false
     func gumroad_decrementUsageCount(key: String, accessToken: String, completionHandler: @escaping (_ serverResponseDict: [String: Any]?, _ error: NSError?, _ urlResponse: URLResponse?) -> ()) {
         
         /// Meant to free a use of the license when the user deactivates it
@@ -134,5 +174,6 @@ import Cocoa
         
         fatalError()
     }
+    #endif
 }
 
