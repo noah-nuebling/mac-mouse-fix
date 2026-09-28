@@ -97,6 +97,7 @@ Mac Mouse Fixを世界中の人々に届けていただき、ありがとうご�
 
 **9月 2026**
 
+- 🇺🇸&nbsp;Albert&nbsp;C&nbsp;Lee
 - 🇬🇧&nbsp;Torin&nbsp;Cooper&nbsp;Bennun - "3 years (and counting) of minimal mouse frustration! Thank you."
 - 🇨🇿&nbsp;Matej&nbsp;Veselovsky
 - 🇦🇲&nbsp;Kotan - "Thank you so much for this great app!"
