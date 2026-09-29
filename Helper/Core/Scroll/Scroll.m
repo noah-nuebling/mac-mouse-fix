@@ -907,12 +907,14 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
 
     /// [Sep 2026] Not using `readsAndWritesState()` and `assertRunLoop` since this is only called by `sendScroll`, where these assertions are already held
 
-    /// Init eventPhase
-    IOHIDEventPhaseBits eventPhase = kIOHIDEventPhaseUndefined;
-    if (animatorPhase != kMFAnimationCallbackPhaseNone) {
+    if (animatorPhase == kMFAnimationCallbackPhaseStoppedBeforeStart) return;
+
+    IOHIDEventPhaseBits eventPhase;
+    if (animatorPhase == kMFAnimationCallbackPhaseNone)
+        eventPhase = kIOHIDEventPhaseUndefined; /// [Sep 2026] If we're not sending outputEvents through the animator
+    else
         eventPhase = [TouchAnimator IOHIDPhaseWithAnimationCallbackPhase:animatorPhase];
-    }
-    
+
     /// Debug
     if (runningPreRelease()) {
         
@@ -937,7 +939,9 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         /// --- GestureScroll ---
         
         if (!config.animationCurveParams.sendMomentumScrolls) {
-            
+
+            mfassert(false, @""); /// Unused. IIRC this was used in early MMF 3 betas but felt bad or something. Not sure. [Sep 2026]
+
             if (eventPhase != kIOHIDEventPhaseEnded) {
                 
                 /// Post event

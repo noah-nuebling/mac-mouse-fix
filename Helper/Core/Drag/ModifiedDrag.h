@@ -82,8 +82,8 @@ typedef struct {
     + (void)handleBecameInUse;
     + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY;
     + (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancel;
-    + (void)suspend; /// See OutputCoordinator
-    + (void)unsuspend;
+    //+ (void)suspend; /// See OutputCoordinator
+    //+ (void)unsuspend;
 @end
 
 /// Modified Drag Declaration

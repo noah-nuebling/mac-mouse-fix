@@ -386,8 +386,7 @@ static void processCoalescedDeltaEvent(double deltaXSum, double deltaYSum, CGPoi
 }
 
 static void processCoalescedDeactivationEvent(CoalescableEvent_Deactivation *deactivationEvent) {
-    if (deactivationEvent)
-        [_drag.outputPlugin handleDeactivationWhileInUseWithCancel: deactivationEvent.cancelled];
+    if (deactivationEvent) [_drag.outputPlugin handleDeactivationWhileInUseWithCancel: deactivationEvent.cancelled];
 }
 
 static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGPoint pointerLocation) {

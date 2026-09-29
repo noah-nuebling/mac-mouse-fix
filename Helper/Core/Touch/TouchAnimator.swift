@@ -142,30 +142,18 @@ class TouchAnimator: TouchAnimatorBase {
         ///     and don't update animationPhase from `start` to `continue`
         ///     Also don't update lastAnimationPhase
         
-        if (isZeroVector(integerAnimationValueDelta)
-            && !isLastDisplayLinkCallback) {
-            
+        if (isZeroVector(integerAnimationValueDelta) && !isLastDisplayLinkCallback) {
+
             /// Log
             DDLogDebug("HNGG Skipped TouchAnimator callback due to 0 delta.")
             
         } else {
-        
-            /// Check if simultaneously start and end
-            ///     There is similar code in superclass. Update that it when you change this.
-            
-            let isEndAndNoPrecedingDeltas =
-                isLastDisplayLinkCallback
-                && !thisAnimationHasProducedDeltas
             
             /// Call callback
-            var phase = kMFAnimationCallbackPhaseNone
-            if (!isEndAndNoPrecedingDeltas) { /// Skip `end` phase callbacks if there have been no deltas.
-                phase = TouchAnimator.callbackPhase(hasProducedDeltas: thisAnimationHasProducedDeltas, isLastCallback: isLastDisplayLinkCallback)
-                callback(integerAnimationValueDelta, phase, momentumHint)
-            }
+            let phase = TouchAnimator.callbackPhase(hasProducedDeltas: thisAnimationHasProducedDeltas, isLastCallback: isLastDisplayLinkCallback)
+            callback(integerAnimationValueDelta, phase, momentumHint)
             
             /// Debug
-            
             DDLogDebug("TouchAnimator callback with delta: \(integerAnimationValueDelta), phase: \(phase), momentumHint: \(momentumHint)")
             
             /// Update hasProducedDeltas

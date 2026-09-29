@@ -31,44 +31,32 @@ import QuartzCore
     
     /// Conversion
     
-    @objc static func callbackPhase(hasProducedDeltas: Bool, isLastCallback: Bool) -> MFAnimationCallbackPhase {
-        
-        assert(!(!hasProducedDeltas && isLastCallback))
-        
-        if isLastCallback {
-            return kMFAnimationCallbackPhaseEnd
-        } else if !hasProducedDeltas {
-            return kMFAnimationCallbackPhaseStart
-        } else {
-            return kMFAnimationCallbackPhaseContinue
-        }
-        
+    internal static func callbackPhase(hasProducedDeltas: Bool, isLastCallback: Bool) -> MFAnimationCallbackPhase {
+
+        if      !isLastCallback && !hasProducedDeltas { return kMFAnimationCallbackPhaseStart }
+        else if !isLastCallback && hasProducedDeltas  { return kMFAnimationCallbackPhaseContinue }
+        else if isLastCallback && hasProducedDeltas   { return kMFAnimationCallbackPhaseEnd }
+        else if isLastCallback && !hasProducedDeltas  { return kMFAnimationCallbackPhaseStoppedBeforeStart }
+        else                                          { fatalError() }
     }
-    
+
     @objc static func IOHIDPhase(animationCallbackPhase: MFAnimationCallbackPhase) -> IOHIDEventPhaseBits {
-        
+
         switch animationCallbackPhase {
-            
-        case kMFAnimationCallbackPhaseStart:
-            return IOHIDEventPhaseBits(kIOHIDEventPhaseBegan)
-        case kMFAnimationCallbackPhaseContinue:
-            return IOHIDEventPhaseBits(kIOHIDEventPhaseChanged)
-        case kMFAnimationCallbackPhaseEnd:
-            return IOHIDEventPhaseBits(kIOHIDEventPhaseEnded)
-        case kMFAnimationCallbackPhaseCanceled:
-            return IOHIDEventPhaseBits(kIOHIDEventPhaseEnded) /// `Canceled` maps to `Ended`. Real trackpad never sends `kIOHIDEventPhaseCancelled`, except when resting fingers and then lifting them off without beginning a scroll, which we're not interested in simulating. [Jul 2025]
-        default:
-            fatalError()
+        case kMFAnimationCallbackPhaseNone:               return IOHIDEventPhaseBits(kIOHIDEventPhaseUndefined);
+        case kMFAnimationCallbackPhaseStart:              return IOHIDEventPhaseBits(kIOHIDEventPhaseBegan)
+        case kMFAnimationCallbackPhaseContinue:           return IOHIDEventPhaseBits(kIOHIDEventPhaseChanged)
+        case kMFAnimationCallbackPhaseEnd:                return IOHIDEventPhaseBits(kIOHIDEventPhaseEnded)
+        case kMFAnimationCallbackPhaseCanceled:           return IOHIDEventPhaseBits(kIOHIDEventPhaseEnded)     /// `Canceled` maps to `Ended`. Real trackpad never sends `kIOHIDEventPhaseCancelled`, except when resting fingers and then lifting them off without beginning a scroll, which we're not interested in simulating. [Jul 2025]
+        default:                                          fatalError()
         }
     }
-    
+
     /// Constants
     
     let maxAnimationDuration = 1.5 /*5.0*/ /// Explanation below. TODO: Move this into ScrollConfig.
     
     /// Vars - Init
-
-
     @objc let displayLink: DisplayLink
     /*@Atomic*/ var clientCallback: UntypedAnimatorCallback?
     /// ^ This is constantly accessed by subclassHook() and constantly written to by startWithUntypedCallback(). Becuase Swift is stinky and not thread safe, the app will sometimes crash, when this property is read from and written to at the same time. So we're using @Atomic propery wrapper
@@ -322,73 +310,37 @@ import QuartzCore
     }
     
     /// Cancel
-    
+
     @objc func cancel() {
-        cancel(forAutoMomentumScroll: false)
-    }
-    
-    @objc(cancel_forAutoMomentumScroll:) func cancel(forAutoMomentumScroll: Bool) {
         
         assertRunLoop(displayLink.runLoop);
         readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
-        do {
 
-            /// Get info
-            /// Notes:
-            ///   - Checking for isRunning would be obsolete if we just set `self.thisAnimationHasProducedDeltas = false` when stopping. But maybe that has other side effects that we don't want? Edit: Don't think this is true anymore
-            ///   - Maybe we could just return if wasRunning is false. For performance. Don't think self.stop_Unsafe should do anything if wasRunning is false.
-            allowNestedReadOrWrite_Begin(from: .readsAndWritesState, readWriteTracker)
-            let wasRunning = self.isRunning_Unsafe
-            allowNestedReadOrWrite_End(from: .readsAndWritesState, readWriteTracker)
-            let hadProducedDeltas = self.thisAnimationHasProducedDeltas
-            
-            /// Debug
-            DDLogDebug("TouchAnimator: cancel_forAutoMomentumScroll called. wasRunning: \(wasRunning), hadProducedDeltas: \(hadProducedDeltas), forAutoMomentumScroll: \(forAutoMomentumScroll), callback: \(String(describing: self.clientCallback)), lastMomentumHint: \(self.lastMomentumHint)")
-            
-            /// Stop displayLink
-            self.stop_Unsafe()
+        /// Get info
+        /// Notes:
+        ///   - Checking for isRunning would be obsolete if we just set `self.thisAnimationHasProducedDeltas = false` when stopping. But maybe that has other side effects that we don't want? Edit: Don't think this is true anymore
+        ///   - Maybe we could just return if wasRunning is false. For performance. Don't think self.stop_Unsafe should do anything if wasRunning is false.
+        allowNestedReadOrWrite_Begin(from: .readsAndWritesState, readWriteTracker)
+        let wasRunning = self.isRunning_Unsafe
+        allowNestedReadOrWrite_End(from: .readsAndWritesState, readWriteTracker)
+        let hadProducedDeltas = self.thisAnimationHasProducedDeltas
 
-            /// Call callback
-            assert(!wasRunning || self.clientCallback is AnimatorCallback) /// Why did we use ? intead of ! in`self.clientCallback as? AnimatorCallback` below? Asserting here because I think that might have been a mistake, but I don't wanna cause crashes in production.
-            if wasRunning, let callback = self.clientCallback as? AnimatorCallback {
-                
-                if hadProducedDeltas {
-                    DDLogDebug("TouchAnimator: Sending cancel events")
+        /// Debug
+        DDLogDebug("TouchAnimator: cancel_forAutoMomentumScroll called. wasRunning: \(wasRunning), hadProducedDeltas: \(hadProducedDeltas), callback: \(String(describing: self.clientCallback)), lastMomentumHint: \(self.lastMomentumHint)")
 
-                    allowNestedReadOrWrite_Begin(from: .readsAndWritesState, readWriteTracker); /// [Sep 2026] Allow this since it happens at the end of `cancel()`
-                    callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseCanceled, self.lastMomentumHint)
-                    allowNestedReadOrWrite_End(from: .readsAndWritesState, readWriteTracker)
-                } else {
-                    if forAutoMomentumScroll {
-                        
-                        /// Notes:
-                        ///   - If the animator is started and then immediately stopped, we usally just want to ignore that and just not call the callback (Why do we even want that? I guess performance, but when does this happen?). But for autoMomentumScroll in GestureScrollSimulator we DO want to send start and cancel events if started and then immediately stopped. Otherwise, app like Xcode might continue momentumScrolling.
-                        ///   - Specifically, this is necessary when momentumScrolling is used by GestureScrollSimulator when it itself is used in Scroll.m when ending an animation and immediately suppressing momentumScroll. Feels like we're implementing some pretty specific high level behaviour in this very low level class. Maybe we need to restructure our abstractions.
-                        ///   - Calling callback with start phase here might be totally unnecessary Edit: Nope is necessary to fix the Safari weirdness. (Edit: Which Safari weirdness? I think it had something to do with overscrolling, but not sure.)
-                        ///   - Maybe we should spread out the start phase and canceled phase callbacks over time? Maybe call the canceled phase callback from the displayLinkCallback?? There an issue in Safari. When you scroll into the rubberband and then back Safari will add momentum. (Even though Safari normally never adds its own momentum I think). This momentum can't even be stopped by touching the trackpad, so idk what we could do about it.
-                        ///     - Edit: Spacing the events out fixes it! We're just using a DispatchQueue, not the displaylink to do this. Might lead to raceconditions if the animator is restarted before the call. Don't think so though.
-                        ///   - Not sure the delay should scale with frametime. I tested 2ms that's too low. 4ms works, so we chose 8ms to be safe (On a 60 hz screen)
-                        ///
-                        ///     Edit: Getting this new dispatchQueue everytime seems to be super slow, so we'll try to use the displayLink queue instead.
-                        ///     Edit2: Nope I made a mistake, this is never even called in the configuration I was testing (it's only called for non-inertial gesture scrolling, which we're currently not using in the app anymore)
-                        ///     Edit3: [Jul 2025] This code is disabled and also this approach is wrong. We're now instead sending a kIOHIDEventPhaseMayBegin followed by a kIOHIDEventPhaseMayCanceled event. This is implemented in Scroll.m (for Scrollwheel) and GestureScrollSimulator.m (for Click and Drag)
-                        
-                        assert(false) /// This is not called anymore according to comment above.
+        /// Stop displayLink
+        self.stop_Unsafe()
 
-                        DDLogDebug("TouchAnimator: Sending extra momentum cancel events even though momentumScrolling hasn't started")
+        /// Guard
+        assert(!wasRunning || self.clientCallback is AnimatorCallback) /// Why did we use ? intead of ! in`self.clientCallback as? AnimatorCallback` below? Asserting here because I think that might have been a mistake, but I don't wanna cause crashes in production.
+        guard wasRunning, let callback = self.clientCallback as? AnimatorCallback else { return }
 
-                        allowNestedReadOrWrite_Begin(from: .readsAndWritesState, readWriteTracker)
-                        callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseStart, self.lastMomentumHint)
-                        allowNestedReadOrWrite_End(from: .readsAndWritesState, readWriteTracker)
-
-                        let delay = 8.0/1000.0 /// self.displayLink.nominalTimeBetweenFrames() / 2.0
-                        MFCFRunLoopPerform_delay(self.displayLink.runLoop, nil, delay) { /// [Sep 2026] Used to use a Global dispatch queue here (not the displayLinkQueue) (Before the 'No more dispatch queues' refactor). No clue why.
-                            callback(Vector(x: 0, y: 0), kMFAnimationCallbackPhaseCanceled, self.lastMomentumHint)
-                        }
-                    }
-                }
-            }
-        }
+        /// Call callback
+        let phase = hadProducedDeltas ? kMFAnimationCallbackPhaseCanceled : kMFAnimationCallbackPhaseStoppedBeforeStart;
+        DDLogDebug("TouchAnimator: Sending cancel event (\(phase)")
+        allowNestedReadOrWrite_Begin(from: .readsAndWritesState, readWriteTracker); /// [Sep 2026] Allow this since it happens at the end of `cancel()`
+        callback(Vector(x: 0, y: 0), phase, self.lastMomentumHint)
+        allowNestedReadOrWrite_End(from: .readsAndWritesState, readWriteTracker)
     }
     
     /// Stop
@@ -670,38 +622,9 @@ import QuartzCore
     /// Subclass overridable
     
     internal func subclassHook(_ untypedCallback: Any, _ animationValueDelta: Vector, _ animationTimeDelta: CFTimeInterval, _ momentumHint: MFMomentumHint) {
-        
-        /// This is unused. Probably doesn't work properly. The override in `TouchAnimator` is the relevant thing.
+        /// Override in subclass [Sep 2026]
         fatalError();
-
-        #if false
-            /// Guard callback type
-
-            guard let callback = untypedCallback as? AnimatorCallback else {
-                fatalError("Invalid state - callback is not type AnimatorCallback")
-            }
-
-            /// Guard simulataneously start and end
-            ///     There is similar code in subclass. Update that it when you change this.
-
-            let isEndAndNoPrecedingDeltas =
-                isLastDisplayLinkCallback
-                && !thisAnimationHasProducedDeltas
-
-            assert(!isEndAndNoPrecedingDeltas)
-
-            /// Call the callback
-            let phase = TouchAnimatorBase.callbackPhase(hasProducedDeltas: thisAnimationHasProducedDeltas, isLastCallback: isLastDisplayLinkCallback)
-            callback(animationValueDelta, phase, momentumHint)
-
-            /// Debug
-
-            DDLogDebug("BaseAnimator callback - delta: \(animationValueDelta)")
-
-            /// Update hasProducedDeltas
-
-            thisAnimationHasProducedDeltas = true
-        #endif
     }
+
 }
 

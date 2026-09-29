@@ -31,9 +31,10 @@ typedef enum {
 typedef enum {
     kMFAnimationCallbackPhaseStart = 0,
     kMFAnimationCallbackPhaseContinue = 1,
-    kMFAnimationCallbackPhaseEnd = 2, /// Deltas will always be zero for this phase
-    kMFAnimationCallbackPhaseCanceled = 3, /// Passed after stop() is called on the animator. Deltas will be zero.
-    kMFAnimationCallbackPhaseNone = 4,
+    kMFAnimationCallbackPhaseEnd = 2,                /// Deltas will always be zero for this phase
+    kMFAnimationCallbackPhaseCanceled = 3,           /// Passed after stop() is called on the animator. Deltas will be zero.
+    kMFAnimationCallbackPhaseStoppedBeforeStart = 4, /// Canceled or ended before the first `kMFAnimationCallbackPhaseStart` event was delivered. Added to guarantee every start of the animator delivers at least one callback. (Added [Sep 2026])
+    kMFAnimationCallbackPhaseNone = 5,
 } MFAnimationCallbackPhase;
 
 #pragma mark - Hybrid curves

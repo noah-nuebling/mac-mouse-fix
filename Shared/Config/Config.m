@@ -95,7 +95,7 @@ static Config *_instance;
 
 NSObject * _Nullable config(NSString *keyPath) {
     /// Convenience function for accessing config
-    assertRunLoop(configRunLoop());
+    assertRunLoop(configRunLoop()); 
 
     NSMutableDictionary *config = Config.shared.config;
     NSObject *result = [config objectForCoolKeyPath:keyPath];
