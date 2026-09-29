@@ -10,6 +10,8 @@
 /// @noGCDCleanup Test licensing module now that it's on `licensingRunLoop()`
 /// @noGCDCleanup Test on macOS 10.15 (Opus 5.5 isn't sure about SerialExecutor back deployment - but another instance did seem sure - will test anyways before release)
 /// @noGCDCleanup All the `await`s can lead to reentrancy bugs. Maybe audit for that.
+///     @noGCDCleanup Maybe add `readsAndWritesState()` checks to this file (... But I think SwiftConcurrency won't let you guarantee non-reentering while awaiting, so readsAndWritesState() checks would be non-deterministic?)
+///         (Maybe also check if we made any stuff direct calls instead of deferred in this file, which would potentially introduce new reentrancy bugs)
 
 /// This is supposed to be a thin wrapper  around `GetLicenseState.swift`, `GetLicenseConfig.swift` and `GetTrialState.swift`.
 

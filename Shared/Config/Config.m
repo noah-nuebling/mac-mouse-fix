@@ -8,6 +8,8 @@
 //
 
 /// @noGCDCleanup Add assertRunLoop to all the other/derived 'config' files.
+/// @noGCDCleanup Maybe add `readsAndWritesState()` checks to this file
+///         (Maybe also check if we made any stuff direct calls instead of deferred in this file, which would potentially introduce new reentrancy bugs)
 
 /// Notes:
 /// - [Aug 2025] MMF 3 doesn't support app-specific settings, so all the 'overrides' stuff doesn't apply currently.
