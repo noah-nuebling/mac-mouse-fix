@@ -131,7 +131,7 @@ static void freezePointer(CGPoint origin, BOOL keepPointerMoving) {
         ///     Not sure why this happens. But adding a delay of 0.02 before hiding makes it look seamless.
         ///     Edit: `dispatch_after` caused race conditions, so we're sleeping instead. Might be bad for performance because we're using dispatch_sync above
         ///
-        usleep(USEC_PER_SEC * 0.01);
+        usleep(USEC_PER_SEC * 0.01); /// @noGCDCleanup think about this.
 
         /// Hide cursor
         [ModificationUtility hideMousePointer:YES];
@@ -360,8 +360,10 @@ static void drawPuppetCursor(BOOL draw, BOOL fresh) {
     NSRect puppetImageFrameUnflipped = [SharedUtility quartzToCocoaScreenSpace:puppetImageFrame];
     
     /// Define mainthread workload
-    
-    MFCFRunLoopPerform(CFRunLoopGetMain(), nil, ^{ /// @noGCDCleanup this used to be sync, which might be necessary for UX. (I think on starting the freeze (fresh == YES), maybe) (Update: Don't notice any degradation - still maybe see if we can tune things to be even better)
+
+    /// @noGCDCleanup this used to be sync, which might be necessary for UX. (I think on starting the freeze (fresh == YES), maybe) (Update: Don't notice any degradation - still maybe see if we can tune things to be even better)
+    /// @noGCDCleanup Opus 5.5 drop frames via CFDispatchSource or similar, like we're planning for the CVDisplayLinkCallback already.
+    MFCFRunLoopPerform(CFRunLoopGetMain(), nil, ^{
 
         /// Normal undraw
         ///     We need to use normal undraw instead of "efficient undraw" (see above) because (at least under Ventura Beta) mouseMoved causes CPU usage as long as the ScreenDrawers `canvas` window is open.
