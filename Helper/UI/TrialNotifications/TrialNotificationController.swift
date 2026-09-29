@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
+/// @noGCDCleanup - audit, maybe add `assertRunLoop()` checks
+
 /// Also see ToastNotifications in the mainApp. They work similarly.
 
 import Cocoa

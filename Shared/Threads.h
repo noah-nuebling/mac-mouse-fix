@@ -6,13 +6,15 @@
 // Licensed under Licensed under the MMF License (https://github.com/noah-nuebling/mac-mouse-fix/blob/master/License)
 // --------------------------------------------------------------------------
 
-
-/// @noGCDCleanup flesh this out / think this through (Swift version as well)
-///     Maybe make these 'require' instead of 'assert'
+/// @noGCDCleanup move GlobalEventTapThread high level comments here. (Maybe merge files)
 
 #import "Logging.h"
 
 extern int _enableRunLoopAsserts;
+
+/// @noGCDCleanup flesh this out / think this through (Swift version as well)
+///     Maybe make these 'require' instead of 'assert'
+
 
 #define assertRunLoop(runLoop) \
     if (_enableRunLoopAsserts) \

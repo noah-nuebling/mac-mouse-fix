@@ -263,6 +263,8 @@ static void loadOverridesForApp(NSString *bundleID) {
     assertRunLoop(configRunLoop());
     #if 0 /// Disable for now
 
+        CFRunLoopRef runLoop = configRunLoop();
+
         CFArrayRef pathsToWatch;
         void *callbackInfo = NULL; /// Could put stream-specific data here.
         if (@available(macOS 13.0, *)) { /// The old code causes a crash on Ventura (specifically trying to log the cfPath using DDLogInfo)
@@ -289,7 +291,7 @@ static void loadOverridesForApp(NSString *bundleID) {
         FSEventStreamRef remapsFileEventStream = FSEventStreamCreate(kCFAllocatorDefault, &Handle_FSEventStreamCallback, callbackInfo, pathsToWatch, kFSEventStreamEventIdSinceNow, latency, flags);
 
         /// Start eventStream
-        FSEventStreamScheduleWithRunLoop(remapsFileEventStream, CFRunLoopGetCurrent(), kCFRunLoopDefaultMode);
+        FSEventStreamScheduleWithRunLoop(remapsFileEventStream, runLoop, kCFRunLoopDefaultMode);
         BOOL EventStreamStarted = FSEventStreamStart(remapsFileEventStream);
         DDLogInfo("EventStreamStarted: %d", EventStreamStarted);
 
