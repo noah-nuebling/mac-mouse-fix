@@ -7,6 +7,8 @@
 // --------------------------------------------------------------------------
 //
 
+/// @noGCDCleanup - Go over old comments about the threading issues. Describe how 'No more dispatch queues' refactor solves it, but also forces continuation stuff which is also a little complex (I anticipate)
+
 #import "ModifiedDragOutputTwoFingerSwipe.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "ModificationUtility.h"

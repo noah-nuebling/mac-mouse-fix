@@ -50,16 +50,16 @@ typedef struct {
     int64_t usageThreshold;
     
     NSDictionary *effectDict;
-//    NSDictionary *initialModifiers;
-    
+    //NSDictionary *initialModifiers;
+
     bool naturalDirection; /// Content follows mouse movement
     
     MFStringConstant type;
     id<ModifiedDragOutputPlugin> outputPlugin;
     
     MFModifiedInputActivationState activationState;
-//    Device *modifiedDevice;
-    
+    //Device *modifiedDevice;
+
     CFTimeInterval initTime;
     bool isSuspended;
     
@@ -68,12 +68,10 @@ typedef struct {
     CGPoint usageOrigin; /// Point at which the modified drag changed its activationState to inUse
     MFAxis usageAxis;
     bool firstCallback;
-    
-    dispatch_queue_t queue;
 
     bool coalesceEvents;
     DisplayLink *coalescingDisplayLink; /// DisplayLink for coalescing high polling rate mouse events, since 1000 Hz mouse produces lag under macOS 27 (TODO: Link to the pull requests here)
-    NSMutableArray<CoalescableEvent *> *coalescableEventQueue;
+    NSMutableArray<CoalescableEvent *> *pendingCoalescableEvents;
 
 } ModifiedDragState;
 
@@ -92,25 +90,10 @@ typedef struct {
 
 @interface ModifiedDrag : NSObject
 
-+ (void)activationStateWithCallback:(void (^)(MFModifiedInputActivationState))callback;
-
 + (void)load_Manual;
-
-//+ (NSDictionary *)initialModifiers;
-//+ (CGEventTapProxy)tapProxy;
 + (void)initializeDragWithDict:(MF_SWIFT_UNBRIDGED(NSDictionary *))effectDict NS_REFINED_FOR_SWIFT;
-
-//+ (void)modifiedScrollHasBeenUsed;
-
-//+ (void (^ _Nullable)(void))suspend;
-
-+ (void)deactivate;
 + (void)deactivateWithCancel:(BOOL)cancel;
 
-//+ (void)handleMouseInputWithDeltaX:(int64_t)deltaX deltaY:(int64_t)deltaY event:(CGEventRef _Nullable)event;
-
-
-CGPoint getRoundedPointerLocation(void); /// Making this public for testing. Remove.
 @end
 
 NS_ASSUME_NONNULL_END

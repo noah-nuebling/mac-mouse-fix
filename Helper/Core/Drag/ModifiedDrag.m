@@ -78,6 +78,7 @@ static ModifiedDragState _drag;
 
 /// Debug
 
+#if 0
 + (void)activationStateWithCallback:(void (^)(MFModifiedInputActivationState))callback {
     
     /// We wanted to expose `_drag` to other modules for debugging, but `_drag` can't be exposed to Swift. Maybe because it contains an ObjC pointer`id`. Right now this is fine though because we only need the activationState for debugging anyways.
@@ -87,6 +88,7 @@ static ModifiedDragState _drag;
         callback(_drag.activationState);
     });
 }
+#endif
 
 + (NSString *)modifiedDragStateDescription:(ModifiedDragState)drag {
     NSString *output = @"";
@@ -113,37 +115,39 @@ static ModifiedDragState _drag;
     
     /// Init plugins
     [ModifiedDragOutputTwoFingerSwipe load_Manual];
-    
-    /// Setup dispatch queue
-    ///     This allows us to process events in the right order
-    ///     When the eventTap and the deactivate function are driven by different threads or whatever then the deactivation can happen before we've processed all the events. This allows us to avoid that issue
-    dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INTERACTIVE, -1);
-    _drag.queue = dispatch_queue_create("com.nuebling.mac-mouse-fix.helper.modified-drag", attr);
 
     /// Setup coalescingDisplayLink
-    _drag.coalescingDisplayLink = [DisplayLink displayLinkOptimizedForWorkType: kMFDisplayLinkWorkTypeEventSending runLoop: GlobalEventTapThread.runLoop name: @"ModifiedDragCoalescing"];
+    _drag.coalescingDisplayLink = [
+        DisplayLink
+        displayLinkOptimizedForWorkType: kMFDisplayLinkWorkTypeEventSending
+        runLoop: GlobalEventTapThread.runLoop
+        name: @"ModifiedDragCoalescing"
+    ];
     _drag.coalescingDisplayLink.delayStopToNextFrame = YES;
 
     [_drag.coalescingDisplayLink setCallback:^(DisplayLinkCallbackTimeInfo timeInfo) { coalescingDisplayLinkCallback(timeInfo); }];
 
-    /// Setup coalescableEventQueue
-    _drag.coalescableEventQueue = [NSMutableArray new];
+    /// Setup pendingCoalescableEvents
+    _drag.pendingCoalescableEvents = [NSMutableArray new];
 
     /// Set usage threshold
     _drag.usageThreshold = 7; // 20, 5
     
     /// Create mouse moved callback
     if (!_drag.eventTap) {
+        
+        CFMachPortRef eventTap = [
+            ModificationUtility
+            createEventTapWithLocation: kCGHIDEventTap
+            mask: (CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved) /// kCGEventMouseMoved is only necessary for keyboard-only drag-modification (which we've disable because it had other problems), and maybe for AddMode to work.
+                  | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged)) /// This is necessary for modified drag to work during a left/right click and drag. Concretely I added this to make drag and drop work. For that we only need the kCGEventLeftMouseDragged. Adding kCGEventRightMouseDragged is probably completely unnecessary. Not sure if there are other concrete applications outside of drag and drop.
+            option:/*kCGEventTapOptionListenOnly*/ kCGEventTapOptionDefault
+                        /// ^ Using `Default` causes weird cursor jumping issues when clicking-dragging-and-holding during addMode. Not sure why that happens. This didn't happen in v2 while using `Default`. Not sure if `ListenOnly` has any disadvantages. Edit: In other places, I've had issues using listenOnly because it messes up the timestamps (I'm on macOS 12.4. right now). -> Trying default again.
+            placement: kCGHeadInsertEventTap
+            callback: eventTapCallBack
+            runLoop: GlobalEventTapThread.runLoop
+        ];
 
-        CGEventTapLocation location = kCGHIDEventTap;
-        CGEventTapPlacement placement = kCGHeadInsertEventTap;
-        CGEventTapOptions option = /*kCGEventTapOptionListenOnly*/ kCGEventTapOptionDefault;
-        /// ^ Using `Default` causes weird cursor jumping issues when clicking-dragging-and-holding during addMode. Not sure why that happens. This didn't happen in v2 while using `Default`. Not sure if `ListenOnly` has any disadvantages. Edit: In other places, I've had issues using listenOnly because it messes up the timestamps (I'm on macOS 12.4. right now). -> Trying default again.
-        CGEventMask mask = CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved); /// kCGEventMouseMoved is only necessary for keyboard-only drag-modification (which we've disable because it had other problems), and maybe for AddMode to work.
-        mask = mask | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged); /// This is necessary for modified drag to work during a left/right click and drag. Concretely I added this to make drag and drop work. For that we only need the kCGEventLeftMouseDragged. Adding kCGEventRightMouseDragged is probably completely unnecessary. Not sure if there are other concrete applications outside of drag and drop.
-        
-        CFMachPortRef eventTap = [ModificationUtility createEventTapWithLocation:location mask:mask option:option placement:placement callback:eventTapCallBack runLoop:GlobalEventTapThread.runLoop];
-        
         _drag.eventTap = eventTap;
     }
 }
@@ -163,53 +167,52 @@ static ModifiedDragState _drag;
 
 + (void)initializeDragWithDict:(NSDictionary *)effectDict {
     
-    dispatch_async(_drag.queue, ^{
-        
-        /// Debug
-        DDLogDebug("INITIALIZING MODIFIEDDRAG WITH previous type %@ activationState %d, newEffectDict: %@", _drag.type, _drag.activationState, effectDict);
-        
-        /// Guard state == inUse
-        ///  I think if state == initialized we don't need to do anything special
-        if (_drag.activationState == kMFModifiedInputActivationStateInUse) {
-            BOOL isSame = [effectDict isEqualToDictionary:_drag.effectDict];
-            BOOL isAddMode = [_drag.effectDict[kMFModifiedDragDictKeyType] isEqual:kMFModifiedDragTypeAddModeFeedback];
-            if (!isSame && !isAddMode) {
-                //deactivate_Unsafe(YES);
-                return;
-            } else {
-                return;
-            }
+    assertRunLoop(GlobalEventTapThread.runLoop);
+
+    /// Debug
+    DDLogDebug("INITIALIZING MODIFIEDDRAG WITH previous type %@ activationState %d, newEffectDict: %@", _drag.type, _drag.activationState, effectDict);
+
+    /// Guard state == inUse
+    ///  I think if state == initialized we don't need to do anything special
+    if (_drag.activationState == kMFModifiedInputActivationStateInUse) {
+        BOOL isSame = [effectDict isEqualToDictionary:_drag.effectDict];
+        BOOL isAddMode = [_drag.effectDict[kMFModifiedDragDictKeyType] isEqual:kMFModifiedDragTypeAddModeFeedback];
+        if (!isSame && !isAddMode) {
+            //deactivate_Unsafe(YES);
+            return;
+        } else {
+            return;
         }
-        
-        /// Get type
-        MFStringConstant type = effectDict[kMFModifiedDragDictKeyType];
-        
-        /// Init static parts of `_drag`
-        _drag.type = type;
-        _drag.effectDict = effectDict;
-        //_drag.initialModifiers = modifiers;
-        _drag.initTime = CACurrentMediaTime();
-        
-        id<ModifiedDragOutputPlugin> p;
-        if      ([type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputThreeFingerSwipe.class;
-        else if ([type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe])   p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputTwoFingerSwipe.class;
-        else if ([type isEqualToString:kMFModifiedDragTypeFakeDrag])         p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputFakeDrag.class;
-        else if ([type isEqualToString:kMFModifiedDragTypeAddModeFeedback])  p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputAddMode.class;
-        else                                                                 assert(false);
+    }
 
-        _drag.coalesceEvents = true;
-        if (1) if (isclass(p, ModifiedDragOutputTwoFingerSwipe)) _drag.coalesceEvents = false; /// `ModifiedDragOutputTwoFingerSwipe` already has its own `TouchAnimator` which effectively coalesces output events, we think coalescing again here might responsiveness (Didn't really test) [Sep 2026]
+    /// Get type
+    MFStringConstant type = effectDict[kMFModifiedDragDictKeyType];
 
-        /// Link with plugin
-        //[p initializeWithDragState:&_drag];
-        _drag.outputPlugin = p;
-        
-        /// Init dynamic parts of _drag
-        initDragState_Unsafe();
-    });
+    /// Init static parts of `_drag`
+    _drag.type = type;
+    _drag.effectDict = effectDict;
+    //_drag.initialModifiers = modifiers;
+    _drag.initTime = CACurrentMediaTime();
+
+    id<ModifiedDragOutputPlugin> p;
+    if      ([type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputThreeFingerSwipe.class;
+    else if ([type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe])   p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputTwoFingerSwipe.class;
+    else if ([type isEqualToString:kMFModifiedDragTypeFakeDrag])         p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputFakeDrag.class;
+    else if ([type isEqualToString:kMFModifiedDragTypeAddModeFeedback])  p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputAddMode.class;
+    else                                                                 assert(false);
+
+    _drag.coalesceEvents = true;
+    if (1) if (isclass(p, ModifiedDragOutputTwoFingerSwipe)) _drag.coalesceEvents = false; /// `ModifiedDragOutputTwoFingerSwipe` already has its own `TouchAnimator` which effectively coalesces output events, we think coalescing again here might responsiveness (Didn't really test) [Sep 2026]
+
+    /// Link with plugin
+    //[p initializeWithDragState:&_drag];
+    _drag.outputPlugin = p;
+
+    /// Init dynamic parts of _drag
+    initDragState_Unsafe();
 }
-void initDragState_Unsafe(void) {
-    
+static void initDragState_Unsafe(void) {
+
     _drag.origin = getRoundedPointerLocation();
     _drag.originOffset = (Vector){0};
     _drag.activationState = kMFModifiedInputActivationStateInitialized;
@@ -222,17 +225,19 @@ void initDragState_Unsafe(void) {
 }
 
 static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void * __nullable userInfo) {
-    
+
+    assertRunLoop(GlobalEventTapThread.runLoop);
+
     /// Store proxy
-//    _tapProxy = proxy;
-    
+    //_tapProxy = proxy;
+
     /// Catch special events
     if (type == kCGEventTapDisabledByTimeout || type == kCGEventTapDisabledByUserInput) {
         
         DDLogDebug("ModifiedDrag eventTap was disabled by %@", type == kCGEventTapDisabledByTimeout ? @"timeout. Re-enabling." : @"user input.");
         
         if (type == kCGEventTapDisabledByTimeout) {
-//            assert(false); /// Not sure this ever times out
+            //assert(false); /// Not sure this ever times out
             CGEventTapEnable(_drag.eventTap, true);
         }
         
@@ -248,43 +253,36 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     
     /// Debug
     
-//    DDLogDebug("modifiedDrag input: %lld %lld", dx, dy);
-    
+    //DDLogDebug("modifiedDrag input: %lld %lld", dx, dy);
+
     /// Ignore event if both deltas are zero
     /// - We do this so the phases for the gesture scroll simulation (aka twoFingerSwipe) make sense. The gesture scroll event with phase kIOHIDEventPhaseBegan should always have a non-zero delta. If we let through zero deltas here it messes those phases up. Now that we're dispatching throuch a TouchAnimator this shouldn't really matter but it doesn't hurt.
     /// - I think for all other types of modified drag (aside from the gesture scroll simulation discussed above) this shouldn't break anything, either.
     
     if (dx != 0 || dy != 0) {
 
-        /// Make copy of event for _drag.queue
-        
-        CGEventRef eventCopy = CGEventCreateCopy(event);
+        /// Interrupt
+        ///     [Sep 2026] Update: Old comment from before `coalescingDisplayLink` refactor, not sure if/how it still applies:
+        ///         This handles race condition where `_drag.eventTap` is disabled right after eventTapCallBack() is called
+        ///         We implemented the same idea in PointerFreeze.
+        ///         Actually, the check for kMFModifiedInputActivationStateNone below (Update: [Sep 2026] Now in `coalescingDisplayLinkCallback`) has the same effect, but I think but this makes it clearer?
+        if (!CGEventTapIsEnabled(_drag.eventTap)) {
+            return event;
+        }
 
-        dispatch_async(_drag.queue, ^{
+        if (!_drag.coalesceEvents) {
+            processCoalescedDeltaEvent(dx, dy, CGEventGetLocation(event));
+        } else {
+            /// Append to pendingCoalescableEvents
+            CoalescableEvent_Delta *deltaEvent = [CoalescableEvent_Delta new];
+            deltaEvent.deltaX = dx;
+            deltaEvent.deltaY = dy;
+            deltaEvent.pointerLocation = CGEventGetLocation(event);
+            [_drag.pendingCoalescableEvents addObject: deltaEvent];
 
-            /// Interrupt
-            ///     [Sep 2026] Update: Old comment from before `coalescingDisplayLink` refactor, not sure if/how it still applies:
-            ///         This handles race condition where _drag.eventTap is disabled right after eventTapCallBack() is called
-            ///         We implemented the same idea in PointerFreeze.
-            ///         Actually, the check for kMFModifiedInputActivationStateNone below (Update: [Sep 2026] Now in `coalescingDisplayLinkCallback`) has the same effect, but I think but this makes it clearer?
-            if (!CGEventTapIsEnabled(_drag.eventTap)) {
-                return;
-            }
-
-            if (!_drag.coalesceEvents) {
-                processCoalescedDeltaEvent(dx, dy, CGEventGetLocation(eventCopy));
-            } else {
-                /// Append to coalescableEventQueue
-                CoalescableEvent_Delta *deltaEvent = [CoalescableEvent_Delta new];
-                deltaEvent.deltaX = dx;
-                deltaEvent.deltaY = dy;
-                deltaEvent.pointerLocation = CGEventGetLocation(eventCopy);
-                [_drag.coalescableEventQueue addObject: deltaEvent];
-
-                /// Start the coalescingDisplayLink
-                [_drag.coalescingDisplayLink start_UnsafeWithCallback: nil];
-            }
-        });
+            /// Start the coalescingDisplayLink
+            [_drag.coalescingDisplayLink start_UnsafeWithCallback: nil];
+        }
     }
 
     /// Return mouseMoved event
@@ -294,45 +292,29 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     /// - Sending mouseMoved here would interfere with fakeDrag output. How will we solve that?
     /// - Just changing the type on the original event is a little hacky but it should work
     /// - Sending these mouseMoved events doesn't interfere with freezing the pointer. Not sure why.
-    
+    /// - Update [Sep 2026]: Comments above are from before 'No more dispatch queues' refactor. Not totally sure they still apply (didn't really read them)
+
     CGEventSetType(event, kCGEventMouseMoved);
     return event;
 }
 
-void coalescingDisplayLinkCallback(DisplayLinkCallbackTimeInfo timeInfo) {
+static void coalescingDisplayLinkCallback(DisplayLinkCallbackTimeInfo timeInfo) {
 
-    /// On using `dispatch_async(_drag.queue, ...)` here:
-    ///     Do this to move this code off of the displayLink thread to solve deadlock, where [Sep 2026]
-    ///             ```
-    ///             displayLinkThread -> main (This code -> twoFingerDrag -> PointerFreeze -> `dispatch_sync(main)` (Not sure if this has to be `dispatch_sync`))
-    ///             main -> displayLinkThread (This code (I think) -> `-[DisplayLink stop_Unsafe]` -> `dispatch_async(main)` -> `CVDisplayLinkStop()` (Requires the private mutex that the displayLinkThread holds, I think))
-    ///             ```
-    ///         Drawback: Not running on displayLinkThread makes this code lower priority, might affect responsiveness.
-    ///         Alternatives:
-    ///             - Drive mainThread PointerFreeze stuff asynchronously (Not sure there's any reason not to do that) [Sep 2026]
-    ///             - Try not calling `CVDisplayLinkStop` from main. (But old notes suggest main was necessary to prevent mysterious errors) [Sep 2026]
-    ///     Update: [Sep 2026]
-    ///         Instead of this, we're using `-[DisplayLink setDispatchCallbacksAsynchronously: YES];` now. It takes effect in `DisplayLink.m > displayLinkCallback` – basically does the same thing at an earlier level in the processing chain (which could still deadlock.)
-    ///         Deadlock I saw which this prevents:
-    ///             ```
-    ///             main -> displayLinkThread               (-[DisplayLink stop_Unsafe] -> dispatch_async(main) -> CVDisplayLinkStop())
-    ///             displayLinkThread -> displayLinkQueue   (displayLinkCallback -> dispatch_sync(self.dispatchQueue, ...))
-    ///             displayLinkQueue -> main                (coalescingDisplayLinkCallback -> dispatch_async(_drag.queue, ...) -> twoFingerSwipe -> PointerFreeze -> dispatch_sync(dispatch_get_main_queue(), ...))
-    ///             ```
-    ///             Alternatives:
-    ///                 Break sync dispatch `displayLinkQueue -> main`. But this would be more complicated refactor, might break something about PointerFreeze (can't find comments about why we're doing sync dispatch), and`coalescingDisplayLinkCallback` doesn't have any drawbacks over previous `dispatch_async(_drag.queue, ...)` in this function that I can think of.
-    //dispatch_async(_drag.queue, ^{
+    assertRunLoop(GlobalEventTapThread.runLoop);
+
+    /// [Sep 2026] Had an old comment here about deadlock which motivated the `dispatchCallbacksAsynchronously` option in DisplayLink.h (which after 'No more dispatch queues' refactor, we always have enabled, and probably deleted the option by time you're reading this.)
+    ///     (Not sure this comment is useful at all - maybe to help if we ever make DisplayLink.m sync call from its displayLinkThread again - to remind us what to dig through to understand the deadlocks again, roughly?)
 
     /// Early return
-    if (!_drag.coalescableEventQueue.count) return;
+    if (!_drag.pendingCoalescableEvents.count) return;
 
-    /// Gather/coalesce data from queue
+    /// Gather/coalesce data from pendingCoalescableEvents
     double deltaXSum = 0;
     double deltaYSum = 0;
     CoalescableEvent_Delta *lastDeltaEvent = nil;
     CoalescableEvent_Deactivation *deactivationEvent = nil;
     {
-        for (CoalescableEvent *event in _drag.coalescableEventQueue) {
+        for (CoalescableEvent *event in _drag.pendingCoalescableEvents) {
             if (isclass(event, CoalescableEvent_Deactivation)) {
                 deactivationEvent = (id)event;
                 break;
@@ -348,12 +330,13 @@ void coalescingDisplayLinkCallback(DisplayLinkCallbackTimeInfo timeInfo) {
     }
     CGPoint lastPointerLocation = getRoundedPointerLocationWithPointerLocation(lastDeltaEvent.pointerLocation);
 
-    /// Clear queue
-    [_drag.coalescableEventQueue removeAllObjects];
+    /// Clear pendingCoalescableEvents
+    [_drag.pendingCoalescableEvents removeAllObjects];
 
     /// Stop coalescingDisplayLink
     ///     (We just aggregate everything for the next frame, and then stop)
     ///     Performance note: [Sep 2026] This makes CVDisplayLink stop its thread every frame, and then create/configure a new thread for the next frame, I think.
+    ///         @noGCDCleanup move this into DisplayLink.m - this affects `thread_policy_set` stuff (gets reset every frame?) if we ever do this on the displayLinkThread.
     ///         However, the overhead of this is dwarfed by CGEvent tapping and sending.
     ///         Avoiding this would lower CPU usage by `<~3%` on my Logitech gaming mouse (1000 Hz) and lower by `<~7%` on Logitech lift (not sure exactly its polling rate, I think low.)
     ///             (Measured on M4 MBA, wiggling the DockSwipe, using 'processor trace' in instruments, 120 Hz display I think, might have accidentally used 60 Hz for some tests.)
@@ -367,11 +350,9 @@ void coalescingDisplayLinkCallback(DisplayLinkCallbackTimeInfo timeInfo) {
 
     /// Process deactivationEvent
     processCoalescedDeactivationEvent(deactivationEvent);
-
-    //});
 }
 
-void processCoalescedDeltaEvent(double deltaXSum, double deltaYSum, CGPoint lastPointerLocation) {
+static void processCoalescedDeltaEvent(double deltaXSum, double deltaYSum, CGPoint lastPointerLocation) {
     if (deltaXSum || deltaYSum)
     {
         /// Update originOffset
@@ -404,7 +385,7 @@ void processCoalescedDeltaEvent(double deltaXSum, double deltaYSum, CGPoint last
     }
 }
 
-void processCoalescedDeactivationEvent(CoalescableEvent_Deactivation *deactivationEvent) {
+static void processCoalescedDeactivationEvent(CoalescableEvent_Deactivation *deactivationEvent) {
     if (deactivationEvent)
         [_drag.outputPlugin handleDeactivationWhileInUseWithCancel: deactivationEvent.cancelled];
 }
@@ -459,8 +440,8 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGP
     }
 }
 /// Only passing in event to obtain event location to get slightly better behaviour for fakeDrag
-void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
-    
+static void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
+
     /// Invert direction
     if (!_drag.naturalDirection) {
         deltaX = -deltaX;
@@ -479,6 +460,7 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
     _drag.firstCallback = false;
 }
 
+#if 0
 + (void (^ _Nullable)(void))suspend {
     
     /// This was used for OutputCoordinator stuff which is unused now. Can probably remove this
@@ -509,22 +491,11 @@ void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
     
     return unsuspend;
 }
-
-+ (void)deactivate {
-    
-//    DDLogDebug("Deactivated modifiedDrag. Caller: %@", [SharedUtility callerInfo]);
-    [self deactivateWithCancel:false];
-}
+#endif
 
 + (void)deactivateWithCancel:(BOOL)cancel {
-    
-    dispatch_async(_drag.queue, ^{
-        /// ^ Do everything on the dragQueue to ensure correct order of operations with the processing of the events from the eventTap.
-        deactivate_Unsafe(cancel);
-    });
-}
 
-void deactivate_Unsafe(BOOL cancel) {
+    assertRunLoop(GlobalEventTapThread.runLoop);
     
     /// Debug
     DDLogDebug("modifiedDrag deactivate with state: %@", [ModifiedDrag modifiedDragStateDescription:_drag]);
@@ -546,7 +517,7 @@ void deactivate_Unsafe(BOOL cancel) {
         if (!_drag.coalesceEvents) {
             processCoalescedDeactivationEvent(coalescableEvent);
         } else {
-            [_drag.coalescableEventQueue addObject: coalescableEvent];
+            [_drag.pendingCoalescableEvents addObject: coalescableEvent];
             [_drag.coalescingDisplayLink start_UnsafeWithCallback: nil];
         }
     }
@@ -585,7 +556,7 @@ void deactivate_Unsafe(BOOL cancel) {
 
 /// Get rounded pointer location
 
-CGPoint getRoundedPointerLocation(void) {
+static CGPoint getRoundedPointerLocation(void) {
     /// Convenience wrapper for getRoundedPointerLocationWithEvent()
     
     CGEventRef event = CGEventCreate(NULL);

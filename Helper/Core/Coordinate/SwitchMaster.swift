@@ -591,7 +591,7 @@ import ReactiveSwift
     private func togglePointingTap(modifications modificationsArg: NSDictionary?) {
         
         if isLockedDown || !userIsActive { /// Not sure if necessary
-            ModifiedDrag.deactivate()
+            ModifiedDrag.deactivate(withCancel: false)
             return
         }
         
@@ -619,7 +619,7 @@ import ReactiveSwift
 //                assert(false)
             }
         } else {
-            ModifiedDrag.deactivate()
+            ModifiedDrag.deactivate(withCancel: false)
         }
     }
     

@@ -64,7 +64,7 @@ static NSMutableDictionary *_modifiers;
         CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
         _kbModEventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionListenOnly, mask, kbModsChanged, NULL);
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _kbModEventTap, 0);
-        CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, kCFRunLoopDefaultMode);
+        CFRunLoopAddSource(GlobalEventTapThread.runLoop, runLoopSource, kCFRunLoopDefaultMode);
         CFRelease(runLoopSource);
         
 //        /// Enable/Disable eventTap based on Remap.remaps
@@ -186,7 +186,9 @@ static CFMachPortRef _kbModEventTap;
     ///             My intuition is though that this complicates things, and has higher likelyhood to lead to weird unexpected behaviour or bugs.
     ///
     /// TODO: @crash Implement Solution Idea 2.
-    
+    ///
+    /// Update: [Sep 2026] Didn't read the above but might be fixed after 'No more dispatch queues' refactor
+
     _kbModPriority = priority;
     CGEventTapEnable(_kbModEventTap, _kbModPriority == kMFModifierPriorityActiveListen);
 }

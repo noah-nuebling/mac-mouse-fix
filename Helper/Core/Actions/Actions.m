@@ -24,10 +24,14 @@
 #import "SymbolicHotKeys.h"
 #import <Carbon/Carbon.h>
 
+#import "Threads.h"
+#import "GlobalEventTapThread.h"
+
 @implementation Actions
 
 + (void)executeActionArray:(NSArray *)actionArray phase:(MFActionPhase)phase {
-    
+    assertRunLoop(GlobalEventTapThread.runLoop);
+
     DDLogDebug("Executing action array: %@, phase: %@", actionArray, @(phase));
     
     if (phase == kMFActionPhaseEnd) {
@@ -59,11 +63,11 @@
             ///             Solution Ideas: - Send at different eventTap - User feedback ala Swish - Simulate navigationSwipes where possible - Some other hacks to keep macOS from diverting the events.
             ///
             
-            /// Dispatch to mainThread
+            /// Defer to mainThread
             ///     [Aug 2025] Run on the mainThread since `MFEmulateNSMenuItemRemapping()` uses TIS API stuff which wants to run on the mainThread. (And this method is called by Buttons.swift which seems to call on the mainThread for some triggers (observed: .release), but calls on `com.nuebling.mac-mouse-fix.buttons` queue for other triggers (observed: .levelExpired))
             ///         Idea: Perhaps we could optimize by only dispatching to mainThread if we really end up calling TIS APIs.
-            dispatch_async(dispatch_get_main_queue(), ^{
-            
+            MFCFRunLoopPerform(CFRunLoopGetMain(), nil, ^{
+
                 #define fail() ({ assert(false); goto endof_universalBackForward; })       /** [Aug 2025] We'll catch the failures during development, so simple is fine */
                 {
                     NSString *dirString = actionDict[kMFActionDictKeyGenericVariant];

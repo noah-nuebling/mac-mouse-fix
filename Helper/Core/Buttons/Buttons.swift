@@ -7,16 +7,13 @@
 // --------------------------------------------------------------------------
 //
 
-/// TODO?: Use dispatchQueue.
-///     I'm not sure the DispatchQueue is neccesary, because all the interaction with this class are naturally spaced out in time, so there's a very low chance of race conditions)
-
 import Cocoa
 
 @objc class Buttons: NSObject {
     
     /// Ivars
-    static var queue: DispatchQueue = DispatchQueue(label: "com.nuebling.mac-mouse-fix.buttons", qos: .userInteractive, attributes: [], autoreleaseFrequency: .inherit, target: nil)
-    static private var clickCycle = ClickCycle(buttonQueue: DispatchQueue(label: "replace this"))
+
+    static private var clickCycle = ClickCycle()
     static private var buttonModifiers = ButtonModifiers()
     @objc static var useButtonModifiers = false
     
@@ -29,13 +26,13 @@ import Cocoa
     private static var isInitialized = false
     private static func coolInitialize() {
         isInitialized = true
-        clickCycle = ClickCycle(buttonQueue: queue)
     }
     
     /// Handling input
     
     @objc static func handleInput(device: Device, button: NSNumber, downNotUp mouseDown: Bool, event: CGEvent) -> MFEventPassThroughEvaluation {
-        
+        assertRunLoop(GlobalEventTapThread.runLoop())
+
         let passThroughEvaluation = kMFEventPassThroughRefusal
         
             /// Init
@@ -71,7 +68,7 @@ import Cocoa
             return kMFEventPassThroughApproval
         }
         
-        /// Dispatch through clickCycle
+        /// Call through clickCycle
         clickCycle.handleClick(device: device, button: ButtonNumber(truncating: button), downNotUp: mouseDown, maxClickLevel: maxClickLevel,
                                triggerCallback: { triggerPhase, clickLevel, device, buttonNumber, onRelease in
             ///
@@ -114,7 +111,7 @@ import Cocoa
                     map[.levelExpired]          = ("click", kMFActionPhaseCombined)
                 } else if effectForMouseDownStateOfThisLevelExists.boolValue {
                     map[.release]               = ("click", kMFActionPhaseCombined)
-//                    map[.releaseFromHold]       = ("click", kMFActionPhaseCombined)
+                    //map[.releaseFromHold]       = ("click", kMFActionPhaseCombined)
                 } else {
                     map[.press]                 = ("click", kMFActionPhaseStart)
                 }
@@ -127,27 +124,27 @@ import Cocoa
             
             /// Get action for current trigger
             ///     This code is horrible to write in Swift. Deal with remapsDict in Objc whenever possible
-            
+
             /// Get actionArray
             guard
                 let (duration, startOrEnd) = map[triggerPhase],
-//                let m1 = modifications[button] as? [AnyHashable: Any],
+                //let m1 = modifications[button] as? [AnyHashable: Any],
                 let m1 = modifications.object(forKey: button) as? NSDictionary,
-//                let m2 = m1[clickLevel as NSNumber] as? [AnyHashable: Any],
+                //let m2 = m1[clickLevel as NSNumber] as? [AnyHashable: Any],
                 let m2 = m1.object(forKey: clickLevel) as? NSDictionary,
-//                let m3 = m2[duration],
+                //let m3 = m2[duration],
                 let actionArray = m2.object(forKey: duration) as? NSArray /// Not nil -> a click/hold action does exist for this button + level + duration
-//                let actionArray = m3 as? [[AnyHashable: Any]]
+                //let actionArray = m3 as? [[AnyHashable: Any]]
             else {
                 return /// Return if there's no action array to send
             }
             
             /// Add modifiers to actionArray for addMode. See Remap -> addMode for context
             ///     Edit: We don't need this anymore now that we're using the addModeSwizzler
-//            if actionArray[0][kMFActionDictKeyType] as! String == kMFActionDictTypeAddModeFeedback {
-//                actionArray[0][kMFRemapsKeyModificationPrecondition] = self.modifiers
-//            }
-            
+            //if actionArray[0][kMFActionDictKeyType] as! String == kMFActionDictTypeAddModeFeedback {
+            //    actionArray[0][kMFRemapsKeyModificationPrecondition] = self.modifiers
+            //}
+
             /// Notify TrialCounter.swift
             TrialCounter.shared.handleUse()
             
@@ -180,14 +177,11 @@ import Cocoa
     
     /// Effect feedback
     
-    @objc static func handleButtonHasHadDirectEffect(device: Device, button: NSNumber) {
-        handleButtonHasHadDirectEffect_Unsafe(device: device, button: button)
-    }
-    
-    @objc static func handleButtonHasHadDirectEffect_Unsafe(device: Device, button: NSNumber) {
+    private static func handleButtonHasHadDirectEffect_Unsafe(device: Device, button: NSNumber) {
         /// Validate
         /// Might wanna `assert(clickCycleIsActive)`
         assert(isInitialized)
+
         /// Do stuff
         if self.clickCycle.isActiveFor(device: device.uniqueID(), button: button) {
             self.clickCycle.kill()
@@ -198,10 +192,9 @@ import Cocoa
     }
     
     @objc static func handleButtonHasHadEffectAsModifier(button: NSNumber) {
-        handleButtonHasHadEffectAsModifier_Unsafe(button: button)
-    }
-    
-    @objc static func handleButtonHasHadEffectAsModifier_Unsafe(button: NSNumber) {
+
+        assertRunLoop(GlobalEventTapThread.runLoop())
+
         /// Validate
         /// Might wanna `assert(buttonIsHeld)`
         assert(isInitialized)
@@ -213,8 +206,8 @@ import Cocoa
     
     /// Interface for accessing submodules
     
-//    @objc static func getActiveButtonModifiers_Unsafe(device: Device) -> [[String: Int]] {
-//        return modifierManager.getActiveButtonModifiersForDevice(device: device)
-//    }
-    
+    //@objc static func getActiveButtonModifiers_Unsafe(device: Device) -> [[String: Int]] {
+    //    return modifierManager.getActiveButtonModifiersForDevice(device: device)
+    //}
+
 }

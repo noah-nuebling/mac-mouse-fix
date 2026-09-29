@@ -15,15 +15,6 @@
 ///
 ///     The `ClickCycle` class is used to track an abstract clickCycle and analyze it. Perhaps most importantly, it tracks state transitions not only to button pressed and button released states but also to more abstract states: `button held down` and `level expired`. Then it can notify the client of these state transitions and the client can do cool stuff with that.
 
-/// Thread safety:
-/// - Edit: IIRC we're just not implementing the dispatchQueue stuff properly because race conditions are incredibly rare and when they happen stuff is robust and doesn't break badly.
-/// - All calls to this are expected to come from the dispatchQueue owned by Buttons.swift `buttonsQueue`. It will also protect its timer callbacks using `buttonQueue`.
-/// - So when using this:
-///     1. Make sure that you're running on buttonsQueue when calling, otherwise there might be race conditions
-///     2. The `modifierCallback` and `triggerCallback` are already protected when they arrive in `Buttons.swift`
-
-
-
 /// Imports
 import Cocoa
 
@@ -59,7 +50,7 @@ fileprivate struct ClickCycleState: Hashable {
     var button: ButtonNumber
     var pressState: ButtonPressState
     var clickLevel: ClickLevel
-//    var isAlive: Bool { clickLevel > 0 }
+    //var isAlive: Bool { clickLevel > 0 }
     var downTimer = Timer()
     var upTimer = Timer()
 }
@@ -67,9 +58,6 @@ typealias ReleaseCallbackKey = ButtonNumber
 
 /// Main class def
 class ClickCycle: NSObject {
-    
-    /// Threading
-    let buttonQueue: DispatchQueue
     
     /// Config
     var maxClickLevel = 99999
@@ -91,20 +79,21 @@ class ClickCycle: NSObject {
     /// Release callbacks
     ///     Clients can register a callback that will *always* be triggered when a button is released, even if the release event doesn't belong to the active click cycle
     fileprivate var releaseCallbacks: [ReleaseCallbackKey: [UnconditionalReleaseCallback]] = [:]
+
+    #if false /** [Sep 2026] unused */
     public func waitingForRelease(device: Device, button: ButtonNumber) -> Bool {
         return releaseCallbacks[button] != nil
     }
-    
+    #endif
+
     /// Init
-    required init(buttonQueue: DispatchQueue) {
-        self.buttonQueue = buttonQueue
+    required override init() {
         super.init()
-        
         kill()
     }
     
-    /// Main interface
-    
+    /// Main interface (for Buttons.swift, which owns this [Sep 2026])
+
     func isActiveFor(device: NSNumber, button: NSNumber) -> Bool { /// Think this is unused now that we moved ButtonModifiers away from using Device
         guard let state = state else { return false }
         return state.device.uniqueID() == device && state.button == ButtonNumber(truncating: button)
@@ -222,41 +211,35 @@ class ClickCycle: NSObject {
             ///                 - My understanding of the current threading situation: (Sep 2024) we process buttonInputs partially on the mainThread and partially on the 'buttonQueue', other inputProcessing modules such as the modifiedDrag also interact with this module by triggering `ClickCycle.kill()`. modifiedDrag runs on the `GlobalEventTapThread`, but then also dispatches to a special `_drag.queue`, which I don't currently understand the purpose of. So it's really a bit all-over-the-place, and the `NSTimer.invalidate()` method inside `ClickCycle.kill()` is probably not always being called from the same thread, which could cause problems according to the docs.
             ///            2. Remove all force unwrapping `!` from ClickCycle and instead do nil checks and then smoothly recover if state == nil.
             ///
-            /// TODO: @crash fix this. 
+            /// TODO: @crash fix this.
             ///
-            
-            assert(Thread.isMainThread)
-            
-            SharedUtilitySwift.doOnMain {
+            ///
+            /// Update: [Sep 2026] Removed the `self.buttonQueue.async` thread-hops in the downTimer/upTimer callbacks. (Didn't read the above, not totally sure if relevant)
+            ///
                 
-                if mouseDown {
-                    /// mouseDown
-                    state?.upTimer.invalidate()
-                    state?.downTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, block: { timer in
-                        self.buttonQueue.async {
-                            /// Callback
-                            var c: [UnconditionalReleaseCallback] = []
-                            triggerCallback(.hold, self.state!.clickLevel, device, button, &c)
-                            if !c.isEmpty {
-                                self.releaseCallbacks[button, default: []].append(contentsOf: c)
-                            }
-                            /// Update state
-                            self.state?.pressState = .held
-                            self.state?.upTimer.invalidate()
-                        }
-                    })
-                    /// Not sure whether to start started upTimer on mouseDown or up
-                    state?.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.26, repeats: false, block: { timer in
-                        self.buttonQueue.async {
-                            if self.state == nil { return } /// Guard race conditions. Not totally sure why this happens.
-                            self.callTriggerCallback(triggerCallback, ClickCycleTriggerPhase.levelExpired, self.state!.clickLevel, device, button)
-                            self.kill()
-                        }
-                    })
-                } else {
-                    /// mouseUp
-                    state?.downTimer.invalidate()
-                }
+            if mouseDown {
+                /// mouseDown
+                state?.upTimer.invalidate()
+                state?.downTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, runLoop: GlobalEventTapThread.runLoop(), block: { timer in
+                    /// Callback
+                    var c: [UnconditionalReleaseCallback] = []
+                    triggerCallback(.hold, self.state!.clickLevel, device, button, &c)
+                    if !c.isEmpty {
+                        self.releaseCallbacks[button, default: []].append(contentsOf: c)
+                    }
+                    /// Update state
+                    self.state?.pressState = .held
+                    self.state?.upTimer.invalidate()
+                })
+                /// Not sure whether to start started upTimer on mouseDown or up
+                state?.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.26, repeats: false, runLoop: GlobalEventTapThread.runLoop(), block: { timer in
+                    if self.state == nil { return } /// Guard race conditions. Not totally sure why this happens. Update: [Sep 2026] This note is from before 'No more dispatch queues' refactor, might be fixed now.
+                    self.callTriggerCallback(triggerCallback, ClickCycleTriggerPhase.levelExpired, self.state!.clickLevel, device, button)
+                    self.kill()
+                })
+            } else {
+                /// mouseUp
+                state?.downTimer.invalidate()
             }
             
         }
