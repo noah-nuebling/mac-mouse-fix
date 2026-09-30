@@ -7,7 +7,7 @@
 // --------------------------------------------------------------------------
 //
 
-/// [Aug 2025] Optimization:
+/// [Aug 2025] Optimization idea:
 ///     - We optimized this for MMF 3.0.5 by overriding sendEvent()
 ///     - Quote from https://medium.com/@avaidyam/the-secret-life-of-core-animation-e0966f942a71:
 ///         "However, if you're creating a CGSWindow, the fast way to get a CALayer on-screen is to create a CGSSurfaceand bind a CAView to it. The header for CAView is incomplete, but it looks trivial to work with, as it then manages the surface for you."
@@ -39,7 +39,7 @@ import Cocoa
         
         /// Create canvas window
         
-        canvas = Canvas.init(contentRect: NSRect.zero, styleMask: .borderless, backing: .buffered, defer: false, screen: nil)
+        canvas = Canvas(contentRect: NSRect.zero, styleMask: .borderless, backing: .buffered, defer: false, screen: nil)
         
         /// Configure canvas window
 
@@ -50,6 +50,7 @@ import Cocoa
         canvas.ignoresMouseEvents = true /// Mouse events should pass through
         canvas.acceptsMouseMovedEvents = false /// Don't track mouse moving
         canvas.collectionBehavior = [.stationary, .moveToActiveSpace] /// Make unaffected by Mission Control and Exposé
+        canvas.animationBehavior = .none; /// [Sep 2026] Prevent the macOS 26 window-animations from creating move effect (opening) / smudge effect (closing)
 
         /// Set contentView
         canvas.contentView = CanvasContent()

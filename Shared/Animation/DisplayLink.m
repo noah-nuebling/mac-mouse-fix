@@ -32,11 +32,6 @@
 
 @interface DisplayLink ()
 
-typedef enum {
-    kMFDisplayLinkRequestedState_Stopped = 0,
-    kMFDisplayLinkRequestedState_Running,
-} MFDisplayLinkRequestedState;
-
 @end
 
 /// Wrapper object for CVDisplayLink that uses blocks
@@ -49,93 +44,133 @@ typedef enum {
     //CGDirectDisplayID _previousDisplayUnderMousePointer;
     BOOL _displayLinkIsOutdated;
     CFRunLoopRef _runLoop;
-    MFDisplayLinkRequestedState _requestedState;
+    bool _userRequestsToRun;            /// What the client wants (start/stop) Formerly `_requestedState`. [Sep 2026]
+    bool _cvDisplayLinkRequestedToRun;  /// What we last told the CVDisplayLink to do (start/stop). Use for `kTicksUntilStoppingDisplayLink` stuff
+    int _ticksSinceUserRequestedStop;
     MFDisplayLinkWorkType _optimizedWorkType;
+    CFRunLoopSourceRef _runLoopSource;
 
     NSString *_name;
 
     MFReadWriteTracker _readWriteTracker;
 
+    DisplayLinkCallbackTimeInfo __timeInfo; /// Used to pass info between the two `displayLinkCallback` functions. Probably invalid before first callback and when displayLink is stopped. Think before using in any other context [Sep 2026]
+    int __hasPendingCVDisplayLinkCallback;  /// Used to pass info between the two `displayLinkCallback` functions
 }
 
-/** Force CVDisplayLink interactions onto the mainThread
-
-    Old notes:
-        @noGCDCleanup: Unify these into one coherent thing
-
-        Hypotheses of mainThread requirement from top of `setUpNewDisplayLinkWithActiveDisplays`:
-            /// [Aug 2025] We're calling CVDisplayLinkStart() and CVDisplayLinkStop() from the mainThread, and apparently that fixed some issues, we also had some external doc that suggested mainThread should be used for some things. (See notes where we call CVDisplayLinkStart()/CVDisplayLinkStop()). I also just saw that CVDisplayLink is non-sendable.
-            ///     - My guess rn would be that each CVDisplayLink instance should only be interacted with from one thread.
-            ///     - On which threads is this called? [Aug 2025]
-            ///         - `[GestureScrollSimulator initialize]` calls this on `com.nuebling.mac-mouse-fix.helper.display-link` queue,
-            ///         - `[Scroll load_Manual]` calls this on mainThread.
-            ///         - `[ModifiedDragOutputTwoFingerSwipe load_Manual]` calls this on the mainThread.
-            ///         - If the displayLink is recreated after detaching/reattaching a display, it seems to always run on `com.nuebling.mac-mouse-fix.helper.display-link` (Haven't done too much testing or thinking here.)
-            ///         - (Haven't tested anything else)
-            ///     - Other thought: Since this is only called rarely, (and I think always *before* that displayLink is actually used) race-conditions might be rare. But rare issues match the sporadic nature of the `scrolling-stops-intermittently_apr-2025.md` issues, and CVDisplayLinkStart()/CVDisplayLinkStop() did randomly fail when we called them from a non-main-thread according to the notes
-            ///         ... but my gut feeling is that it's not about race-conditions.
-
-        From above CVDisplayLinkStart restart loop:
-            /// Start the displayLink
-            ///     If something goes wrong see notes in old SmoothScroll.m > handleInput: method
-            ///
-            /// Starting the displayLink often fails with error code `-6660` for some reason.
-            ///     Running on the main queue seems to fix that. (See SmoothScroll_old_).
-            ///     We don't wanna use `dispatch_sync(dispatch_get_main_queue())` here because if were already running on the main thread(/queue?) then that'll crash
-
-        From `displayLinkCallback`
-            /// Notes:
-            ///     - [Aug 2025] We used to try to delay events here to reduce scrolling stutters. (See `MFDisplayLinkWorkType`) But we've now moved all that into `Old MFDisplayLinkWorkType stuff.md` and restored the 3.0.0 version of this code.
-            ///     - [Aug 2025] There is a deadlock here due to lock-inversion.
-            ///         See `Old MFDisplayLinkWorkType stuff.md > Deadlock: [Aug 2025]`
-            ///         Not addressing that now for fear of causing other bugs, but restoring to 3.0.0 code may reduce chances of hitting the bug.
-            ///         I think the deadlock has been here since commit `2bd62d5` when we started using `dispatch_sync()` here
-            ///     - [Aug 2025] Eventually, we may want to move to CADisplayLink and async-dispatch to the "IOThread" we're planning. This would resolve the deadlock, too (See `Old MFDisplayLinkWorkType stuff.md`)
-
-        From `stop_Unsafe`:
-            /// CVDisplayLink should be stopped from the main thread
-            ///     According to https://cpp.hotexamples.com/examples/-/-/CVDisplayLinkStop/cpp-cvdisplaylinkstop-function-examples.html
-
-            /// Make sure block is running on the main thread
-
-            /// This has been causing deadlocks. Deadlocks explanation:
-            ///
-            /// - This function runs on `_displayLinkQueue` and waits for displayLinkCallback when it calls CVDisplayLinkStop()
-            /// - displayLinkCallback waits for `_displayLinkQueue` when it tries to sync dispatch to it
-            /// -> Classic deadlock scenaro
-            ///
-            /// The pretty solution I can come up with is to make either the displayLinkCallback or the _displayLinkQueue not acquire its resource (thread lock) before it it can acquire all the other resources that it will need. But we don't have access to the locking stuff that the CVDisplayLink uses at all afaik, so I don't know how this would be possible.
-            /// As an alternative, we could simply either
-            /// 1. not make the callback _not_ try to acquire the queue lock
-            ///     - by making the callback dispatch to queue async instead of sync
-            ///     - this will make the callback not execute on the high priotity display link thread though, potentially making scrolling performance worse
-            /// 2. make the queue _not_ try to acquire the callback lock
-            ///     - by dispatching to main async instead of sync in the `- stop` and `- start` functions (Those are the functions where the deadlocks have occured so far.)
-            ///     - This will potentially change the order of operations and introduce new bugs.
-            ///
-            /// -> For now I'll try 2.
-            ///
-            /// Edit: Seems to not make a difference so far and fixes the constant deadlocks!
-            ///
-            /// Edit2: Solution 2. breaks isRunning(). Explanation: If, in start() and stop(), the displayLinkQueue async dispatches to mainQueue to do the actual starting and stopping, then the actual starting and stopping won't have happened yet when isRunnging() runs. Possible solutions:
-            ///     - 1. Go back to sync dispatching to mainQueue in start() and stop() and hope the other changes we made coincidentally prevent the deadlocks that were happening
-            ///         -> Worth a try
-            ///     - 2. Dispatch to mainQueue also in isRunning() -> We're introducing a new sync dispatch, so this might very well lead to new deadlocks
-            ///         -> Doesn't really make sense, try if desperate
-            ///     - 3. Introduce new state variable 'requestedState' with states `requestedRunning` and `requestedStop`. Use this state to make isRunning() return the right value right after start() or stop() are called, even if the underlying CVDisplayLink hasn't started / stopped yet.
-            ///         -> Think this makes sense. Try this if 1. doesn't work.
-            ///
-            ///     Edit: 1. Still doesn't work. -> Introducing `_requestedState` variable
+/**
+    Discussion
+        Deadlocks:
+            As far as I understand, there can be no more deadlocks after 'No more dispatch queues' refactor,
+                since there are only 2 threads (GlobalEventTapThread and mainThread) and the mainThread never waits on the GlobalEventTapThread anywhere in the program [Sep 2026]
+            Before the refactor, this file was a core big source of deadlocks.
+            The core problematic part was displayLinkCallback, which runs on private displayLinkThread holding private displayLinkLock which also locks all other interactions with the displayLink. Now you have dilemma:
+                - If you sync dispatch from displayLinkCallback to displayLinkQueue, you run on the 'high priority thread',
+                - but now there's a window, where you hold private lock but don't hold queue, yet, about to wait on the queue. In this window, someone can snatch the displayLink queue, then try to interact with the displayLink which you already have lock for > deadlock.
+                - To fix, we async dispatched to main before interacting with displayLink. (Also did that for other sporadic error, reason, see `_interactWithCVDisplayLinkFromMainThread`) this mostly fixes it but you can still deadlock if the displayLinkQueue ever waits on main (because displayLinkQueue holds the private displayLink lock, which main will wait for before interacting with displayLink)
+            After 'No more dispatch queues' refactor:
+                - We make the displayLinkThread defer to the GlobalEventTapThread - we don't wait on it. This is fine we think because
+                    we make the GlobalEventTap 'high priority' via `thread_policy_set` just like the displayLinkThread, and we also
+                    can drop frames via CFRunLoopSourceRef, just like the displayLinkThread probably would if your work takes too long
+                    -> So we think that all the benefits of running directly on displayLinkThread are gone and we can now enjoy no more deadlocks. Nice!
+            Also see:
+                - `Old MFDisplayLinkWorkType stuff.md > Deadlock: [Aug 2025]` ([Sep 2026] this hasn't been updated in a long time)
+                - Commit before 'No more dispatch queues' refactor where DisplayLink.m still had a lot of detailed scattered notes on the specific deadlocks and stuff.
+            Old notes: (to be deleted, summary above should be fine)
+                From `displayLinkCallback`
+                    ///     - [Aug 2025] There is a deadlock here due to lock-inversion.
+                    ///         See `Old MFDisplayLinkWorkType stuff.md > Deadlock: [Aug 2025]`
+                    ///         Not addressing that now for fear of causing other bugs, but restoring to 3.0.0 code may reduce chances of hitting the bug.
+                    ///         I think the deadlock has been here since commit `2bd62d5` when we started using `dispatch_sync()` here
+                    ///     - [Aug 2025] Eventually, we may want to move to CADisplayLink and async-dispatch to the "IOThread" we're planning. This would resolve the deadlock, too (See `Old MFDisplayLinkWorkType stuff.md`)
+                From `stop_Unsafe`: (How we introduced `_requestedState`)
+                    /// This has been causing deadlocks. Deadlocks explanation:
+                    ///
+                    /// - This function runs on `_displayLinkQueue` and waits for displayLinkCallback when it calls CVDisplayLinkStop()
+                    /// - displayLinkCallback waits for `_displayLinkQueue` when it tries to sync dispatch to it
+                    /// -> Classic deadlock scenaro
+                    ///
+                    /// The pretty solution I can come up with is to make either the displayLinkCallback or the _displayLinkQueue not acquire its resource (thread lock) before it it can acquire all the other resources that it will need. But we don't have access to the locking stuff that the CVDisplayLink uses at all afaik, so I don't know how this would be possible.
+                    /// As an alternative, we could simply either
+                    /// 1. not make the callback _not_ try to acquire the queue lock
+                    ///     - by making the callback dispatch to queue async instead of sync
+                    ///     - this will make the callback not execute on the high priotity display link thread though, potentially making scrolling performance worse
+                    /// 2. make the queue _not_ try to acquire the callback lock
+                    ///     - by dispatching to main async instead of sync in the `- stop` and `- start` functions (Those are the functions where the deadlocks have occured so far.)
+                    ///     - This will potentially change the order of operations and introduce new bugs.
+                    ///
+                    /// -> For now I'll try 2.
+                    ///
+                    /// Edit: Seems to not make a difference so far and fixes the constant deadlocks!
+                    ///
+                    /// Edit2: Solution 2. breaks isRunning(). Explanation: If, in start() and stop(), the displayLinkQueue async dispatches to mainQueue to do the actual starting and stopping, then the actual starting and stopping won't have happened yet when isRunnging() runs. Possible solutions:
+                    ///     - 1. Go back to sync dispatching to mainQueue in start() and stop() and hope the other changes we made coincidentally prevent the deadlocks that were happening
+                    ///         -> Worth a try
+                    ///     - 2. Dispatch to mainQueue also in isRunning() -> We're introducing a new sync dispatch, so this might very well lead to new deadlocks
+                    ///         -> Doesn't really make sense, try if desperate
+                    ///     - 3. Introduce new state variable 'requestedState' with states `requestedRunning` and `requestedStop`. Use this state to make isRunning() return the right value right after start() or stop() are called, even if the underlying CVDisplayLink hasn't started / stopped yet.
+                    ///         -> Think this makes sense. Try this if 1. doesn't work.
+                    ///
+                    ///     Edit: 1. Still doesn't work. -> Introducing `_requestedState` variable
 
 */
 
-#define _interactWithCVDisplayLinkFromMainThread 1 /** Use mainThread to start/stop/... the CVDisplaylink, instead of `_runLoop`. Might prevent reliability issues. See all the comments above [Sep 2026] */
+/// Keep the displayLink alive for a few frames after the user stops it, this prevents CVDisplayLink from creating new pthreads all the time when stopping and restarting in quick succession.
+///     Used to optimize the `ModifiedDrag.m > coalescingDisplayLink()` which is started and stopped every frame and normally makes CVDisplayLink create a new pthread for every frame
+///     (which we have to call `set_thread_priority`on again). This isn't actually very expensive at all (I measured it only lower CPU usage `<~0.2%` (in absolute terms) during threeFingerDrag)
+///     and the thread priority is pretty high anyways, so not sure this actually makes a UX difference. [Sep 2026]
+///     Optimization Update: (@noGCDCleanup):
+///         [Sep 2026] I saw `coalescingDisplayLink()` actually increases CPU usage compared to pre-refactor when you run low-polling rate mouse on 120 Hz display. I guess because the events come in slower than the frames, so coalescing buys nothing and just costs some CVDisplayLink stuff overhead.
+#define kTicksUntilStoppingCVDisplayLink 3
+
+/// Recreate the underlying CVDisplayLink when a new display is attached (`displayReconfigurationCallback`).
+///     Discussion: [Sep 2026]
+///         Contra:
+///             - MOS doesn't do this (been a while since I checked [Sep 2026]) (Update: Does recreate now but doesn't retarget the displayLink - wrong)
+///             - In [Sep 2026] macOS 27 tests, it's not necessary (displayLink can be created with only 60 Hz displays attached, then 120 Hz display attaches, and it retargets fine to 120 Hz.) (Tested after restart/sleep. Always works)
+///             - Might cause/exacerbate reliability issues (See `kMaxTries_CVDisplayLinkCreate` and the notes by the retry loop [Sep 2026])
+///         Pro:
+///             - The docs sort of suggest this, but it's ambiguous:
+///                 CVDisplayLinkCreateWithActiveCGDisplays() docs say that it "determines the displays actively used by the host computer and creates a display link compatible with all of them.".
+///                 -> I read 'actively used' as it's not compatible with displays that aren't attached, yet - that's why I did all this.
+///             - Claude told me recreating is done in Chromium and other projects and it's the 'robust' thing to do.
+///                 - Update: Other Claude says this isn't true. It says, Chromium and WebKit keep per-display CVDisplayLink and don't recreate. Firefox uses retargetable API and recreates it
+///                     sometimes to fix some edge case sleep/wake bug, which Claude say is plausibly because it never targets the displayLink to a display. MOS is funky and probably wrong. (Also never targets the displayLink apparently)
+///                     -> Only compelling reason to recreate is maybe if the Firefox bug is *not* because it never retargets.
+
+#define kRecreateCVDisplayLink 0 /// [Sep 2026] If we re-enable this: the deferred `_userRequestsToRun` stuff is racy and could lead to getting stuck forever! (Courtesy Opus 5.5) (Update: Changed architecture a little, might not be true anymore)
+
+#define kMaxTries_CVDisplayLinkCreate 20 /** [Aug 2025] 20 is kinda arbitrary, but since this only seems to fail very rarely, and only runs in special situations like launching the helper, so there should be no performance impact to trying many times. */
+#define kMaxTries_CVDisplayLinkStart 100
+
+/// Defer all interactions with the CVDisplayLink to the mainThread. Might prevent reliability issues.
+/// Old comments: [Sep 2026]
+///     From `setUpNewDisplayLinkWithActiveDisplays`:
+///         [Aug 2025] We're calling CVDisplayLinkStart() and CVDisplayLinkStop() from the mainThread, and apparently that fixed some issues, we also had some external doc that suggested mainThread should be used for some things. (See notes where we call CVDisplayLinkStart()/CVDisplayLinkStop()). I also just saw that CVDisplayLink is non-sendable.
+///             - My guess rn would be that each CVDisplayLink instance should only be interacted with from one thread.
+///             - On which threads is this called? [Aug 2025]
+///                 - `[GestureScrollSimulator initialize]` calls this on `com.nuebling.mac-mouse-fix.helper.display-link` queue,
+///                 - `[Scroll load_Manual]` calls this on mainThread.
+///                 - `[ModifiedDragOutputTwoFingerSwipe load_Manual]` calls this on the mainThread.
+///                 - If the displayLink is recreated after detaching/reattaching a display, it seems to always run on `com.nuebling.mac-mouse-fix.helper.display-link` (Haven't done too much testing or thinking here.)
+///                 - (Haven't tested anything else)
+///             - Other thought: Since this is only called rarely, (and I think always *before* that displayLink is actually used) race-conditions might be rare. But rare issues match the sporadic nature of the `scrolling-stops-intermittently_apr-2025.md` issues, and CVDisplayLinkStart()/CVDisplayLinkStop() did randomly fail when we called them from a non-main-thread according to the notes
+///                 ... but my gut feeling is that it's not about race-conditions.
+///     From above CVDisplayLinkStart restart loop:
+///         Start the displayLink
+///             If something goes wrong see notes in old SmoothScroll.m > handleInput: method
+///         Starting the displayLink often fails with error code `-6660` for some reason.
+///             Running on the main queue seems to fix that. (See SmoothScroll_old_).
+///     From `stop_Unsafe`:
+///         CVDisplayLink should be stopped from the main thread
+///             According to https://cpp.hotexamples.com/examples/-/-/CVDisplayLinkStop/cpp-cvdisplaylinkstop-function-examples.html
+#define _interactWithCVDisplayLinkFromMainThread 1
 - (CFRunLoopRef) cvDisplayLinkInteractionRunLoop {
     return _interactWithCVDisplayLinkFromMainThread ? CFRunLoopGetMain() : self->_runLoop;
 }
 - (void) interactWithCVDisplayLink: (void (^)(void))workload {
     if (CFRunLoopGetCurrent() == [self cvDisplayLinkInteractionRunLoop]) workload();
-    else                                                                 MFCFRunLoopPerform([self cvDisplayLinkInteractionRunLoop], nil, workload); /// [Sep 2026] `_requestedState` allows us to make all interaction with CVDisplayLink non-blocking
+    else                                                                 MFCFRunLoopPerform([self cvDisplayLinkInteractionRunLoop], nil, workload); /// [Sep 2026] `_userRequestsToRun` allows us to make all interaction with CVDisplayLink non-blocking
 }
 
 /// [Sep 2026] Disable `readsState()` / `readsAndWritesState()` in DisplayLink.m
@@ -219,67 +254,70 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
     if (self) {
 
         _optimizedWorkType = workType;
-        _runLoop = (void *)CFRetain(runLoop);
+        _runLoop = runLoop;
         //_previousDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 2); /// Init displaysUnderMousePointer cache. Why 2? - see `setDisplayToDisplayUnderMousePointerWithEvent:`
         _displayLinkIsOutdated = NO;
-        _requestedState = kMFDisplayLinkRequestedState_Stopped;
+        _userRequestsToRun = NO; _ticksSinceUserRequestedStop = 0;
+        _cvDisplayLinkRequestedToRun = NO;
         _name = stringf(@"%@.%@", name, @((uintptr_t)self));
+
+        _runLoopSource = CFRunLoopSourceCreate(kCFAllocatorDefault, /*order*/0, &(CFRunLoopSourceContext){
+            .version = 0,
+            .info = (__bridge void *)self,
+            .retain = NULL, .release = NULL, /// NULL to avoid retainCycle, since self owns the `_runLoopSource`
+            .copyDescription = CFCopyDescription, .equal = CFEqual, .hash = CFHash, /// Not sure these are necessary/do anything
+            .schedule = NULL, .cancel = NULL,
+            .perform = displayLinkCallback_OnRunLoop,
+        });
+        CFRunLoopAddSource(_runLoop, _runLoopSource, kCFRunLoopCommonModes);
 
         [self interactWithCVDisplayLink:^{
             [self setUpNewCVDisplayLinkWithActiveDisplays]; /// Setup internal CVDisplayLink
-            CGDisplayRegisterReconfigurationCallback(displayReconfigurationCallback, (__bridge void * _Nullable)(self));
+            if (kRecreateCVDisplayLink) CGDisplayRegisterReconfigurationCallback(displayReconfigurationCallback, (__bridge void * _Nullable)(self));
         }];
 
     }
     return self;
 }
 
-- (void)setUpNewCVDisplayLinkWithActiveDisplays {
+- (void) setUpNewCVDisplayLinkWithActiveDisplays {
     assertRunLoop([self cvDisplayLinkInteractionRunLoop]);
-
-
-    /// Discussion
-    ///     - MOS doesn't recreate the displaylink every time a new display is connected, so it's probably unnecessary. Why did we do all this elaborate stuff without testing? Should've at least left a comment that we haven't confirmed it to be necessary. [Oct 2025]
-    ///         @noGCDCleanup - actually test this now that I have a second display and stufff
 
     /// Delete existing displayLink
     if (_displayLink != NULL) {
         CVReturn ret = CVDisplayLinkStop(_displayLink);
-        mfassert(ret == kCVReturnDisplayLinkNotRunning); /// @noGCDCleanup delete this
+        MFCFRunLoopPerform(_runLoop, nil, ^{
+            self->_userRequestsToRun = NO; self->_ticksSinceUserRequestedStop = 0;
+            self->_cvDisplayLinkRequestedToRun = NO;
+        });
         DDLogDebug("DisplayLink.m: (%@) Deleting existing CVDisplayLink for displayLink. StopCode: %@", _name, MFCVReturn_ToString(ret));
         CVDisplayLinkRelease(_displayLink);
         _displayLink = NULL;
     }
     
-    /// Create new displayLink
+    /// Create new displayLink in retry loop
     ///     [Aug 2025] I think silent failure of this probably causes the `scrolling-stops-intermittently_apr-2025.md` (Aka `Scroll Stops Working Intermittently`) bug.
     ///         To address this, in case of failure, we retry in a loop and eventually crash the program. That way we should have better robustness and better debug data (crashlogs)
-    ///         Update: [Sep 2026]
+    ///         Update: (During 'No more dispatch queues' refactor) [Sep 2026]
     ///             IIRC, this fixed the issue and GitHub issues about this stopped.
     ///             Idea: I think before 'No more dispatch queues' refactor in [Sep 2026], this was called from many different threads, which matches how CVDisplayLinkStart() was apparently failing intermittently, before we put it on the mainThread.
     ///     [Aug 2025] Will this enter a crash-cycle if no display is attached at all?
     ///         Test result: Nope, seems like there is a dummy display in the API when no displayCable is attached to my Mac Mini 2018, and this code runs just fine. (However other parts of the codebase still experience assert-failures when no display is attached – Haven't looked into that.) See commit 6fa42122c7d38c315ad8f8f428e2b9b0fa5c8711.
     {
-        const int max_tries = 20;       /// [Aug 2025] 20 is kinda arbitrary, but since this only seems to fail very rarely, and only runs in special situations like launching the helper, so there should be no performance impact to trying many times.
-        CVReturn ret  = -1;             /// [Aug 2025] Init to silence stupid compiler warnings
-        CVReturn ret2 = -1;
-        
-        for (int i = 0; i < max_tries; i++) {
-            
-            ret  = CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
-            ret2 = CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, (__bridge void *_Nullable)(self)); /// [Aug 2025] Why is self `_Nullable`? || [Aug 2025] Test result: 'Silently' fails with kCVReturnInvalidArgument if you pass NULL as the `_displayLink`, that fits with our theory about this potentially causing `scrolling-stops-intermittently_apr-2025.md`.
-            
-            bool valid = (ret == kCVReturnSuccess) && (ret2 == kCVReturnSuccess) && (_displayLink != NULL);
-            if (valid) {
-                DDLogDebug("DisplayLink.m: (%@) Created CVDisplayLink (%@) on try %d", _name, _displayLink, i);
-                return;
-            }
-            
-            CVDisplayLinkRelease(_displayLink);
-            _displayLink = NULL; /// I'm pretty sure CVDisplayLinkCreateWithActiveCGDisplays() always overrides the `_displayLink` to be either NULL or valid. If it sometimes leaves the value untouched, then we'd have to set it to NULL after releasing to prevent use-after-free.
+
+        CVReturn ret = 0; int i = 0;
+        for (; i < kMaxTries_CVDisplayLinkCreate; i++) {
+            ret = CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
+            if (!ret && _displayLink && !CVDisplayLinkGetCurrentCGDisplay(_displayLink)) ret = kCVReturnInvalidDisplay; /// Opus 5.5 suggestion. Detect broken link (framework bug) See Firefox bug 1201401 / crbug.com/1218720 – CoreVideo sometimes returns success with a broken link (nulled internal pointer) that crashes later. [Sep 2026]
+            if (!ret && _displayLink) break;
+            if (_displayLink) { CVDisplayLinkRelease(_displayLink); _displayLink = NULL; }
         }
-        
-        mfabort("DisplayLink.m: (%@) Failed to create CVDisplayLink (%@) after %d tries. Last codes: (%@, %@)", _name, _displayLink, max_tries, MFCVReturn_ToString(ret), MFCVReturn_ToString(ret2));
+        mfrequire(!ret && _displayLink, "(%@) Creating CVDisplayLink failed after %d tries with error %@", _name, i, MFCVReturn_ToString(ret));
+
+        ret = CVDisplayLinkSetOutputCallback(_displayLink, displayLinkCallback, (__bridge void *)self); /// Old comment from [Aug 2025] Test result: 'Silently' fails with kCVReturnInvalidArgument if you pass NULL as the `_displayLink`, that fits with our theory about this potentially causing `scrolling-stops-intermittently_apr-2025.md`.
+        mfrequire(!ret, "(%@) Setting output callback on CVDisplayLink failed with error: %@", _name, MFCVReturn_ToString(ret)); /// [Sep 2026] This used to be inside the retry-loop before 'No more dispatch queues' refactor - put it back inside if this causes issues.
+
+        DDLogDebug("(%@) Successfully created CVDisplayLink (%@) (%d retries)", _name, _displayLink, i);
     }
 }
 
@@ -287,25 +325,15 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 
 - (void)dealloc
 {
+    CVDisplayLinkStop(_displayLink);
     CVDisplayLinkRelease(_displayLink);
     CGDisplayRemoveReconfigurationCallback(displayReconfigurationCallback, (__bridge void * _Nullable)(self)); /// The arguments need to match the ones for CGDisplayRegisterReconfigurationCallback() exactly
     //free(_previousDisplaysUnderMousePointer);
-    CFRelease(_runLoop);
+    CFRunLoopSourceInvalidate(_runLoopSource);
+    CFRelease(_runLoopSource);
 }
 
 #pragma mark - Start and stop
-
-#if 0 /// Unused [Sep 2026]
-    - (void)startWithCallback:(DisplayLinkCallback _Nonnull)callback {
-        /// The passed in block will be executed every time the display refreshes until `- stop` is called or this instance is deallocated.
-        /// Call `setToMainScreen` to link with the screen that currently has keyboard focus.
-        ///     This is synchronous, when called from the main thread and asynchronous otherwise
-
-        dispatch_async(_displayLinkQueue, ^{
-            [self start_UnsafeWithCallback:callback];
-        });
-    }
-#endif
 
 - (void)start_UnsafeWithCallback:(DisplayLinkCallback _Nullable)callback {
 
@@ -314,107 +342,47 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 
     DDLogDebug("DisplayLink.m: (%@) starting", _name);
 
-    if (callback) /// Set to nil to preserve existing callback
-    self.callback = callback;
+    if (callback) self.callback = callback; /// Pass nil to preserve existing callback
+
+    _userRequestsToRun = YES;
 
     /// Early return
-    BOOL isRunning = NO; _allowNestedReadOrWrite() isRunning = [self isRunning_Unsafe];
-    if ((1)) /// [Sep 2026] Added this as optimization, not totally sure it's correct | @noGCDCleanup: Think this through.
-    if (isRunning) {
-        if ((0)) DDLogDebug("DisplayLink.m: (%@) already starting/started", _name);
-        return;
-    }
-
-    /// Set requestedState
-    ///     before async dispatching to main -> so that isRunning() works properly
-    ///     [Sep 2026] Before the 'No more dispatch queues' refactor, we set `startDisplayLinkBlock` *inside* startDisplayLinkBlock. That must've surely been a mistake. But it seems to have worked? @noGCDCleanup: Delete this comment
-    _requestedState = kMFDisplayLinkRequestedState_Running;
-
-    /// Start the displayLink
+    ///     [Sep 2026] Added this as optimization. Bit error prone. (Always set this with every CVDisplayLinkStop and stuff, otherwise we can get stuck here!) Don't remember when/why/if this mattered.
+    if (_cvDisplayLinkRequestedToRun) return;
+    _cvDisplayLinkRequestedToRun = YES;
     [self interactWithCVDisplayLink: ^{
-        assertRunLoop([self cvDisplayLinkInteractionRunLoop]);
 
-        /// @noGCDCleanup Unify the retry mechanisms for CVDisplayLinkStart and CVDisplayLinkCreateWithActiveCGDisplays
-        int64_t failedAttempts = 0;
-        int64_t maxAttempts = 100;
+        #define retok(ret) (!(ret) || (ret) == kCVReturnDisplayLinkAlreadyRunning)
 
-        while (true) {
-            CVReturn rt = CVDisplayLinkStart(self->_displayLink); /// This locks until the displayLinkCallback is done
-            if (rt == kCVReturnSuccess) break;
+        CVReturn ret;
+        int i = 0;
+        do ret = CVDisplayLinkStart(self->_displayLink); /// Interactions with CVDisplayLink block until the displayLinkCallback returns. Since `displayLinkCallback` doesn't wait on anything this can't cause deadlocks [Sep 2026]
+            while (!retok(ret) && ++i < kMaxTries_CVDisplayLinkStart);
 
-            failedAttempts += 1;
-            if (failedAttempts >= maxAttempts) {
-                DDLogInfo("DisplayLink.m: (%@) Failed to start CVDisplayLink after %lld tries. Last error code: %d", self->_name, failedAttempts, rt);
-                self->_requestedState = kMFDisplayLinkRequestedState_Stopped; /// [Sep 2026] Stop the early return from blocking future start attempts. This is feels a bit hacky. ... also a race since `cvDisplayLinkInteractionRunLoop` doesn't own `_requestedState` @noGCDCleanup
-                break;
-            }
+        if (!retok(ret)) {
+            mfassert(false, @"DisplayLink.m: (%@) Failed to start CVDisplayLink after %d tries. Giving up. Last error: %@", self->_name, i, MFCVReturn_ToString(ret));
+            MFCFRunLoopPerform(self->_runLoop, nil, ^{
+                self->_userRequestsToRun = NO; self->_ticksSinceUserRequestedStop = 0;
+                self->_cvDisplayLinkRequestedToRun = NO; /// Command failed, so the CVDisplayLink isn't running. Reset so the next start retries.
+            });
         }
+        #undef retok
     }];
 }
-
-#if 0 /** [Sep 2026] Unused */
-    - (void)stop {
-
-        dispatch_async(_displayLinkQueue, ^{
-            [self stop_Unsafe];
-        });
-    }
-#endif
 
 - (void)stop_Unsafe {
 
     assertRunLoop(_runLoop);
     _readsAndWritesState(&_readWriteTracker);
-
-    /// Debug
-    DDLogDebug("DisplayLink.m: (%@) stopping", _name);
-
-    BOOL isRunning = NO; _allowNestedReadOrWrite() isRunning = [self isRunning_Unsafe];
-    if (isRunning) {
-
-        /// @noGCDCleanup why have the early return in -start but not -stop? ... `isRunning_Unsafe` is early return, duh
-
-        /// Set requestedState
-        ///     before deferring to main -> so that isRunning() works properly
-        _requestedState = kMFDisplayLinkRequestedState_Stopped;
-
-        [self interactWithCVDisplayLink: ^{
-            assertRunLoop([self cvDisplayLinkInteractionRunLoop]);
-            CVDisplayLinkStop(self->_displayLink); /// This locks until the displayLinkCallback is done
-        }];
-    }
+    DDLogDebug("DisplayLink.m: (%@) stop request", _name);
+    _userRequestsToRun = NO; _ticksSinceUserRequestedStop = 0;
 }
-
-#if 0
-- (void)stop_FromDisplayLinkedThread {
-    /// The normal `stop` function is synchronous. But because of that, it'll deadlock when called from the displayLinkCallback's thread. So we have this asynchronous variant of the function just for that purpose.
-    ///     I'm not sure the standard stop function even has to be synchronous
-    ///         Edit: Actually we've since changed the normal `stop` function to be asynchronous, as well. There were more deadlocking problems and it's not necessary.. So this function is now redundant.
-    ///         I think the displayLinkCallback might run for another frame or even more after calling `stop()`, when we stop it asynchronously. I hope that's not a problem.
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (self.isRunning) {
-            CVDisplayLinkStop(self->_displayLink);
-        }
-    });
-}
-#endif
-
-#if 0
-    - (BOOL)isRunning {
-        BOOL __block result = NO;
-        MFCFRunLoopPerform_sync(_runLoop, nil, -1, ^{
-            result = [self isRunning_Unsafe];
-        });
-        return result;
-    }
-#endif
 
 - (BOOL)isRunning_Unsafe {
 
-    assertRunLoop(_runLoop); /// [Sep 2026] `_requestedState` is owned by `_runLoop` (`self->_displayLink` in the dead code below is owned by [self cvDisplayLinkInteractionRunLoop])
+    assertRunLoop(_runLoop); /// [Sep 2026] `_userRequestsToRun` is owned by `_runLoop` (`self->_displayLink` in the dead code below is owned by [self cvDisplayLinkInteractionRunLoop])
     _readsState(&_readWriteTracker);
-    return _requestedState;
+    return _userRequestsToRun;
 
     #if 0
         /// Only call this if you're already running on `_displayLinkQueue`
@@ -429,22 +397,6 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 }
 
 #pragma mark - Other interface
-
-
-#if 0 /** [Sep 2026] unused now */
-    + (BOOL)callerIsRunningOnDisplayLinkThread {
-        return [NSThread.currentThread.name isEqual:@"CVDisplayLink"];
-    }
-
-    + (NSString *)identifierForDisplayLink:(CVDisplayLinkRef)dl { /// This id stuff is for debugging
-        int64_t pointerNumber = (int64_t)(void *)dl;
-        return [NSString stringWithFormat: @"%lld", pointerNumber];
-    }
-    - (NSString *) identifier { /// [Apr 2025] for debugging it would be handy to give the displayLink a 'name' based on where it's used
-        if (!_identifier) _identifier = [DisplayLink identifierForDisplayLink: _displayLink];
-        return _identifier;
-    }
-#endif
 
 #if 0 /** [Sep 2026] Unused. (But seems useful - maybe we should use them?) */
     - (CFTimeInterval)bestTimeBetweenFramesEstimate {
@@ -535,52 +487,19 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
     }
 #endif
 
-#if 0 /** Made a new version of this that is simpler and more modular. */
-    - (CVReturn)old_linkToDisplayUnderMousePointerWithEvent:(CGEventRef)event {
-
-        /// - Pass in a CGEvent to get pointer location from. Not sure if signification optimization
-
-        CGPoint mouseLocation = CGEventGetLocation(event);
-        CGDirectDisplayID *newDisplaysUnderMousePointer = malloc(sizeof(CGDirectDisplayID) * 2);
-        /// ^ We only make the buffer 2 (instead of 1) so that we can check if there are several displays under the mouse pointer. If there are more than 2 under the pointer, we'll get the primary onw with CGDisplayPrimaryDisplay().
-        uint32_t matchingDisplayCount;
-        CGGetDisplaysWithPoint(mouseLocation, 2, newDisplaysUnderMousePointer, &matchingDisplayCount);
-
-        CVReturn returnCode = kCVReturnSuccess;
-        bool doFreeDisplays = true;
-
-        if (matchingDisplayCount >= 1) {
-            if (newDisplaysUnderMousePointer[0] != _previousDisplaysUnderMousePointer[0]) { /// Why are we only checking at index 0? Should make more sense to check current master display against the previous master display
-                free(_previousDisplaysUnderMousePointer); /// We need to free this memory before we lose the pointer to it in the next line. (If I understand how raw C work in ObjC)
-                _previousDisplaysUnderMousePointer = newDisplaysUnderMousePointer;
-                doFreeDisplays = false;
-                /// Sets dsp to the master display if _displaysUnderMousePointer[0] is part of the mirror set
-                CGDirectDisplayID dsp = CGDisplayPrimaryDisplay(_previousDisplaysUnderMousePointer[0]);
-                returnCode = [self setDisplay:dsp];
-            }
-        } else if (matchingDisplayCount == 0) {
-            DDLogWarn("DisplayLink.m: (%@) There are 0 diplays under the mouse pointer", [self identifier]);
-            returnCode = kCVReturnError;
-        }
-
-        if (doFreeDisplays) {
-            free(newDisplaysUnderMousePointer);
-        }
-
-        return returnCode;
-    }
-#endif
-
 
 - (CVReturn)setDisplay:(CGDirectDisplayID)displayID {
 
     assertRunLoop([self cvDisplayLinkInteractionRunLoop]);
 
     /// Setup new displayLink if displays have been attached / removed
+    if (kRecreateCVDisplayLink)
     if (_displayLinkIsOutdated) {
         [self setUpNewCVDisplayLinkWithActiveDisplays];
         _displayLinkIsOutdated = NO;
     }
+
+    if (CVDisplayLinkGetCurrentCGDisplay(_displayLink) == displayID) return kCVReturnSuccess; /// Setting the display on a running link restarts its thread, even if it's the same display [Sep 2026]
 
     CVReturn ret = CVDisplayLinkSetCurrentCGDisplay(_displayLink, displayID);
 
@@ -593,25 +512,22 @@ NSString *MFCGDisplayChangeSummaryFlags_ToString(CGDisplayChangeSummaryFlags fla
 #pragma mark - Reconfiguration Callback
 
 void displayReconfigurationCallback(CGDirectDisplayID display, CGDisplayChangeSummaryFlags flags, void *userInfo) {
-    
-    /// @noGCDCleanup
-    ///     - Test if this is necessary
-    ///     - Remove comments / consolidate them at top of file.
-    /// This is called whenever a display is added or removed.
-    ///     If that happens we need to set up a new displayLink for it to be compatible with all the new displays (I think)
-    ///     I got this idea, because the CVDisplayLinkCreateWithActiveCGDisplays() docs say that it "determines the displays actively used by the host computer and creates a display link compatible with all of them.". I took this to mean that when a new display is attached, we need to call CVDisplayLinkCreateWithActiveCGDisplays() again. But I'm not sure if that's true. Either way, I guess recreating the displayLink when a new display is attached doesn't hurt.
-    /// To optimize, in this function, we only set the `_displayLinkIsOutdated` flag to true.
-    ///     Then we use that flag in `- setDisplay`, to set up a new displayLink when needed.
-    ///     That way, the displayLink won't be recreated when the user isn't even using Mac Mouse Fix.
-    /// Update: [Mar 2025]
-    ///     - TODO: Test this! This is way to complicated and important to just not test and optimize it.
+
+    /// @noGCDCleanup consider Claude's concern:
+    ///     A dead CVDisplayLink now never recovers (DisplayLink.m:350, 577-585). Only two things clear _cvDisplayLinkRequestedToRun: a callback arriving, or a start that fails. If CoreVideo ever stops firing on its own while the flag is YES, every later start returns early. That DisplayLink then stays dead until the helper restarts, which looks exactly like "scroll
+    ///         stops working". Before this commit, every animation ended with CVDisplayLinkStop and the next one called CVDisplayLinkStart, which gave the link a fresh start.
+    ///     - I don't know whether CoreVideo actually does this (display unplug, sleep/wake). With the link no longer recreated, you've only tested display hot-plug on macOS 27, and the deployment target is 10.15.
+    ///     - Cheap insurance: record when the last callback arrived. In start, if the flag is YES but nothing has arrived for about 0.5 s, queue a Stop and then a Start.
+
+    /// See `kRecreateCVDisplayLink`
+    mfassert(kRecreateCVDisplayLink);
 
     DisplayLink *self = (__bridge DisplayLink *)userInfo;
 
     /// Hop threads
     ///     [Sep 2026] Because `_displayLinkIsOutdated` is owned by `[self cvDisplayLinkInteractionRunLoop]`, and CGDisplayChangeSummaryFlags comments suggest this is called on different threads.
     ///         Either way, this is rare and not performance critical, so hopping should always be fine.
-    MFCFRunLoopPerform([self cvDisplayLinkInteractionRunLoop], nil, ^{
+    [self interactWithCVDisplayLink: ^{
 
         if ((flags & kCGDisplayAddFlag)     || /// Using enabledFlag and disabledFlag here is untested. I'm not sure when they are true.
             (flags & kCGDisplayRemoveFlag)  || /// Update: [Apr 2025] I don't see a reason to recreate the displayLink when displays are *removed*.
@@ -619,12 +535,12 @@ void displayReconfigurationCallback(CGDirectDisplayID display, CGDisplayChangeSu
             (flags & kCGDisplayDisabledFlag))
         {
             DDLogInfo("DisplayLink.m: (%@) added / removed. Flagging the displayLink as outdated. display: %d, flags: %@", self->_name, display, MFCGDisplayChangeSummaryFlags_ToString(flags));
-            self->_displayLinkIsOutdated = YES;
+            self->_displayLinkIsOutdated = YES; /// Only flagging, so the displayLink won't be recreated when the user isn't even using Mac Mouse Fix. [Sep 2026]
         }
         else {
             DDLogDebug("DisplayLink.m: (%@) Ignored display reconfiguration. display: %d, flags: %@", self->_name, display, MFCGDisplayChangeSummaryFlags_ToString(flags));
         }
-    });
+    }];
 }
 
 #pragma mark - Frame Callback
@@ -633,24 +549,54 @@ static CVReturn displayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeSt
 
     DisplayLink *self = (__bridge DisplayLink *)displayLinkContext;
 
-    /// @noGCDCleanup Use runLoopSource instead of MFCFRunLoopPerform to get frame dropping
+    DisplayLinkCallbackTimeInfo timeInfo = parseTimeStamps(inNow, inOutputTime);
 
-    DisplayLinkCallbackTimeInfo timeInfo = parseTimeStamps(inNow, inOutputTime); /// [Sep 2026] Fine to do this outside block since it's a pure function, capturing `timeInfo` in block should be a bit faster than copying the input values.
+    static _Thread_local bool didSetPriority = false; /// CVDisplayLink spawns a new thread at priority 54 (fixed) on every CVDisplayLinkStart() [Sep 2026]
+    if (!didSetPriority) {
+        DDLogDebug("DisplayLink.m (%@) Recreating CVDisplayLinkThread", self->_name);
+        didSetPriority = true; set_thread_priority(63, /*round_robin*/true);
+    }
 
-    MFCFRunLoopPerform(self->_runLoop, nil, ^{
-        assertRunLoop(self->_runLoop);
-        _readsState(&self->_readWriteTracker);
+    bool hasPending;
+    @synchronized (self) { hasPending = self->__hasPendingCVDisplayLinkCallback;
+                           self->__hasPendingCVDisplayLinkCallback = 1;
+                           self->__timeInfo = timeInfo; }
 
-        DDLogDebug("DisplayLink.m: (%@) Callback", self->_name);
-        if (self->_requestedState == kMFDisplayLinkRequestedState_Stopped) {
-            DDLogDebug("DisplayLink.m: (%@) callback called after requested stop. Returning", self->_name);
-            return;
-        }
-        _allowNestedReadOrWrite() /// [Sep 2026] Animators call back into us from their callback (`-stop_Unsafe` when their animation ends)
-        self.callback(timeInfo);
-    });
+    if (!hasPending) { /// Prevent double-wakeup race thing that can happen I think (Signaling again would cause an extra, empty perform if we signal after the runLoop clears the signal but before the perform reads `__timeInfo`. [Sep 2026]
+        CFRunLoopSourceSignal(self->_runLoopSource);
+        CFRunLoopWakeUp(self->_runLoop);
+    }
 
     return kCVReturnSuccess;
+}
+static void displayLinkCallback_OnRunLoop(void *info) {
+
+    DisplayLink *self = (__bridge id)info;
+    assertRunLoop(self->_runLoop);
+    _readsState(&self->_readWriteTracker);
+
+    DDLogDebug("DisplayLink.m: (%@) Callback", self->_name);
+
+    DisplayLinkCallbackTimeInfo timeInfo;
+    @synchronized (self) { self->__hasPendingCVDisplayLinkCallback = 0;
+                           timeInfo = self->__timeInfo; }
+
+    if (!self->_userRequestsToRun && self->_cvDisplayLinkRequestedToRun) {
+        self->_ticksSinceUserRequestedStop += 1;
+        if (self->_ticksSinceUserRequestedStop > kTicksUntilStoppingCVDisplayLink) {
+            DDLogDebug("DisplayLink.m: (%@) callback called %d times after requested stop. Stopping CVDisplayLink", self->_name, kTicksUntilStoppingCVDisplayLink);
+            self->_cvDisplayLinkRequestedToRun = NO;
+            [self interactWithCVDisplayLink: ^{ CVDisplayLinkStop(self->_displayLink); }];
+        }
+        return;
+    }
+    if (!self->_userRequestsToRun) {
+        DDLogDebug("DisplayLink.m: (%@) callback called after stop. Ignoring", self->_name);
+        return;
+    }
+
+    _allowNestedReadOrWrite() /// [Sep 2026] Safe because at end of function | Animators call back into us from their callback (`-stop_Unsafe` when their animation ends)
+    self.callback(timeInfo);
 }
 
 #pragma mark - Timestamps

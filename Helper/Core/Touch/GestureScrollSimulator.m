@@ -16,6 +16,7 @@
 #import "VectorSubPixelator.h"
 #import "ModificationUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "MFHIDEventImports.h"
 
 /**
  This generates fliud scroll events containing gesture data similar to the Apple Trackpad or Apple Magic Mouse driver.
@@ -578,6 +579,19 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     CGEventSetIntegerValueField(e22, 99, phase);
     CGEventSetIntegerValueField(e22, 123, momentumPhase);
 
+    if ((0)) {
+        /// Opus 5.5:
+        /// Attach IOHIDEvent
+        ///     [Sep 2026] Test: Safari only runs its own momentum animation (smooth even when Safari is busy) if the scroll event carries an IOHIDEvent. It reads `rawPlatformDelta` from ScrollX/Y. (See WebKit > WebEventFactory.mm and MomentumEventDispatcher.cpp)
+        ///     Timestamp matters: WebKit computes frame intervals from it.
+
+        HIDEvent *hidEvent = [[HIDEvent alloc] initWithType: kIOHIDEventTypeScroll timestamp: mach_absolute_time() senderID: 0];
+        double deviceSign = invertedFromDevice ? -1 : 1; /// Opus 5.5 Raw deltas are in device direction, so undo the natural-scrolling flip.
+        [hidEvent setDoubleValue: deviceSign * vecScrollPoint.x * 2 forField: kIOHIDEventFieldScrollX];
+        [hidEvent setDoubleValue: deviceSign * vecScrollPoint.y * 2 forField: kIOHIDEventFieldScrollY];
+        CGEventSetHIDEvent(e22, hidEvent);
+    }
+
     /// Debug
     
     DDLogDebug("HNGG Sent event: %@", scrollEventDescription(e22));
@@ -587,7 +601,7 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
     ///     Wow, posting this after the t29s6 events removed the little stutter when swiping between pages, nice!
     
     CGEventSetTimestamp(e22, eventTs);
-//    CGEventSetLocation(e22, eventLocation);
+    //CGEventSetLocation(e22, eventLocation);
     CGEventPost(kCGSessionEventTap, e22); /// Needs to be kCGHIDEventTap instead of kCGSessionEventTap to work with Swish, but that will make the events feed back into our scroll event tap. That's not tooo bad, because we ignore continuous events anyways, still bad because CPU use and stuff.
     CFRelease(e22);
     
@@ -615,10 +629,11 @@ static void getDeltaVectors(Vector point, VectorSubPixelator *subPixelator, Vect
         
         /// Phase
         CGEventSetIntegerValueField(e29, 132, phase);
-        
+
+
         /// Post t29s6 events
         CGEventSetTimestamp(e29, eventTs);
-//        CGEventSetLocation(e29, eventLocation);
+        //CGEventSetLocation(e29, eventLocation);
         CGEventPost(kCGSessionEventTap, e29);
         CFRelease(e29);
     }

@@ -9,15 +9,6 @@
 
 import Cocoa
 
-//func MFCFRunLoopPerform_awaitable<T>(_ runLoop: CFRunLoop, _ body: @escaping () -> T) async -> T { @noGCDCleanup remove this
-//
-//    /// Run a block on `runLoop` and `await` it from an `async` Swift function [Sep 2026]
-//
-//    await withCheckedContinuation { continuation in
-//        MFCFRunLoopPerform(runLoop, nil) { continuation.resume(returning: body()) }
-//    }
-//}
-
 func MFCatch<R, E>(_ workload: () throws(E) -> R) -> (R?, E?) {
     
     /// (Sync version)

@@ -9,12 +9,16 @@
 /// @noGCDCleanup move GlobalEventTapThread high level comments here. (Maybe merge files)
 
 #import "Logging.h"
+#import "pthread.h"
 
 extern int _enableRunLoopAsserts;
 
+void manuallyLoadThreadsDotH(void);
+
+void set_thread_priority(int priority, bool round_robin);
+
 /// @noGCDCleanup flesh this out / think this through (Swift version as well)
 ///     Maybe make these 'require' instead of 'assert'
-
 
 #define assertRunLoop(runLoop) \
     if (_enableRunLoopAsserts) \

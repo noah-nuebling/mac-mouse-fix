@@ -32,7 +32,7 @@
         __auto_type workload = ^void (DisplayLinkCallbackTimeInfo timeInfo) {
             
             /// Check requestedState
-            if (self->_requestedState == kMFDisplayLinkRequestedStateStopped) {
+            if (self->_requestedState == kMFDisplayLinkStateStopped) {
                 DDLogDebug("DisplayLink.m: (%@) callback called after requested stop. Returning", [self identifier]);
                 return;
             }

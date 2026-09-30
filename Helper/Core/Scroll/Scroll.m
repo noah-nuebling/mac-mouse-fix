@@ -252,14 +252,14 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     /// Create copy of event
     
-    CGEventRef eventCopy = CGEventCreateCopy(event); /// Create a copy, because the original event will become invalid and unusable in the new queue.
-    
+    //CGEventRef eventCopy = CGEventCreateCopy(event); /// Create a copy, because the original event will become invalid and unusable in the new queue.
+
     /// Enqueue heavy processing
     ///  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
     ///     [Sep 2026] @noGCDCleanup Try removing this defer (Probably doesn't help anymore since it defers to the same thread?)
-    MFCFRunLoopPerform(GlobalEventTapThread.runLoop, nil, ^{
-        heavyProcessing(eventCopy, scrollDeltaAxis1, scrollDeltaAxis2, tickTime);
-    });
+    //MFCFRunLoopPerform(GlobalEventTapThread.runLoop, nil, ^{
+        allowNestedReadOrWrite() heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTime);
+    //});
 
     return NULL;
 }
@@ -811,9 +811,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
             /// Validate
             assert(distanceDeltaVec.x == 0 || distanceDeltaVec.y == 0);
-            
             if (distanceDelta == 0) {
-                assert(animationPhase == kMFAnimationCallbackPhaseEnd || animationPhase == kMFAnimationCallbackPhaseCanceled);
+                assert(animationPhase == kMFAnimationCallbackPhaseEnd || animationPhase == kMFAnimationCallbackPhaseCanceled || animationPhase == kMFAnimationCallbackPhaseStoppedBeforeStart);
             }
             /// Debug
             if ((0)) {
@@ -829,7 +828,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         }];
     }
     
-    CFRelease(event);
+    //CFRelease(event);
 }
 
 #pragma mark - Send Scroll events

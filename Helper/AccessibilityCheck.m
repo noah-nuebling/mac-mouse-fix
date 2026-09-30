@@ -130,6 +130,9 @@
     ///     [Sep 2026] Claude Opus 5.5 deadlock note: `MFCFRunLoopPerform_sync` onto `GlobalEventTapThread.runLoop` before `+[GlobalEventTapThread start]` would deadlock – but we probably will barely use `MFCFRunLoopPerform_sync` and would probably quickly catch anyways.
     [GlobalEventTapThread load_Manual];
 
+    /// Temp
+    manuallyLoadThreadsDotH();
+
     /// Pre-accessibility-check init
     [MFMessagePort load_Manual];
 

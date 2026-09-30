@@ -94,8 +94,8 @@ static NSSize _screenSize = {};
     }
 }
 
-+ (void)handleDeactivationWhileInUseWithCancel:(BOOL)cancel {
-    
++ (void) handleDeactivationWhileInUseWithCancel:(BOOL)cancel {
+
     MFDockSwipeType type;
     IOHIDEventPhaseBits phase;
     

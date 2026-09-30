@@ -123,7 +123,6 @@ static ModifiedDragState _drag;
         runLoop: GlobalEventTapThread.runLoop
         name: @"ModifiedDragCoalescing"
     ];
-    _drag.coalescingDisplayLink.delayStopToNextFrame = YES;
 
     [_drag.coalescingDisplayLink setCallback:^(DisplayLinkCallbackTimeInfo timeInfo) { coalescingDisplayLinkCallback(timeInfo); }];
 
@@ -203,6 +202,9 @@ static ModifiedDragState _drag;
 
     _drag.coalesceEvents = true;
     if (1) if (isclass(p, ModifiedDragOutputTwoFingerSwipe)) _drag.coalesceEvents = false; /// `ModifiedDragOutputTwoFingerSwipe` already has its own `TouchAnimator` which effectively coalesces output events, we think coalescing again here might responsiveness (Didn't really test) [Sep 2026]
+
+    /// HACK
+    if ((0)) _drag.coalesceEvents = false;
 
     /// Link with plugin
     //[p initializeWithDragState:&_drag];

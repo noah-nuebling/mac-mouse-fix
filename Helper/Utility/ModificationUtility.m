@@ -120,22 +120,22 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
         
         DDLogDebug("Hiding pointer");
         
-//        CGSHideCursor(cid);
+        //CGSHideCursor(cid);
         CGDisplayHideCursor(kCGDirectMainDisplay);
-//        [NSCursor hide];
-        
+        //[NSCursor hide];
+
     } else {
         
         DDLogDebug("UNHiding pointer");
         
-//        CGSShowCursor(cid);
+        //CGSShowCursor(cid);
         CGDisplayShowCursor(kCGDirectMainDisplay); /// Do it twice for good measure.
         CGError result = CGDisplayShowCursor(kCGDirectMainDisplay);
         if (result != kCGErrorSuccess) {
             DDLogDebug("Unhiding pointer failed. CGError: %d", result);
         }
-//        [NSCursor unhide];
-        
+        //[NSCursor unhide];
+
     }
 }
 

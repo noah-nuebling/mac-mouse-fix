@@ -21,6 +21,7 @@
 #import "GlobalEventTapThread.h"
 #import "NSScreen+Additions.h"
 @import CoreMedia;
+#import "MFGate.h"
 
 @implementation PointerFreeze
 
@@ -123,18 +124,24 @@ static void freezePointer(CGPoint origin, BOOL keepPointerMoving) {
         if (rt != kCVReturnSuccess) DDLogWarn("Couldn't get display under mouse pointer in PointerFreeze");
 
         /// Draw puppet cursor before hiding
-        drawPuppetCursor(YES, /*fresh*/YES);
+        drawPuppetCursor(kPuppetCursorCommand_Draw);
 
-        /// Wait
-        ///     The puppetCursor will only be drawn after a delay, while hiding the mouse pointer is really fast.
-        ///     This leads to a little flicker when the puppetCursor is not yet drawn, but the real cursor is already hidden.
-        ///     Not sure why this happens. But adding a delay of 0.02 before hiding makes it look seamless.
-        ///     Edit: `dispatch_after` caused race conditions, so we're sleeping instead. Might be bad for performance because we're using dispatch_sync above
-        ///
-        usleep(USEC_PER_SEC * 0.01); /// @noGCDCleanup think about this.
+        if ((0)) {
+            /// Wait
+            ///     [Sep 2026] Aparrently used to prevent flickers when I developed this (real pointer hiding before puppet cursor draws)
+            ///         Don't think this is necessary anymore. Don't see any flicker when freezing. We're also waiting on mainThread in the `kPuppetCursorCommand_Draw` above, so maybe that helps. Not sure.
+            ///         (However, I *am* seeing occasional flicker when unfreezing now! Maybe look into that at some point. [Sep 2026])
+            ///         Old notes:
+            ///             The puppetCursor will only be drawn after a delay, while hiding the mouse pointer is really fast.
+            ///             This leads to a little flicker when the puppetCursor is not yet drawn, but the real cursor is already hidden.
+            ///             Not sure why this happens. But adding a delay of 20 ms before hiding makes it look seamless.
+            ///             Edit: deferring caused race conditions, so we're sleeping instead. Might be bad for performance because we're using dispatch_sync above
+            ///
+            usleep(10 * 1000); /// Wait for 10 ms
+        }
 
         /// Hide cursor
-        [ModificationUtility hideMousePointer:YES];
+        [ModificationUtility hideMousePointer: YES];
     }
 }
 
@@ -187,7 +194,7 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         /// Update puppetCursorPosition
         updatePuppetCursorPosition(dx, dy);
         /// Draw puppet cursor
-        drawPuppetCursor(YES, /*fresh*/NO);
+        drawPuppetCursor(kPuppetCursorCommand_Move);
     }
 
    return event;
@@ -238,10 +245,10 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         if (_keepPointerMoving) {
         
             /// Show mouse pointer again
-            [ModificationUtility hideMousePointer:NO];
-            
+            [ModificationUtility hideMousePointer: NO];
+
             /// Undraw puppet cursor
-            drawPuppetCursor(NO, /*fresh*/NO);
+            drawPuppetCursor(kPuppetCursorCommand_Undraw);
         }
         
         /// Reset suppression interval to default
@@ -325,18 +332,15 @@ void setSuppressionIntervalWithTimeInterval(CFTimeInterval interval) {
 
 /// Puppet cursor
 
-static void drawPuppetCursor(BOOL draw, BOOL fresh) {
+typedef enum {
+    kPuppetCursorCommand_Draw,
+    kPuppetCursorCommand_Move,
+    kPuppetCursorCommand_Undraw,
+} PuppetCursorCommand;
+
+static void drawPuppetCursor(PuppetCursorCommand command) {
 
     assertRunLoop(pointerFreezeRunLoop());
-
-    /// Efficient undraw
-    ///     -> Just make transparent
-    //if (!draw) {
-    //    MFCFRunLoopPerform(CFRunLoopGetMain(), nil, ^{
-    //        _puppetCursorView.alphaValue = 0; /// Make the puppetCursor invisible
-    //    });
-    //    return;
-    //}
 
     /// Get loc
     CGPoint loc = _puppetCursorPosition;
@@ -358,43 +362,50 @@ static void drawPuppetCursor(BOOL draw, BOOL fresh) {
     /// Unflip coordinates to be compatible with Cocoa
     NSRect puppetImageFrame = NSMakeRect(imageLoc.x, imageLoc.y, _puppetCursor.image.size.width, _puppetCursor.image.size.height);
     NSRect puppetImageFrameUnflipped = [SharedUtility quartzToCocoaScreenSpace:puppetImageFrame];
-    
-    /// Define mainthread workload
 
-    /// @noGCDCleanup this used to be sync, which might be necessary for UX. (I think on starting the freeze (fresh == YES), maybe) (Update: Don't notice any degradation - still maybe see if we can tune things to be even better)
-    /// @noGCDCleanup Opus 5.5 drop frames via CFDispatchSource or similar, like we're planning for the CVDisplayLinkCallback already.
+    /// Decide about blocking
+    /// I used to think blocking was necessary to get the order of hiding/drawing/processing gesture right/non janky. On my M4 MBA it doesn't seem to make a difference. (Still had the usleep enabled, so maybe test again) Still doing this just in case or whatever I guess [Sep 2026]
+    /// Wating on main could deadlock if main ever waits on GlobalEventTapThread (caller)! Doesn't do that currently [Sep 2026]
+    bool blockCaller = command != kPuppetCursorCommand_Move;
+    MFGate *gate = blockCaller ? [MFGate new] : nil;
+    
+    /// Interact with AppKit from mainThread
+    /// Optimization idea: Maybe coalesce these like we're already doing for DisplayLink.m's displayLinkCallback or ModifiedDrag's coalescingDisplayLink (But don't skip draw/undraw commands!) [Sep 2026]
     MFCFRunLoopPerform(CFRunLoopGetMain(), nil, ^{
 
-        /// Normal undraw
-        ///     We need to use normal undraw instead of "efficient undraw" (see above) because (at least under Ventura Beta) mouseMoved causes CPU usage as long as the ScreenDrawers `canvas` window is open.
-        ///     We might be able to somehow fix this when setting up the canvas in `ScreenDrawer.load_Manual()`
-        if (!draw) {
-            [ScreenDrawer.shared undrawWithView: _puppetCursorView];
-            return;
-        }
-        
-        /// Store image of cursor into puppetView
-        if (fresh) {
+        if (command == kPuppetCursorCommand_Draw) {
+
             /// Store cursor image into puppet view
             _puppetCursorView.image = _puppetCursor.image;
-        }
-        
-        /// Draw/move puppet cursor image
-        if (fresh) {
+
             /// Draw puppetCursor
-            NSScreen *_Nullable screenUnderMousePointer = [NSScreen screenUnderMousePointerWithEvent:NULL]; /// We could also use `_display`?
+            NSScreen *_Nullable screenUnderMousePointer = [NSScreen screenUnderMousePointerWithEvent: NULL]; /// We could also use `_display`?
             screenUnderMousePointer = screenUnderMousePointer ?: NSScreen.screens[0]; /// [Aug 2025] Observed nil when no display cable plugged into Mac Mini – which lead to crashes when we passed this on to Swift as a non-optional
-            [ScreenDrawer.shared drawWithView: _puppetCursorView atFrame: puppetImageFrameUnflipped onScreen:  screenUnderMousePointer];
-        } else {
+            [ScreenDrawer.shared drawWithView: _puppetCursorView atFrame: puppetImageFrameUnflipped onScreen: screenUnderMousePointer];
+
+            /// Unhide puppet cursor
+            _puppetCursorView.alphaValue = 1;
+        }
+        else if (command == kPuppetCursorCommand_Move) {
             /// Reposition  puppet cursor!
             [ScreenDrawer.shared moveWithView: _puppetCursorView toOrigin: puppetImageFrameUnflipped.origin];
         }
-        
-        /// Unhide puppet cursor
-        if (fresh) {
-            _puppetCursorView.alphaValue = 1;
+        else if (command == kPuppetCursorCommand_Undraw) {
+
+            /// Efficient undraw
+            if ((0))
+            _puppetCursorView.alphaValue = 0; /// Just make transparent
+
+            /// Normal undraw
+            ///     We need to use normal undraw instead of "efficient undraw" (see above) because (at least under Ventura Beta) mouseMoved causes CPU usage as long as the ScreenDrawers `canvas` window is open.
+            ///     We might be able to somehow fix this when setting up the canvas in `ScreenDrawer.load_Manual()`
+            [ScreenDrawer.shared undrawWithView: _puppetCursorView];
         }
+
+        [gate signalWorkCompleted];
     });
+
+    [gate waitForWork];
 }
 
 static void updatePuppetCursorPosition(int64_t dx, int64_t dy) {

@@ -99,6 +99,7 @@
 #import "GlobalEventTapThread.h"
 #import "MFGate.h"
 #import "Logging.h"
+#import "Threads.h"
 
 @implementation GlobalEventTapThread
 
@@ -147,6 +148,9 @@ static MFGate *_startGate;
 
     /// Wait for +start
     [_startGate waitForWork];
+
+    /// Increase thread priority
+    set_thread_priority(63, /*round_robin*/true);
 
     /// Add empty source so the runLoop doesn't exit immediately
     CFRunLoopSourceRef emptySource = CFRunLoopSourceCreate(kCFAllocatorDefault, 0, &(CFRunLoopSourceContext){0});

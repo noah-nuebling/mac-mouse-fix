@@ -59,6 +59,8 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
     _drag = dragStateRef;
 
     /// Cancel the smoothing animator
+    ///     TODO-ish?: There's a race where a `threeFingerSwipe` could start trying to freeze the pointer before the smoothingAnimator finishes (Tried but could never trigger it, window maybe too small or I did it wrong.) but still ...
+    ///         -> Freezing should probably be managed by ModifiedDrag.m to an extent to allow such coordinations. [Sep 2026]
     [_smoothingAnimator cancel]; /// Sends `kMFAnimationCallbackPhaseCanceled` or `kMFAnimationCallbackPhaseStoppedBeforeStart` to our callback, guaranteeing that the continuation for the last gesture (the pointer-unfreeze) runs [Sep 2026]
 
     /// Stop scrolling
@@ -211,6 +213,7 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
     
     /// Handle cancelation
     if (cancelation) {
+        mfassert(false); /// [Sep 2026] Dead code - remove the `cancelation` arg since it is never used. (Credits to Opus 5.5 for finding this)
         if (_smoothingAnimator.isRunning_Unsafe) /// [Sep 2026] This seems a bit stupid but harmless (Shouldn't -cancel be a no-op if it's not running?)
             [_smoothingAnimator cancel];
 
