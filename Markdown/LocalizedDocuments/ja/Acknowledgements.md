@@ -97,6 +97,7 @@ Mac Mouse Fixを世界中の人々に届けていただき、ありがとうご�
 
 **10月 2026**
 
+- 🇺🇸&nbsp;Saskia - "Love it, thank you"
 - 🇫🇷&nbsp;Jean&nbsp;Marc&nbsp;Supor - "Cool driver for mouses on Mac"
 
 **9月 2026**

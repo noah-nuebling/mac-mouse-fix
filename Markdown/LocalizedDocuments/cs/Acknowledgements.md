@@ -97,6 +97,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **říjen 2026**
 
+- 🇺🇸&nbsp;Saskia - "Love it, thank you"
 - 🇫🇷&nbsp;Jean&nbsp;Marc&nbsp;Supor - "Cool driver for mouses on Mac"
 
 **září 2026**

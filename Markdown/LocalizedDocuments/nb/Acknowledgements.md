@@ -97,6 +97,7 @@ Disse menneskene brukte mye mer enn standardprisen og spanderte en **fantastisk 
 
 **oktober 2026**
 
+- 🇺🇸&nbsp;Saskia - "Love it, thank you"
 - 🇫🇷&nbsp;Jean&nbsp;Marc&nbsp;Supor - "Cool driver for mouses on Mac"
 
 **september 2026**

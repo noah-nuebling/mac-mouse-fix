@@ -98,6 +98,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **oktober 2026**
 
+- 🇺🇸&nbsp;Saskia - "Love it, thank you"
 - 🇫🇷&nbsp;Jean&nbsp;Marc&nbsp;Supor - "Cool driver for mouses on Mac"
 
 **september 2026**

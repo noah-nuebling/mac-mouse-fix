@@ -96,6 +96,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **octubre 2026**
 
+- 🇺🇸&nbsp;Saskia - "Love it, thank you"
 - 🇫🇷&nbsp;Jean&nbsp;Marc&nbsp;Supor - "Cool driver for mouses on Mac"
 
 **septiembre 2026**
