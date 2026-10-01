@@ -96,6 +96,10 @@ Thanks for your support! :)
 
 These people spent a lot more than the standard price and treated me to an **Incredible Milkshake**. (And some even left a message) Thanks for the *sugar rush*!
 
+**październik 2026**
+
+- 🇫🇷&nbsp;Jean&nbsp;Marc&nbsp;Supor - "Cool driver for mouses on Mac"
+
 **wrzesień 2026**
 
 - 🇳🇿&nbsp;Harris&nbsp;Gu

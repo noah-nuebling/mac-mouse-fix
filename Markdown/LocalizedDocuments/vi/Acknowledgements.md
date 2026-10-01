@@ -96,6 +96,10 @@ Cám ơn bạn đã hỗ trợ! :)
 
 Những người đã đóng góp nhiều hơn cả giá thông thường và ủng hộ tôi **ly sữa lắc siêu xịn**.(Và một số tin nhắn để lại) Cám ơn vì đã *ủng hộ tôi hết mình*!
 
+**Tháng 10 2026**
+
+- 🇫🇷&nbsp;Jean&nbsp;Marc&nbsp;Supor - "Cool driver for mouses on Mac"
+
 **Tháng 9 2026**
 
 - 🇳🇿&nbsp;Harris&nbsp;Gu

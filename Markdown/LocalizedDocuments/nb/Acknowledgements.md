@@ -95,6 +95,10 @@ Takk for støtten! :)
 
 Disse menneskene brukte mye mer enn standardprisen og spanderte en **fantastisk milkshake** på meg. (Og noen la til og med igjen en beskjed) Takk for *sukkerrushet*!
 
+**oktober 2026**
+
+- 🇫🇷&nbsp;Jean&nbsp;Marc&nbsp;Supor - "Cool driver for mouses on Mac"
+
 **september 2026**
 
 - 🇳🇿&nbsp;Harris&nbsp;Gu
