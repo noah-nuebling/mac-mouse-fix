@@ -47,7 +47,7 @@ import Cocoa
         
         /// Update stuff when clickCycle starts
         
-        let clickCycleIsActive = clickCycle.isActiveFor(device: device.uniqueID(), button: button)
+        let clickCycleIsActive = clickCycle.isActiveFor(device: device, button: button)
         if mouseDown && !clickCycleIsActive {
             
             /// Update active device
@@ -189,7 +189,7 @@ import Cocoa
         /// Might wanna `assert(clickCycleIsActive)`
         assert(isInitialized)
         /// Do stuff
-        if self.clickCycle.isActiveFor(device: device.uniqueID(), button: button) {
+        if self.clickCycle.isActiveFor(device: device, button: button) {
             self.clickCycle.kill()
         }
         if useButtonModifiers {
