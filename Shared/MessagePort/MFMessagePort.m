@@ -75,6 +75,8 @@
     #define messagePortRunLoop() GlobalEventTapThread.runLoop
 #elif IS_MAIN_APP
     #define messagePortRunLoop() CFRunLoopGetMain()
+#else /** LocalizationScreenshotTaker [Sep 2026] */
+    #define messagePortRunLoop() CFRunLoopGetMain()
 #endif
 
 @implementation MFMessagePort

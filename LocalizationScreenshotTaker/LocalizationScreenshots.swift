@@ -19,10 +19,6 @@ final class LocalizationScreenshotClass: XCTestCase {
     /// Keep-in-sync with .app
     let localized_string_annotation_activation_argument_for_screenshotted_app = "-MF_ANNOTATE_LOCALIZED_STRINGS"
     
-    /// ENV variable names  (This is how we pass data from the Python script that invokes this – uploadstrings.py [Oct 2025])
-    let xcode_screenshot_taker_output_dir_variable = "MF_LOCALIZATION_SCREENSHOT_OUTPUT_DIR"
-    let xcode_screenshot_taker_locale_variable     = "MF_LOCALIZATION_SCREENSHOT_LOCALE"
-    
     /// Keep in sync with .xcloc format
     let xcode_screenshot_taker_outputted_metadata_filename = "localizedStringData.plist"
     typealias LocalizedStringData = [LocalizedStringDatum] /// localizedStringData.plist, which is found inside .xcloc screenshot folders, has this structure
@@ -508,8 +504,11 @@ final class LocalizationScreenshotClass: XCTestCase {
             var killApp: Bool
             var allFilePaths: [String]
         }
+
         var args = Args(
-            onlyUpdateLocales: [/*"vi", "fr", "es", "zh-Hans", "uk", "tr", "nb", "pt-BR"*/],      /// Only update screenshots for these locales. (leave empty to update all), /// Only update screenshots for these locales. (leave empty to update all)
+            onlyUpdateLocales:
+                ProcessInfo.processInfo.environment["MFENV_SCREENSHOT_LOCALES"]?.split(separator: ",").map { String($0) } ?? /// This envvar is set by `./run build-markdown` [Oct 2026]
+                [/*"vi", "fr", "es", "zh-Hans", "uk", "tr", "nb", "pt-BR"*/],                                                           /// Only update screenshots for these locales. (leave empty to update all)
             continueFromLocale: nil,    /// Set in case of interruption, to avoid redoing already-completed localizations. Restart from this locale
             killApp: true,              /// Set false to leave app running for faster iterations.
             allFilePaths: [
@@ -859,13 +858,13 @@ final class LocalizationScreenshotClass: XCTestCase {
         }
         var args = Args(
             locale:
-                ProcessInfo.processInfo.environment[xcode_screenshot_taker_locale_variable] ??  /// This envvar is set by `./run uploadstrings` [Dec 2025]
+                ProcessInfo.processInfo.environment["MFENV_SCREENSHOT_LOCALES"] ??              /// This envvar is set by `./run uploadstrings` [Dec 2025]
                 "ru"                                                                            /// If you run this testRunner directly, without the envvar set, it will fall back to this hardcoded locale.
         )
         
         /// Do test intro
         let outputDir = sharedf_do_test_intro(
-            outputDir:            ProcessInfo.processInfo.environment[xcode_screenshot_taker_output_dir_variable],
+            outputDir:            ProcessInfo.processInfo.environment["MFENV_SCREENSHOT_OUTPUT_DIR"], /// [Sep 2026] envvar passed by `./run uploadstrings`
             fallbackTempDirName:  "MFLocalizationScreenshotsFallbackOutputFolder"
         )
         
@@ -873,7 +872,7 @@ final class LocalizationScreenshotClass: XCTestCase {
         var screenshotsAndMetaData: [ScreenshotAndMetadata?] = []
         
         /// Log
-        DDLogInfo("Localization Screenshot Test Runner launched with output directory: \(xcode_screenshot_taker_output_dir_variable): \(outputDir)")
+        DDLogInfo("Localization Screenshot Test Runner launched with output directory: \"MFENV_SCREENSHOT_OUTPUT_DIR\": \(outputDir)")
         
         /// Debug
         DDLogInfo("Runner envvars: \(ProcessInfo.processInfo.environment)")
