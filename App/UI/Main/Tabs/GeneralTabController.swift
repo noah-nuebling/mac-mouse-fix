@@ -49,6 +49,7 @@ class GeneralTabController: NSViewController {
         
         /// Determine width for this tab
         applyHardcodedTabWidth("general", self, widthControllingTextFields: [enabledHint, updatesHint, menuBarHint]);
+
         
         /// Replace enable checkBox with NSSwitch on newer macOS versions
         var usingSwitch = false

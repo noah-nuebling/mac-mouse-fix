@@ -38,6 +38,93 @@
 
 #pragma mark - IBActions
 
+static NSSet<NSString *> *MFTransferableConfigKeys(void) {
+    return [NSSet setWithArray:@[@"General", @"Pointer", @"Scroll", @"Remaps", @"AppOverrides"]];
+}
+
+- (IBAction)exportSettings:(id)sender {
+    NSSavePanel *panel = NSSavePanel.savePanel;
+    panel.nameFieldStringValue = MFLocalizedString(@"settings-transfer.default-filename", @"Default filename for an exported property list.");
+    panel.allowedFileTypes = @[@"plist"];
+    panel.canCreateDirectories = YES;
+
+    [panel beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse result) {
+        NSURL *destinationURL = panel.URL;
+        if (result != NSModalResponseOK || destinationURL == nil) return;
+
+        NSMutableDictionary *settings = [NSMutableDictionary dictionary];
+        for (NSString *key in MFTransferableConfigKeys()) {
+            id value = Config.shared.config[key];
+            if (value) settings[key] = value;
+        }
+        NSDictionary *document = @{
+            @"formatVersion": @1,
+            @"settings": settings,
+        };
+        NSError *error = nil;
+        NSData *data = [NSPropertyListSerialization dataWithPropertyList:document format:NSPropertyListXMLFormat_v1_0 options:0 error:&error];
+        if (!data || ![data writeToURL:destinationURL options:NSDataWritingAtomic error:&error]) {
+            [self presentSettingsTransferError:error title:MFLocalizedString(@"settings-transfer.export-error-title", @"Alert title shown when exporting settings fails.")];
+        }
+    }];
+}
+
+- (IBAction)importSettings:(id)sender {
+    NSOpenPanel *panel = NSOpenPanel.openPanel;
+    panel.allowedFileTypes = @[@"plist"];
+    panel.allowsMultipleSelection = NO;
+    panel.canChooseDirectories = NO;
+
+    [panel beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse result) {
+        NSURL *sourceURL = panel.URL;
+        if (result != NSModalResponseOK || sourceURL == nil) return;
+
+        NSError *error = nil;
+        NSData *data = [NSData dataWithContentsOfURL:sourceURL options:0 error:&error];
+        NSDictionary *document = data ? [NSPropertyListSerialization propertyListWithData:data options:NSPropertyListMutableContainersAndLeaves format:NULL error:&error] : nil;
+        NSDictionary *settings = [document isKindOfClass:NSDictionary.class] ? document[@"settings"] : nil;
+        NSNumber *formatVersion = [document isKindOfClass:NSDictionary.class] ? document[@"formatVersion"] : nil;
+        if (![settings isKindOfClass:NSDictionary.class] || formatVersion.integerValue != 1 || ![NSPropertyListSerialization propertyList:settings isValidForFormat:NSPropertyListXMLFormat_v1_0]) {
+            if (!error) error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSPropertyListReadCorruptError userInfo:@{NSLocalizedDescriptionKey: MFLocalizedString(@"settings-transfer.invalid-file", @"Error shown when the selected file is not a supported settings export.")}];
+            [self presentSettingsTransferError:error title:MFLocalizedString(@"settings-transfer.import-error-title", @"Alert title shown when importing settings fails.")];
+            return;
+        }
+        for (NSString *key in settings) {
+            if (![MFTransferableConfigKeys() containsObject:key]) {
+                error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSPropertyListReadCorruptError userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:MFLocalizedString(@"settings-transfer.unsupported-section", @"Error format. %@ is replaced by the unsupported settings section name."), key]}];
+                [self presentSettingsTransferError:error title:MFLocalizedString(@"settings-transfer.import-error-title", @"Alert title shown when importing settings fails.")];
+                return;
+            }
+        }
+
+        NSAlert *confirmation = [[NSAlert alloc] init];
+        confirmation.messageText = MFLocalizedString(@"settings-transfer.confirm-title", @"Confirmation alert title shown before applying imported settings.");
+        confirmation.informativeText = MFLocalizedString(@"settings-transfer.confirm-body", @"Confirmation alert body. License and application state are deliberately preserved.");
+        [confirmation addButtonWithTitle:MFLocalizedString(@"settings-transfer.confirm", @"Confirmation button for importing settings.")];
+        [confirmation addButtonWithTitle:MFLocalizedString(@"settings-transfer.cancel", @"Cancel button.")];
+        [confirmation beginSheetModalForWindow:self.window completionHandler:^(NSModalResponse response) {
+            if (response != NSAlertFirstButtonReturn) return;
+
+            NSURL *backupURL = [Locator.configURL.URLByDeletingPathExtension URLByAppendingPathExtension:@"backup.plist"];
+            [NSFileManager.defaultManager removeItemAtURL:backupURL error:NULL];
+            NSError *backupError = nil;
+            if ([NSFileManager.defaultManager fileExistsAtPath:Locator.configURL.path ?: @""] && ![NSFileManager.defaultManager copyItemAtURL:Locator.configURL toURL:backupURL error:&backupError]) {
+                [self presentSettingsTransferError:backupError title:MFLocalizedString(@"settings-transfer.backup-error-title", @"Alert title shown when backing up settings fails.")];
+                return;
+            }
+
+            for (NSString *key in settings) Config.shared.config[key] = [settings[key] mutableCopy];
+            commitConfig();
+        }];
+    }];
+}
+
+- (void)presentSettingsTransferError:(NSError *)error title:(NSString *)title {
+    NSAlert *alert = [NSAlert alertWithError:error ?: [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileWriteUnknownError userInfo:nil]];
+    alert.messageText = title;
+    [alert beginSheetModalForWindow:self.window completionHandler:nil];
+}
+
 - (IBAction)openAboutTab:(id)sender {
     [MainAppState.shared.tabViewController coolSelectTabWithIdentifier:@"about" window:nil];
 }
@@ -235,6 +322,17 @@ static NSDictionary *sideButtonActions;
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
+
+    /// The storyboard intentionally has no File menu. Add settings transfer actions here so the
+    /// feature stays available even if the General tab layout changes.
+    NSMenu *fileMenu = [[NSMenu alloc] initWithTitle:MFLocalizedString(@"menu.file", @"The File menu title.")];
+    NSMenuItem *fileMenuItem = [[NSMenuItem alloc] initWithTitle:MFLocalizedString(@"menu.file", @"The File menu title.") action:NULL keyEquivalent:@""];
+    fileMenuItem.submenu = fileMenu;
+    NSMenuItem *importItem = [fileMenu addItemWithTitle:MFLocalizedString(@"settings-transfer.import-menu", @"File menu item for importing settings.") action:@selector(importSettings:) keyEquivalent:@""];
+    NSMenuItem *exportItem = [fileMenu addItemWithTitle:MFLocalizedString(@"settings-transfer.export-menu", @"File menu item for exporting settings.") action:@selector(exportSettings:) keyEquivalent:@""];
+    importItem.target = self;
+    exportItem.target = self;
+    [NSApp.mainMenu insertItem:fileMenuItem atIndex:1];
     
 #pragma mark - Entry point of MainApp
     
