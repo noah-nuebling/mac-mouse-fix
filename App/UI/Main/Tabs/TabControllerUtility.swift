@@ -59,6 +59,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                     "ja": 320,   /// 350 -> 320 to have more semantic information on second line instead of just particles. Looks good. [Sep 2026]
                     "uk": 330,   /// 350 -> 330 Way the lines wrap feels more aesthetically pleasing and lines up with commas [Sep 2026]
                     "nb": 350,   /// 350 looks great [Sep 2026]
+                    "it": 340,   /// 350 -> 340 makes text wrapping more aesthetic somehow (even though longer lines than English I think) (Questionable: Buttons tab is really wide by comparison) [Sep 2026]
                 ]
             case "scrolling":
                 map = [
@@ -76,6 +77,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                     "ja": 340,  /// 340 looks great [Sep 2026]
                     "uk": 330,  /// 340 -> 330 Fits the words exactly/reduce unnecessary whitespace (long words, have to make it much wider to get different wrapping) [Sep 2026]
                     "nb": 340,  /// 340 looks great [Sep 2026]
+                    "it": 330,  /// 340 -> 330 looks better somehow [Sep 2026]
                 ]
             default:
                 fatalError("Calling this from unexpected tab: \(tabController)")
