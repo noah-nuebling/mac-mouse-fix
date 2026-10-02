@@ -12,6 +12,7 @@ This document is `0%` translated into `🇮🇱 עברית`
   [🇬🇧 English](../../../Acknowledgements.md)\
   [🇩🇪 Deutsch](../../../Markdown/LocalizedDocuments/de/Acknowledgements.md)\
   [🇪🇸 Español](../../../Markdown/LocalizedDocuments/es/Acknowledgements.md)\
+  [🇮🇹 Italiano](../../../Markdown/LocalizedDocuments/it/Acknowledgements.md)\
   [🇳🇴 Norsk bokmål](../../../Markdown/LocalizedDocuments/nb/Acknowledgements.md)\
   [🇧🇷 Português (Brasil)](../../../Markdown/LocalizedDocuments/pt-BR/Acknowledgements.md)\
   [🇻🇳 Tiếng Việt](../../../Markdown/LocalizedDocuments/vi/Acknowledgements.md)\
@@ -68,6 +69,7 @@ Thanks for bringing Mac Mouse Fix to people around the globe!
     - [@mei28](https://github.com/mei28)
 - 🇺🇦 Ukrainian translations by [@denysocheck](https://github.com/denysocheck)
 - 🇳🇴 Norwegian Bokmål translations by [@Bertil78](https://github.com/Bertil78)
+- 🇮🇹 Italian translations by [@Lombae](https://github.com/Lombae)
 
 <!-- 
   Old stuff from Money section:
