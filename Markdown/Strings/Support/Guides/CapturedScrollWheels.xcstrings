@@ -28,6 +28,12 @@
             "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **captura la rueda de desplazamiento de tu ratón por defecto**, de forma similar a cómo [captura los botones del ratón](<{url}>)."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_scroll_wheels}\n\nMac Mouse Fix **cattura per impostazione predefinita la rotellina di scorrimento del mouse**, in modo simile a come [cattura i pulsanti del mouse](<{url}>)."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -98,6 +104,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Para evitar la captura de la rueda de desplazamiento:**\n\n1. Ve a la pestaña 'Desplazamiento' en Mac Mouse Fix\n2. Desactiva **todas** las opciones\n    - En el caso de la opción 'Velocidad', configúrala en 'macOS'\n    - Elimina todas las entradas en 'Modificadores de teclado' haciendo clic en el botón 'x' junto a cada modificador\n\nDespués de esto, deberías ver un mensaje que indica que la rueda de desplazamiento ya no se está capturando."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Per impedire la cattura della rotellina di scorrimento:**\n\n1. Vai alla scheda 'Scorrimento' in Mac Mouse Fix\n2. Disattiva **tutte** le opzioni\n    - Per l'opzione 'Velocità', impostala su 'macOS'\n    - Rimuovi tutte le voci sotto 'Tasti di modifica' facendo clic sul pulsante 'x' accanto a ciascun tasto\n\nDopodiché dovresti vedere un messaggio che indica che la rotellina di scorrimento non è più catturata."
           }
         },
         "ja" : {
@@ -171,6 +183,12 @@
             "value" : "**¿Qué pasa cuando la rueda de desplazamiento *ya no* está siendo capturada?**\n\nMac Mouse Fix ignorará por completo la rueda de desplazamiento de tu ratón; no utilizará potencia del procesador ni carga de batería durante el desplazamiento, ni interferirá de ninguna manera. Esto te da total libertad para usar otras aplicaciones como [MOS]({url}) para manejar tu rueda de desplazamiento."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Cosa succede quando la rotellina di scorrimento *non* è più catturata?**\n\nMac Mouse Fix ignorerà completamente la tua rotellina di scorrimento: non userà potenza del processore né carica della batteria durante lo scorrimento e non interferirà in alcun modo. Questo ti dà completa libertà di usare altre app come [MOS]({url}) per gestire la rotellina di scorrimento."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -240,6 +258,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Ver también\n\n  - [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Editado con la excelente asistencia de Claude 3.5 Sonnet)*"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Vedi anche\n\n- [{docname_captured_buttons_mmf3}](<{url}>)\n\n*(Rivisto con l'ottimo aiuto di Claude 3.5 Sonnet)*"
           }
         },
         "ja" : {

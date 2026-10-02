@@ -29,6 +29,12 @@
             "value" : "Mac Mouse Fix Ayudante"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix Helper"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",

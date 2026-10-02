@@ -35,6 +35,12 @@
             "value" : "Terminé"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fine"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -137,6 +143,12 @@
             "value" : "Recommandé pour les souris « Trackball »"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consigliato per i mouse trackball"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -237,6 +249,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Verrouiller le pointeur de la souris pendant les gestes « Cliquer et lâcher »"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blocca il puntatore del mouse durante i gesti 'clic e trascina'"
           }
         },
         "ja" : {

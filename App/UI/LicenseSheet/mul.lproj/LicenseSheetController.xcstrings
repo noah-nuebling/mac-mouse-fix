@@ -35,6 +35,12 @@
             "value" : "Retour"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Indietro"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -196,6 +202,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Veuillez saisir votre clé de licence"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inserisci la tua chiave di licenza"
           }
         },
         "ja" : {

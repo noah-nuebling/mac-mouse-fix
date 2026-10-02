@@ -29,6 +29,12 @@
             "value" : "# {docname_captured_buttons_mmf3}\n\nMientras usabas Mac Mouse Fix, es posible que hayas encontrado un mensaje que indica que un botón de tu ratón está siendo 'capturado' por Mac Mouse Fix.\n\n{screenshot_0}\n\nEn este artículo, aprenderás lo que esto significa, qué problemas puede causar y cómo solucionarlos."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# {docname_captured_buttons_mmf3}\n\nUsando Mac Mouse Fix potresti aver visto un messaggio che diceva che un pulsante del tuo mouse è ora 'catturato' da Mac Mouse Fix.\n\n{screenshot_0}\n\nIn questo articolo scoprirai cosa significa, quali problemi può causare e come aggirarli."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -98,6 +104,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## ¿Qué significa 'capturar' un botón del ratón?\n\nUn botón del ratón capturado por Mac Mouse Fix ya no puede ser visto por otras aplicaciones ni por macOS.\nLas funciones que este botón realizaría normalmente no funcionarán mientras esté capturado.\n\n**Ejemplo**: Normalmente puedes ir hacia atrás y hacia adelante en Chrome haciendo clic en los botones laterales (botones 4 y 5) del ratón.\nPero cuando los botones laterales son capturados por Mac Mouse Fix, esto ya no funciona. En su lugar, los botones laterales solo activarán las acciones que les hayas asignado en Mac Mouse Fix.\n\n**¿Por qué Mac Mouse Fix hace esto?** Mac Mouse Fix oculta los botones de otras aplicaciones para evitar que actives accidentalmente otras funciones mientras utilizas los gestos de Mac Mouse Fix.\nPor ejemplo, si haces clic y arrastras el botón 4 para cambiar entre escritorios, siempre irías hacia atrás una página en Chrome **simultáneamente**."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Cosa significa 'catturare' un pulsante del mouse?\n\nUn pulsante del mouse catturato da Mac Mouse Fix non può più essere visto dalle altre app né da macOS.\nLe funzioni che questo pulsante svolgerebbe normalmente non funzionano finché è catturato.\n\n**Esempio**: normalmente puoi andare indietro e avanti in Chrome facendo clic sui pulsanti laterali del mouse (pulsanti 4 e 5).\nMa quando i pulsanti laterali sono catturati da Mac Mouse Fix, questo non funziona più. I pulsanti laterali attiveranno invece solo le azioni che hai assegnato loro in Mac Mouse Fix.\n\n**Perché Mac Mouse Fix fa questo?** Mac Mouse Fix nasconde i pulsanti alle altre app per evitare che tu attivi accidentalmente altre funzioni mentre usi i gesti di Mac Mouse Fix.\nAd esempio, se facessi clic e trascina con il pulsante 4 per passare da uno Space all'altro, torneresti sempre **contemporaneamente** indietro di una pagina in Chrome."
           }
         },
         "ja" : {
@@ -172,6 +184,12 @@
             "value" : "## ¿Cómo sé qué botones están siendo capturados por Mac Mouse Fix?\n\nCualquier botón que aparezca en el lado izquierdo de la pestaña 'Botones' está siendo capturado por Mac Mouse Fix.\n\nEn la siguiente imagen, **'Botón central'**, **'Botón 5'** y **'Botón 4'** están siendo capturados:<br>\n\n{screenshot_1}"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Come faccio a sapere quali pulsanti sono catturati da Mac Mouse Fix?\n\nOgni pulsante che compare sul lato sinistro della scheda 'Pulsanti' è catturato da Mac Mouse Fix.\n\nNell'immagine seguente **'Pulsante centrale'**, **'Pulsante 5'** e **'Pulsante 4'** sono catturati: <br>\n\n{screenshot_1}"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -244,6 +262,12 @@
             "value" : "## ¿Cómo evito que Mac Mouse Fix capture un botón del ratón?\n\nPara evitar que Mac Mouse Fix capture un botón del ratón, elimina todas las entradas para ese botón del ratón de la pestaña 'Botones'.\nPuedes eliminar una entrada en la pestaña 'Botones' haciendo clic en el botón '-' de la izquierda.\n\nPor ejemplo, en la siguiente imagen, podrías evitar que **'Botón 4'** sea capturado haciendo clic en los dos botones **'-'** resaltados:\n\n{screenshot_2}"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Come impedisco a Mac Mouse Fix di catturare un pulsante del mouse?\n\nPer impedire a Mac Mouse Fix di catturare un pulsante del mouse, elimina tutte le voci relative a quel pulsante dalla scheda 'Pulsanti'.\nPuoi eliminare una voce nella scheda 'Pulsanti' facendo clic sul pulsante '-' a sinistra.\n\nAd esempio, nell'immagine seguente potresti impedire la cattura del **'Pulsante 4'** facendo clic sui due pulsanti **'-'** evidenziati:\n\n{screenshot_2}"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -313,6 +337,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## ¿Cómo puedo restaurar la funcionalidad original de un botón?\n\nPara hacer que un botón se comporte como lo hacía antes de instalar Mac Mouse Fix, puedes hacer lo siguiente:\n\n1. Puedes **evitar que el botón sea capturado**, como se describe arriba.\n\n2. Simplemente puedes **desactivar Mac Mouse Fix**, así no se capturará ningún botón.\n\n3. Puedes **asignar acciones específicas al botón en Mac Mouse Fix**, de esta manera puedes restaurar ciertas funciones, *incluso mientras el botón está siendo capturado*:"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Come posso ripristinare la funzione originale di un pulsante?\n\nPer far comportare un pulsante come faceva prima di installare Mac Mouse Fix, puoi procedere così:\n\n1. Puoi **impedire che il pulsante venga catturato**, come descritto sopra.\n\n2. Puoi semplicemente **disattivare Mac Mouse Fix**: in questo modo nessun pulsante verrà catturato.\n\n3. Puoi **assegnare azioni specifiche al pulsante in Mac Mouse Fix**: in questo modo puoi ripristinare determinate funzioni, *anche mentre il pulsante è catturato*:"
           }
         },
         "ja" : {
@@ -387,6 +417,12 @@
             "value" : "Botón"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulsante"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -457,6 +493,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Función Original"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Funzione originale"
           }
         },
         "ja" : {
@@ -537,6 +579,12 @@
             "value" : "Acción en Mac Mouse Fix"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Azione in Mac Mouse Fix"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -614,6 +662,12 @@
             "value" : "Botón Central del Ratón"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulsante centrale del mouse"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -689,6 +743,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abrir enlaces en el navegador en una pestaña nueva"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apre i link in una nuova scheda del browser"
           }
         },
         "ja" : {
@@ -769,6 +829,12 @@
             "value" : "'Clic Central'<br>(Se puede asignar al **hacer clic** en un botón)"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Clic centrale'<br>(Assegnabile al **clic** su un pulsante)"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -846,6 +912,12 @@
             "value" : "Botón Central del Ratón"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulsante centrale del mouse"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -921,6 +993,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pegar texto en la terminal"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incolla il testo nel Terminale"
           }
         },
         "ja" : {
@@ -1001,6 +1079,12 @@
             "value" : "'Clic Central'<br>(Se puede asignar al **hacer clic** en un botón)"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Clic centrale'<br>(Assegnabile al **clic** su un pulsante)"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1076,6 +1160,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Botón 4 del Ratón / Botón 5 del Ratón"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulsante 4 / Pulsante 5 del mouse"
           }
         },
         "ja" : {
@@ -1156,6 +1246,12 @@
             "value" : "Volver / avanzar en Chrome y otras aplicaciones"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vai indietro / avanti in Chrome e in altre app"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1232,6 +1328,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "'Atrás' / 'Adelante'<br>(Se puede asignar al **hacer clic** en un botón)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Indietro' / 'Avanti'<br>(Assegnabile al **clic** su un pulsante)"
           }
         },
         "ja" : {
@@ -1311,6 +1413,12 @@
             "value" : "Botón Central del Ratón"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulsante centrale del mouse"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1388,6 +1496,12 @@
             "value" : "Orbitar alrededor de objetos en Blender (y otras aplicaciones 3D)"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Orbita attorno agli oggetti in Blender (e in altre app 3D)"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1458,6 +1572,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "'Desplazamiento y Navegación'<br>(Se puede asignar a **hacer clic y arrastrar** un botón)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "'Scorri e naviga'<br>(Assegnabile al **clic e trascinamento** di un pulsante)"
           }
         },
         "ja" : {
@@ -1531,6 +1651,12 @@
             "value" : "De esta forma, puedes seguir utilizando la funcionalidad habitual del botón, a la vez que le asignas funciones *adicionales* en Mac Mouse Fix."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In questo modo puoi continuare a usare la funzione abituale del pulsante, assegnandogli anche funzioni *aggiuntive* in Mac Mouse Fix."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1600,6 +1726,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "## Ver también\n\n  - [{docname_captured_scroll_wheels}](<{url}>)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## Vedi anche\n\n- [{docname_captured_scroll_wheels}](<{url}>)"
           }
         },
         "ja" : {

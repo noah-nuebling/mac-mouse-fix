@@ -35,6 +35,12 @@
             "value" : "Boutons"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulsanti"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -198,6 +204,12 @@
             "value" : "Défilement"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorrimento"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -298,6 +310,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ouvrir Mac Mouse Fix..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apri Mac Mouse Fix..."
           }
         },
         "ja" : {

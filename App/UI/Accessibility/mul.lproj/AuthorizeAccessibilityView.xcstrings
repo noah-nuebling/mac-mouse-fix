@@ -35,6 +35,12 @@
             "value" : "L'accès à l'accessibilité autorise Mac Mouse Fix à \nintercepter les signaux de votre souris et de votre clavier"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'accesso di Accessibilità consente a Mac Mouse Fix di\nintercettare i segnali del mouse e della tastiera"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -135,6 +141,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aide"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aiuto"
           }
         },
         "ja" : {
@@ -239,6 +251,12 @@
             "value" : "Ouvrir les réglages « Confidentialité et sécurité »"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apri le impostazioni di 'Privacy e sicurezza'"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -341,6 +359,12 @@
             "value" : "Activer « Mac Mouse Fix Helper »"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attiva 'Mac Mouse Fix Helper'"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -438,6 +462,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1."
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "1."
@@ -545,6 +575,12 @@
             "value" : "Maintenez Maj (⇧) et cliquez sur cette icône pour afficher « Mac Mouse Fix Helper.app » dans le Finder"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tieni premuto Shift (⇧) sulla tua tastiera e fai clic su questa icona per mostrare 'Mac Mouse Fix Helper.app' nel Finder"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -647,6 +683,12 @@
             "value" : "Autoriser l'accès à l'accessibilité à Mac Mouse Fix"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Concedi a Mac Mouse Fix l'accesso di Accessibilità"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -744,6 +786,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2."
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "2."
@@ -849,6 +897,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Annuler"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annulla"
           }
         },
         "ja" : {

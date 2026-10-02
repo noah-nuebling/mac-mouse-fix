@@ -28,6 +28,12 @@
             "value" : "Agradecimientos"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riconoscimenti"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -103,6 +109,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Botones del Ratón Capturados"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulsanti del mouse catturati"
           }
         },
         "ja" : {
@@ -182,6 +194,12 @@
             "value" : "Ruedas de desplazamiento capturadas"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rotelle di scorrimento catturate"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -257,6 +275,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Léame"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Readme"
           }
         },
         "ja" : {
@@ -336,6 +360,12 @@
             "value" : "Soporte"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supporto"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -411,6 +441,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "¡Espero que esta guía haya sido útil!"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spero che questa guida ti sia stata utile!"
           }
         },
         "ja" : {
@@ -490,6 +526,12 @@
             "value" : "¡Espero que esta información haya sido útil!"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spero che queste informazioni ti siano state utili!"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -567,6 +609,12 @@
             "value" : "¡Espero que esta guía haya aclarado las cosas!"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spero che questa guida abbia chiarito le cose!"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -642,6 +690,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "¿Aún tiene preguntas? Haga clic [aquí]({url})."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hai ancora domande? Fai clic [qui]({url})."
           }
         },
         "ja" : {
@@ -722,6 +776,12 @@
             "value" : "Este documento está traducido `{localization_progress}` al `{current_language}` [Ayudar a traducir]({url})"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo documento è stato tradotto in `{current_language}` al `{localization_progress}`\n[Aiuta a tradurre]({url})"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -798,6 +858,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "[🌎 ¡Ayudar a traducir!]({url})"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[🌎 Ti piacerebbe aiutarci a tradurre?]({url})"
           }
         },
         "ja" : {

@@ -157,6 +157,12 @@
             "value" : "Annuler"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annulla"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -257,6 +263,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Consulter les guides ou demander à la communauté..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Consulta le guide o chiedi alla community..."
           }
         },
         "ja" : {
@@ -422,6 +434,12 @@
             "value" : "Vérifier les mises à jour..."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verifica aggiornamenti..."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -585,6 +603,12 @@
             "value" : "Désactivée"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disattivata"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -685,6 +709,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Précision"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Precisione"
           }
         },
         "ja" : {
@@ -789,6 +819,12 @@
             "value" : "Proposer une nouvelle fonctionnalité"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aiuta a tradurre"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -889,6 +925,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Supprimer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina"
           }
         },
         "ja" : {
@@ -993,6 +1035,12 @@
             "value" : "Défiler à l'horizontal"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorri in orizzontale"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1093,6 +1141,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Modifier"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica"
           }
         },
         "ja" : {
@@ -1197,6 +1251,12 @@
             "value" : "Remerciements"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riconoscimenti"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1294,6 +1354,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Normale"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Normale"
@@ -1462,6 +1528,12 @@
             "value" : "Haute"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alta"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1562,6 +1634,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Défiler avec précision"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorri con precisione"
           }
         },
         "ja" : {
@@ -1666,6 +1744,12 @@
             "value" : "Déplacez-vous entre les pages dans Safari en défilant horizontalement, et bien plus"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passa da una pagina all'altra in Safari scorrendo in orizzontale, e altro ancora"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1766,6 +1850,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Permet d'activer ou de désactiver rapidement\nles fonctionnalités comme le défilement doux"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ti permette di attivare o disattivare rapidamente funzioni come lo scorrimento fluido"
           }
         },
         "ja" : {
@@ -1870,6 +1960,12 @@
             "value" : "Main Menu"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menu principale"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1970,6 +2066,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tout ramener au premier plan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Porta tutto in primo piano"
           }
         },
         "ja" : {
@@ -2074,6 +2176,12 @@
             "value" : "Mac Mouse Fix restera activé après l'avoir fermé"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix resta attivo anche dopo aver chiuso l'app"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2171,6 +2279,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -2278,6 +2392,12 @@
             "value" : "Ne plus me le rappeler"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Non ricordarmelo più"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2378,6 +2498,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rapide"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alta"
           }
         },
         "ja" : {
@@ -2543,6 +2669,12 @@
             "value" : "Masquer Mac Mouse Fix"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nascondi Mac Mouse Fix"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2643,6 +2775,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Signaler un bug"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invia un feedback"
           }
         },
         "ja" : {
@@ -2806,6 +2944,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "À propos"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informazioni"
           }
         },
         "ja" : {
@@ -3038,6 +3182,12 @@
             "value" : "Acheter Mac Mouse Fix..."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acquista Mac Mouse Fix..."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3138,6 +3288,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Boutons"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulsanti"
           }
         },
         "ja" : {
@@ -3358,6 +3514,12 @@
             "value" : "Aide"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aiuto"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3458,6 +3620,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Modérée"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Media"
           }
         },
         "ja" : {
@@ -3562,6 +3730,12 @@
             "value" : "Général"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generali"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3662,6 +3836,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Défiler rapidement"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorri rapidamente"
           }
         },
         "ja" : {
@@ -3766,6 +3946,12 @@
             "value" : "Obtenir de l'aide"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ottieni aiuto"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3866,6 +4052,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tout afficher"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra tutto"
           }
         },
         "ja" : {
@@ -3970,6 +4162,12 @@
             "value" : "Fenêtre"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finestra"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4070,6 +4268,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aide"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aiuto"
           }
         },
         "ja" : {
@@ -4174,6 +4378,12 @@
             "value" : "Lente"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bassa"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4271,6 +4481,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "macOS"
@@ -4488,6 +4704,12 @@
             "value" : "Défilement naturel"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inverti direzione"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4651,6 +4873,12 @@
             "value" : "Services"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servizi"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4751,6 +4979,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zoomer ou dézoomer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingrandisci o riduci"
           }
         },
         "ja" : {
@@ -4916,6 +5150,12 @@
             "value" : "Mac Mouse Fix"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5016,6 +5256,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Options..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opzioni..."
           }
         },
         "ja" : {
@@ -5120,6 +5366,12 @@
             "value" : "Copier"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copia"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5220,6 +5472,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Annuler"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ripeti"
           }
         },
         "ja" : {
@@ -5324,6 +5582,12 @@
             "value" : "Afficher dans la barre des menus"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra nella barra dei menu"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5426,6 +5690,12 @@
             "value" : "Fenêtre"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finestra"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5523,6 +5793,12 @@
           }
         },
         "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mac Mouse Fix"
@@ -5628,6 +5904,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Défilement"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorrimento"
           }
         },
         "ja" : {
@@ -5793,6 +6075,12 @@
             "value" : "Vitesse :"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velocità:"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5956,6 +6244,12 @@
             "value" : "Restaurer les paramètres par défaut..."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ripristina predefiniti..."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6056,6 +6350,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Édition"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica"
           }
         },
         "ja" : {
@@ -6160,6 +6460,12 @@
             "value" : "Recevoir les versions bêta"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ricevi le versioni beta"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6262,6 +6568,12 @@
             "value" : "Boutons"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pulsanti"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6356,6 +6668,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mantén pulsadas Comando (⌘) y Mayús (⇧), luego haz clic en este icono para mostrar el archivo de configuración de Mac Mouse Fix en el Finder."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tieni premuti Comando (⌘) e Maiuscole (⇧), poi fai clic su questa icona per mostrare nel Finder il file di configurazione di Mac Mouse Fix"
           }
         },
         "ja" : {
@@ -6460,6 +6778,12 @@
             "value" : "Déplacez le pointeur de la souris à l'intérieur du champ « + », puis *cliquez* sur un bouton de la souris pour lui affecter une action.\nVous pouvez aussi utiliser le *double-clic*, le *clic et déplacement* et bien d'autres."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sposta il puntatore del mouse nel campo '+', poi fai *clic* con un pulsante del mouse per assegnargli un'azione.\nPuoi anche fare *doppio clic*, *clic e trascina* e altro ancora."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6562,6 +6886,12 @@
             "value" : "Simulation du trackpad"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Simulazione trackpad"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6662,6 +6992,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Minimiser"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riduci a icona"
           }
         },
         "ja" : {
@@ -6827,6 +7163,12 @@
             "value" : "Tout sélectionner"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleziona tutto"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6927,6 +7269,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Visiter le site web"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visita il sito web"
           }
         },
         "ja" : {
@@ -7092,6 +7440,12 @@
             "value" : "Créé par Noah Nuebling"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Creato da Noah Nuebling"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7255,6 +7609,12 @@
             "value" : "M'envoyer un e-mail"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scrivimi un'email"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7355,6 +7715,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Défilement"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorrimento"
           }
         },
         "ja" : {
@@ -7520,6 +7886,12 @@
             "value" : "Couper"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Taglia"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7620,6 +7992,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Général"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generali"
           }
         },
         "ja" : {
@@ -7724,6 +8102,12 @@
             "value" : "Masquer les autres"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nascondi altri"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7824,6 +8208,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Activer Mac Mouse Fix"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attiva Mac Mouse Fix"
           }
         },
         "ja" : {
@@ -7928,6 +8318,12 @@
             "value" : "Fermer"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiudi"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8028,6 +8424,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Coller"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incolla"
           }
         },
         "ja" : {
@@ -8193,6 +8595,12 @@
             "value" : "Vous serez prévenu d'une nouvelle mise à jour\n lorsque vous ouvrirez cette fenêtre"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riceverai una notifica degli aggiornamenti quando apri questa finestra"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8356,6 +8764,12 @@
             "value" : "Fluidité :"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fluidità:"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8456,6 +8870,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vérifier les mises à jour"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verifica aggiornamenti"
           }
         },
         "ja" : {
@@ -8560,6 +8980,12 @@
             "value" : "Achetez-moi un milkshake :)"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offrimi un milkshake :)"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8662,6 +9088,12 @@
             "value" : "À propos de Mac Mouse Fix"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informazioni su Mac Mouse Fix"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8762,6 +9194,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Quitter Mac Mouse Fix"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esci da Mac Mouse Fix"
           }
         },
         "ja" : {
@@ -8879,6 +9317,12 @@
             "value" : "Raccourcis clavier :"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasti di modifica:"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8979,6 +9423,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "À propos"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informazioni"
           }
         },
         "ja" : {
@@ -9205,6 +9655,12 @@
             "value" : "Services"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servizi"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9366,6 +9822,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Activer une licence..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attiva licenza..."
           }
         },
         "ja" : {
@@ -9531,6 +9993,12 @@
             "value" : "Mac Mouse Fix"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac Mouse Fix"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9633,6 +10101,12 @@
             "value" : "Réduire/agrandir"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoom"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9733,6 +10207,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Voir sur GitHub"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dai un'occhiata su GitHub"
           }
         },
         "ja" : {

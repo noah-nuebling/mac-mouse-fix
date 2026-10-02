@@ -28,6 +28,12 @@
             "value" : "# 🙌 Agradecimientos\n\nMuchas gracias a todos los que utilizan Mac Mouse Fix y brindan comentarios. Es increíble y muy motivador ver a tanta gente disfrutar e interactuar con algo que he creado.\n\nQuiero agradecer especialmente a las personas y proyectos nombrados en este documento."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "# 🙌 Riconoscimenti\n\nUn enorme grazie a tutti quelli che usano Mac Mouse Fix e mi lasciano un feedback. È fantastico e super motivante vedere tante persone apprezzare e usare qualcosa che ho creato io.\n\nVoglio ringraziare in particolare le persone e i progetti citati in questo documento."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -97,13 +103,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n    - [@xianyu-wang]({url_4})\n    - [@djzhao627]({url_5})\n    - [@JunhangWu]({url_6})\n- 🇰🇷 Korean translations by [@jeongtae]({url_7})\n- 🇻🇳 Vietnamese translations by \n    - [@nghlt]({url_8})\n    - [@quocthangit247]({url_9})\n- 🇧🇷 Brazilian Portuguese translations by \n    - **Eduardo Rodrigues**\n    - [@denini08]({url_10})\n- 🇫🇷 French translations by \n    - [@DimitriDR]({url_11})\n    - [@UYTR5]({url_12})\n    - [@Clementabcd]({url_13}) (Website translation)\n- 🇹🇷 Turkish translations by \n    - [@hasanbeder]({url_14})\n    - [@erentomurcuk]({url_15})\n    - [@mstersnd]({url_16})\n    - [@mls0x1]({url_17})\n- 🇨🇿 Czech translations by [Petr Pavlík]({url_18})\n- 🇷🇺 Russian translations by [ETMH]({url_19})\n- 🇪🇸 Spanish translations by [@manghidev]({url_20})\n- 🇵🇱 Polish translations by **Jakub** (Website translation)\n- 🇯🇵 Japanese translations by \n    - [@y-128]({url_21})\n    - [@mei28]({url_22})\n- 🇺🇦 Ukrainian translations by [@denysocheck]({url_23})\n- 🇳🇴 Norwegian Bokmål translations by [@Bertil78]({url_24})"
+            "value" : "## 🌏 Translations\n\nThanks for bringing Mac Mouse Fix to people around the globe!\n\n- 🇨🇳 Chinese translations by \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n    - [@xianyu-wang]({url_4})\n    - [@djzhao627]({url_5})\n    - [@JunhangWu]({url_6})\n- 🇰🇷 Korean translations by [@jeongtae]({url_7})\n- 🇻🇳 Vietnamese translations by \n    - [@nghlt]({url_8})\n    - [@quocthangit247]({url_9})\n- 🇧🇷 Brazilian Portuguese translations by \n    - **Eduardo Rodrigues**\n    - [@denini08]({url_10})\n- 🇫🇷 French translations by \n    - [@DimitriDR]({url_11})\n    - [@UYTR5]({url_12})\n    - [@Clementabcd]({url_13}) (Website translation)\n- 🇹🇷 Turkish translations by \n    - [@hasanbeder]({url_14})\n    - [@erentomurcuk]({url_15})\n    - [@mstersnd]({url_16})\n    - [@mls0x1]({url_17})\n- 🇨🇿 Czech translations by [Petr Pavlík]({url_18})\n- 🇷🇺 Russian translations by [ETMH]({url_19})\n- 🇪🇸 Spanish translations by [@manghidev]({url_20})\n- 🇵🇱 Polish translations by **Jakub** (Website translation)\n- 🇯🇵 Japanese translations by \n    - [@y-128]({url_21})\n    - [@mei28]({url_22})\n- 🇺🇦 Ukrainian translations by [@denysocheck]({url_23})\n- 🇳🇴 Norwegian Bokmål translations by [@Bertil78]({url_24})\n- 🇮🇹 Italian translations by [@Lombae]({url_25})"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
-            "value" : "## 🌏 Traducciones\n\n¡Gracias por llevar Mac Mouse Fix a personas de todo el mundo!\n\n- 🇨🇳 Chinese translations by \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Website translation)\n    - [@jihao]({url_3}) (Website translation)\n    - [@xianyu-wang]({url_4})\n    - [@djzhao627]({url_5})\n    - [@JunhangWu]({url_6})\n- 🇰🇷 Traducciones al coreano por [@jeongtae]({url_7})\n- 🇻🇳 Traducciones al vietnamita por \n    - [@nghlt]({url_8})\n    - [@quocthangit247]({url_9})\n- 🇧🇷 Brazilian Portuguese translations by \n    - **Eduardo Rodrigues**\n    - [@denini08]({url_10})\n- 🇫🇷 Traducciones al francés por \n    - [@DimitriDR]({url_11})\n    - [@UYTR5]({url_12})\n    - [@Clementabcd]({url_13}) (Website translation)\n- 🇹🇷 Turkish translations by \n    - [@hasanbeder]({url_14})\n    - [@erentomurcuk]({url_15})\n    - [@mstersnd]({url_16})\n    - [@mls0x1]({url_17})\n- 🇨🇿 Traducciones al checo por [Petr Pavlík]({url_18})\n- 🇷🇺 Russian translations by [ETMH]({url_19})\n- 🇪🇸 Spanish translations by [@manghidev]({url_20})\n- 🇵🇱 Polish translations by **Jakub** (Website translation)\n- 🇯🇵 Japanese translations by \n    - [@y-128]({url_21})\n    - [@mei28]({url_22})\n- 🇺🇦 Ukrainian translations by [@denysocheck]({url_23})\n- 🇳🇴 Norwegian Bokmål translations by [@Bertil78]({url_24})"
+            "value" : "## 🌏 Traducciones\n\n¡Gracias por llevar Mac Mouse Fix a personas de todo el mundo!\n\n- 🇨🇳 Traducciones al Chino por \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (Traducción del sitio web)\n    - [@jihao]({url_3}) (Traducción del sitio web)\n    - [@xianyu-wang]({url_4})\n    - [@djzhao627]({url_5})\n    - [@JunhangWu]({url_6})\n- 🇰🇷 Traducciones al coreano por [@jeongtae]({url_7})\n- 🇻🇳 Traducciones al vietnamita por \n    - [@nghlt]({url_8})\n    - [@quocthangit247]({url_9})\n- 🇧🇷 Traducciones al Portugués Brasileño por \n    - **Eduardo Rodrigues**\n    - [@denini08]({url_10})\n- 🇫🇷 Traducciones al francés por \n    - [@DimitriDR]({url_11})\n    - [@UYTR5]({url_12})\n    - [@Clementabcd]({url_13}) (Traducción del sitio web)\n- 🇹🇷 Traducciones al Turco por \n    - [@hasanbeder]({url_14})\n    - [@erentomurcuk]({url_15})\n    - [@mstersnd]({url_16})\n    - [@mls0x1]({url_17})\n- 🇨🇿 Traducciones al checo por [Petr Pavlík]({url_18})\n- 🇷🇺 Traducciones al Ruso por [ETMH]({url_19})\n- 🇪🇸 Traducciones al Español por [@manghidev]({url_20})\n- 🇵🇱 Traducciones al Polaco por **Jakub** (Traducción del sitio web)\n- 🇯🇵 Traducciones al Japones por \n    - [@y-128]({url_21})\n    - [@mei28]({url_22})\n- 🇺🇦 Traducciones al Ucraniano por [@denysocheck]({url_23})\n- 🇳🇴 Traducciones al Noruego Bokmål por [@Bertil78]({url_24})"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "## 🌏 Traduzioni\n\nGrazie per aver portato Mac Mouse Fix alle persone di tutto il mondo!\n\n- 🇨🇳 Traduzioni in cinese di \n    - [@groverlynn]({url_1})\n    - [@Dro9an]({url_2}) (traduzione del sito web)\n    - [@jihao]({url_3}) (traduzione del sito web)\n    - [@xianyu-wang]({url_4})\n    - [@djzhao627]({url_5})\n    - [@JunhangWu]({url_6})\n- 🇰🇷 Traduzioni in coreano di [@jeongtae]({url_7})\n- 🇻🇳 Traduzioni in vietnamita di \n    - [@nghlt]({url_8})\n    - [@quocthangit247]({url_9})\n- 🇧🇷 Traduzioni in portoghese brasiliano di \n    - **Eduardo Rodrigues**\n    - [@denini08]({url_10})\n- 🇫🇷 Traduzioni in francese di \n    - [@DimitriDR]({url_11})\n    - [@UYTR5]({url_12})\n    - [@Clementabcd]({url_13}) (traduzione del sito web)\n- 🇹🇷 Traduzioni in turco di \n    - [@hasanbeder]({url_14})\n    - [@erentomurcuk]({url_15})\n    - [@mstersnd]({url_16})\n    - [@mls0x1]({url_17})\n- 🇨🇿 Traduzioni in ceco di [Petr Pavlík]({url_18})\n- 🇷🇺 Traduzioni in russo di [ETMH]({url_19})\n- 🇪🇸 Traduzioni in spagnolo di [@manghidev]({url_20})\n- 🇵🇱 Traduzioni in polacco di **Jakub** (traduzione del sito web)\n- 🇯🇵 Traduzioni in giapponese di \n    - [@y-128]({url_21})\n    - [@mei28]({url_22})\n- 🇺🇦 Traduzioni in ucraino di [@denysocheck]({url_23})\n- 🇳🇴 Traduzioni in norvegese bokmål di [@Bertil78]({url_24})"
           }
         },
         "ja" : {
@@ -184,6 +196,12 @@
             "value" : "## 💰 Dinero\n\nMuchas gracias a todos los que me invitaron a un batido y a las **{sales_count}** personas que compraron Mac Mouse Fix.\nGracias a ustedes, puedo dedicar mucho tiempo a hacer algo que amo.\n\nLas personas que me apoyaron gastando más del precio estándar en Mac Mouse Fix reciben una mención especial aquí:"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 💰 Denaro\n\nGrazie mille a tutti quelli che mi hanno offerto un milkshake e a tutte le **{sales_count}** persone che hanno acquistato Mac Mouse Fix.\nGrazie a voi, posso dedicare tanto tempo a fare qualcosa che amo. \n\nLe persone che mi hanno sostenuto spendendo più del prezzo standard per Mac Mouse Fix ricevono qui una menzione speciale:"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -259,6 +277,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "### ⭐️ Contribuyentes generosos\n\n¡Gracias por tu apoyo! :)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ⭐️ Contributori generosi\n\nGrazie per il vostro supporto! :)"
           }
         },
         "ja" : {
@@ -338,6 +362,12 @@
             "value" : "### 🚀 Contribuyentes muy generosos\n\nEstas personas gastaron mucho más que el precio estándar y me invitaron un **Batido increíble**. (Y algunos incluso dejaron un mensaje) ¡Gracias por el *subidón de azúcar*!"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### 🚀 Contributori molto generosi\n\nQueste persone hanno speso molto più del prezzo standard e mi hanno offerto un **Milkshake Incredibile**. (E alcune hanno persino lasciato un messaggio) Grazie per la *scarica di zuccheri*!"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -413,6 +443,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "### ❤️ Patrocinadores de GitHub\n\n¡**Enormes gracias** a [todos]({url}) los que me patrocinan en GitHub! Con suerte, algún día podré abrir esa fábrica de batidos gracias a ustedes. :)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ❤️ Sponsor su GitHub\n\n**Grazie di cuore** a [chiunque]({url}) mi sponsorizzi su GitHub! Grazie a voi, forse un giorno riuscirò ad avere quella fabbrica di milkshake. :)"
           }
         },
         "ja" : {
@@ -492,6 +528,12 @@
             "value" : "### ✨ Donaciones por PayPal\n\nMucha gente generosa me compró batidos en PayPal cuando Mac Mouse Fix todavía era completamente gratuito.\n\nSi eres uno de ellos, haz clic [aquí]({url}) para recibir una **licencia gratuita**!"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "### ✨ Donazioni su PayPal\n\nMolte persone generose mi hanno offerto dei milkshake su PayPal quando Mac Mouse Fix era ancora completamente gratuito.\n\nSe sei una di loro, fai clic [qui]({url}) per ricevere una **licenza gratuita**!"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -569,6 +611,12 @@
             "value" : "## 👾 Otro software"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "## 👾 Altri software"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -644,6 +692,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "**Software** que inspiró Mac Mouse Fix:\n\n  - [SteerMouse]({url_1}) - Software pionero para ratones en Mac, que inspiró muchas funciones. Hubo momentos en los que pensé \"esto probablemente no es posible\", pero luego vi \"oh, SteerMouse lo hace\", y tres años después, también descubrí cómo implementarlo.\n  - [Calftrail Touch]({url_2}) - La base para el trabajo de \"ingeniería inversa\" que impulsa la mejor simulación de trackpad y la primera en su tipo de Mac Mouse Fix.\n  - [MOS]({url_3}) - La opción de \"Alta fluidez de desplazamiento\" de Mac Mouse Fix, la implementación de \"Ajustes específicos de la aplicación\" y más, fueron inspiradas por MOS.\n  - [SensibleSideButtons]({url_4}) - Copié su código para una implementación temprana de la función \"Volver/Avanzar una página en Safari y otras aplicaciones\", y también me llevó a descubrir el proyecto Calftrail Touch.\n  - [Gifski]({url_5}) - Inspiró enormemente el diseño y el contenido del [Readme.md]({url_6}) para Mac Mouse Fix.\n  - [Vue Issue Helper]({url_7}) - Base para el diseño y la implementación técnica del [Asistente de comentarios de Mac Mouse Fix]({url_8})."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "**Software** che ha ispirato Mac Mouse Fix:\n\n- [SteerMouse]({url_1}) - Software pionieristico per mouse su Mac, che ha ispirato molte funzioni. Ci sono stati momenti in cui pensavo 'probabilmente non è possibile', ma poi vedevo 'ah, SteerMouse ce la fa', e tre anni dopo ho capito come implementarlo anch'io.\n- [Calftrail Touch]({url_2}) - La base del lavoro di 'reverse engineering' che alimenta la simulazione del trackpad di Mac Mouse Fix, la migliore della categoria e la prima del suo genere!\n- [MOS]({url_3}) - L'opzione 'Fluidità alta' dello scorrimento di Mac Mouse Fix, l'implementazione delle 'Impostazioni specifiche per app' e altro ancora sono state ispirate da MOS.\n- [SensibleSideButtons]({url_4}) - Ne ho copiato il codice per una prima implementazione della funzione 'Vai indietro/avanti di una pagina in Safari e in altre app', e mi ha anche portato a scoprire il progetto Calftrail Touch.\n- [Gifski]({url_5}) - Ha ispirato moltissimo il design e i contenuti del [Readme.md]({url_6}) di Mac Mouse Fix.\n- [Vue Issue Helper]({url_7}) - Base per il design e l'implementazione tecnica del [Mac Mouse Fix Feedback Assistant]({url_8})."
           }
         },
         "ja" : {
