@@ -12,7 +12,7 @@
 @implementation LocalizationUtility
 
 + (NSString *) currentLanguageCode {
-    return [NSLocale.currentLocale objectForKey: NSLocaleLanguageCode];
+    return [NSLocale.currentLocale objectForKey: NSLocaleLanguageCode]; /// Should this use `MFLocale()`?
 }
 
 + (double)informationDensityOfCurrentLanguage {

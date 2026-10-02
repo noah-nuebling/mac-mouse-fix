@@ -40,6 +40,7 @@ NS_INLINE NSString *_Nullable MFNSErrorBasicGetReason(NSError *_Nonnull error) {
 
 NS_ASSUME_NONNULL_BEGIN
 
+NSString *MFLocale(void);
 void MFCFRunLoopPerform(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, void (^_Nonnull workload)(void));
 void MFCFRunLoopPerform_delay(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, double delayInSeconds, void (^_Nonnull workload)(void));
 CFTimeInterval machTimeToSeconds(uint64_t tsMach);
