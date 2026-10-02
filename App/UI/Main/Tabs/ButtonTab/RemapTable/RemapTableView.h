@@ -13,10 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RemapTableView : NSTableView
 
-- (void)coolDidLoad;
-- (void)updateColumnWidths;
-- (void)updateSizeWithAnimation;
-- (void)updateSizeWithAnimation:(BOOL)animate tabContentView:(NSView * _Nullable)tabContentView;
+    - (void)coolDidLoad;
+    - (void)updateColumnWidths;
+    - (void)updateSizeWithAnimation;
 
 @end
 
