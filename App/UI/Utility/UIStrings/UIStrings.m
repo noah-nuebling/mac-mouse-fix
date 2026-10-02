@@ -525,7 +525,7 @@ static NSMutableAttributedString *symbolStringWithModifierPrefix(NSString *modif
     
     /// See:
     /// - https://developer.apple.com/forums/thread/91225
-    /// - Locale.current.groupingSeparator
+    /// - Locale.current.groupingSeparator (Actually we should use `MFLocale()` if anything, not `Locale.current` – see `MFLocale()` [Feb 2026])
     
     NSMutableArray<NSString *> *sa = stringArray.mutableCopy;
     
