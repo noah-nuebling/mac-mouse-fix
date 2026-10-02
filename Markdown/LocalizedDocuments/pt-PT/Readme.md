@@ -12,6 +12,7 @@ This document is `0%` translated into `🇵🇹 Português (Portugal)`
   [🇬🇧 English](../../../Readme.md)\
   [🇩🇪 Deutsch](../../../Markdown/LocalizedDocuments/de/Readme.md)\
   [🇪🇸 Español](../../../Markdown/LocalizedDocuments/es/Readme.md)\
+  [🇮🇹 Italiano](../../../Markdown/LocalizedDocuments/it/Readme.md)\
   [🇳🇴 Norsk bokmål](../../../Markdown/LocalizedDocuments/nb/Readme.md)\
   [🇧🇷 Português (Brasil)](../../../Markdown/LocalizedDocuments/pt-BR/Readme.md)\
   **🇵🇹 Português (Portugal)**\

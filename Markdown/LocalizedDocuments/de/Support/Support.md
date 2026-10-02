@@ -12,6 +12,7 @@ Dieses Dokument ist zu `87%` übersetzt auf `🇩🇪 Deutsch`
   [🇬🇧 English](../../../../Support/Support.md)\
   **🇩🇪 Deutsch**\
   [🇪🇸 Español](../../../../Markdown/LocalizedDocuments/es/Support/Support.md)\
+  [🇮🇹 Italiano](../../../../Markdown/LocalizedDocuments/it/Support/Support.md)\
   [🇳🇴 Norsk bokmål](../../../../Markdown/LocalizedDocuments/nb/Support/Support.md)\
   [🇧🇷 Português (Brasil)](../../../../Markdown/LocalizedDocuments/pt-BR/Support/Support.md)\
   [🇻🇳 Tiếng Việt](../../../../Markdown/LocalizedDocuments/vi/Support/Support.md)\

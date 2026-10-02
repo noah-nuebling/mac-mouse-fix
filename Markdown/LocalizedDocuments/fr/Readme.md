@@ -13,6 +13,7 @@ This document is `0%` translated into `🇫🇷 Français`
   [🇩🇪 Deutsch](../../../Markdown/LocalizedDocuments/de/Readme.md)\
   [🇪🇸 Español](../../../Markdown/LocalizedDocuments/es/Readme.md)\
   **🇫🇷 Français**\
+  [🇮🇹 Italiano](../../../Markdown/LocalizedDocuments/it/Readme.md)\
   [🇳🇴 Norsk bokmål](../../../Markdown/LocalizedDocuments/nb/Readme.md)\
   [🇧🇷 Português (Brasil)](../../../Markdown/LocalizedDocuments/pt-BR/Readme.md)\
   [🇹🇷 Türkçe](../../../Markdown/LocalizedDocuments/tr/Readme.md)\

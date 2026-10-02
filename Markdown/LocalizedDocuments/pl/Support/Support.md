@@ -12,6 +12,7 @@ This document is `0%` translated into `🇵🇱 Polski`
   [🇬🇧 English](../../../../Support/Support.md)\
   [🇩🇪 Deutsch](../../../../Markdown/LocalizedDocuments/de/Support/Support.md)\
   [🇪🇸 Español](../../../../Markdown/LocalizedDocuments/es/Support/Support.md)\
+  [🇮🇹 Italiano](../../../../Markdown/LocalizedDocuments/it/Support/Support.md)\
   [🇳🇴 Norsk bokmål](../../../../Markdown/LocalizedDocuments/nb/Support/Support.md)\
   **🇵🇱 Polski**\
   [🇧🇷 Português (Brasil)](../../../../Markdown/LocalizedDocuments/pt-BR/Support/Support.md)\

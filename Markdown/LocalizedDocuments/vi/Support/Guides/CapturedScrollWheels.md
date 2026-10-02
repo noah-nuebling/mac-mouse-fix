@@ -12,6 +12,7 @@ Tài liệu này đã được dịch `73%` sang `🇻🇳 Tiếng Việt`
   [🇬🇧 English](../../../../../Support/Guides/CapturedScrollWheels.md)\
   [🇩🇪 Deutsch](../../../../../Markdown/LocalizedDocuments/de/Support/Guides/CapturedScrollWheels.md)\
   [🇪🇸 Español](../../../../../Markdown/LocalizedDocuments/es/Support/Guides/CapturedScrollWheels.md)\
+  [🇮🇹 Italiano](../../../../../Markdown/LocalizedDocuments/it/Support/Guides/CapturedScrollWheels.md)\
   [🇳🇴 Norsk bokmål](../../../../../Markdown/LocalizedDocuments/nb/Support/Guides/CapturedScrollWheels.md)\
   [🇧🇷 Português (Brasil)](../../../../../Markdown/LocalizedDocuments/pt-BR/Support/Guides/CapturedScrollWheels.md)\
   **🇻🇳 Tiếng Việt**\

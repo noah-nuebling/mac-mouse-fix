@@ -13,6 +13,7 @@ Este documento está `98%` traduzido para `🇧🇷 Português (Brasil)`
   [🇬🇧 English](../../../Readme.md)\
   [🇩🇪 Deutsch](../../../Markdown/LocalizedDocuments/de/Readme.md)\
   [🇪🇸 Español](../../../Markdown/LocalizedDocuments/es/Readme.md)\
+  [🇮🇹 Italiano](../../../Markdown/LocalizedDocuments/it/Readme.md)\
   [🇳🇴 Norsk bokmål](../../../Markdown/LocalizedDocuments/nb/Readme.md)\
   **🇧🇷 Português (Brasil)**\
   [🇹🇷 Türkçe](../../../Markdown/LocalizedDocuments/tr/Readme.md)\

@@ -12,6 +12,7 @@ Tài liệu này đã được dịch `75%` sang `🇻🇳 Tiếng Việt`
   [🇬🇧 English](../../../../Support/Support.md)\
   [🇩🇪 Deutsch](../../../../Markdown/LocalizedDocuments/de/Support/Support.md)\
   [🇪🇸 Español](../../../../Markdown/LocalizedDocuments/es/Support/Support.md)\
+  [🇮🇹 Italiano](../../../../Markdown/LocalizedDocuments/it/Support/Support.md)\
   [🇳🇴 Norsk bokmål](../../../../Markdown/LocalizedDocuments/nb/Support/Support.md)\
   [🇧🇷 Português (Brasil)](../../../../Markdown/LocalizedDocuments/pt-BR/Support/Support.md)\
   **🇻🇳 Tiếng Việt**\
