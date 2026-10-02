@@ -55,7 +55,7 @@
             table.window &&                       /// When you launch the app on the General tab, `RemapTableColumn.setWidth:` is called like 4 times with different values. Checking `table.window` seems to let us identify the last call, where the width is actually correct. [Mar 2026, macOS 26 Tahoe]
             !self.mf_associatedObjects[@"MFOnce"] /// This is an initialization for the RemapTableView, so we only want to do it once.
         ) {
-            if ((0)) DDLogDebug(@"wrapdbg: RemapTableColumn.setWidth: %f (tablewin: %@)", width, table.window);
+            if ((0)) DDLogDebug("wrapdbg: RemapTableColumn.setWidth: %f (tablewin: %@)", width, table.window);
             
             /// Turn off animations
             ///     This prevents visible jank in case the `self.tableView.noteHeightOfRows` HACK below actually ends up changing the height of a row. I don't know why animations are enabled by default. [Dec 2025]
@@ -115,7 +115,7 @@
 }
 
 - (void) commonInit {
-    if ((0)) DDLogDebug(@"wrapdbg: commonInit");
+    if ((0)) DDLogDebug("wrapdbg: commonInit");
 }
 - (void)coolDidLoad {
  
@@ -311,7 +311,7 @@ NSMutableArray *columnConstraints = nil;
     
     /// DEBUG
     if ((0))
-    DDLogDebug(@"wrapdbg: updateColumnWidths: (1: (%f|%f|%f), 2: (%f|%f|%f)",
+    DDLogDebug("wrapdbg: updateColumnWidths: (1: (%f|%f|%f), 2: (%f|%f|%f)",
         self.tableColumns[0].minWidth,
         self.tableColumns[0].width,
         self.tableColumns[0].maxWidth,

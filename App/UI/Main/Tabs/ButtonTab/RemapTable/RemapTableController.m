@@ -780,7 +780,7 @@ static void updateBorderColor(RemapTableController *object, BOOL isInitialAppear
         
         }
         
-        if ((0)) DDLogDebug(@"wrapdbg: tableView:heightOfRow: returning height for row %ld: %f (colwidth: %f)", row, result, colwidth);
+        if ((0)) DDLogDebug("wrapdbg: tableView:heightOfRow: returning height for row %ld: %f (colwidth: %f)", row, result, colwidth);
         
         /// Return
         return result;
