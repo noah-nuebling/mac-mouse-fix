@@ -77,7 +77,7 @@ func applyHardcodedTabWidth(_ tabName: String, _ tabController: NSViewController
                     "ja": 340,  /// 340 looks great [Sep 2026]
                     "uk": 330,  /// 340 -> 330 Fits the words exactly/reduce unnecessary whitespace (long words, have to make it much wider to get different wrapping) [Sep 2026]
                     "nb": 340,  /// 340 looks great [Sep 2026]
-                    "it": 330,  /// 340 -> 330 looks better somehow [Sep 2026]
+                    "it": 370,  /// 340 -> 370 Smallest that doesn't make Scrolling > Speed > macOS hint wrap onto 3 lines [Sep 2026]
                 ]
             default:
                 fatalError("Calling this from unexpected tab: \(tabController)")
