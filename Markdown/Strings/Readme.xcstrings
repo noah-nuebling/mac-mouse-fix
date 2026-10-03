@@ -838,80 +838,80 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Kompatibilita s macOS\n\nNejnovější verze Mac Mouse Fix je určena pro **macOS 11 Big Sur** nebo novější.\n\nPokud používáte macOS **10.15 Catalina**, macOS **10.14 Mojave** nebo macOS **10.13 High Sierra**, můžete použít [nejnovější verzi Mac Mouse Fix 2]({url_1}). Mac Mouse Fix 3.0.0 a novější mohou na vašem počítači stále fungovat, ale budou mít vizuální problémy a některé funkce nemusí fungovat správně.\n\nPokud používáte macOS **10.12 Sierra** nebo **10.11 El Capitan**, můžete použít Mac Mouse Fix [2.2.0]({url_2}) nebo starší verzi."
+            "state" : "needs_review",
+            "value" : "## Kompatibilita s macOS\n\nNejnovější verze Mac Mouse Fix je určena pro **macOS 11 Big Sur** nebo novější.\n\nPokud používáte macOS **10.11 El Capitan** nebo novější, můžete použít [nejnovější verzi Mac Mouse Fix 2]({url}). Mac Mouse Fix 3.0.0 a novější mohou na vašem počítači stále fungovat, ale budou mít vizuální problémy a některé funkce nemusí fungovat správně."
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## macOS-Kompatibilität\n\nDie neueste Version von Mac Mouse Fix ist für **macOS 11 Big Sur** oder später gemacht.\n\nWenn du macOS **10.15 Catalina**, macOS **10.14 Mojave** oder macOS **10.13 High Sierra** benutzt, kannst du die [neueste Version von Mac Mouse Fix 2]({url_1}) verwenden. Mac Mouse Fix 3.0.0 und später könnten vielleicht auch noch auf deinem Gerät funktionieren, aber sie werden visuelle Probleme haben und einige Funktionen werden eventuell nicht richtig funktionieren.\n\nWenn du macOS **10.12 Sierra** oder **10.11 El Capitan** benutzt, kannst du Mac Mouse Fix [2.2.0]({url_2}) oder früher verwenden."
+            "state" : "needs_review",
+            "value" : "## macOS-Kompatibilität\n\nDie neueste Version von Mac Mouse Fix ist für **macOS 11 Big Sur** oder später gemacht.\n\nWenn du macOS **10.11 El Capitan** oder später benutzt, kannst du die [neueste Version von Mac Mouse Fix 2]({url}) verwenden. Mac Mouse Fix 3.0.0 und später könnten vielleicht auch noch auf deinem Gerät funktionieren, aber sie werden visuelle Probleme haben und einige Funktionen werden eventuell nicht richtig funktionieren."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "## macOS compatibility\n\nThe latest version of Mac Mouse Fix is made for **macOS 11 Big Sur** or later.\n  \nIf you're on macOS **10.15 Catalina**, macOS **10.14 Mojave**, or macOS **10.13 High Sierra**, you can use the [latest version of Mac Mouse Fix 2]({url_1}). Mac Mouse Fix 3.0.0 and later might still work on your machine, but they will have visual issues and some features might not work properly.\n    \nIf you're on macOS **10.12 Sierra**, or **10.11 El Capitan**, you can use Mac Mouse Fix [2.2.0]({url_2}) or below."
+            "value" : "## macOS compatibility\n\nThe latest version of Mac Mouse Fix is made for **macOS 11 Big Sur** or later.\n  \nIf you're on macOS **10.11 El Capitan** or later, you can use the [latest version of Mac Mouse Fix 2]({url}). Mac Mouse Fix 3.0.0 and later might still work on your machine, but they will have visual issues and some features might not work properly."
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Compatibilidad con macOS\n\nLa última versión de Mac Mouse Fix está diseñada para **macOS 11 Big Sur** o posterior.\n\nSi utilizas **macOS 10.15 Catalina**, **macOS 10.14 Mojave** o **macOS 10.13 High Sierra**, puedes usar la [última versión de Mac Mouse Fix 2]({url_1}). Mac Mouse Fix 3.0.0 y versiones posteriores podrían seguir funcionando en tu máquina, pero tendrán problemas visuales y es posible que algunas funciones no funcionen correctamente.\n\nSi utilizas **macOS 10.12 Sierra** o **10.11 El Capitan**, puedes usar Mac Mouse Fix [2.2.0]({url_2}) o anterior."
+            "state" : "needs_review",
+            "value" : "## Compatibilidad con macOS\n\nLa última versión de Mac Mouse Fix está diseñada para **macOS 11 Big Sur** o posterior.\n\nSi utilizas **macOS 10.11 El Capitan** o posterior, puedes usar la [última versión de Mac Mouse Fix 2]({url}). Mac Mouse Fix 3.0.0 y versiones posteriores podrían seguir funcionando en tu máquina, pero tendrán problemas visuales y es posible que algunas funciones no funcionen correctamente."
           }
         },
         "it" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Compatibilità con macOS\n\nL'ultima versione di Mac Mouse Fix è pensata per **macOS 11 Big Sur** o successivi.\n  \nSe usi macOS **10.15 Catalina**, macOS **10.14 Mojave** o macOS **10.13 High Sierra**, puoi usare l'[ultima versione di Mac Mouse Fix 2]({url_1}). Mac Mouse Fix 3.0.0 e successivi potrebbero comunque funzionare sul tuo Mac, ma presenteranno problemi grafici e alcune funzioni potrebbero non funzionare correttamente.\n    \nSe usi macOS **10.12 Sierra** o **10.11 El Capitan**, puoi usare Mac Mouse Fix [2.2.0]({url_2}) o versioni precedenti."
+            "state" : "needs_review",
+            "value" : "## Compatibilità con macOS\n\nL'ultima versione di Mac Mouse Fix è pensata per **macOS 11 Big Sur** o successivi.\n  \nSe usi macOS **10.11 El Capitan** o successivi, puoi usare l'[ultima versione di Mac Mouse Fix 2]({url}). Mac Mouse Fix 3.0.0 e successivi potrebbero comunque funzionare sul tuo Mac, ma presenteranno problemi grafici e alcune funzioni potrebbero non funzionare correttamente."
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "##macOSの互換性\nMac Mouse Fixの最新バージョンは、macOS 11 Big Sur以降に対応しています。\n\nmacOS 10.15 Catalina、macOS 10.14 Mojave、または macOS 10.13 High Sierraをご利用の場合は、[Mac Mouse Fix 2 の最新バージョン]({url_1})をお使いいただけます。Mac Mouse Fix 3.0.0以降も動作する可能性はありますが、画面表示の不具合や一部の機能が正しく動作しない場合があります。\n\nmacOS 10.12 SierraまたはmacOS 10.11 El Capitanをご利用の場合は、Mac Mouse Fix [2.2.0]({url_2})以前のバージョンをお使いいただけます。"
+            "state" : "needs_review",
+            "value" : "##macOSの互換性\nMac Mouse Fixの最新バージョンは、macOS 11 Big Sur以降に対応しています。\n\nmacOS 10.11 El Capitan以降をご利用の場合は、[Mac Mouse Fix 2 の最新バージョン]({url})をお使いいただけます。Mac Mouse Fix 3.0.0以降も動作する可能性はありますが、画面表示の不具合や一部の機能が正しく動作しない場合があります。"
           }
         },
         "nb" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## macOS-kompatibilitet\n\nDen nyeste versjonen av Mac Mouse Fix er laget for **macOS 11 Big Sur** eller nyere.\n\nHvis du bruker macOS **10.15 Catalina**, macOS **10.14 Mojave** eller macOS **10.13 High Sierra**, kan du bruke [nyeste versjon av Mac Mouse Fix 2]({url_1}). Mac Mouse Fix 3.0.0 og nyere kan fortsatt fungere på maskinen din, men de vil ha visuelle problemer, og noen funksjoner fungerer kanskje ikke som de skal.\n\nHvis du bruker macOS **10.12 Sierra** eller **10.11 El Capitan**, kan du bruke Mac Mouse Fix [2.2.0]({url_2}) eller eldre."
+            "state" : "needs_review",
+            "value" : "## macOS-kompatibilitet\n\nDen nyeste versjonen av Mac Mouse Fix er laget for **macOS 11 Big Sur** eller nyere.\n\nHvis du bruker macOS **10.11 El Capitan** eller nyere, kan du bruke [nyeste versjon av Mac Mouse Fix 2]({url}). Mac Mouse Fix 3.0.0 og nyere kan fortsatt fungere på maskinen din, men de vil ha visuelle problemer, og noen funksjoner fungerer kanskje ikke som de skal."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Compatibilidade com macOS\n\nA versão mais recente do Mac Mouse Fix foi desenvolvida para **macOS 11 Big Sur** ou superior.\n\nSe você estiver usando macOS **10.15 Catalina**, macOS **10.14 Mojave** ou macOS **10.13 High Sierra**, pode utilizar a [versão mais recente do Mac Mouse Fix 2]({url_1}). O Mac Mouse Fix 3.0.0 e versões posteriores ainda podem funcionar na sua máquina, mas podem apresentar problemas visuais e algumas funcionalidades podem não funcionar corretamente.\n\nSe você estiver usando macOS **10.12 Sierra** ou **10.11 El Capitan**, pode utilizar o Mac Mouse Fix [2.2.0]({url_2}) ou versões anteriores.\n"
+            "state" : "needs_review",
+            "value" : "## Compatibilidade com macOS\n\nA versão mais recente do Mac Mouse Fix foi desenvolvida para **macOS 11 Big Sur** ou superior.\n\nSe você estiver usando macOS **10.11 El Capitan** ou superior, pode utilizar a [versão mais recente do Mac Mouse Fix 2]({url}). O Mac Mouse Fix 3.0.0 e versões posteriores ainda podem funcionar na sua máquina, mas podem apresentar problemas visuais e algumas funcionalidades podem não funcionar corretamente."
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Совместимость с macOS\n\nПоследняя версия Mac Mouse Fix разработана для **macOS 11 Big Sur** или более поздних версий.\n  \nЕсли вы используете macOS **10.15 Catalina**, macOS **10.14 Mojave** или macOS **10.13 High Sierra**, вы можете использовать [последнюю версию Mac Mouse Fix 2]({url_1}). Mac Mouse Fix 3.0.0 и более поздние версии могут по-прежнему работать на вашем компьютере, но у них будут проблемы с отображением, и некоторые функции могут работать некорректно.\n    \nЕсли вы используете macOS **10.12 Sierra** или **10.11 El Capitan**, вы можете использовать Mac Mouse Fix [2.2.0]({url_2}) или более раннюю версию."
+            "state" : "needs_review",
+            "value" : "## Совместимость с macOS\n\nПоследняя версия Mac Mouse Fix разработана для **macOS 11 Big Sur** или более поздних версий.\n  \nЕсли вы используете macOS **10.11 El Capitan** или более позднюю версию, вы можете использовать [последнюю версию Mac Mouse Fix 2]({url}). Mac Mouse Fix 3.0.0 и более поздние версии могут по-прежнему работать на вашем компьютере, но у них будут проблемы с отображением, и некоторые функции могут работать некорректно."
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## macOS Uyumluluğu\n\nMac Mouse Fix'in en son sürümü **mac OS 11 Big Sur** ve sonrası için tasarlandı.\n\nEğer **macOS 10.15 Catalina**, **macOS 10.14 Mojave** veya **macOS 10.13 High Sierra** kullanıyorsanız [Mac Mouse Fix 2'nin son sürümünü]({url_1}) kullanabilirsiniz. Mac Mouse Fix 3.0.0 ve sonrası aygıtınızda çalışabilir fakat görüntü hataları ve beklenmedik program hataları ile karşılaşabilirsiniz.\n\nEğer **macOS 10.12 Sierra** veya **macOS 10.11 El Capitan** kullanıyorsanız [Mac Mouse Fix 2.2.0]({url_2}) veya altını kullanabilirsiniz."
+            "state" : "needs_review",
+            "value" : "## macOS Uyumluluğu\n\nMac Mouse Fix'in en son sürümü **mac OS 11 Big Sur** ve sonrası için tasarlandı.\n\nEğer **macOS 10.11 El Capitan** veya sonrasını kullanıyorsanız [Mac Mouse Fix 2'nin son sürümünü]({url}) kullanabilirsiniz. Mac Mouse Fix 3.0.0 ve sonrası aygıtınızda çalışabilir fakat görüntü hataları ve beklenmedik program hataları ile karşılaşabilirsiniz."
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Сумісність з macOS\n\nОстання версія Mac Mouse Fix створена для **macOS 11 Big Sur** або новішої версії.\n\nЯкщо ви використовуєте macOS **10.15 Catalina**, macOS **10.14 Mojave** або macOS **10.13 High Sierra**, ви можете використовувати [останню версію Mac Mouse Fix 2]({url_1}). Mac Mouse Fix 3.0.0 і новіші версії все ще можуть працювати на вашому комп’ютері, але матимуть візуальні проблеми, а деякі функції можуть працювати некоректно.\n\nЯкщо ви використовуєте macOS **10.12 Sierra** або **10.11 El Capitan**, ви можете використовувати Mac Mouse Fix [2.2.0]({url_2}) або ранішої версії."
+            "state" : "needs_review",
+            "value" : "## Сумісність з macOS\n\nОстання версія Mac Mouse Fix створена для **macOS 11 Big Sur** або новішої версії.\n\nЯкщо ви використовуєте macOS **10.11 El Capitan** або новішу версію, ви можете використовувати [останню версію Mac Mouse Fix 2]({url}). Mac Mouse Fix 3.0.0 і новіші версії все ще можуть працювати на вашому комп’ютері, але матимуть візуальні проблеми, а деякі функції можуть працювати некоректно."
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## Tương thích macOS\n\nPhiên bản mới nhất của Mac Mouse Fix dùng cho các phiên bản **macOS 11 Big Sur** và sau đó.\n\nNếu bạn đang sử dụng macOS **10.15 Catalina**, macOS **10.14 Mojave**, hoặc macOS **10.13 High Sierra**, bạn có thể dùng[bản mới nhất của Mac Mouse Fix 2]({url_1}). Mac Mouse Fix 3.0.0 và sau đó có thể hoạt động nhưng sẽ có vài lỗi về hiển thị hoặc một số tính năng hoạt động không đúng.\n    \nNếu bạn đang sử dụng macOS **10.12 Sierra**, hoặc **10.11 El Capitan**, bạn có thể dùng Mac Mouse Fix [2.2.0]({url_2}) hoặc thấp hơn."
+            "state" : "needs_review",
+            "value" : "## Tương thích macOS\n\nPhiên bản mới nhất của Mac Mouse Fix dùng cho các phiên bản **macOS 11 Big Sur** và sau đó.\n\nNếu bạn đang sử dụng macOS **10.11 El Capitan** hoặc mới hơn, bạn có thể dùng [bản mới nhất của Mac Mouse Fix 2]({url}). Mac Mouse Fix 3.0.0 và sau đó có thể hoạt động nhưng sẽ có vài lỗi về hiển thị hoặc một số tính năng hoạt động không đúng."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "## macOS 兼容性\n\n最新版本的 Mac Mouse Fix 专为 **macOS 11 Big Sur** 或更高版本设计。\n  \n如果你使用的是 macOS **10.15 Catalina**、macOS **10.14 Mojave** 或 macOS **10.13 High Sierra**，可以使用 [Mac Mouse Fix 2 的最新版本]({url_1})。Mac Mouse Fix 3.0.0 及更高版本可能仍能在这些系统上运行，但会出现视觉瑕疵，且部分功能可能无法正常使用。\n    \n如果你使用的是 macOS **10.12 Sierra** 或 **10.11 El Capitan**，可以使用 Mac Mouse Fix [2.2.0]({url_2}) 或更低版本。"
+            "state" : "needs_review",
+            "value" : "## macOS 兼容性\n\n最新版本的 Mac Mouse Fix 专为 **macOS 11 Big Sur** 或更高版本设计。\n  \n如果你使用的是 macOS **10.11 El Capitan** 或更高版本，可以使用 [Mac Mouse Fix 2 的最新版本]({url})。Mac Mouse Fix 3.0.0 及更高版本可能仍能在这些系统上运行，但会出现视觉瑕疵，且部分功能可能无法正常使用。"
           }
         }
       }
