@@ -64,27 +64,6 @@ To disable Mac Mouse Fix, uncheck this checkbox or move the app to the Trash.</s
                                     <rect key="frame" x="0.0" y="0.0" width="546" height="456"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xGK-PH-XPN" customClass="MFSegmentedControl">
-                                            <rect key="frame" x="3" y="86" width="47" height="24"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="btI-2i-s2J">
-                                                <font key="font" metaFont="system"/>
-                                                <segments>
-                                                    <segment toolTip="Add a new Action" image="NSAddTemplate" width="21"/>
-                                                    <segment toolTip="Delete the selected Action" width="19" tag="-1">
-                                                        <imageReference key="image" image="NSRemoveTemplate" symbolScale="small"/>
-                                                    </segment>
-                                                </segments>
-                                            </segmentedCell>
-                                            <userDefinedRuntimeAttributes>
-                                                <userDefinedRuntimeAttribute type="number" keyPath="keyEquivKC">
-                                                    <integer key="value" value="51"/>
-                                                </userDefinedRuntimeAttribute>
-                                            </userDefinedRuntimeAttributes>
-                                            <connections>
-                                                <action selector="addRemoveControl:" target="p2C-Qy-mgp" id="klS-40-MDb"/>
-                                            </connections>
-                                        </segmentedControl>
                                         <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uS5-6r-XRu" userLabel="ScrollGroup">
                                             <rect key="frame" x="6" y="15" width="540" height="82"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -153,6 +132,27 @@ Tips:
                                                 </button>
                                             </subviews>
                                         </customView>
+                                        <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xGK-PH-XPN" customClass="MFSegmentedControl">
+                                            <rect key="frame" x="3" y="86" width="47" height="24"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segmentedCell key="cell" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="btI-2i-s2J">
+                                                <font key="font" metaFont="system"/>
+                                                <segments>
+                                                    <segment toolTip="Add a new Action" image="NSAddTemplate" width="21"/>
+                                                    <segment toolTip="Delete the selected Action" width="19" tag="-1">
+                                                        <imageReference key="image" image="NSRemoveTemplate" symbolScale="small"/>
+                                                    </segment>
+                                                </segments>
+                                            </segmentedCell>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="keyEquivKC">
+                                                    <integer key="value" value="51"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                            <connections>
+                                                <action selector="addRemoveControl:" target="p2C-Qy-mgp" id="klS-40-MDb"/>
+                                            </connections>
+                                        </segmentedControl>
                                         <scrollView fixedFrame="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="39" horizontalPageScroll="10" verticalLineScroll="39" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jLq-vs-Mpd" customClass="MFScrollView">
                                             <rect key="frame" x="0.0" y="116" width="546" height="341"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
