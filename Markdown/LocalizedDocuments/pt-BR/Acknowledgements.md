@@ -96,6 +96,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **outubro 2026**
 
+- 🇻🇳&nbsp;Đỗ&nbsp;Minh&nbsp;Tuấn
 - 🇺🇸&nbsp;Saskia - "Love it, thank you"
 - 🇫🇷&nbsp;Jean&nbsp;Marc&nbsp;Supor - "Cool driver for mouses on Mac"
 

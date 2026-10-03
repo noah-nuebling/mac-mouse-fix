@@ -94,6 +94,7 @@ Queste persone hanno speso molto più del prezzo standard e mi hanno offerto un 
 
 **ottobre 2026**
 
+- 🇻🇳&nbsp;Đỗ&nbsp;Minh&nbsp;Tuấn
 - 🇺🇸&nbsp;Saskia - "Love it, thank you"
 - 🇫🇷&nbsp;Jean&nbsp;Marc&nbsp;Supor - "Cool driver for mouses on Mac"
 
