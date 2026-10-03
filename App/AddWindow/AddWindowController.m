@@ -46,6 +46,16 @@ static BOOL _pointerIsInsideAddField;
     if (@available(macOS 26.0, *)) {
         self.window.contentView.prefersCompactControlSizeMetrics = YES; /// [Aug 2025] Big 'Cancel' button looks weird.
     }
+    if (@available(macOS 26.0, *)) {
+        /// [Sep 2026] Try to lower corner radius.
+        ///     Layout isn't designed for the high corner radius of the modern SwiftUI box.
+        ///     Question: Should this also be active on the Big Sur to Sequoia versions? Don't remember how boxes look there.
+        _addField.boxType = NSBoxCustom; /// Can't modify appearance of NSBoxPrimary, so have to make it custom [Sep 2026]
+        _addField.cornerRadius = 5.0;    /// I think 5.0 was the original corner radius that the design was built around. Looks good either way [Sep 2026]
+        _addField.borderWidth = 0.5;     /// SwiftUI boxes don't have border, but it's hard to see in lightmode otherwise on macOS 27 [Sep 2026]
+        _addField.borderColor = [NSColor separatorColor];
+        _addField.fillColor = [NSColor quaternarySystemFillColor]; /// Pretty close match to NSBoxPrimary on macOS 27 [Sep 2026]
+    }
 }
 
 // UI callbacks
@@ -107,7 +117,10 @@ static BOOL _pointerIsInsideAddField;
     }
 }
 
-+ (void)enableAddFieldHoverEffect:(BOOL)enable {
++ (void) enableAddFieldHoverEffect: (BOOL)enable {
+
+    return; /// Breaks our macOS 26 NSBoxCustom [Sep 2026]
+
     // None of this works
     NSBox *af = _instance.addField;
     NSView *afSub = _instance.addField.subviews[0];
