@@ -9,6 +9,12 @@
 
 #import "CGEventHIDEventBridge.h"
 @import CoreGraphics.CGEvent;
+#import <dlfcn.h>
+
+/// Forward declarations for helpers defined later in this file
+void CGEventSetIOHIDEvent(CGEventRef cgEvent, IOHIDEventRef iohidEvent);
+void setIOHIDEvent_ManualOffsets(CGEventRef cgEvent, IOHIDEventRef iohidEvent);
+void applyOffset(void **ptr, uint8_t byteOffset);
 
 @implementation CGEventHIDEventBridge
 
@@ -35,7 +41,24 @@ void CGEventSetHIDEvent(CGEventRef cgEvent, HIDEvent *hidEvent) {
     return CGEventSetIOHIDEvent(cgEvent, (__bridge IOHIDEventRef)hidEvent);
 }
 
-/// Defining our own IOHIDEvent -> CGEvent function, because we can't link against `_SLEventSetIOHIDEvent`. (See header)
+/// IOHIDEvent -> CGEvent
+///     We prefer Apple's own private `SLEventSetIOHIDEvent` (SkyLight.framework), resolved at runtime via dlsym.
+///     If it can't be found, we fall back to our hand-rolled pointer-offset implementation.
+///
+///     Why prefer `SLEventSetIOHIDEvent`:
+///         Our hand-rolled implementation (`setIOHIDEvent_ManualOffsets`) depends on the private memory layout of
+///         `CGEvent`/`CGSEventRecord`, which Apple can change between OS versions. On macOS 27 (Golden Gate) Beta 3,
+///         this layout changed: the hardcoded `0x18`/`0xd0` offsets no longer point at the embedded IOHIDEvent slot,
+///         so the IOHIDEvent was written to the wrong address. This broke DockSwipe simulation, meaning the
+///         `Spaces & Mission Control` action (switching Spaces / opening Mission Control via Click & Drag) stopped working.
+///
+///         `SLEventSetIOHIDEvent` doesn't depend on any hardcoded offsets and keeps working across OS versions.
+///         (This is the same function the working exploration in `Tests/FixDockSwipes.m` used.)
+///
+///     Why dlsym instead of linking:
+///         SkyLight.framework is a private framework, but it's already loaded into the process (via AppKit / CoreGraphics),
+///         so we can resolve the symbol at runtime without adding it to the Xcode target. This avoids project-file changes
+///         and gracefully degrades to the old implementation if the symbol ever disappears.
 void CGEventSetIOHIDEvent(CGEventRef cgEvent, IOHIDEventRef iohidEvent) {
     
     /// Validate
@@ -47,6 +70,30 @@ void CGEventSetIOHIDEvent(CGEventRef cgEvent, IOHIDEventRef iohidEvent) {
         assert(false);
         return;
     }
+    
+    /// Resolve `SLEventSetIOHIDEvent` once
+    typedef void (*SLEventSetIOHIDEventFuncType)(CGEventRef, IOHIDEventRef);
+    static SLEventSetIOHIDEventFuncType SLEventSetIOHIDEventFunc = NULL;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        SLEventSetIOHIDEventFunc = (SLEventSetIOHIDEventFuncType)dlsym(RTLD_DEFAULT, "SLEventSetIOHIDEvent");
+    });
+    
+    /// Use Apple's function if available
+    ///     Note: We don't `CFRetain(iohidEvent)` here – unlike our manual implementation, `SLEventSetIOHIDEvent`
+    ///     manages the retain/release of the embedded event itself.
+    if (SLEventSetIOHIDEventFunc != NULL) {
+        SLEventSetIOHIDEventFunc(cgEvent, iohidEvent);
+        return;
+    }
+    
+    /// Fallback: hand-rolled implementation
+    setIOHIDEvent_ManualOffsets(cgEvent, iohidEvent);
+}
+
+/// Hand-rolled IOHIDEvent -> CGEvent implementation, kept as a fallback.
+///     Fragile: depends on the private memory layout of CGEvent/CGSEventRecord (hardcoded offsets), which changes between OS versions.
+void setIOHIDEvent_ManualOffsets(CGEventRef cgEvent, IOHIDEventRef iohidEvent) {
     
     /// Retain
     ///     CFRelease(cgEvent) also releases the embedded IOHIDEventRef
