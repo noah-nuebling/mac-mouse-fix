@@ -215,6 +215,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4F0463273071889400F7AC89 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = SOURCE_ROOT; };
 		4F166929305EB10F008C95D2 /* HIDBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDBase.h; sourceTree = "<group>"; };
 		4F16692A305EB10F008C95D2 /* HIDEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HIDEvent.h; sourceTree = "<group>"; };
 		4F16692B305EB10F008C95D2 /* HIDEvent+HIDEventFields.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HIDEvent+HIDEventFields.h"; sourceTree = "<group>"; };
@@ -607,6 +608,7 @@
 				4FEB6616279376C200E6A111 /* Notes */,
 				4F39BC88263B68F400FDF692 /* xcconfig */,
 				4F422EEC23469B0F00AA6E22 /* README.md */,
+				4F0463273071889400F7AC89 /* .gitignore */,
 			);
 			name = Other;
 			sourceTree = "<group>";

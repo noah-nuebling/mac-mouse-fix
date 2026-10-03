@@ -29,4 +29,5 @@ sudopass.sh
 
 # Ignore MMF 3 stuff (this is MMF 2 branch)
 mac-mouse-fix-scripts/
+mmfscriptscache/
 Shared/External/ReactiveCocoa-12.0.0/
