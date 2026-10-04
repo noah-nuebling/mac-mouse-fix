@@ -96,6 +96,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **outubro 2026**
 
+- 🇺🇸&nbsp;Akash&nbsp;Agarwal - "Cool App"
 - 🇩🇪&nbsp;Henry&nbsp;Ryssel
 - 🇫🇮&nbsp;Jukka
 - 🇻🇳&nbsp;Đỗ&nbsp;Minh&nbsp;Tuấn

@@ -94,6 +94,7 @@ Mac Mouse Fixを世界中の人々に届けていただき、ありがとうご�
 
 **10月 2026**
 
+- 🇺🇸&nbsp;Akash&nbsp;Agarwal - "Cool App"
 - 🇩🇪&nbsp;Henry&nbsp;Ryssel
 - 🇫🇮&nbsp;Jukka
 - 🇻🇳&nbsp;Đỗ&nbsp;Minh&nbsp;Tuấn
