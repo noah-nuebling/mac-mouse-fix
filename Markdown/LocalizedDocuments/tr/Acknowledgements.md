@@ -95,6 +95,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Ekim 2026**
 
+- 🇫🇮&nbsp;Jukka
 - 🇻🇳&nbsp;Đỗ&nbsp;Minh&nbsp;Tuấn
 - 🇺🇸&nbsp;Saskia - "Love it, thank you"
 - 🇫🇷&nbsp;Jean&nbsp;Marc&nbsp;Supor - "Cool driver for mouses on Mac"
