@@ -262,7 +262,6 @@
 		4FBC83492DAFB28B00354981 /* SharedMacros.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC83302DAFB28B00354981 /* SharedMacros.m */; };
 		4FBC834B2DAFD7DB00354981 /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */; };
 		4FBC834C2DAFD7DB00354981 /* HashablePair.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */; };
-		4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBC9434260F8AA60062F186 /* MASShortcut.m */; };
 		4FBD52622E47EFF400C39A44 /* TextInput.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FBD52612E47EFF400C39A44 /* TextInput.framework */; };
 		4FBDA14F27B241CE0030E4EA /* GlobalEventTapThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */; };
 		4FC4A24E2EA457EC003566D8 /* Localization.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FC4A24D2EA457EC003566D8 /* Localization.m */; };
@@ -2472,10 +2471,6 @@
 		4FBC83342DAFB28B00354981 /* MFLoop.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFLoop.m; sourceTree = "<group>"; };
 		4FBC83352DAFB28B00354981 /* MFBenchmark.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFBenchmark.h; sourceTree = "<group>"; };
 		4FBC83362DAFB28B00354981 /* MFBenchmark.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFBenchmark.m; sourceTree = "<group>"; };
-		4FBC9434260F8AA60062F186 /* MASShortcut.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASShortcut.m; sourceTree = "<group>"; };
-		4FBC9436260F8AA60062F186 /* MASShortcut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASShortcut.h; sourceTree = "<group>"; };
-		4FBC9437260F8AA60062F186 /* MASKeyMasks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASKeyMasks.h; sourceTree = "<group>"; };
-		4FBC9439260F8AA60062F186 /* MASKeyCodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASKeyCodes.h; sourceTree = "<group>"; };
 		4FBD52612E47EFF400C39A44 /* TextInput.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TextInput.framework; path = ../../../../../../System/Library/PrivateFrameworks/TextInput.framework; sourceTree = "<group>"; };
 		4FBDA14D27B241CE0030E4EA /* GlobalEventTapThread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalEventTapThread.h; sourceTree = "<group>"; };
 		4FBDA14E27B241CE0030E4EA /* GlobalEventTapThread.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalEventTapThread.m; sourceTree = "<group>"; };
@@ -7297,41 +7292,6 @@
 			path = Macros;
 			sourceTree = "<group>";
 		};
-		4FBC9433260F8AA60062F186 /* MAS */ = {
-			isa = PBXGroup;
-			children = (
-				4FBC9450260F8CF20062F186 /* UI */,
-				4FBC944F260F8CE80062F186 /* Model */,
-			);
-			path = MAS;
-			sourceTree = "<group>";
-		};
-		4FBC9442260F8AB10062F186 /* External */ = {
-			isa = PBXGroup;
-			children = (
-				4FBC9433260F8AA60062F186 /* MAS */,
-			);
-			path = External;
-			sourceTree = "<group>";
-		};
-		4FBC944F260F8CE80062F186 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				4FBC9437260F8AA60062F186 /* MASKeyMasks.h */,
-				4FBC9439260F8AA60062F186 /* MASKeyCodes.h */,
-				4FBC9436260F8AA60062F186 /* MASShortcut.h */,
-				4FBC9434260F8AA60062F186 /* MASShortcut.m */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		4FBC9450260F8CF20062F186 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = UI;
-			sourceTree = "<group>";
-		};
 		4FBDA14927B2246B0030E4EA /* SubPixelator */ = {
 			isa = PBXGroup;
 			children = (
@@ -7784,7 +7744,6 @@
 			isa = PBXGroup;
 			children = (
 				4FA40CF528A0CBA600499E53 /* Mac Mouse Fix-Bridging-Header.h */,
-				4FBC9442260F8AB10062F186 /* External */,
 				4FF665E225F2C92700689B77 /* App.entitlements */,
 				4FF665E425F2C92700689B77 /* Info.plist */,
 				4F4B5FF92C67D1BF004051D3 /* InfoPlist.xcstrings */,
@@ -8692,7 +8651,6 @@
 				4F4C73FE2C4FB5D2001D97C3 /* AnnotationUtility.m in Sources */,
 				4F58FE002C56DE9B00926A00 /* Logging.swift in Sources */,
 				4F39BC4A263B179200FDF692 /* AppState.m in Sources */,
-				4FBC943B260F8AA60062F186 /* MASShortcut.m in Sources */,
 				4F909D3B28A0C3D2009349A2 /* ModCaptureDeleteButton.swift in Sources */,
 				4FA40D0428A0D0C000499E53 /* DoublesMatrix.m in Sources */,
 				4FA40CFC28A0CCCB00499E53 /* NaturalAccelerationCurve.swift in Sources */,

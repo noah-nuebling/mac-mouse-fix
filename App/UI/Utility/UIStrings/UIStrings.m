@@ -320,6 +320,111 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
     return symbolStringWithModifierPrefix(flagsStr, keyStr);
 }
 
++ (NSString *) getStringForKeyCode: (CGKeyCode)vk {
+    /// [Sep 2026] Adapted for Mac Mouse Fix from MASShortcut.m > keyCodeString
+    ///     Small: Maybe rename methods in this file to standard Apple pattern so this is called `stringForVirtualKeyCode:`
+
+    // Some key codes don't have an equivalent
+    switch (vk) {
+        case kVK_F1: return @"F1";
+        case kVK_F2: return @"F2";
+        case kVK_F3: return @"F3";
+        case kVK_F4: return @"F4";
+        case kVK_F5: return @"F5";
+        case kVK_F6: return @"F6";
+        case kVK_F7: return @"F7";
+        case kVK_F8: return @"F8";
+        case kVK_F9: return @"F9";
+        case kVK_F10: return @"F10";
+        case kVK_F11: return @"F11";
+        case kVK_F12: return @"F12";
+        case kVK_F13: return @"F13";
+        case kVK_F14: return @"F14";
+        case kVK_F15: return @"F15";
+        case kVK_F16: return @"F16";
+        case kVK_F17: return @"F17";
+        case kVK_F18: return @"F18";
+        case kVK_F19: return @"F19";
+        case kVK_F20: return @"F20";
+
+        case kVK_Space:         return @" Space";
+        case kVK_Escape:        return @" Esc";
+        case kVK_Delete:        return @"⌫";
+        case kVK_ForwardDelete: return @"⌦";
+        case kVK_LeftArrow:     return @"◀";
+        case kVK_RightArrow:    return @"▶";
+        case kVK_UpArrow:       return @"▲";
+        case kVK_DownArrow:     return @"▼";
+        case kVK_Help:          return @"?⃝";
+        case kVK_PageUp:        return @"↑";
+        case kVK_PageDown:      return @"↓";
+        case kVK_End:           return @"⤓";
+        case kVK_Home:          return @"⤒";
+        case kVK_Tab:           return @"⇥"; /// [Sep 2026] This renders with Lucida Grande (instead of System font), says Claude.
+        case kVK_Return:        return @"⏎"; //@"↩";
+
+        // Keypad
+        case kVK_ANSI_Keypad0: return @"0";
+        case kVK_ANSI_Keypad1: return @"1";
+        case kVK_ANSI_Keypad2: return @"2";
+        case kVK_ANSI_Keypad3: return @"3";
+        case kVK_ANSI_Keypad4: return @"4";
+        case kVK_ANSI_Keypad5: return @"5";
+        case kVK_ANSI_Keypad6: return @"6";
+        case kVK_ANSI_Keypad7: return @"7";
+        case kVK_ANSI_Keypad8: return @"8";
+        case kVK_ANSI_Keypad9: return @"9";
+        case kVK_ANSI_KeypadDecimal:  return @".";
+        case kVK_ANSI_KeypadMultiply: return @"*";
+        case kVK_ANSI_KeypadPlus:     return @"+";
+        case kVK_ANSI_KeypadClear:    return @"⌧";
+        case kVK_ANSI_KeypadDivide:   return @"/";
+        case kVK_ANSI_KeypadEnter:    return @"⌅";
+        case kVK_ANSI_KeypadMinus:    return @"-";
+        case kVK_ANSI_KeypadEquals:   return @"=";
+
+    }
+    
+    // Everything else should be printable so look it up in the current ASCII capable keyboard layout
+    OSStatus error = noErr;
+    NSString *keystroke = nil;
+    TISInputSourceRef inputSource = TISCopyCurrentASCIICapableKeyboardLayoutInputSource();
+    if (inputSource) {
+        CFDataRef layoutDataRef = TISGetInputSourceProperty(inputSource, kTISPropertyUnicodeKeyLayoutData);
+        if (layoutDataRef) {
+            UCKeyboardLayout *layoutData = (UCKeyboardLayout *)CFDataGetBytePtr(layoutDataRef);
+            UniCharCount length = 0;
+            UniChar  chars[256] = { 0 };
+            UInt32 deadKeyState = 0;
+            error = UCKeyTranslate(layoutData, (UInt16)vk, kUCKeyActionDisplay, 0, // No modifiers
+                                   LMGetKbdType(), kUCKeyTranslateNoDeadKeysMask, &deadKeyState,
+                                   sizeof(chars) / sizeof(UniChar), &length, chars);
+            keystroke = ((error == noErr) && length ? [NSString stringWithCharacters:chars length:length] : @"");
+        }
+        CFRelease(inputSource);
+    }
+    
+    // Validate keystroke
+    if (runningPreRelease())
+    if (keystroke.length) {
+        static NSMutableCharacterSet *validChars = nil;
+        if (validChars == nil) {
+            validChars = [[NSMutableCharacterSet alloc] init];
+            [validChars formUnionWithCharacterSet:[NSCharacterSet alphanumericCharacterSet]];
+            [validChars formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
+            [validChars formUnionWithCharacterSet:[NSCharacterSet symbolCharacterSet]];
+        }
+        for (NSUInteger i = 0, length = keystroke.length; i < length; i++) {
+            if (![validChars characterIsMember:[keystroke characterAtIndex:i]]) {
+                keystroke = @"";
+                break;
+            }
+        }
+    }
+    
+    // Finally, we've got a shortcut!
+    return keystroke.uppercaseString;
+}
 
 + (NSAttributedString *)getStringForKeyCode:(CGKeyCode)keyCode flags:(CGEventFlags)flags font:(NSFont *)font {
     
@@ -334,9 +439,8 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
     NSString *flagsStr = [UIStrings getKeyboardModifierString:flags];
     
     /// Get keyboard key string from MASShortcut
-    MASShortcut *masShortcut = [MASShortcut shortcutWithKeyCode:keyCode modifierFlags:0];
-    NSString *keyStr = masShortcut.keyCodeString;
-    
+    NSString *keyStr = [UIStrings getStringForKeyCode: keyCode];
+
     if (![keyStr isEqual:@""]) {
         
         NSString *combinedString = stringf(@"%@%@", flagsStr, keyStr);
