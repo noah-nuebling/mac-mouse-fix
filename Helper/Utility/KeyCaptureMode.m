@@ -103,7 +103,7 @@ static bool keyCaptureModePayloadIsValidWithEvent(NSEvent *e, CGEventFlags flags
     BOOL isSub8 = (e.subtype == 8); /// 8 -> Maybe `NX_SUBTYPE_AUX_CONTROL_BUTTONS` says Opus 5.5
     BOOL isKeyDown = (e.data1 & kMFSystemDefinedEventPressedMask) == 0;
     BOOL secondDataIsNil = e.data2 == -1; /// The power key up event has both data fields be 0
-    BOOL typeIsBlackListed = type == kMFSystemEventTypeCapsLock;
+    BOOL typeIsBlackListed = type == NX_KEYTYPE_CAPS_LOCK;
     
     BOOL isValid = isSub8 && isKeyDown && secondDataIsNil && !typeIsBlackListed;
     

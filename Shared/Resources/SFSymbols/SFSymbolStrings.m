@@ -10,6 +10,7 @@
 #import "SFSymbolStrings.h"
 #import "NSAttributedString+Additions.h"
 #import "NSImage+Additions.h"
+#import "Logging.h"
 
 ///
 /// This file offers methods for creating NSAttributedString instances that display an SFSymbol through an NSImage Attachment.

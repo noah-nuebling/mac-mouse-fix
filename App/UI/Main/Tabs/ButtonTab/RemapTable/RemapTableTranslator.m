@@ -349,16 +349,16 @@ static NSArray *getOneShotEffectsTable(NSDictionary *rowDict) {
     int separator = -1;
     
     MFSystemDefinedEventType systemEventTypes[] = {
-        kMFSystemEventTypeBrightnessDown,
-        kMFSystemEventTypeBrightnessUp,
+        NX_KEYTYPE_BRIGHTNESS_DOWN,
+        NX_KEYTYPE_BRIGHTNESS_UP,
         separator,
-        kMFSystemEventTypeMediaBack,
-        kMFSystemEventTypeMediaPlayPause,
-        kMFSystemEventTypeMediaForward,
+        NX_KEYTYPE_REWIND,
+        NX_KEYTYPE_PLAY,
+        NX_KEYTYPE_FAST,
         separator,
-        kMFSystemEventTypeVolumeMute,
-        kMFSystemEventTypeVolumeDown,
-        kMFSystemEventTypeVolumeUp
+        NX_KEYTYPE_MUTE,
+        NX_KEYTYPE_SOUND_DOWN,
+        NX_KEYTYPE_SOUND_UP
     };
     int count = sizeof(systemEventTypes) / sizeof(systemEventTypes[0]);
     

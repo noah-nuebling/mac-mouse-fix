@@ -9,7 +9,6 @@
 
 #import "UIStrings.h"
 #import <Carbon/Carbon.h>
-#import "MASShortcut.h"
 #import "CGSHotKeys.h"
 #import "SharedUtility.h"
 #import "NSAttributedString+Additions.h"
@@ -248,7 +247,10 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
     ///     All the SF Symbols below should appear as 􀃬 in the source code, unless you have an SF Symbol-supporting font like SF Pro installed - or if you have force quit  Mac Mouse Fix the last time you ran it - which prevents it from unregistering the `CoolSFSymbols.otf` font which it registers as the app launches. If this happens, the `CoolSFSymbols.otf` font will also become unregistered after you you log out.
     ///
     ///     The `CoolSFSymbols.otf` font is registered/unregistered from AppDelegate.m at the time of writing.
-    
+    ///
+    /// [Sep 2026] Some of these have regular unicode versions like 􀆨 and 􀆡, while some from `getStringForKeyCode:` like `kVK_Tab` should have SF Symbol (because System Font can't render the unicode we're using)
+    ///     TODO: Unify the lookup mechanism for all: regular unicode if possible, otherwise SFSymbol in `CoolSFSymbols.otf`.
+
     NSDictionary *map = @{
         
         /// Symbolic Hotkeys
@@ -261,19 +263,19 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
         
         /// System events
         ///     Note: All the SKHs are over 100 and the system events are under 100, so we can just put them all into one map. If there's a duplicate key in the literal, Xcode will warn us.
-        @(kMFSystemEventTypeBrightnessDown):        @[@"􀆫", @"sun.min"], /// The symbols will all appear as 􀃬 unless you have SF Fonts installed from the Apple Website. But in MMF they will appear properly since we ship a font.
-        @(kMFSystemEventTypeBrightnessUp):          @[@"􀆭", @"sun.max"],
-        @(kMFSystemEventTypeMediaBack):             @[@"􀊉", @"backward"],
-        @(kMFSystemEventTypeMediaPlayPause):        @[@"􀊇", @"playpause"],
-        @(kMFSystemEventTypeMediaForward):          @[@"􀊋", @"forward"],
-        @(kMFSystemEventTypeVolumeMute):            @[@"􀊠", @"speaker"],
-        @(kMFSystemEventTypeVolumeDown):            @[@"􀊤", @"speaker.wave.1"],
-        @(kMFSystemEventTypeVolumeUp):              @[@"􀊨", @"speaker.wave.3"],
-        @(kMFSystemEventTypeKeyboardBacklightDown): @[@"􀇭", @"light.min"],
-        @(kMFSystemEventTypeKeyboardBacklightUp):   @[@"􀇮", @"light.max"],
-        @(kMFSystemEventTypePower):                 @[@"􀆨", @"power"],
-        @(kMFSystemEventTypeCapsLock):              @[@"􀆡", @"capslock"], /// This symbol doesn't appear on US keyboards, but we disable capturing capslock anyways
-        
+        @(NX_KEYTYPE_BRIGHTNESS_DOWN):        @[@"􀆫", @"sun.min"], /// The symbols will all appear as 􀃬 unless you have SF Fonts installed from the Apple Website. But in MMF they will appear properly since we ship a font.
+        @(NX_KEYTYPE_BRIGHTNESS_UP):          @[@"􀆭", @"sun.max"],
+        @(NX_KEYTYPE_REWIND):                 @[@"􀊉", @"backward"],
+        @(NX_KEYTYPE_PLAY):                   @[@"􀊇", @"playpause"],
+        @(NX_KEYTYPE_FAST):                   @[@"􀊋", @"forward"],
+        @(NX_KEYTYPE_MUTE):                   @[@"􀊠", @"speaker"],
+        @(NX_KEYTYPE_SOUND_DOWN):            @[@"􀊤", @"speaker.wave.1"],
+        @(NX_KEYTYPE_SOUND_UP):              @[@"􀊨", @"speaker.wave.3"],
+        @(NX_KEYTYPE_ILLUMINATION_DOWN):      @[@"􀇭", @"light.min"],
+        @(NX_KEYTYPE_ILLUMINATION_UP):        @[@"􀇮", @"light.max"],
+        @(NX_POWER_KEY):                      @[@"􀆨", @"power"],
+        @(NX_KEYTYPE_CAPS_LOCK):              @[@"􀆡", @"capslock"], /// This symbol doesn't appear on US keyboards, but we disable capturing capslock anyways (doesn't work)
+
         /// Validation
         /// - We should get an assert fail if we don't comment this out
         /// - Notes:
@@ -282,8 +284,25 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
         ///
         
         //@"someUnsupportedSFSymbol1":                @[@"􁖎", NSNull.null],
+
+        /// [Oct 2026] Additional `NX_` constants from that header that we haven't seen in the wild, yet (and didn't know about until now)
+        #if 0
+        /* 5*/NX_KEYTYPE_HELP                ///< Probably the help key found on old Apple keyboards, Ins/Insert on Windows keyboards seems to be recogized as the Help key `kVK_Help` but it doesn't do anything.  [Oct 2026]
+        /* 8*/NX_UP_ARROW_KEY                ///< Not sure [Oct 2026]
+        /* 9*/NX_DOWN_ARROW_KEY              ///< Not sure [Oct 2026]
+        /*10*/NX_KEYTYPE_NUM_LOCK            ///< Num Lock on windows keyboards acts as clear under macOS and some modern Apple keyboadrs have this x symbol in the same spot. Should maybe suppor this [Oct 2026]
+        /*11*/NX_KEYTYPE_CONTRAST_UP         ///< Not sure [Oct 2026]
+        /*12*/NX_KEYTYPE_CONTRAST_DOWN       ///< Not sure [Oct 2026]
+        /*13*/NX_KEYTYPE_LAUNCH_PANEL        ///< Not sure [Oct 2026]
+        /*14*/NX_KEYTYPE_EJECT               ///< Probably the top right eject key when Macs still had optical disk drives - should maybe suppor this [Oct 2026]
+        /*15*/NX_KEYTYPE_VIDMIRROR           ///< Opus 5.5 says maybe display mirroring key found on first MacBook Pro. The icon looks like `rectangle.on.rectangle` [Oct 2026]
+        /*17*/NX_KEYTYPE_NEXT                ///< Not sure [Oct 2026]
+        /*18*/NX_KEYTYPE_PREVIOUS            ///< Not sure [Oct 2026]
+        /*23*/NX_KEYTYPE_ILLUMINATION_TOGGLE ///< Can't find any SFSymbol for this. Appears on original MBP I think - Icon looks like `light.min` but without the dots. (so just a dash) [Oct 2026]
+        /*25*/NX_KEYTYPE_MENU                ///< Not sure. Ideas: The context menu key that current full-size Apple keyboards have instead of the insert key. Opus 5.5 thinks it's the MENU key on Apple TV remote. Weird. [Oct 2026]
+        #endif
     };
-    
+
     NSArray *rmap = map[@(type)];
     if (rmap && rmap != [NSNull null]) {
         symbolUnicode = rmap[0];
