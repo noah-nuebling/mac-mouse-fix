@@ -248,7 +248,7 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
     ///
     ///     The `CoolSFSymbols.otf` font is registered/unregistered from AppDelegate.m at the time of writing.
     ///
-    /// [Sep 2026] Some of these have regular unicode versions like 􀆨 and 􀆡, while some from `getStringForKeyCode:` like `kVK_Tab` should have SF Symbol (because System Font can't render the unicode we're using)
+    /// [Oct 2026] Some of these have regular unicode versions like 􀆨 and 􀆡, while some from `getStringForKeyCode:` like `kVK_Tab` should have SF Symbol (because System Font can't render the unicode we're using)
     ///     TODO: Unify the lookup mechanism for all: regular unicode if possible, otherwise SFSymbol in `CoolSFSymbols.otf`.
 
     NSDictionary *map = @{
@@ -269,8 +269,8 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
         @(NX_KEYTYPE_PLAY):                   @[@"􀊇", @"playpause"],
         @(NX_KEYTYPE_FAST):                   @[@"􀊋", @"forward"],
         @(NX_KEYTYPE_MUTE):                   @[@"􀊠", @"speaker"],
-        @(NX_KEYTYPE_SOUND_DOWN):            @[@"􀊤", @"speaker.wave.1"],
-        @(NX_KEYTYPE_SOUND_UP):              @[@"􀊨", @"speaker.wave.3"],
+        @(NX_KEYTYPE_SOUND_DOWN):             @[@"􀊤", @"speaker.wave.1"],
+        @(NX_KEYTYPE_SOUND_UP):               @[@"􀊨", @"speaker.wave.3"],
         @(NX_KEYTYPE_ILLUMINATION_DOWN):      @[@"􀇭", @"light.min"],
         @(NX_KEYTYPE_ILLUMINATION_UP):        @[@"􀇮", @"light.max"],
         @(NX_POWER_KEY):                      @[@"􀆨", @"power"],
@@ -362,7 +362,7 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
         case kVK_F20: return @"F20";
 
         case kVK_Space:         return @" Space";
-        case kVK_Escape:        return @" Esc";
+        case kVK_Escape:        return /*@" Esc"*/@"⎋"; /// [Sep 2026] ⎋ is what AppKit uses in MenuBar, so it's familiar.
         case kVK_Delete:        return @"⌫";
         case kVK_ForwardDelete: return @"⌦";
         case kVK_LeftArrow:     return @"◀";
