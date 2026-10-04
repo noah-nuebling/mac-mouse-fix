@@ -281,31 +281,26 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
         ///     - If this unicode character displays as 􀃬 but the ones above display properly, than means that SF Fonts are not registered but `CoolSFSymbols.otf` is.
         ///
         
-//        @"someUnsupportedSFSymbol1":                @[@"􁖎", NSNull.null],
+        //@"someUnsupportedSFSymbol1":                @[@"􁖎", NSNull.null],
     };
     
     NSArray *rmap = map[@(type)];
-    symbolUnicode = rmap[0];
-    symbolIdentifier = rmap[1];
-    
+    if (rmap && rmap != [NSNull null]) {
+        symbolUnicode = rmap[0];
+        symbolIdentifier = rmap[1];
+    }
+
     /// Validate
-    if (runningPreRelease()) {
-        for (NSNumber *typeNS in map) {
-            NSString *fallbackUnicode = map[typeNS][0];
-            BOOL fallbackCharIsSupported = [CoolSFSymbolsFont symbolCharacterIsDisplayable:fallbackUnicode];
-            if (!fallbackCharIsSupported) {
-                DDLogError("Error: Fallback character %@ for SFSymbol %@ is not supported by our CoolSFSymbols font. It will not display correctly unless the user has a font installed that can display SF Symbols. To fix this, generate a new font using the createsfsymbols.py script and replace the CoolSFSymbols.otf font included in the Mac Mouse Fix bundle", fallbackUnicode, map[typeNS][1]);
-                assert(false);
-            }
-        }
+    if (runningPreRelease())
+    for (NSNumber *typeNS in map) if (map[typeNS] != [NSNull null]) {
+        NSString *fallbackUnicode = map[typeNS][0];
+        BOOL fallbackCharIsSupported = [CoolSFSymbolsFont symbolCharacterIsDisplayable: fallbackUnicode];
+        mfassert(fallbackCharIsSupported, @"Error: Fallback character %@ for SFSymbol %@ is not supported by our CoolSFSymbols font. It will not display correctly unless the user has a font installed that can display SF Symbols. To fix this, generate a new font using the createsfsymbols.py script and replace the CoolSFSymbols.otf font included in the Mac Mouse Fix bundle", fallbackUnicode, map[typeNS][1]);
     }
     
     /// Validate
-    if ([symbolIdentifier isEqual: @"questionmark.square"]) {
-        DDLogWarn("No visualization programmed for system event with type: %d, flags: %llu", type, flags);
-        assert(false);
-    }
-    
+    mfassert(![symbolIdentifier isEqual: @"questionmark.square"], @"No visualization programmed for system event with type: %d, flags: %llu", type, flags);
+
     NSAttributedString *keyStr;
     if ((NO)) {
         /// TEST - always use the SF Symbol unicode directly
