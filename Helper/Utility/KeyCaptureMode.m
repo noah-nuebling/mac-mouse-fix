@@ -100,7 +100,7 @@ static bool keyCaptureModePayloadIsValidWithKeyCode(CGKeyCode keyCode, CGEventFl
 
 static bool keyCaptureModePayloadIsValidWithEvent(NSEvent *e, CGEventFlags flags, MFSystemDefinedEventType type) {
 
-    BOOL isSub8 = (e.subtype == 8); /// 8 -> NSEventSubtypeScreenChanged
+    BOOL isSub8 = (e.subtype == 8); /// 8 -> Maybe `NX_SUBTYPE_AUX_CONTROL_BUTTONS` says Opus 5.5
     BOOL isKeyDown = (e.data1 & kMFSystemDefinedEventPressedMask) == 0;
     BOOL secondDataIsNil = e.data2 == -1; /// The power key up event has both data fields be 0
     BOOL typeIsBlackListed = type == kMFSystemEventTypeCapsLock;
