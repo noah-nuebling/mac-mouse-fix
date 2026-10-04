@@ -419,7 +419,7 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
     }
     
     // Validate keystroke
-    if (runningPreRelease())
+    //if (runningPreRelease()) /// Opus says this might be necessary to protect us from UCKeyTranslate outputting unprintable characters, though I can't see any problem. [Sep 2026]
     if (keystroke.length) {
         static NSMutableCharacterSet *validChars = nil;
         if (validChars == nil) {
