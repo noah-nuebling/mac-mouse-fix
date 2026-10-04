@@ -94,6 +94,7 @@ Queste persone hanno speso molto più del prezzo standard e mi hanno offerto un 
 
 **ottobre 2026**
 
+- 🇩🇪&nbsp;Henry&nbsp;Ryssel
 - 🇫🇮&nbsp;Jukka
 - 🇻🇳&nbsp;Đỗ&nbsp;Minh&nbsp;Tuấn
 - 🇺🇸&nbsp;Saskia - "Love it, thank you"

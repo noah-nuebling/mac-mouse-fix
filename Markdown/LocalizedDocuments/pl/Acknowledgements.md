@@ -100,6 +100,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **październik 2026**
 
+- 🇩🇪&nbsp;Henry&nbsp;Ryssel
 - 🇫🇮&nbsp;Jukka
 - 🇻🇳&nbsp;Đỗ&nbsp;Minh&nbsp;Tuấn
 - 🇺🇸&nbsp;Saskia - "Love it, thank you"

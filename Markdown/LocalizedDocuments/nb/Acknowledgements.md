@@ -94,6 +94,7 @@ Disse menneskene brukte mye mer enn standardprisen og spanderte en **fantastisk 
 
 **oktober 2026**
 
+- 🇩🇪&nbsp;Henry&nbsp;Ryssel
 - 🇫🇮&nbsp;Jukka
 - 🇻🇳&nbsp;Đỗ&nbsp;Minh&nbsp;Tuấn
 - 🇺🇸&nbsp;Saskia - "Love it, thank you"
