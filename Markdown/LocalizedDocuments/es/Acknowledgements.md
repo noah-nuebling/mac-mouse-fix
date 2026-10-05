@@ -94,6 +94,7 @@ Estas personas gastaron mucho más que el precio estándar y me invitaron un **B
 
 **octubre 2026**
 
+- 🇸🇪&nbsp;Roger&nbsp;Averdahl
 - 🇺🇸&nbsp;Akash&nbsp;Agarwal - "Cool App"
 - 🇩🇪&nbsp;Henry&nbsp;Ryssel
 - 🇫🇮&nbsp;Jukka

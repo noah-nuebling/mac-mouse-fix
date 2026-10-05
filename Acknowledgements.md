@@ -94,6 +94,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **October 2026**
 
+- 🇸🇪&nbsp;Roger&nbsp;Averdahl
 - 🇺🇸&nbsp;Akash&nbsp;Agarwal - "Cool App"
 - 🇩🇪&nbsp;Henry&nbsp;Ryssel
 - 🇫🇮&nbsp;Jukka
