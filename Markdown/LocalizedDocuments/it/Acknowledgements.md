@@ -68,14 +68,14 @@ Grazie per aver portato Mac Mouse Fix alle persone di tutto il mondo!
 <!-- 
   Old stuff from Money section:
 
-  Thanks so much to everyone who bought me a milkshake and to all 49100+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
+  Thanks so much to everyone who bought me a milkshake and to all 49200+ people who bought Mac Mouse Fix! Ya'll are the bomb. Thanks to you I can spend lots of time on sth I love doing.
   You make me me feel like there are many generous people out there who appreciate the app and want to support it, and thanks to you, I can spend more time on something I love doing. 
 -->
 
 <a name="money"></a> 
 ## 💰 Denaro
 
-Grazie mille a tutti quelli che mi hanno offerto un milkshake e a tutte le **49100+** persone che hanno acquistato Mac Mouse Fix.
+Grazie mille a tutti quelli che mi hanno offerto un milkshake e a tutte le **49200+** persone che hanno acquistato Mac Mouse Fix.
 Grazie a voi, posso dedicare tanto tempo a fare qualcosa che amo. 
 
 Le persone che mi hanno sostenuto spendendo più del prezzo standard per Mac Mouse Fix ricevono qui una menzione speciale:
