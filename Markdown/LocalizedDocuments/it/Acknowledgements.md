@@ -94,6 +94,7 @@ Queste persone hanno speso molto più del prezzo standard e mi hanno offerto un 
 
 **ottobre 2026**
 
+- 🇺🇸&nbsp;Jd&nbsp;Grubbs - "Thank you for keeping up with the needed support as the OS changes!!"
 - 🇸🇪&nbsp;Roger&nbsp;Averdahl
 - 🇺🇸&nbsp;Akash&nbsp;Agarwal - "Cool App"
 - 🇩🇪&nbsp;Henry&nbsp;Ryssel

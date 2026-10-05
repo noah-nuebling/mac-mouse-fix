@@ -100,6 +100,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **październik 2026**
 
+- 🇺🇸&nbsp;Jd&nbsp;Grubbs - "Thank you for keeping up with the needed support as the OS changes!!"
 - 🇸🇪&nbsp;Roger&nbsp;Averdahl
 - 🇺🇸&nbsp;Akash&nbsp;Agarwal - "Cool App"
 - 🇩🇪&nbsp;Henry&nbsp;Ryssel

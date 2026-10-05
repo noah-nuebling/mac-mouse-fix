@@ -95,6 +95,7 @@ Những người đã đóng góp nhiều hơn cả giá thông thường và �
 
 **Tháng 10 2026**
 
+- 🇺🇸&nbsp;Jd&nbsp;Grubbs - "Thank you for keeping up with the needed support as the OS changes!!"
 - 🇸🇪&nbsp;Roger&nbsp;Averdahl
 - 🇺🇸&nbsp;Akash&nbsp;Agarwal - "Cool App"
 - 🇩🇪&nbsp;Henry&nbsp;Ryssel
