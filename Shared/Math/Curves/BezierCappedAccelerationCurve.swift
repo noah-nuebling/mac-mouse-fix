@@ -40,6 +40,16 @@
 /// __Resources__
 /// - Desmos Project for PolynomialCapped curves: https://www.desmos.com/calculator/sdvkwmqnmk?lang=de
 /// - Desmos Project for n-point Bezier curves: https://www.desmos.com/calculator/4cqrr3f05o?lang=de
+///
+/// Update: [Oct 2026]
+///     Opus 5.5 findings:
+///     - Closed representation: `y = max − (max − min) · (1 − t)ⁿ⁻¹, with t = speed / range, from 0 to 1.`
+///     - rawAccel comparison:
+///         - With `n == 2` the curve is linear, (we knew that) with `n -> infinity` this curve becomes the 'natural' curve from rawAccel (aka `NaturalAccelerationCurve.swift`) (Natural curve never reaches y==yMax so you'd have to anchor at y==max*0.99 or something, not sure what we should do there, yet)
+///             - Apparrently, the generalization of this is the `q-exponential, a function from Tsallis statistics`, which might make it easier to have user-friendly dials for the curve, said Opus.
+///         - You can also fit the 'linear + gain' curve from rawAccel really closely to this
+///         - Opus says 'natural' and 'linear + gain' are the most popular in rawAccel, so that's good.
+///     - Source: https://claude.ai/share/40c4333a-3101-434e-8a0b-cb0437d50f4e (and the conversation after where it found the natural curve unification)
 
 import Foundation
 
