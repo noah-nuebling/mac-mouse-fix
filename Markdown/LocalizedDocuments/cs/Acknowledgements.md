@@ -94,6 +94,7 @@ Tito lidé utratili mnohem víc, než je standardní cena, a pohostili mě **Neu
 
 **říjen 2026**
 
+- 🇸🇪&nbsp;Joakim&nbsp;Lööv - "Very reasonable price for an excellent product"
 - 🇫🇮&nbsp;Anna&nbsp;V&nbsp;
 - 🇻🇳&nbsp;Hoang&nbsp;Vu&nbsp;Phong
 - 🇺🇸&nbsp;Jd&nbsp;Grubbs - "Thank you for keeping up with the needed support as the OS changes!!"
