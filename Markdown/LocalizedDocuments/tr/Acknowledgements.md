@@ -95,6 +95,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Ekim 2026**
 
+- 🇫🇮&nbsp;Anna&nbsp;V&nbsp;
 - 🇻🇳&nbsp;Hoang&nbsp;Vu&nbsp;Phong
 - 🇺🇸&nbsp;Jd&nbsp;Grubbs - "Thank you for keeping up with the needed support as the OS changes!!"
 - 🇸🇪&nbsp;Roger&nbsp;Averdahl
