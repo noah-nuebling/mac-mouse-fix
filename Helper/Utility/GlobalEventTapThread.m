@@ -27,7 +27,7 @@
                 Problem: deadlocks
                     Overviewiew: Even if per module `dispatch_queues` pretty well protect state from becoming invalid, when you have a bunch of them
                         interacting with `dispatch_sync` (necessary for reading anything from another queue) thing start deadlocking.
-                        As far as I was aware, there was no good way provided by GCD to recover from this. (`dispatch_sync` doesn't even support timeouts, though doing timeouts right might also be really hard)
+                        As far as I was aware, there was no good way provided by GCD to recover from this. (`dispatch_sync` doesn't even support timeouts, though correctly recovering from timeouts might also be hard)
                     Practical memories:
                         I remember spending months to get twoFingerSwipe to work without constant deadlock after coding it up when making MMF 3.0.0.
                         IIRC any later refactor attempt in the Helper's core event processing was scary because it would probably change timing in way that made things deadlock again.
@@ -35,11 +35,11 @@
                         General hum of people reporting 'scrolling stopped working' which might have something to do with this (but maybe all of it was also DisplayLink.m failing to start and stuff, I think reports stopped after adding the retry-loop, but not sure.)
                 Problem: Parallelization doesn't help
                     The mouse-event processing in the helper is inherently pretty serial, I think, putting everything on different queue, won't deliver result much quicker, I'm pretty sure.
-                    The CPU usage of the helper is low anyways - the goal is keeping things responsive - our part in that is just processing the events faster than the display frame-period. Which we're super super easily doing (I'm pretty sure)
+                    The CPU usage of the helper is low anyways - the goal is keeping things responsive - our part in that is just processing the events faster than the display frame-period. Which we're super super easily doing on a single thread (I'm pretty sure)
             Why *dispatch queues* instead of threads are bad idea?
                 (like before  'No more dispatch queues' refactor)
                 Problem: No thread priority
-                    My theory for how MMF Helper can cause framedrops / unresponsiveness at all (even though it uses little CPU), is when system is under load and deprioritizes helper to keep the foreground app responsive (but then actually makes forground app less responsive, because the mouse driver is being throttled).
+                    My theory for how MMF Helper can cause framedrops / unresponsiveness at all (even though it uses little CPU), is when system is under load and deprioritizes helper to keep the foreground app responsive (but then actually makes forground app less responsive, because the mouse driver is being throttled, which everything depends on).
                     -> If you use normal threads instead of GCD, you can tell kernel to prioritize thread with `thread_set_policy` - pretty sure this will help much more for responsiveness. (Will implement soon in GlobalEventTapThread) @noGCDCleanup
                 Dispatch queues have less powerful primitives:
                     You can't even check which `dispatch_queue` you're on. `dispatch_sync` can't time out. Thread primitives are more powerful (Maybe I didn't understand GCD properly, but to be fair it's also more obscure)
@@ -48,8 +48,8 @@
                     As far as I'm aware, the only thing that `dispatch_queues` do better than normal threads, is they are faster and cheaper to create/destroy (they are green threads) ... however,
                         - NSThread is already really fast and fine for any reasonable amount of threads for a GUI app or a mouse driver.
                         - `dispatch_queue` still has weird edge case, when you wait on too many queues, you can get thread explosion.
-                        - If your work is CPU bound (not just waiting for IO) then having more queues/threads than CPU cores won't help anyways.
-                        -> Why the heck is this being promoted for GUI app developers.
+                        - If your work is CPU bound (not just waiting for IO) then having more queues/threads than CPU cores won't help anyways. (That many threads is basically free with NSThread)
+                        -> Why the heck is this being promoted for GUI app developers
             Why 2 threads? (GlobalEventTapThread and MainThread)
                 The only thing that I think could contend CPU with the main event processing is the ScreenDrawer.swift's AppKit drawing driven through twoFingerSwipe -> PointerFreeze > ScreenDrawer.
                     -> This is pretty expensive since it's AppKit (I'm pretty sure [Sep 2026]), and it HAS to be on the mainThread.
@@ -65,7 +65,7 @@
         Note about moving things off of GlobalEventTapThread, if necessary:
             - Should only do this if it's pretty clearly causing some performance issue.
             - Should maybe make core modules accessed by multiple threads threadsafe with locks instead of isolating to a thread. (Would prevent all the threadhops / deadlocks potentially)
-                -> Preliminary analysis looked like locking is pretty doable with Config.m and SecureStorage.swift (leave the Config-did-change update callouts out of the critical zone and stuff)
+                -> Preliminary analysis looked like locking is pretty doable inside Config.m and SecureStorage.swift (leave the Config-did-change update callouts out of the critical zone and stuff)
  */
 
 /// We've created this so that we don't have to use the main runLoop for all eventTaps

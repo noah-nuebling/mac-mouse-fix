@@ -40,7 +40,7 @@ void set_thread_priority(int priority, bool round_robin);
         - You can omit checks for a module, when you can see that nothing calls out in a way that could recurse during invalid-state window of an update. I think that's most code in MMF.
         - You can annotate any callout with `allowNestedReadOrWrite()` when it appears at the very start / end of an update function (before the update reads anything it relies on, or after its last write).
         - You can annotate any callout to another update function with `allowNestedReadOrWrite()` when the calling update function calls the nested one *directly* - then it's clearly intentional (We're trying to catch the accidental ones, that happen indirectly through recursion)
-        - For non trivial cases of `allowNestedReadOrWrite()` explain where the call-tree re-enters the module, and maybe why that's ok here. (Non trivial cases, re-enter module indirectly through non-obvious recursion, and in the middle of another update of the same module.)
+        - For non trivial cases of `allowNestedReadOrWrite()` explain where the call-tree re-enters the module, and maybe why that's ok here. (Non trivial cases: re-enter module indirectly through non-obvious recursion, and in the middle of another update of the same module.)
         - Every entry point to module that touches the state needs `readsState()` / `readsAndWritesState()` annotation. (Otherwise callouts can come back in without the tracker seeing it.)
             - Private helpers don't need `readsState()` / `readsAndWritesState()` annotation (they can only be called by entry points - where readsState() or readsAndWritesState() guarantees are already held)
         - Almost always use `readsAndWritesState()` (not `readsState()`):
