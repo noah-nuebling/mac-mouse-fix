@@ -94,6 +94,7 @@ Disse menneskene brukte mye mer enn standardprisen og spanderte en **fantastisk 
 
 **oktober 2026**
 
+- 🇨🇳&nbsp;Zekai&nbsp;Liu
 - 🇸🇪&nbsp;Joakim&nbsp;Lööv - "Very reasonable price for an excellent product"
 - 🇫🇮&nbsp;Anna&nbsp;V&nbsp;
 - 🇻🇳&nbsp;Hoang&nbsp;Vu&nbsp;Phong

@@ -95,6 +95,7 @@ Những người đã đóng góp nhiều hơn cả giá thông thường và �
 
 **Tháng 10 2026**
 
+- 🇨🇳&nbsp;Zekai&nbsp;Liu
 - 🇸🇪&nbsp;Joakim&nbsp;Lööv - "Very reasonable price for an excellent product"
 - 🇫🇮&nbsp;Anna&nbsp;V&nbsp;
 - 🇻🇳&nbsp;Hoang&nbsp;Vu&nbsp;Phong

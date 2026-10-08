@@ -94,6 +94,7 @@ Mac Mouse Fixを世界中の人々に届けていただき、ありがとうご�
 
 **10月 2026**
 
+- 🇨🇳&nbsp;Zekai&nbsp;Liu
 - 🇸🇪&nbsp;Joakim&nbsp;Lööv - "Very reasonable price for an excellent product"
 - 🇫🇮&nbsp;Anna&nbsp;V&nbsp;
 - 🇻🇳&nbsp;Hoang&nbsp;Vu&nbsp;Phong
