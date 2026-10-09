@@ -15,6 +15,7 @@
 #import "Config.h"
 #import "Scroll.h"
 #import "ButtonInputReceiver.h"
+#import "LogitechHIDPP.h"
 #import "Constants.h"
 #import "ModifiedDrag.h"
 #import "Modifiers.h"
@@ -189,6 +190,7 @@
 
             [ButtonInputReceiver load_Manual];
             [DeviceManager load_Manual];
+            [LogitechHIDPP load_Manual];
             [Scroll load_Manual];
 
             /// NOTE: v Moved these 2 down, to prevent crashes introduced by moving SwitchMaster away from ReactiveSwift to simple callbacks.

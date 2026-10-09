@@ -59,6 +59,25 @@
 
 #pragma mark - App under pointer
 
++ (BOOL)appUnderMousePointerIsChromium {
+    
+    /// Using `containsString` to also catch other release channels like "com.google.Chrome.canary" . Could perhaps use -hasPrefix: instead.
+    /// [Aug 2025] Also see the 'Universal Back and Forward' stuff in Actions.m
+    /// TODO: Add other Chromium browsers with the same behaviour.
+    /// Notes:
+    /// - Blisk (org.blisk.Blisk) and Colibri (co.opqr.colibri) don't seem to support pinch to zoom.
+    
+    NSString *bundleID = [HelperUtility appUnderMousePointerWithEvent:NULL].bundleIdentifier;
+    if (bundleID == nil) return NO;
+    return [bundleID containsString:@"com.google.Chrome"]
+        || [bundleID containsString:@"org.chromium.Chromium"]
+        || [bundleID containsString:@"company.thebrowser.Browser"] /// Arc browser
+        || [bundleID containsString:@"com.operasoftware.Opera"]
+        || [bundleID containsString:@"com.microsoft.edgemac"]
+        || [bundleID containsString:@"com.vivaldi.Vivaldi"]
+        || [bundleID containsString:@"com.brave.Browser"];
+}
+
 + (NSRunningApplication * _Nullable)appUnderMousePointerWithEvent:(CGEventRef _Nullable)event {
     
     ///

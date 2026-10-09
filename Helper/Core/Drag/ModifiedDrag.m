@@ -39,6 +39,7 @@
 
 #import "ModifiedDragOutputThreeFingerSwipe.h"
 #import "ModifiedDragOutputTwoFingerSwipe.h"
+#import "ModifiedDragOutputZoom.h"
 #import "ModifiedDragOutputFakeDrag.h"
 #import "ModifiedDragOutputAddMode.h"
 
@@ -196,6 +197,7 @@ static ModifiedDragState _drag;
     id<ModifiedDragOutputPlugin> p;
     if      ([type isEqualToString:kMFModifiedDragTypeThreeFingerSwipe]) p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputThreeFingerSwipe.class;
     else if ([type isEqualToString:kMFModifiedDragTypeTwoFingerSwipe])   p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputTwoFingerSwipe.class;
+    else if ([type isEqualToString:kMFModifiedDragTypeZoom])             p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputZoom.class;
     else if ([type isEqualToString:kMFModifiedDragTypeFakeDrag])         p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputFakeDrag.class;
     else if ([type isEqualToString:kMFModifiedDragTypeAddModeFeedback])  p = (id<ModifiedDragOutputPlugin>)ModifiedDragOutputAddMode.class;
     else                                                                 assert(false);

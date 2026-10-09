@@ -1183,35 +1183,16 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         /// HACK:
         ///     Chromium browsers need a ton of zooming deltas before they actually start zooming. So we send a bunch of deltas right away to make things more responsive.
         ///     Another way to combat this would be to only send the `end` event when the user releases the modifier.
-        if (eventPhase == kIOHIDEventPhaseBegan) {
+        if (eventPhase == kIOHIDEventPhaseBegan && [HelperUtility appUnderMousePointerIsChromium]) {
             
-            NSString *bundleID = [HelperUtility appUnderMousePointerWithEvent:NULL].bundleIdentifier;
+            [TouchSimulator postMagnificationEventWithMagnification:eventDelta phase:kIOHIDEventPhaseBegan]; /// First delta seems to be ignored
+            eventPhase = kIOHIDEventPhaseChanged;
             
-            if (bundleID != nil) {
-                if ([bundleID containsString:@"com.google.Chrome"]
-                    || [bundleID containsString:@"org.chromium.Chromium"]
-                    || [bundleID containsString:@"company.thebrowser.Browser"] /// Arc browser
-                    || [bundleID containsString:@"com.operasoftware.Opera"]
-                    || [bundleID containsString:@"com.microsoft.edgemac"]
-                    || [bundleID containsString:@"com.vivaldi.Vivaldi"]
-                    || [bundleID containsString:@"com.brave.Browser"]) {
-                    
-                    /// Using `containsString` to also catch other release channels like "com.google.Chrome.canary" . Could perhaps use -hasPrefix: instead.
-                    /// [Aug 2025] Also see the 'Universal Back and Forward' stuff in Actions.m
-                    /// TODO: Add other Chromium browsers with the same behaviour.
-                    /// Notes:
-                    /// - Blisk (org.blisk.Blisk) and Colibri (co.opqr.colibri) don't seem to support pinch to zoom.
-                    
-                    [TouchSimulator postMagnificationEventWithMagnification:eventDelta phase:kIOHIDEventPhaseBegan]; /// First delta seems to be ignored
-                    eventPhase = kIOHIDEventPhaseChanged;
-                    
-                    assert(eventDelta != 0);
-                    if (mfsign(eventDelta) > 0) {
-                        eventDelta += 380/800.0;
-                    } else {
-                        eventDelta -= 250/800.0;
-                    }
-                }
+            assert(eventDelta != 0);
+            if (mfsign(eventDelta) > 0) {
+                eventDelta += 380/800.0;
+            } else {
+                eventDelta -= 250/800.0;
             }
         }
         

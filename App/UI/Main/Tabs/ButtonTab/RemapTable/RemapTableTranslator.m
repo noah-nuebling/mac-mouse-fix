@@ -124,6 +124,13 @@ static NSArray *getDragEffectsTable() {
                   kMFModifiedDragDictKeyType: kMFModifiedDragTypeTwoFingerSwipe,
             }
         },
+        @{
+            @"ui": MFLocalizedString(@"scroll-effect.zoom", @""),
+            @"tool": MFLocalizedString(@"scroll-effect.zoom.hint", @""),
+            @"dict": @{
+                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeZoom,
+            }
+        },
 //        separatorEffectsTableEntry(),
 //        @{
 ////          @"ui": [NSString stringWithFormat:@"%@ Click and Drag", [UIStrings getButtonString:3]],

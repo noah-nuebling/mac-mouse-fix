@@ -16,6 +16,7 @@
 #import "ModificationUtility.h"
 #import "HelperUtility.h"
 #import "GestureScrollSimulator.h"
+#import "LogitechHIDPP.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 
 @implementation ButtonInputReceiver
@@ -143,6 +144,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     ///     - Some time after moving to the newMethod I deleted the old method. You can still find it in ButtonInputReceiver_old.m and in the the MMF 1 and MMF 2 source. We might have moved away from it under MMF 2 as well to fix Ventura problems, not sure.
 
     IOHIDDeviceRef iohidDevice = CGEventGetSendingDevice(event);
+    if (iohidDevice == NULL) iohidDevice = [LogitechHIDPP sendingDeviceForEvent:event];
     Device *device = iohidDevice == NULL ? nil : [DeviceManager attachedDeviceWithIOHIDDevice:iohidDevice];
     
     /// Filter out events from sources other than attached devices

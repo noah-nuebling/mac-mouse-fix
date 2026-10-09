@@ -46,6 +46,7 @@
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "AccessibilityCheck.h"
 #import "KeyCaptureMode.h"
+#import "LogitechHIDPP.h"
 #endif
 
 /// This class is used to communicate between the MainApp and the Helper.
@@ -240,6 +241,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
             [Config loadFileAndUpdateStates];
         }
         xxx(@"terminate") {
+            [LogitechHIDPP restoreDevices];
             MFCFRunLoopPerform(CFRunLoopGetMain(), nil, ^{
                 [NSApp terminate: NULL];
                 //[NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]]; /// This creates an infinite loop or something? The statement below is never executed.

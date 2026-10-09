@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// App under pointer
 + (NSRunningApplication * _Nullable)appUnderMousePointerWithEvent:(CGEventRef _Nullable)event;
++ (BOOL)appUnderMousePointerIsChromium;
 
 /// Open main app
 + (void)openMainApp;

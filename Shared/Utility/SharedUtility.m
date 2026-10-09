@@ -131,8 +131,9 @@ static void _cfRunLoopTimerCallback(CFRunLoopTimerRef timer, void *info) {
 }
 void MFCFRunLoopPerform_delay(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, double delayInSeconds, void (^_Nonnull workload)(void)) {
     if (delayInSeconds <= 0) return MFCFRunLoopPerform(rl, modes, workload);
+    id heapWorkload = [workload copy]; /// Callers may pass a stack block. CFRetain doesn't move it to the heap.
     CFRunLoopTimerContext ctx = {
-        .info = (__bridge void *)workload,
+        .info = (__bridge void *)heapWorkload,
         .release = CFRelease, .retain = CFRetain, .copyDescription = CFCopyDescription,
     };
     CFRunLoopTimerRef timer = CFRunLoopTimerCreate(kCFAllocatorDefault, /*fireDate*/CFAbsoluteTimeGetCurrent() + delayInSeconds, /*interval*/0, /*flags*/0, /*order*/0, _cfRunLoopTimerCallback, &ctx);

@@ -333,6 +333,7 @@
 		4FEBE6632E456DA2005FF70E /* CAAnimationCurveUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEBE6612E456DA2005FF70E /* CAAnimationCurveUtility.m */; };
 		4FEC9668278BBDC600548604 /* NSColor+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FEC9667278BBDC600548604 /* NSColor+Additions.m */; };
 		4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0254D27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m */; };
+		A1C0DE012FA0000100000011 /* ModifiedDragOutputZoom.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C0DE012FA0000100000012 /* ModifiedDragOutputZoom.m */; };
 		4FF0255127B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0255027B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m */; };
 		4FF0255427B007FC00923107 /* ModifiedDragOutputFakeDrag.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0255327B007FC00923107 /* ModifiedDragOutputFakeDrag.m */; };
 		4FF0255727B0091700923107 /* ModifiedDragOutputAddMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF0255627B0091700923107 /* ModifiedDragOutputAddMode.m */; };
@@ -369,6 +370,7 @@
 		4FF6668325F2C93A00689B77 /* HelperAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FF6661025F2C93A00689B77 /* HelperAssets.xcassets */; };
 		4FF6668525F2C93A00689B77 /* Modifiers.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661725F2C93A00689B77 /* Modifiers.m */; };
 		4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */; };
+		A1C0DE012FA0000100000001 /* LogitechHIDPP.m in Sources */ = {isa = PBXBuildFile; fileRef = A1C0DE012FA0000100000002 /* LogitechHIDPP.m */; };
 		4FF6668925F2C93A00689B77 /* Scroll.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662125F2C93A00689B77 /* Scroll.m */; };
 		4FF6668B25F2C93A00689B77 /* CubicUnitBezier.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662425F2C93A00689B77 /* CubicUnitBezier.m */; };
 		4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF6662D25F2C93A00689B77 /* SmoothScroll_old_.m */; };
@@ -2574,6 +2576,8 @@
 		4FEC9667278BBDC600548604 /* NSColor+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSColor+Additions.m"; sourceTree = "<group>"; };
 		4FF0254C27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifiedDragOutputThreeFingerSwipe.h; sourceTree = "<group>"; };
 		4FF0254D27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifiedDragOutputThreeFingerSwipe.m; sourceTree = "<group>"; };
+		A1C0DE012FA0000100000013 /* ModifiedDragOutputZoom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifiedDragOutputZoom.h; sourceTree = "<group>"; };
+		A1C0DE012FA0000100000012 /* ModifiedDragOutputZoom.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifiedDragOutputZoom.m; sourceTree = "<group>"; };
 		4FF0254F27B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifiedDragOutputTwoFingerSwipe.h; sourceTree = "<group>"; };
 		4FF0255027B0033000923107 /* ModifiedDragOutputTwoFingerSwipe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModifiedDragOutputTwoFingerSwipe.m; sourceTree = "<group>"; };
 		4FF0255227B007FC00923107 /* ModifiedDragOutputFakeDrag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModifiedDragOutputFakeDrag.h; sourceTree = "<group>"; };
@@ -2634,6 +2638,8 @@
 		4FF6661C25F2C93A00689B77 /* ButtonTriggerGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonTriggerGenerator.h; sourceTree = "<group>"; };
 		4FF6661D25F2C93A00689B77 /* ButtonTriggerHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonTriggerHandler.h; sourceTree = "<group>"; };
 		4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonInputReceiver.m; sourceTree = "<group>"; };
+		A1C0DE012FA0000100000003 /* LogitechHIDPP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogitechHIDPP.h; sourceTree = "<group>"; };
+		A1C0DE012FA0000100000002 /* LogitechHIDPP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogitechHIDPP.m; sourceTree = "<group>"; };
 		4FF6662025F2C93A00689B77 /* SmoothScroll_old_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmoothScroll_old_.h; sourceTree = "<group>"; };
 		4FF6662125F2C93A00689B77 /* Scroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scroll.m; sourceTree = "<group>"; };
 		4FF6662325F2C93A00689B77 /* SmoothScroll.m (old) */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "SmoothScroll.m (old)"; sourceTree = "<group>"; };
@@ -7578,6 +7584,15 @@
 			path = ThreeFingerSwipe;
 			sourceTree = "<group>";
 		};
+		A1C0DE012FA0000100000014 /* Zoom */ = {
+			isa = PBXGroup;
+			children = (
+				A1C0DE012FA0000100000013 /* ModifiedDragOutputZoom.h */,
+				A1C0DE012FA0000100000012 /* ModifiedDragOutputZoom.m */,
+			);
+			path = Zoom;
+			sourceTree = "<group>";
+		};
 		4FF0255927B00FA400923107 /* TwoFingerSwipe */ = {
 			isa = PBXGroup;
 			children = (
@@ -7840,6 +7855,8 @@
 			children = (
 				4FF6661B25F2C93A00689B77 /* ButtonInputReceiver.h */,
 				4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */,
+				A1C0DE012FA0000100000003 /* LogitechHIDPP.h */,
+				A1C0DE012FA0000100000002 /* LogitechHIDPP.m */,
 				4FF8C8A22895AACB007EC31F /* Buttons.swift */,
 				4FF8C89928955490007EC31F /* ClickCycle.swift */,
 				4FE479DF2933C87A00B75E9B /* ButtonModifiers.h */,
@@ -7906,6 +7923,7 @@
 				4FF6663725F2C93A00689B77 /* ModifiedDrag.h */,
 				4FF6663825F2C93A00689B77 /* ModifiedDrag.m */,
 				4FF0255827B00F9700923107 /* ThreeFingerSwipe */,
+				A1C0DE012FA0000100000014 /* Zoom */,
 				4FF0255927B00FA400923107 /* TwoFingerSwipe */,
 				4FF0255A27B00FAF00923107 /* FakeDrag */,
 				4FF0255B27B00FBA00923107 /* AddMode */,
@@ -8828,6 +8846,7 @@
 				4FA625582DA97CCE004F46DA /* MFDataClass.m in Sources */,
 				4FA9733B293F7643002B5C24 /* ScrollSpeedupCurve.swift in Sources */,
 				4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */,
+				A1C0DE012FA0000100000011 /* ModifiedDragOutputZoom.m in Sources */,
 				4F58FE022C56DE9B00926A00 /* Logging.swift in Sources */,
 				4F428CE62CD3D608006322AB /* MacAddress.m in Sources */,
 				4F44FF042606D73D00926A5E /* MFMessagePort.m in Sources */,
@@ -8895,6 +8914,7 @@
 				4F4C737D2C4FB06E001D97C3 /* NSString+Steganography.m in Sources */,
 				4FFA4E4628B7D2960062A1FE /* Replace.swift in Sources */,
 				4FF6668825F2C93A00689B77 /* ButtonInputReceiver.m in Sources */,
+				A1C0DE012FA0000100000001 /* LogitechHIDPP.m in Sources */,
 				4FBC83432DAFB28B00354981 /* MFBenchmark.m in Sources */,
 				4FBC83452DAFB28B00354981 /* MFLoop.m in Sources */,
 				4FBC83462DAFB28B00354981 /* PrivateFunctions.m in Sources */,
