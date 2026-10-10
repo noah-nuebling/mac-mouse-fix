@@ -580,8 +580,24 @@ static void _loadAndRepair(void) {
                     
                     currentVersion = 24;
                     
+                } else if (currentVersion == 24) {
+
+                    /// 24 -> 25
+                    ///     Split Scroll.reverseDirection into reverseDirectionVertical and reverseDirectionHorizontal
+
+                    log(Info, "Upgrading configVersion from 24 to 25...");
+
+                    NSNumber *oldReverse = (NSNumber *)config(@"Scroll.reverseDirection");
+                    if (oldReverse != nil) {
+                        setConfig(@"Scroll.reverseDirectionVertical", oldReverse);
+                        setConfig(@"Scroll.reverseDirectionHorizontal", oldReverse);
+                        removeFromConfig(@"Scroll.reverseDirection");
+                    }
+
+                    currentVersion = 25;
+
                 } else {
-                    
+
                     log(Info, "No upgrades from configVersion %d. Target is %d.", currentVersion, targetVersion);
                     goto replace;
                 }
