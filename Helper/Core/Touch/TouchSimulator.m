@@ -210,9 +210,13 @@ static NSMutableDictionary *_swipeInfo;
         if (phase == kIOHIDEventPhaseEnded || phase == kIOHIDEventPhaseCancelled) {
             
             HIDEvent *childEvent = [[HIDEvent alloc] initWithType: kIOHIDEventTypeVelocity timestamp: 0 senderID: 0];
+
+            /// Apply the same direction transform as the HID progress above.
+            /// Otherwise, inverted gestures exit with velocity opposing their last movement.
+            double velocity = invertedFromDevice ? -exitSpeed : exitSpeed;
             
-            [childEvent setDoubleValue: exitSpeed forField: kIOHIDEventFieldVelocityX];
-            [childEvent setDoubleValue: exitSpeed forField: kIOHIDEventFieldVelocityY];
+            [childEvent setDoubleValue: velocity  forField: kIOHIDEventFieldVelocityX];
+            [childEvent setDoubleValue: velocity  forField: kIOHIDEventFieldVelocityY];
             [childEvent setDoubleValue: 0.0       forField: kIOHIDEventFieldVelocityZ];
             
             [hidEvent appendEvent: childEvent];
