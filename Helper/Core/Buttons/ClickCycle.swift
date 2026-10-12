@@ -222,14 +222,14 @@ class ClickCycle: NSObject {
                 state?.upTimer.invalidate()
                 state?.downTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, runLoop: GlobalEventTapThread.runLoop(), block: { timer in
                     /// Callback
+                    if self.state == nil { return } /// [Oct 2026] Just saw this be nil and crash right after launching. Didn't look into what happened. Must be rare.
                     var c: [UnconditionalReleaseCallback] = []
                     triggerCallback(.hold, self.state!.clickLevel, device, button, &c)
-                    if !c.isEmpty {
-                        self.releaseCallbacks[button, default: []].append(contentsOf: c)
-                    }
+                    if !c.isEmpty { self.releaseCallbacks[button, default: []].append(contentsOf: c) }
                     /// Update state
-                    self.state?.pressState = .held
-                    self.state?.upTimer.invalidate()
+                    if self.state == nil { return } /// `triggerCallback` may have killed the state [Oct 2026]
+                    self.state!.pressState = .held
+                    self.state!.upTimer.invalidate()
                 })
                 /// Not sure whether to start started upTimer on mouseDown or up
                 state?.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.26, repeats: false, runLoop: GlobalEventTapThread.runLoop(), block: { timer in
