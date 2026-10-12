@@ -11,6 +11,7 @@
 #import "Constants.h"
 #import <Cocoa/Cocoa.h>
 #import "SharedUtility.h"
+#import "Logging.h"
 
 @implementation Locator
 
@@ -76,15 +77,15 @@ static NSURL *_configURL;
     
     /// Use config instead of defaults. There's no good reason to use defaults
     assert(false);
-    
-    if (runningMainApp()) {
+
+    #if IS_MAIN_APP
         return NSUserDefaults.standardUserDefaults;
-    } else if (runningHelper()) {
+    #elif IS_HELPER_APP
         return [[NSUserDefaults alloc] initWithSuiteName:kMFBundleIDApp];
-    } else {
+    #else
         assert(false);
         exit(1);
-    }
+    #endif
 }
 
 #pragma mark - Init
@@ -106,23 +107,23 @@ static NSURL *_configURL;
 + (void)getOriginalBundlesForMainApp:(NSBundle *__autoreleasing *)mainAppBundle helper:(NSBundle *__autoreleasing *)helperBundle {
     NSBundle *thisBundle = NSBundle.mainBundle;
     
-    if (runningMainApp()) {
+    #if IS_MAIN_APP
         NSString *helperPath = [thisBundle.bundleURL URLByAppendingPathComponent:kMFRelativeHelperAppPath].path;
         *mainAppBundle = thisBundle;
         *helperBundle = [NSBundle bundleWithPath:helperPath];
-    } else if (runningHelper()) {
+    #elif IS_HELPER
         NSString *mainAppPath = [thisBundle.bundleURL URLByAppendingPathComponent:kMFRelativeMainAppPathFromHelperBundle].path;
         *mainAppBundle = [NSBundle bundleWithPath:mainAppPath];
         *helperBundle = thisBundle;
-//    } else if (SharedUtility.runningAccomplice) {
-//        /// Accomplice bundle doesn't have url only bundle path
-//        NSString *mainAppPath =  [thisBundle.bundlePath stringByAppendingPathComponent:kMFRelativeMainAppPathFromAccompliceFolder];
-//        NSString *helperPath = [mainAppPath stringByAppendingPathComponent:kMFRelativeHelperAppPath];
-//        *mainAppBundle = [NSBundle bundleWithPath:mainAppPath];
-//        *helperBundle = [NSBundle bundleWithPath:helperPath];
-    } else {
+    //} else if (SharedUtility.runningAccomplice) {
+    //    /// Accomplice bundle doesn't have url only bundle path
+    //    NSString *mainAppPath =  [thisBundle.bundlePath stringByAppendingPathComponent:kMFRelativeMainAppPathFromAccompliceFolder];
+    //    NSString *helperPath = [mainAppPath stringByAppendingPathComponent:kMFRelativeHelperAppPath];
+    //    *mainAppBundle = [NSBundle bundleWithPath:mainAppPath];
+    //    *helperBundle = [NSBundle bundleWithPath:helperPath];
+    #else
         [NSException raise:@"UnknownCallerException" format:@"No handling code for caller at: %@", thisBundle.bundlePath];
-    }
+    #endif
 }
 
 static NSURL *_lastValidMainAppFRURL;

@@ -271,7 +271,7 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     }
 
     /// Debug
-    if (runningPreRelease()) {
+    if (runningDebugMode()) {
 
         static double tsLast = 0;
         double ts = CACurrentMediaTime();
@@ -382,7 +382,7 @@ static void processPendingCoalescableEventsOncePerFrame(void) {
         _drag.lastVBLTimeThatProcessedCoalescableEvents = lastVBLTime;
         processPendingCoalescableEvents();
 
-        if (runningPreRelease()) {
+        if (runningDebugMode()) {
             static double lastTS = 0;
             double ts = CACurrentMediaTime();
             if (lastTS) DDLogDebug("coalescingTimerCallback: invocation delta: %.2fms" ,(ts-lastTS)*1000.0);

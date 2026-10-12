@@ -310,7 +310,7 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
     }
 
     /// Validate
-    if (runningPreRelease())
+    if (runningDebugMode())
     for (NSNumber *typeNS in map) if (map[typeNS] != [NSNull null]) {
         NSString *fallbackUnicode = map[typeNS][0];
         BOOL fallbackCharIsSupported = [CoolSFSymbolsFont symbolCharacterIsDisplayable: fallbackUnicode];
@@ -419,7 +419,7 @@ static NSAttributedString *getStringForSystemDefinedEventOrSymbolicHotkey(int ty
     }
     
     // Validate keystroke
-    //if (runningPreRelease()) /// Opus says this might be necessary to protect us from UCKeyTranslate outputting unprintable characters, though I can't see any problem. [Sep 2026]
+    //if (runningDebugMode()) /// Opus says this might be necessary to protect us from UCKeyTranslate outputting unprintable characters, though I can't see any problem. [Sep 2026]
     if (keystroke.length) {
         static NSMutableCharacterSet *validChars = nil;
         if (validChars == nil) {

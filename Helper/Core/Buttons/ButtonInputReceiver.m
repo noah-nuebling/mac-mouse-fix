@@ -93,7 +93,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     }
 
     /// Debug
-    if (runningPreRelease()) {
+    if (runningDebugMode()) {
         @try {
             NSUInteger buttonNumber = CGEventGetIntegerValueField(event, kCGMouseEventButtonNumber) + 1;
             if (buttonNumber != 1 && buttonNumber != 2) { /// Don't print left and right click cause that'll clog the logs

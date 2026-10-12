@@ -58,7 +58,7 @@
             nowarn_pop()
         }
         
-        if ((NO) /*runningPreRelease()*/) {
+        if ((NO) /*runningDebugMode()*/) {
             
             /// Setup logging  file
             /// Copied this from https://github.com/CocoaLumberjack/CocoaLumberjack/blob/master/Documentation/GettingStarted.md
@@ -76,3 +76,52 @@
 }
 
 @end
+
+#import "Locator.h"
+
+bool runningPrereleaseBuild(void) {
+
+    #if IS_XC_TEST
+        assert(false);
+        return true;
+    #else
+
+        /// Caching optimization
+        /// Rationale: (From back before most usage sites were replaced with runningDebugMode() [Oct 2026]):
+        ///     Caching this seems excessive but it's called a lot and actually has a huge performance impact. We also moved to from ObjC to being a pure C function because that improves performance of the app by a few percentage points.
+        static BOOL _isCached = NO;
+        static BOOL _runningPrereleaseBuild = NO;
+
+        if (_isCached) {
+
+            return _runningPrereleaseBuild;
+
+        } else{
+            /// Check debug configuration
+
+            #if DEBUG
+                _runningPrereleaseBuild = YES;
+            #endif
+
+            /// Check app name for 'beta' or 'alpha'
+            ///     We've started shipping release builds as betas because under MMF 3 using Swift, the debug builds are very very slow.
+            ///     Notes:
+            ///     - Why are we using the 'localized' search? What does that do?
+            ///     - Attention! This makes the version names magic. Make sure you always include 'beta' or 'alpha' in the prerelease version names!
+
+            if (!_runningPrereleaseBuild) {
+
+                NSString *versionName = Locator.bundleVersionShort;
+                if ([versionName localizedCaseInsensitiveContainsString: @"beta"] || [versionName localizedCaseInsensitiveContainsString: @"alpha"]) {
+                    _runningPrereleaseBuild = YES;
+                }
+            }
+
+            /// Update flag
+            _isCached = YES;
+
+            /// Return
+            return _runningPrereleaseBuild;
+        }
+    #endif
+}

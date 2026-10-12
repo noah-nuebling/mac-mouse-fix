@@ -247,8 +247,8 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
 
             /// Clean up
             ///     Unhide mouse pointer
-            if (!runningPreRelease()) {
-                [PointerFreeze unfreeze]; /// Only in release so the crashes are more noticable in prereleases
+            if (!runningDebugMode()) {
+                [PointerFreeze unfreeze]; /// Only in release so the crashes are more noticable in debug mode
             }
 
             /// Crash

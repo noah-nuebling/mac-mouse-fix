@@ -275,7 +275,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     static DriverUnsuspender unsuspendDrivers = ^{}; /// This is old stuff that should be removed I think [Jun 2 2025]
     
     /// Debug
-    if (runningPreRelease()) { /// if-statement because hidEvent.description is very slow
+    if (runningDebugMode()) { /// if-statement because hidEvent.description is very slow
         
         /// Get HIDEvent
         HIDEvent *hidEvent = CGEventGetHIDEvent(event);
@@ -915,7 +915,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         eventPhase = [TouchAnimator IOHIDPhaseWithAnimationCallbackPhase:animatorPhase];
 
     /// Debug
-    if (runningPreRelease()) {
+    if (runningDebugMode()) {
         
         static CFTimeInterval lastTs = 0.0;
         CFTimeInterval ts = CACurrentMediaTime();
@@ -1101,7 +1101,7 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         
         /// Log
         
-        if (runningPreRelease()) {
+        if (runningDebugMode()) {
             
             static double tsStart = 0;
             if (animatorPhase == kMFAnimationCallbackPhaseStart) {

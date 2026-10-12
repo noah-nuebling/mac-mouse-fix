@@ -49,10 +49,6 @@ CFTimeInterval machTimeToSeconds(uint64_t tsMach);
 uint64_t secondsToMachTime(CFTimeInterval tsSeconds);
 NSException * _Nullable tryCatch(void (^tryBlock)(void));
 void *offsetPointer(void *ptr, int byteOffset);
-bool runningPreRelease(void);
-bool runningMainApp(void);
-bool runningHelper(void);
-//bool runningAccomplice(void);
 
 + (id)getPrivateValueOf:(id)obj forName:(NSString *)name;
 + (NSString *)dumpClassInfo:(id)obj;

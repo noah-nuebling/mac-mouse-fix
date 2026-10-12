@@ -209,7 +209,7 @@ static Boolean selectAccelCurveWithIndex(double accelerationPresetIndex, IOHIDSe
     /// - See NotePlan "MMF - Scraps - macOS Pointer Acceleration Investigation 11.06.2022" for more info
     
     /// Debug
-    if (runningPreRelease()) {
+    if (runningDebugMode()) {
         NSString *accelType = (__bridge_transfer NSString *)IOHIDServiceClientCopyProperty(eventServiceClient, CFSTR(kIOHIDPointerAccelerationTypeKey));
         DDLogDebug("Setting AccelCurve preset %f for eventServiceClient: %@ with kIOHIDPointerAccelerationTypeKey: %@", accelerationPresetIndex, eventServiceClient, accelType);
     }

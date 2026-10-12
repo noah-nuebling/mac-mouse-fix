@@ -385,89 +385,6 @@ static void iteratePropertiesOn(id _Nullable obj, void(^_Nonnull callback)(objc_
     free(propertyList);
 }
 
-#pragma mark - Check if pointer is object
-
-
-#pragma mark - Check if this is a prerelease version
-
-bool runningPreRelease(void) {
-    
-    /// TODO: [Apr 16 2025] Move this into Logging.h
-
-#if IS_XC_TEST
-    assert(false);
-    return true;
-#else
-    
-    /// Caching this seems excessive but it's called a lot and actually has a huge performance impact. We also moved to from ObjC to being a pure C function because that improves performance of the app by a few percentage points.
-    
-    static BOOL _isCached = NO;
-    static BOOL _runningPrerelease = NO;
-    
-    if (_isCached) {
-        
-        return _runningPrerelease;
-        
-    } else{
-        
-        
-        /// Check debug configuration
-        
-#if DEBUG
-        _runningPrerelease = YES;
-#endif
-        
-        /// Check app name for 'beta' or 'alpha'
-        ///     We've started shipping release builds as betas because under MMF 3 using Swift, the debug builds are very very slow.
-        ///     Notes:
-        ///     - Why are we using the 'localized' search? What does that do?
-        ///     - Attention! This makes the version names magic. Make sure you always include 'beta' or 'alpha' in the prerelease version names!
-        
-        if (!_runningPrerelease) {
-            
-            NSString *versionName = Locator.bundleVersionShort;
-            if ([versionName localizedCaseInsensitiveContainsString:@"beta"] || [versionName localizedCaseInsensitiveContainsString:@"alpha"]) {
-                _runningPrerelease = YES;
-            }
-        }
-        
-        /// Update flag
-        _isCached = YES;
-        
-        /// Return
-        return _runningPrerelease;
-    }
-#endif
-}
-
-#pragma mark - Check which executable is running
-/// TODO: Maybe move this to `Locator.m`
-/// TODO: Make these NS_INLINE
-
-inline bool runningMainApp(void) {
-    
-#if IS_MAIN_APP
-    return true;
-#endif
-    return false;
-
-//    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDApp];
-}
-inline bool runningHelper(void) {
-    
-#if IS_HELPER
-    return true;
-#endif
-    return false;
-    
-//    return [NSBundle.mainBundle.bundleIdentifier isEqual:kMFBundleIDHelper];
-}
-//bool runningAccomplice(void) {
-//    
-//    /// Return YES if called by accomplice
-//    return [NSFileManager.defaultManager isExecutableFileAtPath:[NSBundle.mainBundle.bundlePath stringByAppendingPathComponent:kMFAccompliceName]];
-//}
-
 #pragma mark - Use command-line tools
 
 + (NSString *)launchCLT:(NSURL *)executableURL withArguments:(NSArray<NSString *> *)arguments error:(NSError *_Nullable * _Nullable)errorPtr {
@@ -531,7 +448,7 @@ inline bool runningHelper(void) {
     }
     
     /// Debug
-    if (runningPreRelease()) {
+    if (runningDebugMode()) {
         NSString *errorDesc = @"";
         if (errorPtr != NULL && *errorPtr != nil) {
             errorDesc = (*errorPtr).debugDescription;

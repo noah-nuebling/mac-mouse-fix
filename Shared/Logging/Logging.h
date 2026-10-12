@@ -26,7 +26,7 @@ How to use:
 Old logLevel logic (When we were still using CocoaLumberjack)
     ```
     /// Setup logLevel
-    ///     Think about moving to using `runningPreRelease()` instead of `#if DEBUG` to set logLevel.
+    ///     Think about moving to using `runningDebugMode()` instead of `#if DEBUG` to set logLevel.
     #if DEBUG
         static const DDLogLevel ddLogLevel = DDLogLevelDebug;
     #else
@@ -125,3 +125,33 @@ Old logLevel logic (When we were still using CocoaLumberjack)
 #define mfrequire(condition, formatAndArgs...) ({ \
     if (mfunlikely(!(condition))) { mfassert(condition, @"(mfrequire) " formatAndArgs); abort(); } \
 })
+
+/** runningDebugMode()
+    Idea: Have user-facing 'debugMode' toggle which: [Oct 2026]
+    - Sacrifices performance for more verbose logs
+    - Sacrifices robustness/recovery for crashing early (and therefore producing crash-reports)
+
+    The user-facing 'debugMode' toggle is not-yet implemented [Oct 2026]
+        However, this is already useful, for attaching `log` clt to release builds and getting all the verbose logs.
+
+    Usage of `runningDebugMode()`:
+        We wrap expensive preparation for debug logs in this, to skip the preparation when the debug logs are disabled, anyways. Can't think of any other usages, right now [Oct 2026]
+    Caution:
+        Don't accidentally use `#if DEBUG` - it can't change it at runtime.
+        TODO: Replace remaining usage of `#if DEBUG` [Oct 2026]
+    Also see:
+        I think there was some super long old note I wrote about improving debugging of hard-to-reproduce issues, where this idea comes from, but I'm too lazy to look it up [Oct 2026]
+            I think it was in my notes repo, or some separate repo, because I didn't have the notes repo, yet [Oct 2026]
+    History:
+        Previously we used `runningPreRelease()` everywhere which I've now split into `runningDebugMode()` and `runningPrereleaseBuild()` [Oct 2026]
+ */
+
+static inline bool runningDebugMode(void) {
+    return os_log_debug_enabled(OS_LOG_DEFAULT);
+}
+
+/** runningPrereleaseBuild()
+    Idea: See implementation
+    Note/History: This one doesn't really belong into Logging.h, but it's here to stay close to `runningDebugMode()` [Oct 2026]
+*/
+bool runningPrereleaseBuild(void);

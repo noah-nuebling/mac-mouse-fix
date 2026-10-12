@@ -674,7 +674,7 @@ import simd /// Vector stuff
         ///         UPDATE: [Jun 2 2025] We created CurveVisualizer.swift as an alternative heuristic for finding reasonable epsilons – Just set an extremely low epsilon and then experiment with higher epsilons until you can see the graphs deviate.
         ///
         
-        if !runningPreRelease() {
+        if !runningPrereleaseBuild() {
             DDLogWarn("getMinEpsilon called in a non-prerelease. This is very slow.")
         }
         

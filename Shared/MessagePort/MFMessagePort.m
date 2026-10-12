@@ -27,6 +27,10 @@
 ///         - Dennis Babkin blog about mach messaging in macOS, with "Security Considerations" section:
 ///             https://dennisbabkin.com/blog/?t=interprocess-communication-using-mach-messages-for-macos
 
+#if !IS_HELPER && !IS_MAIN_APP
+    #error "Expects to be compiled from MMF main app or helper app"
+#endif
+
 #import "MFMessagePort.h"
 #import <Cocoa/Cocoa.h>
 #import "Constants.h"
@@ -86,15 +90,16 @@
     #pragma mark - Init
     
     /// Set up a local port for listening for incoming messages
-    
-    /// Validate
-    assert(runningMainApp() || runningHelper());
-    
+
     /// Log
     DDLogInfo("Initializing MessagePort...");
     
     /// Create port
-    CFStringRef messagePortName = (__bridge CFStringRef)(runningMainApp() ? kMFBundleIDApp : kMFBundleIDHelper);
+    #if IS_HELPER
+        CFStringRef messagePortName = (__bridge void *)kMFBundleIDHelper;
+    #else
+        CFStringRef messagePortName = (__bridge void *)kMFBundleIDApp;
+    #endif
     CFMessagePortRef localPort = CFMessagePortCreateLocal(kCFAllocatorDefault, messagePortName, didReceiveMessage, NULL, NULL);
 
     /// Log
@@ -103,13 +108,13 @@
     /// Validate
     if (localPort == NULL) {
         
-        if (runningMainApp()) {
+        #if IS_MAIN_APP
             DDLogInfo("Failed to create a local message port. It will probably work anyway for some reason");
-        } else {
+        #elif IS_HELPER
             DDLogError("Failed to create a local message port. This might be because there is another instance of %@ already running. Crashing the app.", kMFHelperName);
             @throw [NSException exceptionWithName:@"NoMessagePortException" reason:@"Couldn't create a local CFMessagePort. Can't function properly without local CFMessagePort" userInfo:nil];
-        }
-        
+        #endif
+
         return;
     }
         
@@ -136,9 +141,6 @@ NSString *CFMessagePortSendRequest_ErrorCode_ToString(SInt32 errorCode) {
 static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDataRef data, void *info) {
     
     #pragma mark Receive messages
-    
-    /// Validate
-    assert(runningMainApp() || runningHelper());
     
     /// Decode message
     NSDictionary *messageDict = [NSKeyedUnarchiver unarchiveObjectWithData:(__bridge NSData *)data];
@@ -379,12 +381,13 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     /// Convenience wrapper
     ///     Automatically sends the message to the helper if the mainApp is the sender, and sends to the mainApp if the helper is the sender.
     
-    /// Validate
-    assert(runningMainApp() || runningHelper());
-    
     /// Get remote port name
-    NSString *remotePortName = runningMainApp() ? kMFBundleIDHelper : kMFBundleIDApp;
-    
+    #if IS_MAIN_APP
+        NSString *remotePortName = kMFBundleIDHelper;
+    #else
+        NSString *remotePortName = kMFBundleIDApp;
+    #endif
+
     /// Call core
     NSObject *response = [self sendMessage:message withPayload:payload toRemotePort:remotePortName waitForReply:replyExpected];
     
@@ -394,7 +397,12 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
 
 void invalidationCallback(CFMessagePortRef ms, void *info) {
     /// Log state
-    DDLogInfo("Remote MessagePort invalidated in %@", runningHelper() ? @"Helper" : @"MainApp");
+    #if IS_HELPER
+        NSString *name = @"Helper";
+    #else
+        NSString *name = @"MainApp";
+    #endif
+    DDLogInfo("Remote MessagePort invalidated in %@", name);
 }
 
 @end

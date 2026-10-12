@@ -173,7 +173,7 @@ uint64_t mf_CGDisplayGetNearestVBLTime(CGDirectDisplayID displayID, const char *
             self->_callback(timeInfo);
             uint64_t tsAfterCallback = mach_absolute_time();
 
-            if (runningPreRelease()) {
+            if (runningDebugMode()) {
                 if (self->_lastNow) {
                     uint64_t realLastFrame = mf_CGDisplayGetNearestVBLTime(self->_linkedDisplay, "before", now, /*phaseShiftInVBLDeltas*/0.0);
                     double phaseShift = ((double)(now - realLastFrame) / frameTime);

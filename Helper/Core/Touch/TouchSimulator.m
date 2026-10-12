@@ -143,7 +143,7 @@ static NSMutableDictionary *_swipeInfo;
     
     /// Debug
     
-    if (runningPreRelease()) {
+    if (runningDebugMode()) {
         static CFTimeInterval _dockSwipeLastTimeStamp = 0.0;
         CFTimeInterval ts = CACurrentMediaTime();
         CFTimeInterval timeDiff = ts - _dockSwipeLastTimeStamp;

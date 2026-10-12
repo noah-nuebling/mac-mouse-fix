@@ -83,6 +83,7 @@
 ///
 #pragma mark Check Helper is Active
 
+#if IS_MAIN_APP
 + (BOOL)helperIsActive {
     
     
@@ -97,19 +98,18 @@
     ///     Ask launchd apis whether helper is active.
     ///     Not as reliable, because sometimes there will be an old version of the helper still active (in that case we wan't to return that the helper is incactive but these APIs returned that it is active) or maybe the launchd APIs have registered the helper job but they're not actually starting anything. This happens under Ventura when trying to start the app from another location.
 
-//    if (@available(macos 13.0, *)) {
-//        return [self helperIsActive_SM];
-//    } else {
-//        return helperIsActive_PList();
-//    }
+    //if (@available(macos 13.0, *)) {
+    //    return [self helperIsActive_SM];
+    //} else {
+    //    return helperIsActive_PList();
+    //}
 }
+#endif
 
 #pragma mark Enable / Disable Helper
 
+#if IS_HELPER
 + (void)disableHelperFromHelper {
-    
-    /// Validate
-    assert(runningHelper());
     
     /// HACK (?)
     ///     Our original approach (below) doesn't work with the new SMAppService API under Ventura Beta, so we're disabling this for now. See below for more info.
@@ -132,6 +132,7 @@
     
     [self enableHelperAsUserAgent:NO onComplete:nil];
 }
+#endif
 
 + (void)enableHelperAsUserAgent: (BOOL)enable onComplete: (void (^ _Nullable)(NSError * _Nullable error))onComplete {
     
@@ -256,10 +257,10 @@
     /// 2. Approach
     ///     Disable and re-enable. This seems to circumvent the 1 launch per 10 seconds restriction. (See possibleRestartTime)
     
-    if (runningMainApp()) {
-        
-//        assert([self helperIsActive]);
-        
+    #if IS_MAIN_APP
+
+        //assert([self helperIsActive]);
+
         [self enableHelperAsUserAgent:NO onComplete:^(NSError * _Nullable error) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 
@@ -267,16 +268,16 @@
             });
         }];
         
-    } else if (runningHelper()) {
-        
+    #elif IS_HELPER
+
         /// Open the mainApp and then have it call this function
         
         [NSWorkspace.sharedWorkspace openURL:[NSURL URLWithString:stringf(@"macmousefix:restarthelper?delay=%@", @(delay))]];
         
-    } else {
-        abort();
-    }
-    
+    #else
+        #error "Something's wrong"
+    #endif
+
     /// 1. Approach
     /// If this function is called before `possibleRestartTime` it will freeze until that time
     
@@ -313,18 +314,12 @@
 ///
 #pragma mark Check Helper Is Active
 
+#if IS_MAIN_APP
 + (BOOL)helperIsActive_Message {
-
-    if (runningMainApp()) {
-                NSNumber *response = (NSNumber *)[MFMessagePort sendMessage:@"getBundleVersion" withPayload:nil waitForReply:YES];
-        return response != nil && response.integerValue == Locator.bundleVersion;
-        
-    } else {
-        /// Crash
-        assert(false);
-        abort();
-    }
+    NSNumber *response = (NSNumber *)[MFMessagePort sendMessage:@"getBundleVersion" withPayload:nil waitForReply:YES];
+    return response != nil && response.integerValue == Locator.bundleVersion;
 }
+#endif
 
 /// helperIsActive_SM from version-3. Merge updates from version-2 and git said that "both modified". Doesn't look like both modified. But I'll leave this here for reference in case something breaks.
 // static BOOL helperIsActive_SM() __API_AVAILABLE(macos(13.0)) {
@@ -395,11 +390,11 @@ static BOOL helperIsActive_PList(void) {
             
         /// Guard running main app
         ///     Before using the SM APIs we could call this from anywhere, but the SM stuff will only work from the mainApp afaik.
-        if (runningHelper()) {
+        #if IS_HELPER
             DDLogWarn("Calling enableHelper_SM from Helper under Ventura or later. This is does not work.");
             return [NSError errorWithDomain:MFHelperServicesErrorDomain code:kMFHelperServicesErrorEnableFromHelper userInfo:nil];
-        }
-        
+        #endif
+
         /// Create error
         
         NSError *error = nil;

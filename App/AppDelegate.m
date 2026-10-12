@@ -185,7 +185,7 @@ static NSDictionary *sideButtonActions;
             ///
             ///     Update: [Jul 2025] We tried to set  .prefersCompactControlSizeMetrics for the entire app in one central place right here, but there was random jank where the controls flashed larger right after opening the window. So we're setting  `prefersCompactControlSizeMetrics` inside our window controllers, and only verify here. Just search for `prefersCompactControlSizeMetrics` to find all the places.
             
-            if (!runningPreRelease()) {
+            if (runningDebugMode()) {
                 [NSNotificationCenter.defaultCenter addObserverForName: /*@"_NSWindowDidBecomeVisible"*/ @"_NSWindowDidBecomeVisible" object: nil queue: nil usingBlock: ^void (NSNotification * _Nonnull notification) {
                     if (@available(macOS 26.0, *)) {
                         NSWindow *win = (NSWindow *)notification.object;
@@ -330,7 +330,7 @@ static NSDictionary *sideButtonActions;
         ///     It will only work if `SparkleUpdaterDelegate - updaterDidRelaunchApplication:` is called before this
         /// The app (or this version of it) has probably been downloaded from the internet and is running for the first time.
         ///  -> Override check-for-prereleases setting
-        if (runningPreRelease()) {
+        if (runningPrereleaseBuild()) {
             /// If this is a pre-release version itself, we activate updates to pre-releases
             checkForPrereleases = YES;
         } else {

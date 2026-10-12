@@ -170,7 +170,7 @@ typedef enum {
             
             /// Add debug logging to workload
             
-            if (runningPreRelease()) {
+            if (runningDebugMode()) {
                 
                 workload = ^(DisplayLinkCallbackTimeInfo timeInfo){
                     

@@ -434,7 +434,7 @@ void *_Nullable mfdlsym(void *mfdlopen_handle, MFSymbolTableSection symtabSectio
             uint32_t strtab_offset = symtab[i].n_un.n_strx;
             const char *symname = (strtab_offset == 0) ? "" : ((char *)strtab + strtab_offset); /// The docs say that the symname is emptyString if the offset is 0. Not sure we need to explicitly implement this.
             
-            if ((false) && runningPreRelease()) {
+            if ((false) && runningDebugMode()) {
                 DDLogDebug("(bisection) sym: %s", symname);
                 validateSymbol(&symtab[i], symtabSection);
             }
@@ -459,7 +459,7 @@ void *_Nullable mfdlsym(void *mfdlopen_handle, MFSymbolTableSection symtabSectio
             uint32_t strtab_offset = symtab[i].n_un.n_strx;
             const char *symname = (strtab_offset == 0) ? "" : ((char *)strtab + strtab_offset);
             
-            if ((false) && runningPreRelease()) {
+            if ((false) && runningDebugMode()) {
                 DDLogDebug("(linearSearch) sym: %s", symname);
                 validateSymbol(&symtab[i], symtabSection);
             }

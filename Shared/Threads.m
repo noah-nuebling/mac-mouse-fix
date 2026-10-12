@@ -53,7 +53,7 @@ void set_thread_priority(int priority, bool round_robin) {
     ret = thread_policy_set(threadport, THREAD_PRECEDENCE_POLICY, (thread_policy_t)&(thread_precedence_policy_data_t){ .importance = importance }, THREAD_PRECEDENCE_POLICY_COUNT);
     mfassert(!ret, @"thread_policy_set(THREAD_PRECEDENCE_POLICY) error: %s", mach_error_string(ret));
 
-    if (runningPreRelease()) {
+    if (runningDebugMode()) {
         /// Read back and validate the effective policy of the thread via `thread_info` (`thread_policy_get` just returns whatever `importance` you pass it or whatever. Claude says this API works. [Sep 2026])
         thread_extended_info_data_t extended_info = {}; mach_msg_type_number_t extended_info_count = THREAD_EXTENDED_INFO_COUNT;
         ret = thread_info(threadport, THREAD_EXTENDED_INFO, (thread_info_t)&extended_info, &extended_info_count);

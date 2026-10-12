@@ -15,7 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)disableHelperFromHelper;
 
+#if IS_MAIN_APP
 + (BOOL)helperIsActive;
+#endif
+
 + (void)enableHelperAsUserAgent:(BOOL)enable onComplete:(void (^ _Nullable)(NSError * _Nullable error))onComplete NS_SWIFT_NAME(enableHelperAsUserAgent(_:onComplete:));
 
 + (void)killAllHelpers;

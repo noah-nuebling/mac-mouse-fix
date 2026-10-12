@@ -129,7 +129,7 @@ import ReactiveSwift
 
         #if false /// @noGCDCleanup re-enable
         /// Note: [Mar 2025] This only has to be so complicated because our threading architecture is really bad. Once we move all input and SwitchMaster to GlobalEventTapThread.m, this won't be necessary.
-        if (runningPreRelease()) {
+        if (runningDebugMode()) {
             let invocationId = Int.random(in: 0...99999);
             DDLogDebug("[\(invocationId)] SwitchMaster: \(message())")
             ModifiedDrag.activationState { modifiedDragActivation in /// Note: [Mar 2025] This won't be necessary once we use GlobalEventTapThread.m
@@ -957,7 +957,7 @@ import ReactiveSwift
 //            self.togglePointingTap(modifications: self.latestModifications)
 //        }
     
-//        if runningPreRelease() {
+//        if runningDebugMode() {
 //            SignalProducer<Any, Never>.merge(attachedDevicesSignal.map { $0 as Any }, remapsSignal.map { $0 as Any }, scrollConfigSignal.map { $0 as Any }, modifiersSignal.map { $0 as Any }).startWithValues { _ in
 //
 //                ModifiedDrag.activationState { modifiedDragActivation in

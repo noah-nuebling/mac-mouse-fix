@@ -202,7 +202,7 @@ IOHIDDeviceRef _Nullable copySendingDevice_Reliable(uint64_t senderID) {
     }];
     
     /// Validate
-    if (runningPreRelease()) {
+    if (runningDebugMode()) {
         BOOL isTakingLocalizationScreenshots = [NSProcessInfo.processInfo.arguments containsObject:@"-MF_ANNOTATE_LOCALIZED_STRINGS"];
         if (!isTakingLocalizationScreenshots) {
             assert(iohidDevice != NULL); /// NULL for events sent by localizedScreenshot XCUITest runner, otherwise shouldn't be NULL.

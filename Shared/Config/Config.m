@@ -344,7 +344,7 @@ static void writeConfigToFile(void) {
      You probably want to use `commitConfig()` instead of this
      */
     
-    if (runningPreRelease()) {
+    if (runningDebugMode()) {
         /// Try to catch crash bug
         ///     On [Feb 20 2025], running the new `3.0.4 Beta 1` I saw NSPropertyListSerialization crash (see stacktrace below)
         ///     My first idea is that this might be caused by our new MFPlistEncoder failing to produce a valid plist, but not sure.
