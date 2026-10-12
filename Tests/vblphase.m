@@ -61,7 +61,7 @@ static double machToMs(int64_t t) { return (double)t * _tb.numer / _tb.denom / 1
 static int64_t floorDivision(int64_t n, int64_t d) { return (n / d) - (n < 0 && n % d); }
 
 static uint64_t lastVBLBefore(CGDirectDisplayID display, uint64_t anchor, uint64_t *outDelta) {
-    /// Same as `mf_CGDisplayGetNearestVBLTime(display, "before", anchor, 0.0)` in DisplayLink.m
+    /// Same as `CGDisplay_NearestVBLTime(display, "before", anchor, 0.0)` in DisplayLink.m
     uint64_t lastVBLTime  = SLSDisplayGetPriorVBLTime(display);
     uint64_t lastVBLDelta = SLSDisplayGetCurrentVBLDelta(display);
     *outDelta = lastVBLDelta;

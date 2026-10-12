@@ -359,24 +359,25 @@ static void processPendingCoalescableEventsOncePerFrame(void) {
     ///     Other alternative approach ideas: [Oct 2026]
     ///         All the coalescing just solves *vertical* DockSwipe (Mission Control gesture) freezing and lag introduced by macOS 27 for high-polling rate mice,
     ///             but for low-polling-rate mice, could introduce
-    ///                 - Extra CPU overhead (Due to timers/DisplayLink.m, which we decided to avoid here)
-    ///                 - Maybe slightly more jerkiness for horizontal swipes (see `Problem with this approach` below)
+    ///                 - Extra CPU overhead (Due to timers/DisplayLink.m, which we decided to avoid here for now [Oct 2026])
+    ///                 - Maybe slightly more jerkiness for horizontal swipes if you avoid timers/DisplayLink.m (see `Problem with this approach` below)
     ///             -> Maybe, more pragmatic approach is to activate coalescing only for vertical swipes. That could simplify some things.
     ///             -> Could also only activate for low-polling rate mice, but don't know how to detect that robustly - think it's probably bad approach [Oct 2026]
     ///     Problem with this approach (which is: flushing on mouse events):
     ///         Flushing every frame through DisplayLink uses a lot more CPU, but flushing on the first mouse event each frame causes irregular `PhaseShiftInVBLDeltas` for lower polling-rate mice,
     ///             which I think I observed makes things a little more stuttery than no coalescing at all for horizontal DockSwipes on my [Logitech Lift 135 Hz, macOS 27, 144 Hz display].
     ///                 Also see observations on jankiness caused by sending close to phaseShift 0.0 in `kPhaseShiftInVBLDeltas_DefaultForEventSending` comment [Oct 2026]
-    ///             Caveat: The tracking on the Lift is super uneven and jerky anyways, so it might be placebo.
+    ///             Caveat: The tracking on the Logitech Lift is super uneven and jerky anyways, so it might be placebo.
     ///         Improvement idea:
     ///             Fallback timer - set up a timer (DisplayLink.m) each frame, which waits for a regular mouse event to flush, if no mouse event before deadline, the timer flushes that frame instead
     ///                 -> This should give us good `PhaseShiftInVBLDeltas` with less CPU overhead.
     ///                     I think the CPU overhead, mostly comes from the runLoop waking up for the per-frame timer in addition to the CGEventTap wakeup - I observed there's still a lot of effective CPU overhead flushing every frame through timer, even with our super-lightweight `mk_timer` based `DisplayLink` - so I concluded overhead is inherent to the additional runLoop wakeup. [Oct 2026]
+    ///             @noGCDCleanup consider implementing this
 
     uint64_t now = mach_absolute_time();
-    uint64_t lastVBLTime = mf_CGDisplayGetNearestVBLTime(_drag.displayID, "before", /*anchorInMachTime*/now, kPhaseShiftInVBLDeltas_DefaultForEventSending) ?: fallbackPriorVBLTime(now);
+    uint64_t lastVBLTime = CGDisplay_NearestVBLTime(_drag.displayID, "before", /*anchorInMachTime*/now, kPhaseShiftInVBLDeltas_DefaultForEventSending) ?: fallbackPriorVBLTime(now);
     uint64_t vblDelta = SLSDisplayGetCurrentVBLDelta(_drag.displayID) ?: kFallbackVBLDelta;
-    uint64_t tolerance = (vblDelta / 2.0); /// `mf_CGDisplayGetNearestVBLTime` always extrapolates the frames a little differently so directly comparing the results will give false negatives [Oct 2026]
+    uint64_t tolerance = (vblDelta / 2.0); /// `CGDisplay_NearestVBLTime` always extrapolates the frames a little differently so directly comparing the results will give false negatives [Oct 2026]
     if (_drag.lastVBLTimeThatProcessedCoalescableEvents < lastVBLTime - tolerance) {
 
         _drag.lastVBLTimeThatProcessedCoalescableEvents = lastVBLTime;

@@ -38,7 +38,7 @@
 ///         Avoid callbacks close together?
 ///             I sometimes saw pattern where every second frame callback is delayed, and delivers really close to the next one. Might be better to skip?
 ///                 However, I saw same pattern for real Trackpad events (using `vblphase.m`). Probably fine [Oct 2026]
-///         Use real time thread (instead of max priority in the normal band via our `set_thread_priority()`)
+///         Use real time thread (instead of max priority in the normal band via our `set_thread_priority()` [Oct 2026])
 ///             -> Might solve bad-phase-zone and close-together-callabacks issues (above). Haven't tried real time scheduling at all so far. [Oct 2026]
 ///     Other info:
 ///         Opus 5.5 says CADisplayLink and CFRunLoopTimer are built on `mk_timer`, too, just like this DisplayLink
@@ -56,7 +56,7 @@
 
 #pragma mark - VSync helpers
 
-uint64_t mf_CGDisplayGetNearestVBLTime(CGDirectDisplayID displayID, const char *beforeOrAfter, uint64_t anchorInMachTime, PhaseShiftInVBLDeltas phaseShift) {
+uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *beforeOrAfter, uint64_t anchorInMachTime, PhaseShiftInVBLDeltas phaseShift) {
     /// Helper
     /// Usage: Pass `mach_absolute_time()` as the `anchorInMachTime` to get the nearest VSync time relative to now.
     /// Background: VBL stands for `vertical blank` it's the time between the display reading the last pixel of the previous frame to reading the first pixel of the next frame.
@@ -150,7 +150,7 @@ uint64_t mf_CGDisplayGetNearestVBLTime(CGDirectDisplayID displayID, const char *
         if (!self->_isRunning) return;
 
         uint64_t now = mach_absolute_time();
-        uint64_t lastFrame = mf_CGDisplayGetNearestVBLTime(self->_linkedDisplay, "before", now, self->_phaseShift) ?: fallbackPriorVBLTime(now);
+        uint64_t lastFrame = CGDisplay_NearestVBLTime(self->_linkedDisplay, "before", now, self->_phaseShift) ?: fallbackPriorVBLTime(now);
         uint64_t frameTime = SLSDisplayGetCurrentVBLDelta(self->_linkedDisplay) ?: kFallbackVBLDelta;
 
         uint64_t tolerance = frameTime * (0.5/*0.0*/); /// Prevent quick-succession wakeups in case the VBLTime window shifts forwards a little bit. Not sure this happens. Opus 5.5 is concerned [Oct 2026]
@@ -175,7 +175,7 @@ uint64_t mf_CGDisplayGetNearestVBLTime(CGDirectDisplayID displayID, const char *
 
             if (runningDebugMode()) {
                 if (self->_lastNow) {
-                    uint64_t realLastFrame = mf_CGDisplayGetNearestVBLTime(self->_linkedDisplay, "before", now, /*phaseShiftInVBLDeltas*/0.0);
+                    uint64_t realLastFrame = CGDisplay_NearestVBLTime(self->_linkedDisplay, "before", now, /*phaseShiftInVBLDeltas*/0.0);
                     double phaseShift = ((double)(now - realLastFrame) / frameTime);
                     _DDLogDebug("delta: %05.2f, phaseShift: %.2f, callbackPhaseDuration %05.2f", 1e3*machTimeToSeconds(now - self->_lastNow), phaseShift, ((double)(tsAfterCallback - tsBeforeCallback))/frameTime);
                 }
@@ -192,7 +192,7 @@ uint64_t mf_CGDisplayGetNearestVBLTime(CGDirectDisplayID displayID, const char *
         if (self->_timerIsArmed) return;
 
         uint64_t now = mach_absolute_time();
-        uint64_t nextCallbackTime = mf_CGDisplayGetNearestVBLTime(self->_linkedDisplay, "after", now, self->_phaseShift) ?: (fallbackPriorVBLTime(now) + kFallbackVBLDelta);
+        uint64_t nextCallbackTime = CGDisplay_NearestVBLTime(self->_linkedDisplay, "after", now, self->_phaseShift) ?: (fallbackPriorVBLTime(now) + kFallbackVBLDelta);
 
         kern_return_t ret;
         if ((kUseCriticalTimer)) ret = mk_timer_arm_leeway(self->_mkTimer, MK_TIMER_CRITICAL, nextCallbackTime, /*mk_timer_leeway*/0);
@@ -234,7 +234,7 @@ uint64_t mf_CGDisplayGetNearestVBLTime(CGDirectDisplayID displayID, const char *
         if (!ret && !canceledWakeUpTime) {
             /// Handle minor race, where the timer has already fired but the runLoop hasn't invoked `mkTimerCallback`, yet.
             ///     This can lead to weird behavior, if you're stopping and then restarting the DisplayLink in this period (the period between timer firing and `mkTimerCallback`) the next `mkTimerCallback` may fire for a scheduled time that is *before* the last start command. Which is inconsistent with how start normally works. (Normally it schedules the first timer for the first VSync *after* the start command)
-            ///         Is this just theoretical problem? Maybe. Opus 5.5 says the 'flush coalesced event once a frame on first mouse event *or* fallback timer' strategy we're thinking about implementing in ModifiedDrag.m might be messed up by this inconsistency. Consistent behavior is better either way, probably. [Oct 2026]
+            ///         Is this just theoretical problem? Maybe. Opus 5.5 says the 'fallback timer' strategy we're thinking about implementing in ModifiedDrag.m might be messed up by this inconsistency. Consistent behavior is better either way, probably. [Oct 2026]
             ///     Solution: Drain the mach port.
             ///     Credits: Opus 5.5
 

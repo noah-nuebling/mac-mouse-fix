@@ -88,7 +88,7 @@ int64_t floorDivision(int64_t n, int64_t d) {
 
 int64_t roundToGrid_Int(int64_t x, int64_t grid0, int64_t grid1, char *upOrDown) {
 
-    /// Only used in `mf_CGDisplayGetNearestVBLTime` [Oct 2026]
+    /// Only used in `CGDisplay_NearestVBLTime` [Oct 2026]
     /// Use over the double-based `roundToGrid` for large number precision e.g. for `mach_absolute_time()` values. (Not totally sure it matters) [Oct 2026]
     /// Called something like `snapToGrid` in some older Python script or sth I wrote [Oct 2026]
 

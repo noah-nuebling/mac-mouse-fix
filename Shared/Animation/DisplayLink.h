@@ -17,7 +17,7 @@
 #pragma mark - VSync helpers
 
 /// PhaseShiftInVBLDeltas
-///     Passed to `mf_CGDisplayGetNearestVBLTime`. Pretends like the grid of VSync times is shifted by this many frame periods. Only the fractional part matters (0.25 == 1.25).
+///     Passed to `CGDisplay_NearestVBLTime`. Pretends like the grid of VSync times is shifted by this many frame periods. Only the fractional part matters (0.25 == 1.25).
 ///     Also see:
 ///         `vblphase.m` - Opus 5.5 script visualizing the phase
 ///         `Old MFDisplayLinkWorkType stuff.md` - MFDisplayLinkWorkType was an earlier attempt at doing the phase shifts to improve stuttering, which we rolled back because it caused deadlocks. Deadlocks are no longer a risk after 'No more dispatch queues' refactor! [Oct 2026]
@@ -44,7 +44,7 @@ typedef double PhaseShiftInVBLDeltas;
 
 extern uint64_t SLSDisplayGetPriorVBLTime(CGDirectDisplayID displayID);
 extern uint64_t SLSDisplayGetCurrentVBLDelta(CGDirectDisplayID displayID);
-uint64_t mf_CGDisplayGetNearestVBLTime(CGDirectDisplayID displayID, const char *beforeOrAfter, uint64_t anchorInMachTime, PhaseShiftInVBLDeltas phaseShift);
+uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *beforeOrAfter, uint64_t anchorInMachTime, PhaseShiftInVBLDeltas phaseShift);
 
 #define fallbackPriorVBLTime(now) (now)
 #define kFallbackVBLDelta secondsToMachTime(1.0/60) /** Opus 5.5 says `SLSDisplayGetPriorVBLTime` etc can return 0, and in that case the displayLink should keep ticking because the downstream code expects that so gestures don't get stuck or whatever. Not sure if Opus is overly concerned. [Oct 2026] */
@@ -53,8 +53,8 @@ uint64_t mf_CGDisplayGetNearestVBLTime(CGDirectDisplayID displayID, const char *
 
 
 typedef struct {
-    /// @noGCDCleanup This is now just slight convenience over `mf_CGDisplayGetNearestVBLTime` I guess?
-    CFTimeInterval lastFrame;           ///< Last VSync time (shifted by `phaseShift`) before the callback. Guaranteed to increase between callbacks [Oct 2026]
+    /// @noGCDCleanup This is now just slight convenience over `CGDisplay_NearestVBLTime` I guess?
+    CFTimeInterval lastFrame;           ///< Last VSync time (shifted by `phaseShift`) before the callback. Guaranteed to increase between callbacks (Tiny bug: Clients rely on `nextFrame` to increase, not `lastFrame` and on VRR display there might be small chance this fails) [Oct 2026]
     CFTimeInterval timeBetweenFrames;   ///< Can be used to extrapolate to adjacent frames relative to `lastFrame` [Oct 2026]
     CFTimeInterval nextFrame;           ///< `lastFrame + timeBetweenFrames` [Oct 2026]
 } DisplayLinkCallbackTimeInfo;
