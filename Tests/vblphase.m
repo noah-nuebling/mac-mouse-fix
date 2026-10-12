@@ -1,3 +1,13 @@
+/**
+    This script was written entirely by Opus 5.5 [Oct 2026]
+    It's useful to see patterns in the timing of real Trackpad events and MMF simulated events.
+
+    Observations:
+        To see the 'true' phase of the trackpad events make sure system is not strained, otherwise delay in the phases. [Oct 2026]
+*/
+
+/// vvv Opus 5.5 stuff starts below here vvv
+
 //
 // vblphase.m
 //
@@ -213,7 +223,7 @@ static CGEventRef tapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRe
     return event;
 }
 
-int main(int argc, const char *argv[]) {
+int vblphase_Start() {
     @autoreleasepool {
         mach_timebase_info(&_tb);
         _prev = [NSMutableDictionary dictionary];
@@ -233,5 +243,6 @@ int main(int argc, const char *argv[]) {
         printf("Listening for t22 scroll and t30 dockSwipe events... (ctrl-c to quit)\n");
         CFRunLoopRun();
     }
+
     return 0;
 }

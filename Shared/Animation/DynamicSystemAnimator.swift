@@ -81,16 +81,16 @@ import Foundation
     
     /// Initializers
     
-    @objc convenience init(fromAnimation animation: CASpringAnimation, stopTolerance: Double, optimizedWorkType: MFDisplayLinkWorkType, runLoop: CFRunLoop, name: String) {
+    @objc convenience init(fromAnimation animation: CASpringAnimation, stopTolerance: Double, phaseShift: PhaseShiftInVBLDeltas, runLoop: CFRunLoop, name: String) {
 
         let k = animation.stiffness
         let c = animation.damping
         let m = animation.mass
         
-        self.init(stiffness: k, damping: c, mass: m, stopTolerance: stopTolerance, optimizedWorkType: optimizedWorkType, runLoop: runLoop, name: name)
+        self.init(stiffness: k, damping: c, mass: m, stopTolerance: stopTolerance, phaseShift: phaseShift, runLoop: runLoop, name: name)
     }
     
-    @objc required init(stiffness k: Double, damping c: Double, mass m: Double = 1.0, stopTolerance: Double, optimizedWorkType: MFDisplayLinkWorkType, runLoop: CFRunLoop, name: String) {
+    @objc required init(stiffness k: Double, damping c: Double, mass m: Double = 1.0, stopTolerance: Double, phaseShift: PhaseShiftInVBLDeltas, runLoop: CFRunLoop, name: String) {
 
         /// Validate
         assert(stopTolerance > 0, "Will never stop if stopTolerance <= 0")
@@ -100,7 +100,7 @@ import Foundation
         self.c = c
         self.m = m
         epsilon = stopTolerance
-        displayLink = DisplayLink(optimizedFor: optimizedWorkType, runLoop: runLoop, name: name)
+        displayLink = DisplayLink(phaseShift: phaseShift, runLoop: runLoop, name: name)
         pixelator = VectorSubPixelator.biased()
         stopCallback = nil
 
@@ -158,7 +158,7 @@ import Foundation
         /// - I feel like this somehow makes the animation more stuttery? Turning this off.
         /// - (Sep 2024) We're not linking the displayLink to a specific display at all. Won't this cause problems especially with 120Hz or Pro Motion displays?
         /// @noGCDCleanup Gotta fix this
-        //self.displayLink.linkToMainScreen_Unsafe()
+        self.displayLink.linkToMainScreen()
 
         /// Start displayLink
         ///  @noGCDCleanup Understand/fix the `[weak self]` warning
@@ -174,7 +174,7 @@ import Foundation
         readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
 
         /// Get current step time
-        let t = timeInfo.outFrame
+        let t = timeInfo.nextFrame
         /// Get previous step time
         if t0 <= 0 { t0 = t - timeInfo.timeBetweenFrames }
         /// Get step delta
@@ -259,6 +259,7 @@ import Foundation
         self.pixelator.reset()
     }
     @objc func linkToMainScreen() {
+        mfassert(false, "Unused [Oct 2026]");
         assertRunLoop(displayLink.runLoop)
         readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
         self.displayLink.linkToMainScreen()

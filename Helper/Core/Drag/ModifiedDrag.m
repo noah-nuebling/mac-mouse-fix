@@ -1,3 +1,4 @@
+
 //
 // --------------------------------------------------------------------------
 // ModifyingActions.m
@@ -16,6 +17,33 @@
 
 /// @noGCDCleanup
 ///     Add `readsState()` / `readsAndWritesState()` checks to `ModifiedDrag.m and ModifiedDragOutputTwoFingerSwipe.m and GestureScrollSimulator.m`
+
+/**
+    TODO: Address `[debugWarpDelta]` bug: [Oct 11 2026]  @noGCDCleanup
+        - Problem: After PointerFreeze's CGWarpMouseCursorPosition(), the eventTaps in ModifiedDrag.m and PointerFreeze.m
+            still receive a few events with unwarped location, the first warped event carries a delta describing (actualMovementByUserForThisEvent + warp).
+            Under heavy load, this warpDelta can be so large that it causes major jank and stuff [macOS 27]
+        - Plan: Track the first event that is warped, and subtract the warpDelta.
+            (Opus 5.5 says to use 0.5 px or 1.0 px tolerance off of the warpPoint because of what it saw in earlier logs. Didn't quite understand why.
+                Personally only seen post-warp events be exactly the value passed to CGWarpMouseCursorPosition())
+        - Secondary problem factor:
+            Why does WindowServer send us so many events before applying `CGWarpMouseCursorPosition()`:
+                Looks like, under load, CGEventTapEnable() in freezePointer() blocks long time and stalls all evenProcessing and the call to `CGWarpMouseCursorPosition()`. (Observed ~70 ms, using Instruments Processor Trace)
+                    -> Hypothesis: WindowServer continues processing and sending us events while we wait for it, not having sent `CGWarpMouseCursorPosition()`, yet.
+            Plan2:
+                Writing a `CommonEventTap` abstraction (coined that name right here [Oct 2026] that multiplexes to multiple clients from a single CGEventTap would avoid this this problem
+                    -> I had plans doing that for other reasons, so now might be a good time @noGCDCleanup
+        - Reproduction stuff:
+            - Can be hard to reproduce - Comes in cycles, I think only under heavy window-server load. The load I saw it under:
+                - 60 Hz screen: streaming vbldelta.m and logs from MMF helper, and watching youtube at 1080p
+                - 144 Hz screen: Xcode, streaming MMF Helper logs, using MMF 'Scroll & Navigate' in the main view.
+                - Having lots of Safari tabs and iTerm tabs, and Finder windows open in the background.
+                -> Even then the problem only occurred in 'cycles' sometimes going back to perfectly smooth scrolling, but when it was bad it happened every interaction.
+            - Also reproduced on 3.1.0 (24898) (before 'No more dispatch queues' refactor) -> Not a regression from the refactor. Maybe new in macOS 27 / 27.2 Beta 3
+            - Never noticed this issue ever before that day.
+        - Also see:
+            The logs we added that are tagged with `[debugWarpDelta]` - they let us clearly see the problem (maybe along with vbldelta.m script) (Maybe clean those up after we're done)
+ */
 
 #import "Constants.h"
 
@@ -43,6 +71,7 @@
 #import "ModifiedDragOutputAddMode.h"
 
 #import "GlobalEventTapThread.h"
+#import "MathObjc.h"
 
 @implementation CoalescableEvent @end
 @implementation CoalescableEvent_Delta @end
@@ -111,20 +140,12 @@ static ModifiedDragState _drag;
     return output;
 }
 
+/// Lifecycle
+
 + (void)load_Manual {
     
     /// Init plugins
     [ModifiedDragOutputTwoFingerSwipe load_Manual];
-
-    /// Setup coalescingDisplayLink
-    _drag.coalescingDisplayLink = [
-        DisplayLink
-        displayLinkOptimizedForWorkType: kMFDisplayLinkWorkTypeEventSending
-        runLoop: GlobalEventTapThread.runLoop
-        name: @"ModifiedDragCoalescing"
-    ];
-
-    [_drag.coalescingDisplayLink setCallback:^(DisplayLinkCallbackTimeInfo timeInfo) { coalescingDisplayLinkCallback(timeInfo); }];
 
     /// Setup pendingCoalescableEvents
     _drag.pendingCoalescableEvents = [NSMutableArray new];
@@ -134,12 +155,13 @@ static ModifiedDragState _drag;
     
     /// Create mouse moved callback
     if (!_drag.eventTap) {
-        
+
+        CGEventMask eventMask = (CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved) | /// kCGEventMouseMoved is only necessary for keyboard-only drag-modification (which we've disable because it had other problems), and maybe for AddMode to work.
+                                   CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged)); /// This is necessary for modified drag to work during a left/right click and drag. Concretely I added this to make drag and drop work. For that we only need the kCGEventLeftMouseDragged. Adding kCGEventRightMouseDragged is probably completely unnecessary. Not sure if there are other concrete applications outside of drag and drop.
         CFMachPortRef eventTap = [
             ModificationUtility
             createEventTapWithLocation: kCGHIDEventTap
-            mask: (CGEventMaskBit(kCGEventOtherMouseDragged) | CGEventMaskBit(kCGEventMouseMoved) /// kCGEventMouseMoved is only necessary for keyboard-only drag-modification (which we've disable because it had other problems), and maybe for AddMode to work.
-                  | CGEventMaskBit(kCGEventLeftMouseDragged) | CGEventMaskBit(kCGEventRightMouseDragged)) /// This is necessary for modified drag to work during a left/right click and drag. Concretely I added this to make drag and drop work. For that we only need the kCGEventLeftMouseDragged. Adding kCGEventRightMouseDragged is probably completely unnecessary. Not sure if there are other concrete applications outside of drag and drop.
+            mask: eventMask
             option:/*kCGEventTapOptionListenOnly*/ kCGEventTapOptionDefault
                         /// ^ Using `Default` causes weird cursor jumping issues when clicking-dragging-and-holding during addMode. Not sure why that happens. This didn't happen in v2 while using `Default`. Not sure if `ListenOnly` has any disadvantages. Edit: In other places, I've had issues using listenOnly because it messes up the timestamps (I'm on macOS 12.4. right now). -> Trying default again.
             placement: kCGHeadInsertEventTap
@@ -203,7 +225,7 @@ static ModifiedDragState _drag;
     _drag.coalesceEvents = true;
     if (1) if (isclass(p, ModifiedDragOutputTwoFingerSwipe)) _drag.coalesceEvents = false; /// `ModifiedDragOutputTwoFingerSwipe` already has its own `TouchAnimator` which effectively coalesces output events, we think coalescing again here might responsiveness (Didn't really test) [Sep 2026]
 
-    /// HACK
+    /// TESTING
     if ((0)) _drag.coalesceEvents = false;
 
     /// Link with plugin
@@ -219,7 +241,9 @@ static void initDragState_Unsafe(void) {
     _drag.originOffset = (Vector){0};
     _drag.activationState = kMFModifiedInputActivationStateInitialized;
     _drag.isSuspended = NO;
-    
+    _drag.displayID = 0;
+    _drag.lastVBLTimeThatProcessedCoalescableEvents = 0;
+
     [_drag.outputPlugin initializeWithDragState:&_drag]; /// We just want to reset the plugin state here. The plugin will already hold ref to `_drag`. So this is not super pretty/semantic
     
     CGEventTapEnable(_drag.eventTap, true);
@@ -245,45 +269,70 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
         
         return event;
     }
-    
+
+    /// Debug
+    if (runningPreRelease()) {
+
+        static double tsLast = 0;
+        double ts = CACurrentMediaTime();
+        DDLogDebug("ModifiedDrag eventTapCallback [debugWarpDelta] type %2d, delta (%3lld, %3lld) (%3lld, %3lld), loc: (%.2f, %.2f), dt: %5.2f age: %.2f",
+            CGEventGetType(event),
+            CGEventGetIntegerValueField(event, kCGMouseEventDeltaX),
+            CGEventGetIntegerValueField(event, kCGMouseEventDeltaY),
+            CGEventGetIntegerValueField(event, kCGEventUnacceleratedPointerMovementX),
+            CGEventGetIntegerValueField(event, kCGEventUnacceleratedPointerMovementY),
+            CGEventGetLocation(event).x,
+            CGEventGetLocation(event).y,
+            1e3*(ts - tsLast),
+            1e3*machTimeToSeconds(mach_absolute_time() - CGEventGetTimestamp(event))
+        );
+        tsLast = ts;
+
+        /// Filter other event-types (might wanna log other events for debugging [Oct 2026])
+        //if ((CGEventMaskBit(type) & _eventMask) == 0) return event;
+    }
+
+
     /// Get deltas
     /// These are truly integer values, I'm not rounding anything / losing any info here
     /// However, the deltas seem to be pre-subpixelated, and often, both dx and dy are 0.
     
     int64_t dx = CGEventGetIntegerValueField(event, kCGMouseEventDeltaX);
     int64_t dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
-    
-    /// Debug
-    
-    //DDLogDebug("modifiedDrag input: %lld %lld", dx, dy);
 
     /// Ignore event if both deltas are zero
     /// - We do this so the phases for the gesture scroll simulation (aka twoFingerSwipe) make sense. The gesture scroll event with phase kIOHIDEventPhaseBegan should always have a non-zero delta. If we let through zero deltas here it messes those phases up. Now that we're dispatching throuch a TouchAnimator this shouldn't really matter but it doesn't hurt.
     /// - I think for all other types of modified drag (aside from the gesture scroll simulation discussed above) this shouldn't break anything, either.
-    
+
     if (dx != 0 || dy != 0) {
 
+
         /// Interrupt
-        ///     [Sep 2026] Update: Old comment from before `coalescingDisplayLink` refactor, not sure if/how it still applies:
+        ///     [Sep 2026] Update: Old comment from before `coalesceEvents` refactor, not sure if/how it still applies:
         ///         This handles race condition where `_drag.eventTap` is disabled right after eventTapCallBack() is called
         ///         We implemented the same idea in PointerFreeze.
-        ///         Actually, the check for kMFModifiedInputActivationStateNone below (Update: [Sep 2026] Now in `coalescingDisplayLinkCallback`) has the same effect, but I think but this makes it clearer?
+        ///         Actually, the check for kMFModifiedInputActivationStateNone below (Update: [Sep 2026] Now in `processPendingCoalescableEvents`) has the same effect, but I think but this makes it clearer?
         if (!CGEventTapIsEnabled(_drag.eventTap)) {
             return event;
         }
 
+        /// Get the display (For processing coalescable events once per frame) [Oct 2026]
+        if (!_drag.displayID) _drag.displayID = [[NSScreen mainScreen] displayID];
+
+        /// Process coalescable events
         if (!_drag.coalesceEvents) {
-            processCoalescedDeltaEvent(dx, dy, CGEventGetLocation(event));
+            processCoalescableDeltaEvent(dx, dy, CGEventGetLocation(event));
         } else {
             /// Append to pendingCoalescableEvents
-            CoalescableEvent_Delta *deltaEvent = [CoalescableEvent_Delta new];
-            deltaEvent.deltaX = dx;
-            deltaEvent.deltaY = dy;
-            deltaEvent.pointerLocation = CGEventGetLocation(event);
+            CoalescableEvent_Delta *deltaEvent = [CoalescableEvent_Delta new]; {
+                deltaEvent.deltaX = dx;
+                deltaEvent.deltaY = dy;
+                deltaEvent.pointerLocation = CGEventGetLocation(event);
+            }
             [_drag.pendingCoalescableEvents addObject: deltaEvent];
 
-            /// Start the coalescingDisplayLink
-            [_drag.coalescingDisplayLink start_UnsafeWithCallback: nil];
+            /// Process pendingCoalescableEvents
+            processPendingCoalescableEventsOncePerFrame();
         }
     }
 
@@ -300,12 +349,51 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
     return event;
 }
 
-static void coalescingDisplayLinkCallback(DisplayLinkCallbackTimeInfo timeInfo) {
+static void processPendingCoalescableEventsOncePerFrame(void) {
+
+    /// Strategy: Flush the queue of coalescable events on the first mouse event each frame [Oct 2026]
+    ///     (To be precise, flush on first mouse event that comes at last vsync time + `kPhaseShiftInVBLDeltas_DefaultForEventSending`)
+    ///         Also see: `kPhaseShiftInVBLDeltas_DefaultForEventSending` comments [Oct 2026]
+    ///     Alternative approaches tested and abandoned:
+    ///         - Measure SLSDisplayGetCurrentVBLDelta once at the start of the gesture and use that on a timer. Result: Works just as well, probably because the VBL times don't drift on my display. On a VRR display I suspect it would be worse UX. Don't think it makes a meaningful performance difference, so not worth using. [Oct 2026]
+    ///     Other alternative approach ideas: [Oct 2026]
+    ///         All the coalescing just solves *vertical* DockSwipe (Mission Control gesture) freezing and lag introduced by macOS 27 for high-polling rate mice,
+    ///             but for low-polling-rate mice, could introduce
+    ///                 - Extra CPU overhead (Due to timers/DisplayLink.m, which we decided to avoid here)
+    ///                 - Maybe slightly more jerkiness for horizontal swipes (see `Problem with this approach` below)
+    ///             -> Maybe, more pragmatic approach is to activate coalescing only for vertical swipes. That could simplify some things.
+    ///             -> Could also only activate for low-polling rate mice, but don't know how to detect that robustly - think it's probably bad approach [Oct 2026]
+    ///     Problem with this approach (which is: flushing on mouse events):
+    ///         Flushing every frame through DisplayLink uses a lot more CPU, but flushing on the first mouse event each frame causes irregular `PhaseShiftInVBLDeltas` for lower polling-rate mice,
+    ///             which I think I observed makes things a little more stuttery than no coalescing at all for horizontal DockSwipes on my [Logitech Lift 135 Hz, macOS 27, 144 Hz display].
+    ///                 Also see observations on jankiness caused by sending close to phaseShift 0.0 in `kPhaseShiftInVBLDeltas_DefaultForEventSending` comment [Oct 2026]
+    ///             Caveat: The tracking on the Lift is super uneven and jerky anyways, so it might be placebo.
+    ///         Improvement idea:
+    ///             Fallback timer - set up a timer (DisplayLink.m) each frame, which waits for a regular mouse event to flush, if no mouse event before deadline, the timer flushes that frame instead
+    ///                 -> This should give us good `PhaseShiftInVBLDeltas` with less CPU overhead.
+    ///                     I think the CPU overhead, mostly comes from the runLoop waking up for the per-frame timer in addition to the CGEventTap wakeup - I observed there's still a lot of effective CPU overhead flushing every frame through timer, even with our super-lightweight `mk_timer` based `DisplayLink` - so I concluded overhead is inherent to the additional runLoop wakeup. [Oct 2026]
+
+    uint64_t now = mach_absolute_time();
+    uint64_t lastVBLTime = mf_CGDisplayGetNearestVBLTime(_drag.displayID, "before", /*anchorInMachTime*/now, kPhaseShiftInVBLDeltas_DefaultForEventSending) ?: fallbackPriorVBLTime(now);
+    uint64_t vblDelta = SLSDisplayGetCurrentVBLDelta(_drag.displayID) ?: kFallbackVBLDelta;
+    uint64_t tolerance = (vblDelta / 2.0); /// `mf_CGDisplayGetNearestVBLTime` always extrapolates the frames a little differently so directly comparing the results will give false negatives [Oct 2026]
+    if (_drag.lastVBLTimeThatProcessedCoalescableEvents < lastVBLTime - tolerance) {
+
+        _drag.lastVBLTimeThatProcessedCoalescableEvents = lastVBLTime;
+        processPendingCoalescableEvents();
+
+        if (runningPreRelease()) {
+            static double lastTS = 0;
+            double ts = CACurrentMediaTime();
+            if (lastTS) DDLogDebug("coalescingTimerCallback: invocation delta: %.2fms" ,(ts-lastTS)*1000.0);
+            lastTS = ts;
+        }
+    }
+}
+
+static void processPendingCoalescableEvents(void) {
 
     assertRunLoop(GlobalEventTapThread.runLoop);
-
-    /// [Sep 2026] Had an old comment here about deadlock which motivated the `dispatchCallbacksAsynchronously` option in DisplayLink.h (which after 'No more dispatch queues' refactor, we always have enabled, and probably deleted the option by time you're reading this.)
-    ///     (Not sure this comment is useful at all - maybe to help if we ever make DisplayLink.m sync call from its displayLinkThread again - to remind us what to dig through to understand the deadlocks again, roughly?)
 
     /// Early return
     if (!_drag.pendingCoalescableEvents.count) return;
@@ -335,26 +423,14 @@ static void coalescingDisplayLinkCallback(DisplayLinkCallbackTimeInfo timeInfo) 
     /// Clear pendingCoalescableEvents
     [_drag.pendingCoalescableEvents removeAllObjects];
 
-    /// Stop coalescingDisplayLink
-    ///     (We just aggregate everything for the next frame, and then stop)
-    ///     Performance note: [Sep 2026] This makes CVDisplayLink stop its thread every frame, and then create/configure a new thread for the next frame, I think.
-    ///         @noGCDCleanup move this into DisplayLink.m - this affects `thread_policy_set` stuff (gets reset every frame?) if we ever do this on the displayLinkThread.
-    ///         However, the overhead of this is dwarfed by CGEvent tapping and sending.
-    ///         Avoiding this would lower CPU usage by `<~3%` on my Logitech gaming mouse (1000 Hz) and lower by `<~7%` on Logitech lift (not sure exactly its polling rate, I think low.)
-    ///             (Measured on M4 MBA, wiggling the DockSwipe, using 'processor trace' in instruments, 120 Hz display I think, might have accidentally used 60 Hz for some tests.)
-    ///             (Percentages are relative to current CPU usage, which is `~3%` on Lift and `~7%` on the gaming mouse IIRC, so in absolute terms, this should lower CPU usage by `<~0.2%`.)
-    ///         -> Since I plan on eventually using CADisplayLink for newer macOS (instead of CVDisplayLink), I won't bother optimizing this.
-
-    [_drag.coalescingDisplayLink stop_Unsafe];
-
-    /// Process coalesced delta event(s)
-    processCoalescedDeltaEvent(deltaXSum, deltaYSum, lastPointerLocation);
+    /// Process coalescable delta event(s)
+    processCoalescableDeltaEvent(deltaXSum, deltaYSum, lastPointerLocation);
 
     /// Process deactivationEvent
-    processCoalescedDeactivationEvent(deactivationEvent);
+    processCoalescableDeactivationEvent(deactivationEvent);
 }
 
-static void processCoalescedDeltaEvent(double deltaXSum, double deltaYSum, CGPoint lastPointerLocation) {
+static void processCoalescableDeltaEvent(double deltaXSum, double deltaYSum, CGPoint lastPointerLocation) {
     if (deltaXSum || deltaYSum)
     {
         /// Update originOffset
@@ -365,14 +441,14 @@ static void processCoalescedDeltaEvent(double deltaXSum, double deltaYSum, CGPoi
         if (_drag.isSuspended) return;
 
         /// Debug
-        DDLogDebug("ModifiedDrag handling coalesced mouseMoved");
+        DDLogDebug("ModifiedDrag handling coalescable mouseMoved");
 
         /// Call further handler functions depending on current state
         MFModifiedInputActivationState st = _drag.activationState;
 
         if (st == kMFModifiedInputActivationStateNone) {
 
-            /// [Sep 2026] Old comment from before coalescingDisplayLink refactor:
+            /// [Sep 2026] Old comment from before `coalesceEvents` refactor:
             ///     Disabling the callback triggers this function one more time apparently
             ///         That's the only case I know where I expect this. Maybe we should log this to see what's going on.
 
@@ -387,7 +463,7 @@ static void processCoalescedDeltaEvent(double deltaXSum, double deltaYSum, CGPoi
     }
 }
 
-static void processCoalescedDeactivationEvent(CoalescableEvent_Deactivation *deactivationEvent) {
+static void processCoalescableDeactivationEvent(CoalescableEvent_Deactivation *deactivationEvent) {
     if (deactivationEvent) [_drag.outputPlugin handleDeactivationWhileInUseWithCancel: deactivationEvent.cancelled];
 }
 
@@ -400,7 +476,8 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGP
         
         /// Debug
         DDLogDebug("Modified Drag entered 'in use' state");
-        
+        DDLogDebug("ModifiedDrag becameInUse [debugWarpDelta] (%lld, %lld) loc: (%d, %d)", deltaX, deltaY, (int)pointerLocation.x, (int)pointerLocation.y);
+
         /// Store state
         _drag.usageOrigin = pointerLocation;
 
@@ -413,9 +490,6 @@ static void handleMouseInputWhileInitialized(int64_t deltaX, int64_t deltaY, CGP
         /// Update state
         _drag.activationState = kMFModifiedInputActivationStateInUse;
         _drag.firstCallback = true;
-
-        /// Init coalescingDisplayLink
-        [_drag.coalescingDisplayLink linkToMainScreen];
 
         /// Do deferred init
         /// Could also do this in normal init `initializeDragWithDict`, but here is more effiicient (`initializeDragWithDict` is called on every mouse click if it's set up for that button)
@@ -503,10 +577,15 @@ static void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
     
     /// Disable supension
     _drag.isSuspended = NO;
-    
+
+
     /// Handle state == none
     ///     Return immediately
     if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
+
+    /// Clear pendingCoalescableEvents
+    ///     Subtle: Usually done by `processPendingCoalescableEvents()` below, but that's only called when we're `InUse`, but events are coalesced while `Initialized`, as well [Oct 2026]
+    [_drag.pendingCoalescableEvents removeAllObjects];
     
     /// Handle state == In use
     ///     Notify plugin
@@ -516,10 +595,10 @@ static void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
         coalescableEvent.cancelled = cancel;
 
         if (!_drag.coalesceEvents) {
-            processCoalescedDeactivationEvent(coalescableEvent);
+            processCoalescableDeactivationEvent(coalescableEvent);
         } else {
             [_drag.pendingCoalescableEvents addObject: coalescableEvent];
-            [_drag.coalescingDisplayLink start_UnsafeWithCallback: nil];
+            processPendingCoalescableEvents();
         }
     }
     

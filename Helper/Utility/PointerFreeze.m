@@ -162,7 +162,8 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         
         return event;
     }
-    
+
+
     /// Get deltas
     int64_t dx = -1;
     int64_t dy = -1;
@@ -171,6 +172,15 @@ CGEventRef _Nullable mouseMovedCallback(CGEventTapProxy proxy, CGEventType type,
         dy = CGEventGetIntegerValueField(event, kCGMouseEventDeltaY);
     }
     
+    /// Debug
+    DDLogDebug("PointerFreeze mouseMovedCallback [debugWarpDelta] delta: (%lld, %lld), loc (%d, %d), _coolEventTapIsEnabled: %d"
+        ,CGEventGetIntegerValueField(event, kCGMouseEventDeltaX)
+        ,CGEventGetIntegerValueField(event, kCGMouseEventDeltaY)
+        ,(int)CGEventGetLocation(event).x
+        ,(int)CGEventGetLocation(event).y
+        ,_coolEventTapIsEnabled
+    );
+
     /// Record timestamp and delta
     _lastEventTimestamp = CACurrentMediaTime();
     _lastEventDelta = llabs(MAX(dx,dy));
@@ -338,6 +348,15 @@ typedef enum {
     kPuppetCursorCommand_Undraw,
 } PuppetCursorCommand;
 
+NSString *PuppetCursorCommand_Description(PuppetCursorCommand command) {
+    switch (command) {
+        case kPuppetCursorCommand_Draw: return @"Draw";
+        case kPuppetCursorCommand_Move: return @"Move";
+        case kPuppetCursorCommand_Undraw: return @"Undraw";
+    }
+    return @"<>";
+}
+
 static void drawPuppetCursor(PuppetCursorCommand command) {
 
     assertRunLoop(pointerFreezeRunLoop());
@@ -368,7 +387,10 @@ static void drawPuppetCursor(PuppetCursorCommand command) {
     /// Wating on main could deadlock if main ever waits on GlobalEventTapThread (caller)! Doesn't do that currently [Sep 2026]
     bool blockCaller = command != kPuppetCursorCommand_Move;
     MFGate *gate = blockCaller ? [MFGate new] : nil;
-    
+
+    /// Debug
+    double tsBeforeMain = CACurrentMediaTime();
+
     /// Interact with AppKit from mainThread
     /// Optimization idea: Maybe coalesce these like we're already doing for DisplayLink.m's displayLinkCallback or ModifiedDrag's coalescingDisplayLink (But don't skip draw/undraw commands!) [Sep 2026]
     MFCFRunLoopPerform(CFRunLoopGetMain(), nil, ^{
@@ -406,6 +428,8 @@ static void drawPuppetCursor(PuppetCursorCommand command) {
     });
 
     [gate waitForWork];
+
+    if (gate) DDLogDebug("PointerFreeze waited %-7.2f (%@)", 1e3 * (CACurrentMediaTime() - tsBeforeMain), PuppetCursorCommand_Description(command));
 }
 
 static void updatePuppetCursorPosition(int64_t dx, int64_t dy) {

@@ -90,7 +90,7 @@ static MFReadWriteTracker _readWriteTracker;
     }
     
     /// Create animator
-    _animator = [[TouchAnimator alloc] initWithRunLoop: GlobalEventTapThread.runLoop name: @"ScrollAnimator"];
+    _animator = [[TouchAnimator alloc] initWithPhaseShift: kPhaseShiftInVBLDeltas_DefaultForEventSending runLoop: GlobalEventTapThread.runLoop name: @"ScrollAnimator"];
     
     /// Create initial config instance
     ///     Edit: I don't think this makes sense. `_scrollConfig` will be retrieved as necessary on first consecutive ticks

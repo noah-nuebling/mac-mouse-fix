@@ -41,7 +41,7 @@ static TouchAnimator *_momentumAnimator;
 + (void)initialize {
     if (self == [GestureScrollSimulator class]) {
         _scrollLinePixelator = [VectorSubPixelator biasedPixelator]; /// I think biased is only beneficial on linePixelator. Too lazy to explain.
-        _momentumAnimator = [[TouchAnimator alloc] initWithRunLoop: GlobalEventTapThread.runLoop name: @"GestureScrollSimulatorMomentum"];
+        _momentumAnimator = [[TouchAnimator alloc] initWithPhaseShift: kPhaseShiftInVBLDeltas_DefaultForEventSending runLoop: GlobalEventTapThread.runLoop name: @"GestureScrollSimulatorMomentum"];
         
     }
 }

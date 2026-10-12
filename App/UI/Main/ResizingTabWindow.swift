@@ -50,7 +50,7 @@ import Cocoa
         
         /// Create animator
         if (self.windowFrameAnimator == nil) {
-            windowFrameAnimator = DynamicSystemAnimator(fromAnimation: animation, stopTolerance: 0.003, optimizedWorkType: kMFDisplayLinkWorkTypeGraphicsRendering, runLoop: CFRunLoopGetMain(), name: "ResizingTabWindow");
+            windowFrameAnimator = DynamicSystemAnimator(fromAnimation: animation, stopTolerance: 0.003, phaseShift: kPhaseShiftInVBLDeltas_DefaultForAppKitUpdates, runLoop: CFRunLoopGetMain(), name: "ResizingTabWindow");
         }
         
         /// Debug

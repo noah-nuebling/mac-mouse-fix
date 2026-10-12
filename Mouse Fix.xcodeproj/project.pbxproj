@@ -27,6 +27,7 @@
 		4F1667EF2C6A6EA0009E4924 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F1667EE2C6A6EA0009E4924 /* MainMenu.xib */; };
 		4F1708BE2E51D60400945CF3 /* MFGate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFGate.m */; };
 		4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F17D2E0292A635200EB07CA /* SwitchMaster.swift */; };
+		4F1873D8307C234F00209BB2 /* vblphase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1873D7307C234F00209BB2 /* vblphase.m */; };
 		4F1AFE972670EBA900ECA424 /* DragCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1AFE962670EBA900ECA424 /* DragCurve.swift */; };
 		4F1B418F2D49960E00026C94 /* MFGate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFGate.m */; };
 		4F1B41902D49960E00026C94 /* MFGate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F1B418E2D49960E00026C94 /* MFGate.m */; };
@@ -419,6 +420,8 @@
 		4FFAEBEA2E74367300832CE2 /* AddField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFAEBE92E74367300832CE2 /* AddField.swift */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
 		4FFE2895291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		4FFF9F39307B904F00211519 /* mk_timer_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FFF9F38307B904900211519 /* mk_timer_notes.md */; };
+		4FFF9F3A307B904F00211519 /* mk_timer_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FFF9F38307B904900211519 /* mk_timer_notes.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -650,6 +653,7 @@
 		4F1713522E6201FE00FFE14A /* storyboard-notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "storyboard-notes.md"; sourceTree = "<group>"; };
 		4F17D2E0292A635200EB07CA /* SwitchMaster.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchMaster.swift; sourceTree = "<group>"; };
 		4F18466A2C53AD6D00D5E835 /* Automatic Localization Screenshots.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Automatic Localization Screenshots.md"; sourceTree = "<group>"; };
+		4F1873D7307C234F00209BB2 /* vblphase.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = vblphase.m; sourceTree = "<group>"; };
 		4F18A85727BF6E0200A5703B /* IOHIDEvent-Reconstructed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOHIDEvent-Reconstructed.h"; sourceTree = "<group>"; };
 		4F19F65E2906BB98007DE4CD /* ConfigReadme.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ConfigReadme.md; sourceTree = "<group>"; };
 		4F1AFE962670EBA900ECA424 /* DragCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragCurve.swift; sourceTree = "<group>"; };
@@ -2722,6 +2726,8 @@
 		4FFAEBE92E74367300832CE2 /* AddField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddField.swift; sourceTree = "<group>"; };
 		4FFBC5A6266977CA001D389B /* Mac Mouse Fix Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mac Mouse Fix Helper-Bridging-Header.h"; sourceTree = "<group>"; };
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
+		4FFF9F37307B8FE300211519 /* mk_timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mk_timer.h; sourceTree = "<group>"; };
+		4FFF9F38307B904900211519 /* mk_timer_notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = mk_timer_notes.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -6683,6 +6689,7 @@
 				4FE6CBC328987E8A00B3E829 /* DynamicSystemAnimator.swift */,
 				4F909D0C28A0C3D2009349A2 /* CAAnimation+Extensions.swift */,
 				4FD86058266DBF96004F76C8 /* AnimatorDeclarations.h */,
+				4FFF9F36307B8FD400211519 /* External */,
 			);
 			path = Animation;
 			sourceTree = "<group>";
@@ -7463,6 +7470,7 @@
 			children = (
 				4FDB94342FE75270001E05CB /* main.m */,
 				4FDB94332FE75270001E05CB /* FixDockSwipes.m */,
+				4F1873D7307C234F00209BB2 /* vblphase.m */,
 				4F8605A22FE81F5D00CC1147 /* Other */,
 			);
 			path = Tests;
@@ -8123,6 +8131,15 @@
 			path = Smoothing;
 			sourceTree = "<group>";
 		};
+		4FFF9F36307B8FD400211519 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				4FFF9F37307B8FE300211519 /* mk_timer.h */,
+				4FFF9F38307B904900211519 /* mk_timer_notes.md */,
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -8498,6 +8515,7 @@
 				4F7F47D328A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
 				4FF665F725F2C92700689B77 /* MainAppAssets.xcassets in Resources */,
 				4FFA4E4028B7D0610062A1FE /* SharedSFSymbols.xcassets in Resources */,
+				4FFF9F3A307B904F00211519 /* mk_timer_notes.md in Resources */,
 				4F909D2728A0C3D2009349A2 /* Main.storyboard in Resources */,
 				4F09284828B8EE7200BDC2FF /* LicenseSheetController.xib in Resources */,
 				4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */,
@@ -8513,6 +8531,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FA2F13E2C2B0932000C5535 /* Localizable.xcstrings in Resources */,
+				4FFF9F39307B904F00211519 /* mk_timer_notes.md in Resources */,
 				4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4F143E472B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */,
 				4FF6668325F2C93A00689B77 /* HelperAssets.xcassets in Resources */,
@@ -8994,6 +9013,7 @@
 			files = (
 				4FDB943A2FE75270001E05CB /* AppDelegate.m in Sources */,
 				4FDB943B2FE75270001E05CB /* FixDockSwipes.m in Sources */,
+				4F1873D8307C234F00209BB2 /* vblphase.m in Sources */,
 				4FDB943C2FE75270001E05CB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -9434,6 +9454,7 @@
 				ENABLE_DEBUG_DYLIB = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				EXCLUDED_ARCHS = "";
 				EXCLUDED_SOURCE_FILE_NAMES = "*_old_*";
 				GCC_C_LANGUAGE_STANDARD = gnu11;

@@ -43,6 +43,9 @@ double signedCeil(double num);
 //#define MIN(A,B)    ({ __typeof__(A) __a = (A); __typeof__(B) __b = (B); __a < __b ? __a : __b; })
 //#define MAX(A,B)    ({ __typeof__(A) __a = (A); __typeof__(B) __b = (B); __a < __b ? __b : __a; })
 
+double roundToGrid(double x, double grid0, double grid1, char *upOrDown);
+int64_t roundToGrid_Int(int64_t x, int64_t grid0, int64_t grid1, char *upOrDown);
+
 @end
 
 NS_ASSUME_NONNULL_END

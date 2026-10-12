@@ -75,8 +75,8 @@ import QuartzCore
     @available(*, unavailable)
     @objc override init() { fatalError("init() unavailable") }
 
-    @objc init(runLoop: CFRunLoop, name: String) {
-        self.displayLink = DisplayLink(optimizedFor: kMFDisplayLinkWorkTypeEventSending /*kMFDisplayLinkWorkTypeGraphicsRendering*/, runLoop: runLoop, name: name)
+    @objc init(phaseShift: PhaseShiftInVBLDeltas, runLoop: CFRunLoop, name: String) {
+        self.displayLink = DisplayLink(phaseShift: phaseShift, runLoop: runLoop, name: name)
         super.init()
     }
 
@@ -452,16 +452,15 @@ import QuartzCore
         }
         
         /// Get time when frame will be displayed
-        var frameTime = timeInfo.outFrame
-        
+        var frameTime = timeInfo.nextFrame
+
         if isFirstDisplayLinkCallback_AfterColdStart {
             
             /// Set animation start time
             
             /// Pull time of last frame time out of butt
-            ///  Note: Why don't we use timeInfo.lastFrame/timeInfo.thisFrame here?
-            lastFrameTime = frameTime - timeInfo.nominalTimeBetweenFrames
-            
+            lastFrameTime = frameTime - timeInfo.timeBetweenFrames
+
             /// Set animation start time to hypothetical last frame
             ///     This is so that the first timeDelta is the same size as all the others (instead of 0)
             animationStartTime = lastFrameTime
@@ -482,9 +481,9 @@ import QuartzCore
             ///     Doing this in start() would be easier but leads to deadlocks
             
             if let animationDurationRaw = animationDurationRaw {
-                self.animationDuration = ModificationUtility.roundUp(animationDurationRaw, toMultiple: timeInfo.nominalTimeBetweenFrames)
+                self.animationDuration = ModificationUtility.roundUp(animationDurationRaw, toMultiple: timeInfo.timeBetweenFrames)
             } else if let animationDurationRawInFrames = animationDurationRawInFrames {
-                self.animationDuration = Double(animationDurationRawInFrames) * timeInfo.nominalTimeBetweenFrames
+                self.animationDuration = Double(animationDurationRawInFrames) * timeInfo.timeBetweenFrames
             } else {
                 assert(false)
             }
