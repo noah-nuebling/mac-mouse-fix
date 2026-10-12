@@ -108,12 +108,11 @@ void setConfig(NSString *keyPath, NSObject *value) {
     /// - This create the keyPath if it doesn't exist in the config, yet
     assertRunLoop(configRunLoop());
 
-    #if DEBUG
-        if ([Config.shared.config objectForCoolKeyPath:keyPath] == nil) {
-            DDLogDebug("Setting value %@ to config at non-existent keyPath %@. The keypath will be created.", value, keyPath);
-        }
-    #endif
-    
+    if (runningDebugMode())
+    if ([Config.shared.config objectForCoolKeyPath:keyPath] == nil) {
+        DDLogDebug("Setting value %@ to config at non-existent keyPath %@. The keypath will be created.", value, keyPath);
+    }
+
     [Config.shared.config setObject:value forCoolKeyPath:keyPath];
 }
 void removeFromConfig(NSString *keyPath) {

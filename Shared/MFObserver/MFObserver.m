@@ -191,31 +191,31 @@ static void *_MFObserverKVOContext = "MFObserverContext";
     NSObject *_Nullable oldValue = receivesOldAndNewValues ? change[NSKeyValueChangeOldKey] : nil;
     
     /// Validate
-#if DEBUG
+    if (runningDebugMode()) {
+
+        /// Validate options
+        assert(self->_observingOptions & NSKeyValueObservingOptionNew);
+
+        /// Handle change-kind
+        NSKeyValueChange changeKind = [change[NSKeyValueChangeKindKey] unsignedIntegerValue];
+        assert(changeKind == NSKeyValueChangeSetting); /// We just handle values being set directly - none of the array and set observation stuff.
+
+        /// Handle indexes
+        NSIndexSet *changedIndexes = change[NSKeyValueChangeIndexesKey];
+        assert(changedIndexes == nil); /// We don't know how to handle the array and set observation stuff
+
+        /// Handle prior values
+        BOOL isPrior = [change[NSKeyValueChangeNotificationIsPriorKey] boolValue];
+        assert(!isPrior); /// We don't handle prior-value-observation (getting a callback *before* the value changes)
+
+        /// Validate changed value
+        if (!receivesOldAndNewValues) {
+            assert(oldValue == nil);
+        }
+        assert(newValue != nil);
     
-    /// Validate options
-    assert(self->_observingOptions & NSKeyValueObservingOptionNew);
-    
-    /// Handle change-kind
-    NSKeyValueChange changeKind = [change[NSKeyValueChangeKindKey] unsignedIntegerValue];
-    assert(changeKind == NSKeyValueChangeSetting); /// We just handle values being set directly - none of the array and set observation stuff.
-    
-    /// Handle indexes
-    NSIndexSet *changedIndexes = change[NSKeyValueChangeIndexesKey];
-    assert(changedIndexes == nil); /// We don't know how to handle the array and set observation stuff
-    
-    /// Handle prior values
-    BOOL isPrior = [change[NSKeyValueChangeNotificationIsPriorKey] boolValue];
-    assert(!isPrior); /// We don't handle prior-value-observation (getting a callback *before* the value changes)
-    
-    /// Validate changed value
-    if (!receivesOldAndNewValues) {
-        assert(oldValue == nil);
     }
-    assert(newValue != nil);
-    
-#endif
-    
+
     /// Send callback.
     if (receivesOldAndNewValues)    ((MFObserver_CallbackBlock_OldAndNew)self->_callbackBlock)(oldValue, (id)newValue);
     else                            ((MFObserver_CallbackBlock_New)self->_callbackBlock)((id)newValue);

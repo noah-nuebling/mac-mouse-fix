@@ -117,12 +117,10 @@
     /// - I added the NDEBUG flag back to the Clang Preprocessor Macros now. I also added the NDEBUG flag to the Swift Active Compilation Conditions. Not sure what effect that has, but I think the NDEBUG flag is standard for Swift, as well so it should work fine (Not totally sure though)
     
     #if NDEBUG
-        DDLogInfo("Accessibility Check - Running a Non-Debug build. Asserts are disabled.");
+        DDLogInfo("Accessibility Check - Running an NDEBUG build. Asserts are disabled.");
         assert(false);
-    #endif
-
-    #if DEBUG
-        DDLogInfo("Accessibility Check - Running a Debug build. Asserts are enabled.");
+    #else
+        DDLogInfo("Accessibility Check - Running a non-NDEBUG build. Asserts are enabled.");
     #endif
 
     /// Load (but don't yet +start) `GlobalEventTapThread` before anything else (So that other `load_Manual` methods can schedule things on `GlobalEventTapThread.runLoop`) [Sep 2026]

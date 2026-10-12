@@ -196,11 +196,11 @@ static NSAttributedString *attributedStringWithMarkdown(NSString *src, MDStyleOv
         
         /// Valdiate info from node
         
-        #if DEBUG
+        if (runningDebugMode()) {
             Boolean is_leaf = cmark_node_first_child(node) == NULL; /// This is different from `is_leaf_type` var (See above) [Oct 2025]
             if (node_literal) assert(is_leaf); /// I think only leaf nodes can directly contain text. That would simplify our control flow
             if (is_leaf_type) assert(is_leaf); /// leaf-node-type nodes can never have children. But other nodes types may also have 0 children.
-        #endif
+        }
         
         /// Use stack to track node enter and exit
         NSRange rangeOfExitedNodeInDst = NSMakeRange(NSNotFound, 0);

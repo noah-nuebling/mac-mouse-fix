@@ -138,7 +138,6 @@ Old logLevel logic (When we were still using CocoaLumberjack)
         We wrap expensive preparation for debug logs in this, to skip the preparation when the debug logs are disabled, anyways. Can't think of any other usages, right now [Oct 2026]
     Caution:
         Don't accidentally use `#if DEBUG` - it can't change it at runtime.
-        TODO: Replace remaining usage of `#if DEBUG` [Oct 2026]
     Also see:
         I think there was some super long old note I wrote about improving debugging of hard-to-reproduce issues, where this idea comes from, but I'm too lazy to look it up [Oct 2026]
             I think it was in my notes repo, or some separate repo, because I didn't have the notes repo, yet [Oct 2026]
@@ -151,7 +150,7 @@ static inline bool runningDebugMode(void) {
 }
 
 /** runningPrereleaseBuild()
-    Idea: See implementation
+    Idea: Detect Alpha/Beta releases. (/ debug builds) See implementation. [Oct 2026]
     Note/History: This one doesn't really belong into Logging.h, but it's here to stay close to `runningDebugMode()` [Oct 2026]
 */
 bool runningPrereleaseBuild(void);
