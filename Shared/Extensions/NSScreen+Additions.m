@@ -49,9 +49,10 @@
     return nil;
 }
 
-/// Src: https://stackoverflow.com/questions/1236498/how-to-get-the-display-name-with-the-display-id-in-mac-os-x
+
 - (CGDirectDisplayID)displayID {
-    return [[[self deviceDescription] valueForKey: @"NSScreenNumber"] unsignedIntValue]; /// TODO: Simplify/optimize this. In lldb we can just do `self->_displayID`
+    if (@available(macOS 26.0, *)) return self.CGDirectDisplayID; /// [Oct 2026] Used to go through [self deviceDescription] but that was slow on macOS 27 due to Swift bridging. (Maybe on older macOS, too?) Old source: https://stackoverflow.com/questions/1236498/how-to-get-the-display-name-with-the-display-id-in-mac-os-x
+    else                           return [[self valueForKey: @"_screenNumber"] unsignedIntValue];
 }
 
 - (NSString *)mf_UUIDString {
