@@ -58,4 +58,4 @@
 
 # Threading
 
-Everything licensing runs on `GlobalEventTapThread` (mainThread in the mainApp) as of [Sep 2026]. See `Threads.h` for overview/explanation of threading architecture.
+Everything licensing runs on `IOThread` (mainThread in the mainApp) as of [Sep 2026]. See `Threads.h` for overview/explanation of threading architecture.

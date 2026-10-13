@@ -9,7 +9,7 @@
 /**
     MMF Concurrency Model [Sep 2026]
         MainApp:    Everything on `mainThread`
-        HelperApp:  Everything on `GlobalEventTapThread`, except for things that have to be on `mainThread` (AppKit, TISInputSource, possibly CVDisplayLinkStart/Stop, maybe more)
+        HelperApp:  Everything on `IOThread`, except for things that have to be on `mainThread` (AppKit, TISInputSource, possibly CVDisplayLinkStart/Stop, maybe more)
         -> max 2 threads per process (This possibly leaves out some background download stuff or whatever that doesn't interact much with the core, we don't see that as part of the 'architecture' or 'model' we're describing or caring about here.)
 
     About the 2-thread-model in HelperApp:
@@ -34,11 +34,11 @@
                     The mouse-event processing in the helper is inherently pretty serial, I think, putting everything on different queue, won't deliver result much quicker, I'm pretty sure. (Update: [Oct 2026] We'd now have a way to test that a little better with `vblphase.m`)
                     The CPU usage of the helper is low anyways - the goal is keeping things responsive - our part in that is just processing the events faster than the display frame-period. Which we're super super easily doing on a single thread (I'm pretty sure)
                 Some old comments: [Oct 2026]:
-                    /// We've created `GlobalEventTapThread` so that we don't have to use the main runLoop for all eventTaps
+                    /// We've created `IOThread` so that we don't have to use the main runLoop for all eventTaps
                     ///     Edit2: [Dec 2024] I think since the `twoFingerModifiedDrag` draws a fake mouse pointer (necessarily, on the mainthread), with relatively high CPU usag,  it's probably good to put inputProcessing on a separate thread to ensure responsiveness.
                     ///         Also, all processing of input events should be on the same thread (so on this thread, not the mainthread or some dispatchqueue) to prevent race conditions and problems where events are processed in the wrong order. (I think see order-of-events problems during click-and-drag sometimes under MMF 3.0.3. – seems like clicks and drags are processed on different threads. (?) Also, doubleclicks are – stupidly – processed on the mainthread iirc, (Mightt be wrong, don't remember how this stuff works anymore – but the threading architecture is terrible and overcomplicated.))
                     ///         Update [Apr 2025] another practical reason to change this is the crazy crashes that happened after we tried to change scroll-event scheduling in 3.0.2. IIRC it took us months to get the multithreading bugs under control when building MMF 3, and it seems that changing the timings can make the whole house-of-cards fall apart. We don't want that! Coordinating everything on 1 thread, should allow for more 'fearless refactors'.
-                    ///     Edit3: [Apr 2025] If we put everything on IOThread (that's what we've been calling GlobalEventTapThread lately), this should greatly reduce potential for raceconditions and deadlocks and could simply some existing code a lot, since we won't need as much locking and dispatching to dispatchqueues and stuff, I think.
+                    ///     Edit3: [Apr 2025] If we put everything on IOThread, this should greatly reduce potential for raceconditions and deadlocks and could simply some existing code a lot, since we won't need as much locking and dispatching to dispatchqueues and stuff, I think.
                     ///         However, they are still going to be *interaction-points between the IOThread and mainThread* which have high potential for race-conditions.
                     ///         Thread-interaction points:
                     ///             - Remaps loading
@@ -59,11 +59,11 @@
                         - `dispatch_queue` still has weird edge case, when you wait on too many queues, you can get thread explosion.
                         - If your work is CPU bound (not just waiting for IO) then having more queues/threads than CPU cores won't help anyways. (That many threads is basically free with NSThread)
                         -> Why the heck is this being promoted for GUI app developers
-            Why 2 threads? (GlobalEventTapThread and MainThread)
+            Why 2 threads? (IOThread and MainThread)
                 The only thing that I think could contend CPU with the main event processing is the ScreenDrawer.swift's AppKit drawing driven through twoFingerSwipe -> PointerFreeze > ScreenDrawer.
                     -> This is pretty expensive since it's AppKit (I'm pretty sure [Sep 2026]), and it HAS to be on the mainThread.
-                So we want the eventProcessing to be on a separate thread from mainThread to not contend with expensive AppKit drawing -> That's GlobalEventTapThread.
-                    Everything peripheral like Licensing and Config and Remaps then got pulled onto GlobalEventTapThread as well since it all heavily interacts with eventProcessing
+                So we want the eventProcessing to be on a separate thread from mainThread to not contend with expensive AppKit drawing -> That's IOThread.
+                    Everything peripheral like Licensing and Config and Remaps then got pulled onto IOThread as well since it all heavily interacts with eventProcessing
                     and with each other and would need complicated locking or thread-hops otherwise.
                     -> The only thing left on main is the stuff that needs to be - mostly AppKit - MenuBarItem, TrialNotification, ScreenDrawer, maybe CVDisplayLinkStart/Stop
                         maybe other small parts of input-processing-chain calling mainThread-only Apple APIs like TISInput stuff, also maybe NSScreen. Can't think of anything else. [Sep 2026]
@@ -71,8 +71,8 @@
             mainThread-never-waits might be good and doable: [Sep 2026]
                 If we avoid mainThread ever waiting on anything, then input-processing could theoretically wait on main to do parts of its processing, with easy-to-audit no deadlock risk - I think we can do this.
                 (As for input processing waiting for mainThread - can only think of NSScreen, to get screen under mouse pointer, but feel like that's safe to access off of main, anyways, not sure we even need it.)
-                Update: [Oct 2026] ModifiedDrag.m > PointerFreeze.m > ScreenDrawer.swift has `GlobalEventTapThread` waiting on mainThread I think. Not aware of any other places.
-        Note about moving things off of GlobalEventTapThread, if necessary:
+                Update: [Oct 2026] ModifiedDrag.m > PointerFreeze.m > ScreenDrawer.swift has `IOThread` waiting on mainThread I think. Not aware of any other places.
+        Note about moving things off of IOThread, if necessary:
             - Should only do this if it's pretty clearly causing some performance issue.
             - Should maybe make core modules accessed by multiple threads threadsafe with locks instead of isolating to a thread. (Would prevent all the threadhops / deadlocks potentially)
                 -> Preliminary analysis looked like locking is pretty doable inside Config.m and SecureStorage.swift (leave the Config-did-change update callouts out of the critical zone and stuff)
@@ -150,7 +150,7 @@ typedef struct { int readerCount; int writerCount; } MFReadWriteTracker;
     NS_SWIFT_UNAVAILABLE("")
     static inline void __decrementInt(int **someInt) { **someInt -= 1; }
 
-@interface GlobalEventTapThread : NSObject
+@interface IOThread : NSObject
 
     + (void) load_Manual;
     + (void) start;

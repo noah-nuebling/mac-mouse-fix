@@ -28,15 +28,15 @@ static CFMachPortRef _eventTap;
 }
 
 + (void)start {
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     CGEventTapEnable(_eventTap, true);
 }
 + (void)stop {
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     CGEventTapEnable(_eventTap, false);
 }
 + (BOOL)isRunning {
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     /// Only used for debug inspection at the time of writing. Shouldn't need it for anything else. [Sep 2026]
     return CGEventTapIsEnabled(_eventTap);
 }
@@ -64,11 +64,11 @@ static void registerInputCallback() {
     
     /// Add to runLoop
     ///     Old note: [Sep 2026]
-    ///         Running on `GlobalEventTapThread`. Used to run on main. We made this change as a hotfix to the StatusBarItem only reacting to mouseHover if you click and then move mouse outside of the menu and then back in.
+    ///         Running on `IOThread`. Used to run on main. We made this change as a hotfix to the StatusBarItem only reacting to mouseHover if you click and then move mouse outside of the menu and then back in.
     ///         This might have unforseen consequences. E.g. the stuff we call from the tap must dispatch to mainThread at some points, so this changes the threading model, and might introduce raceConditions
     ///         Edit: Yes this is causing race conditions. The click and drag gestures get stuck all the time now. Alternative solution: Run on main thread and just don't capture MB1.
 
-    CFRunLoopAddSource(GlobalEventTapThread.runLoop, runLoopSource, kCFRunLoopDefaultMode);
+    CFRunLoopAddSource(IOThread.runLoop, runLoopSource, kCFRunLoopDefaultMode);
     
     CFRelease(runLoopSource);
 }
@@ -77,7 +77,7 @@ NSArray *_buttonParseBlacklist; /// Don't send inputs from these buttons to Butt
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
 
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
 
     /// Re-enable on timeout
     /// Maybe it would be better to do the heavy lifting on a background queue, so this never times out, but this is easier, and it times out quite rarely anyways so this should be fine.

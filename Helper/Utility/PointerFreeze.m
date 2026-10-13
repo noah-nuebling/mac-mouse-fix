@@ -43,7 +43,7 @@ static Boolean _coolEventTapIsEnabled; /// CGEventTapIsEnabled() is pretty slow,
 static CFTimeInterval _lastEventTimestamp;
 static int64_t _lastEventDelta;
 
-#define pointerFreezeRunLoop() GlobalEventTapThread.runLoop
+#define pointerFreezeRunLoop() IOThread.runLoop
 
 /// + initialize
 
@@ -384,7 +384,7 @@ static void drawPuppetCursor(PuppetCursorCommand command) {
 
     /// Decide about blocking
     /// I used to think blocking was necessary to get the order of hiding/drawing/processing gesture right/non janky. On my M4 MBA it doesn't seem to make a difference. (Still had the usleep enabled, so maybe test again) Still doing this just in case or whatever I guess [Sep 2026]
-    /// Wating on main could deadlock if main ever waits on GlobalEventTapThread (caller)! Doesn't do that currently [Sep 2026]
+    /// Wating on main could deadlock if main ever waits on IOThread (caller)! Doesn't do that currently [Sep 2026]
     bool blockCaller = command != kPuppetCursorCommand_Move;
     MFGate *gate = blockCaller ? [MFGate new] : nil;
 

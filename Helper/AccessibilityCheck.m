@@ -123,10 +123,10 @@
         DDLogInfo("Accessibility Check - Running a non-NDEBUG build. Asserts are enabled.");
     #endif
 
-    /// Load (but don't yet +start) `GlobalEventTapThread` before anything else (So that other `load_Manual` methods can schedule things on `GlobalEventTapThread.runLoop`) [Sep 2026]
-    ///     Also see `[GlobalEventTapThread start];` at the end
-    ///     [Sep 2026] Claude Opus 5.5 deadlock note: `MFCFRunLoopPerform_sync` onto `GlobalEventTapThread.runLoop` before `+[GlobalEventTapThread start]` would deadlock – but we probably will barely use `MFCFRunLoopPerform_sync` and would probably quickly catch anyways.
-    [GlobalEventTapThread load_Manual];
+    /// Load (but don't yet +start) `IOThread` before anything else (So that other `load_Manual` methods can schedule things on `IOThread.runLoop`) [Sep 2026]
+    ///     Also see `[IOThread start];` at the end
+    ///     [Sep 2026] Claude Opus 5.5 deadlock note: `MFCFRunLoopPerform_sync` onto `IOThread.runLoop` before `+[IOThread start]` would deadlock – but we probably will barely use `MFCFRunLoopPerform_sync` and would probably quickly catch anyways.
+    [IOThread load_Manual];
 
     /// Apply our configurations for the mainThread
     threads_configureMainThread();
@@ -256,10 +256,10 @@
         #endif
     }
 
-    /// Start the GlobalEventTapThread after everything else (That way, eventTaps and stuff we moved from mainThread to GlobalEventTapThread in 'No more dispatch queues' refactor still only start after everything is loaded and don't race with `load_Manual` init) [Sep 2026]
-    ///     -> This makes the whole `+load_Manual` sequence thread-safe (As long as we only use mainThread and GlobalEventTapThread) [Sep 2026]
-    _enableRunLoopAsserts = 1; /** During the Helper's `load_Manual` startup sequence there's only one thread running (mainThread) and we allow it to touch all the state - here, where we start the `GlobalEventTapThread`. [Sep 2026] */
-    [GlobalEventTapThread start];
+    /// Start the IOThread after everything else (That way, eventTaps and stuff we moved from mainThread to IOThread in 'No more dispatch queues' refactor still only start after everything is loaded and don't race with `load_Manual` init) [Sep 2026]
+    ///     -> This makes the whole `+load_Manual` sequence thread-safe (As long as we only use mainThread and IOThread) [Sep 2026]
+    _enableRunLoopAsserts = 1; /** During the Helper's `load_Manual` startup sequence there's only one thread running (mainThread) and we allow it to touch all the state - here, where we start the `IOThread`. [Sep 2026] */
+    [IOThread start];
 }
 
 + (Boolean)checkAccessibilityAndUpdateSystemSettings {

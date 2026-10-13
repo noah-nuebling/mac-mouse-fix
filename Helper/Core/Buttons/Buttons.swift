@@ -31,7 +31,7 @@ import Cocoa
     /// Handling input
     
     @objc static func handleInput(device: Device, button: NSNumber, downNotUp mouseDown: Bool, event: CGEvent) -> MFEventPassThroughEvaluation {
-        assertRunLoop(GlobalEventTapThread.runLoop())
+        assertRunLoop(IOThread.runLoop())
 
         let passThroughEvaluation = kMFEventPassThroughRefusal
         
@@ -193,7 +193,7 @@ import Cocoa
     
     @objc static func handleButtonHasHadEffectAsModifier(button: NSNumber) {
 
-        assertRunLoop(GlobalEventTapThread.runLoop())
+        assertRunLoop(IOThread.runLoop())
 
         /// Validate
         /// Might wanna `assert(buttonIsHeld)`

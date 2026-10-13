@@ -24,7 +24,7 @@
 CFMachPortRef _keyCaptureEventTap;
 
 + (void)enable {
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
 
     DDLogInfo("Enabling keyCaptureMode");
     
@@ -36,19 +36,19 @@ CFMachPortRef _keyCaptureEventTap;
             option: kCGEventTapOptionDefault
             placement: kCGHeadInsertEventTap
             callback: keyCaptureModeCallback
-            runLoop: GlobalEventTapThread.runLoop
+            runLoop: IOThread.runLoop
         ];
     }
     CGEventTapEnable(_keyCaptureEventTap, true);
 }
 
 + (void)disable {
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     CGEventTapEnable(_keyCaptureEventTap, false);
 }
 
 CGEventRef _Nullable keyCaptureModeCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
 
     CGEventFlags flags  = CGEventGetFlags(event);
     

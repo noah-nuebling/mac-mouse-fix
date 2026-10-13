@@ -84,13 +84,13 @@ void set_thread_priority(int priority, bool round_robin) {
 void threads_configureMainThread(void) {
 
     /// Set the priority of the mainThread
-    ///     Set this to `MAXPRI_USER-1` since the mainThread draw the cursor during twoFingerSwipe. Little lower than `GlobalEventTapThread` because scrolling perf is still more important. (Untested, maybe there's a case to set this low to not take resources from the scrolling app.) [Sep 2026]
+    ///     Set this to `MAXPRI_USER-1` since the mainThread draw the cursor during twoFingerSwipe. Little lower than `IOThread` because scrolling perf is still more important. (Untested, maybe there's a case to set this low to not take resources from the scrolling app.) [Sep 2026]
     set_thread_priority(MAXPRI_USER-1, /*round_robin*/true);
 }
 
-#pragma mark - GlobalEventTapThread
+#pragma mark - IOThread
 
-@implementation GlobalEventTapThread
+@implementation IOThread
 
     /// Vars
 

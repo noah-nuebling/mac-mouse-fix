@@ -46,7 +46,7 @@ func licensingRunLoop() -> CFRunLoop {
     #if IS_MAIN_APP
         return CFRunLoopGetMain();
     #elseif IS_HELPER
-        return GlobalEventTapThread.runLoop();
+        return IOThread.runLoop();
     #endif
 }
 

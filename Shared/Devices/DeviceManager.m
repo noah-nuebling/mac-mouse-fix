@@ -45,12 +45,12 @@ static IOHIDManagerRef _manager;
 static NSMutableArray<Device *> *_attachedDevices;
 
 + (BOOL)devicesAreAttached {
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     readsState(&_readWriteTracker);
     return _attachedDevices.count > 0;
 }
 + (NSArray<Device *> *)attachedDevices {
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     readsState(&_readWriteTracker);
     return _attachedDevices;
 }
@@ -58,7 +58,7 @@ static NSMutableArray<Device *> *_attachedDevices;
 static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 + (Device * _Nullable)attachedDeviceWithIOHIDDevice:(IOHIDDeviceRef)iohidDevice {
 
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     readsState(&_readWriteTracker); /// [Sep 2026] Only callout `wrapsIOHIDDevice:` only reads things.
 
     /// NOTE: Tried caching here using `_iohidToAttachedCache`, but it actually makes things slower.
@@ -110,7 +110,7 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
     /// Meant to be called when the app closes
 
     #if 0 /// [Sep 2026] Activate when adding PointerSpeed features
-        assertRunLoop(GlobalEventTapThread.runLoop);
+        assertRunLoop(IOThread.runLoop);
         readsAndWritesState(&_readWriteTracker);
         for (Device *device in _attachedDevices) {
             [PointerSpeed deconfigureDevice:device.iohidDevice];
@@ -140,26 +140,26 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
 #pragma mark - Device information
 
 + (BOOL)someDeviceHasScrollWheel {
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     readsState(&_readWriteTracker);
     return _attachedDevices.count > 0;
 }
 
 + (BOOL)someDeviceHasPointing {
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     readsState(&_readWriteTracker);
     return _attachedDevices.count > 0;
 }
 + (BOOL)someDeviceHasUsableButtons {
     /// We ignore MB 1 and MB 2. That's also why it's called "deviceHas**Usable**Buttons", and not just "deviceHasButtons"
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     return self.maxButtonNumberAmongDevices > 2; /// [Sep 2026] No `readsState()` etc. since this just forwards to `maxButtonNumberAmongDevices`
 }
 
 static BOOL _maxButtonNumberAmongDevices_IsCached = false;
 
 + (int)maxButtonNumberAmongDevices {
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
 
     static MFMouseButtonNumber _result = 0;
@@ -185,7 +185,7 @@ static BOOL _maxButtonNumberAmongDevices_IsCached = false;
 
 static void setupDeviceMatchingAndRemovalCallbacks() {
 
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
 
     /// Create HID Manager
@@ -219,7 +219,7 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
     IOHIDManagerSetDeviceMatchingMultiple(_manager, (__bridge CFArrayRef)matchArray);
     
     /// Register the HID Manager on our app's run loop
-    IOHIDManagerScheduleWithRunLoop(_manager, GlobalEventTapThread.runLoop, kCFRunLoopCommonModes);
+    IOHIDManagerScheduleWithRunLoop(_manager, IOThread.runLoop, kCFRunLoopCommonModes);
 
     /// Open the HID Manager
     //IOReturn IOReturn = IOHIDManagerOpen(_HIDManager, kIOHIDOptionsTypeNone);
@@ -238,7 +238,7 @@ static void setupDeviceMatchingAndRemovalCallbacks() {
 
 static void handleDeviceMatching(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
 
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
 
     DDLogDebug("New matching IOHIDDevice: %@", device);
@@ -309,7 +309,7 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
 
 static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IOHIDDeviceRef device) {
 
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
 
     Device *attachedDevice;

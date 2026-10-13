@@ -96,7 +96,7 @@ static NSMutableDictionary *_swipeInfo;
 
 + (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase invertedFromDevice:(BOOL)invertedFromDevice {
 
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
 
     /// macOS 27 fix notes: (CGEventFields are now ignored, instead it relies on an IOHIDEvent) (See exploration in FixDockSwipes.m)
     ///     Problems/TODOs: (macOS 27 Beta 2)
@@ -331,7 +331,7 @@ static NSMutableDictionary *_swipeInfo;
         if (_tripleSendTimer != nil) [_tripleSendTimer invalidate];
 
         /// Schedule new timers
-        assertRunLoop(GlobalEventTapThread.runLoop);
+        assertRunLoop(IOThread.runLoop);
         _doubleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
         _tripleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
         

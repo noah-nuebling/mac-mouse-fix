@@ -37,7 +37,7 @@ import Foundation
 
 func _secureStorageRunLoop() -> CFRunLoop {
     #if IS_HELPER
-        return GlobalEventTapThread.runLoop()
+        return IOThread.runLoop()
     #elseif IS_MAIN_APP
         return CFRunLoopGetMain();
     #endif

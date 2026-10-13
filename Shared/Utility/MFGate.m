@@ -9,7 +9,7 @@
 
 
 /// Usage: Thread A schedules work on thread B, then waits until the work is completed. [Sep 2026]
-/// Behavior: Can deadlock. Should be able to avoid that architecturally after 'No more dispatch queues' refactor  since we only have 2 threads - main and GlobalEventTapThread [Sep 2026]
+/// Behavior: Can deadlock. Should be able to avoid that architecturally after 'No more dispatch queues' refactor  since we only have 2 threads - main and IOThread [Sep 2026]
 ///     Extension idea: If we ever do need a timeout to catch deadlocks, we gotta either just crash (restarting the Helper), or return `Running` or `Canceled` state from the timed-out wait, so the caller can correctly recover. (We'd then also need to wrap thread B's work in a closure and pass it to the MFGate to ensure correct locking) [Sep 2026]
 ///
 /// Note: Maybe we should implement this using `dispatch_semaphore` or POSIX semaphores (`sem_init()`) instead of `NSCondition`? Probably a bit faster.

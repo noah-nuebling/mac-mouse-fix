@@ -208,7 +208,7 @@ class ClickCycle: NSObject {
             ///                    IIRC I used this approach for Mac Mouse Fix 1 and 2, since I didn't even know what 'thread safe' meant at that point. And it has also worked quite well for ClickCycle so far, with this being the first crash I see - but using force unwrapping (the ! operator) on `state!` is sort of a mistake under that design philosophy, since it crashes when there's a race condition instead of smoothly recovering.
             ///         Solution ideas:
             ///            1. Move all input processing to a single, dedicated thread (I want to do this anyways.)
-            ///                 - My understanding of the current threading situation: (Sep 2024) we process buttonInputs partially on the mainThread and partially on the 'buttonQueue', other inputProcessing modules such as the modifiedDrag also interact with this module by triggering `ClickCycle.kill()`. modifiedDrag runs on the `GlobalEventTapThread`, but then also dispatches to a special `_drag.queue`, which I don't currently understand the purpose of. So it's really a bit all-over-the-place, and the `NSTimer.invalidate()` method inside `ClickCycle.kill()` is probably not always being called from the same thread, which could cause problems according to the docs.
+            ///                 - My understanding of the current threading situation: (Sep 2024) we process buttonInputs partially on the mainThread and partially on the 'buttonQueue', other inputProcessing modules such as the modifiedDrag also interact with this module by triggering `ClickCycle.kill()`. modifiedDrag runs on the `IOThread`, but then also dispatches to a special `_drag.queue`, which I don't currently understand the purpose of. So it's really a bit all-over-the-place, and the `NSTimer.invalidate()` method inside `ClickCycle.kill()` is probably not always being called from the same thread, which could cause problems according to the docs.
             ///            2. Remove all force unwrapping `!` from ClickCycle and instead do nil checks and then smoothly recover if state == nil.
             ///
             /// TODO: @crash fix this.
@@ -220,7 +220,7 @@ class ClickCycle: NSObject {
             if mouseDown {
                 /// mouseDown
                 state?.upTimer.invalidate()
-                state?.downTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, runLoop: GlobalEventTapThread.runLoop(), block: { timer in
+                state?.downTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, runLoop: IOThread.runLoop(), block: { timer in
                     /// Callback
                     if self.state == nil { return } /// [Oct 2026] Just saw this be nil and crash right after launching. Didn't look into what happened. Must be rare.
                     var c: [UnconditionalReleaseCallback] = []
@@ -232,7 +232,7 @@ class ClickCycle: NSObject {
                     self.state!.upTimer.invalidate()
                 })
                 /// Not sure whether to start started upTimer on mouseDown or up
-                state?.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.26, repeats: false, runLoop: GlobalEventTapThread.runLoop(), block: { timer in
+                state?.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.26, repeats: false, runLoop: IOThread.runLoop(), block: { timer in
                     if self.state == nil { return } /// Guard race conditions. Not totally sure why this happens. Update: [Sep 2026] This note is from before 'No more dispatch queues' refactor, might be fixed now.
                     self.callTriggerCallback(triggerCallback, ClickCycleTriggerPhase.levelExpired, self.state!.clickLevel, device, button)
                     self.kill()

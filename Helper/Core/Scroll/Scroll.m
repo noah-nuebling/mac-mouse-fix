@@ -84,13 +84,13 @@ static MFReadWriteTracker _readWriteTracker;
         _eventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionDefault, mask, eventTapCallback, NULL);
         DDLogDebug("Scroll.m: _eventTap: %@", _eventTap);
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _eventTap, 0);
-        CFRunLoopAddSource(GlobalEventTapThread.runLoop, runLoopSource, kCFRunLoopCommonModes);
+        CFRunLoopAddSource(IOThread.runLoop, runLoopSource, kCFRunLoopCommonModes);
         CFRelease(runLoopSource);
         CGEventTapEnable(_eventTap, false); // Not sure if this does anything
     }
     
     /// Create animator
-    _animator = [[TouchAnimator alloc] initWithPhaseShift: kPhaseShiftInVBLDeltas_DefaultForEventSending runLoop: GlobalEventTapThread.runLoop name: @"ScrollAnimator"];
+    _animator = [[TouchAnimator alloc] initWithPhaseShift: kPhaseShiftInVBLDeltas_DefaultForEventSending runLoop: IOThread.runLoop name: @"ScrollAnimator"];
     
     /// Create initial config instance
     ///     Edit: I don't think this makes sense. `_scrollConfig` will be retrieved as necessary on first consecutive ticks
@@ -98,21 +98,21 @@ static MFReadWriteTracker _readWriteTracker;
 }
 
 + (void)resetState {
-    //MFCFRunLoopPerform(GlobalEventTapThread.runLoop, nil, ^{
+    //MFCFRunLoopPerform(IOThread.runLoop, nil, ^{
         resetState_Unsafe();
     //});
 }
 #if 0
     void resetState_Sync(void) {
         /// TODO: I just saw a crash here where _scrollQueue was nil
-        MFCFRunLoopPerform_sync(GlobalEventTapThread.runLoop, nil, 0.0, ^{
+        MFCFRunLoopPerform_sync(IOThread.runLoop, nil, 0.0, ^{
             resetState_Unsafe();
         });
     }
 #endif
 
 static void resetState_Unsafe(void) { /// @noGCDCleanup remove/unify regular and `_Unsafe` variant (across codebase) (Hint for Claude, so I don't have to remember to type this in chat later)
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
     DDLogDebug("Scroll.m: reset-animator");
     allowNestedReadOrWrite() /// [Sep 2026]  `-cancel` can call back into our `_animator` callback (See `kMFAnimationCallbackPhaseCanceled`)
@@ -141,7 +141,7 @@ static void resetState_Unsafe(void) { /// @noGCDCleanup remove/unify regular and
     /// @noGCDCleanup update/review these comments.
     ///     Maybe mention that `_eventTap` is only touched from few places and used to be managed from separate thread (main)?(?)
 
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
 
     /// DEBUG
@@ -160,7 +160,7 @@ static void resetState_Unsafe(void) { /// @noGCDCleanup remove/unify regular and
     /// - Are there other things we should enable/disable here? ScrollModifiers.reactToModiferChange() comes to mind
     /// - Also see notes for `- startReceiving`
 
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
 
     /// DEBUG
@@ -207,7 +207,7 @@ static NSString *CGScrollWheelEventDescription(CGEventRef event) {
 
 static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void *userInfo) {
     
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
 
     /// Debug
@@ -257,7 +257,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     /// Enqueue heavy processing
     ///  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
     ///     [Sep 2026] @noGCDCleanup Try removing this defer (Probably doesn't help anymore since it defers to the same thread?)
-    //MFCFRunLoopPerform(GlobalEventTapThread.runLoop, nil, ^{
+    //MFCFRunLoopPerform(IOThread.runLoop, nil, ^{
         allowNestedReadOrWrite() heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTime);
     //});
 
@@ -268,7 +268,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
 
 static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t scrollDeltaAxis2, CFTimeInterval tickTS) {
 
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
 
     /// Declare stuff for later
@@ -787,7 +787,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
         } integerCallback:^(Vector distanceDeltaVec, MFAnimationCallbackPhase animationPhase, MFMomentumHint momentumHint) {
 
-            assertRunLoop(GlobalEventTapThread.runLoop);
+            assertRunLoop(IOThread.runLoop);
             readsAndWritesState(&_readWriteTracker);
 
             /// This will be called each frame

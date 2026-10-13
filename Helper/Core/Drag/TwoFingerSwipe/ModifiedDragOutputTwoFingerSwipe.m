@@ -46,7 +46,7 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
     ///
     /// @noGCDCleanup ^^^
 
-    _smoothingAnimator = [[TouchAnimator alloc] initWithPhaseShift: kPhaseShiftInVBLDeltas_DefaultForEventSending runLoop: GlobalEventTapThread.runLoop name: @"TwoFingerSwipeSmoothing"];
+    _smoothingAnimator = [[TouchAnimator alloc] initWithPhaseShift: kPhaseShiftInVBLDeltas_DefaultForEventSending runLoop: IOThread.runLoop name: @"TwoFingerSwipeSmoothing"];
     //_smoothingAnimator = [[DynamicSystemAnimator alloc] initWithSpeed:3 damping:1.0 initialResponser:1.0 stopTolerance:1.0];
     
     /// Make cursor settable

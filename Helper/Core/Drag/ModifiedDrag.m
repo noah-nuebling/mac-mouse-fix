@@ -166,7 +166,7 @@ static ModifiedDragState _drag;
                         /// ^ Using `Default` causes weird cursor jumping issues when clicking-dragging-and-holding during addMode. Not sure why that happens. This didn't happen in v2 while using `Default`. Not sure if `ListenOnly` has any disadvantages. Edit: In other places, I've had issues using listenOnly because it messes up the timestamps (I'm on macOS 12.4. right now). -> Trying default again.
             placement: kCGHeadInsertEventTap
             callback: eventTapCallBack
-            runLoop: GlobalEventTapThread.runLoop
+            runLoop: IOThread.runLoop
         ];
 
         _drag.eventTap = eventTap;
@@ -188,7 +188,7 @@ static ModifiedDragState _drag;
 
 + (void)initializeDragWithDict:(NSDictionary *)effectDict {
     
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
 
     /// Debug
     DDLogDebug("INITIALIZING MODIFIEDDRAG WITH previous type %@ activationState %d, newEffectDict: %@", _drag.type, _drag.activationState, effectDict);
@@ -252,7 +252,7 @@ static void initDragState_Unsafe(void) {
 
 static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType type, CGEventRef event, void * __nullable userInfo) {
 
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
 
     /// Store proxy
     //_tapProxy = proxy;
@@ -394,7 +394,7 @@ static void processPendingCoalescableEventsOncePerFrame(void) {
 
 static void processPendingCoalescableEvents(void) {
 
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
 
     /// Early return
     if (!_drag.pendingCoalescableEvents.count) return;
@@ -571,7 +571,7 @@ static void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
 
 + (void)deactivateWithCancel:(BOOL)cancel {
 
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
     
     /// Debug
     DDLogDebug("modifiedDrag deactivate with state: %@", [ModifiedDrag modifiedDragStateDescription:_drag]);

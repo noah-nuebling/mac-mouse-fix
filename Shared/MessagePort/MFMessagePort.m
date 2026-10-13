@@ -76,7 +76,7 @@
 ///         Checking if `localPort != nil` should detect this case
 
 #if IS_HELPER
-    #define messagePortRunLoop() GlobalEventTapThread.runLoop
+    #define messagePortRunLoop() IOThread.runLoop
 #elif IS_MAIN_APP
     #define messagePortRunLoop() CFRunLoopGetMain()
 #else /** LocalizationScreenshotTaker [Sep 2026] */

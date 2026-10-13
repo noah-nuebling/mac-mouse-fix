@@ -64,7 +64,7 @@ static NSMutableDictionary *_modifiers;
         CGEventMask mask = CGEventMaskBit(kCGEventFlagsChanged);
         _kbModEventTap = CGEventTapCreate(kCGHIDEventTap, kCGHeadInsertEventTap, kCGEventTapOptionListenOnly, mask, kbModsChanged, NULL);
         CFRunLoopSourceRef runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, _kbModEventTap, 0);
-        CFRunLoopAddSource(GlobalEventTapThread.runLoop, runLoopSource, kCFRunLoopDefaultMode);
+        CFRunLoopAddSource(IOThread.runLoop, runLoopSource, kCFRunLoopDefaultMode);
         CFRelease(runLoopSource);
         
 //        /// Enable/Disable eventTap based on Remap.remaps

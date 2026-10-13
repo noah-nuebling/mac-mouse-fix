@@ -29,7 +29,7 @@
 @implementation Actions
 
 + (void)executeActionArray:(NSArray *)actionArray phase:(MFActionPhase)phase {
-    assertRunLoop(GlobalEventTapThread.runLoop);
+    assertRunLoop(IOThread.runLoop);
 
     DDLogDebug("Executing action array: %@, phase: %@", actionArray, @(phase));
     
