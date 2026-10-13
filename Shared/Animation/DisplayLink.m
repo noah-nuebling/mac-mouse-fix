@@ -153,8 +153,8 @@ uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *befor
         uint64_t lastFrame = CGDisplay_NearestVBLTime(self->_linkedDisplay, "before", now, self->_phaseShift) ?: fallbackPriorVBLTime(now);
         uint64_t frameTime = SLSDisplayGetCurrentVBLDelta(self->_linkedDisplay) ?: kFallbackVBLDelta;
 
-        uint64_t tolerance = frameTime * (0.5/*0.0*/); /// Prevent quick-succession wakeups in case the VBLTime window shifts forwards a little bit. Not sure this happens. Opus 5.5 is concerned [Oct 2026]
-                                                       /// Update: There are a few more framedrops than I'd expect - maybe setting to 0.0 helps? Not sure. [Oct 2026]
+        uint64_t tolerance = defaultVBLTolerance(frameTime); /// Prevent quick-succession wakeups in case the VBLTime window shifts forwards a little bit. Not sure this happens. Opus 5.5 is concerned [Oct 2026]
+                                                             /// Update: There are a few more framedrops than I'd expect - maybe setting to 0.0 helps? Not sure. [Oct 2026]
 
         if (lastFrame <= self->_lastLastFrame + tolerance) { /// [Oct 2026] Last frame being equal rarely happens but causes division by zero in the animators. Have never seen wakeups in quick succession within `tolerance`.
             _DDLogDebug("Woke up twice lastFrame: %f, _lastLastFrame: %f",

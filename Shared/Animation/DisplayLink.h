@@ -48,6 +48,7 @@ uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *befor
 
 #define fallbackPriorVBLTime(now) (now)
 #define kFallbackVBLDelta secondsToMachTime(1.0/60) /** Opus 5.5 says `SLSDisplayGetPriorVBLTime` etc can return 0, and in that case the displayLink should keep ticking because the downstream code expects that so gestures don't get stuck or whatever. Not sure if Opus is overly concerned. [Oct 2026] */
+#define defaultVBLTolerance(vblDelta) (vblDelta / 2.0)
 
 #pragma mark - Typedefs for the DisplayLink class
 
