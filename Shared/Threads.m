@@ -97,7 +97,6 @@ void threads_configureMainThread(void) {
     static CFRunLoopRef _runLoop;
 
     static NSThread *_thread;
-    /// ^ I usually use dispatch queue but it doesn't let you guarantee that you're not on the main thread. So we're using threads directly.
 
     static MFGate *_runLoopGate;
     static MFGate *_startGate;
@@ -145,12 +144,22 @@ void threads_configureMainThread(void) {
         CFRunLoopSourceRef emptySource = CFRunLoopSourceCreate(kCFAllocatorDefault, 0, &(CFRunLoopSourceContext){0});
         CFRunLoopAddSource(_runLoop, emptySource, kCFRunLoopCommonModes);
 
+        /// Disable the native per-callout autoreleasePools
+        ///     This isn't necessary, I guess it creates consistency between macOS versions for everything to go through our @autoreleasePool (below) [Oct 2026]. (Update: Claude says this actually doesn't affect timers, see CFRunLoopRunInMode comment [Oct 2026])
+        if (@available(macOS 11.0, *)) {
+            extern Boolean _CFRunLoopSetPerCalloutAutoreleasepoolEnabled(Boolean enabled) API_AVAILABLE(macos(10.16), ios(14.0), watchos(7.0), tvos(14.0)); /// Src: [Oct 2026] https://github.com/swiftlang/swift-corelibs-foundation/blob/main/Sources/CoreFoundation/include/CFPriv.h
+            _CFRunLoopSetPerCalloutAutoreleasepoolEnabled(false);
+        }
+
         /// Run the runLoop
         ///     This thread is blocked by the runLoop now
-        ///     TODO: Add an autoreleasepool to this runLoop to prevent abandoned memory. See:
-        ///         - Example implementation: https://stackoverflow.com/questions/11436826/how-to-manage-the-autorelease-pool-of-a-nsrunloop-running-in-a-secondary-thread
-        ///         - Quinn eskimo on abandoned memory: https://developer.apple.com/forums/thread/716261
-        while (true) CFRunLoopRun();
+        while (true) {
+            /// Wrap in autoreleasePool
+            ///     Necessary on older macOS versions. Probably before 11.0. See `_CFRunLoopSetPerCalloutAutoreleasepoolEnabled` (above) [Oct 2026]
+            @autoreleasepool {
+                (void)CFRunLoopRunInMode(kCFRunLoopDefaultMode, /*seconds*/DBL_MAX, /*returnAfterSourceHandled*/true); /// Claude says this doesn't return (which drains the pool) after handling CFRunLoopTimerRef/NSTimer or blocks (MFCFRunLoopPerform). Probably fine. Could alternatively use `CFRunLoopObserverRef` [Oct 2026] Claude also says `_CFRunLoopSetPerCalloutAutoreleasepoolEnabled` doesn't affect timers and timers always drain some internal pool in macOS 10.15 or later. [Oct 2026]
+            }
+        }
     }
 
     /// Getter / main interface
