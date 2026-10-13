@@ -56,7 +56,7 @@ class TouchAnimator: TouchAnimatorBase {
     /// SubPixelator reset
     ///     You usually want to call this where you call linkToMainScreen()
     @objc func resetSubPixelator() {
-        assertRunLoop(displayLink.runLoop);
+        assertRunLoop(displayLink.runLoop());
         readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
         DDLogDebug("HNGG Resetting subpixelator")
         self.subPixelator.reset()
@@ -70,7 +70,7 @@ class TouchAnimator: TouchAnimatorBase {
         /// @noGCDCleanup
         ///     `StartParamCalculationCallback` no longer needed! - simplify
 
-        assertRunLoop(displayLink.runLoop);
+        assertRunLoop(displayLink.runLoop());
 
         /// Get startParams
         let p = params(self.animationValueLeft, self.isRunning, self.animationCurve, self.lastAnimationSpeed)

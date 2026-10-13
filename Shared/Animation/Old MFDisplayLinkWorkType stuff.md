@@ -1,7 +1,7 @@
 
 Update [Oct 2026]
 
-Removed the concept of MFDisplayLinkWorkType entirely in favor of `phaseShiftInVBLDeltas`.
+Removed the concept of MFDisplayLinkWorkType entirely in favor of `VBLPhase`.
 
 Here's what was still in the codebase
 

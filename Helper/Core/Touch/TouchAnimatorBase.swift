@@ -75,7 +75,7 @@ import QuartzCore
     @available(*, unavailable)
     @objc override init() { fatalError("init() unavailable") }
 
-    @objc init(phaseShift: PhaseShiftInVBLDeltas, runLoop: CFRunLoop, name: String) {
+    @objc init(phaseShift: VBLPhase, runLoop: CFRunLoop, name: String) {
         self.displayLink = DisplayLink(phaseShift: phaseShift, runLoop: runLoop, name: name)
         super.init()
     }
@@ -124,20 +124,20 @@ import QuartzCore
         /// - We're passing lastAnimationSpeed into the StartParamCalculationCallback. It might point to an architectural error and slow things down if we need this separate getter.
         /// - The naming with `get` at the start is weird. We don't use that anywhere else.
         /// - TODO: Think about where this should be, if it should exist, and what it should be named. This is all kinda hacky and not-thought-through at this point.
-        assertRunLoop(displayLink.runLoop)
+        assertRunLoop(displayLink.runLoop())
         readsState_Begin(readWriteTracker); defer { readsState_End(readWriteTracker) }
         return lastAnimationSpeed
     }
     
     @objc var animationValueLeft: Vector {
-        assertRunLoop(displayLink.runLoop)
+        assertRunLoop(displayLink.runLoop())
         readsState_Begin(readWriteTracker); defer { readsState_End(readWriteTracker) }
         return subtractedVectors(animationValueTotal, lastAnimationValue)
     }
 
     #if false
     @objc var animationTimeLeft: Double {
-        assertRunLoop(displayLink.runLoop)
+        assertRunLoop(displayLink.runLoop())
         readsState_Begin(readWriteTracker); defer { readsState_End(readWriteTracker) }
         return animationEndTime - lastFrameTime
     }
@@ -148,7 +148,7 @@ import QuartzCore
     @objc func linkToMainScreen() {
         /// Exposing this as a function and not just doing it automatically when the animation starts because I assume it's slow. Not sure where this assumption comes from.
 
-        assertRunLoop(displayLink.runLoop)
+        assertRunLoop(displayLink.runLoop())
         readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
         displayLink.linkToMainScreen()
     }
@@ -301,7 +301,7 @@ import QuartzCore
 
     @objc func cancel() {
         
-        assertRunLoop(displayLink.runLoop);
+        assertRunLoop(displayLink.runLoop());
         readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
 
         /// Get info
@@ -367,7 +367,7 @@ import QuartzCore
     
     @objc func displayLinkCallback(_ timeInfo: DisplayLinkCallbackTimeInfo) {
 
-        assertRunLoop(displayLink.runLoop); /// Guaranteed, just a sanitfy check/documentation, I guess [Sep 2026]
+        assertRunLoop(displayLink.runLoop()); /// Guaranteed, just a sanitfy check/documentation, I guess [Sep 2026]
         readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
 
         /// Race conditions

@@ -351,8 +351,8 @@ static CGEventRef __nullable eventTapCallBack(CGEventTapProxy proxy, CGEventType
 static void processPendingCoalescableEventsOncePerFrame(void) {
 
     /// Strategy: Flush the queue of coalescable events on the first mouse event each frame [Oct 2026]
-    ///     (To be precise, flush on first mouse event that comes at last vsync time + `kPhaseShiftInVBLDeltas_DefaultForEventSending`)
-    ///         Also see: `kPhaseShiftInVBLDeltas_DefaultForEventSending` comments [Oct 2026]
+    ///     (To be precise, flush on first mouse event that comes at last vsync time + `kVBLPhase_DefaultForEventSending`)
+    ///         Also see: `kVBLPhase_DefaultForEventSending` comments [Oct 2026]
     ///     Alternative approaches tested and abandoned:
     ///         - Measure SLSDisplayGetCurrentVBLDelta once at the start of the gesture and use that on a timer. Result: Works just as well, probably because the VBL times don't drift on my display. On a VRR display I suspect it would be worse UX. Don't think it makes a meaningful performance difference, so not worth using. [Oct 2026]
     ///     Other alternative approach ideas: [Oct 2026]
@@ -363,19 +363,19 @@ static void processPendingCoalescableEventsOncePerFrame(void) {
     ///             -> Maybe, more pragmatic approach is to activate coalescing only for vertical swipes. That could simplify some things.
     ///             -> Could also only activate for low-polling rate mice, but don't know how to detect that robustly - think it's probably bad approach [Oct 2026]
     ///     Problem with this approach (which is: flushing on mouse events):
-    ///         Flushing every frame through DisplayLink uses a lot more CPU, but flushing on the first mouse event each frame causes irregular `PhaseShiftInVBLDeltas` for lower polling-rate mice,
+    ///         Flushing every frame through DisplayLink uses a lot more CPU, but flushing on the first mouse event each frame causes irregular `VBLPhase` for lower polling-rate mice,
     ///             which I think I observed makes things a little more stuttery than no coalescing at all for horizontal DockSwipes on my [Logitech Lift 135 Hz, macOS 27, 144 Hz display].
-    ///                 Also see observations on jankiness caused by sending close to phaseShift 0.0 in `kPhaseShiftInVBLDeltas_DefaultForEventSending` comment [Oct 2026]
+    ///                 Also see observations on jankiness caused by sending close to phaseShift 0.0 in `kVBLPhase_DefaultForEventSending` comment [Oct 2026]
     ///             Caveat: The tracking on the Logitech Lift is super uneven and jerky anyways, so it might be placebo.
     ///         Improvement idea:
     ///             Fallback timer - set up a timer (DisplayLink.m) each frame, which waits for a regular mouse event to flush, if no mouse event before deadline, the timer flushes that frame instead
-    ///                 -> This should give us good `PhaseShiftInVBLDeltas` with less CPU overhead.
+    ///                 -> This should give us good `VBLPhase` with less CPU overhead.
     ///                     I think the CPU overhead, mostly comes from the runLoop waking up for the per-frame timer in addition to the CGEventTap wakeup - I observed there's still a lot of effective CPU overhead flushing every frame through timer, even with our super-lightweight `mk_timer` based `DisplayLink` - so I concluded overhead is inherent to the additional runLoop wakeup. [Oct 2026]
     ///             @noGCDCleanup consider implementing this
 
     uint64_t now = mach_absolute_time();
-    uint64_t lastVBLTime = CGDisplay_NearestVBLTime(_drag.displayID, "before", /*anchorInMachTime*/now, kPhaseShiftInVBLDeltas_DefaultForEventSending) ?: fallbackPriorVBLTime(now);
-    uint64_t vblDelta = SLSDisplayGetCurrentVBLDelta(_drag.displayID) ?: kFallbackVBLDelta;
+    uint64_t lastVBLTime = CGDisplay_NearestVBLTime(_drag.displayID, "before", /*anchorInMachTime*/now, kVBLPhase_DefaultForEventSending) ?: fallbackPriorVBLTime(now);
+    uint64_t vblDelta = SLSDisplayGetCurrentVBLDelta(_drag.displayID) ?: kFallbackVBLPhase;
     uint64_t tolerance = defaultVBLTolerance(vblDelta); /// `CGDisplay_NearestVBLTime` always extrapolates the frames a little differently so directly comparing the results will give false negatives [Oct 2026].
     if (_drag.lastVBLTimeThatProcessedCoalescableEvents < lastVBLTime - tolerance) {
 

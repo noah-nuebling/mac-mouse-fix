@@ -81,7 +81,7 @@ import Foundation
     
     /// Initializers
     
-    @objc convenience init(fromAnimation animation: CASpringAnimation, stopTolerance: Double, phaseShift: PhaseShiftInVBLDeltas, runLoop: CFRunLoop, name: String) {
+    @objc convenience init(fromAnimation animation: CASpringAnimation, stopTolerance: Double, phaseShift: VBLPhase, runLoop: CFRunLoop, name: String) {
 
         let k = animation.stiffness
         let c = animation.damping
@@ -90,7 +90,7 @@ import Foundation
         self.init(stiffness: k, damping: c, mass: m, stopTolerance: stopTolerance, phaseShift: phaseShift, runLoop: runLoop, name: name)
     }
     
-    @objc required init(stiffness k: Double, damping c: Double, mass m: Double = 1.0, stopTolerance: Double, phaseShift: PhaseShiftInVBLDeltas, runLoop: CFRunLoop, name: String) {
+    @objc required init(stiffness k: Double, damping c: Double, mass m: Double = 1.0, stopTolerance: Double, phaseShift: VBLPhase, runLoop: CFRunLoop, name: String) {
 
         /// Validate
         assert(stopTolerance > 0, "Will never stop if stopTolerance <= 0")
@@ -134,7 +134,7 @@ import Foundation
     }
     
     @objc func start(distance: Double, callback: @escaping UIAnimatorCallback, onComplete: (() -> ())? = nil) {
-        assertRunLoop(displayLink.runLoop);
+        assertRunLoop(displayLink.runLoop());
         readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
 
         /// Store stopCallback
@@ -170,7 +170,7 @@ import Foundation
     
     private func update(_ timeInfo: DisplayLinkCallbackTimeInfo, _ callback: UIAnimatorCallback) {
 
-        assertRunLoop(displayLink.runLoop)
+        assertRunLoop(displayLink.runLoop())
         readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
 
         /// Get current step time
@@ -241,20 +241,20 @@ import Foundation
     }
     
     @objc func stop() {
-        assertRunLoop(displayLink.runLoop)
+        assertRunLoop(displayLink.runLoop())
         readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
         displayLink.stop()
         resetState()
     }
 
     @objc func resetSubPixelator() {
-        assertRunLoop(displayLink.runLoop)
+        assertRunLoop(displayLink.runLoop())
         readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
         self.pixelator.reset()
     }
     @objc func linkToMainScreen() {
         mfassert(false, "Unused [Oct 2026]");
-        assertRunLoop(displayLink.runLoop)
+        assertRunLoop(displayLink.runLoop())
         readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
         self.displayLink.linkToMainScreen()
     }
