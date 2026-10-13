@@ -201,7 +201,7 @@ uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *befor
         self->_timerIsArmed = true;
     }
 
-    - (void) start_UnsafeWithCallback: (DisplayLinkCallback _Nullable)callback {
+    - (void) startWithCallback: (DisplayLinkCallback _Nullable)callback {
         assertRunLoop(_runLoop);
 
         if (callback) _callback = callback;
@@ -218,7 +218,7 @@ uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *befor
 
         _lastLastFrame = 0;
     }
-    - (void) stop_Unsafe {
+    - (void) stop {
         assertRunLoop(_runLoop);
 
         if (!_isRunning) return;
@@ -247,7 +247,7 @@ uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *befor
 
         _timerIsArmed = false;
     }
-    - (BOOL) isRunning_Unsafe {
+    - (BOOL) isRunning {
         assertRunLoop(_runLoop);
         return _isRunning;
     }

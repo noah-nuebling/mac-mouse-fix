@@ -73,7 +73,7 @@ class TouchAnimator: TouchAnimatorBase {
         assertRunLoop(displayLink.runLoop);
 
         /// Get startParams
-        let p = params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve, self.lastAnimationSpeed)
+        let p = params(self.animationValueLeft, self.isRunning, self.animationCurve, self.lastAnimationSpeed)
 
         readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) } /// @noGCDCleanup - move to start of function after removing `StartParamCalculationCallback`
         do { /// @noGCDCleanup - remove scope
@@ -97,13 +97,13 @@ class TouchAnimator: TouchAnimatorBase {
             /// ^ This is always true for some reason. Make sure to actually pass a Vector in an NSValue! Edit: Randomly, this starting working on 29.05.22
 
             /// Start animator
-            super.startWithUntypedCallback_Unsafe(durationRaw: p["duration"] as! Double?, durationRawInFrames: p["durationInFrames"] as! Int?, value: vectorFromNSValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! Curve, callback: integerCallback)
+            super.startWithUntypedCallback(durationRaw: p["duration"] as! Double?, durationRawInFrames: p["durationInFrames"] as! Int?, value: vectorFromNSValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! Curve, callback: integerCallback)
 
             /// Debug
 
             allowNestedReadOrWrite_Begin(from: .readsAndWritesState, readWriteTracker)
-            let deltaLeftBefore = self.animationValueLeft_Unsafe;
-            DDLogDebug("Started TouchAnimator with deltaLeftDiff: \(subtractedVectors(self.animationValueLeft_Unsafe, deltaLeftBefore)), oldDeltaLeft: \(deltaLeftBefore), newDeltaLeft: \(self.animationValueLeft_Unsafe)")
+            let deltaLeftBefore = self.animationValueLeft;
+            DDLogDebug("Started TouchAnimator with deltaLeftDiff: \(subtractedVectors(self.animationValueLeft, deltaLeftBefore)), oldDeltaLeft: \(deltaLeftBefore), newDeltaLeft: \(self.animationValueLeft)")
             allowNestedReadOrWrite_End(from: .readsAndWritesState, readWriteTracker)
         }
     }
@@ -126,7 +126,7 @@ class TouchAnimator: TouchAnimatorBase {
         /// Update phase to `end` if all valueLeft won't lead to another non-zero delta
         
         allowNestedReadOrWrite_Begin(from: .readsAndWritesState, readWriteTracker)
-        let currentAnimationValueLeft = animationValueLeft_Unsafe
+        let currentAnimationValueLeft = animationValueLeft
         allowNestedReadOrWrite_End(from: .readsAndWritesState, readWriteTracker)
         
         let intAnimationValueLeft = subPixelator.peekIntVector(withDoubleVector: currentAnimationValueLeft);

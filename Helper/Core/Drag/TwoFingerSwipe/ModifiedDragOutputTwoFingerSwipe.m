@@ -216,7 +216,7 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
     /// Handle cancelation
     if (cancelation) {
         mfassert(false); /// [Sep 2026] Dead code - remove the `cancelation` arg since it is never used. (Credits to Opus 5.5 for finding this)
-        if (_smoothingAnimator.isRunning_Unsafe) /// [Sep 2026] This seems a bit stupid but harmless (Shouldn't -cancel be a no-op if it's not running?)
+        if (_smoothingAnimator.isRunning) /// [Sep 2026] This seems a bit stupid but harmless (Shouldn't -cancel be a no-op if it's not running?)
             [_smoothingAnimator cancel];
 
         [GestureScrollSimulator postGestureScrollEventWithDeltaX: 0 deltaY: 0 phase: kIOHIDEventPhaseEnded autoMomentumScroll: YES invertedFromDevice: _drag->naturalDirection];
@@ -258,7 +258,7 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
         #endif
 
         /// Setup starting of momentumScroll (or start it directly)
-        if (_smoothingAnimator.isRunning_Unsafe) { /// Let `_smoothingAnimator` start momentumScroll
+        if (_smoothingAnimator.isRunning) { /// Let `_smoothingAnimator` start momentumScroll
             DDLogDebug("twoFinger Setting _smoothingAnimatorShouldStartMomentumScroll = YES");
             _smoothingAnimatorShouldStartMomentumScroll = YES;
         } else { /// Start momentumScroll directly

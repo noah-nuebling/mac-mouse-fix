@@ -96,12 +96,10 @@ import QuartzCore
     internal var animationValueIntervalX: Interval { Interval(start: 0, end: animationValueTotal.x) }
     internal var animationValueIntervalY: Interval { Interval(start: 0, end: animationValueTotal.y) }
 
-    @objc var isRunning_Unsafe: Bool {
-        readsState_Begin(readWriteTracker); defer { readsState_End(readWriteTracker) } /// [Sep 2026] Use readsState since `displayLink.isRunning_Unsafe` only readsState currently.
-        return displayLink.isRunning_Unsafe()
+    @objc var isRunning: Bool {
+        readsState_Begin(readWriteTracker); defer { readsState_End(readWriteTracker) } /// [Sep 2026] Use readsState since `displayLink.isRunning` only readsState currently.
+        return displayLink.isRunning()
     }
-    
-    internal var onStopCallback: (() -> ())?
 
     /// Vars - DisplayLink
     
@@ -131,29 +129,20 @@ import QuartzCore
         return lastAnimationSpeed
     }
     
-    @objc var animationTimeLeft: Double {
-        assertRunLoop(displayLink.runLoop)
-        readsState_Begin(readWriteTracker); defer { readsState_End(readWriteTracker) }
-        return animationTimeLeft_Unsafe
-    }
     @objc var animationValueLeft: Vector {
-        assertRunLoop(displayLink.runLoop)
-        readsState_Begin(readWriteTracker); defer { readsState_End(readWriteTracker) }
-        return animationValueLeft_Unsafe
-    }
-    
-    @objc var animationValueLeft_Unsafe: Vector {
         assertRunLoop(displayLink.runLoop)
         readsState_Begin(readWriteTracker); defer { readsState_End(readWriteTracker) }
         return subtractedVectors(animationValueTotal, lastAnimationValue)
     }
-    
-    @objc var animationTimeLeft_Unsafe: Double {
+
+    #if false
+    @objc var animationTimeLeft: Double {
         assertRunLoop(displayLink.runLoop)
         readsState_Begin(readWriteTracker); defer { readsState_End(readWriteTracker) }
         return animationEndTime - lastFrameTime
     }
-    
+    #endif
+
     /// Other Interface
     
     @objc func linkToMainScreen() {
@@ -189,9 +178,9 @@ import QuartzCore
 
                 /// Reset lastAnimationValue
                 ///     So we don't give the `params` callback old invalid animationValueLeft.
-                ///     I think this is sort of redundant, because we're resetting animationValueLeft in `startWithUntypedCallback_Unsafe()` as well?
+                ///     I think this is sort of redundant, because we're resetting animationValueLeft in `startWithUntypedCallback()` as well?
 
-                let p: MFAnimatorStartParams = params(self.animationValueLeft_Unsafe, self.isRunning_Unsafe, self.animationCurve, self.lastAnimationSpeed)
+                let p: MFAnimatorStartParams = params(self.animationValueLeft, self.isRunning, self.animationCurve, self.lastAnimationSpeed)
 
                 self.lastAnimationValue = Vector(x: 0, y: 0)
 
@@ -206,21 +195,20 @@ import QuartzCore
                 let vector = vectorFromNSValue(p.object(forKey: "vector") as! NSValue) as Vector
                 let curve = p.object(forKey: "curve") as! Curve
 
-                self.startWithUntypedCallback_Unsafe(durationRaw: durationRaw, durationRawInFrames: durationRawInFrames, value: vector, animationCurve: curve, callback: callback);
+                self.startWithUntypedCallback(durationRaw: durationRaw, durationRawInFrames: durationRawInFrames, value: vector, animationCurve: curve, callback: callback);
             }
         #endif
     }
     
-    internal func startWithUntypedCallback_Unsafe(durationRaw: CFTimeInterval?,
-                                                  durationRawInFrames: Int?,
-                                                  value: Vector,
-                                                  animationCurve: Curve,
-                                                  callback: UntypedAnimatorCallback) {
+    internal func startWithUntypedCallback(durationRaw: CFTimeInterval?,
+                                           durationRawInFrames: Int?,
+                                           value: Vector,
+                                           animationCurve: Curve,
+                                           callback: UntypedAnimatorCallback) {
 
         /// No need for `assertRunLoop` and `readsAndWritesState_Begin` since this is effectively a private helper (only called by subclasses' override) [Sep 2026]
 
         /// Notes:
-        /// - This function has `_Unsafe` in it's name because it doesn't execute on self.animatorQueue. Only call it form self.animatorQueue
         /// - Should only be called by this and subclasses
         /// - The use of 'Interval' in CFTimeInterval is kind of confusing, since its also used to spedify points in time (It's just a `Double`), and also it has nothing to do with our `Interval` class, which is much closer to an Interval in the Mathematical sense.
         /// - Animator will be restarted if it's already running. No need to call stop before calling this.
@@ -244,7 +232,7 @@ import QuartzCore
         /// Get stuff
         
         allowNestedReadOrWrite_Begin(from: .readsAndWritesState, readWriteTracker)
-        let isRunningg = isRunning_Unsafe
+        let isRunningg = isRunning
         allowNestedReadOrWrite_End(from: .readsAndWritesState, readWriteTracker)
         
         /// Update state
@@ -292,7 +280,7 @@ import QuartzCore
             animationValueTotal = value
             
             /// Start displayLink
-            displayLink.start_Unsafe(callback: { [unowned self] (timeInfo: DisplayLinkCallbackTimeInfo) -> () in
+            displayLink.start(callback: { [unowned self] (timeInfo: DisplayLinkCallbackTimeInfo) -> () in
                 let s = self
                 s.displayLinkCallback(timeInfo)
                 /**
@@ -319,9 +307,9 @@ import QuartzCore
         /// Get info
         /// Notes:
         ///   - Checking for isRunning would be obsolete if we just set `self.thisAnimationHasProducedDeltas = false` when stopping. But maybe that has other side effects that we don't want? Edit: Don't think this is true anymore
-        ///   - Maybe we could just return if wasRunning is false. For performance. Don't think self.stop_Unsafe should do anything if wasRunning is false.
+        ///   - Maybe we could just return if wasRunning is false. For performance. Don't think self.stop should do anything if wasRunning is false.
         allowNestedReadOrWrite_Begin(from: .readsAndWritesState, readWriteTracker)
-        let wasRunning = self.isRunning_Unsafe
+        let wasRunning = self.isRunning
         allowNestedReadOrWrite_End(from: .readsAndWritesState, readWriteTracker)
         let hadProducedDeltas = self.thisAnimationHasProducedDeltas
 
@@ -329,7 +317,7 @@ import QuartzCore
         DDLogDebug("TouchAnimator: cancel_forAutoMomentumScroll called. wasRunning: \(wasRunning), hadProducedDeltas: \(hadProducedDeltas), callback: \(String(describing: self.clientCallback)), lastMomentumHint: \(self.lastMomentumHint)")
 
         /// Stop displayLink
-        self.stop_Unsafe()
+        self.stop()
 
         /// Guard
         assert(!wasRunning || self.clientCallback is AnimatorCallback) /// Why did we use ? intead of ! in`self.clientCallback as? AnimatorCallback` below? Asserting here because I think that might have been a mistake, but I don't wanna cause crashes in production.
@@ -351,12 +339,12 @@ import QuartzCore
         ///     The best way we found to stop ASAP is to simply enqueu async on the displayLink's dispatchQueue
 
         MFCFRunLoopPerform(displayLink.runLoop, nil) { /// [Sep 2026] Not sure this should still be deferred after 'No more dispatch queues' refactor
-            self.stop_Unsafe()
+            self.stop()
         }
     }
     #endif
 
-    private func stop_Unsafe() {
+    private func stop() {
 
         /// Debug
         DDLogDebug("AnimationCallback STOP")
@@ -366,51 +354,12 @@ import QuartzCore
         lastAnimationSpeed = Vector(x: 0, y: 0)
         
         /// Do stuff
-        displayLink.stop_Unsafe()
+        displayLink.stop()
         
         isFirstDisplayLinkCallback_AfterColdStart = false
         isFirstDisplayLinkCallback_AfterRunningStart = false
         isLastDisplayLinkCallback = false
-        
-        //if self.onStopCallback != nil {
-        //    self.onStopCallback!()
-        //    self.onStopCallback = nil
-        //}
-
     }
-
-    /// TODO: Delete the onStopCallback stuff
-
-    #if false
-        @objc func onStop_SynchronouslyFromAnimationQueue(callback: @escaping () -> ()) {
-            /// The default `onStop(callback:)` dispatches to self.queue asynchronously.
-            /// It can be used from self.queue, but, if used from self.queue, the callback will only become active after all the other items in the queue are finished, which is not always what we want.
-            /// Use this function to synchronously install the onStop callback.
-            /// This function should only be called from self.queue
-
-            assert(self.isRunning_Unsafe)
-
-            onStop_Unsafe(callback: callback, doImmediatelyIfNotRunning: false)
-        }
-
-        @objc func onStop(callback: @escaping () -> ()) {
-
-            displayLink.dispatchQueue.async {
-                self.onStop_Unsafe(callback: callback, doImmediatelyIfNotRunning: false)
-            }
-        }
-
-        fileprivate func onStop_Unsafe(callback: @escaping () -> (), doImmediatelyIfNotRunning: Bool) {
-            /// Not thread safe. Use `onStop` unless you're already running on displayLink.dispatchQueue
-            /// Do `callback` once the Animator stops or immediately if the animator isn't running and `waitTillNextStop` is false
-
-            if (doImmediatelyIfNotRunning && !self.isRunning_Unsafe) {
-                callback()
-            } else {
-                self.onStopCallback = callback
-            }
-        }
-    #endif
 
     /// DisplayLink callback
     /// This will be called whenever the display refreshes while the displayLink is running
@@ -424,7 +373,7 @@ import QuartzCore
         /// Race conditions
         ///     We're trying to prevent callback calls after stopping in displayLink, but somehow this still happens. Edit: Might have fixed it by moving the queue dispatch into displayLink
         allowNestedReadOrWrite_Begin(from: .readsAndWritesState, readWriteTracker)
-        let isRunning = self.isRunning_Unsafe
+        let isRunning = self.isRunning
         allowNestedReadOrWrite_End(from: .readsAndWritesState, readWriteTracker)
         if !isRunning {
             return;
@@ -437,7 +386,7 @@ import QuartzCore
         }
         
         allowNestedReadOrWrite_Begin(from: .readsAndWritesState, readWriteTracker)
-        DDLogDebug("Animation value total: (\(animationValueTotal.x), \(animationValueTotal.y)), left: (\(animationValueLeft_Unsafe.x), \(animationValueLeft_Unsafe.y))")
+        DDLogDebug("Animation value total: (\(animationValueTotal.x), \(animationValueTotal.y)), left: (\(animationValueLeft.x), \(animationValueLeft.y))")
         allowNestedReadOrWrite_End(from: .readsAndWritesState, readWriteTracker)
         
         DDLogDebug("HNGG AnimationCallback with state - isFirstCold: \(isFirstDisplayLinkCallback_AfterColdStart), isFirstRunning: \(isFirstDisplayLinkCallback_AfterRunningStart)")
@@ -607,7 +556,7 @@ import QuartzCore
         
         /// Stop animation if phase is  `end`
         if isLastDisplayLinkCallback {
-            stop_Unsafe()
+            stop()
             return
         }
         

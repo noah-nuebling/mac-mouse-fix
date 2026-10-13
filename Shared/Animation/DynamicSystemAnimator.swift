@@ -162,7 +162,7 @@ import Foundation
 
         /// Start displayLink
         ///  @noGCDCleanup Understand/fix the `[weak self]` warning
-        self.displayLink.start_Unsafe { [weak self] timeInfo in
+        self.displayLink.start { [weak self] timeInfo in
             assert(self != nil)
             self?.update(timeInfo, callback)
         }
@@ -234,24 +234,18 @@ import Foundation
         /// Stop
         if isEnd {
             allowNestedReadOrWrite_Begin(from: .readsAndWritesState, readWriteTracker); /// Allow these since they happen at the end of `update()` [Sep 2026]
-            stop_Unsafe()
+            stop()
             stopCallback?()
             allowNestedReadOrWrite_End(from: .readsAndWritesState, readWriteTracker)
         }
     }
     
-    @objc func stop_Unsafe() {
+    @objc func stop() {
         assertRunLoop(displayLink.runLoop)
         readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
-        displayLink.stop_Unsafe()
+        displayLink.stop()
         resetState()
     }
-    
-    //@objc func stop() {
-    //    queue.sync {
-    //        stop_Unsafe()
-    //    }
-    //}
 
     @objc func resetSubPixelator() {
         assertRunLoop(displayLink.runLoop)

@@ -196,13 +196,12 @@ static ModifiedDragState _drag;
     /// Guard state == inUse
     ///  I think if state == initialized we don't need to do anything special
     if (_drag.activationState == kMFModifiedInputActivationStateInUse) {
-        BOOL isSame = [effectDict isEqualToDictionary:_drag.effectDict];
-        BOOL isAddMode = [_drag.effectDict[kMFModifiedDragDictKeyType] isEqual:kMFModifiedDragTypeAddModeFeedback];
-        if (!isSame && !isAddMode) {
-            //deactivate_Unsafe(YES);
-            return;
-        } else {
-            return;
+        if ((1)) return;
+        else { /// Old code which doesn't seem to do anything [Oct 2026]
+            BOOL isSame = [effectDict isEqualToDictionary:_drag.effectDict];
+            BOOL isAddMode = [_drag.effectDict[kMFModifiedDragDictKeyType] isEqual:kMFModifiedDragTypeAddModeFeedback];
+            if (!isSame && !isAddMode) { /*deactivate(YES)*/; return; }
+            else                       return;
         }
     }
 
@@ -233,9 +232,9 @@ static ModifiedDragState _drag;
     _drag.outputPlugin = p;
 
     /// Init dynamic parts of _drag
-    initDragState_Unsafe();
+    initDragState();
 }
-static void initDragState_Unsafe(void) {
+static void initDragState(void) {
 
     _drag.origin = getRoundedPointerLocation();
     _drag.originOffset = (Vector){0};
@@ -536,39 +535,6 @@ static void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
     _drag.firstCallback = false;
 }
 
-#if 0
-+ (void (^ _Nullable)(void))suspend {
-    
-    /// This was used for OutputCoordinator stuff which is unused now. Can probably remove this
-    /// Also this creates a dangling pointer according to Xcode analyzer
-    
-    void (^ __block unsuspend)(void);
-    unsuspend = nil;
-    ModifiedDragState *drag = &_drag; /// So the block references the gobal value instead of copying
-    
-    dispatch_sync(_drag.queue, ^{
-        if ((*drag).activationState != kMFModifiedInputActivationStateInUse) return;
-        DDLogDebug("Suspending ModifiedDrag");
-        deactivate_Unsafe(YES);
-        (*drag).isSuspended = YES;
-        [(*drag).outputPlugin suspend];
-        CFTimeInterval ogTime = (*drag).initTime;
-        unsuspend = ^{
-            dispatch_async((*drag).queue, ^{
-                if (ogTime == (*drag).initTime && (*drag).isSuspended) { /// So we don't unsuspend a different drag than the one we suspended
-                    DDLogDebug("UNSuspending ModifiedDrag");
-                    (*drag).isSuspended = NO;
-                    initDragState_Unsafe();
-                    [(*drag).outputPlugin unsuspend];
-                }
-            });
-        };
-    });
-    
-    return unsuspend;
-}
-#endif
-
 + (void)deactivateWithCancel:(BOOL)cancel {
 
     assertRunLoop(IOThread.runLoop);
@@ -621,16 +587,6 @@ static void handleMouseInputWhileInUse(int64_t deltaX, int64_t deltaY) {
 //    if (_drag.activationState == kMFModifiedInputActivationStateInUse) { /// This check should probably also be performed on the _drag.queue
 //        [self deactivateWithCancel:YES];
 //    }
-//}
-    
-//+ (void)suspend {
-//    /// Deactivate and re-initialize
-//    ///     Cool but not used cause it caused some weird bugs
-//
-//    if (_drag.activationState == kMFModifiedInputActivationStateNone) return;
-//
-//    [self deactivateWithCancel:true];
-//    initDragState();
 //}
 
 #pragma mark - Helper functions

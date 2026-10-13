@@ -231,8 +231,8 @@ static void (^_momentumScrollCallback)(void);
 
     /// Validate
     ///     - Old note: `callback != NULL` is a hack to make ModifiedDragOutputTwoFingerSwipe not trigger this
-    ///     - [Sep 2026] Note: Put `_momentumAnimator.isRunning_Unsafe` last in the boolean expression so it's not evaluated if `callback != NULL` since otherwise recursion check (readsAndWritesState()) of TouchAnimator is tripped. (It thinks reading isRunning during framecallback is illegal - frame callbacks should be able to interact with the animator - maybe put the frame callback outside the `readsAndWritesState()` check)
-    if (callback != NULL && _momentumAnimator.isRunning_Unsafe) {
+    ///     - [Sep 2026] Note: Put `_momentumAnimator.isRunning` last in the boolean expression so it's not evaluated if `callback != NULL` since otherwise recursion check (readsAndWritesState()) of TouchAnimator is tripped. (It thinks reading isRunning during framecallback is illegal - frame callbacks should be able to interact with the animator - maybe put the frame callback outside the `readsAndWritesState()` check)
+    if (callback != NULL && _momentumAnimator.isRunning) {
         DDLogError("Trying to set momentumScroll start callback while it's running. This can lead to bad issues and you probably don't want to do it.");
         assert(false);
     }
@@ -253,9 +253,9 @@ static void (^_momentumScrollCallback)(void);
             Callsites:
             - [Device handleInput]; (Dead code)
             - Scroll.m > `/// --- GestureScroll ---`
-            - Scroll.m > `resetState_Unsafe`
-            - GestureScrollSimulator.m > startMomentumScroll_Unsafe
-            - GestureScrollSimulator.m > startMomentumScroll_Unsafe > `_momentumAnimator startWithParams`
+            - Scroll.m > `[Scroll resetState]`
+            - GestureScrollSimulator.m > startMomentumScroll
+            - GestureScrollSimulator.m > startMomentumScroll > `_momentumAnimator startWithParams`
         suspendMomentumScroll -> used to be `dispatch_sync`
             - OutputCoordinator.swift > suspendTouchDrivers() (Dead code)
             - ModifiedDragOutputTwoFingerSwipe.m > +handleDeactivationWhileInUseWithCancel:
@@ -271,10 +271,6 @@ static void (^_momentumScrollCallback)(void);
 /// Momentum scroll main
 
 static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent, BOOL invertedFromDevice) {
-    startMomentumScroll_Unsafe(timeSinceLastInput, exitVelocity, stopSpeed, dragCoefficient, dragExponent, invertedFromDevice);
-}
-
-static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVelocity, double stopSpeed, double dragCoefficient, double dragExponent, BOOL invertedFromDevice) {
     
     /// Debug
     
@@ -301,7 +297,7 @@ static void startMomentumScroll_Unsafe(double timeSinceLastInput, Vector exitVel
 
     /// Init animator
     
-    [_momentumAnimator resetSubPixelator]; /// Shouldn't we use the `_Unsafe` version here?
+    [_momentumAnimator resetSubPixelator];
     [_momentumAnimator linkToMainScreen];
     
     /// Start animator

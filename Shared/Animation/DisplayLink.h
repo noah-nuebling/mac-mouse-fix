@@ -10,10 +10,6 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 
-/// @noGCDCleanup
-///     - Delete the dead declarations and code
-///     - Remove `_Unsafe` suffixes
-
 #pragma mark - VSync helpers
 
 /// PhaseShiftInVBLDeltas
@@ -75,9 +71,9 @@ typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
     + (instancetype) displayLinkWithPhaseShift: (PhaseShiftInVBLDeltas)phaseShift runLoop: (CFRunLoopRef)runLoop name: (NSString *)name;
     - (instancetype) init NS_UNAVAILABLE;
 
-    - (void)start_UnsafeWithCallback:(DisplayLinkCallback)callback;
-    - (void)stop_Unsafe;
-    - (BOOL)isRunning_Unsafe;
+    - (void)startWithCallback:(DisplayLinkCallback)callback;
+    - (void)stop;
+    - (BOOL)isRunning;
 
     - (void)linkToMainScreen;
 
