@@ -101,7 +101,7 @@ static bool get_prediction(const char *displayID, unsigned int *outIndex) {
         CFDictionaryRemoveAllValues(predictionsDict);
         return false;
     }
-    
+
     CFStringRef key = CFStringCreateWithCString(NULL, displayID, kCFStringEncodingUTF8);
     const void *value = CFDictionaryGetValue(predictionsDict, key);
     CFRelease(key);
@@ -117,7 +117,7 @@ static void set_prediction(const char *displayID, unsigned int index) {
     if (!displayID || !predictionsDict) {
         return;
     }
-    
+
     CFStringRef key = CFStringCreateWithCString(NULL, displayID, kCFStringEncodingUTF8);
     CFNumberRef val = CFNumberCreate(NULL, kCFNumberIntType, &index);
     CFDictionarySetValue(predictionsDict, key, val);
@@ -305,7 +305,7 @@ static bool extract_space_info_from_display(CFDictionaryRef displayDict,
             CFNumberGetValue(currentSpaceID, kCFNumberSInt64Type, &displayActiveSpace);
         }
     }
-    
+
     // Use display-specific active space if available, otherwise use global
     CGSSpaceID targetActiveSpace = displayActiveSpace != 0 ? displayActiveSpace : activeSpace;
     bool hasTargetActiveSpace = displayActiveSpace != 0 || hasActiveSpace;
@@ -374,7 +374,7 @@ static bool load_space_info_for_display(ISSSpaceInfo *info, bool useCursorDispla
 
     // Get display identifier based on mode
     CFStringRef activeDisplayIdentifier = NULL;
-    
+
     if (useCursorDisplay) {
         // Get display where cursor is located
         CGEventRef tempEvent = CGEventCreate(NULL);
