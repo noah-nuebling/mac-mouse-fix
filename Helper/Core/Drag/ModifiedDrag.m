@@ -70,7 +70,7 @@
 #import "ModifiedDragOutputFakeDrag.h"
 #import "ModifiedDragOutputAddMode.h"
 
-#import "GlobalEventTapThread.h"
+#import "Threads.h"
 #import "MathObjc.h"
 
 @implementation CoalescableEvent @end

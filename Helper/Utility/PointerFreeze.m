@@ -18,7 +18,7 @@
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "CGSConnection.h"
 #import "ModificationUtility.h"
-#import "GlobalEventTapThread.h"
+#import "Threads.h"
 #import "NSScreen+Additions.h"
 @import CoreMedia;
 #import "MFGate.h"

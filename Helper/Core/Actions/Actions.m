@@ -25,7 +25,6 @@
 #import <Carbon/Carbon.h>
 
 #import "Threads.h"
-#import "GlobalEventTapThread.h"
 
 @implementation Actions
 

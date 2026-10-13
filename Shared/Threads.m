@@ -10,12 +10,22 @@
 #import "Threads.h"
 #import "libproc.h"
 #import "SharedUtility.h"
+#import "MFGate.h"
+#import "Logging.h"
 
-#if IS_MAIN_APP
-    int _enableRunLoopAsserts = 1;
-#elif IS_HELPER
-    int _enableRunLoopAsserts = 0; /// See where this enabled in the Helper's entry point.
-#endif
+#pragma mark - Elevating thread priority
+
+/**
+ Ideas and notes about elevating thread priority: [Oct 2026]
+    (Also see `Problem: No thread priority` in the `.h` file [Oct 2026])
+    NSActivityLatencyCritical – says it makes timers and IO more precise, not sure if applicable here. [Jun 2026]
+    'Mach Scheduling and Thread Interfaces': https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/KernelProgramming/scheduler/scheduler.html [Jun 2026]
+        Contains `thread_policy_set` which we think is core API for changing thread priority [Oct 2026]
+    TN2169 High Precision Timers in iOS / OS X: https://developer.apple.com/library/archive/technotes/tn2169/_index.html
+        micropython GH Issue about improving timers: https://github.com/micropython/micropython/issues/8621
+            Sidenote: They say 'nice' does nothing on macOS. We're setting that in our launchd config. [Apr 2025]
+            SideSideNote: Is there a way to have _launchd_ start the MMF Helper faster after boot? Helper gets started *after* all the windowed apps, with all the background apps. [Apr 2025]
+*/
 
 /// From xnu osfmk/kern/sched.h (not in the SDK)
 #define MAXPRI_USER     63
@@ -26,7 +36,7 @@ void set_thread_priority(int priority, bool round_robin) {
     /// Increase thread priority via `thread_policy_set` mach API.
     ///     Notes:
     ///     What priority to choose?
-    ///         - CVDisplayLink's 'high priority thread' sets priority to 54, round-robin. We can even go a little higher than that to 63 (`MAXPRI_USER`).
+    ///         - CVDisplayLink's 'high priority thread' sets priority to 54 (importance=23), round-robin. We can even go a little higher than that to 63 (`MAXPRI_USER`).
     ///         - `com.apple.AppleUserHIDDrivers` uses priority 63, round-robin on all its threads - so should be appropriate for drivers.
     ///     If `MAXPRI_USER` isn't enough: [Sep 2026]
     ///         - You can prioritize the thread even more (priority >= 97 band) using `THREAD_TIME_CONSTRAINT_POLICY` (That's a real time thread, you see that in `coreaudiod` for example.)
@@ -63,9 +73,90 @@ void set_thread_priority(int priority, bool round_robin) {
     }
 }
 
-void manuallyLoadThreadsDotH(void) {
+#pragma mark - Lifecycle
+
+#if IS_MAIN_APP
+    int _enableRunLoopAsserts = 1;
+#elif IS_HELPER
+    int _enableRunLoopAsserts = 0; /// See where this enabled in the Helper's entry point.
+#endif
+
+void threads_configureMainThread(void) {
 
     /// Set the priority of the mainThread
     ///     Set this to `MAXPRI_USER-1` since the mainThread draw the cursor during twoFingerSwipe. Little lower than `GlobalEventTapThread` because scrolling perf is still more important. (Untested, maybe there's a case to set this low to not take resources from the scrolling app.) [Sep 2026]
     set_thread_priority(MAXPRI_USER-1, /*round_robin*/true);
 }
+
+#pragma mark - GlobalEventTapThread
+
+@implementation GlobalEventTapThread
+
+    /// Vars
+
+    static CFRunLoopRef _runLoop;
+
+    static NSThread *_thread;
+    /// ^ I usually use dispatch queue but it doesn't let you guarantee that you're not on the main thread. So we're using threads directly.
+
+    static MFGate *_runLoopGate;
+    static MFGate *_startGate;
+
+    /// Init
+
+    + (void)load_Manual {
+
+        /// [Sep 2026] `+load_Manual`and `+start` are only called from the Helper's entry point/start sequence in `AccessibilityCheck.m`
+        ///     see there to convince yourself that this is thread safe and stuff.
+
+        /// Setup gates
+        _runLoopGate = [MFGate new];
+        _startGate = [MFGate new];
+
+        /// Setup thread
+        _thread = [[NSThread alloc] initWithTarget:self selector:@selector(threadWorkload) object:nil];
+        _thread.name = @"com.nuebling.mac-mouse-fix.global-event-tap";
+        _thread.qualityOfService = NSQualityOfServiceUserInteractive;
+        _thread.threadPriority = 1.0;
+        [_thread start];
+
+        /// Wait unil runLoop is available
+        [_runLoopGate waitForWork];
+    }
+
+    + (void)start {
+        [_startGate signalWorkCompleted];
+    }
+
+    /// Thread workload
+    + (void)threadWorkload {
+
+        /// Store runLoop of new thread
+        _runLoop = CFRunLoopGetCurrent();
+        [_runLoopGate signalWorkCompleted];
+
+        /// Wait for +start
+        [_startGate waitForWork];
+
+        /// Increase thread priority
+        set_thread_priority(63, /*round_robin*/true);
+
+        /// Add empty source so the runLoop doesn't exit immediately
+        CFRunLoopSourceRef emptySource = CFRunLoopSourceCreate(kCFAllocatorDefault, 0, &(CFRunLoopSourceContext){0});
+        CFRunLoopAddSource(_runLoop, emptySource, kCFRunLoopCommonModes);
+
+        /// Run the runLoop
+        ///     This thread is blocked by the runLoop now
+        ///     TODO: Add an autoreleasepool to this runLoop to prevent abandoned memory. See:
+        ///         - Example implementation: https://stackoverflow.com/questions/11436826/how-to-manage-the-autorelease-pool-of-a-nsrunloop-running-in-a-secondary-thread
+        ///         - Quinn eskimo on abandoned memory: https://developer.apple.com/forums/thread/716261
+        while (true) CFRunLoopRun();
+    }
+
+    /// Getter / main interface
+    + (CFRunLoopRef)runLoop {
+        mfassert(_runLoop);
+        return _runLoop;
+    }
+
+@end

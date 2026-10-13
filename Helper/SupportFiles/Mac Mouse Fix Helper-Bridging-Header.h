@@ -26,7 +26,6 @@
 #import "PolyFitObjC.h"
 #import "IOHIDAccelerationTableBridge.hpp"
 #import "EventUtility.h"
-#import "GlobalEventTapThread.h"
 #import "DeviceManager.h"
 #import "RemapsAnalyzer.h"
 #import "Actions.h"

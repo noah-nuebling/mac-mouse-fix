@@ -12,7 +12,6 @@
 #import "ModificationUtility.h"
 #import "MFMessagePort.h"
 #import "Logging.h"
-#import "GlobalEventTapThread.h"
 #import "Threads.h"
 
 @implementation KeyCaptureMode

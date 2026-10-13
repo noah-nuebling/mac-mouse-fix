@@ -27,7 +27,6 @@
 #import "HelperUtility.h"
 #import "Logging.h"
 #import "Threads.h"
-#import "GlobalEventTapThread.h"
 
 @implementation TouchSimulator
 

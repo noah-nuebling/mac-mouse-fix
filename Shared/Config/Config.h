@@ -11,7 +11,7 @@
 #import <CoreGraphics/CoreGraphics.h>
 
 #if IS_HELPER
-    #import "GlobalEventTapThread.h"
+    #import "Threads.h"
 #endif
 
 NS_ASSUME_NONNULL_BEGIN
