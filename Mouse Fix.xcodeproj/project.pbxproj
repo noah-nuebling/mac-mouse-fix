@@ -422,6 +422,10 @@
 		4FFE2895291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		4FFF9F39307B904F00211519 /* mk_timer_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FFF9F38307B904900211519 /* mk_timer_notes.md */; };
 		4FFF9F3A307B904F00211519 /* mk_timer_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FFF9F38307B904900211519 /* mk_timer_notes.md */; };
+		1F0C64BAEF9957C6996BFB49 /* ISS.c in Sources */ = {isa = PBXBuildFile; fileRef = 67CB43409F3559F395916099 /* ISS.c */; };
+		662B332666E7565B99227603 /* event_serialize.c in Sources */ = {isa = PBXBuildFile; fileRef = B97E45C481DF595E9168F948 /* event_serialize.c */; };
+		02DE70D2BA2F5BE59A616DB2 /* InstantSpaceSwitcher-LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 91C41E5000D352939A1BA086 /* InstantSpaceSwitcher-LICENSE.txt */; };
+		D2B5D18719C3514BB93D876D /* InstantSpaceSwitcher-LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 91C41E5000D352939A1BA086 /* InstantSpaceSwitcher-LICENSE.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2728,6 +2732,12 @@
 		4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExponentialSmoother.swift; sourceTree = "<group>"; };
 		4FFF9F37307B8FE300211519 /* mk_timer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mk_timer.h; sourceTree = "<group>"; };
 		4FFF9F38307B904900211519 /* mk_timer_notes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = mk_timer_notes.md; sourceTree = "<group>"; };
+		67CB43409F3559F395916099 /* ISS.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "ISS.c"; sourceTree = "<group>"; };
+		B97E45C481DF595E9168F948 /* event_serialize.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "event_serialize.c"; sourceTree = "<group>"; };
+		52DFB5149F435803AAF336C9 /* event_serialize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "event_serialize.h"; sourceTree = "<group>"; };
+		5DC3116E8C965086BADA1227 /* include/ISS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "include/ISS.h"; sourceTree = "<group>"; };
+		91C41E5000D352939A1BA086 /* InstantSpaceSwitcher-LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "InstantSpaceSwitcher-LICENSE.txt"; sourceTree = "<group>"; };
+		B24D1757A3275AE69A0035DE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "README.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -7582,6 +7592,7 @@
 			children = (
 				4FF0254C27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.h */,
 				4FF0254D27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m */,
+				B4759DD21A315F648205D4B4 /* InstantSpaceSwitcher */,
 			);
 			path = ThreeFingerSwipe;
 			sourceTree = "<group>";
@@ -8140,6 +8151,19 @@
 			path = External;
 			sourceTree = "<group>";
 		};
+		B4759DD21A315F648205D4B4 /* InstantSpaceSwitcher */ = {
+			isa = PBXGroup;
+			children = (
+				67CB43409F3559F395916099 /* ISS.c */,
+				B97E45C481DF595E9168F948 /* event_serialize.c */,
+				52DFB5149F435803AAF336C9 /* event_serialize.h */,
+				5DC3116E8C965086BADA1227 /* include/ISS.h */,
+				91C41E5000D352939A1BA086 /* InstantSpaceSwitcher-LICENSE.txt */,
+				B24D1757A3275AE69A0035DE /* README.md */,
+			);
+			path = InstantSpaceSwitcher;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -8508,6 +8532,7 @@
 			files = (
 				4FCC354F2C629F0F009E1908 /* CoolSFSymbols.otf in Resources */,
 				4FA2F13D2C2B0932000C5535 /* Localizable.xcstrings in Resources */,
+				02DE70D2BA2F5BE59A616DB2 /* InstantSpaceSwitcher-LICENSE.txt in Resources */,
 				4F9E59972672A67F004E75F7 /* default_config.plist in Resources */,
 				4FF6654225F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4F143E462B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */,
@@ -8531,6 +8556,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FA2F13E2C2B0932000C5535 /* Localizable.xcstrings in Resources */,
+				D2B5D18719C3514BB93D876D /* InstantSpaceSwitcher-LICENSE.txt in Resources */,
 				4FFF9F39307B904F00211519 /* mk_timer_notes.md in Resources */,
 				4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4F143E472B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */,
@@ -8847,6 +8873,8 @@
 				4FA625582DA97CCE004F46DA /* MFDataClass.m in Sources */,
 				4FA9733B293F7643002B5C24 /* ScrollSpeedupCurve.swift in Sources */,
 				4FF0254E27AFF90800923107 /* ModifiedDragOutputThreeFingerSwipe.m in Sources */,
+				1F0C64BAEF9957C6996BFB49 /* ISS.c in Sources */,
+				662B332666E7565B99227603 /* event_serialize.c in Sources */,
 				4F58FE022C56DE9B00926A00 /* Logging.swift in Sources */,
 				4F428CE62CD3D608006322AB /* MacAddress.m in Sources */,
 				4F44FF042606D73D00926A5E /* MFMessagePort.m in Sources */,

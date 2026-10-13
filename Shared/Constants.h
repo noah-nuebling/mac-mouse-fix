@@ -140,6 +140,7 @@ typedef NSString*                                                       MFString
 // Type values
 #define kMFModifiedDragTypeTwoFingerSwipe                               @"twoFingerSwipe"
 #define kMFModifiedDragTypeThreeFingerSwipe                             @"threeFingerSwipe"
+#define kMFModifiedDragTypeThreeFingerSwipeInstant                      @"threeFingerSwipeInstant"
 #define kMFModifiedDragTypeFakeDrag                                     @"fakeDrag"
 #define kMFModifiedDragTypeAddModeFeedback                              @"addModeDrag"
 // Variant keys

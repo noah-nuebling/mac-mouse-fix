@@ -14,6 +14,8 @@
 #import "PointerFreeze.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "CGSDisplays.h"
+#import "Logging.h"
+#import "InstantSpaceSwitcher/include/ISS.h"
 
 @implementation ModifiedDragOutputThreeFingerSwipe
 
@@ -23,6 +25,7 @@ static ModifiedDragState *_drag;
 
 static int16_t _nOfSpaces = 1;
 static NSSize _screenSize = {};
+static BOOL _instantHorizontal = NO;
 
 /// Interface funcs
 
@@ -31,6 +34,21 @@ static NSSize _screenSize = {};
 }
 
 + (void)handleBecameInUse {
+
+    _instantHorizontal = [_drag->type isEqualToString:kMFModifiedDragTypeThreeFingerSwipeInstant]
+        && _drag->usageAxis == kMFAxisHorizontal;
+
+    if (_instantHorizontal) {
+        // originOffset is the movement that crossed the existing drag threshold.
+        // It is still in device coordinates, before ModifiedDrag applies natural scrolling.
+        double deltaX = _drag->naturalDirection ? _drag->originOffset.x : -_drag->originOffset.x;
+        ISSDirection direction = deltaX < 0 ? ISSDirectionRight : ISSDirectionLeft;
+        // One switch per drag, like InstantSpaceSwitcher's trackpad override.
+        // No continuous horizontal swipe is opened, so release must not send an Ended event.
+        if (!iss_switch(direction)) {
+            DDLogDebug("Instant Space switch blocked by a boundary or unavailable Space information");
+        }
+    }
 
     NSScreen *screen = [NSScreen mainScreen];
 
@@ -64,6 +82,7 @@ static NSSize _screenSize = {};
 }
 
 + (void)handleMouseInputWhileInUseWithDeltaX:(double)deltaX deltaY:(double)deltaY {
+    if (_instantHorizontal) return;
     
     /**
      Horizontal dockSwipe scaling
@@ -95,6 +114,11 @@ static NSSize _screenSize = {};
 }
 
 + (void) handleDeactivationWhileInUseWithCancel:(BOOL)cancel {
+
+    if (_instantHorizontal) {
+        if (GeneralConfig.freezePointerDuringModifiedDrag) [PointerFreeze unfreeze];
+        return;
+    }
 
     MFDockSwipeType type;
     IOHIDEventPhaseBits phase;

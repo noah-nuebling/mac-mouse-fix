@@ -1,0 +1,31 @@
+name: Build instant Spaces option
+
+on:
+  push:
+    branches: [feature/instant-spaces-drag]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: xcode-27
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Test embedded switching engine
+        run: bash Tests/InstantSpaces/run.sh
+      - name: Build app and helper
+        run: >-
+          xcodebuild -project 'Mouse Fix.xcodeproj' -scheme App
+          -configuration Debug -derivedDataPath build
+          CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build
+      - name: Package build
+        run: ditto -c -k --keepParent 'build/Build/Products/Debug/Mac Mouse Fix.app' 'Mac Mouse Fix Instant.zip'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Mac-Mouse-Fix-Instant
+          path: Mac Mouse Fix Instant.zip
