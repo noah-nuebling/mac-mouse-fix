@@ -41,7 +41,10 @@ Run `Tests/InstantSpaces/run.sh` on macOS with the command-line developer tools.
 The tests capture posted events instead of sending them to the desktop. They
 cover the legacy and macOS 27 event sequences, end-of-Spaces boundaries, rapid
 switch predictions, prediction expiry, missing Space data, and per-display
-active Space selection.
+active Space selection and both natural scrolling settings. The actual drag
+output plugin is also tested in isolation to verify one switch per horizontal
+drag, both vertical directions, release/cancellation, pointer unfreezing, and
+unchanged legacy mappings.
 
 Build the complete application with Xcode using the shared `App` scheme. Full
 application builds also verify the dropdown, helper integration, localization,

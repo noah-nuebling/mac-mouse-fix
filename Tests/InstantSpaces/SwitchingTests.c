@@ -9,6 +9,12 @@ static CFAbsoluteTime testTime = 100;
 static CFAbsoluteTime test_now(void) { return testTime; }
 static CFArrayRef displayFixture;
 static bool infoUnavailable;
+static int naturalMode = 1;
+static Boolean test_natural(CFStringRef key, CFStringRef application, Boolean *valid) {
+    (void)key; (void)application;
+    *valid = naturalMode >= 0;
+    return naturalMode == 1;
+}
 static int postedCount;
 static CGEventRef posted[64];
 static void capture_event(CGEventTapLocation location, CGEventRef event) {
@@ -16,6 +22,7 @@ static void capture_event(CGEventTapLocation location, CGEventRef event) {
     assert(postedCount < 64);
     posted[postedCount++] = CGEventCreateCopy(event);
 }
+#define CFPreferencesGetAppBooleanValue test_natural
 #define CGEventPost capture_event
 #define CFAbsoluteTimeGetCurrent test_now
 #define CGSMainConnectionID test_connection
@@ -68,7 +75,7 @@ static void set_display(int current, int count) {
     testTime += 2;
     clear_events();
 }
-static void assert_gesture(void) {
+static void assert_gesture(ISSDirection direction) {
     bool modern = iss_requires_event_augmentation();
     assert(postedCount == (modern ? 6 : 3));
     int phases[] = {1, 2, 4};
@@ -80,6 +87,9 @@ static void assert_gesture(void) {
         assert(CGEventGetIntegerValueField(event, (CGEventField)132) == phases[i]);
         double progress = CGEventGetDoubleValueField(event, (CGEventField)124);
         assert(fabs(progress) > 0 && fabs(progress) < 0.001);
+        double expectedSign = direction == ISSDirectionRight ? 1 : -1;
+        if (modern && naturalMode != 0) expectedSign *= -1;
+        assert(progress * expectedSign > 0);
         double velocity = CGEventGetDoubleValueField(event, (CGEventField)129);
         assert(modern && i < 2 ? velocity == 0 : fabs(velocity) >= 2000);
         if (modern) {
@@ -91,23 +101,31 @@ static void assert_gesture(void) {
     }
 }
 int main(void) {
+    // Direction works with natural scrolling on/off and the system default.
+    for (naturalMode = -1; naturalMode <= 1; naturalMode++) {
+        set_display(101, 3);
+        assert(iss_switch(ISSDirectionLeft)); assert_gesture(ISSDirectionLeft);
+        set_display(101, 3);
+        assert(iss_switch(ISSDirectionRight)); assert_gesture(ISSDirectionRight);
+    }
+    naturalMode = 1;
     // Initialization must stay embedded: no global input tap.
     assert(globalTap == NULL);
     set_display(100, 3);
     assert(!iss_switch(ISSDirectionLeft)); assert(postedCount == 0);
-    assert(iss_switch(ISSDirectionRight)); assert_gesture();
+    assert(iss_switch(ISSDirectionRight)); assert_gesture(ISSDirectionRight);
     assert(globalTap == NULL);
 
     // A burst uses predictions while CGS still reports the old Space.
     clear_events();
-    assert(iss_switch(ISSDirectionRight)); assert_gesture();
+    assert(iss_switch(ISSDirectionRight)); assert_gesture(ISSDirectionRight);
     clear_events();
     assert(!iss_switch(ISSDirectionRight)); assert(postedCount == 0);
-    assert(iss_switch(ISSDirectionLeft)); assert_gesture();
+    assert(iss_switch(ISSDirectionLeft)); assert_gesture(ISSDirectionLeft);
 
     set_display(102, 3);
     assert(!iss_switch(ISSDirectionRight)); assert(postedCount == 0);
-    assert(iss_switch(ISSDirectionLeft)); assert_gesture();
+    assert(iss_switch(ISSDirectionLeft)); assert_gesture(ISSDirectionLeft);
 
     set_display(100, 1);
     assert(!iss_switch(ISSDirectionLeft));
@@ -131,7 +149,7 @@ int main(void) {
     assert(iss_switch(ISSDirectionRight));
     clear_events();
     testTime += 2;
-    assert(iss_switch(ISSDirectionRight)); assert_gesture();
+    assert(iss_switch(ISSDirectionRight)); assert_gesture(ISSDirectionRight);
     clear_events();
     CFRelease(displayFixture); iss_destroy();
     puts("Embedded instant switching tests passed");
