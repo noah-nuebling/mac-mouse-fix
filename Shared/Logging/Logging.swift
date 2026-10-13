@@ -22,11 +22,11 @@
 @inlinable func DDLogDebug(_ message: @autoclosure () -> String)   { if OSLog.default.isEnabled(type: .debug)     { os_log(.debug,   log: OSLog.default, "%{public}s", message()); } }
 @inlinable func DDLogVerbose(_ message: @autoclosure () -> String) { if OSLog.default.isEnabled(type: .default)   { os_log(.default, log: OSLog.default, "%{public}s", message()); } }
 
-/// Define mfassert for Swift
-///     @noGCDCleanup Flesh this out a little bit
-@inlinable @_transparent func mfassert(_ condition: @autoclosure () -> Bool, _ message: @autoclosure () -> String = String(), file: StaticString = #file, line: UInt = #line) {
-    assert(condition(), message(), file: file, line: line)
+/// Wrap mfassert() and mfrequire() for Swift
+@inline(__always) func mfassert(_ condition: @autoclosure () -> Bool, _ reason: @autoclosure () -> String? = nil, file: String = #fileID, line: Int = #line, function: String = #function) {
+    if _slowPath(!condition()) { _mfassertrequire_failure(false, "<swift>", reason(), file, Int32(line), function) }
 }
-@inlinable @_transparent func mfrequire(_ condition: @autoclosure () -> Bool, _ message: @autoclosure () -> String = String(), file: StaticString = #file, line: UInt = #line) {
-    assert(condition(), message(), file: file, line: line)
+
+@inline(__always) func mfrequire(_ condition: @autoclosure () -> Bool, _ reason: @autoclosure () -> String? = nil, file: String = #fileID, line: Int = #line, function: String = #function) {
+    if _slowPath(!condition()) { _mfassertrequire_failure(true, "<swift>", reason(), file, Int32(line), function) }
 }

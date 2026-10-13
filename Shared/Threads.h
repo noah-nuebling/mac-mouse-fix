@@ -90,12 +90,10 @@ void threads_configureMainThread(void);
 
 void set_thread_priority(int priority, bool round_robin);
 
-/// @noGCDCleanup flesh this out / think this through (Swift version as well)
-///     Maybe make these 'require' instead of 'assert'
-
-#define assertRunLoop(runLoop) \
-    if (_enableRunLoopAsserts) \
-    mfassert(CFRunLoopGetCurrent() == (runLoop), @"assertRunLoop failure.")
+static inline void assertRunLoop(CFRunLoopRef runLoop) { /// Note: Making this static inline instead of macro so Swift can use it. Downside: the mfrequire macro will have wrong source code location [Oct 2026]
+    if (_enableRunLoopAsserts)
+    mfrequire(CFRunLoopGetCurrent() == (runLoop), @"assertRunLoop failure. Expected vs actual:\n%@\nvs\n%@", (runLoop), CFRunLoopGetCurrent());
+}
 
 /** Nested read/write protection.
 
@@ -143,8 +141,8 @@ typedef struct { int readerCount; int writerCount; } MFReadWriteTracker;
     (tracker)->writerCount += 1; \
     __attribute__((cleanup(__decrementInt))) int *__readerWriterCount = &(tracker)->writerCount
 
-/// @noGCDCleanup Add note about no `break` or `return` inside this (Mention Swift version, too)
-#define allowNestedReadOrWrite() \
+
+#define allowNestedReadOrWrite() /** Caution: break / return breaks this [Oct 2026] */\
     for (int _once = ({ (*__readerWriterCount)--; 1; }); _once; _once = ({ (*__readerWriterCount)++; 0; }))
 
     NS_SWIFT_UNAVAILABLE("")
