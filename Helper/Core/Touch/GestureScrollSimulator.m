@@ -243,7 +243,10 @@ static void (^_momentumScrollCallback)(void);
 
 
 + (void)stopMomentumScroll {
-    DDLogDebug("momentumScroll stop request. Caller: %@", [SharedUtility callerInfo]);
+    if (runningDebugMode()) {
+        NSString *callerInfo = _momentumAnimator.isRunning ? [SharedUtility callerInfo] : @"<Omitted for performance>"; /// Otherwise twoFingerSwipe is extremely unresponsive for me right now [Oct 2026]
+        DDLogDebug("momentumScroll stop request. Caller: %@", callerInfo);
+    }
     [_momentumAnimator cancel];
 }
 

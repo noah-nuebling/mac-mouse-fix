@@ -94,7 +94,9 @@ static NSMutableDictionary *_swipeInfo;
     CFRelease(event);
 }
 
-+ (void)postDockSwipeEventWithDelta:(double)d type:(MFDockSwipeType)type phase:(IOHIDEventPhaseBits)phase invertedFromDevice:(BOOL)invertedFromDevice {
++ (void) postDockSwipeEventWithDelta: (double)d type: (MFDockSwipeType)type phase: (IOHIDEventPhaseBits)phase invertedFromDevice: (BOOL)invertedFromDevice {
+
+    /// @afterNoGCDTodo The pinch DockSwipes no longer work in Mission Control (extremely niche, but I do use them sometimes. [Oct 2026] )
 
     assertRunLoop(IOThread.runLoop);
 
