@@ -127,12 +127,16 @@ import ReactiveSwift
     @inline(__always) private func logWithState(_ message: @autoclosure () -> String) {
 
         if (!runningDebugMode()) { return; }
+        assertRunLoop(IOThread.runLoop())
+
+        let buttonsKilled = /*MenuBarItem.scrollItemIsEnabled()*/  config("General.buttonKillSwitch") as! Bool /// [Oct 2026] Used to go directly through `MenuBarItem.scrollItemIsEnabled` instead of `config()` but that's owned by mainThread. Not sure this makes sense.
+        let scrollKilled  = /*MenuBarItem.buttonsItemIsEnabled()*/ config("General.scrollKillSwitch") as! Bool
 
         DDLogDebug("""
             SwitchMaster: \(message())
-            SwitchMaster: EventTap state - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isReceiving() ? 1 : 0), pointing: \(ModifiedDrag.debug_activationState().rawValue)
-            SwitchMaster: MenuItem state - buttonMenu: \(MenuBarItem.buttonsItemIsEnabled() ? 1 : 0), scrollMenu: \(MenuBarItem.scrollItemIsEnabled() ? 1 : 0)
-            SwitchMaster: Internal state -\n\(SharedUtilitySwift.dumpSwiftIvars(self))
+            EventTap state - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isReceiving() ? 1 : 0), pointing: \(ModifiedDrag.debug_activationState().rawValue)
+            MenuItem state - buttonMenu: \(buttonsKilled ? 1 : 0), scrollMenu: \(scrollKilled ? 1 : 0)
+            Internal state -\n\(SharedUtilitySwift.dumpSwiftIvars(self))
             """)
     }
     
@@ -247,7 +251,7 @@ import ReactiveSwift
         readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
 
         /// Get raw
-        let btn = generalConfig.object(forKey: "buttonKillSwitch") as! Bool
+        let btn  = generalConfig.object(forKey: "buttonKillSwitch") as! Bool
         let scrl = generalConfig.object(forKey: "scrollKillSwitch") as! Bool
         
         /// Update state & set didChange
@@ -319,7 +323,7 @@ import ReactiveSwift
         /// Debug
         logWithState("""
             Toggled due to attachedDevices change.
-            New devices: \(devices)
+            New devices: \(devices.debugDescription/** `debugDescription` prevents escaping linebreaks somehow [Oct 2026] */)
             """)
         
     }
