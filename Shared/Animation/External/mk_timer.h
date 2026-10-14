@@ -59,7 +59,7 @@ extern kern_return_t    mk_timer_cancel(
 #define MK_TIMER_NORMAL         (0)
 #define MK_TIMER_CRITICAL       (1)
 
-extern kern_return_t    mk_timer_arm_leeway(
+extern kern_return_t    mk_timer_arm_leeway( /// First shows up in XNU for macOS 10.12.4 says Opus 5.5 [Oct 2026]
 	mach_port_name_t        name,
 	uint64_t                mk_timer_flags,
 	uint64_t                mk_timer_expire_time,
