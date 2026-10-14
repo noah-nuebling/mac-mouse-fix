@@ -89,7 +89,6 @@ static TouchAnimator *_momentumAnimator;
     
     
     /// Stop momentum scroll
-    ///     Do it sync otherwise it will be stopped immediately after it's startet by this block
     [GestureScrollSimulator stopMomentumScroll];
     
     /// Timestamps and static vars
@@ -244,26 +243,6 @@ static void (^_momentumScrollCallback)(void);
 
 
 + (void)stopMomentumScroll {
-
-    /**
-        @noGCDCleanup
-        Random notes (about something I may have messed up earlier in refactor)
-
-        stopMomentumScroll    -> used to be `dispatch_async`
-            Callsites:
-            - [Device handleInput]; (Dead code)
-            - Scroll.m > `/// --- GestureScroll ---`
-            - Scroll.m > `[Scroll resetState]`
-            - GestureScrollSimulator.m > startMomentumScroll
-            - GestureScrollSimulator.m > startMomentumScroll > `_momentumAnimator startWithParams`
-        suspendMomentumScroll -> used to be `dispatch_sync`
-            - OutputCoordinator.swift > suspendTouchDrivers() (Dead code)
-            - ModifiedDragOutputTwoFingerSwipe.m > +handleDeactivationWhileInUseWithCancel:
-
-        -> Replaced both of these with direct (sync) calls calls without thinking.
-            (Also not sure the original design had much though behind it)
-    */
-
     DDLogDebug("momentumScroll stop request. Caller: %@", [SharedUtility callerInfo]);
     [_momentumAnimator cancel];
 }
