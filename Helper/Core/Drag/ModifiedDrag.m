@@ -375,7 +375,7 @@ static void processPendingCoalescableEventsOncePerFrame(void) {
 
     uint64_t now = mach_absolute_time();
     uint64_t lastVBLTime = CGDisplay_NearestVBLTime(_drag.displayID, "before", /*anchorInMachTime*/now, kVBLPhase_DefaultForEventSending) ?: fallbackPriorVBLTime(now);
-    uint64_t vblDelta = SLSDisplayGetCurrentVBLDelta(_drag.displayID) ?: kFallbackVBLPhase;
+    uint64_t vblDelta = SLSDisplayGetCurrentVBLDelta(_drag.displayID) ?: kFallbackVBLDelta;
     uint64_t tolerance = defaultVBLTolerance(vblDelta); /// `CGDisplay_NearestVBLTime` always extrapolates the frames a little differently so directly comparing the results will give false negatives [Oct 2026].
     if (_drag.lastVBLTimeThatProcessedCoalescableEvents < lastVBLTime - tolerance) {
 
