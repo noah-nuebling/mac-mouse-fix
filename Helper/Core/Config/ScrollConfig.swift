@@ -452,7 +452,6 @@ import Cocoa
     }()
     
     @objc var animationCurve: MFScrollAnimationCurveName {
-        
         set {
             _animationCurveName = newValue
             self.animationCurveParams = animationCurveParamsMap(name: animationCurve)

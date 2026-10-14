@@ -301,7 +301,7 @@ import QuartzCore
         
         /// Reset speed
         /// Notes: Not totally sure this belongs here. But resetting in start() doesn't work with the current code because the speed needs to be reset before it's passed into StartParamCalculationCallback() - And that function is the first thing that is called inside start().
-        ///     [Oct 2026] Removed StartParamCalculationCallback. Don't understand this. Probably doesn't apply anymore.
+        ///     [Oct 2026] Removed StartParamCalculationCallback. Don't understand this. Probably doesn't apply anymore. (Update: Opus 5.5. says it is necessary)
         _lastAnimationSpeed = Vector(x: 0, y: 0)
 
         /// Do stuff

@@ -79,7 +79,7 @@ void mfrun(CFRunLoopRef rl, void (^workload)(void)) {
 
     /// This codebase's standard (greppable) way to run a block on a runLoop [Oct 2026]
     ///     Use this over `dispatch_async`, `-[NSObject performSelector:onThread:...]`, `[NSRunLoop performInModes:block:]` [Oct 2026]
-    ///     Formerly `mfrun` [Oct 2026]
+    ///     Formerly `MFCFRunLoopPerform` [Oct 2026]
 
     CFRunLoopMode mode = kCFRunLoopCommonModes; /// I think this is ok to use everywhere. (Only thing non-default mode would be used for is tracking loops I think?) [Oct 2026]
     CFRunLoopPerformBlock(rl, mode, workload);

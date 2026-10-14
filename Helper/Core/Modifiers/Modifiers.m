@@ -112,7 +112,7 @@ static CFMachPortRef _kbModEventTap;
     ///         - The helper's build-number was 24405, that was probably the feature-strings-catalog branch - the master branch is currently around 22000 (master around the 3.0.3 release right now.) (I'm writing this on the master branch.)
     ///         - This crash actually appeared like 10 times within 1.5 hours, but I didn't notice anything.
     ///         - This might be a quirk in macOS (I've seen a lot of weird crashes lately on macOS 15.0) or there might be a race condition on the initialization process.
-    ///         - We plan to create a unified 'input thread' that handles all the input coming from the user synchronously. Maybe that could help here as well if this is a race-condition.
+    ///         - We plan to create a unified 'IOThread' that handles all the input coming from the user synchronously. Maybe that could help here as well if this is a race-condition.
     ///         - Update (2 days later - 27.09.2024) on one of these crashes (not sure if it was exactly the one I discussed above but the stack-track looked the same) I saw the following timestamps:
     ///             "captureTime" : "2024-09-25 11:57:41.3923 +0200",
     ///             "procLaunch" : "2024-09-25 11:49:20.5558 +0200",
