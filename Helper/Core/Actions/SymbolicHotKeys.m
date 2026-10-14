@@ -109,7 +109,7 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
 
     DDLogDebug("[SymbolicHotKeys +post:] called on thread: %@", NSThread.currentThread);
     
-    MFCFRunLoopPerform(CFRunLoopGetMain(), nil, ^{ /// Should we use the `_sync` variant here? Might be more responsive? 
+    mfrun(CFRunLoopGetMain(), ^{ /// Should we use the `_sync` variant here? Might be more responsive? 
         
         /// Run everything on mainThread
         ///     Reasons:

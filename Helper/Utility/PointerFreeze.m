@@ -393,7 +393,7 @@ static void drawPuppetCursor(PuppetCursorCommand command) {
 
     /// Interact with AppKit from mainThread
     /// Optimization idea: Maybe coalesce these like we're already doing for DisplayLink.m's displayLinkCallback or ModifiedDrag's coalescingDisplayLink (But don't skip draw/undraw commands!) [Sep 2026]
-    MFCFRunLoopPerform(CFRunLoopGetMain(), nil, ^{
+    mfrun(CFRunLoopGetMain(), ^{
 
         if (command == kPuppetCursorCommand_Draw) {
 

@@ -125,7 +125,7 @@
 
     /// Load (but don't yet +start) `IOThread` before anything else (So that other `load_Manual` methods can schedule things on `IOThread.runLoop`) [Sep 2026]
     ///     Also see `[IOThread start];` at the end
-    ///     [Sep 2026] Claude Opus 5.5 deadlock note: `MFCFRunLoopPerform_sync` onto `IOThread.runLoop` before `+[IOThread start]` would deadlock – but we probably will barely use `MFCFRunLoopPerform_sync` and would probably quickly catch anyways.
+    ///     [Sep 2026] Claude Opus 5.5 deadlock note: `mfrun_sync` onto `IOThread.runLoop` before `+[IOThread start]` would deadlock – but we probably will barely use `mfrun_sync` and would probably quickly catch anyways.
     [IOThread load_Manual];
 
     /// Apply our configurations for the mainThread
@@ -239,7 +239,7 @@
 
                 [License licenseStateWithLicenseConfig:licenseConfig completionHandler:^(MFLicenseAndTrialState license, NSError * _Nullable error) {
 
-                    MFCFRunLoopPerform(CFRunLoopGetMain(), nil,  ^{
+                    mfrun(CFRunLoopGetMain(),  ^{
                         [TrialNotificationController.shared openWithLicenseConfig:licenseConfig license:license triggeredByUser:NO];
                     });
                 }];

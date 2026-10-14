@@ -242,7 +242,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
             [Config loadFileAndUpdateStates];
         }
         xxx(@"terminate") {
-            MFCFRunLoopPerform(CFRunLoopGetMain(), nil, ^{
+            mfrun(CFRunLoopGetMain(), ^{
                 [NSApp terminate: NULL];
                 //[NSApp.delegate applicationWillTerminate:[[NSNotification alloc] init]]; /// This creates an infinite loop or something? The statement below is never executed.
             });

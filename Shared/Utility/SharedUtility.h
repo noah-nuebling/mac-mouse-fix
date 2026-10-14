@@ -43,10 +43,11 @@ NS_ASSUME_NONNULL_BEGIN
 NSString *MFLocale(void);
 NSString *MFLanguageCode(void);
 
-void MFCFRunLoopPerform(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, void (^_Nonnull workload)(void));
-void MFCFRunLoopPerform_delay(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, double delayInSeconds, void (^_Nonnull workload)(void));
+void mfrun(CFRunLoopRef _Nonnull rl, void (^_Nonnull workload)(void));
+
 CFTimeInterval machTimeToSeconds(uint64_t tsMach);
 uint64_t secondsToMachTime(CFTimeInterval tsSeconds);
+
 NSException * _Nullable tryCatch(void (^tryBlock)(void));
 void *offsetPointer(void *ptr, int byteOffset);
 

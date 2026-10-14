@@ -23,7 +23,7 @@ import CoreGraphics
     override init() {
         super.init()
         initUserIsActive()
-        MFCFRunLoopPerform(IOThread.runLoop(), nil) { /// [Sep 2026] Can't call non-deferred since it causes HelperState.shared -> HelperState.init -> HelperState.shared recursion which deadlocks or whatever. Been this way before [Sep 2026] 'No more dispatch queues' refactor, so should be fine.
+        mfrun(IOThread.runLoop()) { /// [Sep 2026] Can't call non-deferred since it causes HelperState.shared -> HelperState.init -> HelperState.shared recursion which deadlocks or whatever. Been this way before [Sep 2026] 'No more dispatch queues' refactor, so should be fine.
             SwitchMaster.shared.helperStateChanged()
         }
     }
@@ -48,14 +48,14 @@ import CoreGraphics
         
         /// Listen to user switches and update userIsActive
         NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.sessionDidBecomeActiveNotification, object: nil, queue: nil) { notification in
-            MFCFRunLoopPerform(IOThread.runLoop(), nil) {
+            mfrun(IOThread.runLoop()) {
                 self.userIsActive = true
                 mfassert(self.userIsActive_Uncached() == self.userIsActive)
                 SwitchMaster.shared.helperStateChanged()
             }
         }
         NSWorkspace.shared.notificationCenter.addObserver(forName: NSWorkspace.sessionDidResignActiveNotification, object: nil, queue: nil) { notification in
-            MFCFRunLoopPerform(IOThread.runLoop(), nil) {
+            mfrun(IOThread.runLoop()) {
                 self.userIsActive = false
                 mfassert(self.userIsActive_Uncached() == self.userIsActive)
                 SwitchMaster.shared.helperStateChanged()

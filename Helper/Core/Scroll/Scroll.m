@@ -233,7 +233,7 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     /// Enqueue heavy processing
     ///  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
     ///     [Sep 2026] @noGCDCleanup Try removing this defer (Probably doesn't help anymore since it defers to the same thread?)
-    //MFCFRunLoopPerform(IOThread.runLoop, nil, ^{
+    //mfrun(IOThread.runLoop, ^{
         allowNestedReadOrWrite() heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTime);
     //});
 

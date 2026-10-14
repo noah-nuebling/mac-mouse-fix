@@ -157,7 +157,7 @@ void threads_configureMainThread(void) {
             /// Wrap in autoreleasePool
             ///     Necessary on older macOS versions. Probably before 11.0. See `_CFRunLoopSetPerCalloutAutoreleasepoolEnabled` (above) [Oct 2026]
             @autoreleasepool {
-                (void)CFRunLoopRunInMode(kCFRunLoopDefaultMode, /*seconds*/DBL_MAX, /*returnAfterSourceHandled*/true); /// Claude says this doesn't return (which drains the pool) after handling CFRunLoopTimerRef/NSTimer or blocks (MFCFRunLoopPerform). Probably fine. Could alternatively use `CFRunLoopObserverRef` [Oct 2026] Claude also says `_CFRunLoopSetPerCalloutAutoreleasepoolEnabled` doesn't affect timers and timers always drain some internal pool in macOS 10.15 or later. [Oct 2026]
+                (void)CFRunLoopRunInMode(kCFRunLoopDefaultMode, /*seconds*/DBL_MAX, /*returnAfterSourceHandled*/true); /// Claude says this doesn't return (which drains the pool) after handling CFRunLoopTimerRef/NSTimer or blocks (mfrun). Probably fine. Could alternatively use `CFRunLoopObserverRef` [Oct 2026] Claude also says `_CFRunLoopSetPerCalloutAutoreleasepoolEnabled` doesn't affect timers and timers always drain some internal pool in macOS 10.15 or later. [Oct 2026]
             }
         }
     }
