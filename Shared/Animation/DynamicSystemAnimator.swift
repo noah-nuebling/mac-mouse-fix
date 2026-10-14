@@ -153,16 +153,10 @@ import Foundation
         self.isFirstCallback = true
 
         /// Configure displayLink
-        ///
-        /// Notes:
-        /// - I feel like this somehow makes the animation more stuttery? Turning this off.
-        /// - (Sep 2024) We're not linking the displayLink to a specific display at all. Won't this cause problems especially with 120Hz or Pro Motion displays?
-        /// @noGCDCleanup Gotta fix this
         self.displayLink.linkToMainScreen()
 
         /// Start displayLink
-        ///  @noGCDCleanup Understand/fix the `[weak self]` warning
-        self.displayLink.start { [weak self] timeInfo in
+        self.displayLink.start { [weak self] timeInfo in /// Breaks `displayLink -> callback -> self -> displayLink` retainCycle [Oct 2026]
             assert(self != nil)
             self?.update(timeInfo, callback)
         }
