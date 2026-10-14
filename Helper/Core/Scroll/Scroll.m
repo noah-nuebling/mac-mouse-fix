@@ -7,8 +7,6 @@
 // --------------------------------------------------------------------------
 //
 
-/// @noGCDCleanup deleta all the dead code
-
 #import "Scroll.h"
 #import "DeviceManager.h"
 #import "TouchSimulator.h"
@@ -38,7 +36,7 @@
 ///
 /// There are issues where scrolling stops working intermittently or after a restart [Apr 8 2025]
 ///     See this note on the issue: https://github.com/noah-nuebling/notes-public/blob/23361f16a315f48f1f6278161b8cefab50fc3665/mmf/bug-investigation/scrolling-stops-intermittently_apr-2025.md
-///
+///     Update: These issues disappeared I think after we started CVDisplayLink in restart loop, and now we've replaced CVDisplayLink with `mk_timer`. [Oct 2026] -> Delete this.
 
 @implementation Scroll
 
@@ -49,10 +47,12 @@ static CGEventSourceRef _eventSource;
 
 static TouchAnimator *_animator;
 
-static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this to Config or some sort of OverrideManager class
-+ (AXUIElementRef) systemWideAXUIElement { /// [Sep 2026] Currently unused - due to slowness IIRC
-    return _systemWideAXUIElement;
-}
+#if 0
+    static AXUIElementRef _systemWideAXUIElement; // TODO: should probably move this to Config or some sort of OverrideManager class
+    + (AXUIElementRef) systemWideAXUIElement { /// [Sep 2026] Currently unused - due to slowness IIRC
+        return _systemWideAXUIElement;
+    }
+#endif
 
 #pragma mark - Variables - dynamic
 
@@ -61,7 +61,7 @@ static ScrollConfig *_scrollConfig;
 static MFScrollAnimationCurveParameters *_animationParams;
 static ScrollAnalysisResult _lastScrollAnalysisResult;
 static CFTimeInterval _lastScrollAnalysisResultTimeStamp;
-//static BOOL _isSuspended = NO; TODO: Remove suspension stuff (already commented out)
+
 
 static MFReadWriteTracker _readWriteTracker;
 
@@ -72,7 +72,7 @@ static MFReadWriteTracker _readWriteTracker;
     readsAndWritesState(&_readWriteTracker); /// [Sep 2026] Probably unnecessary
 
     /// Create AXUIElement for getting app under mouse pointer
-    _systemWideAXUIElement = AXUIElementCreateSystemWide();
+    //_systemWideAXUIElement = AXUIElementCreateSystemWide();
     /// Create Event source
     if (_eventSource == NULL) {
         _eventSource = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
@@ -112,41 +112,32 @@ static MFReadWriteTracker _readWriteTracker;
     /// Notes:
     /// - The switch Master will call this over and over again whenever it checks the current conditions and decides that scroll input should be intercepted. Therefore this should be eficient and do nothing if it's called while we're already intercepting scrolls.
     /// - We used to call `resetState` when starting/stopping, but this doesn't makes sense I think. Because we don't want to reset/cancel animations just because the interception of scrollwheel events stopped. Those things are logically separate.
-    /// - We used to `dispatch_async` here because `resetState` should be synchronized on the scrollQueue (as evidenced by its base implementation being suffixed with `_Unsafe`). But since we're not calling `resetState` anymore, I don't think there's a reason to dispatch to the scrollQueue.
     /// - I did some rudimentary performance testing here (when we were still calling `resetState`) and it seems that `[Scroll startReceiving]` and `[Scroll stopReceiving]` have practically no impact on CPU usage even when spamming a button with such settings that SwitchMaster calls start/stop on each button press and release.
-    /// @noGCDCleanup update/review these comments.
-    ///     Maybe mention that `_eventTap` is only touched from few places and used to be managed from separate thread (main)?(?)
+    /// - [Oct 2026] After 'No more dispatch queues' refactor, everything is on `IOThread.runLoop`.
+    ///     Maybe interesting if we ever want to introduce more threads: `_eventTap` is only touched in a few places and used to be managed by a separate thread. IIRC that also caused how some of this is factored, which maybe could be reconsidered (Unsure about all this) [Oct 2026]
 
     assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
 
-    /// DEBUG
     DDLogDebug("Scroll.m: startReceiving. isReceiving: %d", CGEventTapIsEnabled(_eventTap));
 
-    /// Start event tap
-    if (!CGEventTapIsEnabled(_eventTap)) {
+    if (!CGEventTapIsEnabled(_eventTap))
         CGEventTapEnable(_eventTap, true);
-    }
-    
 }
 
 + (void)stopReceiving {
     
     /// Notes:
     /// - Are there other things we should enable/disable here? ScrollModifiers.reactToModiferChange() comes to mind
-    /// - Also see notes for `- startReceiving`
+    /// - Also see notes for `-startReceiving`
 
     assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
 
-    /// DEBUG
     DDLogDebug("Scroll.m: stopReceiving. isReceiving: %d", CGEventTapIsEnabled(_eventTap));
-    
-    
-    /// Stop event tap
-    if (CGEventTapIsEnabled(_eventTap)) {
+
+    if (CGEventTapIsEnabled(_eventTap))
         CGEventTapEnable(_eventTap, false);
-    }
 }
 
 + (BOOL)isReceiving {
@@ -160,24 +151,24 @@ static MFReadWriteTracker _readWriteTracker;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wunused-function"
 
-static NSString *CGScrollWheelEventDescription(CGEventRef event) {
-    
-    /// Helper / debugging function
-    /// TODO: Move this to another file (Don't forget the -Wunused-function warning ignore stuff above and below)
-    
-    double d            = CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis1);
-    double dPoint       = CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis1);
-    double dFixed       = CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1);
-    double dContinuous  = CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
-    double dCount       = CGEventGetDoubleValueField(event, kCGScrollWheelEventScrollCount);
-    double dInstant     = CGEventGetDoubleValueField(event, kCGScrollWheelEventInstantMouser);
-    double dPhase       = CGEventGetDoubleValueField(event, kCGScrollWheelEventScrollPhase);
-    double dMomPhase    = CGEventGetDoubleValueField(event, kCGScrollWheelEventMomentumPhase);
-    
-    NSString *description = [NSString stringWithFormat:@"d: %f dPoint: %f dFixed: %f isContinuous: %f count: %f instant: %f phase: %f momPhase: %f", d, dPoint, dFixed, dContinuous, dCount, dInstant, dPhase, dMomPhase];
-    
-    return description;
-}
+    static NSString *CGScrollWheelEventDescription(CGEventRef event) {
+
+        /// Helper / debugging function
+        /// TODO: Move this to another file (Don't forget the -Wunused-function warning ignore stuff above and below)
+
+        double d            = CGEventGetDoubleValueField(event, kCGScrollWheelEventDeltaAxis1);
+        double dPoint       = CGEventGetDoubleValueField(event, kCGScrollWheelEventPointDeltaAxis1);
+        double dFixed       = CGEventGetDoubleValueField(event, kCGScrollWheelEventFixedPtDeltaAxis1);
+        double dContinuous  = CGEventGetIntegerValueField(event, kCGScrollWheelEventIsContinuous);
+        double dCount       = CGEventGetDoubleValueField(event, kCGScrollWheelEventScrollCount);
+        double dInstant     = CGEventGetDoubleValueField(event, kCGScrollWheelEventInstantMouser);
+        double dPhase       = CGEventGetDoubleValueField(event, kCGScrollWheelEventScrollPhase);
+        double dMomPhase    = CGEventGetDoubleValueField(event, kCGScrollWheelEventMomentumPhase);
+
+        NSString *description = [NSString stringWithFormat:@"d: %f dPoint: %f dFixed: %f isContinuous: %f count: %f instant: %f phase: %f momPhase: %f", d, dPoint, dFixed, dContinuous, dCount, dInstant, dPhase, dMomPhase];
+
+        return description;
+    }
 
 #pragma clang diagnostic pop
 
@@ -224,18 +215,13 @@ static CGEventRef eventTapCallback(CGEventTapProxy proxy, CGEventType type, CGEv
     
     /// Get timestamp
     ///     Get timestamp here instead of _scrollQueue for accurate timing
+    ///     @afterNoGCDTodo We found that the HIDEvent's timestamps are much more accurate.
     CFTimeInterval tickTime = CGEventGetTimestampInSeconds(event);
     
-    /// Create copy of event
-    
-    //CGEventRef eventCopy = CGEventCreateCopy(event); /// Create a copy, because the original event will become invalid and unusable in the new queue.
-
-    /// Enqueue heavy processing
-    ///  Executing heavy stuff on a different thread to prevent the eventTap from timing out. We wrote this before knowing that you can just re-enable the eventTap when it times out. But this doesn't hurt.
-    ///     [Sep 2026] @noGCDCleanup Try removing this defer (Probably doesn't help anymore since it defers to the same thread?)
-    //mfrun(IOThread.runLoop, ^{
-        allowNestedReadOrWrite() heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTime);
-    //});
+    /// Do the actual work
+    ///     We used to do this on a separate dispatch queue before the 'No more dispatch queues' refactor. Deleted the comments about why [Oct 2026]
+    allowNestedReadOrWrite()
+    heavyProcessing(event, scrollDeltaAxis1, scrollDeltaAxis2, tickTime);
 
     return NULL;
 }
@@ -246,9 +232,6 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
 
     assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
-
-    /// Declare stuff for later
-    static DriverUnsuspender unsuspendDrivers = ^{}; /// This is old stuff that should be removed I think [Jun 2 2025]
     
     /// Debug
     if (runningDebugMode()) { /// if-statement because hidEvent.description is very slow
@@ -579,8 +562,6 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             } else {
                 pxLeftToScroll = 0.0;
                 [_animator resetSubPixelator]; /// Maybe it would make more sense to do this automatically inside the animator? That might lead to problems with click and drag smoothing.
-                /// Validate
-                //                assert(isZeroVector(currentSpeed));
             }
             
             /// Debug
@@ -716,15 +697,17 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 }
                 
                 /// Create hybrid curve
-                HybridCurve *hc = [[BezierHybridCurve alloc]
-                     initWithBaseCurve:baseCurve
-                     minDuration:baseDuration
-                     distance:delta
-                     dragCoefficient:pCurve.dragCoefficient
-                     dragExponent:pCurve.dragExponent
-                     stopSpeed:pCurve.stopSpeed
-                     distanceEpsilon:0.2];
-                
+                HybridCurve *hc = [
+                    [BezierHybridCurve alloc]
+                    initWithBaseCurve: baseCurve
+                    minDuration: baseDuration
+                    distance: delta
+                    dragCoefficient: pCurve.dragCoefficient
+                    dragExponent: pCurve.dragExponent
+                    stopSpeed: pCurve.stopSpeed
+                    distanceEpsilon: 0.2
+                ];
+
                 /// Get duration
                 duration = hc.duration;
                 
@@ -742,7 +725,8 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
 
         /// Debug
         DDLogDebug("Scroll.m: animation init - Starting animation with params: %@", @{ @"duration": @(duration), @"vector": @(vector), @"curve": curve });
-        if ((0)) {
+        if ((0))
+        if (runningDebugMode()) {
             static double scrollDeltaSum = 0;
             scrollDeltaSum += labs(pxToScrollForThisTick);
             DDLogDebug("Scroll.m: Delta sum animation init: %f", scrollDeltaSum);
@@ -777,20 +761,14 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             ///     Use this instead of the global `_scrollConfig` to avoid race conditions
             ScrollConfig *config = configCopyForBlock;
             
-            /// Unsuspend
-            if ((0)) { /// This is old stuff that should be removed I think [Jun 2 2025]
-                if (animationPhase != kMFAnimationCallbackPhaseStart && animationPhase != kMFAnimationCallbackPhaseContinue) {
-                    unsuspendDrivers();
-                }
-            }
-            
             /// Validate
             assert(distanceDeltaVec.x == 0 || distanceDeltaVec.y == 0);
             if (distanceDelta == 0) {
                 assert(animationPhase == kMFAnimationCallbackPhaseEnd || animationPhase == kMFAnimationCallbackPhaseCanceled || animationPhase == kMFAnimationCallbackPhaseStoppedBeforeStart);
             }
             /// Debug
-            if ((0)) {
+            if ((0))
+            if (runningDebugMode()) {
                 static double scrollDeltaSummm = 0;
                 scrollDeltaSummm += distanceDelta;
                 DDLogDebug("Scroll.m: in-animator - delta sum: %f", scrollDeltaSummm);
@@ -1106,8 +1084,8 @@ static void sendOutputEvents(int64_t dx, int64_t dy, MFScrollOutputType outputTy
         /// Sol 1: Use `CGEventCreateScrollWheelEvent()`
         ///     - Mysterious: In the real events, `kCGScrollWheelEventIsContinuous` is false. But we have to set it true (through `kCGScrollEventUnitPixel`) to make the scroll distance match the real events.
         ///     - Safari makes the scroll distance larger than the pixels that are specified in lineScrollEvents. But that doesn't work here. Maybe it's becuase we're setting `kCGScrollWheelEventIsContinuous` true? We're just using
-//        CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
-        
+        //CGEventRef event = CGEventCreateScrollWheelEvent(NULL, kCGScrollEventUnitPixel, 1, 0);
+
         /// Sol 2: Just use `CGEventCreate`
         ///     - This is based on analysis of real events
         CGEventRef event = CGEventCreate(NULL);
@@ -1273,6 +1251,7 @@ static BOOL _appSwitcherIsOpen = NO;
 
 + (void)appSwitcherModificationHasBeenDeactivated {
     /// [Sep 2026] If we use this code, think about `readsAndWritesState()` and `assertRunLoop`
+    mfassert(false); /// Unused [Oct 2026]
 
     if (_appSwitcherIsOpen) { /// Not sure if this check is necessary. Should only be called when the appSwitcher is open.
         sendKeyEvent(55, 0, false);
@@ -1281,7 +1260,8 @@ static BOOL _appSwitcherIsOpen = NO;
 }
 
 void sendKeyEvent(CGKeyCode keyCode, CGEventFlags flags, bool keyDown) {
-    
+    mfassert(false); /// Unused [Oct 2026]
+
     CGEventTapLocation tapLoc = kCGSessionEventTap;
     
     CGEventRef event = CGEventCreateKeyboardEvent(NULL, keyCode, keyDown);
