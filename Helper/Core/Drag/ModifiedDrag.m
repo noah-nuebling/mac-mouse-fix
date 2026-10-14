@@ -19,7 +19,7 @@
 ///     Add `readsState()` / `readsAndWritesState()` checks to `ModifiedDrag.m and ModifiedDragOutputTwoFingerSwipe.m and GestureScrollSimulator.m`
 
 /**
-    TODO: Address `[debugWarpDelta]` bug: [Oct 11 2026]  @noGCDCleanup
+    TODO: Address `[debugWarpDelta]` bug: [Oct 11 2026]  @afterNoGCDTodo
         - Problem: After PointerFreeze's CGWarpMouseCursorPosition(), the eventTaps in ModifiedDrag.m and PointerFreeze.m
             still receive a few events with unwarped location, the first warped event carries a delta describing (actualMovementByUserForThisEvent + warp).
             Under heavy load, this warpDelta can be so large that it causes major jank and stuff [macOS 27]
@@ -32,7 +32,7 @@
                     -> Hypothesis: WindowServer continues processing and sending us events while we wait for it, not having sent `CGWarpMouseCursorPosition()`, yet.
             Plan2:
                 Writing a `CommonEventTap` abstraction (coined that name right here [Oct 2026] that multiplexes to multiple clients from a single CGEventTap would avoid this this problem
-                    -> I had plans doing that for other reasons, so now might be a good time @noGCDCleanup
+                    -> I had plans doing that for other reasons, so now might be a good time @afterNoGCDTodo
         - Reproduction stuff:
             - Can be hard to reproduce - Comes in cycles, I think only under heavy window-server load. The load I saw it under:
                 - 60 Hz screen: streaming vbldelta.m and logs from MMF helper, and watching youtube at 1080p
@@ -363,7 +363,7 @@ static void processPendingCoalescableEventsOncePerFrame(void) {
     ///             Fallback timer - set up a timer (DisplayLink.m) each frame, which waits for a regular mouse event to flush, if no mouse event before deadline, the timer flushes that frame instead
     ///                 -> This should give us good `VBLPhase` with less CPU overhead.
     ///                     I think the CPU overhead, mostly comes from the runLoop waking up for the per-frame timer in addition to the CGEventTap wakeup - I observed there's still a lot of effective CPU overhead flushing every frame through timer, even with our super-lightweight `mk_timer` based `DisplayLink` - so I concluded overhead is inherent to the additional runLoop wakeup. [Oct 2026]
-    ///             @noGCDCleanup consider implementing this
+    ///             @afterNoGCDTodo consider implementing this
 
     uint64_t now = mach_absolute_time();
     uint64_t lastVBLTime = CGDisplay_NearestVBLTime(_drag.displayID, "before", /*anchorInMachTime*/now, kVBLPhase_DefaultForEventSending) ?: fallbackPriorVBLTime(now);
