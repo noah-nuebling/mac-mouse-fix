@@ -135,25 +135,30 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
 
     #else /// Use TouchAnimator
 
-    [_smoothingAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, Curve * _Nullable curve, Vector currentSpeed) {
+    /// Get animator params
+    Vector combinedVec = {};
+    Curve *curve = {};
+    double duration = -1;
+    int durationInFrames = -1;
+    bool doStart = true;
+    {
+        assertRunLoop(_smoothingAnimator.displayLink.runLoop);
 
-        NSMutableDictionary *p = [NSMutableDictionary dictionary];
-        
         /// Get delta
         Vector currentVec = { .x = deltaX*twoFingerScale, .y = deltaY*twoFingerScale };
-        Vector combinedVec = addedVectors(currentVec, valueLeft);
+        combinedVec = addedVectors(currentVec, _smoothingAnimator.animationValueLeft);
 
         /// Get Phase
         if (firstCallback) eventPhase = kIOHIDEventPhaseBegan;
         
         /// Debug
-
-        static double lastTs = 0;
-        double ts = CACurrentMediaTime();
-        double tsDiff = ts - lastTs;
-        lastTs = ts;
-
-        DDLogDebug("twoFinger SmoothingAnimator start - time since last: %f", tsDiff * 1000);
+        if (runningDebugMode()) {
+            static double lastTs = 0;
+            double ts = CACurrentMediaTime();
+            double tsDiff = ts - lastTs;
+            lastTs = ts;
+            DDLogDebug("twoFinger SmoothingAnimator start - time since last: %f", tsDiff * 1000);
+        }
 
         /// Get return values
         ///
@@ -168,27 +173,32 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
         
         if (magnitudeOfVector(combinedVec) == 0.0) {
             DDLogWarn("twoFinger Not starting baseAnimator since combinedMagnitude is 0.0");
-            p[@"doStart"] = @NO;
+            doStart = false;
         } else {
-            p[@"vector"] = nsValueFromVector(combinedVec);
-            p[@"curve"] = ScrollConfig.linearCurve;
-            p[@"duration"] = @(3.0/60.0);
-            //p[@"durationInFrames"] = @3;
+            curve = ScrollConfig.linearCurve;
+            duration = 3.0/60.0;
+            //durationInFrames = 3;
         }
 
         /// Debug
+        if (runningDebugMode()) {
+            static Vector scrollDeltaSum = { .x = 0, .y = 0};
+            scrollDeltaSum.x += fabs(currentVec.x);
+            scrollDeltaSum.y += fabs(currentVec.y);
+            DDLogDebug("twoFinger Delta sum pre-animator: (%f, %f)", scrollDeltaSum.x, scrollDeltaSum.y);
+            DDLogDebug("twoFinger Value left pre-animator: (%f, %f)", _smoothingAnimator.animationValueLeft.x, _smoothingAnimator.animationValueLeft.y);
+        }
+    }
 
-        static Vector scrollDeltaSum = { .x = 0, .y = 0};
-        scrollDeltaSum.x += fabs(currentVec.x);
-        scrollDeltaSum.y += fabs(currentVec.y);
-        DDLogDebug("twoFinger Delta sum pre-animator: (%f, %f)", scrollDeltaSum.x, scrollDeltaSum.y);
-        DDLogDebug("twoFinger Value left pre-animator: (%f, %f)", valueLeft.x, valueLeft.y);
-
-        /// Return
-
-        return p;
-
-    } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animatorPhase, MFMomentumHint subCurve) {
+    /// Start the animator
+    if (doStart)
+    [_smoothingAnimator
+        startWithDuration: duration
+        durationInFrames: durationInFrames
+        vector: combinedVec
+        curve: curve
+        integerCallback: ^(Vector deltaVec, MFAnimationCallbackPhase animatorPhase, MFMomentumHint subCurve)
+    {
 
         /// Debug
 

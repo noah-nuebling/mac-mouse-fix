@@ -14,12 +14,6 @@
 
 #pragma mark - General
 
-typedef struct {
-    double value;
-    double duration;
-//    id curve; /// Putting an Objc type into the struct makes the struct invisible to swift
-} MFAnimatorStartParams;
-
 typedef enum {
     kMFAnimationPhaseStart = 0,
     kMFAnimationPhaseRunningStart = 1, /// Animation has been started again while it was already running

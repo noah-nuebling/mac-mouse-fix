@@ -7,38 +7,14 @@
 // --------------------------------------------------------------------------
 //
 
-/// (Copied from old non-vector TouchAnimator)
-///
-/// Only use TouchAnimator, not TouchAnimatorBase superclass directly. TouchAnimatorBase is untested and probably doesn't work right.
-/// This is basically a wrapper around TouchAnimatorBase that subpixelates the output deltas. We thought it would be easier to first build the TouchAnimatorBase without the subpixelation and then add that complextity on after the fact. I think it clutters things up a lot though.
-
-///     \Ideas for refactor: Merge TouchAnimator and TouchAnimatorBase. Maybe remove the subpixelators and just round in a way where you don't lose the rounding error. (e.g. rounding the pixel delta for this frame to determine what to actually scroll and only subtracting from the valueLeft what we actually scrolled... Not sure if that would have the same behavior as the current system though - might be a ton of work to get it to work right with all the touch simulation stuff that relies on very precisely setting the phases and deltas.)
-///
-/// This class does different things. An attempt to summarize: "Based on some input deltas, this class creates smoothly animated output deltas that are that are usable for driving simulated trackpad events"
-/// It is currently used:
-/// 1. To smooth out pointer movement before plugging it into the GestureScrollSimulator. This prevents too slow / fast momentum scroll due to irregular timeBetweenEvents.
-/// 2. To apply animation and find appropriate gesture phases when mapping scrollwheel input to gestureScrolling, dockSwipes, magnification, etc.
-///
-/// TouchAnimator will behave just like TouchAnimatorBase with these differences:
-/// The animationValueDelta values it passes to it's AnimatorCallback are always integers instead of Doubles
-/// To achieve this, the internally generated Double deltas are rounded using a subpixelator which always rounds to the next larger integer (using biasedSubpixelator)
-///     This is so we always generate a non-zero integer delta on the first frame of animation, which makes things more responsive when the deltas are single pixels (which they are when you use Apple Acceleration)
-///
-/// Callbacks wth phases kMFAnimationPhaseStart, and kMFAnimationPhaseContinue have non-zero deltas. Callbacks with kMFAnimationPhaseEnd have a delta of (0,0)
-///     This behaviour will make this animator great for driving touch gesture simulations, where that kind of input is expected. (In gesture events, the end phase signals lifting your fingers off, so that's why it has a (0,0) delta)
-///
-/// Also has this cool momentumHint feature which lets us switch between gesture scrolls and momentum scrolls appropriately to allow for scroll bouncing and generally better behaviour.
+/**
+    See TouchAnimatorBase.swift
+*/
 
 import Cocoa
 
 class TouchAnimator: TouchAnimatorBase {
 
-    /// Make stuff from superclass unavailable
-    
-        @available(*, unavailable)
-        override func start(params: @escaping StartParamCalculationCallback, callback: @escaping AnimatorCallback) {
-            fatalError();
-        }
     
     /// Declare types and vars that superclass doesn't have
     
@@ -64,45 +40,24 @@ class TouchAnimator: TouchAnimatorBase {
     
     // MARK: Declare new start function
     
-    @objc func start(params: @escaping StartParamCalculationCallback,
-                     integerCallback: @escaping TouchAnimatorCallback) {
-
-        /// @noGCDCleanup
-        ///     `StartParamCalculationCallback` no longer needed! - simplify
-
+    @objc func start(duration: Double, durationInFrames: Int, vector: Vector, curve: Curve, integerCallback: @escaping TouchAnimatorCallback) {
         assertRunLoop(displayLink.runLoop());
+        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) }
 
-        /// Get startParams
-        let p = params(self.animationValueLeft, self.isRunning, self.animationCurve, self.lastAnimationSpeed)
-
-        readsAndWritesState_Begin(readWriteTracker); defer { readsAndWritesState_End(readWriteTracker) } /// @noGCDCleanup - move to start of function after removing `StartParamCalculationCallback`
-        do { /// @noGCDCleanup - remove scope
-
-            /// Reset animationValueLeft
-            /// Notes:
-            /// - Do this here since `animationValueLeft` is `animationValueTotal - lastAnimationValue`. A new `animationValueTotal` is contained in `p`, and we need to reset `lastAnimationValue` to make it usable. Edit: What? ... I think this is talking about why this is reset here and not inside startWithUntypedCallback() or the displayLinkCallback, where most other things are reset.
-            /// - Why is this reset before the doStart check?
-
-            self.lastAnimationValue = Vector(x: 0, y: 0)
-
-            /// Do nothing if doStart == false
-            if let doStart = p["doStart"] as? Bool {
-                if doStart == false {
-                    return
-                }
-            }
-
-            /// Validate
-            assert(p["vector"] is NSValue)
-            /// ^ This is always true for some reason. Make sure to actually pass a Vector in an NSValue! Edit: Randomly, this starting working on 29.05.22
-
-            /// Start animator
-            super.startWithUntypedCallback(durationRaw: p["duration"] as! Double?, durationRawInFrames: p["durationInFrames"] as! Int?, value: vectorFromNSValue(p["vector"] as! NSValue), animationCurve: p["curve"] as! Curve, callback: integerCallback)
-
-            /// Debug
-
+        /// Debug
+        var deltaLeftBefore = Vector(x: 0, y: 0)
+        if (runningDebugMode()) {
             allowNestedReadOrWrite_Begin(from: .readsAndWritesState, readWriteTracker)
-            let deltaLeftBefore = self.animationValueLeft;
+            deltaLeftBefore = self.animationValueLeft;
+            allowNestedReadOrWrite_End(from: .readsAndWritesState, readWriteTracker)
+        }
+
+        /// Start animator
+        super.startWithUntypedCallback(durationRaw: duration, durationRawInFrames: durationInFrames, value: vector, animationCurve: curve, callback: integerCallback)
+
+        /// Debug
+        if (runningDebugMode()) {
+            allowNestedReadOrWrite_Begin(from: .readsAndWritesState, readWriteTracker)
             DDLogDebug("Started TouchAnimator with deltaLeftDiff: \(subtractedVectors(self.animationValueLeft, deltaLeftBefore)), oldDeltaLeft: \(deltaLeftBefore), newDeltaLeft: \(self.animationValueLeft)")
             allowNestedReadOrWrite_End(from: .readsAndWritesState, readWriteTracker)
         }

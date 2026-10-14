@@ -278,22 +278,19 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
     
     [_momentumAnimator resetSubPixelator];
     [_momentumAnimator linkToMainScreen];
-    
-    /// Start animator
-    
-    [_momentumAnimator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeft, BOOL isRunning, Curve * _Nullable curve, Vector currentSpeed) {
-        
-        NSMutableDictionary *p = [NSMutableDictionary dictionary];
-        
-        /// Reset subpixelators
-        [_scrollLinePixelator reset];
-        
-        /// Get animator params
-        
-        /// Get initial velocity
+
+    /// Reset subpixelators
+    [_scrollLinePixelator reset];
+
+    /// Get start params for animator
+    double duration = {};
+    Vector distanceVec = {};
+    DragCurve *animationCurve = {};
+    bool doStart = true;
+    {
+        assertRunLoop(_momentumAnimator.displayLink.runLoop);
+
         Vector initialVelocity = initalMomentumScrollVelocity_FromExitVelocity(exitVelocity);
-        
-        /// Get initial speed
         double initialSpeed = magnitudeOfVector(initialVelocity); /// Magnitude is always positive
         
         /// Stop momentumScroll immediately, if the initial Speed is too small
@@ -301,36 +298,35 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
             DDLogDebug("Not starting momentum scroll - initialSpeed smaller stopSpeed: i: %f, s: %f", initialSpeed, stopSpeed);
             if (_momentumScrollCallback != NULL) _momentumScrollCallback();
             [GestureScrollSimulator stopMomentumScroll];
-            p[@"doStart"] = @(NO);
-            return p;
+            doStart = false;
+            goto endof_getParams;
         }
-        
+
         /// Get drag animation curve
-        
-        DragCurve *animationCurve = [[DragCurve alloc] initWithCoefficient:dragCoefficient
-                                                                  exponent:dragExponent
-                                                              initialSpeed:initialSpeed
-                                                                 stopSpeed:stopSpeed];
-        
-        /// Get duration and distance for animation from DragCurve
-        
-        double duration = animationCurve.timeInterval.length;
+        animationCurve = [
+            [DragCurve alloc]
+            initWithCoefficient: dragCoefficient
+            exponent: dragExponent
+            initialSpeed: initialSpeed
+            stopSpeed: stopSpeed
+        ];
+
+        /// Get duration and distance
+        duration = animationCurve.timeInterval.length;
         double distance = animationCurve.distanceInterval.length;
-        
-        /// Get distanceVec
-        
-        Vector distanceVec = scaledVector(unitVector(initialVelocity), distance);
-        
-        /// Return
-        
-        p[@"vector"] = nsValueFromVector(distanceVec);
-        p[@"duration"] = @(duration);
-        p[@"curve"] = animationCurve;
-        
-        return p;
-        
-    } integerCallback:^(Vector deltaVec, MFAnimationCallbackPhase animationPhase, MFMomentumHint subCurve) {
-        
+        distanceVec = scaledVector(unitVector(initialVelocity), distance);
+    } endof_getParams:
+
+    /// Start the animator
+    if (doStart)
+    [_momentumAnimator
+        startWithDuration: duration
+        durationInFrames: -1
+        vector: distanceVec
+        curve: animationCurve
+        integerCallback: ^(Vector deltaVec, MFAnimationCallbackPhase animationPhase, MFMomentumHint subCurve)
+    {
+
         /// Debug
         DDLogDebug("Momentum scrolling - delta: (%f, %f), animationPhase: %d", deltaVec.x, deltaVec.y, animationPhase);
 
@@ -356,13 +352,13 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
             }
 
             /// Post event
-            [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
-                                                           scrollVectorLine:vecScrollLine
-                                                        scrollVectorLineInt:vecScrollLineInt
-                                                          scrollVectorPoint:deltaVec
-                                                                      phase:kIOHIDEventPhaseUndefined
-                                                              momentumPhase:momentumPhase
-                                                         invertedFromDevice:invertedFromDevice];
+            [GestureScrollSimulator postGestureScrollEventWithGestureVector: zeroVector
+                                                           scrollVectorLine: vecScrollLine
+                                                        scrollVectorLineInt: vecScrollLineInt
+                                                          scrollVectorPoint: deltaVec
+                                                                      phase: kIOHIDEventPhaseUndefined
+                                                              momentumPhase: momentumPhase
+                                                         invertedFromDevice: invertedFromDevice];
 
             /// Simulate tap to prevent auto-momentumScroll
             ///     [Jul 2025] Also see Scroll.m where we do the same thing
@@ -371,21 +367,21 @@ static void startMomentumScroll(double timeSinceLastInput, Vector exitVelocity, 
             ///         -> We're not simulating the tap during Click and Drag gesture phase, because cancellation during this phase is currently impossible AFAIK. (Just like cancellation of a real Trackpad scroll during the gesture phase is impossible – lifting the finger will *end* the gesture phase not, *cancel* it.)
             if (animationPhase == kMFAnimationCallbackPhaseEnd || animationPhase == kMFAnimationCallbackPhaseCanceled) {
 
-                [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
-                                                               scrollVectorLine:zeroVector
-                                                            scrollVectorLineInt:zeroVector
-                                                              scrollVectorPoint:zeroVector
-                                                                          phase:kIOHIDEventPhaseMayBegin
-                                                                  momentumPhase:kCGMomentumScrollPhaseNone
-                                                             invertedFromDevice:invertedFromDevice];
+                [GestureScrollSimulator postGestureScrollEventWithGestureVector: zeroVector
+                                                               scrollVectorLine: zeroVector
+                                                            scrollVectorLineInt: zeroVector
+                                                              scrollVectorPoint: zeroVector
+                                                                          phase: kIOHIDEventPhaseMayBegin
+                                                                  momentumPhase: kCGMomentumScrollPhaseNone
+                                                             invertedFromDevice: invertedFromDevice];
 
-                [GestureScrollSimulator postGestureScrollEventWithGestureVector:zeroVector
-                                                               scrollVectorLine:zeroVector
-                                                            scrollVectorLineInt:zeroVector
-                                                              scrollVectorPoint:zeroVector
-                                                                          phase:kIOHIDEventPhaseCancelled
-                                                                  momentumPhase:kCGMomentumScrollPhaseNone
-                                                             invertedFromDevice:invertedFromDevice];
+                [GestureScrollSimulator postGestureScrollEventWithGestureVector: zeroVector
+                                                               scrollVectorLine: zeroVector
+                                                            scrollVectorLineInt: zeroVector
+                                                              scrollVectorPoint: zeroVector
+                                                                          phase: kIOHIDEventPhaseCancelled
+                                                                  momentumPhase: kCGMomentumScrollPhaseNone
+                                                             invertedFromDevice: invertedFromDevice];
             }
         }
 

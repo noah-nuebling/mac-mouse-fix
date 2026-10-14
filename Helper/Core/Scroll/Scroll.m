@@ -496,7 +496,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
         ///         - Implementation:     Should probably implement this in ScrollAnalyzer.m instead of doing a hack here
         ///         - Credit for idea:       This email by 'A day of Software Engineer': (message:<510CF7AC-5BE0-4CED-BF9A-A3A3327EE2A5@gmail.com>)
         
-        double currentAnimationSpeed = magnitudeOfVector(_animator.getLastAnimationSpeed);
+        double currentAnimationSpeed = magnitudeOfVector(_animator.lastAnimationSpeed);
         if (_lastScrollAnalysisResult.scrollDirectionDidChange && currentAnimationSpeed > 0) {
             DDLogDebug("Scroll.m: Direction change – cancel scroll.");
             allowNestedReadOrWrite() /// [Sep 2026] `-cancel` can call back into our `_animator` callback (See `kMFAnimationCallbackPhaseCanceled`)
@@ -525,18 +525,19 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
     } else {
         
         /// Send scroll events through animator, spread out over time.
-        
-        /// Create config-copy for animation-callback-block
-        ///  Edit: Turned copying off now, since it's extremely slow. I don't think this is necessary with the current architecture (the `_scrollConfig` is a reference into a cache. When the scrollConfig updates the cache is deleted but this reference should still be valid)
-        
-        //ScrollConfig *configCopyForBlock = [_scrollConfig copy];
-        ScrollConfig *configCopyForBlock = _scrollConfig;
-        
-        /// Start animation
-        
-        [_animator startWithParams:^NSDictionary<NSString *,id> * _Nonnull(Vector valueLeftVec, BOOL isRunning, Curve *animationCurve, Vector currentSpeed) {
 
-            /// [Sep 2026] Not using `readsAndWritesState()` and `assertRunLoop` inside `_animator startWithParams:` since the callsite already holds those assertions.
+        /// Calculate params for starting animation
+        Vector vector;
+        double duration;
+        Curve *curve;
+        {
+            /// Fetch animator state
+            assertRunLoop(_animator.displayLink.runLoop);
+            Vector valueLeftVec = _animator.animationValueLeft;
+            bool isRunning = _animator.isRunning;
+            Curve *animationCurve = _animator.animationCurve;
+            Vector currentSpeed = _animator.lastAnimationSpeed;
+
 
             /// Validate
             assert(valueLeftVec.x == 0 || valueLeftVec.y == 0);
@@ -550,9 +551,6 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 /// Update animator to currently used display
                 [_animator linkToMainScreen];
             }
-            
-            /// Declare result dict (animator start params)
-            NSMutableDictionary *p = [NSMutableDictionary dictionary];
             
             /// Get px that the animator still wants to scroll
             double pxLeftToScroll = 0.0;
@@ -590,12 +588,12 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             
             /// Calculate distance to scroll
             double delta = pxToScrollForThisTick + pxLeftToScroll;
-            
+            vector = vectorFromDeltaAndDirection(delta, scrollDirection);
+
             /// Get curve params
             MFScrollAnimationCurveParameters *pCurve = _scrollConfig.animationCurveParams;
             
             /// Get baseDuration
-            
             double baseDuration;
             
             if (pCurve.baseMsPerStep != -1) {
@@ -682,15 +680,11 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
             }
             
             /// Get curve and duration
-            
-            double duration;
-            Curve *c;
-            
             if (!pCurve.useDragCurve) {
                 
                 DDLogDebug("Scroll.m: animation init – animation curve base");
                 
-                c = pCurve.baseCurve;
+                curve = pCurve.baseCurve;
                 duration = baseDuration;
                 
             } else {
@@ -741,28 +735,33 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                 DDLogDebug("Scroll.m: animation init - Created hybrid curve with distance %f, duration: %f", hc.distance, hc.duration);
                 
                 /// Assign
-                c = hc;
+                curve = hc;
             }
             
-            
-            /// Fill return dict
-            p[@"duration"] = @(duration);
-            p[@"vector"] = nsValueFromVector(vectorFromDeltaAndDirection(delta, scrollDirection));
-            p[@"curve"] = c;
-            
-            /// Debug
-            DDLogDebug("Scroll.m: animation init - Returning value: %@", p);
-            if ((0)) {
-                static double scrollDeltaSum = 0;
-                scrollDeltaSum += labs(pxToScrollForThisTick);
-                DDLogDebug("Scroll.m: Delta sum animation init: %f", scrollDeltaSum);
-            }
-            
-            /// Return
-            return p;
-            
-        } integerCallback:^(Vector distanceDeltaVec, MFAnimationCallbackPhase animationPhase, MFMomentumHint momentumHint) {
+        }
 
+        /// Debug
+        DDLogDebug("Scroll.m: animation init - Starting animation with params: %@", @{ @"duration": @(duration), @"vector": @(vector), @"curve": curve });
+        if ((0)) {
+            static double scrollDeltaSum = 0;
+            scrollDeltaSum += labs(pxToScrollForThisTick);
+            DDLogDebug("Scroll.m: Delta sum animation init: %f", scrollDeltaSum);
+        }
+
+        /// Create config-copy for animation-callback-block
+        ///  Edit: Turned copying off now, since it's extremely slow. I don't think this is necessary with the current architecture (the `_scrollConfig` is a reference into a cache. When the scrollConfig updates the cache is deleted but this reference should still be valid)
+        
+        //ScrollConfig *configCopyForBlock = [_scrollConfig copy];
+        ScrollConfig *configCopyForBlock = _scrollConfig;
+
+        /// Start the animator
+        [_animator
+            startWithDuration: duration
+            durationInFrames: -1
+            vector: vector
+            curve: curve
+            integerCallback: ^(Vector distanceDeltaVec, MFAnimationCallbackPhase animationPhase, MFMomentumHint momentumHint)
+        {
             assertRunLoop(IOThread.runLoop);
             readsAndWritesState(&_readWriteTracker);
 
