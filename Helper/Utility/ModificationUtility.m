@@ -41,7 +41,8 @@ BOOL directionChanged(MFDirection direction1, MFDirection direction2) {
 
 + (double)roundUp:(double)numToRound toMultiple:(double)multiple {
     /// Src: https://stackoverflow.com/a/3407254/10601702
-    
+    /// [Oct 2026] This is a subset of `roundToGrid()` - probably replace.
+
     if (multiple == 0) return numToRound;
     
     double remainder = fmod(numToRound, multiple);

@@ -66,7 +66,7 @@ Old logLevel logic (When we were still using CocoaLumberjack)
     ({ if (mfunlikely(!(condition))) _mfassertrequire_failure(false, #condition, [NSString stringWithFormat: @"" reason], __FILE_NAME__, __LINE__, __FUNCTION__); })
 
 #define mfrequire(condition, reason...) \
-    ({ if (mfunlikely(!(condition))) _mfassertrequire_failure(true, #condition, [NSString stringWithFormat: @"" reason], __FILE_NAME__, __LINE__, __FUNCTION__); })
+    ({ if (mfunlikely(!(condition))) { _mfassertrequire_failure(true, #condition, [NSString stringWithFormat: @"" reason], __FILE_NAME__, __LINE__, __FUNCTION__); abort(); /** Abort inline so the compiler doesn't complain [Oct 2026] */ } })
 
 static inline void _mfassertrequire_failure(bool require, const char *conditionStr, NSString *reason, const char *file, int line, const char *function) { /// Factored like this so Swift can call it (Can't call macros or varargs) [Oct 2026]
     DDLogError( /// Even in release builds, we log failed asserts as errors [Oct 2026]
