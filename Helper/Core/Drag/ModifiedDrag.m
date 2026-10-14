@@ -9,13 +9,6 @@
 //
 
 /// @noGCDCleanup
-///
-///     Changes introduced in the first commit introducing @noGCDCleanup notes (which also added this note)
-///     made broken changes to ModifiedDrag.m and ModifiedDragOutputTwoFingerSwipe.m and GestureScrollSimulator.m
-///     -> These just served to make the program compile again.
-///         (This commit cared about switching stack between DisplayLink.m ... Scroll.m to runLoops and then making it compile again)
-
-/// @noGCDCleanup
 ///     Add `readsState()` / `readsAndWritesState()` checks to `ModifiedDrag.m and ModifiedDragOutputTwoFingerSwipe.m and GestureScrollSimulator.m`
 
 /**
