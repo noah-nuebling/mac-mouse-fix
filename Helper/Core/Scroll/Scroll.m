@@ -688,7 +688,7 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
                     
                     Vector baseCurveStartDirection = {
                         .y = magnitudeOfVector(currentSpeed)    / delta,
-                        .x = 1                                  / ((double)baseDuration/1000.0),
+                        .x = 1                                  / ((double)baseDuration/1000.0), /// [Oct 2026] Opus 5.5 notes that baseDuration is already divided by 1000 above, meaning this is wrong - maybe my impressions of `speedSmoothing` (I remember it not feeling very good) were wrong?
                     };
                     Vector baseCurveP1 = vectorFromDeltaAndDirectionVector(speedSmoothing, baseCurveStartDirection);
                     baseCurve = [[Bezier alloc] initWithControlPoints:@[@[@0, @0], @[@(baseCurveP1.x), @(baseCurveP1.y)], /*@[@1, @1],*/ @[@1, @1]] defaultEpsilon:0.01];
