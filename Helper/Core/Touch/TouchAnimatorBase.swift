@@ -21,7 +21,7 @@ import QuartzCore
     
     typealias UntypedAnimatorCallback = Any
     typealias AnimatorCallback = (_ animationValueDelta: Vector, _ phase: MFAnimationCallbackPhase, _ subCurve: MFMomentumHint) -> ()
-//    typealias StopCallback = (_ lastPhase: MFAnimationPhase) -> ()
+    //typealias StopCallback = (_ lastPhase: MFAnimationPhase) -> ()
     typealias StartParamCalculationCallback = (_ valueLeft: Vector, _ isRunning: Bool, _ animationCurve: Curve?, _ currentSpeed: Vector) -> MFAnimatorStartParams
     /// ^ When starting the animator, we usually want to get the value that the animator still wants to scroll (`animationValueLeft`), and add that to the new value. The specific logic can differ a lot though, so we can't just hardcode this into `Animator`
     ///     But to avoid race-conditions, we can't just externally execute this, so we to pass in a callback that can execute custom logic to get the start params right before the animator is started

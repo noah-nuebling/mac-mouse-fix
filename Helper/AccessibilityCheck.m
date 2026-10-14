@@ -239,8 +239,7 @@
 
                 [License licenseStateWithLicenseConfig:licenseConfig completionHandler:^(MFLicenseAndTrialState license, NSError * _Nullable error) {
 
-                    dispatch_async(dispatch_get_main_queue(), ^{
-
+                    MFCFRunLoopPerform(CFRunLoopGetMain(), nil,  ^{
                         [TrialNotificationController.shared openWithLicenseConfig:licenseConfig license:license triggeredByUser:NO];
                     });
                 }];

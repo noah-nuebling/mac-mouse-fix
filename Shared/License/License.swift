@@ -125,10 +125,10 @@ extension MFTrialState:     @unchecked Sendable {}
                         /// Not triggered by user -> the users workflow is disruped -> make it as short as possible
                         
                         /// Show trialNotification
-                        DispatchQueue.main.async {
+                        MFCFRunLoopPerform(CFRunLoopGetMain(), nil) {
                             TrialNotificationController.shared.open(licenseConfig: licenseConfig, licenseState: licenseState, trialState: trialState, triggeredByUser: triggeredByUser)
                         }
-                        
+
                         /// Lock helper
                         SwitchMaster.shared.lockDown()
                         
