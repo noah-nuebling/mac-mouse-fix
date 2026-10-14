@@ -96,6 +96,8 @@ typedef struct {
 + (void)initializeDragWithDict:(MF_SWIFT_UNBRIDGED(NSDictionary *))effectDict NS_REFINED_FOR_SWIFT;
 + (void)deactivateWithCancel:(BOOL)cancel;
 
++ (MFModifiedInputActivationState) debug_activationState;
+
 @end
 
 NS_ASSUME_NONNULL_END

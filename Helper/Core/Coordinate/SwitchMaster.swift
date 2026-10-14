@@ -125,20 +125,15 @@ import ReactiveSwift
 
     let readWriteTracker = MFReadWriteTracker()
     @inline(__always) private func logWithState(_ message: @autoclosure () -> String) {
-        /// @noGCDCleanup Simplify this after removing/simplifying `ModifiedDrag.activationState`
 
-        #if false /// @noGCDCleanup re-enable
-        /// Note: [Mar 2025] This only has to be so complicated because our threading architecture is really bad. Once we move all input and SwitchMaster to IOThread.m, this won't be necessary.
-        if (runningDebugMode()) {
-            let invocationId = Int.random(in: 0...99999);
-            DDLogDebug("[\(invocationId)] SwitchMaster: \(message())")
-            ModifiedDrag.activationState { modifiedDragActivation in /// Note: [Mar 2025] This won't be necessary once we use IOThread.m
-                DDLogDebug("[\(invocationId)] SwitchMaster: EventTap state - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isReceiving() ? 1 : 0), pointing: \(modifiedDragActivation.rawValue)")
-                DDLogDebug("[\(invocationId)] SwitchMaster: MenuItem state - buttonMenu: \(MenuBarItem.buttonsItemIsEnabled() ? 1 : 0), scrollMenu: \(MenuBarItem.scrollItemIsEnabled() ? 1 : 0)")
-                DDLogDebug("[\(invocationId)] SwitchMaster: Internal state -\n\(SharedUtilitySwift.dumpSwiftIvars(self))");
-            }
-        }
-        #endif
+        if (!runningDebugMode()) { return; }
+
+        DDLogDebug("""
+            SwitchMaster: \(message())
+            SwitchMaster: EventTap state - kbMod: \(Modifiers.kbModPriority().rawValue), btnMod: \(Modifiers.btnModPriority().rawValue), button: \(ButtonInputReceiver.isRunning() ? 1 : 0), scroll: \(Scroll.isReceiving() ? 1 : 0), pointing: \(ModifiedDrag.debug_activationState().rawValue)
+            SwitchMaster: MenuItem state - buttonMenu: \(MenuBarItem.buttonsItemIsEnabled() ? 1 : 0), scrollMenu: \(MenuBarItem.scrollItemIsEnabled() ? 1 : 0)
+            SwitchMaster: Internal state -\n\(SharedUtilitySwift.dumpSwiftIvars(self))
+            """)
     }
     
     //

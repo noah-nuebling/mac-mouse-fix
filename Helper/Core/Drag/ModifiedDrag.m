@@ -106,18 +106,10 @@ static ModifiedDragState _drag;
 //}
 
 /// Debug
-
-#if 0
-+ (void)activationStateWithCallback:(void (^)(MFModifiedInputActivationState))callback {
-    
++ (MFModifiedInputActivationState) debug_activationState {
     /// We wanted to expose `_drag` to other modules for debugging, but `_drag` can't be exposed to Swift. Maybe because it contains an ObjC pointer`id`. Right now this is fine though because we only need the activationState for debugging anyways.
-    /// We need to retrieve this on the `_drag.queue` to avoid race conditions. But using `dispatch_sync` leads to loads of concurrency issues, so we're using a callback instead.
-    
-    dispatch_async(_drag.queue, ^{
-        callback(_drag.activationState);
-    });
+    return _drag.activationState;
 }
-#endif
 
 + (NSString *)modifiedDragStateDescription:(ModifiedDragState)drag {
     NSString *output = @"";
