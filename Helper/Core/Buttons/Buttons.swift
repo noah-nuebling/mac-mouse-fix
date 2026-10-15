@@ -67,6 +67,10 @@ import Cocoa
         if self.maxClickLevel == 0 {
             return kMFEventPassThroughApproval
         }
+
+        /// Same classifier the gesture test drives. Pass-through returns above, so a
+        /// posted event is not counted a second time.
+        ButtonTriggerPath_noteButton(button.int32Value, mouseDown ? 1 : 0)
         
         /// Call through clickCycle
         clickCycle.handleClick(device: device, button: ButtonNumber(truncating: button), downNotUp: mouseDown, maxClickLevel: maxClickLevel,

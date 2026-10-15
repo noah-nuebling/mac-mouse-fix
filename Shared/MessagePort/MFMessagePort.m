@@ -50,6 +50,7 @@
 #import "Mac_Mouse_Fix_Helper-Swift.h"
 #import "AccessibilityCheck.h"
 #import "KeyCaptureMode.h"
+#import "Config.h"
 #endif
 
 /// This class is used to communicate between the MainApp and the Helper.
@@ -236,8 +237,16 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         }
 
     #elif IS_HELPER
-        
-        if ((0)) ;
+
+        /// getBundleVersion / checkAccessibility / terminate are safe before
+        /// post-check init. Everything else touches modules that are still nil
+        /// when Accessibility permission is missing, and crashes on launch.
+        BOOL safeBeforeInit = [message isEqualToString:@"getBundleVersion"]
+            || [message isEqualToString:@"checkAccessibility"]
+            || [message isEqualToString:@"terminate"];
+        if (!ConfigIsLoaded() && !safeBeforeInit) {
+            DDLogInfo("Ignoring message %@ until the helper finishes starting", message);
+        } else if ((0)) ;
         xxx(@"configFileChanged") {
             [Config loadFileAndUpdateStates];
         }
