@@ -96,6 +96,7 @@ Essas pessoas contribuíram com um valor bem acima do preço padrão e me presen
 
 **outubro 2026**
 
+- 🇺🇸&nbsp;Randall&nbsp;(Triple)&nbsp;Li - "It's been like 5 years or more where I could not use my trackball to scroll. Worth every penny."
 - 🇺🇸&nbsp;Alena&nbsp;Kolenovic
 - 🇨🇳&nbsp;Zekai&nbsp;Liu
 - 🇸🇪&nbsp;Joakim&nbsp;Lööv - "Very reasonable price for an excellent product"
