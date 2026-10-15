@@ -3100,6 +3100,7 @@
 				hi,
 				bn,
 				nb,
+				da,
 			);
 			mainGroup = 4FCECD7721092354001F1078;
 			packageReferences = (
