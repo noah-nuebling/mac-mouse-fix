@@ -49,6 +49,7 @@
 #import "MacAddress.h"
 #import "MFCoding.h"
 #import "NSData+Additions.h"
+#import "NSTimer+Additions.h"
 #import "Localization.h"
 #import "Threads.h"
 

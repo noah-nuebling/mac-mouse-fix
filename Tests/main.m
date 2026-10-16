@@ -12,8 +12,8 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool { }
     
-    void FixDockSwipes_Start(void);     if ((0)) FixDockSwipes_Start();
-    int vblphase_Start(void);           if ((1)) return vblphase_Start();
+    void FixDockSwipes_Start(void);     if ((1)) FixDockSwipes_Start();
+    int vblphase_Start(void);           if ((0)) return vblphase_Start();
 
     return NSApplicationMain(argc, argv);
 }

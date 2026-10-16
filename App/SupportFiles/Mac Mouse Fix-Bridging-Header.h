@@ -56,6 +56,7 @@
 #import "MacAddress.h"
 #import "MFCoding.h"
 #import "NSData+Additions.h"
+#import "NSTimer+Additions.h"
 #import "NSMenu+NSMenu_Additions.h"
 #import "LocalizationUtility.h"
 #import "NSLayoutConstraint+Additions.h"

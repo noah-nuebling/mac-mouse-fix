@@ -82,6 +82,7 @@
 #import <Carbon/Carbon.h>
 #import "SharedUtility.h"
 #import "MFDefer.h"
+#import "Threads.h"
 
 @implementation SymbolicHotKeys
 
@@ -109,7 +110,7 @@ CG_EXTERN CGError CGSSetSymbolicHotKeyValue(CGSSymbolicHotKey hotKey, unichar ke
 
     DDLogDebug("[SymbolicHotKeys +post:] called on thread: %@", NSThread.currentThread);
     
-    mfrun(CFRunLoopGetMain(), ^{ /// Should we use the `_sync` variant here? Might be more responsive? 
+    mfrun(CFRunLoopGetMain(), ^{ /// Should we use `mfrunAndWait()` variant here? Might be more responsive? 
         
         /// Run everything on mainThread
         ///     Reasons:

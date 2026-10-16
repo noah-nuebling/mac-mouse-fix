@@ -135,7 +135,7 @@ import Cocoa
             }
             
             /// Dispatch to mainThread because UI stuff needs to be controlled by main. || Update: [Jun 2025] All license stuff is on the mainThread now, so this is probably unnecessary.
-            DispatchQueue.main.async {
+            mfrun(CFRunLoopGetMain()) {
             
                 /// Display user feedback
                 self.displayUserFeedback(isValidLicense: isValidLicense,

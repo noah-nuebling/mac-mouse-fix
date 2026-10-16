@@ -148,9 +148,12 @@ brew install mac-mouse-fix
 
 Die neueste Version von Mac Mouse Fix ist für **macOS 11 Big Sur** oder später gemacht.
 
-Wenn du macOS **10.15 Catalina**, macOS **10.14 Mojave** oder macOS **10.13 High Sierra** benutzt, kannst du die [neueste Version von Mac Mouse Fix 2](https://redirect.macmousefix.com/?locale=de&target=mmf2-latest) verwenden. Mac Mouse Fix 3.0.0 und später könnten vielleicht auch noch auf deinem Gerät funktionieren, aber sie werden visuelle Probleme haben und einige Funktionen werden eventuell nicht richtig funktionieren.
+Wenn du macOS **10.11 El Capitan** oder später benutzt, kannst du die [neueste Version von Mac Mouse Fix 2](https://redirect.macmousefix.com/?locale=de&target=mmf2-latest) verwenden. Mac Mouse Fix 3.0.0 und später könnten vielleicht auch noch auf deinem Gerät funktionieren, aber sie werden visuelle Probleme haben und einige Funktionen werden eventuell nicht richtig funktionieren.
 
-Wenn du macOS **10.12 Sierra** oder **10.11 El Capitan** benutzt, kannst du Mac Mouse Fix [2.2.0](https://github.com/noah-nuebling/mac-mouse-fix/releases/tag/2.2.0) oder früher verwenden.
+<!--
+    [Sep 2026] Note on `macos-compatibility` section:
+    - MMF 2.2.6 lowered deployment target from 10.13 back down to 10.11 (See 68ce2c8) letting us simplify the text above. I didn't test on macOS 10.11 or 10.12. [Sep 2026]
+-->
 
 <a name="pricing"></a> 
 ## Preisgestaltung

@@ -43,8 +43,6 @@ NS_ASSUME_NONNULL_BEGIN
 NSString *MFLocale(void);
 NSString *MFLanguageCode(void);
 
-void mfrun(CFRunLoopRef _Nonnull rl, void (^_Nonnull workload)(void));
-
 CFTimeInterval machTimeToSeconds(uint64_t tsMach);
 uint64_t secondsToMachTime(CFTimeInterval tsSeconds);
 
@@ -68,10 +66,10 @@ void *offsetPointer(void *ptr, int byteOffset);
 + (NSDictionary *)dictionaryWithOverridesAppliedFrom:(NSDictionary *)src to: (NSDictionary *)dst;
 + (CGEventType)CGEventTypeForButtonNumber:(MFMouseButtonNumber)button isMouseDown:(BOOL)isMouseDown;
 + (CGMouseButton)CGMouseButtonFromMFMouseButtonNumber:(MFMouseButtonNumber)button;
-+ (NSString *)currentDispatchQueueDescription;
+//+ (NSString *)currentDispatchQueueDescription;
 + (void)printInvocationCountWithId:(NSString *)strId;
 + (BOOL)button:(NSNumber * _Nonnull)button isPartOfModificationPrecondition:(NSDictionary *)modificationPrecondition;
-+ (void)resetDispatchGroupCount:(dispatch_group_t)group;
+//+ (void)resetDispatchGroupCount:(dispatch_group_t)group;
 NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitToNameMap[_Nullable], int bitToNameMapCount);
 
 NS_ASSUME_NONNULL_END

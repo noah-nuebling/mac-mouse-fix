@@ -141,7 +141,7 @@ import Foundation
                     commitConfig()
                     
                     /// Reload table
-                    DispatchQueue.main.async {
+                    mfrun(CFRunLoopGetMain()) {
                         self.tableController.reloadAll()
                     }
                 } else { /// currentMap == defaultMap
@@ -251,9 +251,9 @@ import Foundation
         
         /// Display extra UI
         ///     Doing this with a delay because it doesn't work if the tab switch animation is still ongoing
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, qos: .userInteractive, flags: [], execute: {
-            
+        assertRunLoop(CFRunLoopGetMain());
+        Timer.mf_scheduledTimer(withTimeInterval: 0.3, mode: .common) { timer in
+
             ///
             /// Get info
             ///
@@ -313,7 +313,7 @@ import Foundation
                 self.showRestoreDefaultPopover(deviceName: deviceName as String, nOfButtons: nOfButtons, usedButtons: usedButtons)
             }
             
-        })
+        }
         
         ///
         /// Turn off killswitch
@@ -368,7 +368,7 @@ import Foundation
                 
                 /// Reload table
                 /// Note: It feels a bit hacky to call `updateColumnWidths()` here. Maybe this should be handled automatically inside the remapTable code.
-                DispatchQueue.main.async {
+                mfrun(CFRunLoopGetMain()) {
                     MainAppState.shared.remapTableController?.reloadAll()
                     MainAppState.shared.buttonTabController?.tableView.updateColumnWidths()
                 }
@@ -579,7 +579,7 @@ import Foundation
     ///     TODO: Maybe think about race condition for the mouseEntered and mouseExited functions
 
     override func mouseEntered(with event: NSEvent) {
-        DispatchQueue.main.async {
+        mfrun(CFRunLoopGetMain()) {
             
             /// Not sure it makes sense to dispatch async for mouseEntered and mouseExited. We added that dispatch when addField.hoverEffect was controlled by messages we received instead of being based on response to the the messages we sent.
             /// Here are some notes we wrote for the old architecture:
@@ -595,7 +595,7 @@ import Foundation
         }
     }
     override func mouseExited(with event: NSEvent) {
-        DispatchQueue.main.async {
+        mfrun(CFRunLoopGetMain()) {
             self.mouseExited_Internal(dueToAddModeFeeback: false)
         }
     }
@@ -611,7 +611,7 @@ import Foundation
 
     @objc func handleAddModeFeedback(payload: NSDictionary) {
         
-        DispatchQueue.main.async {
+        mfrun(CFRunLoopGetMain()) {
             
             /// Debug
             DDLogDebug("Received AddMode feedback with payload: \(payload)")
@@ -627,10 +627,11 @@ import Foundation
             
             self.mouseExited_Internal(dueToAddModeFeeback: true)
             self.addField.removeTrackingArea(self.trackingArea)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+
+            assertRunLoop(CFRunLoopGetMain());
+            Timer.mf_scheduledTimer(withTimeInterval: 0.5, mode: .common) { timer in
                 self.createTrackingArea()
-            })
+            }
         }
     }
     

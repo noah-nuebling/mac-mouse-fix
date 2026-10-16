@@ -38,7 +38,10 @@ CGEventRef eventTapCallback(CGEventTapProxy  proxy, CGEventType type, CGEventRef
     if (type == kCGEventTapDisabledByTimeout) CGEventTapEnable(eventTap, true);
     
     if (type == 29 || type == 30) { /// These events are emitted by Dock Swipes
-        
+
+        /// Unrelated test (CPU usage of tap that does nothing) . Result: Uses 9% wiggling with 1000 Hz mouse (I think), M4 MBA, macOS 27, Activity Monitor. (varies by app for some reason) [Oct 2026]
+        if ((1)) return event;
+
         /// Log
         if ((0)) mflog(@"eventType: %d", type);
         

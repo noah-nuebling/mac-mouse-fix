@@ -33,11 +33,11 @@ class TrialNotificationController: NSWindowController {
         self.close()
         
         /// Wait for close animation to finish
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                
+        assertRunLoop(CFRunLoopGetMain())
+        Timer.mf_scheduledTimer(withTimeInterval: 0.5, mode: .common) { timer in
             /// Disable helper
             HelperServices.disableHelperFromHelper()
-        })
+        }
     }
     
     /// Vars
@@ -327,7 +327,7 @@ class TrialNotificationController: NSWindowController {
         
         /// Animate
         setFrameWithCoolAnimation(start, end, window, onComplete: {
-            DispatchQueue.main.async {
+            mfrun(CFRunLoopGetMain()) {
                 super.close()
             }
         })
@@ -337,14 +337,14 @@ class TrialNotificationController: NSWindowController {
 
     /*private*/ override func mouseEntered(with event: NSEvent) {
 
-        DispatchQueue.main.async {
+        mfrun(CFRunLoopGetMain()) {
             self.trialSectionManager.showAlternate(animate: true, hAnchor: .leading)
         }
     }
 
     /*private*/ override func mouseExited(with event: NSEvent) {
 
-        DispatchQueue.main.async {
+        mfrun(CFRunLoopGetMain()) {
             self.trialSectionManager.showInitial(animate: true, hAnchor: .leading)
         }
     }

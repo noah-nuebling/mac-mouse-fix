@@ -62,10 +62,10 @@ typedef void(^DisplayLinkCallback)(DisplayLinkCallbackTimeInfo timeInfo);
 @interface DisplayLink : NSObject
 
 
-    + (instancetype) displayLinkWithPhaseShift: (VBLPhase)phaseShift runLoop: (CFRunLoopRef)runLoop name: (NSString *)name;
-    - (instancetype) init NS_UNAVAILABLE;
+    + (instancetype)displayLinkWithPhaseShift: (VBLPhase)phaseShift runLoop: (CFRunLoopRef)runLoop name: (NSString *)name;
+    - (instancetype)init NS_UNAVAILABLE;
 
-    - (CFRunLoopRef) runLoop CF_RETURNS_NOT_RETAINED; /// Expose runLoop so that Animator (which builds ontop of DisplayLink) can access it, too [Oct 2026]
+    - (CFRunLoopRef)runLoop CF_RETURNS_NOT_RETAINED; /// Expose runLoop so that Animators (which build on top of DisplayLink) can access it, too [Oct 2026]
 
     - (void)startWithCallback:(DisplayLinkCallback)callback;
     - (void)stop;

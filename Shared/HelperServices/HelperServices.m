@@ -67,6 +67,7 @@
 #import "MFMessagePort.h"
 
 #import "NSString+Additions.h"
+#import "NSTimer+Additions.h"
 
 #if IS_MAIN_APP
 #import "Mac_Mouse_Fix-Swift.h"
@@ -143,7 +144,8 @@
     ///     - I refactored HelperServices, which is very dangerous. Haven't tested it properly at the time of writing, especially pre-Ventura.
     ///         I think 07e861de4504daad9996a40ce32c4aea5c87552a is the last commit before the changes.
     ///     - [Sep 2025] Cleaned things up and added `[HelperServices terminateAllHelperInstances]` to the 13.0 codepath in commit 0cca8824055724afc6c66498fe7d8b798ad412c9
-    
+    ///     - [Oct 2026] Changed some stuff, look at the git history
+
     /// Old note: [Sep 2025]
     ///     We used to try to detect if a strange helper was currently registered and then unregister that, but our technique for detection doesn't work anymore since macOS 13.0, so we deleted that code.
     ///     Above the code were the following comments:
@@ -154,43 +156,53 @@
     ///             -> So we're disabling this for now. Hopefully Apple will fix this at some point.
     ///                 Update: [Sep 2025] Apple did fix things in macOS 15.0 Sequoia! We're also unregistering strange helpers in some cases when they message us over MFMessagePort. And before we enable here, we also unregister the helper – Should already be pretty robust even without strange helper detection here.
     ///                     Also see notes elsewhere about `is-strange-helper-alert`. [Sep 2025]
-    
+
+    assertRunLoop(CFRunLoopGetMain());
+
     if (@available(macOS 13.0, *)) {
-        
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^{
-                
+
+        mfdetachThread(NSQualityOfServiceUserInteractive, ^{
+            /// [Oct 2026] Before 'No more dispatch queues' refactor we ran all this stuff on a `global_dispatch_queue` and never jumped back to `CFRunLoopGetMain()` - probably racy?
+            ///     Also the whole `onComplete` design could maybe be replaced by making this blocking and using `mfdetachThread` in the caller?
+            ///     Also also, I'm not even sure using SMAppService off the mainThread is even important. See  `-enableHelper_SM`. [Oct 2026]
+
             /// Cleanup
             ///     Remove residue & prevent interference
             {
-                
-                /// Delete legacy launchd.plist files
-                removeLaunchdPlist();
-                removePrefpaneLaunchdPlist();
-                
-                /// Unregister pre-SM helper from launchd
-                removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
-                
+
+                mfrunAndWait(CFRunLoopGetMain(), ^{
+                    /// Delete legacy launchd.plist files
+                    removeLaunchdPlist();
+                    removePrefpaneLaunchdPlist();
+
+                    /// Unregister pre-SM helper from launchd
+                    removeServiceWithIdentifier(kMFLaunchdHelperIdentifier);
+                });
+
                 if (enable) {
                     /// Unregister if enabling
                     /// - This is necessary for enabling to work after updating to new version in the same place while the old helper is still running
                     /// - removeServiceWithIdentifier() also works for this, but it leads to the helper weirdly enabling twice which causes the `is-strange-helper-alert` message to be shown twice
                     ///     Update: [Sep 2025] This sounds like a bug on Apple's side that may have been fixed along with the other bugs on newer macOS versions.
                     [self enableHelper_SM: NO];
-                
+
                     /// Kill non-launchd helpers
                     ///     Non-launchd helpers can only normally happen during debugging I think.
-                    [HelperServices terminateAllHelperInstances];
+                    mfrunAndWait(CFRunLoopGetMain(), ^{
+                        [HelperServices terminateAllHelperInstances];
+                    });
                 }
             }
             
             /// Enable helper 
-            ///     Do this on some global queue. Xcode complains if you do this on mainThread because it can lead to unresponsive UI.
             NSError *error = [self enableHelper_SM: enable];
-            
+
             /// Call onComplete
-            if (onComplete != nil) onComplete(error);
+            mfrun(CFRunLoopGetMain(), ^{
+                if (onComplete != nil) onComplete(error);
+            });
         });
-        
+
     } else {
         
         /// Generate / repair launchd.plist
@@ -261,11 +273,11 @@
 
         //assert([self helperIsActive]);
 
-        [self enableHelperAsUserAgent:NO onComplete:^(NSError * _Nullable error) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                
+        [self enableHelperAsUserAgent: NO onComplete: ^(NSError * _Nullable error) {
+            assertRunLoop(CFRunLoopGetMain());
+            [NSTimer mf_scheduledTimerWithTimeInterval: delay mode: NSRunLoopCommonModes block: ^void (NSTimer *timer) {
                 [self enableHelperAsUserAgent:YES onComplete:nil];
-            });
+            }];
         }];
         
     #elif IS_HELPER
@@ -383,11 +395,11 @@ static BOOL helperIsActive_PList(void) {
 #pragma mark Enable/Disable helper
 
 + (NSError *_Nullable)enableHelper_SM:(BOOL)enable API_AVAILABLE(macos(13.0)) {
-    
-    /// TODO: Dispatch this stuff to another thread. Xcode analysis on `registerAndReturnError:` says "This method should not be called on the main thread as it may lead to UI unresponsiveness"
+
+    mfassert(CFRunLoopGetCurrent() != CFRunLoopGetMain()); /// Xcode analysis said "This method should not be called on the main thread as it may lead to UI unresponsiveness". Not sure this is actually important. Complicates callsites [Oct 2026]
 
     if (@available(macOS 13.0, *)) {
-            
+
         /// Guard running main app
         ///     Before using the SM APIs we could call this from anywhere, but the SM stuff will only work from the mainApp afaik.
         #if IS_HELPER

@@ -40,6 +40,7 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
     ///     custom momentumScroll algorithms with way too high speeds (At least I think that's whats going on) So we're using an animator to smooth things out and hopefully achieve more consistent behaviour
     ///     - Edit: Using the `_smoothingAnimator` forces complicated `continuation` code.
     ///         Maybe you could just introduce a delay between the last two events? I feel like the lack of that delay causes most of the erratic behaviour.
+    ///     @afterNoGCDTodo [Oct 2026] In Safari (heavy load), I observe much more erratic momentum speeds after 'No more dispatch queues' refactor! Possibly `CommonEventTap` will fix this.
     ///
     /// - Using a TouchAnimator here might not be the best choice. We made the TouchAnimator primarily for scrollwheel input. But then we started using it here too.
     ///     In both situations we needed pretty different functionality so now it's this weird swiss army knife hybrid. For example it supports Vectors which we don't
@@ -47,6 +48,7 @@ static BOOL _smoothingAnimatorShouldStartMomentumScroll = NO;
     ///     getting the TouchAnimator to be free of multithreading bugs so we thought there was less potential for error if we only implement that stuff once.
     ///     But we might get some performance improvements and simpler code if we make a separate animator for the dragSmoothing.
     ///         Update: [Oct 2026] 'No more dispatch queues' refactor removed the multithreading! But it seems to work fine.
+    ///
 
     _smoothingAnimator = [[TouchAnimator alloc] initWithPhaseShift: kVBLPhase_DefaultForEventSending runLoop: IOThread.runLoop name: @"TwoFingerSwipeSmoothing"];
     //_smoothingAnimator = [[DynamicSystemAnimator alloc] initWithSpeed:3 damping:1.0 initialResponser:1.0 stopTolerance:1.0];

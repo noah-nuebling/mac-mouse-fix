@@ -27,10 +27,6 @@
 ///         - Dennis Babkin blog about mach messaging in macOS, with "Security Considerations" section:
 ///             https://dennisbabkin.com/blog/?t=interprocess-communication-using-mach-messages-for-macos
 
-#if !IS_HELPER && !IS_MAIN_APP
-    #error "Expects to be compiled from MMF main app or helper app"
-#endif
-
 #import "MFMessagePort.h"
 #import <Cocoa/Cocoa.h>
 #import "Constants.h"
@@ -76,16 +72,20 @@
 ///         I think the reason for this message is that the existing instance would already 'occupy' the kMFBundleIDHelper name.
 ///         Checking if `localPort != nil` should detect this case
 
+#define IS_THIRD (!IS_HELPER && !IS_MAIN_APP) /** LocalizationScreenshotTaker [Sep 2026] */
+
 #if IS_HELPER
     #define messagePortRunLoop() IOThread.runLoop
 #elif IS_MAIN_APP
     #define messagePortRunLoop() CFRunLoopGetMain()
-#else /** LocalizationScreenshotTaker [Sep 2026] */
+#elif IS_THIRD
     #define messagePortRunLoop() CFRunLoopGetMain()
 #endif
 
+
 @implementation MFMessagePort
 
+#if !IS_THIRD
 + (void)load_Manual {
     
     #pragma mark - Init
@@ -124,6 +124,7 @@
     CFRunLoopAddSource(messagePortRunLoop(), runLoopSource, kCFRunLoopCommonModes);
     CFRelease(runLoopSource);
 }
+#endif
 
 NSString *CFMessagePortSendRequest_ErrorCode_ToString(SInt32 errorCode) {
     
@@ -139,6 +140,7 @@ NSString *CFMessagePortSendRequest_ErrorCode_ToString(SInt32 errorCode) {
     return map[@(errorCode)] ?: stringf(@"(%d)", errorCode);
 }
 
+#if !IS_THIRD
 static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messageID, CFDataRef data, void *info) {
     
     #pragma mark Receive messages
@@ -312,6 +314,17 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
         return NULL;
     }
 }
+#endif
+
+static void invalidationCallback(CFMessagePortRef ms, void *info) { /// Helper for `sendMessage:` [Oct 2026]
+    /// Log state
+    #if IS_HELPER
+        NSString *name = @"Helper";
+    #else
+        NSString *name = @"MainApp";
+    #endif
+    DDLogInfo("Remote MessagePort invalidated in %@", name);
+}
 
 + (NSObject *_Nullable)sendMessage:(NSString * _Nonnull)message withPayload:(NSObject<NSCoding> * _Nullable)payload toRemotePort:(NSString *)remotePortName waitForReply:(BOOL)waitForReply {
     
@@ -384,7 +397,7 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
 ///
 /// Helper stuff
 ///
-
+#if !IS_THIRD
 + (NSObject *_Nullable)sendMessage:(NSString *)message withPayload:(NSObject<NSCoding> *)payload waitForReply:(BOOL)replyExpected {
         
     /// Convenience wrapper
@@ -403,15 +416,6 @@ static CFDataRef _Nullable didReceiveMessage(CFMessagePortRef port, SInt32 messa
     /// Return
     return response;
 }
-
-void invalidationCallback(CFMessagePortRef ms, void *info) {
-    /// Log state
-    #if IS_HELPER
-        NSString *name = @"Helper";
-    #else
-        NSString *name = @"MainApp";
-    #endif
-    DDLogInfo("Remote MessagePort invalidated in %@", name);
-}
+#endif
 
 @end

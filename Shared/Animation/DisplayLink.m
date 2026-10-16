@@ -38,7 +38,7 @@
 ///         Avoid callbacks close together?
 ///             I sometimes saw pattern where every second frame callback is delayed, and delivers really close to the next one. Might be better to skip?
 ///                 However, I saw same pattern for real Trackpad events (using `vblphase.m`). Probably fine [Oct 2026]
-///         Use real time thread (instead of max priority in the normal band via our `set_thread_priority()` [Oct 2026]) (@afterNoGCDTodo)
+///         Use real time thread (instead of max priority in the normal band (`MAXPRI_USER`) via our `set_thread_priority()` [Oct 2026]) (@afterNoGCDTodo)
 ///             -> Might solve bad-phase-zone and close-together-callabacks issues (above). Haven't tried real time scheduling at all so far. [Oct 2026]
 ///     Other info:
 ///         Opus 5.5 says CADisplayLink and CFRunLoopTimer are built on `mk_timer`, too, just like this DisplayLink
@@ -53,6 +53,8 @@
 #import "Threads.h"
 #import "MathObjc.h"
 #import "mk_timer.h"
+
+#define range(i, n) (int i = 0; i < (n); i++)
 
 #pragma mark - VSync helpers
 
@@ -181,7 +183,13 @@ uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *befor
                 if (self->_lastNow) {
                     uint64_t realLastFrame = CGDisplay_NearestVBLTime(self->_linkedDisplay, "before", now, /*phaseShift*/0.0);
                     double phaseShift = ((double)(now - realLastFrame) / frameTime);
-                    _DDLogDebug("delta: %05.2f, phaseShift: %.2f, callbackPhaseDuration %05.2f", 1e3*machTimeToSeconds(now - self->_lastNow), phaseShift, ((double)(tsAfterCallback - tsBeforeCallback))/frameTime);
+
+                    char phaseShiftString[21]; { int p = 0; /// Little visualization inspired by Claude's vbldelta.m [Oct 2026]
+                        int phaseShiftRounded = roundToGrid(phaseShift * 20, /*grid0*/0, /*grid1*/1, "down");
+                        for range(i, 20) phaseShiftString[p++] = i == phaseShiftRounded ? '#' : '_';
+                        phaseShiftString[20] = 0;
+                    }
+                    _DDLogDebug("delta: %06.2f, phaseShift: %.2f (%{public}s), callbackPhaseDuration %05.2f", 1e3*machTimeToSeconds(now - self->_lastNow), phaseShift, phaseShiftString, ((double)(tsAfterCallback - tsBeforeCallback))/frameTime);
                 }
                 self->_lastNow = now;
             }
@@ -226,7 +234,6 @@ uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *befor
         assertRunLoop(_runLoop);
 
         if (!_isRunning) return;
-
         _isRunning = false;
 
         if (!_timerIsArmed) return;
@@ -256,7 +263,7 @@ uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *befor
         return _isRunning;
     }
 
-    - (void) linkToMainScreen { /// TODO: Use displayUnderMousePointer instead of mainScreen instead (across the entire program) [Oct 2026]
+    - (void) linkToMainScreen { /// @afterNoGCDTodo: Use displayUnderMousePointer instead of mainScreen instead (across the entire program) [Oct 2026]
         assertRunLoop(_runLoop);
         _linkedDisplay = [[NSScreen mainScreen] displayID];
     }

@@ -80,8 +80,8 @@ class GeneralTabController: NSViewController {
         
         let enableTimeout = 7.0
         var enableTimeoutDisposable: Disposable? = nil
-        var enableTimeoutTimer: DispatchSourceTimer? = nil
-        
+        var enableTimeoutTimer: Timer? = nil
+
         let onToggle = { (doEnable: Bool) in
             
             /// Prevent the enable toggle from toggling when it is clicked
@@ -124,8 +124,8 @@ class GeneralTabController: NSViewController {
                             
                             /// Clean up
                             enableTimeoutDisposable?.dispose()
-                            enableTimeoutTimer?.cancel()
-                            
+                            enableTimeoutTimer?.invalidate()
+
                             /// Create a signal that fires when either the app is enabled or a strange helper is detected.
                             let mergedSignal: Signal<Void, Never> = Signal.merge(
                                 EnabledState.shared.signal.filter({ $0 == true }).map({ _ in () }),
@@ -141,16 +141,14 @@ class GeneralTabController: NSViewController {
                                 
                                 /// Clean up
                                 enableTimeoutDisposable?.dispose()
-                                enableTimeoutTimer?.cancel()
+                                enableTimeoutTimer?.invalidate()
                             })
                             
                             /// Set up a timer that fires `enableTimeout` seconds after the user clicked
                             let timeSinceUserClick = CACurrentMediaTime() - userClickTS
-                            var timerFireTime = DispatchTime.now() + enableTimeout - timeSinceUserClick
-                            enableTimeoutTimer = DispatchSource.makeTimerSource(flags: [], queue: .main) /// Using main queue here since we're drawing UI from the callback
-                            enableTimeoutTimer?.schedule(deadline: timerFireTime, repeating: .never, leeway: .nanoseconds(0))
-                            enableTimeoutTimer?.setEventHandler(qos: .userInitiated, flags: [], handler: {
-      
+                            let timerFireDate = Date.init(timeIntervalSinceNow: enableTimeout - timeSinceUserClick)
+                            assertRunLoop(CFRunLoopGetMain()) /// Need to be main since we're drawing UI from the callback
+                            enableTimeoutTimer = Timer.init(fire: timerFireDate, interval: DBL_MAX, repeats: true, block: { timer in
                                 ///
                                 /// Enabling __has__ timed out
                                 ///
@@ -172,14 +170,15 @@ class GeneralTabController: NSViewController {
                                     }
                                     
                                     if mightBeStartingUp {
-                                        timerFireTime = timerFireTime + enableTimeout
-                                        enableTimeoutTimer?.schedule(deadline: timerFireTime)
-                                        
+                                        enableTimeoutTimer?.fireDate = (enableTimeoutTimer?.fireDate ?? Date.now).addingTimeInterval(enableTimeout)
                                         DDLogDebug("GeneralTabController - might be starting up - extending enable timeout. CPU usage: \(cpuUsage)")
                                         return
                                     }
                                 }
-                                
+
+                                /// Invalidate timer
+                                enableTimeoutTimer?.invalidate()
+
                                 /// Clean up
                                 enableTimeoutDisposable?.dispose()
                                 
@@ -190,7 +189,8 @@ class GeneralTabController: NSViewController {
                                     }
                                 }
                             })
-                            enableTimeoutTimer?.resume()
+                            RunLoop.main.add(enableTimeoutTimer!, forMode: .common);
+
                         }
                         
                     } else { /// error != nil

@@ -88,8 +88,54 @@ void threads_configureMainThread(void) {
     set_thread_priority(MAXPRI_USER-1, /*round_robin*/true);
 }
 
+#pragma mark - General threading helpers
+
+/// Standard patterns (Try to use these consistently) (greppability, I guess) (We might not actually end up using this) [Oct 2026]
+///     stdlib:
+///         Sleep for duration: `usleep(1e6 * <seconds>)`
+///         Sleep until deadline: `-[NSThread sleepUntilDate: <date>]`
+///         Timers / delays / cancellable work: `+[NSTimer mf_scheduledTimerWithTimeInterval:]` / `-[NSTimer initWithFireDate:]` / `CFRunLoopTimer`
+///     Our helpers:
+///         Thread hops / wait on other thread / async: `mfrun` / `mfrunAndWait` / `MFGate`
+///         Multi-step with waiting: (async-await pattern): `mfdetachThread` + `usleep` + `mfrunAndWait`
+
+void mfdetachThread(NSQualityOfService qos, void (^workload)(void)) {
+    NSThread *thread = [[NSThread alloc] initWithBlock: workload];
+    //thread.stackSize = 16 * 1024; /// 16 KB is min size. Opus 5.5 say it's small for general purpose helper and pages won't be allocated anyways until you use them. [Oct 2026]
+    thread.qualityOfService = qos;
+    [thread start];
+}
+
+void mfrun(CFRunLoopRef rl, void (^workload)(void)) {
+
+    /// This codebase's standard (greppable) way to run a block on a runLoop (Use this over `dispatch_async`) [Oct 2026]
+    ///     Formerly `MFCFRunLoopPerform` [Oct 2026]
+
+    CFRunLoopMode mode = kCFRunLoopCommonModes; /// I think this is ok to use everywhere. (Only thing non-default mode would be used for is tracking loops I think?) [Oct 2026]
+    CFRunLoopPerformBlock(rl, mode, workload);
+    CFRunLoopWakeUp(rl);
+}
+
+void mfrunAndWait(CFRunLoopRef rl, void (^workload)(void)) {
+
+    /// Like `mfrun` but it blocks until the workload is done. (Use this over `dispatch_sync`) [Oct 2026]
+    /// Caution: This can lead to deadlocks! See `MFGate.m` comments [Oct 2026]
+
+    if (CFEqual(rl, CFRunLoopGetCurrent()))
+        workload();
+    else {
+        MFGate *gate = [MFGate new];
+        mfrun(rl, ^{
+            workload();
+            [gate signalWorkCompleted];
+        });
+        [gate waitForWork];
+    }
+}
+
 #pragma mark - IOThread
 
+#if IS_HELPER
 @implementation IOThread
 
     /// Vars
@@ -169,3 +215,4 @@ void threads_configureMainThread(void) {
     }
 
 @end
+#endif
