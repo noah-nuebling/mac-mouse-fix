@@ -27,6 +27,7 @@
 #import "HelperUtility.h"
 #import "Logging.h"
 #import "Threads.h"
+#import "NSTimer+Additions.h"
 
 @implementation TouchSimulator
 
@@ -334,8 +335,8 @@ static NSMutableDictionary *_swipeInfo;
 
         /// Schedule new timers
         assertRunLoop(IOThread.runLoop);
-        _doubleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
-        _tripleSendTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(dockSwipeTimerFired:) userInfo:events repeats:NO];
+        _doubleSendTimer = [NSTimer mf_scheduledTimerWithTimeInterval: 0.2 mode: NSDefaultRunLoopMode block: ^(NSTimer *timer) { [self dockSwipeTimerFiredWithEvents: events]; }];
+        _tripleSendTimer = [NSTimer mf_scheduledTimerWithTimeInterval: 0.5 mode: NSDefaultRunLoopMode block: ^(NSTimer *timer) { [self dockSwipeTimerFiredWithEvents: events]; }];
         
     }
     
@@ -347,9 +348,8 @@ static NSMutableDictionary *_swipeInfo;
     _dockSwipeLastDelta = d;
 }
 
-+ (void)dockSwipeTimerFired:(NSTimer *)timer {
-    
-    NSDictionary *events = timer.userInfo;
++ (void)dockSwipeTimerFiredWithEvents:(NSDictionary *)events {
+
     CGEventRef e30 = (__bridge CGEventRef)events[@"e30"];
     CGEventRef e29 = (__bridge CGEventRef)events[@"e29"];
     

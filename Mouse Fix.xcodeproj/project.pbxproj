@@ -192,6 +192,8 @@
 		4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */; };
 		4FA1FD8128A85FD100D1C8EE /* RemapTableElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8028A85FD100D1C8EE /* RemapTableElements.swift */; };
 		4FA1FD8328A916B600D1C8EE /* NSShadow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */; };
+		4FA2ADAC308287A000925D0C /* NSTimer+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA2ADAB308287A000925D0C /* NSTimer+Additions.m */; };
+		4FA2ADAD308287A000925D0C /* NSTimer+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA2ADAB308287A000925D0C /* NSTimer+Additions.m */; };
 		4FA2F1262C29A125000C5535 /* NotificationLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FD82DDA260575B100664D6F /* NotificationLabel.m */; };
 		4FA2F13D2C2B0932000C5535 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */; };
 		4FA2F13E2C2B0932000C5535 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 4FA2F13C2C2B0932000C5535 /* Localizable.xcstrings */; };
@@ -391,8 +393,6 @@
 		4FF7973A2C8245D700C18001 /* Links.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF797392C8245D700C18001 /* Links.m */; };
 		4FF7973B2C8245D700C18001 /* Links.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FF797392C8245D700C18001 /* Links.m */; };
 		4FF8C89A28955491007EC31F /* ClickCycle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8C89928955490007EC31F /* ClickCycle.swift */; };
-		4FF8C89E28955DC4007EC31F /* CoolTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8C89D28955DC4007EC31F /* CoolTimer.swift */; };
-		4FF8C89F28955DC4007EC31F /* CoolTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8C89D28955DC4007EC31F /* CoolTimer.swift */; };
 		4FF8C8A32895AACB007EC31F /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF8C8A22895AACB007EC31F /* Buttons.swift */; };
 		4FF93059288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF93058288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift */; };
 		4FFA4E3528B795F30062A1FE /* LicenseUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFA4E3428B795F30062A1FE /* LicenseUtility.swift */; };
@@ -892,6 +892,8 @@
 		4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeletableTableCellView.xib; sourceTree = "<group>"; };
 		4FA1FD8028A85FD100D1C8EE /* RemapTableElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapTableElements.swift; sourceTree = "<group>"; };
 		4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSShadow+Extensions.swift"; sourceTree = "<group>"; };
+		4FA2ADAA308287A000925D0C /* NSTimer+Additions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSTimer+Additions.h"; sourceTree = "<group>"; };
+		4FA2ADAB308287A000925D0C /* NSTimer+Additions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+Additions.m"; sourceTree = "<group>"; };
 		4FA2F1392C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/LicenseSheetController.xcstrings; sourceTree = "<group>"; };
 		4FA2F13A2C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Main.xcstrings; sourceTree = "<group>"; };
 		4FA2F13B2C2B0932000C5535 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/MenuBarItem.xcstrings; sourceTree = "<group>"; };
@@ -1187,7 +1189,6 @@
 		4FF797382C8245D700C18001 /* Links.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Links.h; sourceTree = "<group>"; };
 		4FF797392C8245D700C18001 /* Links.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Links.m; sourceTree = "<group>"; };
 		4FF8C89928955490007EC31F /* ClickCycle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClickCycle.swift; sourceTree = "<group>"; };
-		4FF8C89D28955DC4007EC31F /* CoolTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoolTimer.swift; sourceTree = "<group>"; };
 		4FF8C8A028956DDD007EC31F /* ButtonModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonModifiers.swift; sourceTree = "<group>"; };
 		4FF8C8A22895AACB007EC31F /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		4FF93058288026FC0007CCA7 /* PolynomialCappedAccelerationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolynomialCappedAccelerationCurve.swift; sourceTree = "<group>"; };
@@ -1851,6 +1852,8 @@
 		4F909D4228A0C4C2009349A2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4FA2ADAA308287A000925D0C /* NSTimer+Additions.h */,
+				4FA2ADAB308287A000925D0C /* NSTimer+Additions.m */,
 				4FDB5F482D4F85A900164F97 /* NSCharacterSet+Additions.h */,
 				4FDB5F492D4F85A900164F97 /* NSCharacterSet+Additions.m */,
 				4F1B41A32D4BACBA00026C94 /* NSData+Additions.h */,
@@ -2478,7 +2481,6 @@
 				4FCEDC87292D6A8F00E7DA2A /* HashablePair.swift */,
 				4FBC83392DAFB28B00354981 /* Macros */,
 				4FBC832E2DAFB28B00354981 /* PrivateFunctions */,
-				4FF8C89D28955DC4007EC31F /* CoolTimer.swift */,
 				4FBDA14927B2246B0030E4EA /* SubPixelator */,
 				4FD860C2266EEA94004F76C8 /* Unused */,
 			);
@@ -3495,7 +3497,6 @@
 				4FB8B2A32CCEBC4900A5A580 /* APIRequests.swift in Sources */,
 				4FDE75A428B25E1A00662314 /* String+Extensions.swift in Sources */,
 				4FB8B29E2CCEBB1700A5A580 /* GetTrialState.swift in Sources */,
-				4FF8C89E28955DC4007EC31F /* CoolTimer.swift in Sources */,
 				4FDB5F4A2D4F85A900164F97 /* NSCharacterSet+Additions.m in Sources */,
 				4F909D3428A0C3D2009349A2 /* Replace.swift in Sources */,
 				4FF665ED25F2C92700689B77 /* MFSegmentedControl.m in Sources */,
@@ -3585,6 +3586,7 @@
 				4F319CBB26252A2D004E5F63 /* ButtonGroupRowView.m in Sources */,
 				4F79A82B2605074000076A7E /* NSAttributedString+Additions.m in Sources */,
 				4FAA3DA92C55DF4F00CBA413 /* InvisibleKeyResponder.m in Sources */,
+				4FA2ADAD308287A000925D0C /* NSTimer+Additions.m in Sources */,
 				4F2E8FD72D52877F00689058 /* MFPlistEncoder.m in Sources */,
 				4FA40CFD28A0CCCB00499E53 /* AccelerationBezier.swift in Sources */,
 				4F909D3228A0C3D2009349A2 /* FadeAnimations.swift in Sources */,
@@ -3657,6 +3659,7 @@
 				4F8A8DBF287F7BBA00786BCC /* NaturalAccelerationCurve.swift in Sources */,
 				4FF6668F25F2C93A00689B77 /* SmoothScroll_old_.m in Sources */,
 				4F70ECB7267E810900325A76 /* IOUtility.m in Sources */,
+				4FA2ADAC308287A000925D0C /* NSTimer+Additions.m in Sources */,
 				4F17D2E1292A635200EB07CA /* SwitchMaster.swift in Sources */,
 				4FD0A71127B295F600FFCD12 /* GeneralConfig.swift in Sources */,
 				4F1D58192881D880002EB119 /* CombinedLinearCurve.swift in Sources */,
@@ -3741,7 +3744,6 @@
 				4FB8B29B2CCEBAEB00A5A580 /* GetLicenseConfig.swift in Sources */,
 				4F1B41902D49960E00026C94 /* MFGate.m in Sources */,
 				4FF666A825F2C93A00689B77 /* DeviceManager.m in Sources */,
-				4FF8C89F28955DC4007EC31F /* CoolTimer.swift in Sources */,
 				4FF6669B25F2C93A00689B77 /* AppDelegate.m in Sources */,
 				4FA625552DA97CBB004F46DA /* TreeNode.m in Sources */,
 				4FF1DC7A2CC1130700A839AB /* License.m in Sources */,

@@ -34,7 +34,7 @@ class TrialNotificationController: NSWindowController {
         
         /// Wait for close animation to finish
         assertRunLoop(CFRunLoopGetMain())
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { timer in
+        Timer.mf_scheduledTimer(withTimeInterval: 0.5, mode: .common) { timer in
             /// Disable helper
             HelperServices.disableHelperFromHelper()
         }

@@ -15,6 +15,7 @@
 #import "CoolSUComparator.h"
 #import "Logging.h"
 #import "Threads.h"
+#import "NSTimer+Additions.h"
 
 // See https://sparkle-project.org/documentation/customization/
 
@@ -305,7 +306,7 @@ int getMajorVersion(NSString *version) {
 
     float delayInSeconds = 0.0;
     assertRunLoop(CFRunLoopGetMain());
-    [NSTimer scheduledTimerWithTimeInterval: delayInSeconds repeats: NO block:^(NSTimer * _Nonnull timer) {
+    [NSTimer mf_scheduledTimerWithTimeInterval: delayInSeconds mode: NSRunLoopCommonModes block: ^(NSTimer * _Nonnull timer) {
         /// Prevent Sparkle from storing its own skippedVersion
         ///     By deleting the default Sparkle key from user defaults.
         ///

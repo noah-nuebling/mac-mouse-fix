@@ -67,6 +67,7 @@
 #import "MFMessagePort.h"
 
 #import "NSString+Additions.h"
+#import "NSTimer+Additions.h"
 
 #if IS_MAIN_APP
 #import "Mac_Mouse_Fix-Swift.h"
@@ -274,7 +275,7 @@
 
         [self enableHelperAsUserAgent: NO onComplete: ^(NSError * _Nullable error) {
             assertRunLoop(CFRunLoopGetMain());
-            [NSTimer scheduledTimerWithTimeInterval: delay repeats: NO block: ^void (NSTimer *timer) {
+            [NSTimer mf_scheduledTimerWithTimeInterval: delay mode: NSRunLoopCommonModes block: ^void (NSTimer *timer) {
                 [self enableHelperAsUserAgent:YES onComplete:nil];
             }];
         }];

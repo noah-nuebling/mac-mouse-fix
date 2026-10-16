@@ -65,7 +65,7 @@ class ScrollTabController: NSViewController {
         ///     Need to do asynAfter 0.0 seconds for it to work (I think - not well tested) that makes it do it on the next runLoop cycle I think.
 
         assertRunLoop(CFRunLoopGetMain())
-        Timer.scheduledTimer(withTimeInterval: 0.0, repeats: false) { timer in
+        Timer.mf_scheduledTimer(withTimeInterval: 0.0, mode: .common) { timer in
             MainAppState.shared.window?.makeFirstResponder(nil)
         }
         

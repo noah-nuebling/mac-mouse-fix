@@ -194,7 +194,7 @@ class ClickCycle: NSObject {
             /// ```
             /// Discussion: (last updated: Sep 2024)
             /// - The helper build number was 22854 which matches with the 3.0.3 release.
-            /// - I assume this was due to the forceful optional unwrapping of `self.state!` failing in the `scheduledTimer` callbacks below.
+            /// - I assume this was due to the forceful optional unwrapping of `self.state!` failing in the `mf_scheduledTimer` callbacks below.
             ///     - We set `self.state` to nil regularly whenever we call `self.kill()`, however this should also invalidate the timers, which should prevent them from firing and executing the code that crashed, so I think there must be a race condition or other error.
             ///         Thoughts on where the error could come from:
             ///             - `self.kill()` is invoked by all the other input handling code (modified drag, modified scroll, and keyboardModifier handling I think), I believe that not all of those run on the main thread.
@@ -218,7 +218,8 @@ class ClickCycle: NSObject {
             if mouseDown {
                 /// mouseDown
                 state?.upTimer.invalidate()
-                state?.downTimer = CoolTimer.scheduledTimer(timeInterval: 0.25, repeats: false, runLoop: IOThread.runLoop(), block: { timer in
+                assertRunLoop(IOThread.runLoop())
+                state?.downTimer = Timer.mf_scheduledTimer(withTimeInterval: 0.25, mode: .common, block: { timer in
                     /// Callback
                     if self.state == nil { return } /// [Oct 2026] Just saw this be nil and crash right after launching. Didn't look into what happened. Must be rare.
                     var c: [UnconditionalReleaseCallback] = []
@@ -230,7 +231,7 @@ class ClickCycle: NSObject {
                     self.state!.upTimer.invalidate()
                 })
                 /// Not sure whether to start started upTimer on mouseDown or up
-                state?.upTimer = CoolTimer.scheduledTimer(timeInterval: 0.26, repeats: false, runLoop: IOThread.runLoop(), block: { timer in
+                state?.upTimer = Timer.mf_scheduledTimer(withTimeInterval: 0.26, mode: .common, block: { timer in
                     if self.state == nil { return } /// Guard race conditions. Not totally sure why this happens. Update: [Sep 2026] This note is from before 'No more dispatch queues' refactor, might be fixed now.
                     self.callTriggerCallback(triggerCallback, ClickCycleTriggerPhase.levelExpired, self.state!.clickLevel, device, button)
                     self.kill()

@@ -21,6 +21,7 @@
 #import "NotificationLabel.h"
 #import "NSAttributedString+Additions.h"
 #import "LocalizationUtility.h"
+#import "NSTimer+Additions.h"
 #import "Mac_Mouse_Fix-Swift.h"
 
 @interface ToastController ()
@@ -428,7 +429,7 @@ typedef enum {
     /// Track showDuration
     ///     On retain cycles: `self` is a Class not an instance, and `_showDurationTimer` is a static var, so neither get retained when the block captures them (I think) [Sep 2025]
     [_showDurationTimer invalidate];
-    _showDurationTimer = [NSTimer scheduledTimerWithTimeInterval: showDuration repeats: NO block: ^(NSTimer * _Nonnull timer) {
+    _showDurationTimer = [NSTimer mf_scheduledTimerWithTimeInterval: showDuration mode: NSDefaultRunLoopMode block: ^(NSTimer * _Nonnull timer) {
         
         /// Invalidate the timer
         ///     Note: After the timer fires, I thought it invalidates itself, but `timer.isValid` seems to be true in here (if I didn't test wrong)

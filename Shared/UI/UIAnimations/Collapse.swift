@@ -291,7 +291,7 @@ class CollapsingStackView: NSStackView {
             }
             
             /// Wait until animation done
-            state.uncollapseTimer = Timer.scheduledTimer(withTimeInterval: duration, repeats: false) { timer in
+            state.uncollapseTimer = Timer.mf_scheduledTimer(withTimeInterval: duration, mode: .default) { timer in
                 
                 /// Add bottom constraint between wrapper and subview back in
                 state.bottomConstraint!.isActive = true

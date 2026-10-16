@@ -154,8 +154,8 @@
         
         /// Check accessibility every 0.5s
         ///     Not storing the timer in a variable because we don't have to invalidate / release it since the helper will restart anyways
-        [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:YES block:^(NSTimer * _Nonnull timer) {
-            
+        NSTimer *timer = [[NSTimer alloc] initWithFireDate: [NSDate dateWithTimeIntervalSinceNow: 0.5] interval: 0.5 repeats: YES block: ^(NSTimer * _Nonnull timer) {
+
             BOOL hasAccessibility = [self checkAccessibilityAndUpdateSystemSettings];
             
             if (hasAccessibility) {
@@ -165,7 +165,8 @@
                 [HelperServices restartHelperWithDelay:0.0];
             }
         }];
-            
+        [[NSRunLoop currentRunLoop] addTimer: timer forMode: NSDefaultRunLoopMode];
+
     } else {
         
         /// Accessibility is enabled -> Start normally!

@@ -326,7 +326,7 @@ import Cocoa
                         plusIconView.reactiveAnimator().contentTintColor.set(NSColor.controlAccentColor)
                     } onComplete: {
                         assertRunLoop(CFRunLoopGetMain());
-                        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { timer in /// This timer is not terminated when unhover is triggered some other way, leading to slightly weird behaviour
+                        Timer.mf_scheduledTimer(withTimeInterval: 1.5, mode: .common) { timer in /// This timer is not terminated when unhover is triggered some other way, leading to slightly weird behaviour
                             Animate.with(CASpringAnimation(speed: 3.5, damping: 1.3)) {
                                 self.plusIconView.reactiveAnimator().contentTintColor.set(self.plusIconViewBaseColor())
                             }
@@ -382,7 +382,7 @@ import Cocoa
                 self.reactiveAnimator().shadow.set(s)
             }
 
-            //Timer.scheduledTimer(withTimeInterval: 0.05, repeats: false) { timer in
+            //Timer.mf_scheduledTimer(withTimeInterval: 0.05, mode: .common) { timer in
             //    Animate.with(CABasicAnimation(name: .default, duration: 0.25)) {
             //        self.plusIconView.reactiveAnimator().shadow.set(t)
             //    }

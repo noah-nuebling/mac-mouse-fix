@@ -94,7 +94,7 @@ void threads_configureMainThread(void) {
 ///     stdlib:
 ///         Sleep for duration: `usleep(1e6 * <seconds>)`
 ///         Sleep until deadline: `-[NSThread sleepUntilDate: <date>]`
-///         Timers / delays / cancellable work: `NSTimer` / `CFRunLoopTimer` / `CoolTimer`
+///         Timers / delays / cancellable work: `+[NSTimer mf_scheduledTimerWithTimeInterval:]` / `-[NSTimer initWithFireDate:]` / `CFRunLoopTimer`
 ///     Our helpers:
 ///         Thread hops / wait on other thread / async: `mfrun` / `mfrunAndWait` / `MFGate`
 ///         Multi-step with waiting: (async-await pattern): `mfdetachThread` + `usleep` + `mfrunAndWait`
@@ -135,6 +135,7 @@ void mfrunAndWait(CFRunLoopRef rl, void (^workload)(void)) {
 
 #pragma mark - IOThread
 
+#if IS_HELPER
 @implementation IOThread
 
     /// Vars
@@ -214,3 +215,4 @@ void mfrunAndWait(CFRunLoopRef rl, void (^workload)(void)) {
     }
 
 @end
+#endif

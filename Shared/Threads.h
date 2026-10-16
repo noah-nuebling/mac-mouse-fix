@@ -152,6 +152,7 @@ typedef struct { int readerCount; int writerCount; } MFReadWriteTracker;
     NS_SWIFT_UNAVAILABLE("")
     static inline void __decrementInt(int **someInt) { **someInt -= 1; }
 
+#if IS_HELPER
 @interface IOThread : NSObject
 
     + (void) load_Manual;
@@ -159,3 +160,4 @@ typedef struct { int readerCount; int writerCount; } MFReadWriteTracker;
     + (CFRunLoopRef)runLoop CF_RETURNS_NOT_RETAINED;
 
 @end
+#endif

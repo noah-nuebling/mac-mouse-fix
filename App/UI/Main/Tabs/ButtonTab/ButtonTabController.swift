@@ -252,7 +252,7 @@ import Foundation
         /// Display extra UI
         ///     Doing this with a delay because it doesn't work if the tab switch animation is still ongoing
         assertRunLoop(CFRunLoopGetMain());
-        Timer.scheduledTimer(withTimeInterval:  0.3, repeats: false) { timer in
+        Timer.mf_scheduledTimer(withTimeInterval: 0.3, mode: .common) { timer in
 
             ///
             /// Get info
@@ -629,7 +629,7 @@ import Foundation
             self.addField.removeTrackingArea(self.trackingArea)
 
             assertRunLoop(CFRunLoopGetMain());
-            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { timer in
+            Timer.mf_scheduledTimer(withTimeInterval: 0.5, mode: .common) { timer in
                 self.createTrackingArea()
             }
         }
