@@ -263,7 +263,7 @@ uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *befor
         return _isRunning;
     }
 
-    - (void) linkToMainScreen { /// TODO: Use displayUnderMousePointer instead of mainScreen instead (across the entire program) [Oct 2026]
+    - (void) linkToMainScreen { /// @afterNoGCDTodo: Use displayUnderMousePointer instead of mainScreen instead (across the entire program) [Oct 2026]
         assertRunLoop(_runLoop);
         _linkedDisplay = [[NSScreen mainScreen] displayID];
     }

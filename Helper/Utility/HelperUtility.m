@@ -60,7 +60,11 @@
 #pragma mark - App under pointer
 
 + (NSRunningApplication * _Nullable)appUnderMousePointerWithEvent:(CGEventRef _Nullable)event {
-    
+
+    /// Opus 5.5 is concerned about this:
+    ///     'Can block for seconds if the app is hung', fixed by `AXUIElementSetMessagingTimeout`
+    ///     -> Never experienced any issues though. Probably fine [Oct 2026]
+
     ///
     /// Get PID under mouse pointer
     ///
