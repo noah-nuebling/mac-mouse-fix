@@ -72,7 +72,7 @@
 ///     Discussion on current system:
 ///         I feel a bit bad about ReactiveAnimatorProxy.swift. It's quite messy and seems prone to breaking as it did here.
 ///         From my current understanding, the reason we introduced the ReactiveAnimatorProxy.swift in the first place was so that:
-///             1. So that we can assign values using ReactiveSwift and have those value assignments be animated (we do this by making our animatorProxy a ReactiveSwift BindingTargetProvider)
+///             1. So that we can assign values using ReactiveSwift and have those value assignments be animated (we do this by making our animatorProxy a ReactiveSwift BindingTargetProvider) (Update: [Oct 2026] This was unused and now commented out.)
 ///             2. So we can use custom CAAnimations with an animator proxy, which we couldn't figure out a way to do otherwise
 ///                 (NSAnimationContext only lets you specify one of 4 or 5 `timingFunctions` iirc, CALayer has methods for animating with a specific animation, but that is very cumbersome and might not apply in all places where we use animator proxies.
 ///                 E.g. when animating a layoutConstraint, then no CALayers are directly involved afaiu.

@@ -68,7 +68,7 @@
                     -> The only thing left on main is the stuff that needs to be - mostly AppKit - MenuBarItem, TrialNotification, ScreenDrawer, maybe CVDisplayLinkStart/Stop
                         maybe other small parts of input-processing-chain calling mainThread-only Apple APIs like TISInput stuff, also maybe NSScreen. Can't think of anything else. [Sep 2026]
         Ideas/usage policy:
-            mainThread-never-waits might be good and doable: [Sep 2026]
+            `main-thread-never-waits` might be good and doable: [Sep 2026]
                 If we avoid mainThread ever waiting on anything, then input-processing could theoretically wait on main to do parts of its processing, with easy-to-audit no deadlock risk - I think we can do this.
                 (As for input processing waiting for mainThread - can only think of NSScreen, to get screen under mouse pointer, but feel like that's safe to access off of main, anyways, not sure we even need it.)
                 Update: [Oct 2026] ModifiedDrag.m > PointerFreeze.m > ScreenDrawer.swift has `IOThread` waiting on mainThread I think. Not aware of any other places.
@@ -85,11 +85,15 @@
 #import "pthread.h"
 
 extern int _enableRunLoopAsserts;
-
+void set_thread_priority(int priority, bool round_robin);
 void threads_configureMainThread(void);
 
-void set_thread_priority(int priority, bool round_robin);
+/// General threading helpers
+void mfdetachThread(NSQualityOfService qos, void (^workload)(void));
+void mfrun(CFRunLoopRef rl, void (^workload)(void));
+void mfrunAndWait(CFRunLoopRef rl, void (^workload)(void));
 
+/// Race condition protection
 static inline void assertRunLoop(CFRunLoopRef runLoop) { /// Note: Making this static inline instead of macro so Swift can use it. Downside: the mfrequire macro will have wrong source code location [Oct 2026]
     if (_enableRunLoopAsserts)
     mfrequire(CFRunLoopGetCurrent() == (runLoop), @"assertRunLoop failure. Expected vs actual:\n%@\nvs\n%@", (runLoop), CFRunLoopGetCurrent());

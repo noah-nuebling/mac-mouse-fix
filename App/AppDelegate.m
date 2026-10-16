@@ -108,23 +108,20 @@
         NSString *currentTab = MainAppState.shared.tabViewController.identifierOfSelectedTab;
         BOOL willSwitch = ![currentTab isEqual:@"general"];
         BOOL windowExists = self.window != nil;
-        
-        /// Get delays
-        double preSwitchDelay = willSwitch && !windowExists ? 0.1 : 0.0; /// Wait until the window exists so the switch works
-        double postSwitchDelay = willSwitch ? 0.5 : 0.0; /// Wait until the tab switch animation is done before disabling the helper
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * preSwitchDelay), dispatch_get_main_queue(), ^{
-            
+
+        mfdetachThread(NSQualityOfServiceUserInteractive, ^{
             if (willSwitch) {
-                [MainAppState.shared.tabViewController coolSelectTabWithIdentifier:@"general" window:self.window];
+                if (!windowExists) usleep(1e6 * 0.1); /// Wait until the window exists so the switch works
+                mfrunAndWait(CFRunLoopGetMain(), ^{
+                    [MainAppState.shared.tabViewController coolSelectTabWithIdentifier:@"general" window:self.window];
+                });
+                usleep(1e6 * 0.5); /// Wait until the tab switch animation is done before disabling the helper
             }
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * postSwitchDelay), dispatch_get_main_queue(), ^{
-                
+            mfrun(CFRunLoopGetMain(), ^{
                 [EnabledState.shared disable];
             });
         });
-        
+
     } else if ([path isEqual:@"restarthelper"]) {
         
         NSString *delay = queryItems[@"delay"];

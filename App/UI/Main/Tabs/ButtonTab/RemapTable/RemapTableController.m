@@ -281,7 +281,7 @@
         ///     Once we remove .prefersCompactControlSizeMetrics, we should adjust this.
         scrollView.layer.cornerRadius = 7.0; /// [Aug 2025] Not sure if 6 or 7
         scrollView.layer.cornerCurve = kCACornerCurveContinuous;
-        if (runningDebugMode()) dispatch_async(dispatch_get_main_queue(), ^{ if (!MainAppState.shared.window.contentView.prefersCompactControlSizeMetrics) assert(false); });
+        if (runningDebugMode()) mfrun(CFRunLoopGetMain(), ^{ if (!MainAppState.shared.window.contentView.prefersCompactControlSizeMetrics) assert(false); });
     }
     else
         scrollView.layer.cornerRadius = MFNSBoxCornerRadius();

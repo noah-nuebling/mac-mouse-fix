@@ -72,67 +72,6 @@ NSString *MFLanguageCode(void) {
     return (id)result;
 }
 
-
-#pragma mark - runLoops
-
-void mfrun(CFRunLoopRef rl, void (^workload)(void)) {
-
-    /// This codebase's standard (greppable) way to run a block on a runLoop [Oct 2026]
-    ///     Use this over `dispatch_async`, `-[NSObject performSelector:onThread:...]`, `[NSRunLoop performInModes:block:]` [Oct 2026]
-    ///     Formerly `MFCFRunLoopPerform` [Oct 2026]
-
-    CFRunLoopMode mode = kCFRunLoopCommonModes; /// I think this is ok to use everywhere. (Only thing non-default mode would be used for is tracking loops I think?) [Oct 2026]
-    CFRunLoopPerformBlock(rl, mode, workload);
-    CFRunLoopWakeUp(rl);
-}
-
-
-#if 0 /** [Sep 2026] Unused. */
-
-    void mfrun_delay(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, double delayInSeconds, void (^_Nonnull workload)(void)) {
-        if (delayInSeconds <= 0) return mfrun(rl, modes, workload);
-        CFRunLoopTimerContext ctx = {
-            .info = (__bridge void *)workload,
-            .release = CFRelease, .retain = CFRetain, .copyDescription = CFCopyDescription,
-        };
-        CFRunLoopTimerRef timer = CFRunLoopTimerCreate(kCFAllocatorDefault, /*fireDate*/CFAbsoluteTimeGetCurrent() + delayInSeconds, /*interval*/0, /*flags*/0, /*order*/0, _cfRunLoopTimerCallback, &ctx);
-        modes = _resolveModes(rl, modes);
-        if (!isclass(modes, NSArray)) modes = @[modes];
-        for (NSRunLoopMode mode in modes) CFRunLoopAddTimer(rl, timer, (void *)mode);
-        CFRelease(timer);
-    }
-    static void _cfRunLoopTimerCallback(CFRunLoopTimerRef timer, void *info) {
-        void (^workload)(void) = (__bridge id)info;
-        workload();
-    }
-
-    bool mfrun_sync(CFRunLoopRef _Nonnull rl, NSArray<NSRunLoopMode> *_Nullable modes, NSTimeInterval timeout, void (^_Nonnull workload)(void)) { /// We're using [MFGate] directly in a few places to achieve waiting [Oct 2026]
-
-        /// Variant of mfrun which waits for the workload to complete (or does the workload immediately if `rl` is the current runLoop.)
-        ///     Sort of an analog to `dispatch_sync()` (if `mfrun()` was `dispatch_async()`)
-        ///     Returns `1` if waiting timed out. `0` otherwise.
-        ///     Pass `timeout <= 0` to disable the timeout.
-        ///
-        /// Caution: If you don't pass a timeout, this can lead to deadlocks!
-        ///     (Deadlocks can happen if you're waiting for a thread which (indirectly) waits for you. As long as `workload` doesn't wait for anything/acquire any locks, there can't be deadlocks.)
-
-        bool didTimeOut = false;
-
-        if (CFEqual(rl, CFRunLoopGetCurrent())) {
-            workload();
-            return didTimeOut;
-        }
-
-        NSDate *timeoutDate = (timeout <= 0) ? nil : [NSDate dateWithTimeIntervalSinceNow: timeout]; /// We calculate the timeoutDate early in the function, so that it's accurate. Not sure if that's silly.
-
-        MFGate *gate = [MFGate new];
-        mfrun(rl, modes, ^{ [gate doWork: workload]; });
-        didTimeOut = [gate waitForWorkUntilDate: timeoutDate]; /// We completely block the current thread/runloop. Do the waiting `-[NSObject performSelector:onThread:...]` APIs do that, too?
-
-        return didTimeOut;
-    }
-#endif
-
 #pragma mark - Time
 
 uint64_t secondsToMachTime(CFTimeInterval tsSeconds) {
@@ -548,9 +487,9 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitpos
     DDLogInfo("PRINTING STACK TRACE: %@", [NSThread callStackSymbols]);
 }
 
-+ (NSString *)currentDispatchQueueDescription {
-    return dispatch_get_current_queue().description;
-}
+//+ (NSString *)currentDispatchQueueDescription {
+//    return dispatch_get_current_queue().description;
+//}
 
 /// For debugging.
 + (void)printInvocationCountWithId:(NSString *)strId {
@@ -786,6 +725,7 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitpos
     return dstMutable;
 }
 
+#if 0
 + (void)resetDispatchGroupCount:(dispatch_group_t)group {
     /// Reset smoothing group counter to 0
     /// This doesn't work, don't use this.
@@ -809,5 +749,6 @@ NSString *_Nonnull bitflagstring(int64_t flags, NSString *const _Nullable bitpos
         dispatch_group_leave(group);
     }
 }
+#endif
 
 @end

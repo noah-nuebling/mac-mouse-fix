@@ -19,7 +19,7 @@
 ///     - Most reactive features like backpressure, errors, hot & cold signals etc, are totally unnecessary for us.
 ///     - Any 'maps' or 'filters' or similar transforms on 'streams of values over time' we can simply do inside our observation callback block.
 ///         E.g. filter is just an `if (xyz) return;` statement. compactMap is just `if (newValue == nil) return;`
-///     - We can do scheduling by just calling functions like `dispatch_async()` inside the callback block.
+///     - We can do scheduling by just calling functions like `mfrun()` inside the callback block.
 ///     - As far as I can think of, the only useful thing for MMF  in Reactive frameworks that goes beyond this basic API would be debouncing,
 ///             but even that we could replace by adding an NSTimer and 3 lines of code inside an observation callback block.
 ///     - Basically all properties or other values assigned to any NSObject (even NSDictionary) should be observable with KVO - and by extension our MFObserver API.

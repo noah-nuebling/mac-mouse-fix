@@ -326,9 +326,10 @@ class TabViewController: NSTabViewController {
                 guard let currentTab = self.identifierOfSelectedTab() else { return }
                 let currentTabWillBeDisabled = !alwaysEnabledTabs.contains(currentTab)
                 if currentTabWillBeDisabled {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01, execute: { /// Why are we delaying this?
+                    assertRunLoop(CFRunLoopGetMain());
+                    Timer.scheduledTimer(withTimeInterval: 0.01, repeats: false) { timer in /// Why are we delaying this?
                         self.coolSelectTab(identifier: "general", window: self.window)
-                    })
+                    }
                 }
             }
         }

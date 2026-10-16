@@ -25,6 +25,7 @@ class ReplaceAnimations {
     
     /// Storage
     ///     28.08.2024: This seems to be unused.
+    #if false
     private static var _fadeInDelayDispatchQueues: [NSView: DispatchQueue] = [:]
     private static func fadeInDelayDispatchQueue(forView view: NSView) -> DispatchQueue {
         if let cachedQueue = _fadeInDelayDispatchQueues[view] {
@@ -35,7 +36,8 @@ class ReplaceAnimations {
             return newQueue
         }
     }
-    
+    #endif
+
     /// Core function
 
     @discardableResult static func animate(ogView: NSView, replaceView: NSView, hAnchor: MFHAnchor = .center, vAnchor: MFVAnchor = .center, doAnimate: Bool = true, expectingSizeChanges: Bool = true, onComplete onCompleteArg: @escaping () -> () = { }) -> (() -> ())? {

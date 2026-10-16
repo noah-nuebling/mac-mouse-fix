@@ -54,10 +54,10 @@
     _captureHandler = captureHandler;
     _cancelHandler = cancelHandler;
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    mfrun(CFRunLoopGetMain(), ^{
         [MainAppState.shared.window makeFirstResponder:self];
     });
-    // ^ This view is being drawn by the tableView. Using dispatch_async makes it execute after the tableView is done drawing preventing a crash
+    // ^ This view is being drawn by the tableView. Using mfrun makes it execute after the tableView is done drawing preventing a crash
     
 }
 

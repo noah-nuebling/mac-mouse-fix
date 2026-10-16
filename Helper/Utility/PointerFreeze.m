@@ -135,7 +135,7 @@ static void freezePointer(CGPoint origin, BOOL keepPointerMoving) {
             ///             The puppetCursor will only be drawn after a delay, while hiding the mouse pointer is really fast.
             ///             This leads to a little flicker when the puppetCursor is not yet drawn, but the real cursor is already hidden.
             ///             Not sure why this happens. But adding a delay of 20 ms before hiding makes it look seamless.
-            ///             Edit: deferring caused race conditions, so we're sleeping instead. Might be bad for performance because we're using dispatch_sync above
+            ///             Edit: deferring caused race conditions, so we're sleeping instead. Might be bad for performance because this is running on IOThread [Oct 2026]
             ///
             usleep(10 * 1000); /// Wait for 10 ms
         }

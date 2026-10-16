@@ -143,7 +143,7 @@ import Cocoa
             animation.start()
         }
         
-        DispatchQueue.main.async { workload() }
+        mfrun(CFRunLoopGetMain()) { workload() }
     }
     
     fileprivate func resizeTime_Manual(_ newFrame: NSRect) -> TimeInterval {

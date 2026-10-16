@@ -180,7 +180,6 @@ class ClickCycle: NSObject {
             ///
             /// Start/reset timers
             ///
-            /// Consider using DispatchSourceTimer instead
             /// We need to start timers from main. Async dispatching to main caused race conditions.
             /// Edit: Asserting Thread.isMainThread now since we're think it's a good idea for all input (clicks, drags, and scrolls) to be handled synchronously / on the the same thread - ideally the main thread so things are also synced with the NSTimers. (Could also use another mechanism instead of NSTimers?). Handling things on different threads leads to inconsistent triggering of gestures when the computer is slow.
             /// Update (Sep 2024): are we sure we can't simply use NSTimer on another thread than the main thread? I'd like to move all the input handling over to a single thread as much as possible. I think this would be much nicer both to avoid race conditions and crashes and to ensure we're always handling the users inputs in the order they performed them (When using click and drag while the computer is slow, the order that the clicks and mouse-moves are handled is sometimes wrong I think.)
@@ -215,8 +214,7 @@ class ClickCycle: NSObject {
             ///
             ///
             /// Update: [Sep 2026] Removed the `self.buttonQueue.async` thread-hops in the downTimer/upTimer callbacks. (Didn't read the above, not totally sure if relevant)
-            ///
-                
+
             if mouseDown {
                 /// mouseDown
                 state?.upTimer.invalidate()

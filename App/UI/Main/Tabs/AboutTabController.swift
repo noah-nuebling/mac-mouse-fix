@@ -155,11 +155,11 @@ class AboutTabController: NSViewController {
             let licenseState = await GetLicenseState.get()
                 
             if licenseState.isLicensed {
-                DispatchQueue.main.async { self.updateUI_WithIsLicensedTrue(licenseState: licenseState) } /// Dispatch to main bc UI updates need to run on main. Update: [Jun 2025] This is probably unnecessary now that we're running all the License stuff on the main thread anyways.
+                mfrun(CFRunLoopGetMain()) { self.updateUI_WithIsLicensedTrue(licenseState: licenseState) } /// Dispatch to main bc UI updates need to run on main. Update: [Jun 2025] This is probably unnecessary now that we're running all the License stuff on the main thread anyways.
             } else {
                 let licenseConfig = await GetLicenseConfig.get() /// Only get the licenseConfig if the app *is not* licensed - that way, if the app *is* licensed through offline validation, we can avoid all internet connections.
                 let trialState = GetTrialState.get(licenseConfig)
-                DispatchQueue.main.async { self.updateUI_WithIsLicensedFalse(licenseConfig: licenseConfig, trialState: trialState) }
+                mfrun(CFRunLoopGetMain()) { self.updateUI_WithIsLicensedFalse(licenseConfig: licenseConfig, trialState: trialState) }
             }
         })
     }
@@ -477,13 +477,13 @@ class AboutTabController: NSViewController {
     
     override func mouseEntered(with event: NSEvent) {
         
-        DispatchQueue.main.async {
+        mfrun(CFRunLoopGetMain()) {
             self.trialSectionManager?.showAlternate(animate: true, hAnchor: .center)
         }
     }
     override func mouseExited(with event: NSEvent) {
         
-        DispatchQueue.main.async {
+        mfrun(CFRunLoopGetMain()) {
             self.trialSectionManager?.showInitial(animate: true, hAnchor: .center)
         }
     }

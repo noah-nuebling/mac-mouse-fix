@@ -456,7 +456,7 @@ static BOOL _mouseIsOverToast = NO;
 
 //+ (void)closeNotification:(NSTimer *)timer {
 //    
-//    dispatch_async(dispatch_get_main_queue(), ^{ /// Necessary under Ventura Beta for animations to work (this function used to be called by the showDuration timer)
+//    mfrun(CFRunLoopGetMain(), ^{ /// Necessary under Ventura Beta for animations to work (this function used to be called by the showDuration timer)
 //        [self closeNotificationWithFadeOut];
 //    });
 //}
@@ -471,7 +471,7 @@ static BOOL _mouseIsOverToast = NO;
     
     if (showDurationIsOver && !_mouseIsOverToast) {
         
-        dispatch_async(dispatch_get_main_queue(), ^{ /// Necessary under Ventura Beta for animations to work (at that point the calling logic was different, e.g. now we also call this from the mouseEntered/mouseExited callbacks)
+        mfrun(CFRunLoopGetMain(), ^{ /// Necessary under Ventura Beta for animations to work (at that point the calling logic was different, e.g. now we also call this from the mouseEntered/mouseExited callbacks)
             [self closeNotificationWithFadeOut];
         });
         

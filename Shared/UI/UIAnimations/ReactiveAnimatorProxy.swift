@@ -45,8 +45,8 @@ extension NSAnimatablePropertyContainer where Self: NSObject {
     }
 }
 
-@dynamicMemberLookup public struct ReactiveAnimatorPropertyProxy<Base: NSObject, U>: BindingTargetProvider {
-    
+@dynamicMemberLookup public struct ReactiveAnimatorPropertyProxy<Base: NSObject, U> /*: BindingTargetProvider*/ {
+
     /// Storage
     private let base: Base
     private let keyPath: String
@@ -61,14 +61,16 @@ extension NSAnimatablePropertyContainer where Self: NSObject {
         self.keyPath = keyPath
         self.type = type
     }
-    
+
     /// BindingTargetProvider protocol implementations
+    #if false /** Unused [Oct 2026] */
     public var bindingTarget: BindingTarget<U> {
         return BindingTarget(on: UIScheduler(), lifetime: Lifetime.of(self.base)) { (newValue) -> Void in
             self.set(newValue)
         }
     }
-    
+    #endif
+
     /// Main function
     func set(_ newValue: U) {
         switch type {

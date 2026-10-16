@@ -113,10 +113,6 @@ clean_up:
     return childEntry;
 }
 
-+ (void)afterDelay:(double)delay runBlock:(void(^)(void))block {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC*delay), dispatch_get_main_queue(), block);
-}
-
 + (NSString *)registryPathForServiceClient:(IOHIDServiceClientRef)service {
     /// TODO: Don't use IORegistryEntryGetPath(). Use kIORegistryEntryIDKey or IORegistryEntryCopyPath().
     
