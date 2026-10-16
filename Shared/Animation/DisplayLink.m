@@ -54,6 +54,8 @@
 #import "MathObjc.h"
 #import "mk_timer.h"
 
+#define range(i, n) (int i = 0; i < (n); i++)
+
 #pragma mark - VSync helpers
 
 uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *beforeOrAfter, uint64_t anchorInMachTime, VBLPhase phaseShift) {
@@ -181,7 +183,13 @@ uint64_t CGDisplay_NearestVBLTime(CGDirectDisplayID displayID, const char *befor
                 if (self->_lastNow) {
                     uint64_t realLastFrame = CGDisplay_NearestVBLTime(self->_linkedDisplay, "before", now, /*phaseShift*/0.0);
                     double phaseShift = ((double)(now - realLastFrame) / frameTime);
-                    _DDLogDebug("delta: %05.2f, phaseShift: %.2f, callbackPhaseDuration %05.2f", 1e3*machTimeToSeconds(now - self->_lastNow), phaseShift, ((double)(tsAfterCallback - tsBeforeCallback))/frameTime);
+
+                    char phaseShiftString[21]; { int p = 0; /// Little visualization inspired by Claude's vbldelta.m [Oct 2026]
+                        int phaseShiftRounded = roundToGrid(phaseShift * 20, /*grid0*/0, /*grid1*/1, "down");
+                        for range(i, 20) phaseShiftString[p++] = i == phaseShiftRounded ? '#' : '_';
+                        phaseShiftString[20] = 0;
+                    }
+                    _DDLogDebug("delta: %06.2f, phaseShift: %.2f (%{public}s), callbackPhaseDuration %05.2f", 1e3*machTimeToSeconds(now - self->_lastNow), phaseShift, phaseShiftString, ((double)(tsAfterCallback - tsBeforeCallback))/frameTime);
                 }
                 self->_lastNow = now;
             }

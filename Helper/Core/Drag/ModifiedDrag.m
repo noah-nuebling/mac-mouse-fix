@@ -26,6 +26,10 @@
             Plan2:
                 Writing a `CommonEventTap` abstraction (coined that name right here [Oct 2026] that multiplexes to multiple clients from a single CGEventTap would avoid this this problem
                     -> I had plans doing that for other reasons, so now might be a good time @afterNoGCDTodo
+                        Another note about `CommonEventTap` idea: [Oct 2026, macOS 27, M4 MBA] In `claude --resume 361c7ab2-a2f2-48cb-9d54-7b7bf7fbc804` Claude skipped CGEvent serialization for raw data communication with WindowServer.
+                            CPU usage of passing through mouse wiggles of 1000 Hz mouse went from 9% -> 4%. Required around 180 lines microlib of .defs and C helpers (Just for the tap, we didn't parse the eventData).
+                            Dataformat could break in future. Not sure if worth it. (WindowServer at ~45% and AppleUserHIDDrivers at ~15%, so all three together went from ~70% to ~65%.)
+                            Could maybe send Apple Feedback about this. (Claude in that session can explain what is inefficient)
         - Reproduction stuff:
             - Can be hard to reproduce - Comes in cycles, I think only under heavy window-server load. The load I saw it under:
                 - 60 Hz screen: streaming vbldelta.m and logs from MMF helper, and watching youtube at 1080p
