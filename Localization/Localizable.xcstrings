@@ -5159,6 +5159,28 @@
         }
       }
     },
+    "drag-effect.dock-swipe-instant": {
+      "comment": "Optional instant horizontal Space switching; vertical Mission Control and App Exposé remain available.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Spaces & Mission Control (Instant)"
+          }
+        }
+      }
+    },
+    "drag-effect.dock-swipe-instant.hint": {
+      "comment": "InstantSpaceSwitcher-derived one-shot switch at the drag activation threshold.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Move your mouse:\n- Up to show Mission Control\n- Down to show Application Windows\n- Left or Right to switch one Space instantly\n\nRelease the button before switching again. Follows your natural scrolling setting."
+          }
+        }
+      }
+    },
     "drag-effect.dock-swipe.hint" : {
       "comment" : "",
       "localizations" : {

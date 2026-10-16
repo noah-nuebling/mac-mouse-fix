@@ -118,6 +118,13 @@ static NSArray *getDragEffectsTable() {
             }
         },
         @{
+            @"ui": MFLocalizedString(@"drag-effect.dock-swipe-instant", @""),
+            @"tool": MFLocalizedString(@"drag-effect.dock-swipe-instant.hint", @""),
+            @"dict": @{
+                  kMFModifiedDragDictKeyType: kMFModifiedDragTypeThreeFingerSwipeInstant,
+            }
+        },
+        @{
             @"ui": MFLocalizedString(@"drag-effect.scroll-swipe", @""),
             @"tool": MFLocalizedString(@"drag-effect.scroll-swipe.hint", @"") ,
             @"dict": @{
