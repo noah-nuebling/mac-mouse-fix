@@ -100,6 +100,7 @@ These people spent a lot more than the standard price and treated me to an **Inc
 
 **অক্টোবর 2026**
 
+- 🇫🇷&nbsp;Philippe&nbsp;Kalmykow
 - 🇺🇸&nbsp;Randall&nbsp;(Triple)&nbsp;Li - "It's been like 5 years or more where I could not use my trackball to scroll. Worth every penny."
 - 🇺🇸&nbsp;Alena&nbsp;Kolenovic
 - 🇨🇳&nbsp;Zekai&nbsp;Liu
