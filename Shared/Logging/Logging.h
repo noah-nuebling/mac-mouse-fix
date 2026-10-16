@@ -56,6 +56,7 @@ Old logLevel logic (When we were still using CocoaLumberjack)
 /// mfassert() and mfrequire()
 ///     TODO: Use this consistently
 ///         -> Replace`NSAssert()`, `NSCAssert()`, `assert()`, `fatalError()`, log+exit(), log+abort(), maybe more I can't think of [Oct 2026]
+///             TODO: Also Replace NDEBUG with `!runningDebugMode()` entirely so all behavior is controlled at runtime. [Oct 2026]
 ///     Improvement ideas:
 ///         - Maybe use `CRSetCrashLogMessage()` for nicer crash reports. Apple's code uses it quite extensively. (abort() also uses it internally I think.) See GitHub search: `CRSetCrashLogMessage (owner:apple OR owner:apple-oss-distributions)`
 ///     Interesting:

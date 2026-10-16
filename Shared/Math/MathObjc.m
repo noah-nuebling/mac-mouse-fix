@@ -69,19 +69,6 @@ double signedCeil(double num) {
     }
 }
 
-double roundToGrid(double x, double grid0, double grid1, char *upOrDown) {
-
-    mfassert(false); /// Unused, companion to `roundToGrid_Int` [Oct 2026]
-
-    double unit = (x - grid0) / (grid1 - grid0);
-
-    if      (!strcmp(upOrDown, "up"))   unit = ceil(unit);
-    else if (!strcmp(upOrDown, "down")) unit = floor(unit);
-    else                                mfrequire(false, "Invalid argument");
-
-    return unit * (grid1 - grid0) + grid0;
-}
-
 int64_t floorDivision(int64_t n, int64_t d) {
     return (n / d) - (n < 0 && n % d);
 }
@@ -99,6 +86,19 @@ int64_t roundToGrid_Int(int64_t x, int64_t grid0, int64_t grid1, char *upOrDown)
 
     if      (!strcmp(upOrDown, "up"))   unit += 1;
     else if (!strcmp(upOrDown, "down")) unit += 0;
+    else                                mfrequire(false, "Invalid argument");
+
+    return unit * (grid1 - grid0) + grid0;
+}
+
+double roundToGrid(double x, double grid0, double grid1, char *upOrDown) {
+
+    /// Companion to `roundToGrid_Int` [Oct 2026]
+
+    double unit = (x - grid0) / (grid1 - grid0);
+
+    if      (!strcmp(upOrDown, "up"))   unit = ceil(unit);
+    else if (!strcmp(upOrDown, "down")) unit = floor(unit);
     else                                mfrequire(false, "Invalid argument");
 
     return unit * (grid1 - grid0) + grid0;
