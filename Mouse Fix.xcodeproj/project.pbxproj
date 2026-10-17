@@ -419,8 +419,6 @@
 		4FFAEBEA2E74367300832CE2 /* AddField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFAEBE92E74367300832CE2 /* AddField.swift */; };
 		4FFBC5A8266977CA001D389B /* DoubleExponentialSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFBC5A7266977CA001D389B /* DoubleExponentialSmoother.swift */; };
 		4FFE2895291B35AA0058ABE0 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		4FFF9F39307B904F00211519 /* mk_timer_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FFF9F38307B904900211519 /* mk_timer_notes.md */; };
-		4FFF9F3A307B904F00211519 /* mk_timer_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 4FFF9F38307B904900211519 /* mk_timer_notes.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3305,7 +3303,6 @@
 				4F7F47D328A6EFC800290BBD /* SharedAssets.xcassets in Resources */,
 				4FF665F725F2C92700689B77 /* MainAppAssets.xcassets in Resources */,
 				4FFA4E4028B7D0610062A1FE /* SharedSFSymbols.xcassets in Resources */,
-				4FFF9F3A307B904F00211519 /* mk_timer_notes.md in Resources */,
 				4F909D2728A0C3D2009349A2 /* Main.storyboard in Resources */,
 				4F09284828B8EE7200BDC2FF /* LicenseSheetController.xib in Resources */,
 				4FD148CC28AA423F00FE688C /* AuthorizeAccessibilityView.xib in Resources */,
@@ -3321,7 +3318,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FA2F13E2C2B0932000C5535 /* Localizable.xcstrings in Resources */,
-				4FFF9F39307B904F00211519 /* mk_timer_notes.md in Resources */,
 				4FF6654125F2C7B000689B77 /* default_launchd.plist in Resources */,
 				4F143E472B2D1F5600FE4092 /* fallback_licenseinfo_config.json in Resources */,
 				4FF6668325F2C93A00689B77 /* HelperAssets.xcassets in Resources */,
