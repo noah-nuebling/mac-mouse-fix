@@ -94,6 +94,7 @@ Disse menneskene brukte mye mer enn standardprisen og spanderte en **fantastisk 
 
 **oktober 2026**
 
+- 🇺🇸&nbsp;William&nbsp;Raggio
 - 🇫🇷&nbsp;Philippe&nbsp;Kalmykow
 - 🇺🇸&nbsp;Randall&nbsp;(Triple)&nbsp;Li - "It's been like 5 years or more where I could not use my trackball to scroll. Worth every penny."
 - 🇺🇸&nbsp;Alena&nbsp;Kolenovic

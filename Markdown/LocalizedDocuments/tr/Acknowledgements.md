@@ -95,6 +95,7 @@ Bu kişiler standart fiyattan çok daha fazlasını harcayarak bana **muhteşem 
 
 **Ekim 2026**
 
+- 🇺🇸&nbsp;William&nbsp;Raggio
 - 🇫🇷&nbsp;Philippe&nbsp;Kalmykow
 - 🇺🇸&nbsp;Randall&nbsp;(Triple)&nbsp;Li - "It's been like 5 years or more where I could not use my trackball to scroll. Worth every penny."
 - 🇺🇸&nbsp;Alena&nbsp;Kolenovic
