@@ -189,6 +189,9 @@
 		4FA13FC228B3A2D3005C68FC /* TrialNotificationWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA13FC028B3A2D3005C68FC /* TrialNotificationWindow.swift */; };
 		4FA13FC328B3A2DB005C68FC /* TrialNotificationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA13FBC28B39423005C68FC /* TrialNotificationController.xib */; };
 		4FA13FC428B3A2E0005C68FC /* TrialNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */; };
+		4FA1B0032FE8000100AA0003 /* LiftFix.c in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1B0022FE8000100AA0002 /* LiftFix.c */; };
+		4FA1B0062FE8000100AA0006 /* ButtonTriggerPath.c in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1B0052FE8000100AA0005 /* ButtonTriggerPath.c */; };
+		4FA1B0092FE8000100AA0009 /* LiftDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1B0082FE8000100AA0008 /* LiftDevice.m */; };
 		4FA1FD7F28A847BF00D1C8EE /* DeletableTableCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */; };
 		4FA1FD8128A85FD100D1C8EE /* RemapTableElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8028A85FD100D1C8EE /* RemapTableElements.swift */; };
 		4FA1FD8328A916B600D1C8EE /* NSShadow+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */; };
@@ -889,6 +892,12 @@
 		4FA13FBB28B39423005C68FC /* TrialNotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialNotificationController.swift; sourceTree = "<group>"; };
 		4FA13FBC28B39423005C68FC /* TrialNotificationController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrialNotificationController.xib; sourceTree = "<group>"; };
 		4FA13FC028B3A2D3005C68FC /* TrialNotificationWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialNotificationWindow.swift; sourceTree = "<group>"; };
+		4FA1B0012FE8000100AA0001 /* LiftFix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiftFix.h; sourceTree = "<group>"; };
+		4FA1B0022FE8000100AA0002 /* LiftFix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LiftFix.c; sourceTree = "<group>"; };
+		4FA1B0042FE8000100AA0004 /* ButtonTriggerPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonTriggerPath.h; sourceTree = "<group>"; };
+		4FA1B0052FE8000100AA0005 /* ButtonTriggerPath.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ButtonTriggerPath.c; sourceTree = "<group>"; };
+		4FA1B0072FE8000100AA0007 /* LiftDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiftDevice.h; sourceTree = "<group>"; };
+		4FA1B0082FE8000100AA0008 /* LiftDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiftDevice.m; sourceTree = "<group>"; };
 		4FA1FD7E28A847BF00D1C8EE /* DeletableTableCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeletableTableCellView.xib; sourceTree = "<group>"; };
 		4FA1FD8028A85FD100D1C8EE /* RemapTableElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemapTableElements.swift; sourceTree = "<group>"; };
 		4FA1FD8228A916B600D1C8EE /* NSShadow+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSShadow+Extensions.swift"; sourceTree = "<group>"; };
@@ -2639,6 +2648,8 @@
 			children = (
 				4FF6661B25F2C93A00689B77 /* ButtonInputReceiver.h */,
 				4FF6661E25F2C93A00689B77 /* ButtonInputReceiver.m */,
+				4FA1B0042FE8000100AA0004 /* ButtonTriggerPath.h */,
+				4FA1B0052FE8000100AA0005 /* ButtonTriggerPath.c */,
 				4FF8C8A22895AACB007EC31F /* Buttons.swift */,
 				4FF8C89928955490007EC31F /* ClickCycle.swift */,
 				4FE479DF2933C87A00B75E9B /* ButtonModifiers.h */,
@@ -2827,6 +2838,10 @@
 				4FD98209292A8C1700645FE3 /* ReactiveDeviceManager.swift */,
 				4FF6667C25F2C93A00689B77 /* Device.h */,
 				4FF6667A25F2C93A00689B77 /* Device.m */,
+				4FA1B0012FE8000100AA0001 /* LiftFix.h */,
+				4FA1B0022FE8000100AA0002 /* LiftFix.c */,
+				4FA1B0072FE8000100AA0007 /* LiftDevice.h */,
+				4FA1B0082FE8000100AA0008 /* LiftDevice.m */,
 			);
 			path = Devices;
 			sourceTree = "<group>";
@@ -3675,6 +3690,9 @@
 				4FF0255F27B013A100923107 /* PointerFreeze.m in Sources */,
 				4FBC829C2DAE93AD00354981 /* MFObserver.m in Sources */,
 				4FF666A725F2C93A00689B77 /* Device.m in Sources */,
+				4FA1B0032FE8000100AA0003 /* LiftFix.c in Sources */,
+				4FA1B0062FE8000100AA0006 /* ButtonTriggerPath.c in Sources */,
+				4FA1B0092FE8000100AA0009 /* LiftDevice.m in Sources */,
 				4FD9A7D228BA2A8A0006DF4B /* SecureStorage.swift in Sources */,
 				4F3A40B1266BBC5000436821 /* Curve.swift in Sources */,
 				4FF27DD82B95B108004744E1 /* Shorthands.swift in Sources */,

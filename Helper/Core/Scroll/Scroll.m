@@ -28,6 +28,7 @@
 #import "EventUtility.h"
 #import "MathObjc.h"
 #import "Threads.h"
+#import "ButtonTriggerPath.h"
 
 @import IOKit;
 #import "MFHIDEventImports.h"
@@ -232,6 +233,10 @@ static void heavyProcessing(CGEventRef event, int64_t scrollDeltaAxis1, int64_t 
 
     assertRunLoop(IOThread.runLoop);
     readsAndWritesState(&_readWriteTracker);
+
+    int notedWheel = (int)scrollDeltaAxis1;
+    if (notedWheel == 0) notedWheel = (int)scrollDeltaAxis2;
+    ButtonTriggerPath_noteWheel(notedWheel);
     
     /// Debug
     if (runningDebugMode()) { /// if-statement because hidEvent.description is very slow

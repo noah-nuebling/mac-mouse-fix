@@ -17,12 +17,14 @@
 #import "HelperUtility.h"
 #import "GestureScrollSimulator.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "ButtonTriggerPath.h"
 
 @implementation ButtonInputReceiver
 
 static CFMachPortRef _eventTap;
 
 + (void)load_Manual {
+    ButtonTriggerPath_resetGlobal();
     registerInputCallback();
     _buttonParseBlacklist = @[@(1),@(2)]; /// Ignore inputs from left and right mouse buttons
 }

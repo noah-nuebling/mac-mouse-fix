@@ -31,6 +31,10 @@ static inline CFRunLoopRef configRunLoop(void) CF_RETURNS_NOT_RETAINED {
 /// Singleton
 + (Config *)shared;
 
+/// 0 until `load_Manual` has created the singleton. The helper receives
+/// `configFileChanged` from the main app even when post-check init has not run.
+BOOL ConfigIsLoaded(void);
+
 /// Main storage
 @property (strong, nonatomic) NSMutableDictionary *config; /// [Aug 2025] This could just be an ivar instead of a property  (Except if we wanna support KVO)
 

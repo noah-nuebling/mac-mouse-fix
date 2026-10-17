@@ -218,10 +218,10 @@ class ClickCycle: NSObject {
             if mouseDown {
                 /// mouseDown
                 state?.upTimer.invalidate()
-                assertRunLoop(IOThread.runLoop())
-                state?.downTimer = Timer.mf_scheduledTimer(withTimeInterval: 0.25, mode: .common, block: { timer in
+                state?.downTimer = CoolTimer.scheduledTimer(timeInterval: MFButtonTriggerHoldSeconds, repeats: false, runLoop: IOThread.runLoop(), block: { timer in
                     /// Callback
                     if self.state == nil { return } /// [Oct 2026] Just saw this be nil and crash right after launching. Didn't look into what happened. Must be rare.
+                    ButtonTriggerPath_noteTime()
                     var c: [UnconditionalReleaseCallback] = []
                     triggerCallback(.hold, self.state!.clickLevel, device, button, &c)
                     if !c.isEmpty { self.releaseCallbacks[button, default: []].append(contentsOf: c) }
@@ -231,7 +231,7 @@ class ClickCycle: NSObject {
                     self.state!.upTimer.invalidate()
                 })
                 /// Not sure whether to start started upTimer on mouseDown or up
-                state?.upTimer = Timer.mf_scheduledTimer(withTimeInterval: 0.26, mode: .common, block: { timer in
+                state?.upTimer = CoolTimer.scheduledTimer(timeInterval: MFButtonTriggerDoubleClickSeconds, repeats: false, runLoop: IOThread.runLoop(), block: { timer in
                     if self.state == nil { return } /// Guard race conditions. Not totally sure why this happens. Update: [Sep 2026] This note is from before 'No more dispatch queues' refactor, might be fixed now.
                     self.callTriggerCallback(triggerCallback, ClickCycleTriggerPhase.levelExpired, self.state!.clickLevel, device, button)
                     self.kill()
