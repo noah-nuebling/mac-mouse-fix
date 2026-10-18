@@ -15,7 +15,7 @@
 /// VBLPhase
 ///     Passed to `CGDisplay_NearestVBLTime`. Pretends like the grid of VSync times is shifted by this many frame periods. Only the fractional part matters (0.25 == 1.25).
 ///     Also see:
-///         `vblphase.m` - Opus 5.5 script visualizing the phase
+///         `vblphase.m` - Opus 5.5 script visualizing the phase of events sent by Trackpad / MMF.
 ///         `Old MFDisplayLinkWorkType stuff.md` - MFDisplayLinkWorkType was an earlier attempt at doing the phaseShifts to improve stuttering, which we rolled back because it caused deadlocks. Deadlocks are no longer a risk after 'No more dispatch queues' refactor! [Oct 2026]
 ///     Alternative optimization idea:
 ///         [Sep 2026] On macOS 27, M4 MBA, after 'No more dispatch queues' refactor, responsiveness feels exactly the same as a trackpad, (so MFDisplayLinkWorkType delay idea may not help anymore)
