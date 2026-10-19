@@ -9,6 +9,7 @@
 
 #import "AppDelegate.h"
 #import "DeviceManager.h"
+#import "LiftDevice.h"
 
 @interface AppDelegate ()
 @property (strong) IBOutlet NSWindow *addedWindow;
@@ -22,7 +23,8 @@
 
 - (void)applicationWillTerminate:(NSNotification *)notification {
     /// This doesn't seem to get called when the Helper is terminated through launchd.
-    /// Opus 5.5: For that we'd have to catch the `SIGTERM` UNIX signal. (See UNIXSignals.m – currently we don't catch it, since there's no cleanup to do) [Sep 2026]
+    /// SIGTERM is handled by LiftDeviceEnableQuitRestore. This is the best-effort path.
+    LiftDeviceRequestRestore();
 }
 
 @end

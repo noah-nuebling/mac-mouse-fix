@@ -34,10 +34,29 @@
 
 #import "SharedUtility.h"
 #import "Mac_Mouse_Fix_Helper-Swift.h"
+#import "LiftDevice.h"
+#import <CoreGraphics/CoreGraphics.h>
 
 @implementation DeviceManager
 
 static MFReadWriteTracker _readWriteTracker;
+
+static void liftEdge(id deviceObject, int button, int down) {
+    if (deviceObject == nil || button <= 0) return;
+    CGEventRef marker = CGEventCreate(NULL);
+    CGPoint point = marker ? CGEventGetLocation(marker) : CGPointZero;
+    if (marker) CFRelease(marker);
+    CGEventType type = down ? kCGEventOtherMouseDown : kCGEventOtherMouseUp;
+    CGEventRef event = CGEventCreateMouseEvent(NULL, type, point, (CGMouseButton)(button - 1));
+    if (event == NULL) return;
+    CGEventSetIntegerValueField(event, kCGMouseEventButtonNumber, button - 1);
+    CGEventSetIntegerValueField(event, kCGMouseEventPressure, down ? 1 : 0);
+    MFEventPassThroughEvaluation eval = [Buttons handleInputWithDevice:deviceObject button:@(button) downNotUp:down event:event];
+    if (eval != kMFEventPassThroughRefusal) {
+        CGEventPost(kCGHIDEventTap, event);
+    }
+    CFRelease(event);
+}
 
 # pragma mark - Accessing attached devices
 
@@ -101,13 +120,16 @@ static NSMutableDictionary<NSNumber *, Device *> *_iohidToAttachedCache;
  Edit Really?
  */
 + (void)load_Manual {
+    LiftDeviceSetEdgeHandler(liftEdge);
     setupDeviceMatchingAndRemovalCallbacks();
     _attachedDevices = [NSMutableArray array];
 }
 
 + (void)deconfigureDevices {
 
-    /// Meant to be called when the app closes
+    /// Meant to be called when the app closes.
+    /// Gives a diverted Lift its thumb buttons back. Other mice are untouched.
+    LiftDeviceRestoreAll();
 
     #if 0 /// [Sep 2026] Activate when adding PointerSpeed features
         assertRunLoop(IOThread.runLoop);
@@ -296,6 +318,18 @@ static void handleDeviceMatching(void *context, IOReturn result, void *sender, I
         
         /// Log
         DDLogInfo("New device added to attached devices:\n%@", newDevice);
+
+        /// Logitech Lift thumb buttons report a click on release unless we divert them
+        /// for this session. Nested HID++ reads run while the write lock is dropped.
+        allowNestedReadOrWrite() {
+            int applied = LiftDeviceApply(device, newDevice);
+            LiftDeviceResult liftResult;
+            if (LiftDeviceCopyResult(device, &liftResult) && liftResult.matched) {
+                DDLogInfo("Lift fix: applied=%d opened=%d feature=%d back=%d forward=%d %s",
+                          applied, liftResult.opened, liftResult.featureIndex, liftResult.backImmediate, liftResult.forwardImmediate, liftResult.detail);
+                if (applied) LiftDeviceEnableQuitRestore();
+            }
+        }
         
     } else {
         DDLogInfo("New matching IOHIDDevice device didn't pass filtering");
@@ -322,6 +356,7 @@ static void handleDeviceRemoval(void *context, IOReturn result, void *sender, IO
     } else {
         
         /// Remove
+        allowNestedReadOrWrite() LiftDeviceDetach(device);
         [_attachedDevices removeObject:attachedDevice];
         
         /// Reset cache

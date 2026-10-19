@@ -80,6 +80,10 @@ static Config *_instance;
     return _instance;
 }
 
+BOOL ConfigIsLoaded(void) {
+    return _instance != nil;
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -154,6 +158,11 @@ void commitConfig(void) {
     ///         Isn't it an error to call `[loadConfigFromFile]` without calling `[updateDerivedStates]` afterwards? - should we make loadConfigFromFile private?
     assertRunLoop(configRunLoop());
 
+    /// Main-app launch always commits config. Without Accessibility permission the
+    /// helper skips post-check init, so `_instance` is still nil. The override
+    /// write below is an ivar store and crashes on nil.
+    if (_instance == nil) return;
+
     [self.shared loadConfigFromFile];
     updateDerivedStates();
 }
@@ -219,6 +228,8 @@ static void updateDerivedStates(void) {
 /// Applies AppOverrides from app with `bundleIdentifier` to `self->_config` and writes the result into `_configWithAppOverridesApplied`.
 #if IS_HELPER
 static void loadOverridesForApp(NSString *bundleID) {
+
+    if (_instance == nil) return;
 
     /// Store app
     Config.shared->_bundleIDOfAppWhichCausesAppOverride = bundleID;

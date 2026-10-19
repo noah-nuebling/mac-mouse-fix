@@ -69,6 +69,7 @@
 
 #import "Threads.h"
 #import "MathObjc.h"
+#import "ButtonTriggerPath.h"
 
 @implementation CoalescableEvent @end
 @implementation CoalescableEvent_Delta @end
@@ -140,7 +141,7 @@ static ModifiedDragState _drag;
     _drag.pendingCoalescableEvents = [NSMutableArray new];
 
     /// Set usage threshold
-    _drag.usageThreshold = 7; // 20, 5
+    _drag.usageThreshold = MFButtonTriggerDragThreshold; // 20, 5
     
     /// Create mouse moved callback
     if (!_drag.eventTap) {
@@ -425,6 +426,7 @@ static void processCoalescableDeltaEvent(double deltaXSum, double deltaYSum, CGP
         /// Update originOffset
         _drag.originOffset.x += deltaXSum;
         _drag.originOffset.y += deltaYSum;
+        ButtonTriggerPath_notePointer((int)deltaXSum, (int)deltaYSum);
 
         /// Suspension
         if (_drag.isSuspended) return;

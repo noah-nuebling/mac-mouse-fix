@@ -43,6 +43,7 @@
 #import "NSView+Additions.h"
 #import "NSScreen+Additions.h"
 #import "Device.h"
+#import "ButtonTriggerPath.h"
 #import "ButtonModifiers.h"
 #import "NSString+Additions.h"
 #import "MacAddress.h"
